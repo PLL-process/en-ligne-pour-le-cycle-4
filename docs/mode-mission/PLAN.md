@@ -52,8 +52,8 @@ qu'apprennent les autres, et ce sont d'abord les plus fragiles (Baker, Corbett, 
 | Retour jamais par la seule couleur (✓, « ✗ à revoir », texte) ; animations coupées si l'appareil le demande | fait (moteur) |
 | Toucher puis toucher (sans glisser), clavier ; cibles de 44 px au moins (WCAG 2.2, 2.5.7 et 2.5.8) | fait (moteur) |
 | Au doigt, la page défile quand le doigt part d'une case | fait (moteur) |
-| **Étiquettes leurres** (une ou deux de trop, plausibles) : sans elles, la dernière étiquette est donnée | contenu, à chaque séquence |
-| **Le pourquoi de l'erreur**, dit dès la première erreur (une phrase par mauvaise réponse) | contenu, à chaque séquence |
+| **Étiquettes leurres** (une ou deux de trop, plausibles) : sans elles, la dernière étiquette est donnée | moteur et outil faits ; contenu écrit pour `5e_C4.1` (3 leurres), à écrire ailleurs |
+| **Le pourquoi de l'erreur**, dit dès la première erreur (une phrase par mauvaise réponse) | moteur et outil faits ; contenu écrit pour `5e_C4.1` (97 pourquoi, 17 indices), à écrire ailleurs |
 | Une justification écrite par activité : gardée (les écrits ont leur écran, jamais transformés en étiquettes) | fait, à surveiller |
 | Rappel en début de séance : trois questions des séances d'avant (Adesope et al., 2017) | à concevoir |
 | Maîtrise confirmée plus tard, pas le jour même (modèle Khan Academy) | à concevoir |
@@ -86,5 +86,6 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 - [ ] Autres habillages : cartes à remettre dans l'ordre (séries de numéros), texte à trous.
 - [ ] Les séquences suivantes : à chaque révision (skill `revision-sequence`, étape 7), poser le mode et jouer le
       banc générique. Thèmes 1 et 3 : même geste.
-- [ ] À chaque séquence, les étiquettes leurres et le pourquoi de chaque erreur — le lampadaire d'abord, pour modèle.
+- [x] Leurres et pourquoi des erreurs : le modèle, sur le lampadaire (`mission_5e_C4.1.json`, `enrichir.py`).
+- [ ] Les mêmes, sur les autres séquences — après l'avis de Pascal sur le modèle.
 - [ ] Rappel en début de séance, maîtrise confirmée, code bilan.

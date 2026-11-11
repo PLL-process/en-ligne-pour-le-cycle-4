@@ -29957,3 +29957,20 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 **Écartées de ce lot.** `3e_C4.8` et `3e_C6.2` (gabarit « atelier » : des lignes d'exercice posées dans la carte, sans bloc d'activité — le mode n'y montrerait qu'une carte par écran, sans étoile) ; `4e_C4.1_book-train` (autre gabarit, non reconnu). À apprendre au moteur.
 
 **Mesure.** Banc générique : 10 pages, 456 écrans, 219 vérifiés par le mode (dont 9 à étiquettes), 56 vérifications de page déclenchées, aucun refus. Banc du pilote : 44 / 44. Bancs des neuf séquences : inchangés et verts (18 bancs). Contrôles du thème 2 : verts. **Non essayé sur une vraie tablette.**
+
+---
+
+## 11/11/2026 — Mode mission : le pourquoi de chaque erreur et des réponses leurres — le modèle, sur le lampadaire de 5e
+
+**Contexte.** Le rapport de recherche du 11/11 place deux mesures en tête, et toutes deux sont du contenu : dire **pourquoi** une réponse est fausse (un retour qui explique : 0,49 ; un simple « juste / faux » : 0,05 — Van der Kleij et al., 2015), et ajouter des **réponses leurres** aux exercices d'association (sans elles, la dernière étiquette est donnée). Écrit d'abord sur une séquence, pour que Pascal juge le modèle avant qu'il soit étendu.
+
+**Décisions.**
+- **Un fichier de données par séquence**, à côté de la page : `mission_5e_C4.1.json`. Trois clés : `pourquoi` (par question à choix, une phrase par mauvaise proposition), `indices` (par ligne de grille ou de rangée : ce que la ligne demande), `leurres` (par grille : les réponses de trop). `_outils/mode_mission/enrichir.py` les pose dans la page (`data-pourquoi`, `data-indice`, légende et lignes relettrées) et se rejoue sans rien changer.
+- **Règles d'écriture** : une phrase, vingt mots au plus, le vocabulaire de la séance ; jamais la bonne réponse, ni celle d'une autre question ; pour une observation au simulateur, renvoyer à l'expérience (« règle 10 lux, sans passage, puis regarde la LED »).
+- **Lampadaire de 5e** : 97 pourquoi, 17 indices, 3 leurres — les 123 mauvaises réponses et lignes de grille de la séquence ont leur explication. Leurres : « le mât » et « le capteur de luminosité » dans « fonctions → solutions » (le second vise le piège que l'atelier nomme : prendre « capteur » pour « capter ») ; « TRANSMETTRE un mouvement » dans la chaîne d'énergie (la fonction qu'un lampadaire n'a pas).
+- **Un leurre change aussi la page qui défile et la fiche papier** : la légende le dit (« 2 réponses ne servent à aucune ligne »), et les deux corrections disent pourquoi ces réponses ne vont nulle part. Les « pourquoi », eux, ne se voient qu'en mode mission ; la page garde sa correction complète.
+- **En mission** : une erreur sur une question à choix affiche son pourquoi ; une étiquette mal posée nomme la paire fausse et dit ce que la ligne demande ; la réserve annonce « attention, 2 en trop ».
+
+**Un défaut réparé au passage, que j'avais introduit en #650.** Dans « c) La règle de décision » (séance 3), les trois réponses à choisir dans la phrase portaient toutes la légende de la question précédente (« Expérience 4 — jour (80 lux) + passage : la LED est… ») : la conversion des listes en boutons radio l'avait recopiée. La règle se complète maintenant en trois lignes légendées (« SI il fait… », « … ET que quelqu'un… », « … ALORS pleine puissance. SI il fait nuit, sans passage, ALORS… »). Balayage des 56 séquences : aucune autre page n'a ce défaut.
+
+**Mesure.** Banc du pilote : 50 / 50. Banc générique : 10 pages, aucun refus ; il refuse désormais un « pourquoi » posé sur une bonne réponse. Bancs de la séquence : 64/64, 34/34, 25/25 ; contrôles verts. Mots visibles : séance 1 à **1 218** (1 196 avant : +22, les deux leurres et leur annonce — au-dessus du repère de 1 200, noté au suivi) ; séance 2 à 645 (628) ; séance 3 à 470 (496).

@@ -100,6 +100,15 @@ for (const PAGE of pages) {
       if (s1 !== s0 + 1) faux.push(`${id} (${s0} → ${s1})`); f.value = garde; });
     return { n: Object.keys(cles).length, faux };
   }, cles);
+  // le pourquoi des erreurs : jamais sur la bonne réponse ; et combien de mauvaises réponses en ont un
+  const pq = await p.evaluate(cles => { let surBonne = [], total = 0, avec = 0;
+    Object.keys(cles).forEach(id => { const f = document.getElementById(id), ind = f.hasAttribute('data-indice');
+      f.querySelectorAll('input[type=radio]').forEach(r => { if (r.value === cles[id]) { if (r.hasAttribute('data-pourquoi')) surBonne.push(id); return; }
+        if (f.classList.contains('qcm-grille')) return; total++; if (ind || r.hasAttribute('data-pourquoi')) avec++; });
+      if (f.classList.contains('qcm-grille')) { total++; if (ind) avec++; } });
+    return { surBonne, total, avec }; }, cles);
+  if (pq.surBonne.length) refus.push(`un « pourquoi » est posé sur la bonne réponse : ${pq.surBonne.join(', ')}`);
+  if (pq.avec) notes.push(`pourquoi des erreurs : ${pq.avec} / ${pq.total} (mauvaises propositions et lignes de grille)`);
   if (croise.sans) notes.push('pas de table CHECKS : les réponses retenues ne sont pas croisées avec la vérification de la page');
   else if (croise.faux.length) refus.push(`${croise.faux.length} réponse(s) retenue(s) par le mode ne valent pas un point à la vérification de la page : ${croise.faux.slice(0, 10).join(', ')}`);
   const sortie = await p.evaluate(() => ({ ms: document.body.classList.contains('ms'), seuls: [...document.querySelectorAll('.ms-seul')].filter(x => x.offsetParent).length }));

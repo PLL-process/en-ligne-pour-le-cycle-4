@@ -1277,7 +1277,8 @@ details.bonus-replie{padding:0;border:0;background:transparent}
   .ms-retour{margin:12px 0 4px;border-radius:12px;padding:11px 13px;border:1px solid var(--border,#274a8a);background:var(--panel2,#0a1b3d);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .ms-retour:empty{display:none}
   .ms-retour.ok{border-color:var(--ok,#81fba1)} .ms-retour.encore{border-color:var(--warn,#ffd66b)}
-  .ms-retour p{margin:0;flex:1 1 200px;min-width:0}
+  .ms-retour-t{flex:1 1 200px;min-width:0;display:grid;gap:6px} .ms-retour p{margin:0}
+  .ms-pq{margin:0;padding-left:1.15em;display:grid;gap:5px}
   .ms-etoiles{display:inline-flex;gap:2px} .ms-etoiles .ms-et{width:24px;height:24px}
 
   /* les questions à choix : de grandes cartes à toucher */
@@ -1514,7 +1515,7 @@ function habiller(p){
       if (sets.length >= 2){
         var comp = el("div", "ms-etq ms-seul"); comp._sets = sets;
         comp._libs = $$("input[type=radio]", sets[0]).map(function(r){ return r.value; });
-        var att = sets.map(cle); comp._unique = att.every(function(a){ return a !== undefined; }) && att.filter(function(a, x){ return att.indexOf(a) === x; }).length === sets.length;
+        var att = sets.map(cle); comp._unique = att.every(function(a){ return a !== undefined; }) && att.filter(function(a, x){ return att.indexOf(a) === x; }).length === sets.length;   // chaque étiquette sert une fois au plus (il peut en rester : les leurres)
         c.parentNode.insertBefore(comp, c); c.classList.add("ms-origine"); sets.forEach(function(f){ f.classList.add("ms-origine"); });
         p.n.splice(j, 0, comp); j = q + 1; continue;
       }
@@ -1532,7 +1533,9 @@ function peindre(comp){
     + "</div>";
   if (!fini){
     var labs = comp._libs.map(function(t, j){ return (comp._unique && pris.indexOf(t) >= 0) ? "" : '<button type="button" class="ms-lab' + (sel && sel.comp === comp && sel.j === j ? " choisie" : "") + '" data-j="' + j + '" aria-pressed="' + !!(sel && sel.comp === comp && sel.j === j) + '">' + esc(t) + "</button>"; }).join("");
-    h += '<div class="ms-reserve"><p class="ms-reserve-t">Étiquettes' + (comp._unique ? "" : " — chacune peut servir plusieurs fois") + '</p><div class="ms-reserve-l">' + (labs || '<span class="ms-geste">Toutes les étiquettes sont posées. Appuie sur « Vérifier ».</span>') + "</div></div>";
+    var trop = comp._unique ? comp._libs.length - comp._sets.length : 0, plein = pris.every(function(v){ return !!v; });
+    var titre = plein && labs ? "Toutes les cases sont remplies : appuie sur « Vérifier »" : "Étiquettes" + (!comp._unique ? " — chacune peut servir plusieurs fois" : trop > 0 ? " — attention, " + trop + " en trop" : "");
+    h += '<div class="ms-reserve"><p class="ms-reserve-t">' + titre + '</p><div class="ms-reserve-l">' + (labs || '<span class="ms-geste">Toutes les étiquettes sont posées. Appuie sur « Vérifier ».</span>') + "</div></div>";
   }
   var act = D.activeElement, quoi = act && comp.contains(act) ? (act.dataset.i !== undefined ? '[data-i="' + act.dataset.i + '"]' : act.dataset.j !== undefined ? '[data-j="' + act.dataset.j + '"]' : null) : null;
   comp.innerHTML = h;
@@ -1627,8 +1630,18 @@ function coupDePouce(s, niveau){
   var deja = d.open; d.open = true; d.classList.add("ms-pousse");
   return deja ? " Relis le coup de pouce ouvert juste en dessous, puis réessaie." : " Un coup de pouce vient de s'ouvrir juste en dessous : lis-le, puis réessaie.";
 }
-function dire(s, ton, html, n){ s.msg = html ? { ton:ton, html:html, n:n } : null; peindreRetour(s); if (html && s.retour.scrollIntoView) s.retour.scrollIntoView({ block:"nearest" }); }
-function peindreRetour(s){ if (!s.retour) return; var m = s.msg; s.retour.className = "ms-retour ms-seul" + (m && m.ton ? " " + m.ton : ""); s.retour.innerHTML = m ? (m.n ? etoiles(m.n) : "") + "<p>" + m.html + "</p>" : ""; }
+function dire(s, ton, html, n, liste, fin){ s.msg = html ? { ton:ton, html:html, n:n, liste:liste || [], fin:fin || "" } : null; peindreRetour(s); if (html && s.retour.scrollIntoView) s.retour.scrollIntoView({ block:"nearest" }); }
+function peindreRetour(s){
+  if (!s.retour) return; var m = s.msg; s.retour.className = "ms-retour ms-seul" + (m && m.ton ? " " + m.ton : "");
+  s.retour.innerHTML = m ? (m.n ? etoiles(m.n) : "") + '<div class="ms-retour-t"><p>' + m.html + "</p>" + (m.liste && m.liste.length ? '<ul class="ms-pq">' + m.liste.map(function(x){ return "<li>" + x + "</li>"; }).join("") + "</ul>" : "") + (m.fin ? "<p>" + m.fin + "</p>" : "") + "</div>" : "";
+}
+/* Le pourquoi d'une erreur, écrit dans la page : `data-pourquoi` sur la proposition choisie (pourquoi elle ne convient
+   pas), sinon `data-indice` sur la question (ce qu'elle demande). Jamais la bonne réponse. */
+function raison(f, seule){
+  var r = $("input[type=radio]:checked", f), pq = (r && r.getAttribute("data-pourquoi")) || f.getAttribute("data-indice"); if (!pq) return "";
+  if (f.classList.contains("ms-origine")) return "<b>« " + esc(f.value) + " »</b> ne va pas avec « " + esc(net($("legend", f).textContent)) + " ». " + esc(pq);
+  return seule ? esc(pq) : "<b>" + esc(net($("legend", f).textContent)) + "</b> " + esc(pq);
+}
 function verifier(){
   var s = ecrans[k]; if (s.t !== "partie" || Date.now() < souffle) return;
   var avec = s.champs.filter(function(f){ return cle(f) !== undefined; }), vides = avec.filter(function(f){ return !f.value; }).length;
@@ -1640,9 +1653,11 @@ function verifier(){
     if (fautes.length){
       M.essais[s.id] = (M.essais[s.id] || 0) + 1; M.erreurs[s.id] = (M.erreurs[s.id] || 0) + fautes.length; ecrire();
       var justes = avec.length - fautes.length, enEtq = fautes.filter(function(f){ return f.classList.contains("ms-origine"); }), essais = M.essais[s.id];
-      var debut = avec.length === 1 ? "Pas encore." : "Pas encore. " + justes + " réponse" + (justes > 1 ? "s justes restent" : " juste reste") + " en place.";
-      dire(s, "encore", debut + (enEtq.length ? " " + enEtq.length + " étiquette" + (enEtq.length > 1 ? "s retournent" : " retourne") + " dans la réserve." : "")
-        + (essais >= 2 ? coupDePouce(s, essais >= 4 ? 2 : 1) : " Relis la consigne, puis réessaie."));
+      var seule = avec.length === 1, raisons = fautes.map(function(f){ return raison(f, seule); }).filter(Boolean);
+      var debut = seule ? "Pas encore." : "Pas encore. " + justes + " réponse" + (justes > 1 ? "s justes restent" : " juste reste") + " en place.";
+      debut += enEtq.length ? " " + enEtq.length + " étiquette" + (enEtq.length > 1 ? "s retournent" : " retourne") + " dans la réserve." : "";
+      var suite = essais >= 2 ? coupDePouce(s, essais >= 4 ? 2 : 1).trim() : raisons.length ? "Corrige, puis vérifie de nouveau." : "Relis la consigne, puis réessaie.";
+      if (seule && raisons.length) dire(s, "encore", debut + " " + raisons[0], 0, [], suite); else dire(s, "encore", debut, 0, raisons, suite);
       souffler();
       $$(".ms-etq", panneau).forEach(peindre);
       setTimeout(function(){ enEtq.forEach(function(f){ if (f.classList.contains("ms-faux")){ f.value = null; f.classList.remove("ms-faux"); saisie(f); } }); if (actif) $$(".ms-etq", panneau).forEach(peindre); }, 950);
@@ -1951,70 +1966,78 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="consigne"><b>Consigne :</b> lis le schéma, puis réponds aux parties a), b) et c).</div>
     <div class="exo">
       <h4>a) Fonctions → solutions</h4>
-      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>le panneau solaire</li><li><b>B</b>le bloc de LED</li><li><b>C</b>la batterie</li><li><b>D</b>la carte électronique</li></ol></div>
-<fieldset class="qcm-groupe qcm-grille" id="e1_1">
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>2 réponses ne servent à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>le capteur de luminosité</li><li><b>B</b>le panneau solaire</li><li><b>C</b>le mât</li><li><b>D</b>le bloc de LED</li><li><b>E</b>la batterie</li><li><b>F</b>la carte électronique</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="e1_1" data-indice="Capter l'énergie du soleil, c'est en faire de l'électricité pour tout le lampadaire — pas seulement mesurer la lumière.">
   <legend>Capter l'énergie du soleil</legend>
-  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="e1_1__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__2" value="le bloc de LED" aria-label="B — le bloc de LED"><label for="e1_1__2" title="le bloc de LED">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__3" value="la batterie" aria-label="C — la batterie"><label for="e1_1__3" title="la batterie">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__4" value="la carte électronique" aria-label="D — la carte électronique"><label for="e1_1__4" title="la carte électronique">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__1" value="le capteur de luminosité" aria-label="A — le capteur de luminosité"><label for="e1_1__1" title="le capteur de luminosité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__2" value="le panneau solaire" aria-label="B — le panneau solaire"><label for="e1_1__2" title="le panneau solaire">B</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__3" value="le mât" aria-label="C — le mât"><label for="e1_1__3" title="le mât">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__4" value="le bloc de LED" aria-label="D — le bloc de LED"><label for="e1_1__4" title="le bloc de LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__5" value="la batterie" aria-label="E — la batterie"><label for="e1_1__5" title="la batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__6" value="la carte électronique" aria-label="F — la carte électronique"><label for="e1_1__6" title="la carte électronique">F</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e1_2">
+      <fieldset class="qcm-groupe qcm-grille" id="e1_2" data-indice="Stocker, c'est garder l'énergie reçue le jour pour s'en servir plus tard.">
   <legend>Stocker l'énergie pour la nuit</legend>
-  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="e1_2__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__2" value="le bloc de LED" aria-label="B — le bloc de LED"><label for="e1_2__2" title="le bloc de LED">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__3" value="la batterie" aria-label="C — la batterie"><label for="e1_2__3" title="la batterie">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__4" value="la carte électronique" aria-label="D — la carte électronique"><label for="e1_2__4" title="la carte électronique">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__1" value="le capteur de luminosité" aria-label="A — le capteur de luminosité"><label for="e1_2__1" title="le capteur de luminosité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__2" value="le panneau solaire" aria-label="B — le panneau solaire"><label for="e1_2__2" title="le panneau solaire">B</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__3" value="le mât" aria-label="C — le mât"><label for="e1_2__3" title="le mât">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__4" value="le bloc de LED" aria-label="D — le bloc de LED"><label for="e1_2__4" title="le bloc de LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__5" value="la batterie" aria-label="E — la batterie"><label for="e1_2__5" title="la batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__6" value="la carte électronique" aria-label="F — la carte électronique"><label for="e1_2__6" title="la carte électronique">F</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e1_3">
+      <fieldset class="qcm-groupe qcm-grille" id="e1_3" data-indice="Éclairer, c'est produire de la lumière à partir de l'électricité.">
   <legend>Éclairer le parking</legend>
-  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="e1_3__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__2" value="le bloc de LED" aria-label="B — le bloc de LED"><label for="e1_3__2" title="le bloc de LED">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__3" value="la batterie" aria-label="C — la batterie"><label for="e1_3__3" title="la batterie">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__4" value="la carte électronique" aria-label="D — la carte électronique"><label for="e1_3__4" title="la carte électronique">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__1" value="le capteur de luminosité" aria-label="A — le capteur de luminosité"><label for="e1_3__1" title="le capteur de luminosité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__2" value="le panneau solaire" aria-label="B — le panneau solaire"><label for="e1_3__2" title="le panneau solaire">B</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__3" value="le mât" aria-label="C — le mât"><label for="e1_3__3" title="le mât">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__4" value="le bloc de LED" aria-label="D — le bloc de LED"><label for="e1_3__4" title="le bloc de LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__5" value="la batterie" aria-label="E — la batterie"><label for="e1_3__5" title="la batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__6" value="la carte électronique" aria-label="F — la carte électronique"><label for="e1_3__6" title="la carte électronique">F</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e1_4">
+      <fieldset class="qcm-groupe qcm-grille" id="e1_4" data-indice="Décider, c'est comparer ce que disent les capteurs à une règle, puis donner un ordre.">
   <legend>Décider d'allumer ou non</legend>
-  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="e1_4__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__2" value="le bloc de LED" aria-label="B — le bloc de LED"><label for="e1_4__2" title="le bloc de LED">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__3" value="la batterie" aria-label="C — la batterie"><label for="e1_4__3" title="la batterie">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__4" value="la carte électronique" aria-label="D — la carte électronique"><label for="e1_4__4" title="la carte électronique">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__1" value="le capteur de luminosité" aria-label="A — le capteur de luminosité"><label for="e1_4__1" title="le capteur de luminosité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__2" value="le panneau solaire" aria-label="B — le panneau solaire"><label for="e1_4__2" title="le panneau solaire">B</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__3" value="le mât" aria-label="C — le mât"><label for="e1_4__3" title="le mât">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__4" value="le bloc de LED" aria-label="D — le bloc de LED"><label for="e1_4__4" title="le bloc de LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__5" value="la batterie" aria-label="E — la batterie"><label for="e1_4__5" title="la batterie">E</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__6" value="la carte électronique" aria-label="F — la carte électronique"><label for="e1_4__6" title="la carte électronique">F</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e1_5" data-melange="1">
   <legend>Détecter un passage</legend>
-  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__2" value="le capteur de luminosité"><label for="e1_5__2">le capteur de luminosité</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__2" value="le capteur de luminosité" data-pourquoi="Il mesure la lumière ambiante : il sait s'il fait jour ou nuit, pas si quelqu'un passe."><label for="e1_5__2">le capteur de luminosité</label></div>
   <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__1" value="le détecteur de mouvement (PIR)"><label for="e1_5__1">le détecteur de mouvement (PIR)</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__4" value="le mât"><label for="e1_5__4">le mât</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__3" value="la batterie"><label for="e1_5__3">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__4" value="le mât" data-pourquoi="Le mât porte le luminaire en hauteur : il ne mesure rien."><label for="e1_5__4">le mât</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__3" value="la batterie" data-pourquoi="La batterie fait partie de la chaîne d'énergie : elle ne perçoit rien de ce qui se passe autour."><label for="e1_5__3">la batterie</label></div>
 </fieldset>
       <h4>b) De quoi c'est fait ?</h4>
       <fieldset class="qcm-groupe" id="e1_m1" data-melange="1">
   <legend>Le mât (dehors, vent, pluie, embruns)</legend>
-  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__3" value="bois brut"><label for="e1_m1__3">bois brut</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__4" value="verre"><label for="e1_m1__4">verre</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__3" value="bois brut" data-pourquoi="Sans traitement, le bois pourrit sous la pluie et les embruns : le mât ne tiendrait pas des années."><label for="e1_m1__3">bois brut</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__4" value="verre" data-pourquoi="Le verre casse au premier choc : trop fragile pour porter un luminaire dans le vent."><label for="e1_m1__4">verre</label></div>
   <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__1" value="acier galvanisé (traité contre la rouille)"><label for="e1_m1__1">acier galvanisé (traité contre la rouille)</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__2" value="carton renforcé"><label for="e1_m1__2">carton renforcé</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__2" value="carton renforcé" data-pourquoi="Le carton se ramollit dès qu'il est mouillé : impossible dehors."><label for="e1_m1__2">carton renforcé</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e1_m2" data-melange="1">
   <legend>La vitre qui protège les LED</legend>
-  <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__3" value="coton"><label for="e1_m2__3">coton</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__4" value="caoutchouc"><label for="e1_m2__4">caoutchouc</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__2" value="acier"><label for="e1_m2__2">acier</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__3" value="coton" data-pourquoi="Le coton est un tissu : il ne laisse pas passer la lumière, et il boit l'eau."><label for="e1_m2__3">coton</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__4" value="caoutchouc" data-pourquoi="Le caoutchouc est opaque : la lumière des LED ne le traverserait pas."><label for="e1_m2__4">caoutchouc</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__2" value="acier" data-pourquoi="L'acier est opaque : les LED seraient protégées, mais plus aucune lumière ne sortirait."><label for="e1_m2__2">acier</label></div>
   <div class="qcm-option"><input type="radio" name="e1_m2" id="e1_m2__1" value="polycarbonate (plastique transparent très résistant)"><label for="e1_m2__1">polycarbonate (plastique transparent très résistant)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e1_m3" data-melange="1">
   <legend>Le corps du luminaire (léger, ne rouille pas)</legend>
-  <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__2" value="plomb"><label for="e1_m3__2">plomb</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__4" value="laine"><label for="e1_m3__4">laine</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__3" value="béton"><label for="e1_m3__3">béton</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__2" value="plomb" data-pourquoi="Le plomb est très lourd : en haut d'un mât, il faut un matériau léger."><label for="e1_m3__2">plomb</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__4" value="laine" data-pourquoi="La laine est un textile : elle n'est pas rigide, et elle retient l'eau."><label for="e1_m3__4">laine</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__3" value="béton" data-pourquoi="Le béton est bien trop lourd pour être porté en haut d'un mât."><label for="e1_m3__3">béton</label></div>
   <div class="qcm-option"><input type="radio" name="e1_m3" id="e1_m3__1" value="aluminium"><label for="e1_m3__1">aluminium</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e1_m4" data-melange="1">
   <legend>Les fils électriques (bon conducteur)</legend>
   <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__1" value="cuivre (gainé de plastique isolant)"><label for="e1_m4__1">cuivre (gainé de plastique isolant)</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__4" value="coton"><label for="e1_m4__4">coton</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__3" value="verre"><label for="e1_m4__3">verre</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__2" value="bois"><label for="e1_m4__2">bois</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__4" value="coton" data-pourquoi="Le coton est un isolant : le courant ne le traverse pas."><label for="e1_m4__4">coton</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__3" value="verre" data-pourquoi="Le verre est un isolant, et il casse quand on le plie : on ne peut pas en faire un fil."><label for="e1_m4__3">verre</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__2" value="bois" data-pourquoi="Le bois sec est un isolant : il ne conduit pas le courant."><label for="e1_m4__2">bois</label></div>
 </fieldset>
       <label for="e1_just" style="display:block;margin-top:8px"><b>c) Justifie :</b> pourquoi de l'acier « galvanisé » pour le mât, en Martinique ?</label>
       <textarea id="e1_just" placeholder="Près de la mer, l'air contient…"></textarea>
@@ -2039,7 +2062,10 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <br>Éclairer le parking → <b>le bloc de LED</b>.
       <br>Décider d'allumer ou non → <b>la carte électronique</b>.
       <br>Détecter un passage → <b>le détecteur de mouvement (PIR)</b>.
-      <br>Pas le capteur de luminosité&nbsp;: lui mesure la lumière du jour, pas un passage.</p>
+      <br>Pas le capteur de luminosité&nbsp;: lui mesure la lumière du jour, pas un passage.
+<br><b>Deux réponses ne servent à aucune des quatre premières lignes&nbsp;:</b>
+<br>le mât — il porte le luminaire en hauteur, rien de plus&nbsp;;
+<br>le capteur de luminosité — il mesure la lumière pour informer la carte&nbsp;: il ne fournit pas l'énergie et ne décide rien.</p>
       <p><b>b) Chaque élément a son matériau&nbsp;:</b>
       <br>Le mât → <b>acier galvanisé</b>&nbsp;: solide face au vent, protégé de la rouille.
       <br>La vitre → <b>polycarbonate</b>&nbsp;: transparent et très résistant.
@@ -2120,61 +2146,65 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="retenir"><b>📐 Règle d'or du schéma :</b> l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
     <div class="exo">
       <h4>a) Les constituants et leurs fonctions</h4>
-      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>STOCKER</li><li><b>B</b>CONVERTIR la lumière en électricité</li><li><b>C</b>CONVERTIR l’électricité en lumière</li><li><b>D</b>ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED</li></ol></div>
-<fieldset class="qcm-groupe qcm-grille" id="e2_o1">
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>une réponse ne sert à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>STOCKER</li><li><b>B</b>CONVERTIR la lumière en électricité</li><li><b>C</b>TRANSMETTRE un mouvement (engrenages, courroie)</li><li><b>D</b>CONVERTIR l’électricité en lumière</li><li><b>E</b>ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="e2_o1" data-indice="La batterie reçoit de l'électricité le jour et en rend la nuit : entre les deux, elle la garde.">
   <legend>La batterie</legend>
   <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o1__1" title="STOCKER">A</label></div>
   <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o1__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__3" value="CONVERTIR l’électricité en lumière" aria-label="C — CONVERTIR l’électricité en lumière"><label for="e2_o1__3" title="CONVERTIR l’électricité en lumière">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__4" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="D — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o1__4" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o1__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o1__4" title="CONVERTIR l’électricité en lumière">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o1__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e2_o2">
+      <fieldset class="qcm-groupe qcm-grille" id="e2_o2" data-indice="Le panneau solaire reçoit de la lumière et fournit du courant : l'énergie y change de forme.">
   <legend>Le panneau solaire</legend>
   <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o2__1" title="STOCKER">A</label></div>
   <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o2__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__3" value="CONVERTIR l’électricité en lumière" aria-label="C — CONVERTIR l’électricité en lumière"><label for="e2_o2__3" title="CONVERTIR l’électricité en lumière">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__4" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="D — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o2__4" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o2__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o2__4" title="CONVERTIR l’électricité en lumière">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o2__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e2_o3">
+      <fieldset class="qcm-groupe qcm-grille" id="e2_o3" data-indice="Le bloc de LED reçoit du courant et envoie de la lumière : l'énergie y change de forme.">
   <legend>Le bloc de LED</legend>
   <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o3__1" title="STOCKER">A</label></div>
   <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o3__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__3" value="CONVERTIR l’électricité en lumière" aria-label="C — CONVERTIR l’électricité en lumière"><label for="e2_o3__3" title="CONVERTIR l’électricité en lumière">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__4" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="D — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o3__4" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o3__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o3__4" title="CONVERTIR l’électricité en lumière">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o3__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e2_o4">
+      <fieldset class="qcm-groupe qcm-grille" id="e2_o4" data-indice="Le régulateur fournit une électricité adaptée ; l'interrupteur la laisse passer, ou non, vers les LED.">
   <legend>Le régulateur de charge et l’interrupteur commandé : leurs rôles respectifs</legend>
   <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o4__1" title="STOCKER">A</label></div>
   <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o4__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__3" value="CONVERTIR l’électricité en lumière" aria-label="C — CONVERTIR l’électricité en lumière"><label for="e2_o4__3" title="CONVERTIR l’électricité en lumière">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__4" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="D — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o4__4" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o4__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o4__4" title="CONVERTIR l’électricité en lumière">D</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o4__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
 </fieldset>
       <h4>b) La nature des énergies</h4>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n1">
+      <fieldset class="qcm-groupe qcm-rangee" id="e2_n1" data-indice="Le panneau est tourné vers le soleil : ce qui entre, c'est ce qu'il en reçoit.">
   <legend>Ce qui ENTRE dans le panneau solaire</legend>
   <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__1" value="énergie lumineuse"><label for="e2_n1__1">énergie lumineuse</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__2" value="énergie électrique"><label for="e2_n1__2">énergie électrique</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__3" value="énergie chimique"><label for="e2_n1__3">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n2">
+      <fieldset class="qcm-groupe qcm-rangee" id="e2_n2" data-indice="Des fils partent du panneau : ce qui sort, c'est ce qui circule dans ces fils.">
   <legend>Ce qui SORT du panneau solaire</legend>
   <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__1" value="énergie lumineuse"><label for="e2_n2__1">énergie lumineuse</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__2" value="énergie électrique"><label for="e2_n2__2">énergie électrique</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__3" value="énergie chimique"><label for="e2_n2__3">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n3">
+      <fieldset class="qcm-groupe qcm-rangee" id="e2_n3" data-indice="La batterie ne garde ni de la lumière, ni du courant qui circule : pense à ce qu'il y a dans une pile.">
   <legend>Sous quelle forme la batterie STOCKE l'énergie</legend>
   <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__1" value="énergie lumineuse"><label for="e2_n3__1">énergie lumineuse</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__2" value="énergie électrique"><label for="e2_n3__2">énergie électrique</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__3" value="énergie chimique"><label for="e2_n3__3">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n4">
+      <fieldset class="qcm-groupe qcm-rangee" id="e2_n4" data-indice="Le bloc de LED est branché par des fils : ce qui entre, c'est ce qui circule dans ces fils.">
   <legend>Ce qui ENTRE dans le bloc de LED</legend>
   <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__1" value="énergie lumineuse"><label for="e2_n4__1">énergie lumineuse</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__2" value="énergie électrique"><label for="e2_n4__2">énergie électrique</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__3" value="énergie chimique"><label for="e2_n4__3">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n5">
+      <fieldset class="qcm-groupe qcm-rangee" id="e2_n5" data-indice="Regarde ce que le bloc de LED envoie vers le parking.">
   <legend>Ce qui SORT du bloc de LED</legend>
   <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__1" value="énergie lumineuse"><label for="e2_n5__1">énergie lumineuse</label></div>
   <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__2" value="énergie électrique"><label for="e2_n5__2">énergie électrique</label></div>
@@ -2202,7 +2232,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <br>Le panneau solaire → <b>CONVERTIR</b> la lumière en électricité.
       <br>Le bloc de LED → <b>CONVERTIR</b> l'électricité en lumière.
       <br>Le régulateur de charge → <b>ALIMENTER</b>.
-      <br>L'interrupteur commandé → <b>DISTRIBUER</b> vers les LED.</p>
+      <br>L'interrupteur commandé → <b>DISTRIBUER</b> vers les LED.
+<br><b>La réponse en trop&nbsp;:</b> TRANSMETTRE un mouvement. Rien ne bouge dans un lampadaire&nbsp;: sa chaîne d'énergie n'a pas cette fonction.</p>
       <p><b>b) La nature de l'énergie, étape par étape&nbsp;:</b>
       <br>Ce qui entre dans le panneau solaire&nbsp;: énergie <b>lumineuse</b>.
       <br>Ce qui en sort&nbsp;: énergie <b>électrique</b>.
@@ -2248,24 +2279,24 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <h4>a) Les constituants de la chaîne d'information</h4>
       <fieldset class="qcm-groupe" id="e3_1" data-melange="1">
   <legend>ACQUÉRIR est assuré par…</legend>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__3" value="le bloc de LED"><label for="e3_1__3">le bloc de LED</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__3" value="le bloc de LED" data-pourquoi="Le bloc de LED éclaire : il agit, il ne mesure rien."><label for="e3_1__3">le bloc de LED</label></div>
   <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__1" value="le capteur de luminosité et le détecteur de mouvement"><label for="e3_1__1">le capteur de luminosité et le détecteur de mouvement</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__2" value="la batterie"><label for="e3_1__2">la batterie</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__4" value="le mât"><label for="e3_1__4">le mât</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__2" value="la batterie" data-pourquoi="La batterie appartient à la chaîne d'énergie : elle ne prélève aucune information."><label for="e3_1__2">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__4" value="le mât" data-pourquoi="Le mât porte le lampadaire : il ne mesure rien."><label for="e3_1__4">le mât</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e3_2" data-melange="1">
   <legend>TRAITER est assuré par…</legend>
-  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__2" value="le panneau solaire"><label for="e3_2__2">le panneau solaire</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__3" value="la vitre"><label for="e3_2__3">la vitre</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__2" value="le panneau solaire" data-pourquoi="Le panneau solaire fournit l'énergie : il ne compare rien et ne décide rien."><label for="e3_2__2">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__3" value="la vitre" data-pourquoi="La vitre protège les LED : elle ne reçoit aucune information."><label for="e3_2__3">la vitre</label></div>
   <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__1" value="la carte électronique"><label for="e3_2__1">la carte électronique</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__4" value="le régulateur"><label for="e3_2__4">le régulateur</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__4" value="le régulateur" data-pourquoi="Le régulateur gère la charge de la batterie, dans la chaîne d'énergie : il ne décide pas d'allumer."><label for="e3_2__4">le régulateur</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e3_3" data-melange="1">
   <legend>La COMMANDE part vers…</legend>
   <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__1" value="le bloc de LED (via l&#x27;interrupteur commandé)"><label for="e3_3__1">le bloc de LED (via l'interrupteur commandé)</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__2" value="le panneau solaire"><label for="e3_3__2">le panneau solaire</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__4" value="la pluie"><label for="e3_3__4">la pluie</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__3" value="le mât"><label for="e3_3__3">le mât</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__2" value="le panneau solaire" data-pourquoi="Le panneau solaire ne reçoit aucun ordre : il produit de l'électricité dès qu'il y a de la lumière."><label for="e3_3__2">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__4" value="la pluie" data-pourquoi="La pluie, c'est la météo : le lampadaire ne commande pas le temps qu'il fait."><label for="e3_3__4">la pluie</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__3" value="le mât" data-pourquoi="Le mât ne fait que porter : il n'y a rien à lui commander."><label for="e3_3__3">le mât</label></div>
 </fieldset>
       <h4>b) Aux commandes du simulateur !</h4>
       <div class="simu" style="margin:10px 0">
@@ -2283,45 +2314,48 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
           <div id="simLedTxt" class="etiquette">éteint</div>
         </div>
       </div>
-      <fieldset class="qcm-groupe qcm-rangee" id="e3_e1">
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_e1" data-indice="Règle le simulateur sur 80 lux, sans passage, puis regarde la LED : note ce que tu vois, pas ce que tu supposes.">
   <legend>Expérience 1 — jour (80 lux), sans passage : la LED est…</legend>
   <div class="qcm-option"><input type="radio" name="e3_e1" id="e3_e1__1" value="éteinte"><label for="e3_e1__1">éteinte</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e1" id="e3_e1__2" value="en veille (faible)"><label for="e3_e1__2">en veille (faible)</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e1" id="e3_e1__3" value="à pleine puissance"><label for="e3_e1__3">à pleine puissance</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e3_e2">
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_e2" data-indice="Règle le simulateur sur 10 lux, sans passage, puis regarde bien la LED.">
   <legend>Expérience 2 — nuit (10 lux), sans passage : la LED est…</legend>
   <div class="qcm-option"><input type="radio" name="e3_e2" id="e3_e2__1" value="éteinte"><label for="e3_e2__1">éteinte</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e2" id="e3_e2__2" value="en veille (faible)"><label for="e3_e2__2">en veille (faible)</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e2" id="e3_e2__3" value="à pleine puissance"><label for="e3_e2__3">à pleine puissance</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e3_e3">
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_e3" data-indice="Règle le simulateur sur 10 lux, déclenche un passage, puis regarde la LED.">
   <legend>Expérience 3 — nuit (10 lux) + passage : la LED est…</legend>
   <div class="qcm-option"><input type="radio" name="e3_e3" id="e3_e3__1" value="éteinte"><label for="e3_e3__1">éteinte</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e3" id="e3_e3__2" value="en veille (faible)"><label for="e3_e3__2">en veille (faible)</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e3" id="e3_e3__3" value="à pleine puissance"><label for="e3_e3__3">à pleine puissance</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e3_e4">
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_e4" data-indice="Règle le simulateur sur 80 lux, déclenche un passage, puis regarde la LED : le passage change-t-il quelque chose en plein jour ?">
   <legend>Expérience 4 — jour (80 lux) + passage : la LED est…</legend>
   <div class="qcm-option"><input type="radio" name="e3_e4" id="e3_e4__1" value="éteinte"><label for="e3_e4__1">éteinte</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e4" id="e3_e4__2" value="en veille (faible)"><label for="e3_e4__2">en veille (faible)</label></div>
   <div class="qcm-option"><input type="radio" name="e3_e4" id="e3_e4__3" value="à pleine puissance"><label for="e3_e4__3">à pleine puissance</label></div>
 </fieldset>
       <h4>c) La règle de décision</h4>
-      <p>SI il fait <fieldset class="qcm-groupe" id="e3_r1">
-  <legend>Expérience 4 — jour (80 lux) + passage : la LED est…</legend>
+      <p>Complète la règle du lampadaire, morceau par morceau.</p>
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_r1">
+  <legend>SI il fait…</legend>
   <div class="qcm-option"><input type="radio" name="e3_r1" id="e3_r1__1" value="nuit"><label for="e3_r1__1">nuit</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_r1" id="e3_r1__2" value="jour"><label for="e3_r1__2">jour</label></div>
-</fieldset> ET que quelqu'un <fieldset class="qcm-groupe" id="e3_r2">
-  <legend>Expérience 4 — jour (80 lux) + passage : la LED est…</legend>
+  <div class="qcm-option"><input type="radio" name="e3_r1" id="e3_r1__2" value="jour" data-pourquoi="Reprends les expériences 1 et 4 : le jour, la LED reste éteinte, même quand quelqu'un passe."><label for="e3_r1__2">jour</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_r2">
+  <legend>… ET que quelqu'un…</legend>
   <div class="qcm-option"><input type="radio" name="e3_r2" id="e3_r2__1" value="passe"><label for="e3_r2__1">passe</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_r2" id="e3_r2__2" value="dort"><label for="e3_r2__2">dort</label></div>
-</fieldset> ALORS pleine puissance ; SI nuit sans passage ALORS <fieldset class="qcm-groupe" id="e3_r3" data-melange="1">
-  <legend>Expérience 4 — jour (80 lux) + passage : la LED est…</legend>
-  <div class="qcm-option"><input type="radio" name="e3_r3" id="e3_r3__3" value="éteint"><label for="e3_r3__3">éteint</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_r3" id="e3_r3__2" value="pleine puissance"><label for="e3_r3__2">pleine puissance</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_r2" id="e3_r2__2" value="dort" data-pourquoi="Quelqu'un qui dort ne bouge pas : le détecteur de mouvement ne signale rien."><label for="e3_r2__2">dort</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="e3_r3" data-melange="1">
+  <legend>… ALORS pleine puissance. SI il fait nuit, sans passage, ALORS…</legend>
+  <div class="qcm-option"><input type="radio" name="e3_r3" id="e3_r3__3" value="éteint" data-pourquoi="Reprends l'expérience 2 : la nuit, sans passage, la LED n'est pas éteinte."><label for="e3_r3__3">éteint</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_r3" id="e3_r3__2" value="pleine puissance" data-pourquoi="La pleine puissance est réservée au passage de quelqu'un : reprends l'expérience 2."><label for="e3_r3__2">pleine puissance</label></div>
   <div class="qcm-option"><input type="radio" name="e3_r3" id="e3_r3__1" value="veille"><label for="e3_r3__1">veille</label></div>
-</fieldset>.</p>
+</fieldset>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
@@ -2373,47 +2407,47 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <h4>a) Bien choisir les descripteurs</h4>
       <fieldset class="qcm-groupe" id="e4_1" data-melange="1">
   <legend>Pour la colonne « niveau de batterie », le meilleur descripteur est…</legend>
-  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__4" value="truc2"><label for="e4_1__4">truc2</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__4" value="truc2" data-pourquoi="« truc2 » ne dit pas ce que la colonne contient : dans un an, plus personne ne le saura."><label for="e4_1__4">truc2</label></div>
   <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__1" value="batterie_pct (clair + unité, sans espace)"><label for="e4_1__1">batterie_pct (clair + unité, sans espace)</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__2" value="b"><label for="e4_1__2">b</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__3" value="la batterie du lampadaire"><label for="e4_1__3">la batterie du lampadaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__2" value="b" data-pourquoi="Une seule lettre ne dit rien : b comme batterie, comme bus, comme bleu ?"><label for="e4_1__2">b</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__3" value="la batterie du lampadaire" data-pourquoi="C'est une phrase, avec des espaces et sans unité : un descripteur est court, sans espace, et dit l'unité."><label for="e4_1__3">la batterie du lampadaire</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e4_2" data-melange="1">
   <legend>« batterie_pct » contient des données de quel type ?</legend>
-  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__4" value="des sons"><label for="e4_2__4">des sons</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__2" value="du texte"><label for="e4_2__2">du texte</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__3" value="des images"><label for="e4_2__3">des images</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__4" value="des sons" data-pourquoi="Regarde la colonne : 85, 78, 12… Rien ne s'y écoute."><label for="e4_2__4">des sons</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__2" value="du texte" data-pourquoi="Regarde la colonne : 85, 78, 12… On peut les comparer et les additionner, ce qu'on ne fait pas avec des mots."><label for="e4_2__2">du texte</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__3" value="des images" data-pourquoi="Regarde la colonne : 85, 78, 12… Ce ne sont pas des dessins."><label for="e4_2__3">des images</label></div>
   <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__1" value="des nombres"><label for="e4_2__1">des nombres</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e4_3" data-melange="1">
   <legend>Pour ajouter la couleur du mât, on créerait…</legend>
   <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__1" value="une nouvelle colonne « couleur_mat »"><label for="e4_3__1">une nouvelle colonne « couleur_mat »</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__3" value="un nouveau tableau entier"><label for="e4_3__3">un nouveau tableau entier</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__4" value="rien, c&#x27;est impossible"><label for="e4_3__4">rien, c'est impossible</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__2" value="une nouvelle ligne"><label for="e4_3__2">une nouvelle ligne</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__3" value="un nouveau tableau entier" data-pourquoi="Inutile de tout refaire : la couleur est une information de plus sur chaque lampadaire déjà dans la table."><label for="e4_3__3">un nouveau tableau entier</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__4" value="rien, c&#x27;est impossible" data-pourquoi="Une table peut toujours recevoir une information de plus sur ce qu'elle décrit."><label for="e4_3__4">rien, c'est impossible</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__2" value="une nouvelle ligne" data-pourquoi="Une ligne décrit UN lampadaire : en ajouter une, c'est ajouter un lampadaire, pas une information."><label for="e4_3__2">une nouvelle ligne</label></div>
 </fieldset>
       <h4>b) Lire la table</h4>
       <fieldset class="qcm-groupe" id="e4_4" data-melange="1">
   <legend>Quel lampadaire faut-il dépanner en priorité (il n'éclaire plus du tout) ?</legend>
-  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__4" value="L6"><label for="e4_4__4">L6</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__4" value="L6" data-pourquoi="Lis la colonne « etat » de L6 : il est noté OK."><label for="e4_4__4">L6</label></div>
   <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__1" value="L5"><label for="e4_4__1">L5</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__3" value="L3"><label for="e4_4__3">L3</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__2" value="L1"><label for="e4_4__2">L1</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__3" value="L3" data-pourquoi="L3 a une batterie faible, mais sa LED fonctionne : cherche celui qui n'éclaire plus du tout."><label for="e4_4__3">L3</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__2" value="L1" data-pourquoi="Lis la colonne « etat » de L1 : il est noté OK."><label for="e4_4__2">L1</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e4_5" data-melange="1">
   <legend>Quel lampadaire a la batterie la plus faible ?</legend>
-  <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__2" value="L4"><label for="e4_5__2">L4</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__4" value="L5"><label for="e4_5__4">L5</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__2" value="L4" data-pourquoi="L4 est à 91 : c'est la batterie la plus pleine de la table."><label for="e4_5__2">L4</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__4" value="L5" data-pourquoi="L5 a sa LED en panne, mais sa batterie est à 66 : compare tous les nombres de « batterie_pct »."><label for="e4_5__4">L5</label></div>
   <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__1" value="L3"><label for="e4_5__1">L3</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__3" value="L2"><label for="e4_5__3">L2</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_5" id="e4_5__3" value="L2" data-pourquoi="L2 est à 78 : compare tous les nombres de la colonne « batterie_pct »."><label for="e4_5__3">L2</label></div>
 </fieldset>
       <div class="assoc"><label for="e4_6">Combien de lampadaires ont été posés en 2025 ?</label><input type="number" id="e4_6" min="0" max="6"></div>
       <fieldset class="qcm-groupe" id="e4_7" data-melange="1">
   <legend>La ligne « L4 · portail vélos · 91 · OK · 2025 » décrit…</legend>
-  <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__3" value="une seule donnée"><label for="e4_7__3">une seule donnée</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__4" value="la mairie"><label for="e4_7__4">la mairie</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__3" value="une seule donnée" data-pourquoi="Compte : la ligne contient cinq données, une par colonne."><label for="e4_7__3">une seule donnée</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__4" value="la mairie" data-pourquoi="La mairie n'apparaît nulle part dans la ligne : lis son identifiant, au début."><label for="e4_7__4">la mairie</label></div>
   <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__1" value="UN lampadaire complet (toutes ses données)"><label for="e4_7__1">UN lampadaire complet (toutes ses données)</label></div>
-  <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__2" value="tous les lampadaires"><label for="e4_7__2">tous les lampadaires</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_7" id="e4_7__2" value="tous les lampadaires" data-pourquoi="Tous les lampadaires, c'est toute la table : une ligne n'en décrit qu'un."><label for="e4_7__2">tous les lampadaires</label></div>
 </fieldset>
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb4" role="status"></div>
@@ -2454,44 +2488,44 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <fieldset class="qcm-groupe" id="e5_1" data-melange="1">
   <legend>Les PC, tablettes et l'imprimante sont des…</legend>
   <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__1" value="terminaux"><label for="e5_1__1">terminaux</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__3" value="serveurs"><label for="e5_1__3">serveurs</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__2" value="commutateurs"><label for="e5_1__2">commutateurs</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__4" value="bornes"><label for="e5_1__4">bornes</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__3" value="serveurs" data-pourquoi="Un serveur stocke et partage les fichiers de tout le monde : ce n'est pas l'appareil sur lequel on travaille."><label for="e5_1__3">serveurs</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__2" value="commutateurs" data-pourquoi="Un commutateur relie les appareils entre eux : on ne travaille pas dessus."><label for="e5_1__2">commutateurs</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_1" id="e5_1__4" value="bornes" data-pourquoi="Une borne donne l'accès sans fil au réseau : on ne travaille pas dessus."><label for="e5_1__4">bornes</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e5_2" data-melange="1">
   <legend>L'équipement qui relie tout le monde au centre :</legend>
-  <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__4" value="l&#x27;imprimante"><label for="e5_2__4">l'imprimante</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__4" value="l&#x27;imprimante" data-pourquoi="L'imprimante reçoit des documents : elle ne relie pas les autres appareils entre eux."><label for="e5_2__4">l'imprimante</label></div>
   <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__1" value="le commutateur"><label for="e5_2__1">le commutateur</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__3" value="le serveur"><label for="e5_2__3">le serveur</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__2" value="la borne Wi-Fi"><label for="e5_2__2">la borne Wi-Fi</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__3" value="le serveur" data-pourquoi="Le serveur stocke les dossiers : il est lui-même relié à l'équipement du centre."><label for="e5_2__3">le serveur</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_2" id="e5_2__2" value="la borne Wi-Fi" data-pourquoi="La borne ne relie que les appareils sans fil : les PC et l'imprimante, eux, sont câblés."><label for="e5_2__2">la borne Wi-Fi</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e5_3" data-melange="1">
   <legend>L'équipement qui permet l'accès SANS FIL :</legend>
-  <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__3" value="le serveur"><label for="e5_3__3">le serveur</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__3" value="le serveur" data-pourquoi="Le serveur stocke les dossiers : ce n'est pas lui qui émet les ondes pour les tablettes."><label for="e5_3__3">le serveur</label></div>
   <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__1" value="la borne Wi-Fi"><label for="e5_3__1">la borne Wi-Fi</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__4" value="le câble"><label for="e5_3__4">le câble</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__2" value="le commutateur"><label for="e5_3__2">le commutateur</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__4" value="le câble" data-pourquoi="Un câble, c'est justement une liaison AVEC fil."><label for="e5_3__4">le câble</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_3" id="e5_3__2" value="le commutateur" data-pourquoi="Sur le commutateur, tout se branche par câble."><label for="e5_3__2">le commutateur</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e5_4" data-melange="1">
   <legend>L'équipement qui stocke les dossiers des classes :</legend>
-  <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__4" value="le mât"><label for="e5_4__4">le mât</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__2" value="la borne Wi-Fi"><label for="e5_4__2">la borne Wi-Fi</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__4" value="le mât" data-pourquoi="Le mât appartient au lampadaire : il n'est pas dans le réseau du collège."><label for="e5_4__4">le mât</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__2" value="la borne Wi-Fi" data-pourquoi="La borne fait passer les messages par les ondes : elle ne garde aucun dossier."><label for="e5_4__2">la borne Wi-Fi</label></div>
   <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__1" value="le serveur"><label for="e5_4__1">le serveur</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__3" value="la tablette"><label for="e5_4__3">la tablette</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_4" id="e5_4__3" value="la tablette" data-pourquoi="La tablette est un terminal : si elle tombe en panne, les dossiers de la classe ne doivent pas disparaître."><label for="e5_4__3">la tablette</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e5_5" data-melange="1">
   <legend>PC-TECHNO-01 est relié au réseau par…</legend>
   <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__1" value="une liaison filaire (câble)"><label for="e5_5__1">une liaison filaire (câble)</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__3" value="un tuyau d&#x27;eau"><label for="e5_5__3">un tuyau d'eau</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__2" value="une liaison sans fil"><label for="e5_5__2">une liaison sans fil</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__4" value="rien"><label for="e5_5__4">rien</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__3" value="un tuyau d&#x27;eau" data-pourquoi="Un tuyau transporte de l'eau, pas des informations."><label for="e5_5__3">un tuyau d'eau</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__2" value="une liaison sans fil" data-pourquoi="Regarde sur le schéma le trait qui part de ce PC, puis compare-le à celui d'une tablette."><label for="e5_5__2">une liaison sans fil</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_5" id="e5_5__4" value="rien" data-pourquoi="Sans liaison, le PC ne pourrait ni imprimer, ni enregistrer sur le serveur."><label for="e5_5__4">rien</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e5_6" data-melange="1">
   <legend>TABLETTE-07 est reliée au réseau par…</legend>
-  <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__4" value="le serveur"><label for="e5_6__4">le serveur</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__4" value="le serveur" data-pourquoi="Le serveur est un appareil du réseau, pas une liaison."><label for="e5_6__4">le serveur</label></div>
   <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__1" value="une liaison sans fil (Wi-Fi)"><label for="e5_6__1">une liaison sans fil (Wi-Fi)</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__2" value="une liaison filaire"><label for="e5_6__2">une liaison filaire</label></div>
-  <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__3" value="une rallonge"><label for="e5_6__3">une rallonge</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__2" value="une liaison filaire" data-pourquoi="Une tablette se déplace de table en table : regarde sur le schéma comment elle rejoint le réseau."><label for="e5_6__2">une liaison filaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_6" id="e5_6__3" value="une rallonge" data-pourquoi="Une rallonge transporte de l'énergie électrique, pas des informations."><label for="e5_6__3">une rallonge</label></div>
 </fieldset>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
@@ -2525,38 +2559,38 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="exo">
       <fieldset class="qcm-groupe" id="e6_1" data-melange="1">
   <legend>Message « IMPRIME ce document » → à livrer à…</legend>
-  <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__3" value="PC-TECHNO-01"><label for="e6_1__3">PC-TECHNO-01</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__2" value="TABLETTE-07"><label for="e6_1__2">TABLETTE-07</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__3" value="PC-TECHNO-01" data-pourquoi="Un PC affiche et envoie : il ne sort pas de feuille."><label for="e6_1__3">PC-TECHNO-01</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__2" value="TABLETTE-07" data-pourquoi="Une tablette affiche : elle ne sort pas de feuille."><label for="e6_1__2">TABLETTE-07</label></div>
   <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__1" value="IMPRIMANTE-CDI"><label for="e6_1__1">IMPRIMANTE-CDI</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__4" value="SERVEUR-COLLEGE"><label for="e6_1__4">SERVEUR-COLLEGE</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_1" id="e6_1__4" value="SERVEUR-COLLEGE" data-pourquoi="Le serveur garde des fichiers : il ne sort pas de feuille."><label for="e6_1__4">SERVEUR-COLLEGE</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e6_2" data-melange="1">
   <legend>Message « ENREGISTRE mon exposé dans le dossier de la classe » → à livrer à…</legend>
-  <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__3" value="TABLETTE-07"><label for="e6_2__3">TABLETTE-07</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__2" value="IMPRIMANTE-CDI"><label for="e6_2__2">IMPRIMANTE-CDI</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__3" value="TABLETTE-07" data-pourquoi="Sur une tablette, l'exposé resterait chez un seul élève : le dossier de la classe est partagé."><label for="e6_2__3">TABLETTE-07</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__2" value="IMPRIMANTE-CDI" data-pourquoi="L'imprimante met sur papier : elle ne garde aucun fichier."><label for="e6_2__2">IMPRIMANTE-CDI</label></div>
   <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__1" value="SERVEUR-COLLEGE"><label for="e6_2__1">SERVEUR-COLLEGE</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__4" value="PC-TECHNO-01"><label for="e6_2__4">PC-TECHNO-01</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_2" id="e6_2__4" value="PC-TECHNO-01" data-pourquoi="Sur ce PC, seul celui qui s'y assoit retrouverait l'exposé : le dossier de la classe est partagé."><label for="e6_2__4">PC-TECHNO-01</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e6_3" data-melange="1">
   <legend>Message du prof « OUVRE l'exercice n°3 » destiné à l'élève → à livrer à…</legend>
-  <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__2" value="SERVEUR-COLLEGE"><label for="e6_3__2">SERVEUR-COLLEGE</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__4" value="PC-TECHNO-01"><label for="e6_3__4">PC-TECHNO-01</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__3" value="IMPRIMANTE-CDI"><label for="e6_3__3">IMPRIMANTE-CDI</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__2" value="SERVEUR-COLLEGE" data-pourquoi="Le serveur garde les dossiers : aucun élève ne travaille dessus."><label for="e6_3__2">SERVEUR-COLLEGE</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__4" value="PC-TECHNO-01" data-pourquoi="Relis l'annuaire : PC-TECHNO-01 est le poste du professeur, celui qui envoie le message."><label for="e6_3__4">PC-TECHNO-01</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__3" value="IMPRIMANTE-CDI" data-pourquoi="L'imprimante met sur papier : elle n'ouvre pas un exercice à l'écran."><label for="e6_3__3">IMPRIMANTE-CDI</label></div>
   <div class="qcm-option"><input type="radio" name="e6_3" id="e6_3__1" value="TABLETTE-07"><label for="e6_3__1">TABLETTE-07</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e6_4" data-melange="1">
   <legend>Catastrophe : DEUX tablettes s'appellent toutes les deux « TABLETTE-07 ». Que se passe-t-il ?</legend>
   <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__1" value="le réseau ne sait plus à qui livrer : conflit, messages perdus ou livrés au mauvais endroit"><label for="e6_4__1">le réseau ne sait plus à qui livrer : conflit, messages perdus ou livrés au mauvais endroit</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__3" value="les tablettes fusionnent"><label for="e6_4__3">les tablettes fusionnent</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__4" value="le Wi-Fi devient plus rapide"><label for="e6_4__4">le Wi-Fi devient plus rapide</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__2" value="rien, ça marche quand même"><label for="e6_4__2">rien, ça marche quand même</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__3" value="les tablettes fusionnent" data-pourquoi="Deux appareils restent deux appareils : un nom en double ne les colle pas ensemble."><label for="e6_4__3">les tablettes fusionnent</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__4" value="le Wi-Fi devient plus rapide" data-pourquoi="La vitesse ne dépend pas des noms : pense au facteur devant deux boîtes aux lettres au même nom."><label for="e6_4__4">le Wi-Fi devient plus rapide</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_4" id="e6_4__2" value="rien, ça marche quand même" data-pourquoi="Pense au facteur devant deux boîtes aux lettres au même nom : dans laquelle dépose-t-il la lettre ?"><label for="e6_4__2">rien, ça marche quand même</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e6_5" data-melange="1">
   <legend>Un message SANS destinataire écrit dessus…</legend>
-  <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__3" value="arrive au hasard, c&#x27;est bien aussi"><label for="e6_5__3">arrive au hasard, c'est bien aussi</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__3" value="arrive au hasard, c&#x27;est bien aussi" data-pourquoi="Un réseau ne tire pas au sort — et un message arrivé chez le mauvais élève ne sert à rien."><label for="e6_5__3">arrive au hasard, c'est bien aussi</label></div>
   <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__1" value="ne peut pas être livré (comme une lettre sans adresse)"><label for="e6_5__1">ne peut pas être livré (comme une lettre sans adresse)</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__4" value="se transforme en imprimé"><label for="e6_5__4">se transforme en imprimé</label></div>
-  <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__2" value="arrive partout"><label for="e6_5__2">arrive partout</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__4" value="se transforme en imprimé" data-pourquoi="Un message ne change pas de nature tout seul : il lui manque une adresse."><label for="e6_5__4">se transforme en imprimé</label></div>
+  <div class="qcm-option"><input type="radio" name="e6_5" id="e6_5__2" value="arrive partout" data-pourquoi="Le réseau livre à une adresse précise : sans adresse, il ne sait pas où aller."><label for="e6_5__2">arrive partout</label></div>
 </fieldset>
       <label for="e6_just" style="display:block;margin-top:8px"><b>Justifie</b> en une phrase : pourquoi chaque terminal doit-il avoir un nom (une identification) UNIQUE sur le réseau ?</label>
       <textarea id="e6_just" placeholder="Si deux appareils ont le même nom…"></textarea>
@@ -2626,45 +2660,45 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="exo">
       <fieldset class="qcm-groupe" id="e7_1" data-melange="1">
   <legend>FONCTION « prévenir la vie scolaire » — la SOLUTION est…</legend>
-  <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__2" value="la pile"><label for="e7_1__2">la pile</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__4" value="la pluie"><label for="e7_1__4">la pluie</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__2" value="la pile" data-pourquoi="La pile fournit l'énergie : elle ne prévient personne."><label for="e7_1__2">la pile</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__4" value="la pluie" data-pourquoi="La pluie n'est pas un élément de la sonnette."><label for="e7_1__4">la pluie</label></div>
   <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__1" value="la sonnerie (haut-parleur) de la vie scolaire"><label for="e7_1__1">la sonnerie (haut-parleur) de la vie scolaire</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__3" value="le portail"><label for="e7_1__3">le portail</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_1" id="e7_1__3" value="le portail" data-pourquoi="Le portail est l'endroit où l'on sonne : il ne fait aucun bruit dans le bureau de la vie scolaire."><label for="e7_1__3">le portail</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e7_2" data-melange="1">
   <legend>Dans la chaîne d'ÉNERGIE de la sonnette, la pile assure la fonction…</legend>
   <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__1" value="stocker"><label for="e7_2__1">stocker</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__2" value="convertir en lumière"><label for="e7_2__2">convertir en lumière</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__3" value="acquérir"><label for="e7_2__3">acquérir</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__4" value="décider"><label for="e7_2__4">décider</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__2" value="convertir en lumière" data-pourquoi="Une pile ne produit pas de lumière : demande-toi ce qu'elle contient quand elle est neuve, et plus quand elle est usée."><label for="e7_2__2">convertir en lumière</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__3" value="acquérir" data-pourquoi="Acquérir, c'est prélever une information : c'est une fonction de la chaîne d'information, pas de la chaîne d'énergie."><label for="e7_2__3">acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_2" id="e7_2__4" value="décider" data-pourquoi="Décider appartient à la chaîne d'information : la pile ne compare rien."><label for="e7_2__4">décider</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e7_3" data-melange="1">
   <legend>L'énergie qui SORT du haut-parleur de la sonnerie est…</legend>
   <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__1" value="sonore"><label for="e7_3__1">sonore</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__2" value="chimique"><label for="e7_3__2">chimique</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__3" value="lumineuse"><label for="e7_3__3">lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__4" value="musculaire"><label for="e7_3__4">musculaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__2" value="chimique" data-pourquoi="L'énergie chimique ne sort pas d'un haut-parleur : demande-toi ce qu'il envoie dans le bureau de la vie scolaire."><label for="e7_3__2">chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__3" value="lumineuse" data-pourquoi="Un haut-parleur ne s'allume pas : demande-toi ce qu'il envoie dans le bureau de la vie scolaire."><label for="e7_3__3">lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_3" id="e7_3__4" value="musculaire" data-pourquoi="L'énergie musculaire, c'est celle du doigt qui appuie : elle entre dans la sonnette, elle n'en sort pas."><label for="e7_3__4">musculaire</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e7_4" data-melange="1">
   <legend>Dans la chaîne d'INFORMATION, le bouton-poussoir assure…</legend>
-  <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__2" value="TRAITER"><label for="e7_4__2">TRAITER</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__2" value="TRAITER" data-pourquoi="Traiter, c'est comparer et décider : le bouton ne décide rien, il signale seulement qu'on appuie."><label for="e7_4__2">TRAITER</label></div>
   <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__1" value="ACQUÉRIR (il capte l&#x27;appui)"><label for="e7_4__1">ACQUÉRIR (il capte l'appui)</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__3" value="COMMUNIQUER"><label for="e7_4__3">COMMUNIQUER</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__4" value="STOCKER l&#x27;énergie"><label for="e7_4__4">STOCKER l'énergie</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__3" value="COMMUNIQUER" data-pourquoi="Communiquer, c'est envoyer l'information plus loin : le bouton est au tout début de la chaîne."><label for="e7_4__3">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_4" id="e7_4__4" value="STOCKER l&#x27;énergie" data-pourquoi="Stocker l'énergie appartient à la chaîne d'énergie : la question porte sur la chaîne d'information."><label for="e7_4__4">STOCKER l'énergie</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e7_5" data-melange="1">
   <legend>Le boîtier extérieur de la sonnette sera de préférence en…</legend>
-  <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__4" value="acier non protégé"><label for="e7_5__4">acier non protégé</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__3" value="sucre"><label for="e7_5__3">sucre</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__2" value="carton"><label for="e7_5__2">carton</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__4" value="acier non protégé" data-pourquoi="Sans protection, l'acier rouille vite sous la pluie et les embruns."><label for="e7_5__4">acier non protégé</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__3" value="sucre" data-pourquoi="Le sucre fond à la première averse."><label for="e7_5__3">sucre</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__2" value="carton" data-pourquoi="Le carton se ramollit dès qu'il est mouillé."><label for="e7_5__2">carton</label></div>
   <div class="qcm-option"><input type="radio" name="e7_5" id="e7_5__1" value="plastique résistant aux UV et à la pluie"><label for="e7_5__1">plastique résistant aux UV et à la pluie</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e7_6" data-melange="1">
   <legend>La sonnette rejoint le réseau du collège par…</legend>
   <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__1" value="la borne Wi-Fi (liaison sans fil), avec un nom unique sur le réseau"><label for="e7_6__1">la borne Wi-Fi (liaison sans fil), avec un nom unique sur le réseau</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__2" value="un tuyau"><label for="e7_6__2">un tuyau</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__3" value="le serveur directement par magie"><label for="e7_6__3">le serveur directement par magie</label></div>
-  <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__4" value="elle ne peut pas"><label for="e7_6__4">elle ne peut pas</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__2" value="un tuyau" data-pourquoi="Un tuyau transporte de l'eau, pas des informations."><label for="e7_6__2">un tuyau</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__3" value="le serveur directement par magie" data-pourquoi="Rien ne se relie par magie : il faut une liaison, avec ou sans fil."><label for="e7_6__3">le serveur directement par magie</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_6" id="e7_6__4" value="elle ne peut pas" data-pourquoi="Si : tout objet qui a un nom unique et une liaison peut rejoindre le réseau."><label for="e7_6__4">elle ne peut pas</label></div>
 </fieldset>
       <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb7" role="status"></div>
