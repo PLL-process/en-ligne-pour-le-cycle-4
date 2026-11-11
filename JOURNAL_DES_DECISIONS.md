@@ -29791,7 +29791,7 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 
 ---
 
-## 11/11/2026 — Révision de 3e_C6.1, 23 listes en boutons radio, la restauration tient les guillemets
+## 11/11/2026 — Révision des trois thèmes, 20 : 3e_C6.1, 23 listes en boutons radio, la restauration tient les guillemets
 
 **Décisions.**
 - **n°300** : 23 listes → groupes de boutons radio (71 propositions) ; `collect()` lit la valeur des groupes ; enveloppes `div.assoc` retirées. Aucune grille lettrée : les réponses à deux propositions (« utilisée / produite ») portent la classe `qcm-rangee` — côte à côte quand la largeur le permet, l'une sous l'autre à 390 px.
