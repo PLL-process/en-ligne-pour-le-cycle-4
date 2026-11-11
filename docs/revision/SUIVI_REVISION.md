@@ -35,7 +35,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 16 | `4e_C4.1_book-train` | 2752 → 1510 | 0 | 0 | 14 → 0 | livrée #642 — séances 2 (1 307) et 3 (1 510) au-dessus du repère : exercices à six positions, deux chaînes à étiqueter, fichiers draw.io à télécharger ; le reste est replié |
 | 17 | `3e_C4.7` | 1169 → 1075 | 1 → 0 | 28 → 0 (1 menu d'interface, simulateur) | 8 → 0 | livrée #644 |
 | 18 | `3e_C4.8` | 2076 → 1504 | 1 → 0 | 30 → 0 | 9 → 0 | livrée #645 — séances 1 (1 504) et 3 (1 485) au-dessus du repère : ce qui reste visible, ce sont les questions (deux activités de 20 min + billet ; deux activités de 25 min + clôture) |
-| 19 | `3e_C5.1` | 1238 | 1 | 30 | 5 | à faire |
+| 19 | `3e_C5.1` | 1238 → 1132 | 1 → 0 | 30 → 0 | 5 → 0 | livrée #PR |
 | 20 | `3e_C6.1` | 1135 | 1 | 23 | 9 | à faire |
 | 21 | `3e_C6.2` | 1285 | 1 | 32 | 5 | à faire |
 | 22 | `5e_C4.1` | 2663 | 1 | 64 | 17 | à faire |

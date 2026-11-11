@@ -29759,3 +29759,16 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Aération** : 91 retours posés ; « le voyage réel » de la simulation (six sauts cousus par des flèches) réécrit un saut par ligne, avec son horodatage ; la mission en ①②③④ ; la problématique en deux questions ; la situation, la rue-pont, le TTL et le protocole de routage (aides) en phrases courtes.
 
 **Mesure.** Séances : 1 504 · 635 · 1 485 mots visibles (avant : 2 076 · 934 · 1 953). ✘ 1 → 0 ; menus 30 → 0 ; aération 9 → 0. Banc n°311 34/34 (le lot n'a pas de banc d'activités) ; contrôles verts. **Écart** : les séances 1 et 3 restent au-dessus du repère ; ce qui reste visible, ce sont les questions — deux activités de 20 min plus le billet d'entrée, deux activités de 25 min plus la clôture. Piste : rien à replier de plus sans toucher aux exercices ; une séance de plus serait une décision de Pascal.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 19 : 3e_C5.1, 30 listes en boutons radio, les questions sortent de leurs phrases
+
+**Décisions.**
+- **n°300** : 30 listes → groupes de boutons radio (107 propositions) ; `collect()` lit la valeur des groupes ; enveloppes `div.assoc` retirées. Aucune grille lettrée : les trois que l'outil proposait portaient sur des numéros (1 à 5) ou des noms courts — elles se cochent en rangée (`qcm-rangee`).
+- **Une liste au milieu d'une phrase ne se convertit pas telle quelle** : « La panne se situe entre le dernier point de test [liste] et le premier point [liste] » et « l'élément suspect est [liste] » devenaient des `fieldset` dans un `<p>` (HTML invalide, phrase coupée). La phrase à compléter est écrite en entier, puis les deux questions viennent dessous ; l'exemple T1 à T4 se lit une mesure par ligne. À signaler dans l'outil : refuser une liste précédée de texte dans son paragraphe.
+- **Règle `qcm-rangee`** renforcée (sélecteur plus précis) ici et dans 3e_C4.7, où la règle de la page l'écrasait : les options restaient empilées.
+- **Aération** : 41 retours posés ; l'ordre du protocole (cinq étapes écrites avec leur libellé), le choix du procédé, les réponses du réinvestissement et la décision attendue réécrits une idée par ligne. Bonus replié, ouvert à l'impression.
+
+**Mesure.** Séances : 836 · 471 · 434 · 1 132 mots visibles (la 4 était à 1 238). ✘ 1 → 0 ; menus 30 → 0 ; aération 5 → 0. Bancs 34/34 et 34/34 ; contrôles verts.
+
