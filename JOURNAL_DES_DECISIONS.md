@@ -29940,3 +29940,20 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 **Trois écueils rencontrés, à ne pas refaire.** Un bouton dans la barre d'outils la fait passer à trois lignes à 390 px (banc de la règle n°311) ; un élément visible entre les onglets et les panneaux est refusé par `controle_squelette` (D5) ; une variable `window.__…` est lue par `controle_verrous` comme un verrou ouvert au chargement — le mode se signale par un attribut sur `<html>`.
 
 **Mesure.** Banc du mode : 44 / 44 (22 tests à 390 px, 22 à 1 180 px). Page qui défile inchangée : bancs 64/64, 34/34, 25/25 ; mots visibles par séance identiques (1 196 · 628 · 496 · 399 · 611 · 2 113) ; contrôles verts. **Non essayé sur une vraie tablette** : le glisser au doigt n'a été joué qu'en simulation. Limites : séries de numéros à ordonner et textes à trous pas encore habillés ; 50 pages sans table `const att` ne se vérifieraient pas écran par écran.
+
+---
+
+## 11/11/2026 — Mode mission, lot 1 : neuf séquences du thème 2, et un banc qui joue chaque page écran par écran
+
+**Contexte.** Le pilote (lampadaire de 5e, #657) est fusionné. Décision de Pascal du 11/11 : « on peut valider pour toutes les séquences ». Premier lot : les séquences déjà révisées du thème 2.
+
+**Décisions.**
+- **Le mode est posé sur neuf séquences de plus** : `3e_C4.1`, `3e_C4.3`, `3e_C4.7`, `3e_C5.1`, `3e_C6.1`, `4e_C4.1`, `4e_C5.1`, `4e_C6.1`, `5e_C6.1`. Toujours éteint par défaut ; la page qui défile n'est pas touchée.
+- **Un banc générique** (`_outils/mode_mission/banc_generique.mjs`) joue toute page qui porte le bloc : il entre en mission, parcourt chaque séance par « Suivant », répond juste à chaque écran qui se vérifie, puis revient à la page complète. Il refuse un écran vide, un défilement de côté, des bonnes réponses non acceptées, un message de vérification de la page qui ne s'affiche pas à la dernière question, une page complète mal rétablie.
+- **Chaque réponse retenue par le mode est croisée avec la vérification de la page.** Le mode lit les réponses attendues dans le code de la page ; une lecture fausse dirait « faux » à un élève qui a juste. Le banc rejoue donc chaque réponse lue contre `CHECKS` : elle doit valoir un point, et un seul. 298 réponses lues sur les dix pages, toutes croisées.
+- **Le moteur a appris ce que les autres pages font autrement que le pilote** : trois écritures de réponses (`const att = {…}`, `$("id").value === "…"`, `.startsWith("…")`) — au moindre doute, l'écran ne se vérifie pas ici, la page le vérifie toujours ; plusieurs zones d'exercice dans une activité, chacune avec sa vérification ; le bouton de vérification placé après les aides ; un exercice incrusté replié (rappel du cahier des charges) sur son propre écran ; les balises `<script>` posées dans un panneau ne font plus d'écran vide.
+- **Le skill `revision-sequence` pose désormais le mode** à l'étape 7 : toute séquence révisée le reçoit, et passe au banc générique.
+
+**Écartées de ce lot.** `3e_C4.8` et `3e_C6.2` (gabarit « atelier » : des lignes d'exercice posées dans la carte, sans bloc d'activité — le mode n'y montrerait qu'une carte par écran, sans étoile) ; `4e_C4.1_book-train` (autre gabarit, non reconnu). À apprendre au moteur.
+
+**Mesure.** Banc générique : 10 pages, 456 écrans, 219 vérifiés par le mode (dont 9 à étiquettes), 56 vérifications de page déclenchées, aucun refus. Banc du pilote : 44 / 44. Bancs des neuf séquences : inchangés et verts (18 bancs). Contrôles du thème 2 : verts. **Non essayé sur une vraie tablette.**

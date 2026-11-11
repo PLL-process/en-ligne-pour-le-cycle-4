@@ -1360,55 +1360,100 @@ function ecrire(){ try { localStorage.setItem(CLE, JSON.stringify(M)); } catch (
 function etoiles(n){ var s = ""; for (var i = 1; i <= 3; i++) s += ET.replace("{on}", i <= n ? " on" : ""); return '<span class="ms-etoiles" role="img" aria-label="' + n + " étoile" + (n > 1 ? "s" : "") + ' sur 3">' + s + "</span>"; }
 function saisie(f){ f.dispatchEvent(new Event("input", { bubbles:true })); f.dispatchEvent(new Event("change", { bubbles:true })); }
 
-/* Les réponses attendues, lues dans la page : ses vérifications les portent déjà (`const att = {id:"texte"}`). */
-function lesCles(){
+/* Les réponses attendues, lues dans les vérifications de la page. Trois écritures :
+     const att = {id:"texte", …}  (ou `attendu`)      $("id").value === "texte"      $("id").value.startsWith("début")
+   Une réponse n'est retenue que si elle désigne UNE proposition du groupe, et une seule : au moindre doute (deux
+   textes pour la même question, un début commun à deux propositions), l'écran ne se vérifie pas ici — la page le
+   vérifie toujours. Le banc générique rejoue chaque réponse retenue contre la vérification de la page. */
+function candidats(){
   if (cles) return cles; cles = {};
-  var table = new RegExp("const att\\s*=\\s*\\{([\\s\\S]*?)\\};", "g"), paire = /(\w+)\s*:\s*"((?:[^"\\]|\\.)*)"/g;
-  $$("script:not([src])").forEach(function(s){
-    var t = s.textContent, m, p; if (t.indexOf("data-mode-mission") >= 0 || t.indexOf("const att") < 0) return;
-    table.lastIndex = 0;
-    while ((m = table.exec(t))){ paire.lastIndex = 0; while ((p = paire.exec(m[1]))) cles[p[1]] = p[2].replace(/\\(["'])/g, "$1"); }
+  function note(id, sorte, v){ (cles[id] || (cles[id] = [])).push([sorte, v.replace(/\\(["'])/g, "$1")]); }
+  var table = /const att\w*\s*=\s*\{([\s\S]*?)\};/g, paire = /(\w+)\s*:\s*"((?:[^"\\]|\\.)*)"/g,
+      egal = /\(\s*["'](\w+)["']\s*\)\.value\s*===?\s*(["'])((?:(?!\2)[^\\]|\\.)*)\2/g,
+      debut = /\(\s*["'](\w+)["']\s*\)\.value\.(?:startsWith\(\s*(["'])((?:(?!\2)[^\\]|\\.)*)\2\s*\)|indexOf\(\s*(["'])((?:(?!\4)[^\\]|\\.)*)\4\s*\)\s*===?\s*0)/g;
+  $$("script:not([src])").forEach(function(sc){
+    var t = sc.textContent, m, q; if (t.indexOf("data-mode-mission") >= 0) return;
+    table.lastIndex = 0; while ((m = table.exec(t))){ paire.lastIndex = 0; while ((q = paire.exec(m[1]))) note(q[1], "=", q[2]); }
+    egal.lastIndex = 0; while ((m = egal.exec(t))) note(m[1], "=", m[3]);
+    debut.lastIndex = 0; while ((m = debut.exec(t))) note(m[1], "^", m[3] !== undefined ? m[3] : m[5]);
   });
   return cles;
 }
-function cle(f){ var c = lesCles()[f.id]; return (c !== undefined && f.matches("fieldset.qcm-groupe") && !f.classList.contains("positionnement")) ? c : undefined; }
+function cle(f){
+  if (f._msCle !== undefined) return f._msCle === null ? undefined : f._msCle;
+  var c = candidats()[f.id], r = null;
+  if (c && f.matches("fieldset.qcm-groupe") && !f.classList.contains("positionnement")){
+    var vals = $$("input[type=radio]", f).map(function(x){ return x.value; }), bons = [];
+    c.forEach(function(x){
+      var ok = vals.filter(function(v){ return x[0] === "=" ? v === x[1] : v.indexOf(x[1]) === 0; });
+      if (x[0] === "=" && !ok.length) return;                       // un texte qui n'est pas une proposition : il parle d'autre chose
+      if (ok.length !== 1) bons.push(null); else if (bons.indexOf(ok[0]) < 0) bons.push(ok[0]);
+    });
+    if (bons.length === 1 && bons[0] !== null) r = bons[0];
+  }
+  f._msCle = r; return r === null ? undefined : r;
+}
 
 /* ═══ Les écrans d'une séance : la séance, puis pour chaque activité l'atelier, le départ, une partie par écran,
        « je retiens » ; puis chaque autre carte ═══ */
 function titreDe(n){ var h = n.matches && n.matches("h2,h3,h4") ? n : $("h2,h3,h4", n); return h ? net(h.textContent) : ""; }
-function enfants(n){ return [].slice.call(n.children); }
-function activite(A, E){
-  var kids = enfants(A), exo = kids.filter(function(c){ return c.classList.contains("exo"); })[0], nom = titreDe(A) || "Activité";
-  var header = kids.filter(function(c){ return c.tagName === "HEADER"; });
-  if (!exo){ E.push({ t:"activite", titre:nom, n:kids }); return; }
-  var i = kids.indexOf(exo), avant = kids.slice(0, i), apres = kids.slice(i + 1);
-  var tete = avant.filter(function(c){ return c.tagName === "HEADER" || c.classList.contains("meta-grid"); });
-  var ateliers = avant.filter(function(c){ return c.classList.contains("atelier-incruste"); });
-  var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
-  var ress = avant.filter(function(c){ return tete.indexOf(c) < 0 && ateliers.indexOf(c) < 0 && consigne.indexOf(c) < 0; });
-  var aides = apres.filter(function(c){ return c.matches("details.aide1,details.aide2,details.aide"); });
-  var fin = apres.filter(function(c){ return aides.indexOf(c) < 0; });
-  ateliers.forEach(function(a){ E.push({ t:"atelier", titre:titreDe(a) || "Atelier", n:header.concat([a]) }); });
-  E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
-  var parts = [], cur = null, queue = [];
+function enfants(n){ return [].slice.call(n.children).filter(function(c){ return !/^(SCRIPT|STYLE|TEMPLATE|LINK|NOSCRIPT)$/.test(c.tagName); }); }
+function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"); }
+function estCheck(c){ return c.matches("button[data-check]"); }
+/* Une zone d'exercice (`.exo`) : ses parties (une par `h4`), son bouton de vérification et son message s'ils sont
+   dedans, et ce qui suit ce bouton (une correction propre à la zone). */
+function zone(exo){
+  var z = { exo:exo, parts:[], check:null, fb:[], suite:[], avant:[], dehors:false }, cur = null;
   enfants(exo).forEach(function(c){
-    if (c.matches("button[data-check]") || c.classList.contains("feedback")){ queue.push(c); return; }
-    if (c.tagName === "H4" || !cur){ cur = { h: c.tagName === "H4" ? c : null, n:[] }; parts.push(cur); }
+    if (!z.check && estCheck(c)){ z.check = c; return; }
+    if (c.classList.contains("feedback")){ z.fb.push(c); return; }
+    if (z.check){ z.suite.push(c); return; }
+    if (c.tagName === "H4" || !cur){ cur = { h: c.tagName === "H4" ? c : null, n:[] }; z.parts.push(cur); }
     cur.n.push(c);
   });
+  return z;
+}
+function activite(A, E){
+  var kids = enfants(A), exos = kids.filter(function(c){ return c.classList.contains("exo"); }), nom = titreDe(A) || "Activité";
+  var header = kids.filter(function(c){ return c.tagName === "HEADER"; });
+  if (!exos.length){ E.push({ t:"activite", titre:nom, n:kids }); return; }
+  var i = kids.indexOf(exos[0]), avant = kids.slice(0, i);
+  var tete = avant.filter(function(c){ return c.tagName === "HEADER" || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison"); });
+  /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
+  var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
+  var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
+  var ress = avant.filter(function(c){ return tete.indexOf(c) < 0 && ateliers.indexOf(c) < 0 && consigne.indexOf(c) < 0; });
+  /* à partir de la première zone : les zones, les aides (communes à l'activité), le bouton de vérification et son
+     message quand ils suivent les aides, ce qui sépare deux zones (il accompagne la suivante), et la fin */
+  var zones = [], aides = [], attente = [];
+  kids.slice(i).forEach(function(c){
+    if (c.classList.contains("exo")){ var z = zone(c); z.avant = attente; attente = []; zones.push(z); return; }
+    if (estAide(c)){ aides.push(c); return; }
+    if (estCheck(c)){ var zc = zones.filter(function(z){ return !z.check; }).pop(); if (zc){ zc.check = c; zc.dehors = true; return; } }
+    if (c.classList.contains("feedback")){ var zf = zones.filter(function(z){ return z.dehors && !z.fb.length; }).pop(); if (zf){ zf.fb.push(c); return; } }
+    attente.push(c);
+  });
+  var fin = attente;
+  ateliers.forEach(function(a){ var sm = a.matches("details") ? $("summary", a) : null; E.push({ t:"atelier", titre:(sm ? net(sm.textContent) : "") || titreDe(a) || "Atelier", n:header.concat([a]) }); });
   /* ce qui précède la première partie sans poser de question (un tableau, une figure) est une ressource */
-  if (parts.length > 1 && !parts[0].h && !parts[0].n.some(function(c){ return champsDe(c).length || ecrit([c]); })) ress = ress.concat(parts.shift().n);
-  var check = queue.filter(function(c){ return c.matches("button[data-check]"); })[0], fb = queue.filter(function(c){ return c.classList.contains("feedback"); });
+  var p0 = zones[0].parts;
+  if (p0.length > 1 && !p0[0].h && !p0[0].n.some(function(c){ return champsDe(c).length || ecrit([c]); })) ress = ress.concat(p0.shift().n);
+  E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : exo); }
-  var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite"); exo.insertBefore(retour, check || null);
-  if (check) check.classList.add("ms-origine");
-  var tous = [];
-  parts.forEach(function(p, j){ habiller(p); var ps = pas(p); ps.forEach(function(st, q){ tous.push({ p:p, st:st, j:j, q:q, sur:ps.length }); }); });
-  tous.forEach(function(x, r){
-    var dernier = r === tous.length - 1, base = x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-    E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:check, fb:fb[0],
-             id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(x.st.n, [retour], dernier ? fb : [], aides) });
+  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : exos[0]); }
+  var J = 0;
+  zones.forEach(function(z){
+    var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
+    if (z.check && z.check.parentNode === z.exo) z.exo.insertBefore(retour, z.check); else z.exo.appendChild(retour);
+    if (z.check) z.check.classList.add("ms-origine");
+    var tous = [];
+    z.parts.forEach(function(p){ habiller(p); var ps = pas(p); ps.forEach(function(st, q){ tous.push({ p:p, st:st, j:J, q:q, sur:ps.length }); }); J++; });
+    if (z.avant.length && tous.length) tous[0].st.n = z.avant.concat(tous[0].st.n);
+    tous.forEach(function(x, r){
+      var dernier = r === tous.length - 1, base = x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+               id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
+    });
   });
   if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, n:header.concat(fin) });
 }
@@ -1444,11 +1489,13 @@ function construire(P){
     if (C.classList.contains("page-suivante")) return;
     var acts = enfants(C).filter(function(x){ return x.classList.contains("activite"); });
     if (!acts.length){ E.push({ t:"carte", titre:titreDe(C) || "Suite", n:[C] }); return; }
-    var avant = [], vu = false;
+    var avant = [], vu = false, suite = [];
+    function vider(){ if (suite.length){ var t = ""; suite.forEach(function(x){ t = t || titreDe(x); }); E.push({ t:"carte", titre:t || "À lire", n:suite }); suite = []; } }
     enfants(C).forEach(function(x){
-      if (x.classList.contains("activite")){ if (!vu){ vu = true; E.push({ t:"intro", titre:titreDe(C) || "La séance", n:avant, ouverture:true }); } activite(x, E); }
-      else if (!vu) avant.push(x); else E.push({ t:"carte", titre:titreDe(x) || "Suite", n:[x] });
+      if (x.classList.contains("activite")){ if (!vu){ vu = true; E.push({ t:"intro", titre:titreDe(C) || "La séance", n:avant, ouverture:true }); } vider(); activite(x, E); }
+      else if (!vu) avant.push(x); else suite.push(x);
     });
+    vider();
   });
   /* tous les blocs qui se montrent ou se cachent : ceux des écrans, et leurs conteneurs jusqu'au panneau */
   E.tous = [];
@@ -1679,6 +1726,8 @@ function lache(ev, annule){
 window.addEventListener("pointerup", function(ev){ lache(ev, false); });
 window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
 
+/* pour les bancs : la réponse que le mode retient pour un groupe, et l'écran en cours */
+D.documentElement._mission = { cle: cle, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
 function init(){
   if (!$(".seance-panel") || !$(".seance-tab")) return;            // gabarit non reconnu : la page reste telle quelle
   lire();

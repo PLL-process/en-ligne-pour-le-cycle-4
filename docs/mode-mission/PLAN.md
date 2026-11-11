@@ -73,12 +73,18 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 ## Étapes
 
 - [x] Prototype hors dépôt (artefact « Mission lampadaire »), validé.
-- [x] **Pilote** : le lampadaire de 5e (`5e_C4.1`). Vue éteinte par défaut ; le bouton « 🎮 Mode mission » est dans
-      le cadre « Ma progression », la sortie (« 📄 Page complète ») dans la barre de la mission.
+- [x] **Pilote** : le lampadaire de 5e (`5e_C4.1`), #657. Vue éteinte par défaut ; le bouton « 🎮 Mode mission » est
+      dans le cadre « Ma progression », la sortie (« 📄 Page complète ») dans la barre de la mission.
+- [x] **Lot 1** : les séquences révisées du thème 2 au gabarit commun — `3e_C4.1`, `3e_C4.3`, `3e_C4.7`, `3e_C5.1`,
+      `3e_C6.1`, `4e_C4.1`, `4e_C5.1`, `4e_C6.1`, `5e_C6.1`. Le moteur a appris trois écritures de réponses, les
+      activités à plusieurs zones d'exercice, la vérification placée après les aides. Banc générique
+      (`banc_generique.mjs`) : chaque page jouée écran par écran, chaque réponse croisée avec la vérification de la page.
 - [ ] L'essayer en classe, sur les tablettes réelles.
 - [ ] Décider de la vue par défaut. L'allumer d'office demande d'apprendre aux bancs et aux contrôles à ouvrir la
       page complète (`?vue=page`) : ils mesurent et jouent la page qui défile.
+- [ ] Gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) et `4e_C4.1_book-train` : à apprendre au moteur.
 - [ ] Autres habillages : cartes à remettre dans l'ordre (séries de numéros), texte à trous.
-- [ ] Généralisation, séquence par séquence, gabarit par gabarit (50 pages n'ont pas de table `const att`) ; à
-      chaque séquence, les étiquettes leurres et le pourquoi de chaque erreur.
+- [ ] Les séquences suivantes : à chaque révision (skill `revision-sequence`, étape 7), poser le mode et jouer le
+      banc générique. Thèmes 1 et 3 : même geste.
+- [ ] À chaque séquence, les étiquettes leurres et le pourquoi de chaque erreur — le lampadaire d'abord, pour modèle.
 - [ ] Rappel en début de séance, maîtrise confirmée, code bilan.

@@ -13,8 +13,11 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 - **Habille** une grille de boutons radio (`.qcm-cles` + `fieldset.qcm-grille`) en **étiquettes à poser** : on
   touche l'étiquette puis sa case, on la glisse, ou on fait les deux au clavier. Poser une étiquette coche le
   bouton radio de la page : la sauvegarde, la vérification et l'impression de la page ne voient aucune différence.
-- **Vérifie** chaque écran avec les réponses que la page porte déjà (`const att = {…}` dans ses vérifications) :
-  les réponses justes restent, les étiquettes fausses retournent dans la réserve. La dernière question d'une
+- **Vérifie** chaque écran avec les réponses que la page porte déjà dans ses vérifications. Trois écritures sont
+  lues : `const att = {id:"texte"}` (ou `attendu`), `$("id").value === "texte"`, `$("id").value.startsWith("début")`
+  (ou `.indexOf("début") === 0`). Une réponse n'est retenue que si elle désigne **une** proposition du groupe, et une
+  seule ; au moindre doute, l'écran ne se vérifie pas ici (la page le vérifie toujours, à la fin de l'activité).
+  Les réponses justes restent, les étiquettes fausses retournent dans la réserve. La dernière question d'une
   activité lance la vérification de la page : c'est elle qui valide l'activité (verrous, justification écrite,
   atelier réussi).
 - **Décourage le tâtonnement** : les erreurs se comptent réponse par réponse et font les étoiles (3 sans erreur ;
@@ -40,20 +43,32 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 | `mission.css`, `mission.js` | la source unique |
 | `poser.py` | pose ou met à jour le bloc dans une page (`--verifier` : ne rien écrire) |
 | `banc_mission.mjs` | joue le pilote comme un élève, à 390 px et à 1 180 px (22 tests par largeur) |
+| `banc_generique.mjs` | joue **toute** page qui porte le bloc, écran par écran (`--detail` : la liste des écrans) |
 | `../controle_mode_mission.py` | le bloc d'une page est celui de la source, une fois |
 
 ## Poser le mode mission sur une séquence
 
 ```bash
 python3 _outils/mode_mission/poser.py <sequence.html>
-node _outils/mode_mission/banc_mission.mjs          # le pilote
+node _outils/mode_mission/banc_generique.mjs <sequence.html> --detail
 python3 _outils/controle_mode_mission.py
 ```
 
-Avant de le poser ailleurs que sur le pilote : ouvrir la page en mode mission et parcourir chaque séance. Le
-découpage suit le gabarit commun (`.seance-panel > section.card > .activite > .exo`, parties en `h4`) ; une page
-d'un autre gabarit reste telle quelle (le bouton n'apparaît pas). Sans table `const att`, les écrans ne se
-vérifient pas un à un : seule la vérification de la page joue, à la dernière question de l'activité.
+Le banc générique entre en mission, parcourt chaque séance par « Suivant », répond juste à chaque écran qui se
+vérifie, puis revient à la page complète. Il **refuse** : une erreur JavaScript, un écran vide, un défilement de
+côté à 390 px, un écran qui n'accepte pas les bonnes réponses, un bouton de vérification de la page laissé visible
+dans un écran de question, une page complète mal rétablie — et **une réponse retenue par le mode qui ne vaut pas un
+point à la vérification de la page** (chaque réponse lue est rejouée contre `CHECKS`). Avec `--detail`, lire la
+liste des écrans : le découpage doit avoir du sens pour un élève.
+
+Ce que le découpage reconnaît (gabarit commun, `.seance-panel > section.card > .activite`) :
+- une ou plusieurs zones d'exercice (`.exo`) par activité, leurs parties en `h4` ;
+- le bouton de vérification (`button[data-check]`) et son message dans la zone, ou après les aides ;
+- un exercice incrusté avant la zone (`.atelier-incruste`, `details.incruste-repliee`) : il a son écran ;
+- une activité sans zone d'exercice (un Bonus replié) et toute autre carte : un écran, tels quels.
+
+Une page d'un autre gabarit reste telle quelle (le bouton n'apparaît pas). Sans réponse lisible, un écran ne se
+vérifie pas seul : la vérification de la page joue à la dernière question de l'activité.
 
 ## Limites connues (pilote)
 
@@ -61,5 +76,7 @@ vérifient pas un à un : seule la vérification de la page joue, à la dernièr
 - Un lien vers une ancre (`#act3`) ouvre la bonne séance, pas le bon écran.
 - Non essayé sur une vraie tablette : le glisser au doigt n'a été joué qu'en simulation. Au doigt, une étiquette
   se glisse depuis la réserve ; une case ne se glisse pas (la page défile) : on la touche pour reprendre l'étiquette.
+- Gabarit « atelier » (`3e_C4.8`, `3e_C6.2` : des `.ligne-exo` posées dans la carte, sans `.activite`) : non
+  découpé — le mode n'y est pas posé. `4e_C4.1_book-train` : autre gabarit, non reconnu.
 - Pas d'étiquettes leurres ni de « pourquoi » par mauvaise réponse : c'est du contenu, à écrire séquence par
   séquence (voir `docs/mode-mission/PLAN.md`, « Ce que dit la recherche »).
