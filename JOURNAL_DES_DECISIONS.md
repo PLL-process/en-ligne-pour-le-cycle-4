@@ -29900,3 +29900,17 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 **Mesure.** Groupes appariés à leur réponse attendue : 275 → 524 ; pages mesurées : 15 → 21 ; 0 refus. Les onze séquences révisées du thème 2 sont mesurées avec leurs vraies réponses : la bonne réponse est répartie (lampadaire de 5e : 17 · 14 · 13 · 7 sur les quatre places ; jardin de 4e : 8 · 9 · 7 · 8).
 
 **Ce qui reste hors de vue.** 50 pages à boutons radio n'ont pas de table `const att` lisible par le contrôle (28 au thème 1, 3 au thème 2, 19 au thème 3) : leur ordre n'est pas mesuré. À traiter : apprendre au contrôle leurs tables, ou y rejouer `melanger_propositions.py`.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 25 : 4e_C6.1, 28 listes en boutons radio, l'algorigramme à numéroter est mélangé
+
+**Décisions.**
+- **n°300** : 28 listes → groupes de boutons radio (117 propositions) ; `collect()` lit la valeur des groupes. Aucune grille. L'auto-positionnement et les numéros d'étape se cochent en rangée.
+- **L'algorigramme à remettre dans l'ordre affichait ses six blocs… dans l'ordre** : la réponse était 1, 2, 3, 4, 5, 6 de haut en bas. Les blocs sont affichés mélangés (décision 2, début, boucle, décision 1, traitement, traitement) ; chacun est un groupe de six numéros, trois par ligne à 390 px. Même défaut que les bonnes réponses en tête (constat de Pascal du 11/11), sous une autre forme.
+- **Propositions mélangées** dès la conversion (`melanger_propositions.py`, 23 groupes) : première séquence révisée avec l'outil dans la passe. Places des bonnes réponses mesurées par `controle_ordre_propositions.py` : 7 · 3 · 6 · 4.
+- **Corrections exhaustives** : quatre corrections réécrites une réponse par ligne, avec sa raison, et des intertitres (le contrôle de hiérarchie refusait un pavé de 113 mots sans repère).
+- **Lecture allégée** : les trois « Pièges classiques » repliés (`details.erreurs-repliees`, gabarit de 3e_C4.8, ouverts à l'impression) ; deux consignes ne redisent plus les titres de leurs parties ; pour le lux, l'unité et les seuils restent sous les yeux, le capteur et les ordres de grandeur se déplient.
+- **Écart** : séance 2 à 1 216 mots (1 200 en mode essentiel). Sa clôture — concept invariant, retour sur l'hypothèse, bilan, auto-positionnement — pèse 290 mots et ne se replie pas (n°301, n°306, n°311).
+
+**Mesure.** Séances : 1 184 · 1 216 mots visibles (1 277 · 1 460 avant). ✘ 1 → 0 ; menus 28 → 0 ; aération 6 → 0. Bancs 29/29 et 34/34 ; contrôles verts.
