@@ -227,6 +227,19 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -589,6 +602,11 @@ body.essentiel details.referentiel-replie{display:none}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body><a class="skip-link" href="#seances">Aller directement aux activités</a>
 <style id="navharm-css">
@@ -648,7 +666,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C6.1/Synthèses/synthese_eleve_4e_C6.1-C6.3.html#tester">relis « Comment modifier le programme sans rien casser ? » dans la synthèse 4e_C6.1 à C6.3</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> au lieu d'écrire le programme qui fait marcher la machine, tu écris celui qui <b>vérifie</b> qu'elle marche. Un auto-test, c'est un programme qui doute de l'objet — et qui le dit avant que ce soit grave.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> au lieu d'écrire le programme qui fait marcher la machine, tu écris celui qui <b>vérifie</b> qu'elle marche. <br>Un auto-test, c'est un programme qui doute de l'objet — et qui le dit avant que ce soit grave.</p>
   <p class="filet">Un mot à garder en tête : dans un algorigramme, un losange pour une question, un rectangle pour une action.</p>
 </section>
 
@@ -666,13 +684,12 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="bloc referentiel-eleve">
   <h4>Compétence de technologie (programme 2024)</h4>
   <p><b>3e_C6.2</b> — «&nbsp;Programmer un algorithme lié à une nouvelle fonctionnalité.&nbsp;»
-  → <em>tu conçois puis tu écris, de zéro, l'algorithme de l'auto-test (act. 2 et 3), tu l'éprouves au banc
-  d'essai (act. 4) et tu le confrontes à des cas limites (act. 5).</em></p>
+  → <em>tu conçois puis tu écris, de zéro, l'algorithme de l'auto-test (act. <br>2 et 3), tu l'éprouves au banc
+  d'essai (act. 4) et tu le confrontes à des cas limites (act. <br>5).</em></p>
 
   <p style="font-size:.92em;color:var(--sub)">Attention à ne pas confondre les trois codes voisins&nbsp;:
   <b>3e_C6.1</b> demande de <em>déterminer les données</em> d'un programme existant, <b>3e_C6.3</b> de le
-  <em>modifier et le tester</em>. Ces deux-là sont traités par la séquence «&nbsp;Programmer l'alerte&nbsp;».
-  Ici, le verbe est <b>programmer</b> et l'objet est une <b>fonctionnalité qui n'existe pas encore</b>&nbsp;:
+  <em>modifier et le tester</em>. <br>Ces deux-là sont traités par la séquence «&nbsp;Programmer l'alerte&nbsp;». <br>Ici, le verbe est <b>programmer</b> et l'objet est une <b>fonctionnalité qui n'existe pas encore</b>&nbsp;:
   rien à lire, rien à modifier — tout à écrire.</p>
 
   <h4>Socle commun — domaines mobilisés</h4>
@@ -684,15 +701,14 @@ body.essentiel details.referentiel-replie{display:none}
 
   <h4>Et le domaine 1 dans son entier&nbsp;?</h4>
   <p>La rédaction du <b>message au gardien</b> (act. 5) relève de la langue française&nbsp;: un message
-  d'alerte technique doit être compris par quelqu'un qui n'est pas technicien. C'est évaluable comme tel.</p>
+  d'alerte technique doit être compris par quelqu'un qui n'est pas technicien. <br>C'est évaluable comme tel.</p>
 
   <h4>CRCN</h4>
   <p><b>3.4 — Programmer</b>, niveau 3 visé — l'élève <b>élabore son propre algorithme</b> plutôt que
   d'exécuter une procédure&nbsp;; il en éprouve la validité sur des cas qu'il choisit.
-  <b>2.3 — Collaborer</b> est travaillée par la conception en binôme et la revue croisée.
-  Le CRCN reste le résultat d'une activité authentique, jamais une étiquette&nbsp;: aucune recherche en ligne
+  <br><b>2.3 — Collaborer</b> est travaillée par la conception en binôme et la revue croisée. <br>Le CRCN reste le résultat d'une activité authentique, jamais une étiquette&nbsp;: aucune recherche en ligne
   n'a été ajoutée artificiellement pour cocher une case de plus.</p>
-  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C6.1</code> · <code>3e_C6.2</code> · <code>3e_C6.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C6.1</code> · <code>3e_C6.2</code> · <code>3e_C6.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. <br>Les formulations ci-dessus sont celles du référentiel.</p>
 </div>
 </details>
 
@@ -709,21 +725,21 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <section class="card">
   <h2>🌀 La situation : la station a bien marché… l'an dernier</h2>
-  <p><b>Sainte-Luce, début juin.</b> La station d'alerte cyclonique que le club techno a réparée puis améliorée
-  l'an dernier est toujours en haut du mât, face à la baie. Elle n'a plus servi depuis huit mois.</p>
+  <p><b>Sainte-Luce, début juin.</b><br>La station d'alerte cyclonique que le club techno a réparée puis améliorée
+  l'an dernier est toujours en haut du mât, face à la baie. <br>Elle n'a plus servi depuis huit mois.</p>
 
-  <p><b>La question qui fâche.</b> À la réunion de préparation de la saison, M. Firmin pose la question qui fâche&nbsp;:
-  «&nbsp;Elle marchait en novembre. Mais aujourd'hui&nbsp;? La batterie tient-elle encore&nbsp;? Le gyrophare
+  <p><b>La question qui fâche.</b><br>À la réunion de préparation de la saison, M. Firmin pose la question qui fâche&nbsp;:
+  «&nbsp;Elle marchait en novembre. <br>Mais aujourd'hui&nbsp;? La batterie tient-elle encore&nbsp;? Le gyrophare
   s'allume-t-il&nbsp;? La liaison radio passe-t-elle&nbsp;? On le saura le jour où on en aura besoin —
   et ce jour-là, il sera trop tard.&nbsp;»</p>
 
   <p>Un pompier volontaire présent dans la salle tranche&nbsp;: «&nbsp;Chez nous, aucun matériel d'alerte
-  n'attend la catastrophe pour se signaler en panne. <b>Il se teste tout seul, tous les jours.</b>&nbsp;»</p>
+  n'attend la catastrophe pour se signaler en panne. <br><b>Il se teste tout seul, tous les jours.</b>&nbsp;»</p>
 
   <p class="retenir"><b>🎯 Ta mission&nbsp;:</b> écrire l'algorithme d'une <b>nouvelle fonctionnalité</b> —
-  un <b>auto-test quotidien</b>. Chaque matin à 7&nbsp;h, la station vérifie ses organes (les parties qui la font marcher) un par un, compte
-  les défauts, et prévient le gardien s'il y en a. Ce programme n'existe pas encore&nbsp;: personne ne va te
-  le donner à modifier. <b>C'est toi qui vas l'écrire.</b></p>
+  un <b>auto-test quotidien</b>. <br>Chaque matin à 7&nbsp;h, la station vérifie ses organes (les parties qui la font marcher) un par un, compte
+  les défauts, et prévient le gardien s'il y en a. <br>Ce programme n'existe pas encore&nbsp;: personne ne va te
+  le donner à modifier. <br><b>C'est toi qui vas l'écrire.</b></p>
   <figure class="situation-photo">
     <img src="Images/synthese_station_alerte.png" width="1536" height="1024" loading="lazy"
          alt="La station d'alerte sur le toit du collège : un mât avec anémomètre, girouette, panneau solaire, sirène, gyrophare et antenne, face à la mer.">
@@ -755,12 +771,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <h2>🧰 Trois façons de vivre l'atelier</h2>
   <div class="versions">
     <div class="version va"><h4>🅰 Matériel réel, sur banc ISOLÉ</h4>
-      <p>Si l'établissement dispose d'une carte et de deux ou trois composants (LED, buzzer, interrupteur),
-      on câble un mini-banc <b>totalement indépendant</b> de tout autre réseau ou installation, et on y fait
-      tourner l'auto-test pour de vrai. <b>Très basse tension uniquement</b>&nbsp;: jamais le secteur.</p></div>
+      <p>Si l'établissement dispose d'une carte et de deux ou trois composants (LED, buzzer, interrupteur)&nbsp;:
+      <br>on câble un mini-banc <b>totalement indépendant</b> de tout autre réseau ou installation.
+      <br>On y fait tourner l'auto-test pour de vrai. <br><b>Très basse tension uniquement</b>&nbsp;: jamais le secteur.</p></div>
     <div class="version vb"><h4>🅱 Le banc d'essai de la page (cœur de l'atelier)</h4>
       <p>Un banc d'essai est intégré à cette page&nbsp;: tu mets toi-même des organes en panne, tu lances ton
-      auto-test, et tu lis le journal qu'il produit. Hors ligne, aucune donnée envoyée.</p></div>
+      auto-test, et tu lis le journal qu'il produit. <br>Hors ligne, aucune donnée envoyée.</p></div>
     <div class="version vc"><h4>🅲 Sans ordinateur</h4>
       <p>L'algorigramme se dessine sur papier et l'exécution se suit à la main dans le
       <b>tableau de suivi des variables</b> de l'activité 5 — le geste évalué est identique.</p></div>
@@ -791,29 +807,32 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <p>Trois questions sur ce que tu sais déjà faire. <b>Aucune note</b>&nbsp;: c'est un aiguillage, pas une
   évaluation — le vérificateur ne compte aucun point et te le dira.</p>
   <div class="exo">
-    <div class="ligne-exo"><label for="p0_1">Une <b>variable</b>, dans un programme, sert à…</label>
-      <select id="p0_1"><option value="">— je choisis —</option>
-        <option>garder une valeur en mémoire pour s'en servir plus tard</option>
-        <option>afficher un texte à l'écran</option>
-        <option>relier deux composants électroniques</option>
-        <option>ralentir le programme</option></select></div>
-    <div class="ligne-exo"><label for="p0_2">Un <b>test</b> (SI … ALORS …) sert à…</label>
-      <select id="p0_2"><option value="">— je choisis —</option>
-        <option>faire deux choses différentes selon qu'une condition est vraie ou fausse</option>
-        <option>répéter une action un certain nombre de fois</option>
-        <option>donner un nom à une valeur</option>
-        <option>arrêter définitivement le programme</option></select></div>
-    <div class="ligne-exo"><label for="p0_3">Une <b>boucle</b> sert à…</label>
-      <select id="p0_3"><option value="">— je choisis —</option>
-        <option>répéter des instructions sans les réécrire à chaque fois</option>
-        <option>choisir entre deux chemins</option>
-        <option>mesurer une grandeur physique</option>
-        <option>enregistrer un fichier</option></select></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="p0_1">
+  <legend>Une <b>variable</b>, dans un programme, sert à…</legend>
+  <div class="qcm-option"><input type="radio" name="p0_1" id="p0_1__1" value="garder une valeur en mémoire pour s&#x27;en servir plus tard"><label for="p0_1__1">garder une valeur en mémoire pour s'en servir plus tard</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_1" id="p0_1__2" value="afficher un texte à l&#x27;écran"><label for="p0_1__2">afficher un texte à l'écran</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_1" id="p0_1__3" value="relier deux composants électroniques"><label for="p0_1__3">relier deux composants électroniques</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_1" id="p0_1__4" value="ralentir le programme"><label for="p0_1__4">ralentir le programme</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="p0_2">
+  <legend>Un <b>test</b> (SI … ALORS …) sert à…</legend>
+  <div class="qcm-option"><input type="radio" name="p0_2" id="p0_2__1" value="faire deux choses différentes selon qu&#x27;une condition est vraie ou fausse"><label for="p0_2__1">faire deux choses différentes selon qu'une condition est vraie ou fausse</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_2" id="p0_2__2" value="répéter une action un certain nombre de fois"><label for="p0_2__2">répéter une action un certain nombre de fois</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_2" id="p0_2__3" value="donner un nom à une valeur"><label for="p0_2__3">donner un nom à une valeur</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_2" id="p0_2__4" value="arrêter définitivement le programme"><label for="p0_2__4">arrêter définitivement le programme</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="p0_3">
+  <legend>Une <b>boucle</b> sert à…</legend>
+  <div class="qcm-option"><input type="radio" name="p0_3" id="p0_3__1" value="répéter des instructions sans les réécrire à chaque fois"><label for="p0_3__1">répéter des instructions sans les réécrire à chaque fois</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_3" id="p0_3__2" value="choisir entre deux chemins"><label for="p0_3__2">choisir entre deux chemins</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_3" id="p0_3__3" value="mesurer une grandeur physique"><label for="p0_3__3">mesurer une grandeur physique</label></div>
+  <div class="qcm-option"><input type="radio" name="p0_3" id="p0_3__4" value="enregistrer un fichier"><label for="p0_3__4">enregistrer un fichier</label></div>
+</fieldset></div>
     <button class="btn check" data-check="0">Vérifier mon billet d'entrée</button>
     <div class="feedback" id="fb0" aria-live="polite"></div>
     <details class="aide" id="capsule4e"><summary>🎒 Je révise en 3 minutes</summary>
       <p>Une <b>variable</b> est une case mémoire avec un nom. <code>defauts = 0</code> crée la case
-      «&nbsp;defauts&nbsp;» et y met 0. Plus tard, <code>defauts = defauts + 1</code> ajoute 1 à ce qu'elle
+      «&nbsp;defauts&nbsp;» et y met 0. <br>Plus tard, <code>defauts = defauts + 1</code> ajoute 1 à ce qu'elle
       contenait&nbsp;: c'est un <b>compteur</b>, et tu vas en avoir besoin.</p>
       <p>Un <b>test</b> pose une question à deux issues et fait bifurquer le programme&nbsp;:
       <code>SI la sirène ne répond pas ALORS compter un défaut</code>. Dans un algorigramme, c'est le losange.</p>
@@ -849,36 +868,41 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   (l'algorithme la reçoit), une <b>donnée de sortie</b> (l'algorithme la produit), ou <b>ni l'un ni l'autre</b>&nbsp;?</div>
 
   <div class="exo">
-    <div class="ligne-exo"><label for="e1_1">La réponse de <code>tester(sirène)</code>&nbsp;:</label>
-      <select id="e1_1"><option value="">— je choisis —</option>
-        <option>une donnée d'entrée : l'algorithme la reçoit pour décider</option>
-        <option>une donnée de sortie : l'algorithme la produit</option>
-        <option>ni l'un ni l'autre : c'est un composant</option>
-        <option>une variable inutile</option></select></div>
-    <div class="ligne-exo"><label for="e1_2">Le <b>nombre de défauts</b> trouvés&nbsp;:</label>
-      <select id="e1_2"><option value="">— je choisis —</option>
-        <option>une donnée de sortie : c'est un résultat que l'algorithme calcule</option>
-        <option>une donnée d'entrée : elle est connue avant de commencer</option>
-        <option>ni l'un ni l'autre : c'est un composant</option>
-        <option>une donnée d'entrée fournie par le gardien</option></select></div>
-    <div class="ligne-exo"><label for="e1_3">L'<b>heure qu'il est</b>&nbsp;:</label>
-      <select id="e1_3"><option value="">— je choisis —</option>
-        <option>une donnée d'entrée : elle déclenche l'auto-test à 7 h</option>
-        <option>une donnée de sortie : l'algorithme la calcule</option>
-        <option>ni l'un ni l'autre : le temps ne se programme pas</option>
-        <option>une donnée d'entrée, mais seulement en saison cyclonique</option></select></div>
-    <div class="ligne-exo"><label for="e1_4">Le <b>message envoyé au gardien</b>&nbsp;:</label>
-      <select id="e1_4"><option value="">— je choisis —</option>
-        <option>une donnée de sortie : c'est la production utile de l'algorithme</option>
-        <option>une donnée d'entrée : le gardien l'écrit lui-même</option>
-        <option>ni l'un ni l'autre : c'est un organe</option>
-        <option>une variable intermédiaire sans importance</option></select></div>
-    <div class="ligne-exo"><label for="e1_5">Combien d'organes l'auto-test doit-il tester&nbsp;?</label>
-      <select id="e1_5"><option value="">— je choisis —</option>
-        <option>4 : anémomètre, gyrophare, sirène, liaison radio</option>
-        <option>1 : la sirène suffit, c'est le plus important</option>
-        <option>2 : la sirène et le gyrophare</option>
-        <option>autant qu'on veut, ça n'a pas d'importance</option></select></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e1_1">
+  <legend>La réponse de <code>tester(sirène)</code>&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__1" value="une donnée d&#x27;entrée : l&#x27;algorithme la reçoit pour décider"><label for="e1_1__1">une donnée d'entrée : l'algorithme la reçoit pour décider</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__2" value="une donnée de sortie : l&#x27;algorithme la produit"><label for="e1_1__2">une donnée de sortie : l'algorithme la produit</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__3" value="ni l&#x27;un ni l&#x27;autre : c&#x27;est un composant"><label for="e1_1__3">ni l'un ni l'autre : c'est un composant</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_1" id="e1_1__4" value="une variable inutile"><label for="e1_1__4">une variable inutile</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e1_2">
+  <legend>Le <b>nombre de défauts</b> trouvés&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__1" value="une donnée de sortie : c&#x27;est un résultat que l&#x27;algorithme calcule"><label for="e1_2__1">une donnée de sortie : c'est un résultat que l'algorithme calcule</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__2" value="une donnée d&#x27;entrée : elle est connue avant de commencer"><label for="e1_2__2">une donnée d'entrée : elle est connue avant de commencer</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__3" value="ni l&#x27;un ni l&#x27;autre : c&#x27;est un composant"><label for="e1_2__3">ni l'un ni l'autre : c'est un composant</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_2" id="e1_2__4" value="une donnée d&#x27;entrée fournie par le gardien"><label for="e1_2__4">une donnée d'entrée fournie par le gardien</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e1_3">
+  <legend>L'<b>heure qu'il est</b>&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__1" value="une donnée d&#x27;entrée : elle déclenche l&#x27;auto-test à 7 h"><label for="e1_3__1">une donnée d'entrée : elle déclenche l'auto-test à 7 h</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__2" value="une donnée de sortie : l&#x27;algorithme la calcule"><label for="e1_3__2">une donnée de sortie : l'algorithme la calcule</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__3" value="ni l&#x27;un ni l&#x27;autre : le temps ne se programme pas"><label for="e1_3__3">ni l'un ni l'autre : le temps ne se programme pas</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_3" id="e1_3__4" value="une donnée d&#x27;entrée, mais seulement en saison cyclonique"><label for="e1_3__4">une donnée d'entrée, mais seulement en saison cyclonique</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e1_4">
+  <legend>Le <b>message envoyé au gardien</b>&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__1" value="une donnée de sortie : c&#x27;est la production utile de l&#x27;algorithme"><label for="e1_4__1">une donnée de sortie : c'est la production utile de l'algorithme</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__2" value="une donnée d&#x27;entrée : le gardien l&#x27;écrit lui-même"><label for="e1_4__2">une donnée d'entrée : le gardien l'écrit lui-même</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__3" value="ni l&#x27;un ni l&#x27;autre : c&#x27;est un organe"><label for="e1_4__3">ni l'un ni l'autre : c'est un organe</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_4" id="e1_4__4" value="une variable intermédiaire sans importance"><label for="e1_4__4">une variable intermédiaire sans importance</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e1_5">
+  <legend>Combien d'organes l'auto-test doit-il tester&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__1" value="4 : anémomètre, gyrophare, sirène, liaison radio"><label for="e1_5__1">4 : anémomètre, gyrophare, sirène, liaison radio</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__2" value="1 : la sirène suffit, c&#x27;est le plus important"><label for="e1_5__2">1 : la sirène suffit, c'est le plus important</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__3" value="2 : la sirène et le gyrophare"><label for="e1_5__3">2 : la sirène et le gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_5" id="e1_5__4" value="autant qu&#x27;on veut, ça n&#x27;a pas d&#x27;importance"><label for="e1_5__4">autant qu'on veut, ça n'a pas d'importance</label></div>
+</fieldset></div>
 
     <details class="aide"><summary>💡 Aide niveau 1</summary>
       <p>Pose-toi la question dans ce sens&nbsp;: est-ce que l'algorithme <b>reçoit</b> cette information
@@ -938,7 +962,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       <tr><th>Vérificateur</th><td class="vide"></td><td class="vide"></td></tr>
     </tbody>
   </table>
-  <p class="roles-note">À recopier à chaque séance. Si personne ne change de rôle, c'est
+  <p class="roles-note">À recopier à chaque séance. <br>Si personne ne change de rôle, c'est
   toujours le même qui apprend à tenir le clavier — et ce n'est pas celui qui en avait le
   plus besoin.</p>
 </section>
@@ -947,21 +971,21 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <div><b>Objectif&nbsp;:</b> concevoir soi-même l'enchaînement de l'auto-test, puis le confronter à une référence.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité.</div>
     <div><b>Production&nbsp;:</b> l'algorigramme rédigé en toutes lettres + la revue croisée du binôme voisin.</div>
-    <div><b>Ressources&nbsp;:</b> les quatre symboles normalisés, rappelés ci-dessous.</div>
+    <div><b>Ressources&nbsp;:</b> les quatre symboles normalisés, dans le rappel ci-dessous.</div>
   </div>
 
-  <div class="ressource">
-    <h4>Les quatre symboles, et rien d'autre</h4>
-    <p><b>Ovale</b> — Début et Fin. <b>Parallélogramme</b> — une entrée ou une sortie de donnée.
-    <b>Rectangle</b> — une action. <b>Losange</b> — un test à deux issues.</p>
-    <p>Une flèche qui revient en arrière crée une <b>boucle</b>. Aucune branche ne reste dans le vide&nbsp;:
+  <details class="ressource rappel-replie">
+    <summary><b>📐 Rappel — les quatre symboles de l'algorigramme, et rien d'autre</b></summary>
+    <p><b>Ovale</b> — Début et Fin. <br><b>Parallélogramme</b> — une entrée ou une sortie de donnée.
+    <br><b>Rectangle</b> — une action. <br><b>Losange</b> — un test à deux issues.</p>
+    <p>Une flèche qui revient en arrière crée une <b>boucle</b>. <br>Aucune branche ne reste dans le vide&nbsp;:
     un algorigramme dont une flèche ne mène nulle part est faux.</p>
-  </div>
+  </details>
 
-  <div class="consigne"><b>Consigne — tu conçois d'abord, la référence vient après&nbsp;:</b> écris dans le
-  cadre ci-dessous, en toutes lettres, l'enchaînement de ton auto-test. Ton texte doit contenir au moins
-  <b>un compteur</b>, <b>une boucle</b> sur les organes et <b>un test</b>. Échange ensuite ta feuille avec
-  le binôme voisin&nbsp;: cherchez chez l'autre une branche qui ne mène nulle part.</div>
+  <div class="consigne"><b>Consigne — tu conçois d'abord, la référence vient après&nbsp;:</b>
+  <br>① Écris dans le cadre, en toutes lettres, l'enchaînement de ton auto-test.
+  <br>② Ton texte contient au moins <b>un compteur</b>, <b>une boucle</b> sur les organes et <b>un test</b>.
+  <br>③ Échange ta feuille avec le binôme voisin&nbsp;: cherchez chez l'autre une branche qui ne mène nulle part.</div>
 
   <div class="exo">
     <label for="e2_prod">✍️ Mon algorigramme, écrit en toutes lettres (60 caractères minimum)&nbsp;:</label>
@@ -975,43 +999,48 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       Une fois la boucle terminée, SI defauts ______ alors j'envoie ______, SINON j'envoie ______.<br>
       FIN.&nbsp;»</p></details>
 
-    <div class="ligne-exo"><label for="e2_1">Où placer le compteur <code>defauts = 0</code>&nbsp;?</label>
-      <select id="e2_1"><option value="">— je choisis —</option>
-        <option>avant la boucle : il doit exister avant qu'on commence à compter</option>
-        <option>à l'intérieur de la boucle, au début de chaque tour</option>
-        <option>après la boucle, juste avant le message</option>
-        <option>il n'en faut pas : on compte de tête</option></select></div>
-    <div class="ligne-exo"><label for="e2_2">Que se passe-t-il si on remet <code>defauts = 0</code> à chaque tour de boucle&nbsp;?</label>
-      <select id="e2_2"><option value="">— je choisis —</option>
-        <option>on efface le comptage : à la fin, on n'a plus que le dernier organe testé</option>
-        <option>rien, le résultat est le même</option>
-        <option>le programme plante</option>
-        <option>on compte deux fois chaque défaut</option></select></div>
-    <div class="ligne-exo"><label for="e2_3">Quel symbole pour «&nbsp;l'organe répond-il&nbsp;?&nbsp;»&nbsp;?</label>
-      <select id="e2_3"><option value="">— je choisis —</option>
-        <option>un losange : c'est un test à deux issues</option>
-        <option>un rectangle : c'est une action</option>
-        <option>un parallélogramme : c'est une donnée</option>
-        <option>un ovale : c'est le début du test</option></select></div>
-    <div class="ligne-exo"><label for="e2_4">Quel symbole pour «&nbsp;envoyer le message au gardien&nbsp;»&nbsp;?</label>
-      <select id="e2_4"><option value="">— je choisis —</option>
-        <option>un parallélogramme : c'est une sortie de donnée</option>
-        <option>un losange : le gardien peut répondre ou non</option>
-        <option>un ovale : c'est la fin du programme</option>
-        <option>un rectangle : c'est un calcul interne</option></select></div>
-    <div class="ligne-exo"><label for="e2_5">Pourquoi une boucle plutôt que quatre tests écrits à la suite&nbsp;?</label>
-      <select id="e2_5"><option value="">— je choisis —</option>
-        <option>pour éviter de réécrire quatre fois la même chose, et pouvoir ajouter un organe sans tout réécrire</option>
-        <option>parce que les boucles sont plus rapides à exécuter</option>
-        <option>parce que le programme est obligé d'avoir une boucle</option>
-        <option>pour économiser de la mémoire sur la carte</option></select></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e2_1">
+  <legend>Où placer le compteur <code>defauts = 0</code>&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e2_1" id="e2_1__1" value="avant la boucle : il doit exister avant qu&#x27;on commence à compter"><label for="e2_1__1">avant la boucle : il doit exister avant qu'on commence à compter</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_1" id="e2_1__2" value="à l&#x27;intérieur de la boucle, au début de chaque tour"><label for="e2_1__2">à l'intérieur de la boucle, au début de chaque tour</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_1" id="e2_1__3" value="après la boucle, juste avant le message"><label for="e2_1__3">après la boucle, juste avant le message</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_1" id="e2_1__4" value="il n&#x27;en faut pas : on compte de tête"><label for="e2_1__4">il n'en faut pas : on compte de tête</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e2_2">
+  <legend>Que se passe-t-il si on remet <code>defauts = 0</code> à chaque tour de boucle&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e2_2" id="e2_2__1" value="on efface le comptage : à la fin, on n&#x27;a plus que le dernier organe testé"><label for="e2_2__1">on efface le comptage : à la fin, on n'a plus que le dernier organe testé</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_2" id="e2_2__2" value="rien, le résultat est le même"><label for="e2_2__2">rien, le résultat est le même</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_2" id="e2_2__3" value="le programme plante"><label for="e2_2__3">le programme plante</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_2" id="e2_2__4" value="on compte deux fois chaque défaut"><label for="e2_2__4">on compte deux fois chaque défaut</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e2_3">
+  <legend>Quel symbole pour «&nbsp;l'organe répond-il&nbsp;?&nbsp;»&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e2_3" id="e2_3__1" value="un losange : c&#x27;est un test à deux issues"><label for="e2_3__1">un losange : c'est un test à deux issues</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_3" id="e2_3__2" value="un rectangle : c&#x27;est une action"><label for="e2_3__2">un rectangle : c'est une action</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_3" id="e2_3__3" value="un parallélogramme : c&#x27;est une donnée"><label for="e2_3__3">un parallélogramme : c'est une donnée</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_3" id="e2_3__4" value="un ovale : c&#x27;est le début du test"><label for="e2_3__4">un ovale : c'est le début du test</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e2_4">
+  <legend>Quel symbole pour «&nbsp;envoyer le message au gardien&nbsp;»&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e2_4" id="e2_4__1" value="un parallélogramme : c&#x27;est une sortie de donnée"><label for="e2_4__1">un parallélogramme : c'est une sortie de donnée</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_4" id="e2_4__2" value="un losange : le gardien peut répondre ou non"><label for="e2_4__2">un losange : le gardien peut répondre ou non</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_4" id="e2_4__3" value="un ovale : c&#x27;est la fin du programme"><label for="e2_4__3">un ovale : c'est la fin du programme</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_4" id="e2_4__4" value="un rectangle : c&#x27;est un calcul interne"><label for="e2_4__4">un rectangle : c'est un calcul interne</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e2_5">
+  <legend>Pourquoi une boucle plutôt que quatre tests écrits à la suite&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e2_5" id="e2_5__1" value="pour éviter de réécrire quatre fois la même chose, et pouvoir ajouter un organe sans tout réécrire"><label for="e2_5__1">pour éviter de réécrire quatre fois la même chose, et pouvoir ajouter un organe sans tout réécrire</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_5" id="e2_5__2" value="parce que les boucles sont plus rapides à exécuter"><label for="e2_5__2">parce que les boucles sont plus rapides à exécuter</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_5" id="e2_5__3" value="parce que le programme est obligé d&#x27;avoir une boucle"><label for="e2_5__3">parce que le programme est obligé d'avoir une boucle</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_5" id="e2_5__4" value="pour économiser de la mémoire sur la carte"><label for="e2_5__4">pour économiser de la mémoire sur la carte</label></div>
+</fieldset></div>
 
     <details class="aide"><summary>💡 Aide niveau 1</summary>
-      <p>Déroule ton algorithme à voix haute avec quatre organes dont deux en panne. Si tu ne sais pas dire
+      <p>Déroule ton algorithme à voix haute avec quatre organes dont deux en panne. <br>Si tu ne sais pas dire
       combien vaut <code>defauts</code> à la fin, c'est que le compteur est mal placé.</p></details>
     <details class="aide"><summary>💡💡 Aide niveau 2</summary>
       <p>Ordre attendu&nbsp;: initialiser le compteur → parcourir les organes → tester chacun → compter les
-      défauts → <b>une fois la boucle finie</b>, décider du message. Décider à l'intérieur de la boucle
+      défauts → <b>une fois la boucle finie</b>, décider du message. <br>Décider à l'intérieur de la boucle
       enverrait un message par organe&nbsp;: quatre SMS chaque matin, le gardien couperait tout au bout
       d'une semaine.</p></details>
 
@@ -1019,16 +1048,18 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <div class="feedback" id="fb2" aria-live="polite"></div>
 
     <details class="correction"><summary>✅ Correction complète — l'algorigramme de référence</summary>
-      <p><b>DÉBUT</b> → <em>(action)</em> <code>defauts = 0</code> et <code>pannes = liste vide</code>
-      → <em>(boucle)</em> POUR CHAQUE organe de [anémomètre, gyrophare, sirène, radio] →
-      <em>(losange)</em> «&nbsp;<code>tester(organe)</code> répond-il vrai&nbsp;?&nbsp;»&nbsp;:
-      si OUI, on passe à l'organe suivant&nbsp;; si NON, <em>(action)</em>
-      <code>defauts = defauts + 1</code> et on ajoute le nom de l'organe à <code>pannes</code>.</p>
-      <p>Une fois la liste épuisée&nbsp;: <em>(losange)</em> «&nbsp;<code>defauts > 0</code>&nbsp;?&nbsp;» →
-      si OUI, <em>(parallélogramme)</em> envoyer «&nbsp;Station&nbsp;: N défaut(s) — [liste]&nbsp;»&nbsp;;
-      si NON, envoyer «&nbsp;Station opérationnelle&nbsp;». <b>FIN.</b></p>
+      <p><b>① DÉBUT</b> <em>(ovale)</em>.
+      <br><b>②</b> <em>(action)</em> <code>defauts = 0</code> et <code>pannes = liste vide</code>.
+      <br><b>③</b> <em>(boucle)</em> POUR CHAQUE organe de [anémomètre, gyrophare, sirène, radio]&nbsp;:
+      <br><b>④</b> <em>(losange)</em> «&nbsp;<code>tester(organe)</code> répond-il vrai&nbsp;?&nbsp;»
+      <br>&nbsp;&nbsp;&nbsp;— si OUI, on passe à l'organe suivant&nbsp;;
+      <br>&nbsp;&nbsp;&nbsp;— si NON, <em>(action)</em> <code>defauts = defauts + 1</code>, et on ajoute le nom de l'organe à <code>pannes</code>.</p>
+      <p><b>⑤</b> Une fois la liste épuisée&nbsp;: <em>(losange)</em> «&nbsp;<code>defauts > 0</code>&nbsp;?&nbsp;»
+      <br>&nbsp;&nbsp;&nbsp;— si OUI, <em>(parallélogramme)</em> envoyer «&nbsp;Station&nbsp;: N défaut(s) — [liste]&nbsp;»&nbsp;;
+      <br>&nbsp;&nbsp;&nbsp;— si NON, <em>(parallélogramme)</em> envoyer «&nbsp;Station opérationnelle&nbsp;».
+      <br><b>⑥ FIN</b> <em>(ovale)</em>.</p>
       <p><b>Le compteur avant la boucle</b>&nbsp;: le remettre à zéro à chaque tour effacerait le comptage —
-      à la fin, on ne saurait plus que l'état du dernier organe. C'est l'erreur la plus fréquente, et elle ne
+      à la fin, on ne saurait plus que l'état du dernier organe. <br>C'est l'erreur la plus fréquente, et elle ne
       se voit pas&nbsp;: le programme tourne, il ment.</p>
       <p><b>La décision après la boucle</b>&nbsp;: c'est ce qui transforme quatre résultats isolés en un
       <em>bilan</em>. Un système d'alerte doit produire une information utilisable, pas un flot de données.</p>
@@ -1036,7 +1067,8 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <div class="retenir"><b>📌 À retenir&nbsp;:</b> un compteur s'initialise <b>avant</b> la boucle et se
     lit <b>après</b>. Entre les deux, la boucle ne fait qu'ajouter.</div>
     <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> mon algorigramme contient un compteur bien placé,
-    une boucle sur les organes, un test par organe et une décision finale — et aucune flèche ne mène nulle part.</p>
+    une boucle sur les organes, un test par organe et une décision finale.
+    <br>Aucune flèche ne mène nulle part.</p>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="seance2" type="button">Séance 2 — Écrire l'algorithme ›</button></p>
@@ -1059,26 +1091,98 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   décalées vers la droite sont à l'intérieur de la boucle ou du test.</div>
 
   <div class="exo">
-    <div class="assoc"><label for="e3_a">&nbsp;&nbsp;&nbsp;&nbsp;<code>defauts = defauts + 1</code> <span style="color:var(--sub);font-size:.85em">(dans le SI, dans la boucle)</span></label>
-      <select id="e3_a"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_b"><code>defauts = 0</code></label>
-      <select id="e3_b"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_c"><code>SI defauts &gt; 0 ALORS</code></label>
-      <select id="e3_c"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_d"><code>POUR CHAQUE organe DANS organes :</code></label>
-      <select id="e3_d"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_e"><code>organes = [anemometre, gyrophare, sirene, radio]</code></label>
-      <select id="e3_e"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_f">&nbsp;&nbsp;&nbsp;&nbsp;<code>SI tester(organe) est FAUX ALORS</code> <span style="color:var(--sub);font-size:.85em">(dans la boucle)</span></label>
-      <select id="e3_f"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_g">&nbsp;&nbsp;&nbsp;&nbsp;<code>envoyer("Station : " + defauts + " defaut(s) — " + pannes)</code></label>
-      <select id="e3_g"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
-    <div class="assoc"><label for="e3_h"><code>SINON envoyer("Station operationnelle")</code></label>
-      <select id="e3_h"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <fieldset class="qcm-groupe" id="e3_a">
+  <legend>&nbsp;&nbsp;&nbsp;&nbsp;<code>defauts = defauts + 1</code> <span style="color:var(--sub);font-size:.85em">(dans le SI, dans la boucle)</span></legend>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__1" value="1"><label for="e3_a__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__2" value="2"><label for="e3_a__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__3" value="3"><label for="e3_a__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__4" value="4"><label for="e3_a__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__5" value="5"><label for="e3_a__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__6" value="6"><label for="e3_a__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__7" value="7"><label for="e3_a__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_a" id="e3_a__8" value="8"><label for="e3_a__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_b">
+  <legend><code>defauts = 0</code></legend>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__1" value="1"><label for="e3_b__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__2" value="2"><label for="e3_b__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__3" value="3"><label for="e3_b__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__4" value="4"><label for="e3_b__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__5" value="5"><label for="e3_b__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__6" value="6"><label for="e3_b__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__7" value="7"><label for="e3_b__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_b" id="e3_b__8" value="8"><label for="e3_b__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_c">
+  <legend><code>SI defauts &gt; 0 ALORS</code></legend>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__1" value="1"><label for="e3_c__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__2" value="2"><label for="e3_c__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__3" value="3"><label for="e3_c__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__4" value="4"><label for="e3_c__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__5" value="5"><label for="e3_c__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__6" value="6"><label for="e3_c__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__7" value="7"><label for="e3_c__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_c" id="e3_c__8" value="8"><label for="e3_c__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_d">
+  <legend><code>POUR CHAQUE organe DANS organes :</code></legend>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__1" value="1"><label for="e3_d__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__2" value="2"><label for="e3_d__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__3" value="3"><label for="e3_d__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__4" value="4"><label for="e3_d__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__5" value="5"><label for="e3_d__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__6" value="6"><label for="e3_d__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__7" value="7"><label for="e3_d__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_d" id="e3_d__8" value="8"><label for="e3_d__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_e">
+  <legend><code>organes = [anemometre, gyrophare, sirene, radio]</code></legend>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__1" value="1"><label for="e3_e__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__2" value="2"><label for="e3_e__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__3" value="3"><label for="e3_e__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__4" value="4"><label for="e3_e__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__5" value="5"><label for="e3_e__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__6" value="6"><label for="e3_e__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__7" value="7"><label for="e3_e__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_e" id="e3_e__8" value="8"><label for="e3_e__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_f">
+  <legend>&nbsp;&nbsp;&nbsp;&nbsp;<code>SI tester(organe) est FAUX ALORS</code> <span style="color:var(--sub);font-size:.85em">(dans la boucle)</span></legend>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__1" value="1"><label for="e3_f__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__2" value="2"><label for="e3_f__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__3" value="3"><label for="e3_f__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__4" value="4"><label for="e3_f__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__5" value="5"><label for="e3_f__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__6" value="6"><label for="e3_f__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__7" value="7"><label for="e3_f__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_f" id="e3_f__8" value="8"><label for="e3_f__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_g">
+  <legend>&nbsp;&nbsp;&nbsp;&nbsp;<code>envoyer("Station : " + defauts + " defaut(s) — " + pannes)</code></legend>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__1" value="1"><label for="e3_g__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__2" value="2"><label for="e3_g__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__3" value="3"><label for="e3_g__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__4" value="4"><label for="e3_g__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__5" value="5"><label for="e3_g__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__6" value="6"><label for="e3_g__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__7" value="7"><label for="e3_g__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_g" id="e3_g__8" value="8"><label for="e3_g__8">8</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e3_h">
+  <legend><code>SINON envoyer("Station operationnelle")</code></legend>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__1" value="1"><label for="e3_h__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__2" value="2"><label for="e3_h__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__3" value="3"><label for="e3_h__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__4" value="4"><label for="e3_h__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__5" value="5"><label for="e3_h__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__6" value="6"><label for="e3_h__6">6</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__7" value="7"><label for="e3_h__7">7</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_h" id="e3_h__8" value="8"><label for="e3_h__8">8</label></div>
+</fieldset>
 
-    <p style="margin-top:14px"><label for="e3_manque">✍️ Une instruction manque dans cette liste&nbsp;:
-    celle qui <b>retient le nom</b> de l'organe en panne, pour que le message puisse le citer.
-    Écris-la comme tu l'écrirais dans ton programme&nbsp;:</label></p>
+    <p style="margin-top:14px"><label for="e3_manque">✍️ Une instruction manque dans cette liste.
+    <br>C'est celle qui <b>retient le nom</b> de l'organe en panne, pour que le message puisse le citer.
+    <br>Écris-la comme tu l'écrirais dans ton programme&nbsp;:</label></p>
     <textarea id="e3_manque" rows="2" placeholder="ajouter …"></textarea>
     <details class="aide"><summary>🪜 Version étayée — la phrase à compléter</summary>
       <p>«&nbsp;ajouter ______ à la liste ______&nbsp;» — et cette instruction se place juste ______ le
@@ -1088,8 +1192,9 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       <p>Commence par ce qui doit exister <b>avant</b> tout le reste&nbsp;: la liste des organes et le
       compteur. Termine par ce qui ne peut se décider qu'<b>une fois tout testé</b>.</p></details>
     <details class="aide"><summary>💡💡 Aide niveau 2</summary>
-      <p>Les deux lignes décalées de deux crans (<code>defauts = defauts + 1</code>) sont dans le SI, lui-même
-      dans la boucle&nbsp;: elles ne peuvent donc pas venir avant la ligne <code>POUR CHAQUE</code>.</p></details>
+      <p>Les deux lignes décalées de deux crans (<code>defauts = defauts + 1</code>) sont dans le SI.
+      <br>Le SI est lui-même dans la boucle.
+      <br>Elles ne peuvent donc pas venir avant la ligne <code>POUR CHAQUE</code>.</p></details>
 
     <button class="btn check" data-check="3">Vérifier mon programme</button>
     <div class="feedback" id="fb3" aria-live="polite"></div>
@@ -1106,7 +1211,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       <b>8.</b> <code>SINON envoyer("Station operationnelle")</code> — l'autre branche.</p>
       <p><b>L'instruction manquante&nbsp;:</b> <code>ajouter organe à pannes</code>, placée juste après le
       comptage, dans le SI. Sans elle, le message peut dire «&nbsp;2 défauts&nbsp;» sans dire lesquels —
-      et le gardien devrait monter au mât pour le découvrir. <b>Un bon message d'alerte dit quoi faire, pas
+      et le gardien devrait monter au mât pour le découvrir. <br><b>Un bon message d'alerte dit quoi faire, pas
       seulement qu'il y a un problème.</b></p>
     </details>
     <div class="retenir"><b>📌 À retenir&nbsp;:</b> dans un programme, <b>l'ordre et l'indentation portent
@@ -1147,35 +1252,39 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   </div>
 
   <div class="exo">
-    <div class="ligne-exo"><label for="e4_1">Avec les quatre organes en état, que vaut <code>defauts</code> à la fin&nbsp;?</label>
-      <select id="e4_1"><option value="">— je choisis —</option>
-        <option>0, et le message annonce une station opérationnelle</option>
-        <option>4, puisqu'il y a quatre organes</option>
-        <option>1, il compte toujours au moins un passage</option>
-        <option>impossible à savoir sans lancer le test</option></select></div>
-    <div class="ligne-exo"><label for="e4_2">Avec la sirène et la radio en panne, combien de messages sont envoyés&nbsp;?</label>
-      <select id="e4_2"><option value="">— je choisis —</option>
-        <option>un seul, qui cite les deux organes : la décision est après la boucle</option>
-        <option>deux, un par organe en panne</option>
-        <option>quatre, un par organe testé</option>
-        <option>aucun, le programme s'arrête à la première panne</option></select></div>
-    <div class="ligne-exo"><label for="e4_3">Que change le fait de tester la radio <b>en dernier</b> plutôt qu'en premier&nbsp;?</label>
-      <select id="e4_3"><option value="">— je choisis —</option>
-        <option>rien au comptage : la boucle teste tout le monde avant de décider</option>
-        <option>le compteur repart de zéro</option>
-        <option>les organes suivants ne sont pas testés</option>
-        <option>le message part deux fois</option></select></div>
-    <div class="ligne-exo"><label for="e4_4">Un organe en panne <b>n'interrompt pas</b> l'auto-test. Pourquoi est-ce important&nbsp;?</label>
-      <select id="e4_4"><option value="">— je choisis —</option>
-        <option>pour découvrir TOUTES les pannes en une fois, et n'envoyer le technicien qu'une seule fois au mât</option>
-        <option>pour économiser la batterie</option>
-        <option>pour que le programme soit plus court</option>
-        <option>ce n'est pas important, on pourrait s'arrêter à la première</option></select></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e4_1">
+  <legend>Avec les quatre organes en état, que vaut <code>defauts</code> à la fin&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__1" value="0, et le message annonce une station opérationnelle"><label for="e4_1__1">0, et le message annonce une station opérationnelle</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__2" value="4, puisqu&#x27;il y a quatre organes"><label for="e4_1__2">4, puisqu'il y a quatre organes</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__3" value="1, il compte toujours au moins un passage"><label for="e4_1__3">1, il compte toujours au moins un passage</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_1" id="e4_1__4" value="impossible à savoir sans lancer le test"><label for="e4_1__4">impossible à savoir sans lancer le test</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e4_2">
+  <legend>Avec la sirène et la radio en panne, combien de messages sont envoyés&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__1" value="un seul, qui cite les deux organes : la décision est après la boucle"><label for="e4_2__1">un seul, qui cite les deux organes : la décision est après la boucle</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__2" value="deux, un par organe en panne"><label for="e4_2__2">deux, un par organe en panne</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__3" value="quatre, un par organe testé"><label for="e4_2__3">quatre, un par organe testé</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_2" id="e4_2__4" value="aucun, le programme s&#x27;arrête à la première panne"><label for="e4_2__4">aucun, le programme s'arrête à la première panne</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e4_3">
+  <legend>Que change le fait de tester la radio <b>en dernier</b> plutôt qu'en premier&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__1" value="rien au comptage : la boucle teste tout le monde avant de décider"><label for="e4_3__1">rien au comptage : la boucle teste tout le monde avant de décider</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__2" value="le compteur repart de zéro"><label for="e4_3__2">le compteur repart de zéro</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__3" value="les organes suivants ne sont pas testés"><label for="e4_3__3">les organes suivants ne sont pas testés</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_3" id="e4_3__4" value="le message part deux fois"><label for="e4_3__4">le message part deux fois</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e4_4">
+  <legend>Un organe en panne <b>n'interrompt pas</b> l'auto-test. Pourquoi est-ce important&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__1" value="pour découvrir TOUTES les pannes en une fois, et n&#x27;envoyer le technicien qu&#x27;une seule fois au mât"><label for="e4_4__1">pour découvrir TOUTES les pannes en une fois, et n'envoyer le technicien qu'une seule fois au mât</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__2" value="pour économiser la batterie"><label for="e4_4__2">pour économiser la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__3" value="pour que le programme soit plus court"><label for="e4_4__3">pour que le programme soit plus court</label></div>
+  <div class="qcm-option"><input type="radio" name="e4_4" id="e4_4__4" value="ce n&#x27;est pas important, on pourrait s&#x27;arrêter à la première"><label for="e4_4__4">ce n'est pas important, on pourrait s'arrêter à la première</label></div>
+</fieldset></div>
 
     <details class="aide"><summary>💡 Aide niveau 1</summary>
       <p>Fais l'essai plutôt que de deviner&nbsp;: décoche deux cases, lance, et lis le journal ligne à ligne.</p></details>
     <details class="aide"><summary>💡💡 Aide niveau 2</summary>
-      <p>Le journal affiche le compteur après chaque organe. Regarde à quel moment il change, et à quel moment
+      <p>Le journal affiche le compteur après chaque organe. <br>Regarde à quel moment il change, et à quel moment
       le message est produit&nbsp;: c'est toute la différence entre décider dans la boucle et décider après.</p></details>
 
     <button class="btn check" data-check="4">Vérifier mes essais</button>
@@ -1193,8 +1302,9 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     </details>
     <div class="retenir"><b>📌 À retenir&nbsp;:</b> un algorithme se juge sur son <b>comportement</b>, pas
     sur son allure. Deux essais minimum&nbsp;: le cas normal et le cas dégradé.</div>
-    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> j'ai lancé le banc au moins deux fois, dont une
-    fois sans panne et une fois avec au moins deux pannes, et je sais lire le journal produit.</p>
+    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> j'ai lancé le banc au moins deux fois&nbsp;:
+    une fois sans panne, une fois avec au moins deux pannes.
+    <br>Je sais lire le journal produit.</p>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="seance3" type="button">Séance 3 — Éprouver et valider ›</button></p>
@@ -1214,9 +1324,10 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
   <div class="ressource">
     <h4>Le tableau de suivi des variables — l'outil du programmeur</h4>
-    <p>Quand un programme ne fait pas ce qu'on attend, on ne le fixe pas du regard&nbsp;: on le <b>déroule à la
-    main</b>, ligne à ligne, en notant ce que vaut chaque variable. C'est valable sur papier comme à l'écran,
-    et c'est ce qu'on te demandera de savoir faire au brevet.</p>
+    <p>Quand un programme ne fait pas ce qu'on attend, on ne le fixe pas du regard.
+    <br>On le <b>déroule à la main</b>, ligne à ligne, en notant ce que vaut chaque variable.
+    <br>C'est valable sur papier comme à l'écran.
+    <br>C'est ce qu'on te demandera de savoir faire au brevet.</p>
     <p>Scénario à dérouler&nbsp;: <b>anémomètre en panne, gyrophare en état, sirène en panne, radio en état</b>.</p>
   </div>
 
@@ -1224,28 +1335,54 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   la valeur de <code>defauts</code> après chaque organe testé.</div>
 
   <div class="exo">
-    <div class="assoc"><label for="e5_t1">après l'<b>anémomètre</b> (en panne), <code>defauts</code> vaut&nbsp;:</label>
-      <select id="e5_t1"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
-    <div class="assoc"><label for="e5_t2">après le <b>gyrophare</b> (en état), <code>defauts</code> vaut&nbsp;:</label>
-      <select id="e5_t2"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
-    <div class="assoc"><label for="e5_t3">après la <b>sirène</b> (en panne), <code>defauts</code> vaut&nbsp;:</label>
-      <select id="e5_t3"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
-    <div class="assoc"><label for="e5_t4">après la <b>radio</b> (en état), <code>defauts</code> vaut&nbsp;:</label>
-      <select id="e5_t4"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    <fieldset class="qcm-groupe" id="e5_t1">
+  <legend>après l'<b>anémomètre</b> (en panne), <code>defauts</code> vaut&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e5_t1" id="e5_t1__1" value="0"><label for="e5_t1__1">0</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t1" id="e5_t1__2" value="1"><label for="e5_t1__2">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t1" id="e5_t1__3" value="2"><label for="e5_t1__3">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t1" id="e5_t1__4" value="3"><label for="e5_t1__4">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t1" id="e5_t1__5" value="4"><label for="e5_t1__5">4</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e5_t2">
+  <legend>après le <b>gyrophare</b> (en état), <code>defauts</code> vaut&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e5_t2" id="e5_t2__1" value="0"><label for="e5_t2__1">0</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t2" id="e5_t2__2" value="1"><label for="e5_t2__2">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t2" id="e5_t2__3" value="2"><label for="e5_t2__3">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t2" id="e5_t2__4" value="3"><label for="e5_t2__4">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t2" id="e5_t2__5" value="4"><label for="e5_t2__5">4</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e5_t3">
+  <legend>après la <b>sirène</b> (en panne), <code>defauts</code> vaut&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e5_t3" id="e5_t3__1" value="0"><label for="e5_t3__1">0</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t3" id="e5_t3__2" value="1"><label for="e5_t3__2">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t3" id="e5_t3__3" value="2"><label for="e5_t3__3">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t3" id="e5_t3__4" value="3"><label for="e5_t3__4">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t3" id="e5_t3__5" value="4"><label for="e5_t3__5">4</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="e5_t4">
+  <legend>après la <b>radio</b> (en état), <code>defauts</code> vaut&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="e5_t4" id="e5_t4__1" value="0"><label for="e5_t4__1">0</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t4" id="e5_t4__2" value="1"><label for="e5_t4__2">1</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t4" id="e5_t4__3" value="2"><label for="e5_t4__3">2</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t4" id="e5_t4__4" value="3"><label for="e5_t4__4">3</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_t4" id="e5_t4__5" value="4"><label for="e5_t4__5">4</label></div>
+</fieldset>
 
-    <div class="ligne-exo" style="margin-top:12px"><label for="e5_lim">🚨 <b>Le cas limite qui fait réfléchir&nbsp;:</b>
-      et si c'est la <b>liaison radio</b> qui est en panne&nbsp;? Que se passe-t-il&nbsp;?</label>
-      <select id="e5_lim"><option value="">— je choisis —</option>
-        <option>l'auto-test détecte la panne mais ne peut pas prévenir : le message ne part pas</option>
-        <option>rien de spécial, le message part quand même</option>
-        <option>le programme plante et redémarre</option>
-        <option>la sirène sonne à la place</option></select></div>
-    <div class="ligne-exo"><label for="e5_rem">Quel remède raisonnable pour ce cas&nbsp;?</label>
-      <select id="e5_rem"><option value="">— je choisis —</option>
-        <option>prévoir un second moyen de signalement local : faire clignoter le gyrophare selon un motif convenu</option>
-        <option>supprimer le test de la radio, puisqu'il ne sert à rien</option>
-        <option>envoyer le message deux fois pour être sûr</option>
-        <option>arrêter la station tant que la radio n'est pas réparée</option></select></div>
+    <div class="ligne-exo" style="margin-top:12px"><fieldset class="qcm-groupe" id="e5_lim">
+  <legend>🚨 <b>Le cas limite qui fait réfléchir&nbsp;:</b>
+      et si c'est la <b>liaison radio</b> qui est en panne&nbsp;? Que se passe-t-il&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e5_lim" id="e5_lim__1" value="l&#x27;auto-test détecte la panne mais ne peut pas prévenir : le message ne part pas"><label for="e5_lim__1">l'auto-test détecte la panne mais ne peut pas prévenir : le message ne part pas</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_lim" id="e5_lim__2" value="rien de spécial, le message part quand même"><label for="e5_lim__2">rien de spécial, le message part quand même</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_lim" id="e5_lim__3" value="le programme plante et redémarre"><label for="e5_lim__3">le programme plante et redémarre</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_lim" id="e5_lim__4" value="la sirène sonne à la place"><label for="e5_lim__4">la sirène sonne à la place</label></div>
+</fieldset></div>
+    <div class="ligne-exo"><fieldset class="qcm-groupe" id="e5_rem">
+  <legend>Quel remède raisonnable pour ce cas&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="e5_rem" id="e5_rem__1" value="prévoir un second moyen de signalement local : faire clignoter le gyrophare selon un motif convenu"><label for="e5_rem__1">prévoir un second moyen de signalement local : faire clignoter le gyrophare selon un motif convenu</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_rem" id="e5_rem__2" value="supprimer le test de la radio, puisqu&#x27;il ne sert à rien"><label for="e5_rem__2">supprimer le test de la radio, puisqu'il ne sert à rien</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_rem" id="e5_rem__3" value="envoyer le message deux fois pour être sûr"><label for="e5_rem__3">envoyer le message deux fois pour être sûr</label></div>
+  <div class="qcm-option"><input type="radio" name="e5_rem" id="e5_rem__4" value="arrêter la station tant que la radio n&#x27;est pas réparée"><label for="e5_rem__4">arrêter la station tant que la radio n'est pas réparée</label></div>
+</fieldset></div>
 
     <p style="margin-top:14px"><label for="e5_msg">✍️ <b>Rédige le message</b> que la station envoie au gardien
     dans le scénario ci-dessus (anémomètre et sirène en panne). Il sera lu sur un téléphone, par quelqu'un qui
@@ -1261,7 +1398,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       <p>Le compteur n'augmente <b>que</b> pour les organes en panne. Un organe en état ne change rien&nbsp;:
       sa valeur reste celle du tour précédent.</p></details>
     <details class="aide"><summary>💡💡 Aide niveau 2</summary>
-      <p>Pour le cas limite, demande-toi par quel organe passe le message. Un système qui dépend d'un organe
+      <p>Pour le cas limite, demande-toi par quel organe passe le message. <br>Un système qui dépend d'un organe
       pour signaler la panne de cet organe a un angle mort — les ingénieurs appellent ça une
       <em>défaillance silencieuse</em>, et c'est la plus dangereuse.</p></details>
 
@@ -1274,12 +1411,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       <p><b>Le cas limite&nbsp;:</b> si la radio est morte, l'auto-test <em>détecte</em> la panne mais ne peut
       pas la <em>signaler</em>. C'est une <b>défaillance silencieuse</b> — le pire cas pour un système
       d'alerte, parce que tout semble normal vu d'en bas.</p>
-      <p><b>Le remède&nbsp;:</b> un second canal, local et indépendant. Faire clignoter le gyrophare selon un
-      motif convenu coûte zéro euro et se voit depuis la route. Supprimer le test serait absurde&nbsp;;
+      <p><b>Le remède&nbsp;:</b> un second canal, local et indépendant. <br>Faire clignoter le gyrophare selon un
+      motif convenu coûte zéro euro et se voit depuis la route. <br>Supprimer le test serait absurde&nbsp;;
       arrêter la station reviendrait à se priver de la sirène parce que le SMS ne part pas.</p>
-      <p><b>Le message&nbsp;:</b> «&nbsp;Station de Sainte-Luce, auto-test de 7 h&nbsp;: 2 défauts. Organes
-      concernés&nbsp;: anémomètre, sirène. Conséquence&nbsp;: la station ne mesure plus le vent et ne peut plus
-      alerter au son. Action attendue&nbsp;: intervention avant le prochain épisode.&nbsp;» Un message qui dirait
+      <p><b>Le message&nbsp;:</b> «&nbsp;Station de Sainte-Luce, auto-test de 7 h&nbsp;: 2 défauts. <br>Organes
+      concernés&nbsp;: anémomètre, sirène. <br>Conséquence&nbsp;: la station ne mesure plus le vent et ne peut plus
+      alerter au son. <br>Action attendue&nbsp;: intervention avant le prochain épisode.&nbsp;» Un message qui dirait
       seulement «&nbsp;erreur 2&nbsp;» obligerait le gardien à monter au mât pour comprendre.</p>
     </details>
     <div class="retenir"><b>📌 À retenir&nbsp;:</b> un algorithme utile ne s'arrête pas au calcul juste&nbsp;:
@@ -1297,24 +1434,28 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   <h2>📝 Synthèse de l'atelier — à retenir</h2>
   <p><b>Programmer une nouvelle fonctionnalité</b>, ce n'est pas taper des lignes&nbsp;: c'est d'abord dire ce
   qui entre et ce qui sort, puis concevoir l'enchaînement, puis seulement écrire — et enfin éprouver.</p>
-  <p>Les trois outils de cet atelier reviendront partout&nbsp;: le <b>compteur</b> initialisé avant la boucle et
-  lu après, la <b>boucle</b> qui évite de répéter le même test, et la <b>décision finale</b> qui transforme
+  <p>Les trois outils de cet atelier reviendront partout&nbsp;:
+  <br>① le <b>compteur</b>, initialisé avant la boucle et lu après&nbsp;;
+  <br>② la <b>boucle</b>, qui évite de répéter le même test&nbsp;;
+  <br>③ la <b>décision finale</b>, qui transforme
   des résultats isolés en un bilan utilisable.</p>
   <p>Enfin, un système technique qui surveille son propre état vaut mieux qu'un système qu'on découvre en
-  panne le jour où on en a besoin. C'est vrai d'une station d'alerte, d'un ascenseur, d'un détecteur de fumée.</p>
+  panne le jour où on en a besoin. <br>C'est vrai d'une station d'alerte, d'un ascenseur, d'un détecteur de fumée.</p>
 </section>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p><b>Défi 1 — le cinquième organe.</b> La mairie ajoute un capteur de pluie. Que faut-il changer dans ton
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+  <p><b>Défi 1 — le cinquième organe.</b><br>La mairie ajoute un capteur de pluie. Que faut-il changer dans ton
   programme&nbsp;? Compte les lignes à modifier — et mesure ce que la boucle t'a fait économiser.</p>
-  <p><b>Défi 2 — l'auto-test qui ment.</b> Écris volontairement la version fausse où le compteur est remis à
-  zéro dans la boucle. Fais-la tourner au banc d'essai avec trois pannes&nbsp;: que répond-elle&nbsp;? Explique
+  <p><b>Défi 2 — l'auto-test qui ment.</b><br>Écris volontairement la version fausse où le compteur est remis à
+  zéro dans la boucle. <br>Fais-la tourner au banc d'essai avec trois pannes&nbsp;: que répond-elle&nbsp;? Explique
   pourquoi c'est le genre de bogue le plus dangereux.</p>
-  <p><b>Défi 3 — la fréquence.</b> Un auto-test toutes les minutes, est-ce mieux&nbsp;? Réfléchis à la batterie,
-  à l'usure de la sirène et à la patience du gardien. Propose une fréquence et justifie-la.</p>
+  <p><b>Défi 3 — la fréquence.</b><br>Un auto-test toutes les minutes, est-ce mieux&nbsp;? Réfléchis à la batterie,
+  à l'usure de la sirène et à la patience du gardien. <br>Propose une fréquence et justifie-la.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card">
@@ -1331,21 +1472,20 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
   <h3>Je me positionne</h3>
   <div class="bilan-grid">
-    <p><b>3e_C6.2</b> — programmer un algorithme lié à une nouvelle fonctionnalité&nbsp;:</p>
-    <select id="pos_c62" aria-label="Auto-positionnement sur la compétence 3e_C6.2">
-      <option value="">— je me positionne —</option>
-      <option>🔴 Maîtrise insuffisante — j'ai besoin du modèle sous les yeux</option>
-      <option>🟠 Maîtrise fragile — je conçois avec de l'aide</option>
-      <option>🟡 Maîtrise satisfaisante — je conçois et j'écris seul·e</option>
-      <option>🟢 Très bonne maîtrise — je conçois, j'écris et j'éprouve sur des cas que je choisis</option>
-    </select>
+    <fieldset class="qcm-groupe" id="pos_c62">
+  <legend><b>3e_C6.2</b> — programmer un algorithme lié à une nouvelle fonctionnalité&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="pos_c62" id="pos_c62__1" value="🔴 Maîtrise insuffisante — j&#x27;ai besoin du modèle sous les yeux"><label for="pos_c62__1">🔴 Maîtrise insuffisante — j'ai besoin du modèle sous les yeux</label></div>
+  <div class="qcm-option"><input type="radio" name="pos_c62" id="pos_c62__2" value="🟠 Maîtrise fragile — je conçois avec de l&#x27;aide"><label for="pos_c62__2">🟠 Maîtrise fragile — je conçois avec de l'aide</label></div>
+  <div class="qcm-option"><input type="radio" name="pos_c62" id="pos_c62__3" value="🟡 Maîtrise satisfaisante — je conçois et j&#x27;écris seul·e"><label for="pos_c62__3">🟡 Maîtrise satisfaisante — je conçois et j'écris seul·e</label></div>
+  <div class="qcm-option"><input type="radio" name="pos_c62" id="pos_c62__4" value="🟢 Très bonne maîtrise — je conçois, j&#x27;écris et j&#x27;éprouve sur des cas que je choisis"><label for="pos_c62__4">🟢 Très bonne maîtrise — je conçois, j'écris et j'éprouve sur des cas que je choisis</label></div>
+</fieldset>
   </div>
 </section>
 
 <section class="card">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de l'atelier t'attend&nbsp;: <b>30 questions</b> dont 3 illustrées, sur les données, la conception,
-  l'écriture et la mise à l'épreuve d'un algorithme. Chaque réponse est expliquée — même les mauvaises.</p>
+  l'écriture et la mise à l'épreuve d'un algorithme. <br>Chaque réponse est expliquée — même les mauvaises.</p>
   <p style="text-align:center"><a class="btn qcm" href="qcm_3e_C6.2_auto_test.html">🩺 Lancer le QCM de l'atelier</a></p>
   <p style="text-align:center;font-size:.92em">Et pour t'entraîner spécifiquement au brevet&nbsp;:
   <a href="entrainement_dnb_algorigrammes.html">l'entraînement DNB, 30 exercices corrigés</a> — lecture,
@@ -1361,14 +1501,35 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 </footer>
 
 <script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
+<script>
 "use strict";
 /* ══════ Sauvegarde ══════ */
 const KEY = "seq_3e_C6.2_auto_test";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, checks:{}, valid: window.__valid||{}, exp: window.__exp||{}};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{
-    if(el.type==="checkbox") o.checks[el.id] = el.checked ? 1 : 0; else o.inputs[el.id]=el.value; });
+  // n°300 : chaque groupe de boutons radio (fieldset.qcm-groupe) porte sa valeur
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{
+    if(el.type==="checkbox") o.checks[el.id] = el.checked ? 1 : 0; else if(el.type!=="radio") o.inputs[el.id]=el.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c=>{ o.inputs[c.id]=c.checked; });
   return o;
@@ -1666,6 +1827,14 @@ function appliqueSeance(idPanneau){
 }
 let ouvertEnImpression = null;
 window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+/* Révision du 11/11/2026 : ce qui est replié à l'écran (Bonus, erreurs fréquentes, synthèse) s'ouvre pour l'impression. */
+(function(){
+  var replis = "details.bonus-replie, details.erreurs-repliees, details.rappel-replie", etats = null;
+  function ouvrir(){ etats = []; document.querySelectorAll(replis).forEach(function(d){ etats.push([d, d.open]); d.open = true; }); }
+  function refermer(){ if (!etats) return; etats.forEach(function(e){ e[0].open = e[1]; }); etats = null; }
+  window.addEventListener("beforeprint", ouvrir); window.addEventListener("afterprint", refermer);
+  if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) ouvrir(); else refermer(); }); }
+})();
 window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
 function ouvrirSeanceDeLAncre(){
