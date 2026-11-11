@@ -37,6 +37,37 @@
 import { chromium } from 'playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+/* Règle d'or n°300 (révision de la séquence, 10/11/2026) : les questions de la page sont des groupes de boutons
+   radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
+   proposition qui porte cette valeur — la leçon de la vague du 20/09 : on vise la VALEUR, jamais la
+   position. Rien d'autre du banc ne change. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 import fs from 'node:fs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
@@ -49,7 +80,7 @@ const b = await chromium.launch();
 /* ════════════════ SÉQUENCE (21 contrôles) ════════════════ */
 {
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = [], fail = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
@@ -57,6 +88,8 @@ p.on('requestfailed', r => { if (!/fonts\.g/.test(r.url())) fail.push(r.url()); 
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 10/11/2026 : Bonus et exercice incrusté sont repliés ; le banc ouvre les volets.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; }));
 await p.waitForTimeout(340);
 
 const texte = (await p.textContent('body')).replace(/\s+/g, ' ');
@@ -104,7 +137,9 @@ async function remplir(n) {
   for (const [id, v] of Object.entries(ATT[n])) {
     if (!(await ouvrirPour(id))) continue;
     const el = await p.$('#' + id); if (!el) continue;
-    if ((await el.evaluate(e => e.tagName)) === 'SELECT') await p.selectOption('#' + id, v);
+    const tag = await el.evaluate(e => e.tagName);
+    if (tag === 'SELECT') await p.selectOption('#' + id, v);
+    else if (tag === 'FIELDSET') await p.selectOption('#' + id, v); // n°300 (10/11/2026) : groupe de boutons radio, via le shim
     else await p.fill('#' + id, v);
   }
 }
@@ -174,7 +209,7 @@ ok('12 · activité 4 REFUSÉE malgré 4 réponses justes — les pannes ne sont
    donne exprès est prise dans les options réelles du menu, jamais écrite ici. */
 const CAUSES = await p.evaluate(() => {
   const bonnes = Object.fromEntries(Object.entries(PANNES).map(([k, v]) => [k, v.cause]));
-  const offertes = [...document.querySelectorAll('#causeSel option')]
+  const offertes = [...document.querySelectorAll('#causeSel option, #causeSel input[type=radio]')] // n°300 (10/11/2026) : boutons radio
     .map(o => o.value).filter(Boolean);
   return { bonnes, offertes };
 });
@@ -281,7 +316,7 @@ ok('17 · progression 5 / 5 activités, et les quatre onglets portent leur coche
    await p.textContent('#progTxt'));
 
 /* ── persistance ─────────────────────────────────────────────────────────── */
-await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(340);
+await p.reload({ waitUntil: 'load' }); await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; })); await p.waitForTimeout(340);
 const premier = Object.keys(ATT[1])[0];
 ok('18 · rechargement : réponses, validations ET les deux verrous sont restaurés',
    (await p.inputValue('#' + premier)) === ATT[1][premier]
@@ -373,7 +408,7 @@ await ctx.close();
 /* ════════════════ QCM (9 contrôles) ════════════════ */
 {
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 
@@ -451,11 +486,13 @@ await ctx.close();
    impossible, une unité qui ne va pas ; puis elle recharge, passe à 390 px, imprime. */
 {
 const ctx = await b.newContext({ viewport: { width: 1280, height: 900 }, locale: 'fr-FR' });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
-await p.goto('file://' + SEQ, { waitUntil: 'load' }); await p.waitForTimeout(300);
+await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 10/11/2026 : Bonus et exercice incrusté sont repliés ; le banc ouvre les volets.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; })); await p.waitForTimeout(300);
 await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(150);
 const courbe = () => p.evaluate(() => {
   const s = document.getElementById('ddCourbe'), vb = s.viewBox.baseVal;
@@ -541,7 +578,7 @@ ok('38 · « Vérifier » donne un retour par manque — l\'unité, le lieu de l
    ret.items.map(i => i.t.slice(0, 40)).join(' | ').slice(0, 240) + ' → ' + juste.t.slice(0, 40));
 
 await p.waitForTimeout(800);                                   // la sauvegarde de la page part 600 ms après la dernière saisie
-await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(300);
+await p.reload({ waitUntil: 'load' }); await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; })); await p.waitForTimeout(300);
 await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(150);
 const relu = await courbe();
 const valeurs = await p.evaluate(() => [1, 2, 3, 4, 5, 6].map(i => ['D', 'H', 'L', 'V'].map(c => document.getElementById('dd' + c + i).value).join(' ')));
@@ -587,6 +624,7 @@ await ctx.close();
 const ctx2 = await b.newContext({ viewport: { width: 1280, height: 900 }, locale: 'fr-FR' });
 const q = await ctx2.newPage();
 await q.goto('file://' + SEQ, { waitUntil: 'load' }); await q.waitForTimeout(300);
+await q.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; }));
 await q.click('.seance-tab[data-panel="s4"]'); await q.waitForTimeout(150);
 await q.focus('#ddGrandeur');
 const ordre = [];                                              // un champ date ou heure a ses segments : on garde chaque champ une fois

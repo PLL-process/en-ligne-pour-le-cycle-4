@@ -777,9 +777,9 @@ E6 = dict(
     jumeau=dict(consigne="Une ligne s'ajoute au tableau&nbsp;: FC (la voisine), parce que la pompe fait du bruit la nuit. Pour la "
                          "désignation, quelqu'un propose «&nbsp;La pompe ne gêne pas les voisins&nbsp;». Corrige cette désignation, "
                          "puis donne un critère et un niveau.",
-                correction="La proposition a un sujet («&nbsp;la pompe&nbsp;») et un verbe conjugué → désignation corrigée, avec un "
-                           "verbe à l'infinitif&nbsp;: <b>«&nbsp;ne pas gêner la voisine par son bruit&nbsp;»</b>. Critère&nbsp;: le "
-                           "<b>niveau sonore</b>, en décibels (dB), mesuré à un mètre. Niveau&nbsp;: <b>au plus 35&nbsp;dB</b> la nuit. "
+                correction="La proposition a un sujet («&nbsp;la pompe&nbsp;») et un verbe conjugué. <br>Désignation corrigée, avec un "
+                           "verbe à l'infinitif&nbsp;: <b>«&nbsp;ne pas gêner la voisine par son bruit&nbsp;»</b>. <br>Critère&nbsp;: le "
+                           "<b>niveau sonore</b>, en décibels (dB), mesuré à un mètre. <br>Niveau&nbsp;: <b>au plus 35&nbsp;dB</b> la nuit. <br>"
                            "(Autre réponse juste&nbsp;: critère «&nbsp;heures de fonctionnement&nbsp;», niveau «&nbsp;jamais entre "
                            "22&nbsp;h et 7&nbsp;h&nbsp;».)"),
     correction=[
@@ -802,9 +802,9 @@ E6 = dict(
         "niveau&nbsp;: 12&nbsp;V (volts), une très basse tension",
         "<b>Ligne 6</b> «&nbsp;Être facile à régler&nbsp;» → critère&nbsp;: <b>le temps pour changer l'heure</b> → niveau&nbsp;: "
         "<b>2&nbsp;min au plus</b>",
-        "Les niveaux refusés&nbsp;: «&nbsp;10 par jour&nbsp;», «&nbsp;2 au plus&nbsp;» → sans unité&nbsp;; «&nbsp;10&nbsp;min par "
-        "jour&nbsp;», «&nbsp;2&nbsp;L au plus&nbsp;» → l'unité d'un autre critère&nbsp;; «&nbsp;Pas trop d'eau&nbsp;», "
-        "«&nbsp;Rapidement&nbsp;» → ne se mesurent pas",
+        "Les niveaux refusés&nbsp;: <br>«&nbsp;10 par jour&nbsp;», «&nbsp;2 au plus&nbsp;»&nbsp;: sans unité&nbsp;; <br>«&nbsp;10&nbsp;min par "
+        "jour&nbsp;», «&nbsp;2&nbsp;L au plus&nbsp;»&nbsp;: l'unité d'un autre critère&nbsp;; <br>«&nbsp;Pas trop d'eau&nbsp;», "
+        "«&nbsp;Rapidement&nbsp;»&nbsp;: ne se mesurent pas",
         "La couleur du boîtier ne vérifie aucune des quatre contraintes&nbsp;: elle ne se mesure pas pour elles.",
         "<b>IPX4</b> → vient d'une <b>norme</b> internationale&nbsp;: elle fixe les codes IP pour tous les fabricants.",
         "<b>12&nbsp;V</b> → «&nbsp;pas question&nbsp;» d'autre chose → aucun écart → <b>F0</b> (le 230&nbsp;V serait un danger "
@@ -816,9 +816,9 @@ E6 = dict(
         "<b>accepte</b> comme écart&nbsp;: la gardienne tient beaucoup à ses plantes, et pourtant le volume d'eau est en F2.",
         "<b>Une exigence attendue&nbsp;:</b> « Le système doit envoyer l'état de l'arrosage au smartphone <b>au moins 1 fois par jour</b>. » "
         "ou « …le message doit arriver <b>en moins de 5 minutes</b> après l'arrosage. »",
-        ("conclusion", "Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe à "
-                       "l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) et sa "
-                       "<b>flexibilité</b> (F0 impératif → F3 très négociable). Le niveau vient d'une norme, d'un cahier des "
+        ("conclusion", "Chaque ligne du cahier des charges a&nbsp;: <br>sa <b>fonction</b> (FP ou FC)&nbsp;; <br>sa <b>désignation</b> (un verbe à "
+                       "l'infinitif)&nbsp;; <br>son <b>critère</b> (ce qu'on mesure)&nbsp;; <br>son <b>niveau</b> (un nombre et son unité)&nbsp;; <br>sa "
+                       "<b>flexibilité</b> (F0 impératif → F3 très négociable). <br>Le niveau vient d'une norme, d'un cahier des "
                        "charges, d'un label ou d'une certification."),
     ],
     retenir="dans le cahier des charges, chaque fonction a une <b>désignation</b> qui commence par un <b>verbe à l'infinitif</b>, "
