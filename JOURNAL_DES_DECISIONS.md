@@ -29347,6 +29347,47 @@ essentiel compris. **Reste** : le lexique du lot n'a pas d'ancres par séance ; 
 
 **Fusion avec `main` (même jour)** : la PR #624, fusionnée entre-temps, avait déjà révisé 4e_C1.4 (texte simplifié, exemples de 5.b repliés). Résolution : le texte de #624 est gardé partout ; cette PR n'y ajoute que son idée propre — les leçons des cinq situations repliées dans un `<details>` ouvert après la réponse. Les chiffres de mots de l'entrée ci-dessus sont ceux mesurés avant la fusion.
 
+## 08/11/2026 — Audit hebdomadaire : 91 ✘ (−44), 73 fichiers de dérive (+61) dont 62 perdraient leur licence, 7 séquences propres sur 56 (transversal : `docs/audits`)
+
+**Premier audit de la boucle du dimanche** (tâche planifiée du 07/11, déplacée du lundi au dimanche le 08/11 ; 17 h 35
+Martinique). `rapport_audit.py --complet --generateurs` sur `main` après #625 : `docs/audits/RAPPORT_AUDIT_2026-11-08.md`,
+avec la section « Depuis la semaine dernière », le crible reporté du 07/11 et la veille. Rien n'est corrigé, rien n'est fusionné.
+
+**Ce qui a bougé depuis le 07/11** (13 PR fusionnées, #611 → #625). ✘ de règles d'or **135 → 91**, 51 → 39 pages (V1 #612,
+V2 de 3e #614, 5e_C1.5 #619) ; listes n°300 à convertir **1 196 → 1 030** sur 38 pages ; ancien gabarit (n°29/30/31/34)
+**19 → 11 pages**. Couverture, preuves des COUVERT et matrice : inchangées (4 codes à vérifier, 19 non mesurables, 107
+annotés). Les six contrôles Playwright ont tourné cette fois : squelette, hors ligne, impression, verrous, code coloré verts ;
+**`controle_contraste_liens` rouge** — nouveau. Révision des trois thèmes (`bilan_revision.py`) : **7 séquences propres sur 56**.
+
+**Deux dettes laissées par les lots transversaux, visibles seulement d'ici.** (1) Dérive des générateurs **12 → 73 fichiers** :
+régénération d'essai dans une copie — **62 pages perdraient leur mention de licence** (n°321), parce que `build.py` (ateliers
+des représentations : 35 pages et 24 incrustations) et `build_atelier.py` (planification, 3 pages) ne connaissent pas la
+`MENTION` que #616 a posée à la main — le défaut que #621 a réparé dans `build_tp.py`, pas dans les deux autres (n°283).
+(2) Le lien « CC BY-NC-SA 4.0 » de la mention est en bleu par défaut du navigateur sur fond sombre (2,03:1) sur **93 pages**
+(58 lexiques, 17 synthèses professeur, 13 séquences, 5 QCM) : une seule source, `_outils/licence_cc.py`.
+
+**Chantiers proposés, dans l'ordre.** 1) `build.py` et `build_atelier.py` importent la mention de licence, puis régénération
+des 62 pages (la grille des « classer » de #624 se pose au passage) — avant toute autre régénération. 2) Couleur du lien dans
+`licence_cc.py`, mention reposée sur 410 pages. 3) La passe complète continue dans l'ordre du suivi (5e_C1.1, 5e_C1.2,
+5e_C3.1, 4e_C2.1…) ; V2 de 4e et de 5e (11 pages) par vague ou à leur tour : à Pascal de dire. 4) 3e_C9.2 dans son
+générateur : listes (62), images sans alternative (n°34), bouton QCM à 54 % (`regle4`) ; le contrôle n°301 à interroger sur
+les pages intermédiaires d'une séquence éclatée (le bilan vit en page 4 par construction). 5) 3e_C4.3 (Bonus après le bilan),
+4e_C6.2 (aucun bilan) ; n°23 sur 4e_C2.1 et 4e_C7.1 à trancher. 6) Matrice : relire 5e_C1.3, 4e_C1.4, 3e_C1.5 après leur révision.
+
+**Veille** (lecture seule, dépôts clonés, rien exécuté, rien installé) : huit candidats inspectés, aucun à installer ; trois
+idées à réécrire de zéro — les quatre niveaux d'une correction (Hattie & Timperley) et le « test de l'action » pour
+`texte-clair-et-aere`, une grille des causes de charge pour `revision-sequence`, les trois niveaux de vocabulaire pour
+`lexique-sequence` ; `education-agent-skills` (CC BY-SA, 165 skills) est probablement la source de trois skills du compte.
+`SKILLS_AUDIT.md` n'est pas modifié : le rapport propose.
+
+**Vérifié.** Le rapport a tourné une fois, complet (≈ 25 min) ; `controle_contraste_liens` relancé à part pour lire ses 93
+lignes ; `verif_regles_audit.py` relancé pour le compte des listes ; `build.py` et `build_atelier.py` relancés dans une copie
+hors git, jamais dans le dépôt ; `bilan_revision.py --md`. **Non exécuté** : les bancs des lots (aucune page touchée), un
+navigateur réel.
+
+**Reste à Pascal.** Fusionner cette PR (rapport + journal) ; cocher les décisions de la section 6 du rapport — surtout les
+deux PR d'outil sur la licence, et l'ordre V2 / passe complète.
+
 ## 10/11/2026 — Révision des trois thèmes, 4 bis : le jeu des licences de 4e_C1.4 devient jouable, et la séance 6 se lit (thème 1)
 
 **D'où ça vient.** En relisant 4e_C1.4 après #624 (la passe « lire comme un élève »), l'activité 6.c « le jeu des
