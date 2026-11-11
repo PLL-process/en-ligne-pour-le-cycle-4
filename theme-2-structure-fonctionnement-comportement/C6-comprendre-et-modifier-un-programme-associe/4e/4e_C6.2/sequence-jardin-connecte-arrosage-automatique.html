@@ -139,7 +139,7 @@
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
   .filet,.pourquoi{opacity:1!important}
-  #a1q1,#a1q2,#a1q3,#a2q1,#a2q2,#a2q3,#a2q4,#a3o1,#a3o2,#a3o3,#a3o4,#a3o5,#a4q1,#a4q2,#a4q3,#a5q1,#a5t1,#a5t2,#a5t3,#a6q1,#a7q1,#a7q2,#a7q3,#a7q4,#a8q1,#a8txt,.ae-b,.aide,.badge,.bench th,.code,.correction,.donnees,.num,.parsons td,.pytrous,.refs th,.tag{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  #a1q1,#a1q2,#a1q3,#a2q1,#a2q2,#a2q3,#a2q4,#a3o1,#a3o2,#a3o3,#a3o4,#a3o5,#a4q1,#a4q2,#a4q3,#a5q1,#a5t1,#a5t2,#a5t3,#a6q1,#a7_cdcf_1,#a7_cdcf_2,#a7_cdcf_3,#a7_cdcf_4,#a8q1,#a8txt,.ae-b,.aide,.badge,.bench th,.code,.correction,.donnees,.num,.parsons td,.pytrous,.refs th,.tag{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
   .n3,.n3 span,.py-var,.question-directrice{color:#047fa0!important}
   .correction summary,.n4,.n4 span,.py-str{color:#048827!important}
   .badge{color:#0d2347!important}
@@ -236,6 +236,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -573,7 +600,66 @@ body.essentiel details.referentiel-replie{display:none}
 <!-- fiche-papier v1 : fin -->
 <link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
+<style id="css-qcm-rangee">
+/* révision du 11/11/2026 : réponses d'un mot ou d'un chiffre — en rangée, pas en grille lettrée */
+fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0}
+/* les blocs de l'algorigramme à numéroter : la forme du bloc, son texte, puis les six numéros */
+/* six numéros : trois par ligne à 390 px au lieu de deux */
+fieldset.bloc-algo>.qcm-option{margin:0 4px 6px 0!important;padding-left:8px;padding-right:10px;min-width:0}
+fieldset.bloc-algo legend .forme{font-size:.82em;color:var(--sub);font-weight:400;margin-right:6px;white-space:nowrap}
+</style>
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
+<style id="css-replis-4e-c62">
+/* révision du 11/11/2026 : ce qui ne sert qu'au besoin se déplie (charge de lecture des séances 1 et 3) */
+details.geste-detail,details.gestes-vitta-replie,details.carte-detail{margin:6px 0}
+ol.gestes-pratique li{flex-wrap:wrap}
+ol.gestes-pratique li>.geste-texte{flex:1 1 0;min-width:0}
+details.geste-detail{flex:0 0 100%;padding-left:1.9em}
+details.geste-detail>summary,details.gestes-vitta-replie>summary,details.carte-detail>summary{cursor:pointer;font-weight:700;color:var(--sub,#9bbefc);padding:6px 0;min-height:24px}
+details.geste-detail>p{margin:4px 0 0}
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C6.2.html">📖 Lexique</a></nav>
@@ -584,6 +670,8 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="btn small" id="btnSave" type="button">💾 Sauvegarder</button>
   <button class="btn small ghost" id="btnPrint" type="button">🖨 Imprimer</button>
   <button class="btn small ghost" id="btnReset" type="button">🗑 Tout effacer</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 <p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Tout effacer&nbsp;».</p>
 <p class="saved-note" id="savedNote"></p>
@@ -606,7 +694,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C6.1/Synthèses/synthese_eleve_5e_C6.1-C6.3.html#partie-3">relis la partie 3 de la synthèse 5e_C6.1 à C6.3, « Que change un paramètre qu'on règle ? »</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> tu vas écrire la logique d'arrosage <b>toi-même</b>, sous forme d'algorigramme puis de programme. Ce n'est pas un texte à comprendre : c'est une décision à formuler assez précisément pour qu'une machine l'exécute sans se tromper.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> tu vas écrire la logique d'arrosage <b>toi-même</b>, sous forme d'algorigramme puis de programme. <br>Ce n'est pas un texte à comprendre : c'est une décision à formuler assez précisément pour qu'une machine l'exécute sans se tromper.</p>
   <p class="filet">Un mot à garder en tête : un algorigramme est un dessin qui montre les décisions d'un programme — un losange pour une question, un rectangle pour une action.</p>
 </section>
 
@@ -650,15 +738,15 @@ body.essentiel details.referentiel-replie{display:none}
     <tr><th>Domaines du socle</th><td>D1.3 (langage informatique) · D2 (méthodes/outils) · D4 (systèmes techniques) — et D3/D5 pour le volet impact (séance 3)</td></tr>
     <tr><th>Compétence numérique (CRCN)</th><td>3.4 Programmer, Niv. 2 — action observable : condition complétée et exécutée dans l'éditeur Vittascience ; trace : réponses, banc de tests et badges sauvegardés dans la page</td></tr>
   </table>
-  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>4e_C1.4</code> · <code>4e_C4.1</code> · <code>4e_C4.5</code> · <code>4e_C6.2</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>4e_C1.4</code> · <code>4e_C4.1</code> · <code>4e_C4.5</code> · <code>4e_C6.2</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
 </div>
 </details>
 
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
-  <p class="declencheur">Pendant les vacances d'été, les plantes du collège ne sont pas toujours arrosées. À New York,
-  une canicule de juillet peut être rude : certaines reçoivent trop d'eau, d'autres pas assez — et l'eau coûte cher. Le collège
+  <p class="declencheur">Pendant les vacances d'été, les plantes du collège ne sont pas toujours arrosées. <br>À New York,
+  une canicule de juillet peut être rude : certaines reçoivent trop d'eau, d'autres pas assez — et l'eau coûte cher. <br>Le collège
   dispose d'un prototype d'arrosage automatique… mais son programme est INCOMPLET : à toi de le compléter,
   de le tester et de prouver qu'il répond au besoin.</p>  <figure class="situation-photo">
     <img src="Images/synthese_jardin_new_york.png" width="1536" height="1024" loading="lazy"
@@ -700,7 +788,7 @@ body.essentiel details.referentiel-replie{display:none}
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
     <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience (en ligne) relié à une carte réelle + capteur d'humidité + relais + petite pompe 5 V (volts) ou DEL de substitution (<b>très basse tension uniquement — jamais de secteur</b>).</p>
-    <p>🅱 <b>En simulation</b> : les <b>éditeurs Python 🐍</b> des séances 1, 2 et du Bonus sont dans la page — tu tapes ton programme, ▶&nbsp;Exécuter, et la page simule le capteur et la pompe. Le simulateur de pompe de la séance 2 complète le tout ; Vittascience reste possible, par un lien. C'est le parcours principal.</p>
+    <p>🅱 <b>En simulation</b> : les <b>éditeurs Python 🐍</b> des séances 1, 2 et du Bonus sont dans la page — tu tapes ton programme, ▶&nbsp;Exécuter, et la page simule le capteur et la pompe. <br>Le simulateur de pompe de la séance 2 complète le tout ; Vittascience reste possible, par un lien. <br>C'est le parcours principal.</p>
     <p>🅲 <b>Sans matériel</b> : la remise en ordre, le Python à trous, le simulateur de pompe et le banc de tests fonctionnent entièrement dans la page, hors ligne.</p>
   </div>
   <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter :</b> à chaque exercice, tu PRÉDIS
@@ -711,7 +799,7 @@ body.essentiel details.referentiel-replie{display:none}
 <section class="card">
   <h2>🗺️ Chaînes fonctionnelles</h2>
   <img class="diagram" src="Images/schema_chaines_arrosage.svg" alt="Schéma des chaînes d'information et d'énergie de l'arrosage automatique : en haut, l'humidité du sol entre dans ACQUÉRIR, le capteur ; TRAITER, la carte Arduino et son programme, compare au seuil ; COMMUNIQUER, l'écran LCD, affiche l'état du sol ; l'ordre descend de TRAITER et arrive sur DISTRIBUER ; en bas, STOCKER, la pile, où l'énergie chimique est stockée ; l'énergie électrique passe à DISTRIBUER, le relais, puis à CONVERTIR, la petite pompe, qui fournit de l'énergie mécanique pour mettre l'eau en mouvement ; TRANSMETTRE est absent, en pointillés ; à part, le circuit d'eau va du réservoir à la pompe puis au pot de la plante" loading="lazy">
-  <p style="font-size:.88em;color:var(--sub)">La carte relie les deux chaînes : elle <em>traite</em> l'information reçue du capteur puis <em>commande</em> le relais qui laisse passer l'énergie vers la pompe. Dans les blocs, les fonctions ; dessous, les composants ; sur les flèches, les formes d'énergie. L'eau est de la matière, pas de l'énergie : elle a son propre circuit. 📐 <b>Règle du schéma :</b> l'information en haut, l'énergie en bas, l'ordre qui descend.</p>
+  <p style="font-size:.88em;color:var(--sub)">La carte relie les deux chaînes : elle <em>traite</em> l'information reçue du capteur puis <em>commande</em> le relais qui laisse passer l'énergie vers la pompe. <br>Dans les blocs, les fonctions ; <br>dessous, les composants ; <br>sur les flèches, les formes d'énergie. <br>L'eau est de la matière, pas de l'énergie : elle a son propre circuit. 📐 <b>Règle du schéma :</b> l'information en haut, l'énergie en bas, l'ordre qui descend.</p>
 </section>
 </details>
 
@@ -726,32 +814,45 @@ body.essentiel details.referentiel-replie{display:none}
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Valider &amp; discuter<span id="done-s3"></span></button>
 </div>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier l'activité 5</li>
+    <li data-tache="6"><span class="tb-etat">○</span> Vérifier l'activité 6</li>
+    <li data-tache="7"><span class="tb-etat">○</span> Vérifier l'activité 7</li>
+    <li data-tache="8"><span class="tb-etat">○</span> Vérifier l'activité 8</li>
+  </ul>
+</div>
 <!-- ═══════════ SÉANCE 1 ═══════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
 <!-- Billet d'entrée (n°26) : en tête de la séance 1, comme le pilote 3e_C1.1. Une question par ligne du bloc
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
-  <fieldset class="qcm-groupe" id="be_1">
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
+  <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Dans le programme du lampadaire, l'<b>état de la lampe</b> (éteinte, veille, pleine puissance) est…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une sortie : le programme la produit"><label for="be_1__1">une sortie : le programme la produit</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une entrée : elle renseigne le programme"><label for="be_1__2">une entrée : elle renseigne le programme</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un paramètre qu&#x27;on règle à la main"><label for="be_1__3">un paramètre qu'on règle à la main</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
-  <fieldset class="qcm-groupe" id="be_2">
+  <fieldset class="qcm-groupe" id="be_2" data-melange="1">
       <legend>« SI luminosité &lt; 30 ALORS nuit SINON jour ». Avec une luminosité de 60, le programme conclut…</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="nuit : la luminosité dépasse le seuil"><label for="be_2__1">nuit : la luminosité dépasse le seuil</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="rien : le programme s&#x27;arrête là"><label for="be_2__2">rien : le programme s'arrête là</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="jour : c&#x27;est le SINON qui s&#x27;applique"><label for="be_2__3">jour : c'est le SINON qui s'applique</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="rien : le programme s&#x27;arrête là"><label for="be_2__2">rien : le programme s'arrête là</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="nuit : la luminosité dépasse le seuil"><label for="be_2__1">nuit : la luminosité dépasse le seuil</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
-  <fieldset class="qcm-groupe" id="be_3">
+  <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>Passer le seuil « nuit » de 30 à 45, c'est…</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="réécrire la condition : la logique change"><label for="be_3__1">réécrire la condition : la logique change</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="régler un paramètre : la logique ne change pas"><label for="be_3__2">régler un paramètre : la logique ne change pas</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="ajouter un capteur plus sensible à la nuit"><label for="be_3__3">ajouter un capteur plus sensible à la nuit</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="réécrire la condition : la logique change"><label for="be_3__1">réécrire la condition : la logique change</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
@@ -808,15 +909,41 @@ body.essentiel details.referentiel-replie{display:none}
 
   <div class="act">
     <header><span class="num">Activité 1</span><h3>La chaîne d'information du prototype</h3><span class="duree">⏱ 10 min</span></header>
-    <div class="consigne"><b>Consigne :</b> complète les 3 cases avec le bon élément.</div>
-    <label>Le <select id="a1q1"><option value="">— je choisis —</option><option>capteur d'humidité</option><option>écran LCD</option><option>carte programmable</option></select> <strong>acquiert</strong> l'information.</label>
-    <label>La <select id="a1q2"><option value="">— je choisis —</option><option>capteur d'humidité</option><option>écran LCD</option><option>carte programmable</option></select> <strong>traite</strong> l'information reçue.</label>
-    <label>L'<select id="a1q3"><option value="">— je choisis —</option><option>capteur d'humidité</option><option>écran LCD</option><option>carte programmable</option></select> <strong>communique</strong> l'état du sol à l'utilisateur.</label>
+    <div class="consigne"><b>Consigne :</b> pour chaque fonction, choisis le bon élément.</div>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>capteur d'humidité</li><li><b>B</b>écran LCD</li><li><b>C</b>carte programmable</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a1q1">
+  <legend>Qui <strong>acquiert</strong> l'information&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="capteur d&#x27;humidité" aria-label="A — capteur d&#x27;humidité"><label for="a1q1__1" title="capteur d&#x27;humidité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="écran LCD" aria-label="B — écran LCD"><label for="a1q1__2" title="écran LCD">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="carte programmable" aria-label="C — carte programmable"><label for="a1q1__3" title="carte programmable">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a1q2">
+  <legend>Qui <strong>traite</strong> l'information reçue&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="capteur d&#x27;humidité" aria-label="A — capteur d&#x27;humidité"><label for="a1q2__1" title="capteur d&#x27;humidité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="écran LCD" aria-label="B — écran LCD"><label for="a1q2__2" title="écran LCD">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="carte programmable" aria-label="C — carte programmable"><label for="a1q2__3" title="carte programmable">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a1q3">
+  <legend>Qui <strong>communique</strong> l'état du sol à l'utilisateur&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="capteur d&#x27;humidité" aria-label="A — capteur d&#x27;humidité"><label for="a1q3__1" title="capteur d&#x27;humidité">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="écran LCD" aria-label="B — écran LCD"><label for="a1q3__2" title="écran LCD">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="carte programmable" aria-label="C — carte programmable"><label for="a1q3__3" title="carte programmable">C</label></div>
+</fieldset>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>« Acquérir », c'est capter une grandeur du monde réel. Quel composant touche la terre du pot ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Suis le schéma des chaînes fonctionnelles ci-dessus, de gauche à droite : ce qui capte → ce qui traite → ce qui affiche. Reporte chaque bloc dans la bonne case.</p></div></details>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <p class="feedback" id="fb1" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>capteur d'humidité → <b>acquiert</b> · carte programmable → <b>traite</b> · écran LCD → <b>communique</b>. La chaîne d'information : acquérir → traiter → communiquer. Le capteur ne décide RIEN : c'est le programme de la carte qui décide.</p></div></details>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>Chaque fonction a son élément&nbsp;:</b>
+<br>Acquérir → <b>le capteur d'humidité</b>&nbsp;: planté dans la terre, il mesure l'humidité du sol.
+<br>Traiter → <b>la carte programmable</b>&nbsp;: son programme convertit la mesure et la compare au seuil.
+<br>Communiquer → <b>l'écran LCD</b>&nbsp;: il affiche l'état du sol pour l'utilisateur.</p>
+<p><b>Pourquoi pas les autres&nbsp;?</b>
+<br>L'écran n'acquiert rien&nbsp;: il montre ce que la carte lui envoie.
+<br>Le capteur ne traite rien et ne décide RIEN&nbsp;: il fournit un nombre, et c'est le programme de la carte qui décide.
+<br>La carte ne communique pas seule avec l'utilisateur&nbsp;: sans écran, personne ne lit son résultat.</p>
+<p><b>À retenir&nbsp;:</b> la chaîne d'information se lit toujours dans cet ordre — acquérir, traiter, communiquer.</p>
+</div></details>
   </div>
 
   <div class="act">
@@ -825,15 +952,51 @@ body.essentiel details.referentiel-replie{display:none}
     nombre entre <b>0</b> (sol complètement sec) et <b>1023</b> (sol saturé d'eau). Le programme le convertit en
     pourcentage : <code>humidite = valeur_brute × 100 / 1023</code>.</div>
     <div class="consigne"><b>Consigne :</b> PRÉDIS les conversions, puis vérifie-les à la calculatrice (ou dans l'éditeur de l'activité 3).</div>
-    <label>valeur_brute = 1023 → humidité = <select id="a2q1"><option value="">— je choisis —</option><option>0 %</option><option>50 %</option><option>100 %</option><option>1023 %</option></select></label>
-    <label>valeur_brute = 0 → humidité = <select id="a2q2"><option value="">— je choisis —</option><option>0 %</option><option>10 %</option><option>100 %</option><option>impossible à savoir</option></select></label>
-    <label>valeur_brute ≈ 512 → humidité ≈ <select id="a2q3"><option value="">— je choisis —</option><option>25 %</option><option>50 %</option><option>75 %</option><option>512 %</option></select></label>
-    <label>Cette conversion est calculée par… <select id="a2q4"><option value="">— je choisis —</option><option>le capteur lui-même</option><option>le programme de la carte</option><option>l'écran LCD</option><option>la pompe</option></select></label>
+    <fieldset class="qcm-groupe qcm-rangee" id="a2q1">
+  <legend>valeur_brute = 1023 → humidité =</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="0 %"><label for="a2q1__1">0 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="50 %"><label for="a2q1__2">50 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="100 %"><label for="a2q1__3">100 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="1023 %"><label for="a2q1__4">1023 %</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-rangee" id="a2q2">
+  <legend>valeur_brute = 0 → humidité =</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="0 %"><label for="a2q2__1">0 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="10 %"><label for="a2q2__2">10 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="100 %"><label for="a2q2__3">100 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="impossible à savoir"><label for="a2q2__4">impossible à savoir</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-rangee" id="a2q3">
+  <legend>valeur_brute ≈ 512 → humidité ≈</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="25 %"><label for="a2q3__1">25 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="50 %"><label for="a2q3__2">50 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="75 %"><label for="a2q3__3">75 %</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="512 %"><label for="a2q3__4">512 %</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q4" data-melange="1">
+  <legend>Cette conversion est calculée par…</legend>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__1" value="le capteur lui-même"><label for="a2q4__1">le capteur lui-même</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__4" value="la pompe"><label for="a2q4__4">la pompe</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__3" value="l&#x27;écran LCD"><label for="a2q4__3">l'écran LCD</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__2" value="le programme de la carte"><label for="a2q4__2">le programme de la carte</label></div>
+</fieldset>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>1023 × 100 / 1023 : simplifie avant de calculer. Et 512, c'est à peu près la moitié de 1023…</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>La formule est une proportionnalité : (valeur ÷ 1023) × 100. Pour la dernière question : le capteur ne sait QUE mesurer — tout calcul est fait par le programme (4e_C4.5 : transformation des données).</p></div></details>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <p class="feedback" id="fb2" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>1023 → <b>100 %</b> · 0 → <b>0 %</b> · 512 → <b>≈ 50 %</b> · conversion faite par <b>le programme de la carte</b>. C'est la transformation d'une donnée brute (0-1023) en information utile (un pourcentage) — exactement le rôle du TRAITEMENT dans la chaîne d'information.</p></div></details>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>Les trois conversions</b> — la formule&nbsp;: humidité = valeur_brute × 100 ÷ 1&nbsp;023.
+<br>1&nbsp;023 → <b>100&nbsp;%</b>&nbsp;: 1&nbsp;023 × 100 ÷ 1&nbsp;023 = 100. C'est la valeur la plus haute du capteur.
+<br>0 → <b>0&nbsp;%</b>&nbsp;: 0 × 100 ÷ 1&nbsp;023 = 0. Le calcul est toujours possible.
+<br>512 → <b>environ 50&nbsp;%</b>&nbsp;: 512 est à peu près la moitié de 1&nbsp;023.</p>
+<p><b>Les pièges&nbsp;:</b>
+<br>«&nbsp;1&nbsp;023&nbsp;%&nbsp;» et «&nbsp;512&nbsp;%&nbsp;» sont la valeur brute, recopiée sans la convertir. Un pourcentage d'humidité ne dépasse pas 100.
+<br>«&nbsp;Impossible à savoir&nbsp;» est faux&nbsp;: la formule donne un résultat pour toute valeur, même 0.</p>
+<p><b>Qui calcule&nbsp;? Le programme de la carte.</b>
+<br>Le capteur ne sait que mesurer&nbsp;: il fournit le nombre brut.
+<br>L'écran affiche, la pompe arrose&nbsp;: ni l'un ni l'autre ne calcule.
+<br>Transformer une donnée brute (de 0 à 1&nbsp;023) en information utile (un pourcentage), c'est le rôle du TRAITEMENT dans la chaîne d'information.</p>
+</div></details>
   </div>
 
 <!-- gestes-outil-v3 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau ; n°297 : à la porte de l'outil.
@@ -842,13 +1005,13 @@ body.essentiel details.referentiel-replie{display:none}
      éditeur, un vrai : l'élève fait les quatre gestes sur un programme d'essai, et chaque geste réussi se coche. -->
 <section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
   <h2 id="gestes-editeur-python">🧰 Avant l'activité 3 (échauffement) — les quatre gestes de l'éditeur Python</h2>
-  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. <b>Entraîne-toi d'abord ici</b>, sur un petit programme d'essai&nbsp;: l'éditeur d'essai, à côté des gestes (dessous, sur un petit écran), est un vrai, le même que dans l'activité&nbsp;3. Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. Ensuite, dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme, et il ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
+  <p class="pourquoi"><b>Entraîne-toi d'abord ici</b>, dans l'éditeur d'essai&nbsp;: fais les quatre gestes dans l'ordre, chacun se coche quand il est réussi. <br>Dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme — et il ne se perdra pas.</p>
   <div class="gestes-pratique-atelier">
   <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan" aria-label="Les quatre gestes, à faire dans l'éditeur d'essai">
-    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b> Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></span><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></span></li>
-    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>4e-ARROSAGE-essai-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></span></li>
-    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 4E3</b> (ta classe).</span></span></li>
-    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b> Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></span></li>
+    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b> Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces.</span><details class="geste-detail"><summary>👀 Ce que tu dois voir — et que faire si ça coince</summary><p><span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <br><i>La première fois, Python met une seconde à se préparer.</i></span><br><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. <br>Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></p></details></li>
+    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>4e-ARROSAGE-essai-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante.</span><details class="geste-detail"><summary>👀 Ce que tu dois voir — et que faire si ça coince</summary><p><span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></p></details></li>
+    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur.</span><details class="geste-detail"><summary>👀 Ce que tu dois voir — et que faire si ça coince</summary><p><span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 4E3</b> (ta classe).</span></p></details></li>
+    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b> Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>.</span><details class="geste-detail"><summary>👀 Ce que tu dois voir — et que faire si ça coince</summary><p><span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». <br>Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></p></details></li>
   </ol>
   <div class="gestes-pratique-poste">
   <p class="gestes-pratique-bilan" id="gestes-bilan" role="status"></p>
@@ -862,13 +1025,13 @@ print("2 + 3 =", 2 + 3)
   </div>
   </div>
   </div>
-  <details class="gestes-fenetres" open>
+  <details class="gestes-fenetres">
     <summary>🪟 Le geste 3 pas à pas&nbsp;: ranger ton fichier avec l'Explorateur de Windows</summary>
-    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
+    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. <br>Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 4E3)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="543" loading="lazy"
            alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 4e-ARROSAGE-DUPONT_202694_75334.py » est sélectionné ; en bas, « 1 élément sélectionné 609 octet(s) ».">
-      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <br><i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>4e-ARROSAGE-act3-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <br><i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>4e-ARROSAGE-act3-DUPONT</code>). <br>La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
     </figure>
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
@@ -883,33 +1046,70 @@ print("2 + 3 =", 2 + 3)
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="523" loading="lazy"
            alt="Fenêtre de l'Explorateur ouverte sur « Documents › 4E3 » : un seul fichier, « 4e-ARROSAGE-DUPONT_202694_75334.py », de type Python, 609 octets, sélectionné.">
-      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b><br><i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
+      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 4E3</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. <br>Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b><br><i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
     </figure>
     <p><b>Au geste 4</b>, la fenêtre «&nbsp;Ouvrir&nbsp;» est celle de ton poste&nbsp;: <b>Documents</b> est dans sa colonne de gauche, et le dossier de ta classe dedans — le même chemin qu'ici.</p>
   </details>
-  <p class="gestes-vitta"><b>Avec Vittascience (facultatif, Internet nécessaire).</b> Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode code</b>&nbsp;: colle d'abord le préambule de la carte (bouton 📋 sous chaque éditeur) à la place de <code>print('Bonjour&nbsp;!')</code>, écris sous ses huit lignes, <b>Exécuter</b> → le <b>crayon</b>, <code>4e-ARROSAGE-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. Pour reprendre&nbsp;: <b>📂&nbsp;Ouvrir mon .py</b> dans la page (son en-tête est retiré), puis <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;C</b> ici et <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;V</b> là-bas — son «&nbsp;Ouvrir → Depuis votre appareil&nbsp;» remettrait <code>print('Bonjour&nbsp;!')</code>.</p>
+  <details class="gestes-vitta-replie"><summary>Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: les mêmes gestes</summary><p class="gestes-vitta">Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode code</b>&nbsp;: colle d'abord le préambule de la carte (bouton 📋 sous chaque éditeur) à la place de <code>print('Bonjour&nbsp;!')</code>, écris sous ses huit lignes, <b>Exécuter</b> → le <b>crayon</b>, <code>4e-ARROSAGE-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. <br>Pour reprendre&nbsp;: <b>📂&nbsp;Ouvrir mon .py</b> dans la page (son en-tête est retiré), puis <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;C</b> ici et <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;V</b> là-bas — son «&nbsp;Ouvrir → Depuis votre appareil&nbsp;» remettrait <code>print('Bonjour&nbsp;!')</code>.</p></details>
 </section>
   <div class="act">
     <header><span class="num">Activité 3</span><h3>Les blocs en désordre — remets le programme de MESURE en ordre</h3><span class="duree">⏱ 25 min</span></header>
     <div class="consigne"><b>Consigne :</b> le stagiaire a fait tomber les blocs du programme de mesure… Attribue à
     chaque ligne sa position (1 à 5), puis <b>reconstruis et exécute</b> le programme dans l'éditeur Python, plus bas, pour vérifier&nbsp;: les cinq lignes y sont, dans le désordre du stagiaire.</div>
-    <table class="parsons">
-      <tr><td><select id="a3o1"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-var">humidite</span> <span class="py-op">=</span> <span class="py-var">valeur_brute</span> <span class="py-op">*</span> <span class="py-num">100</span> <span class="py-op">/</span> <span class="py-num">1023</span></td></tr>
-      <tr><td><select id="a3o2"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-kw">attendre</span>(<span class="py-num">1</span>)</td></tr>
-      <tr><td><select id="a3o3"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-kw">while</span> <span class="py-kw">True</span><span class="py-op">:</span> &nbsp;<span class="py-com"># répéter sans fin</span></td></tr>
-      <tr><td><select id="a3o4"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-kw">print</span>(<span class="py-str">"Humidité du sol :"</span>, <span class="py-var">humidite</span>, <span class="py-str">"%"</span>)</td></tr>
-      <tr><td><select id="a3o5"><option value="">pos. ?</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><span class="py-var">valeur_brute</span> <span class="py-op">=</span> <span class="py-kw">lire_capteur</span>(<span class="py-var">A0</span>)</td></tr>
-    </table>
+    <div class="parsons">
+      <fieldset class="qcm-groupe qcm-rangee" id="a3o1">
+  <legend><code class="py-ligne"><span class="py-var">humidite</span> <span class="py-op">=</span> <span class="py-var">valeur_brute</span> <span class="py-op">*</span> <span class="py-num">100</span> <span class="py-op">/</span> <span class="py-num">1023</span></code> — position&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__1" value="1"><label for="a3o1__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__2" value="2"><label for="a3o1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__3" value="3"><label for="a3o1__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__4" value="4"><label for="a3o1__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__5" value="5"><label for="a3o1__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="a3o2">
+  <legend><code class="py-ligne"><span class="py-kw">attendre</span>(<span class="py-num">1</span>)</code> — position&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__1" value="1"><label for="a3o2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__2" value="2"><label for="a3o2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__3" value="3"><label for="a3o2__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__4" value="4"><label for="a3o2__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__5" value="5"><label for="a3o2__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="a3o3">
+  <legend><code class="py-ligne"><span class="py-kw">while</span> <span class="py-kw">True</span><span class="py-op">:</span> &nbsp;<span class="py-com"># répéter sans fin</span></code> — position&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__1" value="1"><label for="a3o3__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__2" value="2"><label for="a3o3__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__3" value="3"><label for="a3o3__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__4" value="4"><label for="a3o3__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__5" value="5"><label for="a3o3__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="a3o4">
+  <legend><code class="py-ligne"><span class="py-kw">print</span>(<span class="py-str">"Humidité du sol :"</span>, <span class="py-var">humidite</span>, <span class="py-str">"%"</span>)</code> — position&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__1" value="1"><label for="a3o4__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__2" value="2"><label for="a3o4__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__3" value="3"><label for="a3o4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__4" value="4"><label for="a3o4__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__5" value="5"><label for="a3o4__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="a3o5">
+  <legend><code class="py-ligne"><span class="py-var">valeur_brute</span> <span class="py-op">=</span> <span class="py-kw">lire_capteur</span>(<span class="py-var">A0</span>)</code> — position&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__1" value="1"><label for="a3o5__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__2" value="2"><label for="a3o5__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__3" value="3"><label for="a3o5__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__4" value="4"><label for="a3o5__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__5" value="5"><label for="a3o5__5">5</label></div>
+</fieldset>
+    </div>
     <p class="py-legende">🎨 Lis le code en couleurs : <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
     <div class="carte-simulee" id="fonctions-simulees">
-      <p><b>🔌 Pas de carte branchée&nbsp;: la page simule la carte.</b> Dans les éditeurs Python de cette page, ces fonctions existent déjà&nbsp;: tu les appelles, tu ne les écris pas. Elles écrivent dans la console ce que ferait la vraie carte.</p>
+      <p><b>🔌 Pas de carte branchée&nbsp;: la page simule la carte.</b><br>Dans les éditeurs Python de cette page, ces fonctions existent déjà&nbsp;: tu les appelles, tu ne les écris pas. <br>Elles écrivent dans la console ce que ferait la vraie carte.</p>
+      <details class="carte-detail"><summary>Les fonctions de la carte simulée, et les valeurs que lit son capteur</summary>
       <ul>
         <li><code>lire_capteur(A0)</code> → la valeur <b>brute</b> du capteur d'humidité, de 0 à 1&nbsp;023&nbsp;; la console écrit «&nbsp;[capteur] valeur brute …&nbsp;».</li>
         <li><code>lire_capteur_pourcent(A0)</code> → l'humidité <b>en %</b>, déjà convertie&nbsp;; «&nbsp;[capteur] … %&nbsp;».</li>
         <li><code>demarrer_pompe()</code> → «&nbsp;[pompe] MARCHE&nbsp;»&nbsp;; <code>arreter_pompe()</code> → «&nbsp;[pompe] arrêt&nbsp;».</li>
         <li><code>attendre(1)</code> → le programme attend 1&nbsp;seconde, comme la carte.</li>
       </ul>
-      <p>Le capteur simulé lit, l'une après l'autre, <b>55, 40, 25, 12, 28 puis 45&nbsp;%</b>, et recommence&nbsp;: les valeurs plausibles d'un pot qui sèche, puis qu'on arrose. Ce ne sont pas les mesures de TON jardin&nbsp;: avec la vraie carte, les mêmes lignes de programme liraient le vrai capteur.</p>
+      <p>Le capteur simulé lit, l'une après l'autre, <b>55, 40, 25, 12, 28 puis 45&nbsp;%</b>, et recommence&nbsp;: les valeurs plausibles d'un pot qui sèche, puis qu'on arrose. <br>Ce ne sont pas les mesures de TON jardin&nbsp;: avec la vraie carte, les mêmes lignes de programme liraient le vrai capteur.</p>
+      </details>
     </div>
     <script type="text/x-python" id="carte-simulee-arrosage">
 import time
@@ -936,7 +1136,7 @@ def attendre(secondes):
 </script>
 <div class="editeur-py" id="vs1" data-fichier="4e-ARROSAGE-act3-TON NOM" data-simulation="carte-simulee-arrosage">
   <label for="py_a3">🐍 L'éditeur Python de la page — reconstruis le programme de mesure, puis exécute-le</label>
-  <p class="editeur-py-note">Remets les cinq lignes dans l'ordre que tu as choisi, et décale de 4 espaces (touche Tab) celles qui se répètent sous <code>while True:</code>. Puis ▶&nbsp;Exécuter : la console montre ce que lit le capteur simulé, une mesure par seconde. Le programme boucle sans fin, comme sur la vraie carte : clique ⏹&nbsp;Arrêter.</p>
+  <p class="editeur-py-note">Remets les cinq lignes dans l'ordre que tu as choisi, et décale de 4 espaces (touche Tab) celles qui se répètent sous <code>while True:</code>. <br>Puis ▶&nbsp;Exécuter : la console montre ce que lit le capteur simulé, une mesure par seconde. <br>Le programme boucle sans fin, comme sur la vraie carte : clique ⏹&nbsp;Arrêter.</p>
   <textarea id="py_a3" class="editeur-py-code" rows="7" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">humidite = valeur_brute * 100 / 1023
 attendre(1)
 while True:  # répéter sans fin
@@ -946,7 +1146,7 @@ valeur_brute = lire_capteur(A0)
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
   <details class="vs-vitta">
     <summary>Avec Vittascience&nbsp;: le préambule de la carte, à coller d'abord</summary>
-    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
+    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. <br>Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
       <div class="preambule-carte">
         <pre class="code" id="preambule-vs1">import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====
 def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]
@@ -966,13 +1166,24 @@ def attendre(secondes): time.sleep(secondes)
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Ordre logique du technicien :<br>① ouvrir la répétition (<code>while True:</code>) →<br>② LIRE le capteur →<br>③ CONVERTIR la valeur →<br>④ AFFICHER le résultat →<br>⑤ ATTENDRE avant la mesure suivante. Vérifie ta prédiction dans l'éditeur avant de valider.</p></div></details>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <p class="feedback" id="fb3" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>Ordre : <code>while True:</code> (1) → <code>valeur_brute = lire_capteur(A0)</code> (2) → <code>humidite = valeur_brute * 100 / 1023</code> (3) → <code>print(…)</code> (4) → <code>attendre(1)</code> (5).</p>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>L'ordre des cinq lignes&nbsp;:</b>
+<br>1 — <code>while True:</code> La boucle d'abord&nbsp;: tout le reste se répète dedans.
+<br>2 — <code>valeur_brute = lire_capteur(A0)</code> On lit le capteur.
+<br>3 — <code>humidite = valeur_brute * 100 / 1023</code> On convertit ce qu'on vient de lire.
+<br>4 — <code>print(…)</code> On affiche le résultat de la conversion.
+<br>5 — <code>attendre(1)</code> On attend une seconde avant la mesure suivante.</p>
 <pre class="code">while True:
     valeur_brute = lire_capteur(A0)
     humidite = valeur_brute * 100 / 1023
     print("Humidité du sol :", humidite, "%")
     attendre(1)</pre>
-<p>Lire AVANT de convertir, convertir AVANT d'afficher : chaque ligne utilise ce que la précédente a rangé dans sa boîte.</p></div></details>
+<p><b>La règle&nbsp;:</b> lire AVANT de convertir, convertir AVANT d'afficher.
+<br>Chaque ligne utilise ce que la précédente a rangé dans sa boîte.</p>
+<p><b>Les erreurs fréquentes&nbsp;:</b>
+<br>Convertir avant de lire&nbsp;: <code>valeur_brute</code> n'existe pas encore, Python s'arrête sur une erreur.
+<br>Oublier de décaler les quatre lignes sous <code>while True:</code>&nbsp;: Python signale une erreur de décalage, ou les lignes ne se répètent pas.</p>
+</div></details>
   </div>
 
   <div class="retenir"><b>🧠 À retenir (séance 1) :</b> un capteur analogique fournit un NOMBRE brut ; c'est le
@@ -991,14 +1202,39 @@ def attendre(secondes): time.sleep(secondes)
   <div class="act">
     <header><span class="num">Activité 4</span><h3>La décision — en français d'abord</h3><span class="duree">⏱ 10 min</span></header>
     <div class="consigne"><b>Consigne :</b> complète la règle de décision en langage naturel — le pseudo-code s'écrit sous tes yeux.</div>
-    <label>Si l'humidité du sol est <select id="a4q1"><option value="">— je choisis —</option><option value="inf">inférieure</option><option value="sup">supérieure</option></select> au seuil, alors on <select id="a4q2"><option value="">— je choisis —</option><option value="active">active</option><option value="coupe">coupe</option></select> la pompe.</label>
+    <fieldset class="qcm-groupe qcm-rangee" id="a4q1">
+  <legend>SI l'humidité du sol est… au seuil,</legend>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="inf"><label for="a4q1__1">inférieure</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="sup"><label for="a4q1__2">supérieure</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-rangee" id="a4q2">
+  <legend>… ALORS on… la pompe.</legend>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="active"><label for="a4q2__1">active</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="coupe"><label for="a4q2__2">coupe</label></div>
+</fieldset>
     <div class="pytrous" aria-label="Pseudo-code complété automatiquement"><span class="py-kw">SI</span> <span class="py-var">humidite</span> <span class="py-op" id="pcSigne">…</span> <span class="py-var">seuil</span> <span class="py-kw">ALORS</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="py-var">pompe</span> <span class="py-op" id="pcAction">…</span><br><span class="py-kw">SINON</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="py-var">pompe</span> <span class="py-op">=</span> <span class="py-var">ARRET</span><br><span class="py-kw">FIN SI</span></div>
-    <label>Et si l'humidité est EXACTEMENT égale au seuil (30 pour 30) ? La pompe est… <select id="a4q3"><option value="">— je choisis —</option><option>à l'arrêt — 30 &lt; 30 est FAUX</option><option>en marche — c'est la limite</option><option>le programme plante</option></select></label>
+    <fieldset class="qcm-groupe" id="a4q3" data-melange="1">
+  <legend>Et si l'humidité est EXACTEMENT égale au seuil (30 pour 30) ? La pompe est…</legend>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="le programme plante"><label for="a4q3__3">le programme plante</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="en marche — c&#x27;est la limite"><label for="a4q3__2">en marche — c'est la limite</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="à l&#x27;arrêt — 30 &lt; 30 est FAUX"><label for="a4q3__1">à l'arrêt — 30 &lt; 30 est FAUX</label></div>
+</fieldset>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Un sol SEC, c'est une humidité BASSE. Basse par rapport à quoi ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Déroule la frontière À LA MAIN : humidite = 30, seuil = 30 → « 30 &lt; 30 » est FAUX → on passe dans le SINON. Le cas limite se décide toujours en revenant au BESOIN.</p></div></details>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <p class="feedback" id="fb4" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>humidité <b>inférieure</b> au seuil → sol sec → on <b>active</b> la pompe. À la frontière (30 pile), « 30 &lt; 30 » est FAUX → <b>pompe à l'arrêt</b> : le sol est juste assez humide, on économise l'eau. Un programme ne « sent » rien : il compare des nombres.</p></div></details>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>La règle complète&nbsp;:</b>
+<br>SI l'humidité du sol est <b>inférieure</b> au seuil — le sol est sec —
+<br>ALORS on <b>active</b> la pompe.</p>
+<p><b>Pourquoi pas «&nbsp;supérieure&nbsp;»&nbsp;?</b> Une humidité au-dessus du seuil, c'est un sol déjà humide&nbsp;: l'arroser gaspillerait l'eau.
+<br><b>Pourquoi pas «&nbsp;coupe&nbsp;»&nbsp;?</b> Un sol sec a besoin d'eau&nbsp;: couper la pompe laisserait la plante avoir soif.</p>
+<p><b>À la frontière (30 pour 30)&nbsp;:</b> «&nbsp;30 &lt; 30&nbsp;» est FAUX, donc la <b>pompe est à l'arrêt</b>.
+<br>Le sol est juste assez humide&nbsp;: on économise l'eau.
+<br>«&nbsp;En marche, c'est la limite&nbsp;» est faux&nbsp;: 30 n'est pas plus petit que 30.
+<br>«&nbsp;Le programme plante&nbsp;» est faux&nbsp;: une comparaison répond toujours VRAI ou FAUX.</p>
+<p><b>À retenir&nbsp;:</b> un programme ne «&nbsp;sent&nbsp;» rien, il compare des nombres.</p>
+</div></details>
   </div>
 
   <div class="act">
@@ -1009,16 +1245,39 @@ def attendre(secondes): time.sleep(secondes)
 <span class="py-var">seuil</span> <span class="py-op">=</span> <span class="py-num">30</span><br>
 <span class="py-kw">while</span> <span class="py-kw">True</span><span class="py-op">:</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="py-var">humidite</span> <span class="py-op">=</span> <span class="py-kw">lire_capteur_pourcent</span>(<span class="py-var">A0</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="py-kw">if</span> <span class="py-var">humidite</span> <select id="a5t1" aria-label="trou 1 : symbole de comparaison"><option value="">?</option><option>&lt;</option><option>&gt;</option><option>==</option></select> <span class="py-var">seuil</span><span class="py-op">:</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="a5t2" aria-label="trou 2 : action si sol sec"><option value="">— je choisis —</option><option>demarrer_pompe()</option><option>arreter_pompe()</option><option>print(seuil)</option></select><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="py-kw">if</span> <span class="py-var">humidite</span> <b class="trou-num">① ___</b> <span class="py-var">seuil</span><span class="py-op">:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b class="trou-num">② ___</b><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="py-kw">else</span><span class="py-op">:</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="a5t3" aria-label="trou 3 : action sinon"><option value="">— je choisis —</option><option>arreter_pompe()</option><option>demarrer_pompe()</option><option>attendre(1)</option></select><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b class="trou-num">③ ___</b><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="py-kw">attendre</span>(<span class="py-num">1</span>)
     </div>
-    <label>PRÉDIS, puis vérifie dans l'éditeur : avec <code>humidite = 12</code> et <code>seuil = 30</code>, il se passe… <select id="a5q1"><option value="">— je choisis —</option><option>la pompe démarre (12 &lt; 30 est VRAI)</option><option>la pompe s'arrête</option><option>rien, le programme attend</option></select></label>
+    <fieldset class="qcm-groupe qcm-rangee" id="a5t1">
+  <legend>Trou ① — le symbole de comparaison&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__1" value="&lt;"><label for="a5t1__1">&lt;</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__2" value="&gt;"><label for="a5t1__2">&gt;</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__3" value="=="><label for="a5t1__3">==</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-rangee" id="a5t2">
+  <legend>Trou ② — l'action si le sol est sec&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__1" value="demarrer_pompe()"><label for="a5t2__1">demarrer_pompe()</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__2" value="arreter_pompe()"><label for="a5t2__2">arreter_pompe()</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__3" value="print(seuil)"><label for="a5t2__3">print(seuil)</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-rangee" id="a5t3">
+  <legend>Trou ③ — l'action sinon&nbsp;:</legend>
+  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__1" value="arreter_pompe()"><label for="a5t3__1">arreter_pompe()</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__2" value="demarrer_pompe()"><label for="a5t3__2">demarrer_pompe()</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__3" value="attendre(1)"><label for="a5t3__3">attendre(1)</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a5q1" data-melange="1">
+  <legend>PRÉDIS, puis vérifie dans l'éditeur : avec <code>humidite = 12</code> et <code>seuil = 30</code>, il se passe…</legend>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="la pompe s&#x27;arrête"><label for="a5q1__2">la pompe s'arrête</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="rien, le programme attend"><label for="a5q1__3">rien, le programme attend</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="la pompe démarre (12 &lt; 30 est VRAI)"><label for="a5q1__1">la pompe démarre (12 &lt; 30 est VRAI)</label></div>
+</fieldset>
 <div class="editeur-py" id="vs2" data-fichier="4e-ARROSAGE-act5-TON NOM" data-simulation="carte-simulee-arrosage">
   <label for="py_a5">🐍 L'éditeur Python de la page — complète les trois trous ___, puis exécute : la preuve par la console</label>
-  <p class="editeur-py-note">Remplace chaque <code>___</code> par ta réponse, puis ▶&nbsp;Exécuter. Les fonctions de la carte sont simulées par la page (encadré 🔌 de l'activité 3) : le capteur lit 55, 40, 25, 12, 28, puis 45&nbsp;%, et la console montre la décision pour chaque mesure. ⏹&nbsp;Arrêter pour finir.</p>
+  <p class="editeur-py-note">Remplace chaque <code>___</code> par ta réponse, puis ▶&nbsp;Exécuter. <br>Les fonctions de la carte sont simulées par la page (encadré 🔌 de l'activité 3) : le capteur lit 55, 40, 25, 12, 28, puis 45&nbsp;%, et la console montre la décision pour chaque mesure. ⏹&nbsp;Arrêter pour finir.</p>
   <textarea id="py_a5" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">seuil = 30
 while True:
     humidite = lire_capteur_pourcent(A0)
@@ -1031,7 +1290,7 @@ while True:
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
   <details class="vs-vitta">
     <summary>Avec Vittascience&nbsp;: le préambule de la carte, à coller d'abord</summary>
-    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
+    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. <br>Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
       <div class="preambule-carte">
         <pre class="code" id="preambule-vs2">import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====
 def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]
@@ -1060,8 +1319,17 @@ while True:
     else:
         arreter_pompe()
     attendre(1)</pre>
-<p>Avec humidite = 12 : « 12 &lt; 30 » est VRAI → <b>la pompe démarre</b>. Remarque de technicien : le nombre 30
-n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer le réglage, une seule ligne à modifier.</p></div></details>
+<p><b>Les trois trous&nbsp;:</b>
+<br>① <code>&lt;</code> On arrose quand l'humidité est PLUS PETITE que le seuil.
+<br>Avec <code>&gt;</code>, la pompe arroserait un sol déjà humide. Avec <code>==</code>, elle n'arroserait qu'à 30 pile.
+<br>② <code>demarrer_pompe()</code> La condition est vraie&nbsp;: le sol est sec, il lui faut de l'eau.
+<br><code>print(seuil)</code> afficherait un nombre sans rien arroser.
+<br>③ <code>arreter_pompe()</code> Sinon, le sol est assez humide.
+<br><code>attendre(1)</code> ne coupe pas la pompe&nbsp;: elle resterait en marche.</p>
+<p><b>La prédiction&nbsp;:</b> avec humidite = 12, «&nbsp;12 &lt; 30&nbsp;» est VRAI, donc <b>la pompe démarre</b>.</p>
+<p><b>Remarque de technicien&nbsp;:</b> le nombre 30 n'est écrit qu'à UN endroit, la variable <code>seuil</code>.
+<br>Pour changer le réglage, une seule ligne à modifier.</p>
+</div></details>
   </div>
 
   <div class="act">
@@ -1087,12 +1355,27 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
       <tr><td>T3 — FRONTIÈRE</td><td>30</td><td>30</td><td>pompe à l'arrêt</td><td id="bt3">—</td><td><button class="btn small bench-run" data-t="3" type="button">▶</button></td></tr>
     </table>
     <span id="benchBadge" style="color:var(--ok);font-weight:700"></span>
-    <label>Pourquoi le test T3 (30 pile) est-il LE test le plus important ? <select id="a6q1"><option value="">— je choisis —</option><option>c'est le cas frontière : c'est là que les erreurs de symbole (&lt; ou &lt;=) se cachent</option><option>parce que 30 est un joli nombre</option><option>il ne sert à rien, T1 et T2 suffisent</option></select></label>
+    <fieldset class="qcm-groupe" id="a6q1" data-melange="1">
+  <legend>Pourquoi le test T3 (30 pile) est-il LE test le plus important ?</legend>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__1" value="c&#x27;est le cas frontière : c&#x27;est là que les erreurs de symbole (&lt; ou &lt;=) se cachent"><label for="a6q1__1">c'est le cas frontière : c'est là que les erreurs de symbole (&lt; ou &lt;=) se cachent</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__2" value="parce que 30 est un joli nombre"><label for="a6q1__2">parce que 30 est un joli nombre</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__3" value="il ne sert à rien, T1 et T2 suffisent"><label for="a6q1__3">il ne sert à rien, T1 et T2 suffisent</label></div>
+</fieldset>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Si le programmeur avait écrit <code>&lt;=</code> au lieu de <code>&lt;</code>, T1 et T2 passeraient quand même… et T3 ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Un banc de tests couvre chaque cas du besoin + chaque FRONTIÈRE. « Ça a marché une fois » n'est pas une preuve : trois tests verts, frontière comprise, en sont une. (Souviens-toi du lampadaire : même démarche.)</p></div></details>
     <button class="btn check" data-check="6" type="button">✅ Vérifier l'activité 6</button>
     <p class="feedback" id="fb6" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>T1 : 10 &lt; 30 VRAI → MARCHE ✔ · T2 : 80 &lt; 30 FAUX → arrêt ✔ · T3 : 30 &lt; 30 FAUX → arrêt ✔. La frontière est LE piège classique : avec <code>&lt;=</code>, la pompe arroserait un sol déjà assez humide — gaspillage. Le symbole se choisit avec le BESOIN, pas au hasard.</p></div></details>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>Les trois tests, avec un seuil de 30&nbsp;:</b>
+<br>T1 — humidité 10&nbsp;: «&nbsp;10 &lt; 30&nbsp;» est VRAI, la pompe est en MARCHE ✔
+<br>T2 — humidité 80&nbsp;: «&nbsp;80 &lt; 30&nbsp;» est FAUX, la pompe est à l'arrêt ✔
+<br>T3 — humidité 30&nbsp;: «&nbsp;30 &lt; 30&nbsp;» est FAUX, la pompe est à l'arrêt ✔</p>
+<p><b>Pourquoi T3 est le plus important&nbsp;:</b> c'est le cas frontière, là où les erreurs de symbole se cachent.
+<br>Avec <code>&lt;=</code>, la pompe arroserait un sol déjà assez humide — du gaspillage. Ni T1 ni T2 ne le verraient.
+<br>«&nbsp;30 est un joli nombre&nbsp;» est faux&nbsp;: un test se choisit pour ce qu'il peut révéler.
+<br>«&nbsp;T1 et T2 suffisent&nbsp;» est faux&nbsp;: ils passent aussi avec le mauvais symbole.</p>
+<p><b>À retenir&nbsp;:</b> le symbole se choisit avec le BESOIN, pas au hasard.</p>
+</div></details>
   </div>
 
   <div class="retenir"><b>🧠 À retenir (séance 2) :</b> une instruction conditionnelle lit une variable et DÉCIDE ;
@@ -1108,6 +1391,7 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
   <p class="question-directrice">Question directrice : le système répond-il au besoin, et quel est son impact ?</p>
 
 <!-- ateliers-representations:debut rc-arrosage-4e -->
+<details class="incruste-repliee"><summary>🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu ne sais plus ce qu'est un critère, un niveau, une flexibilité</summary>
 <section class="card atelier-incruste rappel-cdc" id="incruste-rc-arrosage-4e" aria-labelledby="incruste-rc-arrosage-4e-titre"><h3 id="incruste-rc-arrosage-4e-titre">🔁 Piqûre de rappel&nbsp;: le cahier des charges</h3><p>L'activité 7 juge le prototype ligne par ligne du <b>cahier des charges</b>. Avant, trois minutes pour retrouver ce que dit chaque case d'une ligne, sur celle de la sécurité.</p><p><b>Ce que dit un cahier des charges, en trois mots&nbsp;:</b> pour chaque fonction, un <b>critère</b>, un <b>niveau</b> et une <b>flexibilité</b>. Les mots de référence&nbsp;:</p><ul class="mots-reference"><li><b>fonction principale (FP)</b>&nbsp;: elle relie deux interacteurs <b>en passant par l'objet</b>&nbsp;: c'est le service rendu.</li><li><b>fonction contrainte (FC)</b>&nbsp;: elle relie l'objet à <b>un seul</b> interacteur&nbsp;: c'est une condition à respecter.</li><li><b>désignation</b>&nbsp;: la phrase de la fonction&nbsp;: elle commence par un <b>verbe à l'infinitif</b> («&nbsp;résister à la pluie&nbsp;»).</li><li><b>critère (on dit aussi critère d'appréciation)</b>&nbsp;: ce que l'on <b>mesure</b> ou contrôle pour savoir si la fonction est remplie.</li><li><b>niveau</b>&nbsp;: la <b>valeur à atteindre</b> pour ce critère (au moins…, au plus…), avec son <b>unité</b>.</li><li><b>flexibilité</b>&nbsp;: l'<b>écart que le client accepte</b> autour du niveau&nbsp;: <b>F0</b> impératif · <b>F1</b> peu négociable · <b>F2</b> négociable · <b>F3</b> très négociable.</li></ul><p class="note">🐙 La leçon complète, avec un cahier des charges entier à compléter&nbsp;: <a href="../../../../theme-1-objets-systemes-usages-interactions/ateliers-representations/interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html#pv_4e_e6">l'atelier de 4e «&nbsp;Le diagramme des interacteurs extérieurs&nbsp;», exercice 6, «&nbsp;Le cahier des charges&nbsp;: critère, niveau, flexibilité&nbsp;», et son cours</a>.</p><section class="card exercice" id="rc_arrosage_4e" data-exo="rc_arrosage_4e" data-cle="rep_rappel-cdc_arrosage-4e" aria-labelledby="rc_arrosage_4e-titre"><h4 id="rc_arrosage_4e-titre">Une ligne du cahier des charges de l'arrosage automatique</h4><div class="meta"><b>🎯 Objectif&nbsp;:</b> retrouver, sur l'arrosage automatique, ce que dit chaque case d'une ligne du cahier des charges&nbsp;: la fonction (FP ou FC), sa désignation, son critère, son niveau et sa flexibilité.<br><b>🧩 Compétence&nbsp;:</b> <span title="Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." aria-label="4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs.">4e_C2.2</span><br><b>✍ Ce que tu produis&nbsp;:</b> une ligne du cahier des charges complétée (5 cases).<br><b>Durée&nbsp;:</b> environ 3 minutes, comptées dans celle de l'activité.</div><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>verbe à l'infinitif</dt><dd>la forme du verbe qu'on trouve dans le dictionnaire, sans conjugaison&nbsp;: résister, permettre, prendre, être.</dd><dt>solution technique</dt><dd>le moyen concret choisi pour remplir une fonction&nbsp;: elle dit <b>avec quoi</b>&nbsp;; la fonction dit <b>ce que</b> l'objet doit faire.</dd><dt>interacteur</dt><dd>un élément extérieur à l'objet, qui agit sur lui ou sur lequel il agit (une personne, la pluie, un autre objet…).</dd></dl></details><div class="consigne"><p><b>Complète cette ligne du cahier des charges de l'arrosage automatique, directement dans le tableau</b>&nbsp;: chaque case à menu attend une réponse.</p><ul><li><b>Fonction</b>&nbsp;: FP ou FC&nbsp;? Compte les interacteurs écrits dans la case.</li><li><b>Désignation</b>&nbsp;: la phrase qui commence par un <b>verbe à l'infinitif</b> — ni un nom, ni une phrase avec un sujet, ni une solution.</li><li><b>Critère</b>&nbsp;: ce qu'on mesure — ni la valeur à atteindre, ni une solution.</li><li><b>Niveau</b>&nbsp;: un nombre et l'unité de son critère.</li><li><b>Flexibilité</b>&nbsp;: d'après ce que répond le professeur responsable du jardin, juste au-dessus du tableau.</li></ul></div><p class="critere"><b>✅ Tu as réussi si…</b> les 5 cases justes, et tu sais dire pourquoi chaque piège ne va pas.</p><div class="tableau-menus"><div><p><b>Ce que répond le professeur responsable du jardin</b> à la question «&nbsp;Et si on n'atteint pas tout à fait ce niveau&nbsp;?&nbsp;»</p><ul class="paroles"><li><b>La sécurité électrique</b>&nbsp;: «&nbsp;Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre&nbsp;»</li></ul></div><div class="defile"><table class="cdcf"><caption>Le cahier des charges de l'arrosage automatique — une ligne à compléter (entre parenthèses&nbsp;: l'interacteur que la fonction concerne)</caption><colgroup><col style="width:14%"><col style="width:27%"><col style="width:22%"><col style="width:19%"><col style="width:18%"></colgroup><thead><tr><th scope="col">Fonction</th><th scope="col">Désignation</th><th scope="col">Critère</th><th scope="col">Niveau</th><th scope="col">Flexibilité</th></tr></thead><tbody><tr><td data-col="Fonction" class="case-menu"><span class="menu-case"><select id="rc_arrosage_4e__cdcf_0_0" name="rc_arrosage_4e__cdcf_0_0" aria-label="Ligne 1, les élèves — Fonction" aria-describedby="rc_arrosage_4e__cdcf_0_0-retour"><option value="">— choisir —</option><option value="fp">FP</option><option value="fc">FC</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-mesure" aria-hidden="true">FP
 FC</span><span class="menu-fleche" aria-hidden="true">▾</span></span> <span class="case-texte">(les élèves)</span><span class="encoche" data-pour="rc_arrosage_4e__cdcf_0_0"></span><span class="retour-case" id="rc_arrosage_4e__cdcf_0_0-retour" data-pour="rc_arrosage_4e__cdcf_0_0"></span><span class="retour-mesure" aria-hidden="true">interacteur,
 interacteurs
@@ -1145,7 +1429,8 @@ F0</span><span class="menu-fleche" aria-hidden="true">▾</span></span><span cla
 d&#x27;autre » :
 impératif :
 « n&#x27;importe
-condition.</span></td></tr></tbody></table></div></div><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Remplis le tableau <b>colonne par colonne</b>. Pour chaque case, relis la définition du mot, juste au-dessus, dans «&nbsp;Les mots du cahier des charges&nbsp;».</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><ul><li><b>Fonction</b>&nbsp;: deux interacteurs reliés en passant par l'objet → FP&nbsp;; un seul → FC.</li><li><b>Désignation</b>&nbsp;: le premier mot est un verbe à l'infinitif (permettre, résister, être…).</li><li><b>Critère</b>&nbsp;: demande-toi «&nbsp;qu'est-ce que je mesurerais&nbsp;?&nbsp;». Une valeur avec «&nbsp;au moins&nbsp;» ou «&nbsp;au plus&nbsp;» est un niveau, pas un critère.</li><li><b>Niveau</b>&nbsp;: un nombre <b>et</b> l'unité du critère&nbsp;: un temps → des secondes ou des minutes&nbsp;; une température → des degrés Celsius.</li><li><b>Flexibilité</b>&nbsp;: aucun écart → F0&nbsp;; un écart à une condition → F1&nbsp;; un petit écart sans condition → F2&nbsp;; un écart large → F3. Elle ne dit pas l'importance de la fonction.</li></ul></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>Ligne 1, les élèves</b> → FC (les élèves) · «&nbsp;Fonctionner sans danger pour les élèves&nbsp;» · critère&nbsp;: Tension d'alimentation du prototype, en volts · niveau&nbsp;: 5 V au plus · F0, impératif</div><div class="ligne"><b>Fonction</b> → FC&nbsp;: <b>un seul</b> interacteur → une condition à respecter → <b>FC</b>. Les pièges&nbsp;: FP → Un seul interacteur, les élèves : c'est une FC, une condition à respecter. La FP relie deux interacteurs en passant par l'objet.</div><div class="ligne"><b>Désignation</b> → « Fonctionner sans danger pour les élèves »&nbsp;: elle commence par le verbe à l'infinitif «&nbsp;fonctionner&nbsp;». Les pièges&nbsp;: « Sécurité des élèves au jardin » → « Sécurité » est un nom : une fonction commence par un verbe à l'infinitif, « fonctionner, être » ; « Le prototype ne met pas les élèves en danger » → Cette phrase a un sujet, « le prototype », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif ; « Pile et câble USB au lieu du secteur » → C'est une solution, pas une fonction : la pile et le câble USB sont les moyens de rester en très basse tension. La fonction dit ce que l'objet doit faire.</div><div class="ligne"><b>Critère</b> → Tension d'alimentation du prototype, en volts&nbsp;: le danger vient du courant électrique : on contrôle la tension qui alimente le prototype. Les pièges&nbsp;: « 5 V au plus » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; ici : tension d'alimentation du prototype, en volts ; « Un relais entre la carte et la pompe » est une solution : c'est un composant du montage. Le critère dit ce qu'on mesure, pas avec quoi on y arrive ; « Humidité du sol, en pourcentage » → L'humidité dit quand arroser ; elle ne dit rien du danger électrique.</div><div class="ligne"><b>Niveau</b> → 5 V au plus&nbsp;: un nombre et l'unité de son critère. Les pièges&nbsp;: « 5 au plus » → Un nombre sans unité n'est pas un niveau : 5 quoi ? Des volts, des ampères, des pour cent ? ; « 5 A au plus » → L'ampère (A) mesure une intensité ; le critère est une tension : son unité est le volt (V) ; « Pas dangereux » ne se mesure pas : un niveau, c'est un nombre et son unité.</div><div class="ligne"><b>Flexibilité</b> → F0, impératif&nbsp;: «&nbsp;Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre&nbsp;» → aucun écart accepté. Les pièges&nbsp;: F1 → « Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart, même à une condition. Le niveau est impératif : F0 ; F2 → « Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition ; F3 → « Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : la sécurité des personnes ne se négocie pas ; F3 voudrait dire « n'importe quelle valeur me va ».</div><div class="ligne conclusion">Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe à l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) et sa <b>flexibilité</b> (l'écart que le client accepte, de F0 impératif à F3 très négociable).</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> chaque fonction du cahier des charges (FP ou FC) a une <b>désignation</b> qui commence par un <b>verbe à l'infinitif</b>, un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (un nombre et son unité) et une <b>flexibilité</b> (l'écart que le client accepte, de <b>F0</b> impératif à <b>F3</b> très négociable).</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> prendre le niveau («&nbsp;au moins…&nbsp;») pour le critère, écrire un niveau sans unité, ou choisir la flexibilité d'après l'importance de la fonction au lieu de l'écart que le client accepte.</p></section><script type="application/json">{"exercices": {"rc_arrosage_4e": {"cle": "rep_rappel-cdc_arrosage-4e", "widgets": [{"type": "tableau", "name": "rc_arrosage_4e__cdcf", "cases": [{"name": "rc_arrosage_4e__cdcf_0_0", "bonne": "fc", "indice": null, "retours": {"fp": "Un seul interacteur, les élèves : c'est une FC, une condition à respecter. La FP relie deux interacteurs en passant par l'objet."}}, {"name": "rc_arrosage_4e__cdcf_0_1", "bonne": "bon", "indice": null, "retours": {"nom": "« Sécurité » est un nom : une fonction commence par un verbe à l'infinitif, « fonctionner, être ».", "sujet": "Cette phrase a un sujet, « le prototype », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif.", "solution": "C'est une solution, pas une fonction : la pile et le câble USB sont les moyens de rester en très basse tension. La fonction dit ce que l'objet doit faire."}}, {"name": "rc_arrosage_4e__cdcf_0_2", "bonne": "bon", "indice": null, "retours": {"niveau": "« 5 V au plus » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; ici : tension d'alimentation du prototype, en volts.", "solution": "« Un relais entre la carte et la pompe » est une solution : c'est un composant du montage. Le critère dit ce qu'on mesure, pas avec quoi on y arrive.", "autre": "L'humidité dit quand arroser ; elle ne dit rien du danger électrique."}}, {"name": "rc_arrosage_4e__cdcf_0_3", "bonne": "bon", "indice": null, "retours": {"sans_unite": "Un nombre sans unité n'est pas un niveau : 5 quoi ? Des volts, des ampères, des pour cent ?", "unite": "L'ampère (A) mesure une intensité ; le critère est une tension : son unité est le volt (V).", "vague": "« Pas dangereux » ne se mesure pas : un niveau, c'est un nombre et son unité."}}, {"name": "rc_arrosage_4e__cdcf_0_4", "bonne": "f0", "indice": null, "retours": {"f1": "« Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart, même à une condition. Le niveau est impératif : F0.", "f2": "« Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition.", "f3": "« Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : la sécurité des personnes ne se négocie pas ; F3 voudrait dire « n'importe quelle valeur me va »."}}], "vide": null}]}}}</script></section>
+condition.</span></td></tr></tbody></table></div></div><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Remplis le tableau <b>colonne par colonne</b>. Pour chaque case, relis la définition du mot, juste au-dessus, dans «&nbsp;Les mots du cahier des charges&nbsp;».</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><ul><li><b>Fonction</b>&nbsp;: deux interacteurs reliés en passant par l'objet → FP&nbsp;; un seul → FC.</li><li><b>Désignation</b>&nbsp;: le premier mot est un verbe à l'infinitif (permettre, résister, être…).</li><li><b>Critère</b>&nbsp;: demande-toi «&nbsp;qu'est-ce que je mesurerais&nbsp;?&nbsp;». Une valeur avec «&nbsp;au moins&nbsp;» ou «&nbsp;au plus&nbsp;» est un niveau, pas un critère.</li><li><b>Niveau</b>&nbsp;: un nombre <b>et</b> l'unité du critère&nbsp;: un temps → des secondes ou des minutes&nbsp;; une température → des degrés Celsius.</li><li><b>Flexibilité</b>&nbsp;: aucun écart → F0&nbsp;; <br>un écart à une condition → F1&nbsp;; <br>un petit écart sans condition → F2&nbsp;; <br>un écart large → F3. Elle ne dit pas l'importance de la fonction.</li></ul></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>Ligne 1, les élèves</b> → FC (les élèves) <br>«&nbsp;Fonctionner sans danger pour les élèves&nbsp;» <br>critère&nbsp;: Tension d'alimentation du prototype, en volts <br>niveau&nbsp;: 5 V au plus <br>F0, impératif</div><div class="ligne"><b>Fonction</b> → FC&nbsp;: <b>un seul</b> interacteur → une condition à respecter → <b>FC</b>. <br>Les pièges&nbsp;: <br>FP → Un seul interacteur, les élèves : c'est une FC, une condition à respecter. La FP relie deux interacteurs en passant par l'objet.</div><div class="ligne"><b>Désignation</b> → « Fonctionner sans danger pour les élèves »&nbsp;: elle commence par le verbe à l'infinitif «&nbsp;fonctionner&nbsp;». <br>Les pièges&nbsp;: <br>« Sécurité des élèves au jardin » → « Sécurité » est un nom : une fonction commence par un verbe à l'infinitif, « fonctionner, être »&nbsp;; <br>« Le prototype ne met pas les élèves en danger » → Cette phrase a un sujet, « le prototype », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif&nbsp;; <br>« Pile et câble USB au lieu du secteur » → C'est une solution, pas une fonction : la pile et le câble USB sont les moyens de rester en très basse tension. La fonction dit ce que l'objet doit faire.</div><div class="ligne"><b>Critère</b> → Tension d'alimentation du prototype, en volts&nbsp;: le danger vient du courant électrique : on contrôle la tension qui alimente le prototype. <br>Les pièges&nbsp;: <br>« 5 V au plus » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; <br>ici : tension d'alimentation du prototype, en volts&nbsp;; <br><br>« Un relais entre la carte et la pompe » est une solution : c'est un composant du montage. Le critère dit ce qu'on mesure, pas avec quoi on y arrive&nbsp;; <br>« Humidité du sol, en pourcentage » → L'humidité dit quand arroser ; elle ne dit rien du danger électrique.</div><div class="ligne"><b>Niveau</b> → 5 V au plus&nbsp;: un nombre et l'unité de son critère. <br>Les pièges&nbsp;: <br>« 5 au plus » → Un nombre sans unité n'est pas un niveau : 5 quoi ? Des volts, des ampères, des pour cent ?&nbsp;; <br>« 5 A au plus » → L'ampère (A) mesure une intensité ; <br>le critère est une tension : son unité est le volt (V)&nbsp;; <br><br>« Pas dangereux » ne se mesure pas : un niveau, c'est un nombre et son unité.</div><div class="ligne"><b>Flexibilité</b> → F0, impératif&nbsp;: «&nbsp;Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre&nbsp;» → aucun écart accepté. <br>Les pièges&nbsp;: <br>F1 → « Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart, même à une condition. Le niveau est impératif : F0&nbsp;; <br>F2 → « Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart n'est accepté ; <br>« négociable » voudrait dire un petit écart sans condition&nbsp;; <br><br>F3 → « Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : la sécurité des personnes ne se négocie pas ; F3 voudrait dire « n'importe quelle valeur me va ».</div><div class="ligne conclusion">Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe à l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) et sa <b>flexibilité</b> (l'écart que le client accepte, de F0 impératif à F3 très négociable).</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> chaque fonction du cahier des charges (FP ou FC) a une <b>désignation</b> qui commence par un <b>verbe à l'infinitif</b>, un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (un nombre et son unité) et une <b>flexibilité</b> (l'écart que le client accepte, de <b>F0</b> impératif à <b>F3</b> très négociable).</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> prendre le niveau («&nbsp;au moins…&nbsp;») pour le critère, écrire un niveau sans unité, ou choisir la flexibilité d'après l'importance de la fonction au lieu de l'écart que le client accepte.</p></section><script type="application/json">{"exercices": {"rc_arrosage_4e": {"cle": "rep_rappel-cdc_arrosage-4e", "widgets": [{"type": "tableau", "name": "rc_arrosage_4e__cdcf", "cases": [{"name": "rc_arrosage_4e__cdcf_0_0", "bonne": "fc", "indice": null, "retours": {"fp": "Un seul interacteur, les élèves : c'est une FC, une condition à respecter. La FP relie deux interacteurs en passant par l'objet."}}, {"name": "rc_arrosage_4e__cdcf_0_1", "bonne": "bon", "indice": null, "retours": {"nom": "« Sécurité » est un nom : une fonction commence par un verbe à l'infinitif, « fonctionner, être ».", "sujet": "Cette phrase a un sujet, « le prototype », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif.", "solution": "C'est une solution, pas une fonction : la pile et le câble USB sont les moyens de rester en très basse tension. La fonction dit ce que l'objet doit faire."}}, {"name": "rc_arrosage_4e__cdcf_0_2", "bonne": "bon", "indice": null, "retours": {"niveau": "« 5 V au plus » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; ici : tension d'alimentation du prototype, en volts.", "solution": "« Un relais entre la carte et la pompe » est une solution : c'est un composant du montage. Le critère dit ce qu'on mesure, pas avec quoi on y arrive.", "autre": "L'humidité dit quand arroser ; elle ne dit rien du danger électrique."}}, {"name": "rc_arrosage_4e__cdcf_0_3", "bonne": "bon", "indice": null, "retours": {"sans_unite": "Un nombre sans unité n'est pas un niveau : 5 quoi ? Des volts, des ampères, des pour cent ?", "unite": "L'ampère (A) mesure une intensité ; le critère est une tension : son unité est le volt (V).", "vague": "« Pas dangereux » ne se mesure pas : un niveau, c'est un nombre et son unité."}}, {"name": "rc_arrosage_4e__cdcf_0_4", "bonne": "f0", "indice": null, "retours": {"f1": "« Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart, même à une condition. Le niveau est impératif : F0.", "f2": "« Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition.", "f3": "« Jamais le secteur au jardin : la très basse tension prévue, et rien d'autre » : la sécurité des personnes ne se négocie pas ; F3 voudrait dire « n'importe quelle valeur me va »."}}], "vide": null}]}}}</script></section>
+</details>
 <!-- ateliers-representations:fin rc-arrosage-4e -->
   <div class="act">
     <header><span class="num">Activité 7</span><h3>Le verdict — cahier des charges ligne par ligne</h3><span class="duree">⏱ 20 min</span></header>
@@ -1154,7 +1439,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <p><b>Tes preuves, rappelées</b>&nbsp;:</p>
     <ul class="preuves">
       <li><b>Activité 3</b>&nbsp;: le programme lit la valeur brute du capteur (de 0 à 1&nbsp;023), la convertit en pourcentage, puis affiche «&nbsp;Humidité du sol&nbsp;: …&nbsp;%&nbsp;».</li>
-      <li><b>Activité 6, le banc de tests</b>, avec un seuil de 30&nbsp;%&nbsp;: T1, humidité 10 → pompe en marche&nbsp;; T2, humidité 80 → pompe à l'arrêt&nbsp;; T3, humidité 30 pile, la frontière → pompe à l'arrêt.</li>
+      <li><b>Activité 6, le banc de tests</b>, avec un seuil de 30&nbsp;%&nbsp;: T1, humidité 10 → pompe en marche&nbsp;; <br>T2, humidité 80 → pompe à l'arrêt&nbsp;; <br>T3, humidité 30 pile, la frontière → pompe à l'arrêt.</li>
       <li><b>Le matériel</b> (version 🅰)&nbsp;: une carte alimentée par une pile ou un câble USB, une pompe de 5&nbsp;volts.</li>
     </ul>
     <div class="defile"><table class="refs cdcf">
@@ -1162,33 +1447,33 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
       <colgroup><col style="width:24%"><col style="width:26%"><col style="width:50%"></colgroup>
       <thead><tr><th scope="col">Fonction / contrainte</th><th scope="col">Critère</th><th scope="col">Ton verdict, et sa preuve</th></tr></thead>
       <tbody>
-      <tr><td data-col="Fonction / contrainte">Détecter un sol sec</td><td data-col="Critère">Valeur d'humidité mesurée et convertie</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q1" aria-label="Ligne 1, détecter un sol sec — ton verdict et sa preuve" aria-describedby="a7q1-retour"><option value="">— choisir —</option><option value="capteur">Respecté — le capteur est bien branché sur A0, comme à l'activité 1</option><option value="mesure">Respecté — l'activité 3 affiche l'humidité mesurée, en pourcentage</option><option value="aspect">Respecté — la plante a l'air bien arrosée, ses feuilles sont vertes</option><option value="brute">Non respecté — le capteur donne de 0 à 1 023, pas un pourcentage</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q1-retour"></span></td></tr>
-      <tr><td data-col="Fonction / contrainte">Arroser uniquement si nécessaire</td><td data-col="Critère">Déclenchement sous le seuil seulement</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q2" aria-label="Ligne 2, arroser uniquement si nécessaire — ton verdict et sa preuve" aria-describedby="a7q2-retour"><option value="">— choisir —</option><option value="niveau">Respecté — le seuil est bien réglé à 30 % dans le programme</option><option value="t1">Respecté — T1 : à 10, sol sec, la pompe démarre bien (act. 6)</option><option value="pluie">Impossible à vérifier — il faudrait attendre un jour de pluie</option><option value="t1t2">Respecté — T1 démarre la pompe, T2 la laisse à l'arrêt (act. 6)</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q2-retour"></span></td></tr>
-      <tr><td data-col="Fonction / contrainte">Économiser l'eau</td><td data-col="Critère">Pas d'arrosage à la frontière ni au-dessus</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q3" aria-label="Ligne 3, économiser l'eau — ton verdict et sa preuve" aria-describedby="a7q3-retour"><option value="">— choisir —</option><option value="t3">Respecté — T3, à 30 pile, la pompe reste à l'arrêt (act. 6)</option><option value="t2">Respecté — T2, à 80, la pompe reste bien à l'arrêt (act. 6)</option><option value="inferieur">Non respecté — 30 &lt; 30 est vrai, donc la pompe arrose à 30</option><option value="impression">Respecté — il arrose moins souvent qu'un arrosage à heure fixe</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q3-retour"></span></td></tr>
-      <tr><td data-col="Fonction / contrainte">Fonctionner en sécurité</td><td data-col="Critère">Alimentation du prototype</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7q4" aria-label="Ligne 4, fonctionner en sécurité — ton verdict et sa preuve" aria-describedby="a7q4-retour"><option value="">— choisir —</option><option value="autre">Respecté — la pompe s'arrête dès que le sol est assez humide</option><option value="impossible">Impossible à vérifier — un danger électrique ne se mesure pas</option><option value="tbt">Respecté — pile ou USB : très basse tension, jamais le secteur</option><option value="secteur">Respecté — branché sur le secteur 230 volts, comme une lampe</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7q4-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Détecter un sol sec</td><td data-col="Critère">Valeur d'humidité mesurée et convertie</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7_cdcf_1" aria-label="Ligne 1, détecter un sol sec — ton verdict et sa preuve" aria-describedby="a7_cdcf_1-retour"><option value="">— choisir —</option><option value="capteur">Respecté — le capteur est bien branché sur A0, comme à l'activité 1</option><option value="mesure">Respecté — l'activité 3 affiche l'humidité mesurée, en pourcentage</option><option value="aspect">Respecté — la plante a l'air bien arrosée, ses feuilles sont vertes</option><option value="brute">Non respecté — le capteur donne de 0 à 1 023, pas un pourcentage</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7_cdcf_1-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Arroser uniquement si nécessaire</td><td data-col="Critère">Déclenchement sous le seuil seulement</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7_cdcf_2" aria-label="Ligne 2, arroser uniquement si nécessaire — ton verdict et sa preuve" aria-describedby="a7_cdcf_2-retour"><option value="">— choisir —</option><option value="niveau">Respecté — le seuil est bien réglé à 30 % dans le programme</option><option value="t1">Respecté — T1 : à 10, sol sec, la pompe démarre bien (act. 6)</option><option value="pluie">Impossible à vérifier — il faudrait attendre un jour de pluie</option><option value="t1t2">Respecté — T1 démarre la pompe, T2 la laisse à l'arrêt (act. 6)</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7_cdcf_2-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Économiser l'eau</td><td data-col="Critère">Pas d'arrosage à la frontière ni au-dessus</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7_cdcf_3" aria-label="Ligne 3, économiser l'eau — ton verdict et sa preuve" aria-describedby="a7_cdcf_3-retour"><option value="">— choisir —</option><option value="t3">Respecté — T3, à 30 pile, la pompe reste à l'arrêt (act. 6)</option><option value="t2">Respecté — T2, à 80, la pompe reste bien à l'arrêt (act. 6)</option><option value="inferieur">Non respecté — 30 &lt; 30 est vrai, donc la pompe arrose à 30</option><option value="impression">Respecté — il arrose moins souvent qu'un arrosage à heure fixe</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7_cdcf_3-retour"></span></td></tr>
+      <tr><td data-col="Fonction / contrainte">Fonctionner en sécurité</td><td data-col="Critère">Alimentation du prototype</td><td data-col="Ton verdict, et sa preuve" class="case-menu"><span class="menu-case"><select id="a7_cdcf_4" aria-label="Ligne 4, fonctionner en sécurité — ton verdict et sa preuve" aria-describedby="a7_cdcf_4-retour"><option value="">— choisir —</option><option value="autre">Respecté — la pompe s'arrête dès que le sol est assez humide</option><option value="impossible">Impossible à vérifier — un danger électrique ne se mesure pas</option><option value="tbt">Respecté — pile ou USB : très basse tension, jamais le secteur</option><option value="secteur">Respecté — branché sur le secteur 230 volts, comme une lampe</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-fleche" aria-hidden="true">▾</span></span><span class="retour-case" id="a7_cdcf_4-retour"></span></td></tr>
       </tbody>
     </table></div>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Lis le <b>critère</b> de la ligne, puis cherche dans «&nbsp;Tes preuves, rappelées&nbsp;» le test ou la mesure qui vérifie <b>exactement</b> ce critère — pas un autre, et pas seulement la moitié.</p></div></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>C'est la démarche de VALIDATION&nbsp;: besoin → critère → test → verdict. Pour chaque proposition du menu, pose-toi trois questions&nbsp;: Est-ce un test ou une mesure, et pas un composant ni une valeur recopiée du programme&nbsp;? Vérifie-t-il le critère de CETTE ligne&nbsp;? Le vérifie-t-il en entier (la frontière, les deux cas)&nbsp;? La sécurité électrique n'est pas négociable&nbsp;: un prototype de collège fonctionne en très basse tension, toujours.</p></div></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>C'est la démarche de VALIDATION&nbsp;: besoin → critère → test → verdict. <br>Pour chaque proposition du menu, pose-toi trois questions&nbsp;: Est-ce un test ou une mesure, et pas un composant ni une valeur recopiée du programme&nbsp;? Vérifie-t-il le critère de CETTE ligne&nbsp;? Le vérifie-t-il en entier (la frontière, les deux cas)&nbsp;? La sécurité électrique n'est pas négociable&nbsp;: un prototype de collège fonctionne en très basse tension, toujours.</p></div></details>
     <button class="btn check" data-check="7" type="button">✅ Vérifier l'activité 7</button>
     <p class="feedback" id="fb7" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary><div>
       <p><b>Les quatre lignes sont respectées</b>, et chacune a SA preuve. Valider, c'est relier chaque ligne du cahier des charges au test qui vérifie son critère&nbsp;: besoin → critère → test → verdict.</p>
       <ul class="demo">
-        <li><b>Ligne 1, détecter un sol sec</b> → critère&nbsp;: une valeur mesurée et convertie → preuve&nbsp;: <b>l'activité 3</b>, dont le programme lit la valeur brute, la convertit et affiche l'humidité en pourcentage → <b>respecté</b>.
+        <li><b>Ligne 1, détecter un sol sec</b> <br>Critère&nbsp;: une valeur mesurée et convertie. <br>Preuve&nbsp;: <b>l'activité 3</b>, dont le programme lit la valeur brute, la convertit et affiche l'humidité en pourcentage. <br>Verdict&nbsp;: <b>respecté</b>.
           <br>Piège «&nbsp;le capteur est branché sur A0&nbsp;» → c'est la solution technique, pas une preuve&nbsp;: un capteur branché ne dit pas encore ce qu'il mesure.
           <br>Piège «&nbsp;la plante a l'air bien arrosée&nbsp;» → c'est juger à l'œil, sans mesure.
           <br>Piège «&nbsp;de 0 à 1&nbsp;023, pas un pourcentage&nbsp;» → c'est la valeur brute&nbsp;; le programme la convertit (activité 2&nbsp;: 1&nbsp;023 → 100&nbsp;%).</li>
-        <li><b>Ligne 2, arroser uniquement si nécessaire</b> → critère&nbsp;: la pompe se déclenche sous le seuil, et seulement là → preuve&nbsp;: <b>T1 et T2</b> (10 → marche&nbsp;; 80 → arrêt) → <b>respecté</b>.
+        <li><b>Ligne 2, arroser uniquement si nécessaire</b> <br>Critère&nbsp;: la pompe se déclenche sous le seuil, et seulement là. <br>Preuve&nbsp;: <b>T1 et T2</b> (10 → marche&nbsp;; 80 → arrêt). <br>Verdict&nbsp;: <b>respecté</b>.
           <br>Piège «&nbsp;le seuil est réglé à 30&nbsp;%&nbsp;» → 30&nbsp;% est le <b>niveau</b> écrit dans le programme, pas un test&nbsp;: il ne montre pas que la pompe lui obéit.
           <br>Piège «&nbsp;T1 seul&nbsp;» → la moitié de la preuve&nbsp;: T1 montre que la pompe arrose un sol sec, pas qu'elle laisse tranquille un sol humide.
           <br>Piège «&nbsp;attendre un jour de pluie&nbsp;» → inutile&nbsp;: le banc simule le sol humide (T2).</li>
-        <li><b>Ligne 3, économiser l'eau</b> → critère&nbsp;: pas d'arrosage à la frontière ni au-dessus → preuve&nbsp;: <b>T3</b>, à 30 pile, 30 &lt; 30 est FAUX → pompe à l'arrêt → <b>respecté</b>.
+        <li><b>Ligne 3, économiser l'eau</b> <br>Critère&nbsp;: pas d'arrosage à la frontière ni au-dessus. <br>Preuve&nbsp;: <b>T3</b>, à 30 pile, 30 &lt; 30 est FAUX → pompe à l'arrêt. <br>Verdict&nbsp;: <b>respecté</b>.
           <br>Piège «&nbsp;T2&nbsp;» → T2 vérifie «&nbsp;au-dessus&nbsp;» (80), pas «&nbsp;à la frontière&nbsp;»&nbsp;: c'est à 30 pile que se cache l'erreur de symbole (&lt; ou &lt;=).
           <br>Piège «&nbsp;30 &lt; 30 est vrai&nbsp;» → faux&nbsp;: 30 n'est pas plus petit que 30 (activité 4).
           <br>Piège «&nbsp;il arrose moins qu'à heure fixe&nbsp;» → c'est l'effet espéré (activité 8), pas un test du critère&nbsp;: rien n'a été mesuré.</li>
-        <li><b>Ligne 4, fonctionner en sécurité</b> → critère&nbsp;: l'alimentation du prototype → preuve&nbsp;: une <b>pile ou un câble USB</b>, une très basse tension → <b>respecté</b>.
+        <li><b>Ligne 4, fonctionner en sécurité</b> <br>Critère&nbsp;: l'alimentation du prototype. <br>Preuve&nbsp;: une <b>pile ou un câble USB</b>, une très basse tension. <br>Verdict&nbsp;: <b>respecté</b>.
           <br>Piège «&nbsp;branché sur le secteur 230 volts&nbsp;» → <b>DANGER</b>&nbsp;: le secteur peut tuer&nbsp;; au collège, un prototype fonctionne toujours en très basse tension.
           <br>Piège «&nbsp;la pompe s'arrête quand le sol est humide&nbsp;» → c'est la fonction de la ligne 2, pas la sécurité.
           <br>Piège «&nbsp;un danger ne se mesure pas&nbsp;» → le critère se contrôle&nbsp;: on regarde ce qui alimente la carte.</li>
@@ -1200,23 +1485,32 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <div class="act">
     <header><span class="num">Activité 8</span><h3>L'impact — moins d'eau, vraiment ?</h3><span class="duree">⏱ 15 min</span></header>
     <div class="consigne"><b>Consigne :</b> compare ce système à un arrosage « tous les jours à 7 h » — puis note tes 2 arguments pour le débat de classe.</div>
-    <label>Par rapport à un arrosage à heure fixe, ce système… <select id="a8q1"><option value="">— je choisis —</option><option>n'arrose QUE si le sol est sec : moins d'eau gaspillée</option><option>arrose plus souvent, donc plus d'eau</option><option>consomme pareil</option></select></label>
+    <fieldset class="qcm-groupe" id="a8q1" data-melange="1">
+  <legend>Par rapport à un arrosage à heure fixe, ce système…</legend>
+  <div class="qcm-option"><input type="radio" name="a8q1" id="a8q1__3" value="consomme pareil"><label for="a8q1__3">consomme pareil</label></div>
+  <div class="qcm-option"><input type="radio" name="a8q1" id="a8q1__1" value="n&#x27;arrose QUE si le sol est sec : moins d&#x27;eau gaspillée"><label for="a8q1__1">n'arrose QUE si le sol est sec : moins d'eau gaspillée</label></div>
+  <div class="qcm-option"><input type="radio" name="a8q1" id="a8q1__2" value="arrose plus souvent, donc plus d&#x27;eau"><label for="a8q1__2">arrose plus souvent, donc plus d'eau</label></div>
+</fieldset>
     <label>Tes 2 arguments pour le débat (économie d'eau, canicule, entretien, limites du capteur…) :
-    <textarea id="a8txt" rows="3" placeholder="Argument 1… Argument 2…"></textarea></label>
+    <textarea aria-label="Argument 1… Argument 2…" id="a8txt" rows="3" placeholder="Argument 1… Argument 2…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Ce système économise l'eau parce que … »</li><li>« Par rapport à un arrosage à heure fixe, il … quand … »</li><li>« Sa limite : si le capteur … , alors … »</li></ul></details></label>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Que se passe-t-il un jour de pluie avec l'arrosage à heure fixe ? Et avec le nôtre ?</p></div></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Pense aussi aux LIMITES (usage raisonné 4e_C1.4) : un capteur peut dériver ou s'encrasser, le seuil dépend de la plante, et fabriquer le système a aussi un coût. Un bon argument reconnaît les limites.</p></div></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Pense aussi aux LIMITES (usage raisonné 4e_C1.4) : un capteur peut dériver ou s'encrasser, le seuil dépend de la plante, et fabriquer le système a aussi un coût. <br>Un bon argument reconnaît les limites.</p></div></details>
     <button class="btn check" data-check="8" type="button">✅ Vérifier l'activité 8</button>
     <p class="feedback" id="fb8" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>Il n'arrose QUE si le sol est sec — un jour de pluie, l'arrosage à heure fixe gaspille, le nôtre s'abstient (T2 !). Arguments possibles : économie d'eau en été, plante mieux portante (ni trop ni trop peu), MAIS entretien du capteur et choix du seuil restent à la charge de l'humain : automatique ne veut pas dire sans surveillance.</p></div></details>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<p><b>La réponse&nbsp;:</b> ce système n'arrose QUE si le sol est sec.
+<br>Un jour de pluie, l'arrosage à heure fixe gaspille&nbsp;; le nôtre s'abstient — c'est le test T2.
+<br>«&nbsp;Arrose plus souvent&nbsp;» est faux&nbsp;: il arrose quand il le faut, jamais sur un sol humide.
+<br>«&nbsp;Consomme pareil&nbsp;» est faux&nbsp;: chaque arrosage évité est de l'eau économisée.</p>
+<p><b>Des arguments possibles pour le débat&nbsp;:</b>
+<br>Pour — l'eau économisée en été.
+<br>Pour — une plante mieux portante&nbsp;: ni trop, ni trop peu d'eau.
+<br>Limite — le capteur s'entretient et le seuil se choisit&nbsp;: cela reste à la charge de l'humain.</p>
+<p><b>À retenir&nbsp;:</b> automatique ne veut pas dire sans surveillance.</p>
+</div></details>
   </div>
-
-  <div class="act">
-    <header><span class="num">Auto-éval</span><h3>Où en es-tu ?</h3><span class="duree">⏱ 5 min</span></header>
-    <div class="ae-row"><span>📡 Je sais remettre en ordre un programme de mesure (lire → convertir → afficher)</span><span class="ae-btns" data-k="ORD"></span></div>
-    <div class="ae-row"><span>🚰 Je sais compléter une condition (symbole + actions) et la tester dans l'éditeur</span><span class="ae-btns" data-k="CND"></span></div>
-    <div class="ae-row"><span>🧪 Je sais prouver un comportement par un banc de tests, frontière comprise</span><span class="ae-btns" data-k="BNC"></span></div>
-  </div>
-</section>
+  </section>
 
 <section class="card">
   <h2>📝 Synthèse — à retenir</h2>
@@ -1224,10 +1518,10 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <p>Un système automatisé enchaîne deux circuits complémentaires : la <b>chaîne d'information</b> (un capteur
     ACQUIERT une donnée brute, le programme la TRAITE — conversion, comparaison au seuil —, un écran COMMUNIQUE)
     et la <b>chaîne d'énergie</b> (l'alimentation fournit, le relais distribue, la pompe convertit en action).
-    <b>Compléter un programme</b> (4e_C6.2), c'est ajouter ou ajuster une <b>instruction conditionnelle</b>
+    <br><b>Compléter un programme</b> (4e_C6.2), c'est ajouter ou ajuster une <b>instruction conditionnelle</b>
     (SI … ALORS … SINON) sans tout réécrire — puis <b>prouver</b> le comportement par un banc de tests dont le cas
-    frontière. Le choix du seuil est un compromis technique : trop bas, la plante a soif ; trop haut, on gaspille.</p>
-    <p><b>🔁 Le concept invariant&nbsp;:</b> ce que tu as refait dans les défis (hystérésis, garde-fou du capteur), tu l'avais déjà fait en complétant l'arrosage — le concept commun s'appelle la <b>comparaison à un seuil</b>&nbsp;: elle se dessine (algorigramme, chaînes d'information et d'énergie), se code en blocs et se lit en Python.</p>
+    frontière. <br>Le choix du seuil est un compromis technique : trop bas, la plante a soif ; trop haut, on gaspille.</p>
+    <p><b>🔁 Le concept invariant&nbsp;:</b> ce que tu as refait dans les défis (hystérésis, garde-fou du capteur), tu l'avais déjà fait en complétant l'arrosage. <br>Le concept commun s'appelle la <b>comparaison à un seuil</b>. <br>Elle se dessine (algorigramme, chaînes d'information et d'énergie), se code en blocs et se lit en Python.</p>
   </div></details>
 </section>
 
@@ -1245,19 +1539,19 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 <section class="card">
   <h2>🧩 Différenciation</h2>
   <p><strong>Aides intégrées :</strong> chaque activité embarque deux niveaux d'aide (un indice, puis la démarche) — à ouvrir AVANT de regarder la correction.</p>
-  <p><strong>Élèves rapides :</strong> le bloc 🎁 Bonus les attend (deuxième condition, seuil réglable). <strong>Approfondissement 3e :</strong> la version multi-conditions t'attend dans l'atelier <em>« Variables, types et systèmes » (3e_C9.1)</em> — mêmes boîtes, mêmes bancs de tests.</p>
+  <p><strong>Élèves rapides :</strong> le bloc 🎁 Bonus les attend (deuxième condition, seuil réglable). <br><strong>Approfondissement 3e :</strong> la version multi-conditions t'attend dans l'atelier <em>« Variables, types et systèmes » (3e_C9.1)</em> — mêmes boîtes, mêmes bancs de tests.</p>
 </section>
 
 <section class="card" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
   <p>Trois défis ouverts, sans vérificateur :</p>
-  <p><b>🌙 Défi nuit :</b> on ne veut PAS arroser la nuit (l'eau s'évapore moins, la pompe réveille le gardien).
-  Ajoute une deuxième condition avec <code>luminosite</code> : la pompe ne démarre que si le sol est sec ET s'il fait jour.</p>
+  <p><b>🌙 Défi nuit :</b> on ne veut PAS arroser la nuit (l'eau s'évapore moins, la pompe réveille le gardien). <br>Ajoute une deuxième condition avec <code>luminosite</code> : la pompe ne démarre que si le sol est sec ET s'il fait jour.</p>
   <p><b>🎚 Défi réglage :</b> remplace le seuil fixe par une valeur réglable (un potentiomètre en 🅰, une variable
   modifiée en tête de programme en 🅱) — combien de lignes as-tu dû changer ? Pourquoi si peu ?</p>
   <p><b>🏡 Défi maison :</b> explique à quelqu'un de ta famille pourquoi le test « 30 pile » est le plus important
-  du banc. S'il trouve la réponse tout seul à « et avec ≤ ? », vous avez gagné tous les deux.</p>
+  du banc. <br>S'il trouve la réponse tout seul à « et avec ≤ ? », vous avez gagné tous les deux.</p>
 <div class="editeur-py" id="vs3" data-fichier="4e-ARROSAGE-bonus-TON NOM" data-simulation="carte-simulee-arrosage">
   <label for="py_bonus">🐍 L'éditeur du Bonus — code tes défis ici</label>
   <p class="editeur-py-note">Les fonctions simulées de la carte (encadré 🔌 de l'activité 3) y marchent aussi. Le départ est celui du défi nuit : à toi d'y ajouter la luminosité.</p>
@@ -1273,7 +1567,7 @@ else:
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
   <details class="vs-vitta">
     <summary>Avec Vittascience&nbsp;: le préambule de la carte, à coller d'abord</summary>
-    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
+    <p>Vittascience ne connaît pas les fonctions de la carte simulée&nbsp;: colle d'abord ces huit lignes dans sa zone (<b>Ctrl&nbsp;+&nbsp;A</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>), puis ton programme dessous. <br>Un programme qui boucle sans fin s'y arrête avec <b>Arrêter</b>, dans le bandeau vert.</p>
     <div class="preambule-carte">
       <pre class="code" id="preambule-vs3">import time; A0 = 0; mesures = [55, 40, 25, 12, 28, 45]; rang = [0]  # ===== Simulation de la carte (7 lignes) : ne les change pas =====
 def suivante(): rang[0] = rang[0] + 1; return mesures[(rang[0] - 1) % len(mesures)]
@@ -1291,6 +1585,25 @@ def attendre(secondes): time.sleep(secondes)
 </div>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai choisi le défi … parce que … »</li><li>« J'ai modifié … dans le programme, et la console a affiché … »</li><li>« Ce que j'ai compris : … »</li></ul></details>
+</details>
+</section>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <p><b>Ce que tu sais faire désormais&nbsp;:</b>
+  <br>lire la chaîne d'information d'un système&nbsp;;
+  <br>convertir une mesure brute en une grandeur qui parle (ici, des pourcents)&nbsp;;
+  <br>compléter la condition d'un programme — SI… ALORS… SINON&nbsp;;
+  <br>prouver par des tests qu'il fait ce qu'on attend, cas frontière compris.</p>
+  <p><b>Reviens à la situation de départ.</b> <br>Sais-tu maintenant expliquer pourquoi un arrosage «&nbsp;tous les jours à 7&nbsp;h&nbsp;» gaspille de l'eau&nbsp;? <br>Et ce que ton programme fait de mieux&nbsp;?</p>
+  <p><b>🎯 Auto-positionnement&nbsp;:</b> pour chaque ligne, dis où tu en es. C'est toi qui choisis.</p>
+  <div class="act">
+    <header><span class="num">Auto-éval</span><h3>Où en es-tu ?</h3><span class="duree">⏱ 5 min</span></header>
+    <div class="ae-row"><span>📡 Je sais remettre en ordre un programme de mesure (lire → convertir → afficher)</span><span class="ae-btns" data-k="ORD"></span></div>
+    <div class="ae-row"><span>🚰 Je sais compléter une condition (symbole + actions) et la tester dans l'éditeur</span><span class="ae-btns" data-k="CND"></span></div>
+    <div class="ae-row"><span>🧪 Je sais prouver un comportement par un banc de tests, frontière comprise</span><span class="ae-btns" data-k="BNC"></span></div>
+  </div>
 </section>
 
 <p style="text-align:center;margin:20px 0"><button class="btn small" id="btnTeacher" type="button">🔑 Mode enseignant</button></p>
@@ -1305,11 +1618,11 @@ def attendre(secondes): time.sleep(secondes)
 
 <section class="card" id="teacherPanel">
   <h3>Fiche professeur</h3>
-  <p><strong>Corrigés :</strong> act. 1 : capteur → carte → écran · act. 2 : 100 % / 0 % / ≈50 % / le programme ·
-  act. 3 (ordre) : while (1) → lire (2) → convertir (3) → print (4) → attendre (5) · act. 4 : inférieure + active ; frontière → arrêt ·
-  act. 5 : <code>&lt;</code> / <code>demarrer_pompe()</code> / <code>arreter_pompe()</code> ; humidite 12 → démarre ·
-  act. 6 : MARCHE / arrêt / arrêt (frontière = piège du &lt;=) · act. 7 : 4 « respecté » avec preuves · act. 8 : « n'arrose que si sec ».</p>
-  <p><strong>Verrous expérientiels :</strong> act. 3 exige une exécution dans l'éditeur Python (la console affiche « Humidité du sol »), act. 5 aussi (des lignes « [pompe] ») — ou un clic sur le lien Vittascience ; act. 6 exige
+  <p><strong>Corrigés :</strong> act. <br>1 : capteur → carte → écran · act. <br>2 : 100 % / 0 % / ≈50 % / le programme ·
+  act. <br>3 (ordre) : while (1) → lire (2) → convertir (3) → print (4) → attendre (5) · act. <br>4 : inférieure + active ; <br>frontière → arrêt ·
+  act. <br>5 : <code>&lt;</code> / <code>demarrer_pompe()</code> / <code>arreter_pompe()</code> ; <br>humidite 12 → démarre ·
+  act. <br>6 : MARCHE / arrêt / arrêt (frontière = piège du &lt;=) · act. <br>7 : 4 « respecté » avec preuves · act. 8 : « n'arrose que si sec ».</p>
+  <p><strong>Verrous expérientiels :</strong> act. <br>3 exige une exécution dans l'éditeur Python (la console affiche « Humidité du sol »), act. <br>5 aussi (des lignes « [pompe] ») — ou un clic sur le lien Vittascience ; act. <br>6 exige
   les 3 tests du banc exécutés. Les réponses et badges des élèves restent dans la page (sauvegarde locale du poste).</p>
   <p><strong>Progressivité 2024 :</strong> 4e_C6.2 travaillée ici prépare 4e_C6.3 (tester/valider une modification)
   et l'atelier 3e_C9.1 (fonctions, types, multi-conditions). En amont : le SI/SINON du lampadaire de 5e.</p>
@@ -1414,22 +1727,22 @@ document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(
    Un retour par option fausse, écrit sous sa case après « Vérifier » : il dit pourquoi ce n'est pas une preuve du
    critère de la ligne. Les options sont mélangées dans le HTML ; aucune ne se devine à sa longueur ni à sa forme. */
 const RETOURS7 = {
-  a7q1: {
+  a7_cdcf_1: {
     capteur: "Le capteur branché, c'est la solution technique, pas une preuve : tant qu'aucune valeur n'est lue, convertie et affichée, rien ne montre que le sol sec est détecté.",
     aspect: "C'est juger à l'œil, sans mesure : une plante peut rester verte sur un sol déjà sec. Le critère demande une valeur mesurée — relis l'activité 3.",
     brute: "De 0 à 1 023, c'est la valeur BRUTE : le programme la convertit en pourcentage (activité 2 : 1 023 → 100 %). Le critère dit « mesurée et convertie » : c'est fait."
   },
-  a7q2: {
+  a7_cdcf_2: {
     niveau: "30 %, c'est le NIVEAU écrit dans le programme, pas un test : il ne montre pas que la pompe obéit à ce seuil. Cherche les tests du banc qui le montrent.",
     t1: "T1 n'est que la moitié de la preuve : il montre que la pompe arrose un sol sec. « Uniquement si nécessaire » demande aussi qu'elle n'arrose pas un sol humide.",
     pluie: "Pas besoin d'attendre la pluie : le banc de l'activité 6 SIMULE un sol humide (T2, humidité 80). Un test reproduit la situation quand on veut."
   },
-  a7q3: {
+  a7_cdcf_3: {
     t2: "T2 vérifie « au-dessus » (humidité 80), pas « à la frontière ». C'est à 30 pile que se cache l'erreur de symbole (< ou <=) : quel test essaie 30 pile ?",
     inferieur: "30 < 30 est FAUX : 30 n'est pas plus petit que 30 (activité 4). À la frontière, la pompe reste à l'arrêt, et le banc l'a montré.",
     impression: "C'est l'effet espéré (activité 8), pas un test du critère : ici, rien n'a été mesuré. Le critère parle de la frontière : quel test la vérifie ?"
   },
-  a7q4: {
+  a7_cdcf_4: {
     autre: "Ça, c'est la fonction de la ligne 2 (arroser si nécessaire). La sécurité se juge sur SON critère : ce qui alimente le prototype.",
     impossible: "Le critère se contrôle : on regarde ce qui alimente la carte. Une pile ou un câble USB donnent une très basse tension, sans danger au toucher.",
     secteur: "DANGER : le secteur (230 volts) peut tuer. Au collège, un prototype fonctionne toujours en très basse tension (pile, USB) : c'est une règle, pas un choix."
@@ -1491,10 +1804,10 @@ const CHECKS = {
     return {score: s, total: 1, exp, expMsg: "Exécute les 3 tests du banc (▶) — le cas frontière T3 compris."};
   },
   7(){ let s = 0;
-    s += sv("a7q1","mesure");
-    s += sv("a7q2","t1t2");
-    s += sv("a7q3","t3");
-    s += sv("a7q4","tbt");
+    s += sv("a7_cdcf_1","mesure");
+    s += sv("a7_cdcf_2","t1t2");
+    s += sv("a7_cdcf_3","t3");
+    s += sv("a7_cdcf_4","tbt");
     retours7();
     return {score: s, total: 4, exp: true};
   },
@@ -1509,7 +1822,7 @@ const par = {s: []};
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Toutes les encoches sont vertes. Ouvre la correction pour consolider, puis passe à la suite."; fb.className = "feedback show ok";
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Toutes les encoches sont vertes. Ouvre la correction pour consolider, puis passe à la suite."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau();
     if(!par.s.includes(n)){ par.s.push(n); } }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder : reprends ces questions avec l'aide niveau 1, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : relis le document de l'activité, corrige les réponses marquées ✘ (l'aide niveau 2 te guide pas à pas), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1576,7 +1889,9 @@ $("btnTeacher").addEventListener("click", () => {
 /* ── sauvegarde locale ── */
 function save(){
   const o = {inputs: {}, par, exp: window.__exp || {}, ae: {}};
-  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => { if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
+    o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c => { o.inputs[c.id] = c.checked; });
   document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.textContent; });
@@ -1603,6 +1918,25 @@ $("btnReset").addEventListener("click", () => { if(demande("effacer-ta-sauvegard
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
 restore();
 verdictsVus();   // l'activité 7 : les choix retrouvés s'écrivent dans leurs cases
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 
@@ -1914,6 +2248,14 @@ function appliqueSeance(idPanneau){
 }
 let ouvertEnImpression = null;
 window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+/* Révision du 11/11/2026 : ce qui est replié à l'écran (Bonus, erreurs fréquentes, synthèse) s'ouvre pour l'impression. */
+(function(){
+  var replis = "details.bonus-replie, details.erreurs-repliees, details.gestes-fenetres, details.geste-detail, details.gestes-vitta-replie, details.carte-detail, details.incruste-repliee", etats = null;
+  function ouvrir(){ etats = []; document.querySelectorAll(replis).forEach(function(d){ etats.push([d, d.open]); d.open = true; }); }
+  function refermer(){ if (!etats) return; etats.forEach(function(e){ e[0].open = e[1]; }); etats = null; }
+  window.addEventListener("beforeprint", ouvrir); window.addEventListener("afterprint", refermer);
+  if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) ouvrir(); else refermer(); }); }
+})();
 window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
 function ouvrirSeanceDeLAncre(){
@@ -1966,6 +2308,15 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 .atelier-incruste .option{display:flex;align-items:flex-start;gap:9px;padding:7px 9px;border-radius:8px;border:1px solid transparent;cursor:pointer}
 .atelier-incruste .option:hover{border-color:var(--input-bd);background:rgba(29,78,137,.25)}
 .atelier-incruste .option input{margin-top:.32em;width:1.15em;height:1.15em;flex:0 0 auto;accent-color:#61dafb}
+.atelier-incruste .cles-grille{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--input-bd);border-radius:10px}
+.atelier-incruste .cles-grille .cles-titre{margin:0 0 4px;font-weight:600}
+.atelier-incruste .cles-grille ol{margin:0;padding-left:0;list-style:none}
+.atelier-incruste .cles-grille li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.atelier-incruste .cles-grille li b{display:inline-block;width:1.6em;text-indent:0;color:#61dafb}
+.atelier-incruste .options-grille{flex-direction:row;flex-wrap:wrap;gap:6px}
+.atelier-incruste .options-grille .option{align-items:center;gap:5px;padding:4px 8px;border-color:var(--input-bd)}
+.atelier-incruste .options-grille .option input{margin-top:0}
+.atelier-incruste .options-grille .option span{font-weight:700}
 .atelier-incruste .encoche{display:inline-block;min-width:1.3em;font-weight:700;margin-left:6px}
 .atelier-incruste .encoche.juste{color:var(--ok)}
 .atelier-incruste .encoche.faux{color:var(--err)}
@@ -2071,12 +2422,16 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
+@media print{.atelier-incruste .cles-grille{border-color:#999!important}.atelier-incruste .cles-grille li b{color:#111!important}}
 @media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .ms-case,.atelier-incruste .ms-retours{display:none!important}.atelier-incruste .ms-papier{display:block}.atelier-incruste .ms-dessin svg text[data-car],.atelier-incruste .ms-dessin svg .bac-pointilles{visibility:visible!important}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media (pointer:coarse){.atelier-incruste input,.atelier-incruste textarea,.atelier-incruste select{font-size:16px!important}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
 .atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:var(--hl);font-size:1.02em;margin:4px 0 8px}
 @media print{.atelier-incruste,.atelier-incruste .card.exercice{background:#fff!important;color:#111}.atelier-incruste>h3,.atelier-incruste>h4,.atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:#111}}
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:12px;padding:6px 12px}details.incruste-repliee>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}details.incruste-repliee[open]>summary{margin-bottom:8px}@media print{details.incruste-repliee{border-color:#999}}
 </style>
 <script>
 /* Ateliers des représentations — moteur commun des exercices.

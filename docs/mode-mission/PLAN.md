@@ -79,10 +79,12 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
       `3e_C6.1`, `4e_C4.1`, `4e_C5.1`, `4e_C6.1`, `5e_C6.1`. Le moteur a appris trois écritures de réponses, les
       activités à plusieurs zones d'exercice, la vérification placée après les aides. Banc générique
       (`banc_generique.mjs`) : chaque page jouée écran par écran, chaque réponse croisée avec la vérification de la page.
-- [ ] L'essayer en classe, sur les tablettes réelles.
+- [x] Essai sur une vraie tablette, par Pascal (11/11/2026) : « Sur une tablette c'est bon. » Reste l'essai en classe.
 - [ ] Décider de la vue par défaut. L'allumer d'office demande d'apprendre aux bancs et aux contrôles à ouvrir la
       page complète (`?vue=page`) : ils mesurent et jouent la page qui défile.
 - [ ] Gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) et `4e_C4.1_book-train` : à apprendre au moteur.
+- [ ] Ancien gabarit (`div.act` posées dans une seule carte, sans `.exo` : `4e_C6.2` et la famille C7/C8 du thème 3) :
+      le banc générique le refuse — un écran par séance, aucune question vérifiée. À apprendre au moteur.
 - [ ] Autres habillages : cartes à remettre dans l'ordre (séries de numéros), texte à trous.
 - [ ] Les séquences suivantes : à chaque révision (skill `revision-sequence`, étape 7), poser le mode et jouer le
       banc générique. Thèmes 1 et 3 : même geste.

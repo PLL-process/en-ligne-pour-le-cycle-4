@@ -97,7 +97,7 @@ bonne réponse et dit combien de mauvaises réponses ont le leur.
 
 - Les séries de numéros à ordonner et les textes à trous ne sont pas encore habillés (ils restent des boutons radio).
 - Un lien vers une ancre (`#act3`) ouvre la bonne séance, pas le bon écran.
-- Non essayé sur une vraie tablette : le glisser au doigt n'a été joué qu'en simulation. Au doigt, une étiquette
+- Essayé sur une vraie tablette par Pascal le 11/11/2026 (« c'est bon ») ; pas encore en classe. Au doigt, une étiquette
   se glisse depuis la réserve ; une case ne se glisse pas (la page défile) : on la touche pour reprendre l'étiquette.
 - Gabarit « atelier » (`3e_C4.8`, `3e_C6.2` : des `.ligne-exo` posées dans la carte, sans `.activite`) : non
   découpé — le mode n'y est pas posé. `4e_C4.1_book-train` : autre gabarit, non reconnu.

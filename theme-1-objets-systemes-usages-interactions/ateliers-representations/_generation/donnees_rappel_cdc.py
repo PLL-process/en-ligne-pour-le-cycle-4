@@ -367,6 +367,9 @@ RAPPELS = [
                    dict(bonne="f0", cit="Une main, pas deux : un parent tient son enfant de l'autre")),
          ]),
     dict(id="arrosage-4e", niveau="4e",
+         # révision du 11/11/2026 (la charge de lecture de la séance 3, 1 891 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=T2 + "C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html",
          avant='  <div class="act">\n    <header><span class="num">Activité 7</span>', balise="h3", balise_exo="h4",
          titre="Une ligne du cahier des charges de l'arrosage automatique",

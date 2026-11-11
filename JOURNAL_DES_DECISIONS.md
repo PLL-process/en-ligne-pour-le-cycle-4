@@ -29974,3 +29974,26 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 **Un défaut réparé au passage, que j'avais introduit en #650.** Dans « c) La règle de décision » (séance 3), les trois réponses à choisir dans la phrase portaient toutes la légende de la question précédente (« Expérience 4 — jour (80 lux) + passage : la LED est… ») : la conversion des listes en boutons radio l'avait recopiée. La règle se complète maintenant en trois lignes légendées (« SI il fait… », « … ET que quelqu'un… », « … ALORS pleine puissance. SI il fait nuit, sans passage, ALORS… »). Balayage des 56 séquences : aucune autre page n'a ce défaut.
 
 **Mesure.** Banc du pilote : 50 / 50. Banc générique : 10 pages, aucun refus ; il refuse désormais un « pourquoi » posé sur une bonne réponse. Bancs de la séquence : 64/64, 34/34, 25/25 ; contrôles verts. Mots visibles : séance 1 à **1 218** (1 196 avant : +22, les deux leurres et leur annonce — au-dessus du repère de 1 200, noté au suivi) ; séance 2 à 645 (628) ; séance 3 à 470 (496).
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 26 : 4e_C6.2, l'ancien gabarit rejoint le commun — 21 listes en boutons radio, corrections exhaustives
+
+**Décisions.**
+- **Gabarit** (`migrer_gabarit_306.py`) : mode essentiel (n°29), tableau de bord des tâches (n°30), versions étayées pour les deux rédactions (n°31), étiquettes (n°34). L'outil apprend qu'un **éditeur de code n'est pas une rédaction** : il n'exige plus de version étayée pour une zone `editeur-py-code` (un volet glissé sous la zone de saisie aurait cassé l'éditeur).
+- **n°300** : 21 listes → groupes de boutons radio (75 propositions). Chaque famille a demandé sa forme, écrite à la main avant la conversion :
+  - *« Le [ ] acquiert, La [ ] traite, L'[ ] communique »* — l'article donnait la réponse. Devient « Qui acquiert l'information ? », en grille lettrée.
+  - *les cinq lignes du programme à numéroter* : cinq rangées de numéros, la ligne de code (en couleurs) en légende.
+  - *la règle à deux trous* : deux rangées légendées (« SI l'humidité du sol est… au seuil, », « … ALORS on… la pompe. ») ; le pseudo-code s'écrit toujours sous les yeux.
+  - *le programme à trois trous* : les trous restent dans le code, numérotés ①②③ ; les trois questions suivent le programme.
+- **Les quatre menus du tableau de vérification du cahier des charges restent des menus** (n°317 : un cahier des charges se complète dans son tableau). Leurs identifiants le disent désormais (`a7q1…4` → `a7_cdcf_1…4`) : c'est à l'identifiant que l'audit reconnaît un menu voulu. Conséquence : une réponse déjà sauvegardée dans ces quatre cases n'est pas retrouvée.
+- **n°301** : la séquence ne se terminait par rien. Un bilan clôt la page, après le Bonus : ce que l'élève sait faire, le retour à la situation, et l'auto-évaluation — celle que la page portait déjà, déplacée de la fin de la séance 3 vers le bilan.
+- **Corrections exhaustives** : sept corrections réécrites une réponse par ligne, avec sa raison et le pourquoi de chaque mauvaise réponse (« Pourquoi pas “supérieure” ? », « “T1 et T2 suffisent” est faux : ils passent aussi avec le mauvais symbole »). La correction du verdict passe en lignes : critère, preuve, verdict.
+- **Lecture allégée.** Séance 3 : le rappel du cahier des charges se replie à sa source (`donnees_rappel_cdc.py`, `replie=`), le Bonus aussi. Séance 1 : le pas-à-pas de l'Explorateur de Windows, la variante Vittascience des gestes et la liste des fonctions simulées se déplient ; pour chaque geste, l'action reste écrite, « ce que tu dois voir — et que faire si ça coince » se déplie. Tous ces volets s'ouvrent à l'impression.
+- **Écart** : séance 1 à 1 329 mots. L'échauffement de l'éditeur Python — quatre gestes à faire, pas un texte à lire (règles n°93 et n°297) — reste déplié : 370 mots.
+- **Mode mission non posé** : le banc générique refuse la page. Les activités de l'ancien gabarit sont des `div.act` posées dans une seule carte, sans zone d'exercice : le mode n'y montrerait qu'un écran par séance. À apprendre au moteur (vaut aussi pour la famille C7/C8 du thème 3).
+- **Bancs** : le banc commun de la règle n°311 suit désormais une réponse en boutons radio comme une liste déroulante (`banc_regle_311_theme2.mjs`).
+
+**Par ailleurs.** Pascal, le 11/11 : « Sur une tablette c'est bon » (mode mission essayé sur une vraie tablette) ; et, sur le modèle des pourquoi et des leurres : « Je te laisse carte blanche » — l'extension aux neuf autres séquences est lancée après cette révision.
+
+**Mesure.** Séances : 1 329 · 732 · 997 mots visibles (1 990 · 730 · 1 891 avant). ✘ 6 → 0 ; menus 25 → 0 (4 voulus) ; aération 18 → 0. Bancs 56/56 et 34/34 ; contrôles verts. Le vérificateur des incrustations signale 19 autres pages « à mettre à jour » : elles le sont déjà sur `main`, sans lien avec cette révision.
