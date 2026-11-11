@@ -205,6 +205,20 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+  fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0} /* 11/11/2026 : les numéros en rangée */
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -540,6 +554,11 @@ body.essentiel details.referentiel-replie{display:none}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -614,7 +633,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C5.1/Synthèses/synthese_eleve_4e_C5.1-C5.3.html#remplacer">relis « Remplacer une pièce sans protocole fourni » dans la synthèse 4e_C5.1 à C5.3</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> la question n'est pas seulement « où est la panne » mais <b>« faut-il réparer ou remplacer »</b>. Tu vas mettre en balance le coût, la durée de vie et ce que ça coûte à la planète — et assumer une décision qui n'a pas de bonne réponse évidente.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> la question n'est pas seulement « où est la panne » mais <b>« faut-il réparer ou remplacer »</b>. <br>Tu vas mettre en balance le coût, la durée de vie et ce que ça coûte à la planète. <br>Et assumer une décision qui n'a pas de bonne réponse évidente.</p>
   <p class="filet">Un mot à garder en tête : un objet en panne n'est pas un objet mort ; il est mort quand on décide qu'il l'est.</p>
 </section>
 
@@ -640,8 +659,8 @@ body.essentiel details.referentiel-replie{display:none}
     <tr><td><b>3e_C5.3</b></td><td>Réaliser le dépannage ou la réparation d\'un système défectueux.</td><td>D2, D4, D5</td><td>4, R</td></tr>
     <tr><td><b>3e_C5.4</b></td><td>Réaliser une pièce sur mesure pour réparer un objet technique.</td><td>D2, D3, D4</td><td>5</td></tr>
   </table>
-  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C5</b> : identifier un dysfonctionnement d\'un objet technique et y remédier — BO n°9 du 29/02/2024. Suite directe des séquences « Station d\'alerte » (C4.3→C4.6) et « Internet jusqu\'à Sainte-Luce » (C4.7-C4.8).</p>
-  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C5.1</code> · <code>3e_C5.2</code> · <code>3e_C5.3</code> · <code>3e_C5.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C5</b> : identifier un dysfonctionnement d\'un objet technique et y remédier — BO n°9 du 29/02/2024. <br>Suite directe des séquences « Station d\'alerte » (C4.3→C4.6) et « Internet jusqu\'à Sainte-Luce » (C4.7-C4.8).</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C5.1</code> · <code>3e_C5.2</code> · <code>3e_C5.3</code> · <code>3e_C5.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. <br>Les formulations ci-dessus sont celles du référentiel.</p>
 </div>
 </details>
 
@@ -657,13 +676,13 @@ body.essentiel details.referentiel-replie{display:none}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Lundi matin, après le passage du cyclone.</b> Le quartier a tenu bon, la station aussi… presque. Au test
-    hebdomadaire de la sirène : <b>silence total</b>. Pourtant l'application reçoit toujours les mesures de vent et de
-    pluie, et la LED du boîtier est allumée. Autre dégât visible : la girouette (elle indique d'où vient le vent) pend lamentablement, son support en
+    <p><b>Lundi matin, après le passage du cyclone.</b><br>Le quartier a tenu bon, la station aussi… presque. <br>Au test
+    hebdomadaire de la sirène : <b>silence total</b>. <br>Pourtant l'application reçoit toujours les mesures de vent et de
+    pluie, et la LED du boîtier est allumée. <br>Autre dégât visible : la girouette (elle indique d'où vient le vent) pend lamentablement, son support en
     plastique a cassé net.</p>
-    <p>Le technicien de la mairie propose de « tout changer » : une station neuve coûte 1 800 €. Le club techno du
-    collège refuse : <b>« On diagnostique, on répare, on refabrique ce qui manque. »</b> La prochaine saison cyclonique
-    n'attendra pas — et jeter un système qui fonctionne à 90 % serait un gâchis absurde.</p>
+    <p>Le technicien de la mairie propose de « tout changer » : une station neuve coûte 1 800 €. <br>Le club techno du
+    collège refuse : <b>« On diagnostique, on répare, on refabrique ce qui manque. »</b> <br>La prochaine saison cyclonique
+    n'attendra pas. <br>Et jeter un système qui fonctionne à 90 % serait un gâchis absurde.</p>
   </div>
   <figure class="situation-photo">
     <img src="Images/synthese_station_alerte.png" width="1536" height="1024" loading="lazy"
@@ -685,7 +704,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp1" placeholder="Je pense que la panne vient de… je commencerais par…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Les causes possibles sont ____, ____ et ____.</li>
     <li>Je commencerais par ____, parce que c&#x27;est ____ à vérifier.</li>
@@ -696,7 +715,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp2" placeholder="Je pense cela parce que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je m&#x27;appuie sur ____.</li>
     <li>Ce qui me le fait penser, c&#x27;est que ____.</li>
@@ -721,11 +740,11 @@ body.essentiel details.referentiel-replie{display:none}
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <div class="versions">
     <div class="version va"><h4>🅰 Matériel réel</h4>
-      <p>Atelier « clinique des objets » : objets en panne apportés (lampe LED, ventilateur, jouet), diagnostic au multimètre <b>(MATÉRIEL À CONFIRMER)</b>, réparation encadrée. Sécurité : très basse tension uniquement, jamais d\'objet branché au secteur.</p></div>
+      <p>Atelier « clinique des objets » : objets en panne apportés (lampe LED, ventilateur, jouet), diagnostic au multimètre <b>(MATÉRIEL À CONFIRMER)</b>, réparation encadrée. <br>Sécurité : très basse tension uniquement, jamais d\'objet branché au secteur.</p></div>
     <div class="version vb"><h4>🅱 Logiciel</h4>
       <p><b>FreeCAD</b> : modéliser le support de girouette à partir du plan coté (activité 5), exporter en STL pour une impression future.</p></div>
     <div class="version vc"><h4>🅲 Sans matériel</h4>
-      <p>Tout est dans cette page : simulateur de dépannage (activité 4), plan coté à lire (activité 5) et gabarit papier de la pièce à tracer en vraie grandeur. Personne n\'est pénalisé.</p></div>
+      <p>Tout est dans cette page : simulateur de dépannage (activité 4), plan coté à lire (activité 5) et gabarit papier de la pièce à tracer en vraie grandeur. <br>Personne n\'est pénalisé.</p></div>
   </div>
 </section>
 </details>
@@ -749,7 +768,7 @@ body.essentiel details.referentiel-replie{display:none}
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>« La sirène ne sonne pas pendant l'alerte », c'est…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="un symptôme : ce qu&#x27;on constate"><label for="be_1__1">un symptôme : ce qu'on constate</label></div>
@@ -774,6 +793,26 @@ body.essentiel details.referentiel-replie{display:none}
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
 </section>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
@@ -835,20 +874,55 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> a) à partir des constats 2 et 3 du schéma, réponds aux déductions ; b) classe ensuite les hypothèses restantes dans l'ordre où il faudra les tester.</div>
     <div class="exo">
       <h4>a) Ce que les constats nous apprennent</h4>
-      <div class="assoc"><label for="c1_1">Constat 2 (LED allumée) : la panne « batterie complètement vide » est…</label><select id="c1_1"><option value="">— choisir —</option><option>peu probable : le boîtier est alimenté</option><option>certaine</option><option>impossible à évaluer</option></select></div>
-      <div class="assoc"><label for="c1_2">Constat 3 (mesures reçues) : microcontrôleur et transmission radio sont…</label><select id="c1_2"><option value="">— choisir —</option><option>probablement en état de marche</option><option>certainement en panne</option><option>sans rapport avec la sirène</option></select></div>
-      <div class="assoc"><label for="c1_3">« La sirène est muette » est…</label><select id="c1_3"><option value="">— choisir —</option><option>un symptôme (on le constate)</option><option>une hypothèse (on le suppose)</option><option>un protocole</option></select></div>
-      <div class="assoc"><label for="c1_4">« Le fusible de la sirène a grillé » est…</label><select id="c1_4"><option value="">— choisir —</option><option>un symptôme (on le constate)</option><option>une hypothèse (on le suppose)</option><option>une certitude</option></select></div>
+      <fieldset class="qcm-groupe" id="c1_1">
+  <legend>Constat 2 (LED allumée) : la panne « batterie complètement vide » est…</legend>
+  <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__1" value="peu probable : le boîtier est alimenté"><label for="c1_1__1">peu probable : le boîtier est alimenté</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__2" value="certaine"><label for="c1_1__2">certaine</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__3" value="impossible à évaluer"><label for="c1_1__3">impossible à évaluer</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c1_2">
+  <legend>Constat 3 (mesures reçues) : microcontrôleur et transmission radio sont…</legend>
+  <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__1" value="probablement en état de marche"><label for="c1_2__1">probablement en état de marche</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__2" value="certainement en panne"><label for="c1_2__2">certainement en panne</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__3" value="sans rapport avec la sirène"><label for="c1_2__3">sans rapport avec la sirène</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c1_3">
+  <legend>« La sirène est muette » est…</legend>
+  <div class="qcm-option"><input type="radio" name="c1_3" id="c1_3__1" value="un symptôme (on le constate)"><label for="c1_3__1">un symptôme (on le constate)</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_3" id="c1_3__2" value="une hypothèse (on le suppose)"><label for="c1_3__2">une hypothèse (on le suppose)</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_3" id="c1_3__3" value="un protocole"><label for="c1_3__3">un protocole</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c1_4">
+  <legend>« Le fusible de la sirène a grillé » est…</legend>
+  <div class="qcm-option"><input type="radio" name="c1_4" id="c1_4__1" value="un symptôme (on le constate)"><label for="c1_4__1">un symptôme (on le constate)</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_4" id="c1_4__2" value="une hypothèse (on le suppose)"><label for="c1_4__2">une hypothèse (on le suppose)</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_4" id="c1_4__3" value="une certitude"><label for="c1_4__3">une certitude</label></div>
+</fieldset>
       <h4>b) Classer les hypothèses restantes (1 = à tester en premier)</h4>
       <p style="font-size:.88em;color:var(--sub)">Règle du dépanneur : tester d'abord ce qui est <b>simple, rapide et probable</b>.</p>
-      <div class="assoc"><label for="c1_h1">Câble boîtier→sirène arraché par le vent (contrôle visuel, 30 s)</label><select id="c1_h1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option></select></div>
-      <div class="assoc"><label for="c1_h2">Sirène elle-même détruite (test par substitution, 10 min)</label><select id="c1_h2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option></select></div>
-      <div class="assoc"><label for="c1_h3">Fusible de la sortie sirène grillé (contrôle visuel + mesure, 2 min)</label><select id="c1_h3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="c1_h1">
+  <legend>Câble boîtier→sirène arraché par le vent (contrôle visuel, 30 s)</legend>
+  <div class="qcm-option"><input type="radio" name="c1_h1" id="c1_h1__1" value="1"><label for="c1_h1__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_h1" id="c1_h1__2" value="2"><label for="c1_h1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_h1" id="c1_h1__3" value="3"><label for="c1_h1__3">3</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c1_h2">
+  <legend>Sirène elle-même détruite (test par substitution, 10 min)</legend>
+  <div class="qcm-option"><input type="radio" name="c1_h2" id="c1_h2__1" value="1"><label for="c1_h2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_h2" id="c1_h2__2" value="2"><label for="c1_h2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_h2" id="c1_h2__3" value="3"><label for="c1_h2__3">3</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c1_h3">
+  <legend>Fusible de la sortie sirène grillé (contrôle visuel + mesure, 2 min)</legend>
+  <div class="qcm-option"><input type="radio" name="c1_h3" id="c1_h3__1" value="1"><label for="c1_h3__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_h3" id="c1_h3__2" value="2"><label for="c1_h3__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c1_h3" id="c1_h3__3" value="3"><label for="c1_h3__3">3</label></div>
+</fieldset>
       <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb1" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un symptôme s'OBSERVE (on peut le montrer du doigt) ; une hypothèse s'IMAGINE (elle commence souvent par « peut-être que… »). Pour le classement : regarde les durées indiquées !</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le câble se vérifie d'un coup d'œil (n°1) ; le fusible demande d'ouvrir le boîtier (n°2) ; tester la sirène en la remplaçant est le plus long (n°3). Les constats 2 et 3 innocentent déjà la batterie ET le microcontrôleur : inutile de les suspecter en premier.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le câble se vérifie d'un coup d'œil (n°1) ; <br>le fusible demande d'ouvrir le boîtier (n°2) ; <br>tester la sirène en la remplaçant est le plus long (n°3). Les constats 2 et 3 innocentent déjà la batterie ET le microcontrôleur : inutile de les suspecter en premier.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> peu probable (boîtier alimenté) · probablement en état (les mesures partent encore) · symptôme · hypothèse.</p>
       <p><b>b)</b> câble = 1 · fusible = 2 · sirène = 3.</p>
@@ -872,14 +946,32 @@ body.essentiel details.referentiel-replie{display:none}
     <object class="figure" data="Images/arbre_diagnostic_sirene.svg" type="image/svg+xml" aria-label="Organigramme de diagnostic de la sirène muette, avec trois questions successives : LED allumée ?, ordre envoyé ?, câble intact ?">Arbre de diagnostic de la sirène (SVG)</object>
     <div class="consigne"><b>Consigne :</b> parcours l'arbre pour chaque situation et donne la conclusion atteinte, puis justifie l'ordre des questions.</div>
     <div class="exo">
-      <div class="assoc"><label for="c2_1">Situation A : LED éteinte. Conclusion de l'arbre ?</label><select id="c2_1"><option value="">— choisir —</option><option>contrôler batterie et panneau solaire</option><option>remplacer la sirène</option><option>contrôler le programme</option><option>rebrancher le câble</option></select></div>
-      <div class="assoc"><label for="c2_2">Situation B : LED allumée, ordre visible dans le journal, câble arraché. Conclusion ?</label><select id="c2_2"><option value="">— choisir —</option><option>rebrancher ou remplacer le câble</option><option>remplacer la sirène</option><option>contrôler la batterie</option><option>contrôler le programme</option></select></div>
-      <div class="assoc"><label for="c2_3">Situation C : LED allumée, ordre visible, câble intact et branché. Conclusion ?</label><select id="c2_3"><option value="">— choisir —</option><option>remplacer la sirène</option><option>contrôler la batterie</option><option>rebrancher le câble</option><option>racheter une station</option></select></div>
+      <fieldset class="qcm-groupe" id="c2_1">
+  <legend>Situation A : LED éteinte. Conclusion de l'arbre ?</legend>
+  <div class="qcm-option"><input type="radio" name="c2_1" id="c2_1__1" value="contrôler batterie et panneau solaire"><label for="c2_1__1">contrôler batterie et panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_1" id="c2_1__2" value="remplacer la sirène"><label for="c2_1__2">remplacer la sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_1" id="c2_1__3" value="contrôler le programme"><label for="c2_1__3">contrôler le programme</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_1" id="c2_1__4" value="rebrancher le câble"><label for="c2_1__4">rebrancher le câble</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c2_2">
+  <legend>Situation B : LED allumée, ordre visible dans le journal, câble arraché. Conclusion ?</legend>
+  <div class="qcm-option"><input type="radio" name="c2_2" id="c2_2__1" value="rebrancher ou remplacer le câble"><label for="c2_2__1">rebrancher ou remplacer le câble</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_2" id="c2_2__2" value="remplacer la sirène"><label for="c2_2__2">remplacer la sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_2" id="c2_2__3" value="contrôler la batterie"><label for="c2_2__3">contrôler la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_2" id="c2_2__4" value="contrôler le programme"><label for="c2_2__4">contrôler le programme</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c2_3">
+  <legend>Situation C : LED allumée, ordre visible, câble intact et branché. Conclusion ?</legend>
+  <div class="qcm-option"><input type="radio" name="c2_3" id="c2_3__1" value="remplacer la sirène"><label for="c2_3__1">remplacer la sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_3" id="c2_3__2" value="contrôler la batterie"><label for="c2_3__2">contrôler la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_3" id="c2_3__3" value="rebrancher le câble"><label for="c2_3__3">rebrancher le câble</label></div>
+  <div class="qcm-option"><input type="radio" name="c2_3" id="c2_3__4" value="racheter une station"><label for="c2_3__4">racheter une station</label></div>
+</fieldset>
       <label for="c2_just" style="display:block;margin-top:10px"><b>Justifie :</b> pourquoi l'arbre pose-t-il la question de la LED EN PREMIER, et pourquoi ne faut-il changer qu'UNE chose à la fois ?</label>
       <textarea id="c2_just" placeholder="La LED se vérifie en… Si on change deux choses à la fois…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>L&#x27;arbre pose la question de la LED en premier parce qu&#x27;elle permet de savoir si ____.</li>
     <li>Tant qu&#x27;on ne sait pas cela, on ne peut pas distinguer une panne de ____ d&#x27;une panne de ____.</li>
@@ -890,10 +982,10 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb2" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis les flèches avec le doigt : à chaque losange, prends la branche OUI ou NON selon la situation décrite.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>A : premier losange → NON → branche de gauche. B : OUI, OUI, NON → action câble. C : OUI, OUI, OUI → dernier rectangle. Pour la justification : la LED est le test le plus rapide (1 seconde, sans outil) ; et si on change deux choses et que ça remarche, impossible de savoir laquelle était la panne.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>A : premier losange → NON → branche de gauche. <br>B : OUI, OUI, NON → action câble. <br>C : OUI, OUI, OUI → dernier rectangle. <br>Pour la justification : la LED est le test le plus rapide (1 seconde, sans outil). <br>Et si on change deux choses et que ça remarche, impossible de savoir laquelle était la panne.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>A</b> → contrôler batterie et panneau solaire · <b>B</b> → rebrancher/remplacer le câble · <b>C</b> → remplacer la sirène.</p>
-      <p><b>Justification :</b> l'arbre trie les tests du plus simple au plus coûteux : la LED se lit en 1 seconde sans démonter. Et on ne modifie qu'UNE chose à la fois : sinon, même si la panne disparaît, on ignore laquelle des modifications l'a corrigée — le diagnostic n'apprend rien, et on a peut-être remplacé un élément sain.</p>
+      <p><b>Justification :</b> l'arbre trie les tests du plus simple au plus coûteux : la LED se lit en 1 seconde sans démonter. <br>Et on ne modifie qu'UNE chose à la fois : sinon, même si la panne disparaît, on ignore laquelle des modifications l'a corrigée — le diagnostic n'apprend rien, et on a peut-être remplacé un élément sain.</p>
       <p><b>Lien avec la programmation :</b> cet arbre est un algorigramme (comme en 3e_C6.2) : losange = test, rectangle = action. Diagnostiquer, c'est exécuter un algorithme !</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> sauter une question de l'arbre ; répondre « remplacer la sirène » dès la situation B (le câble arraché suffit !) ; changer plusieurs éléments à la fois « pour aller plus vite ».</div>
@@ -922,22 +1014,78 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> a) remets les étapes du protocole dans l'ordre ; b) complète la règle de localisation ; c) réponds aux questions de sécurité ; d) rédige un protocole pour la panne de la pompe du jardin connecté.</div>
     <div class="exo">
       <h4>a) Ordonner le protocole (1 → 5)</h4>
-      <div class="assoc"><label for="c3_e1">Mesurer aux points T1 → T4, dans l'ordre, UNE mesure à la fois</label><select id="c3_e1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-      <div class="assoc"><label for="c3_e2">Inspecter visuellement (câbles, connecteurs, traces de choc)</label><select id="c3_e2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-      <div class="assoc"><label for="c3_e3">Retester la sirène complètement après réparation</label><select id="c3_e3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-      <div class="assoc"><label for="c3_e4">Remplacer ou réparer UNIQUEMENT l'élément localisé</label><select id="c3_e4"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-      <div class="assoc"><label for="c3_e5">Rassembler les constats et relire l'arbre de diagnostic</label><select id="c3_e5"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_e1">
+  <legend>Mesurer aux points T1 → T4, dans l'ordre, UNE mesure à la fois</legend>
+  <div class="qcm-option"><input type="radio" name="c3_e1" id="c3_e1__1" value="1"><label for="c3_e1__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e1" id="c3_e1__2" value="2"><label for="c3_e1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e1" id="c3_e1__3" value="3"><label for="c3_e1__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e1" id="c3_e1__4" value="4"><label for="c3_e1__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e1" id="c3_e1__5" value="5"><label for="c3_e1__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_e2">
+  <legend>Inspecter visuellement (câbles, connecteurs, traces de choc)</legend>
+  <div class="qcm-option"><input type="radio" name="c3_e2" id="c3_e2__1" value="1"><label for="c3_e2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e2" id="c3_e2__2" value="2"><label for="c3_e2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e2" id="c3_e2__3" value="3"><label for="c3_e2__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e2" id="c3_e2__4" value="4"><label for="c3_e2__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e2" id="c3_e2__5" value="5"><label for="c3_e2__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_e3">
+  <legend>Retester la sirène complètement après réparation</legend>
+  <div class="qcm-option"><input type="radio" name="c3_e3" id="c3_e3__1" value="1"><label for="c3_e3__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e3" id="c3_e3__2" value="2"><label for="c3_e3__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e3" id="c3_e3__3" value="3"><label for="c3_e3__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e3" id="c3_e3__4" value="4"><label for="c3_e3__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e3" id="c3_e3__5" value="5"><label for="c3_e3__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_e4">
+  <legend>Remplacer ou réparer UNIQUEMENT l'élément localisé</legend>
+  <div class="qcm-option"><input type="radio" name="c3_e4" id="c3_e4__1" value="1"><label for="c3_e4__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e4" id="c3_e4__2" value="2"><label for="c3_e4__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e4" id="c3_e4__3" value="3"><label for="c3_e4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e4" id="c3_e4__4" value="4"><label for="c3_e4__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e4" id="c3_e4__5" value="5"><label for="c3_e4__5">5</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_e5">
+  <legend>Rassembler les constats et relire l'arbre de diagnostic</legend>
+  <div class="qcm-option"><input type="radio" name="c3_e5" id="c3_e5__1" value="1"><label for="c3_e5__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e5" id="c3_e5__2" value="2"><label for="c3_e5__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e5" id="c3_e5__3" value="3"><label for="c3_e5__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e5" id="c3_e5__4" value="4"><label for="c3_e5__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_e5" id="c3_e5__5" value="5"><label for="c3_e5__5">5</label></div>
+</fieldset>
       <h4>b) La règle de localisation</h4>
-      <p>La panne se situe entre le dernier point de test <select id="c3_r1" style="width:auto;display:inline-block" aria-label="La panne se situe entre le dernier point de test… (son état)"><option value="">…</option><option>correct</option><option>anormal</option></select> et le premier point <select id="c3_r2" style="width:auto;display:inline-block" aria-label="…et le premier point (son état)"><option value="">…</option><option>correct</option><option>anormal</option></select>.</p>
-      <p style="font-size:.9em">Exemple : T1 = 12 V (volts) ✔, T2 = 12 V ✔, T3 = signal ✔, T4 = 0 V ✘ → l'élément suspect est <select id="c3_r3" style="width:auto;display:inline-block" aria-label="Dans l'exemple donné, l'élément suspect est"><option value="">…</option><option>la batterie</option><option>le fusible</option><option>le câble</option><option>la sirène</option></select>.</p>
+      <p>Complète la règle&nbsp;: « La panne se situe entre le dernier point de test … et le premier point … ».</p>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_r1">
+  <legend>La panne se situe entre le dernier point de test…</legend>
+  <div class="qcm-option"><input type="radio" name="c3_r1" id="c3_r1__1" value="correct"><label for="c3_r1__1">correct</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_r1" id="c3_r1__2" value="anormal"><label for="c3_r1__2">anormal</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="c3_r2">
+  <legend>…et le premier point…</legend>
+  <div class="qcm-option"><input type="radio" name="c3_r2" id="c3_r2__1" value="correct"><label for="c3_r2__1">correct</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_r2" id="c3_r2__2" value="anormal"><label for="c3_r2__2">anormal</label></div>
+</fieldset>
+      <p>Un exemple&nbsp;: <br>T1 = 12 V (volts) ✔ <br>T2 = 12 V ✔ <br>T3 = signal ✔ <br>T4 = 0 V ✘</p>
+      <fieldset class="qcm-groupe" id="c3_r3">
+  <legend>Dans cet exemple, l'élément suspect est…</legend>
+  <div class="qcm-option"><input type="radio" name="c3_r3" id="c3_r3__1" value="la batterie"><label for="c3_r3__1">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_r3" id="c3_r3__2" value="le fusible"><label for="c3_r3__2">le fusible</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_r3" id="c3_r3__3" value="le câble"><label for="c3_r3__3">le câble</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_r3" id="c3_r3__4" value="la sirène"><label for="c3_r3__4">la sirène</label></div>
+</fieldset>
       <h4>c) Sécurité</h4>
-      <div class="assoc"><label for="c3_s1">Vrai ou faux : « On peut dépanner ce circuit 12 V au collège, mais jamais un appareil branché sur le secteur 230 V. »</label><select id="c3_s1"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <fieldset class="qcm-groupe" id="c3_s1">
+  <legend>Vrai ou faux : « On peut dépanner ce circuit 12 V au collège, mais jamais un appareil branché sur le secteur 230 V. »</legend>
+  <div class="qcm-option"><input type="radio" name="c3_s1" id="c3_s1__1" value="vrai"><label for="c3_s1__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="c3_s1" id="c3_s1__2" value="faux"><label for="c3_s1__2">faux</label></div>
+</fieldset>
       <h4>d) À toi : la pompe du jardin connecté ne démarre plus</h4>
       <label for="c3_prot">Rédige un protocole en 3-4 étapes (inspire-toi de la méthode, sans la recopier mot à mot) :</label>
       <textarea id="c3_prot" placeholder="1. J'observe… 2. Je teste… 3. …"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Étape 1 : je vérifie d&#x27;abord ____, parce que ____.</li>
     <li>Étape 2 : si c&#x27;est correct, je contrôle ____ et j&#x27;attends de trouver ____.</li>
@@ -949,9 +1097,14 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb3" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un protocole commence toujours par ce qui ne demande AUCUN outil (regarder, rassembler les indices) et finit toujours par une vérification.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : constats (1) → inspection visuelle (2) → mesures ordonnées (3) → réparation ciblée (4) → retest complet (5). Pour l'exemple : tout est correct jusqu'à T3, anormal à T4 → l'élément situé ENTRE T3 et T4 est le câble.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : constats (1) → inspection visuelle (2) → mesures ordonnées (3) → réparation ciblée (4) → retest complet (5). <br>Pour l'exemple : tout est correct jusqu'à T3, anormal à T4 → l'élément situé ENTRE T3 et T4 est le câble.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> mesures = 3 · inspection = 2 · retest = 5 · réparation = 4 · constats/arbre = 1.</p>
+      <p><b>a)</b> L'ordre du protocole : <br>
+      1. rassembler les constats et relire l'arbre de diagnostic ; <br>
+      2. inspecter visuellement ; <br>
+      3. mesurer aux points T1 à T4, une mesure à la fois ; <br>
+      4. remplacer ou réparer uniquement l'élément localisé ; <br>
+      5. retester la sirène complètement.</p>
       <p><b>b)</b> entre le dernier point <b>correct</b> et le premier point <b>anormal</b> ; exemple → <b>le câble</b> (entre T3 et T4).</p>
       <p><b>c)</b> Vrai : la règle absolue du collège est « très basse tension uniquement » — le secteur 230 V peut tuer, son dépannage est réservé aux professionnels habilités.</p>
       <p><b>d) Protocole attendu (exemple) :</b><br>1. constater (la pompe ne tourne pas, le programme d'arrosage s'exécute-t-il ?) ;<br>2. inspecter (tuyau pincé ? connecteur débranché ?) ;<br>3. mesurer la tension à l'entrée de la pompe au moment de la commande ;<br>4. remplacer l'élément localisé puis relancer un cycle complet d'arrosage.</p>
@@ -994,17 +1147,30 @@ body.essentiel details.referentiel-replie{display:none}
         <button class="btn small" data-mesure="T4" type="button">📏 Mesurer T4<br><small>entrée sirène</small></button>
       </div>
       <div id="simReleves" style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.9em;background:#08132c;border-radius:10px;padding:10px 14px;margin:10px 0;min-height:2em" aria-live="polite">Relevés : (aucune mesure)</div>
-      <div class="assoc"><label for="simDiag">Mon diagnostic — l'élément défectueux est :</label><select id="simDiag"><option value="">— choisir —</option><option>la batterie</option><option>le fusible</option><option>le microcontrôleur</option><option>le câble</option><option>la sirène</option></select></div>
+      <fieldset class="qcm-groupe" id="simDiag">
+  <legend>Mon diagnostic — l'élément défectueux est :</legend>
+  <div class="qcm-option"><input type="radio" name="simDiag" id="simDiag__1" value="la batterie"><label for="simDiag__1">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="simDiag" id="simDiag__2" value="le fusible"><label for="simDiag__2">le fusible</label></div>
+  <div class="qcm-option"><input type="radio" name="simDiag" id="simDiag__3" value="le microcontrôleur"><label for="simDiag__3">le microcontrôleur</label></div>
+  <div class="qcm-option"><input type="radio" name="simDiag" id="simDiag__4" value="le câble"><label for="simDiag__4">le câble</label></div>
+  <div class="qcm-option"><input type="radio" name="simDiag" id="simDiag__5" value="la sirène"><label for="simDiag__5">la sirène</label></div>
+</fieldset>
       <button class="btn small" id="btnRemplacer" type="button">🔧 Remplacer cet élément puis retester</button>
       <div id="simVerdict" role="status" aria-live="polite" style="margin-top:8px;font-weight:600;min-height:1.4em"></div>
       <h4 style="margin-top:14px">Questions</h4>
       <div class="assoc"><label for="c4_q1">Pour la panne n°1, combien de mesures étaient STRICTEMENT nécessaires pour localiser la panne (en mesurant dans l'ordre) ?</label><input type="number" id="c4_q1" min="1" max="8"></div>
-      <div class="assoc"><label for="c4_q2">Après remplacement, pourquoi faut-il relancer un test COMPLET plutôt que se contenter de « ça a l'air bon » ?</label><select id="c4_q2"><option value="">— choisir —</option><option>pour vérifier que le symptôme initial a disparu ET qu'aucun autre n'est apparu</option><option>pour user la batterie</option><option>parce que c'est plus amusant</option><option>ce n'est pas nécessaire</option></select></div>
+      <fieldset class="qcm-groupe" id="c4_q2">
+  <legend>Après remplacement, pourquoi faut-il relancer un test COMPLET plutôt que se contenter de « ça a l'air bon » ?</legend>
+  <div class="qcm-option"><input type="radio" name="c4_q2" id="c4_q2__1" value="pour vérifier que le symptôme initial a disparu ET qu&#x27;aucun autre n&#x27;est apparu"><label for="c4_q2__1">pour vérifier que le symptôme initial a disparu ET qu'aucun autre n'est apparu</label></div>
+  <div class="qcm-option"><input type="radio" name="c4_q2" id="c4_q2__2" value="pour user la batterie"><label for="c4_q2__2">pour user la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="c4_q2" id="c4_q2__3" value="parce que c&#x27;est plus amusant"><label for="c4_q2__3">parce que c'est plus amusant</label></div>
+  <div class="qcm-option"><input type="radio" name="c4_q2" id="c4_q2__4" value="ce n&#x27;est pas nécessaire"><label for="c4_q2__4">ce n'est pas nécessaire</label></div>
+</fieldset>
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb4" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Applique la règle de la séance 2 : mesure T1, puis T2, puis T3, puis T4 — et arrête-toi dès la première valeur anormale : la panne est juste avant.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Panne n°1 : T1, T2, T3 corrects puis T4 = 0 V → l'élément entre T3 et T4 est le câble. Panne n°2 : T1 = 12 V mais T2 = 0 V → l'élément entre T1 et T2 est le fusible. Dans les deux cas, 2 à 4 mesures suffisent.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Panne n°1 : T1, T2, T3 corrects puis T4 = 0 V → l'élément entre T3 et T4 est le câble. <br>Panne n°2 : T1 = 12 V mais T2 = 0 V → l'élément entre T1 et T2 est le fusible. <br>Dans les deux cas, 2 à 4 mesures suffisent.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>Panne n°1 :</b> relevés T1 12 V · T2 12 V · T3 signal OK · T4 0 V → panne entre T3 et T4 = <b>câble</b> (arraché par le cyclone, cohérent avec l'inspection). 4 mesures nécessaires (on doit aller jusqu'à T4 pour voir l'anomalie).</p>
       <p><b>Panne n°2 :</b> T1 12 V · T2 0 V → panne entre T1 et T2 = <b>fusible</b> (2 mesures suffisent !). Un fusible grillé après un cyclone signale souvent une surtension : le noter dans le rapport.</p>
@@ -1044,19 +1210,40 @@ body.essentiel details.referentiel-replie{display:none}
       <p style="font-size:.88em;color:var(--sub)">💡 Sans l'entraxe exact, les vis ne tomberont jamais en face des trous du mât : c'est LA cote critique d'une pièce « sur mesure ».</p>
       <h4>b) Choisir le procédé</h4>
       <object class="figure" data="Images/procedes_fabrication_piece.svg" type="image/svg+xml" aria-label="Comparatif de trois procédés : impression 3D pour pièce unique et formes complexes, découpe-assemblage rapide mais formes simples, moulage rentable en grande série">Comparatif des trois procédés (SVG)</object>
-      <div class="assoc"><label for="c5_p1">Pour NOTRE pièce unique, avec son fût cylindrique et son alésage :</label><select id="c5_p1"><option value="">— choisir —</option><option>impression 3D</option><option>découpe + assemblage</option><option>moulage par injection</option></select></div>
-      <div class="assoc"><label for="c5_p2">Pour une réparation PROVISOIRE en 30 minutes, en attendant mieux :</label><select id="c5_p2"><option value="">— choisir —</option><option>impression 3D</option><option>découpe + assemblage</option><option>moulage par injection</option></select></div>
-      <div class="assoc"><label for="c5_p3">Pour le FABRICANT qui produit ce support par dizaines de milliers :</label><select id="c5_p3"><option value="">— choisir —</option><option>impression 3D</option><option>découpe + assemblage</option><option>moulage par injection</option></select></div>
+      <fieldset class="qcm-groupe" id="c5_p1">
+  <legend>Pour NOTRE pièce unique, avec son fût cylindrique et son alésage :</legend>
+  <div class="qcm-option"><input type="radio" name="c5_p1" id="c5_p1__1" value="impression 3D"><label for="c5_p1__1">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_p1" id="c5_p1__2" value="découpe + assemblage"><label for="c5_p1__2">découpe + assemblage</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_p1" id="c5_p1__3" value="moulage par injection"><label for="c5_p1__3">moulage par injection</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c5_p2">
+  <legend>Pour une réparation PROVISOIRE en 30 minutes, en attendant mieux :</legend>
+  <div class="qcm-option"><input type="radio" name="c5_p2" id="c5_p2__1" value="impression 3D"><label for="c5_p2__1">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_p2" id="c5_p2__2" value="découpe + assemblage"><label for="c5_p2__2">découpe + assemblage</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_p2" id="c5_p2__3" value="moulage par injection"><label for="c5_p2__3">moulage par injection</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c5_p3">
+  <legend>Pour le FABRICANT qui produit ce support par dizaines de milliers :</legend>
+  <div class="qcm-option"><input type="radio" name="c5_p3" id="c5_p3__1" value="impression 3D"><label for="c5_p3__1">impression 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_p3" id="c5_p3__2" value="découpe + assemblage"><label for="c5_p3__2">découpe + assemblage</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_p3" id="c5_p3__3" value="moulage par injection"><label for="c5_p3__3">moulage par injection</label></div>
+</fieldset>
       <h4>c) Choisir le matériau</h4>
-      <div class="assoc"><label for="c5_m1">La pièce vit dehors, au soleil et aux embruns. Le meilleur choix :</label><select id="c5_m1"><option value="">— choisir —</option><option>un plastique résistant aux UV (ASA ou ABS traité)</option><option>de l'acier non protégé (rouille)</option><option>du carton plastifié</option><option>du PLA standard (se déforme à la chaleur)</option></select></div>
+      <fieldset class="qcm-groupe" id="c5_m1">
+  <legend>La pièce vit dehors, au soleil et aux embruns. Le meilleur choix :</legend>
+  <div class="qcm-option"><input type="radio" name="c5_m1" id="c5_m1__1" value="un plastique résistant aux UV (ASA ou ABS traité)"><label for="c5_m1__1">un plastique résistant aux UV (ASA ou ABS traité)</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_m1" id="c5_m1__2" value="de l&#x27;acier non protégé (rouille)"><label for="c5_m1__2">de l'acier non protégé (rouille)</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_m1" id="c5_m1__3" value="du carton plastifié"><label for="c5_m1__3">du carton plastifié</label></div>
+  <div class="qcm-option"><input type="radio" name="c5_m1" id="c5_m1__4" value="du PLA standard (se déforme à la chaleur)"><label for="c5_m1__4">du PLA standard (se déforme à la chaleur)</label></div>
+</fieldset>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les cotes sont écrites en jaune sur le plan : cherche « 60 », « 40 (entraxe) », « Ø5 », « Ø6 ». Pour les procédés, relis les ✔ et ✘ du comparatif.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pièce unique + forme avec cylindre → impression 3D. Provisoire rapide → découpe. Grande série → moulage (c'est d'ailleurs le procédé d'origine). Matériau : dehors en Martinique = UV violents + sel → il faut un plastique prévu pour l'extérieur.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les cotes sont écrites en jaune sur le plan : cherche « 60 », « 40 (entraxe) », « Ø5 », « Ø6 ». <br>Pour les procédés, relis les ✔ et ✘ du comparatif.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pièce unique + forme avec cylindre → impression 3D. Provisoire rapide → découpe. <br>Grande série → moulage (c'est d'ailleurs le procédé d'origine). Matériau : dehors en Martinique = UV violents + sel → il faut un plastique prévu pour l'extérieur.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> longueur 60 mm · entraxe 40 mm · trous Ø5 mm · alésage Ø6 mm.</p>
-      <p><b>b)</b> notre pièce → <b>impression 3D</b> (unique, forme complexe — l'imprimante de la salle, une FlashForge Adventurer 5M Pro, la produit&nbsp;: 60&nbsp;mm de long tiennent largement dans ses 220&nbsp;×&nbsp;220&nbsp;×&nbsp;220&nbsp;mm) · provisoire → <b>découpe + assemblage</b> · grande série → <b>moulage</b>.</p>
+      <p><b>b)</b> Notre pièce : <b>impression 3D</b> — unique, de forme complexe. <br>L'imprimante de la salle, une FlashForge Adventurer 5M Pro, la produit&nbsp;: 60&nbsp;mm de long tiennent largement dans ses 220&nbsp;×&nbsp;220&nbsp;×&nbsp;220&nbsp;mm. <br>La pièce provisoire : <b>découpe + assemblage</b>. <br>La grande série : <b>moulage</b>.</p>
       <p><b>c)</b> plastique résistant aux UV (ASA, ou ABS traité anti-UV) : l'acier nu rouille avec les embruns, le carton ne survivrait pas à la première pluie, le PLA standard ramollit au soleil tropical (60 °C au soleil direct sur un toit !).</p>
       <p><b>Version 🅱 :</b> dans FreeCAD, la pièce se modélise en 3 opérations : esquisse du rectangle 60×40 extrudée sur 8 mm, cylindre Ø12 h35, perçages Ø5 et alésage Ø6. Export STL → impression.</p>
       <p><b>Version 🅲 :</b> imprime le plan à l'échelle 1:1 et découpe le gabarit papier : pose-le sur le mât pour vérifier que l'entraxe tombe juste — c'est exactement le rôle d'un prototype.</p>
@@ -1076,16 +1263,43 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
     <div class="consigne"><b>Consigne :</b> le ventilateur sur pied du CDI (alimentation par bloc secteur basse tension 12 V, en volts) ne tourne plus. Constats : le voyant du bloc d'alimentation est allumé ; en position 2, on entend un léger bourdonnement ; les pales tournent librement à la main. Réponds sans rouvrir les corrections.</div>
     <div class="exo">
-      <div class="assoc"><label for="c6_1">« Le voyant du bloc est allumé » est…</label><select id="c6_1"><option value="">— choisir —</option><option>un symptôme/constat</option><option>une hypothèse</option><option>un protocole</option></select></div>
-      <div class="assoc"><label for="c6_2">Ce constat rend PEU PROBABLE l'hypothèse :</label><select id="c6_2"><option value="">— choisir —</option><option>« le bloc d'alimentation ne fournit plus rien »</option><option>« le moteur est bloqué »</option><option>« l'interrupteur est cassé »</option><option>« le condensateur du moteur est mort »</option></select></div>
-      <div class="assoc"><label for="c6_3">Le bourdonnement + les pales libres orientent plutôt vers…</label><select id="c6_3"><option value="">— choisir —</option><option>un composant du moteur défaillant (il « essaie » de tourner)</option><option>une panne de secteur</option><option>des pales bloquées</option><option>une télécommande déchargée</option></select></div>
-      <div class="assoc"><label for="c6_4">Première étape du protocole :</label><select id="c6_4"><option value="">— choisir —</option><option>rassembler les constats et inspecter visuellement sans démonter</option><option>démonter entièrement le moteur</option><option>racheter un ventilateur</option><option>secouer l'appareil</option></select></div>
-      <div class="assoc"><label for="c6_5">Vrai ou faux : « Comme l'appareil fonctionne en 12 V après son bloc secteur, on peut mesurer côté 12 V au collège, mais on ne démonte JAMAIS le bloc secteur lui-même. »</label><select id="c6_5"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <fieldset class="qcm-groupe" id="c6_1">
+  <legend>« Le voyant du bloc est allumé » est…</legend>
+  <div class="qcm-option"><input type="radio" name="c6_1" id="c6_1__1" value="un symptôme/constat"><label for="c6_1__1">un symptôme/constat</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_1" id="c6_1__2" value="une hypothèse"><label for="c6_1__2">une hypothèse</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_1" id="c6_1__3" value="un protocole"><label for="c6_1__3">un protocole</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c6_2">
+  <legend>Ce constat rend PEU PROBABLE l'hypothèse :</legend>
+  <div class="qcm-option"><input type="radio" name="c6_2" id="c6_2__1" value="« le bloc d&#x27;alimentation ne fournit plus rien »"><label for="c6_2__1">« le bloc d'alimentation ne fournit plus rien »</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_2" id="c6_2__2" value="« le moteur est bloqué »"><label for="c6_2__2">« le moteur est bloqué »</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_2" id="c6_2__3" value="« l&#x27;interrupteur est cassé »"><label for="c6_2__3">« l'interrupteur est cassé »</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_2" id="c6_2__4" value="« le condensateur du moteur est mort »"><label for="c6_2__4">« le condensateur du moteur est mort »</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c6_3">
+  <legend>Le bourdonnement + les pales libres orientent plutôt vers…</legend>
+  <div class="qcm-option"><input type="radio" name="c6_3" id="c6_3__1" value="un composant du moteur défaillant (il « essaie » de tourner)"><label for="c6_3__1">un composant du moteur défaillant (il « essaie » de tourner)</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_3" id="c6_3__2" value="une panne de secteur"><label for="c6_3__2">une panne de secteur</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_3" id="c6_3__3" value="des pales bloquées"><label for="c6_3__3">des pales bloquées</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_3" id="c6_3__4" value="une télécommande déchargée"><label for="c6_3__4">une télécommande déchargée</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c6_4">
+  <legend>Première étape du protocole :</legend>
+  <div class="qcm-option"><input type="radio" name="c6_4" id="c6_4__1" value="rassembler les constats et inspecter visuellement sans démonter"><label for="c6_4__1">rassembler les constats et inspecter visuellement sans démonter</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_4" id="c6_4__2" value="démonter entièrement le moteur"><label for="c6_4__2">démonter entièrement le moteur</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_4" id="c6_4__3" value="racheter un ventilateur"><label for="c6_4__3">racheter un ventilateur</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_4" id="c6_4__4" value="secouer l&#x27;appareil"><label for="c6_4__4">secouer l'appareil</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="c6_5">
+  <legend>Vrai ou faux : « Comme l'appareil fonctionne en 12 V après son bloc secteur, on peut mesurer côté 12 V au collège, mais on ne démonte JAMAIS le bloc secteur lui-même. »</legend>
+  <div class="qcm-option"><input type="radio" name="c6_5" id="c6_5__1" value="vrai"><label for="c6_5__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="c6_5" id="c6_5__2" value="faux"><label for="c6_5__2">faux</label></div>
+</fieldset>
       <label for="c6_dec" style="display:block;margin-top:10px"><b>Décision :</b> la pièce moteur coûte 12 €, un ventilateur neuf 45 €. Réparer ou jeter ? Argumente en 2-3 phrases (coût, déchets, temps, apprentissage).</label>
       <textarea id="c6_dec" placeholder="Je choisis de… parce que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je choisis de ____, parce que la pièce coûte ____ contre ____ pour un appareil neuf.</li>
     <li>Réparer évite en plus ____.</li>
@@ -1096,10 +1310,15 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb6" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends la démarche : constats → hypothèses innocentées → hypothèse la plus probable → protocole qui commence sans outil.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Voyant allumé = le bloc fournit (probablement) → suspect n°1 éliminé. Bourdonnement = le courant arrive au moteur qui n'arrive pas à démarrer → composant moteur. La règle TBT : on travaille après le bloc (12 V), jamais dedans (230 V à l'intérieur !).</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Voyant allumé = le bloc fournit (probablement) → suspect n°1 éliminé. <br>Bourdonnement = le courant arrive au moteur qui n'arrive pas à démarrer → composant moteur. <br>La règle TBT : on travaille après le bloc (12 V), jamais dedans (230 V à l'intérieur !).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Réponses :</b> symptôme/constat · « le bloc ne fournit plus rien » · composant du moteur défaillant · rassembler les constats et inspecter · vrai.</p>
-      <p><b>Décision attendue :</b> réparer : 12 € contre 45 €, un déchet électronique évité, une compétence acquise — et le temps passé est un apprentissage, pas une perte. (Une réponse argumentée « jeter » peut être recevable si elle pèse honnêtement les critères — c'est l'argumentation qui est évaluée.)</p>
+      <p><b>Réponses :</b> <br>
+      1. « Le voyant du bloc est allumé » est un <b>symptôme, un constat</b>. <br>
+      2. Il rend peu probable l'hypothèse « le bloc ne fournit plus rien ». <br>
+      3. Le bourdonnement et les pales libres orientent vers un <b>composant du moteur défaillant</b>. <br>
+      4. Première étape du protocole : rassembler les constats et inspecter. <br>
+      5. « On mesure côté 12 V, mais on ne démonte JAMAIS le bloc secteur » : <b>vrai</b>.</p>
+      <p><b>Décision attendue :</b> réparer. <br>12 € contre 45 €, un déchet électronique évité, une compétence acquise. <br>Le temps passé est un apprentissage, pas une perte. <br>(Une réponse argumentée « jeter » peut être recevable si elle pèse honnêtement les critères : c'est l'argumentation qui est évaluée.)</p>
       <p><b>Ouverture :</b> c'est exactement l'esprit de l'<b>indice de réparabilité</b> affiché sur les appareils neufs en France : plus il est haut, plus les pièces et les plans sont disponibles — un critère de choix citoyen (lien 3e_C3.3, Thème 1).</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> accuser le bloc secteur malgré son voyant allumé ; démonter avant d'observer ; oublier la règle absolue : on ne travaille jamais côté 230 V.</div>
@@ -1112,24 +1331,26 @@ body.essentiel details.referentiel-replie{display:none}
   <h2>📝 Synthèse de la séquence — à retenir</h2>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5 — rien de nouveau ici.</p>
   <h4>1. Diagnostiquer (activités 1-2)</h4>
-  <p><b>Symptôme</b> = constat observable · <b>hypothèse</b> = explication supposée. Les constats (même positifs) innocentent des éléments. On classe les hypothèses <b>simple → rapide → probable</b> et on les teste via un <b>arbre de diagnostic</b>, en ne modifiant qu'<b>une chose à la fois</b>.</p>
+  <p><b>Symptôme</b> = constat observable · <b>hypothèse</b> = explication supposée. <br>Les constats (même positifs) innocentent des éléments. <br>On classe les hypothèses <b>simple → rapide → probable</b> et on les teste via un <b>arbre de diagnostic</b>, en ne modifiant qu'<b>une chose à la fois</b>.</p>
   <h4>2. Le protocole (activité 3)</h4>
-  <p>Constats → inspection visuelle → <b>mesures ordonnées</b> de proche en proche (T1→T4) → réparation du seul élément localisé → <b>retest complet</b>. La panne est <b>entre le dernier point correct et le premier point anormal</b>. Un protocole écrit est reproductible et prouve la démarche.</p>
+  <p>Constats → inspection visuelle → <b>mesures ordonnées</b> de proche en proche (T1→T4) → réparation du seul élément localisé → <b>retest complet</b>. <br>La panne est <b>entre le dernier point correct et le premier point anormal</b>. <br>Un protocole écrit est reproductible et prouve la démarche.</p>
   <h4>3. Réparer (activité 4)</h4>
-  <p>Le dépannage réel applique le protocole avec méthode : peu de mesures bien choisies valent mieux que beaucoup au hasard. Sécurité absolue : <b>très basse tension uniquement</b>, jamais le secteur 230 V (volts).</p>
+  <p>Le dépannage réel applique le protocole avec méthode : peu de mesures bien choisies valent mieux que beaucoup au hasard. <br>Sécurité absolue : <b>très basse tension uniquement</b>, jamais le secteur 230 V (volts).</p>
   <h4>4. La pièce sur mesure (activité 5)</h4>
-  <p>Le <b>plan coté</b> transmet toutes les dimensions (dont l'<b>entraxe</b>, cote critique). Le <b>procédé</b> (impression 3D / découpe / moulage) se choisit selon forme, quantité, délai, coût, moyens ; le <b>matériau</b> selon l'environnement (UV, sel…). Réparer plutôt que jeter : un geste technique, économique et écologique — cf. l'indice de réparabilité.</p>
+  <p>Le <b>plan coté</b> transmet toutes les dimensions (dont l'<b>entraxe</b>, cote critique). <br>Le <b>procédé</b> (impression 3D / découpe / moulage) se choisit selon forme, quantité, délai, coût, moyens ; le <b>matériau</b> selon l'environnement (UV, sel…). <br>Réparer plutôt que jeter : un geste technique, économique et écologique — cf. l'indice de réparabilité.</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">panne = failure/breakdown</span><span class="tag">dépannage = troubleshooting</span><span class="tag">fusible = fuse</span><span class="tag">pièce détachée = spare part</span><span class="tag">plan coté = dimensioned drawing</span><span class="tag">entraxe = hole spacing</span><span class="tag">réparer = to repair/fix</span></p>
 </section>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
   <p>♻ <b>Défi citoyen :</b> relève l'indice de réparabilité de 3 appareils chez toi ou en magasin ; lequel choisirais-tu à qualité égale, et pourquoi ?</p>
   <p>🖥 <b>Défi FreeCAD :</b> modélise le support de girouette d'après le plan coté et exporte le STL — le fichier pourra être imprimé dès que l'imprimante du collège sera confirmée.</p>
   <p>🔧 <b>Défi repair café :</b> renseigne-toi : existe-t-il un « repair café » en Martinique ? Quels objets y répare-t-on le plus ?</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card">
@@ -1141,7 +1362,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp_retour" placeholder="En fait, pour trouver une panne, il faut…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Au départ je pensais que ____.</li>
     <li>Maintenant je sais que ____, parce que ____ me l&#x27;a montré.</li>
@@ -1153,7 +1374,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>J&#x27;ai appris que une panne se localise en ____.</li>
     <li>J&#x27;ai appris que un arbre de diagnostic sert à ____.</li>
@@ -1163,7 +1384,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je sais maintenant suivre un protocole de dépannage sans ____.</li>
     <li>Je sais maintenant décider s&#x27;il faut réparer ou remplacer en comparant ____.</li>
@@ -1173,7 +1394,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je dois encore revoir ____, parce que ____.</li>
     <li>Ce que je n&#x27;arrive pas encore à faire seul·e : ____.</li>
@@ -1212,7 +1433,8 @@ const KEY = "seq_3e_C5.1-C5.4_sos_station";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, radios:{}, valid: window.__valid || {}, sim: window.__sim || {}};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  // n°300 : chaque groupe de boutons radio (fieldset.qcm-groupe) porte sa valeur ; ses boutons sont déjà sauvés par leur nom
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
@@ -1507,6 +1729,14 @@ function appliqueSeance(idPanneau){
 }
 let ouvertEnImpression = null;
 window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+/* Révision du 11/11/2026 : ce qui est replié à l'écran (Bonus, erreurs fréquentes, synthèse) s'ouvre pour l'impression. */
+(function(){
+  var replis = "details.bonus-replie, details.erreurs-repliees", etats = null;
+  function ouvrir(){ etats = []; document.querySelectorAll(replis).forEach(function(d){ etats.push([d, d.open]); d.open = true; }); }
+  function refermer(){ if (!etats) return; etats.forEach(function(e){ e[0].open = e[1]; }); etats = null; }
+  window.addEventListener("beforeprint", ouvrir); window.addEventListener("afterprint", refermer);
+  if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) ouvrir(); else refermer(); }); }
+})();
 window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
 function ouvrirSeanceDeLAncre(){
