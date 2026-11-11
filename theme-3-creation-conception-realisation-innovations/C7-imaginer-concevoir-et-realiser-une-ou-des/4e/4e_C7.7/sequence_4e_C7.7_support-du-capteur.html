@@ -225,6 +225,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -561,7 +588,44 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
 </head>
 <body>
 
@@ -573,6 +637,8 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
@@ -646,7 +712,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   <p class="problematique">Le dessin est validé. Comment savoir, avant de lancer la machine, si elle rendra bien la pièce qu'on a dessinée ?</p>
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
-    <textarea id="hyp" rows="3" placeholder="À mon avis, pour choisir la machine qui fabriquera une pièce, il faut regarder…"></textarea>
+    <textarea aria-label="À mon avis, pour choisir la machine qui fabriquera une pièce, il faut regarder…" id="hyp" rows="3" placeholder="À mon avis, pour choisir la machine qui fabriquera une pièce, il faut regarder…"></textarea>
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
   </div>
@@ -766,6 +832,16 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Deux pièces, deux quantités, conclure</small><span class="done" id="done-s2"></span></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-tete">
@@ -782,38 +858,35 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   <div class="exo">
 
     <p>Associe chaque moyen à ce qui lui est impossible.</p>
-    <p style="margin-top:12px"><b>La découpe laser</b></p>
-    <select id="a0r0" aria-label="La découpe laser">
-      <option value="">— je choisis —</option>
-      <option>un angle interne plus serré que le rayon de sa fraise</option>
-      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
-      <option>un trou qui ne traverse pas, ni le moindre relief</option>
-      <option>une fente étroite, ni une cote au dixième de millimètre</option>
-    </select>
-    <p style="margin-top:12px"><b>La fraiseuse numérique</b></p>
-    <select id="a0r1" aria-label="La fraiseuse numérique">
-      <option value="">— je choisis —</option>
-      <option>un angle interne plus serré que le rayon de sa fraise</option>
-      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
-      <option>un trou qui ne traverse pas, ni le moindre relief</option>
-      <option>une fente étroite, ni une cote au dixième de millimètre</option>
-    </select>
-    <p style="margin-top:12px"><b>Le thermoformage</b></p>
-    <select id="a0r2" aria-label="Le thermoformage">
-      <option value="">— je choisis —</option>
-      <option>un angle interne plus serré que le rayon de sa fraise</option>
-      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
-      <option>un trou qui ne traverse pas, ni le moindre relief</option>
-      <option>une fente étroite, ni une cote au dixième de millimètre</option>
-    </select>
-    <p style="margin-top:12px"><b>Le sciage à la main</b></p>
-    <select id="a0r3" aria-label="Le sciage à la main">
-      <option value="">— je choisis —</option>
-      <option>un angle interne plus serré que le rayon de sa fraise</option>
-      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
-      <option>un trou qui ne traverse pas, ni le moindre relief</option>
-      <option>une fente étroite, ni une cote au dixième de millimètre</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>un angle interne plus serré que le rayon de sa fraise</li><li><b>B</b>un perçage, ni une forme qui bloquerait au démoulage</li><li><b>C</b>un trou qui ne traverse pas, ni le moindre relief</li><li><b>D</b>une fente étroite, ni une cote au dixième de millimètre</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a0r0">
+  <legend><b>La découpe laser</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="un angle interne plus serré que le rayon de sa fraise" aria-label="A — un angle interne plus serré que le rayon de sa fraise"><label for="a0r0__1" title="un angle interne plus serré que le rayon de sa fraise">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="un perçage, ni une forme qui bloquerait au démoulage" aria-label="B — un perçage, ni une forme qui bloquerait au démoulage"><label for="a0r0__2" title="un perçage, ni une forme qui bloquerait au démoulage">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="un trou qui ne traverse pas, ni le moindre relief" aria-label="C — un trou qui ne traverse pas, ni le moindre relief"><label for="a0r0__3" title="un trou qui ne traverse pas, ni le moindre relief">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="une fente étroite, ni une cote au dixième de millimètre" aria-label="D — une fente étroite, ni une cote au dixième de millimètre"><label for="a0r0__4" title="une fente étroite, ni une cote au dixième de millimètre">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r1">
+  <legend><b>La fraiseuse numérique</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="un angle interne plus serré que le rayon de sa fraise" aria-label="A — un angle interne plus serré que le rayon de sa fraise"><label for="a0r1__1" title="un angle interne plus serré que le rayon de sa fraise">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="un perçage, ni une forme qui bloquerait au démoulage" aria-label="B — un perçage, ni une forme qui bloquerait au démoulage"><label for="a0r1__2" title="un perçage, ni une forme qui bloquerait au démoulage">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="un trou qui ne traverse pas, ni le moindre relief" aria-label="C — un trou qui ne traverse pas, ni le moindre relief"><label for="a0r1__3" title="un trou qui ne traverse pas, ni le moindre relief">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="une fente étroite, ni une cote au dixième de millimètre" aria-label="D — une fente étroite, ni une cote au dixième de millimètre"><label for="a0r1__4" title="une fente étroite, ni une cote au dixième de millimètre">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r2">
+  <legend><b>Le thermoformage</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="un angle interne plus serré que le rayon de sa fraise" aria-label="A — un angle interne plus serré que le rayon de sa fraise"><label for="a0r2__1" title="un angle interne plus serré que le rayon de sa fraise">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="un perçage, ni une forme qui bloquerait au démoulage" aria-label="B — un perçage, ni une forme qui bloquerait au démoulage"><label for="a0r2__2" title="un perçage, ni une forme qui bloquerait au démoulage">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="un trou qui ne traverse pas, ni le moindre relief" aria-label="C — un trou qui ne traverse pas, ni le moindre relief"><label for="a0r2__3" title="un trou qui ne traverse pas, ni le moindre relief">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="une fente étroite, ni une cote au dixième de millimètre" aria-label="D — une fente étroite, ni une cote au dixième de millimètre"><label for="a0r2__4" title="une fente étroite, ni une cote au dixième de millimètre">D</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r3">
+  <legend><b>Le sciage à la main</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="un angle interne plus serré que le rayon de sa fraise" aria-label="A — un angle interne plus serré que le rayon de sa fraise"><label for="a0r3__1" title="un angle interne plus serré que le rayon de sa fraise">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="un perçage, ni une forme qui bloquerait au démoulage" aria-label="B — un perçage, ni une forme qui bloquerait au démoulage"><label for="a0r3__2" title="un perçage, ni une forme qui bloquerait au démoulage">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="un trou qui ne traverse pas, ni le moindre relief" aria-label="C — un trou qui ne traverse pas, ni le moindre relief"><label for="a0r3__3" title="un trou qui ne traverse pas, ni le moindre relief">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="une fente étroite, ni une cote au dixième de millimètre" aria-label="D — une fente étroite, ni une cote au dixième de millimètre"><label for="a0r3__4" title="une fente étroite, ni une cote au dixième de millimètre">D</label></div>
+</fieldset>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -850,7 +923,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
       <tr id="li_traversant"><td class="etat" id="et_traversant">·</td><td>Deux perçages traversants Ø 4 mm</td><td class="val"><b>oui</b> <span style="color:var(--sub)"></span></td><td class="pq">deux vis M4 traversent la paroi du bac et serrent le support</td></tr>
     </table>
     <div class="atel-cmd"><label for="qte">Nombre de pièces à produire :</label>
-      <select id="qte">
+      <select data-interface="commande" id="qte">
         <option value="4">4 — les quatre bacs du jardin</option>
         <option value="30">30 — un support par élève, une classe entière</option>
       </select></div>
@@ -876,46 +949,42 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
 
     <h4>Après l'essai</h4>
     <p>Associe chaque moyen écarté au motif exact de son élimination.</p>
-    <p style="margin-top:12px"><b>L'impression 3D</b></p>
-    <select id="a1r0" aria-label="L'impression 3D">
-      <option value="">— je choisis —</option>
-      <option>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</option>
-      <option>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</option>
-      <option>sa tolérance est trop grande, et il ne sait pas percer les deux trous</option>
-    </select>
-    <p style="margin-top:12px"><b>Le sciage à la main</b></p>
-    <select id="a1r1" aria-label="Le sciage à la main">
-      <option value="">— je choisis —</option>
-      <option>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</option>
-      <option>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</option>
-      <option>sa tolérance est trop grande, et il ne sait pas percer les deux trous</option>
-    </select>
-    <p style="margin-top:12px"><b>Le thermoformage</b></p>
-    <select id="a1r2" aria-label="Le thermoformage">
-      <option value="">— je choisis —</option>
-      <option>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</option>
-      <option>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</option>
-      <option>sa tolérance est trop grande, et il ne sait pas percer les deux trous</option>
-    </select>
-    <p style="margin-top:14px"><b>1.</b> L'impression 3D est le moyen le plus polyvalent de
-    l'atelier : elle seule fabrique un volume creux ou une contre-dépouille. Elle est pourtant
-    écartée la première. Que faut-il en conclure ?</p>
-    <select id="a1q1">
-      <option value="">— je choisis —</option>
-      <option>un moyen très polyvalent ne sert à rien s'il n'accepte pas la matière</option>
-      <option>que la polyvalence d'un moyen se paie toujours par un manque de précision</option>
-      <option>que le support aurait dû être dessiné pour pouvoir être imprimé en 3D</option>
-      <option>que l'impression 3D ne convient jamais aux pièces plates et minces</option>
-    </select>
-    <p style="margin-top:14px"><b>2.</b> Le sciage à la main est le seul moyen sans aucun temps
-    de préparation : on prend la scie et on commence. Est-ce un avantage ici ?</p>
-    <select id="a1q2">
-      <option value="">— je choisis —</option>
-      <option>non : il est écarté sur la tolérance, avant même qu'on parle de temps</option>
-      <option>oui : sans préparation, c'est lui qui fabrique les quatre supports au plus vite</option>
-      <option>oui, à condition de tracer la fente très soigneusement avant de scier</option>
-      <option>non : il est écarté parce qu'il ne sait pas percer des trous de 4 mm</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</li><li><b>B</b>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</li><li><b>C</b>sa tolérance est trop grande, et il ne sait pas percer les deux trous</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a1r0">
+  <legend><b>L'impression 3D</b></legend>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__1" value="elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP" aria-label="A — elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP"><label for="a1r0__1" title="elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__2" value="sa tolérance de 1 mm est plus de trois fois trop grande pour la fente" aria-label="B — sa tolérance de 1 mm est plus de trois fois trop grande pour la fente"><label for="a1r0__2" title="sa tolérance de 1 mm est plus de trois fois trop grande pour la fente">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r0" id="a1r0__3" value="sa tolérance est trop grande, et il ne sait pas percer les deux trous" aria-label="C — sa tolérance est trop grande, et il ne sait pas percer les deux trous"><label for="a1r0__3" title="sa tolérance est trop grande, et il ne sait pas percer les deux trous">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a1r1">
+  <legend><b>Le sciage à la main</b></legend>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__1" value="elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP" aria-label="A — elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP"><label for="a1r1__1" title="elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__2" value="sa tolérance de 1 mm est plus de trois fois trop grande pour la fente" aria-label="B — sa tolérance de 1 mm est plus de trois fois trop grande pour la fente"><label for="a1r1__2" title="sa tolérance de 1 mm est plus de trois fois trop grande pour la fente">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r1" id="a1r1__3" value="sa tolérance est trop grande, et il ne sait pas percer les deux trous" aria-label="C — sa tolérance est trop grande, et il ne sait pas percer les deux trous"><label for="a1r1__3" title="sa tolérance est trop grande, et il ne sait pas percer les deux trous">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a1r2">
+  <legend><b>Le thermoformage</b></legend>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__1" value="elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP" aria-label="A — elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP"><label for="a1r2__1" title="elle n&#x27;accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__2" value="sa tolérance de 1 mm est plus de trois fois trop grande pour la fente" aria-label="B — sa tolérance de 1 mm est plus de trois fois trop grande pour la fente"><label for="a1r2__2" title="sa tolérance de 1 mm est plus de trois fois trop grande pour la fente">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a1r2" id="a1r2__3" value="sa tolérance est trop grande, et il ne sait pas percer les deux trous" aria-label="C — sa tolérance est trop grande, et il ne sait pas percer les deux trous"><label for="a1r2__3" title="sa tolérance est trop grande, et il ne sait pas percer les deux trous">C</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>1.</b> L'impression 3D est le moyen le plus polyvalent de
+    l'atelier : elle seule fabrique un volume creux ou une contre-dépouille. Elle est pourtant
+    écartée la première. Que faut-il en conclure ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="un moyen très polyvalent ne sert à rien s&#x27;il n&#x27;accepte pas la matière"><label for="a1q1__1">un moyen très polyvalent ne sert à rien s'il n'accepte pas la matière</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="que la polyvalence d&#x27;un moyen se paie toujours par un manque de précision"><label for="a1q1__2">que la polyvalence d'un moyen se paie toujours par un manque de précision</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="que le support aurait dû être dessiné pour pouvoir être imprimé en 3D"><label for="a1q1__3">que le support aurait dû être dessiné pour pouvoir être imprimé en 3D</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="que l&#x27;impression 3D ne convient jamais aux pièces plates et minces"><label for="a1q1__4">que l'impression 3D ne convient jamais aux pièces plates et minces</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q2">
+  <legend><b>2.</b> Le sciage à la main est le seul moyen sans aucun temps
+    de préparation : on prend la scie et on commence. Est-ce un avantage ici ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="non : il est écarté sur la tolérance, avant même qu&#x27;on parle de temps"><label for="a1q2__1">non : il est écarté sur la tolérance, avant même qu'on parle de temps</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="oui : sans préparation, c&#x27;est lui qui fabrique les quatre supports au plus vite"><label for="a1q2__2">oui : sans préparation, c'est lui qui fabrique les quatre supports au plus vite</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="oui, à condition de tracer la fente très soigneusement avant de scier"><label for="a1q2__3">oui, à condition de tracer la fente très soigneusement avant de scier</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="non : il est écarté parce qu&#x27;il ne sait pas percer des trous de 4 mm"><label for="a1q2__4">non : il est écarté parce qu'il ne sait pas percer des trous de 4 mm</label></div>
+</fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Clique d'abord sur « 🏭 Lancer l'atelier » : on ne commente pas un tri qu'on n'a pas fait.</p>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
@@ -967,32 +1036,29 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
     <tr><td>Largeur réelle de la fente sortie de la découpe laser</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… mm"></td></tr>
     <tr><td>Longueur droite utile de la fente sortie de la fraiseuse</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… mm"></td></tr>
   </table>
-    <p style="margin-top:14px"><b>1.</b> La sonde fait 20 mm de long. Entre-t-elle dans la fente
-    sortie de la <b>fraiseuse</b> ?</p>
-    <select id="a2q1">
-      <option value="">— je choisis —</option>
-      <option>non : les extrémités sont arrondies, il ne reste que 17 mm de fente droite</option>
-      <option>oui : la fente mesure toujours 20 mm de long, seuls les coins sont adoucis</option>
-      <option>oui : la fraiseuse est le moyen le plus précis, à cinq centièmes près</option>
-      <option>non : la fraiseuse creuse la fente 1,5 mm trop étroite pour le méplat</option>
-    </select>
-    <p style="margin-top:14px"><b>2.</b> Est-ce un défaut de la fraiseuse ?</p>
-    <select id="a2q2">
-      <option value="">— je choisis —</option>
-      <option>non : un outil rond ne peut pas creuser un angle vif, c'est son domaine</option>
-      <option>oui : une machine numérique doit rendre exactement le dessin qu'on lui donne</option>
-      <option>oui : il suffirait de la régler plus finement pour obtenir des angles vifs</option>
-      <option>non : c'est un défaut du dessin, qui n'aurait pas dû comporter de fente</option>
-    </select>
-    <p style="margin-top:14px"><b>3.</b> On veut garder la fraiseuse. Que faut-il ajouter au
-    <b>dessin</b> pour que la sonde entre quand même ?</p>
-    <select id="a2q3">
-      <option value="">— je choisis —</option>
-      <option>deux dégagements d'angle aux extrémités, qui libèrent la longueur droite</option>
-      <option>rien du tout : il suffit de limer les deux extrémités après l'usinage</option>
-      <option>allonger la fente à 23 mm, pour compenser les deux arrondis de 1,5 mm</option>
-      <option>élargir la fente à 4,5 mm, afin que le méplat puisse entrer de biais</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q1">
+  <legend><b>1.</b> La sonde fait 20 mm de long. Entre-t-elle dans la fente
+    sortie de la <b>fraiseuse</b> ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="non : les extrémités sont arrondies, il ne reste que 17 mm de fente droite"><label for="a2q1__1">non : les extrémités sont arrondies, il ne reste que 17 mm de fente droite</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="oui : la fente mesure toujours 20 mm de long, seuls les coins sont adoucis"><label for="a2q1__2">oui : la fente mesure toujours 20 mm de long, seuls les coins sont adoucis</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="oui : la fraiseuse est le moyen le plus précis, à cinq centièmes près"><label for="a2q1__3">oui : la fraiseuse est le moyen le plus précis, à cinq centièmes près</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="non : la fraiseuse creuse la fente 1,5 mm trop étroite pour le méplat"><label for="a2q1__4">non : la fraiseuse creuse la fente 1,5 mm trop étroite pour le méplat</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q2">
+  <legend><b>2.</b> Est-ce un défaut de la fraiseuse ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="non : un outil rond ne peut pas creuser un angle vif, c&#x27;est son domaine"><label for="a2q2__1">non : un outil rond ne peut pas creuser un angle vif, c'est son domaine</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="oui : une machine numérique doit rendre exactement le dessin qu&#x27;on lui donne"><label for="a2q2__2">oui : une machine numérique doit rendre exactement le dessin qu'on lui donne</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="oui : il suffirait de la régler plus finement pour obtenir des angles vifs"><label for="a2q2__3">oui : il suffirait de la régler plus finement pour obtenir des angles vifs</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="non : c&#x27;est un défaut du dessin, qui n&#x27;aurait pas dû comporter de fente"><label for="a2q2__4">non : c'est un défaut du dessin, qui n'aurait pas dû comporter de fente</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a2q3">
+  <legend><b>3.</b> On veut garder la fraiseuse. Que faut-il ajouter au
+    <b>dessin</b> pour que la sonde entre quand même ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="deux dégagements d&#x27;angle aux extrémités, qui libèrent la longueur droite"><label for="a2q3__1">deux dégagements d'angle aux extrémités, qui libèrent la longueur droite</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="rien du tout : il suffit de limer les deux extrémités après l&#x27;usinage"><label for="a2q3__2">rien du tout : il suffit de limer les deux extrémités après l'usinage</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="allonger la fente à 23 mm, pour compenser les deux arrondis de 1,5 mm"><label for="a2q3__3">allonger la fente à 23 mm, pour compenser les deux arrondis de 1,5 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="élargir la fente à 4,5 mm, afin que le méplat puisse entrer de biais"><label for="a2q3__4">élargir la fente à 4,5 mm, afin que le méplat puisse entrer de biais</label></div>
+</fieldset>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1031,25 +1097,24 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
 
   <div class="exo">
 
-    <p><b>1.</b> Pour les <b>4 bacs</b> du jardin, les deux moyens tiennent-ils dans les 3 h ?</p>
-    <select id="a3q1" aria-label="Pour les 4 bacs du jardin, les deux moyens tiennent-ils dans les 3 h ?">
-      <option value="">— je choisis —</option>
-      <option>oui : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique</option>
-      <option>non : seule la découpe laser y arrive, la fraiseuse demande plus de 3 h</option>
-      <option>oui, mais seulement si l'on prépare les deux machines la veille</option>
-      <option>non : aucun des deux ne tient, il faudrait étaler sur deux semaines</option>
-    </select>
-    <p><b>2.</b> Pour <b>30 supports</b>, un par élève, que se passe-t-il ?</p>
-    <select id="a3q2" aria-label="Pour 30 supports, un par élève, que se passe-t-il ?">
-      <option value="">— je choisis —</option>
-      <option>la fraiseuse sort du délai : 6 h 25 contre 1 h 10 à la découpe laser</option>
-      <option>les deux sortent du délai, et il faut renoncer à équiper toute la classe</option>
-      <option>rien ne change : les deux moyens restent capables de produire la pièce</option>
-      <option>la découpe laser sort du délai, car son temps de préparation se répète</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a3q1">
+  <legend><b>1.</b> Pour les <b>4 bacs</b> du jardin, les deux moyens tiennent-ils dans les 3 h ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="oui : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique"><label for="a3q1__1">oui : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="non : seule la découpe laser y arrive, la fraiseuse demande plus de 3 h"><label for="a3q1__2">non : seule la découpe laser y arrive, la fraiseuse demande plus de 3 h</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="oui, mais seulement si l&#x27;on prépare les deux machines la veille"><label for="a3q1__3">oui, mais seulement si l'on prépare les deux machines la veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="non : aucun des deux ne tient, il faudrait étaler sur deux semaines"><label for="a3q1__4">non : aucun des deux ne tient, il faudrait étaler sur deux semaines</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2">
+  <legend><b>2.</b> Pour <b>30 supports</b>, un par élève, que se passe-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="la fraiseuse sort du délai : 6 h 25 contre 1 h 10 à la découpe laser"><label for="a3q2__1">la fraiseuse sort du délai : 6 h 25 contre 1 h 10 à la découpe laser</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="les deux sortent du délai, et il faut renoncer à équiper toute la classe"><label for="a3q2__2">les deux sortent du délai, et il faut renoncer à équiper toute la classe</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="rien ne change : les deux moyens restent capables de produire la pièce"><label for="a3q2__3">rien ne change : les deux moyens restent capables de produire la pièce</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="la découpe laser sort du délai, car son temps de préparation se répète"><label for="a3q2__4">la découpe laser sort du délai, car son temps de préparation se répète</label></div>
+</fieldset>
     <p><b>3.</b> Écris en deux phrases le moyen que tu retiens pour les 4 bacs, celui que tu
     retiendrais pour 30 supports, et ce qui a fait changer la réponse.</p>
-    <textarea id="a3j" rows="3" placeholder="Pour 4 supports je retiens … ; pour 30 je retiens … ; ce qui change est …"></textarea>
+    <textarea aria-label="Pour 4 supports je retiens … ; pour 30 je retiens … ; ce qui change est …" id="a3j" rows="3" placeholder="Pour 4 supports je retiens … ; pour 30 je retiens … ; ce qui change est …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Pour les 4 bacs, je retiens … parce que …. »</li><li>« Pour 30 supports, je retiendrais … parce que …. »</li><li>« Ce qui a fait changer la réponse, c'est … »</li></ul></details>
     <p style="font-size:.9em;color:var(--warn)">🔒 Change d'abord la quantité sur l'atelier (le menu « Nombre de pièces à produire ») : c'est ce geste-là que l'activité te demande de commenter.</p>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <div class="feedback" id="fb3"></div>
@@ -1085,7 +1150,8 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   d'autre. Le dessin, lui, est le même.</p>
   <p>Écris : <b>quel moyen reste possible</b>, <b>ce qu'il faut changer</b> — au dessin ou à la
   matière — et <b>ce que ce changement coûte</b>.</p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Sans découpeuse laser, le moyen qui reste possible est …. »</li><li>« Il faut changer … (au dessin / à la matière) : …. »</li><li>« Ce changement coûte … (en temps, en matière ou en précision). »</li></ul></details>
   <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb4"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1147,6 +1213,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« La fraiseuse dépasse 3 h à partir de … supports, parce que 25 + 12 × … &gt; 180. »</li><li>« Ces 3 h viennent de …, pas de la machine. »</li><li>« Si cette contrainte changeait, … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du Bonus — à partir de combien de supports, et d'où viennent les 3 h</summary><div>
     <p><b>Le calcul.</b> La fraiseuse tient le délai tant que 25 + 12 × n ≤ 180, c'est-à-dire tant que 12 × n ≤ 155, soit n ≤ 12,9. Pour 12 supports : 25 + 12 × 12 = 169 min, soit 2 h 49 — elle tient. Pour 13 supports : 25 + 12 × 13 = 181 min, soit 3 h 01 — elle dépasse d'une minute. <b>À partir de 13 supports, la découpe laser devient indispensable</b> ; pour ces 13 pièces, elle demande 10 + 2 × 13 = 36 min.</p>
     <p><b>D'où viennent les 3 h ?</b> D'un emploi du temps : les machines de l'atelier servent aussi à d'autres classes, et quelqu'un a réservé ce temps pour le projet, avant une date. Ce n'est pas une loi de la physique : on peut demander un créneau de plus, ou une date plus tardive. Une phrase qui convient : « j'irais demander au professeur qui tient le planning des machines de l'atelier s'il reste un créneau — et, si c'est la date qui coince, à la personne qui l'a fixée ».</p>
@@ -1162,19 +1229,21 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
   <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle de ce
   que la machine ferait du dessin ?</p>
 
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Au départ, ma réponse parlait de … ; elle ne parlait pas de ce que la machine ferait du dessin. »</li><li>« Maintenant je sais qu'un même dessin donne … selon …. »</li><li>« Ce qui me résiste encore : … »</li></ul></details>
   <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">où as-tu hésité en lisant les verdicts de l'atelier, et qu'est-ce qui t'a surpris quand la quantité a changé la réponse ?</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en lisant les verdicts de l'atelier quand … »</li><li>« Ce qui m'a surpris quand la quantité a changé la réponse : … »</li><li>« La prochaine fois, je regarderai d'abord … »</li></ul></details>
   <h3>📍 Je me positionne</h3>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <p style="margin-top:12px"><label for="pos"><b>4e_C7.7 — choisir les moyens et produire la forme voulue :</b></label></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide</option>
-    <option>🟠 Maîtrise fragile — je confronte le dessin aux moyens si l'on m'aide à relire le domaine de chacun</option>
-    <option>🟢 Maîtrise satisfaisante — je confronte un dessin aux moyens de l'atelier et je dis ce que chacun en fera</option>
-    <option>⭐ Très bonne maîtrise — et je tiens compte de la quantité, ou je change le dessin pour qu'un moyen sache le produire</option>
-  </select>
+  <p style="margin-top:12px"></p>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>4e_C7.7 — choisir les moyens et produire la forme voulue :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide"><label for="pos__1">🔴 Maîtrise insuffisante — je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je confronte le dessin aux moyens si l&#x27;on m&#x27;aide à relire le domaine de chacun"><label for="pos__2">🟠 Maîtrise fragile — je confronte le dessin aux moyens si l'on m'aide à relire le domaine de chacun</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je confronte un dessin aux moyens de l&#x27;atelier et je dis ce que chacun en fera"><label for="pos__3">🟢 Maîtrise satisfaisante — je confronte un dessin aux moyens de l'atelier et je dis ce que chacun en fera</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je tiens compte de la quantité, ou je change le dessin pour qu&#x27;un moyen sache le produire"><label for="pos__4">⭐ Très bonne maîtrise — et je tiens compte de la quantité, ou je change le dessin pour qu'un moyen sache le produire</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>4e_C4.3 (appui) — mettre en relation la forme d’une pièce avec le procédé de réalisation</legend>
 <label><input type="radio" name="pos_c43" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c43" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c43" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c43" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -1187,7 +1256,7 @@ cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la prod
 
 </div>
 
-<footer>Séquence 4e_C7.7 — « Le support du capteur ». Atelier des moyens original (CC0), temps et domaines calculés par <a href="moyens.py" download title="Télécharger moyens.py">📥&nbsp;moyens.py</a>, aucune dépendance externe. Programme 2024, Thème 3.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 4e_C7.7 — « Le support du capteur ». Atelier des moyens original (CC0), temps et domaines calculés par <a href="moyens.py" download title="Télécharger moyens.py">📥&nbsp;moyens.py</a>, aucune dépendance externe. Programme 2024, Thème 3.<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1421,7 +1490,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1430,8 +1499,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
@@ -1523,6 +1593,25 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majAtelier();
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 

@@ -60,7 +60,10 @@ ENTREES = [
                "Entraîne-toi sur celui d'un système d'arrosage très proche de celui du collège&nbsp;: le "
                "jardin partagé d'un quartier, et sa gardienne. Un exercice d'environ un quart d'heure&nbsp;; "
                "il se vérifie tout seul et a sa correction complète.",
-         suite="le diagramme pieuvre de ce même système, ce que son concepteur a oublié, et le QCM de l'atelier"),
+         suite="le diagramme pieuvre de ce même système, ce que son concepteur a oublié, et le QCM de l'atelier",
+         # 10/11/2026 (révision, charge de lecture) : l'exercice reste en tête de l'activité 5, replié sous son
+         # résumé — la séance 4 lisait 2 358 mots, dont 999 pour lui.
+         replie="📋 D'abord, le cahier des charges (15 min)&nbsp;: critère, niveau, flexibilité — ouvre l'exercice"),
     dict(id="fa-4e-jardin-conception", module="fast", niveau="4e", exos=["e5"],
          sequence=T3 + "4e/4e_C7.1/sequence_4e_C7_jardin-conception.html",
          avant='<div class="exo">\n<p>Nouveau besoin&nbsp;: une <b>jardinière de balcon</b>',

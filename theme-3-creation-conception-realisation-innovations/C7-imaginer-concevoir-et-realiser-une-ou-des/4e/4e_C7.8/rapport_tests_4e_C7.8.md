@@ -149,3 +149,20 @@ Découpage, volet « 📖 Rappel » et clôture complétée : voir la fiche péd
   `controle_sigles`, `controle_navigation_seances` ; `verif_regles_audit.py` : autant de ✘ qu'avant, aucun nouveau.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle. Non fait : le lexique par séance.
+
+## 10/11/2026 — V2 de la boucle d'audit (4e) : gabarit commun (n°306), groupes de boutons radio (n°300), grilles
+
+Page migrée par `_outils/migrer_gabarit_306.py` (rejouable depuis `main`, résultat identique octet pour octet) : chaque
+question posée par une liste déroulante devient un `fieldset.qcm-groupe` ; mode essentiel (n°29), bandeau des tâches
+(n°30), versions étayées `etayage_sequence_4e_C7.8_….json` (n°31), `aria-label` des zones de texte (n°34). Les questions
+qui partagent leurs réponses se lisent en grille (`_outils/grilles_radio.py` : 1 grille(s), 4 questions) — les
+réponses une fois, lettrées ; chaque question, une rangée de lettres. Le lien de la licence (pied de page, #616) restait au bleu par défaut du navigateur (2,03:1) : la règle `a,a:where(:visited){color:#9ecbff}` des pages sœurs est posée (n°303).
+
+Les bancs n'ont pas changé de questions : shim `_groupesRadio(page)` en tête de `tests_4e_C7.8_sequence.mjs`.
+
+Exécuté le 10/11/2026 (Chromium Playwright, session cloud) : `tests_4e_C7.8_sequence.mjs` **46 / 46** ; `tests_4e_C7.8_qcm.mjs`
+**32 / 32** ; `tests_regle_311_4e_C7.8.mjs` **34 / 34** ; `verif_regles_audit.py` **0 ✘** ; `controle_squelette`,
+`controle_hors_ligne`, `controle_contraste_liens`, `controle_impression_papier`, `banc_papier.py --filtre 4e_C7.8`,
+`controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
+`controle_navigation_seances`, `controle_rapports_tests`, `controle_licence` : 0 refus. Captures 390 px avant/après/essentiel
+dans `_outils/captures_v2_4e_2026-11-10/`. Non exécuté : vrai téléphone, Firefox, Safari, impression réelle.

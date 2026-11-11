@@ -1,8 +1,40 @@
 import { chromium } from 'playwright';
 import { readFileSync } from 'fs';
+
+/* Règle d'or n°300 (V2 de l'audit, 07/11/2026) : les questions de la page sont des groupes de boutons
+   radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
+   proposition qui porte cette valeur — la leçon de la vague du 20/09 : on vise la VALEUR, jamais la
+   position. Rien d'autre du banc ne change. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
+
 const f = process.argv[2], niveau = process.argv[3];
 const b = await chromium.launch();
-const p = await b.newPage();
+const p = _groupesRadio(await b.newPage());
 const err = [], fail = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
@@ -100,7 +132,10 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   }
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), n);
   const fb = await p.textContent('#fb' + n);
-  ok('activité ' + n + ' validée (' + REP.totaux[n] + ')', fb.includes(REP.totaux[n]), fb.slice(0, 75));
+  // depuis #637 (10/11/2026), une réponse libre n'est pas « validée » mais « enregistrée » : le retour ✍️ vaut 1/1 ;
+  // la validation elle-même est vérifiée par la classe « ok » du retour (bandeau des tâches, n°30)
+  const okCls = await p.$eval('#fb' + n, e => e.classList.contains('ok'));
+  ok('activité ' + n + ' validée (' + REP.totaux[n] + ')', okCls && (fb.includes(REP.totaux[n]) || fb.startsWith('✍️')), fb.slice(0, 75));
 }
 
 // ── une réponse fausse est refusée ───────────────────────────────────────
@@ -132,7 +167,7 @@ const ANCIENNE = { inputs: { hyp: 'Le jardin doit tout envoyer, tout le temps.',
   const CLE = (src.match(/const KEY = "([^"]+)"/) || [])[1];
   ok('la page enregistre sous sa propre clé', CLE === 'seq_4e_C7_8', CLE);
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-  const q = await ctx.newPage(); const e2 = [];
+  const q = _groupesRadio(await ctx.newPage()); const e2 = [];
   q.on('pageerror', e => e2.push(e.message));
   const lit = k => q.evaluate(k => localStorage.getItem(k), k);
   await q.goto('file://' + f, { waitUntil: 'load' }); await q.waitForTimeout(200);

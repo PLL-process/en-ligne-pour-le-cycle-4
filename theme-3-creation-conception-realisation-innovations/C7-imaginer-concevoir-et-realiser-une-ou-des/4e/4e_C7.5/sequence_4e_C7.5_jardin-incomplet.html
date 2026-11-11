@@ -214,6 +214,33 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -550,8 +577,45 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 <link rel="stylesheet" href="../../../../_ressources-communes/relais-anime/relais-anime.css">
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
 </head>
 <body>
 
@@ -563,6 +627,8 @@ body.essentiel details.referentiel-replie{display:none}
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
@@ -633,7 +699,7 @@ Il a raison. Le programme, lui, est le même dans les trois cartes, et il est co
   <p class="problematique">Aucune pièce n'est défectueuse et le programme est juste. Comment trouve-t-on, alors, ce qui manque à un prototype ?</p>
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
-    <textarea id="hyp" rows="3" placeholder="Pour trouver ce qui manque sans rien démonter, je commencerais par…"></textarea>
+    <textarea aria-label="Pour trouver ce qui manque sans rien démonter, je commencerais par…" id="hyp" rows="3" placeholder="Pour trouver ce qui manque sans rien démonter, je commencerais par…"></textarea>
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
   </div>
@@ -823,6 +889,16 @@ Il a raison. Le programme, lui, est le même dans les trois cartes, et il est co
   <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Les cas 2 et 3, refaire, conclure</small><span class="done" id="done-s2"></span></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-tete">
@@ -908,75 +984,69 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="exo">
 
     <p>Associe chaque constituant à sa fonction dans la chaîne.</p>
-    <p style="margin-top:12px"><b>Le capteur d'humidité du sol</b></p>
-    <select id="a0r0" aria-label="Le capteur d'humidité du sol">
-      <option value="">— je choisis —</option>
-      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
-      <option>Agir — elle produit l'effet attendu dans le jardin</option>
-      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
-      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
-      <option>Relier — il ne tient aucune des quatre fonctions</option>
-      <option>Traiter — elle compare la mesure au seuil et décide</option>
-    </select>
-    <p style="margin-top:12px"><b>La carte Arduino UNO</b></p>
-    <select id="a0r1" aria-label="La carte Arduino UNO">
-      <option value="">— je choisis —</option>
-      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
-      <option>Agir — elle produit l'effet attendu dans le jardin</option>
-      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
-      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
-      <option>Relier — il ne tient aucune des quatre fonctions</option>
-      <option>Traiter — elle compare la mesure au seuil et décide</option>
-    </select>
-    <p style="margin-top:12px"><b>Le module relais</b></p>
-    <select id="a0r2" aria-label="Le module relais">
-      <option value="">— je choisis —</option>
-      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
-      <option>Agir — elle produit l'effet attendu dans le jardin</option>
-      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
-      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
-      <option>Relier — il ne tient aucune des quatre fonctions</option>
-      <option>Traiter — elle compare la mesure au seuil et décide</option>
-    </select>
-    <p style="margin-top:12px"><b>La pompe immergée</b></p>
-    <select id="a0r3" aria-label="La pompe immergée">
-      <option value="">— je choisis —</option>
-      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
-      <option>Agir — elle produit l'effet attendu dans le jardin</option>
-      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
-      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
-      <option>Relier — il ne tient aucune des quatre fonctions</option>
-      <option>Traiter — elle compare la mesure au seuil et décide</option>
-    </select>
-    <p style="margin-top:12px"><b>L'alimentation externe 5 V (volts) / 2 A (ampères)</b></p>
-    <select id="a0r4" aria-label="L'alimentation externe 5 V (volts) / 2 A (ampères)">
-      <option value="">— je choisis —</option>
-      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
-      <option>Agir — elle produit l'effet attendu dans le jardin</option>
-      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
-      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
-      <option>Relier — il ne tient aucune des quatre fonctions</option>
-      <option>Traiter — elle compare la mesure au seuil et décide</option>
-    </select>
-    <p style="margin-top:12px"><b>Le Base Shield V2</b></p>
-    <select id="a0r5" aria-label="Le Base Shield V2">
-      <option value="">— je choisis —</option>
-      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
-      <option>Agir — elle produit l'effet attendu dans le jardin</option>
-      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
-      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
-      <option>Relier — il ne tient aucune des quatre fonctions</option>
-      <option>Traiter — elle compare la mesure au seuil et décide</option>
-    </select>
-    <p style="margin-top:14px"><b>Et une question qui compte :</b> deux constituants portent ici
-    la fonction « agir ». Pourquoi le prototype a-t-il besoin des deux ?</p>
-    <select id="a0q1">
-      <option value="">— je choisis —</option>
-      <option>la carte commande de très faibles intensités, la pompe en demande beaucoup</option>
-      <option>le relais sert de rechange si la pompe tombe en panne</option>
-      <option>la pompe est trop lente, le relais accélère son démarrage</option>
-      <option>c'est une redondance de sécurité imposée par la norme électrique</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>Acquérir — il prend la mesure sur laquelle on décide</li><li><b>B</b>Agir — elle produit l'effet attendu dans le jardin</li><li><b>C</b>Agir — il laisse passer la puissance sur ordre de la carte</li><li><b>D</b>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</li><li><b>E</b>Relier — il ne tient aucune des quatre fonctions</li><li><b>F</b>Traiter — elle compare la mesure au seuil et décide</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a0r0">
+  <legend><b>Le capteur d'humidité du sol</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r0__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="Agir — elle produit l&#x27;effet attendu dans le jardin" aria-label="B — Agir — elle produit l&#x27;effet attendu dans le jardin"><label for="a0r0__2" title="Agir — elle produit l&#x27;effet attendu dans le jardin">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="C — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r0__3" title="Agir — il laisse passer la puissance sur ordre de la carte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir" aria-label="D — Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir"><label for="a0r0__4" title="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__5" value="Relier — il ne tient aucune des quatre fonctions" aria-label="E — Relier — il ne tient aucune des quatre fonctions"><label for="a0r0__5" title="Relier — il ne tient aucune des quatre fonctions">E</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__6" value="Traiter — elle compare la mesure au seuil et décide" aria-label="F — Traiter — elle compare la mesure au seuil et décide"><label for="a0r0__6" title="Traiter — elle compare la mesure au seuil et décide">F</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r1">
+  <legend><b>La carte Arduino UNO</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r1__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="Agir — elle produit l&#x27;effet attendu dans le jardin" aria-label="B — Agir — elle produit l&#x27;effet attendu dans le jardin"><label for="a0r1__2" title="Agir — elle produit l&#x27;effet attendu dans le jardin">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="C — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r1__3" title="Agir — il laisse passer la puissance sur ordre de la carte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir" aria-label="D — Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir"><label for="a0r1__4" title="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__5" value="Relier — il ne tient aucune des quatre fonctions" aria-label="E — Relier — il ne tient aucune des quatre fonctions"><label for="a0r1__5" title="Relier — il ne tient aucune des quatre fonctions">E</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__6" value="Traiter — elle compare la mesure au seuil et décide" aria-label="F — Traiter — elle compare la mesure au seuil et décide"><label for="a0r1__6" title="Traiter — elle compare la mesure au seuil et décide">F</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r2">
+  <legend><b>Le module relais</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r2__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="Agir — elle produit l&#x27;effet attendu dans le jardin" aria-label="B — Agir — elle produit l&#x27;effet attendu dans le jardin"><label for="a0r2__2" title="Agir — elle produit l&#x27;effet attendu dans le jardin">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="C — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r2__3" title="Agir — il laisse passer la puissance sur ordre de la carte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir" aria-label="D — Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir"><label for="a0r2__4" title="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__5" value="Relier — il ne tient aucune des quatre fonctions" aria-label="E — Relier — il ne tient aucune des quatre fonctions"><label for="a0r2__5" title="Relier — il ne tient aucune des quatre fonctions">E</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__6" value="Traiter — elle compare la mesure au seuil et décide" aria-label="F — Traiter — elle compare la mesure au seuil et décide"><label for="a0r2__6" title="Traiter — elle compare la mesure au seuil et décide">F</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r3">
+  <legend><b>La pompe immergée</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r3__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="Agir — elle produit l&#x27;effet attendu dans le jardin" aria-label="B — Agir — elle produit l&#x27;effet attendu dans le jardin"><label for="a0r3__2" title="Agir — elle produit l&#x27;effet attendu dans le jardin">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="C — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r3__3" title="Agir — il laisse passer la puissance sur ordre de la carte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir" aria-label="D — Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir"><label for="a0r3__4" title="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__5" value="Relier — il ne tient aucune des quatre fonctions" aria-label="E — Relier — il ne tient aucune des quatre fonctions"><label for="a0r3__5" title="Relier — il ne tient aucune des quatre fonctions">E</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__6" value="Traiter — elle compare la mesure au seuil et décide" aria-label="F — Traiter — elle compare la mesure au seuil et décide"><label for="a0r3__6" title="Traiter — elle compare la mesure au seuil et décide">F</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r4">
+  <legend><b>L'alimentation externe 5 V (volts) / 2 A (ampères)</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r4__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__2" value="Agir — elle produit l&#x27;effet attendu dans le jardin" aria-label="B — Agir — elle produit l&#x27;effet attendu dans le jardin"><label for="a0r4__2" title="Agir — elle produit l&#x27;effet attendu dans le jardin">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__3" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="C — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r4__3" title="Agir — il laisse passer la puissance sur ordre de la carte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__4" value="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir" aria-label="D — Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir"><label for="a0r4__4" title="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__5" value="Relier — il ne tient aucune des quatre fonctions" aria-label="E — Relier — il ne tient aucune des quatre fonctions"><label for="a0r4__5" title="Relier — il ne tient aucune des quatre fonctions">E</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__6" value="Traiter — elle compare la mesure au seuil et décide" aria-label="F — Traiter — elle compare la mesure au seuil et décide"><label for="a0r4__6" title="Traiter — elle compare la mesure au seuil et décide">F</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a0r5">
+  <legend><b>Le Base Shield V2</b></legend>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r5__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__2" value="Agir — elle produit l&#x27;effet attendu dans le jardin" aria-label="B — Agir — elle produit l&#x27;effet attendu dans le jardin"><label for="a0r5__2" title="Agir — elle produit l&#x27;effet attendu dans le jardin">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__3" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="C — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r5__3" title="Agir — il laisse passer la puissance sur ordre de la carte">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__4" value="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir" aria-label="D — Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir"><label for="a0r5__4" title="Alimenter — elle fournit le courant que l&#x27;USB ne peut pas fournir">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__5" value="Relier — il ne tient aucune des quatre fonctions" aria-label="E — Relier — il ne tient aucune des quatre fonctions"><label for="a0r5__5" title="Relier — il ne tient aucune des quatre fonctions">E</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__6" value="Traiter — elle compare la mesure au seuil et décide" aria-label="F — Traiter — elle compare la mesure au seuil et décide"><label for="a0r5__6" title="Traiter — elle compare la mesure au seuil et décide">F</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q1">
+  <legend><b>Et une question qui compte :</b> deux constituants portent ici
+    la fonction « agir ». Pourquoi le prototype a-t-il besoin des deux ?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="la carte commande de très faibles intensités, la pompe en demande beaucoup"><label for="a0q1__1">la carte commande de très faibles intensités, la pompe en demande beaucoup</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="le relais sert de rechange si la pompe tombe en panne"><label for="a0q1__2">le relais sert de rechange si la pompe tombe en panne</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="la pompe est trop lente, le relais accélère son démarrage"><label for="a0q1__3">la pompe est trop lente, le relais accélère son démarrage</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="c&#x27;est une redondance de sécurité imposée par la norme électrique"><label for="a0q1__4">c'est une redondance de sécurité imposée par la norme électrique</label></div>
+</fieldset>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1016,15 +1086,15 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
 
     <table class="cat">
       <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
-      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_hum"><td><b>Capteur d'humidité du sol Grove</b></td><td>il mesure l'humidité du sol</td><td class="ma" id="ma_hum">—</td><td class="pt"><select id="pt_hum" aria-label="Port de Capteur d'humidité du sol Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_temp"><td><b>Capteur de température Grove</b></td><td>il mesure la température de l'air</td><td class="ma" id="ma_temp">—</td><td class="pt"><select id="pt_temp" aria-label="Port de Capteur de température Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_relais"><td><b>Module relais Grove</b></td><td>il laisse passer la puissance sur ordre</td><td class="ma" id="ma_relais">—</td><td class="pt"><select id="pt_relais" aria-label="Port de Module relais Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_pompe"><td><b>Pompe immergée 5 V (volts, TBT)</b></td><td>elle envoie l'eau dans le bac</td><td class="ma" id="ma_pompe">—</td><td class="pt"><select id="pt_pompe" aria-label="Port de Pompe immergée 5 V (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_lcd"><td><b>Écran LCD I2C Grove</b></td><td>il affiche la mesure au jardinier</td><td class="ma" id="ma_lcd">—</td><td class="pt"><select id="pt_lcd" aria-label="Port de Écran LCD I2C Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_alim"><td><b>Alimentation externe 5 V / 2 A (ampères, TBT)</b></td><td>elle fournit la puissance</td><td class="ma" id="ma_alim">—</td><td class="pt"><select id="pt_alim" aria-label="Port de Alimentation externe 5 V / 2 A (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
-      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il alimente la carte et les modules</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" data-interface="port" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" data-interface="port" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_hum"><td><b>Capteur d'humidité du sol Grove</b></td><td>il mesure l'humidité du sol</td><td class="ma" id="ma_hum">—</td><td class="pt"><select id="pt_hum" data-interface="port" aria-label="Port de Capteur d'humidité du sol Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_temp"><td><b>Capteur de température Grove</b></td><td>il mesure la température de l'air</td><td class="ma" id="ma_temp">—</td><td class="pt"><select id="pt_temp" data-interface="port" aria-label="Port de Capteur de température Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_relais"><td><b>Module relais Grove</b></td><td>il laisse passer la puissance sur ordre</td><td class="ma" id="ma_relais">—</td><td class="pt"><select id="pt_relais" data-interface="port" aria-label="Port de Module relais Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_pompe"><td><b>Pompe immergée 5 V (volts, TBT)</b></td><td>elle envoie l'eau dans le bac</td><td class="ma" id="ma_pompe">—</td><td class="pt"><select id="pt_pompe" data-interface="port" aria-label="Port de Pompe immergée 5 V (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_lcd"><td><b>Écran LCD I2C Grove</b></td><td>il affiche la mesure au jardinier</td><td class="ma" id="ma_lcd">—</td><td class="pt"><select id="pt_lcd" data-interface="port" aria-label="Port de Écran LCD I2C Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_alim"><td><b>Alimentation externe 5 V / 2 A (ampères, TBT)</b></td><td>elle fournit la puissance</td><td class="ma" id="ma_alim">—</td><td class="pt"><select id="pt_alim" data-interface="port" aria-label="Port de Alimentation externe 5 V / 2 A (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (volts), 500 mA (milliampères)</b></td><td>il alimente la carte et les modules</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" data-interface="port" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
     </table>
     <p class="budget" id="budget">—</p>
     <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
@@ -1043,7 +1113,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
     <div class="etabli-cmd">
       <label for="cas">Charger un prototype livré :</label>
-      <select id="cas">
+      <select id="cas" data-interface="commande">
         <option value="">— je choisis —</option>
         <option value="1">Cas 1 — l'écran affiche 42 %, la pompe ne part jamais</option>
         <option value="2">Cas 2 — dès que la pompe démarre, la carte redémarre</option>
@@ -1055,23 +1125,21 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 </div>
   <div class="exo">
 
-    <p><b>1.</b> D'après le symptôme <em>seul</em>, avant même de tester : quelles fonctions
-    sont sûrement tenues ?</p>
-    <select id="a1q1" aria-label="D'après le symptôme seul, avant même de tester : quelles fonctions sont sûrement tenues ?">
-      <option value="">— je choisis —</option>
-      <option>acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule</option>
-      <option>aucune : si rien ne s'arrose, c'est que rien ne fonctionne</option>
-      <option>seulement alimenter : l'écran s'allume, c'est tout ce qu'on sait</option>
-      <option>toutes les quatre : l'affichage prouve que la chaîne est complète</option>
-    </select>
-    <p><b>2.</b> Quel constituant manque ?</p>
-    <select id="a1q2" aria-label="Quel constituant manque ?">
-      <option value="">— je choisis —</option>
-      <option>le module relais</option>
-      <option>le capteur d'humidité du sol</option>
-      <option>l'alimentation externe</option>
-      <option>le Base Shield V2</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a1q1">
+  <legend><b>1.</b> D'après le symptôme <em>seul</em>, avant même de tester : quelles fonctions
+    sont sûrement tenues ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="acquérir, traiter et alimenter : la mesure s&#x27;affiche, donc elle circule"><label for="a1q1__1">acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="aucune : si rien ne s&#x27;arrose, c&#x27;est que rien ne fonctionne"><label for="a1q1__2">aucune : si rien ne s'arrose, c'est que rien ne fonctionne</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="seulement alimenter : l&#x27;écran s&#x27;allume, c&#x27;est tout ce qu&#x27;on sait"><label for="a1q1__3">seulement alimenter : l'écran s'allume, c'est tout ce qu'on sait</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="toutes les quatre : l&#x27;affichage prouve que la chaîne est complète"><label for="a1q1__4">toutes les quatre : l'affichage prouve que la chaîne est complète</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a1q2">
+  <legend><b>2.</b> Quel constituant manque ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="le module relais"><label for="a1q2__1">le module relais</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="le capteur d&#x27;humidité du sol"><label for="a1q2__2">le capteur d'humidité du sol</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="l&#x27;alimentation externe"><label for="a1q2__3">l'alimentation externe</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="le Base Shield V2"><label for="a1q2__4">le Base Shield V2</label></div>
+</fieldset>
     <p><b>3.</b> Complète le prototype sur l'établi et re-teste jusqu'au ✔.</p>
     <p style="color:var(--sub);font-size:.9em">La troisième encoche relit ton établi : elle
     s'allume quand le montage est complet et juste.</p>
@@ -1119,14 +1187,13 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
     <p><b>1.</b> Combien de milliampères le montage du cas 2 demande-t-il en tout ?</p>
     <input type="text" inputmode="numeric" id="a2q1" placeholder="… mA">
-    <p><b>2.</b> Pourquoi la carte redémarre-t-elle exactement au démarrage de la pompe ?</p>
-    <select id="a2q2" aria-label="Pourquoi la carte redémarre-t-elle exactement au démarrage de la pompe ?">
-      <option value="">— je choisis —</option>
-      <option>la demande dépasse ce que l'USB peut fournir : la tension s'effondre</option>
-      <option>la pompe envoie de l'eau sur la carte et provoque un court-circuit</option>
-      <option>le programme redémarre volontairement la carte après chaque arrosage</option>
-      <option>le relais coupe l'alimentation de la carte quand il se ferme</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a2q2">
+  <legend><b>2.</b> Pourquoi la carte redémarre-t-elle exactement au démarrage de la pompe ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="la demande dépasse ce que l&#x27;USB peut fournir : la tension s&#x27;effondre"><label for="a2q2__1">la demande dépasse ce que l'USB peut fournir : la tension s'effondre</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="la pompe envoie de l&#x27;eau sur la carte et provoque un court-circuit"><label for="a2q2__2">la pompe envoie de l'eau sur la carte et provoque un court-circuit</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="le programme redémarre volontairement la carte après chaque arrosage"><label for="a2q2__3">le programme redémarre volontairement la carte après chaque arrosage</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="le relais coupe l&#x27;alimentation de la carte quand il se ferme"><label for="a2q2__4">le relais coupe l'alimentation de la carte quand il se ferme</label></div>
+</fieldset>
     <p><b>3.</b> Complète le prototype sur l'établi et re-teste jusqu'au ✔.</p>
     <p style="font-size:.9em;color:var(--warn)">🔒 Charge le cas 2 sur l'établi et teste-le : lis le nombre que l'établi te donne avant de répondre.</p>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
@@ -1157,22 +1224,20 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
   <div class="exo">
 
-    <p><b>1.</b> Quel capteur est monté sur A0 dans ce cas ?</p>
-    <select id="a3q1" aria-label="Quel capteur est monté sur A0 dans ce cas ?">
-      <option value="">— je choisis —</option>
-      <option>le capteur de température de l'air</option>
-      <option>le capteur d'humidité du sol</option>
-      <option>aucun capteur n'est monté</option>
-      <option>les deux capteurs sont montés sur A0</option>
-    </select>
-    <p><b>2.</b> La fonction « acquérir » est pourtant bien tenue. Alors où est le problème ?</p>
-    <select id="a3q2" aria-label="Alors où est le problème ?">
-      <option value="">— je choisis —</option>
-      <option>on mesure une grandeur, mais pas celle sur laquelle le programme décide</option>
-      <option>un capteur de température consomme trop pour le budget disponible</option>
-      <option>deux capteurs analogiques ne peuvent pas cohabiter sur la même carte</option>
-      <option>le capteur de température doit être branché sur un port numérique</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a3q1">
+  <legend><b>1.</b> Quel capteur est monté sur A0 dans ce cas ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="le capteur de température de l&#x27;air"><label for="a3q1__1">le capteur de température de l'air</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="le capteur d&#x27;humidité du sol"><label for="a3q1__2">le capteur d'humidité du sol</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="aucun capteur n&#x27;est monté"><label for="a3q1__3">aucun capteur n'est monté</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="les deux capteurs sont montés sur A0"><label for="a3q1__4">les deux capteurs sont montés sur A0</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2">
+  <legend><b>2.</b> La fonction « acquérir » est pourtant bien tenue. Alors où est le problème ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="on mesure une grandeur, mais pas celle sur laquelle le programme décide"><label for="a3q2__1">on mesure une grandeur, mais pas celle sur laquelle le programme décide</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="un capteur de température consomme trop pour le budget disponible"><label for="a3q2__2">un capteur de température consomme trop pour le budget disponible</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="deux capteurs analogiques ne peuvent pas cohabiter sur la même carte"><label for="a3q2__3">deux capteurs analogiques ne peuvent pas cohabiter sur la même carte</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="le capteur de température doit être branché sur un port numérique"><label for="a3q2__4">le capteur de température doit être branché sur un port numérique</label></div>
+</fieldset>
     <p><b>3.</b> Complète le prototype sur l'établi et re-teste jusqu'au ✔.</p>
     <p style="font-size:.9em;color:var(--warn)">🔒 Charge le cas 3 sur l'établi et teste-le : ce cas-là ne se devine pas, il se lit.</p>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
@@ -1203,7 +1268,8 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
   correspond.</p>
   <p>Écris ce que tu ferais : <b>quelles fonctions le symptôme prouve déjà tenues</b>, quelle
   hypothèse tu formes, et <b>quel essai</b> permettrait de la vérifier sans rien démonter.</p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le symptôme prouve déjà que les fonctions … et … sont tenues, parce que … »</li><li>« Mon hypothèse : ce qui manque, c'est …, parce que la pompe … »</li><li>« L'essai qui le vérifierait sans rien démonter : … »</li></ul></details>
   <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb4"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
@@ -1254,6 +1320,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Mon quatrième cas : le montage affiche la mesure, n'arrose jamais, et il lui manque …. »</li><li>« Le symptôme que le collège verrait, sans ouvrir le boîtier : « … ». »</li><li>« Ce symptôme ne ressemble pas aux trois autres parce que … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du Bonus — le quatrième cas : il manque la pompe</summary><div>
     <p><b>Le constituant qui manque : la pompe immergée.</b> On garde tout le reste : la carte et le Base Shield, le capteur d'humidité du sol sur A0, le relais sur D4, l'écran sur I2C et le câble USB. L'écran affiche la mesure, la carte décide, le relais reçoit l'ordre et claque — mais au bout de la chaîne, rien ne pousse l'eau.</p>
     <p><b>Pourquoi c'est le seul choix.</b> Sans la carte, le Base Shield, l'écran ou le câble USB, la mesure ne s'afficherait plus ; le relais, l'alimentation et le capteur d'humidité sont exclus par la consigne. Il ne reste que la pompe. (Le capteur de température ne compte pas : il ne sert à rien dans ce montage, l'enlever ne crée aucun manque.)</p>
@@ -1271,19 +1338,21 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
   <p style="font-size:.92em;color:var(--sub)">Compare : ta méthode de départ partait-elle du
   montage, ou du cahier des charges ?</p>
 
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Au départ, ma méthode partait du … (montage / cahier des charges). »</li><li>« Maintenant je pars de … parce que … »</li><li>« Ce que je sais faire : à partir d'un symptôme, dire quelle fonction … »</li></ul></details>
   <p style="margin-top:12px"><b>Comment j'ai travaillé :</b> <label for="bilanMeta">par quel bout as-tu pris chaque cas, et où as-tu hésité — ou failli te tromper de constituant ?</label></p>
   <textarea id="bilanMeta" rows="2" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Pour le cas 1, j'ai commencé par … ; pour le cas 2, par … ; pour le cas 3, par …. »</li><li>« J'ai hésité — ou failli me tromper de constituant — au moment où … »</li><li>« La prochaine fois, je vérifierai d'abord … »</li></ul></details>
   <h3>📍 Je me positionne</h3>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <p style="margin-top:12px"><label for="pos"><b>4e_C7.5 — identifier les constituants manquants dans un prototype et le compléter :</b></label></p>
-  <select id="pos">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je reconnais les fonctions, mais je pars encore du montage plutôt que du besoin</option>
-    <option>🟠 Maîtrise fragile — je trouve le manque quand on me rappelle le cahier des charges</option>
-    <option>🟢 Maîtrise satisfaisante — je pars d'un symptôme, j'élimine les fonctions déjà tenues, et je nomme le constituant qui manque</option>
-    <option>⭐ Très bonne maîtrise — et je sais dire quand une fonction tenue ne suffit pas, ou quand ce n'est plus un manque mais une panne</option>
-  </select>
+  <p style="margin-top:12px"></p>
+  <fieldset class="qcm-groupe" id="pos">
+  <legend><b>4e_C7.5 — identifier les constituants manquants dans un prototype et le compléter :</b></legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je reconnais les fonctions, mais je pars encore du montage plutôt que du besoin"><label for="pos__1">🔴 Maîtrise insuffisante — je reconnais les fonctions, mais je pars encore du montage plutôt que du besoin</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je trouve le manque quand on me rappelle le cahier des charges"><label for="pos__2">🟠 Maîtrise fragile — je trouve le manque quand on me rappelle le cahier des charges</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je pars d&#x27;un symptôme, j&#x27;élimine les fonctions déjà tenues, et je nomme le constituant qui manque"><label for="pos__3">🟢 Maîtrise satisfaisante — je pars d'un symptôme, j'élimine les fonctions déjà tenues, et je nomme le constituant qui manque</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je sais dire quand une fonction tenue ne suffit pas, ou quand ce n&#x27;est plus un manque mais une panne"><label for="pos__4">⭐ Très bonne maîtrise — et je sais dire quand une fonction tenue ne suffit pas, ou quand ce n'est plus un manque mais une panne</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>4e_C4.4 (appui) — identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction</legend>
 <label><input type="radio" name="pos_c44" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c44" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c44" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c44" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -1296,7 +1365,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
 </div>
 
-<footer>Séquence 4e_C7.5 — « Le jardin qui n'arrose pas encore ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>Séquence 4e_C7.5 — « Le jardin qui n'arrose pas encore ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -1511,7 +1580,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -1520,8 +1589,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
@@ -1613,6 +1683,25 @@ if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majEtabli();
 placerOutil((document.querySelector(".seance-panel.active") || {}).id);   // l'outil rejoint la séance affichée
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 
