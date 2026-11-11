@@ -184,6 +184,19 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -519,6 +532,15 @@
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-qcm-rangee">
+/* révision du 11/11/2026 : réponses d'un mot ou d'un chiffre — en rangée, pas en grille lettrée */
+fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0}
+</style>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -593,7 +615,7 @@
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../5e/5e_C5.1/Synthèses/synthese_eleve_5e_C5.1-C5.3.html#demarche">relis « La démarche complète » dans la synthèse 5e_C5.1 à C5.3</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> la panne ne se voit pas. Le jardin a l'air normal et n'arrose pas : il va falloir <b>chercher</b> au lieu de constater, et suivre la chaîne maillon par maillon jusqu'à celui qui ment.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> la panne ne se voit pas. <br>Le jardin a l'air normal et n'arrose pas : il va falloir <b>chercher</b> au lieu de constater, et suivre la chaîne maillon par maillon jusqu'à celui qui ment.</p>
   <p class="filet">Un mot à garder en tête : on ne remplace jamais une pièce avant d'avoir prouvé que c'est elle.</p>
 </section>
 
@@ -616,13 +638,10 @@
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Mardi matin, la présidente du club jardin vous attend devant le carré potager, l'air grave.</b>
-    « Regardez les tomates : flétries. Le week-end a été le plus chaud de l'été, et le jardin connecté
-    n'a PAS arrosé. Le pire ? L'écran du coffret affiche <b>“Humidité du sol : 78 % — ARROSAGE : OK”</b>.
-    Il dit que tout va bien… pendant que tout sèche. »</p>
+    <p><b>Mardi matin, la présidente du club jardin vous attend devant le carré potager, l'air grave.</b><br>« Regardez les tomates : flétries. <br>Le week-end a été le plus chaud de l'été, et le jardin connecté
+    n'a PAS arrosé. <br>Le pire ? L'écran du coffret affiche <b>“Humidité du sol : 78 % — ARROSAGE : OK”</b>. <br>Il dit que tout va bien… pendant que tout sèche. »</p>
     <p>Le technicien de la mairie répond au téléphone : « Vous êtes les 4e qui avez étudié et programmé
-    ce jardin. Cette fois, je ne vous envoie PAS de protocole tout fait : <b>c'est VOUS qui allez le proposer.</b>
-    Trouvez la cause avec des tests qui prouvent, remplacez la pièce fautive — je vous fournis la pièce,
+    ce jardin. <br>Cette fois, je ne vous envoie PAS de protocole tout fait : <b>c'est VOUS qui allez le proposer.</b><br>Trouvez la cause avec des tests qui prouvent, remplacez la pièce fautive — je vous fournis la pièce,
     pas la méthode — et si quelque chose casse au passage, l'atelier du collège sait refabriquer. »</p>
     <p>Votre mission de 4e : <b>proposer</b> le protocole de diagnostic, <b>remplacer</b> la pièce
     défectueuse en autonomie, et <b>choisir le procédé</b> pour refabriquer ce qui manque.</p>
@@ -644,7 +663,7 @@
     <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>La cause la plus probable est ____, parce que l&#x27;écran dit ____ alors que la terre ____.</li>
     <li>Mon premier test serait ____.</li>
@@ -686,7 +705,7 @@
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Repérer visuellement une pièce défectueuse, c'est…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="démonter l&#x27;objet entier pour voir l&#x27;intérieur"><label for="be_1__1">démonter l'objet entier pour voir l'intérieur</label></div>
@@ -711,6 +730,26 @@
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
 </section>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
@@ -775,12 +814,60 @@
     <div class="consigne"><b>Consigne :</b> a) observe l'image et retiens les faits ; b) remets les 6 tests dans l'ordre du bon protocole (règle du dépanneur : du test le plus RAPIDE au plus long, la sécurité avant tout démontage) ; c) exécute TON protocole au poste de diagnostic (une erreur d'ordre remet à zéro) jusqu'à isoler la cause ; d) réponds aux 2 questions de méthode.</div>
     <div class="exo">
       <h4>b) J'ordonne mes 6 tests (du 1er au 6e)</h4>
-      <div class="assoc"><label for="o1_a">« Observer et relever les symptômes, sans rien toucher » est le test n°…</label><select id="o1_a"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o1_b">« Vérifier de mes yeux le niveau du réservoir » est le test n°…</label><select id="o1_b"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o1_c">« Comparer la mesure de l'écran (78 % humide) à l'état RÉEL du sol » est le test n°…</label><select id="o1_c"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o1_d">« Lancer la marche forcée de la pompe (très basse tension) pour tester pompe et tuyau » est le test n°…</label><select id="o1_d"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o1_e">« Couper l'alimentation, puis examiner le capteur de près » est le test n°…</label><select id="o1_e"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o1_f">« Conclure : désigner la cause et la pièce à remplacer » est le test n°…</label><select id="o1_f"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="o1_a">
+  <legend>« Observer et relever les symptômes, sans rien toucher » est le test n°…</legend>
+  <div class="qcm-option"><input type="radio" name="o1_a" id="o1_a__1" value="1"><label for="o1_a__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_a" id="o1_a__2" value="2"><label for="o1_a__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_a" id="o1_a__3" value="3"><label for="o1_a__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_a" id="o1_a__4" value="4"><label for="o1_a__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_a" id="o1_a__5" value="5"><label for="o1_a__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_a" id="o1_a__6" value="6"><label for="o1_a__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="o1_b">
+  <legend>« Vérifier de mes yeux le niveau du réservoir » est le test n°…</legend>
+  <div class="qcm-option"><input type="radio" name="o1_b" id="o1_b__1" value="1"><label for="o1_b__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_b" id="o1_b__2" value="2"><label for="o1_b__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_b" id="o1_b__3" value="3"><label for="o1_b__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_b" id="o1_b__4" value="4"><label for="o1_b__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_b" id="o1_b__5" value="5"><label for="o1_b__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_b" id="o1_b__6" value="6"><label for="o1_b__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="o1_c">
+  <legend>« Comparer la mesure de l'écran (78 % humide) à l'état RÉEL du sol » est le test n°…</legend>
+  <div class="qcm-option"><input type="radio" name="o1_c" id="o1_c__1" value="1"><label for="o1_c__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_c" id="o1_c__2" value="2"><label for="o1_c__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_c" id="o1_c__3" value="3"><label for="o1_c__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_c" id="o1_c__4" value="4"><label for="o1_c__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_c" id="o1_c__5" value="5"><label for="o1_c__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_c" id="o1_c__6" value="6"><label for="o1_c__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="o1_d">
+  <legend>« Lancer la marche forcée de la pompe (très basse tension) pour tester pompe et tuyau » est le test n°…</legend>
+  <div class="qcm-option"><input type="radio" name="o1_d" id="o1_d__1" value="1"><label for="o1_d__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_d" id="o1_d__2" value="2"><label for="o1_d__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_d" id="o1_d__3" value="3"><label for="o1_d__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_d" id="o1_d__4" value="4"><label for="o1_d__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_d" id="o1_d__5" value="5"><label for="o1_d__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_d" id="o1_d__6" value="6"><label for="o1_d__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="o1_e">
+  <legend>« Couper l'alimentation, puis examiner le capteur de près » est le test n°…</legend>
+  <div class="qcm-option"><input type="radio" name="o1_e" id="o1_e__1" value="1"><label for="o1_e__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_e" id="o1_e__2" value="2"><label for="o1_e__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_e" id="o1_e__3" value="3"><label for="o1_e__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_e" id="o1_e__4" value="4"><label for="o1_e__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_e" id="o1_e__5" value="5"><label for="o1_e__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_e" id="o1_e__6" value="6"><label for="o1_e__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="o1_f">
+  <legend>« Conclure : désigner la cause et la pièce à remplacer » est le test n°…</legend>
+  <div class="qcm-option"><input type="radio" name="o1_f" id="o1_f__1" value="1"><label for="o1_f__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_f" id="o1_f__2" value="2"><label for="o1_f__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_f" id="o1_f__3" value="3"><label for="o1_f__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_f" id="o1_f__4" value="4"><label for="o1_f__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_f" id="o1_f__5" value="5"><label for="o1_f__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="o1_f" id="o1_f__6" value="6"><label for="o1_f__6">6</label></div>
+</fieldset>
       <h4>c) J'exécute MON protocole au poste de diagnostic</h4>
       <div class="simu" style="margin:10px 0">
         <div>
@@ -799,20 +886,39 @@
         </div>
       </div>
       <h4>d) Les questions du dépanneur</h4>
-      <div class="assoc"><label for="q1_1">Quel test a DÉMASQUÉ le coupable (le test « discriminant ») ?</label><select id="q1_1"><option value="">— choisir —</option><option>comparer la mesure de l'écran (78 % humide) au sol réel, sec et craquelé</option><option>vérifier le niveau du réservoir</option><option>observer les plants flétris</option><option>couper l'alimentation</option></select></div>
-      <div class="assoc"><label for="q1_2">Pourquoi placer les tests RAPIDES en premier dans le protocole ?</label><select id="q1_2"><option value="">— choisir —</option><option>chaque test rapide peut éliminer une cause en quelques secondes, avant d'engager les tests longs ou un démontage</option><option>parce que les tests longs sont interdits</option><option>pour finir la séance plus tôt</option><option>l'ordre des tests n'a aucune importance</option></select></div>
+      <fieldset class="qcm-groupe" id="q1_1">
+  <legend>Quel test a DÉMASQUÉ le coupable (le test « discriminant ») ?</legend>
+  <div class="qcm-option"><input type="radio" name="q1_1" id="q1_1__1" value="comparer la mesure de l&#x27;écran (78 % humide) au sol réel, sec et craquelé"><label for="q1_1__1">comparer la mesure de l'écran (78 % humide) au sol réel, sec et craquelé</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_1" id="q1_1__2" value="vérifier le niveau du réservoir"><label for="q1_1__2">vérifier le niveau du réservoir</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_1" id="q1_1__3" value="observer les plants flétris"><label for="q1_1__3">observer les plants flétris</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_1" id="q1_1__4" value="couper l&#x27;alimentation"><label for="q1_1__4">couper l'alimentation</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="q1_2">
+  <legend>Pourquoi placer les tests RAPIDES en premier dans le protocole ?</legend>
+  <div class="qcm-option"><input type="radio" name="q1_2" id="q1_2__1" value="chaque test rapide peut éliminer une cause en quelques secondes, avant d&#x27;engager les tests longs ou un démontage"><label for="q1_2__1">chaque test rapide peut éliminer une cause en quelques secondes, avant d'engager les tests longs ou un démontage</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_2" id="q1_2__2" value="parce que les tests longs sont interdits"><label for="q1_2__2">parce que les tests longs sont interdits</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_2" id="q1_2__3" value="pour finir la séance plus tôt"><label for="q1_2__3">pour finir la séance plus tôt</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_2" id="q1_2__4" value="l&#x27;ordre des tests n&#x27;a aucune importance"><label for="q1_2__4">l'ordre des tests n'a aucune importance</label></div>
+</fieldset>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le protocole du dépanneur commence toujours par ce qui ne coûte rien : REGARDER. Puis il teste du plus rapide au plus long. On ne démonte jamais en premier — et on coupe l'alimentation AVANT d'approcher les mains d'un composant.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Trois faits se contredisent : le sol CRAQUE, le réservoir est PLEIN, l'écran dit « 78 % humide ». Qui ment ? Celui qui MESURE. Si la marche forcée fait couler l'eau (pompe et tuyau innocents), il ne reste qu'un suspect : le capteur d'humidité, qui répète « humide » — donc le programme ne commande jamais l'arrosage.</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le protocole du dépanneur commence toujours par ce qui ne coûte rien : REGARDER. Puis il teste du plus rapide au plus long. <br>On ne démonte jamais en premier — et on coupe l'alimentation AVANT d'approcher les mains d'un composant.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Trois faits se contredisent : le sol CRAQUE, le réservoir est PLEIN, l'écran dit « 78 % humide ». <br>Qui ment ? Celui qui MESURE. <br>Si la marche forcée fait couler l'eau, la pompe et le tuyau sont innocents. <br>Il ne reste qu'un suspect : le capteur d'humidité. <br>Il répète « humide » : le programme ne commande donc jamais l'arrosage.</p></details>
     <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb1" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
-      <p>Ordre du protocole : <b>1</b> observer sans toucher · <b>2</b> réservoir (10 secondes, de ses yeux) ·
-      <b>3</b> comparer mesure/réalité — c'est le test <b>discriminant</b> : « 78 % humide » sur un sol qui craque,
-      le capteur MENT · <b>4</b> marche forcée : l'eau coule, pompe et tuyau sont innocentés · <b>5</b> alimentation
-      coupée, examen de près : les électrodes du capteur sont prises dans une <b>croûte de terre et de calcaire</b>
-      qui bloque la mesure · <b>6</b> conclusion : capteur d'humidité défectueux, à remplacer. La logique du
-      protocole : chaque test <b>élimine</b> un suspect, du test le plus rapide au plus engageant (4e_C5.1).</p>
+      <p><b>L'ordre du protocole</b>
+      <br><b>1</b> Observer et relever les symptômes, sans rien toucher.
+      <br><b>2</b> Vérifier le réservoir&nbsp;: 10 secondes, de ses yeux.
+      <br><b>3</b> Comparer la mesure de l'écran à l'état réel du sol.
+      <br><b>4</b> Lancer la marche forcée&nbsp;: l'eau coule, la pompe et le tuyau sont innocentés.
+      <br><b>5</b> Couper l'alimentation, puis examiner le capteur de près.
+      <br><b>6</b> Conclure&nbsp;: capteur d'humidité défectueux, à remplacer.</p>
+      <p><b>Le test discriminant</b>, c'est le test 3.
+      <br>L'écran dit «&nbsp;78 % humide&nbsp;» sur un sol qui craque&nbsp;: le capteur MENT.
+      <br>L'examen de près le confirme&nbsp;: ses électrodes sont prises dans une <b>croûte de terre et de calcaire</b> qui bloque la mesure.</p>
+      <p><b>Pourquoi les tests rapides d'abord&nbsp;?</b>
+      <br>Chacun peut éliminer une cause en quelques secondes, avant un test long ou un démontage.
+      <br>La logique du protocole&nbsp;: chaque test <b>élimine</b> un suspect, du plus rapide au plus engageant (4e_C5.1).</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> en 4e, on ne reçoit plus le protocole : on le PROPOSE. Un bon protocole liste les causes possibles, puis les teste une par une — tests rapides d'abord, sécurité avant tout démontage, et chaque test doit pouvoir INNOCENTER ou ACCUSER un composant (test discriminant).</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> croire l'écran sur parole (une mesure peut mentir) ; démonter en premier ; changer une pièce au hasard « pour voir » ; oublier de couper l'alimentation avant d'approcher les composants.</div>
@@ -843,12 +949,60 @@
     <div class="consigne"><b>Consigne :</b> a) construis TON ordre des 6 gestes (indice : la sécurité ouvre, la preuve ferme) ; b) exécute le remplacement au simulateur — aucun protocole ne s'affiche, une erreur d'ordre remet à zéro ; c) réponds aux questions du dépanneur autonome.</div>
     <div class="exo">
       <h4>a) Je construis mon ordre de remplacement</h4>
-      <div class="assoc"><label for="r2_a">« Couper l'alimentation et PHOTOGRAPHIER le branchement » est le geste n°…</label><select id="r2_a"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="r2_b">« Débrancher le connecteur et extraire l'ancien capteur » est le geste n°…</label><select id="r2_b"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="r2_c">« Comparer capteur neuf et ancien : broches, longueur, repères » est le geste n°…</label><select id="r2_c"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="r2_d">« Installer le neuf et rebrancher À L'IDENTIQUE grâce à la photo » est le geste n°…</label><select id="r2_d"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="r2_e">« Remettre l'alimentation » est le geste n°…</label><select id="r2_e"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="r2_f">« TEST FINAL : verser de l'eau au pied du plant témoin, la mesure doit chuter et la pompe s'amorcer » est le geste n°…</label><select id="r2_f"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="r2_a">
+  <legend>« Couper l'alimentation et PHOTOGRAPHIER le branchement » est le geste n°…</legend>
+  <div class="qcm-option"><input type="radio" name="r2_a" id="r2_a__1" value="1"><label for="r2_a__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_a" id="r2_a__2" value="2"><label for="r2_a__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_a" id="r2_a__3" value="3"><label for="r2_a__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_a" id="r2_a__4" value="4"><label for="r2_a__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_a" id="r2_a__5" value="5"><label for="r2_a__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_a" id="r2_a__6" value="6"><label for="r2_a__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="r2_b">
+  <legend>« Débrancher le connecteur et extraire l'ancien capteur » est le geste n°…</legend>
+  <div class="qcm-option"><input type="radio" name="r2_b" id="r2_b__1" value="1"><label for="r2_b__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_b" id="r2_b__2" value="2"><label for="r2_b__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_b" id="r2_b__3" value="3"><label for="r2_b__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_b" id="r2_b__4" value="4"><label for="r2_b__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_b" id="r2_b__5" value="5"><label for="r2_b__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_b" id="r2_b__6" value="6"><label for="r2_b__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="r2_c">
+  <legend>« Comparer capteur neuf et ancien : broches, longueur, repères » est le geste n°…</legend>
+  <div class="qcm-option"><input type="radio" name="r2_c" id="r2_c__1" value="1"><label for="r2_c__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_c" id="r2_c__2" value="2"><label for="r2_c__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_c" id="r2_c__3" value="3"><label for="r2_c__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_c" id="r2_c__4" value="4"><label for="r2_c__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_c" id="r2_c__5" value="5"><label for="r2_c__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_c" id="r2_c__6" value="6"><label for="r2_c__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="r2_d">
+  <legend>« Installer le neuf et rebrancher À L'IDENTIQUE grâce à la photo » est le geste n°…</legend>
+  <div class="qcm-option"><input type="radio" name="r2_d" id="r2_d__1" value="1"><label for="r2_d__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_d" id="r2_d__2" value="2"><label for="r2_d__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_d" id="r2_d__3" value="3"><label for="r2_d__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_d" id="r2_d__4" value="4"><label for="r2_d__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_d" id="r2_d__5" value="5"><label for="r2_d__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_d" id="r2_d__6" value="6"><label for="r2_d__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="r2_e">
+  <legend>« Remettre l'alimentation » est le geste n°…</legend>
+  <div class="qcm-option"><input type="radio" name="r2_e" id="r2_e__1" value="1"><label for="r2_e__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_e" id="r2_e__2" value="2"><label for="r2_e__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_e" id="r2_e__3" value="3"><label for="r2_e__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_e" id="r2_e__4" value="4"><label for="r2_e__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_e" id="r2_e__5" value="5"><label for="r2_e__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_e" id="r2_e__6" value="6"><label for="r2_e__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="r2_f">
+  <legend>« TEST FINAL : verser de l'eau au pied du plant témoin, la mesure doit chuter et la pompe s'amorcer » est le geste n°…</legend>
+  <div class="qcm-option"><input type="radio" name="r2_f" id="r2_f__1" value="1"><label for="r2_f__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_f" id="r2_f__2" value="2"><label for="r2_f__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_f" id="r2_f__3" value="3"><label for="r2_f__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_f" id="r2_f__4" value="4"><label for="r2_f__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_f" id="r2_f__5" value="5"><label for="r2_f__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="r2_f" id="r2_f__6" value="6"><label for="r2_f__6">6</label></div>
+</fieldset>
       <h4>b) J'exécute mon remplacement au simulateur</h4>
       <div class="simu" style="margin:10px 0">
         <div>
@@ -867,19 +1021,37 @@
         </div>
       </div>
       <h4>c) Les questions du dépanneur autonome</h4>
-      <div class="assoc"><label for="q2_1">Pourquoi photographier le branchement AVANT de débrancher ?</label><select id="q2_1"><option value="">— choisir —</option><option>la photo remplace le protocole absent : elle garantit un remontage à l'identique</option><option>pour décorer le compte du club jardin</option><option>parce que les photos réparent les capteurs</option><option>pour prouver qu'on a travaillé</option></select></div>
-      <div class="assoc"><label for="q2_2">Pourquoi comparer le capteur neuf et l'ancien AVANT de monter le neuf ?</label><select id="q2_2"><option value="">— choisir —</option><option>vérifier la compatibilité (broches, dimensions) évite un démontage de plus si la pièce ne convient pas</option><option>pour choisir le plus joli des deux</option><option>c'est inutile, une pièce neuve convient toujours</option><option>pour les peser</option></select></div>
+      <fieldset class="qcm-groupe" id="q2_1">
+  <legend>Pourquoi photographier le branchement AVANT de débrancher ?</legend>
+  <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__1" value="la photo remplace le protocole absent : elle garantit un remontage à l&#x27;identique"><label for="q2_1__1">la photo remplace le protocole absent : elle garantit un remontage à l'identique</label></div>
+  <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__2" value="pour décorer le compte du club jardin"><label for="q2_1__2">pour décorer le compte du club jardin</label></div>
+  <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__3" value="parce que les photos réparent les capteurs"><label for="q2_1__3">parce que les photos réparent les capteurs</label></div>
+  <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__4" value="pour prouver qu&#x27;on a travaillé"><label for="q2_1__4">pour prouver qu'on a travaillé</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="q2_2">
+  <legend>Pourquoi comparer le capteur neuf et l'ancien AVANT de monter le neuf ?</legend>
+  <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__1" value="vérifier la compatibilité (broches, dimensions) évite un démontage de plus si la pièce ne convient pas"><label for="q2_2__1">vérifier la compatibilité (broches, dimensions) évite un démontage de plus si la pièce ne convient pas</label></div>
+  <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__2" value="pour choisir le plus joli des deux"><label for="q2_2__2">pour choisir le plus joli des deux</label></div>
+  <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__3" value="c&#x27;est inutile, une pièce neuve convient toujours"><label for="q2_2__3">c'est inutile, une pièce neuve convient toujours</label></div>
+  <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__4" value="pour les peser"><label for="q2_2__4">pour les peser</label></div>
+</fieldset>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Sans protocole, la MÉTHODE te protège : la sécurité OUVRE toujours (couper l'alimentation), la preuve FERME toujours (le test final). Entre les deux : retirer l'ancien, vérifier le neuf, monter, réalimenter — et la photo est ta mémoire.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre complet : couper + photo → extraire → comparer → monter selon la photo → réalimenter → tester. Pourquoi comparer en 3e position et pas après le montage ? Parce qu'une pièce incompatible découverte APRÈS montage oblige à tout refaire. Et pourquoi un test final À L'EAU ? Parce que seule une VRAIE variation d'humidité prouve que la chaîne capteur → carte → pompe fonctionne de bout en bout.</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Sans protocole, la MÉTHODE te protège : la sécurité OUVRE toujours (couper l'alimentation), la preuve FERME toujours (le test final). <br>Entre les deux : retirer l'ancien, vérifier le neuf, monter, réalimenter — et la photo est ta mémoire.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre complet : couper + photo → extraire → comparer → monter selon la photo → réalimenter → tester. <br>Pourquoi comparer en 3e position et pas après le montage ? Parce qu'une pièce incompatible découverte APRÈS montage oblige à tout refaire. <br>Et pourquoi un test final À L'EAU ? Parce que seule une VRAIE variation d'humidité prouve que la chaîne capteur → carte → pompe fonctionne de bout en bout.</p></details>
     <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb2" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
-      <p>Ordre : <b>1</b> couper l'alimentation + photographier (sécurité + mémoire) · <b>2</b> débrancher, extraire
-      l'ancien capteur · <b>3</b> comparer neuf/ancien AVANT montage (compatibilité) · <b>4</b> installer et rebrancher
-      à l'identique grâce à la photo · <b>5</b> réalimenter · <b>6</b> test final : de l'eau au pied du plant témoin →
-      la mesure chute de 78 % à ~35 %, la pompe s'amorce, le goutte-à-goutte coule. La réparation n'est pas « finie
-      quand c'est remonté » : elle est finie quand c'est <b>PROUVÉ</b> (4e_C5.2).</p>
+      <p><b>L'ordre du remplacement</b>
+      <br><b>1</b> Couper l'alimentation et photographier le branchement&nbsp;: la sécurité, puis la mémoire.
+      <br><b>2</b> Débrancher le connecteur et extraire l'ancien capteur.
+      <br><b>3</b> Comparer le capteur neuf et l'ancien AVANT le montage.
+      <br><b>4</b> Installer le neuf et rebrancher à l'identique, grâce à la photo.
+      <br><b>5</b> Remettre l'alimentation.
+      <br><b>6</b> Test final&nbsp;: de l'eau au pied du plant témoin.
+      <br>La mesure chute de 78 % à environ 35 %, la pompe s'amorce, le goutte-à-goutte coule.</p>
+      <p><b>Pourquoi la photo&nbsp;?</b> Elle remplace le protocole absent&nbsp;: elle garantit un remontage à l'identique.
+      <br><b>Pourquoi comparer avant de monter&nbsp;?</b> Vérifier les broches et les dimensions évite un démontage de plus.</p>
+      <p>La réparation n'est pas «&nbsp;finie quand c'est remonté&nbsp;». <br>Elle est finie quand c'est <b>PROUVÉ</b> (4e_C5.2).</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> remplacer sans protocole = remplacer AVEC une méthode : sécurité d'abord (couper l'alimentation), photo avant tout débranchement, comparaison neuf/ancien avant montage, remontage en ordre inverse, et TEST FINAL qui prouve. La méthode remplace le document.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> débrancher sans photo (« je m'en souviendrai »… non) ; monter la pièce neuve sans l'avoir comparée ; déclarer la réparation finie sans test ; travailler sous tension « parce que c'est rapide ».</div>
@@ -910,25 +1082,74 @@
     <div class="consigne"><b>Consigne :</b> a) choisis le procédé adapté à CHAQUE critère (le clip a une forme en volume avec des ergots élastiques ; il vivra dehors, au soleil et à l'arrosage) ; b) remets la mini-gamme de fabrication dans l'ordre ; c) rappelle la règle de sécurité de l'atelier.</div>
     <div class="exo">
       <h4>a) Je choisis en croisant les critères</h4>
-      <div class="assoc"><label for="a3_1">Pour une forme EN VOLUME avec ergots élastiques (le clip), le procédé adapté est…</label><select id="a3_1"><option value="">— choisir —</option><option>l'impression 3D : elle construit les volumes complexes couche par couche, en une seule pièce</option><option>la découpe-pliage de PVC : parfaite pour les volumes à ergots</option><option>la taille dans le bois : rapide pour les petites pièces élastiques</option><option>aucun procédé ne peut faire un clip</option></select></div>
-      <div class="assoc"><label for="a3_2">Pourquoi la découpe-pliage de plaque est-elle écartée pour CE clip ?</label><select id="a3_2"><option value="">— choisir —</option><option>elle produit des pièces issues d'une plaque pliée — pas un volume avec ergots élastiques qui s'enclenchent</option><option>parce que la plieuse est en panne</option><option>parce que le PVC n'existe pas en plaque</option><option>parce que plier est interdit en 4e</option></select></div>
-      <div class="assoc"><label for="a3_3">Le clip vivra au jardin (soleil, arrosage). On imprime en PETG plutôt qu'en PLA car…</label><select id="a3_3"><option value="">— choisir —</option><option>le PETG supporte mieux la chaleur, l'humidité et les UV — le PLA se déforme et vieillit vite dehors</option><option>le PETG est plus joli</option><option>le PLA est réservé aux professeurs</option><option>le PETG s'imprime sans imprimante</option></select></div>
-      <div class="assoc"><label for="a3_4">La PREMIÈRE opération de la fabrication est…</label><select id="a3_4"><option value="">— choisir —</option><option>mesurer l'ancien clip au pied à coulisse (même cassé, il porte toutes les cotes)</option><option>lancer l'impression au hasard et ajuster ensuite</option><option>peindre le futur clip</option><option>jeter l'ancien clip</option></select></div>
+      <fieldset class="qcm-groupe" id="a3_1">
+  <legend>Pour une forme EN VOLUME avec ergots élastiques (le clip), le procédé adapté est…</legend>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="l&#x27;impression 3D : elle construit les volumes complexes couche par couche, en une seule pièce"><label for="a3_1__1">l'impression 3D : elle construit les volumes complexes couche par couche, en une seule pièce</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="la découpe-pliage de PVC : parfaite pour les volumes à ergots"><label for="a3_1__2">la découpe-pliage de PVC : parfaite pour les volumes à ergots</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="la taille dans le bois : rapide pour les petites pièces élastiques"><label for="a3_1__3">la taille dans le bois : rapide pour les petites pièces élastiques</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="aucun procédé ne peut faire un clip"><label for="a3_1__4">aucun procédé ne peut faire un clip</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a3_2">
+  <legend>Pourquoi la découpe-pliage de plaque est-elle écartée pour CE clip ?</legend>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="elle produit des pièces issues d&#x27;une plaque pliée — pas un volume avec ergots élastiques qui s&#x27;enclenchent"><label for="a3_2__1">elle produit des pièces issues d'une plaque pliée — pas un volume avec ergots élastiques qui s'enclenchent</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="parce que la plieuse est en panne"><label for="a3_2__2">parce que la plieuse est en panne</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="parce que le PVC n&#x27;existe pas en plaque"><label for="a3_2__3">parce que le PVC n'existe pas en plaque</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="parce que plier est interdit en 4e"><label for="a3_2__4">parce que plier est interdit en 4e</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a3_3">
+  <legend>Le clip vivra au jardin (soleil, arrosage). On imprime en PETG plutôt qu'en PLA car…</legend>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="le PETG supporte mieux la chaleur, l&#x27;humidité et les UV — le PLA se déforme et vieillit vite dehors"><label for="a3_3__1">le PETG supporte mieux la chaleur, l'humidité et les UV — le PLA se déforme et vieillit vite dehors</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="le PETG est plus joli"><label for="a3_3__2">le PETG est plus joli</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="le PLA est réservé aux professeurs"><label for="a3_3__3">le PLA est réservé aux professeurs</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="le PETG s&#x27;imprime sans imprimante"><label for="a3_3__4">le PETG s'imprime sans imprimante</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="a3_4">
+  <legend>La PREMIÈRE opération de la fabrication est…</legend>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="mesurer l&#x27;ancien clip au pied à coulisse (même cassé, il porte toutes les cotes)"><label for="a3_4__1">mesurer l'ancien clip au pied à coulisse (même cassé, il porte toutes les cotes)</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="lancer l&#x27;impression au hasard et ajuster ensuite"><label for="a3_4__2">lancer l'impression au hasard et ajuster ensuite</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="peindre le futur clip"><label for="a3_4__3">peindre le futur clip</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="jeter l&#x27;ancien clip"><label for="a3_4__4">jeter l'ancien clip</label></div>
+</fieldset>
       <h4>b) La mini-gamme, puis la sécurité</h4>
-      <div class="assoc"><label for="q3_1">La mini-gamme complète, dans l'ordre, est…</label><select id="q3_1"><option value="">— choisir —</option><option>mesurer → modéliser en 3D (avec le jeu) → imprimer → ébavurer et ajuster → monter et tester</option><option>imprimer → mesurer → modéliser → monter → ajuster</option><option>monter → tester → mesurer → imprimer</option><option>modéliser → jeter l'ancien → deviner les cotes → imprimer</option></select></div>
-      <div class="assoc"><label for="q3_2">Le trou du clip fait 10,0 mm pour un capteur de 10,0 mm : on modélise le trou à…</label><select id="q3_2"><option value="">— choisir —</option><option>environ 10,2 mm : le jeu fonctionnel permet au capteur de s'enclencher sans forcer</option><option>10,0 mm exactement : les cotes ne se discutent pas</option><option>9,8 mm pour serrer très fort</option><option>15 mm pour être tranquille</option></select></div>
-      <div class="assoc"><label for="q3_3">Avant d'utiliser une machine de l'atelier, la règle est…</label><select id="q3_3"><option value="">— choisir —</option><option>lunettes, cheveux attachés, autorisation ET présence d'un adulte — jamais seul·e sur une machine</option><option>aller vite pour libérer la machine</option><option>retirer les protections pour mieux voir</option><option>souffler les copeaux à la bouche</option></select></div>
+      <fieldset class="qcm-groupe" id="q3_1">
+  <legend>La mini-gamme complète, dans l'ordre, est…</legend>
+  <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__1" value="mesurer → modéliser en 3D (avec le jeu) → imprimer → ébavurer et ajuster → monter et tester"><label for="q3_1__1">mesurer → modéliser en 3D (avec le jeu) → imprimer → ébavurer et ajuster → monter et tester</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__2" value="imprimer → mesurer → modéliser → monter → ajuster"><label for="q3_1__2">imprimer → mesurer → modéliser → monter → ajuster</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__3" value="monter → tester → mesurer → imprimer"><label for="q3_1__3">monter → tester → mesurer → imprimer</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__4" value="modéliser → jeter l&#x27;ancien → deviner les cotes → imprimer"><label for="q3_1__4">modéliser → jeter l'ancien → deviner les cotes → imprimer</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="q3_2">
+  <legend>Le trou du clip fait 10,0 mm pour un capteur de 10,0 mm : on modélise le trou à…</legend>
+  <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__1" value="environ 10,2 mm : le jeu fonctionnel permet au capteur de s&#x27;enclencher sans forcer"><label for="q3_2__1">environ 10,2 mm : le jeu fonctionnel permet au capteur de s'enclencher sans forcer</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__2" value="10,0 mm exactement : les cotes ne se discutent pas"><label for="q3_2__2">10,0 mm exactement : les cotes ne se discutent pas</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__3" value="9,8 mm pour serrer très fort"><label for="q3_2__3">9,8 mm pour serrer très fort</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__4" value="15 mm pour être tranquille"><label for="q3_2__4">15 mm pour être tranquille</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="q3_3">
+  <legend>Avant d'utiliser une machine de l'atelier, la règle est…</legend>
+  <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__1" value="lunettes, cheveux attachés, autorisation ET présence d&#x27;un adulte — jamais seul·e sur une machine"><label for="q3_3__1">lunettes, cheveux attachés, autorisation ET présence d'un adulte — jamais seul·e sur une machine</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__2" value="aller vite pour libérer la machine"><label for="q3_3__2">aller vite pour libérer la machine</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__3" value="retirer les protections pour mieux voir"><label for="q3_3__3">retirer les protections pour mieux voir</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__4" value="souffler les copeaux à la bouche"><label for="q3_3__4">souffler les copeaux à la bouche</label></div>
+</fieldset>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le procédé se choisit en croisant : la FORME de la pièce (plate ? pliée ? en volume ?), le MATÉRIAU qui convient à son environnement, et le TEMPS/matériel disponibles. Une forme en volume avec ergots ne peut pas sortir d'une plaque pliée.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Au jardin, le soleil tape et l'arrosage mouille : le PLA (qui ramollit vers 55-60 °C et vieillit aux UV) tiendrait quelques semaines ; le PETG tient des années. Et la gamme commence TOUJOURS par la mesure : l'ancien clip cassé, recollé le temps d'un relevé, porte toutes les cotes dont le modèle 3D a besoin — plus le jeu (10,2 mm pour 10,0 mm) pour que ça s'enclenche sans forcer.</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le procédé se choisit en croisant : la FORME de la pièce (plate ? pliée ? en volume ?), le MATÉRIAU qui convient à son environnement, et le TEMPS/matériel disponibles. <br>Une forme en volume avec ergots ne peut pas sortir d'une plaque pliée.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Au jardin, le soleil tape et l'arrosage mouille : le PLA ramollit vers 55-60 °C et vieillit aux UV. <br>Il tiendrait quelques semaines ; le PETG tient des années. <br>Et la gamme commence TOUJOURS par la mesure. <br>L'ancien clip cassé, recollé le temps d'un relevé, porte toutes les cotes dont le modèle 3D a besoin. <br>On y ajoute le jeu (10,2 mm pour 10,0 mm), pour que ça s'enclenche sans forcer.</p></details>
     <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb3" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
-      <p>Forme en volume + ergots élastiques → <b>impression 3D</b> ; la découpe-pliage est écartée (elle produit des
-      pièces de plaque) ; matériau : <b>PETG</b>, qui tient chaleur, humidité et UV du jardin, là où le PLA se déforme.
-      Gamme : <b>mesurer</b> (pied à coulisse sur l'ancien clip) → <b>modéliser</b> avec le jeu fonctionnel (10,2 mm
-      pour un capteur de 10,0) → <b>imprimer</b> → <b>ébavurer/ajuster</b> → <b>monter et tester</b>. Et à l'atelier :
-      lunettes, cheveux attachés, adulte présent — toujours (4e_C5.3).</p>
+      <p><b>a) Le choix du procédé</b>
+      <br>Une forme en volume, avec des ergots élastiques&nbsp;: <b>l'impression 3D</b>. Elle construit le volume couche par couche, en une seule pièce.
+      <br>La découpe-pliage est écartée&nbsp;: elle donne des pièces issues d'une plaque pliée, pas un volume à ergots.
+      <br>Le matériau&nbsp;: <b>PETG</b>. Il tient la chaleur, l'humidité et les UV du jardin, là où le PLA se déforme.
+      <br>La première opération&nbsp;: <b>mesurer</b> l'ancien clip au pied à coulisse. Même cassé, il porte toutes les cotes.</p>
+      <p><b>b) La mini-gamme, dans l'ordre</b>
+      <br>① <b>Mesurer</b> l'ancien clip.
+      <br>② <b>Modéliser</b> en 3D, avec le jeu fonctionnel&nbsp;: 10,2 mm pour un capteur de 10,0 mm.
+      <br>③ <b>Imprimer</b>.
+      <br>④ <b>Ébavurer et ajuster</b>.
+      <br>⑤ <b>Monter et tester</b>.</p>
+      <p><b>La sécurité à l'atelier</b>&nbsp;: lunettes, cheveux attachés, autorisation et adulte présent — toujours (4e_C5.3).</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> choisir un procédé = croiser la FORME de la pièce, le MATÉRIAU adapté à son environnement, le TEMPS et le matériel disponibles. La fabrication suit une gamme ordonnée qui commence par MESURER — et le jeu fonctionnel se prévoit dès la modélisation.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> choisir le procédé « préféré » au lieu du procédé adapté ; imprimer en PLA une pièce d'extérieur ; modéliser sans jeu (« ça rentrera bien ») ; commencer par imprimer au lieu de mesurer.</div>
@@ -945,18 +1166,45 @@
     </div>
     <div class="consigne"><b>Consigne :</b> la lampe de bureau du CDI ne s'allume plus (ampoule LED neuve fournie par la documentaliste, bouton-poussoir fendu). Transpose ta démarche.</div>
     <div class="exo">
-      <div class="assoc"><label for="r4_1">Ton protocole commence par…</label><select id="r4_1"><option value="">— choisir —</option><option>observer sans toucher, puis tester la prise avec un autre appareil : les tests rapides éliminent d'abord les causes simples</option><option>démonter entièrement la lampe pour tout voir</option><option>changer l'ampoule immédiatement sans tester</option><option>acheter une lampe neuve</option></select></div>
-      <div class="assoc"><label for="r4_2">Pour remplacer l'ampoule fournie SANS protocole, ton premier geste est…</label><select id="r4_2"><option value="">— choisir —</option><option value="débrancher la lampe du secteur — et faire appel à un adulte : le 230 V n'est JAMAIS pour nous">débrancher la lampe du secteur — et faire appel à un adulte : le 230 volts n'est JAMAIS pour nous</option><option>dévisser l'ampoule lampe branchée, c'est plus rapide</option><option>secouer la lampe</option><option>mouiller l'ampoule pour la refroidir</option></select></div>
-      <div class="assoc"><label for="r4_3">La preuve que ta réparation est terminée :</label><select id="r4_3"><option value="">— choisir —</option><option>le test final réussit : la lampe s'allume et s'éteint normalement au bouton</option><option>l'ampoule est vissée, donc c'est fini</option><option>la lampe est plus belle qu'avant</option><option>personne ne s'est plaint</option></select></div>
-      <div class="assoc"><label for="r4_4">Le bouton-poussoir fendu, introuvable en magasin, sera…</label><select id="r4_4"><option value="">— choisir —</option><option>mesuré au pied à coulisse puis réimprimé en 3D à l'atelier, à l'unité et sur mesure</option><option>remplacé par du ruban adhésif pour toujours</option><option>ignoré : un bouton fendu fonctionne très bien</option><option>commandé même s'il n'existe plus</option></select></div>
+      <fieldset class="qcm-groupe" id="r4_1">
+  <legend>Ton protocole commence par…</legend>
+  <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__1" value="observer sans toucher, puis tester la prise avec un autre appareil : les tests rapides éliminent d&#x27;abord les causes simples"><label for="r4_1__1">observer sans toucher, puis tester la prise avec un autre appareil : les tests rapides éliminent d'abord les causes simples</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__2" value="démonter entièrement la lampe pour tout voir"><label for="r4_1__2">démonter entièrement la lampe pour tout voir</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__3" value="changer l&#x27;ampoule immédiatement sans tester"><label for="r4_1__3">changer l'ampoule immédiatement sans tester</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__4" value="acheter une lampe neuve"><label for="r4_1__4">acheter une lampe neuve</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r4_2">
+  <legend>Pour remplacer l'ampoule fournie SANS protocole, ton premier geste est…</legend>
+  <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__1" value="débrancher la lampe du secteur — et faire appel à un adulte : le 230 V n&#x27;est JAMAIS pour nous"><label for="r4_2__1">débrancher la lampe du secteur — et faire appel à un adulte : le 230 volts n'est JAMAIS pour nous</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__2" value="dévisser l&#x27;ampoule lampe branchée, c&#x27;est plus rapide"><label for="r4_2__2">dévisser l'ampoule lampe branchée, c'est plus rapide</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__3" value="secouer la lampe"><label for="r4_2__3">secouer la lampe</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__4" value="mouiller l&#x27;ampoule pour la refroidir"><label for="r4_2__4">mouiller l'ampoule pour la refroidir</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r4_3">
+  <legend>La preuve que ta réparation est terminée :</legend>
+  <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__1" value="le test final réussit : la lampe s&#x27;allume et s&#x27;éteint normalement au bouton"><label for="r4_3__1">le test final réussit : la lampe s'allume et s'éteint normalement au bouton</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__2" value="l&#x27;ampoule est vissée, donc c&#x27;est fini"><label for="r4_3__2">l'ampoule est vissée, donc c'est fini</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__3" value="la lampe est plus belle qu&#x27;avant"><label for="r4_3__3">la lampe est plus belle qu'avant</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__4" value="personne ne s&#x27;est plaint"><label for="r4_3__4">personne ne s'est plaint</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="r4_4">
+  <legend>Le bouton-poussoir fendu, introuvable en magasin, sera…</legend>
+  <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__1" value="mesuré au pied à coulisse puis réimprimé en 3D à l&#x27;atelier, à l&#x27;unité et sur mesure"><label for="r4_4__1">mesuré au pied à coulisse puis réimprimé en 3D à l'atelier, à l'unité et sur mesure</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__2" value="remplacé par du ruban adhésif pour toujours"><label for="r4_4__2">remplacé par du ruban adhésif pour toujours</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__3" value="ignoré : un bouton fendu fonctionne très bien"><label for="r4_4__3">ignoré : un bouton fendu fonctionne très bien</label></div>
+  <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__4" value="commandé même s&#x27;il n&#x27;existe plus"><label for="r4_4__4">commandé même s'il n'existe plus</label></div>
+</fieldset>
     </div>
-    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Même démarche, autre objet : tests rapides d'abord, sécurité avant tout geste, preuve à la fin, refabrication sur mesure quand le commerce ne suit plus. ATTENTION : la lampe du CDI est branchée sur le SECTEUR — ce n'est plus de la très basse tension : on débranche, et un adulte intervient.</p></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Même démarche, autre objet : tests rapides d'abord, sécurité avant tout geste, preuve à la fin, refabrication sur mesure quand le commerce ne suit plus. <br>ATTENTION : la lampe du CDI est branchée sur le SECTEUR — ce n'est plus de la très basse tension : on débranche, et un adulte intervient.</p></details>
     <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb4" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
-      <p>Observer puis tester la prise (protocole, tests rapides d'abord) · débrancher ET adulte — le 230 V du secteur
-      est un danger mortel, notre terrain est la très basse tension uniquement · le test final prouve · le bouton
-      se mesure et se réimprime. La démarche du dépanneur est transférable à TOUT objet — c'est ça, une compétence.</p>
+      <p>Le protocole commence par <b>observer sans toucher</b>, puis tester la prise avec un autre appareil&nbsp;: les tests rapides d'abord.
+      <br>Le premier geste du remplacement&nbsp;: <b>débrancher la lampe ET appeler un adulte</b>.
+      <br>Le 230 V du secteur est un danger mortel&nbsp;: notre terrain est la très basse tension uniquement.
+      <br>La preuve que c'est réparé&nbsp;: <b>le test final réussit</b>. La lampe s'allume et s'éteint au bouton.
+      <br>Le bouton-poussoir fendu se <b>mesure au pied à coulisse</b>, puis se réimprime en 3D.</p>
+      <p>La démarche du dépanneur est transférable à TOUT objet — c'est ça, une compétence.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> protocole → remplacement méthodique → preuve → refabrication : la démarche vaut pour le jardin, la lampe, le vélo… Réparer plutôt que jeter, c'est bon pour le porte-monnaie ET pour la planète.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
@@ -965,11 +1213,13 @@
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p>🕵 <b>Défi protocole :</b> choisis un objet en panne chez toi et rédige le protocole de diagnostic en 5 tests, du plus rapide au plus long — SANS le réaliser. Un adulte le validerait-il ?</p>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+  <p>🕵 <b>Défi protocole :</b> choisis un objet en panne chez toi et rédige le protocole de diagnostic en 5 tests, du plus rapide au plus long — SANS le réaliser. <br>Un adulte le validerait-il ?</p>
   <p>📐 <b>Défi conception :</b> dessine le clip-support du capteur sur papier quadrillé, avec ses cotes en millimètres ET le jeu fonctionnel annoté — le dessin qui précède toute impression 3D.</p>
   <p>👨‍👩‍👧 <b>Défi famille :</b> demande à un adulte s'il a déjà réparé quelque chose SANS notice : quelle méthode a-t-il inventée ? La photo avant démontage, il connaissait ?</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card" id="bilan">
@@ -980,15 +1230,33 @@
       <p>Avais-tu soupçonné le capteur menteur ? Ton premier test était-il rapide et discriminant ?</p></div>
       <p><b>Ce que tu sais faire désormais :</b> proposer un protocole de diagnostic qui PROUVE l'origine d'une
       panne (4e_C5.1), remplacer une pièce en autonomie — méthode, photo, comparaison, test final (4e_C5.2), et
-      choisir le procédé pour refabriquer une pièce introuvable (4e_C5.3). Le jardin arrose de nouveau — et cette
+      choisir le procédé pour refabriquer une pièce introuvable (4e_C5.3). <br>Le jardin arrose de nouveau — et cette
       fois, c'est TA méthode qui l'a sauvé.</p>
       <p class="refs">Revoir l'objet complet : <a href="../../../C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html">« Le jardin connecté » (structure et chaînes)</a> · <a href="../../../C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">« L'arrosage automatique » (le programme)</a>.</p>
     </div>
     <div class="confiance">
       <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
-      <div class="assoc"><label for="auto1">4e_C5.1 — proposer un protocole de diagnostic :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
-      <div class="assoc"><label for="auto2">4e_C5.2 — remplacer une pièce sans protocole :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
-      <div class="assoc"><label for="auto3">4e_C5.3 — choisir les procédés de réalisation :</label><select id="auto3"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="auto1">
+  <legend>4e_C5.1 — proposer un protocole de diagnostic :</legend>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 fragile"><label for="auto1__1">🔴 fragile</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟡 en cours"><label for="auto1__2">🟡 en cours</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 solide"><label for="auto1__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__4" value="⭐ expert"><label for="auto1__4">⭐ expert</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="auto2">
+  <legend>4e_C5.2 — remplacer une pièce sans protocole :</legend>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__1" value="🔴 fragile"><label for="auto2__1">🔴 fragile</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__2" value="🟡 en cours"><label for="auto2__2">🟡 en cours</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__3" value="🟢 solide"><label for="auto2__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__4" value="⭐ expert"><label for="auto2__4">⭐ expert</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="auto3">
+  <legend>4e_C5.3 — choisir les procédés de réalisation :</legend>
+  <div class="qcm-option"><input type="radio" name="auto3" id="auto3__1" value="🔴 fragile"><label for="auto3__1">🔴 fragile</label></div>
+  <div class="qcm-option"><input type="radio" name="auto3" id="auto3__2" value="🟡 en cours"><label for="auto3__2">🟡 en cours</label></div>
+  <div class="qcm-option"><input type="radio" name="auto3" id="auto3__3" value="🟢 solide"><label for="auto3__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto3" id="auto3__4" value="⭐ expert"><label for="auto3__4">⭐ expert</label></div>
+</fieldset>
       <p class="refs"><a href="Synthèses/synthese_eleve_4e_C5.1-C5.3.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_4e_C5.1-C5.3.html">👩‍🏫 Synthèse professeur</a></p>
     </div>
   </div>
@@ -1014,7 +1282,8 @@ const KEY = "seq_4e_C5.1-C5.3_depanner_jardin";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  /* n°300 : chaque groupe de boutons radio (fieldset.qcm-groupe) porte sa valeur */
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
   return o;
@@ -1312,6 +1581,14 @@ function appliqueSeance(idPanneau){
 }
 let ouvertEnImpression = null;
 window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+/* Révision du 11/11/2026 : ce qui est replié à l'écran (Bonus, erreurs fréquentes, synthèse) s'ouvre pour l'impression. */
+(function(){
+  var replis = "details.bonus-replie, details.erreurs-repliees", etats = null;
+  function ouvrir(){ etats = []; document.querySelectorAll(replis).forEach(function(d){ etats.push([d, d.open]); d.open = true; }); }
+  function refermer(){ if (!etats) return; etats.forEach(function(e){ e[0].open = e[1]; }); etats = null; }
+  window.addEventListener("beforeprint", ouvrir); window.addEventListener("afterprint", refermer);
+  if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) ouvrir(); else refermer(); }); }
+})();
 window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
 function ouvrirSeanceDeLAncre(){

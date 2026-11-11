@@ -29839,3 +29839,16 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **À décider (toutes les séquences converties)** : dans plusieurs questions, la bonne réponse est la première proposition. C'était déjà l'ordre des listes ; en boutons radio, cela se voit. Non modifié ici ; question posée à Pascal (mélanger les propositions dans `migrer_gabarit_306.py`).
 
 **Mesure.** Séances : 438 · 569 · 912 mots visibles (459 · 596 · 1 023 avant). ✘ 1 → 0 ; menus 30 → 0 ; aération 5 → 0. Bancs 32/32 et 34/34 ; contrôles verts.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 24 : 4e_C5.1, 30 listes en boutons radio, quatre corrections réécrites
+
+**Décisions.**
+- **n°300** : 30 listes → groupes de boutons radio (144 propositions) ; `collect()` lit la valeur des groupes. Aucune grille lettrée : les trois que l'outil proposait lettraient des numéros (ordre des six tests, ordre des six gestes) ou l'auto-positionnement — ces 15 questions se cochent en rangée (`qcm-rangee`).
+- **Corrections exhaustives** : les quatre corrections tenaient en un paragraphe de 58 à 105 mots, réponses séparées par « · ». Chacune est écrite une étape par ligne, et répond aussi aux questions qu'elle passait sous silence (le test discriminant, pourquoi les tests rapides d'abord, pourquoi la photo, pourquoi comparer avant de monter, la première opération de la gamme).
+- **Séance 3 sous le repère** (1 316 → 1 179) : Bonus replié, ouvert à l'impression.
+- **Aération** : 27 retours posés ; deux aides de niveau 2 écrites une idée par ligne.
+- Pascal confirme le 11/11 que « les bonnes réponses sont toujours les premières » : le mélange des propositions fait l'objet de l'entrée suivante et d'une PR à part.
+
+**Mesure.** Séances : 795 · 599 · 1 179 mots visibles (819 · 623 · 1 316 avant). ✘ 1 → 0 ; menus 30 → 0 ; aération 4 → 0. Bancs 26/26 et 34/34 ; contrôles verts.
