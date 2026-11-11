@@ -44,9 +44,17 @@ import sys
 EXCLUS = {"_archive-anciennes-versions", ".git", "node_modules", "__pycache__", "_exports", "_generation", "_outils"}
 SEUIL_GROUPES = 6
 SEUIL_PART = 0.60
-MELANGE = re.compile(r"shuffle|m[ée]lange|sort\(\(\)\s*=>\s*Math\.random", re.I)
+# 11/11/2026 : « m[ée]lange » seul reconnaissait le mot dans un commentaire, un texte ou une fonction de couleurs
+# (`melange(a, b, f)` du lampadaire de 5e) et lisait la page comme saine : six pages passaient ainsi sans être
+# mesurées, dont celle où Pascal a vu « les bonnes réponses toujours les premières ». On ne reconnaît plus qu'un
+# mélange fait par un script au chargement.
+MELANGE = re.compile(r"shuffle\s*\(|Fisher-Yates|sort\(\(\)\s*=>\s*Math\.random", re.I)
+# l'ordre de ces groupes est une légende ou une échelle : on les mesure, on ne les réordonne pas
+FIXES = ("qcm-grille", "qcm-rangee", "positionnement")
 DERNIER = re.compile(r"\b(aucune? des|toutes? (les|ces)|les deux|ni l'un ni l'autre)\b", re.I)
-FIELDSET = re.compile(r'<fieldset class="qcm-groupe" id="([^"]+)">(.*?)</fieldset>', re.S)
+# le groupe peut porter d'autres classes (qcm-grille, qcm-rangee) et d'autres attributs (data-melange, posé par
+# melanger_propositions.py) : sans cela, un groupe déjà mélangé n'était plus lu du tout.
+FIELDSET = re.compile(r'<fieldset class="(qcm-groupe[^"]*)" id="([^"]+)"([^>]*)>(.*?)</fieldset>', re.S)
 OPTION = re.compile(r'(\s*<div class="qcm-option">.*?</div>)', re.S)
 VALEUR = re.compile(r'<input type="radio"[^>]*value="([^"]*)"')
 ATT = re.compile(r"const att\s*=\s*\{(.*?)\};", re.S)
@@ -73,8 +81,8 @@ def attendus(src):
 def groupes(src):
     out = {}
     for m in FIELDSET.finditer(src):
-        vals = [html.unescape(v) for v in VALEUR.findall(m.group(2))]
-        out[m.group(1)] = vals
+        vals = [html.unescape(v) for v in VALEUR.findall(m.group(4))]
+        out[m.group(2)] = vals
     return out
 
 
@@ -103,7 +111,9 @@ def verdict(src, pos):
 
 def melanger_page(src, nom_page):
     def melange_fieldset(m):
-        fid, corps = m.group(1), m.group(2)
+        classes, fid, attrs, corps = m.group(1), m.group(2), m.group(3), m.group(4)
+        if any(c in classes.split() for c in FIXES):
+            return m.group(0)
         blocs = OPTION.findall(corps)
         if len(blocs) < 2 or "".join(blocs) != corps.rstrip() and "".join(blocs).strip() != corps.strip():
             # le corps porte autre chose que des options (légende, aide) : on ne réordonne que la
@@ -121,7 +131,7 @@ def melanger_page(src, nom_page):
         # « aucune des… », « toutes les… », « les deux » restent en dernier
         derniers = [i for i in ordre if DERNIER.search(re.sub(r"<[^>]+>", " ", blocs[i]))]
         ordre = [i for i in ordre if i not in derniers] + derniers
-        return '<fieldset class="qcm-groupe" id="%s">%s%s%s</fieldset>' % (fid, avant, "".join(blocs[i] for i in ordre), apres)
+        return '<fieldset class="%s" id="%s"%s>%s%s%s</fieldset>' % (classes, fid, attrs, avant, "".join(blocs[i] for i in ordre), apres)
     melange_fieldset.tour = 0
     for tour in range(1, 8):
         melange_fieldset.tour = tour
