@@ -29701,3 +29701,35 @@ la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui import
 - **Aération** : 91 retours posés par l'outil ; les corrections « d'un seul tenant » (ALIMENTER, la MLI, le squelette du défi 1 en une ligne par forme) réécrites.
 
 **Mesure.** Séances : 1 173 · 1 307 · 1 510 · 817 · 1 104 mots visibles (avant : 1 173 · 1 586 · 1 990 · 1 836 · 2 752). Aération 14 → 0 ; ✘ 0 ; bancs 39/39 et 38/38 ; contrôles verts. **Écart** : les séances 2 et 3 restent au-dessus du repère — leurs exercices sont longs par nature (six positions, chaîne d'énergie à étiqueter, deux chaînes dans draw.io avec leurs fichiers à télécharger) ; piste : une grille lettrée pour l'activité 2.1 si ses propositions sont les mêmes d'une question à l'autre (elles ne le sont pas aujourd'hui).
+
+## 11/11/2026 — 4e_C2.1 passe à quatre séances (n°23) ; six bancs remis d'aplomb après l'audit externe (thème 1)
+
+**Décision de Pascal**, sur la question posée dans #630 (165 minutes annoncées pour 165 disponibles, sans les
+10 minutes de service) : « une 4e » — une quatrième séance.
+- Séance 3 — Remonter aux exigences : l'activité 4 seule (45 min ; 1 716 → 1 306 mots visibles).
+- **Séance 4 — Conclure** (nouvelle) : le Bonus facultatif, le bilan (10 min), le QCM d'entraînement (439 mots).
+- Aucune activité n'est coupée ni raccourcie : la clôture quitte la séance 3. Les badges, la légende, l'onglet, le
+  bouton « Séance 4 — Conclure › », la fiche pédagogique et le README disent quatre séances. L'onglet de la séance 4 se
+  coche quand le bilan est écrit (elle n'a pas d'activité à valider).
+- `verif_regles_audit` : n°23 ✘ → ✔, 0 ✘ sur la séquence.
+
+**Six bancs cassés depuis l'audit externe (#637), réparés.** L'audit a déplacé la bonne proposition pour qu'elle ne se
+devine plus à sa place (elle était toujours la première). Six bancs de séquence cochaient « la première proposition »
+pour valider une activité ; ils échouaient donc en cascade sur `main` :
+
+| Banc | sur `main` | après |
+|---|---|---|
+| 4e_C2.1 | 54 / 65 | 62 / 65 |
+| 3e_C2.1 | 47 / 58 | 55 / 58 |
+| 5e_C2.1 | 143 / 151 | 149 / 151 |
+| 3e_C3.1 | 32 / 37 | 37 / 37 |
+| 5e_C3.1 | 31 / 35 | 35 / 35 |
+| 4e_C3.1 | 28 / 32 | 32 / 32 |
+
+Chaque banc choisit maintenant la proposition que le vérificateur de la page attend (lue dans son script), où qu'elle
+soit. Les échecs restants sont les anciens, déjà connus (n°298, liens de navigation des deux synthèses).
+**À retenir pour la méthode** : quand un changement touche l'ordre ou le texte des propositions, rejouer les bancs de
+toutes les séquences touchées, pas seulement ceux du lot.
+
+**Contrôles.** 4e_C2.1 : banc 62 / 65 (les trois anciens), n°311 34 / 34 (la clôture en séance 4), fiche papier ✅,
+squelette, navigation des séances, mode essentiel verts, `audit_aeration --strict` 0.

@@ -70,7 +70,7 @@ with sync_playwright() as p:
       "aucune note" in pg.inner_text("#fb0"), pg.inner_text("#fb0")[:60])
     # activité 1 complète
     pg.evaluate("['a1_1','a1_2','a1_3','a1_4','a1_5','a1_6']"
-                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+                ".forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="1"]'); pg.wait_for_timeout(150)
     t("activité 1 : le cahier des charges écrit est exigé",
       "cahier des charges" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-50:])
@@ -89,7 +89,7 @@ with sync_playwright() as p:
     # verrou de rédaction : l'activité 2 refuse sans texte
     pg.click("#tab-s2"); pg.wait_for_timeout(150)
     pg.evaluate("['a2_1','a2_2','a2_3','a2_4','a2_5','a2_6']"
-                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+                ".forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="2"]'); pg.wait_for_timeout(150)
     t("activité 2 : l'analyse écrite est exigée",
       "analyse" in pg.inner_text("#fb2"), pg.inner_text("#fb2")[-60:])

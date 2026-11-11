@@ -9,6 +9,6 @@ await lancerBanc311({
   champ: '#hyp1',
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'be_1__1',
-  ancreSN: 'a4_1__1',
-  panneauSN: 's3',
+  ancreSN: 'bilan1',   // la séance 4 (11/11/2026) est la dernière : elle porte la clôture
+  panneauSN: 's4',
 });

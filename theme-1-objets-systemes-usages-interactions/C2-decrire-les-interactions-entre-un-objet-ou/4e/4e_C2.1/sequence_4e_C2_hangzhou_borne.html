@@ -570,7 +570,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">4e</span>
   <span class="badge code" title="Code de rangement de la séquence (il ne vient pas du programme officiel) : décrire l'expérience de l'utilisateur.">4e_C2.1</span><span class="badge code" title="Code de rangement de la séquence (il ne vient pas du programme officiel) : repérer et expliquer les contraintes et exigences.">4e_C2.2</span>
   <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D3 La formation de la personne et du citoyen · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">D1.3 · D3 · D4 · D5</span>
-  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">3 séances de 55 min</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">4 séances de 55 min</span>
 </div>
 <!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
 <details class="referentiel-replie">
@@ -599,7 +599,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 classement <b>propres à ce site</b>, expliqués en toutes lettres plus bas.
 <br><b>D1.3 · D3 · D4 · D5</b>&nbsp;: les domaines du <b>socle commun</b> — les grandes familles de ce
 qu'on apprend au collège, toutes matières confondues.
-<br><b>3 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
+<br><b>4 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
 </div>
 </details>
 
@@ -665,6 +665,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Écouter, puis schématiser<span class="done" id="done-s1"></span></button>
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Mesurer, puis algorithmer<span class="done" id="done-s2"></span></button>
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Remonter aux exigences<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Conclure<span class="done" id="done-s4"></span></button>
 </div>
 <div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <main class="page" id="contenu">
@@ -1263,7 +1264,11 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <p><b>Critère de réussite</b>&nbsp;: quatre exigences, au moins trois familles du programme, et
   chacune reliée à un verbatim.</p>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Conclure ›</button></p>
+</div>
 
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<p class="programme-seance">Au programme : <br>① le Bonus, si tu veux aller plus loin (facultatif) ; <br>② ton point personnel (environ 10 min) ; <br>③ le QCM d'entraînement.</p>
 <section class="card approfondissement">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
@@ -1657,6 +1662,8 @@ function majProgress(){
   $("progBar").setAttribute("aria-valuenow", n);
   const par={s1:[1], s2:[2,3], s3:[4]};
   Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  // la séance 4 (clôture, ajoutée le 11/11/2026) n'a pas d'activité à valider : elle est faite quand le bilan est écrit
+  const d4=$("done-s4"), b1=$("bilan1"); if(d4) d4.textContent = (b1 && b1.value.trim()) ? " ✔" : "";
   majTaches(); majQcm();
 }
 
@@ -1670,7 +1677,7 @@ const TACHES = {
     {n:3, libelle:"Écrire l'algorigramme du déverrouillage, sortie d'échec comprise"}]},
   s3:{titre:"Séance 3 — Remonter aux exigences", taches:[
     {n:4, libelle:"Faire le tour des contraintes (diagramme pieuvre), puis écrire quatre exigences, trois familles, chacune reliée à une attente"}]}
-};
+};  // la séance 4 (clôture) n'a pas de tâche à valider : le bandeau s'y efface
 
 function majTaches(){
   const hote=$("tachesBandeau"); if(!hote) return;
