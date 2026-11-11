@@ -11,7 +11,7 @@
 | Référentiel | BO n°9 du 29/02/2024 · cahier Nathan 3e (éd. 2024) |
 | Domaines du socle | D1.3, D1.4, D2, D4, D5 |
 | CRCN | 1.2 Gérer des données · 1.3 Traiter des données · 3.4 Programmer (initiation, pseudo-code) · 5.2 Évoluer dans un environnement numérique |
-| Durée | 4 séances de 55 min |
+| Durée | 5 séances de 55 min |
 | Discipline pilote | Technologie |
 
 ## Sous-compétences travaillées
@@ -52,11 +52,14 @@
 2. Activité 4 (40 min) : typage, descripteurs, enregistrement, codage binaire de la vigilance, dimensionnement 2ⁿ ≥ V.
 3. Synthèse partielle (10 min) : lecture commune du SVG « types et codage ».
 
-### Séance 4 — Fichiers et réinvestissement (C4.6 + bilan)
+### Séance 4 — Fichiers et enquête dans les données (C4.6)
 1. Activité 5 (20 min) : formats de fichiers, transmission = copie, redondance.
-2. Activité 6 (20 min) : enquête dans les 48 h de données (page ou LibreOffice Calc).
-3. Réinvestissement (15 min, achevable à la maison) : bouée houlographe — transfert intégral sans modèle.
-4. Bilan personnel + annonce du QCM d'entraînement (à la maison ou en AP).
+2. Activité 6 (35 min) : enquête dans les 48 h de données (page ou LibreOffice Calc).
+
+### Séance 5 — Réinvestir et conclure (bilan) — ajoutée le 11/11/2026
+1. Réinvestissement (30 min) : bouée houlographe — transfert intégral sans modèle.
+2. Synthèse de la séquence (10 min), Bonus pour les rapides.
+3. Bilan personnel (10 min) + QCM d'entraînement (5 min pour le lancer ; à finir à la maison ou en AP).
 
 ## Organisation de la classe
 

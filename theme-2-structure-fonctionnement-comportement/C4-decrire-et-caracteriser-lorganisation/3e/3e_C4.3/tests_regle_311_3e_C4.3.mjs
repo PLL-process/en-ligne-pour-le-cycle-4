@@ -9,6 +9,6 @@ await lancerBanc311Theme2({
   champ: '#hyp1',
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'act1',
-  ancreSN: 'act5',
-  panneauSN: 's4',
+  ancreSN: 'act7', // 11/11/2026 : le réinvestissement ouvre la séance 5
+  panneauSN: 's5',
 });

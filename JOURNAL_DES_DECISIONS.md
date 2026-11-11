@@ -29759,3 +29759,18 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Aération** : 91 retours posés ; « le voyage réel » de la simulation (six sauts cousus par des flèches) réécrit un saut par ligne, avec son horodatage ; la mission en ①②③④ ; la problématique en deux questions ; la situation, la rue-pont, le TTL et le protocole de routage (aides) en phrases courtes.
 
 **Mesure.** Séances : 1 504 · 635 · 1 485 mots visibles (avant : 2 076 · 934 · 1 953). ✘ 1 → 0 ; menus 30 → 0 ; aération 9 → 0. Banc n°311 34/34 (le lot n'a pas de banc d'activités) ; contrôles verts. **Écart** : les séances 1 et 3 restent au-dessus du repère ; ce qui reste visible, ce sont les questions — deux activités de 20 min plus le billet d'entrée, deux activités de 25 min plus la clôture. Piste : rien à replier de plus sans toucher aux exercices ; une séance de plus serait une décision de Pascal.
+
+---
+
+## 11/11/2026 — 3e_C4.3 passe à cinq séances : le réinvestissement et la clôture quittent la séance 4
+
+**Décision de Pascal** (« sur la séance 4 de 3e_C4.3 oui », en réponse à la question posée dans #633). La séance 4 annonçait 85 min d'activités (20 + 35 + 30) plus la clôture.
+
+**Fait.**
+- **Séance 4 — Fichiers & enquête** : activités 5 (20 min) et 6 (35 min), soit 55 min. Elle mène à la suivante par son bouton « Séance 5 — Réinvestir & conclure › ».
+- **Séance 5 — Réinvestir & conclure** (nouvel onglet, nouveau panneau `s5`) : le réinvestissement « bouée houlographe de Sainte-Anne » (30 min), puis la synthèse, le Bonus, le bilan et le QCM d'entraînement. Sa question directrice : « sais-tu refaire toute la démarche, seul, sur un système que tu n'as jamais vu ? »
+- Le badge de durée (« 5 séances de 55 min »), la coche d'onglet (`par`), le tableau de bord des tâches (`TACHES`), la fiche pédagogique et le manifeste du lot suivent. La progression reste « / 7 activités ».
+- Bancs : `PANNEAU[7] = 's5'` ; banc n°311 : `panneauSN: 's5'`, ancre de dernière séance `act7`.
+
+**Mesure.** Mots visibles par séance : 817 · 460 · 437 · 737 · 551 (la séance 4 était à 1 252). Bancs 23/23 et 34/34 ; ✘ 0 ; aération 0 ; squelette, navigation entre séances, mode essentiel, liens, impression, verrous : verts.
+
