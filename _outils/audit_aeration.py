@@ -42,7 +42,8 @@ def texte(fragment):
 # un schéma SVG (son <title>, son <desc> : ce que lit un lecteur d'écran), un script, une feuille de style ne sont pas
 # du texte qui s'affiche en paragraphe : ils ne comptent pas (08/11/2026, révision des trois thèmes — la description
 # d'une carte mentale dans une correction comptait 197 mots « d'un seul tenant »)
-INVISIBLE = re.compile(r"<(svg|script|style|template)\b.*?</\1\s*>", re.S | re.I)
+# 11/11/2026 : un listing de programme (<pre>) n'est pas de la prose — ses retours à la ligne sont dans le texte même.
+INVISIBLE = re.compile(r"<(svg|script|style|template|pre)\b.*?</\1\s*>", re.S | re.I)
 
 
 def blocs(fragment):
