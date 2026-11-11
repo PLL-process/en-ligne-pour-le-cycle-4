@@ -35,6 +35,17 @@ Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu
   (n°144, 27/08/2026 ; n°198, 28/08/2026).
 - Les bonnes réponses se répartissent sur toutes les positions offertes, à une unité près
   (n°137, 26/08/2026).
+- La bonne réponse ne se devine pas non plus à ses MOTS (contrôle du 11/11/2026, `controle_indices_qcm.mjs` ;
+  Haladyna, Downing et Rodriguez, 2002) :
+  - un mot absolu (« toujours », « jamais », « uniquement », « aucun ») ne vit pas que dans les mauvaises
+    réponses. Mesuré le 11/11/2026 sur 72 banques : 84 % des propositions qui en portent un sont fausses,
+    pour 75 % attendus. En écrivant une banque, en glisser dans des bonnes réponses qui s'y prêtent
+    (« le secteur 230 V n'est jamais manipulé »), ou les retirer de mauvaises ;
+  - la bonne réponse n'est pas la seule proposition à reprendre un mot de l'énoncé ;
+  - pas de proposition fourre-tout (« toutes les réponses », « aucune des réponses ») ; « les deux » se
+    garde quand c'est la notion elle-même qui est en jeu, et se place en dernier ;
+  - l'énoncé ne s'achève pas sur un article ou un accord qui n'irait qu'avec une proposition. Aucun outil
+    ne le voit : c'est à la relecture.
 - Une question se lit seule : chaque unité savante y est nommée en toutes lettres à sa première
   apparition, « 12 V (volts) » (n°312, 25/10/2026). Si l'unité est dans les options, toutes les
   options qui la portent reçoivent le nom : aucune ne doit se distinguer. Si UNE SEULE option porte l'unité,
@@ -126,6 +137,8 @@ Répartition des bonnes réponses (n°137) :
 - `python3 _outils/controle_longueurs.py` — bonnes réponses détachées par leur longueur (n°144,
   n°198) ; banque signalée au-delà de 15 %.
 - `node _outils/mesures_qcm.mjs` — position des bonnes réponses (n°137).
+- `node _outils/controle_indices_qcm.mjs --muet` — mots absolus, écho de l'énoncé, propositions fourre-tout
+  (11/11/2026). Sortie 1 si une banque livre sa bonne réponse par ses mots ; 2 si aucune banque n'est lue.
 - `python3 _outils/controle_sigles.py` — sigles en capitales dans les questions et les options, FAST et non « fast »
   (n°313) ; seul le mot cité entre guillemets (« fast », le mot anglais) garde ses minuscules.
 - `node _outils/verif_qcm_coherence.mjs <fichiers…>` — après rotation : réfutation vide pour la

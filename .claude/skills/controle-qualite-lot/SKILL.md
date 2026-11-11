@@ -99,6 +99,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_hors_ligne.mjs [--source]` | n°305 (21/09/2026) : aucune ressource chargée depuis Internet |
 | `controle_impression.mjs` | rendu `media: print` : aucun texte sombre sur fond sombre ; sur une page qui porte la fiche papier, aucun texte sous 4,5 : 1 (25/10/2026) |
 | `controle_contraste_liens.mjs [chemin]` | n°303 (21/09/2026) : chaque lien se lit (contraste) |
+| `controle_axe.mjs [--muet] [chemin] [--json <f>] [--reference]` | 11/11/2026, au navigateur : axe-core (WCAG 2.0, 2.1 et 2.2 A/AA, bonnes pratiques) sur chaque page à 1 280 px. Refuse qu'une page porte PLUS de défauts graves (critical, serious) que `_outils/axe_reference.json` ; les défauts de structure (`region`, `heading-order`) sont mesurés, jamais refusés. `--reference` réécrit la référence, sur tout le dépôt, en fin de lot et après lecture de ce qui a changé. Demande le paquet `axe-core`, non versionné ; banc `tests_controle_axe.mjs` |
 | `controle_debordement.py` | n°135 (second passage du 27/09/2026) : un tableau large défile au lieu de casser la page sur mobile |
 | `controle_tactile.py` | 06/11/2026 : sur iPhone et iPad, chaque champ passe à 16 px au toucher (sinon la page zoome) ; « Aller au contenu » est le premier lien de la page ; les gabarits qui fabriquent des pages portent la règle |
 | `controle_code_colore.mjs [--muet] [dossier]` | n°13 (05/11/2026), au navigateur : chaque listing de programme ou d'algorithme, et chaque éditeur de code, est en couleurs comme dans un IDE |
@@ -122,6 +123,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_entete_qcm.py` ⚠ 0 | titre, menu « Compétence à réviser » et pied de page sont ceux du lot |
 | `controle_echantillonnage.py [chemin]` ⚠ 0 | n°202 (28/08/2026) : au moins 5 questions par code évalué. Ne prend pas `--muet` : il le lit comme un chemin |
 | `controle_longueurs.py [chemin]` ⚠ 0 | la bonne réponse ne se devine pas à sa longueur. Même piège avec `--muet` |
+| `controle_indices_qcm.mjs [--muet] [--strict] [chemin] [--json <f>]` | 11/11/2026 : la bonne réponse ne se devine pas à ses mots. Refuse une banque où un mot absolu (« toujours », « jamais »…) ne vit que dans les mauvaises réponses (95 % sur 12 au moins) ou dont plus d'une bonne réponse sur quatre est seule à reprendre un mot de l'énoncé ; liste les propositions fourre-tout (« les deux », « aucune des réponses ») sans les refuser. Ne voit ni l'indice grammatical ni les questions des séquences ; banc `tests_controle_indices_qcm.mjs` |
 | `verif_qcm_coherence.mjs <qcm.html…>` ⚠ 0 | réfutations alignées sur les propositions. Sans argument, il ne lit rien et sort à 0 |
 | `audit_lisibilite_qcm.mjs` | n°300 (20/09/2026) : inventaire des propositions qui masquent la question (0 / 2) |
 
@@ -141,6 +143,8 @@ les 404 (y compris les adresses fabriquées par script), la casse des noms de fi
 
 **Prérequis.** Les `.mjs` en navigateur et `verifier_chaines_energie.py` demandent Playwright et Chromium. Sans le paquet `playwright`
 pour Node, les `.mjs` tombent en `ERR_MODULE_NOT_FOUND` (constaté le 23/10/2026 en session cloud) : c'est une panne, à noter « non exécuté ».
+`controle_axe.mjs` demande en plus le paquet `axe-core` (licence MPL-2.0, non versionné dans le dépôt) : `npm install axe-core` dans le dossier
+parent du dépôt, ou `AXE_CORE=/chemin/vers/axe.min.js`. Sans lui il sort à 2 (en panne), jamais à 0.
 
 ## Hors outils : bancs du lot et vérifications à la main
 
