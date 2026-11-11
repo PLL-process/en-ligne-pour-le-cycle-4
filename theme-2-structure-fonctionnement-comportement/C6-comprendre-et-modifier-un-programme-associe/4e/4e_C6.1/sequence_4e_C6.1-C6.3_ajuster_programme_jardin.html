@@ -865,7 +865,7 @@ function habiller(p){
 }
 function peindre(comp){
   var pris = comp._sets.map(function(f){ return f.value; }), fini = comp._sets.every(function(f){ return f.classList.contains("ms-juste"); });
-  var h = '<p class="ms-geste">Touche une étiquette, puis touche sa case. Tu peux aussi la faire glisser.</p><div class="ms-lignes">'
+  var h = '<p class="ms-geste">Fais glisser chaque étiquette vers sa case. Tu peux aussi la toucher, puis toucher sa case.</p><div class="ms-lignes">'
     + comp._sets.map(function(f, i){
         var v = f.value, juste = f.classList.contains("ms-juste"), cl = "ms-case" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
         return '<div class="ms-l"><div class="ms-nom">' + $("legend", f).innerHTML + '</div><button type="button" class="' + cl + '" data-i="' + i + '"' + (juste ? " disabled" : "")
