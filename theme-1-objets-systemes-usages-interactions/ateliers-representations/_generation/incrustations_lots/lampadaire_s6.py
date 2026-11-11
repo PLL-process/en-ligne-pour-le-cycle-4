@@ -28,13 +28,13 @@ ENTREES = [
          avant='    <div class="exo"><p>Quand l\'exercice du FAST affiche',
          balise="h4", balise_exo="h5",
          titre="Retour au diagramme FAST de la séance 1",
-         intro="Le diagramme FAST de la séance 1 cachait trois solutions, sur les lignes «&nbsp;détecter un "
-               "passant&nbsp;», «&nbsp;stocker l'énergie pour la nuit&nbsp;» et «&nbsp;capter l'énergie du "
-               "soleil&nbsp;». Depuis, la chaîne d'énergie (séance 2) a dit qui capte et qui stocke, et la "
-               "chaîne d'information (séance 3) qui repère un passage. Remplis maintenant ces trois cases, "
-               "écarte l'intrus, puis remonte de la batterie jusqu'à la fonction d'usage&nbsp;: tout le "
-               "lampadaire tient alors dans un seul schéma. Un exercice d'environ dix minutes&nbsp;; il se "
-               "vérifie tout seul et a sa correction complète.",
+         intro="Le diagramme FAST de la séance 1 cachait trois solutions. "
+               "<br>Depuis, la séance 2 a dit qui capte et qui stocke l'énergie, et la séance 3 qui repère un passage. "
+               "<br>① Remplis ces trois cases. "
+               "<br>② Écarte l'intrus. "
+               "<br>③ Remonte de la batterie jusqu'à la fonction d'usage&nbsp;: tout le lampadaire tient alors "
+               "dans un seul schéma. "
+               "<br>Environ dix minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
          suite="l'exercice qui lit ce FAST dans les deux sens, un autre sur deux principes de freinage, "
                "et le QCM de l'atelier"),
 ]

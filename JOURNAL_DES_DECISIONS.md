@@ -29812,3 +29812,18 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Aération** : 41 retours posés ; critères de réussite, version matériel, consigne de l'instruction manquante, aide sur l'indentation, méthode de la trace et « trois outils » du concept invariant écrits une idée par ligne. Bonus replié, ouvert à l'impression. La situation déclenchante n'est pas touchée.
 
 **Mesure.** Séances : 1 185 · 768 · 772 mots visibles (1 285 · 794 · 907 avant). ✘ 1 → 0 ; menus 32 → 0 ; aération 5 → 0. Bancs 22/22 et 34/34 ; contrôles verts ; essai à part : 32 groupes cochés, 32 restaurés après rechargement.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 22 : 5e_C4.1, 51 listes en boutons radio, le constructeur de chaîne garde ses menus
+
+**Décisions.**
+- **n°300** : 51 listes → groupes de boutons radio. Deux grilles lettrées (fonctions → solutions de l'activité 1, constituants → fonctions de l'activité 2, 8 questions) ; les réponses courtes (« énergie lumineuse / électrique / chimique », « éteinte / en veille / à pleine puissance », 9 questions) restent en rangée (`qcm-rangee`), sans lettres.
+- **Le constructeur de chaîne du défi maison garde ses douze menus** (`bmE0`, `bmF1`…`bmE5`, `bmAbsent`), marqués `data-interface="constructeur"` : ce sont les pièces d'un outil (une fonction par bloc, une énergie par flèche), pas des questions. En boutons radio, ils auraient posé une centaine de propositions à l'écran. `migrer_gabarit_306.py --n300` ne reconnaissait que `bmNb` : à lui apprendre qu'un menu dans `.cb-champ` est un menu d'outil.
+- **Corrections exhaustives** : dix corrections tenaient en une ligne de réponses séparées par « · ». Chacune redit sa question et donne sa raison, une par ligne (activités 1, 2, 5, 6, réinvestissement) ; les chaînes du corrigé du défi maison gardent leurs flèches, une étape par ligne.
+- **Séance 1 sous le repère** (1 248 → 1 196) : la consigne ne redit plus les trois parties que leurs titres annoncent.
+- **Séance 6** (2 663 → 2 113) : Bonus replié, ouvert à l'impression, sans marge propre (le dessin de la chaîne garde ses 14 px) ; l'introduction du FAST incrusté passe de 97 mots d'un seul tenant à trois gestes ①②③ (`incrustations_lots/lampadaire_s6.py`, incrustations régénérées — elles étaient en retard sur leur source). **Elle reste au-delà du repère** : le positionnement sur huit compétences à quatre niveaux pèse 512 mots et doit rester visible (n°306), le FAST incrusté 680. Pistes notées au suivi ; la question est posée à Pascal.
+- **Aération** : 17 → 3. Les trois qui restent sont des lectures fléchées du FAST (« → vers la gauche → ») dans l'exercice incrusté ; leur source est l'atelier du thème 1, partagée avec l'atelier et le cahier de 5e. Non touchées.
+- `restore()` cherche le bouton par comparaison de valeur, comme en 3e_C6.1.
+
+**Mesure.** Séances : 1 196 · 628 · 496 · 399 · 611 · 2 113 mots visibles (1 248 · 682 · 484 · 417 · 644 · 2 663 avant). ✘ 1 → 0 ; menus 64 → 0 ; aération 17 → 3. Bancs 64/64, 34/34 et 25/25 ; contrôles verts.

@@ -40,6 +40,37 @@
 import { chromium } from 'playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+/* Règle d'or n°300 (révision de la séquence, 11/11/2026) : les questions de la page sont des groupes de boutons
+   radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
+   proposition qui porte cette valeur — la leçon de la vague du 20/09 : on vise la VALEUR, jamais la
+   position. Rien d'autre du banc ne change. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 import fs from 'node:fs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
@@ -47,7 +78,7 @@ const PAGE = path.join(ICI, 'sequence_5e_C4.1-C4.8_lampadaire_intelligent.html')
 
 const b = await chromium.launch();
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = [], fail = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
@@ -57,6 +88,9 @@ p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 
 await p.goto('file://' + PAGE, { waitUntil: 'load' });
+/* révision du 11/11/2026 : le Bonus est replié — le banc l'ouvre, comme l'élève qui a fini */
+const _ouvrirVolets = pg => pg.evaluate(() => document.querySelectorAll('details.bonus-replie').forEach(d => { d.open = true; }));
+await _ouvrirVolets(p);
 await p.waitForTimeout(350);
 
 ok('1 · charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
@@ -267,7 +301,7 @@ ok('23 · l\'hypothèse est rappelée dès la saisie',
    (await p.textContent('#hypRappelTxt')).includes('nuit'),
    await p.textContent('#hypRappelTxt'));
 
-await p.reload({ waitUntil: 'load' });
+await p.reload({ waitUntil: 'load' });  await _ouvrirVolets(p);
 await p.waitForTimeout(350);
 ok('24 · les réponses survivent au rechargement',
    (await p.inputValue('#e5_1')) === ATT[5].e5_1, await p.inputValue('#e5_1'));
@@ -335,7 +369,7 @@ await p.evaluate(() => {
     exp: { jour: 'eteint', nuit: 'veille', 'nuit+passage': 'fort' } }));
 });
 const errAvant = err.length;
-await p.reload({ waitUntil: 'load' });
+await p.reload({ waitUntil: 'load' });  await _ouvrirVolets(p);
 await p.waitForTimeout(350);
 const reprise = await p.evaluate(() => ({ prog: document.getElementById('progTxt').textContent,
   s5: document.getElementById('done-s5').textContent.trim(), s6: document.getElementById('done-s6').textContent.trim(),
@@ -380,7 +414,7 @@ ok('38 · bilan : « Je me positionne », un groupe de quatre boutons radio par 
 for (const [i, c] of ['c41', 'c42', 'c43', 'c44', 'c45', 'c46', 'c47', 'c48'].entries())
   await p.check(`#pos_${c}_${(i % 4) + 1}`);
 await p.waitForTimeout(800);
-await p.reload({ waitUntil: 'load' });
+await p.reload({ waitUntil: 'load' });  await _ouvrirVolets(p);
 await p.waitForTimeout(350);
 const posApres = await p.evaluate(() => ['c41', 'c42', 'c43', 'c44', 'c45', 'c46', 'c47', 'c48']
   .map(c => (document.querySelector(`input[name="pos_${c}"]:checked`) || {}).value || '-'));
@@ -474,7 +508,7 @@ const q = await ctx2.newPage();
 const err2 = [];
 q.on('pageerror', e => err2.push(e.message));
 q.on('console', m => { if (m.type() === 'error') err2.push('console: ' + m.text()); });
-await q.goto('file://' + PAGE, { waitUntil: 'load' }); await q.waitForTimeout(350);
+await q.goto('file://' + PAGE, { waitUntil: 'load' }); await q.waitForTimeout(350); await _ouvrirVolets(q);
 await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
 const VENT = { bmObjet: 'mon ventilateur', bmNb: '4', bmE0: 'Énergie électrique', bmSource: 'la prise',
   bmF1: 'ALIMENTER', bmC1: 'La prise et le câble', bmE1: 'Énergie électrique', bmF2: 'DISTRIBUER', bmC2: 'Interrupteur et sélecteur',
@@ -546,7 +580,7 @@ ok('47 · le corrigé se construit : le ventilateur est jugé complet ; le réve
    JSON.stringify({ ventOk: ventOk.t.slice(0, 30), reveil: reveil.absent, lignes: cinq.lignes }).slice(0, 220));
 
 /* « Vérifier » : à vide, un retour par manque ; avec les pièges, le retour qui explique ; chacun mène à son champ */
-await q.evaluate(() => localStorage.clear()); await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(350);
+await q.evaluate(() => localStorage.clear()); await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(350); await _ouvrirVolets(q);
 await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
 await q.click('#bmVerifier'); await q.waitForTimeout(80);
 const aVide = await q.evaluate(() => [...document.querySelectorAll('#bmRetour li a')].map(a => a.getAttribute('data-champ')));
@@ -566,7 +600,7 @@ ok('48 · « Vérifier » ne juge pas l\'objet mais la forme : à vide, un retou
 await remplir2(VENT);
 const avant = await chaine();
 await q.waitForTimeout(800);                                    // la sauvegarde de la page part 600 ms après la dernière saisie
-await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(350);
+await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(350); await _ouvrirVolets(q);
 await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
 const apres = await chaine();
 ok('49 · sauvegarde : au rechargement, les choix reviennent et la chaîne se redessine à l\'identique',
