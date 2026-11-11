@@ -29701,3 +29701,16 @@ la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui import
 - **Aération** : 91 retours posés par l'outil ; les corrections « d'un seul tenant » (ALIMENTER, la MLI, le squelette du défi 1 en une ligne par forme) réécrites.
 
 **Mesure.** Séances : 1 173 · 1 307 · 1 510 · 817 · 1 104 mots visibles (avant : 1 173 · 1 586 · 1 990 · 1 836 · 2 752). Aération 14 → 0 ; ✘ 0 ; bancs 39/39 et 38/38 ; contrôles verts. **Écart** : les séances 2 et 3 restent au-dessus du repère — leurs exercices sont longs par nature (six positions, chaîne d'énergie à étiqueter, deux chaînes dans draw.io avec leurs fichiers à télécharger) ; piste : une grille lettrée pour l'activité 2.1 si ses propositions sont les mêmes d'une question à l'autre (elles ne le sont pas aujourd'hui).
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 17 : 3e_C4.7, 27 listes en boutons radio, pas de grille lettrée pour des numéros
+
+**Décisions.**
+- **n°300** : `migrer_gabarit_306.py --n300` refusait la page à cause d'un `<select>` sans id, construit par un gabarit JavaScript (les positions des paquets du simulateur de réassemblage). C'est un menu d'interface : il reçoit un id (`paquet_${i}`) et `data-interface="simulateur"`, et reste une liste. Les 27 listes-questions deviennent des groupes de boutons radio (110 propositions) ; `collect()` lit la valeur des groupes ; enveloppes `div.assoc` retirées.
+- **Pas de grille lettrée quand la réponse est un numéro ou un nom court** : `grilles_radio.py` avait posé deux grilles — « A = 1, B = 2… » pour la mise en ordre des six étapes, « A = R1, B = R3, C = R4 » pour l'aiguillage. Une lettre qui renvoie à un numéro, c'est une indirection de plus pour rien. Les deux grilles sont défaites : les numéros 1 à 6 et les routeurs se lisent en rangée (`qcm-rangee`). Règle à ajouter à l'outil : ne griller que des propositions d'au moins trois mots.
+- **Aération** : 39 retours posés ; cinq corrections « cousues » (réponses de l'activité 1 et du réinvestissement avec le libellé de leur question, l'ordre des six étapes, l'aiguillage, le re-routage) réécrites ; les aides et l'ouverture en phrases courtes.
+- Le Bonus replié (`replier_bonus.py`) s'ouvre à l'impression.
+
+**Mesure.** Séances : 857 · 758 · 1 075 mots visibles (avant : 884 · 779 · 1 169). ✘ 1 → 0 ; menus 28 → 0 (+ 1 menu d'interface) ; aération 8 → 0. Bancs 35/35 (shim `_groupesRadio`, remplissage « par préfixe » sur un groupe) et 34/34 ; contrôles verts.
+
