@@ -29800,3 +29800,15 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Aération** : 42 retours posés ; les classements des six données, les cinq tests (55, 60, 61, 118, 119 km/h), les réponses du réinvestissement, l'aide de niveau 2 et le défi Python réécrits une idée par ligne. Bonus replié, ouvert à l'impression.
 
 **Mesure.** Séances : 700 · 532 · 1 009 mots visibles (727 · 538 · 1 135 avant). ✘ 1 → 0 ; menus 23 → 0 ; aération 9 → 0. Bancs 35/35 et 34/34 ; contrôles verts.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 21 : 3e_C6.2, 32 listes en boutons radio, le rappel des symboles se replie
+
+**Décisions.**
+- **n°300** : 32 listes → groupes de boutons radio (164 propositions) ; `collect()` lit la valeur des groupes et n'enregistre plus chaque bouton sous son identifiant ; 12 enveloppes `div.assoc` retirées. Aucune grille : chaque question a ses propres réponses.
+- **Séance 1 sous le repère** (1 285 → 1 185 mots) : le rappel « Les quatre symboles de l'algorigramme » (acquis de 4e) passe dans un volet `details.rappel-replie`, ouvert à l'impression ; la consigne de l'activité 2 est écrite en trois lignes ①②③. Rien n'est retiré.
+- **Correction de référence** : l'algorigramme, qui tenait en une phrase de 55 mots à flèches, est écrit en six étapes numérotées, le symbole de chacune nommé, les deux issues de chaque losange sur leur ligne.
+- **Aération** : 41 retours posés ; critères de réussite, version matériel, consigne de l'instruction manquante, aide sur l'indentation, méthode de la trace et « trois outils » du concept invariant écrits une idée par ligne. Bonus replié, ouvert à l'impression. La situation déclenchante n'est pas touchée.
+
+**Mesure.** Séances : 1 185 · 768 · 772 mots visibles (1 285 · 794 · 907 avant). ✘ 1 → 0 ; menus 32 → 0 ; aération 5 → 0. Bancs 22/22 et 34/34 ; contrôles verts ; essai à part : 32 groupes cochés, 32 restaurés après rechargement.

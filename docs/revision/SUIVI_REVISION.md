@@ -37,7 +37,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 18 | `3e_C4.8` | 2076 → 1504 | 1 → 0 | 30 → 0 | 9 → 0 | livrée #645 — séances 1 (1 504) et 3 (1 485) au-dessus du repère : ce qui reste visible, ce sont les questions (deux activités de 20 min + billet ; deux activités de 25 min + clôture) |
 | 19 | `3e_C5.1` | 1238 → 1132 | 1 → 0 | 30 → 0 | 5 → 0 | livrée #647 |
 | 20 | `3e_C6.1` | 1135 → 1009 | 1 → 0 | 23 → 0 | 9 → 0 | livrée #648 |
-| 21 | `3e_C6.2` | 1285 | 1 | 32 | 5 | à faire |
+| 21 | `3e_C6.2` | 1285 → 1185 | 1 → 0 | 32 → 0 | 5 → 0 | livrée #649 |
 | 22 | `5e_C4.1` | 2663 | 1 | 64 | 17 | à faire |
 | 23 | `5e_C6.1` | 1023 | 1 | 30 | 5 | à faire |
 | 24 | `4e_C5.1` | 1316 | 1 | 30 | 4 | à faire |
