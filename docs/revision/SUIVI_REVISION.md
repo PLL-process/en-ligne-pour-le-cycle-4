@@ -41,7 +41,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 22 | `5e_C4.1` | 2663 → 2113 | 1 → 0 | 64 → 0 | 17 → 3 | livrée #650 — séance 6 au-delà du repère (positionnement sur 8 compétences : 512 mots ; FAST incrusté : 680) ; pistes : une séance 7 « synthèse et bilan », ou un positionnement en grille. Aération : 3 lectures fléchées du FAST, à la source de l'atelier (thème 1) |
 | 23 | `5e_C6.1` | 1023 → 912 | 1 → 0 | 30 → 0 | 5 → 0 | livrée #651 |
 | 24 | `4e_C5.1` | 1316 → 1179 | 1 → 0 | 30 → 0 | 4 → 0 | livrée #652 |
-| 25 | `4e_C6.1` | 1460 | 1 | 28 | 6 | à faire |
+| 25 | `4e_C6.1` | 1460 → 1216 | 1 → 0 | 28 → 0 | 6 → 0 | livrée #PR — séance 2 à 1 216 mots (1 200 en mode essentiel) : sa clôture (concept invariant, retour sur l'hypothèse, bilan, auto-positionnement) pèse 290 mots et ne se replie pas |
 | 26 | `4e_C6.2` | 1990 | 6 | 25 | 18 | à faire |
 | 27 | `3e_C9.1` | 1597 | 1 | 33 | 11 | à faire |
 | 28 | `3e_C7.1` | 3512 | 1 | 20 | 12 | à faire |
