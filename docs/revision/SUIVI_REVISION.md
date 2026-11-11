@@ -26,7 +26,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 7 | `5e_C1.1` | 1629 → 1301 | 0 | 0 | 26 → 0 | livrée #630 — séances 1 et 5 au-dessus du repère, justifiées |
 | 8 | `5e_C1.2` | 2117 → 1967 | 0 | 0 | 26 → 0 | livrée #630 — séance 4 au-dessus du repère, justifiée |
 | 9 | `5e_C3.1` | 2912 → 1994 | 0 | 0 | 0 | livrée #630 — séances 1 et 4 au-dessus du repère, justifiées |
-| 10 | `4e_C2.1` | 2625 → 1716 | 1 (n°23 : décision de Pascal) | 0 | 24 → 0 | livrée #630 — séances 1 et 3 au-dessus du repère, justifiées |
+| 10 | `4e_C2.1` | 2625 → 1548 | 1 → 0 | 0 | 24 → 0 | livrée #630 ; quatrième séance (décision de Pascal) #643 — séances 1 et 3 au-dessus du repère, justifiées |
 | 11 | `4e_C3.1` | 1850 → 1299 | 0 | 0 | 10 → 0 | livrée #630 — séance 1 au-dessus du repère, justifiée |
 | 12 | `3e_C4.1` | 1444 → 1032 | 1 → 0 | 33 → 0 | 6 → 0 | livrée #632 |
 | 13 | `3e_C4.3` | 1928 → 1252 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 — séance 4 à 1 252 : 85 min d'activités annoncées (20 + 35 + 30), question posée à Pascal (réinvestissement en séance 5 ?) |
@@ -145,3 +145,6 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   `aerer_corrections.aerer` ; les corrections du rappel du cahier des charges s'écrivent une idée par ligne
   (`donnees_rappel_cdc.py`). Les neuf séquences révisées qui portent une incrustation sont remises à jour ; les 17
   autres le seront à leur tour de passe (`incrustations.py --verifier` les dit « à mettre à jour » d'ici là).
+- **4e_C2.1, la quatrième séance** (11/11/2026 ; Pascal : « une 4e »). Le n°23 est réglé : 165 minutes annoncées pour
+  220 disponibles. La séance 3 garde l'activité 4 (1 716 → 1 306 mots) ; la séance 4, « Conclure », porte le Bonus, le
+  bilan et le QCM (439 mots). La séance 1 reste à 1 548 mots (l'exercice d'atelier du croquis).
