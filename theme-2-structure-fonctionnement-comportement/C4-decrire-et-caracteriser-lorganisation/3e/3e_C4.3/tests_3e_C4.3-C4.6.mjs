@@ -160,7 +160,7 @@ const PROSE = {
 };
 
 /* La répartition est celle de `majProgress()` dans la page, pas une supposition. */
-const PANNEAU = { 1: 's1', 2: 's1', 3: 's2', 4: 's3', 5: 's4', 6: 's4', 7: 's4' };
+const PANNEAU = { 1: 's1', 2: 's1', 3: 's2', 4: 's3', 5: 's4', 6: 's4', 7: 's5' };
 async function remplir(n) {
   const onglet = await p.$(`.seance-tab[data-panel="${PANNEAU[n]}"]`);
   if (onglet) { await onglet.click(); await p.waitForTimeout(110); }

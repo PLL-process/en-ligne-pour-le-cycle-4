@@ -29762,6 +29762,23 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 
 ---
 
+## 11/11/2026 — 3e_C4.3 passe à cinq séances : le réinvestissement et la clôture quittent la séance 4
+
+**Décision de Pascal** (« sur la séance 4 de 3e_C4.3 oui », en réponse à la question posée dans #633). La séance 4 annonçait 85 min d'activités (20 + 35 + 30) plus la clôture.
+
+**Fait.**
+- **Séance 4 — Fichiers & enquête** : activités 5 (20 min) et 6 (35 min), soit 55 min. Elle mène à la suivante par son bouton « Séance 5 — Réinvestir & conclure › ».
+- **Séance 5 — Réinvestir & conclure** (nouvel onglet, nouveau panneau `s5`) : le réinvestissement « bouée houlographe de Sainte-Anne » (30 min), puis la synthèse, le Bonus, le bilan et le QCM d'entraînement. Sa question directrice : « sais-tu refaire toute la démarche, seul, sur un système que tu n'as jamais vu ? »
+- Le badge de durée (« 5 séances de 55 min »), la coche d'onglet (`par`), le tableau de bord des tâches (`TACHES`), la fiche pédagogique et le manifeste du lot suivent. La progression reste « / 7 activités ».
+- Bancs : `PANNEAU[7] = 's5'` ; banc n°311 : `panneauSN: 's5'`, ancre de dernière séance `act7`.
+
+**Mesure.** Mots visibles par séance : 817 · 460 · 437 · 737 · 551 (la séance 4 était à 1 252). Bancs 23/23 et 34/34 ; ✘ 0 ; aération 0 ; squelette, navigation entre séances, mode essentiel, liens, impression, verrous : verts.
+
+---
+
+
+---
+
 ## 11/11/2026 — Révision des trois thèmes, 19 : 3e_C5.1, 30 listes en boutons radio, les questions sortent de leurs phrases
 
 **Décisions.**
@@ -29771,4 +29788,3 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Aération** : 41 retours posés ; l'ordre du protocole (cinq étapes écrites avec leur libellé), le choix du procédé, les réponses du réinvestissement et la décision attendue réécrits une idée par ligne. Bonus replié, ouvert à l'impression.
 
 **Mesure.** Séances : 836 · 471 · 434 · 1 132 mots visibles (la 4 était à 1 238). ✘ 1 → 0 ; menus 30 → 0 ; aération 5 → 0. Bancs 34/34 et 34/34 ; contrôles verts.
-

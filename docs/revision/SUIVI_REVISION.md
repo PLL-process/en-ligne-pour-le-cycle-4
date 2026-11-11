@@ -29,7 +29,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 10 | `4e_C2.1` | 2625 → 1548 | 1 → 0 | 0 | 24 → 0 | livrée #630 ; quatrième séance (décision de Pascal) #643 — séances 1 et 3 au-dessus du repère, justifiées |
 | 11 | `4e_C3.1` | 1850 → 1299 | 0 | 0 | 10 → 0 | livrée #630 — séance 1 au-dessus du repère, justifiée |
 | 12 | `3e_C4.1` | 1444 → 1032 | 1 → 0 | 33 → 0 | 6 → 0 | livrée #632 |
-| 13 | `3e_C4.3` | 1928 → 1252 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 — séance 4 à 1 252 : 85 min d'activités annoncées (20 + 35 + 30), question posée à Pascal (réinvestissement en séance 5 ?) |
+| 13 | `3e_C4.3` | 1928 → 817 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 ; #646 coupe la séance 4 en deux (décision de Pascal du 11/11) : cinq séances, 817 · 460 · 437 · 737 · 551 |
 | 14 | `5e_C2.1` | 2272 | 0 | 0 | 20 | à faire |
 | 15 | `4e_C4.1` | 2394 → 782 | 1 → 0 | 39 → 0 (22 menus du cahier des charges, voulus) | 11 → 0 | livrée #639 |
 | 16 | `4e_C4.1_book-train` | 2752 → 1510 | 0 | 0 | 14 → 0 | livrée #642 — séances 2 (1 307) et 3 (1 510) au-dessus du repère : exercices à six positions, deux chaînes à étiqueter, fichiers draw.io à télécharger ; le reste est replié |
