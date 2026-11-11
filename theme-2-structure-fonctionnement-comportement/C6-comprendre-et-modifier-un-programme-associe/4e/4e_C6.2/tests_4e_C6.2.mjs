@@ -47,6 +47,37 @@ import { chromium } from 'playwright';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
+
+/* Règle d'or n°300 (révision de la séquence, 11/11/2026) : les questions de la page sont des groupes de boutons
+   radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
+   proposition qui porte cette valeur — la leçon de la vague du 20/09 : on vise la VALEUR, jamais la
+   position. Rien d'autre du banc ne change. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 import { eprouverEditeurs, eprouverPose, executerBloc } from '../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs';
 // les éditeurs des activités (l'éditeur d'essai de l'échauffement, 05/11/2026, n'en est pas un)
 const ACT_PY = '.editeur-py:not(.editeur-py-essai)';
@@ -69,13 +100,15 @@ await ctx.route('**/*', route => {
   if (/^https?:/i.test(u)) { bloquees.push(u); return route.abort(); }
   return route.continue();
 });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 11/11/2026 : le Bonus, le rappel du cahier des charges et les volets des gestes sont repliés ; le banc les ouvre.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee, details.geste-detail, details.gestes-vitta-replie, details.carte-detail').forEach(d => { d.open = true; }));
 await p.waitForTimeout(360);
 
 const texte = (await p.textContent('body')).replace(/\s+/g, ' ');
@@ -334,16 +367,16 @@ ok('23 · rechargement : réponses, progression 8 / 8 et les trois verrous sont 
 /* l'activité 7 sur le papier : le choix s'imprime en texte, une case vide donne une ligne,
    ni la liste des options ni les retours ne s'impriment */
 {
-  await ouvrirPour('a7q1');
+  await ouvrirPour('a7_cdcf_1');
   const ecran = await p.evaluate(() => [...document.querySelectorAll('.cdcf-verdict .menu-vu')].map(v => v.textContent));
-  await p.selectOption('#a7q2', '');
+  await p.selectOption('#a7_cdcf_2', '');
   await p.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
   await p.emulateMedia({ media: 'print' }); await p.waitForTimeout(120);
   const papier = await p.evaluate(() => {
     const vis = e => e && getComputedStyle(e).display !== 'none' && e.offsetHeight > 0;
     const z = document.querySelector('.cdcf-verdict');
-    const v1 = document.getElementById('a7q1').parentNode.querySelector('.menu-vu');
-    const v2 = document.getElementById('a7q2').parentNode.querySelector('.menu-vu');
+    const v1 = document.getElementById('a7_cdcf_1').parentNode.querySelector('.menu-vu');
+    const v2 = document.getElementById('a7_cdcf_2').parentNode.querySelector('.menu-vu');
     return { texte: vis(v1) ? v1.textContent : '', ligne: vis(v2) && v2.textContent === ''
                && getComputedStyle(v2).borderBottomStyle === 'solid',
              choix: [...z.querySelectorAll('.pp-choix, select, .retour-case, .menu-fleche')].filter(vis).length };
@@ -370,7 +403,7 @@ await ctx.close();
 /* ════════════════ QCM (10 contrôles) ════════════════ */
 {
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 
@@ -461,8 +494,10 @@ await ctx.addInitScript(() => {
   Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async t => { window.__copies.push(t); } } });
 });
 await ctx.route('**/*', route => /^https?:/i.test(route.request().url()) ? route.abort() : route.continue());
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 11/11/2026 : le Bonus, le rappel du cahier des charges et les volets des gestes sont repliés ; le banc les ouvre.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee, details.geste-detail, details.gestes-vitta-replie, details.carte-detail').forEach(d => { d.open = true; }));
 const copies = [];
 for (const id of ['preambule-vs1', 'preambule-vs2', 'preambule-vs3']) {
   const panneau = await p.evaluate(i => { const q = document.getElementById(i).closest('[role=tabpanel], .seance-panel'); return q ? q.id : null; }, id);
@@ -503,9 +538,11 @@ await ctx.close();
 const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
 const reseau = [];
 await ctx.route('**/*', route => { const u = route.request().url(); if (/^https?:/i.test(u)) { reseau.push(u); return route.abort(); } return route.continue(); });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
-await p.goto('file://' + SEQ, { waitUntil: 'load' }); await p.waitForTimeout(300);
+await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 11/11/2026 : le Bonus, le rappel du cahier des charges et les volets des gestes sont repliés ; le banc les ouvre.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee, details.geste-detail, details.gestes-vitta-replie, details.carte-detail').forEach(d => { d.open = true; })); await p.waitForTimeout(300);
 await eprouverPose(p, ['vs1', 'vs2', 'vs3'], ok);
 ok('éditeur Python · l\'encadré 🔌 nomme les cinq fonctions simulées, et le script de la carte les définit toutes',
    await p.evaluate(() => { const e = document.getElementById('fonctions-simulees'), s = document.getElementById('carte-simulee-arrosage');

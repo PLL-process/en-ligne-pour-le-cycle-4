@@ -325,6 +325,10 @@ def poser_etayage(t, page, chemin_json):
         tid = mid.group(1)
         if tid == "hyp":
             continue
+        # un éditeur de code n'est pas une rédaction : sa version étayée, c'est le programme à trous qu'il porte
+        # déjà ; et un volet glissé sous sa zone de saisie casserait l'éditeur (4e_C6.2, 11/11/2026)
+        if "editeur-py-code" in m.group(1):
+            continue
         apres = t[m.end():m.end() + 300]
         if 'class="etayage"' in apres:
             continue

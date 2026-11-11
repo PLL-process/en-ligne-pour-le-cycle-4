@@ -11,6 +11,6 @@ await lancerBanc311Theme2({
   choix: true,
   texte: "capteur d'humidité",
   ancreS1: 'a1q1',
-  ancreSN: 'a7q1',
+  ancreSN: 'a7_cdcf_1',
   panneauSN: 's3',
 });

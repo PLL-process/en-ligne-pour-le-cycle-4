@@ -41,7 +41,18 @@ export async function lancerBanc311Theme2(o) {
     console.log(`ℹ ${o.code} : pas de champ dans l'ouverture (pas d'hypothèse) — le banc suit la réponse ${o.champ} de la séance 1.`);
     const b2 = await chromium.launch(); const P = Object.getPrototypeOf(await b2.newPage());
     const fill = P.fill;
-    P.fill = function (sel, v, opts) { return sel === o.champ ? this.selectOption(sel, v, opts) : fill.call(this, sel, v, opts); };
+    // n°300 (11/11/2026) : la réponse suivie peut être un groupe de boutons radio (4e_C6.2 révisée) — on coche alors
+    // le bouton qui porte cette valeur ; une liste déroulante se remplit toujours par selectOption.
+    P.fill = async function (sel, v, opts) {
+      if (sel !== o.champ) return fill.call(this, sel, v, opts);
+      if (await this.evaluate(s => document.querySelector(s).tagName === 'SELECT', sel)) return this.selectOption(sel, v, opts);
+      return this.evaluate(([s, val]) => { [...document.querySelectorAll(s + ' input[type=radio]')].find(x => x.value === val).click(); }, [sel, v]);
+    };
+    const inputValue = P.inputValue;
+    P.inputValue = async function (sel, opts) {
+      if (sel !== o.champ || await this.evaluate(s => /^(SELECT|INPUT|TEXTAREA)$/.test(document.querySelector(s).tagName), sel)) return inputValue.call(this, sel, opts);
+      return this.evaluate(s => document.querySelector(s).value, sel);          // le groupe porte sa valeur
+    };
     await b2.close();
   }
   await lancerBanc311(o);
