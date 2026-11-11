@@ -32,6 +32,37 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
+
+/* Règle d'or n°300 (révision de la séquence, 11/11/2026) : les questions de la page sont des groupes de boutons
+   radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
+   proposition qui porte cette valeur — la leçon de la vague du 20/09 : on vise la VALEUR, jamais la
+   position. Rien d'autre du banc ne change. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 import fs from 'node:fs';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname);
@@ -44,7 +75,7 @@ const b = await chromium.launch();
 /* ════════════════ SÉQUENCE (24 contrôles) ════════════════ */
 {
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = [], fail = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
@@ -52,6 +83,8 @@ p.on('requestfailed', r => { if (!/fonts\.g/.test(r.url())) fail.push(r.url()); 
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 await p.goto('file://' + SEQ, { waitUntil: 'load' });
+// Révision du 11/11/2026 : le Bonus est replié ; le banc l'ouvre.
+await p.evaluate(() => document.querySelectorAll('details.bonus-replie').forEach(d => { d.open = true; }));
 await p.waitForTimeout(340);
 
 const texte = (await p.textContent('body')).replace(/\s+/g, ' ');
@@ -128,9 +161,10 @@ async function remplir(n, seulement = null) {
     const el = await p.$('#' + id); if (!el) continue;
     const balise = await el.evaluate(e => e.tagName);
     if (c.mode === 'prose') { await p.fill('#' + id, rediger(c)); continue; }
-    if (balise !== 'SELECT') { await p.fill('#' + id, String(c.v)); continue; }
+    // n°300 (11/11/2026) : une question est un groupe de boutons radio (FIELDSET), rempli par le shim comme une liste
+    if (balise !== 'SELECT' && balise !== 'FIELDSET') { await p.fill('#' + id, String(c.v)); continue; }
     if (c.mode === 'prefixe') {
-      const exact = await el.evaluate((e, deb) => [...e.options].map(o => o.value)
+      const exact = await el.evaluate((e, deb) => [...(e.options || e.querySelectorAll('input[type=radio]'))].map(o => o.value)
         .find(v => v && v.startsWith(deb)), c.v);
       if (exact) await p.selectOption('#' + id, exact);
     } else await p.selectOption('#' + id, String(c.v));
@@ -306,7 +340,7 @@ await ctx.close();
 /* ════════════════ QCM (9 contrôles) ════════════════ */
 {
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-const p = await ctx.newPage();
+const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 
