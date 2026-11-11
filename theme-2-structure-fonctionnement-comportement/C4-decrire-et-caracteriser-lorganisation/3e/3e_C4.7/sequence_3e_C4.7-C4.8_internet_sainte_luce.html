@@ -206,6 +206,20 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+  .qcm-groupe.qcm-rangee .qcm-option{display:inline-flex;margin:0 8px 6px 0} /* 10/11/2026 : les numéros 1 à 6 en rangée */
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -568,6 +582,11 @@ body.essentiel details.referentiel-replie{display:none}
 })();
 </script>
 <!-- fiche-papier v1 : fin -->
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -630,7 +649,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C4.7/Synthèses/synthese_eleve_4e_C4.7-C4.9.html#partie-4">relis la partie 4 de la synthèse 4e_C4.7 à C4.9, « Comment trouver une panne sans tout débrancher ? »</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> on sort du collège : tu vas suivre le chemin réel d'une donnée depuis <b>Sainte-Luce</b> jusqu'à l'autre bout du monde — les câbles sous-marins, les relais, les opérateurs. Le principe d'un réseau local, mais à l'échelle d'une île.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> on sort du collège. <br>Tu vas suivre le chemin réel d'une donnée depuis <b>Sainte-Luce</b> jusqu'à l'autre bout du monde — les câbles sous-marins, les relais, les opérateurs. <br>Le principe d'un réseau local, mais à l'échelle d'une île.</p>
   <p class="filet">Un mot à garder en tête : Internet n'est pas dans les airs ; c'est très majoritairement du câble, posé au fond de la mer.</p>
 </section>
 
@@ -654,7 +673,7 @@ body.essentiel details.referentiel-replie{display:none}
   </table>
   <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> — BO n°9 du 29/02/2024. Cette séquence prolonge « Station d'alerte cyclonique » (3e_C4.3 → C4.6) : la chaîne d'information se poursuit au-delà du collège.</p>
 <div class="regle-or-schema" role="note" style="border:3px solid #1F3864;border-radius:12px;padding:14px 18px;margin:18px 0;background:#EAF1FB;font-weight:600;line-height:1.5;">📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
-  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C4.3</code> · <code>3e_C4.7</code> · <code>3e_C4.8</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C4.3</code> · <code>3e_C4.7</code> · <code>3e_C4.8</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. <br>Les formulations ci-dessus sont celles du référentiel.</p>
 </div>
 </details>
 
@@ -671,12 +690,12 @@ body.essentiel details.referentiel-replie{display:none}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Suite de notre projet.</b> La station d'alerte cyclonique du collège fonctionne : elle mesure, décide, et sait
-    déclencher sa sirène. Mais lors de l'exercice d'évacuation de septembre, un problème est apparu : la sirène ne couvre
-    que le quartier du collège. Les familles de Rivière-Pilote, de Fort-de-France — et même la tante de Maëlle qui vit à
+    <p><b>Suite de notre projet.</b><br>La station d'alerte cyclonique du collège fonctionne : elle mesure, décide, et sait
+    déclencher sa sirène. <br>Mais lors de l'exercice d'évacuation de septembre, un problème est apparu : la sirène ne couvre
+    que le quartier du collège. <br>Les familles de Rivière-Pilote, de Fort-de-France — et même la tante de Maëlle qui vit à
     Paris — doivent recevoir l'alerte <b>sur leur téléphone, en quelques secondes</b>.</p>
     <p>Le message d'alerte doit donc quitter le réseau du collège, traverser la Martinique, peut-être l'océan… et arriver
-    à bon port sans se perdre. Par où passe-t-il exactement ? Qui décide de son chemin ? Et que se passe-t-il si un
+    à bon port sans se perdre. <br>Par où passe-t-il exactement ? Qui décide de son chemin ? Et que se passe-t-il si un
     cyclone coupe un câble en route ?</p>
   </div>
   <figure class="situation-photo">
@@ -699,7 +718,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp1" placeholder="Je pense que le message passe par…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>D&#x27;après moi, le message part d&#x27;abord vers ____.</li>
     <li>Ensuite il traverse ____ pour franchir l&#x27;océan.</li>
@@ -710,7 +729,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp2" placeholder="Je pense cela parce que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je m&#x27;appuie sur ____.</li>
     <li>Ce qui me le fait penser, c&#x27;est que ____.</li>
@@ -738,7 +757,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="version vb"><h4>🅱 Simulation en ligne</h4>
       <p>Packet Tracer si les comptes sont disponibles (<b>À CONFIRMER</b>) — sinon rester sur Filius ou la version 🅲.</p></div>
     <div class="version vc"><h4>🅲 Sans matériel</h4>
-      <p>Tout est dans cette page : simulateur de découpage en paquets (activité 3), jeu du routeur (activité 4) et simulateur de panne (activité 5). Une version imprimable du jeu du routeur permet même de jouer <b>débranché</b>, par équipes.</p></div>
+      <p>Tout est dans cette page : simulateur de découpage en paquets (activité 3), jeu du routeur (activité 4) et simulateur de panne (activité 5). <br>Une version imprimable du jeu du routeur permet même de jouer <b>débranché</b>, par équipes.</p></div>
   </div>
 </section>
 </details>
@@ -761,7 +780,7 @@ body.essentiel details.referentiel-replie{display:none}
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Dans un réseau qui utilise le masque 255.255.255.0, les machines 192.168.20.12 et 192.168.20.40…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="sont sur deux réseaux, car leur fin diffère"><label for="be_1__1">sont sur deux réseaux, car leur fin diffère</label></div>
@@ -786,6 +805,26 @@ body.essentiel details.referentiel-replie{display:none}
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
 </section>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc
    « Avant de commencer » ; une réponse manquée renvoie au rattrapage que cette ligne porte déjà. */
@@ -846,19 +885,57 @@ body.essentiel details.referentiel-replie{display:none}
     <object class="figure" data="Images/reseau_college_vers_internet.svg" type="image/svg+xml" aria-label="Schéma : réseau local du collège avec PC, station d'alerte, commutateur et routeur relié par fibre à Internet, représenté comme un maillage de routeurs desservant maison, mairie et réseau mobile">Schéma du réseau local relié à Internet (SVG)</object>
     <div class="consigne"><b>Consigne :</b> observe le schéma puis attribue son rôle à chaque équipement, et réponds aux vrai/faux.</div>
     <div class="exo">
-      <div class="assoc"><label for="b1_1">Les ordinateurs et la station d'alerte sont des…</label><select id="b1_1"><option value="">— choisir —</option><option>terminaux</option><option>commutateurs</option><option>routeurs</option><option>serveurs</option></select></div>
-      <div class="assoc"><label for="b1_2">L'équipement qui relie les appareils DU réseau local entre eux :</label><select id="b1_2"><option value="">— choisir —</option><option>le terminal</option><option>le commutateur (switch)</option><option>le routeur</option><option>la box de la maison</option></select></div>
-      <div class="assoc"><label for="b1_3">L'équipement « porte de sortie » qui relie le réseau du collège AUX AUTRES réseaux :</label><select id="b1_3"><option value="">— choisir —</option><option>le terminal</option><option>le commutateur (switch)</option><option>le routeur</option><option>l'écran</option></select></div>
-      <div class="assoc"><label for="b1_4">Pour être joignable sur le réseau, chaque équipement possède…</label><select id="b1_4"><option value="">— choisir —</option><option>une adresse IP unique</option><option>un mot de passe</option><option>un nom d'utilisateur</option><option>une prise HDMI</option></select></div>
-      <div class="assoc"><label for="b1_5">Vrai ou faux : « Internet est un seul immense réseau appartenant à une seule entreprise. »</label><select id="b1_5"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
-      <div class="assoc"><label for="b1_6">Vrai ou faux : « Sans routeur, le message de la station ne peut pas sortir du collège. »</label><select id="b1_6"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <fieldset class="qcm-groupe" id="b1_1">
+  <legend>Les ordinateurs et la station d'alerte sont des…</legend>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__1" value="terminaux"><label for="b1_1__1">terminaux</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__2" value="commutateurs"><label for="b1_1__2">commutateurs</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__3" value="routeurs"><label for="b1_1__3">routeurs</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__4" value="serveurs"><label for="b1_1__4">serveurs</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b1_2">
+  <legend>L'équipement qui relie les appareils DU réseau local entre eux :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__1" value="le terminal"><label for="b1_2__1">le terminal</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__2" value="le commutateur (switch)"><label for="b1_2__2">le commutateur (switch)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__3" value="le routeur"><label for="b1_2__3">le routeur</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__4" value="la box de la maison"><label for="b1_2__4">la box de la maison</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b1_3">
+  <legend>L'équipement « porte de sortie » qui relie le réseau du collège AUX AUTRES réseaux :</legend>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__1" value="le terminal"><label for="b1_3__1">le terminal</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__2" value="le commutateur (switch)"><label for="b1_3__2">le commutateur (switch)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__3" value="le routeur"><label for="b1_3__3">le routeur</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__4" value="l&#x27;écran"><label for="b1_3__4">l'écran</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b1_4">
+  <legend>Pour être joignable sur le réseau, chaque équipement possède…</legend>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__1" value="une adresse IP unique"><label for="b1_4__1">une adresse IP unique</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__2" value="un mot de passe"><label for="b1_4__2">un mot de passe</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__3" value="un nom d&#x27;utilisateur"><label for="b1_4__3">un nom d'utilisateur</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__4" value="une prise HDMI"><label for="b1_4__4">une prise HDMI</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b1_5">
+  <legend>Vrai ou faux : « Internet est un seul immense réseau appartenant à une seule entreprise. »</legend>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__1" value="vrai"><label for="b1_5__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__2" value="faux"><label for="b1_5__2">faux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b1_6">
+  <legend>Vrai ou faux : « Sans routeur, le message de la station ne peut pas sortir du collège. »</legend>
+  <div class="qcm-option"><input type="radio" name="b1_6" id="b1_6__1" value="vrai"><label for="b1_6__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_6" id="b1_6__2" value="faux"><label for="b1_6__2">faux</label></div>
+</fieldset>
       <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb1" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Sur le schéma, suis les traits : qui est relié à qui ? Le commutateur est AU MILIEU du réseau local ; le routeur est À LA FRONTIÈRE, là où part la fibre.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Terminaux = les appareils qui utilisent le réseau (PC, station, téléphone). Le commutateur distribue à l'intérieur ; le routeur fait passer d'un réseau à l'autre. « Inter-net » signifie littéralement « entre les réseaux » : des milliers de réseaux indépendants interconnectés — personne n'en est propriétaire.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Sur le schéma, suis les traits : qui est relié à qui ? <br>Le commutateur est AU MILIEU du réseau local. <br>Le routeur est À LA FRONTIÈRE, là où part la fibre.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Terminaux = les appareils qui utilisent le réseau (PC, station, téléphone). <br>Le commutateur distribue à l'intérieur ; le routeur fait passer d'un réseau à l'autre. <br>« Inter-net » signifie littéralement « entre les réseaux » : des milliers de réseaux indépendants interconnectés — personne n'en est propriétaire.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Réponses :</b> terminaux · le commutateur (switch) · le routeur · une adresse IP unique · faux · vrai.</p>
+      <p><b>Réponses :</b> <br>
+      1. Les ordinateurs et la station sont des <b>terminaux</b>. <br>
+      2. L'équipement qui relie les appareils du réseau local : le <b>commutateur (switch)</b>. <br>
+      3. La « porte de sortie » vers les autres réseaux : le <b>routeur</b>. <br>
+      4. Chaque équipement possède une <b>adresse IP unique</b>. <br>
+      5. « Internet appartient à une seule entreprise » : <b>faux</b>. <br>
+      6. « Sans routeur, le message ne sort pas du collège » : <b>vrai</b>.</p>
       <p><b>Raisonnement :</b> à l'intérieur d'un réseau local, le commutateur relie les terminaux entre eux. Pour sortir, tout passe par le routeur — c'est la seule frontière. Internet n'appartient à personne : c'est l'interconnexion de milliers de réseaux (collèges, opérateurs, entreprises…) qui acceptent des règles communes.</p>
       <p><b>Exemple :</b> chez toi, la « box » joue les deux rôles à la fois : commutateur/Wi-Fi pour l'intérieur, routeur vers ton opérateur.</p>
       <p><b>Limite :</b> certains équipements combinent plusieurs fonctions (box, point d'accès Wi-Fi) — on les classe selon la fonction étudiée.</p>
@@ -879,18 +956,72 @@ body.essentiel details.referentiel-replie{display:none}
     <object class="figure" data="Images/trajet_message_martinique_monde.svg" type="image/svg+xml" aria-label="Carte stylisée : trajet du message depuis Sainte-Luce en Martinique, via le réseau de l'opérateur, un câble sous-marin transatlantique, un centre d'échange en Europe, jusqu'au téléphone du destinataire à Paris">Trajet d'un message de la Martinique vers Paris (SVG)</object>
     <div class="consigne"><b>Consigne :</b> l'alerte part de la station pour prévenir la tante de Maëlle à Paris. Remets les 6 étapes du voyage dans l'ordre (place un numéro de 1 à 6 devant chacune), puis réponds.</div>
     <div class="exo">
-      <div class="assoc"><label for="b2_e1">…le message plonge dans le câble sous-marin transatlantique</label><select id="b2_e1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="b2_e2">…la station envoie l'alerte au routeur du collège</label><select id="b2_e2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="b2_e3">…le téléphone de la tante affiche la notification</label><select id="b2_e3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="b2_e4">…le message traverse le réseau de l'opérateur antillais</label><select id="b2_e4"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="b2_e5">…les routeurs français l'acheminent jusqu'à la box parisienne</label><select id="b2_e5"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="b2_e6">…il ressort au point d'atterrissage et traverse le centre d'échange européen</label><select id="b2_e6"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc" style="margin-top:10px"><label for="b2_q1">Par où passe l'essentiel (~99 %) du trafic Internet intercontinental ?</label><select id="b2_q1"><option value="">— choisir —</option><option>par les satellites</option><option>par les câbles sous-marins</option><option>par les antennes 4G</option><option>par ondes radio directes</option></select></div>
+<fieldset class="qcm-groupe qcm-rangee" id="b2_e1">
+  <legend>…le message plonge dans le câble sous-marin transatlantique</legend>
+  <div class="qcm-option"><input type="radio" name="b2_e1" id="b2_e1__1" value="1"><label for="b2_e1__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e1" id="b2_e1__2" value="2"><label for="b2_e1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e1" id="b2_e1__3" value="3"><label for="b2_e1__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e1" id="b2_e1__4" value="4"><label for="b2_e1__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e1" id="b2_e1__5" value="5"><label for="b2_e1__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e1" id="b2_e1__6" value="6"><label for="b2_e1__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b2_e2">
+  <legend>…la station envoie l'alerte au routeur du collège</legend>
+  <div class="qcm-option"><input type="radio" name="b2_e2" id="b2_e2__1" value="1"><label for="b2_e2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e2" id="b2_e2__2" value="2"><label for="b2_e2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e2" id="b2_e2__3" value="3"><label for="b2_e2__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e2" id="b2_e2__4" value="4"><label for="b2_e2__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e2" id="b2_e2__5" value="5"><label for="b2_e2__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e2" id="b2_e2__6" value="6"><label for="b2_e2__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b2_e3">
+  <legend>…le téléphone de la tante affiche la notification</legend>
+  <div class="qcm-option"><input type="radio" name="b2_e3" id="b2_e3__1" value="1"><label for="b2_e3__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e3" id="b2_e3__2" value="2"><label for="b2_e3__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e3" id="b2_e3__3" value="3"><label for="b2_e3__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e3" id="b2_e3__4" value="4"><label for="b2_e3__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e3" id="b2_e3__5" value="5"><label for="b2_e3__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e3" id="b2_e3__6" value="6"><label for="b2_e3__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b2_e4">
+  <legend>…le message traverse le réseau de l'opérateur antillais</legend>
+  <div class="qcm-option"><input type="radio" name="b2_e4" id="b2_e4__1" value="1"><label for="b2_e4__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e4" id="b2_e4__2" value="2"><label for="b2_e4__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e4" id="b2_e4__3" value="3"><label for="b2_e4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e4" id="b2_e4__4" value="4"><label for="b2_e4__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e4" id="b2_e4__5" value="5"><label for="b2_e4__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e4" id="b2_e4__6" value="6"><label for="b2_e4__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b2_e5">
+  <legend>…les routeurs français l'acheminent jusqu'à la box parisienne</legend>
+  <div class="qcm-option"><input type="radio" name="b2_e5" id="b2_e5__1" value="1"><label for="b2_e5__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e5" id="b2_e5__2" value="2"><label for="b2_e5__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e5" id="b2_e5__3" value="3"><label for="b2_e5__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e5" id="b2_e5__4" value="4"><label for="b2_e5__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e5" id="b2_e5__5" value="5"><label for="b2_e5__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e5" id="b2_e5__6" value="6"><label for="b2_e5__6">6</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b2_e6">
+  <legend>…il ressort au point d'atterrissage et traverse le centre d'échange européen</legend>
+  <div class="qcm-option"><input type="radio" name="b2_e6" id="b2_e6__1" value="1"><label for="b2_e6__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e6" id="b2_e6__2" value="2"><label for="b2_e6__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e6" id="b2_e6__3" value="3"><label for="b2_e6__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e6" id="b2_e6__4" value="4"><label for="b2_e6__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e6" id="b2_e6__5" value="5"><label for="b2_e6__5">5</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_e6" id="b2_e6__6" value="6"><label for="b2_e6__6">6</label></div>
+</fieldset>
+      <div class="assoc" style="margin-top:10px"><fieldset class="qcm-groupe" id="b2_q1">
+  <legend>Par où passe l'essentiel (~99 %) du trafic Internet intercontinental ?</legend>
+  <div class="qcm-option"><input type="radio" name="b2_q1" id="b2_q1__1" value="par les satellites"><label for="b2_q1__1">par les satellites</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_q1" id="b2_q1__2" value="par les câbles sous-marins"><label for="b2_q1__2">par les câbles sous-marins</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_q1" id="b2_q1__3" value="par les antennes 4G"><label for="b2_q1__3">par les antennes 4G</label></div>
+  <div class="qcm-option"><input type="radio" name="b2_q1" id="b2_q1__4" value="par ondes radio directes"><label for="b2_q1__4">par ondes radio directes</label></div>
+</fieldset></div>
       <label for="b2_cahier" style="display:block;margin-top:10px"><b>Dans le cahier :</b> représente le trajet par un schéma fléché (station → routeur → opérateur → câble → centre d'échange → box → téléphone), puis recopie ta légende ici :</label>
       <textarea id="b2_cahier" placeholder="Mon schéma montre…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Le message part de ____ et rejoint d&#x27;abord ____.</li>
     <li>Il passe ensuite par ____, puis franchit l&#x27;Atlantique par ____.</li>
@@ -901,9 +1032,16 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb2" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Le message part TOUJOURS du réseau local (routeur du collège = étape 1), et finit TOUJOURS chez le destinataire. Entre les deux : d'abord l'île, puis l'océan, puis l'Europe.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : collège (1) → opérateur antillais (2) → câble sous-marin (3) → point d'atterrissage/centre d'échange (4) → routeurs français (5) → téléphone (6). Les numéros du SVG t'aident à vérifier.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : collège (1) → opérateur antillais (2) → câble sous-marin (3) → point d'atterrissage/centre d'échange (4) → routeurs français (5) → téléphone (6). <br>Les numéros du SVG t'aident à vérifier.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Ordre :</b> câble sous-marin = 3 · station→routeur = 1 · notification = 6 · opérateur antillais = 2 · routeurs français→box = 5 · atterrissage/centre d'échange = 4. Trafic intercontinental : <b>par les câbles sous-marins</b>.</p>
+      <p><b>Ordre :</b> <br>
+      1. de la station au routeur du collège ; <br>
+      2. l'opérateur antillais ; <br>
+      3. le câble sous-marin ; <br>
+      4. l'atterrissage et le centre d'échange ; <br>
+      5. les routeurs français jusqu'à la box ; <br>
+      6. la notification. <br>
+      Trafic intercontinental : <b>par les câbles sous-marins</b>.</p>
       <p><b>Raisonnement :</b> l'information traverse une succession de réseaux — local, opérateur, dorsales intercontinentales, opérateur du destinataire — reliés par des routeurs. Pour une île comme la Martinique, les câbles sous-marins sont vitaux : sans eux, presque plus d'Internet.</p>
       <p><b>Exemple concret :</b> la Martinique est notamment reliée par des câbles sous-marins vers les îles voisines, l'Amérique et l'Europe ; leur maintenance est assurée par des navires câbliers spécialisés.</p>
       <p><b>Contre-exemple (idée reçue) :</b> le satellite existe, mais il est minoritaire : plus lent (latence) et plus cher. Il sert surtout de secours ou pour les zones sans câble.</p>
@@ -941,14 +1079,32 @@ body.essentiel details.referentiel-replie{display:none}
       <div id="zonePaquets" style="margin-top:12px"></div>
       <div id="zoneReassemble" style="margin-top:8px"></div>
       <h4 style="margin-top:16px">Questions</h4>
-      <div class="assoc"><label for="b3_q1">À quoi sert le numéro écrit sur chaque paquet ?</label><select id="b3_q1"><option value="">— choisir —</option><option>à remettre les paquets dans l'ordre à l'arrivée</option><option>à connaître le prix d'envoi</option><option>à chiffrer le message</option><option>à choisir le Wi-Fi</option></select></div>
-      <div class="assoc"><label for="b3_q2">Le paquet n°2 s'est perdu en route. Que fait le destinataire ?</label><select id="b3_q2"><option value="">— choisir —</option><option>il redemande SEULEMENT le paquet n°2</option><option>il redemande tout le message</option><option>il abandonne la communication</option><option>il lit le message sans le n°2</option></select></div>
-      <div class="assoc"><label for="b3_q3">Pourquoi découper en paquets plutôt qu'envoyer le message d'un seul bloc ?</label><select id="b3_q3"><option value="">— choisir —</option><option>les paquets se faufilent par plusieurs routes et partagent le réseau équitablement</option><option>parce que les câbles sont trop courts</option><option>pour rendre le message secret</option><option>pour le rendre plus joli</option></select></div>
+      <fieldset class="qcm-groupe" id="b3_q1">
+  <legend>À quoi sert le numéro écrit sur chaque paquet ?</legend>
+  <div class="qcm-option"><input type="radio" name="b3_q1" id="b3_q1__1" value="à remettre les paquets dans l&#x27;ordre à l&#x27;arrivée"><label for="b3_q1__1">à remettre les paquets dans l'ordre à l'arrivée</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q1" id="b3_q1__2" value="à connaître le prix d&#x27;envoi"><label for="b3_q1__2">à connaître le prix d'envoi</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q1" id="b3_q1__3" value="à chiffrer le message"><label for="b3_q1__3">à chiffrer le message</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q1" id="b3_q1__4" value="à choisir le Wi-Fi"><label for="b3_q1__4">à choisir le Wi-Fi</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b3_q2">
+  <legend>Le paquet n°2 s'est perdu en route. Que fait le destinataire ?</legend>
+  <div class="qcm-option"><input type="radio" name="b3_q2" id="b3_q2__1" value="il redemande SEULEMENT le paquet n°2"><label for="b3_q2__1">il redemande SEULEMENT le paquet n°2</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q2" id="b3_q2__2" value="il redemande tout le message"><label for="b3_q2__2">il redemande tout le message</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q2" id="b3_q2__3" value="il abandonne la communication"><label for="b3_q2__3">il abandonne la communication</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q2" id="b3_q2__4" value="il lit le message sans le n°2"><label for="b3_q2__4">il lit le message sans le n°2</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b3_q3">
+  <legend>Pourquoi découper en paquets plutôt qu'envoyer le message d'un seul bloc ?</legend>
+  <div class="qcm-option"><input type="radio" name="b3_q3" id="b3_q3__1" value="les paquets se faufilent par plusieurs routes et partagent le réseau équitablement"><label for="b3_q3__1">les paquets se faufilent par plusieurs routes et partagent le réseau équitablement</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q3" id="b3_q3__2" value="parce que les câbles sont trop courts"><label for="b3_q3__2">parce que les câbles sont trop courts</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q3" id="b3_q3__3" value="pour rendre le message secret"><label for="b3_q3__3">pour rendre le message secret</label></div>
+  <div class="qcm-option"><input type="radio" name="b3_q3" id="b3_q3__4" value="pour le rendre plus joli"><label for="b3_q3__4">pour le rendre plus joli</label></div>
+</fieldset>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde l'en-tête de chaque paquet dans le simulateur : numéro, IP source, IP destination — comme une enveloppe postale numérotée.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Les numéros servent au réassemblage ET à détecter une perte : s'il manque le n°2 sur 3, on ne redemande que lui — c'est bien plus efficace que tout renvoyer. Et de petits paquets peuvent emprunter des routes différentes en parallèle : personne ne bloque le réseau.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Les numéros servent au réassemblage ET à détecter une perte : s'il manque le n°2 sur 3, on ne redemande que lui — c'est bien plus efficace que tout renvoyer. <br>Et de petits paquets peuvent emprunter des routes différentes en parallèle : personne ne bloque le réseau.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> Ton message a été découpé (ici en 3 paquets), mélangé pendant le transport, puis reconstitué grâce aux numéros d'ordre — exactement comme sur le schéma.</p>
       <p><b>b)</b> numéro → remise en ordre · paquet perdu → on redemande <b>seulement</b> le n°2 · découpage → plusieurs routes possibles + partage équitable du réseau (personne ne monopolise la ligne).</p>
@@ -988,7 +1144,7 @@ body.essentiel details.referentiel-replie{display:none}
       <tr><th>Vérificateur</th><td class="vide"></td><td class="vide"></td></tr>
     </tbody>
   </table>
-  <p class="roles-note">À recopier à chaque séance. Si personne ne change de rôle, c'est
+  <p class="roles-note">À recopier à chaque séance. <br>Si personne ne change de rôle, c'est
   toujours le même qui apprend à tenir le clavier — et ce n'est pas celui qui en avait le
   plus besoin.</p>
 </section>
@@ -1002,15 +1158,35 @@ body.essentiel details.referentiel-replie{display:none}
     <object class="figure" data="Images/table_routage_jeu.svg" type="image/svg+xml" aria-label="Le routeur R2 reçoit un paquet pour 203.0.113.25 ; sa table de routage indique de passer par R4 ; en cas de panne de R4 la table se met à jour et le trafic passe par R3">La table de routage du routeur R2 (SVG)</object>
     <div class="consigne"><b>Consigne :</b> tu ES le routeur R2. Ta table : réseau <code>198.51.100.x</code> → R1 · réseau <code>203.0.113.x</code> → R4 · tout le reste → R3. Aiguille chaque paquet, puis justifie.</div>
     <div class="exo">
-      <div class="assoc"><label for="b4_p1">Paquet A → destination <code>203.0.113.7</code></label><select id="b4_p1"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
-      <div class="assoc"><label for="b4_p2">Paquet B → destination <code>198.51.100.42</code></label><select id="b4_p2"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
-      <div class="assoc"><label for="b4_p3">Paquet C → destination <code>172.16.9.30</code></label><select id="b4_p3"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
-      <div class="assoc"><label for="b4_p4">Paquet D → destination <code>203.0.113.199</code>, mais la liaison vers R4 vient de tomber !</label><select id="b4_p4"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
+<fieldset class="qcm-groupe qcm-rangee" id="b4_p1">
+  <legend>Paquet A → destination <code>203.0.113.7</code></legend>
+  <div class="qcm-option"><input type="radio" name="b4_p1" id="b4_p1__1" value="R1"><label for="b4_p1__1">R1</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p1" id="b4_p1__2" value="R3"><label for="b4_p1__2">R3</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p1" id="b4_p1__3" value="R4"><label for="b4_p1__3">R4</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b4_p2">
+  <legend>Paquet B → destination <code>198.51.100.42</code></legend>
+  <div class="qcm-option"><input type="radio" name="b4_p2" id="b4_p2__1" value="R1"><label for="b4_p2__1">R1</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p2" id="b4_p2__2" value="R3"><label for="b4_p2__2">R3</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p2" id="b4_p2__3" value="R4"><label for="b4_p2__3">R4</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b4_p3">
+  <legend>Paquet C → destination <code>172.16.9.30</code></legend>
+  <div class="qcm-option"><input type="radio" name="b4_p3" id="b4_p3__1" value="R1"><label for="b4_p3__1">R1</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p3" id="b4_p3__2" value="R3"><label for="b4_p3__2">R3</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p3" id="b4_p3__3" value="R4"><label for="b4_p3__3">R4</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="b4_p4">
+  <legend>Paquet D → destination <code>203.0.113.199</code>, mais la liaison vers R4 vient de tomber !</legend>
+  <div class="qcm-option"><input type="radio" name="b4_p4" id="b4_p4__1" value="R1"><label for="b4_p4__1">R1</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p4" id="b4_p4__2" value="R3"><label for="b4_p4__2">R3</label></div>
+  <div class="qcm-option"><input type="radio" name="b4_p4" id="b4_p4__3" value="R4"><label for="b4_p4__3">R4</label></div>
+</fieldset>
       <label for="b4_just" style="display:block;margin-top:10px"><b>Justifie :</b> les routeurs du monde entier sont fabriqués par des entreprises différentes. Pourquoi ont-ils absolument besoin d'un <b>protocole de routage commun</b> (mêmes règles pour tous) ?</label>
       <textarea id="b4_just" placeholder="Sans règles communes…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Un protocole de routage commun est nécessaire parce que les routeurs doivent ____.</li>
     <li>Sans règles identiques pour tous, un routeur fabriqué par une entreprise ne pourrait pas ____.</li>
@@ -1021,10 +1197,14 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb4" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Compare le DÉBUT de l'adresse de destination avec les réseaux de la table : <code>203.0.113.7</code> commence par <code>203.0.113</code>…</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Paquet D : la route normale (R4) est morte ; la règle « tout le reste → R3 » sert de secours le temps que les tables se mettent à jour. Pour la justification : pense à deux personnes qui ne parlent pas la même langue et doivent se transmettre un colis avec des consignes précises…</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Paquet D : la route normale (R4) est morte. <br>La règle « tout le reste → R3 » sert de secours, le temps que les tables se mettent à jour. <br>Pour la justification : pense à deux personnes qui ne parlent pas la même langue et doivent se transmettre un colis avec des consignes précises…</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Aiguillage :</b> A → R4 · B → R1 · C → R3 (aucune règle précise ne correspond : règle par défaut) · D → R3 (liaison R4 coupée : route de secours, les tables se mettent à jour).</p>
-      <p><b>Justification attendue :</b> un paquet traverse des dizaines de routeurs de marques et de pays différents. S'ils ne partageaient pas les mêmes règles (format des adresses, façon d'annoncer les routes, réaction aux pannes), chaque frontière serait un mur : le paquet serait perdu ou incompris. Le protocole commun garantit que <em>n'importe quel</em> routeur comprend <em>n'importe quel</em> paquet et sait annoncer ses routes aux voisins — c'est ce qui fait d'Internet UN réseau mondial au lieu d'îlots isolés.</p>
+      <p><b>Aiguillage :</b> <br>
+      A : vers R4. <br>
+      B : vers R1. <br>
+      C : vers R3 — aucune règle précise ne correspond, c'est la règle par défaut. <br>
+      D : vers R3 — la liaison R4 est coupée, route de secours ; les tables se mettent à jour.</p>
+      <p><b>Justification attendue :</b> un paquet traverse des dizaines de routeurs de marques et de pays différents. <br>S'ils ne partageaient pas les mêmes règles (format des adresses, façon d'annoncer les routes, réaction aux pannes), chaque frontière serait un mur : le paquet serait perdu ou incompris. <br>Le protocole commun garantit que <em>n'importe quel</em> routeur comprend <em>n'importe quel</em> paquet et sait annoncer ses routes aux voisins — c'est ce qui fait d'Internet UN réseau mondial au lieu d'îlots isolés.</p>
       <p><b>Exemple :</b> c'est comme le code de la route : peu importe la marque de la voiture ou le pays du conducteur, tout le monde comprend « priorité à droite » — sinon, carambolage.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> envoyer C vers R4 « parce qu'il reste de la place » (la règle par défaut existe pour ça) ; oublier que D doit être re-routé ; justifier seulement par « c'est plus pratique » sans expliquer l'interopérabilité.</div>
@@ -1033,7 +1213,7 @@ body.essentiel details.referentiel-replie{display:none}
     <details class="prof"><summary>🅰 Version Filius (au labo, avec le professeur)</summary>
       <p><b>Protocole :</b><br>1. construire deux réseaux locaux (2 PC + switch chacun) ;<br>2. les relier par deux routeurs ;<br>3. configurer les adresses IP (ex. 192.168.1.x et 192.168.2.x) ;<br>4. passer en mode simulation ;<br>5. envoyer un <i>ping</i> d'un réseau à l'autre et observer le trajet des paquets ;<br>6. couper une liaison et observer l'échec puis le re-routage après reconfiguration.</p>
       <p><b>Dépannage :</b> ping en échec → vérifier les passerelles des PC ; paquets bloqués au routeur → table de routage incomplète.</p>
-      <p><b>Version débranchée :</b> 3 équipes = 3 routeurs, enveloppes numérotées avec adresses ; chaque équipe n'a que SA table. Chronométrer la livraison, puis « couper » une équipe et refaire la partie.</p>
+      <p><b>Version débranchée :</b> 3 équipes = 3 routeurs, enveloppes numérotées avec adresses ; chaque équipe n'a que SA table. <br>Chronométrer la livraison, puis « couper » une équipe et refaire la partie.</p>
     </details>
   </div>
 </section>
@@ -1080,13 +1260,25 @@ body.essentiel details.referentiel-replie{display:none}
         <text x="550" y="172" font-family="Verdana" font-size="10" fill="#9bbefc" text-anchor="middle">🏛 mairie</text>
       </svg>
       <p id="simResultat" role="status" aria-live="polite" style="text-align:center;font-weight:600;margin:10px 0;min-height:1.4em">Clique sur « Envoyer l'alerte » pour commencer. (Astuce : clique sur une liaison pour la couper/réparer.)</p>
-      <div class="assoc"><label for="b5_q1">Tu as coupé une liaison du chemin utilisé. Qu'a fait le réseau ?</label><select id="b5_q1"><option value="">— choisir —</option><option>il a trouvé automatiquement un autre chemin</option><option>l'alerte a été définitivement perdue</option><option>il a fallu appeler un technicien</option><option>le message est resté bloqué pour toujours</option></select></div>
-      <div class="assoc"><label for="b5_q2">Quand TOUTES les routes vers R5 sont coupées, que constate-t-on ?</label><select id="b5_q2"><option value="">— choisir —</option><option>l'alerte ne peut plus être livrée : aucun protocole ne remplace un réseau physiquement isolé</option><option>l'alerte passe quand même par magie</option><option>le simulateur invente une nouvelle liaison</option><option>R5 devient R4</option></select></div>
+      <fieldset class="qcm-groupe" id="b5_q1">
+  <legend>Tu as coupé une liaison du chemin utilisé. Qu'a fait le réseau ?</legend>
+  <div class="qcm-option"><input type="radio" name="b5_q1" id="b5_q1__1" value="il a trouvé automatiquement un autre chemin"><label for="b5_q1__1">il a trouvé automatiquement un autre chemin</label></div>
+  <div class="qcm-option"><input type="radio" name="b5_q1" id="b5_q1__2" value="l&#x27;alerte a été définitivement perdue"><label for="b5_q1__2">l'alerte a été définitivement perdue</label></div>
+  <div class="qcm-option"><input type="radio" name="b5_q1" id="b5_q1__3" value="il a fallu appeler un technicien"><label for="b5_q1__3">il a fallu appeler un technicien</label></div>
+  <div class="qcm-option"><input type="radio" name="b5_q1" id="b5_q1__4" value="le message est resté bloqué pour toujours"><label for="b5_q1__4">le message est resté bloqué pour toujours</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b5_q2">
+  <legend>Quand TOUTES les routes vers R5 sont coupées, que constate-t-on ?</legend>
+  <div class="qcm-option"><input type="radio" name="b5_q2" id="b5_q2__1" value="l&#x27;alerte ne peut plus être livrée : aucun protocole ne remplace un réseau physiquement isolé"><label for="b5_q2__1">l'alerte ne peut plus être livrée : aucun protocole ne remplace un réseau physiquement isolé</label></div>
+  <div class="qcm-option"><input type="radio" name="b5_q2" id="b5_q2__2" value="l&#x27;alerte passe quand même par magie"><label for="b5_q2__2">l'alerte passe quand même par magie</label></div>
+  <div class="qcm-option"><input type="radio" name="b5_q2" id="b5_q2__3" value="le simulateur invente une nouvelle liaison"><label for="b5_q2__3">le simulateur invente une nouvelle liaison</label></div>
+  <div class="qcm-option"><input type="radio" name="b5_q2" id="b5_q2__4" value="R5 devient R4"><label for="b5_q2__4">R5 devient R4</label></div>
+</fieldset>
       <label for="b5_exp" style="display:block;margin-top:10px"><b>Explique</b> avec tes mots pourquoi Internet a été conçu ainsi (plusieurs chemins possibles + tables mises à jour) :</label>
       <textarea id="b5_exp" placeholder="Internet résiste aux pannes parce que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Internet a été conçu avec plusieurs chemins possibles pour que ____.</li>
     <li>Les tables de routage sont mises à jour en permanence afin de ____.</li>
@@ -1097,10 +1289,10 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb5" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Fais vraiment les expériences ! Envoie, coupe la liaison utilisée (elle devient rouge), renvoie. Observe le NOUVEAU chemin affiché.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le maillage offre plusieurs chemins possibles ; le protocole de routage détecte la coupure et met à jour les tables : le trafic contourne. Mais si R5 est totalement isolé (plus aucune liaison), aucune règle ne peut l'atteindre : la résilience a une limite physique.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le maillage offre plusieurs chemins possibles ; le protocole de routage détecte la coupure et met à jour les tables : le trafic contourne. <br>Mais si R5 est totalement isolé (plus aucune liaison), aucune règle ne peut l'atteindre : la résilience a une limite physique.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> Chemin initial : R1→R3→R5 (le plus court : 2 sauts seulement).<br><b>b)</b> Après coupure d'une liaison du chemin (ex. R3-R5) : re-routage automatique par un chemin plus long (R1→R3→R4→R5 ou R1→R2→R4→R5) — plus lent, mais l'alerte arrive.<br><b>c)</b> R5 isolé (R3-R5 ET R4-R5 coupées) → « livraison impossible » : le protocole ne crée pas de câbles, il exploite ceux qui existent.</p>
-      <p><b>Explication attendue :</b> Internet est <b>maillé</b> (plusieurs chemins possibles entre deux points) et les routeurs <b>s'informent mutuellement</b> des routes disponibles grâce au protocole de routage. Une panne locale est contournée automatiquement, sans intervention humaine — conception héritée des besoins de résilience des premiers réseaux. C'est vital en zone cyclonique !</p>
+      <p><b>a)</b> Chemin initial : R1→R3→R5 (le plus court : 2 sauts seulement).<br><b>b)</b> Après coupure d'une liaison du chemin (ex. R3-R5) : re-routage automatique par un chemin plus long, R1, R3, R4, R5 ou R1, R2, R4, R5. <br>Plus lent, mais l'alerte arrive.<br><b>c)</b> R5 isolé (R3-R5 ET R4-R5 coupées) : « livraison impossible ». <br>Le protocole ne crée pas de câbles, il exploite ceux qui existent.</p>
+      <p><b>Explication attendue :</b> Internet est <b>maillé</b> (plusieurs chemins possibles entre deux points) et les routeurs <b>s'informent mutuellement</b> des routes disponibles grâce au protocole de routage. <br>Une panne locale est contournée automatiquement, sans intervention humaine — conception héritée des besoins de résilience des premiers réseaux. <br>C'est vital en zone cyclonique !</p>
       <p><b>Exemple réel :</b> quand un câble sous-marin est endommagé aux Antilles, le trafic est re-routé par les câbles voisins ; la connexion devient plus lente, mais elle survit.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire que le re-routage nécessite un technicien ; croire que le protocole peut « traverser » une coupure totale ; confondre lenteur (route de secours plus longue) et panne.</div>
@@ -1118,17 +1310,45 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
     <div class="consigne"><b>Consigne :</b> depuis le lycée de Rivière-Salée, Kylian envoie à sa correspondante de Tokyo un mail avec une photo (3 000 000 octets). Les paquets transportent 1 500 octets de données chacun. Réponds sans recopier les activités précédentes.</div>
     <div class="exo">
-      <div class="assoc"><label for="b6_1">Par quel équipement le mail SORT-il du réseau du lycée ?</label><select id="b6_1"><option value="">— choisir —</option><option>le routeur</option><option>le commutateur</option><option>l'écran du PC</option><option>la sirène</option></select></div>
+      <fieldset class="qcm-groupe" id="b6_1">
+  <legend>Par quel équipement le mail SORT-il du réseau du lycée ?</legend>
+  <div class="qcm-option"><input type="radio" name="b6_1" id="b6_1__1" value="le routeur"><label for="b6_1__1">le routeur</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_1" id="b6_1__2" value="le commutateur"><label for="b6_1__2">le commutateur</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_1" id="b6_1__3" value="l&#x27;écran du PC"><label for="b6_1__3">l'écran du PC</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_1" id="b6_1__4" value="la sirène"><label for="b6_1__4">la sirène</label></div>
+</fieldset>
       <div class="assoc"><label for="b6_2">Combien de paquets faut-il environ pour la photo ? (3 000 000 ÷ 1 500)</label><input type="number" id="b6_2"></div>
-      <div class="assoc"><label for="b6_3">Quel support achemine l'essentiel du trajet Martinique → Japon ?</label><select id="b6_3"><option value="">— choisir —</option><option>des câbles sous-marins successifs</option><option>un satellite unique</option><option>le Bluetooth</option><option>une antenne 4G géante</option></select></div>
-      <div class="assoc"><label for="b6_4">Les paquets 1 à 2000 arrivent, sauf le n°1207. Que se passe-t-il ?</label><select id="b6_4"><option value="">— choisir —</option><option>seul le paquet n°1207 est redemandé puis réinséré à sa place</option><option>toute la photo est renvoyée</option><option>la photo s'affiche avec un trou définitif</option><option>le mail est annulé</option></select></div>
-      <div class="assoc"><label for="b6_5">Vrai ou faux : « Tous les paquets de la photo suivent forcément le même chemin. »</label><select id="b6_5"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
-      <div class="assoc"><label for="b6_6">Un séisme endommage un câble dans le Pacifique pendant l'envoi. Le plus probable :</label><select id="b6_6"><option value="">— choisir —</option><option>les routeurs re-routent le trafic par d'autres câbles, éventuellement plus lentement</option><option>Internet s'arrête dans le monde entier</option><option>la photo revient à l'expéditeur</option><option>le Japon change d'adresse IP</option></select></div>
+      <fieldset class="qcm-groupe" id="b6_3">
+  <legend>Quel support achemine l'essentiel du trajet Martinique → Japon ?</legend>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__1" value="des câbles sous-marins successifs"><label for="b6_3__1">des câbles sous-marins successifs</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__2" value="un satellite unique"><label for="b6_3__2">un satellite unique</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__3" value="le Bluetooth"><label for="b6_3__3">le Bluetooth</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_3" id="b6_3__4" value="une antenne 4G géante"><label for="b6_3__4">une antenne 4G géante</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b6_4">
+  <legend>Les paquets 1 à 2000 arrivent, sauf le n°1207. Que se passe-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="b6_4" id="b6_4__1" value="seul le paquet n°1207 est redemandé puis réinséré à sa place"><label for="b6_4__1">seul le paquet n°1207 est redemandé puis réinséré à sa place</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_4" id="b6_4__2" value="toute la photo est renvoyée"><label for="b6_4__2">toute la photo est renvoyée</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_4" id="b6_4__3" value="la photo s&#x27;affiche avec un trou définitif"><label for="b6_4__3">la photo s'affiche avec un trou définitif</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_4" id="b6_4__4" value="le mail est annulé"><label for="b6_4__4">le mail est annulé</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b6_5">
+  <legend>Vrai ou faux : « Tous les paquets de la photo suivent forcément le même chemin. »</legend>
+  <div class="qcm-option"><input type="radio" name="b6_5" id="b6_5__1" value="vrai"><label for="b6_5__1">vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_5" id="b6_5__2" value="faux"><label for="b6_5__2">faux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="b6_6">
+  <legend>Un séisme endommage un câble dans le Pacifique pendant l'envoi. Le plus probable :</legend>
+  <div class="qcm-option"><input type="radio" name="b6_6" id="b6_6__1" value="les routeurs re-routent le trafic par d&#x27;autres câbles, éventuellement plus lentement"><label for="b6_6__1">les routeurs re-routent le trafic par d'autres câbles, éventuellement plus lentement</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_6" id="b6_6__2" value="Internet s&#x27;arrête dans le monde entier"><label for="b6_6__2">Internet s'arrête dans le monde entier</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_6" id="b6_6__3" value="la photo revient à l&#x27;expéditeur"><label for="b6_6__3">la photo revient à l'expéditeur</label></div>
+  <div class="qcm-option"><input type="radio" name="b6_6" id="b6_6__4" value="le Japon change d&#x27;adresse IP"><label for="b6_6__4">le Japon change d'adresse IP</label></div>
+</fieldset>
       <label for="b6_just" style="display:block;margin-top:10px"><b>Justifie</b> en 2-3 phrases : pourquoi ce voyage n'est possible que parce que tous les réseaux traversés respectent les mêmes protocoles ?</label>
       <textarea id="b6_just" placeholder="Le mail traverse des réseaux de pays et d'opérateurs différents…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Ce voyage n&#x27;est possible que parce que tous les réseaux traversés ____.</li>
     <li>Chaque appareil du trajet sait quoi faire du paquet parce qu&#x27;il ____.</li>
@@ -1139,10 +1359,16 @@ body.essentiel details.referentiel-replie{display:none}
       <div class="feedback" id="fb6" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends la logique de la séquence : sortie du réseau local → succession de réseaux → paquets numérotés → routage résilient. Le calcul est une simple division.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>3 000 000 ÷ 1 500 = 2 000 paquets. Pour la justification : adresses comprises partout + règles de transport identiques + annonces de routes — sans cela, chaque frontière de réseau serait un mur.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>3 000 000 ÷ 1 500 = 2 000 paquets. <br>Pour la justification : adresses comprises partout + règles de transport identiques + annonces de routes — sans cela, chaque frontière de réseau serait un mur.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Réponses :</b> le routeur · <b>2 000</b> paquets · câbles sous-marins successifs · seul le n°1207 est redemandé · faux (routes possiblement différentes) · re-routage par d'autres câbles.</p>
-      <p><b>Justification :</b> le mail traverse des dizaines de réseaux d'opérateurs et de pays différents. Ils n'ont ni le même matériel ni la même langue humaine — mais ils partagent les <b>mêmes protocoles</b> : adressage IP compris par tous, découpage en paquets identique, règles de routage communes et annonces de routes mutuelles. C'est cette norme partagée qui transforme des milliers de réseaux étrangers en UN réseau mondial.</p>
+      <p><b>Réponses :</b> <br>
+      1. L'équipement qui aiguille : le <b>routeur</b>. <br>
+      2. <b>2 000</b> paquets. <br>
+      3. Le trajet : des câbles sous-marins successifs. <br>
+      4. Seul le paquet n°1207 est redemandé. <br>
+      5. « Tous les paquets suivent la même route » : faux, les routes peuvent différer. <br>
+      6. Liaison coupée : re-routage par d'autres câbles.</p>
+      <p><b>Justification :</b> le mail traverse des dizaines de réseaux d'opérateurs et de pays différents. <br>Ils n'ont ni le même matériel ni la même langue humaine — mais ils partagent les <b>mêmes protocoles</b> : adressage IP compris par tous, découpage en paquets identique, règles de routage communes et annonces de routes mutuelles. <br>C'est cette norme partagée qui transforme des milliers de réseaux étrangers en UN réseau mondial.</p>
       <p><b>Bilan :</b> si tu as répondu sans rouvrir les corrections, les notions sont acquises — note le reste dans ton bilan ci-dessous.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre 200 ou 20 000 paquets (erreur de zéros) ; répondre « vrai » au chemin unique ; justifier par « c'est obligatoire » sans expliquer l'interopérabilité.</div>
@@ -1155,22 +1381,24 @@ body.essentiel details.referentiel-replie{display:none}
   <h2>📝 Synthèse de la séquence — à retenir</h2>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5 — rien de nouveau ici.</p>
   <h4>1. Du réseau local à Internet (activités 1-2)</h4>
-  <p>Un réseau local = <b>terminaux</b> + <b>commutateur</b> (relie à l'intérieur) + <b>routeur</b> (porte vers les autres réseaux). Chaque équipement a une <b>adresse IP</b>. <b>Internet est un réseau de réseaux</b> : une information traverse une succession de réseaux (local → opérateur → câbles sous-marins → opérateur du destinataire), et l'on sait représenter ce trajet par un schéma fléché. ~99 % du trafic intercontinental passe par les <b>câbles sous-marins</b>.</p>
+  <p>Un réseau local = <b>terminaux</b> + <b>commutateur</b> (relie à l'intérieur) + <b>routeur</b> (porte vers les autres réseaux). <br>Chaque équipement a une <b>adresse IP</b>. <br><b>Internet est un réseau de réseaux</b> : une information traverse une succession de réseaux (local, opérateur, câbles sous-marins, opérateur du destinataire). <br>On sait représenter ce trajet par un schéma fléché. ~99 % du trafic intercontinental passe par les <b>câbles sous-marins</b>.</p>
   <h4>2. Les paquets (activité 3)</h4>
-  <p>Tout message est <b>découpé en paquets numérotés</b> portant les adresses IP source et destination. Ils voyagent indépendamment (routes parfois différentes), sont <b>réassemblés grâce aux numéros</b>, et un paquet perdu est redemandé individuellement.</p>
+  <p>Tout message est <b>découpé en paquets numérotés</b> portant les adresses IP source et destination. <br>Ils voyagent indépendamment (routes parfois différentes), sont <b>réassemblés grâce aux numéros</b>, et un paquet perdu est redemandé individuellement.</p>
   <h4>3. Le routage et sa nécessité (activités 4-5)</h4>
-  <p>Chaque routeur aiguille les paquets grâce à sa <b>table de routage</b>, mise à jour automatiquement. Le <b>protocole de routage commun</b> est indispensable : sans règles partagées par tous les réseaux, pas de communication possible entre eux. Le <b>maillage</b> + les mises à jour rendent Internet <b>résilient</b> aux pannes — dans la limite du physique : un réseau isolé reste injoignable.</p>
+  <p>Chaque routeur aiguille les paquets grâce à sa <b>table de routage</b>, mise à jour automatiquement. <br>Le <b>protocole de routage commun</b> est indispensable : sans règles partagées par tous les réseaux, pas de communication possible entre eux. <br>Le <b>maillage</b> + les mises à jour rendent Internet <b>résilient</b> aux pannes — dans la limite du physique : un réseau isolé reste injoignable.</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">réseau = network</span><span class="tag">routeur = router</span><span class="tag">commutateur = switch</span><span class="tag">paquet = packet</span><span class="tag">table de routage = routing table</span><span class="tag">câble sous-marin = submarine cable</span><span class="tag">protocole = protocol</span><span class="tag">pare-feu = firewall</span></p>
 </section>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
   <p>🗺 <b>Défi carte :</b> sur le site (public) de cartographie des câbles sous-marins, retrouve les câbles qui desservent la Martinique et note leurs points d'atterrissage.</p>
   <p>⏱ <b>Défi mesure :</b> avec le professeur, lance <code>tracert</code> (Windows) vers un site français puis japonais : compte les routeurs traversés et compare.</p>
   <p>🔧 <b>Défi Filius :</b> ajoute un 3e réseau à ton montage Filius et fais communiquer les trois — combien de routes possibles maintenant ?</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card">
@@ -1182,7 +1410,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp_retour" placeholder="En fait, le message passe par…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Au départ je pensais que ____.</li>
     <li>Maintenant je sais que ____, parce que ____ me l&#x27;a montré.</li>
@@ -1194,7 +1422,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>J&#x27;ai appris que un paquet voyage de réseau en réseau grâce à ____.</li>
     <li>J&#x27;ai appris que une table de routage sert à ____.</li>
@@ -1204,7 +1432,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je sais maintenant suivre le trajet d&#x27;un message de la Martinique à ____.</li>
     <li>Je sais maintenant expliquer pourquoi un message arrive même quand ____.</li>
@@ -1214,7 +1442,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je dois encore revoir ____, parce que ____.</li>
     <li>Ce que je n&#x27;arrive pas encore à faire seul·e : ____.</li>
@@ -1261,7 +1489,8 @@ function collect(){
   const o = {inputs:{}, radios:{}, valid: window.__valid || {}, coupees: window.__coupees || [],
              simOk: !!window.__simOk, rerouteVu: !!window.__rerouteVu,
              isoleVu: !!window.__isoleVu};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  // n°300 : chaque groupe de boutons radio (fieldset.qcm-groupe) porte sa valeur ; ses boutons sont déjà sauvés par leur nom
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
@@ -1317,7 +1546,7 @@ $("btnDecoupe").addEventListener("click", ()=>{
   ordre.forEach(i=>{
     html += `<div class="assoc" style="background:#0d2347;border:1px solid var(--color-border,#274a8a);border-radius:9px;padding:8px 12px">
       <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em"><b style="color:#ffd66b">n°${i+1}/3</b> · IP dest. 203.0.113.25 · « ${parts[i].replace(/</g,"&lt;")} »</span>
-      <select data-paquet="${i}" aria-label="Position du paquet ${i+1}"><option value="">position…</option><option>1</option><option>2</option><option>3</option></select></div>`;
+      <select id="paquet_${i}" data-paquet="${i}" data-interface="simulateur" aria-label="Position du paquet ${i+1}"><option value="">position…</option><option>1</option><option>2</option><option>3</option></select></div>`;
   });
   html += '</div><button class="btn small" id="btnReassemble" type="button" style="margin-top:8px">🧩 Réassembler</button>';
   $("zonePaquets").innerHTML = html;
@@ -1840,6 +2069,14 @@ function appliqueSeance(idPanneau){
 }
 let ouvertEnImpression = null;
 window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+/* Révision du 11/11/2026 : le Bonus est replié à l'écran ; il s'ouvre pour l'impression (beforeprint et média émulé). */
+(function(){
+  var replis = "details.bonus-replie", etats = null;
+  function ouvrir(){ etats = []; document.querySelectorAll(replis).forEach(function(d){ etats.push([d, d.open]); d.open = true; }); }
+  function refermer(){ if (!etats) return; etats.forEach(function(e){ e[0].open = e[1]; }); etats = null; }
+  window.addEventListener("beforeprint", ouvrir); window.addEventListener("afterprint", refermer);
+  if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) ouvrir(); else refermer(); }); }
+})();
 window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
 function ouvrirSeanceDeLAncre(){
