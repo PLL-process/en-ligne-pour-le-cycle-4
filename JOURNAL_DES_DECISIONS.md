@@ -30065,3 +30065,18 @@ Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) vi
 - L'indice grammatical et les questions des séquences (boutons radio) ne sont vus par aucun outil.
 - Du rapport, non repris : le degré de certitude (« sûr / pas sûr ») dans le moteur des QCM — il change 72 pages dont le HTML est la source, décision de Pascal ; le rappel en début de séance — déjà « à concevoir » dans `docs/mode-mission/PLAN.md` ; une typographie « dyslexie » — écartée par le même plan (aucun gain mesuré pour une police dédiée).
 - Les contrôles navigateur du dépôt ne trouvent pas `playwright` en session cloud sans un lien dans le dossier parent (constat du 23/10, toujours vrai le 11/11).
+
+---
+
+## 11/11/2026 — Trois écarts croisés pendant la veille, refermés : « kN » sans son nom, un manifeste en retard d'une question, un banc qui prenait le lien de la licence pour un fichier (transversal : thèmes 1 et 3)
+
+**Demande de Pascal (11/11).** « Corrige les défauts » — les deux signalés à la fin du lot de veille (#663).
+
+**Décisions.**
+- **`4e_C7.3`, activité « Le plus adapté »** (n°312). Dans la grille, la réponse A portait « 1,5 kN » sans son nom, et elle est la seule des quatre réponses à porter une unité : elle s'écrit en toutes lettres, sans parenthèse — « avec 1,5 kilonewton sur le grand côté ». Quinze occurrences dans la page (liste des réponses, boutons radio, vérification) et la ligne de `reponses_4e_C7.3.json`, que le banc lit. La correction, elle, disait déjà « 1,5 kN (kilonewtons) ».
+- **Manifeste de `5e_C2.1`** (n°261). Le QCM compte 34 questions depuis qu'une question y a été ajoutée (19 pour 5e_C2.1, 15 pour 5e_C2.2 ; la page et sa clé `_34q` le disaient) ; le manifeste annonçait encore 33 et 18. Corrigé, avec la répartition mesurée des bonnes réponses : 9 · 8 · 8 · 9.
+- **Troisième écart, trouvé en rejouant le banc de ce lot** : `tests_5e_C2.1-C2.2_shenzhen.py` échouait sur « liens de navigation valides » des deux synthèses, avant comme après ma correction (149 / 151). Les pages sont justes : depuis la n°321, leur pied porte le lien de la licence, et le banc cherchait `https://creativecommons.org/…` comme un fichier du dossier. Le banc ignore désormais les liens `http(s)` ; les liens locaux restent vérifiés.
+
+**Mesure.** `controle_unites.py` : 1 écart → 0. `controle_effectifs_qcm.py` : 2 écarts → 0. Banc 4e_C7.3 : 44 / 44 (séquence) et 34 / 34 (n°311) ; `banc_mat.py` sans erreur. Banc 5e_C2.1 : 149 / 151 → 151 / 151. `controle_axe.mjs` sur la page de 4e_C7.3 : aucun recul.
+
+**Non fait.** `materiaux.py` de 4e_C7.3 garde « 1,5 kN » dans sa donnée `sigma` : elle ne s'affiche pas telle quelle (la correction de la page nomme l'unité). Le rapport de tests de 5e_C2.1 dit encore « QCM à 33 questions » à la date où il a été écrit : un rapport daté ne se réécrit pas.

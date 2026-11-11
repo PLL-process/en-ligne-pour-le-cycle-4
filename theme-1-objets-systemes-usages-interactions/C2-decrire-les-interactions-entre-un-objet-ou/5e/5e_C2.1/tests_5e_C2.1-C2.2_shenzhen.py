@@ -701,7 +701,8 @@ with sync_playwright() as p:
         t(f"synthèse {nom} : liens de navigation valides",
           all(pathlib.Path("Synthèses").joinpath(h.split("#")[0]).exists()
               for h in pg.eval_on_selector_all("a", "a=>a.map(e=>e.getAttribute('href'))")
-              if not h.startswith("#")))   # n°316 : la carte renvoie aux parties de la page (#partie-N)
+              if not h.startswith("#")            # n°316 : la carte renvoie aux parties de la page (#partie-N)
+              and not h.startswith(("http://", "https://"))))   # n°321 : le lien de la licence sort du dépôt, ce n'est pas un fichier
 
     b.close()
 
