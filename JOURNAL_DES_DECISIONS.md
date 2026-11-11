@@ -29867,3 +29867,19 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Reste à faire** : le thème 1 (38 pages à boutons radio, l'autre session) et le thème 3 (19 pages) ; 4e_C6.1 et 4e_C6.2 le recevront à leur révision (lignes 25 et 26).
 
 **Mesure.** 12 pages, 264 groupes. Bancs des douze dossiers tous verts après mélange (dont 5e_C4.1 : 64/64, 34/34, 25/25). Contrôles du thème 2 verts (fiche papier, hiérarchie, tactile, mode essentiel, règles visibles).
+
+---
+
+## 11/11/2026 — Lampadaire de 5e, séance 2 : la voix de l'étape 1 disait « lumineu »
+
+**Constat de Pascal**, à l'écoute de l'animation des deux chaînes : la voix dit « l'énergie lumineu » au lieu de « l'énergie lumineuse ».
+
+**Cause.** Étape 1, « … convertit l'énergie lumineuse en énergie électrique ». La phonétisation était juste (« lyminˈøz ɑ̃n »), mais la voix de synthèse avalait le [z] en fin de mot devant « en ». La transcription automatique du 08/11 l'avait laissée passer : un outil de transcription rétablit le mot attendu, il n'entend pas la consonne qui manque.
+
+**Décisions.**
+- `phrases.json`, scène 1 : phonèmes corrigés à la main, le [z] rattaché au mot suivant (« lyminˈø zɑ̃n », l'enchaînement du français parlé). Le texte affiché ne change pas.
+- Nouvelle prise de la seule étape 1 (`generer.py --scene 1`, même modèle — empreinte vérifiée —, mêmes réglages) ; les huit autres fichiers sont intacts. L'étape 8 (« en énergie lumineuse : ») a été mesurée : son [z] sonne, elle n'est pas reprise.
+- **Contrôle** : mesure du bruit de friction du [z] (part d'énergie au-dessus de 3 kHz, là où tombe la consonne). Ancienne prise : 10 % au plus ; prise sans [z], pour comparer : 0 % ; nouvelle prise : 31 %. Trois prises produites, la plus nette gardée.
+- **Non écoutée** : je ne peux pas écouter un fichier son. `voix.json` le dit ; seule l'écoute de Pascal valide la prise.
+
+**Mesure.** Étape 1 : 11,4 s (11,6 avant) ; Opus 44,4 Ko, MP3 66,7 Ko. Banc de la séquence 64/64.
