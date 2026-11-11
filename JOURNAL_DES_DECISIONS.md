@@ -29827,3 +29827,15 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - `restore()` cherche le bouton par comparaison de valeur, comme en 3e_C6.1.
 
 **Mesure.** Séances : 1 196 · 628 · 496 · 399 · 611 · 2 113 mots visibles (1 248 · 682 · 484 · 417 · 644 · 2 663 avant). ✘ 1 → 0 ; menus 64 → 0 ; aération 17 → 3. Bancs 64/64, 34/34 et 25/25 ; contrôles verts.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 23 : 5e_C6.1, 30 listes en boutons radio, quatre corrections réécrites
+
+**Décisions.**
+- **n°300** : 30 listes → groupes de boutons radio (122 propositions) ; `collect()` lit la valeur des groupes. Aucune grille lettrée : la seule que `grilles_radio.py` proposait lettrait les numéros d'étape (A = 1 … F = 6). Les réponses d'un mot ou d'un chiffre (numéros d'étape, SI / ET / SINON, auto-positionnement) se cochent en rangée (`qcm-rangee`).
+- **Corrections exhaustives** : les quatre corrections donnaient les réponses cousues (« Humidité = donnée utilisée · ordre d'arroser = … »). Chacune reprend ses questions une par ligne, avec la raison : classement des six données, ordre des six étapes, trois mots-clés, mission et prédictions, réinvestissement.
+- **Aération** : 31 retours posés ; deux aides écrites une idée par ligne. Bonus replié, ouvert à l'impression.
+- **À décider (toutes les séquences converties)** : dans plusieurs questions, la bonne réponse est la première proposition. C'était déjà l'ordre des listes ; en boutons radio, cela se voit. Non modifié ici ; question posée à Pascal (mélanger les propositions dans `migrer_gabarit_306.py`).
+
+**Mesure.** Séances : 438 · 569 · 912 mots visibles (459 · 596 · 1 023 avant). ✘ 1 → 0 ; menus 30 → 0 ; aération 5 → 0. Bancs 32/32 et 34/34 ; contrôles verts.
