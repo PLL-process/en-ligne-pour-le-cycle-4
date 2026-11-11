@@ -29701,3 +29701,15 @@ la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui import
 - **Aération** : 91 retours posés par l'outil ; les corrections « d'un seul tenant » (ALIMENTER, la MLI, le squelette du défi 1 en une ligne par forme) réécrites.
 
 **Mesure.** Séances : 1 173 · 1 307 · 1 510 · 817 · 1 104 mots visibles (avant : 1 173 · 1 586 · 1 990 · 1 836 · 2 752). Aération 14 → 0 ; ✘ 0 ; bancs 39/39 et 38/38 ; contrôles verts. **Écart** : les séances 2 et 3 restent au-dessus du repère — leurs exercices sont longs par nature (six positions, chaîne d'énergie à étiqueter, deux chaînes dans draw.io avec leurs fichiers à télécharger) ; piste : une grille lettrée pour l'activité 2.1 si ses propositions sont les mêmes d'une question à l'autre (elles ne le sont pas aujourd'hui).
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 18 : 3e_C4.8, la recette de l'architecte et les erreurs fréquentes se replient, 30 listes en boutons radio
+
+**Décisions.**
+- **n°300** : 30 listes → groupes de boutons radio (120 propositions) ; `collect()` lit la valeur des groupes. Aucune grille : les propositions diffèrent d'une question à l'autre.
+- **Replis** : les quatre (cinq, avec l'activité 3) étapes de « la recette de l'architecte » gardent leur titre visible, l'explication s'ouvre dessous (`details.recette-repliee`) — la vignette de chaque étape reste dans la figure ; les cinq blocs « ⚠ Erreurs fréquentes » sous un volet « à ouvrir avant de vérifier » ; le corps de la synthèse en page sous son titre ; le Bonus (`replier_bonus.py`). Tous s'ouvrent à l'impression.
+- **Aération** : 91 retours posés ; « le voyage réel » de la simulation (six sauts cousus par des flèches) réécrit un saut par ligne, avec son horodatage ; la mission en ①②③④ ; la problématique en deux questions ; la situation, la rue-pont, le TTL et le protocole de routage (aides) en phrases courtes.
+
+**Mesure.** Séances : 1 504 · 635 · 1 485 mots visibles (avant : 2 076 · 934 · 1 953). ✘ 1 → 0 ; menus 30 → 0 ; aération 9 → 0. Banc n°311 34/34 (le lot n'a pas de banc d'activités) ; contrôles verts. **Écart** : les séances 1 et 3 restent au-dessus du repère ; ce qui reste visible, ce sont les questions — deux activités de 20 min plus le billet d'entrée, deux activités de 25 min plus la clôture. Piste : rien à replier de plus sans toucher aux exercices ; une séance de plus serait une décision de Pascal.
+
