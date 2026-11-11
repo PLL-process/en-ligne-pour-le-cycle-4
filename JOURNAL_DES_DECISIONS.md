@@ -29997,3 +29997,16 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 **Par ailleurs.** Pascal, le 11/11 : « Sur une tablette c'est bon » (mode mission essayé sur une vraie tablette) ; et, sur le modèle des pourquoi et des leurres : « Je te laisse carte blanche » — l'extension aux neuf autres séquences est lancée après cette révision.
 
 **Mesure.** Séances : 1 329 · 732 · 997 mots visibles (1 990 · 730 · 1 891 avant). ✘ 6 → 0 ; menus 25 → 0 (4 voulus) ; aération 18 → 0. Bancs 56/56 et 34/34 ; contrôles verts. Le vérificateur des incrustations signale 19 autres pages « à mettre à jour » : elles le sont déjà sur `main`, sans lien avec cette révision.
+
+---
+
+## 11/11/2026 — Mode mission : la consigne des étiquettes dit d'abord de les faire glisser (transversal : `_outils`, thème 2)
+
+**Demande de Pascal (11/11).** « Je préfère déplacer les étiquettes », puis carte blanche sur la réponse.
+
+**Décisions.**
+- **La consigne est inversée** dans la source (`_outils/mode_mission/mission.js`) : « Fais glisser chaque étiquette vers sa case. Tu peux aussi la toucher, puis toucher sa case. » Elle disait le toucher d'abord, le glisser ensuite. Les deux gestes et le clavier restent : rien d'autre ne change dans le moteur.
+- **Reposée par `poser.py` sur les dix séquences qui portent le mode** (thème 2).
+- **Non fait, et pourquoi** : reglisser au doigt une étiquette déjà posée. Les cases sont empilées, donc ce glisser est vertical, comme le défilement de la page ; le moteur laisse la page défiler quand le doigt part d'une case, et toucher la case rend l'étiquette à la réserve, d'où elle se glisse de nouveau. À rouvrir si la classe le demande.
+
+**Mesure.** `controle_mode_mission.py` : 10 pages, 0 refus. Banc générique : 10 pages, aucun refus. Banc du pilote : 50 / 50. **Non essayé sur une vraie tablette** pour ce lot : seul le texte de la consigne change.
