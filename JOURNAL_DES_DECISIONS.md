@@ -29852,3 +29852,18 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - Pascal confirme le 11/11 que « les bonnes réponses sont toujours les premières » : le mélange des propositions fait l'objet de l'entrée suivante et d'une PR à part.
 
 **Mesure.** Séances : 795 · 599 · 1 179 mots visibles (819 · 623 · 1 316 avant). ✘ 1 → 0 ; menus 30 → 0 ; aération 4 → 0. Bancs 26/26 et 34/34 ; contrôles verts.
+
+---
+
+## 11/11/2026 — Les propositions des boutons radio sont mélangées : la bonne réponse n'est plus toujours la première
+
+**Constat de Pascal**, sur le lampadaire de 5e en ligne : « on dirait que les bonnes réponses sont toujours les premières ». Vrai : les listes déroulantes rangeaient la bonne réponse juste sous « — choisir — », et la conversion n°300 a gardé cet ordre. En boutons radio, un élève le repère dès la deuxième question.
+
+**Décisions.**
+- **Nouvel outil `_outils/melanger_propositions.py`** : dans chaque `fieldset.qcm-groupe`, l'ancienne tête de liste prend une place tirée à tour de rôle (1re, 2e, 3e, 4e), les autres propositions sont mélangées autour. Le tirage est fixé par le nom de la page et l'identifiant du groupe ; le groupe porte `data-melange="1"` : rejouer l'outil ne change rien.
+- **Ce qui ne bouge pas** : les grilles lettrées, les rangées (`qcm-rangee`), les positionnements, les groupes de nombres, les échelles à pastilles, les groupes de deux propositions, les incrustations d'atelier ; « je ne sais pas encore », « aucune… », « les deux » restent en dernier.
+- **Rejoué sur les douze séquences du thème 2 déjà révisées** (lignes 12 à 24 du suivi) : 264 groupes mélangés. Les bancs lisent les réponses attendues par leur valeur, pas par leur rang : aucun n'a dû être adapté.
+- **La passe de révision l'intègre** (skill `revision-sequence`, étape 2).
+- **Reste à faire** : le thème 1 (38 pages à boutons radio, l'autre session) et le thème 3 (19 pages) ; 4e_C6.1 et 4e_C6.2 le recevront à leur révision (lignes 25 et 26).
+
+**Mesure.** 12 pages, 264 groupes. Bancs des douze dossiers tous verts après mélange (dont 5e_C4.1 : 64/64, 34/34, 25/25). Contrôles du thème 2 verts (fiche papier, hiérarchie, tactile, mode essentiel, règles visibles).
