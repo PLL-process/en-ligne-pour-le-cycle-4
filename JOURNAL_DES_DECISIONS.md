@@ -29867,3 +29867,17 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Reste à faire** : le thème 1 (38 pages à boutons radio, l'autre session) et le thème 3 (19 pages) ; 4e_C6.1 et 4e_C6.2 le recevront à leur révision (lignes 25 et 26).
 
 **Mesure.** 12 pages, 264 groupes. Bancs des douze dossiers tous verts après mélange (dont 5e_C4.1 : 64/64, 34/34, 25/25). Contrôles du thème 2 verts (fiche papier, hiérarchie, tactile, mode essentiel, règles visibles).
+
+---
+
+## 11/11/2026 — Le contrôle de la place des bonnes réponses ne voyait pas le lampadaire : deux angles morts fermés
+
+**Constat.** `_outils/controle_ordre_propositions.py` (08/11/2026) existait et disait « ✅ nulle part la bonne réponse ne se devine à sa place », alors que Pascal venait de voir le contraire sur le lampadaire de 5e. Je l'ai découvert après avoir écrit `melanger_propositions.py` (#653) : les deux outils se recouvrent en partie.
+
+**Deux angles morts.**
+- Le contrôle lisait une page comme « mélangée au chargement » dès que ses scripts contenaient le mot « mélange ». Six pages passaient ainsi sans être mesurées — le lampadaire à cause d'une fonction de couleurs `melange(a, b, f)`, d'autres à cause d'un texte (« se mélangeraient »). Seule la séquence de cybersécurité mélange vraiment (Fisher-Yates). Le motif ne reconnaît plus qu'un mélange fait par un script.
+- Il ne lisait que `<fieldset class="qcm-groupe" id="…">` écrit exactement ainsi : un groupe en grille, en rangée, ou marqué `data-melange` par #653 n'était plus lu. Le motif accepte les autres classes et attributs ; `--corriger` les conserve et ne réordonne ni grille, ni rangée, ni positionnement.
+
+**Mesure.** Groupes appariés à leur réponse attendue : 275 → 524 ; pages mesurées : 15 → 21 ; 0 refus. Les onze séquences révisées du thème 2 sont mesurées avec leurs vraies réponses : la bonne réponse est répartie (lampadaire de 5e : 17 · 14 · 13 · 7 sur les quatre places ; jardin de 4e : 8 · 9 · 7 · 8).
+
+**Ce qui reste hors de vue.** 50 pages à boutons radio n'ont pas de table `const att` lisible par le contrôle (28 au thème 1, 3 au thème 2, 19 au thème 3) : leur ordre n'est pas mesuré. À traiter : apprendre au contrôle leurs tables, ou y rejouer `melanger_propositions.py`.
