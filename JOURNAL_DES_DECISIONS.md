@@ -30016,3 +30016,33 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) viennent après.
 
 **Mesure.** Banc générique sur les deux pages : aucun refus, 47 réponses croisées avec la vérification des pages. Bancs des séquences : 32/32, 34/34, 29/29, 34/34. Mots visibles inchangés.
+
+---
+
+## 11/11/2026 — Veille des skills pédagogiques : rien à installer, deux contrôles nés de la lecture — les indices de QCM et axe-core en permanence (transversal : `_outils`, `.claude`, `SKILLS_AUDIT.md`)
+
+**Demande de Pascal (11/11).** « Cherche sur le web des skills, des plugins ou autres » pour améliorer séquences, TP, QCM et synthèses ; puis, après le rapport : « installe et crée ce que tu as repéré, tu as carte blanche ».
+
+**Ce que la veille a rendu.** Trois bibliothèques de skills pédagogiques et cinq outils, consignés dans `SKILLS_AUDIT.md` (« Skills externes »). **Aucune skill n'est installée** : la plus sérieuse (Gareth Manning, 165 skills) est sous CC BY-SA 4.0, dont le texte ne peut pas entrer dans un dépôt CC BY-NC-SA 4.0 (n°321) ; les deux autres doublonnent les skills du dépôt.
+
+**Ce que la lecture du dépôt a corrigé dans le rapport.** Le rapport classait dix améliorations. Le dépôt en portait déjà la plupart : place et longueur des bonnes réponses (n°137, n°144, n°323), réfutation de chaque distracteur et erreur classique (`d`, `err`), pourquoi de chaque erreur et leurres (mode mission), voix Piper SIWIS, impression, charge de lecture mesurée. Deux manques réels, comblés ici ; un troisième laissé à qui conçoit le mode mission.
+
+**Décisions.**
+- **Nouveau contrôle `_outils/controle_indices_qcm.mjs`** : une bonne réponse ne se devine pas à ses mots. Il lit le tableau `const QUESTIONS` des QCM autonomes, sans navigateur, et cherche trois indices que rien ne mesurait (Haladyna, Downing et Rodriguez, 2002) : le mot absolu qui ne vit que dans les mauvaises réponses, la bonne réponse seule à reprendre un mot de l'énoncé, la proposition fourre-tout. Les deux premiers se refusent au niveau de la banque ; le troisième se mesure (`--strict` pour le refuser).
+- **Des seuils recalés sur la mesure.** Un premier seuil (90 % de mots absolus faux, sur 8) refusait 20 banques sur 72 : avec quatre propositions dont une juste, le hasard place déjà un mot absolu dans une mauvaise réponse 75 fois sur 100. Seuil retenu : 95 % sur 12 au moins. De même, un motif `^les deux` accusait 63 propositions (« les deux tâches qui possèdent de la marge ») : il en reste 12.
+- **Nouveau contrôle `_outils/controle_axe.mjs`** : l'accessibilité ne recule pas. L'audit externe du 01/11 avait passé axe-core sur 408 pages, puis l'outil était reparti avec la session. Le contrôle rejoue la même mesure (mêmes règles, 1 280 px) et la compare à `_outils/axe_reference.json`, règle par règle et page par page : il refuse qu'une page porte plus de défauts graves qu'à la référence. Les défauts de structure (`region`, `heading-order`), laissés à Pascal par l'audit (décision 4), sont comptés, jamais refusés.
+- **`axe-core` n'est pas versionné** (licence MPL-2.0) : c'est un outil de contrôle, comme Playwright. Sans lui, le contrôle sort à 2 (n°299).
+- **Skills mis à jour** : `qcm-html-accessible` (les quatre indices de mots, le contrôle), `controle-qualite-lot` (les deux outils, le prérequis).
+- **Aucune règle d'or réservée.** Deux candidates, à l'appréciation de Pascal : « la bonne réponse ne se devine pas à ses mots » (pendant de la n°323) ; « une page ne porte pas plus de défauts d'accessibilité graves qu'à la référence ».
+
+**Mesure.**
+- Indices : 72 banques, 2 181 questions. **2 banques refusées** pour le mot absolu — `qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html` (15 sur 15) et `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html` de 4e_C4.7 (13 sur 13). Sur le site : 720 mots absolus sur 861 sont dans une mauvaise réponse (84 %, pour 75 % attendus). Écho : 98 questions, aucune banque au-dessus de 23 %. Fourre-tout : 12. Six pages `qcm_*.html` n'ont pas de tableau lisible : non mesurées.
+- axe-core 4.14 : 407 pages mesurées, une page de renvoi comptée à part. Défauts graves à la référence : 138 nœuds — `color-contrast` 114 (19 pages), `label` 10 (4), `select-name` 6 (3), `label-content-name-mismatch` 5 (2), `aria-prohibited-attr` 2 (2), `list` 1. L'audit du 01/11 en laissait 117, 10 et 20 pour les trois premières. Structure : `region` 5 137 nœuds (384 pages), `landmark-one-main` 265, `heading-order` 73 (51 pages).
+- Bancs : `tests_controle_indices_qcm.mjs` 32 / 32 ; `tests_controle_axe.mjs` 25 / 25.
+
+**Non fait, et dit.**
+- **Les deux banques refusées ne sont pas corrigées** : réécrire des propositions est un travail de contenu, à faire avec la séquence sous les yeux. Sur `main`, `controle_indices_qcm.mjs` sort donc à 1 tant qu'elles ne le sont pas.
+- Les 138 nœuds graves restent à corriger ; le contrôle ne fait que les empêcher de croître.
+- L'indice grammatical et les questions des séquences (boutons radio) ne sont vus par aucun outil.
+- Du rapport, non repris : le degré de certitude (« sûr / pas sûr ») dans le moteur des QCM — il change 72 pages dont le HTML est la source, décision de Pascal ; le rappel en début de séance — déjà « à concevoir » dans `docs/mode-mission/PLAN.md` ; une typographie « dyslexie » — écartée par le même plan (aucun gain mesuré pour une police dédiée).
+- Les contrôles navigateur du dépôt ne trouvent pas `playwright` en session cloud sans un lien dans le dossier parent (constat du 23/10, toujours vrai le 11/11).
