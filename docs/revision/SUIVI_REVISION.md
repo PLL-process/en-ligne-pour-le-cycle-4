@@ -39,7 +39,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 20 | `3e_C6.1` | 1135 → 1009 | 1 → 0 | 23 → 0 | 9 → 0 | livrée #648 |
 | 21 | `3e_C6.2` | 1285 → 1185 | 1 → 0 | 32 → 0 | 5 → 0 | livrée #649 |
 | 22 | `5e_C4.1` | 2663 → 2113 | 1 → 0 | 64 → 0 | 17 → 3 | livrée #650 — séance 6 au-delà du repère (positionnement sur 8 compétences : 512 mots ; FAST incrusté : 680) ; pistes : une séance 7 « synthèse et bilan », ou un positionnement en grille. Aération : 3 lectures fléchées du FAST, à la source de l'atelier (thème 1) |
-| 23 | `5e_C6.1` | 1023 → 912 | 1 → 0 | 30 → 0 | 5 → 0 | livrée #PR |
+| 23 | `5e_C6.1` | 1023 → 912 | 1 → 0 | 30 → 0 | 5 → 0 | livrée #651 |
 | 24 | `4e_C5.1` | 1316 | 1 | 30 | 4 | à faire |
 | 25 | `4e_C6.1` | 1460 | 1 | 28 | 6 | à faire |
 | 26 | `4e_C6.2` | 1990 | 6 | 25 | 18 | à faire |
