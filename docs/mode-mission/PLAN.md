@@ -12,8 +12,8 @@ qui se projette, et que mesurent les contrôles du dépôt.
 
 - Source unique : `_outils/mode_mission/` (`mission.css`, `mission.js`), posée dans chaque page par `poser.py`,
   entre deux marqueurs — comme la fiche papier. Contrôle : `_outils/controle_mode_mission.py`.
-- Aucune donnée propre à une page dans le bloc : les réponses attendues sont lues dans la page elle-même
-  (tables `const att = {…}` de ses vérifications).
+- Aucune donnée propre à une page dans le bloc : les réponses attendues sont lues dans la page elle-même, dans
+  ses vérifications (quatre écritures reconnues : `_outils/mode_mission/README.md`).
 
 ## Les écrans d'une séance
 
@@ -82,15 +82,37 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 - [x] Essai sur une vraie tablette, par Pascal (11/11/2026) : « Sur une tablette c'est bon. » Reste l'essai en classe.
 - [ ] Décider de la vue par défaut. L'allumer d'office demande d'apprendre aux bancs et aux contrôles à ouvrir la
       page complète (`?vue=page`) : ils mesurent et jouent la page qui défile.
-- [ ] Gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) et `4e_C4.1_book-train` : à apprendre au moteur.
-- [ ] Ancien gabarit (`div.act` posées dans une seule carte, sans `.exo` : `4e_C6.2` et la famille C7/C8 du thème 3) :
-      le banc générique le refuse — un écran par séance, aucune question vérifiée. À apprendre au moteur.
+- [x] Gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) et ancien gabarit (`div.act` posées dans une seule carte :
+      `4e_C6.2`, famille C7/C8) : appris au moteur — une activité est le bloc qui porte un exercice et son bouton
+      de vérification, quelle que soit sa classe.
 - [ ] Autres habillages : cartes à remettre dans l'ordre (séries de numéros), texte à trous.
-- [ ] Les séquences suivantes : à chaque révision (skill `revision-sequence`, étape 7), poser le mode et jouer le
-      banc générique. Thèmes 1 et 3 : même geste.
+- [ ] À chaque révision (skill `revision-sequence`, étape 7) : rejouer le banc générique — la révision change ce
+      que le mode lit (listes déroulantes devenues boutons radio, questions rangées en grille) — et écrire les
+      pourquoi de la séquence.
 - [x] Leurres et pourquoi des erreurs : le modèle, sur le lampadaire (`mission_5e_C4.1.json`, `enrichir.py`).
 - [x] Avis de Pascal sur le modèle (11/11) : « Je te laisse carte blanche ». Faits : `5e_C6.1`, `4e_C6.1`.
 - [ ] Les pourquoi des sept autres séquences qui portent le mode.
-- [ ] **« Le mode mission doit être partout »** (Pascal, 11/11) : apprendre au moteur l'ancien gabarit et le gabarit
-      « atelier », puis poser le mode sur toutes les séquences des trois thèmes que le banc générique accepte.
+- [x] **« Le mode mission doit être partout »** (Pascal, 11/11), premier lot : le mode est posé sur **55 pages de
+      séquence sur 60**, dans les trois thèmes (état ci-dessous).
+- [ ] « Partout », la suite : `4e_C4.1_book-train` et les quatre pages « station » de `3e_C9.2` (le mode n'y démarre
+      pas) ; `3e_C1.5`, `4e_C1.4`, `5e_C1.3` (une carte par écran, à découper).
 - [ ] Rappel en début de séance, maîtrise confirmée, code bilan.
+
+## Où en est chaque séquence (11/11/2026)
+
+Mesure : `node _outils/mode_mission/banc_generique.mjs` (sans argument : toutes les pages qui portent le bloc).
+55 pages acceptées, aucune refusée ; **2 136 écrans, dont 1 008 vérifiés par le mode** ; 280 vérifications de page
+déclenchées à la dernière question d'une activité.
+
+| Niveau | Pages | Ce que voit l'élève |
+|---|---|---|
+| **Une question par écran, vérifiée par le mode** | 52 pages : toutes les séquences des thèmes 2 et 3 sauf celles des lignes suivantes ; au thème 1, `3e_C1.1`, `4e_C1.1`, `5e_C1.1`, `5e_C1.2`, `5e_C1.5`, `3e_C2.1`, `4e_C2.1`, `5e_C2.1`, `3e_C3.1`, `4e_C3.1`, `5e_C3.1` | le mode complet : écrans, étoiles, coup de pouce |
+| **Une carte par écran, sans vérification par le mode** | `3e_C1.5`, `4e_C1.4`, `5e_C1.3` | le mode se joue, la page vérifie comme avant |
+| **Pas de mode mission** | `4e_C4.1_book-train` ; les quatre pages « station » de `3e_C9.2` | la page qui défile, comme avant |
+
+Sur les 52 pages du premier niveau, trois portent le pourquoi de chaque erreur (`5e_C4.1`, `5e_C6.1`, `4e_C6.1`) ;
+neuf ont des étiquettes à poser (19 écrans), une seule des leurres (`5e_C4.1`) : les grilles viennent avec la
+révision. Les pages pas encore révisées gardent leurs listes déroulantes : le mode les vérifie telles quelles.
+
+Vingt et une pages n'ont pas le cadre « Ma progression » : le bouton « 🎮 Mode mission » y est posé juste au-dessus
+des onglets des séances, qu'il descend d'environ 58 px.

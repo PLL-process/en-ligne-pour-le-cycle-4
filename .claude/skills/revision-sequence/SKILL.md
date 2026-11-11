@@ -117,11 +117,14 @@ décroche (mot inconnu, phrase trop longue, consigne ambiguë, aller-retour dans
 - Les bancs du lot (`tests_*`), lancés comme d'habitude ; un échec présent sur `main` est dit, pas caché.
 - Les contrôles du site touchés (`controle_squelette`, `controle_mode_essentiel`, `controle_hierarchie`,
   `controle_impression`, `controle_liens`, `controle_tactile`, `controle_licence`).
-- **Le mode mission** (décision de Pascal du 11/11/2026 : « on peut valider pour toutes les séquences ») :
+- **Le mode mission** (décisions de Pascal du 11/11/2026 : « on peut valider pour toutes les séquences », puis « le
+  mode mission doit être partout ») : presque toutes les pages le portent déjà. La révision change ce qu'il lit
+  (listes devenues boutons radio, questions rangées en grille) ; après elle :
   `python3 _outils/mode_mission/poser.py <page>`, puis `node _outils/mode_mission/banc_generique.mjs <page> --detail`.
   Le banc joue la page écran par écran et croise chaque réponse lue avec la vérification de la page ; lire la liste
-  des écrans (le découpage doit avoir du sens). Une page que le banc refuse ne reçoit pas le bloc : on le dit dans
-  la PR. Voir `_outils/mode_mission/README.md`.
+  des écrans (le découpage doit avoir du sens). Une page que le banc refuse ne garde pas le bloc : on le dit dans
+  la PR. Puis écrire le pourquoi de chaque erreur (`mission_<lot>.json`, `enrichir.py`).
+  Voir `_outils/mode_mission/README.md`.
 - **Revue d'écran en trois tours** (`controle-qualite-lot`) : 390 et 1 280 px, mode essentiel compris.
 - Une PR par séquence (ou par deux ou trois petites), le journal, et la ligne de `docs/revision/SUIVI_REVISION.md` :
   avant → après pour les mots de la séance la plus lourde, les ✘, les menus, l'aération ; « livrée #PR ».

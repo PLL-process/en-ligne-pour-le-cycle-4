@@ -69,6 +69,11 @@
   body.ms fieldset.qcm-groupe.ms-juste>legend::after{content:" ✓";color:var(--ok,#81fba1)}
   body.ms fieldset.qcm-groupe.ms-faux>legend::after{content:" — à revoir";color:var(--warn,#ffd66b);font-weight:400}
 
+  /* une liste déroulante qui pose une question (page pas encore révisée) : la marque dit juste ou à revoir, pas la couleur seule */
+  body.ms select.ms-juste{outline:3px solid var(--ok,#81fba1);outline-offset:1px}
+  body.ms select.ms-faux{outline:3px solid var(--warn,#ffd66b);outline-offset:1px}
+  .ms-marque{display:inline-block;margin-left:8px;font-weight:700;font-size:.9em}
+  .ms-marque.juste{color:var(--ok,#81fba1)} .ms-marque.faux{color:var(--warn,#ffd66b)} .ms-marque:empty{display:none}
   /* les étiquettes à placer */
   .ms-etq{margin:10px 0 14px;display:grid;gap:12px}
   .ms-lignes{display:grid;gap:10px}
