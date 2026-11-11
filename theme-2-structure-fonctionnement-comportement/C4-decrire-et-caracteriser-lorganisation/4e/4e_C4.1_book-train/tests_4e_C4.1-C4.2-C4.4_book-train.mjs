@@ -72,6 +72,8 @@ async function ouvrir(largeur, storage = null) {
     await p.reload({ waitUntil: 'load' });
   }
   await p.waitForTimeout(200);
+  // Révision du 10/11/2026 : guides pas à pas, pièges et Bonus sont repliés ; le banc ouvre les volets après le rechargement.
+  await p.evaluate(() => document.querySelectorAll('details.guide-replie, details.pieges-replies, details.bonus-replie').forEach(d => { d.open = true; }));
   return { ctx, p, err, reseau };
 }
 /* L'onglet qui contient un élément : le banc ne suppose pas dans quelle séance vit un bloc. */
@@ -281,7 +283,9 @@ const formes = await p.evaluate(() => {
     if (new Set(radios.map(r => r.name)).size !== 1 || radios[0].name !== f.id) defauts.push(f.id + ' : noms différents');
     for (const r of radios) {
       const l = document.querySelector(`label[for="${r.id}"]`);
-      if (!l || l.textContent.trim() !== r.value) defauts.push(r.id + ' : étiquette ≠ valeur');
+      // grille lettrée (grilles_radio.py, 10/11/2026) : l'étiquette est une lettre, la proposition entière est dans title et aria-label
+      const grille = f.classList.contains('qcm-grille') && l && l.title === r.value && (r.getAttribute('aria-label') || '').endsWith(r.value);
+      if (!l || (l.textContent.trim() !== r.value && !grille)) defauts.push(r.id + ' : étiquette ≠ valeur');
     }
     if (f.dataset.bonne !== undefined && !radios.some(r => r.value === f.dataset.bonne)) defauts.push(f.id + ' : bonne réponse absente');
   }

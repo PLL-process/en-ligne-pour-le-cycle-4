@@ -29691,3 +29691,13 @@ la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui import
 
 **Reste à Pascal.** Fusionner (410 pages touchées d'une ligne chacune, rien d'autre). La première version de cette PR
 (#640, ouverte avant #637) est fermée : celle-ci repart de `main`.
+
+## 10/11/2026 — Révision des trois thèmes, 16 : Book Train, les guides pas à pas se replient, l'exercice de mise en ordre lit ses lettres
+
+**Décisions.**
+- **Guides pas à pas** : le guide draw.io (étapes A à H, activité 3.2) et le guide LibreOffice Impress (étapes A à H, activité 4.3) — un millier de mots à eux deux — se replient sous un titre qui dit ce qu'ils contiennent (« ouvre-le si tu ne sais pas faire ») ; la consigne, la case à cocher, les aides et le modèle de correction restent visibles. Le modèle de chaîne d'énergie à imiter (Fig. 4, activité 2.3) de même. Rien n'est retiré.
+- **Pièges classiques** (cinq blocs, jusqu'à 160 mots) : sous un volet « à ouvrir avant de vérifier ». Le Bonus (six défis, `div.bloc-bonus`, que `replier_bonus.py` ne reconnaît pas) replié à la main. Tous s'ouvrent à l'impression.
+- **Grille lettrée** : les six positions du trajet du livre (activité 1.1) partageaient leurs six réponses, écrites six fois (390 mots) ; `grilles_radio.py` les range A–F — après avoir retiré la classe de mise en page `qcm-grille` que la page utilisait pour autre chose (deux colonnes), et avec une règle qui pose les lettres en rangée. Le banc du lot accepte une étiquette-lettre dont `title` et `aria-label` portent la proposition.
+- **Aération** : 91 retours posés par l'outil ; les corrections « d'un seul tenant » (ALIMENTER, la MLI, le squelette du défi 1 en une ligne par forme) réécrites.
+
+**Mesure.** Séances : 1 173 · 1 307 · 1 510 · 817 · 1 104 mots visibles (avant : 1 173 · 1 586 · 1 990 · 1 836 · 2 752). Aération 14 → 0 ; ✘ 0 ; bancs 39/39 et 38/38 ; contrôles verts. **Écart** : les séances 2 et 3 restent au-dessus du repère — leurs exercices sont longs par nature (six positions, chaîne d'énergie à étiqueter, deux chaînes dans draw.io avec leurs fichiers à télécharger) ; piste : une grille lettrée pour l'activité 2.1 si ses propositions sont les mêmes d'une question à l'autre (elles ne le sont pas aujourd'hui).
