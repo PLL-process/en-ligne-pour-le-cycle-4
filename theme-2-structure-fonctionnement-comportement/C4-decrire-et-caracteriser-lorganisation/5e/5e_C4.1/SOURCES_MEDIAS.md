@@ -33,7 +33,7 @@ synthèse et de l'impression.
 
 | Fichier | Ce que c'est |
 |---|---|
-| `Audio/chaines_lampadaire_etape1.ogg` · `.mp3` | Étape 1 : voix de synthèse, 9.9 s, Opus mono 32 kb/s (40.4 Ko) et MP3 mono 48 kb/s de secours (58.2 Ko) |
+| `Audio/chaines_lampadaire_etape1.ogg` · `.mp3` | Étape 1 : voix de synthèse, 11.4 s, Opus mono 32 kb/s (44.4 Ko) et MP3 mono 48 kb/s de secours (66.7 Ko) — nouvelle prise du 11/11/2026 : le [z] de « lumineuse » s'entend |
 | `Audio/chaines_lampadaire_etape2.ogg` · `.mp3` | Étape 2 : voix de synthèse, 9.1 s, Opus mono 32 kb/s (36.5 Ko) et MP3 mono 48 kb/s de secours (53.1 Ko) |
 | `Audio/chaines_lampadaire_etape3.ogg` · `.mp3` | Étape 3 : voix de synthèse, 6.3 s, Opus mono 32 kb/s (25.4 Ko) et MP3 mono 48 kb/s de secours (36.9 Ko) |
 | `Audio/chaines_lampadaire_etape4.ogg` · `.mp3` | Étape 4 : voix de synthèse, 5.0 s, Opus mono 32 kb/s (20.1 Ko) et MP3 mono 48 kb/s de secours (29.4 Ko) |
