@@ -1,0 +1,115 @@
+/* Mode mission v1 — un exercice à la fois. Source unique : _outils/mode_mission/ (poser.py).
+   Tout ce qui cache est sous @media screen : la fiche papier s'imprime comme avant, entière. */
+@media screen{
+  body.ms .ms-cache,body.ms .ms-origine,body:not(.ms) .ms-seul{display:none!important}
+  body.ms #tachesBandeau,body.ms .page-suivante{display:none!important}
+  body.ms{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
+  body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
+  body.ms h1{font-size:1.05rem!important;margin:6px auto 6px!important}
+  body.ms .toolbar{gap:6px;margin:6px auto 10px}
+  body.ms .toolbar .btn{padding:6px 10px;font-size:.78rem;min-height:40px}
+  body.ms #seances{flex-wrap:nowrap;overflow-x:auto;gap:6px;margin-bottom:10px;padding-bottom:2px}
+  body.ms #seances .seance-tab{flex:0 0 auto;min-width:0;padding:8px 12px;min-height:44px}
+  body.ms #seances .seance-tab small{display:none}
+  .ms-retour{scroll-margin-bottom:110px}
+  .ms-invite{display:flex;justify-content:center;margin-top:10px}
+  .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
+  .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
+  .ms-quitter{min-height:44px;padding:6px 12px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-size:.82em;font-weight:700;cursor:pointer;margin-left:auto}
+
+  /* ── la barre de la mission : où j'en suis, ce que j'ai gagné ── */
+  .ms-tete{max-width:940px;margin:0 auto 14px;position:sticky;top:44px;z-index:900;background:var(--panel,#0d2347);border:1px solid var(--border,#274a8a);border-radius:16px;padding:10px 14px;box-shadow:0 10px 26px rgba(0,0,0,.28);display:grid;gap:8px}
+  .ms-ligne1{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .ms-ou{margin:0;font-weight:700;color:var(--text,#e4eaf5);min-width:0}
+  .ms-ou small{display:block;font-weight:400;font-size:.8em;color:var(--sub,#9bbefc)}
+  .ms-gains{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text,#e4eaf5);font-variant-numeric:tabular-nums;position:relative}
+  .ms-jauge{width:84px;height:12px;border-radius:999px;background:var(--panel2,#0a1b3d);border:1px solid var(--border,#274a8a);overflow:hidden}
+  .ms-jauge i{display:block;height:100%;width:0;background:var(--energie,#ffb454);border-radius:999px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+  .ms-et{width:20px;height:20px;fill:var(--border,#274a8a);flex:none;vertical-align:middle}
+  .ms-et.on{fill:var(--energie,#ffb454)}
+  .ms-gain{position:absolute;right:0;top:100%;background:var(--energie,#ffb454);color:#2a1800;border-radius:999px;padding:1px 12px;font-weight:800;animation:ms-monte 1.5s ease-out forwards;pointer-events:none}
+  @keyframes ms-monte{0%{opacity:0;transform:translateY(8px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+  .ms-rail{list-style:none;margin:0;padding:0;display:flex;gap:5px}
+  .ms-rail li{flex:1 1 0;min-width:0}
+  .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
+  .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
+  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
+  .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
+
+  /* ── la barre basse : Précédent · Vérifier · Suivant ── */
+  .ms-pied{position:fixed;left:0;right:0;bottom:0;z-index:1100;background:var(--panel,#0d2347);border-top:1px solid var(--border,#274a8a);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .ms-pied-in{max-width:940px;margin:0 auto;padding:10px max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center}
+  .ms-btn{border-radius:13px;border:2px solid var(--input-bd,#2e5d9f);background:transparent;color:var(--text,#e4eaf5);padding:10px 16px;min-height:52px;font:inherit;font-weight:700;cursor:pointer}
+  .ms-btn:disabled,.ms-btn[aria-disabled=true]{opacity:.45;cursor:default}
+  .ms-btn.verif{flex:1;background:var(--energie,#ffb454);border-color:var(--energie,#ffb454);color:#2a1800;font-size:1.05em}
+  .ms-btn.suiv{background:var(--btn,#1d4e89);border-color:var(--btn,#1d4e89);color:#fff;font-size:1.05em}
+  .ms-btn.suiv.seul{flex:1}
+  .ms-vide-f{flex:1}
+  .ms-btn:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
+  @media (max-width:460px){.ms-btn.prec span{display:none}}
+
+  /* ── dans la scène ── */
+  body.ms .seance-panel.active>section.card{animation:ms-entre .3s ease-out}
+  @keyframes ms-entre{from{transform:translateY(8px)}to{transform:none}}
+  .ms-ressbtn{display:inline-flex;align-items:center;min-height:44px;border:1px dashed var(--border,#274a8a);border-radius:10px;background:transparent;color:var(--hl,#61dafb);font:inherit;font-weight:700;padding:6px 12px;cursor:pointer;margin:6px 0}
+  .ms-retour{margin:12px 0 4px;border-radius:12px;padding:11px 13px;border:1px solid var(--border,#274a8a);background:var(--panel2,#0a1b3d);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .ms-retour:empty{display:none}
+  .ms-retour.ok{border-color:var(--ok,#81fba1)} .ms-retour.encore{border-color:var(--warn,#ffd66b)}
+  .ms-retour p{margin:0;flex:1 1 200px;min-width:0}
+  .ms-etoiles{display:inline-flex;gap:2px} .ms-etoiles .ms-et{width:24px;height:24px}
+
+  /* les questions à choix : de grandes cartes à toucher */
+  body.ms fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee):not(.positionnement)>.qcm-option{padding:12px 14px;border:2px solid var(--border,#274a8a);border-radius:14px;min-height:52px;align-items:center;margin:8px 0}
+  body.ms fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee):not(.positionnement)>.qcm-option:has(input:checked){border-color:var(--hl,#61dafb);background:rgba(97,218,251,.10)}
+  body.ms fieldset.qcm-groupe.ms-juste>.qcm-option:has(input:checked){border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10)}
+  body.ms fieldset.qcm-groupe.ms-faux>.qcm-option:has(input:checked){border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10)}
+  body.ms fieldset.qcm-groupe.ms-juste>legend::after{content:" ✓";color:var(--ok,#81fba1)}
+  body.ms fieldset.qcm-groupe.ms-faux>legend::after{content:" — à revoir";color:var(--warn,#ffd66b);font-weight:400}
+
+  /* les étiquettes à placer */
+  .ms-etq{margin:10px 0 14px;display:grid;gap:12px}
+  .ms-lignes{display:grid;gap:10px}
+  .ms-l{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:10px;align-items:center}
+  @media (max-width:560px){.ms-l{grid-template-columns:1fr;gap:5px}}
+  .ms-nom{font-weight:600;min-width:0}
+  .ms-case,.ms-lab{-webkit-user-select:none;user-select:none;font:inherit;color:var(--text,#e4eaf5)}
+  /* une étiquette de la réserve se glisse ; une case laisse défiler la page sous le doigt */
+  .ms-lab{touch-action:none} .ms-case{touch-action:manipulation}
+  .ms-case{min-height:50px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:9px 13px;border-radius:14px;border:2px dashed var(--border,#274a8a);background:var(--panel2,#0a1b3d);cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
+  .ms-case .ms-vide{font-weight:400;color:var(--sub,#9bbefc);font-size:.9em}
+  .ms-case.pleine{border-style:solid;background:var(--panel,#0d2347)}
+  .ms-case.vise{border-color:var(--hl,#61dafb);transform:scale(1.02)}
+  .ms-case.juste{border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10);cursor:default;opacity:1}
+  .ms-case.faux{border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10);animation:ms-secoue .45s}
+  @keyframes ms-secoue{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .ms-case.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
+  body.ms details.ms-pousse{outline:2px solid var(--warn,#ffd66b);outline-offset:3px;border-radius:10px}
+  .ms-coche{width:22px;height:22px;flex:none;fill:none;stroke:var(--ok,#81fba1);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .ms-reserve{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--panel,#0d2347);border:1px solid var(--border,#274a8a);border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:9px 12px;display:grid;gap:7px}
+  .ms-reserve-t{margin:0;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--sub,#9bbefc)}
+  .ms-reserve-l{display:flex;flex-wrap:wrap;gap:8px}
+  .ms-lab{border:2px solid var(--input-bd,#2e5d9f);background:var(--input-bg,#173666);border-radius:12px;padding:9px 14px;min-height:46px;font-weight:700;cursor:grab;transition:transform .12s,border-color .12s}
+  .ms-lab:hover{border-color:var(--hl,#61dafb)}
+  .ms-lab.choisie{border-color:var(--hl,#61dafb);transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.35)}
+  .ms-lab.part{opacity:.35}
+  .ms-case:focus-visible,.ms-lab:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
+  .ms-geste{margin:0;font-size:.86em;color:var(--sub,#9bbefc)}
+  .ms-fantome{position:fixed;left:0;top:0;z-index:2000;pointer-events:none;border:2px solid var(--hl,#61dafb);background:var(--panel,#0d2347);color:var(--text,#e4eaf5);border-radius:12px;padding:9px 14px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+  /* au téléphone, la réserve tient sur une ligne qui défile de côté : elle ne cache pas les cases */
+  @media (max-width:640px){.ms-reserve{padding:8px 0 10px}.ms-reserve-t{padding:0 12px}.ms-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 12px 4px}.ms-reserve .ms-lab{flex:none;white-space:nowrap;touch-action:pan-x}}
+  /* au téléphone : la barre de la mission sur deux lignes, et une seule boîte autour de la question */
+  @media (max-width:640px){
+    .ms-tete{padding:8px 12px;gap:6px}
+    .ms-ligne1{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center}
+    .ms-ou{grid-column:1/-1} .ms-gains{grid-column:1;grid-row:2} .ms-quitter{grid-column:2;grid-row:2;padding:4px 10px}
+    body.ms .seance-panel>section.card{padding:14px 12px}
+    body.ms .seance-panel .activite{padding:0;border:0;background:none;margin:0}
+    body.ms .seance-panel .activite>.exo{padding:12px;margin:8px 0}
+  }
+  .ms-bilan{border:1px solid var(--energie,#ffb454);border-radius:14px;padding:12px 14px;margin:0 0 14px;display:grid;gap:6px}
+  .ms-bilan p{margin:0}
+  @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card{animation:none!important;transition:none!important}}
+}
+@media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}
