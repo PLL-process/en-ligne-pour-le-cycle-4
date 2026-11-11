@@ -30000,6 +30000,25 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 
 ---
 
+## 11/11/2026 — Mode mission : le pourquoi des erreurs sur deux séquences de plus (5e_C6.1, 4e_C6.1) ; et « le mode mission doit être partout »
+
+**Décisions de Pascal (11/11).** Sur le modèle des pourquoi et des leurres du lampadaire : « Je te laisse carte blanche ». Puis : « le mode mission doit être partout ».
+
+**Fait ici.** Le pourquoi de chaque erreur, sur le modèle de `mission_5e_C4.1.json` :
+- `5e_C6.1` (programmer le lampadaire) : 44 pourquoi, 9 indices — les 83 mauvaises réponses et lignes ont leur explication. Pour les étapes à numéroter, l'indice dit ce dont l'étape a besoin (« Pour dire s'il fait nuit, il faut avoir mesuré »), jamais son numéro.
+- `4e_C6.1` (ajuster le programme du jardin) : 53 pourquoi — 53 sur 53.
+- Aucune grille dans ces deux pages : pas de leurre à poser.
+
+**Ce que « partout » change à l'ordre du travail.** Dix séquences portent le mode ; cinquante ne l'ont pas. La suite, dans cet ordre :
+1. apprendre au moteur l'ancien gabarit (`div.act` dans une seule carte : `4e_C6.2` et la famille C7/C8 du thème 3) et le gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) ;
+2. poser le mode sur toutes les séquences des trois thèmes que le banc générique accepte, par lots ;
+3. nommer celles qu'il refuse encore, et pourquoi.
+Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) viennent après.
+
+**Mesure.** Banc générique sur les deux pages : aucun refus, 47 réponses croisées avec la vérification des pages. Bancs des séquences : 32/32, 34/34, 29/29, 34/34. Mots visibles inchangés.
+
+---
+
 ## 11/11/2026 — Mode mission : la consigne des étiquettes dit d'abord de les faire glisser (transversal : `_outils`, thème 2)
 
 **Demande de Pascal (11/11).** « Je préfère déplacer les étiquettes », puis carte blanche sur la réponse.
