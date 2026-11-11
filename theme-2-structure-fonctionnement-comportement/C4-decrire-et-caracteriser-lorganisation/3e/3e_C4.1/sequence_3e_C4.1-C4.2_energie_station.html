@@ -609,7 +609,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-retour{margin:12px 0 4px;border-radius:12px;padding:11px 13px;border:1px solid var(--border,#274a8a);background:var(--panel2,#0a1b3d);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .ms-retour:empty{display:none}
   .ms-retour.ok{border-color:var(--ok,#81fba1)} .ms-retour.encore{border-color:var(--warn,#ffd66b)}
-  .ms-retour p{margin:0;flex:1 1 200px;min-width:0}
+  .ms-retour-t{flex:1 1 200px;min-width:0;display:grid;gap:6px} .ms-retour p{margin:0}
+  .ms-pq{margin:0;padding-left:1.15em;display:grid;gap:5px}
   .ms-etoiles{display:inline-flex;gap:2px} .ms-etoiles .ms-et{width:24px;height:24px}
 
   /* les questions à choix : de grandes cartes à toucher */
@@ -846,7 +847,7 @@ function habiller(p){
       if (sets.length >= 2){
         var comp = el("div", "ms-etq ms-seul"); comp._sets = sets;
         comp._libs = $$("input[type=radio]", sets[0]).map(function(r){ return r.value; });
-        var att = sets.map(cle); comp._unique = att.every(function(a){ return a !== undefined; }) && att.filter(function(a, x){ return att.indexOf(a) === x; }).length === sets.length;
+        var att = sets.map(cle); comp._unique = att.every(function(a){ return a !== undefined; }) && att.filter(function(a, x){ return att.indexOf(a) === x; }).length === sets.length;   // chaque étiquette sert une fois au plus (il peut en rester : les leurres)
         c.parentNode.insertBefore(comp, c); c.classList.add("ms-origine"); sets.forEach(function(f){ f.classList.add("ms-origine"); });
         p.n.splice(j, 0, comp); j = q + 1; continue;
       }
@@ -864,7 +865,9 @@ function peindre(comp){
     + "</div>";
   if (!fini){
     var labs = comp._libs.map(function(t, j){ return (comp._unique && pris.indexOf(t) >= 0) ? "" : '<button type="button" class="ms-lab' + (sel && sel.comp === comp && sel.j === j ? " choisie" : "") + '" data-j="' + j + '" aria-pressed="' + !!(sel && sel.comp === comp && sel.j === j) + '">' + esc(t) + "</button>"; }).join("");
-    h += '<div class="ms-reserve"><p class="ms-reserve-t">Étiquettes' + (comp._unique ? "" : " — chacune peut servir plusieurs fois") + '</p><div class="ms-reserve-l">' + (labs || '<span class="ms-geste">Toutes les étiquettes sont posées. Appuie sur « Vérifier ».</span>') + "</div></div>";
+    var trop = comp._unique ? comp._libs.length - comp._sets.length : 0, plein = pris.every(function(v){ return !!v; });
+    var titre = plein && labs ? "Toutes les cases sont remplies : appuie sur « Vérifier »" : "Étiquettes" + (!comp._unique ? " — chacune peut servir plusieurs fois" : trop > 0 ? " — attention, " + trop + " en trop" : "");
+    h += '<div class="ms-reserve"><p class="ms-reserve-t">' + titre + '</p><div class="ms-reserve-l">' + (labs || '<span class="ms-geste">Toutes les étiquettes sont posées. Appuie sur « Vérifier ».</span>') + "</div></div>";
   }
   var act = D.activeElement, quoi = act && comp.contains(act) ? (act.dataset.i !== undefined ? '[data-i="' + act.dataset.i + '"]' : act.dataset.j !== undefined ? '[data-j="' + act.dataset.j + '"]' : null) : null;
   comp.innerHTML = h;
@@ -959,8 +962,18 @@ function coupDePouce(s, niveau){
   var deja = d.open; d.open = true; d.classList.add("ms-pousse");
   return deja ? " Relis le coup de pouce ouvert juste en dessous, puis réessaie." : " Un coup de pouce vient de s'ouvrir juste en dessous : lis-le, puis réessaie.";
 }
-function dire(s, ton, html, n){ s.msg = html ? { ton:ton, html:html, n:n } : null; peindreRetour(s); if (html && s.retour.scrollIntoView) s.retour.scrollIntoView({ block:"nearest" }); }
-function peindreRetour(s){ if (!s.retour) return; var m = s.msg; s.retour.className = "ms-retour ms-seul" + (m && m.ton ? " " + m.ton : ""); s.retour.innerHTML = m ? (m.n ? etoiles(m.n) : "") + "<p>" + m.html + "</p>" : ""; }
+function dire(s, ton, html, n, liste, fin){ s.msg = html ? { ton:ton, html:html, n:n, liste:liste || [], fin:fin || "" } : null; peindreRetour(s); if (html && s.retour.scrollIntoView) s.retour.scrollIntoView({ block:"nearest" }); }
+function peindreRetour(s){
+  if (!s.retour) return; var m = s.msg; s.retour.className = "ms-retour ms-seul" + (m && m.ton ? " " + m.ton : "");
+  s.retour.innerHTML = m ? (m.n ? etoiles(m.n) : "") + '<div class="ms-retour-t"><p>' + m.html + "</p>" + (m.liste && m.liste.length ? '<ul class="ms-pq">' + m.liste.map(function(x){ return "<li>" + x + "</li>"; }).join("") + "</ul>" : "") + (m.fin ? "<p>" + m.fin + "</p>" : "") + "</div>" : "";
+}
+/* Le pourquoi d'une erreur, écrit dans la page : `data-pourquoi` sur la proposition choisie (pourquoi elle ne convient
+   pas), sinon `data-indice` sur la question (ce qu'elle demande). Jamais la bonne réponse. */
+function raison(f, seule){
+  var r = $("input[type=radio]:checked", f), pq = (r && r.getAttribute("data-pourquoi")) || f.getAttribute("data-indice"); if (!pq) return "";
+  if (f.classList.contains("ms-origine")) return "<b>« " + esc(f.value) + " »</b> ne va pas avec « " + esc(net($("legend", f).textContent)) + " ». " + esc(pq);
+  return seule ? esc(pq) : "<b>" + esc(net($("legend", f).textContent)) + "</b> " + esc(pq);
+}
 function verifier(){
   var s = ecrans[k]; if (s.t !== "partie" || Date.now() < souffle) return;
   var avec = s.champs.filter(function(f){ return cle(f) !== undefined; }), vides = avec.filter(function(f){ return !f.value; }).length;
@@ -972,9 +985,11 @@ function verifier(){
     if (fautes.length){
       M.essais[s.id] = (M.essais[s.id] || 0) + 1; M.erreurs[s.id] = (M.erreurs[s.id] || 0) + fautes.length; ecrire();
       var justes = avec.length - fautes.length, enEtq = fautes.filter(function(f){ return f.classList.contains("ms-origine"); }), essais = M.essais[s.id];
-      var debut = avec.length === 1 ? "Pas encore." : "Pas encore. " + justes + " réponse" + (justes > 1 ? "s justes restent" : " juste reste") + " en place.";
-      dire(s, "encore", debut + (enEtq.length ? " " + enEtq.length + " étiquette" + (enEtq.length > 1 ? "s retournent" : " retourne") + " dans la réserve." : "")
-        + (essais >= 2 ? coupDePouce(s, essais >= 4 ? 2 : 1) : " Relis la consigne, puis réessaie."));
+      var seule = avec.length === 1, raisons = fautes.map(function(f){ return raison(f, seule); }).filter(Boolean);
+      var debut = seule ? "Pas encore." : "Pas encore. " + justes + " réponse" + (justes > 1 ? "s justes restent" : " juste reste") + " en place.";
+      debut += enEtq.length ? " " + enEtq.length + " étiquette" + (enEtq.length > 1 ? "s retournent" : " retourne") + " dans la réserve." : "";
+      var suite = essais >= 2 ? coupDePouce(s, essais >= 4 ? 2 : 1).trim() : raisons.length ? "Corrige, puis vérifie de nouveau." : "Relis la consigne, puis réessaie.";
+      if (seule && raisons.length) dire(s, "encore", debut + " " + raisons[0], 0, [], suite); else dire(s, "encore", debut, 0, raisons, suite);
       souffler();
       $$(".ms-etq", panneau).forEach(peindre);
       setTimeout(function(){ enEtq.forEach(function(f){ if (f.classList.contains("ms-faux")){ f.value = null; f.classList.remove("ms-faux"); saisie(f); } }); if (actif) $$(".ms-etq", panneau).forEach(peindre); }, 950);

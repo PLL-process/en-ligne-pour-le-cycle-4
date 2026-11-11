@@ -35,16 +35,19 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
 
   await jusqua('a) Fonctions');
   const vu = await p.evaluate(() => ({ etq: [...document.querySelectorAll('.ms-etq')].filter(e => e.offsetParent).length, grilles: [...document.querySelectorAll('#e1_1,#e1_2,.qcm-cles')].filter(e => e.offsetParent).length,
-    labs: [...document.querySelectorAll('.ms-lab')].filter(e => e.offsetParent).map(e => e.textContent), large: document.documentElement.scrollWidth > innerWidth }));
-  ok(T('3 · la grille de boutons radio se joue en étiquettes : 4 cases, 4 étiquettes, la grille d\'origine cachée, pas de défilement de côté'),
-     vu.etq === 1 && vu.grilles === 0 && vu.labs.length === 4 && !vu.large, JSON.stringify(vu.labs));
+    labs: [...document.querySelectorAll('.ms-lab')].filter(e => e.offsetParent).map(e => e.textContent), large: document.documentElement.scrollWidth > innerWidth,
+    cases: [...document.querySelectorAll('.ms-case')].filter(e => e.offsetParent).length, titre: document.querySelector('.ms-reserve-t').textContent }));
+  ok(T('3 · la grille de boutons radio se joue en étiquettes : 4 cases, 6 étiquettes dont 2 leurres annoncés, la grille d\'origine cachée, pas de défilement de côté'),
+     vu.etq === 1 && vu.grilles === 0 && vu.cases === 4 && vu.labs.length === 6 && /2 en trop/.test(vu.titre) && !vu.large, vu.titre + ' · ' + JSON.stringify(vu.labs));
   const cibles = await p.evaluate(() => Math.min(...[...document.querySelectorAll('.ms-lab,.ms-case,.ms-btn')].filter(e => e.offsetParent).map(e => e.getBoundingClientRect().height)));
   ok(T('4 · étiquettes, cases et boutons de navigation : 44 px de haut au moins'), cibles >= 44, Math.round(cibles) + ' px');
 
   const poser = async (i, t) => { await p.locator(`.ms-etq:visible .ms-lab:has-text("${t}")`).click(); await p.locator(`.ms-etq:visible .ms-case[data-i="${i}"]`).click(); };
   await poser(0, 'le panneau solaire'); await poser(1, 'le bloc de LED'); await poser(2, 'la batterie');
   // la quatrième au clavier : Entrée sur l'étiquette, Entrée sur la case
-  await p.locator('.ms-etq:visible .ms-lab').first().focus(); await p.keyboard.press('Enter'); await p.locator('.ms-etq:visible .ms-case[data-i="3"]').focus(); await p.keyboard.press('Enter');
+  await p.locator('.ms-etq:visible .ms-lab:has-text("la carte électronique")').focus(); await p.keyboard.press('Enter'); await p.locator('.ms-etq:visible .ms-case[data-i="3"]').focus(); await p.keyboard.press('Enter');
+  const plein = await p.evaluate(() => ({ titre: document.querySelector('.ms-reserve-t').textContent, restent: [...document.querySelectorAll('.ms-lab')].filter(e => e.offsetParent).map(e => e.textContent) }));
+  ok(T('5b · toutes les cases remplies : la réserve le dit, et les deux leurres y restent'), /appuie sur « Vérifier »/.test(plein.titre) && plein.restent.join('|') === 'le capteur de luminosité|le mât', plein.restent.join(' · '));
   const pose = await p.evaluate(() => ['e1_1', 'e1_2', 'e1_3', 'e1_4'].map(i => document.getElementById(i).value));
   ok(T('5 · poser une étiquette (au doigt comme au clavier) coche le bouton radio de la page'),
      pose.join('|') === 'le panneau solaire|le bloc de LED|la batterie|la carte électronique', pose.join(' · '));
@@ -54,6 +57,9 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   const apres = await p.evaluate(() => ['e1_1', 'e1_2', 'e1_3', 'e1_4'].map(i => document.getElementById(i).value));
   ok(T('6 · vérifier : 2 justes restent en place, 2 fausses retournent dans la réserve, et la page le sait'),
      faux.justes === 2 && faux.faux === 2 && apres[0] && !apres[1] && !apres[2] && apres[3] && /Pas encore/.test((await etat()).retour), JSON.stringify(apres));
+  const pq = (await etat()).retour;
+  ok(T('6a · chaque erreur est expliquée : la paire fausse est nommée, et ce que la ligne demande est dit — sans donner la réponse'),
+     /« le bloc de LED » ne va pas avec « Stocker l'énergie pour la nuit »/.test(pq) && /Stocker, c'est garder/.test(pq) && /Éclairer, c'est produire/.test(pq) && !/la batterie va|→/.test(pq), pq.slice(0, 150));
   const mission = () => p.evaluate(() => JSON.parse(localStorage.getItem(Object.keys(localStorage).find(k => k.startsWith('mission:')))));
   const pret = () => p.waitForSelector('#msVerif:not([aria-disabled])', { timeout: 4000 });
   const bouton = await p.evaluate(() => ({ bloque: document.getElementById('msVerif').getAttribute('aria-disabled'), texte: document.getElementById('msVerif').textContent }));
@@ -79,11 +85,13 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   await p.click('#msSuiv'); await p.waitForTimeout(160);
   const mauvais = p.locator('#e1_m1 .qcm-option', { hasNotText: 'acier galvanisé' });
   await mauvais.nth(0).locator('label').click(); await p.click('#msVerif'); await p.waitForTimeout(150);
+  const pq1 = (await etat()).retour;
   const aide0 = await p.evaluate(() => [...document.querySelectorAll('#act1 details.aide1, #act1 details.aide')].some(d => d.open));
   await pret(); await mauvais.nth(1).locator('label').click(); await p.click('#msVerif'); await p.waitForTimeout(150);
   const aide2 = await p.evaluate(() => { const d = document.querySelector('#act1 details.ms-pousse'); return { ouverte: !!d && d.open, vue: !!d && !!d.offsetParent }; });
   e = await etat();
   ok(T('10b · deuxième essai manqué sur le même écran : le coup de pouce de l\'activité s\'ouvre sous le message (pas au premier)'), !aide0 && aide2.ouverte && aide2.vue && /coup de pouce/.test(e.retour), e.retour.slice(0, 90));
+  ok(T('10b\' · une mauvaise réponse à choix reçoit son pourquoi (ce matériau, dehors) — sans la bonne réponse'), /pourrit|casse|ramollit/.test(pq1 + e.retour) && !/acier galvanisé/.test(pq1 + e.retour), (pq1 || e.retour).slice(0, 110));
   await pret(); await p.locator('#e1_m1 label:has-text("acier galvanisé")').first().click(); await p.click('#msVerif'); await p.waitForTimeout(160); e = await etat();
   ok(T('10c · deux erreurs sur une question à choix, puis juste : 1 étoile (essayer toutes les réponses ne rapporte pas)'), /^6 \//.test(e.compte), e.compte);
   for (const [id, t] of [['e1_m2', 'polycarbonate'], ['e1_m3', 'aluminium'], ['e1_m4', 'cuivre']]) {
@@ -103,7 +111,7 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   ok(T('13 · rechargement : le mode, l\'écran et les étoiles reviennent'), await p.evaluate(() => document.body.classList.contains('ms')) && /5 sur 5/.test(e.ou) && e.compte === '15 / 18', e.ou.slice(0, 40));
   await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s3"]').click()); await p.waitForTimeout(250);
   const r3 = await rail();
-  ok(T('14 · changer de séance par son onglet : les écrans de la séance 3, le simulateur avec ses questions'), r3.length === 11 && r3.some(x => /simulateur/.test(x)), r3.length + ' écrans');
+  ok(T('14 · changer de séance par son onglet : les écrans de la séance 3, le simulateur avec ses questions'), r3.length === 9 && r3.some(x => /simulateur/.test(x)), r3.length + ' écrans');
   await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s6"]').click()); await p.waitForTimeout(250);
   const r6 = await rail(), ib = r6.findIndex(x => /bilan personnel/i.test(x));
   await p.click(`#msRail [data-k="${ib}"]`); await p.waitForTimeout(200);
