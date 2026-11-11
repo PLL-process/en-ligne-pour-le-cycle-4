@@ -29668,3 +29668,26 @@ du retour, celle que lit le bandeau des tâches.
 - **Bancs** : shim `_groupesRadio(page)` ; `remplir` accepte un groupe ; le banc ouvre les volets après chaque chargement ; la lecture des causes du simulateur réseau accepte des boutons radio. 52/52 et 34/34.
 
 **Mesure.** Séances : 782 · 762 · 594 · 782 mots visibles. ✘ 1 → 0 ; menus 39 → 0 ; aération 11 → 0 ; contrôles verts.
+
+## 10/11/2026 — Le lien de la licence se lit sur toutes les pages, visité et imprimé compris : la mention porte sa feuille (n°303, n°321) (transversal : les trois thèmes, `_outils`)
+
+**D'où ça vient.** V2 4e (10/11) : sur 4e_C7.4 et 4e_C7.8, le lien « CC BY-NC-SA 4.0 » posé en pied de page par #616
+restait au **bleu par défaut du navigateur** — 2,03:1 sur fond sombre. `controle_contraste_liens` sur tout le site
+(410 pages, 3 250 liens) : **91 pages** dans ce cas (15 du thème 1, 35 du thème 2, 41 du thème 3), toutes pour ce seul
+lien, sur les pages sans règle de couleur pour `a`. L'audit externe (#637, étape 2, le même jour) a vu le même défaut et
+posé `style="color:inherit"` sur le lien : à l'écran, c'est lisible ; mais le contrôle refuse encore les 91 pages, pour
+deux raisons qu'un `style` en ligne ne peut pas régler — il ne dit rien de l'**état visité** (le navigateur remet son
+violet), et sur un pied de page imprimé en gris clair (QCM de 4e_C2.1) l'héritage tombe à **2,54:1 sur papier**.
+
+**Ce qui change** — à la source, `_outils/licence_cc.py`, puis la mention réécrite sur les 410 pages qui la portent :
+la mention arrive avec sa feuille de trois règles — `.licence-cc a` et `.licence-cc a:visited` en `color:inherit`,
+souligné ; sur papier `color:#000`. Le `style` en ligne du lien disparaît (la feuille le remplace) ; `retirer()` retire
+la feuille avec la mention ; `make_index.py` et `generer_lexique.py`, qui importent `MENTION`, suivent sans retouche.
+
+**Vérifié** (10/11/2026, Chromium Playwright) : `controle_contraste_liens` sur tout le site — **0 lien sous le seuil
+(écran, visité, papier), 0 page qui colore `a` sans `a:visited`** (91 → 0) ; `tests_controle_licence.py` vert ;
+`controle_licence` 410/410 ; `controle_regles_visibles`, `controle_impression_papier`, `controle_tactile`,
+`controle_liens`, `controle_impression --muet` : 0 refus. Non exécuté : une impression réelle, Firefox, Safari.
+
+**Reste à Pascal.** Fusionner (410 pages touchées d'une ligne chacune, rien d'autre). La première version de cette PR
+(#640, ouverte avant #637) est fermée : celle-ci repart de `main`.
