@@ -202,7 +202,7 @@ with sync_playwright() as p:
       and pg.get_attribute("#lienQcm", "href").endswith("#depart=court"))
 
     # activité 1
-    pg.evaluate("['a1_1','a1_2','a1_3','a1_4'].forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+    pg.evaluate("['a1_1','a1_2','a1_3','a1_4'].forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
     t("activité 1 : la lecture par profil est exigée", "CINQ profils" in pg.inner_text("#fb1"))
@@ -221,7 +221,7 @@ with sync_playwright() as p:
     pg.click("#tab-s2")
     pg.wait_for_timeout(120)
     pg.evaluate("['a2_1','a2_2','a2_3','a2_4','a2_5','a2_6']"
-                ".forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+                ".forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.fill("#a2_appar", APPAR)
     pg.click('[data-check="2"]')
     pg.wait_for_timeout(120)
@@ -235,7 +235,7 @@ with sync_playwright() as p:
       "12 / 12" in pg.inner_text("#fb2"))
 
     # activité 3 — l'ordre, et le message qui le distingue
-    pg.evaluate("['a3_1','a3_2','a3_3','a3_4'].forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+    pg.evaluate("['a3_1','a3_2','a3_3','a3_4'].forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.fill("#a3_algo", ALGO_ORDRE_INVERSE)
     pg.click('[data-check="3"]')
     pg.wait_for_timeout(120)
@@ -250,7 +250,7 @@ with sync_playwright() as p:
     # activité 4 — la défense, et le troisième point
     pg.click("#tab-s3")
     pg.wait_for_timeout(120)
-    pg.evaluate("['a4_1','a4_2','a4_3','a4_4'].forEach(i=>{const g=document.getElementById(i);const r=g.querySelector('input[type=radio]');if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
+    pg.evaluate("['a4_1','a4_2','a4_3','a4_4'].forEach(i=>{const g=document.getElementById(i);const m=[...document.scripts].map(x=>x.textContent).join('\\n').match(new RegExp(i+':\"([^\"]*)\"'));const r=m&&[...g.querySelectorAll('input[type=radio]')].find(x=>x.value===m[1]);if(!r)throw new Error('aucune proposition dans '+i);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}));})")
     pg.fill("#a4_prod", DEFENSE_SANS_ECARTE)
     pg.click('[data-check="4"]')
     pg.wait_for_timeout(120)

@@ -4,7 +4,7 @@ Deuxième lot du **C2**. Il prend la suite du 5e — où l'élève recensait les
 ce que le programme de 4e impose : **partir de ce que les gens disent pour aboutir aux schémas, aux
 graphiques et aux algorithmes**, puis remonter aux exigences.
 
-➡ **[Séquence complète](sequence_4e_C2_hangzhou_borne.html)** — 3 séances de 55 min. Une
+➡ **[Séquence complète](sequence_4e_C2_hangzhou_borne.html)** — 4 séances de 55 min (la quatrième, ajoutée le 11/11/2026, porte la clôture : Bonus, bilan, QCM). Une
 réclamation : « vos bornes sont trop lentes ». Une réponse : « aucune n'est en panne ». **Les deux
 ont raison, et personne n'avance.**
 
