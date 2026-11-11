@@ -231,6 +231,20 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+  fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0} /* 11/11/2026 : deux réponses courtes en rangée */
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -567,7 +581,32 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -642,7 +681,7 @@ body.essentiel details.referentiel-replie{display:none}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C6.1/Synthèses/synthese_eleve_4e_C6.1-C6.3.html#tester">relis « Comment modifier le programme sans rien casser ? » dans la synthèse 4e_C6.1 à C6.3</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> le programme déclenche une <b>alerte cyclonique</b>. Un arrosage raté se rattrape le lendemain ; une alerte ratée, non. Tu vas devoir écrire un programme dont on peut <b>prouver</b> qu'il réagit au bon moment, et pas seulement constater qu'il a l'air de marcher.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> le programme déclenche une <b>alerte cyclonique</b>. <br>Un arrosage raté se rattrape le lendemain ; une alerte ratée, non. <br>Tu vas devoir écrire un programme dont on peut <b>prouver</b> qu'il réagit au bon moment, et pas seulement constater qu'il a l'air de marcher.</p>
   <p class="filet">Un mot à garder en tête : un programme est une suite de décisions écrites, et une décision oubliée est un comportement imprévisible.</p>
 </section>
 
@@ -664,8 +703,8 @@ body.essentiel details.referentiel-replie{display:none}
     <tr><td><b>3e_C6.1</b></td><td>Déterminer les données utilisées et produites par un programme associé à une fonctionnalité en vue de le modifier.</td><td>D1.3, D2</td><td>1, 2, R</td></tr>
     <tr><td><b>3e_C6.3</b></td><td>Modifier et tester le programme associé à une nouvelle fonctionnalité d'un OST.</td><td>D2, D4</td><td>3, 4, 5, R</td></tr>
   </table>
-  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C6</b> — BO n°9 du 29/02/2024. Le code <b>3e_C6.2</b> (programmer un algorithme lié à une nouvelle fonctionnalité) est couvert par <a href="../3e_C6.2/sequence_3e_C6.2_auto_test_station.html">« L'auto-test de la station »</a>. Pour réviser la lecture d'algorigrammes avant la séance 2&nbsp;: <a href="../3e_C6.2/entrainement_dnb_algorigrammes.html">l'entraînement DNB</a>, 30 exercices corrigés.</p>
-  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C6.1</code> · <code>3e_C6.2</code> · <code>3e_C6.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. Les formulations ci-dessus sont celles du référentiel.</p>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C6</b> — BO n°9 du 29/02/2024. <br>Le code <b>3e_C6.2</b> (programmer un algorithme lié à une nouvelle fonctionnalité) est couvert par <a href="../3e_C6.2/sequence_3e_C6.2_auto_test_station.html">« L'auto-test de la station »</a>. <br>Pour réviser la lecture d'algorigrammes avant la séance 2&nbsp;: <a href="../3e_C6.2/entrainement_dnb_algorigrammes.html">l'entraînement DNB</a>, 30 exercices corrigés.</p>
+  <p style="font-size:.9em;color:var(--sub)"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C6.1</code> · <code>3e_C6.2</code> · <code>3e_C6.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel. <br>Les formulations ci-dessus sont celles du référentiel.</p>
 </div>
 </details>
 
@@ -681,13 +720,13 @@ body.essentiel details.referentiel-replie{display:none}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>La station est réparée, la sirène resonne.</b> Mais à la réunion de quartier, une habitante soulève un vrai
-    problème : « Votre sirène, c'est tout ou rien. Elle hurle pareil pour un coup de vent et pour un ouragan — du coup,
+    <p><b>La station est réparée, la sirène resonne.</b><br>Mais à la réunion de quartier, une habitante soulève un vrai
+    problème : « Votre sirène, c'est tout ou rien. <br>Elle hurle pareil pour un coup de vent et pour un ouragan — du coup,
     plus personne ne la prend au sérieux. » Le maire confirme : lors du dernier épisode orange (une alerte météo de niveau orange : « soyez très vigilants »), la moitié du quartier
     a ignoré l'alerte.</p>
     <p>Le club techno décide d'améliorer la <b>fonctionnalité d'alerte</b> : une alerte <b>graduée</b> — gyrophare seul
-    en orange, sirène en rouge, les deux en violet. Pas besoin de changer le matériel (le gyrophare est déjà branché) :
-    tout se joue dans le <b>programme</b>. Encore faut-il le comprendre avant de le modifier… et prouver, tests à
+    en orange, sirène en rouge, les deux en violet. <br>Pas besoin de changer le matériel (le gyrophare est déjà branché) :
+    tout se joue dans le <b>programme</b>. <br>Encore faut-il le comprendre avant de le modifier… et prouver, tests à
     l'appui, que la nouvelle version fonctionne.</p>
   </div>  <figure class="situation-photo">
     <img src="Images/synthese_station_alerte.png" width="1536" height="1024" loading="lazy"
@@ -717,7 +756,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp1" placeholder="Avant de modifier, il faut…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Avant de modifier un programme, il faut connaître ____.</li>
     <li>Il faut aussi savoir ____, sinon on risque de ____.</li>
@@ -728,7 +767,7 @@ body.essentiel details.referentiel-replie{display:none}
     <textarea id="hyp2" placeholder="Pour vérifier, je…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Pour être sûr·e de n&#x27;avoir rien cassé, je ____.</li>
     <li>Je referais surtout les essais qui ____.</li>
@@ -745,7 +784,7 @@ body.essentiel details.referentiel-replie{display:none}
     <tr><td><b>CodeLab Techno</b> (éditeur intégré à cette page)</td><td>Le composant commun du projet : édition directe, coloration, sauvegarde locale, export .py — chaque élève manipule le vrai texte du programme, même à la maison.</td><td>—</td></tr>
     <tr><td>mBlock 5 / VittaScience (versions A-B)</td><td>Exécution réelle sur la maquette Arduino de la station ou en simulation.</td><td>Python + PyCharm pour les plus avancés</td></tr>
   </table>
-  <p style="font-size:.85em;color:var(--sub)">Le langage utilisé est Python (syntaxe réelle). L'exécution n'est pas indispensable : CodeLab permet de lire, modifier, comparer, sauvegarder et exporter — la validation se fait par les jeux d'essai calculés à la main (séance 3), puis sur machine en version A/B.</p>
+  <p style="font-size:.85em;color:var(--sub)">Le langage utilisé est Python (syntaxe réelle). <br>L'exécution n'est pas indispensable : CodeLab permet de lire, modifier, comparer, sauvegarder et exporter. <br>La validation se fait par les jeux d'essai calculés à la main (séance 3), puis sur machine en version A/B.</p>
 </section>
 
 <section class="card">
@@ -756,7 +795,7 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="version vb"><h4>🅱 Simulation</h4>
       <p><b>VittaScience</b> ou <b>mBlock</b> : recréer l'algorithme en blocs, exécuter les 5 jeux d'essai virtuellement.</p></div>
     <div class="version vc"><h4>🅲 Sans matériel</h4>
-      <p>Tout est dans cette page : CodeLab Techno pour lire et modifier le programme, et le plan de tests « à la main » (activité 5) pour valider — la méthode professionnelle, machine ou pas.</p></div>
+      <p>Tout est dans cette page. <br>CodeLab Techno pour lire et modifier le programme. <br>Le plan de tests « à la main » (activité 5) pour valider : la méthode professionnelle, machine ou pas.</p></div>
   </div>
 </section>
 </details>
@@ -815,7 +854,7 @@ body.essentiel details.referentiel-replie{display:none}
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Les relevés montrent un comportement différent de celui qu'on attendait. On cherche alors…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="la règle du programme qui autorise ce comportement"><label for="be_1__1">la règle du programme qui autorise ce comportement</label></div>
@@ -900,21 +939,52 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
     <div class="consigne"><b>Consigne :</b> <button class="btn small ghost" type="button" data-hl="6-7">✨ Surligner les lignes 6-7</button> <button class="btn small ghost" type="button" data-hl="20-23">✨ Surligner les lignes 20-23</button> — lis le programme dans CodeLab, puis classe chaque donnée et relève les lignes demandées.</div>
     <div class="exo">
-      <div class="assoc"><label for="d1_1"><code>vent_kmh</code> est une donnée…</label><select id="d1_1"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d1_2"><code>SEUIL_OURAGAN</code> est une donnée…</label><select id="d1_2"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d1_3"><code>vigilance</code> est une donnée…</label><select id="d1_3"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d1_4"><code>sirene_active</code> est une donnée…</label><select id="d1_4"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d1_5"><code>pression_hpa</code> est une donnée…</label><select id="d1_5"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d1_6"><code>message</code> est une donnée…</label><select id="d1_6"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="d1_1">
+  <legend><code>vent_kmh</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d1_1" id="d1_1__1" value="utilisée (entrée)"><label for="d1_1__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_1" id="d1_1__2" value="produite (sortie)"><label for="d1_1__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="d1_2">
+  <legend><code>SEUIL_OURAGAN</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d1_2" id="d1_2__1" value="utilisée (entrée)"><label for="d1_2__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_2" id="d1_2__2" value="produite (sortie)"><label for="d1_2__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="d1_3">
+  <legend><code>vigilance</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d1_3" id="d1_3__1" value="utilisée (entrée)"><label for="d1_3__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_3" id="d1_3__2" value="produite (sortie)"><label for="d1_3__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="d1_4">
+  <legend><code>sirene_active</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d1_4" id="d1_4__1" value="utilisée (entrée)"><label for="d1_4__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_4" id="d1_4__2" value="produite (sortie)"><label for="d1_4__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="d1_5">
+  <legend><code>pression_hpa</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d1_5" id="d1_5__1" value="utilisée (entrée)"><label for="d1_5__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_5" id="d1_5__2" value="produite (sortie)"><label for="d1_5__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="d1_6">
+  <legend><code>message</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d1_6" id="d1_6__1" value="utilisée (entrée)"><label for="d1_6__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_6" id="d1_6__2" value="produite (sortie)"><label for="d1_6__2">produite (sortie)</label></div>
+</fieldset>
       <div class="assoc"><label for="d1_l1">À quelle ligne la donnée <code>vent_kmh</code> est-elle LUE depuis le capteur ?</label><input type="number" id="d1_l1" min="1" max="30"></div>
       <div class="assoc"><label for="d1_l2">À quelle ligne le <code>message</code> est-il fabriqué (produit) ?</label><input type="number" id="d1_l2" min="1" max="30"></div>
       <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb1" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Une donnée UTILISÉE arrive de l'extérieur (capteur, constante) ; une donnée PRODUITE est créée par le programme (à gauche d'un « = » calculé). Utilise les boutons ✨ pour surligner les lignes dans CodeLab.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><code>vent_kmh</code> et <code>pression_hpa</code> viennent de <code>lire_capteur(...)</code> (lignes 6-7) ; <code>SEUIL_*</code> sont des constantes (lignes 2-4) : tout cela est UTILISÉ. <code>vigilance</code>, <code>sirene_active</code> et <code>message</code> sont créés par le programme : PRODUITS. Le message est fabriqué ligne 21.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Une donnée UTILISÉE arrive de l'extérieur (capteur, constante) ; une donnée PRODUITE est créée par le programme (à gauche d'un « = » calculé). <br>Utilise les boutons ✨ pour surligner les lignes dans CodeLab.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><code>vent_kmh</code> et <code>pression_hpa</code> viennent de <code>lire_capteur(...)</code> (lignes 6-7). <br><code>SEUIL_*</code> sont des constantes (lignes 2-4). <br>Tout cela est UTILISÉ. <br><code>vigilance</code>, <code>sirene_active</code> et <code>message</code> sont créés par le programme : PRODUITS. <br>Le message est fabriqué ligne 21.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Classements :</b> vent_kmh → utilisée · SEUIL_OURAGAN → utilisée · vigilance → produite · sirene_active → produite · pression_hpa → utilisée · message → produite. <b>Lignes :</b> vent_kmh lu ligne <b>6</b> ; message fabriqué ligne <b>21</b>.</p>
+      <p><b>Classements :</b> <br>
+      <code>vent_kmh</code> : utilisée (entrée). <br>
+      <code>SEUIL_OURAGAN</code> : utilisée (entrée). <br>
+      <code>vigilance</code> : produite (sortie). <br>
+      <code>sirene_active</code> : produite (sortie). <br>
+      <code>pression_hpa</code> : utilisée (entrée). <br>
+      <code>message</code> : produite (sortie). <br>
+      <b>Lignes :</b> <code>vent_kmh</code> est lu ligne <b>6</b>. <br><code>message</code> est fabriqué ligne <b>21</b>.</p>
       <p><b>Méthode :</b> pour chaque variable, on cherche D'OÙ vient sa valeur : capteur/constante = entrée ; calculée par le programme = sortie. Remarque : <code>pression_hpa</code> est lue mais pas encore exploitée par la décision — une piste d'amélioration future (validation croisée, cf. séquence C4.3) !</p>
       <p><b>Pourquoi c'est crucial :</b> modifier un programme sans connaître ses entrées/sorties, c'est opérer sans radiographie : on risque de casser une donnée dont une AUTRE partie du système a besoin (le message part vers l'application !).</p>
     </details>
@@ -934,15 +1004,31 @@ body.essentiel details.referentiel-replie{display:none}
     <div class="consigne"><b>Consigne :</b> suis le programme ligne à ligne « dans ta tête » (ou au brouillon) pour chaque situation, et donne les valeurs produites.</div>
     <div class="exo">
       <p><b>Situation A :</b> <code>vent_kmh = 95</code></p>
-      <div class="assoc"><label for="d2_a1">vigilance =</label><select id="d2_a1"><option value="">— choisir —</option><option>"verte"</option><option>"orange"</option><option>"rouge"</option><option>"violette"</option></select></div>
-      <div class="assoc"><label for="d2_a2">sirene_active =</label><select id="d2_a2"><option value="">— choisir —</option><option>True</option><option>False</option></select></div>
+      <fieldset class="qcm-groupe" id="d2_a1">
+  <legend>vigilance =</legend>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__1" value="&quot;verte&quot;"><label for="d2_a1__1">"verte"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__2" value="&quot;orange&quot;"><label for="d2_a1__2">"orange"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__3" value="&quot;rouge&quot;"><label for="d2_a1__3">"rouge"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__4" value="&quot;violette&quot;"><label for="d2_a1__4">"violette"</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d2_a2">
+  <legend>sirene_active =</legend>
+  <div class="qcm-option"><input type="radio" name="d2_a2" id="d2_a2__1" value="True"><label for="d2_a2__1">True</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a2" id="d2_a2__2" value="False"><label for="d2_a2__2">False</label></div>
+</fieldset>
       <p style="margin-top:10px"><b>Situation B (piège classique) :</b> <code>vent_kmh = 118</code> exactement</p>
-      <div class="assoc"><label for="d2_b1">vigilance =</label><select id="d2_b1"><option value="">— choisir —</option><option>"verte"</option><option>"orange"</option><option>"rouge"</option><option>"violette"</option></select></div>
+      <fieldset class="qcm-groupe" id="d2_b1">
+  <legend>vigilance =</legend>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__1" value="&quot;verte&quot;"><label for="d2_b1__1">"verte"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__2" value="&quot;orange&quot;"><label for="d2_b1__2">"orange"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__3" value="&quot;rouge&quot;"><label for="d2_b1__3">"rouge"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__4" value="&quot;violette&quot;"><label for="d2_b1__4">"violette"</label></div>
+</fieldset>
       <label for="d2_just" style="display:block;margin-top:8px"><b>Justifie</b> la situation B en citant l'opérateur de comparaison de la ligne 12 :</label>
       <textarea id="d2_just" placeholder="À la ligne 12, le test est vent_kmh > 118, or…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Dans la situation B, la valeur 118 est exactement ____.</li>
     <li>L&#x27;opérateur de comparaison de la ligne 12 est ____, ce qui veut dire que ____.</li>
@@ -952,10 +1038,10 @@ body.essentiel details.referentiel-replie{display:none}
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Descends les tests dans l'ordre : 95 est-il &gt; 118 ? Non → suivant. 95 &gt; 90 ? … Le PREMIER test vrai gagne, les suivants sont ignorés (c'est le rôle de <code>elif</code>).</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>A : 95 &gt; 90 → rouge, sirène True. B : 118 &gt; 118 est FAUX (l'opérateur &gt; est strict !) → on passe au test suivant : 118 &gt; 90 → rouge. Pour avoir violette il faut 119 ou plus.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Descends les tests dans l'ordre : 95 est-il &gt; 118 ? Non → suivant. <br>95 &gt; 90 ? … Le PREMIER test vrai gagne, les suivants sont ignorés (c'est le rôle de <code>elif</code>).</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>A : 95 &gt; 90 → rouge, sirène True. <br>B : 118 &gt; 118 est FAUX (l'opérateur &gt; est strict !) → on passe au test suivant : 118 &gt; 90 → rouge. <br>Pour avoir violette il faut 119 ou plus.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>A :</b> vigilance = "rouge", sirene_active = True. <b>B :</b> vigilance = <b>"rouge"</b> — car ligne 12 le test est <code>vent_kmh &gt; SEUIL_OURAGAN</code> avec un <b>&gt; strict</b> : 118 &gt; 118 est faux. C'est exactement le genre de « valeur frontière » qui piège les programmes (et les programmeurs) — on le retrouvera dans le plan de tests.</p>
+      <p><b>A :</b> vigilance = "rouge", sirene_active = True. <br><b>B :</b> vigilance = <b>"rouge"</b> — car ligne 12 le test est <code>vent_kmh &gt; SEUIL_OURAGAN</code> avec un <b>&gt; strict</b> : 118 &gt; 118 est faux. <br>C'est exactement le genre de « valeur frontière » qui piège les programmes (et les programmeurs) — on le retrouvera dans le plan de tests.</p>
       <p><b>Méthode de la trace :</b> une ligne à la fois, en notant la valeur de chaque variable — c'est ce que fait la machine, ni plus ni moins.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre « violette » en B (confondre &gt; et ≥) ; oublier qu'après un test vrai, les <code>elif</code> suivants sont ignorés ; tracer de tête sans noter les valeurs.</div>
@@ -984,15 +1070,26 @@ body.essentiel details.referentiel-replie{display:none}
     </div>
     <div class="consigne"><b>Consigne :</b> Météo-France recalibre ses niveaux : le seuil orange passe de 50 à <b>60 km/h</b>. Dans CodeLab, <b>modifie la ligne 2</b> en conséquence, puis réponds.</div>
     <div class="exo">
-      <div class="assoc"><label for="d3_1">Après ta modification, un vent de 55 km/h déclenche…</label><select id="d3_1"><option value="">— choisir —</option><option>vigilance verte/jaune (rien)</option><option>vigilance orange</option><option>vigilance rouge</option></select></div>
-      <div class="assoc"><label for="d3_2">Quel est l'intérêt d'avoir écrit les seuils dans des CONSTANTES en tête de programme (lignes 2-4) plutôt que « en dur » dans les tests ?</label><select id="d3_2"><option value="">— choisir —</option><option>une seule ligne à modifier, aucun risque d'oublier une occurrence</option><option>ça rend le programme plus long</option><option>c'est obligatoire en Python</option><option>aucun intérêt</option></select></div>
+      <fieldset class="qcm-groupe" id="d3_1">
+  <legend>Après ta modification, un vent de 55 km/h déclenche…</legend>
+  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__1" value="vigilance verte/jaune (rien)"><label for="d3_1__1">vigilance verte/jaune (rien)</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__2" value="vigilance orange"><label for="d3_1__2">vigilance orange</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__3" value="vigilance rouge"><label for="d3_1__3">vigilance rouge</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d3_2">
+  <legend>Quel est l'intérêt d'avoir écrit les seuils dans des CONSTANTES en tête de programme (lignes 2-4) plutôt que « en dur » dans les tests ?</legend>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__1" value="une seule ligne à modifier, aucun risque d&#x27;oublier une occurrence"><label for="d3_2__1">une seule ligne à modifier, aucun risque d'oublier une occurrence</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__2" value="ça rend le programme plus long"><label for="d3_2__2">ça rend le programme plus long</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__3" value="c&#x27;est obligatoire en Python"><label for="d3_2__3">c'est obligatoire en Python</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__4" value="aucun intérêt"><label for="d3_2__4">aucun intérêt</label></div>
+</fieldset>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses (je vérifie aussi ta ligne 2 dans CodeLab !)</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La ligne 2 est <code>SEUIL_ORANGE = 50</code> : remplace juste la valeur. Puis trace : 55 &gt; 60 ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Avec SEUIL_ORANGE = 60 : 55 &gt; 60 est faux → aucune branche ne se déclenche → verte/jaune. Un seuil dans une constante se change en UN endroit ; « en dur », il faudrait le chercher partout — et en oublier un = bug garanti.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Avec SEUIL_ORANGE = 60 : 55 &gt; 60 est faux → aucune branche ne se déclenche → verte/jaune. <br>Un seuil dans une constante se change en UN endroit ; « en dur », il faudrait le chercher partout — et en oublier un = bug garanti.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p>Ligne 2 : <code>SEUIL_ORANGE = 60</code>. Un vent de 55 km/h ne déclenche plus rien (55 &gt; 60 faux) → <b>verte/jaune</b>. Intérêt des constantes : <b>un seul point de modification</b> — c'est une règle d'or de la programmation (et la raison pour laquelle la ligne s'appelle SEUIL_ORANGE et pas x).</p>
+      <p>Ligne 2 : <code>SEUIL_ORANGE = 60</code>. <br>Un vent de 55 km/h ne déclenche plus rien (55 &gt; 60 faux) → <b>verte/jaune</b>. <br>Intérêt des constantes : <b>un seul point de modification</b> — c'est une règle d'or de la programmation (et la raison pour laquelle la ligne s'appelle SEUIL_ORANGE et pas x).</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> modifier le 50 dans le test au lieu de la constante ; répondre « orange » sans re-tracer avec la nouvelle valeur.</div>
     <div class="retenir"><b>📌 À retenir :</b> <b>modifier un paramètre</b> = changer une valeur SANS toucher à la structure. Les <b>constantes nommées</b> rendent la modification sûre : un seul endroit à changer, un effet prévisible qu'on vérifie par une trace.</div>
@@ -1049,7 +1146,7 @@ if sirene_active:
     activer_sirene()
 if gyrophare_actif:               # ④ nouveau bloc de commande
     activer_gyrophare()</pre>
-      <p><b>Pourquoi initialiser à False (①) :</b> par sécurité, les actionneurs sont « au repos » par défaut — seule une condition explicite les active. <b>Pourquoi l'ordre des tests :</b> du plus fort au plus faible, sinon un ouragan serait capté par « &gt; 60 » avant d'atteindre son test. <b>Pourquoi ④ à la fin :</b> la décision d'abord, la commande ensuite — comme pour la sirène.</p>
+      <p><b>Pourquoi initialiser à False (①) :</b> par sécurité, les actionneurs sont « au repos » par défaut — seule une condition explicite les active. <br><b>Pourquoi l'ordre des tests :</b> du plus fort au plus faible, sinon un ouragan serait capté par « &gt; 60 » avant d'atteindre son test. <br><b>Pourquoi ④ à la fin :</b> la décision d'abord, la commande ensuite — comme pour la sirène.</p>
       <p><b>Erreur de message possible :</b> si Python affichait <code>IndentationError</code>, c'est qu'une ligne de branche n'a pas ses 4 espaces — l'indentation EST la structure du programme.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier l'initialisation à False (le gyrophare resterait allumé d'un cycle sur l'autre !) ; mauvaise indentation (la ligne sort de la branche) ; ajouter gyrophare_actif = True dans la branche ROUGE (relis l'algorigramme : rouge = sirène seule).</div>
@@ -1078,22 +1175,68 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
     <div class="consigne"><b>Consigne :</b> a) calcule À LA MAIN la sortie attendue de ta v2 pour chaque jeu d'essai ; b) analyse ensuite le bug du schéma.</div>
     <div class="exo">
       <h4>a) Sorties attendues de TA v2 (seuil orange = 60)</h4>
-      <div class="assoc"><label for="d5_1">vent = 55 →</label><select id="d5_1"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
-      <div class="assoc"><label for="d5_2">vent = 60 (frontière !) →</label><select id="d5_2"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
-      <div class="assoc"><label for="d5_3">vent = 61 →</label><select id="d5_3"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
-      <div class="assoc"><label for="d5_4">vent = 118 (frontière !) →</label><select id="d5_4"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
-      <div class="assoc"><label for="d5_5">vent = 119 →</label><select id="d5_5"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
+      <fieldset class="qcm-groupe" id="d5_1">
+  <legend>vent = 55 →</legend>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__1" value="verte/jaune, rien"><label for="d5_1__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__2" value="orange + gyrophare"><label for="d5_1__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__3" value="rouge + sirène"><label for="d5_1__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__4" value="violette + les deux"><label for="d5_1__4">violette + les deux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d5_2">
+  <legend>vent = 60 (frontière !) →</legend>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__1" value="verte/jaune, rien"><label for="d5_2__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__2" value="orange + gyrophare"><label for="d5_2__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__3" value="rouge + sirène"><label for="d5_2__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__4" value="violette + les deux"><label for="d5_2__4">violette + les deux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d5_3">
+  <legend>vent = 61 →</legend>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__1" value="verte/jaune, rien"><label for="d5_3__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__2" value="orange + gyrophare"><label for="d5_3__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__3" value="rouge + sirène"><label for="d5_3__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__4" value="violette + les deux"><label for="d5_3__4">violette + les deux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d5_4">
+  <legend>vent = 118 (frontière !) →</legend>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__1" value="verte/jaune, rien"><label for="d5_4__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__2" value="orange + gyrophare"><label for="d5_4__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__3" value="rouge + sirène"><label for="d5_4__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__4" value="violette + les deux"><label for="d5_4__4">violette + les deux</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d5_5">
+  <legend>vent = 119 →</legend>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__1" value="verte/jaune, rien"><label for="d5_5__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__2" value="orange + gyrophare"><label for="d5_5__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__3" value="rouge + sirène"><label for="d5_5__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__4" value="violette + les deux"><label for="d5_5__4">violette + les deux</label></div>
+</fieldset>
       <h4>b) Le bug du schéma</h4>
-      <div class="assoc"><label for="d5_6">Sur le schéma, le test n°4 (vent = 118) obtient « violette » au lieu de « rouge ». La cause la plus probable dans le code testé :</label><select id="d5_6"><option value="">— choisir —</option><option>quelqu'un a écrit >= 118 au lieu de > 118</option><option>le capteur est cassé</option><option>Python ne sait pas comparer</option><option>118 est un nombre spécial</option></select></div>
-      <div class="assoc"><label for="d5_7">Pourquoi les jeux d'essai visent-ils les valeurs 49/50/51 ou 117/118/119 plutôt que 30, 75, 200 ?</label><select id="d5_7"><option value="">— choisir —</option><option>les erreurs se cachent aux frontières : c'est là que > et >= diffèrent</option><option>ce sont des nombres plus jolis</option><option>pour aller plus vite</option><option>par tradition</option></select></div>
+      <fieldset class="qcm-groupe" id="d5_6">
+  <legend>Sur le schéma, le test n°4 (vent = 118) obtient « violette » au lieu de « rouge ». La cause la plus probable dans le code testé :</legend>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__1" value="quelqu&#x27;un a écrit &gt;= 118 au lieu de &gt; 118"><label for="d5_6__1">quelqu'un a écrit >= 118 au lieu de > 118</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__2" value="le capteur est cassé"><label for="d5_6__2">le capteur est cassé</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__3" value="Python ne sait pas comparer"><label for="d5_6__3">Python ne sait pas comparer</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__4" value="118 est un nombre spécial"><label for="d5_6__4">118 est un nombre spécial</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d5_7">
+  <legend>Pourquoi les jeux d'essai visent-ils les valeurs 49/50/51 ou 117/118/119 plutôt que 30, 75, 200 ?</legend>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__1" value="les erreurs se cachent aux frontières : c&#x27;est là que &gt; et &gt;= diffèrent"><label for="d5_7__1">les erreurs se cachent aux frontières : c'est là que > et >= diffèrent</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__2" value="ce sont des nombres plus jolis"><label for="d5_7__2">ce sont des nombres plus jolis</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__3" value="pour aller plus vite"><label for="d5_7__3">pour aller plus vite</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__4" value="par tradition"><label for="d5_7__4">par tradition</label></div>
+</fieldset>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour chaque valeur, redéroule les tests de TA v2 dans l'ordre (rappel : tous les &gt; sont stricts, et ton seuil orange vaut 60 depuis l'activité 3).</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>55 : rien (55&gt;60 faux). 60 : rien (60&gt;60 faux — frontière !). 61 : orange+gyro. 118 : rouge+sirène (118&gt;118 faux, 118&gt;90 vrai). 119 : violette+les deux. Le schéma obtient violette à 118 : seul un ≥ l'explique.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>55 : rien (55&gt;60 faux). <br>60 : rien (60&gt;60 faux — frontière !). <br>61 : orange+gyro. 118 : rouge+sirène (118&gt;118 faux, 118&gt;90 vrai). 119 : violette+les deux. <br>Le schéma obtient violette à 118 : seul un ≥ l'explique.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> 55 → verte/jaune · 60 → verte/jaune (60 &gt; 60 est faux : frontière exclue) · 61 → orange + gyrophare · 118 → rouge + sirène · 119 → violette + les deux.</p>
-      <p><b>b)</b> ≥ au lieu de &gt; : avec <code>vent_kmh &gt;= 118</code>, la valeur 118 bascule en violette — exactement l'écart constaté. Les frontières sont les SEULS points où &gt; et ≥ diffèrent : c'est pourquoi un bon plan de tests les vise systématiquement (49/50/51…). Tester 30, 75, 200 ne distinguerait jamais les deux opérateurs.</p>
+      <p><b>a)</b> 55 km/h : verte/jaune, rien. <br>
+      60 km/h : verte/jaune, rien — 60 &gt; 60 est faux, la frontière est exclue. <br>
+      61 km/h : orange + gyrophare. <br>
+      118 km/h : rouge + sirène. <br>
+      119 km/h : violette + les deux.</p>
+      <p><b>b)</b> ≥ au lieu de &gt; : avec <code>vent_kmh &gt;= 118</code>, la valeur 118 bascule en violette — exactement l'écart constaté. <br>Les frontières sont les SEULS points où &gt; et ≥ diffèrent : c'est pourquoi un bon plan de tests les vise systématiquement (49/50/51…). <br>Tester 30, 75, 200 ne distinguerait jamais les deux opérateurs.</p>
       <p><b>La règle professionnelle :</b> sortie ATTENDUE calculée à la main AVANT l'exécution, sinon on ne teste pas, on constate. Verdict ✔/✘ pour chaque jeu, et un seul ✘ suffit à refuser la version.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre « orange » pour 60 (oublier que &gt; est strict) ; répondre « violette » pour 118 ; choisir des jeux d'essai loin des seuils « pour faire varié ».</div>
@@ -1117,20 +1260,49 @@ drapeau = "vert"
 if hauteur_m &gt; SEUIL_HOULE:
     drapeau = "rouge"
 envoyer("Baignade : " + drapeau)</pre>
-      <div class="assoc"><label for="d6_1"><code>hauteur_m</code> est une donnée…</label><select id="d6_1"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d6_2"><code>drapeau</code> est une donnée…</label><select id="d6_2"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
-      <div class="assoc"><label for="d6_3">Trace : hauteur_m = 4.0 exactement → drapeau =</label><select id="d6_3"><option value="">— choisir —</option><option>"vert"</option><option>"rouge"</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee" id="d6_1">
+  <legend><code>hauteur_m</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d6_1" id="d6_1__1" value="utilisée (entrée)"><label for="d6_1__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_1" id="d6_1__2" value="produite (sortie)"><label for="d6_1__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe qcm-rangee" id="d6_2">
+  <legend><code>drapeau</code> est une donnée…</legend>
+  <div class="qcm-option"><input type="radio" name="d6_2" id="d6_2__1" value="utilisée (entrée)"><label for="d6_2__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_2" id="d6_2__2" value="produite (sortie)"><label for="d6_2__2">produite (sortie)</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d6_3">
+  <legend>Trace : hauteur_m = 4.0 exactement → drapeau =</legend>
+  <div class="qcm-option"><input type="radio" name="d6_3" id="d6_3__1" value="&quot;vert&quot;"><label for="d6_3__1">"vert"</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_3" id="d6_3__2" value="&quot;rouge&quot;"><label for="d6_3__2">"rouge"</label></div>
+</fieldset>
       <div class="assoc"><label for="d6_4">La mairie veut passer le seuil à 3 m. Quelle ligne modifier ?</label><input type="number" id="d6_4" min="1" max="6"></div>
-      <div class="assoc"><label for="d6_5">Après cette modification, quel TRIO de jeux d'essai est le plus pertinent ?</label><select id="d6_5"><option value="">— choisir —</option><option>2,9 · 3,0 · 3,1</option><option>1 · 5 · 10</option><option>0 · 100 · 1000</option><option>3 · 3 · 3</option></select></div>
-      <div class="assoc"><label for="d6_6">On ajoute un drapeau « orange » entre 2 m et 3 m. Quelle structure faut-il introduire ?</label><select id="d6_6"><option value="">— choisir —</option><option>un elif intermédiaire, testé APRÈS le cas le plus fort</option><option>un deuxième programme complet</option><option>supprimer le if existant</option><option>une boucle infinie</option></select></div>
+      <fieldset class="qcm-groupe" id="d6_5">
+  <legend>Après cette modification, quel TRIO de jeux d'essai est le plus pertinent ?</legend>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__1" value="2,9 · 3,0 · 3,1"><label for="d6_5__1">2,9 · 3,0 · 3,1</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__2" value="1 · 5 · 10"><label for="d6_5__2">1 · 5 · 10</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__3" value="0 · 100 · 1000"><label for="d6_5__3">0 · 100 · 1000</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__4" value="3 · 3 · 3"><label for="d6_5__4">3 · 3 · 3</label></div>
+</fieldset>
+      <fieldset class="qcm-groupe" id="d6_6">
+  <legend>On ajoute un drapeau « orange » entre 2 m et 3 m. Quelle structure faut-il introduire ?</legend>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__1" value="un elif intermédiaire, testé APRÈS le cas le plus fort"><label for="d6_6__1">un elif intermédiaire, testé APRÈS le cas le plus fort</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__2" value="un deuxième programme complet"><label for="d6_6__2">un deuxième programme complet</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__3" value="supprimer le if existant"><label for="d6_6__3">supprimer le if existant</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__4" value="une boucle infinie"><label for="d6_6__4">une boucle infinie</label></div>
+</fieldset>
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Applique la check-list dans l'ordre : entrées/sorties → trace (attention à la frontière !) → paramètre → plan de tests → structure.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>4.0 &gt; 4 est faux → vert. Le seuil est ligne 1. Les jeux d'essai encadrent le NOUVEAU seuil (3) : 2,9/3,0/3,1. Pour l'orange : un elif, en testant du plus fort au plus faible (comme l'alerte graduée !).</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>4.0 &gt; 4 est faux → vert. <br>Le seuil est ligne 1. <br>Les jeux d'essai encadrent le NOUVEAU seuil (3) : 2,9/3,0/3,1. Pour l'orange : un elif, en testant du plus fort au plus faible (comme l'alerte graduée !).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p>utilisée · produite · <b>"vert"</b> (4.0 &gt; 4 faux, frontière) · ligne <b>1</b> · <b>2,9 · 3,0 · 3,1</b> · <b>un elif intermédiaire</b> testé après le cas le plus fort.</p>
-      <p><b>🔁 Le concept invariant&nbsp;:</b> ce que tu viens de refaire sur ce programme inconnu, tu l'avais déjà fait sur l'alerte graduée — le concept commun s'appelle la <b>structure conditionnelle paramétrée</b> (SI/SINON + seuils), qui se dessine en algorigramme comme elle s'écrit en blocs ou en texte.</p>
+      <p><code>hauteur_m</code> : utilisée (entrée). <br>
+      <code>drapeau</code> : produite (sortie). <br>
+      Pour 4,0 m : <b>"vert"</b> — 4.0 &gt; 4 est faux, c'est la frontière. <br>
+      La ligne à modifier : la ligne <b>1</b>. <br>
+      Les trois valeurs à tester : <b>2,9</b>, <b>3,0</b> et <b>3,1</b>. <br>
+      Le drapeau orange : <b>un elif intermédiaire</b>, testé après le cas le plus fort.</p>
+      <p><b>🔁 Le concept invariant&nbsp;:</b> ce que tu viens de refaire sur ce programme inconnu, tu l'avais déjà fait sur l'alerte graduée. <br>Le concept commun s'appelle la <b>structure conditionnelle paramétrée</b> (SI/SINON + seuils). <br>Elle se dessine en algorigramme comme elle s'écrit en blocs ou en texte.</p>
       <p><b>Bilan :</b> tu viens de dérouler seul·e la démarche complète — carte d'identité, trace, modification de paramètre, plan de tests aux frontières, extension de structure. C'est exactement C6.1 + C6.3, transférées à un programme inconnu.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> « rouge » à 4.0 (encore la frontière !) ; jeux d'essai autour de l'ANCIEN seuil (4) au lieu du nouveau (3) ; vouloir réécrire tout le programme pour ajouter un niveau.</div>
@@ -1143,9 +1315,9 @@ envoyer("Baignade : " + drapeau)</pre>
   <h2>📝 Synthèse de la séquence — à retenir</h2>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5 — rien de nouveau ici.</p>
   <h4>1. La carte d'identité du programme (activités 1-2 — C6.1)</h4>
-  <p>Avant de modifier : identifier les données <b>utilisées</b> (capteurs, constantes) et <b>produites</b> (résultats, commandes, messages), puis <b>tracer</b> l'exécution à la main pour prédire les sorties. Les <b>elif</b> s'arrêtent au premier test vrai ; l'opérateur <b>&gt;</b> est strict.</p>
+  <p>Avant de modifier : identifier les données <b>utilisées</b> (capteurs, constantes) et <b>produites</b> (résultats, commandes, messages), puis <b>tracer</b> l'exécution à la main pour prédire les sorties. <br>Les <b>elif</b> s'arrêtent au premier test vrai ; l'opérateur <b>&gt;</b> est strict.</p>
   <h4>2. Modifier sans casser (activités 3-4 — C6.3)</h4>
-  <p>Modifier un <b>paramètre</b> = changer une constante nommée (un seul point de modification). Implémenter une <b>nouvelle fonctionnalité</b> = suivre une spécification (algorigramme) en imitant les modèles existants : initialisation sûre (False) → décision (branches, du plus fort au plus faible) → commande (if final). En Python, l'<b>indentation</b> fait partie du langage.</p>
+  <p>Modifier un <b>paramètre</b> = changer une constante nommée (un seul point de modification). <br>Implémenter une <b>nouvelle fonctionnalité</b> = suivre une spécification (algorigramme) en imitant les modèles existants : initialisation sûre (False) → décision (branches, du plus fort au plus faible) → commande (if final). <br>En Python, l'<b>indentation</b> fait partie du langage.</p>
   <h4>3. Valider (activité 5 — C6.3)</h4>
   <p><b>Plan de tests</b> : jeux d'essai visant les <b>valeurs frontières</b>, sortie attendue calculée <b>à la main avant</b> l'exécution, verdict ✔/✘. Un seul ✘ refuse la version ; on reteste aussi l'ancien comportement (<b>non-régression</b>).</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
@@ -1154,11 +1326,13 @@ envoyer("Baignade : " + drapeau)</pre>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p>🐍 <b>Défi Python réel :</b> recopie ta v2 dans un vrai Python (PyCharm ou console) en remplaçant <code>lire_capteur(...)</code> par <code>float(input("vent ? "))</code> et les <code>activer_*()</code> par des <code>print(...)</code> : déroule ton plan de tests pour de vrai !</p>
-  <p>📊 <b>Défi pression :</b> le programme lit <code>pression_hpa</code> mais ne s'en sert pas. Propose (sur papier) une condition qui croise vent ET pression pour fiabiliser l'alerte — souviens-toi de la séquence C4.3.</p>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+  <p>🐍 <b>Défi Python réel :</b> recopie ta v2 dans un vrai Python (PyCharm ou console). <br>Remplace <code>lire_capteur(...)</code> par <code>float(input("vent ? "))</code>, et les <code>activer_*()</code> par des <code>print(...)</code>. <br>Puis déroule ton plan de tests pour de vrai !</p>
+  <p>📊 <b>Défi pression :</b> le programme lit <code>pression_hpa</code> mais ne s'en sert pas. <br>Propose (sur papier) une condition qui croise vent ET pression pour fiabiliser l'alerte — souviens-toi de la séquence C4.3.</p>
   <p>🤖 <b>Défi mBot2 :</b> transpose l'alerte graduée sur le mBot2 : LED orange/rouge/violette selon la distance mesurée par l'ultrason.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card">
@@ -1170,7 +1344,7 @@ envoyer("Baignade : " + drapeau)</pre>
     <textarea id="hyp_retour" placeholder="Avant de modifier un programme, il faut en fait…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Au départ je pensais que ____.</li>
     <li>Maintenant je sais que ____, parce que ____ me l&#x27;a montré.</li>
@@ -1182,7 +1356,7 @@ envoyer("Baignade : " + drapeau)</pre>
     <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>J&#x27;ai appris que une donnée d&#x27;entrée se distingue d&#x27;une sortie parce qu&#x27;elle ____.</li>
     <li>J&#x27;ai appris que un seuil sert à ____.</li>
@@ -1192,7 +1366,7 @@ envoyer("Baignade : " + drapeau)</pre>
     <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je sais maintenant repérer dans un programme les données qu&#x27;il ____.</li>
     <li>Je sais maintenant modifier un seuil sans ____.</li>
@@ -1202,7 +1376,7 @@ envoyer("Baignade : " + drapeau)</pre>
     <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je dois encore revoir ____, parce que ____.</li>
     <li>Ce que je n&#x27;arrive pas encore à faire seul·e : ____.</li>
@@ -1267,7 +1441,8 @@ const KEY = "seq_3e_C6.1-C6.3_programmer";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, radios:{}, valid: window.__valid || {}, code: $("clTa").value, fs: window.__clFs||14};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio" && el.id!=="clTa") o.inputs[el.id]=el.value; });
+  // n°300 : chaque groupe de boutons radio (fieldset.qcm-groupe) porte sa valeur
+  document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{ if(el.type!=="radio" && el.id!=="clTa") o.inputs[el.id]=el.value; });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
@@ -1285,7 +1460,7 @@ function restore(){
   if(!o) return;
   Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(!el) return;
     if((el.type==="checkbox" || el.type==="radio") && el.closest(".rappel-spiralaire, #billet")) el.checked = (v===true); else el.value=v; });
-  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=[...document.getElementsByName(n)].find(x=>x.value===v); if(r) r.checked=true; });  /* une valeur peut porter des guillemets ("verte") : pas de sélecteur */
   window.__valid = o.valid || {};
   if(typeof o.code === "string" && o.code.length) $("clTa").value = o.code;
   window.__clFs = o.fs || 14;
@@ -1609,6 +1784,14 @@ function appliqueSeance(idPanneau){
 }
 let ouvertEnImpression = null;
 window.addEventListener("beforeprint", ()=>{ const v=document.getElementById("ouverture"); if(v){ ouvertEnImpression=v.open; v.open=true; } });
+/* Révision du 11/11/2026 : ce qui est replié à l'écran (Bonus, erreurs fréquentes, synthèse) s'ouvre pour l'impression. */
+(function(){
+  var replis = "details.bonus-replie, details.erreurs-repliees", etats = null;
+  function ouvrir(){ etats = []; document.querySelectorAll(replis).forEach(function(d){ etats.push([d, d.open]); d.open = true; }); }
+  function refermer(){ if (!etats) return; etats.forEach(function(e){ e[0].open = e[1]; }); etats = null; }
+  window.addEventListener("beforeprint", ouvrir); window.addEventListener("afterprint", refermer);
+  if (window.matchMedia) { var m = window.matchMedia("print"); if (m.addEventListener) m.addEventListener("change", function(e){ if (e.matches) ouvrir(); else refermer(); }); }
+})();
 window.addEventListener("afterprint", ()=>{ const v=document.getElementById("ouverture"); if(v && ouvertEnImpression!==null){ v.open=ouvertEnImpression; ouvertEnImpression=null; } });
 /* Lien direct : #ancre ouvre la séance qui la contient, sans l'ouverture. */
 function ouvrirSeanceDeLAncre(){

@@ -29788,3 +29788,15 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Aération** : 41 retours posés ; l'ordre du protocole (cinq étapes écrites avec leur libellé), le choix du procédé, les réponses du réinvestissement et la décision attendue réécrits une idée par ligne. Bonus replié, ouvert à l'impression.
 
 **Mesure.** Séances : 836 · 471 · 434 · 1 132 mots visibles (la 4 était à 1 238). ✘ 1 → 0 ; menus 30 → 0 ; aération 5 → 0. Bancs 34/34 et 34/34 ; contrôles verts.
+
+---
+
+## 11/11/2026 — Révision des trois thèmes, 20 : 3e_C6.1, 23 listes en boutons radio, la restauration tient les guillemets
+
+**Décisions.**
+- **n°300** : 23 listes → groupes de boutons radio (71 propositions) ; `collect()` lit la valeur des groupes ; enveloppes `div.assoc` retirées. Aucune grille lettrée : les réponses à deux propositions (« utilisée / produite ») portent la classe `qcm-rangee` — côte à côte quand la largeur le permet, l'une sous l'autre à 390 px.
+- **Une valeur de réponse peut porter des guillemets** (`"verte"`, `"rouge"` : ce sont des chaînes Python). `restore()` cherchait le bouton par un sélecteur `[value="…"]`, qui cassait sur ces valeurs : au rechargement, plus aucune réponse ni validation ne revenait. Le bouton est maintenant cherché par comparaison de valeur (`getElementsByName`). Les douze autres pages qui portent ce sélecteur n'ont aucune valeur à guillemets (vérifié) ; à corriger dans le gabarit le jour où l'une en reçoit.
+- **`_outils/audit_aeration.py`** : un listing de programme (`<pre>`) n'est pas de la prose ; il ne compte plus comme une correction d'un seul tenant (le listing v2 comptait 142 mots).
+- **Aération** : 42 retours posés ; les classements des six données, les cinq tests (55, 60, 61, 118, 119 km/h), les réponses du réinvestissement, l'aide de niveau 2 et le défi Python réécrits une idée par ligne. Bonus replié, ouvert à l'impression.
+
+**Mesure.** Séances : 700 · 532 · 1 009 mots visibles (727 · 538 · 1 135 avant). ✘ 1 → 0 ; menus 23 → 0 ; aération 9 → 0. Bancs 35/35 et 34/34 ; contrôles verts.
