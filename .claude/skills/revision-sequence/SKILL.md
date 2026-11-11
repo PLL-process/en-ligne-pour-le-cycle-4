@@ -44,6 +44,10 @@ Les cinq commandes ci-dessus sur la page (et ses pages engendrées), chiffres no
   <page> --ecrire` les range en grille (dans une incrustation d'atelier, c'est le moteur qui le fait : le widget
   `classer` se lit en grille dès trois items et trois catégories, depuis le 08/11/2026) — les réponses une fois, lettrées A, B, C ; chaque question, une rangée de lettres.
   Sans grille, la conversion n°300 écrit cinq fois les cinq réponses (5e_C1.5 : séance 2, 1 169 → 888 mots).
+- **La bonne réponse n'est pas toujours la première** : les listes la rangeaient en tête ; en boutons radio, cela se voit
+  (constat de Pascal, 11/11/2026). Après la conversion et les grilles, `python3 _outils/melanger_propositions.py <page>
+  --ecrire` mélange les propositions de chaque groupe — sauf les grilles, les rangées (`qcm-rangee`), les numéros, les
+  échelles de positionnement et les « je ne sais pas encore », qui restent en dernier. Le tirage est fixe : rejouer ne change rien.
 - **Les autres ✘** (n°23 durée, n°301 clôture, n°304 avant de commencer…) : à la main, selon leur skill.
 
 ### 3. Alléger la lecture de chaque séance
