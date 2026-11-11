@@ -89,5 +89,8 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 - [ ] Les séquences suivantes : à chaque révision (skill `revision-sequence`, étape 7), poser le mode et jouer le
       banc générique. Thèmes 1 et 3 : même geste.
 - [x] Leurres et pourquoi des erreurs : le modèle, sur le lampadaire (`mission_5e_C4.1.json`, `enrichir.py`).
-- [ ] Les mêmes, sur les autres séquences — après l'avis de Pascal sur le modèle.
+- [x] Avis de Pascal sur le modèle (11/11) : « Je te laisse carte blanche ». Faits : `5e_C6.1`, `4e_C6.1`.
+- [ ] Les pourquoi des sept autres séquences qui portent le mode.
+- [ ] **« Le mode mission doit être partout »** (Pascal, 11/11) : apprendre au moteur l'ancien gabarit et le gabarit
+      « atelier », puis poser le mode sur toutes les séquences des trois thèmes que le banc générique accepte.
 - [ ] Rappel en début de séance, maîtrise confirmée, code bilan.
