@@ -29914,3 +29914,29 @@ squelette, navigation des séances, mode essentiel verts, `audit_aeration --stri
 - **Écart** : séance 2 à 1 216 mots (1 200 en mode essentiel). Sa clôture — concept invariant, retour sur l'hypothèse, bilan, auto-positionnement — pèse 290 mots et ne se replie pas (n°301, n°306, n°311).
 
 **Mesure.** Séances : 1 184 · 1 216 mots visibles (1 277 · 1 460 avant). ✘ 1 → 0 ; menus 28 → 0 ; aération 6 → 0. Bancs 29/29 et 34/34 ; contrôles verts.
+
+---
+
+## 11/11/2026 — Mode mission : un exercice à la fois, des étiquettes à poser — pilote sur le lampadaire de 5e
+
+**Demande de Pascal (11/11).** « Le défilement des séances de haut en bas… que proposerais-tu de plus ergonomique, premium, pédagogique ? Un exercice par page avec des boutons de navigation… des étiquettes à placer comme dans Tactileo. » Après le prototype (artefact « Mission lampadaire ») : « On peut valider pour toutes les séquences, c'est plus clair de voir un exercice à la fois. Apporte aussi des améliorations, tu as carte blanche. »
+
+**Décisions.**
+- **Une seconde vue de la même page, pas une seconde page.** Le mode mission montre les exercices de la séquence un écran à la fois ; il n'en invente aucun. Sauvegarde, verrous, vérification et validation restent ceux de la page. La page qui défile reste entière : elle s'imprime, se projette, et c'est elle que mesurent les contrôles et les bancs.
+- **Source unique** : `_outils/mode_mission/` (`mission.css`, `mission.js`), posée entre deux marqueurs par `poser.py`, comme la fiche papier. Aucune donnée propre à une page : les réponses attendues sont lues dans les vérifications de la page (`const att = {…}`). Contrôle : `_outils/controle_mode_mission.py`.
+- **Éteint par défaut.** L'élève l'allume par « 🎮 Mode mission : un exercice à la fois », dans le cadre « Ma progression » ; « 📄 Page complète » y ramène. L'allumer d'office reste à décider : il faudrait apprendre aux bancs et aux contrôles à ouvrir la page complète.
+- **Une question par écran** : la séance et sa situation de départ ; pour chaque activité l'atelier, le départ, chaque question, « je retiens » ; puis chaque carte (synthèse, Bonus, bilan). Trois boutons : Précédent · Vérifier · Suivant. « Suivant » n'est jamais bloqué.
+- **Étiquettes à poser** : une grille de boutons radio (mêmes réponses pour plusieurs questions) se joue en étiquettes. On touche l'étiquette puis sa case, on la glisse, ou on le fait au clavier. Poser une étiquette coche le bouton radio de la page. Les écrits gardent leur écran : rien de ce qui demande d'expliquer ne devient une étiquette.
+- **Ni chronomètre, ni vies, ni classement.** Étoiles par écran ; la barre compte celles de la séance, le bilan celles de la séquence, au-dessus de l'auto-positionnement, qui reste le choix de l'élève.
+
+**Ce que la recherche a changé (rapport du 11/11, résumé dans `docs/mode-mission/PLAN.md`).** Le risque du prototype : étiquettes fausses rendues + essais illimités = réussir par élimination, sans comprendre — et ce sont les élèves fragiles qui le font le plus (Baker, Corbett, Koedinger, 2004). Dans le moteur, donc pour toutes les séquences à venir :
+- les erreurs se comptent **réponse par réponse** et font les étoiles (3 sans erreur ; 2 avec une erreur, deux sur un jeu de trois réponses ou plus ; 1 au-delà) ; ouvrir une aide ne retire rien ;
+- après une erreur, « Vérifier » **souffle deux secondes** (« Relis d'abord… ») ;
+- au **deuxième essai manqué** sur le même écran, le coup de pouce de l'activité s'ouvre sous le message ; au quatrième, le second ;
+- le bilan dit les erreurs corrigées en route ; le retour ne passe jamais par la seule couleur ; au doigt, la page défile quand le doigt part d'une case.
+
+**Ce qui reste du contenu, séquence par séquence** : des étiquettes leurres (sans elles, la dernière étiquette est donnée) et le pourquoi de chaque mauvaise réponse, dit dès la première erreur. **À concevoir** : rappel en début de séance, maîtrise confirmée plus tard, code bilan pour le professeur.
+
+**Trois écueils rencontrés, à ne pas refaire.** Un bouton dans la barre d'outils la fait passer à trois lignes à 390 px (banc de la règle n°311) ; un élément visible entre les onglets et les panneaux est refusé par `controle_squelette` (D5) ; une variable `window.__…` est lue par `controle_verrous` comme un verrou ouvert au chargement — le mode se signale par un attribut sur `<html>`.
+
+**Mesure.** Banc du mode : 44 / 44 (22 tests à 390 px, 22 à 1 180 px). Page qui défile inchangée : bancs 64/64, 34/34, 25/25 ; mots visibles par séance identiques (1 196 · 628 · 496 · 399 · 611 · 2 113) ; contrôles verts. **Non essayé sur une vraie tablette** : le glisser au doigt n'a été joué qu'en simulation. Limites : séries de numéros à ordonner et textes à trous pas encore habillés ; 50 pages sans table `const att` ne se vérifieraient pas écran par écran.
