@@ -30133,3 +30133,15 @@ Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) vi
 - dans les animations commentées, relever **plus de quatre secondes de voix sans changement à l'écran**.
 
 **Mesure.** Aucune page ni aucun outil modifié : `SKILLS_AUDIT.md` et ce journal seulement.
+
+---
+
+## 11/11/2026 — Book Train, activité 2.1 : la frise des quatre formes d'énergie se lit de nouveau
+
+**Constat** (vu en jouant le mode mission, #669). Dans `4e_C4.1_book-train`, la frise animée « Les quatre visages de l'énergie » avait ses quatre légendes et ses quatre cadres presque invisibles : texte clair sur fond clair (contraste 1,2 pour 1). Elle est dessinée à la couleur du texte de la page, pour le fond sombre de la carte ; la règle `figure svg{background:#fdfcf8}`, écrite pour les schémas, lui posait une plaque claire.
+
+**Correction.** La frise ne prend plus la plaque (`background:transparent;border:0` sur ce seul dessin) : ses légendes et ses cadres se lisent sur la carte, comme prévu. Rien d'autre ne change dans la page. Sur papier, le texte est noir sur blanc, comme avant.
+
+**Vérifié aussi.** Les treize autres dessins de la page qui portent une plaque : leurs textes sont foncés sur la plaque, ou clairs sur leurs propres blocs foncés (le modèle de la chaîne d'énergie a son fond sombre). Aucun autre cas.
+
+**Mesure.** Bancs de la page : 39/39 et 38/38. `controle_schemas` : 0 ✘. `controle_impression`, `controle_axe` : verts.
