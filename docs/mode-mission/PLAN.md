@@ -91,7 +91,8 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
       pourquoi de la séquence.
 - [x] Leurres et pourquoi des erreurs : le modèle, sur le lampadaire (`mission_5e_C4.1.json`, `enrichir.py`).
 - [x] Avis de Pascal sur le modèle (11/11) : « Je te laisse carte blanche ». Faits : `5e_C6.1`, `4e_C6.1`.
-- [ ] Les pourquoi des sept autres séquences qui portent le mode.
+- [x] Les pourquoi de `3e_C4.1` (72 pourquoi, 5 indices) et de `3e_C4.3` (17 pourquoi, 26 indices, 1 leurre).
+- [ ] Les pourquoi des cinq autres séquences du premier lot : `3e_C4.7`, `3e_C5.1`, `3e_C6.1`, `4e_C4.1`, `4e_C5.1`.
 - [x] **« Le mode mission doit être partout »** (Pascal, 11/11), premier lot : le mode est posé sur **55 pages de
       séquence sur 60**, dans les trois thèmes (état ci-dessous).
 - [x] « Partout », la suite : `4e_C4.1_book-train` (séances en `section.panneau`, cartes en `div.carte`, réponses en
@@ -117,8 +118,9 @@ déclenchées à la dernière question d'une activité.
 La page 2 de la station (`3e_C9.2`, séances 3 et 4 : programmer sur Vittascience) n'a presque pas de question
 fermée : ses deux activités tiennent chacune sur un écran, que la page vérifie.
 
-Sur les 57 pages du premier niveau, trois portent le pourquoi de chaque erreur (`5e_C4.1`, `5e_C6.1`, `4e_C6.1`) ;
-dix ont des étiquettes à poser (20 écrans), une seule des leurres (`5e_C4.1`) : les grilles viennent avec la
+Sur les 57 pages du premier niveau, cinq portent le pourquoi de chaque erreur (`5e_C4.1`, `5e_C6.1`, `4e_C6.1`,
+`3e_C4.1`, `3e_C4.3`) ; dix ont des étiquettes à poser (20 écrans), deux des leurres ajoutés (`5e_C4.1`,
+`3e_C4.3`) : les grilles viennent avec la
 révision. Les pages pas encore révisées gardent leurs listes déroulantes : le mode les vérifie telles quelles.
 
 Vingt et une pages n'ont pas le cadre « Ma progression » : le bouton « 🎮 Mode mission » y est posé juste au-dessus

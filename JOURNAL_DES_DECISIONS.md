@@ -30232,3 +30232,24 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Vérifié aussi.** Les treize autres dessins de la page qui portent une plaque : leurs textes sont foncés sur la plaque, ou clairs sur leurs propres blocs foncés (le modèle de la chaîne d'énergie a son fond sombre). Aucun autre cas.
 
 **Mesure.** Bancs de la page : 39/39 et 38/38. `controle_schemas` : 0 ✘. `controle_impression`, `controle_axe` : verts.
+
+---
+
+## 12/11/2026 — Mode mission : le pourquoi de chaque erreur sur `3e_C4.1` et `3e_C4.3`
+
+**Cadre.** Carte blanche de Pascal (11/11) pour étendre le modèle du lampadaire aux autres séquences : dès la première erreur, une phrase dit pourquoi la réponse choisie ne convient pas, sans donner la bonne.
+
+**Ce qui est écrit.**
+
+| Séquence | Pourquoi (une phrase par mauvaise proposition) | Indices (une phrase par ligne de grille) | Leurre ajouté |
+|---|---|---|---|
+| `3e_C4.1` — station météo, énergie et matériaux | 72, sur 24 questions | 5 | aucun : la grille des blocs a déjà ses deux intrus |
+| `3e_C4.3` — station d'alerte, chaîne d'information | 17, sur 7 questions | 26 | « Alimenter », dans l'ordre des trois fonctions |
+
+- **Règles d'écriture tenues** : une phrase de 20 mots au plus ; jamais la bonne réponse, ni celle d'une autre question ; un renvoi au document quand la réponse s'y lit (« relis l'encadré des embruns », « relis la ligne du mât dans l'abaque »).
+- **Le leurre de `3e_C4.3`** : la grille « L'ordre des fonctions » avait trois réponses pour trois lignes — la dernière était donnée. « Alimenter » s'y ajoute : c'est la fonction que l'activité 1 vient d'écarter de la chaîne d'information. La légende le dit : « une réponse ne sert à aucune ligne ». Ce leurre se voit aussi dans la page qui défile.
+- Les données sont à côté de chaque page (`mission_3e_C4.1.json`, `mission_3e_C4.3.json`) ; `enrichir.py` les pose et se rejoue sans rien changer.
+
+**Mesure.** Banc générique : les deux pages acceptées ; pourquoi présents pour 77 propositions ou lignes sur 77, et 43 sur 43 ; aucun pourquoi sur une bonne réponse. Bancs des pages : 23/23 et 34/34 chacune. Contrôles : ordre des propositions, indices des QCM, unités, sigles, règles visibles, boutons, tactile, mode mission — verts. Règles d'or : 0 ✘ sur les deux dossiers. Charge : aucune séance au-delà de 1 200 mots (la plus lourde : 1 034). Vu à l'écran, à 390 px : quatre erreurs provoquées (une proposition, un vrai/faux, deux grilles d'étiquettes).
+
+**Reste.** Les cinq autres séquences du premier lot : `3e_C4.7`, `3e_C5.1`, `3e_C6.1`, `4e_C4.1`, `4e_C5.1`.
