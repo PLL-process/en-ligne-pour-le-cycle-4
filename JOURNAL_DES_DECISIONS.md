@@ -30171,9 +30171,6 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 
 ---
 
-
----
-
 ## 11/11/2026 — Mode mission partout, suite : les 60 pages de séquence le portent ; un écran se montre depuis son début
 
 **Décision de Pascal (11/11).** « Le mode mission doit être partout. » Le premier lot (#665) en laissait cinq pages sans mode.
