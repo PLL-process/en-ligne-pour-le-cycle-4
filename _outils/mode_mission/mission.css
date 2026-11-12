@@ -2,7 +2,9 @@
    Tout ce qui cache est sous @media screen : la fiche papier s'imprime comme avant, entière. */
 @media screen{
   body.ms .ms-cache,body.ms .ms-origine,body:not(.ms) .ms-seul{display:none!important}
-  body.ms #tachesBandeau,body.ms .page-suivante{display:none!important}
+  body.ms #tachesBandeau,body.ms .page-suivante:not(.ms-montre){display:none!important}
+  /* une page sans onglets : le mode ne montre qu'une séance à la fois */
+  body.ms .seance-bloc[id]:not(.ms-ici){display:none!important}
   body.ms{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
   body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
@@ -13,6 +15,7 @@
   body.ms #seances .seance-tab{flex:0 0 auto;min-width:0;padding:8px 12px;min-height:44px}
   body.ms #seances .seance-tab small{display:none}
   .ms-retour{scroll-margin-bottom:110px}
+  .ms-ancre{height:0}
   .ms-invite{display:flex;justify-content:center;margin-top:10px}
   .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
   .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
@@ -43,15 +46,15 @@
   .ms-pied-in{max-width:940px;margin:0 auto;padding:10px max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center}
   .ms-btn{border-radius:13px;border:2px solid var(--input-bd,#2e5d9f);background:transparent;color:var(--text,#e4eaf5);padding:10px 16px;min-height:52px;font:inherit;font-weight:700;cursor:pointer}
   .ms-btn:disabled,.ms-btn[aria-disabled=true]{opacity:.45;cursor:default}
-  .ms-btn.verif{flex:1;background:var(--energie,#ffb454);border-color:var(--energie,#ffb454);color:#2a1800;font-size:1.05em}
-  .ms-btn.suiv{background:var(--btn,#1d4e89);border-color:var(--btn,#1d4e89);color:#fff;font-size:1.05em}
-  .ms-btn.suiv.seul{flex:1}
+  .ms-btn.ms-verif{flex:1;background:var(--energie,#ffb454);border-color:var(--energie,#ffb454);color:#2a1800;font-size:1.05em}
+  .ms-btn.ms-suiv{background:var(--btn,#1d4e89);border-color:var(--btn,#1d4e89);color:#fff;font-size:1.05em}
+  .ms-btn.ms-suiv.seul{flex:1}
   .ms-vide-f{flex:1}
   .ms-btn:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
-  @media (max-width:460px){.ms-btn.prec span{display:none}}
+  @media (max-width:460px){.ms-btn.ms-prec span{display:none}}
 
   /* ── dans la scène ── */
-  body.ms .seance-panel.active>section.card{animation:ms-entre .3s ease-out}
+  body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:ms-entre .3s ease-out}
   @keyframes ms-entre{from{transform:translateY(8px)}to{transform:none}}
   .ms-ressbtn{display:inline-flex;align-items:center;min-height:44px;border:1px dashed var(--border,#274a8a);border-radius:10px;background:transparent;color:var(--hl,#61dafb);font:inherit;font-weight:700;padding:6px 12px;cursor:pointer;margin:6px 0}
   .ms-retour{margin:12px 0 4px;border-radius:12px;padding:11px 13px;border:1px solid var(--border,#274a8a);background:var(--panel2,#0a1b3d);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
@@ -64,8 +67,8 @@
   /* les questions à choix : de grandes cartes à toucher */
   body.ms fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee):not(.positionnement)>.qcm-option{padding:12px 14px;border:2px solid var(--border,#274a8a);border-radius:14px;min-height:52px;align-items:center;margin:8px 0}
   body.ms fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee):not(.positionnement)>.qcm-option:has(input:checked){border-color:var(--hl,#61dafb);background:rgba(97,218,251,.10)}
-  body.ms fieldset.qcm-groupe.ms-juste>.qcm-option:has(input:checked){border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10)}
-  body.ms fieldset.qcm-groupe.ms-faux>.qcm-option:has(input:checked){border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10)}
+  body.ms fieldset.qcm-groupe.ms-juste .qcm-option:has(input:checked){border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10)}
+  body.ms fieldset.qcm-groupe.ms-faux .qcm-option:has(input:checked){border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10)}
   body.ms fieldset.qcm-groupe.ms-juste>legend::after{content:" ✓";color:var(--ok,#81fba1)}
   body.ms fieldset.qcm-groupe.ms-faux>legend::after{content:" — à revoir";color:var(--warn,#ffd66b);font-weight:400}
 
@@ -116,6 +119,6 @@
   }
   .ms-bilan{border:1px solid var(--energie,#ffb454);border-radius:14px;padding:12px 14px;margin:0 0 14px;display:grid;gap:6px}
   .ms-bilan p{margin:0}
-  @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:none!important;transition:none!important}}
 }
 @media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}

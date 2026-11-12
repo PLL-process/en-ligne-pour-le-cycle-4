@@ -35,7 +35,7 @@ def blocs_de(html):
 
 
 def poser(html):
-    """Rend la page avec le bloc à jour, ou lève ValueError (deux blocs, ou pas de </head> unique)."""
+    """Rend la page avec le bloc à jour, ou lève ValueError (deux blocs, ou aucune place unique où le poser)."""
     b = bloc()
     trouves = blocs_de(html)
     if len(trouves) > 1:
@@ -44,7 +44,10 @@ def poser(html):
         return _BLOC_RE.sub(lambda _m: b, html, count=1)
     if html.count("</head>") == 1:
         return html.replace("</head>", b + "\n</head>", 1)
-    raise ValueError("pas de </head> unique où poser le mode mission")
+    corps = re.findall(r"<body[\s>]", html)
+    if html.count("</head>") == 0 and len(corps) == 1:        # page engendrée sans </head> : juste avant <body>, comme la fiche papier
+        return html.replace(corps[0], b + "\n" + corps[0], 1)
+    raise ValueError("ni </head> unique, ni (sans </head>) <body> unique, où poser le mode mission")
 
 
 def main(args):

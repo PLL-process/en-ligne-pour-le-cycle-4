@@ -545,7 +545,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
    Tout ce qui cache est sous @media screen : la fiche papier s'imprime comme avant, entière. */
 @media screen{
   body.ms .ms-cache,body.ms .ms-origine,body:not(.ms) .ms-seul{display:none!important}
-  body.ms #tachesBandeau,body.ms .page-suivante{display:none!important}
+  body.ms #tachesBandeau,body.ms .page-suivante:not(.ms-montre){display:none!important}
+  /* une page sans onglets : le mode ne montre qu'une séance à la fois */
+  body.ms .seance-bloc[id]:not(.ms-ici){display:none!important}
   body.ms{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
   body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
@@ -556,6 +558,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   body.ms #seances .seance-tab{flex:0 0 auto;min-width:0;padding:8px 12px;min-height:44px}
   body.ms #seances .seance-tab small{display:none}
   .ms-retour{scroll-margin-bottom:110px}
+  .ms-ancre{height:0}
   .ms-invite{display:flex;justify-content:center;margin-top:10px}
   .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
   .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
@@ -586,15 +589,15 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-pied-in{max-width:940px;margin:0 auto;padding:10px max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center}
   .ms-btn{border-radius:13px;border:2px solid var(--input-bd,#2e5d9f);background:transparent;color:var(--text,#e4eaf5);padding:10px 16px;min-height:52px;font:inherit;font-weight:700;cursor:pointer}
   .ms-btn:disabled,.ms-btn[aria-disabled=true]{opacity:.45;cursor:default}
-  .ms-btn.verif{flex:1;background:var(--energie,#ffb454);border-color:var(--energie,#ffb454);color:#2a1800;font-size:1.05em}
-  .ms-btn.suiv{background:var(--btn,#1d4e89);border-color:var(--btn,#1d4e89);color:#fff;font-size:1.05em}
-  .ms-btn.suiv.seul{flex:1}
+  .ms-btn.ms-verif{flex:1;background:var(--energie,#ffb454);border-color:var(--energie,#ffb454);color:#2a1800;font-size:1.05em}
+  .ms-btn.ms-suiv{background:var(--btn,#1d4e89);border-color:var(--btn,#1d4e89);color:#fff;font-size:1.05em}
+  .ms-btn.ms-suiv.seul{flex:1}
   .ms-vide-f{flex:1}
   .ms-btn:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
-  @media (max-width:460px){.ms-btn.prec span{display:none}}
+  @media (max-width:460px){.ms-btn.ms-prec span{display:none}}
 
   /* ── dans la scène ── */
-  body.ms .seance-panel.active>section.card{animation:ms-entre .3s ease-out}
+  body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:ms-entre .3s ease-out}
   @keyframes ms-entre{from{transform:translateY(8px)}to{transform:none}}
   .ms-ressbtn{display:inline-flex;align-items:center;min-height:44px;border:1px dashed var(--border,#274a8a);border-radius:10px;background:transparent;color:var(--hl,#61dafb);font:inherit;font-weight:700;padding:6px 12px;cursor:pointer;margin:6px 0}
   .ms-retour{margin:12px 0 4px;border-radius:12px;padding:11px 13px;border:1px solid var(--border,#274a8a);background:var(--panel2,#0a1b3d);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
@@ -607,8 +610,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   /* les questions à choix : de grandes cartes à toucher */
   body.ms fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee):not(.positionnement)>.qcm-option{padding:12px 14px;border:2px solid var(--border,#274a8a);border-radius:14px;min-height:52px;align-items:center;margin:8px 0}
   body.ms fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee):not(.positionnement)>.qcm-option:has(input:checked){border-color:var(--hl,#61dafb);background:rgba(97,218,251,.10)}
-  body.ms fieldset.qcm-groupe.ms-juste>.qcm-option:has(input:checked){border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10)}
-  body.ms fieldset.qcm-groupe.ms-faux>.qcm-option:has(input:checked){border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10)}
+  body.ms fieldset.qcm-groupe.ms-juste .qcm-option:has(input:checked){border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10)}
+  body.ms fieldset.qcm-groupe.ms-faux .qcm-option:has(input:checked){border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10)}
   body.ms fieldset.qcm-groupe.ms-juste>legend::after{content:" ✓";color:var(--ok,#81fba1)}
   body.ms fieldset.qcm-groupe.ms-faux>legend::after{content:" — à revoir";color:var(--warn,#ffd66b);font-weight:400}
 
@@ -659,7 +662,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   }
   .ms-bilan{border:1px solid var(--energie,#ffb454);border-radius:14px;padding:12px 14px;margin:0 0 14px;display:grid;gap:6px}
   .ms-bilan p{margin:0}
-  @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:none!important;transition:none!important}}
 }
 @media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}
 </style>
@@ -668,8 +671,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
    Source unique : _outils/mode_mission/ (poser.py). Ne pas le modifier dans la page.
 
    Ce script n'invente aucun exercice : il montre ceux de la page, un écran à la fois, et habille les grilles de
-   boutons radio en étiquettes à placer. Les réponses attendues sont lues dans les vérifications de la page
-   (`const att = {…}`) ; la sauvegarde, les verrous et la validation des activités restent ceux de la page. */
+   boutons radio en étiquettes à placer. Les réponses attendues sont lues dans la page elle-même (ses vérifications,
+   ou `data-bonne`) ; la sauvegarde, les verrous et la validation des activités restent ceux de la page. */
 (function(){
 "use strict";
 /* posé une seule fois. Un attribut, pas une variable `window.__…` : le contrôle des verrous (n°226) lit ces
@@ -687,11 +690,40 @@ function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
 function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:false, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; }
 function ecrire(){ try { localStorage.setItem(CLE, JSON.stringify(M)); } catch (e) {} }
 function etoiles(n){ var s = ""; for (var i = 1; i <= 3; i++) s += ET.replace("{on}", i <= n ? " on" : ""); return '<span class="ms-etoiles" role="img" aria-label="' + n + " étoile" + (n > 1 ? "s" : "") + ' sur 3">' + s + "</span>"; }
-function saisie(f){ f.dispatchEvent(new Event("input", { bubbles:true })); f.dispatchEvent(new Event("change", { bubbles:true })); }
+/* prévenir la page qu'une réponse a changé, comme le ferait un appui : l'événement part du bouton radio coché (c'est
+   lui que certaines pages écoutent pour sauvegarder), ou du groupe quand plus rien n'est coché */
+function saisie(f){ var x = (f.tagName === "FIELDSET" && $("input[type=radio]:checked", f)) || f; x.dispatchEvent(new Event("input", { bubbles:true })); x.dispatchEvent(new Event("change", { bubbles:true })); }
 
-/* Les réponses attendues, lues dans les vérifications de la page. Quatre écritures :
+/* Les séances : des panneaux. Trois écritures dans le dépôt :
+     gabarit commun   .seance-tab[data-panel]     →  .seance-panel.active      cartes : section.card
+     Book Train       [role=tab][aria-controls]   →  section.panneau.actif     cartes : div.carte
+     page sans onglets (une grande étape d'une séquence découpée) : des `.seance-bloc` à la suite, tous visibles —
+       ici c'est le mode qui n'en montre qu'un à la fois (`.ms-ici`), et qui mène de l'un à l'autre */
+var G = null, CARTE = "section.card, div.carte";
+function gabarit(){
+  if ($(".seance-panel") && $(".seance-tab")) return { panneau:".seance-panel", onglet:".seance-tab", actif:"active", de:function(o){ return o.dataset.panel; } };
+  if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:"actif", de:function(o){ return o.getAttribute("aria-controls"); } };
+  if ($(".seance-bloc[id]")) return { panneau:".seance-bloc[id]", onglet:null, actif:"ms-ici" };
+  return null;
+}
+function panneauActif(){ return $(G.panneau + "." + G.actif); }
+function ongletActif(){ var P = panneauActif(); return P && G.onglet ? $$(G.onglet).filter(function(o){ return G.de(o) === P.id; })[0] || null : null; }
+function nomOnglet(o){ for (var i = 0; i < o.childNodes.length; i++){ var n = o.childNodes[i]; if (n.nodeName !== "SMALL" && net(n.textContent)) return net(n.textContent); } return net(o.textContent); }
+function nomSeance(){ var o = ongletActif(); if (o) return nomOnglet(o); var m = panneau && /^seance-(\d+)$/.exec(panneau.id); return m ? "Séance " + m[1] : ""; }
+/* la séance d'avant (-1) ou d'après (+1) : son identifiant, ou null ; et l'ouvrir */
+function voisine(d){
+  if (G.onglet){ var o = $$(G.onglet), i = o.indexOf(ongletActif()); return i < 0 || !o[i + d] ? null : G.de(o[i + d]); }
+  var P = $$(G.panneau), j = P.indexOf(panneauActif()); return j < 0 || !P[j + d] ? null : P[j + d].id;
+}
+function ouvrir(id){
+  if (G.onglet){ var o = $$(G.onglet).filter(function(x){ return G.de(x) === id; })[0]; if (o) o.click(); return; }
+  $$(G.panneau).forEach(function(P){ P.classList.toggle(G.actif, P.id === id); }); M.ici = id; synchroniser();
+}
+
+/* Les réponses attendues, lues dans les vérifications de la page. Cinq écritures :
      const att = {id:"texte", …}  (ou `attendu`, ou `ATTENDUS = {1:{id:"texte"}, 2:{…}}`, une table par activité)
      $("id").value === "texte"      $("id").value.startsWith("début")      sv("id", "texte")  (l'ancien gabarit)
+     <fieldset data-bonne="texte">                    (la réponse écrite sur la question elle-même : Book Train)
    Une réponse n'est retenue que si elle désigne UNE proposition du champ, et une seule : au moindre doute (deux
    textes pour la même question, un début commun à deux propositions), l'écran ne se vérifie pas ici — la page le
    vérifie toujours. Le banc générique rejoue chaque réponse retenue contre la vérification de la page. */
@@ -721,8 +753,9 @@ function ecrireV(f, v){ if (f.tagName === "SELECT"){ f.value = v || ""; return; 
 function intitule(f){ var l = f.tagName === "SELECT" ? (f.id && $('label[for="' + f.id + '"]')) || f.closest("label") : $("legend", f); return net(l ? l.textContent : f.getAttribute("aria-label") || "Cette question").replace(/\s*[:…]\s*$/, ""); }
 function cle(f){
   if (f._msCle !== undefined) return f._msCle === null ? undefined : f._msCle;
-  var c = candidats()[f.id], r = null;
-  if (c && estChamp(f) && !f.classList.contains("positionnement")){
+  var c = (candidats()[f.id] || []).slice(), r = null;
+  if (f.hasAttribute("data-bonne")) c.push(["=", f.getAttribute("data-bonne")]);
+  if (c.length && estChamp(f) && !f.classList.contains("positionnement")){
     var vals = valeurs(f), bons = [];
     c.forEach(function(x){
       var ok = vals.filter(function(v){ return x[0] === "=" ? v === x[1] : v.indexOf(x[1]) === 0; });
@@ -745,13 +778,17 @@ function titreDe(n){ var h = n.matches && n.matches("h2,h3,h4") ? n : $("h2,h3,h
 function enfants(n){ return [].slice.call(n.children).filter(function(c){ return !/^(SCRIPT|STYLE|TEMPLATE|LINK|NOSCRIPT)$/.test(c.tagName); }); }
 function rendu(c){ return getComputedStyle(c).display !== "none" && !c.hidden; }
 function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"); }
-function estCheck(c){ return c.matches("button[data-check]"); }
+/* le bouton de vérification de la page, et le message qu'elle écrit : `button[data-check]` et `.feedback` (gabarit
+   commun) ; `button.verif[data-exo="x"]` et `#res-x` (Book Train : le bouton désigne sa zone `#x`) */
+var CHECK = "button[data-check], button.verif[data-exo]";
+function estCheck(c){ return c.matches(CHECK); }
+function estMessage(c){ return c.classList.contains("feedback") || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
 function porteChamp(c){ return estChamp(c) || !!$(CHAMP + ",textarea,input:not([type=radio]):not([type=checkbox]):not([type=hidden])", c); }
 function estActivite(c){
   if (c.matches(".activite, .act")) return true;
-  if (!c.matches("section.card") || $(".activite, .act", c)) return false;
+  if (!c.matches(CARTE) || $(".activite, .act", c)) return false;
   var k = enfants(c);
-  return k.some(estCheck) || k.some(function(x){ return x.classList.contains("exo") && !!$("button[data-check]", x); });
+  return k.some(estCheck) || k.some(function(x){ return x.classList.contains("exo") && !!$(CHECK, x); });
 }
 /* Les zones d'exercice d'une suite de blocs. Une zone : ses parties (une par titre de partie), son bouton de
    vérification, son message, et ce qui suit ce bouton (la correction de la zone). Après une vérification, un nouveau
@@ -763,9 +800,9 @@ function zonesDe(nodes, titres){
   nouvelle();
   nodes.forEach(function(c){
     var t = titres.indexOf(c.tagName) >= 0;
-    if (z.check && (t || (c.tagName !== "DETAILS" && !c.classList.contains("feedback") && (estCheck(c) || porteChamp(c))))) nouvelle();
+    if (z.check && (t || (c.tagName !== "DETAILS" && !estMessage(c) && (estCheck(c) || porteChamp(c))))) nouvelle();
     if (!z.check && estCheck(c)){ z.check = c; return; }
-    if (c.classList.contains("feedback")){ z.fb.push(c); return; }
+    if (estMessage(c)){ z.fb.push(c); return; }
     if (z.check){ z.suite.push(c); return; }
     if (t || !cur){ cur = { h: t ? c : null, n:[] }; z.parts.push(cur); }
     cur.n.push(c);
@@ -773,10 +810,12 @@ function zonesDe(nodes, titres){
   return liste.filter(function(x){ return x.parts.length || x.check; });
 }
 function activite(A, E){
-  var carte = A.matches("section.card"), kids = enfants(A), nom = titreDe(A) || "Activité";
-  var exos = kids.filter(function(c){ return c.classList.contains("exo"); });
-  var header = kids.filter(function(c){ return c.tagName === "HEADER" || (carte && c.tagName === "H2"); });
-  var marquee = exos.length && (A.matches(".activite") || exos.some(function(x){ return !!$("button[data-check]", x); }));
+  var carte = A.matches(CARTE), kids = enfants(A), nom = titreDe(A) || "Activité";
+  /* une zone d'exercice marquée : `.exo`, ou le bloc que le bouton de vérification désigne (`data-exo="x"` → `#x`) */
+  function designee(c){ return !!c.id && kids.some(function(b){ return estCheck(b) && b.getAttribute("data-exo") === c.id; }); }
+  var exos = kids.filter(function(c){ return c.classList.contains("exo") || designee(c); });
+  var header = kids.filter(function(c){ return c.tagName === "HEADER" || (carte && (c.tagName === "H2" || (c === kids[0] && c.tagName === "H3"))); });
+  var marquee = exos.length && (A.matches(".activite") || exos.some(function(x){ return !x.classList.contains("exo") || !!$(CHECK, x); }));
   var i = marquee ? kids.indexOf(exos[0]) : -1;
   /* pas de zone marquée (carte-activité, ancien gabarit) : de la première question à la première aide ou à la
      vérification. Une activité du gabarit commun sans zone (un Bonus replié) reste un seul écran, telle quelle ; un
@@ -786,7 +825,7 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison"); });
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -796,10 +835,10 @@ function activite(A, E){
     /* à partir de la première zone : les zones, les aides (communes à l'activité), le bouton de vérification et son
        message quand ils suivent les aides, ce qui sépare deux zones (il accompagne la suivante), et la fin */
     kids.slice(i).forEach(function(c){
-      if (c.classList.contains("exo")){ var zs = zonesDe(enfants(c), titres); zs.forEach(function(z, r){ z.exo = c; if (!r) z.avant = attente; }); attente = []; zones = zones.concat(zs); return; }
+      if (exos.indexOf(c) >= 0){ var zs = zonesDe(enfants(c), titres); zs.forEach(function(z, r){ z.exo = c; if (!r) z.avant = attente; }); attente = []; zones = zones.concat(zs); return; }
       if (estAide(c)){ aides.push(c); return; }
-      if (estCheck(c)){ var zc = zones.filter(function(z){ return !z.check; }).pop(); if (zc){ zc.check = c; zc.dehors = true; return; } }
-      if (c.classList.contains("feedback")){ var zf = zones.filter(function(z){ return z.dehors && !z.fb.length; }).pop(); if (zf){ zf.fb.push(c); return; } }
+      if (estCheck(c)){ var de = c.getAttribute("data-exo"), zc = zones.filter(function(z){ return !z.check && (!de || z.exo.id === de); }).pop(); if (zc){ zc.check = c; zc.dehors = true; return; } }
+      if (estMessage(c)){ var zf = zones.filter(function(z){ return z.dehors && !z.fb.length; }).pop(); if (zf){ zf.fb.push(c); return; } }
       attente.push(c);
     });
   } else {
@@ -841,6 +880,7 @@ function activite(A, E){
    série de réponses courtes (rangée) ensemble, un écrit (zone de texte et sa version étayée) sur le sien.
    Ce qui précède une question sans rien demander (un simulateur, un tableau) l'accompagne. */
 function champsDe(c){ return estChamp(c) ? [c] : $$(CHAMP, c); }
+function courte(f){ return f.classList.contains("qcm-rangee") || f.classList.contains("qcm-court"); }
 function ecrit(nodes){ var q = "textarea,select[data-interface],input:not([type=radio]):not([type=checkbox]):not([type=hidden])"; return nodes.some(function(c){ return c.matches(q) || !!$(q, c); }); }
 function pas(p){
   var steps = [], tampon = [], n = p.n.filter(function(x){ return x !== p.h; }), i = 0;
@@ -853,8 +893,8 @@ function pas(p){
     }
     var f = champsDe(c);
     if (f.length){
-      var g2 = [c], ch = f.slice(), rangee = f[0].classList.contains("qcm-rangee"); i++;
-      if (rangee) while (i < n.length && champsDe(n[i]).length && champsDe(n[i])[0].classList.contains("qcm-rangee")){ g2.push(n[i]); ch = ch.concat(champsDe(n[i])); i++; }
+      var g2 = [c], ch = f.slice(), rangee = courte(f[0]); i++;
+      if (rangee) while (i < n.length && champsDe(n[i]).length && courte(champsDe(n[i])[0])){ g2.push(n[i]); ch = ch.concat(champsDe(n[i])); i++; }
       steps.push({ n:contexte().concat(g2), champs:ch }); continue;
     }
     tampon.push(c); i++;
@@ -929,7 +969,7 @@ function poser(comp, i, valeur){
 }
 
 /* ═══ L'habillage de la page : la barre de la mission, la barre basse, le bouton de la barre d'outils ═══ */
-var tete, pied, bMission;
+var tete, pied, bMission, ancre;
 function chrome(){
   /* le bouton d'entrée se range dans le cadre « Ma progression », AVANT les onglets : rien ne s'ajoute entre les
      onglets et les panneaux (controle_squelette, D5), ni dans la barre d'outils (deux lignes à 390 px), ni dans le
@@ -938,11 +978,12 @@ function chrome(){
   bMission = el("button", "btn"); bMission.id = "btnMission"; bMission.type = "button";
   bMission.textContent = "🎮 Mode mission : un exercice à la fois";
   invite.appendChild(bMission);
-  if (cadre) cadre.appendChild(invite); else { var b0 = $("#seances") || $(".seance-panel"); b0.parentNode.insertBefore(invite, b0); }
+  if (cadre) cadre.appendChild(invite); else { var b0 = $("#seances") || $(G.panneau); b0.parentNode.insertBefore(invite, b0); }
   bMission.addEventListener("click", entrer);
   tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu"></p><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
-  var premier = $(".seance-panel"); premier.parentNode.insertBefore(tete, premier);
-  pied = el("div", "ms-pied ms-seul", '<div class="ms-pied-in"><button type="button" class="ms-btn prec" id="msPrec" aria-label="Écran précédent">← <span>Précédent</span></button><button type="button" class="ms-btn verif" id="msVerif">Vérifier</button><span class="ms-vide-f" id="msVide" hidden></span><button type="button" class="ms-btn suiv" id="msSuiv">Suivant →</button></div>');
+  /* un repère sans hauteur juste avant la barre : collée en haut de l'écran, la barre ne dit plus où elle commence */
+  var premier = $(G.panneau); ancre = el("div", "ms-ancre ms-seul"); premier.parentNode.insertBefore(ancre, premier); premier.parentNode.insertBefore(tete, premier);
+  pied = el("div", "ms-pied ms-seul", '<div class="ms-pied-in"><button type="button" class="ms-btn ms-prec" id="msPrec" aria-label="Écran précédent">← <span>Précédent</span></button><button type="button" class="ms-btn ms-verif" id="msVerif">Vérifier</button><span class="ms-vide-f" id="msVide" hidden></span><button type="button" class="ms-btn ms-suiv" id="msSuiv">Suivant →</button></div>');
   D.body.appendChild(pied);
   $("#msQuitter").addEventListener("click", sortir);
   $("#msPrec").addEventListener("click", function(){ aller(k - 1); });
@@ -952,16 +993,16 @@ function chrome(){
 }
 function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id){ if (seul && id !== seul) return; parPanneau[id].forEach(function(e){ if (e.t === "partie" && e.champs.some(function(f){ return cle(f) !== undefined; })) t.push(e); }); }); return t; }
 function barre(){
-  var s = ecrans[k], onglet = $(".seance-tab.active"), nomSeance = onglet ? net((onglet.childNodes[0] || {}).textContent || onglet.textContent) : "";
-  $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
+  var s = ecrans[k];
+  $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance()) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
   $("#msRail").innerHTML = ecrans.map(function(e, j){ var fait = e.t === "partie" ? !!M.fait[e.id] : j < k; return '<li><button type="button" class="ms-pas' + (fait ? " fait" : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (fait ? ", fait" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
-  $("#msPrec").disabled = k === 0 && !$(".seance-tab.active").previousElementSibling;
+  $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
-  var suiv = $("#msSuiv"), fin = k === ecrans.length - 1, apres = $(".seance-tab.active") && $(".seance-tab.active").nextElementSibling;
+  var suiv = $("#msSuiv"), fin = k === ecrans.length - 1, apres = voisine(1);
   suiv.classList.toggle("seul", !exo); suiv.hidden = fin && !apres;
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
@@ -980,20 +1021,21 @@ function montrer(haut){
   if (s.ressBtn) s.ressBtn.textContent = ressVue() ? "📎 Masquer la ressource de l'activité" : "📎 Revoir la ressource de l'activité";
   $$(".ms-etq", panneau).forEach(peindre); peindreRetour(s); bilan(s);
   if (ecrans.length > 1 && vide(s)){ ecrans.splice(k, 1); k = Math.min(k, ecrans.length - 1); return montrer(haut); }
+  if (!G.onglet){ var bout = k === ecrans.length - 1 && !voisine(1); $$(".page-suivante").forEach(function(x){ x.classList.toggle("ms-montre", bout && !x.closest(G.panneau)); }); }
   barre(); M.k[panneau.id] = k; ecrire();
-  if (haut){ var y = tete.getBoundingClientRect().top + window.scrollY - 52; window.scrollTo(0, Math.max(0, y)); }
+  if (haut){ var y = Math.max(0, ancre.getBoundingClientRect().top + window.scrollY - 52); try { window.scrollTo({ top:y, behavior:"instant" }); } catch (e) { window.scrollTo(0, y); } }
 }
 function aller(j){
-  if (j < 0){ var av = $(".seance-tab.active").previousElementSibling; if (av && av.classList.contains("seance-tab")){ M.k[av.dataset.panel] = 1e9; av.click(); } return; }
+  if (j < 0){ var av = voisine(-1); if (av){ M.k[av] = 1e9; ouvrir(av); } return; }
   if (j >= ecrans.length) return;
   k = j; sel = null; reprendre(); montrer(true);
 }
 function suivant(){
   if (k < ecrans.length - 1) return aller(k + 1);
-  var apres = $(".seance-tab.active").nextElementSibling; if (apres && apres.classList.contains("seance-tab")){ M.k[apres.dataset.panel] = 0; apres.click(); }
+  var apres = voisine(1); if (apres){ M.k[apres] = 0; ouvrir(apres); }
 }
 function synchroniser(){
-  panneau = $(".seance-panel.active"); if (!panneau) return;
+  panneau = panneauActif(); if (!panneau) return;
   ecrans = parPanneau[panneau.id] || (parPanneau[panneau.id] = construire(panneau));
   k = Math.min(Math.max(0, M.k[panneau.id] || 0), ecrans.length - 1);
   montrer(true);
@@ -1077,12 +1119,13 @@ function bilan(s){
 /* ═══ Entrer, sortir ═══ */
 function entrer(){
   if (!construit){
-    $$(".seance-panel").forEach(function(P){ parPanneau[P.id] = construire(P); });
+    $$(G.panneau).forEach(function(P){ parPanneau[P.id] = construire(P); });
     Object.keys(parPanneau).forEach(function(id){ parPanneau[id].forEach(function(e){            // ce qui était réussi le reste
       if (e.t === "partie" && M.fait[e.id]) e.champs.forEach(function(f){ if (cle(f) !== undefined && lireV(f) === cle(f)) marquer(f, true); }); }); });
     construit = true;
   }
   actif = true; M.on = true; D.body.classList.add("ms");
+  if (!G.onglet && !panneauActif()) ((M.ici && $(G.panneau + '[id="' + M.ici + '"]')) || $(G.panneau)).classList.add(G.actif);
   synchroniser();
 }
 function sortir(){
@@ -1095,6 +1138,8 @@ function sortir(){
 function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-case:not(:disabled)"); }
 D.addEventListener("click", function(ev){
   if (!actif) return;
+  /* une séquence découpée en pages : qui passe à la page suivante en mission y arrive en mission */
+  if (ev.target.closest(".page-suivante a[href], a.seance-tab[href]")){ try { sessionStorage.setItem("mission:suite", "1"); } catch (e) {} return; }
   var r = ev.target.closest("[data-ms=ress]"); if (r){ M.ress = !ressVue(); montrer(false); return; }
   if (glisse) return;
   var lab = ev.target.closest(".ms-lab"); if (lab){ var comp = lab.closest(".ms-etq"), j = +lab.dataset.j; sel = (sel && sel.comp === comp && sel.j === j) ? null : { comp:comp, j:j }; peindre(comp); return; }
@@ -1133,14 +1178,18 @@ window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
 /* pour les bancs : la réponse que le mode retient pour un groupe, et l'écran en cours */
 D.documentElement._mission = { cle: cle, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
 function init(){
-  if (!$(".seance-panel") || !$(".seance-tab")) return;            // gabarit non reconnu : la page reste telle quelle
+  G = gabarit(); if (!G) return;                                    // gabarit non reconnu : la page reste telle quelle
   lire();
   /* « Effacer ma sauvegarde » efface aussi la mission : sur un poste partagé, l'élève suivant ne trouve ni les
      étoiles ni l'écran du précédent. La page efface sa clé puis se recharge ; on le voit ici à sa clé absente. */
   try { if (typeof KEY === "string" && localStorage.getItem(KEY) === null && (Object.keys(M.etoiles).length || Object.keys(M.fait).length || Object.keys(M.k).length || Object.keys(M.erreurs).length)){ M = { v:1, on:M.on, k:{}, essais:{}, erreurs:{}, etoiles:{}, fait:{} }; ecrire(); } } catch (e) {}
   chrome();
-  $$(".seance-tab").forEach(function(t){ t.addEventListener("click", function(){ if (actif) setTimeout(synchroniser, 0); }); });
-  if (M.on) entrer();
+  /* la séance change (onglet, bouton « séance suivante », lien vers une ancre) : le mode suit le panneau ouvert */
+  function suivre(){ if (actif && panneauActif() !== panneau) synchroniser(); }
+  if (G.onglet) $$(G.onglet).forEach(function(o){ o.addEventListener("click", function(){ setTimeout(suivre, 0); }); });
+  if (window.MutationObserver){ var obs = new MutationObserver(suivre); $$(G.panneau).forEach(function(P){ obs.observe(P, { attributes:true, attributeFilter:["class"] }); }); }
+  var suite = false; try { suite = sessionStorage.getItem("mission:suite") === "1"; sessionStorage.removeItem("mission:suite"); } catch (e) {}
+  if (M.on || suite) entrer();
 }
 if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
 })();
