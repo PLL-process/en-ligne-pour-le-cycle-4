@@ -16,6 +16,16 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
+
+/* Règle d'or n°300 (révision du 12/11/2026) : une question est un groupe de boutons radio, plus une liste déroulante.
+   `choisir` coche, dans le groupe, la proposition qui porte cette valeur — comme le doigt de l'élève. */
+async function choisir(page, sel, v) {
+  await page.evaluate(([sel, v]) => {
+    const f = document.querySelector(sel), r = f && [...f.querySelectorAll('input[type=radio]')].find(x => x.value === v);
+    if (!r) throw new Error('proposition introuvable : ' + sel + ' → ' + v);
+    r.click();
+  }, [sel, v]);
+}
 import { pathToFileURL } from 'node:url';
 
 let chromium;
@@ -97,13 +107,15 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 
 /* — règle n°26 : le billet d'entrée, noté hors progression — */
 {
-  await page.selectOption("#be_1", { index: 1 });
-  await page.selectOption("#be_2", { index: 1 });
-  await page.selectOption("#be_3", { index: 1 });
+  // trois mauvaises réponses — dont « un nombre… », qui commence comme la bonne (« un nom… ») : le billet doit rendre 0 / 3
+  await choisir(page, "#be_1", "un nombre qui change tout seul, au hasard");
+  await choisir(page, "#be_2", "s'arrête toujours avec un message d'erreur");
+  await choisir(page, "#be_3", "le lancer une fois et regarder si ça a l'air bon");
   await page.click("#btnBillet");
   await page.waitForTimeout(150);
   const fb = (await page.locator("#fbBillet").textContent()) || "";
   ok("n°26 : le billet d'entrée rend un feedback", fb.trim().length > 10, fb.slice(0, 60));
+  ok("n°26 : trois mauvaises réponses valent 0 / 3 (« un nombre… » n'est pas pris pour « un nom… »)", /^0 \/ 3/.test(fb.trim()), fb.slice(0, 30));
   ok("n°26 : le billet se déclare hors progression", /ne compte pas dans ta progression/.test(fb));
   const prog = await page.locator("#progTxt").textContent();
   ok("n°26 : la progression reste à 0 après le billet", /^0 \//.test(prog.trim()), prog.trim());
@@ -222,10 +234,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      /🔓|badge/i.test(badge), badge.trim().slice(0, 60));
   await shot(page, "simulateur_memoire", "#memEcran");
 
-  await page.selectOption("#a1q1", "3");
-  await page.selectOption("#a1q2", "il est perdu : il a été remplacé");
-  await page.selectOption("#a1q3", "« mets cette valeur dans la boîte »");
-  await page.selectOption("#a1q4", "de droite à gauche : je calcule, puis je range");
+  await choisir(page, "#a1q1", "3");
+  await choisir(page, "#a1q2", "il est perdu : il a été remplacé");
+  await choisir(page, "#a1q3", "« mets cette valeur dans la boîte »");
+  await choisir(page, "#a1q4", "de droite à gauche : je calcule, puis je range");
   await page.click('.btn.check[data-check="1"]');
   await page.waitForTimeout(150);
   const fb1 = await page.locator("#fb1").textContent();
@@ -238,7 +250,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const src = fs.readFileSync(path.join(LOT, "sequence_3e_C9.1_variables_types_systemes.html"), "utf8");
   const paires = [...src.matchAll(/sv\("([^"]+)","((?:[^"\\]|\\.)*)"\)/g)].map(m => [m[1], m[2].replace(/\\"/g, '"')]);
   const forme = await page.evaluate((P) => P.map(([id, rep]) => {
-    const o = [...document.querySelectorAll("#" + id + " option")].map(x => x.textContent).filter(x => x && !x.startsWith("—"));
+    // n°300 : les propositions sont des boutons radio (leur valeur est le texte de la réponse)
+    const o = [...document.querySelectorAll("#" + id + " input[type=radio]")].map(x => x.value);
     const autres = o.filter(x => x !== rep).map(x => x.length);
     return { id, rang: o.indexOf(rep), detachee: rep.length > Math.max(...autres) + 8 || rep.length < Math.min(...autres) - 8 };
   }), paires);
@@ -264,7 +277,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   for (const [id, v] of [["a4b1l", "3"], ["a4b1c", "minutes = 2 + 1"], ["a4b2l", "5"],
                          ["a4b2c", "écrire 1.8, avec un point"], ["a4b3c", "on ne soustrait pas un nombre d'un texte"],
                          ["a4b4", "Q - 96 St 2 min | 25.0 C"]])
-    await page.selectOption("#" + id, v);
+    await choisir(page, "#" + id, v);
   await page.click('.btn.check[data-check="4"]');
   await page.waitForTimeout(150);
   const fb4 = await page.locator("#fb4").textContent();
@@ -278,10 +291,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.reload();
   await page.waitForTimeout(400);
   for (let i = 0; i < 6; i++) { await page.click("#memNext"); await page.waitForTimeout(60); }
-  await page.selectOption("#a1q1", "3");
-  await page.selectOption("#a1q2", "il est perdu : il a été remplacé");
-  await page.selectOption("#a1q3", "« mets cette valeur dans la boîte »");
-  await page.selectOption("#a1q4", "de droite à gauche : je calcule, puis je range");
+  await choisir(page, "#a1q1", "3");
+  await choisir(page, "#a1q2", "il est perdu : il a été remplacé");
+  await choisir(page, "#a1q3", "« mets cette valeur dans la boîte »");
+  await choisir(page, "#a1q4", "de droite à gauche : je calcule, puis je range");
   await page.click('.btn.check[data-check="1"]');
   await page.waitForTimeout(150);
 }
@@ -335,7 +348,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.reload();
   await page.waitForTimeout(400);
   const prog = await page.locator("#progTxt").textContent();
-  const a1 = await page.locator("#a1q1").inputValue();
+  const a1 = await page.evaluate(() => (document.querySelector("#a1q1 input[type=radio]:checked") || {}).value || "");
   ok("restauration : la progression survit au rechargement", /^1 \/ 5/.test(prog.trim()), prog.trim());
   ok("restauration : les réponses saisies sont restituées", a1 === "3", a1);
 }
@@ -352,7 +365,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   /* le verrou de l'activité 3 : refusé avant toute exécution, ouvert par une exécution menée au bout */
   await pe.click("#tab-s2"); await pe.waitForTimeout(200);
   for (const [id, v] of [["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"],
-                         ["a3r4", "il les COLLE bout à bout (concaténation)"], ["a3r5", "41 min"]]) await pe.selectOption("#" + id, v);
+                         ["a3r4", "il les COLLE bout à bout (concaténation)"], ["a3r5", "41 min"]]) await choisir(pe, "#" + id, v);
   await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
   const fbAvant = await pe.locator("#fb3").textContent();
   await executerBloc(pe, "vs1");
@@ -360,6 +373,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const fbApres = await pe.locator("#fb3").textContent();
   ok("act. 3 : le verrou demande l'éditeur Python, et une exécution menée au bout l'ouvre (8/8)",
      /🔒[\s\S]*éditeur Python/.test(fbAvant) && /activité validée/.test(fbApres) && /8\/8/.test(fbApres), fbAvant.slice(0, 50) + " → " + fbApres.slice(0, 40));
+  // Révision du 12/11/2026 : le Bonus est replié (son éditeur aussi) ; le banc l'ouvre, comme l'élève qui a fini.
+  await pe.evaluate(() => document.querySelectorAll("details.bonus-replie").forEach(d => { d.open = true; }));
   await eprouverEditeurs(pe, [
     { bloc: "vs1", nom: "activité 3", onglet: "#tab-s2", depart: { sortie: "7\n34\nTrain Q 3 min\n" } },
     { bloc: "vs2", nom: "activité 4", onglet: "#tab-s3", depart: { erreur: "TypeError", ligne: 7, explication: /on ne soustrait pas/ },

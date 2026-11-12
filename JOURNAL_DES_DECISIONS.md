@@ -30253,3 +30253,24 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Mesure.** Banc générique : les deux pages acceptées ; pourquoi présents pour 77 propositions ou lignes sur 77, et 43 sur 43 ; aucun pourquoi sur une bonne réponse. Bancs des pages : 23/23 et 34/34 chacune. Contrôles : ordre des propositions, indices des QCM, unités, sigles, règles visibles, boutons, tactile, mode mission — verts. Règles d'or : 0 ✘ sur les deux dossiers. Charge : aucune séance au-delà de 1 200 mots (la plus lourde : 1 034). Vu à l'écran, à 390 px : quatre erreurs provoquées (une proposition, un vrai/faux, deux grilles d'étiquettes).
 
 **Reste.** Les cinq autres séquences du premier lot : `3e_C4.7`, `3e_C5.1`, `3e_C6.1`, `4e_C4.1`, `4e_C5.1`.
+
+---
+
+## 12/11/2026 — Révision de `3e_C9.1` (variables, types, mise au point), en priorité : Pascal la fait en classe aujourd'hui
+
+**Demande de Pascal (12/11, 4 h 55).** « Traite et revois surtout en priorité » cette séquence, « car c'est cela que je fais aujourd'hui ».
+
+**Un défaut de fond trouvé, corrigé.** Au billet d'entrée, question 1, la page ne regardait que le début de la réponse (« un nom… »). La mauvaise réponse « un nombre qui change tout seul, au hasard » commence par les mêmes lettres : elle était comptée juste. La page compare maintenant « un nom, » (avec la virgule) ; le banc de la page le vérifie (trois mauvaises réponses valent 0 / 3). Le défaut était sur `main`.
+
+**La passe.**
+- **n°300** : les 33 listes déroulantes sont des groupes de boutons radio (128 propositions), mélangées.
+- **Charge de lecture** : séance 2, de 1 598 à 1 116 mots ; séance 4, de 1 417 à 994. Rien n'est retiré : dans l'échauffement de l'éditeur Python, « ce que tu dois voir » se déplie sous chaque geste, le pas-à-pas de l'Explorateur et la note Vittascience sont repliés ; le Bonus est replié.
+- **Texte aéré** : 11 passages d'un seul tenant, tous repris (80 retours à la ligne posés par l'outil, 7 passages réécrits à la main : la lecture du plan, la table de suivi, une aide, les trois défis du Bonus).
+- **Le fond, relu activité par activité** : la table de suivi (3, 2, 5, trois changements), les expériences A, B, C (7, 34, Train Q 3 min), les trois bugs du panneau et la sortie corrigée (`Q - 96 St 2 min | 25.0 C`), la fonction de ventilation et son cas limite (1 avec `>`, 3 avec `>=`) : réponses attendues et corrections justes.
+- **Le résumé du Bonus** disait « 2 défis » pour trois défis : corrigé.
+
+**Un outil réparé au passage.** `migrer_gabarit_306.py --n300` ne finissait pas sur cette page, et remplissait la mémoire : ici, chaque liste vit DANS son `<label>`. L'énoncé emportait la liste avec lui, le groupe la recopiait dans sa légende, et la boucle la retrouvait sans fin. L'outil reconnaît ce cas : l'énoncé est le label sans la liste, et le groupe remplace le label entier.
+
+**Mesure.** Règles d'or : 1 ✘ → 0. Aération : 11 → 0. Bancs de la page : 56/56 (55 avant, un test de plus pour le billet) et 34/34. Mode mission : page acceptée, 52 écrans, 27 vérifiés par le mode. Vu à l'écran, à 390 et 1 280 px : le billet, les exercices convertis des activités 1, 4 et 5, la carte d'échauffement, le Bonus.
+
+**Reste, pour une seconde passe.** Le pourquoi de chaque erreur (mode mission) ; les réponses très courtes (numéros de ligne) à ranger en rangée ; les phrases longues que `aerer_corrections.py` signale encore, hors corrections ; en mode mission, l'éditeur Python d'une activité à verrou arrive après la dernière question — l'élève doit revenir vérifier.

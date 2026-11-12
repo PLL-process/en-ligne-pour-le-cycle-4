@@ -43,7 +43,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 24 | `4e_C5.1` | 1316 → 1179 | 1 → 0 | 30 → 0 | 4 → 0 | livrée #652 |
 | 25 | `4e_C6.1` | 1460 → 1216 | 1 → 0 | 28 → 0 | 6 → 0 | livrée #656 — séance 2 à 1 216 mots (1 200 en mode essentiel) : sa clôture (concept invariant, retour sur l'hypothèse, bilan, auto-positionnement) pèse 290 mots et ne se replie pas |
 | 26 | `4e_C6.2` | 1990 → 1329 | 6 → 0 | 25 → 0 (4 menus du tableau de vérification du cahier des charges, voulus) | 18 → 0 | livrée #660 — séance 1 à 1 329 mots : l'échauffement de l'éditeur Python (quatre gestes à faire, règles n°93 et n°297) reste déplié, 370 mots ; ses « ce que tu dois voir » se déplient. Séances 2 et 3 : 732 · 997. Mode mission : posé le 11/11, une fois l'ancien gabarit appris au moteur (48 écrans, 13 vérifiés par le mode) |
-| 27 | `3e_C9.1` | 1597 | 1 | 33 | 11 | à faire |
+| 27 | `3e_C9.1` | 1597 → 1116 | 1 → 0 | 33 → 0 | 11 → 0 | livrée #672 — révisée en priorité le 12/11 (Pascal la fait en classe ce jour). Billet d'entrée réparé : une mauvaise réponse était comptée juste. Mode mission rejoué (52 écrans, 27 vérifiés). Reste pour une seconde passe : les pourquoi des erreurs, les réponses courtes en rangée (numéros de ligne), les phrases longues signalées par `aerer_corrections.py` |
 | 28 | `3e_C7.1` | 3512 | 1 | 20 | 12 | à faire |
 | 29 | `5e_C5.1` | 1109 | 1 | 30 | 4 | à faire |
 | 30 | `4e_C4.7` | 2022 | 1 | 40 | 7 | à faire |
