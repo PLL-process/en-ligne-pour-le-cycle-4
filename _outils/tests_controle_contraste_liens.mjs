@@ -35,7 +35,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { main, lanceDirectement, SEUIL } from './controle_contraste_liens.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
@@ -188,7 +188,7 @@ controles++;
 {
   // importé, il ne doit RIEN faire tout seul (règle d'or n°299)
   const r = spawnSync(process.execPath, ['--input-type=module', '-e',
-    `import ${JSON.stringify('file://' + SCRIPT.replace(/\\/g, '/'))};`],
+    `import ${JSON.stringify(pathToFileURL(SCRIPT).href)};`],
     { encoding: 'utf8', timeout: 120000 });
   if ((r.stdout || '').trim()) echecs.push('importé, le contrôle écrit alors qu\'il ne doit rien faire');
 }

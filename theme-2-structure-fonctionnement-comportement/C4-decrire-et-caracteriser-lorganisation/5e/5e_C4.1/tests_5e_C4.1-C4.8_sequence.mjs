@@ -39,7 +39,7 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (révision de la séquence, 11/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -87,7 +87,7 @@ p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 
-await p.goto('file://' + PAGE, { waitUntil: 'load' });
+await p.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' });
 /* révision du 11/11/2026 : le Bonus est replié — le banc l'ouvre, comme l'élève qui a fini */
 const _ouvrirVolets = pg => pg.evaluate(() => document.querySelectorAll('details.bonus-replie').forEach(d => { d.open = true; }));
 await _ouvrirVolets(p);
@@ -508,7 +508,7 @@ const q = await ctx2.newPage();
 const err2 = [];
 q.on('pageerror', e => err2.push(e.message));
 q.on('console', m => { if (m.type() === 'error') err2.push('console: ' + m.text()); });
-await q.goto('file://' + PAGE, { waitUntil: 'load' }); await q.waitForTimeout(350); await _ouvrirVolets(q);
+await q.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' }); await q.waitForTimeout(350); await _ouvrirVolets(q);
 await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
 const VENT = { bmObjet: 'mon ventilateur', bmNb: '4', bmE0: 'Énergie électrique', bmSource: 'la prise',
   bmF1: 'ALIMENTER', bmC1: 'La prise et le câble', bmE1: 'Énergie électrique', bmF2: 'DISTRIBUER', bmC2: 'Interrupteur et sélecteur',

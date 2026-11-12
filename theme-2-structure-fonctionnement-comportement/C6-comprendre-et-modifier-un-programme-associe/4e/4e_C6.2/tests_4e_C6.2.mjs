@@ -46,7 +46,7 @@
 import { chromium } from 'playwright';
 import path from 'node:path';
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (révision de la séquence, 11/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -106,7 +106,7 @@ p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
-await p.goto('file://' + SEQ, { waitUntil: 'load' });
+await p.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' });
 // Révision du 11/11/2026 : le Bonus, le rappel du cahier des charges et les volets des gestes sont repliés ; le banc les ouvre.
 await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee, details.geste-detail, details.gestes-vitta-replie, details.carte-detail').forEach(d => { d.open = true; }));
 await p.waitForTimeout(360);
@@ -407,7 +407,7 @@ const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 
-await p.goto('file://' + QCM, { waitUntil: 'load' });
+await p.goto(pathToFileURL(QCM).href, { waitUntil: 'load' });
 await p.waitForTimeout(300);
 
 const Q = await p.evaluate(() => QUESTIONS.map(q => ({
@@ -495,7 +495,7 @@ await ctx.addInitScript(() => {
 });
 await ctx.route('**/*', route => /^https?:/i.test(route.request().url()) ? route.abort() : route.continue());
 const p = _groupesRadio(await ctx.newPage());
-await p.goto('file://' + SEQ, { waitUntil: 'load' });
+await p.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' });
 // Révision du 11/11/2026 : le Bonus, le rappel du cahier des charges et les volets des gestes sont repliés ; le banc les ouvre.
 await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee, details.geste-detail, details.gestes-vitta-replie, details.carte-detail').forEach(d => { d.open = true; }));
 const copies = [];
@@ -540,7 +540,7 @@ const reseau = [];
 await ctx.route('**/*', route => { const u = route.request().url(); if (/^https?:/i.test(u)) { reseau.push(u); return route.abort(); } return route.continue(); });
 const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
-await p.goto('file://' + SEQ, { waitUntil: 'load' });
+await p.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' });
 // Révision du 11/11/2026 : le Bonus, le rappel du cahier des charges et les volets des gestes sont repliés ; le banc les ouvre.
 await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee, details.geste-detail, details.gestes-vitta-replie, details.carte-detail').forEach(d => { d.open = true; })); await p.waitForTimeout(300);
 await eprouverPose(p, ['vs1', 'vs2', 'vs3'], ok);

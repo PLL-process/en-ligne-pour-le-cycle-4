@@ -25,6 +25,7 @@
 import { chromium } from 'playwright';
 import path from 'node:path';
 import fs from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 const f = path.resolve(process.argv[2] || 'sequence_5e_C8.2_patere-du-hall.html');
 
@@ -60,7 +61,7 @@ const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 const seance = async (id) => { if (!(await p.evaluate(i => document.getElementById(i).classList.contains('active'), id))) {
   await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); } };
 
-await p.goto('file://' + f, { waitUntil: 'load' });
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' });
 await p.waitForTimeout(400);
 
 ok('1 · charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));

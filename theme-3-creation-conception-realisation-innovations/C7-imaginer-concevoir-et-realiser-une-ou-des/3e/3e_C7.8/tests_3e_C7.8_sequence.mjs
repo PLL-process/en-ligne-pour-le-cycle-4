@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (V2 de l'audit, 07/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -55,7 +56,7 @@ async function ouvrirSeanceDe(sel) {
 }
 const src = readFileSync(f, 'utf8');
 const REP = JSON.parse(readFileSync(process.argv[4], 'utf8'));
-await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await p.waitForTimeout(500);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '));
@@ -217,7 +218,7 @@ const ANCIENNE = { inputs: { hyp: 'Si l’une des deux tombe, la sirène ne part
   const q = _groupesRadio(await ctx.newPage()); const e2 = [];
   q.on('pageerror', e => e2.push(e.message));
   const lit = k => q.evaluate(k => localStorage.getItem(k), k);
-  await q.goto('file://' + f, { waitUntil: 'load' }); await q.waitForTimeout(200);
+  await q.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await q.waitForTimeout(200);
   ok('première ouverture : la clé propre est créée, rien sous seq_3e_C7_4',
      (await lit('seq_3e_C7_8')) !== null && (await lit('seq_3e_C7_4')) === null);
   // l'ancienne sauvegarde existe, la clé propre pas encore : la page doit COPIER l'ancienne

@@ -13,6 +13,7 @@
  *   · qu'une réponse fausse est refusée, et pas seulement qu'une juste passe.
  */
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (V2 de l'audit, 07/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -73,7 +74,7 @@ async function ouvrirSeanceDe(sel, q = p) {
   if (id) { await q.click('.seance-tab[data-panel="' + id + '"]'); await q.waitForTimeout(80); }
 }
 
-await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await p.waitForTimeout(500);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '));
@@ -261,7 +262,7 @@ if (REP.seances) {
   // À 390 px : pas de défilement horizontal, chaque séance atteinte, passage à la suivante.
   const m = _groupesRadio(await b.newPage({ viewport: { width: 390, height: 844 } }));
   const errM = []; m.on('pageerror', e => errM.push(e.message));
-  await m.goto('file://' + f, { waitUntil: 'load' }); await m.waitForTimeout(300);
+  await m.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await m.waitForTimeout(300);
   ok('à 390 px : aucun défilement horizontal',
     !(await m.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)));
   const enVue = id => m.evaluate(id => { const r = document.getElementById(id).getBoundingClientRect();
@@ -277,7 +278,7 @@ if (REP.seances) {
     await m.click('a.vers-seance[href="#seance-' + (i + 1) + '"]'); await m.waitForTimeout(150);
     ok('à 390 px : « ➡ Séance ' + (i + 1) + ' » mène à son en-tête', await enVue('seance-' + (i + 1)));
   }
-  await m.goto('file://' + f + '#seance-' + S.nombre, { waitUntil: 'load' }); await m.waitForTimeout(300);
+  await m.goto(pathToFileURL(f).href + '#seance-' + S.nombre, { waitUntil: 'load' }); await m.waitForTimeout(300);
   await m.reload({ waitUntil: 'load' }); await m.waitForTimeout(300);
   ok('à 390 px : après rechargement, la page reste sur la séance ' + S.nombre, await enVue('seance-' + S.nombre));
   ok('à 390 px : zéro erreur JS', errM.length === 0, errM.slice(0, 2).join(' | '));

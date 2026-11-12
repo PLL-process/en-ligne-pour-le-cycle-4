@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { pathToFileURL } from 'node:url';
 
 /* Playwright : installation locale si présente, sinon installation globale. */
 let chromium;
@@ -37,7 +38,7 @@ async function shot(page, nom, selecteur) {
   if (selecteur) { try { await page.locator(selecteur).scrollIntoViewIfNeeded(); await page.waitForTimeout(120); } catch {} }
   await page.screenshot({ path: f, fullPage: false });
 }
-const url = f => "file://" + path.join(LOT, f);
+const url = f => pathToFileURL(path.join(LOT, f)).href;
 
 /* ── vérification des liens locaux (href/src/data) des HTML du lot ── */
 function verifLiens() {

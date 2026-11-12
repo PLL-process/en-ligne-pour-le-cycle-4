@@ -16,6 +16,7 @@
 // Usage : NODE_PATH=… node _outils/tests_sans_modale.mjs <fichier.html> […]
 
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 const fichiers = process.argv.slice(2);
 const b = await chromium.launch();
@@ -32,7 +33,7 @@ for (const f of fichiers) {
   const ok = (n, c, d = '') => { T.push({ n, ok: !!c, d }); total++; if (!c) echecs++; };
 
   try {
-    await p.goto('file://' + f, { waitUntil: 'load' });
+    await p.goto(pathToFileURL(f).href, { waitUntil: 'load' });
     await p.waitForTimeout(350);
     ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 
