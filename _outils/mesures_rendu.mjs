@@ -28,6 +28,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
+import { pathToFileURL } from 'node:url';
 
 const RACINE = path.resolve(process.argv[2] || ".");
 const seqs = [];
@@ -57,7 +58,7 @@ for (const f of seqs) {
        suivante, qui se charge déjà dans cet état — et la mesure de l'effet
        d'un dispositif donne alors zéro pour une page parfaitement saine.
        On repart donc d'un stockage vide pour CHAQUE séquence. */
-    await page.goto("file://" + f, { timeout: 20000 });
+    await page.goto(pathToFileURL(f).href, { timeout: 20000 });
     await page.evaluate(() => { try { localStorage.clear(); sessionStorage.clear(); } catch {} });
     await page.reload({ timeout: 20000 });
     await page.waitForTimeout(350);
@@ -136,7 +137,7 @@ for (const f of seqs) {
   const pm = await ctxM.newPage();
   let debord = null;
   try {
-    await pm.goto("file://" + f, { timeout: 20000 });
+    await pm.goto(pathToFileURL(f).href, { timeout: 20000 });
     await pm.evaluate(() => { try { localStorage.clear(); sessionStorage.clear(); } catch {} });
     await pm.reload({ timeout: 20000 });
     await pm.waitForTimeout(300);

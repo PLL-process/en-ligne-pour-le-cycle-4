@@ -36,7 +36,7 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (révision de la séquence, 10/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -87,7 +87,7 @@ p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()
 p.on('requestfailed', r => { if (!/fonts\.g/.test(r.url())) fail.push(r.url()); });
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
-await p.goto('file://' + SEQ, { waitUntil: 'load' });
+await p.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' });
 // Révision du 10/11/2026 : Bonus et exercice incrusté sont repliés ; le banc ouvre les volets.
 await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; }));
 await p.waitForTimeout(340);
@@ -412,7 +412,7 @@ const p = _groupesRadio(await ctx.newPage());
 const err = []; p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 
-await p.goto('file://' + QCM, { waitUntil: 'load' });
+await p.goto(pathToFileURL(QCM).href, { waitUntil: 'load' });
 await p.waitForTimeout(300);
 
 const Q = await p.evaluate(() => QUESTIONS.map(q => ({
@@ -490,7 +490,7 @@ const p = _groupesRadio(await ctx.newPage());
 const err = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
-await p.goto('file://' + SEQ, { waitUntil: 'load' });
+await p.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' });
 // Révision du 10/11/2026 : Bonus et exercice incrusté sont repliés ; le banc ouvre les volets.
 await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; })); await p.waitForTimeout(300);
 await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(150);
@@ -623,7 +623,7 @@ await ctx.close();
 /* Une fiche imprimée avant toute mesure : la table vide et le cadre de la courbe, quadrillé, qui dit quoi tracer. */
 const ctx2 = await b.newContext({ viewport: { width: 1280, height: 900 }, locale: 'fr-FR' });
 const q = await ctx2.newPage();
-await q.goto('file://' + SEQ, { waitUntil: 'load' }); await q.waitForTimeout(300);
+await q.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' }); await q.waitForTimeout(300);
 await q.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; }));
 await q.click('.seance-tab[data-panel="s4"]'); await q.waitForTimeout(150);
 await q.focus('#ddGrandeur');

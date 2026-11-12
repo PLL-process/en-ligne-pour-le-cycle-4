@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (V2 de l'audit, 07/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -54,7 +55,7 @@ async function ouvrirSeanceDe(sel) {
   if (id) { await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); }
 }
 const src = readFileSync(f, 'utf8');
-await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await p.waitForTimeout(500);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '));
@@ -237,7 +238,7 @@ const ANCIENNE = { inputs: { hyp: 'Un panneau solaire suffit, il y a du soleil t
   const q = _groupesRadio(await ctx.newPage()); const e2 = [];
   q.on('pageerror', e => e2.push(e.message));
   const CLE = (src.match(/const KEY = "([^"]+)"/) || [])[1];
-  await q.goto('file://' + f, { waitUntil: 'load' });
+  await q.goto(pathToFileURL(f).href, { waitUntil: 'load' });
   await q.evaluate(([k, v]) => localStorage.setItem(k, v), [CLE, JSON.stringify(ANCIENNE)]);
   await q.reload({ waitUntil: 'load' }); await q.waitForTimeout(300);
   ok('ancienne sauvegarde : la page se recharge sans erreur JS', e2.length === 0, e2.slice(0, 2).join(' | '));
