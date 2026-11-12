@@ -30133,3 +30133,38 @@ Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) vi
 - dans les animations commentées, relever **plus de quatre secondes de voix sans changement à l'écran**.
 
 **Mesure.** Aucune page ni aucun outil modifié : `SKILLS_AUDIT.md` et ce journal seulement.
+
+---
+
+## 11/11/2026 — Deux mesures nouvelles : la charge d'un schéma, le débit des voix d'animation (transversal : `_outils`, `.claude`)
+
+**Demande de Pascal (11/11).** Sur les deux idées de la seconde veille : « tu as carte blanche pour un résultat premium ».
+
+**Décisions.**
+- **Ce sont des mesures, pas des contrôles.** Aucune ne refuse quoi que ce soit, aucune ne change un score ni une sortie : leurs repères viennent d'une lecture ou d'une visée, pas d'une classe. Elles montrent où regarder ; la règle, s'il en faut une, reste à Pascal.
+- **`controle_schemas.mjs` compte la charge de chaque schéma** : ses entités (les cadres qui ne sont ni la cellule d'un tableau ni une pastille), ses flèches, ses mots. `--charge [n]` liste les plus chargés ; le `--json` porte `entites`, `cellules`, `mots`, `charge`. Repère : 9 entités ou 12 flèches (lu dans un guide de dessin de schémas, veille du 11/11).
+- **Un tableau dessiné n'est pas un schéma chargé.** Première mesure : 131 schémas sur 481 dépassaient 9 cadres, et les premiers étaient des tableaux (un plan de tests à 31 cases). Une cellule est un rectangle bord contre bord avec un autre, ou — dans un schéma sans flèche — un rectangle rangé en ligne et en colonne parmi six au moins. Avec une flèche, des boîtes alignées restent des entités : deux chaînes superposées ne sont pas un tableau.
+- **Nouvel outil `_outils/mesurer_voix.py`** : le débit de chaque voix d'animation pas à pas, étape par étape. La revue du 30/10 l'avait mesuré à la main sur deux lots ; l'outil le rejoue sur les cinq. Mots comptés sur le texte envoyé à la voix ; durée lue par ffprobe.
+- **L'idée « plus de quatre secondes de voix sans changement à l'écran » n'est pas reprise** : elle vient de la vidéo. Dans le lecteur pas à pas, l'écran change une fois par étape, puis la voix dit sa phrase. L'outil donne la durée de l'étape la plus longue, sans la juger.
+- Skill `controle-qualite-lot` : les deux outils y sont décrits.
+
+**Mesure — les schémas.** 481 schémas lus. **108 au-dessus du repère** (72 au thème 1, 23 au thème 2, 13 au thème 3), soit une cinquantaine de dessins distincts : le même schéma revient dans une séquence, un cahier et un atelier. Médiane : 5 entités, 40 mots. Les plus chargés : `montage_station_grove.svg` (3e_C9.2, 21 entités), `corrige_trois_representations.svg` (3e_C2.1, 18 entités et 9 flèches), `blocs_palier3_afficher.svg` (3e_C9.2, 17 entités, 252 mots). Les scores et la sortie du contrôle sont inchangés.
+
+**Mesure — les voix.** Cinq animations, 42 prises.
+
+| Animation | Vitesse Piper | Débit moyen | Étendue | Étapes au-dessus de 170 |
+|---|---|---|---|---|
+| Trois principes (5e_C1.1) | 1.0 | 185 mots/min | 153 à 249 | 8 sur 11 |
+| Vélo-cargo (5e_C3.1) | 1.0 | 174 | 146 à 200 | 5 sur 6 |
+| Situation du jardin (4e_C8.1) | 1.0 | 191 | 176 à 218 | 7 sur 7 |
+| Chaînes du lampadaire (5e_C4.1) | 1.15 | 150 | 140 à 173 | 1 sur 9 |
+| Pompe (4e_C9.1) | 1.15 | 143 | 122 à 161 | 0 sur 9 |
+
+Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les trois autres parlent encore à 174–191 mots par minute : c'est la question laissée à Pascal le 08/11 (« dire si les trois autres lots s'alignent sur 1.15 »), maintenant chiffrée. Les refaire demande une nouvelle écoute de leurs 24 prises.
+
+**Bancs.** `tests_controle_schemas.mjs` 22 / 22 (11 avant) ; `tests_mesurer_voix.py` 15 / 15.
+
+**Dit tel quel.**
+- Le débit est calculé sur la durée du fichier, silences compris : sur les deux lots refaits (0,5 s de marge), le débit de la voix seule est de 4 à 5 % plus élevé. Le journal du 08/11 donnait 158 mots/min en moyenne pour ces deux lots ; l'outil donne 150 et 143. L'écart tient à la façon de compter les mots (« l'énergie », « vélo-cargo » : un mot ici) et à ces silences.
+- La mesure de charge ne voit pas si les mots sont difficiles ni si le schéma se lit dans un ordre évident.
+- **Une fragilité rencontrée, antérieure à ce lot** : `controle_schemas.mjs` a rendu deux fois 98 points de défauts et deux fois aucun pour le premier schéma de `sequence_4e_C8_jardin-validation.html`, selon la passe. Rejoué seul trois fois avec l'ancien code et trois fois avec le nouveau : même résultat à chaque fois. Ce schéma est dessiné par un script après le chargement ; sur une machine occupée, le contrôle le mesure avant qu'il soit fini. Non corrigé ici.
