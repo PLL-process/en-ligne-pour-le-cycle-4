@@ -95,7 +95,11 @@ Ensuite **les activités**. Une activité est le bloc qui porte un exercice et s
 - Des réponses courtes qui se suivent (`qcm-rangee`, `qcm-court`) tiennent sur un même écran ; un tableau de
   questions (`qcm-cellule`) aussi.
 - Un exercice incrusté avant la zone (`.atelier-incruste`, `details.incruste-repliee`) a son écran.
+- Un outil posé entre la dernière zone et sa vérification (l'éditeur Python où l'on prouve, un écrit) a son écran,
+  « Avant de vérifier », après la dernière question : c'est là que la vérification de la page parle.
 - Une activité sans zone d'exercice (un Bonus replié) et toute autre carte : un écran, tels quels.
+- En tête de séance, un lien seul, sans titre ni question (« 📖 Les mots de cette séance »), n'a pas d'écran : il
+  accompagne le premier.
 - Un bloc que la page cache n'a pas d'écran ; un écran qui serait vide est sauté.
 
 Une page qui n'a aucune de ces trois formes de séances reste telle quelle (le bouton n'apparaît pas). Sans réponse lisible, un écran ne se

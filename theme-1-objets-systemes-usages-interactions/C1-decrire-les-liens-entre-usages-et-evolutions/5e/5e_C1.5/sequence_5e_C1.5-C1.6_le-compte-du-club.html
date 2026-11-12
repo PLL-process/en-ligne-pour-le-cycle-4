@@ -623,7 +623,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   body.ms #seances{flex-wrap:nowrap;overflow-x:auto;gap:6px;margin-bottom:10px;padding-bottom:2px}
   body.ms #seances .seance-tab{flex:0 0 auto;min-width:0;padding:8px 12px;min-height:44px}
   body.ms #seances .seance-tab small{display:none}
-  .ms-retour{scroll-margin-bottom:110px}
+  .ms-retour,.ms-message{scroll-margin-bottom:110px}
   .ms-ancre{height:0}
   .ms-invite{display:flex;justify-content:center;margin-top:10px}
   .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
@@ -903,7 +903,11 @@ function activite(A, E){
     kids.slice(i).forEach(function(c){
       if (exos.indexOf(c) >= 0){ var zs = zonesDe(enfants(c), titres); zs.forEach(function(z, r){ z.exo = c; if (!r) z.avant = attente; }); attente = []; zones = zones.concat(zs); return; }
       if (estAide(c)){ aides.push(c); return; }
-      if (estCheck(c)){ var de = c.getAttribute("data-exo"), zc = zones.filter(function(z){ return !z.check && (!de || z.exo.id === de); }).pop(); if (zc){ zc.check = c; zc.dehors = true; return; } }
+      if (estCheck(c)){ var de = c.getAttribute("data-exo"), zc = zones.filter(function(z){ return !z.check && (!de || z.exo.id === de); }).pop(); if (zc){ zc.check = c; zc.dehors = true;
+        /* un outil posé entre la dernière zone et sa vérification (l'éditeur où l'on prouve, un écrit) se joue AVANT de
+           vérifier : il a son écran, après la dernière question, et c'est là que la vérification de la page parle */
+        if (zc === zones[zones.length - 1] && ecrit(attente)){ zc.preuve = attente; attente = []; }
+        return; } }
       if (estMessage(c)){ var zf = zones.filter(function(z){ return z.dehors && !z.fb.length; }).pop(); if (zf){ zf.fb.push(c); return; } }
       attente.push(c);
     });
@@ -934,8 +938,9 @@ function activite(A, E){
     var tous = [];
     z.parts.forEach(function(p){ habiller(p); var ps = pas(p); ps.forEach(function(st, q){ tous.push({ p:p, st:st, j:J, q:q, sur:ps.length }); }); J++; });
     if (z.avant.length && tous.length) tous[0].st.n = z.avant.concat(tous[0].st.n);
+    if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
-      var dernier = r === tous.length - 1, base = x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
+      var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
       E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
@@ -969,13 +974,17 @@ function pas(p){
   steps.forEach(function(s){ if (p.h) s.n = [p.h].concat(s.n); });
   return steps;
 }
+/* un lien seul, sans titre ni question (« 📖 Les mots de cette séance ») */
+function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas,video,iframe,object,button,details,table", C) && !!$("a[href]", C) && net(C.textContent).split(" ").length < 12; }
 function construire(P){
-  var E = [];
+  var E = [], portes = [];
   enfants(P).forEach(function(C){
     if (C.classList.contains("page-suivante") || !rendu(C)) return;          // ce que la page cache d'elle-même (fiche professeur) ne fait pas d'écran
+    /* en tête de séance, un lien seul n'est pas un écran (il n'ouvrait la séance que sur lui) : il accompagne le premier */
+    if (!E.length && lienSeul(C)){ portes.push(C); return; }
     if (estActivite(C)){ activite(C, E); return; }
     var acts = enfants(C).filter(estActivite);
-    if (!acts.length){ E.push({ t:"carte", titre:titreDe(C) || "Suite", n:[C] }); return; }
+    if (!acts.length){ E.push({ t:"carte", titre:titreDe(C) || (E.length ? "Suite" : "La séance"), n:[C] }); return; }          // sans titre : le premier écran ouvre la séance
     var avant = [], vu = false, suite = [];
     function vider(){ if (suite.length){ var t = ""; suite.forEach(function(x){ t = t || titreDe(x); }); E.push({ t:"carte", titre:t || "À lire", n:suite }); suite = []; } }
     enfants(C).forEach(function(x){
@@ -984,6 +993,7 @@ function construire(P){
     });
     vider();
   });
+  if (portes.length){ if (E.length) E[0].n = portes.concat(E[0].n); else E.push({ t:"carte", titre:"La séance", n:portes }); }
   if (E.length && !E.some(function(e){ return e.ouverture; })) E[0].ouverture = true;       // la situation de départ s'ouvre au premier écran
   /* tous les blocs qui se montrent ou se cachent : ceux des écrans, et leurs conteneurs jusqu'au panneau */
   E.tous = [];
@@ -1131,7 +1141,8 @@ function peindreRetour(s){
 function raison(f, seule){
   var r = f.tagName === "SELECT" ? f.selectedOptions[0] : $("input[type=radio]:checked", f), pq = (r && r.getAttribute("data-pourquoi")) || f.getAttribute("data-indice"); if (!pq) return "";
   if (f.classList.contains("ms-origine")) return "<b>« " + esc(lireV(f)) + " »</b> ne va pas avec « " + esc(intitule(f)) + " ». " + esc(pq);
-  return seule ? esc(pq) : "<b>" + esc(intitule(f)) + "</b> " + esc(pq);
+  var t = intitule(f);          // l'intitulé de la question, puis son pourquoi : deux phrases, pas une seule
+  return seule ? esc(pq) : "<b>" + esc(t) + (/[?!.»]$/.test(t) ? "" : "\u00a0:") + "</b> " + esc(pq);
 }
 function marquer(f, ok){
   f.classList.toggle("ms-juste", ok === true); f.classList.toggle("ms-faux", ok === false);
@@ -1151,7 +1162,7 @@ function verifier(){
       M.essais[s.id] = (M.essais[s.id] || 0) + 1; M.erreurs[s.id] = (M.erreurs[s.id] || 0) + fautes.length; ecrire();
       var justes = avec.length - fautes.length, enEtq = fautes.filter(function(f){ return f.classList.contains("ms-origine"); }), essais = M.essais[s.id];
       var seule = avec.length === 1, raisons = fautes.map(function(f){ return raison(f, seule); }).filter(Boolean);
-      var debut = seule ? "Pas encore." : "Pas encore. " + justes + " réponse" + (justes > 1 ? "s justes restent" : " juste reste") + " en place.";
+      var debut = seule || !justes ? "Pas encore." : "Pas encore. " + justes + " réponse" + (justes > 1 ? "s justes restent" : " juste reste") + " en place.";
       debut += enEtq.length ? " " + enEtq.length + " étiquette" + (enEtq.length > 1 ? "s retournent" : " retourne") + " dans la réserve." : "";
       var suite = essais >= 2 ? coupDePouce(s, essais >= 4 ? 2 : 1).trim() : raisons.length ? "Corrige, puis vérifie de nouveau." : "Relis la consigne, puis réessaie.";
       if (seule && raisons.length) dire(s, "encore", debut + " " + raisons[0], 0, [], suite); else dire(s, "encore", debut, 0, raisons, suite);
@@ -1167,7 +1178,10 @@ function verifier(){
     dire(s, "ok", n === 3 ? "Tout est juste, du premier coup." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend.", n);
   } else dire(s, "", "C'est noté. Lis le message de la vérification ci-dessous.");
   M.fait[s.id] = true; ecrire();
-  if (s.dernier && s.check) s.check.click();          // la vérification de la page : c'est elle qui valide l'activité
+  if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
+    s.check.click();
+    if (s.fb && net(s.fb.textContent) && s.fb.scrollIntoView){ s.fb.classList.add("ms-message"); s.fb.scrollIntoView({ block:"nearest" }); }
+  }
   $$(".ms-etq", panneau).forEach(peindre); barre();
   if (gain){ var b = el("span", "ms-gain"); b.textContent = "+" + gain; $("#msGains").appendChild(b); setTimeout(function(){ b.remove(); }, 1600); }
   $("#msSuiv").focus({ preventScroll:true });

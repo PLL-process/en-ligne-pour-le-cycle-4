@@ -70,12 +70,17 @@ for (const PAGE of pages) {
           mots: texte ? texte.split(' ').length : 0, medias: [...P.querySelectorAll('img,svg,canvas,video,iframe,textarea,input,select')].filter(vu).length,
           large: document.documentElement.scrollWidth > innerWidth + 1,
           checks: [...P.querySelectorAll(CHECK)].filter(vu).length, suiv: !document.getElementById('msSuiv').hidden,
+          // un outil où l'on écrit (éditeur Python, zone de texte), placé dans la page AVANT la vérification de son activité
+          avantVerif: [...P.querySelectorAll('.editeur-py, textarea')].filter(x => vu(x) && (x.matches('.editeur-py') || !x.closest('.editeur-py')))
+            .filter(x => { const A = x.closest('.activite, .act, section.card, div.carte'), c = A && [...A.querySelectorAll(CHECK)].pop(); return !!c && !!(x.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING); }).map(x => x.id || x.className.split(' ')[0]),
           ecran: document.documentElement._mission.ecran() };
       }, [cles, ACTIF, CHECK]);
       nEcrans++; const ou = `${id} · écran ${e.k + 1}/${e.n} « ${e.titre.slice(0, 50)} »`;
       if (e.mots < 2 && !e.medias) refus.push(`${ou} : écran vide`);
+      if (e.k === 0 && e.n > 1 && e.mots < 12 && !e.medias && !refus.some(m => m.includes('presque vide'))) refus.push(`${ou} : la séance s'ouvre sur un écran presque vide (${e.mots} mots)`);
       if (e.large) refus.push(`${ou} : défilement de côté à 390 px`);
       if (e.exo && e.checks) refus.push(`${ou} : le bouton de vérification de la page est visible dans un écran de question`);
+      if (e.ecran && e.ecran.t === 'retenir' && e.avantVerif.length) refus.push(`${ou} : un outil qui sert avant la vérification n'arrive qu'après elle, sur l'écran « je retiens » — ${e.avantVerif.join(', ')}`);
       let issue = '';
       if (e.verif && (e.etq || e.avecCle.length)) {
         // répondre juste, comme un élève qui sait : étiquettes posées une à une, boutons radio cochés
