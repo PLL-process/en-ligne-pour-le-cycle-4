@@ -24,6 +24,7 @@
 import { chromium } from 'playwright';
 import path from 'node:path';
 import fs from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname);
 const SEQ = path.join(ICI, 'sequence_5e_C5.1-C5.3_depanner_lampadaire.html');
@@ -41,7 +42,7 @@ p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
-await p.goto('file://' + SEQ, { waitUntil: 'load' });
+await p.goto(pathToFileURL(SEQ).href, { waitUntil: 'load' });
 await p.waitForTimeout(320);
 
 const texte = (await p.textContent('body')).replace(/\s+/g, ' ');
@@ -159,7 +160,7 @@ const p = await ctx.newPage();
 const err = []; p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
 
-await p.goto('file://' + QCM, { waitUntil: 'load' });
+await p.goto(pathToFileURL(QCM).href, { waitUntil: 'load' });
 await p.waitForTimeout(280);
 
 const Q = await p.evaluate(() => QUESTIONS.map(q => ({

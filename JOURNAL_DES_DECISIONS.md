@@ -30133,3 +30133,32 @@ Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) vi
 - dans les animations commentées, relever **plus de quatre secondes de voix sans changement à l'écran**.
 
 **Mesure.** Aucune page ni aucun outil modifié : `SKILLS_AUDIT.md` et ce journal seulement.
+
+---
+
+## 11/11/2026 — Règle n°299, premier corollaire : plus aucun banc ne construit une adresse de fichier en collant `'file://'` devant un chemin (transversal : `_outils`, thèmes 1, 2 et 3)
+
+**Demande de Pascal (11/11).** Sur les 69 fichiers relevés par la seconde veille : « tu as carte blanche pour un résultat premium ».
+
+**Le défaut.** `'file://' + chemin` donne une adresse juste sous Linux quand le chemin est absolu et sans caractère spécial. Sous Windows, `file://C:\…` n'est pas une adresse ; partout, un `#` ou un `%` dans un nom de fichier la casse ; et un chemin relatif (`node banc.mjs page.html`) donnait `file://page.html`, où le navigateur lit un nom de machine. Le journal l'a mesuré le 19/09 et interdit depuis ; 69 fichiers `.mjs` et un outil Python le faisaient encore.
+
+**Décisions.**
+- **94 remplacements dans 68 fichiers `.mjs`** : `'file://' + X` devient `pathToFileURL(X).href` (6 fichiers de `_outils`, dont `controle_impression.mjs` signalé le 23/10 ; 2 bancs du thème 1, 13 du thème 2, 47 du thème 3). L'importation de `pathToFileURL` est ajoutée (59 fichiers) ou jointe à l'importation de `url` déjà là (9).
+- **Trois cas écrits à la main** : dans les bancs de `3e_C8.1` et `5e_C8.1`, `new URL('file://' + f)` servait de base pour lire la synthèse — `pathToFileURL(f)` ; dans `tests_controle_contraste_liens.mjs`, l'importation en sous-processus passe par `pathToFileURL(SCRIPT).href`.
+- **`_outils/mesurer_impression.py`** : `pathlib.Path(page_html).resolve().as_uri()`.
+- **Laissé tel quel, exprès** : la ligne de `tests_controle_impression.mjs` qui compare les deux formes — c'est le test de la règle.
+- **Aucune page, aucun test, aucun attendu n'est modifié** : seule change la façon dont un banc donne au navigateur l'adresse d'un fichier.
+
+**Vérifié : chaque banc joué avant et après, avec sa vraie commande.** 26 bancs se lancent sans argument ; pour 38 autres, la commande a été lue dans le rapport de tests de leur lot (`node banc.mjs "$PWD/page.html" …`) ; deux bancs d'outils s'y ajoutent. Soit **66 bancs joués deux fois**.
+- **62 rendent le même résultat**, à la ligne près.
+- **2 passent du rouge au vert** : `tests_3e_C8.1_sequence.mjs` (62 / 62) et `tests_5e_C8.1_sequence.mjs` (39 / 39). Ils s'arrêtaient sur une erreur avant tout test : avec un chemin relatif, `new URL('file://' + f)` ne désignait aucun fichier.
+- **2 ont changé de résultat sous la charge, pas à cause du changement** : `tests_4e_C7.mjs` (47 / 47 avant, un échec de restauration après) et `tests_4e_C7.7_qcm.mjs` (31 / 32 avant, 32 / 32 après). Rejoués seuls dans les deux versions : 47 / 47 et 32 / 32 des deux côtés. Quatre bancs tournaient en même temps ; ces deux-là attendent un délai fixe.
+- Les 68 fichiers passent `node --check`. `controle_impression.mjs` sur le dépôt : vert. `tests_controle_impression.mjs` 17 / 17. Banc du mode mission 50 / 50.
+
+**Ce que la passe a montré, antérieur à ce lot et non corrigé.**
+- **Douze bancs échouent sur `main`, avant comme après** : dix bancs de séquence du thème 3 (famille C7 et `3e_C8.2`) et `tests_5e_C1.5-C1.6_sequence.mjs` perdent chacun un test — celui que j'ai ouvert, `3e_C7.3`, échoue sur « activité 4 validée » ; `tests_4e_C8.mjs` signale un débord de 15 px à 390 px.
+- `tests_controle_contraste_liens.mjs` rend 15 / 16 : son test « le même chemin sous Windows » ne peut passer que sous Windows.
+- `tests_sans_modale.mjs`, lancé sans argument, rend « 0 / 0 » et sort à 0 : il n'a rien testé et ne le dit pas (n°299).
+- Trois bancs n'ont pas été joués, faute de commande connue : `lecteur_qcm_dom.mjs` (un outil, pas un banc), `tests_3e_C8.1_qcm.mjs` et `tests_5e_C8.1_qcm.mjs`.
+
+**Non essayé sous Windows.** La forme nouvelle est celle que Node documente pour Windows ; elle n'a été jouée que sous Linux.

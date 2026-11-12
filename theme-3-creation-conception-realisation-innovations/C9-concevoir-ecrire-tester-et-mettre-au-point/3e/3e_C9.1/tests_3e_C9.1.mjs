@@ -16,6 +16,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
+import { pathToFileURL } from 'node:url';
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -41,7 +42,7 @@ async function shot(page, nom, selecteur) {
   if (selecteur) { try { await page.locator(selecteur).scrollIntoViewIfNeeded(); await page.waitForTimeout(120); } catch {} }
   await page.screenshot({ path: f, fullPage: false });
 }
-const url = f => "file://" + path.join(LOT, f);
+const url = f => pathToFileURL(path.join(LOT, f)).href;
 const SEQ = "sequence_3e_C9.1_variables_types_systemes.html";
 const QCM = "qcm_3e_C9.1_variables_types_systemes.html";
 

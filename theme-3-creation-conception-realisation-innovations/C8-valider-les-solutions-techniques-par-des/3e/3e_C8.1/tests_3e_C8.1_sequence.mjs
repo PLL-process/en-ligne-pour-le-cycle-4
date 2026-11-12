@@ -17,6 +17,7 @@
  *     rechargement.
  */
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (V2 de l'audit, 07/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -63,7 +64,7 @@ const plat = norm(src);
 const dit = phrase => plat.includes(norm(phrase));
 /* Règle d'or n°298 (vague du thème 3, 26/10/2026) : le référentiel — formulation officielle, code d'appui —
  * a quitté la page élève pour la synthèse professeur du lot. On l'y lit, au mot près. */
-const platSynthese = norm(readFileSync(new URL('Synthèses/synthese_professeur_3e_C8.1.html', new URL('file://' + f)), 'utf8'));
+const platSynthese = norm(readFileSync(new URL('Synthèses/synthese_professeur_3e_C8.1.html', pathToFileURL(f)), 'utf8'));
 const ditSynthese = phrase => platSynthese.includes(norm(phrase));
 
 const b = await chromium.launch();
@@ -90,7 +91,7 @@ async function ouvrirSeanceDe(sel) {
   if (id) { await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); }
 }
 
-await p.goto('file://' + f, { waitUntil: 'load' });
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' });
 await p.waitForTimeout(400);
 
 /* ── la page elle-même ───────────────────────────────────────────────────── */

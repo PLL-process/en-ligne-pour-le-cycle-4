@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (V2 de l'audit, 07/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -43,7 +44,7 @@ const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
  * Avant d'agir sur un champ, on ouvre, comme l'élève, l'onglet de la séance qui le porte. Le banc suit la séance ouverte. */
 const seance = async (id) => { if (!(await p.evaluate(i => document.getElementById(i).classList.contains('active'), id))) {
   await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); } };
-await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(600);
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await p.waitForTimeout(600);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0);

@@ -91,7 +91,7 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 export const DEPOT = path.dirname(ICI);
@@ -196,7 +196,7 @@ export async function main(muet = false, racine = DEPOT, tolerees = TOLEREES) {
   for (const abs of liste) {
     const rel = path.relative(racine, abs).split(path.sep).join('/');
     let r;
-    try { r = await relever(p, 'file://' + abs); }
+    try { r = await relever(p, pathToFileURL(abs).href); }
     catch (e) { fautives.push({ rel, refus: [{ txt: String(e).slice(0, 70), pourquoi: 'page illisible' }] }); continue; }
     inspectees++;
     lus += r.lus; nEncre += r.encre.length;

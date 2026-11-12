@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { readFileSync } from 'fs';
+import { pathToFileURL } from 'node:url';
 
 /* Règle d'or n°300 (révision de la séquence, 08/11/2026) : les questions de la page sont des groupes de boutons
    radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption et fill visant un groupe cochent la
@@ -42,7 +43,7 @@ p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 const src = readFileSync(f, 'utf8');
 const REP = JSON.parse(readFileSync(process.argv[4], 'utf8'));
-await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await p.waitForTimeout(500);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '));
