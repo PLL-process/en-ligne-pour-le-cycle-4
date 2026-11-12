@@ -188,9 +188,14 @@ def convertir_selects(t, page):
         if not props:
             refus("%s : #%s n'a aucune proposition" % (page, sid))
         # l'énoncé : un <label for=X> n'importe où, sinon le <p> qui précède immédiatement
-        enonce, retirer = None, None
+        enonce, retirer, englobe = None, None, None
         ml = re.search(r'<label\b[^>]*\bfor="%s"[^>]*>(.*?)</label>\s*' % re.escape(sid), t, re.S)
-        if ml:
+        if ml and m.group(0) in ml.group(1):
+            # Le <select> vit DANS son <label> (« <label for="x">énoncé <select id="x">…</select></label> », 3e_C9.1) :
+            # l'énoncé est le label SANS le select, et c'est le label entier que le groupe remplace. Sans ce cas,
+            # l'énoncé emportait le select avec lui, le groupe le recopiait dans sa légende, et la boucle ne finissait pas.
+            enonce, englobe = ml.group(1).replace(m.group(0), "").strip(), ml
+        elif ml:
             enonce, retirer = ml.group(1).strip(), ml.group(0)
         else:
             avant = t[:m.start()]
@@ -211,7 +216,10 @@ def convertir_selects(t, page):
         lignes.append("</fieldset>")
         bloc = "\n".join(lignes)
         # remplacer : le select, puis l'énoncé retiré (qui le précède ou vit ailleurs)
-        t = t[:m.start()] + "@@SELECT_%s@@" % sid + t[m.end():]
+        if englobe:
+            t = t[:englobe.start()] + "@@SELECT_%s@@" % sid + "\n" + t[englobe.end():]
+        else:
+            t = t[:m.start()] + "@@SELECT_%s@@" % sid + t[m.end():]
         if retirer:
             if retirer in t[:t.find("@@SELECT_%s@@" % sid)] or ml:
                 t = t.replace(retirer, "", 1)
