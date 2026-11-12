@@ -432,6 +432,27 @@ await ctx.close();
   ok("mobile 390 px : aucun défilement horizontal", debord === 0, "débord = " + debord + " px");
   ok("mobile 390 px : zéro erreur JS", em.length === 0, em.slice(0, 2).join(" | "));
   await shot(pm, "mobile_390");
+  /* Lecture sur un téléphone (12/11/2026) : le banc de tests montrait ses boutons ▶ hors de l'écran (il fallait faire
+     glisser le tableau, sans que rien le dise) ; un document de 860 px tenait dans 254 px ; le code de l'expérience C
+     se coupait au milieu de "Train ". */
+  const tel = await pm.evaluate(async () => {
+    const onglet = s => [...document.querySelectorAll(".seance-tab")].find(t => t.dataset.panel === s).click();
+    onglet("s4"); await new Promise(r => setTimeout(r, 150));
+    const boutons = [...document.querySelectorAll(".bench-run")].map(x => x.getBoundingClientRect());
+    const banc = boutons.length === 4 && boutons.every(r => r.width >= 44 && r.height >= 44 && r.left >= 0 && r.right <= innerWidth);
+    onglet("s1"); await new Promise(r => setTimeout(r, 150));
+    const fig = document.querySelector("#act1 figure"), doc = fig.querySelector("object").getBoundingClientRect();
+    const indice = document.querySelector("#act1 .doc-glisse"), glisse = fig.scrollWidth > fig.clientWidth + 100, aide = !!indice && !!indice.offsetParent;
+    onglet("s2"); await new Promise(r => setTimeout(r, 150));
+    const code = [...document.querySelectorAll(".code-ligne")].pop();
+    return { banc, docLarge: Math.round(doc.width), glisse, indice: aide,
+      uneLigne: !!code && code.getClientRects().length === 1 && code.getBoundingClientRect().height < 30,
+      debord: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+  });
+  ok("mobile 390 px : les quatre boutons ▶ du banc de tests sont à l'écran, sans faire glisser, et font 44 px", tel.banc);
+  ok("mobile 390 px : un document garde une largeur lisible et se fait glisser dans son cadre, avec sa ligne d'aide",
+     tel.docLarge >= 700 && tel.glisse && tel.indice && tel.debord === 0, "document " + tel.docLarge + " px · glisse " + tel.glisse + " · aide " + tel.indice + " · débord " + tel.debord);
+  ok("mobile 390 px : le code de l'expérience C tient sur une ligne", tel.uneLigne);
   await pm.close();
   await ctxm.close();
 }
