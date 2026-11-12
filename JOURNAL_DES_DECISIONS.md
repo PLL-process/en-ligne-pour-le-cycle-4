@@ -30302,3 +30302,23 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 - « Pas encore. 0 réponse juste reste en place. » quand tout est faux sur un écran à plusieurs réponses.
 
 **Mesure.** Banc générique : page acceptée, 46 écrans, 21 vérifiés par le mode, 5 vérifications de la page ; pourquoi présents pour 79 mauvaises propositions sur 79, aucun sur une bonne réponse. Bancs de la page : 56/56 et 34/34. Charge inchangée (séance la plus lourde : 1 116 mots) ; règles d'or 0 ✘ ; aération 0. Banc de `5e_C9.1` rejoué. Vu à l'écran : les quatre séances en entier à 1 280 px, le bilan des deux pages à 390 et 1 280 px ; à 390 et 1 024 px, les rangées sur la page et en mission, sept erreurs provoquées et leur message.
+
+---
+
+## 12/11/2026 — Mode mission : l'outil qui prouve passe avant la vérification ; une séance ne s'ouvre plus sur un écran presque vide
+
+**D'où cela vient.** En jouant `3e_C9.1` en mission, le matin où Pascal la fait en classe (seconde passe, #673), six défauts du moteur — deux qui gênent le parcours, quatre de formulation.
+
+**Corrigé.**
+- **L'éditeur Python arrivait après la vérification.** Activité 4 (les trois bugs) : la vérification de la page demande une exécution du programme corrigé. En mission, l'éditeur n'était montré qu'après la dernière question, sur l'écran « Je retiens ». L'élève lisait « 🔒 Exécute ton programme », passait à l'écran suivant pour exécuter, puis devait revenir d'un écran pour valider. Règle nouvelle : un outil où l'on écrit, posé entre la dernière zone d'exercice et sa vérification, a son écran — « Avant de vérifier » — après la dernière question. C'est là que la vérification de la page parle. Même effet sur l'activité 5 (l'éditeur « pour aller au bout »).
+- **Une séance s'ouvrait sur un écran presque vide.** Sur six séquences, le lien « 📖 Les mots de cette séance » faisait à lui seul le premier écran de chaque séance, titré « Suite » : 25 séances commençaient par un appui sur « Suivant » pour rien. Ce lien accompagne maintenant le premier écran.
+- **« Pas encore. 0 réponse juste reste en place. »** quand tout est faux sur un écran à plusieurs réponses : « Pas encore. » suffit.
+- **L'intitulé d'une question et son pourquoi se lisaient d'une traite** (« …la fonction renvoie 3, c'est ce que le besoin attend ») : deux points les séparent.
+- **Le message de la vérification de la page** restait en partie sous la barre basse : il remonte au-dessus.
+- **Un premier écran sans titre** s'appelait « Suite » : il s'appelle « La séance ».
+
+**Gardé par les bancs.**
+- Banc générique, deux règles nouvelles : un outil qui sert avant la vérification ne doit pas n'arriver qu'après elle ; une séance ne doit pas s'ouvrir sur un écran de moins de 12 mots. Rejouées sur l'ancien moteur, elles le refusent.
+- Banc de `3e_C9.1`, deux tests de plus : l'éditeur de l'activité 4 a son écran avant « Je retiens » ; la vérification y demande l'exécution, puis valide l'activité, et son message se lit au-dessus de la barre.
+
+**Mesure.** Banc générique, 60 pages, à 390 px : aucune refusée ; 2 223 écrans (2 246 avec #673), 1 046 vérifiés par le mode et 296 vérifications de la page (inchangés). Six pages changent, les 54 autres gardent exactement leurs écrans : `3e_C1.1` 50 → 45, `4e_C1.1` 41 → 35, `5e_C2.1` 50 → 46, `4e_C9.1` 63 → 60, `5e_C9.1` 42 → 39 (un écran « Suite » de moins par séance) ; `3e_C9.1` 46 → 44 (quatre écrans « Suite » de moins, deux écrans « Avant de vérifier » de plus). Bancs des six séquences : mêmes résultats qu'avant ; `3e_C9.1` 58/58 avec ses deux tests de plus. Les 60 pages ne changent qu'entre les deux marqueurs du bloc (vérifié fichier par fichier). Vu à l'écran, à 390 et 1 024 px : l'activité 4 jouée du début à la validation ; le premier écran de la séance sur `3e_C9.1`, `5e_C2.1` et `4e_C1.1` ; les messages reformulés.

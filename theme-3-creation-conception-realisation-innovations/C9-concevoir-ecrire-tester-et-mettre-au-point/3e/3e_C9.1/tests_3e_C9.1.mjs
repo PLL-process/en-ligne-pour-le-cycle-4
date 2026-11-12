@@ -471,6 +471,37 @@ await ctx.close();
   await ctxq.close();
 }
 
+/* — mode mission (12/11/2026) : l'éditeur de l'activité 4 sert à PROUVER ; il se joue avant la vérification, sur son
+     écran. Avant, il arrivait après la dernière question, sur « Je retiens » : la vérification demandait une
+     exécution que l'élève ne pouvait faire qu'un écran plus loin. — */
+{
+  const ctxM = await nav.newContext({ viewport: { width: 390, height: 844 } });
+  const pm = await ctxM.newPage();
+  await pm.goto(url(SEQ)); await pm.waitForTimeout(400);
+  await pm.click("#btnMission"); await pm.waitForTimeout(250);
+  await pm.evaluate(() => [...document.querySelectorAll(".seance-tab")].find(t => t.dataset.panel === "s3").click()); await pm.waitForTimeout(250);
+  const ecrans = await pm.evaluate(async () => { const out = [], rail = () => [...document.querySelectorAll("#msRail [data-k]")];
+    for (let k = 0; k < rail().length; k++) { rail()[k].click(); await new Promise(r => setTimeout(r, 120));
+      out.push({ titre: document.getElementById("msOu").childNodes[0].textContent, editeur: !!document.getElementById("vs2").offsetParent,
+        verif: !document.getElementById("msVerif").hidden, question: [...document.querySelectorAll("#act4 fieldset.qcm-groupe")].some(f => f.offsetParent) }); }
+    return out; });
+  const iEd = ecrans.findIndex(e => e.editeur), iQ = ecrans.map(e => e.question).lastIndexOf(true), iRet = ecrans.findIndex(e => /^Je retiens/.test(e.titre));
+  ok("mission · act. 4 : l'éditeur a son écran — après la dernière question, avant « Je retiens », avec « Vérifier »",
+     iEd === iQ + 1 && iEd === iRet - 1 && ecrans[iEd].verif && !ecrans[iEd].question, ecrans.map(e => e.titre.slice(0, 16) + (e.editeur ? " [éditeur]" : "")).join(" | "));
+  await pm.evaluate(() => { const bon = { a4b1l: "3", a4b1c: "minutes = 2 + 1", a4b2l: "5", a4b2c: "écrire 1.8, avec un point", a4b3c: "on ne soustrait pas un nombre d'un texte", a4b4: "Q - 96 St 2 min | 25.0 C" };
+    for (const id in bon) [...document.querySelectorAll("#" + id + " input[type=radio]")].find(r => r.value === bon[id]).click(); });
+  await pm.evaluate(k => document.querySelector('#msRail [data-k="' + k + '"]').click(), iEd); await pm.waitForTimeout(200);
+  await pm.click("#msVerif"); await pm.waitForTimeout(300);
+  const sans = await pm.locator("#fb4").textContent();
+  await executerBloc(pm, "vs2", 'train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1.8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n');
+  await pm.click("#msVerif"); await pm.waitForTimeout(400);
+  const avec = await pm.evaluate(() => { const fb = document.getElementById("fb4").getBoundingClientRect(), pied = document.querySelector(".ms-pied").getBoundingClientRect();
+    return { texte: document.getElementById("fb4").textContent, lisible: fb.height > 0 && fb.top >= 0 && fb.bottom <= pied.top + 1 }; });
+  ok("mission · act. 4 : sur cet écran, la vérification demande l'exécution, puis valide l'activité — son message se lit au-dessus de la barre",
+     /🔒[\s\S]*éditeur Python/.test(sans) && /activité validée/.test(avec.texte) && avec.lisible, sans.slice(0, 40) + " → " + avec.texte.slice(0, 40) + (avec.lisible ? "" : " (message caché par la barre)"));
+  await pm.close(); await ctxM.close();
+}
+
 verifLiens();
 await nav.close();
 

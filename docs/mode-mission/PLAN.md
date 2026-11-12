@@ -19,8 +19,9 @@ qui se projette, et que mesurent les contrôles du dépôt.
 
 1. **La séance** : son titre, sa question directrice — et la situation de départ (`#ouverture`).
 2. Pour chaque activité : **l'atelier incrusté** s'il y en a un ; **le départ** (objectif, ressources, consigne) ;
-   **un écran par partie** (a, b, c… : ce qui suit chaque `h4` de `.exo`) ; **je retiens** (correction, erreurs
-   fréquentes, à retenir, critère de réussite).
+   **un écran par partie** (a, b, c… : ce qui suit chaque `h4` de `.exo`) ; **avant de vérifier**, quand un outil
+   est posé entre les questions et la vérification (l'éditeur Python où l'on prouve) ; **je retiens** (correction,
+   erreurs fréquentes, à retenir, critère de réussite).
 3. Chaque autre carte de la séance (synthèse, Bonus, bilan, QCM) : un écran.
 
 ## Les choix de jeu (carte blanche du 11/11)
@@ -101,6 +102,12 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
       séance à la fois ; leur générateur pose le bloc). **Les 60 pages de séquence portent le mode.**
 - [x] Un écran se montre depuis son début : la barre de la mission, collée en haut, faussait le calcul dès que
       l'élève avait défilé — l'écran suivant s'ouvrait au milieu. Réparé, et le banc générique le vérifie partout.
+- [x] L'outil qui sert à prouver passe avant la vérification (12/11) : sur `3e_C9.1`, activité 4, l'éditeur Python
+      arrivait après la dernière question, sur l'écran « je retiens » — la vérification demandait une exécution que
+      l'élève ne pouvait faire qu'un écran plus loin. Il a son écran, « Avant de vérifier ».
+- [x] Une séance ne s'ouvre plus sur un écran presque vide (12/11) : sur six séquences (`3e_C1.1`, `4e_C1.1`, `5e_C2.1`,
+      `3e_C9.1`, `4e_C9.1`, `5e_C9.1`), le lien « 📖 Les mots de cette séance » faisait à lui seul le premier écran
+      de chaque séance, titré « Suite ». Il accompagne maintenant le premier écran.
 - [ ] `3e_C1.5`, `4e_C1.4`, `5e_C1.3` : une carte par écran. Pas de vérification par activité à découper : ces
       pages demandent d'abord d'être ramenées au squelette commun (thème 1).
 - [ ] Rappel en début de séance, maîtrise confirmée, code bilan.
@@ -108,7 +115,7 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 ## Où en est chaque séquence (11/11/2026)
 
 Mesure : `node _outils/mode_mission/banc_generique.mjs` (sans argument : toutes les pages qui portent le bloc).
-60 pages acceptées, aucune refusée ; **2 252 écrans, dont 1 052 vérifiés par le mode** ; 296 vérifications de page
+60 pages acceptées, aucune refusée ; **2 223 écrans, dont 1 046 vérifiés par le mode** (12/11) ; 296 vérifications de page
 déclenchées à la dernière question d'une activité.
 
 | Niveau | Pages | Ce que voit l'élève |
