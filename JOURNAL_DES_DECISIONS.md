@@ -30220,3 +30220,15 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 - La page 2 de la station (programmer sur Vittascience) n'a presque pas de question fermée : ses deux activités tiennent chacune sur un écran.
 
 **Mesure.** Banc générique : 60 pages acceptées, aucune refusée ; 2 252 écrans, dont 1 052 vérifiés par le mode ; 296 vérifications de page. Les 55 pages du premier lot gardent exactement leurs écrans (mêmes comptes, page par page). Banc du pilote : 50/50. Contrôles du site : 24 verts. Bancs des séquences, tous rejoués : mêmes résultats qu'au premier lot, banc par banc (dont le Book Train 39/39 et 38/38, et le découpage de la station 167/167) ; les deux échecs déjà connus sur `main` restent (`tests_regle_311_4e_C7.1`, `tests_4e_C8`).
+
+---
+
+## 11/11/2026 — Book Train, activité 2.1 : la frise des quatre formes d'énergie se lit de nouveau
+
+**Constat** (vu en jouant le mode mission, #669). Dans `4e_C4.1_book-train`, la frise animée « Les quatre visages de l'énergie » avait ses quatre légendes et ses quatre cadres presque invisibles : texte clair sur fond clair (contraste 1,2 pour 1). Elle est dessinée à la couleur du texte de la page, pour le fond sombre de la carte ; la règle `figure svg{background:#fdfcf8}`, écrite pour les schémas, lui posait une plaque claire.
+
+**Correction.** La frise ne prend plus la plaque (`background:transparent;border:0` sur ce seul dessin) : ses légendes et ses cadres se lisent sur la carte, comme prévu. Rien d'autre ne change dans la page. Sur papier, le texte est noir sur blanc, comme avant.
+
+**Vérifié aussi.** Les treize autres dessins de la page qui portent une plaque : leurs textes sont foncés sur la plaque, ou clairs sur leurs propres blocs foncés (le modèle de la chaîne d'énergie a son fond sombre). Aucun autre cas.
+
+**Mesure.** Bancs de la page : 39/39 et 38/38. `controle_schemas` : 0 ✘. `controle_impression`, `controle_axe` : verts.
