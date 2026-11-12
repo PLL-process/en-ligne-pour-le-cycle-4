@@ -138,7 +138,7 @@ bonne réponse et dit combien de mauvaises réponses ont le leur.
   leur seul bouton « Vérifier » : elles demandent d'abord d'être ramenées au squelette commun.
 - Sur `4e_C4.1_book-train`, une étiquette retournée dans la réserve reste dans la sauvegarde de la page : rechargée,
   la page la montre de nouveau posée (non vérifiée). La page n'a pas de moyen d'effacer une réponse.
-- Leurres et « pourquoi » : écrits pour `5e_C4.1`, `5e_C6.1`, `4e_C6.1`, `3e_C4.1` et `3e_C4.3` ; ailleurs, le
+- Leurres et « pourquoi » : écrits pour `5e_C4.1`, `5e_C6.1`, `4e_C6.1`, `3e_C4.1`, `3e_C4.3` et `3e_C9.1` ; ailleurs, le
   message d'erreur reste général. Les « pourquoi » ne se voient qu'en mode mission : la page qui défile garde sa correction complète.
 - Une liste déroulante n'a pas de « pourquoi » par proposition (`enrichir.py` écrit sur des boutons radio) : ce
   contenu vient avec la révision de la page, quand ses listes deviennent des boutons radio (n°300).

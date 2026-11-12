@@ -161,6 +161,11 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 /* simulateur mémoire */
 .mem-wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1.2fr);gap:14px;margin:12px 0}
 @media(max-width:680px){.mem-wrap{grid-template-columns:1fr}}
+/* le positionnement du bilan : les pastilles se détachent du texte, et celle qu'on choisit se voit (12/11/2026 — elles n'avaient aucun style à l'écran) */
+.ae-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--border);padding:8px 0;flex-wrap:wrap}
+.ae-btns{display:flex;gap:6px}
+.ae-b{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:6px 12px;min-height:40px;cursor:pointer;font-family:inherit;font-size:1rem;color:var(--text)}
+.ae-b.sel{background:var(--btn);border-color:var(--hl);box-shadow:0 0 0 2px var(--hl)}
 .mem-code{background:#08132c;border:1px solid #274a8a;border-radius:10px;padding:10px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.9em}
 .mem-code div{padding:4px 8px;border-radius:6px}
 .mem-code div.cur{background:#173666;outline:1.5px solid #ffd66b}
@@ -174,7 +179,9 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 .py-lno{color:#4a6ca8}
 .val.py-str{color:var(--ok)}
 .val.py-num{color:var(--energie)}
-pre.code{max-width:100%;overflow-x:auto}   /* à 390 px, une longue ligne de code défile dans son cadre, la page ne défile plus en largeur (séances 3 et 4) */
+pre.code{max-width:100%;overflow-x:auto;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.82em;line-height:1.6}
+@media (min-width:700px){pre.code{font-size:.95em}}   /* sur un poste de classe, on lit une virgule, un guillemet, une case ▢ sans plisser les yeux */
+/* à 390 px, une longue ligne de code défile dans son cadre, la page ne défile plus en largeur (séances 3 et 4) */
 .py-legende{font-size:.8em;color:#9bbefc;margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
 .mem-boxes{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;background:#0d2347;border:1px solid #c68ef2;border-radius:10px;padding:14px}
 .mem-box{min-width:104px;border:2px solid #61dafb;border-radius:8px;background:#0a1b3d;text-align:center;padding-bottom:8px}
@@ -699,6 +706,10 @@ body.essentiel details.referentiel-replie{display:none}
 })();
 </script>
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
+<style id="css-qcm-rangee">
+/* révision du 12/11/2026 : réponses d'un mot ou d'un chiffre — en rangée, pas une par ligne */
+fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0}
+</style>
 <style id="css-replis-3e-c91">
 /* révision du 12/11/2026 : ce qui ne sert qu'au besoin se déplie (charge de lecture de la séance 2) */
 details.geste-detail,details.gestes-vitta-replie{margin:6px 0}
@@ -1456,7 +1467,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../4e/4e_C9.1/Synthèses/synthese_eleve_4e_C9.html#partie-4">relis la partie 4 de la synthèse 4e_C9.1 à C9.3, « Comment prouver que le programme décide juste ? »</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> on regarde <b>dans</b> la boîte. <br>Toutes les variables ne se valent pas : un nombre entier, un nombre à virgule, un texte, un vrai-ou-faux ne se rangent pas de la même façon et ne réagissent pas pareil. <br>C'est ce qui explique une bonne part des bogues de débutant.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> on regarde <b>dans</b> la boîte. <br>Toutes les variables ne se valent pas. <br>Un nombre entier, un nombre à virgule, un texte, un vrai-ou-faux&nbsp;: chacun se range à sa façon, et réagit à sa façon. <br>C'est ce qui explique une bonne part des bogues de débutant.</p>
   <p class="filet">Un mot à garder en tête : une variable porte un nom et contient une valeur qu'on peut changer en cours de programme.</p>
 </section>
 
@@ -1599,13 +1610,14 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <section class="card">
   <h2>🔀 Deux façons de vivre l'atelier</h2>
   <div class="donnees">
-    <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python est <b>dans la page</b>, à chaque activité qui fait programmer — tu écris ton programme au clavier, tu cliques ▶&nbsp;Exécuter, la console est en dessous. <br>C'est le parcours principal. Cherche les <b>éditeurs 🐍</b> dans les séances 2, 3 et 4 ; Vittascience reste possible, par un lien, si tu préfères.</p>
-    <p data-parcours="c">🅲 <b>Sans matériel</b> : le simulateur de mémoire (séance 1, activité 1 — le bouton « ▶ Étape suivante ») + les tables de suivi (séance 1, activité 2) à refaire au cahier.</p>
+    <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python est <b>dans la page</b>, à chaque activité qui fait programmer. <br>Tu écris ton programme au clavier, tu cliques ▶&nbsp;Exécuter&nbsp;: la console est en dessous. <br>C'est le parcours principal. <br>Cherche les <b>éditeurs 🐍</b> dans les séances 2, 3 et 4. <br>Vittascience reste possible, par un lien, si tu préfères.</p>
+    <p data-parcours="c">🅲 <b>Sans matériel</b> : tu t'appuies sur deux activités de la séance 1. <br>① Activité 1 : le simulateur de mémoire, avec le bouton « ▶ Étape suivante ». <br>② Activité 2 : les tables de suivi, à refaire au cahier.</p>
   </div>
-  <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter :</b> à chaque exercice,
-  tu PRÉDIS d'abord le résultat (sans ordinateur), tu TESTES ensuite dans l'éditeur Python de la page,
-  puis tu REPORTES ce que tu as observé. La prédiction ratée n'est pas une erreur : c'est l'endroit
-  exact où ton cerveau apprend.</div>
+  <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter.</b> À chaque exercice&nbsp;: <br>
+  ① tu PRÉDIS d'abord le résultat, sans ordinateur&nbsp;; <br>
+  ② tu TESTES ensuite dans l'éditeur Python de la page&nbsp;; <br>
+  ③ tu REPORTES ce que tu as observé. <br>
+  La prédiction ratée n'est pas une erreur : c'est l'endroit exact où ton cerveau apprend.</div>
 </section>
 </details><!-- /rappel-ouverture -->
 
@@ -1671,31 +1683,31 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       <p><b>Après l'exécution complète, réponds :</b></p>
       <fieldset class="qcm-groupe" id="a1q1" data-melange="1">
   <legend>1. Après la ligne <code>minutes = minutes - 1</code>, que contient la boîte <code>minutes</code> ?</legend>
-  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="4 et 3 en même temps"><label for="a1q1__2">4 et 3 en même temps</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="rien, elle est vidée"><label for="a1q1__4">rien, elle est vidée</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="4 et 3 en même temps" data-pourquoi="Une boîte ne garde qu'une valeur à la fois : regarde-la dans le simulateur, à la ligne 4."><label for="a1q1__2">4 et 3 en même temps</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="rien, elle est vidée" data-pourquoi="Le simulateur ne montre jamais une boîte vide après une affectation : relance-le jusqu'à la ligne 4."><label for="a1q1__4">rien, elle est vidée</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="3"><label for="a1q1__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="4"><label for="a1q1__1">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="4" data-pourquoi="4, c'était avant cette ligne : relance le simulateur et regarde la boîte à l'étape 4."><label for="a1q1__1">4</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a1q2" data-melange="1">
   <legend>2. Où est passé l'ancien contenu (le 4) ?</legend>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="il est rangé dans une autre boîte"><label for="a1q2__1">il est rangé dans une autre boîte</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="il est rangé dans une autre boîte" data-pourquoi="Compte les boîtes du simulateur avant et après la ligne 4 : une nouvelle est-elle apparue ?"><label for="a1q2__1">il est rangé dans une autre boîte</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="il est perdu : il a été remplacé"><label for="a1q2__4">il est perdu : il a été remplacé</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="il reste caché derrière le 3"><label for="a1q2__2">il reste caché derrière le 3</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="il est retourné dans le programme"><label for="a1q2__3">il est retourné dans le programme</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="il reste caché derrière le 3" data-pourquoi="Une boîte n'a pas d'arrière : elle ne contient qu'une valeur, celle que montre le simulateur."><label for="a1q2__2">il reste caché derrière le 3</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="il est retourné dans le programme" data-pourquoi="Le programme ne change pas pendant l'exécution : seules les boîtes de la mémoire changent."><label for="a1q2__3">il est retourné dans le programme</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a1q3" data-melange="1">
   <legend>3. Le signe <code>=</code> en Python signifie :</legend>
-  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="« compare les deux côtés du signe »"><label for="a1q3__3">« compare les deux côtés du signe »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="« compare les deux côtés du signe »" data-pourquoi="Pour comparer, Python a un autre signe, le double égal == : ici, une boîte change de contenu."><label for="a1q3__3">« compare les deux côtés du signe »</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="« mets cette valeur dans la boîte »"><label for="a1q3__1">« mets cette valeur dans la boîte »</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="« est égal à », comme en maths"><label for="a1q3__2">« est égal à », comme en maths</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="« affiche la valeur à l&#x27;écran »"><label for="a1q3__4">« affiche la valeur à l'écran »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="« est égal à », comme en maths" data-pourquoi="En maths, minutes = minutes - 1 serait impossible : ici pourtant, le simulateur l'exécute sans problème."><label for="a1q3__2">« est égal à », comme en maths</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="« affiche la valeur à l&#x27;écran »" data-pourquoi="Pour afficher, le programme utilise print, à la dernière ligne : le signe = ne montre rien à l'écran."><label for="a1q3__4">« affiche la valeur à l'écran »</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a1q4" data-melange="1">
   <legend>4. <code>minutes = minutes - 1</code> se lit :</legend>
-  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="c&#x27;est une équation impossible à résoudre"><label for="a1q4__4">c'est une équation impossible à résoudre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="c&#x27;est une équation impossible à résoudre" data-pourquoi="Ce n'est pas une équation, c'est un ordre : le simulateur l'a exécuté sans se bloquer."><label for="a1q4__4">c'est une équation impossible à résoudre</label></div>
   <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__2" value="de droite à gauche : je calcule, puis je range"><label for="a1q4__2">de droite à gauche : je calcule, puis je range</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__1" value="de gauche à droite, comme une phrase française"><label for="a1q4__1">de gauche à droite, comme une phrase française</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__3" value="dans n&#x27;importe quel sens, le résultat est le même"><label for="a1q4__3">dans n'importe quel sens, le résultat est le même</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__1" value="de gauche à droite, comme une phrase française" data-pourquoi="Pour ranger une valeur, Python doit d'abord la connaître : quel côté du = contient le calcul ?"><label for="a1q4__1">de gauche à droite, comme une phrase française</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__3" value="dans n&#x27;importe quel sens, le résultat est le même" data-pourquoi="Essaie dans l'autre sens : range d'abord, calcule ensuite. Quelle valeur rangerais-tu ?"><label for="a1q4__3">dans n'importe quel sens, le résultat est le même</label></div>
 </fieldset>
 </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le simulateur : à la ligne 4, la boîte <code>minutes</code> a-t-elle DEUX valeurs, ou une seule ? Une boîte ne contient jamais qu'UNE valeur à la fois.</p></details>
@@ -1753,46 +1765,46 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       <div><b>Ressources :</b> le programme ci-dessous, ton cerveau, PAS l'ordinateur.</div>
     </div>
     <div class="consigne"><b>Consigne :</b> voici le programme du compteur de voyageurs du tourniquet. SANS l'exécuter, complète la table de suivi : la valeur de chaque variable APRÈS chaque ligne.</div>
-    <pre class="code">passages = 0
-groupe = 3
-passages = passages + groupe
-groupe = groupe - 1
-passages = passages + groupe</pre>
+    <pre class="code">1  passages = 0
+2  groupe = 3
+3  passages = passages + groupe
+4  groupe = groupe - 1
+5  passages = passages + groupe</pre>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a2q1" data-melange="1">
   <legend>Après la ligne 3, <code>passages</code> vaut :</legend>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="0"><label for="a2q1__1">0</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="6"><label for="a2q1__2">6</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="« passages + groupe »"><label for="a2q1__4">« passages + groupe »</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="0" data-pourquoi="0, c'est la valeur après la ligne 1 : la ligne 3 range autre chose dans passages."><label for="a2q1__1">0</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="6" data-pourquoi="Tu as compté groupe deux fois : à la ligne 3, que vaut passages juste avant le calcul ?"><label for="a2q1__2">6</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="« passages + groupe »" data-pourquoi="Une boîte contient une valeur, pas un calcul : Python fait l'addition avant de ranger."><label for="a2q1__4">« passages + groupe »</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="3"><label for="a2q1__3">3</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a2q2">
+<fieldset class="qcm-groupe qcm-rangee" id="a2q2">
   <legend>Après la ligne 4, <code>groupe</code> vaut :</legend>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="3"><label for="a2q2__1">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="1"><label for="a2q2__2">1</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="0"><label for="a2q2__3">0</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="3" data-pourquoi="Tu donnes la valeur d'avant la ligne 4 : cette ligne range un nouveau résultat dans groupe."><label for="a2q2__1">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="1" data-pourquoi="La ligne 4 ne retire 1 qu'une seule fois : pars de la valeur rangée à la ligne 2."><label for="a2q2__2">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="0" data-pourquoi="Tu as lu la boîte passages, à son départ : ici, on te demande la boîte groupe."><label for="a2q2__3">0</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="2"><label for="a2q2__4">2</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a2q3">
+<fieldset class="qcm-groupe qcm-rangee" id="a2q3">
   <legend>Après la ligne 5, <code>passages</code> vaut :</legend>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="6"><label for="a2q3__1">6</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="6" data-pourquoi="Tu as repris l'ancienne valeur de groupe : la ligne 4 l'a changée. Relis ta table."><label for="a2q3__1">6</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="5"><label for="a2q3__2">5</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="3"><label for="a2q3__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="8"><label for="a2q3__4">8</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="3" data-pourquoi="Tu donnes passages avant la ligne 5 : cette ligne lui ajoute encore la valeur de groupe."><label for="a2q3__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="8" data-pourquoi="Tu as ajouté trop : à la ligne 5, on n'ajoute qu'une fois la valeur courante de groupe."><label for="a2q3__4">8</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a2q4" data-melange="1">
+<fieldset class="qcm-groupe qcm-rangee" id="a2q4" data-melange="1">
   <legend>Combien de FOIS la boîte <code>passages</code> a-t-elle changé de contenu (ligne 1 comprise) ?</legend>
-  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__3" value="2 fois"><label for="a2q4__3">2 fois</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__1" value="1 fois"><label for="a2q4__1">1 fois</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__4" value="5 fois"><label for="a2q4__4">5 fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__3" value="2 fois" data-pourquoi="Tu as oublié la ligne 1 : la première valeur rangée dans la boîte compte aussi."><label for="a2q4__3">2 fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__1" value="1 fois" data-pourquoi="Cherche toutes les lignes qui commencent par passages = : chacune remplit la boîte."><label for="a2q4__1">1 fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__4" value="5 fois" data-pourquoi="Toutes les lignes ne touchent pas passages : certaines ne remplissent que la boîte groupe."><label for="a2q4__4">5 fois</label></div>
   <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__2" value="3 fois"><label for="a2q4__2">3 fois</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a2q5" data-melange="1">
   <legend>Quelle phrase décrit le rôle de ce programme ?</legend>
-  <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__2" value="il affiche un message sur le panneau du quai"><label for="a2q5__2">il affiche un message sur le panneau du quai</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__1" value="il compare deux nombres et garde le plus grand"><label for="a2q5__1">il compare deux nombres et garde le plus grand</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__2" value="il affiche un message sur le panneau du quai" data-pourquoi="Cherche print dans le programme : sans lui, rien ne s'affiche nulle part."><label for="a2q5__2">il affiche un message sur le panneau du quai</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__1" value="il compare deux nombres et garde le plus grand" data-pourquoi="Aucune ligne ne compare : regarde ce que les lignes 3 et 5 font à passages."><label for="a2q5__1">il compare deux nombres et garde le plus grand</label></div>
   <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__3" value="il additionne les passages dans une variable"><label for="a2q5__3">il additionne les passages dans une variable</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__4" value="il efface la mémoire avant chaque passage"><label for="a2q5__4">il efface la mémoire avant chaque passage</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q5" id="a2q5__4" value="il efface la mémoire avant chaque passage" data-pourquoi="Rien n'est effacé : après la ligne 1, passages ne revient jamais à 0."><label for="a2q5__4">il efface la mémoire avant chaque passage</label></div>
 </fieldset>
 </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais ta table au brouillon : deux colonnes (<code>passages</code>, <code>groupe</code>), une ligne par ligne de programme. Remplis case par case, sans sauter.</p></details>
@@ -1886,17 +1898,17 @@ print("2 + 3 =", 2 + 3)
       <object class="figure" data="Images/types_python_familles.svg" type="image/svg+xml" aria-label="Les quatre types de valeurs en Python et le piège des guillemets" style="width:100%"></object>
       <figcaption>Document 2 — Quatre types, et la double vie du signe +.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> pour chaque expérience : ① PRÉDIS le résultat (sans ordinateur) ; ② dans l'éditeur Python ci-dessous, où les trois expériences sont déjà écrites, clique ▶&nbsp;Exécuter ; ③ REPORTE ce que la console a VRAIMENT affiché. Ta prédiction peut être fausse — ton report, lui, doit être exact.</div>
+    <div class="consigne"><b>Consigne :</b> pour chaque expérience&nbsp;: <br>① PRÉDIS le résultat, sans ordinateur&nbsp;; <br>② dans l'éditeur Python ci-dessous, où les trois expériences sont déjà écrites, clique ▶&nbsp;Exécuter&nbsp;; <br>③ REPORTE ce que la console a VRAIMENT affiché. <br>Ta prédiction peut être fausse — ton report, lui, doit être exact.</div>
     <div class="exo">
       <p><b>Expérience A :</b> <code>print(3 + 4)</code></p>
-      <fieldset class="qcm-groupe" id="a3p1" data-melange="1">
+      <fieldset class="qcm-groupe qcm-rangee" id="a3p1" data-melange="1">
   <legend>① Je prédis :</legend>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__2" value="7"><label for="a3p1__2">7</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="une erreur"><label for="a3p1__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__1" value="34"><label for="a3p1__1">34</label></div>
 </fieldset>
 <p><b>Expérience B :</b> <code>print("3" + "4")</code></p>
-      <fieldset class="qcm-groupe" id="a3p2" data-melange="1">
+      <fieldset class="qcm-groupe qcm-rangee" id="a3p2" data-melange="1">
   <legend>① Je prédis :</legend>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="une erreur"><label for="a3p2__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__2" value="7"><label for="a3p2__2">7</label></div>
@@ -1924,38 +1936,38 @@ print("Train " + "Q", 2 + 1, "min")
 </div>
     <div class="exo">
       <p><b>③ Je reporte ce que la console a affiché :</b></p>
-      <fieldset class="qcm-groupe" id="a3r1" data-melange="1">
+      <fieldset class="qcm-groupe qcm-rangee" id="a3r1" data-melange="1">
   <legend>Expérience A a affiché :</legend>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__2" value="7"><label for="a3r1__2">7</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__3" value="une erreur"><label for="a3r1__3">une erreur</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__1" value="34"><label for="a3r1__1">34</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__3" value="une erreur" data-pourquoi="Relance ▶ Exécuter et lis la première ligne de la console : y a-t-il un message d'erreur ?"><label for="a3r1__3">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__1" value="34" data-pourquoi="Ici, 3 et 4 n'ont pas de guillemets : relis la première ligne de la console."><label for="a3r1__1">34</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a3r2" data-melange="1">
+<fieldset class="qcm-groupe qcm-rangee" id="a3r2" data-melange="1">
   <legend>Expérience B a affiché :</legend>
-  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__2" value="7"><label for="a3r2__2">7</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__3" value="une erreur"><label for="a3r2__3">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__2" value="7" data-pourquoi="Ici, 3 et 4 sont entre guillemets : relis la deuxième ligne de la console."><label for="a3r2__2">7</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__3" value="une erreur" data-pourquoi="Relance ▶ Exécuter : la deuxième ligne de la console n'est pas un message d'erreur."><label for="a3r2__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__1" value="34"><label for="a3r2__1">34</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r3" data-melange="1">
   <legend>Expérience C a affiché :</legend>
-  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__4" value="une erreur"><label for="a3r3__4">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__4" value="une erreur" data-pourquoi="Relance ▶ Exécuter : la troisième ligne de la console n'est pas un message d'erreur."><label for="a3r3__4">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__3" value="Train Q 3 min"><label for="a3r3__3">Train Q 3 min</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__2" value="TrainQ3min"><label for="a3r3__2">TrainQ3min</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__1" value="Train Q 21 min"><label for="a3r3__1">Train Q 21 min</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__2" value="TrainQ3min" data-pourquoi="Regarde les espaces dans la console : la virgule de print en ajoute un entre chaque élément."><label for="a3r3__2">TrainQ3min</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__1" value="Train Q 21 min" data-pourquoi="2 et 1 n'ont pas de guillemets : ce sont des nombres. Relis la console."><label for="a3r3__1">Train Q 21 min</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r4" data-melange="1">
   <legend>Conclusion — que fait <code>+</code> entre deux <b>textes</b> (str) ?</legend>
-  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__1" value="il additionne leurs valeurs, chiffre par chiffre"><label for="a3r4__1">il additionne leurs valeurs, chiffre par chiffre</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__3" value="il les compare, comme le fait =="><label for="a3r4__3">il les compare, comme le fait ==</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__1" value="il additionne leurs valeurs, chiffre par chiffre" data-pourquoi="Reprends l'expérience B : si + additionnait, la console aurait affiché 7."><label for="a3r4__1">il additionne leurs valeurs, chiffre par chiffre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__3" value="il les compare, comme le fait ==" data-pourquoi="Une comparaison répond True ou False : regarde ce que l'expérience B a affiché."><label for="a3r4__3">il les compare, comme le fait ==</label></div>
   <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__4" value="il les COLLE bout à bout (concaténation)"><label for="a3r4__4">il les COLLE bout à bout (concaténation)</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__2" value="il provoque toujours une erreur de type"><label for="a3r4__2">il provoque toujours une erreur de type</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__2" value="il provoque toujours une erreur de type" data-pourquoi="L'expérience B met un + entre deux textes : la console a-t-elle affiché une erreur ?"><label for="a3r4__2">il provoque toujours une erreur de type</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a3r5" data-melange="1">
+<fieldset class="qcm-groupe qcm-rangee" id="a3r5" data-melange="1">
   <legend>Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Le panneau affiche donc :</legend>
-  <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__2" value="4 min"><label for="a3r5__2">4 min</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__1" value="5 min"><label for="a3r5__1">5 min</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__2" value="4 min" data-pourquoi="Le + ne fait pas disparaître le &quot;1&quot; : que fait-il entre deux textes ?"><label for="a3r5__2">4 min</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__1" value="5 min" data-pourquoi="5 serait le résultat sans guillemets : ici, &quot;4&quot; et &quot;1&quot; sont des textes."><label for="a3r5__1">5 min</label></div>
   <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__3" value="41 min"><label for="a3r5__3">41 min</label></div>
-  <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__4" value="une erreur"><label for="a3r5__4">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__4" value="une erreur" data-pourquoi="Deux textes avec un + : l'expérience B en avait aussi, et la console n'a pas affiché d'erreur."><label for="a3r5__4">une erreur</label></div>
 </fieldset>
 </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le document 2 : la carte <b>str</b> dit « entre guillemets = TEXTE, même si ce sont des chiffres ». Que fait <code>+</code> avec deux textes ?</p></details>
@@ -1996,7 +2008,7 @@ print("Train " + "Q", 2 + 1, "min")
       <div><b>Production attendue :</b> 3 bugs identifiés et corrigés + test réel.</div>
       <div><b>Ressources :</b> le programme du panneau + l'éditeur Python de la page.</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> voici le programme laissé par le stagiaire. Le panneau doit afficher le train, le quai, le temps d'attente en minutes et la température en °C. Trouve les 3 bugs 🔎 : pour chacun, choisis sa LIGNE puis sa CORRECTION. Termine en corrigeant le programme dans l'éditeur Python, plus bas — il y est déjà, bugs compris —, pour PROUVER qu'il affiche la bonne chose (badge 🔓).</div>
+    <div class="consigne"><b>Consigne :</b> voici le programme laissé par le stagiaire. <br>Le panneau doit afficher le train, le quai, le temps d'attente en minutes et la température en °C. <br>① Trouve les 3 bugs 🔎 : pour chacun, choisis sa LIGNE, puis sa CORRECTION. <br>② Corrige le programme dans l'éditeur Python, plus bas : il y est déjà, bugs compris. <br>③ Exécute-le, pour PROUVER qu'il affiche la bonne chose (badge 🔓).</div>
     <pre class="code">1  train = "Q"
 2  quai = "96 St"
 3  minutes = "2" + "1"
@@ -2007,49 +2019,49 @@ print("Train " + "Q", 2 + 1, "min")
 8  print(message, minutes, "min |", temperature_c, "C")</pre>
     <div class="exo">
       <p><b>🔎 Bug n°1 — les minutes fantômes.</b></p>
-      <fieldset class="qcm-groupe" id="a4b1l">
+      <fieldset class="qcm-groupe qcm-rangee" id="a4b1l">
   <legend>Il se cache à la ligne :</legend>
-  <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__1" value="1"><label for="a4b1l__1">1</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__2" value="6"><label for="a4b1l__2">6</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__1" value="1" data-pourquoi="La ligne 1 range le nom du train : cherche où minutes reçoit sa première valeur."><label for="a4b1l__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__2" value="6" data-pourquoi="La ligne 6 fabrique le message, avec train et quai : elle ne touche pas à minutes."><label for="a4b1l__2">6</label></div>
   <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__3" value="3"><label for="a4b1l__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__4" value="8"><label for="a4b1l__4">8</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__4" value="8" data-pourquoi="La ligne 8 affiche seulement : les minutes sont déjà fausses avant elle. Remonte le programme."><label for="a4b1l__4">8</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4b1c" data-melange="1">
   <legend>La correction :</legend>
   <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__3" value="minutes = 2 + 1"><label for="a4b1c__3">minutes = 2 + 1</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__4" value="supprimer la ligne 3"><label for="a4b1c__4">supprimer la ligne 3</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__1" value="minutes = &quot;2 + 1&quot;"><label for="a4b1c__1">minutes = "2 + 1"</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__2" value="minutes = &quot;21&quot;"><label for="a4b1c__2">minutes = "21"</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__4" value="supprimer la ligne 3" data-pourquoi="Sans la ligne 3, la boîte minutes n'existe plus : la ligne 7 ne pourrait rien calculer."><label for="a4b1c__4">supprimer la ligne 3</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__1" value="minutes = &quot;2 + 1&quot;" data-pourquoi="Entre guillemets, tout est du texte : Python ne ferait pas le calcul, il garderait les caractères."><label for="a4b1c__1">minutes = "2 + 1"</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__2" value="minutes = &quot;21&quot;" data-pourquoi="Le panneau afficherait encore 21, et c'est toujours un texte : le temps d'attente doit être un nombre."><label for="a4b1c__2">minutes = "21"</label></div>
 </fieldset>
 <p><b>🔎 Bug n°2 — la virgule qui trompe.</b> Attention : pour celui-ci, Python n'affiche aucune erreur.</p>
-      <fieldset class="qcm-groupe" id="a4b2l">
+      <fieldset class="qcm-groupe qcm-rangee" id="a4b2l">
   <legend>Il se cache à la ligne :</legend>
-  <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__1" value="4"><label for="a4b2l__1">4</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__2" value="6"><label for="a4b2l__2">6</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__3" value="7"><label for="a4b2l__3">7</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__1" value="4" data-pourquoi="À la ligne 4, 77 est un nombre entier bien écrit : cherche un nombre décimal."><label for="a4b2l__1">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__2" value="6" data-pourquoi="Ligne 6 : aucun nombre, seulement des textes collés. Cherche un nombre décimal mal écrit."><label for="a4b2l__2">6</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__3" value="7" data-pourquoi="La ligne 7, c'est le bug n°3, et lui déclenche une erreur : ici, Python ne dit rien."><label for="a4b2l__3">7</label></div>
   <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__4" value="5"><label for="a4b2l__4">5</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4b2c" data-melange="1">
   <legend>La correction :</legend>
   <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__2" value="écrire 1.8, avec un point"><label for="a4b2c__2">écrire 1.8, avec un point</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__3" value="mettre 1,8 entre guillemets"><label for="a4b2c__3">mettre 1,8 entre guillemets</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__4" value="remplacer / par ×"><label for="a4b2c__4">remplacer / par ×</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__1" value="écrire 18, sans virgule"><label for="a4b2c__1">écrire 18, sans virgule</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__3" value="mettre 1,8 entre guillemets" data-pourquoi="Entre guillemets, 1,8 devient un texte : relis la carte float du document 2."><label for="a4b2c__3">mettre 1,8 entre guillemets</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__4" value="remplacer / par ×" data-pourquoi="Le signe / fait bien la division de la formule : le défaut est dans l'écriture d'un nombre."><label for="a4b2c__4">remplacer / par ×</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__1" value="écrire 18, sans virgule" data-pourquoi="Diviser par 18 donnerait une température dix fois trop petite : le nombre doit rester décimal."><label for="a4b2c__1">écrire 18, sans virgule</label></div>
 </fieldset>
 <p><b>🔎 Bug n°3 — le calcul impossible.</b> Avec la ligne 3 d'origine, le programme s'arrête à la ligne 7 sur une erreur.</p>
       <fieldset class="qcm-groupe" id="a4b3c" data-melange="1">
   <legend>Pourquoi <code>minutes - 1</code> plantait-il avec la version d'origine ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__1" value="7 est un numéro de ligne interdit"><label for="a4b3c__1">7 est un numéro de ligne interdit</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__4" value="il manque des parenthèses autour"><label for="a4b3c__4">il manque des parenthèses autour</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__1" value="7 est un numéro de ligne interdit" data-pourquoi="Aucun numéro de ligne n'est interdit : demande-toi quel est le type de minutes à ce moment-là."><label for="a4b3c__1">7 est un numéro de ligne interdit</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__4" value="il manque des parenthèses autour" data-pourquoi="minutes - 1 se calcule sans parenthèses : la séance 1 l'a fait. Regarde plutôt le type de minutes."><label for="a4b3c__4">il manque des parenthèses autour</label></div>
   <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__2" value="on ne soustrait pas un nombre d&#x27;un texte"><label for="a4b3c__2">on ne soustrait pas un nombre d'un texte</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__3" value="minutes est écrit en minuscules"><label for="a4b3c__3">minutes est écrit en minuscules</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b3c" id="a4b3c__3" value="minutes est écrit en minuscules" data-pourquoi="Un nom de variable en minuscules est correct : toutes les variables du programme le sont."><label for="a4b3c__3">minutes est écrit en minuscules</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4b4" data-melange="1">
   <legend>Une fois les 3 bugs corrigés, la ligne 8 affiche :</legend>
   <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__2" value="Q - 96 St 2 min | 25.0 C"><label for="a4b4__2">Q - 96 St 2 min | 25.0 C</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__3" value="Q96St2min25C"><label for="a4b4__3">Q96St2min25C</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__1" value="Q - 96 St 21 min | 25.0 C"><label for="a4b4__1">Q - 96 St 21 min | 25.0 C</label></div>
-  <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__4" value="une erreur"><label for="a4b4__4">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__3" value="Q96St2min25C" data-pourquoi="print sépare ses éléments par un espace, et message contient déjà un tiret : regarde la ligne 6."><label for="a4b4__3">Q96St2min25C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__1" value="Q - 96 St 21 min | 25.0 C" data-pourquoi="Une fois corrigée, la ligne 3 ne colle plus rien : refais la table de suivi de minutes."><label for="a4b4__1">Q - 96 St 21 min | 25.0 C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__4" value="une erreur" data-pourquoi="Les trois bugs sont corrigés : plus rien n'arrête le programme. Refais la table de suivi."><label for="a4b4__4">une erreur</label></div>
 </fieldset>
 </div>
     <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : l'éditeur est dans la page — corrige et exécute le programme (▶). <br>Sur papier, recopie le programme corrigé au cahier ligne à ligne, et vérifie ta ligne 8 avec la correction complète.</p>
@@ -2115,7 +2127,7 @@ print(message, minutes, "min |", temperature_c, "C")
       <object class="figure" data="Images/ventilation_station_algo.svg" type="image/svg+xml" aria-label="De l'algorithme au programme structuré et testé" style="width:100%"></object>
       <figcaption>Document 3 — Élaborer, traduire, mettre au point : le trajet complet du besoin au programme prouvé.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. ① Complète la traduction Python. ② Exécute les 4 tests du banc (ton badge 🔓). ③ Tranche le cas limite.</div>
+    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. <br>① Complète la traduction Python. <br>② Exécute les 4 tests du banc (ton badge 🔓). <br>③ Tranche le cas limite.</div>
     <div class="exo">
       <p><b>① La traduction — complète la fonction :</b></p>
       <pre class="code">def vitesse_ventilation(air, train_arrive):
@@ -2125,33 +2137,33 @@ print(message, minutes, "min |", temperature_c, "C")
         return 2
     else:
         return ▢3</pre>
-      <fieldset class="qcm-groupe" id="a5t1" data-melange="1">
+      <fieldset class="qcm-groupe qcm-rangee" id="a5t1" data-melange="1">
   <legend>▢1 :</legend>
   <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__3" value="&gt;"><label for="a5t1__3">&gt;</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__2" value="=="><label for="a5t1__2">==</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__4" value="="><label for="a5t1__4">=</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__1" value="&lt;"><label for="a5t1__1">&lt;</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__2" value="==" data-pourquoi="Le signe == vérifie « exactement 100 » : le besoin parle d'un indice qui dépasse 100."><label for="a5t1__2">==</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__4" value="=" data-pourquoi="Un seul = range une valeur dans une boîte : dans un if, il faut un signe qui compare."><label for="a5t1__4">=</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__1" value="&lt;" data-pourquoi="Avec &lt;, la ventilation à fond partirait quand l'air est propre : relis la consigne."><label for="a5t1__1">&lt;</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a5t2" data-melange="1">
+<fieldset class="qcm-groupe qcm-rangee" id="a5t2" data-melange="1">
   <legend>▢2 :</legend>
-  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__1" value="1"><label for="a5t2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__1" value="1" data-pourquoi="Relis la consigne : quelle vitesse demande-t-elle quand l'air est pollué ?"><label for="a5t2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__3" value="3"><label for="a5t2__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__2" value="2"><label for="a5t2__2">2</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__4" value="&quot;3&quot;"><label for="a5t2__4">"3"</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__2" value="2" data-pourquoi="Cette vitesse est déjà renvoyée plus bas, pour le train qui arrive : relis la consigne."><label for="a5t2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__4" value="&quot;3&quot;" data-pourquoi="Entre guillemets, c'est un texte : la ventilation attend un nombre, comme le return 2 plus bas."><label for="a5t2__4">"3"</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a5t3">
+<fieldset class="qcm-groupe qcm-rangee" id="a5t3">
   <legend>▢3 :</legend>
-  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__1" value="0"><label for="a5t3__1">0</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__1" value="0" data-pourquoi="La consigne ne prévoit pas d'arrêt : même sans pollution ni train, la ventilation tourne."><label for="a5t3__1">0</label></div>
   <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__2" value="1"><label for="a5t3__2">1</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__3" value="2"><label for="a5t3__3">2</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__4" value="3"><label for="a5t3__4">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__3" value="2" data-pourquoi="Cette vitesse est déjà renvoyée juste au-dessus, quand un train arrive : le else traite le reste."><label for="a5t3__3">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__4" value="3" data-pourquoi="Relis la consigne : quelle vitesse demande-t-elle quand l'air est propre et qu'aucun train n'arrive ?"><label for="a5t3__4">3</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a5t4" data-melange="1">
   <legend>Pourquoi une FONCTION plutôt que du code en vrac ?</legend>
   <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__2" value="on peut la rejouer et la tester à volonté"><label for="a5t4__2">on peut la rejouer et la tester à volonté</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__1" value="c&#x27;est plus joli à lire, sans autre effet"><label for="a5t4__1">c'est plus joli à lire, sans autre effet</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__3" value="Python l&#x27;exige pour tout programme"><label for="a5t4__3">Python l'exige pour tout programme</label></div>
-  <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__4" value="ça rend le programme plus rapide"><label for="a5t4__4">ça rend le programme plus rapide</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__1" value="c&#x27;est plus joli à lire, sans autre effet" data-pourquoi="Une fonction change autre chose que l'apparence : regarde ce que le banc fait avec elle, quatre fois."><label for="a5t4__1">c'est plus joli à lire, sans autre effet</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__3" value="Python l&#x27;exige pour tout programme" data-pourquoi="Les programmes des séances 1 à 3 tournaient sans aucune fonction : Python ne l'exige pas."><label for="a5t4__3">Python l'exige pour tout programme</label></div>
+  <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__4" value="ça rend le programme plus rapide" data-pourquoi="Une fonction ne fait pas gagner de temps à l'ordinateur : pense à ce que le banc en fait."><label for="a5t4__4">ça rend le programme plus rapide</label></div>
 </fieldset>
 </div>
     <div class="consigne"><b>② Le banc de mise au point :</b> exécute les 4 tests (dans l'ordre que tu veux) en cliquant ▶ — la page calcule ce que TA fonction (celle du document 3, avec <code>air &gt; 100</code>) renvoie vraiment.</div>
@@ -2167,26 +2179,26 @@ print(message, minutes, "min |", temperature_c, "C")
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
       <p><b>③ Tranche le cas limite :</b> la MTA précise son besoin : « à 100 exactement, l'air est déjà trop pollué : il faut ventiler à fond ».</p>
-      <fieldset class="qcm-groupe" id="a5q1" data-melange="1">
+      <fieldset class="qcm-groupe qcm-rangee" id="a5q1" data-melange="1">
   <legend>Le test T4 a montré que la fonction renvoie :</legend>
-  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="2"><label for="a5q1__2">2</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="une erreur"><label for="a5q1__4">une erreur</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="3"><label for="a5q1__1">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="2" data-pourquoi="Relance le test T4 du banc et lis la colonne « Obtenu » : aucun train n'arrive."><label for="a5q1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="une erreur" data-pourquoi="Le banc n'affiche pas d'erreur : relance le test T4 et lis la colonne « Obtenu »."><label for="a5q1__4">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="3" data-pourquoi="Le besoin attend bien 3, mais la colonne « Obtenu » du test T4 dit autre chose."><label for="a5q1__1">3</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="1"><label for="a5q1__3">1</label></div>
 </fieldset>
-<fieldset class="qcm-groupe" id="a5q2" data-melange="1">
+<fieldset class="qcm-groupe qcm-rangee" id="a5q2" data-melange="1">
   <legend>Pour respecter le besoin, il faut corriger la condition en :</legend>
-  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__4" value="air &lt; 100"><label for="a5q2__4">air &lt; 100</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__4" value="air &lt; 100" data-pourquoi="Avec &lt;, la ventilation à fond partirait quand l'air est propre : c'est l'inverse du besoin."><label for="a5q2__4">air &lt; 100</label></div>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__3" value="air &gt;= 100"><label for="a5q2__3">air &gt;= 100</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__1" value="air &gt; 99.9"><label for="a5q2__1">air &gt; 99.9</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__2" value="air == 100"><label for="a5q2__2">air == 100</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__1" value="air &gt; 99.9" data-pourquoi="C'est une astuce fragile : 99,95 déclencherait aussi. Le besoin dit « à 100 exactement », et au-dessus."><label for="a5q2__1">air &gt; 99.9</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__2" value="air == 100" data-pourquoi="Avec ==, seul 100 pile serait pollué : le test T1, à 150, ne passerait plus."><label for="a5q2__2">air == 100</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a5q3" data-melange="1">
   <legend>Après cette correction, que DOIT-on faire ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__3" value="rejouer tous les tests du banc"><label for="a5q3__3">rejouer tous les tests du banc</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__2" value="supprimer le test T4, devenu inutile"><label for="a5q3__2">supprimer le test T4, devenu inutile</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__4" value="changer aussi les autres return"><label for="a5q3__4">changer aussi les autres return</label></div>
-  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="rien : la correction est évidente"><label for="a5q3__1">rien : la correction est évidente</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__2" value="supprimer le test T4, devenu inutile" data-pourquoi="T4 est le seul test qui surveille la frontière : sans lui, le défaut pourrait revenir sans bruit."><label for="a5q3__2">supprimer le test T4, devenu inutile</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__4" value="changer aussi les autres return" data-pourquoi="Les tests T1, T2 et T3 passaient déjà : les autres return répondent bien au besoin."><label for="a5q3__4">changer aussi les autres return</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="rien : la correction est évidente" data-pourquoi="Une correction peut casser ailleurs : comment le saurais-tu sans preuve ?"><label for="a5q3__1">rien : la correction est évidente</label></div>
 </fieldset>
 </div>
 <div class="editeur-py" id="vs3" data-fichier="3e-VARIABLES-act5-TON NOM">
