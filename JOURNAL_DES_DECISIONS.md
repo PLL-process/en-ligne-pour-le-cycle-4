@@ -30274,3 +30274,31 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Mesure.** Règles d'or : 1 ✘ → 0. Aération : 11 → 0. Bancs de la page : 56/56 (55 avant, un test de plus pour le billet) et 34/34. Mode mission : page acceptée, 52 écrans, 27 vérifiés par le mode. Vu à l'écran, à 390 et 1 280 px : le billet, les exercices convertis des activités 1, 4 et 5, la carte d'échauffement, le Bonus.
 
 **Reste, pour une seconde passe.** Le pourquoi de chaque erreur (mode mission) ; les réponses très courtes (numéros de ligne) à ranger en rangée ; les phrases longues que `aerer_corrections.py` signale encore, hors corrections ; en mode mission, l'éditeur Python d'une activité à verrou arrive après la dernière question — l'élève doit revenir vérifier.
+
+---
+
+## 12/11/2026 — `3e_C9.1`, seconde passe : le pourquoi de chaque erreur, les réponses courtes en rangée
+
+**Suite de la révision du matin (#672).** Trois points étaient restés pour une seconde passe ; Pascal fait cette séquence en classe aujourd'hui.
+
+**Fait.**
+- **Le pourquoi de chaque erreur**, en mode mission : 79 phrases, une par mauvaise proposition des 27 questions vérifiées (activités 1 à 5). Règles tenues : 20 mots au plus ; jamais la bonne réponse, ni celle d'une autre question ; pour une observation (simulateur, console, banc de tests), le renvoi à l'expérience — « relance le test T4 et lis la colonne Obtenu ». Données : `mission_3e_C9.1.json`, posées par `enrichir.py`.
+- **Réponses courtes en rangée** : 15 questions dont les réponses tiennent en un chiffre, un signe ou deux mots (numéros de ligne, valeurs de la table de suivi, signes de comparaison). Sur la page, elles prennent une ou deux lignes au lieu de quatre. En mission, celles qui se suivent partagent un écran : 46 écrans au lieu de 52.
+- **Texte** : quatre passages visibles réécrits, une idée par ligne — la phrase d'ouverture « Dans cette séquence », les parcours 🅱 et 🅲, la méthode « prédire → tester → reporter ». Aucun mot de fond retiré.
+
+**Lu comme un élève, les quatre séances du début à la fin, à 1 280 px** (ce que #672 n'avait pas fait). Trois endroits où il décroche, corrigés :
+- **Activité 2** : les questions disent « après la ligne 3 », mais le programme n'avait pas de numéros de ligne. Il les a, comme celui de l'activité 4.
+- **Les programmes à lire** (activités 2, 4, 5) étaient écrits en 12 px : la virgule de `1,8`, les guillemets et les cases ▢1, ▢2, ▢3 se lisaient mal. 15 px sur un poste de classe ; 13 px sur un téléphone, où le programme de l'activité 2 tient encore dans son cadre.
+- **Consignes des activités 3, 4 et 5** : un seul bloc de trois ou quatre phrases. Une action par ligne, ①, ②, ③.
+
+**Un défaut trouvé au bilan, corrigé sur deux pages.** « Je me positionne » : les quatre pastilles 🔴 🟡 🟢 ⭐ n'avaient aucun style à l'écran. Elles étaient collées à la phrase, et la pastille choisie ne se distinguait pas des autres : l'élève ne voyait pas son choix. Elles se détachent maintenant du texte, et la pastille choisie est cerclée. Même défaut, même correction sur `5e_C9.1` (la boîte étiquetée), qui partage ce bilan. Le défaut était sur `main`.
+
+**Une question pour Pascal, non tranchée.** Dans les activités 1, 3 et 5, le document affiché au-dessus des questions contient les réponses. Document 1 : le sens de `=`, la lecture de droite à gauche, « le 4 est remplacé ». Document 2 : `3 + 4` → 7 et `"3" + "4"` → "34", soit les expériences A et B que l'élève doit « prédire ». Document 3 : la fonction complète, le résultat du test T4, la correction `>=`. L'élève peut répondre en recopiant. Si ce n'est pas voulu, deux pistes : replier le document sous « à ouvrir si tu bloques », ou changer les nombres des expériences A et B.
+
+**Une règle d'écriture apprise en jouant.** Quand plusieurs réponses courtes partagent un écran, le mode écrit l'intitulé de la question, puis le pourquoi. Un pourquoi qui commence par la valeur choisie (« 3, c'est ce que le besoin attend… ») se lit alors comme la suite de l'intitulé : « …la fonction renvoie 3 ». Six phrases reprises pour commencer par une phrase complète.
+
+**Vu en jouant la mission, à corriger dans le moteur (à part : il touche les 60 pages).**
+- Activité 4 : l'éditeur Python arrive après la dernière question, sur l'écran « Je retiens ». La vérification répond « 🔒 Exécute ton programme », et l'élève doit revenir d'un écran pour valider.
+- « Pas encore. 0 réponse juste reste en place. » quand tout est faux sur un écran à plusieurs réponses.
+
+**Mesure.** Banc générique : page acceptée, 46 écrans, 21 vérifiés par le mode, 5 vérifications de la page ; pourquoi présents pour 79 mauvaises propositions sur 79, aucun sur une bonne réponse. Bancs de la page : 56/56 et 34/34. Charge inchangée (séance la plus lourde : 1 116 mots) ; règles d'or 0 ✘ ; aération 0. Banc de `5e_C9.1` rejoué. Vu à l'écran : les quatre séances en entier à 1 280 px, le bilan des deux pages à 390 et 1 280 px ; à 390 et 1 024 px, les rangées sur la page et en mission, sept erreurs provoquées et leur message.
