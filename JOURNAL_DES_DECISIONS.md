@@ -30322,3 +30322,23 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 - Banc de `3e_C9.1`, deux tests de plus : l'éditeur de l'activité 4 a son écran avant « Je retiens » ; la vérification y demande l'exécution, puis valide l'activité, et son message se lit au-dessus de la barre.
 
 **Mesure.** Banc générique, 60 pages, à 390 px : aucune refusée ; 2 223 écrans (2 246 avec #673), 1 046 vérifiés par le mode et 296 vérifications de la page (inchangés). Six pages changent, les 54 autres gardent exactement leurs écrans : `3e_C1.1` 50 → 45, `4e_C1.1` 41 → 35, `5e_C2.1` 50 → 46, `4e_C9.1` 63 → 60, `5e_C9.1` 42 → 39 (un écran « Suite » de moins par séance) ; `3e_C9.1` 46 → 44 (quatre écrans « Suite » de moins, deux écrans « Avant de vérifier » de plus). Bancs des six séquences : mêmes résultats qu'avant ; `3e_C9.1` 58/58 avec ses deux tests de plus. Les 60 pages ne changent qu'entre les deux marqueurs du bloc (vérifié fichier par fichier). Vu à l'écran, à 390 et 1 024 px : l'activité 4 jouée du début à la validation ; le premier écran de la séance sur `3e_C9.1`, `5e_C2.1` et `4e_C1.1` ; les messages reformulés.
+
+---
+
+## 12/11/2026 — Mode mission : le pourquoi de chaque erreur sur `3e_C4.7`, `3e_C5.1` et `3e_C6.1`
+
+**Suite du lot du 11/11 (#671).** Trois séquences de plus du premier lot ; restent `4e_C4.1` et `4e_C5.1`.
+
+| Séquence | Pourquoi | Indices de ligne |
+|---|---|---|
+| `3e_C4.7` — Internet à Sainte-Luce : réseaux, paquets, routage | 45, sur 17 questions | 10 (l'ordre du trajet, la table de routage) |
+| `3e_C5.1` — SOS station : diagnostiquer, réparer | 45, sur 19 questions | 10 (la durée des contrôles, l'ordre du protocole) |
+| `3e_C6.1` — comprendre et modifier le programme d'alerte | 48, sur 23 questions | — |
+
+- **Règles d'écriture tenues** : 20 mots au plus ; jamais la bonne réponse, ni celle d'une autre question ; pour une trace de programme, la phrase renvoie au test à relire (« 118 > 118 : vrai ou faux ? ») ; pour une expérience au simulateur, à l'expérience (« coupe la liaison, renvoie l'alerte, observe le trajet »).
+- **Les faits cités sont ceux de la page quand elle les donne** : 60 °C sur un toit au soleil pour le PLA, le satellite « plus lent et plus cher », les seuils 60, 90 et 118 km/h. Trois ordres de grandeur viennent d'ailleurs : une antenne 4G porte à quelques kilomètres, le Bluetooth à quelques mètres, une houle de 100 mètres n'existe pas.
+- Les données sont à côté de chaque page (`mission_3e_C4.7.json`, `mission_3e_C5.1.json`, `mission_3e_C6.1.json`) ; `enrichir.py` les pose et se rejoue sans rien changer.
+
+**Mesure.** Banc générique : les trois pages acceptées ; un pourquoi ou un indice pour 83 mauvaises réponses sur 83, 73 sur 73, 48 sur 48 ; aucun sur une bonne réponse. Bancs des pages : inchangés (35/35 et 34/34 ; 34/34 et 34/34 ; 35/35 et 34/34). Dix erreurs provoquées à l'écran, à 390 et 1 024 px, et leur message lu.
+
+**Reste.** `4e_C4.1` et `4e_C5.1`.

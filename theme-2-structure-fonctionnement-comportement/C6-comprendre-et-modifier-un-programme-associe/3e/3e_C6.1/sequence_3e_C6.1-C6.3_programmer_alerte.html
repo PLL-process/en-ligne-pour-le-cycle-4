@@ -1612,31 +1612,31 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <fieldset class="qcm-groupe qcm-rangee" id="d1_1">
   <legend><code>vent_kmh</code> est une donnée…</legend>
   <div class="qcm-option"><input type="radio" name="d1_1" id="d1_1__1" value="utilisée (entrée)"><label for="d1_1__1">utilisée (entrée)</label></div>
-  <div class="qcm-option"><input type="radio" name="d1_1" id="d1_1__2" value="produite (sortie)"><label for="d1_1__2">produite (sortie)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_1" id="d1_1__2" value="produite (sortie)" data-pourquoi="Cherche d'où vient sa valeur : le programme la calcule-t-il, ou la reçoit-il d'un capteur ?"><label for="d1_1__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe qcm-rangee" id="d1_2">
   <legend><code>SEUIL_OURAGAN</code> est une donnée…</legend>
   <div class="qcm-option"><input type="radio" name="d1_2" id="d1_2__1" value="utilisée (entrée)"><label for="d1_2__1">utilisée (entrée)</label></div>
-  <div class="qcm-option"><input type="radio" name="d1_2" id="d1_2__2" value="produite (sortie)"><label for="d1_2__2">produite (sortie)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_2" id="d1_2__2" value="produite (sortie)" data-pourquoi="Une constante est écrite une fois pour toutes en tête de programme : le programme ne la calcule pas."><label for="d1_2__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe qcm-rangee" id="d1_3">
   <legend><code>vigilance</code> est une donnée…</legend>
-  <div class="qcm-option"><input type="radio" name="d1_3" id="d1_3__1" value="utilisée (entrée)"><label for="d1_3__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_3" id="d1_3__1" value="utilisée (entrée)" data-pourquoi="Elle sert au message, mais qui lui donne sa valeur : un capteur, ou les tests du programme ?"><label for="d1_3__1">utilisée (entrée)</label></div>
   <div class="qcm-option"><input type="radio" name="d1_3" id="d1_3__2" value="produite (sortie)"><label for="d1_3__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe qcm-rangee" id="d1_4">
   <legend><code>sirene_active</code> est une donnée…</legend>
-  <div class="qcm-option"><input type="radio" name="d1_4" id="d1_4__1" value="utilisée (entrée)"><label for="d1_4__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_4" id="d1_4__1" value="utilisée (entrée)" data-pourquoi="Aucun capteur ne fournit sirene_active : regarde quelles lignes la passent à True."><label for="d1_4__1">utilisée (entrée)</label></div>
   <div class="qcm-option"><input type="radio" name="d1_4" id="d1_4__2" value="produite (sortie)"><label for="d1_4__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe qcm-rangee" id="d1_5">
   <legend><code>pression_hpa</code> est une donnée…</legend>
   <div class="qcm-option"><input type="radio" name="d1_5" id="d1_5__1" value="utilisée (entrée)"><label for="d1_5__1">utilisée (entrée)</label></div>
-  <div class="qcm-option"><input type="radio" name="d1_5" id="d1_5__2" value="produite (sortie)"><label for="d1_5__2">produite (sortie)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_5" id="d1_5__2" value="produite (sortie)" data-pourquoi="Regarde comment elle reçoit sa valeur : par un calcul, ou par lire_capteur ?"><label for="d1_5__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe qcm-rangee" id="d1_6">
   <legend><code>message</code> est une donnée…</legend>
-  <div class="qcm-option"><input type="radio" name="d1_6" id="d1_6__1" value="utilisée (entrée)"><label for="d1_6__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d1_6" id="d1_6__1" value="utilisée (entrée)" data-pourquoi="Le message n'existe pas avant le programme : c'est lui qui l'assemble, puis l'envoie."><label for="d1_6__1">utilisée (entrée)</label></div>
   <div class="qcm-option"><input type="radio" name="d1_6" id="d1_6__2" value="produite (sortie)"><label for="d1_6__2">produite (sortie)</label></div>
 </fieldset>
       <div class="assoc"><label for="d1_l1">À quelle ligne la donnée <code>vent_kmh</code> est-elle LUE depuis le capteur ?</label><input type="number" id="d1_l1" min="1" max="30"></div>
@@ -1676,23 +1676,23 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <p><b>Situation A :</b> <code>vent_kmh = 95</code></p>
       <fieldset class="qcm-groupe" id="d2_a1" data-melange="1">
   <legend>vigilance =</legend>
-  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__1" value="&quot;verte&quot;"><label for="d2_a1__1">"verte"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__1" value="&quot;verte&quot;" data-pourquoi="Verte, c'est la valeur de départ : avec 95, un des tests est vrai. Lequel, en premier ?"><label for="d2_a1__1">"verte"</label></div>
   <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__3" value="&quot;rouge&quot;"><label for="d2_a1__3">"rouge"</label></div>
-  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__2" value="&quot;orange&quot;"><label for="d2_a1__2">"orange"</label></div>
-  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__4" value="&quot;violette&quot;"><label for="d2_a1__4">"violette"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__2" value="&quot;orange&quot;" data-pourquoi="95 dépasse bien le seuil orange, mais un test placé avant lui est déjà vrai : le premier gagne."><label for="d2_a1__2">"orange"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a1" id="d2_a1__4" value="&quot;violette&quot;" data-pourquoi="Pour violette, il faut dépasser SEUIL_OURAGAN : compare 95 à sa valeur, ligne 4."><label for="d2_a1__4">"violette"</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d2_a2">
   <legend>sirene_active =</legend>
   <div class="qcm-option"><input type="radio" name="d2_a2" id="d2_a2__1" value="True"><label for="d2_a2__1">True</label></div>
-  <div class="qcm-option"><input type="radio" name="d2_a2" id="d2_a2__2" value="False"><label for="d2_a2__2">False</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_a2" id="d2_a2__2" value="False" data-pourquoi="False est la valeur de départ : la branche où 95 entre la change-t-elle ?"><label for="d2_a2__2">False</label></div>
 </fieldset>
       <p style="margin-top:10px"><b>Situation B (piège classique) :</b> <code>vent_kmh = 118</code> exactement</p>
       <fieldset class="qcm-groupe" id="d2_b1" data-melange="1">
   <legend>vigilance =</legend>
   <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__3" value="&quot;rouge&quot;"><label for="d2_b1__3">"rouge"</label></div>
-  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__1" value="&quot;verte&quot;"><label for="d2_b1__1">"verte"</label></div>
-  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__4" value="&quot;violette&quot;"><label for="d2_b1__4">"violette"</label></div>
-  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__2" value="&quot;orange&quot;"><label for="d2_b1__2">"orange"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__1" value="&quot;verte&quot;" data-pourquoi="Le premier test est faux, mais ce n'est pas fini : descends aux elif, dans l'ordre."><label for="d2_b1__1">"verte"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__4" value="&quot;violette&quot;" data-pourquoi="118 &gt; 118 : vrai ou faux ? Regarde bien l'opérateur de la ligne 12."><label for="d2_b1__4">"violette"</label></div>
+  <div class="qcm-option"><input type="radio" name="d2_b1" id="d2_b1__2" value="&quot;orange&quot;" data-pourquoi="118 dépasse le seuil orange, mais un elif placé avant est déjà vrai : le premier gagne."><label for="d2_b1__2">"orange"</label></div>
 </fieldset>
       <label for="d2_just" style="display:block;margin-top:8px"><b>Justifie</b> la situation B en citant l'opérateur de comparaison de la ligne 12 :</label>
       <textarea id="d2_just" placeholder="À la ligne 12, le test est vent_kmh > 118, or…"></textarea>
@@ -1743,15 +1743,15 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <fieldset class="qcm-groupe" id="d3_1" data-melange="1">
   <legend>Après ta modification, un vent de 55 km/h déclenche…</legend>
   <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__1" value="vigilance verte/jaune (rien)"><label for="d3_1__1">vigilance verte/jaune (rien)</label></div>
-  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__3" value="vigilance rouge"><label for="d3_1__3">vigilance rouge</label></div>
-  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__2" value="vigilance orange"><label for="d3_1__2">vigilance orange</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__3" value="vigilance rouge" data-pourquoi="Pour rouge, il faut dépasser SEUIL_ROUGE : compare 55 à sa valeur, ligne 3."><label for="d3_1__3">vigilance rouge</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_1" id="d3_1__2" value="vigilance orange" data-pourquoi="Orange, c'était avec l'ancien seuil : retrace 55 avec la nouvelle valeur de la ligne 2."><label for="d3_1__2">vigilance orange</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d3_2" data-melange="1">
   <legend>Quel est l'intérêt d'avoir écrit les seuils dans des CONSTANTES en tête de programme (lignes 2-4) plutôt que « en dur » dans les tests ?</legend>
-  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__2" value="ça rend le programme plus long"><label for="d3_2__2">ça rend le programme plus long</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__2" value="ça rend le programme plus long" data-pourquoi="Plus long, oui, de trois lignes : mais qu'as-tu gagné en changeant le seuil orange à l'instant ?"><label for="d3_2__2">ça rend le programme plus long</label></div>
   <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__1" value="une seule ligne à modifier, aucun risque d&#x27;oublier une occurrence"><label for="d3_2__1">une seule ligne à modifier, aucun risque d'oublier une occurrence</label></div>
-  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__3" value="c&#x27;est obligatoire en Python"><label for="d3_2__3">c'est obligatoire en Python</label></div>
-  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__4" value="aucun intérêt"><label for="d3_2__4">aucun intérêt</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__3" value="c&#x27;est obligatoire en Python" data-pourquoi="Python accepte un nombre écrit directement dans un test : les constantes sont un choix du programmeur."><label for="d3_2__3">c'est obligatoire en Python</label></div>
+  <div class="qcm-option"><input type="radio" name="d3_2" id="d3_2__4" value="aucun intérêt" data-pourquoi="Tu viens de changer un seuil : combien de lignes as-tu dû modifier ?"><label for="d3_2__4">aucun intérêt</label></div>
 </fieldset>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses (je vérifie aussi ta ligne 2 dans CodeLab !)</button>
       <div class="feedback" id="fb3" role="status"></div>
@@ -1848,52 +1848,52 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
       <fieldset class="qcm-groupe" id="d5_1" data-melange="1">
   <legend>vent = 55 →</legend>
   <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__1" value="verte/jaune, rien"><label for="d5_1__1">verte/jaune, rien</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__4" value="violette + les deux"><label for="d5_1__4">violette + les deux</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__3" value="rouge + sirène"><label for="d5_1__3">rouge + sirène</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__2" value="orange + gyrophare"><label for="d5_1__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__4" value="violette + les deux" data-pourquoi="Violette demande plus de 118 km/h : 55 en est loin. Redéroule les tests dans l'ordre."><label for="d5_1__4">violette + les deux</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__3" value="rouge + sirène" data-pourquoi="Rouge demande plus de 90 km/h : 55 en est loin. Redéroule les tests dans l'ordre."><label for="d5_1__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_1" id="d5_1__2" value="orange + gyrophare" data-pourquoi="Ton seuil orange vaut 60 depuis l'activité 3 : 55 le dépasse-t-il ?"><label for="d5_1__2">orange + gyrophare</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d5_2" data-melange="1">
   <legend>vent = 60 (frontière !) →</legend>
-  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__2" value="orange + gyrophare"><label for="d5_2__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__2" value="orange + gyrophare" data-pourquoi="60 &gt; 60 : vrai ou faux ? Tous les &gt; du programme sont stricts."><label for="d5_2__2">orange + gyrophare</label></div>
   <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__1" value="verte/jaune, rien"><label for="d5_2__1">verte/jaune, rien</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__4" value="violette + les deux"><label for="d5_2__4">violette + les deux</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__3" value="rouge + sirène"><label for="d5_2__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__4" value="violette + les deux" data-pourquoi="Violette demande plus de 118 km/h : avec 60, ce test est faux. Continue vers les suivants."><label for="d5_2__4">violette + les deux</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_2" id="d5_2__3" value="rouge + sirène" data-pourquoi="Rouge demande plus de 90 km/h : avec 60, ce test est faux. Continue vers le suivant."><label for="d5_2__3">rouge + sirène</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d5_3" data-melange="1">
   <legend>vent = 61 →</legend>
-  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__3" value="rouge + sirène"><label for="d5_3__3">rouge + sirène</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__1" value="verte/jaune, rien"><label for="d5_3__1">verte/jaune, rien</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__4" value="violette + les deux"><label for="d5_3__4">violette + les deux</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__3" value="rouge + sirène" data-pourquoi="61 ne dépasse pas 90 : le test rouge est faux. Passe au elif suivant."><label for="d5_3__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__1" value="verte/jaune, rien" data-pourquoi="61 &gt; 60 : vrai ou faux ? Une branche se déclenche bien."><label for="d5_3__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__4" value="violette + les deux" data-pourquoi="61 ne dépasse pas 118 : le premier test est faux. Descends les elif dans l'ordre."><label for="d5_3__4">violette + les deux</label></div>
   <div class="qcm-option"><input type="radio" name="d5_3" id="d5_3__2" value="orange + gyrophare"><label for="d5_3__2">orange + gyrophare</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d5_4" data-melange="1">
   <legend>vent = 118 (frontière !) →</legend>
   <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__3" value="rouge + sirène"><label for="d5_4__3">rouge + sirène</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__4" value="violette + les deux"><label for="d5_4__4">violette + les deux</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__2" value="orange + gyrophare"><label for="d5_4__2">orange + gyrophare</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__1" value="verte/jaune, rien"><label for="d5_4__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__4" value="violette + les deux" data-pourquoi="118 &gt; 118 : vrai ou faux ? La frontière ne déclenche pas la branche violette."><label for="d5_4__4">violette + les deux</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__2" value="orange + gyrophare" data-pourquoi="118 dépasse le seuil orange, mais un elif placé avant est déjà vrai : le premier gagne."><label for="d5_4__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_4" id="d5_4__1" value="verte/jaune, rien" data-pourquoi="Le premier test est faux, mais 118 dépasse d'autres seuils : descends les elif dans l'ordre."><label for="d5_4__1">verte/jaune, rien</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d5_5" data-melange="1">
   <legend>vent = 119 →</legend>
   <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__4" value="violette + les deux"><label for="d5_5__4">violette + les deux</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__3" value="rouge + sirène"><label for="d5_5__3">rouge + sirène</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__2" value="orange + gyrophare"><label for="d5_5__2">orange + gyrophare</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__1" value="verte/jaune, rien"><label for="d5_5__1">verte/jaune, rien</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__3" value="rouge + sirène" data-pourquoi="119 &gt; 118 : vrai ou faux ? Le premier test vrai gagne, les elif sont ignorés."><label for="d5_5__3">rouge + sirène</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__2" value="orange + gyrophare" data-pourquoi="119 dépasse le seuil orange, mais le programme teste d'abord les seuils les plus forts."><label for="d5_5__2">orange + gyrophare</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_5" id="d5_5__1" value="verte/jaune, rien" data-pourquoi="119 dépasse plusieurs seuils : commence par le premier test, ligne 12."><label for="d5_5__1">verte/jaune, rien</label></div>
 </fieldset>
       <h4>b) Le bug du schéma</h4>
       <fieldset class="qcm-groupe" id="d5_6" data-melange="1">
   <legend>Sur le schéma, le test n°4 (vent = 118) obtient « violette » au lieu de « rouge ». La cause la plus probable dans le code testé :</legend>
-  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__2" value="le capteur est cassé"><label for="d5_6__2">le capteur est cassé</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__2" value="le capteur est cassé" data-pourquoi="Dans un test, on donne la valeur 118 à la main : le capteur n'intervient pas."><label for="d5_6__2">le capteur est cassé</label></div>
   <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__1" value="quelqu&#x27;un a écrit &gt;= 118 au lieu de &gt; 118"><label for="d5_6__1">quelqu'un a écrit >= 118 au lieu de > 118</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__3" value="Python ne sait pas comparer"><label for="d5_6__3">Python ne sait pas comparer</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__4" value="118 est un nombre spécial"><label for="d5_6__4">118 est un nombre spécial</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__3" value="Python ne sait pas comparer" data-pourquoi="Python compare juste, et toujours pareil : il fait ce qui est écrit. Relis l'opérateur du test."><label for="d5_6__3">Python ne sait pas comparer</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_6" id="d5_6__4" value="118 est un nombre spécial" data-pourquoi="118 n'a rien de spécial pour Python : il est spécial pour le programme, c'est un seuil."><label for="d5_6__4">118 est un nombre spécial</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d5_7" data-melange="1">
   <legend>Pourquoi les jeux d'essai visent-ils les valeurs 49/50/51 ou 117/118/119 plutôt que 30, 75, 200 ?</legend>
-  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__3" value="pour aller plus vite"><label for="d5_7__3">pour aller plus vite</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__4" value="par tradition"><label for="d5_7__4">par tradition</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__3" value="pour aller plus vite" data-pourquoi="Trois valeurs proches ou éloignées prennent le même temps : que montre 118, que 200 cache ?"><label for="d5_7__3">pour aller plus vite</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__4" value="par tradition" data-pourquoi="Ce n'est pas une habitude : le bug du schéma n'apparaît qu'à une seule valeur. Laquelle ?"><label for="d5_7__4">par tradition</label></div>
   <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__1" value="les erreurs se cachent aux frontières : c&#x27;est là que &gt; et &gt;= diffèrent"><label for="d5_7__1">les erreurs se cachent aux frontières : c'est là que > et >= diffèrent</label></div>
-  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__2" value="ce sont des nombres plus jolis"><label for="d5_7__2">ce sont des nombres plus jolis</label></div>
+  <div class="qcm-option"><input type="radio" name="d5_7" id="d5_7__2" value="ce sont des nombres plus jolis" data-pourquoi="Regarde ces nombres : chacun est un seuil, ou son voisin immédiat. Ce n'est pas un hasard."><label for="d5_7__2">ce sont des nombres plus jolis</label></div>
 </fieldset>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
@@ -1933,31 +1933,31 @@ envoyer("Baignade : " + drapeau)</pre>
       <fieldset class="qcm-groupe qcm-rangee" id="d6_1">
   <legend><code>hauteur_m</code> est une donnée…</legend>
   <div class="qcm-option"><input type="radio" name="d6_1" id="d6_1__1" value="utilisée (entrée)"><label for="d6_1__1">utilisée (entrée)</label></div>
-  <div class="qcm-option"><input type="radio" name="d6_1" id="d6_1__2" value="produite (sortie)"><label for="d6_1__2">produite (sortie)</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_1" id="d6_1__2" value="produite (sortie)" data-pourquoi="Regarde la ligne 2 : sa valeur vient-elle d'un calcul, ou de lire_capteur ?"><label for="d6_1__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe qcm-rangee" id="d6_2">
   <legend><code>drapeau</code> est une donnée…</legend>
-  <div class="qcm-option"><input type="radio" name="d6_2" id="d6_2__1" value="utilisée (entrée)"><label for="d6_2__1">utilisée (entrée)</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_2" id="d6_2__1" value="utilisée (entrée)" data-pourquoi="Aucun capteur ne fournit le drapeau : regarde quelles lignes lui donnent sa valeur."><label for="d6_2__1">utilisée (entrée)</label></div>
   <div class="qcm-option"><input type="radio" name="d6_2" id="d6_2__2" value="produite (sortie)"><label for="d6_2__2">produite (sortie)</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d6_3">
   <legend>Trace : hauteur_m = 4.0 exactement → drapeau =</legend>
   <div class="qcm-option"><input type="radio" name="d6_3" id="d6_3__1" value="&quot;vert&quot;"><label for="d6_3__1">"vert"</label></div>
-  <div class="qcm-option"><input type="radio" name="d6_3" id="d6_3__2" value="&quot;rouge&quot;"><label for="d6_3__2">"rouge"</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_3" id="d6_3__2" value="&quot;rouge&quot;" data-pourquoi="4.0 &gt; 4 : vrai ou faux ? C'est encore une frontière."><label for="d6_3__2">"rouge"</label></div>
 </fieldset>
       <div class="assoc"><label for="d6_4">La mairie veut passer le seuil à 3 m. Quelle ligne modifier ?</label><input type="number" id="d6_4" min="1" max="6"></div>
       <fieldset class="qcm-groupe" id="d6_5" data-melange="1">
   <legend>Après cette modification, quel TRIO de jeux d'essai est le plus pertinent ?</legend>
-  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__2" value="1 · 5 · 10"><label for="d6_5__2">1 · 5 · 10</label></div>
-  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__4" value="3 · 3 · 3"><label for="d6_5__4">3 · 3 · 3</label></div>
-  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__3" value="0 · 100 · 1000"><label for="d6_5__3">0 · 100 · 1000</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__2" value="1 · 5 · 10" data-pourquoi="Ces valeurs sont loin du nouveau seuil : un bon trio l'encadre de tout près."><label for="d6_5__2">1 · 5 · 10</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__4" value="3 · 3 · 3" data-pourquoi="Trois fois la même valeur, c'est un seul test : il faut aussi regarder juste avant et juste après."><label for="d6_5__4">3 · 3 · 3</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__3" value="0 · 100 · 1000" data-pourquoi="Une houle de 100 mètres n'existe pas, et ces valeurs sont loin du seuil : rapproche-toi de 3."><label for="d6_5__3">0 · 100 · 1000</label></div>
   <div class="qcm-option"><input type="radio" name="d6_5" id="d6_5__1" value="2,9 · 3,0 · 3,1"><label for="d6_5__1">2,9 · 3,0 · 3,1</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="d6_6" data-melange="1">
   <legend>On ajoute un drapeau « orange » entre 2 m et 3 m. Quelle structure faut-il introduire ?</legend>
-  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__3" value="supprimer le if existant"><label for="d6_6__3">supprimer le if existant</label></div>
-  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__2" value="un deuxième programme complet"><label for="d6_6__2">un deuxième programme complet</label></div>
-  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__4" value="une boucle infinie"><label for="d6_6__4">une boucle infinie</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__3" value="supprimer le if existant" data-pourquoi="Le if existant décide du drapeau rouge : sans lui, plus d'alerte. On ajoute, on ne retire pas."><label for="d6_6__3">supprimer le if existant</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__2" value="un deuxième programme complet" data-pourquoi="Pour l'alerte graduée, tu as ajouté un niveau sans tout réécrire : fais de même ici."><label for="d6_6__2">un deuxième programme complet</label></div>
+  <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__4" value="une boucle infinie" data-pourquoi="Une boucle répète ; ici, il faut choisir entre trois drapeaux. Quelle structure choisit ?"><label for="d6_6__4">une boucle infinie</label></div>
   <div class="qcm-option"><input type="radio" name="d6_6" id="d6_6__1" value="un elif intermédiaire, testé APRÈS le cas le plus fort"><label for="d6_6__1">un elif intermédiaire, testé APRÈS le cas le plus fort</label></div>
 </fieldset>
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
