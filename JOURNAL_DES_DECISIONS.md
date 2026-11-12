@@ -30361,3 +30361,19 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Mesure.** Banc générique : les deux pages acceptées ; un pourquoi ou un indice pour 97 mauvaises réponses sur 97 et 105 sur 105 ; aucun sur une bonne réponse. Bancs des pages : inchangés (52/52 et 34/34 ; 26/26 et 34/34). Huit erreurs provoquées à l'écran, à 390 et 1 024 px, et leur message lu.
 
 **Où en est le pourquoi.** Onze pages sur les 57 du premier niveau : le pilote (`5e_C4.1`), les neuf du premier lot et `3e_C9.1`. Les autres le reçoivent avec leur révision.
+
+---
+
+## 12/11/2026 — `3e_C9.1`, troisième passe : la lecture sur un téléphone
+
+**Demande de Pascal (12/11, 7 h 28).** « Cette séquence est prioritaire. » Je reste dessus : les quatre séances relues à 390 px (ce que #673 n'avait pas fait), la mission jouée écran par écran à 1 024 px.
+
+**Trouvé à 390 px, corrigé.**
+- **Le banc de tests de l'activité 5 cachait ses boutons.** Le tableau fait 515 px : la colonne « Obtenu » et les quatre boutons ▶ étaient hors de l'écran. Il fallait faire glisser le tableau, et rien ne le disait — or la vérification demande d'exécuter les quatre tests. Sur un téléphone, chaque test est maintenant un bloc : ses valeurs, son résultat, son bouton ▶ (44 px), tous à l'écran.
+- **Les trois documents ne se lisaient pas.** Dessinés pour 860 px, ils tenaient dans 254 px. Ils gardent 760 px et se font glisser dans leur cadre ; une ligne le dit, sur petit écran seulement.
+- **Le code de l'expérience C se coupait au milieu de `"Train "`** : l'espace qui fait la réponse disparaissait en bout de ligne. Le code d'une expérience tient sur une ligne.
+- **« Correction complète »** : une cible de 25 px de haut au doigt ; 45 px.
+
+**Vu en jouant la mission sur un grand écran, non corrigé — à décider.** Sur une tablette ou un poste, la ressource de l'activité s'ouvre au-dessus de chaque question. À l'activité 1, le document 1 et le simulateur précèdent la question : elle commence deux écrans plus bas (1 584 px pour une question). Piste : à partir de 1 000 px de large, la ressource à gauche et la question à droite. Cela touche le moteur, donc les 60 pages. Et ce document contient les réponses (question posée dans #673, toujours ouverte).
+
+**Mesure.** Banc de la page : 61/61 (trois tests de plus, au téléphone) et 34/34. Mode mission : page acceptée, 44 écrans. Charge : séance la plus lourde, 1 130 mots (la ligne d'aide des documents compte à 390 px) ; règles d'or 0 ✘ ; aération 0. Vu à l'écran à 390 px : le banc, le document 1, les prédictions ; à 1 280 px : le banc et le document, inchangés.
