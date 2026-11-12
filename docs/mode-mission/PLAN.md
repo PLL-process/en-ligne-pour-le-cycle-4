@@ -94,24 +94,31 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 - [ ] Les pourquoi des sept autres séquences qui portent le mode.
 - [x] **« Le mode mission doit être partout »** (Pascal, 11/11), premier lot : le mode est posé sur **55 pages de
       séquence sur 60**, dans les trois thèmes (état ci-dessous).
-- [ ] « Partout », la suite : `4e_C4.1_book-train` et les quatre pages « station » de `3e_C9.2` (le mode n'y démarre
-      pas) ; `3e_C1.5`, `4e_C1.4`, `5e_C1.3` (une carte par écran, à découper).
+- [x] « Partout », la suite : `4e_C4.1_book-train` (séances en `section.panneau`, cartes en `div.carte`, réponses en
+      `data-bonne`) et les quatre pages « station » de `3e_C9.2` (pages sans onglets : le mode n'y montre qu'une
+      séance à la fois ; leur générateur pose le bloc). **Les 60 pages de séquence portent le mode.**
+- [x] Un écran se montre depuis son début : la barre de la mission, collée en haut, faussait le calcul dès que
+      l'élève avait défilé — l'écran suivant s'ouvrait au milieu. Réparé, et le banc générique le vérifie partout.
+- [ ] `3e_C1.5`, `4e_C1.4`, `5e_C1.3` : une carte par écran. Pas de vérification par activité à découper : ces
+      pages demandent d'abord d'être ramenées au squelette commun (thème 1).
 - [ ] Rappel en début de séance, maîtrise confirmée, code bilan.
 
 ## Où en est chaque séquence (11/11/2026)
 
 Mesure : `node _outils/mode_mission/banc_generique.mjs` (sans argument : toutes les pages qui portent le bloc).
-55 pages acceptées, aucune refusée ; **2 136 écrans, dont 1 008 vérifiés par le mode** ; 280 vérifications de page
+60 pages acceptées, aucune refusée ; **2 252 écrans, dont 1 052 vérifiés par le mode** ; 296 vérifications de page
 déclenchées à la dernière question d'une activité.
 
 | Niveau | Pages | Ce que voit l'élève |
 |---|---|---|
-| **Une question par écran, vérifiée par le mode** | 52 pages : toutes les séquences des thèmes 2 et 3 sauf celles des lignes suivantes ; au thème 1, `3e_C1.1`, `4e_C1.1`, `5e_C1.1`, `5e_C1.2`, `5e_C1.5`, `3e_C2.1`, `4e_C2.1`, `5e_C2.1`, `3e_C3.1`, `4e_C3.1`, `5e_C3.1` | le mode complet : écrans, étoiles, coup de pouce |
+| **Une question par écran, vérifiée par le mode** | 57 pages : toutes les séquences des thèmes 2 et 3, les quatre pages « station » de `3e_C9.2` comprises ; au thème 1, `3e_C1.1`, `4e_C1.1`, `5e_C1.1`, `5e_C1.2`, `5e_C1.5`, `3e_C2.1`, `4e_C2.1`, `5e_C2.1`, `3e_C3.1`, `4e_C3.1`, `5e_C3.1` | le mode complet : écrans, étoiles, coup de pouce |
 | **Une carte par écran, sans vérification par le mode** | `3e_C1.5`, `4e_C1.4`, `5e_C1.3` | le mode se joue, la page vérifie comme avant |
-| **Pas de mode mission** | `4e_C4.1_book-train` ; les quatre pages « station » de `3e_C9.2` | la page qui défile, comme avant |
 
-Sur les 52 pages du premier niveau, trois portent le pourquoi de chaque erreur (`5e_C4.1`, `5e_C6.1`, `4e_C6.1`) ;
-neuf ont des étiquettes à poser (19 écrans), une seule des leurres (`5e_C4.1`) : les grilles viennent avec la
+La page 2 de la station (`3e_C9.2`, séances 3 et 4 : programmer sur Vittascience) n'a presque pas de question
+fermée : ses deux activités tiennent chacune sur un écran, que la page vérifie.
+
+Sur les 57 pages du premier niveau, trois portent le pourquoi de chaque erreur (`5e_C4.1`, `5e_C6.1`, `4e_C6.1`) ;
+dix ont des étiquettes à poser (20 écrans), une seule des leurres (`5e_C4.1`) : les grilles viennent avec la
 révision. Les pages pas encore révisées gardent leurs listes déroulantes : le mode les vérifie telles quelles.
 
 Vingt et une pages n'ont pas le cadre « Ma progression » : le bouton « 🎮 Mode mission » y est posé juste au-dessus

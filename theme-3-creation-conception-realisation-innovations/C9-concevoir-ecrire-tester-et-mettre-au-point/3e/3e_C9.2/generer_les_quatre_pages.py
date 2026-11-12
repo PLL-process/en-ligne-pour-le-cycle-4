@@ -62,6 +62,12 @@ if _racine is None:
 _spec = importlib.util.spec_from_file_location("poser_papier", _racine / "_outils" / "impression_papier" / "poser.py")
 FICHE_PAPIER = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(FICHE_PAPIER)
+# Le mode mission (« un exercice à la fois », décision de Pascal du 11/11/2026 : « le mode mission doit être partout »)
+# se pose de la même façon, par SA source unique, `_outils/mode_mission/poser.py`. Dans une page sans onglets, il ne
+# montre qu'une séance à la fois (`.seance-bloc`) et mène de l'une à l'autre.
+_spec_m = importlib.util.spec_from_file_location("poser_mission", _racine / "_outils" / "mode_mission" / "poser.py")
+MODE_MISSION = importlib.util.module_from_spec(_spec_m)
+_spec_m.loader.exec_module(MODE_MISSION)
 SRC = LOT / "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"
 L = io.open(SRC, encoding="utf-8").read().split("\n")
 
@@ -403,5 +409,6 @@ for p in PAGES:
         FOOTER, js, LOUPE,
     ])
     page = FICHE_PAPIER.poser(page)     # la fiche papier, source unique (_outils/impression_papier/)
+    page = MODE_MISSION.poser(page)     # le mode mission, source unique (_outils/mode_mission/)
     io.open(LOT / p["fichier"], "w", encoding="utf-8").write(page)
     print("écrit :", p["fichier"], len(page) // 1024, "Ko")

@@ -30200,6 +30200,29 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 
 ---
 
+## 11/11/2026 — Mode mission partout, suite : les 60 pages de séquence le portent ; un écran se montre depuis son début
+
+**Décision de Pascal (11/11).** « Le mode mission doit être partout. » Le premier lot (#665) en laissait cinq pages sans mode.
+
+**Les cinq pages qui manquaient.**
+- `4e_C4.1_book-train` : ses séances sont des `section.panneau` ouvertes par des onglets `role="tab"`, ses cartes des `div.carte`, ses réponses sont écrites sur la question (`data-bonne`), son bouton de vérification désigne sa zone (`data-exo`). Le moteur lit désormais ces quatre écritures. 47 écrans, 9 vérifiés par le mode, dont le trajet du livre en étiquettes à poser.
+- Les quatre pages « station » de `3e_C9.2` : des pages sans onglets, deux séances à la suite. Le mode n'en montre qu'une à la fois et mène de l'une à l'autre ; au dernier écran, le lien « Page suivante » se montre, et la page suivante s'ouvre en mission. Ces pages sont engendrées : c'est leur générateur (`generer_les_quatre_pages.py`) qui pose le bloc, comme il pose la fiche papier.
+
+**Un défaut réparé sur toutes les pages.** Quand l'élève avait défilé dans un écran long, « Suivant » ouvrait l'écran suivant au milieu, pas à son début : la barre de la mission, collée en haut de l'écran, faussait le calcul. Mesuré sur le lampadaire tel qu'il était sur `main` : le haut de l'écran suivant était 179 px au-dessus de la fenêtre. Le banc générique descend maintenant en bas de chaque écran avant d'appuyer sur « Suivant », et refuse un écran qui ne se montre pas depuis son début.
+
+**Deux retouches du moteur, vues en jouant le Book Train.**
+- Les boutons de la barre basse s'appelaient `.verif`, `.suiv`, `.prec` : le Book Train a ses propres boutons `.verif`, dont le style de survol repeignait « Vérifier » en bleu, texte sombre. Ils s'appellent `.ms-verif`, `.ms-suiv`, `.ms-prec`.
+- Poser une étiquette prévient la page depuis le bouton radio coché, comme un appui : le Book Train sauvegarde à cet événement.
+
+**Ce qui reste.**
+- `3e_C1.5`, `4e_C1.4`, `5e_C1.3` (thème 1) : une carte par écran, sans vérification par le mode. Ces pages n'ont pas de vérification par activité — glisser-déposer et blocs de questions propres à la page, une seule vérification par section, corrections à déplier. Les découper par titres séparerait les questions de leur seul bouton « Vérifier ». Elles demandent d'abord d'être ramenées au squelette commun : à décider avec Pascal (le thème 1 est suivi par une autre session).
+- Sur le Book Train, une étiquette retournée dans la réserve reste dans la sauvegarde de la page : rechargée, la page la montre de nouveau posée, non vérifiée.
+- La page 2 de la station (programmer sur Vittascience) n'a presque pas de question fermée : ses deux activités tiennent chacune sur un écran.
+
+**Mesure.** Banc générique : 60 pages acceptées, aucune refusée ; 2 252 écrans, dont 1 052 vérifiés par le mode ; 296 vérifications de page. Les 55 pages du premier lot gardent exactement leurs écrans (mêmes comptes, page par page). Banc du pilote : 50/50. Contrôles du site : 24 verts. Bancs des séquences, tous rejoués : mêmes résultats qu'au premier lot, banc par banc (dont le Book Train 39/39 et 38/38, et le découpage de la station 167/167) ; les deux échecs déjà connus sur `main` restent (`tests_regle_311_4e_C7.1`, `tests_4e_C8`).
+
+---
+
 ## 11/11/2026 — Book Train, activité 2.1 : la frise des quatre formes d'énergie se lit de nouveau
 
 **Constat** (vu en jouant le mode mission, #669). Dans `4e_C4.1_book-train`, la frise animée « Les quatre visages de l'énergie » avait ses quatre légendes et ses quatre cadres presque invisibles : texte clair sur fond clair (contraste 1,2 pour 1). Elle est dessinée à la couleur du texte de la page, pour le fond sombre de la carte ; la règle `figure svg{background:#fdfcf8}`, écrite pour les schémas, lui posait une plaque claire.
