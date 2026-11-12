@@ -31,6 +31,7 @@ après la mesure de tout le dépôt, comme pour les n°300 et n°302.
 """
 import argparse
 import logging
+import pathlib
 import os
 import re
 import subprocess
@@ -49,7 +50,7 @@ def imprimer(page_html, pdf, fond, police=None):
         b = p.chromium.launch()
         pg = b.new_page(viewport={"width": 1280, "height": 900})
         pg.route("**/*", lambda r: r.continue_() if r.request.url.startswith(("file:", "data:", "blob:")) else r.abort())
-        pg.goto("file://" + os.path.abspath(page_html))
+        pg.goto(pathlib.Path(page_html).resolve().as_uri())   # n°299 : jamais "file://" + chemin
         if police:
             pg.add_style_tag(content="body{font-family:'%s',sans-serif!important}" % police.replace("'", ""))
         pg.wait_for_timeout(400)

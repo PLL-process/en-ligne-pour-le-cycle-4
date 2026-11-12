@@ -43,6 +43,7 @@
  */
 import { chromium } from "playwright";
 import path from "node:path";
+import { pathToFileURL } from 'node:url';
 
 /* Le corps de l'extraction s'exécute DANS la page : il a le DOM sous la main,
    et les variables globales des scripts classiques de la page. */
@@ -248,7 +249,7 @@ for (const f of fichiers) {
   const page = await ctx.newPage();
   const erreurs = [];
   page.on("pageerror", (e) => erreurs.push(String(e)));
-  await page.goto("file://" + path.resolve(f));
+  await page.goto(pathToFileURL(path.resolve(f)).href);
   await page.waitForTimeout(300);
   const lu = await page.evaluate(extraire);
   await ctx.close();

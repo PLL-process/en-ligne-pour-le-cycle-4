@@ -11,6 +11,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
+import { pathToFileURL } from 'node:url';
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -36,7 +37,7 @@ async function shot(page, nom, selecteur) {
   if (selecteur) { try { await page.locator(selecteur).scrollIntoViewIfNeeded(); await page.waitForTimeout(120); } catch {} }
   await page.screenshot({ path: f, fullPage: false });
 }
-const url = f => "file://" + path.join(LOT, f);
+const url = f => pathToFileURL(path.join(LOT, f)).href;
 
 /* ── l'atelier du programme (activité 5), conduit AU CLAVIER : focus, flèches, chiffres, Entrée ── */
 async function choisirAuClavier(p, id, texte) {

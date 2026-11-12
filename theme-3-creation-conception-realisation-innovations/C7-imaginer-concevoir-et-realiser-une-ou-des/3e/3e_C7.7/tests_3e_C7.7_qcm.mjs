@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 const f = process.argv[2], c1 = process.argv[3], c2 = process.argv[4], seq = process.argv[5];
 const b = await chromium.launch();
 const p = await b.newPage();
@@ -8,7 +9,7 @@ p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()
 p.on('requestfailed', r => fail.push(r.url()));
 p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
-await p.goto('file://' + f, { waitUntil: 'load' }); await p.waitForTimeout(500);
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' }); await p.waitForTimeout(500);
 
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '));

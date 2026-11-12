@@ -10,7 +10,7 @@
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const args = process.argv.slice(2), detail = args.includes('--detail');
@@ -28,7 +28,7 @@ for (const PAGE of pages) {
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); const p = await ctx.newPage();
   const err = []; p.on('pageerror', e => err.push(e.message));
   const refus = [], notes = [], ecransVus = [];
-  await p.goto('file://' + PAGE, { waitUntil: 'load' }); await p.waitForTimeout(350);
+  await p.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' }); await p.waitForTimeout(350);
   if (!(await p.$('#btnMission'))) { console.log(`❌ ${path.relative(RACINE, PAGE)}\n   · le bouton du mode mission n'apparaît pas (gabarit non reconnu, ou bloc absent)`); refusTotal++; await ctx.close(); continue; }
 
   // les séances : des panneaux ouverts par des onglets (gabarit commun, Book Train), ou des blocs à la suite dans une

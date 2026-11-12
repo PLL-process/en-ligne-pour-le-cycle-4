@@ -18,6 +18,7 @@
  */
 import { chromium } from 'playwright';
 import { readFileSync } from 'fs';
+import { pathToFileURL } from 'node:url';
 
 const f = process.argv[2];
 const REP = JSON.parse(readFileSync(process.argv[3], 'utf8'));
@@ -32,7 +33,7 @@ const plat = norm(src);
 const dit = phrase => plat.includes(norm(phrase));
 /* Règle d'or n°298 (vague du thème 3, 26/10/2026) : le référentiel — formulation officielle, code d'appui —
  * a quitté la page élève pour la synthèse professeur du lot. On l'y lit, au mot près. */
-const platSynthese = norm(readFileSync(new URL('Synthèses/synthese_professeur_5e_C8.1.html', new URL('file://' + f)), 'utf8'));
+const platSynthese = norm(readFileSync(new URL('Synthèses/synthese_professeur_5e_C8.1.html', pathToFileURL(f)), 'utf8'));
 const ditSynthese = phrase => platSynthese.includes(norm(phrase));
 
 const b = await chromium.launch();
@@ -59,7 +60,7 @@ async function ouvrirSeanceDe(sel) {
   if (id) { await p.click('.seance-tab[data-panel="' + id + '"]'); await p.waitForTimeout(80); }
 }
 
-await p.goto('file://' + f, { waitUntil: 'load' });
+await p.goto(pathToFileURL(f).href, { waitUntil: 'load' });
 await p.waitForTimeout(400);
 
 /* ── la page elle-même ───────────────────────────────────────────────────── */

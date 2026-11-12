@@ -3,7 +3,7 @@
 // Sortie 0 si tout passe, 1 sinon. Ne dépend d'aucun réseau.
 import { chromium } from 'playwright';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const PAGE = path.resolve(ICI, '../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html');
@@ -14,7 +14,7 @@ const b = await chromium.launch();
 for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', { width: 1180, height: 820 }]]) {
   const ctx = await b.newContext({ viewport: vp }); const p = await ctx.newPage();
   const err = []; p.on('pageerror', e => err.push(e.message));
-  await p.goto('file://' + PAGE, { waitUntil: 'load' }); await p.waitForTimeout(400);
+  await p.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' }); await p.waitForTimeout(400);
   const T = n => `[${nom}] ${n}`;
 
   const depart = await p.evaluate(() => ({ bouton: !!document.getElementById('btnMission'), ms: document.body.classList.contains('ms'),

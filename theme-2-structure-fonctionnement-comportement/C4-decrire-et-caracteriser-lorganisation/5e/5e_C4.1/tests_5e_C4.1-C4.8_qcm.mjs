@@ -27,7 +27,7 @@
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import fs from 'node:fs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
@@ -49,7 +49,7 @@ p.on('dialog', async d => { dlg.push(d.message()); await d.dismiss(); });
 
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 
-await p.goto('file://' + PAGE, { waitUntil: 'load' });
+await p.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' });
 await p.waitForTimeout(300);
 
 ok('1 · charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
