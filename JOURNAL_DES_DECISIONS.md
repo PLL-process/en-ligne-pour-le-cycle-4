@@ -30120,6 +30120,22 @@ Les pourquoi des sept autres séquences et la révision (ligne 27, `3e_C9.1`) vi
 
 ---
 
+## 11/11/2026 — Registre des skills : `webapp-testing` était déjà à jour ; seconde veille, rien à installer, deux idées en attente (transversal : `SKILLS_AUDIT.md`)
+
+**Demande de Pascal (11/11).** « webapp-testing est à mettre à jour ; puis cherche des skills utiles. »
+
+**Constat.** Le skill `webapp-testing` du compte a été corrigé le 24/10/2026 : son SKILL.md interdit `'file://' + chemin`, donne la bonne forme, et porte une section sur ce dépôt. C'est le registre qui retardait — et je l'ai répété à Pascal sans ouvrir le skill. `SKILLS_AUDIT.md` est corrigé.
+
+**Ce que le skill dit encore de vrai, remesuré.** La forme interdite par le premier corollaire de la n°299 vit toujours dans le dépôt : 95 lignes de code dans 69 fichiers `.mjs` (7 dans `_outils`, dont `controle_impression.mjs` ligne 199, signalé le 23/10 ; 2 au thème 1, 13 au thème 2, 47 au thème 3). Le skill en comptait 57 le 24/10. Sous Linux, ces bancs passent ; sous Windows, `file://C:\…` n'est pas une adresse. **Non corrigé dans ce lot** : 69 fichiers dans trois thèmes, à faire d'un geste et à rejouer banc par banc.
+
+**Seconde veille.** Sept sources lues, consignées dans `SKILLS_AUDIT.md`. Aucune skill installée. Deux idées, que je n'applique pas sans l'avis de Pascal parce qu'elles créeraient chacune une mesure nouvelle sur des contenus existants :
+- un **budget de complexité par schéma** (9 cadres, 12 flèches, 14 caractères par étiquette de flèche) dans `controle_schemas.mjs` ;
+- dans les animations commentées, relever **plus de quatre secondes de voix sans changement à l'écran**.
+
+**Mesure.** Aucune page ni aucun outil modifié : `SKILLS_AUDIT.md` et ce journal seulement.
+
+---
+
 ## 11/11/2026 — Deux mesures nouvelles : la charge d'un schéma, le débit des voix d'animation (transversal : `_outils`, `.claude`)
 
 **Demande de Pascal (11/11).** Sur les deux idées de la seconde veille : « tu as carte blanche pour un résultat premium ».
