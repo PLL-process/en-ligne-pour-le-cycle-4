@@ -30342,3 +30342,22 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Mesure.** Banc générique : les trois pages acceptées ; un pourquoi ou un indice pour 83 mauvaises réponses sur 83, 73 sur 73, 48 sur 48 ; aucun sur une bonne réponse. Bancs des pages : inchangés (35/35 et 34/34 ; 34/34 et 34/34 ; 35/35 et 34/34). Dix erreurs provoquées à l'écran, à 390 et 1 024 px, et leur message lu.
 
 **Reste.** `4e_C4.1` et `4e_C5.1`.
+
+---
+
+## 12/11/2026 — Mode mission : le pourquoi de chaque erreur sur `4e_C4.1` et `4e_C5.1` — le premier lot est complet
+
+**Suite de #675.** Les deux dernières séquences du premier lot.
+
+| Séquence | Pourquoi | Indices de ligne |
+|---|---|---|
+| `4e_C4.1` — le jardin connecté : chaînes d'énergie et d'information, données, réseau, procédés | 97, sur 32 questions | — |
+| `4e_C5.1` — dépanner le jardin connecté | 45, sur 15 questions | 12 (l'ordre des six tests, l'ordre des six gestes) |
+
+- **Règles d'écriture tenues** : 20 mots au plus ; jamais la bonne réponse, ni celle d'une autre question. Sur `4e_C4.1`, plusieurs questions se répondent l'une l'autre (les stries de l'impression 3D, la ligne de joint du moule) : les phrases ont été reprises pour ne pas livrer la voisine.
+- **Le renvoi à ce que l'élève a sous la main** : la ligne orangée de la table, l'explorateur (« refais un filtre : sur quelle colonne s'appuie-t-il ? »), la panne 2 du simulateur réseau, l'image des trois procédés.
+- **Les faits cités sont ceux de la page** : le réservoir plein, 612 → 60 %, la box qui distribue les adresses, la lampe du CDI sur le secteur. Deux viennent d'ailleurs : le moulage au sable donne une surface rugueuse ; un trou imprimé n'est jamais parfaitement cylindrique.
+
+**Mesure.** Banc générique : les deux pages acceptées ; un pourquoi ou un indice pour 97 mauvaises réponses sur 97 et 105 sur 105 ; aucun sur une bonne réponse. Bancs des pages : inchangés (52/52 et 34/34 ; 26/26 et 34/34). Huit erreurs provoquées à l'écran, à 390 et 1 024 px, et leur message lu.
+
+**Où en est le pourquoi.** Onze pages sur les 57 du premier niveau : le pilote (`5e_C4.1`), les neuf du premier lot et `3e_C9.1`. Les autres le reçoivent avec leur révision.
