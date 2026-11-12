@@ -35,12 +35,30 @@
  *
  * Score = 3 × ✘ + ⚠. Les schémas sont rangés du pire au meilleur.
  *
+ * LA CHARGE D'UN SCHÉMA — UNE MESURE, PAS UN DÉFAUT (11/11/2026)
+ * -------------------------------------------------------------
+ * Un schéma peut n'avoir aucun cadre qui en touche un autre et rester trop chargé pour un élève qui lit mal. Le
+ * contrôle compte donc, pour chaque schéma, ses ENTITÉS (les cadres qui ne sont ni la cellule d'un tableau ni une
+ * pastille), ses flèches et ses mots. Un schéma est dit « chargé » au-dessus de REPERE_ENTITES entités ou de
+ * REPERE_FLECHES flèches. Ces deux repères viennent d'une lecture (veille du 11/11/2026, `SKILLS_AUDIT.md` : un guide
+ * de dessin de schémas propose 9 nœuds et 12 flèches au plus) : ce ne sont pas des seuils mesurés en classe.
+ *
+ * La charge NE CHANGE NI LE SCORE NI LA SORTIE. Elle s'écrit dans le --json (`entites`, `cellules`, `mots`,
+ * `charge`), se résume en une ligne, et se détaille avec --charge [n] : les n schémas les plus chargés.
+ *
+ * Pourquoi les cellules ne comptent pas : mesuré le 11/11/2026, 131 schémas sur 481 dépassent 9 CADRES — les
+ * premiers sont des tableaux dessinés (un plan de tests à 31 cases). Un tableau se lit ligne par ligne ; ce n'est pas
+ * la même charge qu'un schéma à 31 boîtes. Une CELLULE est un rectangle bord contre bord avec un autre (la règle du
+ * « contact »), ou, dans un schéma SANS FLÈCHE, un rectangle rangé en ligne et en colonne parmi six au moins : un
+ * tableau dessiné avec des gouttières. Dès qu'il y a une flèche, des boîtes alignées restent des entités. Ce que la mesure ne voit pas : si les mots sont difficiles, si le schéma
+ * se lit dans un ordre évident, si deux schémas plus simples vaudraient mieux qu'un.
+ *
  * OÙ IL REGARDE
  * -------------
  * Chaque fichier .svg, et chaque schéma écrit dans une page (.html) — un <svg> d'au moins 200 × 80 unités qui
  * porte au moins deux textes. L'archive, node_modules et les dossiers de captures ne sont pas lus.
  *
- * Usage : node _outils/controle_schemas.mjs [dossier ou fichier…] [--json fichier] [--planche dossier] [--muet]
+ * Usage : node _outils/controle_schemas.mjs [dossier ou fichier…] [--json fichier] [--planche dossier] [--charge [n]] [--muet]
  * Sortie : 0 aucun ✘ · 1 au moins un ✘ · 2 rien n'a pu être lu (règle n°299).
  */
 import { chromium } from 'playwright';
@@ -49,6 +67,7 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const REPERE_ENTITES = 9, REPERE_FLECHES = 12;
 const EXCLUS = /(^|\/)(_archive[^/]*|node_modules|\.git|captures[^/]*|banc-docker)(\/|$)/;
 
 function parcourir(chemin, sortie) {
@@ -133,7 +152,7 @@ const MESURER = (svg) => {
       const dx = Math.max(B.b.x - A.b.X, A.b.x - B.b.X), dy = Math.max(B.b.y - A.b.Y, A.b.y - B.b.Y);
       const coin = Math.abs(U(dx)) <= 1.2 && Math.abs(U(dy)) <= 1.2;
       const ali = (Math.abs(A.b.y - B.b.y) < 1 && Math.abs(A.b.Y - B.b.Y) < 1) || (Math.abs(A.b.x - B.b.x) < 1 && Math.abs(A.b.X - B.b.X) < 1);
-      if (coin || (Math.abs(U(Math.max(dx, dy))) <= 1.2 && ali)) continue;
+      if (coin || (Math.abs(U(Math.max(dx, dy))) <= 1.2 && ali)) { A.cellule = B.cellule = true; continue; }
     }
     // loin l'un de l'autre : inutile de mesurer finement
     const dxb = Math.max(B.b.x - A.b.X, A.b.x - B.b.X), dyb = Math.max(B.b.y - A.b.Y, A.b.y - B.b.Y);
@@ -273,14 +292,29 @@ const MESURER = (svg) => {
   }
   if (ecrasees) dit('⚠', 'écrasée', `${ecrasees} taille(s) de police posée(s) en attribut, écrasée(s) par la feuille de style`);
   if (petits) dit('⚠', 'minuscule', `${petits} texte(s) sous 10 px pour un schéma de 800 px de large`);
-  return { largeur: Math.round(vb.width), hauteur: Math.round(vb.height), cadres: cadres.length, textes: textes.length, fleches: fleches.length, defauts };
+  // LA CHARGE (mesure, jamais un défaut) : une ENTITÉ est un cadre qui n'est ni la cellule d'un tableau ni une pastille.
+  // Un tableau dessiné avec des gouttières : SANS AUCUNE FLÈCHE, six rectangles au moins dont chacun a un voisin de
+  // même colonne (mêmes bords gauche et droit) ET un voisin de même ligne. Avec des flèches, des boîtes rangées en
+  // lignes et en colonnes sont un schéma — une chaîne d'information au-dessus d'une chaîne d'énergie, par exemple.
+  if (!fleches.length) {
+    const tol = 1.5 * k, rects = cadres.filter(c => c.rect && !c.pastille);
+    const col = (A, B) => Math.abs(A.b.x - B.b.x) < tol && Math.abs(A.b.X - B.b.X) < tol;
+    const lig = (A, B) => Math.abs(A.b.y - B.b.y) < tol && Math.abs(A.b.Y - B.b.Y) < tol;
+    const grille = rects.filter(c => rects.some(d => d !== c && col(c, d)) && rects.some(d => d !== c && lig(c, d)));
+    if (grille.length >= 6) for (const c of grille) c.cellule = true;
+  }
+  const entites = cadres.filter(c => !c.cellule && !c.pastille).length, cellules = cadres.filter(c => c.cellule).length;
+  const mots = textes.reduce((n, t) => n + (t.s.trim().match(/[\p{L}\p{N}][\p{L}\p{N}'’.-]*/gu) || []).length, 0);
+  return { largeur: Math.round(vb.width), hauteur: Math.round(vb.height), cadres: cadres.length, textes: textes.length, fleches: fleches.length, entites, cellules, mots, defauts };
 };
 
 async function main(argv) {
   const muet = argv.includes('--muet');
   const opt = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
   const json = opt('--json'), planche = opt('--planche');
-  const cibles = argv.filter((a, i) => !a.startsWith('--') && !['--json', '--planche'].includes(argv[i - 1]));
+  const iCharge = argv.indexOf('--charge');
+  const nCharge = iCharge < 0 ? 0 : (/^\d+$/.test(argv[iCharge + 1] || '') ? +argv[iCharge + 1] : 20);
+  const cibles = argv.filter((a, i) => !a.startsWith('--') && !['--json', '--planche'].includes(argv[i - 1]) && !(argv[i - 1] === '--charge' && /^\d+$/.test(a)));
   const racines = cibles.length ? cibles.map(c => path.resolve(c)) : fs.readdirSync(RACINE).filter(n => /^theme-/.test(n)).map(n => path.join(RACINE, n));
   const fichiers = racines.flatMap(r => parcourir(r, []));
   const svgs = fichiers.filter(f => f.endsWith('.svg'));
@@ -381,7 +415,11 @@ async function main(argv) {
     r.croix = r.defauts.filter(d => d.g === '✘').length;
     r.alertes = r.defauts.filter(d => d.g === '⚠').length;
     r.score = 3 * r.croix + r.alertes;
+    if (r.entites !== undefined) r.charge = r.entites > REPERE_ENTITES || r.fleches > REPERE_FLECHES;
   }
+  const mesures = resultats.filter(r => r.entites !== undefined);
+  const charges = mesures.filter(r => r.charge);
+  const mediane = l => { const t = l.slice().sort((a, b) => a - b); return t.length ? t[Math.floor((t.length - 1) / 2)] : 0; };
   resultats.sort((a, b) => b.score - a.score || a.schema.localeCompare(b.schema));
   const croix = resultats.reduce((s, r) => s + r.croix, 0);
   const touches = resultats.filter(r => r.croix).length;
@@ -394,6 +432,14 @@ async function main(argv) {
     }
     console.log(`\n${resultats.length} schémas lus (${svgs.length} fichiers SVG, ${resultats.length - svgs.length} écrits dans ${pages.length} pages)`);
     console.log(`${touches} schéma(s) avec au moins un ✘ · ${croix} ✘ · ${resultats.reduce((s, r) => s + r.alertes, 0)} ⚠`);
+  }
+  if (mesures.length && (!muet || nCharge)) {
+    console.log(`charge (mesure, hors score) : ${charges.length} schéma(s) sur ${mesures.length} au-dessus du repère (${REPERE_ENTITES} entités ou ${REPERE_FLECHES} flèches) · médiane ${mediane(mesures.map(r => r.entites))} entité(s), ${mediane(mesures.map(r => r.mots))} mot(s)`);
+  }
+  if (nCharge) {
+    const tri = mesures.slice().sort((a, b) => b.entites - a.entites || b.fleches - a.fleches || b.mots - a.mots).slice(0, nCharge);
+    console.log(`\nLes ${tri.length} schémas les plus chargés — entités · flèches · mots (cellules de tableau à part) :`);
+    for (const r of tri) console.log(`  ${r.charge ? '▲' : ' '} ${String(r.entites).padStart(3)} · ${String(r.fleches).padStart(2)} · ${String(r.mots).padStart(3)}${r.cellules ? ` (+${r.cellules} cellules)` : ''}  ${r.schema}`);
   }
   if (json) fs.writeFileSync(json, JSON.stringify(resultats, null, 1));
   if (planche) {
