@@ -30466,3 +30466,38 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 - **Généraliser** : un contrôle par règle au moment de l'étendre (taille des textes de figure à 390 px, contraste des textes secondaires, commandes sans nom, verrous qui s'ouvrent sans résultat).
 
 **Mesure.** Banc de la séquence : 82/82 (61 avant ; 21 tests de plus pour l'audit : chaque cas refusé et le cas juste des activités 3, 4 et 5, l'ancienne sauvegarde, le clavier, les pastilles, le contraste, les textes, la mission) ; banc n°311 : 34/34. Mode mission : page acceptée, 45 écrans, 22 vérifiés par le mode ; 82 pourquoi sur 82. Charge : séance 4, 1 018 → 1 186 mots visibles ; les trois autres inchangées (850, 1 158, 761). Règles d'or 0 ✘ ; aération 0. Contrôles du site : Les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), rejoués sur l'état final. Vu à l'écran : l'activité 5 entière à 1 280 et 390 px ; le banc de l'élève avec une fonction fausse, puis juste.
+
+---
+
+## 14/11/2026 — `3e_C9.1`, audit (2/4) : les représentations lisibles, à l'écran et sur papier (règle d'or n°325)
+
+**Demandes de Pascal.** L'audit du 12/11 (règle n°325 : une figure essentielle se lit sur un téléphone) et, le 12/11 à 9 h 33 : « L'impression en PDF peut-être devrait être revue, parce qu'il y a beaucoup de blancs. »
+
+**Ce que la mesure a montré.**
+- **Les quatre dessins** (plan de la ligne Q, documents 1, 2, 3) : 940 unités de large. Dans un cadre de 254 px, le plus petit texte faisait 2,3 à 2,8 px ; dans le cadre de 760 px qui glissait depuis #677, 6,9 à 8,5 px ; à 1 280 px, 7,6 à 9,4 px. Sur papier, 5 à 6 points.
+- **L'impression** : 15 pages pour les quatre séances, et 281 mm de blanc perdu en cours de fiche. Un dessin ne se coupe pas entre deux pages : quand il ne tenait pas, il partait à la page suivante et laissait un trou (128 mm en bas d'une page de la séance 1, une troisième page presque vide en séance 2).
+- **Rapetisser les dessins sur papier** (essayé) : 13 pages, mais leur texte à 4,6 points. Refusé : c'est le reproche de l'audit.
+
+**Ce qui change.**
+- **Les quatre dessins deviennent du texte HTML**, avec le même contenu :
+  - le plan de la ligne Q : un plan de ligne vertical, les stations en texte, « la ligne Q en bref » et les deux questions de lecture à côté (en dessous sur un téléphone) ;
+  - le document 1 : trois zones — le programme, la mémoire, le panneau —, côte à côte sur un grand écran, l'une sous l'autre sur un téléphone, puis les trois règles ;
+  - le document 2 : quatre cartes (`int`, `float`, `str`, `bool`) avec les mêmes rubriques, sur une ligne, puis deux, puis une ; le piège du + en trois cas ;
+  - le document 3 : les trois étapes, élaborer, traduire, mettre au point.
+- **Aucun texte sous 14 px à 390 px**, dans aucun document ; aucun ne déborde.
+- **Deux changements de contenu, dits ici.**
+  - Document 2 : les exemples ne sont plus ceux des expériences A et B (`5 + 5` et `"5" + "5"` au lieu de `3 + 4` et `"3" + "4"`), et le troisième cas est ajouté (`"5" + 5` → erreur de type, règle n°323).
+  - Document 1 : « l'ancienne valeur est perdue » devient « par le nom `minutes`, on ne retrouve plus le 4 » (la limite de la boîte, règle n°323).
+- **Le simulateur de mémoire** (cahier des charges, A) : « ◀ Étape précédente » ; « Étape 4 sur 6 » ; ce que fait chaque ligne, dit en mots et annoncé au lecteur d'écran (« Python calcule d'abord minutes - 1, soit 4 - 1 = 3. Puis il range 3 dans la boîte minutes : 4 devient 3 ») ; les boutons se grisent aux deux bouts.
+- **Sur papier** :
+  - un document se coupe entre ses parties, jamais au milieu d'une carte ou d'une étape ; ses parties se disposent en largeur (les quatre types sur une ligne, les trois zones de la mémoire côte à côte) ;
+  - une photo se place à côté de sa légende (58 mm) au lieu d'occuper une demi-page ;
+  - une réponse courte en rangée tient sur une ligne avec son énoncé ;
+  - un titre de séance, une consigne restent avec ce qui suit ; un banc de tests tient sur une page ;
+  - « Je me positionne » s'imprime en cases à cocher (la fiche papier retirait les pastilles, qui sont des boutons : l'élève ne pouvait pas se positionner sur sa feuille) ;
+  - ce qui ne parle que de l'écran ne s'imprime plus : le bandeau « Sans connexion, tout se fait dans la page », l'état du banc, le titre d'un Bonus replié, deux phrases du pied de page.
+- **Au passage (règle n°304)** : « Cet atelier s'appuie sur ce que tu as fait en 4e et en 5e » et « En 4e, tu as programmé l'arrosage du jardin connecté » affirmaient ce que l'élève a fait. Réécrits sans rien affirmer.
+
+**Pilote.** Les règles d'impression sont propres à la page, dans le bloc `css-papier-compact`. Si la fiche convient à Pascal, elles passent dans `_outils/impression_papier/papier.css` pour toutes les séquences.
+
+**Mesure.** Banc de la séquence : 85/85 (trois tests de plus : les quatre documents à 390 px — aucun texte sous 14 px, aucun débordement, plus aucun dessin réduit ; le simulateur ; le contenu des dessins repris) ; banc n°311 : 34/34. Mode mission : page acceptée, 45 écrans ; 82 pourquoi sur 82 ; sur tablette, la ressource ouverte au-dessus de la question est plus haute (activité 1 : 1 584 → 1 824 px). Impression : 15 → 15 pages (séance 1 : 6 → 5 ; séance 4 : 4 → 5) ; blanc perdu en cours de fiche 281 → 163 mm ; banc papier vert. Charge : séance 2, 1 158 → 1 352 mots visibles ; séance 4, 1 186 → 1 431 — le texte des dessins existait en 3 px, la mesure le voit maintenant ; piste : replier les documents (décision de Pascal, liée à la question des documents qui donnent les réponses). Règles d'or 0 ✘ ; aération 0 ; hiérarchie 0. Contrôles du site : Les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), rejoués sur l'état final.
