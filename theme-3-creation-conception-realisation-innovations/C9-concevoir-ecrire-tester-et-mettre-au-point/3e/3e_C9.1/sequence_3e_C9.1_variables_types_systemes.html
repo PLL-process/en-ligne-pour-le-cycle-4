@@ -2536,7 +2536,7 @@ print(message, minutes, "min |", temperature_c, "C")
       <p class="doc-retenir"><b>Un programme n'est pas fini quand il « marche une fois »</b> : il est fini quand il passe TOUS les tests. <br><i>La vraie ventilation du métro de New York brasse l'air de 472 stations — et son programme a, lui aussi, commencé par un algorithme.</i></p>
       <figcaption>Document 3 — Élaborer, traduire, mettre au point : le trajet complet du besoin au programme prouvé.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice de simulation &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. <br>① Complète la traduction Python. <br>② Exécute les 4 tests du banc de démonstration (ton badge 🔓). <br>③ Tranche le cas limite. <br>④ Écris TA fonction dans l'éditeur : la page la teste.</div>
+    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice de simulation &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. <br>Le panneau affichait des données ; la ventilation, elle, DÉCIDE. <br>Deux entrées (<code>air</code>, <code>train_arrive</code>) → la fonction décide → une sortie : la vitesse. <br>① Complète la traduction Python. <br>② Exécute les 4 tests du banc de démonstration (ton badge 🔓). <br>③ Tranche le cas limite. <br>④ Écris TA fonction dans l'éditeur : la page la teste.</div>
     <div class="exo">
       <p><b>① La traduction — complète la fonction :</b></p>
       <pre class="code">def vitesse_ventilation(air, train_arrive):
@@ -2677,6 +2677,58 @@ print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
     <div class="retenir"><b>🧠 À retenir :</b> élaborer (algorithme en français) → traduire (fonction qui reçoit des variables et renvoie un résultat) → mettre au point (banc de tests écrit À L'AVANCE, cas limites compris, rejoué après CHAQUE correction).</div>
     <p class="critere"><b>🎯 Critère de réussite :</b> ma fonction réussit les 7 tests de la page. <br>Je sais expliquer pourquoi on rejoue tout après une correction.</p>
   </div>
+</section>
+
+<section class="card" id="transfert">
+  <h2>🧍 Seul : un besoin neuf — l'éclairage du quai</h2>
+  <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
+  <p>Cette fois, tu travailles <b>seul</b> : pas de squelette à compléter, ton binôme ne t'aide pas. <br>C'est la preuve que tu sais faire tout le trajet, du besoin au programme testé. <br>Hors progression : le résultat est pour toi et pour le professeur.</p>
+  <div class="consigne"><b>Le besoin :</b> la MTA veut aussi automatiser l'éclairage du quai. <br>La lumière du jour est un indice de simulation, de 0 (nuit noire) à 100 (plein soleil). <br><b>Lumière inférieure à 30 → lampes à fond (2) ; sinon, train qui arrive → à moitié (1) ; sinon → éteintes (0).</b> <br>① Écris l'algorithme en français. <br>② Écris la fonction <code>eclairage(lumiere, train_arrive)</code> dans l'éditeur, puis ▶&nbsp;Exécuter : la page la teste 6 fois.</div>
+  <div class="exo">
+    <label for="tr_algo"><b>① Mon algorithme, en français :</b></label>
+    <textarea id="tr_algo" rows="4" placeholder="SI … ALORS … SINON SI … ALORS … SINON …"></textarea>
+  </div>
+<div class="editeur-py" id="vs5" data-fichier="3e-VARIABLES-transfert-TON NOM">
+  <label for="py_tr">🐍 ② Ma fonction <code>eclairage(lumiere, train_arrive)</code>, écrite seul</label>
+  <p class="editeur-py-note">Écris la fonction en entier, puis ▶&nbsp;Exécuter. <br>À chaque exécution sans erreur, la page l'appelle 6 fois : le tableau ci-dessous montre ce qu'elle renvoie.</p>
+  <textarea id="py_tr" class="editeur-py-code" rows="9" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off"># écris ici ta fonction eclairage(lumiere, train_arrive)
+
+</textarea>
+  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+</div>
+  <div class="bench">
+    <table aria-label="Le banc de ta fonction eclairage : six appels">
+      <tr><th>Test</th><th>lumiere</th><th>train_arrive</th><th>Attendu (besoin)</th><th>Obtenu (ta fonction)</th></tr>
+      <tr><td>E1 — très sombre</td><td data-l="lumiere">10</td><td data-l="train_arrive">False</td><td data-l="attendu">2</td><td class="res" id="te1" data-l="obtenu">—</td></tr>
+      <tr><td>E2 — sombre, et un train</td><td data-l="lumiere">29</td><td data-l="train_arrive">True</td><td data-l="attendu">2</td><td class="res" id="te2" data-l="obtenu">—</td></tr>
+      <tr><td>E3 — la frontière, sans train</td><td data-l="lumiere">30</td><td data-l="train_arrive">False</td><td data-l="attendu">0</td><td class="res" id="te3" data-l="obtenu">—</td></tr>
+      <tr><td>E4 — la frontière, avec un train</td><td data-l="lumiere">30</td><td data-l="train_arrive">True</td><td data-l="attendu">1</td><td class="res" id="te4" data-l="obtenu">—</td></tr>
+      <tr><td>E5 — juste au-dessus, avec un train</td><td data-l="lumiere">31</td><td data-l="train_arrive">True</td><td data-l="attendu">1</td><td class="res" id="te5" data-l="obtenu">—</td></tr>
+      <tr><td>E6 — plein jour</td><td data-l="lumiere">80</td><td data-l="train_arrive">False</td><td data-l="attendu">0</td><td class="res" id="te6" data-l="obtenu">—</td></tr>
+    </table>
+  </div>
+  <p class="banc-eleve-etat" id="transfertEtat" role="status">Ce tableau se remplit quand tu exécutes ta fonction dans l'éditeur Python.</p>
+  <details class="aide"><summary>💡 Si tu bloques — le squelette</summary><pre class="code">def eclairage(lumiere, train_arrive):
+    if lumiere ▢ 30:
+        return ▢
+    elif ▢:
+        return 1
+    else:
+        return ▢</pre></details>
+  <details class="correction"><summary>📖 Correction — à ouvrir APRÈS avoir essayé seul</summary>
+    <p><b>① L'algorithme :</b> <br>SI la lumière est inférieure à 30 ALORS lampes à fond (2) <br>SINON SI un train arrive ALORS à moitié (1) <br>SINON éteintes (0).</p>
+    <pre class="code">def eclairage(lumiere, train_arrive):
+    if lumiere &lt; 30:
+        return 2
+    elif train_arrive:
+        return 1
+    else:
+        return 0</pre>
+    <p><b>Les 6 tests :</b> <br>E1 (10, False) donne 2 : il fait très sombre. <br>E2 (29, True) donne 2 : sombre ET un train ; la lumière passe en premier, comme la pollution à l'activité 5. <br>E3 (30, False) donne 0 : 30 n'est pas inférieur à 30, et aucun train. <br>E4 (30, True) donne 1 : 30 n'est pas inférieur à 30, mais un train arrive. <br>E5 (31, True) donne 1 : juste au-dessus. <br>E6 (80, False) donne 0 : plein jour, aucun train.</p>
+    <p><b>Le piège :</b> écrire <code>lumiere &lt;= 30</code>. <br>« Inférieure à 30 » exclut 30 : avec <code>&lt;=</code>, les tests E3 et E4 renverraient 2.</p>
+  </details>
+  <p class="critere"><b>🎯 Critère de réussite :</b> seul, ma fonction passe les 6 tests. <br>Je sais dire pourquoi 30 ne fait pas allumer à fond.</p>
 </section>
 
 <section class="card" id="bonus">
@@ -3105,6 +3157,39 @@ function majTaches(){
   }).join("");
 }
 
+/* ══ Le transfert individuel (14/11/2026, règle d'or n°330) : une fonction écrite seul, jugée sur ce qu'elle renvoie ══ */
+const BANC_TR = [[10,false,2], [29,true,2], [30,false,0], [30,true,1], [31,true,1], [80,false,0]];
+function renderTransfert(){
+  const p = window.__exp.transfert, etat = $("transfertEtat"), ta = $("py_tr"); if(!etat) return;
+  BANC_TR.forEach((x, i) => { const c = $("te" + (i + 1)), r = p && p.res && p.res[i]; if(!c) return;
+    if(!r){ c.textContent = "—"; c.style.color = ""; return; }
+    c.textContent = (r[0][0] === "!" ? "erreur" : r[0]) + (r[1] ? " ✔" : " ✘ — attendu " + x[2]); c.style.color = r[1] ? "var(--ok)" : "var(--ko)"; });
+  let m, cls = "ko";
+  if(!p) { m = "Ce tableau se remplit quand tu exécutes ta fonction dans l'éditeur Python."; cls = ""; }
+  else if(ta && !memeCode(p.code, ta.value)) m = "⚠ Ton code a changé depuis le dernier test. Relance ▶ Exécuter.";
+  else if(p.etat === "erreur") m = "⚠ Ton programme ne va pas jusqu'au bout : lis le message de la console, corrige, puis réexécute.";
+  else if(!/def\s+eclairage\s*\(/.test(p.code)) m = "⚠ La page ne trouve pas de fonction nommée eclairage, avec ses deux paramètres (lumiere, train_arrive).";
+  else if(!p.ok){ const i = p.res.findIndex(x => !x[1]), x = BANC_TR[i]; m = "⚠ Le test E" + (i + 1) + " — eclairage(" + x[0] + ", " + (x[1] ? "True" : "False") + ") — attend " + x[2] + " et obtient " + (p.res[i][0][0] === "!" ? "une erreur" : p.res[i][0]) + ". Relis le besoin."; }
+  else { m = "✅ Seul, ta fonction passe les 6 tests. Tu sais faire tout le trajet."; cls = "ok"; }
+  etat.textContent = m; etat.className = "banc-eleve-etat" + (cls ? " " + cls : "");
+}
+document.addEventListener("editeur-py:fin", e => {
+  const d = e.detail || {}; if(d.bloc !== "vs5") return;
+  if(d.erreur || d.arret || !window.EditeurPython){ window.__exp.transfert = {code: d.code, res: [], ok: false, etat: "erreur"}; renderTransfert(); save(); return; }
+  const banc = d.code + "\n\nprint(\"§banc§\")\nfor _l, _t, _att in [" + BANC_TR.map(x => "(" + x[0] + ", " + (x[1] ? "True" : "False") + ", " + x[2] + ")").join(", ") + "]:\n" +
+    "    try:\n        _r = eclairage(_l, _t)\n        print(repr(_r) + \"|\" + (\"ok\" if (type(_r) in (int, float) and _r == _att) else \"non\"))\n" +
+    "    except Exception as _e:\n        print(\"!\" + type(_e).__name__ + \"|non\")\n";
+  window.EditeurPython.executer(banc).then(r => {
+    const p = {code: d.code, res: [], ok: false, etat: "erreur"};
+    if(!r.erreur && !r.arret){ const L = String(r.sortie || "").split("\n"), i = L.lastIndexOf("§banc§");
+      p.res = L.slice(i + 1).filter(Boolean).slice(0, BANC_TR.length).map(l => { const k = l.lastIndexOf("|"); return [l.slice(0, k), l.slice(k + 1) === "ok"]; });
+      p.ok = i >= 0 && p.res.length === BANC_TR.length && p.res.every(x => x[1]); p.etat = p.ok ? "ok" : "non"; }
+    window.__exp.transfert = p; renderTransfert(); save();
+  });
+});
+if($("py_tr")) $("py_tr").addEventListener("input", renderTransfert);
+renderTransfert();
+
 /* ══ Le billet de sortie (14/11/2026, règle d'or n°330) : seul, sans aide, hors progression ══ */
 if($("btnBilletSortie")) $("btnBilletSortie").addEventListener("click", () => {
   const bon = [["bs1","3"], ["bs2","4"], ["bs3",'"Train Q"'], ["bs4","la ligne 2 a rangé la VALEUR 4 dans copie ; la ligne 3 ne change qu'attente"], ["bs5",'"41", puis 5']]
@@ -3204,7 +3289,7 @@ function restore(){
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   if(window.__exp.memoire){ step = PROG.length - 1; renderMem(); }
   if(window.__exp.tests){ $("benchBadge").textContent = "🔓 badge de démonstration obtenu — les 4 tests sont exécutés. Reste l'étape ④ : ta fonction."; }
-  renderBancEleve();
+  renderBancEleve(); renderTransfert();   /* le transfert est défini plus haut dans ce script : sa table existe déjà */
   if(par.s.includes("5") && !etatProd().ok){
     par.s = par.s.filter(x => x !== "5");
     const f5 = $("fb5"); if(f5){ f5.textContent = "🔒 L'activité 5 n'est plus validée : la page teste maintenant TA fonction. Écris-la dans l'éditeur Python (étape ④), puis ▶ Exécuter, puis vérifie de nouveau."; f5.className = "feedback show warn"; }

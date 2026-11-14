@@ -720,6 +720,17 @@ await ctx.close();
   const r = await pp.evaluate(() => window.EditeurPython.executer('train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1,8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n'));
   ok("act. 4 : la réponse « l'erreur de la ligne 7 disparaît aussi » est ce que Python fait (seule la ligne 3 corrigée : pas d'erreur, (45.0, 8))",
      !r.erreur && /2 min \| \(45\.0, 8\) C/.test(r.sortie), JSON.stringify(r.sortie));
+  /* le transfert individuel (n°330) : sans squelette, la page appelle eclairage() 6 fois ; hors progression */
+  await pp.click("#tab-s4"); await pp.waitForTimeout(150);
+  const tr = async (code) => { await executerBloc(pp, "vs5", code); await pp.waitForFunction(() => window.__exp.transfert && window.__exp.transfert.code === document.getElementById("py_tr").value, null, { timeout: 15000 });
+    return pp.evaluate(() => ({ etat: document.getElementById("transfertEtat").textContent, cases: [1, 2, 3, 4, 5, 6].map(i => document.getElementById("te" + i).textContent) })); };
+  const squelette = await pp.evaluate(() => ({ depart: document.getElementById("py_tr").defaultValue, aideRepliee: !!document.querySelector("#transfert details.aide:not([open]) pre.code") }));
+  const avantTr = await pp.locator("#progTxt").textContent();
+  const faux = await tr("def eclairage(lumiere, train_arrive):\n    if lumiere <= 30:\n        return 2\n    elif train_arrive:\n        return 1\n    else:\n        return 0\n");
+  const juste = await tr("def eclairage(lumiere, train_arrive):\n    if lumiere < 30:\n        return 2\n    if train_arrive:\n        return 1\n    return 0\n");
+  ok("transfert (séance 4) : départ sans squelette (le squelette est une aide repliée) ; `<= 30` refusé au test E3 ; une autre écriture juste passe les 6 tests ; la progression ne bouge pas",
+     !/def /.test(squelette.depart) && squelette.aideRepliee && /E3[\s\S]*attend 0 et obtient 2/.test(faux.etat) && /6 tests/.test(juste.etat) && juste.cases.every(c => /✔/.test(c))
+     && avantTr === await pp.locator("#progTxt").textContent(), faux.etat.slice(0, 60) + " → " + juste.etat.slice(0, 40));
   ok("pédagogie : aucune erreur JavaScript", ep.length === 0, ep.slice(0, 2).join(" | "));
   await pp.close(); await ctxP.close();
 }
