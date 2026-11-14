@@ -13,7 +13,7 @@
 ## État du lot de complétion
 
 - deux synthèses accessibles et imprimables ajoutées ;
-- structuration pédagogique prévue sur trois séances : identité numérique et traces, hameçonnage et vérification, réglages de confidentialité et authentification ;
+- structuration pédagogique sur quatre séances depuis le 14/11/2026 : les risques ; mes données ; mes traces ; ma réputation (la propriété intellectuelle, puis la clôture) ;
 - corrections, erreurs fréquentes et différenciation A/B/C explicitées dans le guide professeur ;
 - QCM encore non conforme à l’en-tête standard : pas de minuteur, pas des sept compteurs permanents et pas des modes de travail attendus ;
 - aucun test navigateur nouveau n’est déclaré à ce stade.

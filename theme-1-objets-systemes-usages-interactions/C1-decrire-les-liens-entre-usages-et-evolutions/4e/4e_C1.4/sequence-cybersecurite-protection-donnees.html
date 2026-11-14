@@ -1788,11 +1788,13 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
           data-panel="s2" id="tab-s2">Séance 2<span class="quoi">Mes données</span></button>
   <button class="seance-tab" role="tab" aria-selected="false" aria-controls="s3"
           data-panel="s3" id="tab-s3">Séance 3<span class="quoi">Mes traces</span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" aria-controls="s4"
+          data-panel="s4" id="tab-s4">Séance 4<span class="quoi">Ma réputation</span></button>
   <button class="seance-tab hors" role="tab" aria-selected="false" aria-controls="shors"
           data-panel="shors" id="tab-shors">Hors parcours<span class="quoi">Python — relève de C9</span></button>
 </div>
 <div id="tachesBandeau" class="pp-ecran" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
-<p class="seance-avis" id="avis-hors" hidden>⚠️ Ce bloc ne fait pas partie des trois séances de
+<p class="seance-avis" id="avis-hors" hidden>⚠️ Ce bloc ne fait pas partie des quatre séances de
 cette séquence&nbsp;: la programmation relève de la compétence C9, pas de C1. <br>Il est conservé ici
 parce que des classes l'utilisent déjà. <strong>Ses points ne comptent pas</strong> dans le score de la séquence — c'est un bonus, pas une séance.</p>
 
@@ -2974,6 +2976,12 @@ Fin du programme.</code></pre>
     </div>
   </div>
 
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Ma réputation ›</button></p>
+</section>
+
+<!-- Séance 4 (14/11/2026, décision de Pascal : « créer une séance 4 ») : la séance 3 portait deux sections et la clôture
+     (1 350 mots visibles). La section 6 et la clôture viennent ici, déplacées sans être réécrites. -->
+<section class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4" data-titre="Séance 4 — Ma réputation">
    <!-- 6. Propriété intellectuelle & e-réputation -->
   <div class="section panel activite" id="sec6">
     <h2 id="bloc6-propriete">⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="sc6">0</span>/<span id="scm6">…</span></span></h2>
@@ -3262,7 +3270,7 @@ Fin du programme.</code></pre>
   </div><!-- fin du bloc 6 : ce </div> manquait ; le navigateur le fermait à </section>,
              et la clôture, posée ici, se serait rangée DANS la carte de l'activité 6 -->
 
-<!-- Clôture de la séquence : Bonus → Bilan → QCM. DANS le panneau de la séance 3
+<!-- Clôture de la séquence : Bonus → Bilan → QCM. DANS le panneau de la séance 4 (de la séance 3 jusqu'au 14/11/2026)
      (22/09/2026, n°306) : hors panneau, ces blocs s'affichaient dès la séance 1. -->
 <section class="r4" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
@@ -3441,7 +3449,7 @@ Fin du programme.</code></pre>
   </fieldset>
 </section>
 
-<!-- Métacognition (meta1-3, ids inchangés) : dans la clôture de la séance 3, juste après le bilan
+<!-- Métacognition (meta1-3, ids inchangés) : dans la clôture de la dernière séance (la 4 depuis le 14/11/2026), juste après le bilan
      (22/09/2026, n°306 D5) — hors panneau, elle s'affichait dès la séance 1. -->
   <div class="section panel">
     <h2>🧠 Métacognition (non notée)</h2>
@@ -4581,7 +4589,8 @@ document.querySelectorAll(".verif-c14 fieldset.qcm-groupe[id]").forEach(f => f.a
 const TACHES = {
   s1: ["Les exercices 1.a à 1.e, puis « Vérifier » la section", {n: "q1", l: "Le quiz Menaces & Solutions"}],
   s2: ["Les exercices 3.a à 3.c", {n: "q3", l: "Le quiz Données personnelles"}, "L'exercice 4.a et la question 4.b", {n: "q4", l: "Le quiz Protection des données"}],
-  s3: ["Les exercices 5.a et 5.b", {n: "q5", l: "Le quiz Traces en ligne"}, "Les exercices 6.a à 6.c", {n: "q6", l: "Le quiz Propriété intellectuelle"}]
+  s3: ["Les exercices 5.a et 5.b", {n: "q5", l: "Le quiz Traces en ligne"}],
+  s4: ["Les exercices 6.a à 6.c", {n: "q6", l: "Le quiz Propriété intellectuelle"}, "Le bilan et « Je me positionne »"]
 };
 function majTaches(){
   const hote = $("tachesBandeau"); if (!hote) return;

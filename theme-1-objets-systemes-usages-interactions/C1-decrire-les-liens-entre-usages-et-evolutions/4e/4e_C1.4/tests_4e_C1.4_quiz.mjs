@@ -16,7 +16,7 @@ await p.goto(URL0, { waitUntil: 'load' }); await p.evaluate(() => localStorage.c
 
 const ATT = await p.evaluate(() => { const out = {}; for (const s of [...document.scripts]) { for (const m of s.textContent.matchAll(/const ATTQ(\d) = \{([^}]*)\};/g)) {
   out[m[1]] = Object.fromEntries([...m[2].matchAll(/(\w+):"((?:[^"\\]|\\.)*)"/g)].map((x) => [x[1], JSON.parse('"' + x[2] + '"')])); } } return out; });
-const QUIZ = { 1: 's1', 3: 's2', 4: 's2', 5: 's3', 6: 's3' };
+const QUIZ = { 1: 's1', 3: 's2', 4: 's2', 5: 's3', 6: 's4' };
 ok('les réponses attendues des cinq quiz se lisent dans la page, 7 questions chacun', Object.keys(QUIZ).every((n) => ATT[n] && Object.keys(ATT[n]).length === 7),
   Object.keys(QUIZ).map((n) => n + ':' + (ATT[n] ? Object.keys(ATT[n]).length : 0)).join(' '));
 const options = (id) => p.$$eval(`#${id} input[type=radio]`, (l) => l.map((x) => x.value));
@@ -57,8 +57,8 @@ await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
 const rest = await p.evaluate((ATT) => Object.values(ATT).every((a) => Object.entries(a).every(([id, v]) => {
   const c = document.querySelector(`#${id} input[type=radio]:checked`); return c && c.value === v; })), ATT);
 ok('après rechargement, les 35 réponses choisies reviennent (sauvegarde de la page)', rest);
-const coches = []; for (const s of ['s1', 's2', 's3']) { await ouvrir(s); coches.push(((await bandeau()).match(/☑/g) || []).length); }
-ok('après rechargement, les cinq quiz validés restent cochés (1 + 2 + 2)', coches.join(',') === '1,2,2', coches.join(','));
+const coches = []; for (const s of ['s1', 's2', 's3', 's4']) { await ouvrir(s); coches.push(((await bandeau()).match(/☑/g) || []).length); }
+ok('après rechargement, les cinq quiz validés restent cochés (1 + 2 + 1 + 1, séance 4 depuis le 14/11/2026)', coches.join(',') === '1,2,1,1', coches.join(','));
 ok('aucune erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 
 const n0 = T.filter((x) => x.ok).length;
