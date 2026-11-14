@@ -276,12 +276,12 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.waitForFunction(() => window.__exp.preuve4 && window.__exp.preuve4.etat !== "rejeu", null, { timeout: 15000 });
   for (const [id, v] of [["a4b1l", "3"], ["a4b1c", "minutes = 2 + 1"], ["a4b2l", "5"],
                          ["a4b2c", "écrire 1.8, avec un point"], ["a4b3c", "on ne soustrait pas un nombre d'un texte"],
-                         ["a4b4", "Q - 96 St 2 min | 25.0 C"]])
+                         ["a4b4", "Q - 96 St 2 min | 25.0 C"], ["a4b5", "disparaît aussi : minutes est devenu un nombre"]])
     await choisir(page, "#" + id, v);
   await page.click('.btn.check[data-check="4"]');
   await page.waitForTimeout(150);
   const fb4 = await page.locator("#fb4").textContent();
-  ok("act. 4 : validée 6/6 avec la sortie réelle de Python", /activité validée/.test(fb4) && /6\/6/.test(fb4), fb4.slice(0, 60));
+  ok("act. 4 : validée 7/7 avec la sortie réelle de Python", /activité validée/.test(fb4) && /7\/7/.test(fb4), fb4.slice(0, 60));
   const texte = await page.evaluate(() => document.body.innerText);
   ok("act. 4 : plus aucune trace de « Q - 96 St - 2 min » ni de « Q - 96 St - 3 min »",
      !/96 St - [23] min/.test(texte));
@@ -364,19 +364,19 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await eprouverPose(pe, ["vs1", "vs2", "vs3", "vs4"], ok);
   /* le verrou de l'activité 3 : refusé avant toute exécution, ouvert par une exécution menée au bout */
   await pe.click("#tab-s2"); await pe.waitForTimeout(200);
-  for (const [id, v] of [["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"],
+  for (const [id, v] of [["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3p4", "<class 'float'> True"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"], ["a3r6", "<class 'float'> True"],
                          ["a3r4", "il les COLLE bout à bout (concaténation)"], ["a3r5", "41 min"]]) await choisir(pe, "#" + id, v);
   await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
   const fbAvant = await pe.locator("#fb3").textContent();
   await executerBloc(pe, "vs1");
   await pe.click('.btn.check[data-check="3"]'); await pe.waitForTimeout(150);
   const fbApres = await pe.locator("#fb3").textContent();
-  ok("act. 3 : le verrou demande l'éditeur Python, et une exécution menée au bout l'ouvre (8/8)",
-     /🔒[\s\S]*éditeur Python/.test(fbAvant) && /activité validée/.test(fbApres) && /8\/8/.test(fbApres), fbAvant.slice(0, 50) + " → " + fbApres.slice(0, 40));
+  ok("act. 3 : le verrou demande l'éditeur Python, et une exécution menée au bout l'ouvre (10/10)",
+     /🔒[\s\S]*éditeur Python/.test(fbAvant) && /activité validée/.test(fbApres) && /10\/10/.test(fbApres), fbAvant.slice(0, 50) + " → " + fbApres.slice(0, 40));
   // Révision du 12/11/2026 : le Bonus est replié (son éditeur aussi) ; le banc l'ouvre, comme l'élève qui a fini.
   await pe.evaluate(() => document.querySelectorAll("details.bonus-replie").forEach(d => { d.open = true; }));
   await eprouverEditeurs(pe, [
-    { bloc: "vs1", nom: "activité 3", onglet: "#tab-s2", depart: { sortie: "7\n34\nTrain Q 3 min\n" } },
+    { bloc: "vs1", nom: "activité 3", onglet: "#tab-s2", depart: { sortie: "7\n34\nTrain Q 3 min\n<class 'float'> True\n" } },
     { bloc: "vs2", nom: "activité 4", onglet: "#tab-s3", depart: { erreur: "TypeError", ligne: 7, explication: /on ne soustrait pas/ },
       corrige: { quoi: "« Q - 96 St 2 min | 25.0 C »", sortie: "Q - 96 St 2 min | 25.0 C\n",
         code: 'train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1.8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n' } },
@@ -517,7 +517,7 @@ await ctx.close();
   const iEd = ecrans.findIndex(e => e.editeur), iQ = ecrans.map(e => e.question).lastIndexOf(true), iRet = ecrans.findIndex(e => /^Je retiens/.test(e.titre));
   ok("mission · act. 4 : l'éditeur a son écran — après la dernière question, avant « Je retiens », avec « Vérifier »",
      iEd === iQ + 1 && iEd === iRet - 1 && ecrans[iEd].verif && !ecrans[iEd].question, ecrans.map(e => e.titre.slice(0, 16) + (e.editeur ? " [éditeur]" : "")).join(" | "));
-  await pm.evaluate(() => { const bon = { a4b1l: "3", a4b1c: "minutes = 2 + 1", a4b2l: "5", a4b2c: "écrire 1.8, avec un point", a4b3c: "on ne soustrait pas un nombre d'un texte", a4b4: "Q - 96 St 2 min | 25.0 C" };
+  await pm.evaluate(() => { const bon = { a4b1l: "3", a4b1c: "minutes = 2 + 1", a4b2l: "5", a4b2c: "écrire 1.8, avec un point", a4b3c: "on ne soustrait pas un nombre d'un texte", a4b4: "Q - 96 St 2 min | 25.0 C", a4b5: "disparaît aussi : minutes est devenu un nombre" };
     for (const id in bon) [...document.querySelectorAll("#" + id + " input[type=radio]")].find(r => r.value === bon[id]).click(); });
   await pm.evaluate(k => document.querySelector('#msRail [data-k="' + k + '"]').click(), iEd); await pm.waitForTimeout(200);
   await pm.click("#msVerif"); await pm.waitForTimeout(300);
@@ -585,7 +585,7 @@ await ctx.close();
   /* activité 4 */
   await pa.click("#tab-s3"); await pa.waitForTimeout(200);
   await repondre([["a4b1l", "3"], ["a4b1c", "minutes = 2 + 1"], ["a4b2l", "5"], ["a4b2c", "écrire 1.8, avec un point"],
-                  ["a4b3c", "on ne soustrait pas un nombre d'un texte"], ["a4b4", "Q - 96 St 2 min | 25.0 C"]]);
+                  ["a4b3c", "on ne soustrait pas un nombre d'un texte"], ["a4b4", "Q - 96 St 2 min | 25.0 C"], ["a4b5", "disparaît aussi : minutes est devenu un nombre"]]);
   await pa.evaluate(() => { const a = document.querySelector("#vs2 .vs-lien"); a.addEventListener("click", e => e.preventDefault(), { once: true }); a.click(); });
   const vitta = await verifier(4);
   ok("audit · act. 4 : ouvrir Vittascience ne valide pas", /🔒/.test(vitta) && !(await valide(4)), vitta.slice(0, 70));
@@ -602,16 +602,16 @@ await ctx.close();
 
   /* activité 3 */
   await pa.click("#tab-s2"); await pa.waitForTimeout(200);
-  await repondre([["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"],
+  await repondre([["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3p4", "<class 'float'> True"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"], ["a3r6", "<class 'float'> True"],
                   ["a3r4", "il les COLLE bout à bout (concaténation)"], ["a3r5", "41 min"]]);
   await pa.evaluate(() => { const a = document.querySelector("#vs1 .vs-lien"); a.addEventListener("click", e => e.preventDefault(), { once: true }); a.click(); });
   const vitta3 = await verifier(3);
   await executerBloc(pa, "vs1", "print(3 + 4)\n");
   const une = await verifier(3);
-  await executerBloc(pa, "vs1", 'print("3" + "4")\nprint("Train " + "Q", 2 + 1, "min")\n');
+  await executerBloc(pa, "vs1", 'print("3" + "4")\nprint("Train " + "Q", 2 + 1, "min")\nprint(type(3 + 4.5), 3 + 4.5 > 7)\n');
   const trois = await verifier(3);
-  ok("audit · act. 3 : Vittascience seul ou une seule expérience → refusé ; les trois expériences vues (en deux fois) → validée",
-     /🔒/.test(vitta3) && /🔒[\s\S]*3 expériences/.test(une) && /activité validée/.test(trois), une.slice(0, 60) + " → " + trois.slice(0, 30));
+  ok("audit · act. 3 : Vittascience seul ou une seule expérience → refusé ; les quatre expériences vues (en deux fois) → validée",
+     /🔒/.test(vitta3) && /🔒[\s\S]*4 expériences/.test(une) && /activité validée/.test(trois), une.slice(0, 60) + " → " + trois.slice(0, 30));
 
   /* une validation de l'activité 5 enregistrée avant le 12/11/2026, sans fonction testée, est retirée à l'ouverture */
   await pa.evaluate(() => { const K = "seq_3e_C9.1_variables_types_systemes", o = JSON.parse(localStorage.getItem(K));
@@ -693,6 +693,35 @@ await ctx.close();
      docs.cols === 4 && docs.planQ && docs.doc1 && docs.doc2 && docs.doc3, JSON.stringify(docs));
   ok("représentations : aucune erreur JavaScript", er.length === 0, er.slice(0, 2).join(" | "));
   await pr.close(); await ctxR.close();
+}
+
+/* ═══ La pédagogie (14/11/2026, audit : A2, A4, B3, G3 ; règles d'or n°323, n°328, n°330) ═══ */
+{
+  const ctxP = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const { page: pp, erreurs: ep } = await ouvrir(ctxP, SEQ);
+  const scenario = await pp.evaluate(() => /scénario de cette séquence/.test(document.querySelector(".declencheur").textContent));
+  ok("situation : le défi est présenté comme le scénario de la séquence (règle d'or n°328)", scenario);
+  /* le billet de sortie : seul, sans aide, hors progression */
+  await pp.click("#tab-s3"); await pp.waitForTimeout(150);
+  const avant = await pp.locator("#progTxt").textContent();
+  const forme = await pp.evaluate(() => { const c = document.getElementById("billetSortie");
+    return { questions: c.querySelectorAll("fieldset.qcm-groupe").length, aides: c.querySelectorAll("details.aide, details.aide1, details.aide2").length,
+      correction: !!c.querySelector("details.correction:not([open])"), seance: c.closest(".seance-panel").id }; });
+  for (const [id, v] of [["bs1", "3"], ["bs2", "4"], ["bs3", '"Train Q"'], ["bs4", "la ligne 2 a rangé la VALEUR 4 dans copie ; la ligne 3 ne change qu'attente"], ["bs5", '"41", puis 5']])
+    await choisir(pp, "#" + id, v);
+  await pp.click("#btnBilletSortie"); await pp.waitForTimeout(150);
+  const fbBS = await pp.locator("#fbBilletSortie").textContent(), apres = await pp.locator("#progTxt").textContent();
+  await choisir(pp, "#bs2", "3"); await pp.click("#btnBilletSortie"); await pp.waitForTimeout(150);
+  const fbBS2 = await pp.locator("#fbBilletSortie").textContent();
+  ok("billet de sortie (séance 3) : 5 questions, sans aide, correction repliée ; 5/5, puis 4/5 avec une erreur ; la progression ne bouge pas",
+     forme.questions === 5 && forme.aides === 0 && forme.correction && forme.seance === "s3" && /^5 \/ 5/.test(fbBS) && /^4 \/ 5/.test(fbBS2) && avant === apres,
+     JSON.stringify(forme) + " · " + fbBS.slice(0, 30) + " · " + fbBS2.slice(0, 20));
+  /* une cause, deux symptômes : le programme du panneau, avec SEULEMENT la ligne 3 corrigée, ne s'arrête plus ligne 7 */
+  const r = await pp.evaluate(() => window.EditeurPython.executer('train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1,8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n'));
+  ok("act. 4 : la réponse « l'erreur de la ligne 7 disparaît aussi » est ce que Python fait (seule la ligne 3 corrigée : pas d'erreur, (45.0, 8))",
+     !r.erreur && /2 min \| \(45\.0, 8\) C/.test(r.sortie), JSON.stringify(r.sortie));
+  ok("pédagogie : aucune erreur JavaScript", ep.length === 0, ep.slice(0, 2).join(" | "));
+  await pp.close(); await ctxP.close();
 }
 
 verifLiens();
