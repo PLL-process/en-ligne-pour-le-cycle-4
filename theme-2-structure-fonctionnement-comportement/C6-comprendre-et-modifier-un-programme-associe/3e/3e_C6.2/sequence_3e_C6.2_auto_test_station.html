@@ -384,6 +384,38 @@ body.essentiel details.referentiel-replie{display:none}
   [data-lpp-racine] [data-lpp="dessin"]{max-width:none!important;width:100%!important;margin:0!important}
   [data-lpp-racine] .lpp-imprime{margin:0!important;padding-left:4.5mm!important;font-size:9pt}
   [data-lpp-racine]:not(.lpp-sans-impression)>:not([data-lpp="dessin"]):not(.lpp-imprime){display:none!important}
+  /* ═══ Sans blancs (14/11/2026 ; pilote 3e_C9.1, puis décision de Pascal : « appliquer à toutes les séquences les règles
+     d'impression compactes ») : rien ne disparaît qui serve à l'élève ; les photos rapetissent ; les titres restent avec
+     leur suite. Les documents dessinés (schémas, captures) gardent leur largeur : plus petits, leur texte passerait sous
+     5 points. ═══ */
+  /* une photo documentaire tient à côté de sa légende, au lieu d'occuper une demi-page */
+  html body figure:has(> img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"])){display:flex!important;gap:4mm;align-items:flex-start;break-inside:avoid;margin:2mm 0!important}
+  html body figure > img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"]){width:58mm!important;max-height:44mm!important;object-fit:cover;flex:none;margin:0!important}
+  html body figure:has(> img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"])) > figcaption{flex:1;text-align:left!important;margin:0!important;font-size:8.5pt!important}
+  /* une réponse courte en rangée : l'énoncé et ses choix sur une même ligne, quand ils y tiennent */
+  html body fieldset.qcm-groupe.qcm-rangee > legend{float:left!important;width:auto!important;margin:0 3mm .6mm 0!important;padding:0!important}
+  html body fieldset.qcm-groupe.qcm-rangee > .qcm-option{display:inline-flex!important;width:auto!important;margin:0 4mm .6mm 0!important}
+  /* « Sans connexion, tout se fait dans la page » parle de l'écran (l'éditeur, le lien) : sur papier, il ne dit rien */
+  html body .activite-en-ligne{display:none!important}
+  /* un banc de tests tient sur une page ; son état (« pas encore testée ») ne parle que de l'écran */
+  html body .bench{break-inside:avoid}
+  html body #bancEleveEtat{display:none!important}
+  /* un Bonus dont les défis sont repliés n'imprime pas son titre seul */
+  html body :is(#bonus,.bonus):has(> details.bonus-replie:not([open])){display:none!important}
+  /* le pied de page (thème, licence) tient en deux lignes, sur la dernière page plutôt que sur une page à lui */
+  html body footer{margin:3mm 0 0!important;padding:0!important;font-size:7.5pt!important;line-height:1.3!important;break-before:avoid}
+  html body footer p{margin:0 0 1mm!important}
+  html body footer p.licence-cc,html body p.licence-cc{margin:0!important;font-size:7.5pt!important}
+  /* (le pilote gardait aussi la consigne avec l'exercice qu'elle annonce, et la question directrice avec sa suite : sur les
+     60 séquences, ces deux règles ont ajouté du blanc — une consigne partie avec un grand exercice laisse un trou en bas de
+     page. Mesuré le 14/11/2026 ; retirées.) */
+  /* « Je me positionne » en pastilles : les pastilles sont des boutons, que la fiche retire ; sur la feuille, des cases
+     (la pastille choisie à l'écran est déjà cochée) */
+  html body .ae-row::after{content:'☐ pas encore    ☐ avec aide    ☐ seul·e    ☐ je peux l\'expliquer';display:block;width:100%;margin-top:1mm;font-size:9pt;color:#111827}
+  html body .ae-row:has(.ae-b.sel[data-v="🔴"])::after{content:'☒ pas encore    ☐ avec aide    ☐ seul·e    ☐ je peux l\'expliquer'}
+  html body .ae-row:has(.ae-b.sel[data-v="🟡"])::after{content:'☐ pas encore    ☒ avec aide    ☐ seul·e    ☐ je peux l\'expliquer'}
+  html body .ae-row:has(.ae-b.sel[data-v="🟢"])::after{content:'☐ pas encore    ☐ avec aide    ☒ seul·e    ☐ je peux l\'expliquer'}
+  html body .ae-row:has(.ae-b.sel[data-v="⭐"])::after{content:'☐ pas encore    ☐ avec aide    ☐ seul·e    ☒ je peux l\'expliquer'}
 }
 </style>
 <script>
@@ -427,7 +459,20 @@ body.essentiel details.referentiel-replie{display:none}
     ["Nom", "Prénom", "Classe", "Date"].forEach(function(n, i){ id.appendChild(el("span", i > 1 ? "pp-court" : "", n + " :")); });
     e.appendChild(id);
     document.body.insertBefore(e, document.body.firstChild);
-    document.documentElement.style.setProperty("--pp-pied", JSON.stringify(titre + (niveau ? " · " + niveau : "")));
+    /* La licence passe dans le pied de chaque page (« CC BY-NC-SA 4.0 · © auteur, année »), qui ne coûte aucune place ; le
+       pied de la page web (thème, licence) ne s'imprime plus, sauf s'il porte des crédits : seul en fin de fiche, il
+       prenait parfois une page à lui (14/11/2026). */
+    var pied = titre + (niveau ? " · " + niveau : ""), lic = document.querySelector("p.licence-cc");
+    if (lic){
+      var tx = propre(lic.textContent), cc = /CC0(?: 1\.0)?|CC [A-Z]{2}(?:-[A-Z]{2})*(?: \d\.\d)?/.exec(tx), au = /©\s*([^·—]+?)\s*(?:·|—|$)/.exec(tx);
+      if (cc) pied += " · " + cc[0] + (au ? " · © " + au[1].trim() : "");
+      [].forEach.call(document.querySelectorAll("footer"), function(f){
+        if (!f.contains(lic)) return;
+        var c = f.cloneNode(true); c.querySelectorAll("p.licence-cc, style, script").forEach(function(x){ x.remove(); });
+        if (!/crédit|photo|©|CC BY|wikimedia|\bsources?\b/i.test(c.textContent)) f.classList.add("pp-ecran");
+      });
+    }
+    document.documentElement.style.setProperty("--pp-pied", JSON.stringify(pied));
     return sur;
   }
 

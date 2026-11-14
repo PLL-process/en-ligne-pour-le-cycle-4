@@ -38,7 +38,20 @@
     ["Nom", "Prénom", "Classe", "Date"].forEach(function(n, i){ id.appendChild(el("span", i > 1 ? "pp-court" : "", n + " :")); });
     e.appendChild(id);
     document.body.insertBefore(e, document.body.firstChild);
-    document.documentElement.style.setProperty("--pp-pied", JSON.stringify(titre + (niveau ? " · " + niveau : "")));
+    /* La licence passe dans le pied de chaque page (« CC BY-NC-SA 4.0 · © auteur, année »), qui ne coûte aucune place ; le
+       pied de la page web (thème, licence) ne s'imprime plus, sauf s'il porte des crédits : seul en fin de fiche, il
+       prenait parfois une page à lui (14/11/2026). */
+    var pied = titre + (niveau ? " · " + niveau : ""), lic = document.querySelector("p.licence-cc");
+    if (lic){
+      var tx = propre(lic.textContent), cc = /CC0(?: 1\.0)?|CC [A-Z]{2}(?:-[A-Z]{2})*(?: \d\.\d)?/.exec(tx), au = /©\s*([^·—]+?)\s*(?:·|—|$)/.exec(tx);
+      if (cc) pied += " · " + cc[0] + (au ? " · © " + au[1].trim() : "");
+      [].forEach.call(document.querySelectorAll("footer"), function(f){
+        if (!f.contains(lic)) return;
+        var c = f.cloneNode(true); c.querySelectorAll("p.licence-cc, style, script").forEach(function(x){ x.remove(); });
+        if (!/crédit|photo|©|CC BY|wikimedia|\bsources?\b/i.test(c.textContent)) f.classList.add("pp-ecran");
+      });
+    }
+    document.documentElement.style.setProperty("--pp-pied", JSON.stringify(pied));
     return sur;
   }
 
