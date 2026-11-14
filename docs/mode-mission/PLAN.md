@@ -93,7 +93,7 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
 - [x] Leurres et pourquoi des erreurs : le modèle, sur le lampadaire (`mission_5e_C4.1.json`, `enrichir.py`).
 - [x] Avis de Pascal sur le modèle (11/11) : « Je te laisse carte blanche ». Faits : `5e_C6.1`, `4e_C6.1`.
 - [x] Les pourquoi de `3e_C4.1` (72 pourquoi, 5 indices) et de `3e_C4.3` (17 pourquoi, 26 indices, 1 leurre).
-- [x] Les pourquoi de `3e_C9.1` (79 pourquoi, 27 questions), écrits avec sa révision du 12/11.
+- [x] Les pourquoi de `3e_C9.1` (79 pourquoi, 27 questions), écrits avec sa révision du 12/11 ; 82 et 28 le 14/11 (audit : la question des deux conditions vraies, activité 5).
 - [x] Les pourquoi de `3e_C4.7` (45 pourquoi, 10 indices), de `3e_C5.1` (45 pourquoi, 10 indices) et de `3e_C6.1` (48 pourquoi).
 - [x] Les pourquoi de `4e_C4.1` (97 pourquoi) et de `4e_C5.1` (45 pourquoi, 12 indices) : le premier lot est complet.
 - [x] **« Le mode mission doit être partout »** (Pascal, 11/11), premier lot : le mode est posé sur **55 pages de
