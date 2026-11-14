@@ -696,8 +696,21 @@ function $$(s, r){ return [].slice.call((r || D).querySelectorAll(s)); }
 function el(t, c, h){ var e = D.createElement(t); if (c) e.className = c; if (h) e.innerHTML = h; return e; }
 function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; }); }
 function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
-function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:false, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; }
-function ecrire(){ try { localStorage.setItem(CLE, JSON.stringify(M)); } catch (e) {} }
+/* Allumé d'emblée (décision de Pascal du 14/11/2026 : « le mode mission est, pour toutes les séquences, déclenché
+   d'emblée ») : à sa première visite, l'élève arrive en mission ; s'il choisit « 📄 Page complète », la page s'en souvient
+   (dans ce navigateur) ; « Effacer ma sauvegarde » le remet en mission. Un navigateur piloté par un robot de test
+   (`navigator.webdriver`) ouvre la page complète, comme avant : les bancs et les contrôles mesurent la page qui défile,
+   et ceux du mode (banc_generique, banc_mission, banc_defaut) l'allument eux-mêmes. */
+var DEFAUT = !(navigator && navigator.webdriver);
+try {
+  var _rm = Storage.prototype.removeItem, _vide = Storage.prototype.clear, marque = function(){ try { sessionStorage.setItem("mission:efface", "1"); } catch (e) {} };
+  Storage.prototype.removeItem = function(k){ if (this === window.localStorage && typeof KEY === "string" && k === KEY) marque(); return _rm.apply(this, arguments); };
+  Storage.prototype.clear = function(){ if (this === window.localStorage) marque(); return _vide.apply(this, arguments); };
+} catch (e) {}
+function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; }
+/* `vu` : la page a déjà enregistré quelque chose depuis que la mission tient ses comptes. Sa sauvegarde disparue ensuite,
+   c'est « Effacer ma sauvegarde » : on le distingue ainsi d'une page où l'élève n'a encore rien enregistré. */
+function ecrire(){ try { if (typeof KEY === "string" && localStorage.getItem(KEY) !== null) M.vu = true; localStorage.setItem(CLE, JSON.stringify(M)); } catch (e) {} }
 function etoiles(n){ var s = ""; for (var i = 1; i <= 3; i++) s += ET.replace("{on}", i <= n ? " on" : ""); return '<span class="ms-etoiles" role="img" aria-label="' + n + " étoile" + (n > 1 ? "s" : "") + ' sur 3">' + s + "</span>"; }
 /* prévenir la page qu'une réponse a changé, comme le ferait un appui : l'événement part du bouton radio coché (c'est
    lui que certaines pages écoutent pour sauvegarder), ou du groupe quand plus rien n'est coché */
@@ -1205,7 +1218,10 @@ function init(){
   lire();
   /* « Effacer ma sauvegarde » efface aussi la mission : sur un poste partagé, l'élève suivant ne trouve ni les
      étoiles ni l'écran du précédent. La page efface sa clé puis se recharge ; on le voit ici à sa clé absente. */
-  try { if (typeof KEY === "string" && localStorage.getItem(KEY) === null && (Object.keys(M.etoiles).length || Object.keys(M.fait).length || Object.keys(M.k).length || Object.keys(M.erreurs).length)){ M = { v:1, on:M.on, k:{}, essais:{}, erreurs:{}, etoiles:{}, fait:{} }; ecrire(); } } catch (e) {}
+  /* « Effacer ma sauvegarde » : la page retire sa clé (ou vide tout) puis se recharge. Certaines pages réécrivent leur clé
+     dès le chargement, avant ce script : le geste d'effacer est donc repéré au moment où il a lieu (marque de session). */
+  var efface = false; try { efface = sessionStorage.getItem("mission:efface") === "1"; sessionStorage.removeItem("mission:efface"); } catch (e) {}
+  try { if (efface || (typeof KEY === "string" && localStorage.getItem(KEY) === null && (M.vu || Object.keys(M.etoiles).length || Object.keys(M.fait).length || Object.keys(M.k).length || Object.keys(M.erreurs).length))){ M = { v:1, on:((efface || M.vu) ? DEFAUT : M.on), k:{}, essais:{}, erreurs:{}, etoiles:{}, fait:{} }; ecrire(); } } catch (e) {}
   chrome();
   /* la séance change (onglet, bouton « séance suivante », lien vers une ancre) : le mode suit le panneau ouvert */
   function suivre(){ if (actif && panneauActif() !== panneau) synchroniser(); }
