@@ -30554,6 +30554,28 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 
 ---
 
+## 14/11/2026 — Le mode mission s'ouvre d'emblée, sur toutes les séquences
+
+**La décision.** Pascal : « Le mode mission est pour toutes les séquences déclenché d'emblée. » Elle tranche la question laissée ouverte le 11/11 (« L'allumer d'office reste à décider : il faudrait apprendre aux bancs et aux contrôles à ouvrir la page complète »).
+
+**Ce que voit l'élève.**
+- À sa première visite d'une séquence, il arrive en mission : un exercice à la fois.
+- « 📄 Page complète » le ramène à la page qui défile, et la page s'en souvient dans son navigateur. « 🎮 Mode mission » l'y renvoie.
+- « Effacer ma sauvegarde » remet la mission : sur un poste partagé, l'élève suivant arrive en mission.
+- À l'impression, rien ne change : tout ce que la mission cache l'est sous `@media screen`, et la fiche papier sort entière.
+
+**Comment.** Une seule source, `_outils/mode_mission/mission.js`, reposée sur les 60 séquences (`poser.py`) :
+- l'état de départ de la mission est « allumé » (il était « éteint ») ;
+- **un robot de test ouvre la page complète** (`navigator.webdriver`). Les bancs des séquences et les contrôles du site mesurent et jouent la page qui défile, comme avant ; il n'a pas fallu réécrire les quelque 80 bancs. Ceux du mode l'allument eux-mêmes ;
+- l'effacement de la sauvegarde est repéré au moment où il a lieu (la clé de la page retirée, ou le stockage vidé). Le test l'a montré nécessaire : `5e_C6.1` réécrit sa clé dès le chargement, avant le script de la mission, qui ne voyait donc jamais la sauvegarde disparue ;
+- la page sait si elle a déjà enregistré quelque chose (`vu`) : une clé absente parce que l'élève n'a encore rien écrit ne passe plus pour un effacement — sinon, après « 📄 Page complète », un rechargement le renvoyait en mission.
+
+**Le banc qui le prouve** (`_outils/mode_mission/banc_defaut.mjs`, nouveau), sur les 60 séquences, avec un navigateur d'élève (`navigator.webdriver` faux) : première visite en mission ; imprimée en mission, la même fiche que la page complète ; « 📄 Page complète » retenu au rechargement ; « 🎮 Mode mission » retenu aussi ; « Effacer ma sauvegarde » et un stockage vide ramènent la mission ; un robot de test ouvre la page complète. **60 / 60** : les 60 séquences s'ouvrent en mission (Book Train et les pages « station » de `3e_C9.2` comprises : le moteur reconnaît leurs séances).
+
+**Ce que ça ne change pas.** Le contenu des pages ; la page complète, ses bancs et ses contrôles ; l'impression. `4e_C1.4` et `3e_C1.5` s'ouvrent en mission comme les autres, une carte par écran, avec la vérification de leur section, en attendant leurs questions par activité (la suite du thème 1).
+
+---
+
 ## 14/11/2026 — L'impression sans blancs, de `3e_C9.1` à toutes les séquences ; la licence dans le pied de page
 
 **La décision.** Pascal : « appliquer à toutes les séquences les règles d'impression compactes testées sur 3e_C9.1 ». La question venait de `5e_C1.3` (#681) : la quatrième page de la séance 3 ne portait que la licence.
