@@ -181,9 +181,9 @@ E1 = dict(
            "<b>Ce n'est pas un interacteur.</b></p>"],
     jumeau=dict(consigne="Un parasol est planté dans le sable d'une plage, au soleil ; une famille pique-nique dessous. "
                          "Écris trois de ses interacteurs extérieurs.",
-                correction="Par exemple&nbsp;: <b>le sable</b> (il tient le pied), <b>le soleil</b> (le parasol fait de l'ombre "
-                           "contre lui), <b>le vent</b> (il pousse la toile), <b>la famille</b> (elle s'abrite dessous). "
-                           "La toile et le mât sont des pièces du parasol&nbsp;: ce ne sont pas des interacteurs."),
+                correction="Par exemple&nbsp;: <br><b>le sable</b> (il tient le pied)&nbsp;; <br><b>le soleil</b> (le parasol fait de l'ombre "
+                           "contre lui)&nbsp;; <br><b>le vent</b> (il pousse la toile)&nbsp;; <br><b>la famille</b> (elle s'abrite dessous). "
+                           "<br>La toile et le mât sont des pièces du parasol&nbsp;: ce ne sont pas des interacteurs."),
     correction=[
         "<b>Ce qu'on cherche&nbsp;:</b> ce qui est <b>en dehors</b> du vélo-cargo <b>et</b> en relation avec lui.",
         "<b>Léa</b> → en dehors ✔ → elle pédale et dirige ✔ → interacteur",
@@ -369,13 +369,13 @@ E3 = dict(
         "<b>Bulle ②</b>, un autre objet → <b>les courses</b> → une chose qu'on touche, que le bac porte",
         "<b>Bulle ③</b>, un élément de l'environnement → <b>la route en pente</b> → les roues roulent dessus",
         "<b>Les intrus</b> → la pédale et la chaîne → ce sont des <b>pièces du vélo-cargo</b>, dedans",
-        "Les trois autres raisons ne tiennent pas&nbsp;: les enfants bougent aussi et ont une bulle&nbsp;; la pluie n'est pas une "
-        "personne et a une bulle&nbsp;; la taille ne décide de rien.",
+        "Les trois autres raisons ne tiennent pas&nbsp;: <br>les enfants bougent aussi et ont une bulle&nbsp;; <br>la pluie n'est pas une "
+        "personne et a une bulle&nbsp;; <br>la taille ne décide de rien.",
         "<b>FP1</b> → relie <b>deux</b> éléments, Léa et ses enfants, <b>en passant par</b> le vélo-cargo → le service rendu",
-        "<b>FP1 et la bête à cornes</b> → Léa, l'utilisatrice, c'est «&nbsp;à qui&nbsp;?&nbsp;» (la bulle de départ) ; les enfants, "
-        "la matière d'œuvre, «&nbsp;sur quoi&nbsp;?&nbsp;» (la bulle d'arrivée) ; transporter, la fonction, «&nbsp;dans quel "
-        "but&nbsp;?&nbsp;» (la phrase) ; le vélo-cargo, le produit, au centre des deux schémas → la FP1 dit la <b>fonction "
-        "d'usage</b>, c'est la corne de la bête à cornes",
+        "<b>FP1 et la bête à cornes</b>&nbsp;: <br>Léa, l'utilisatrice, c'est «&nbsp;à qui&nbsp;?&nbsp;» (la bulle de départ)&nbsp;; <br>les enfants, "
+        "la matière d'œuvre, «&nbsp;sur quoi&nbsp;?&nbsp;» (la bulle d'arrivée)&nbsp;; <br>transporter, la fonction, «&nbsp;dans quel "
+        "but&nbsp;?&nbsp;» (la phrase)&nbsp;; <br>le vélo-cargo, le produit, au centre des deux schémas. <br>La FP1 dit la <b>fonction "
+        "d'usage</b>&nbsp;: c'est la corne de la bête à cornes",
         '<figure class="figure">' + BETE_VERS_PIEUVRE + '<figcaption>La corne devient la FP1.</figcaption></figure>',
         "<b>FC1</b> → au bout de FP1, les enfants imposent aussi une contrainte → «&nbsp;protéger les enfants pendant le trajet&nbsp;» "
         "(c'est souvent le cas&nbsp;: ce sur quoi l'objet agit lui impose une condition)",

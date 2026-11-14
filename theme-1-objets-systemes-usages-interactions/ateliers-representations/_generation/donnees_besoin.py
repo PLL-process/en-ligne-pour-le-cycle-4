@@ -124,9 +124,9 @@ def fig_reference(ident, apte=True, legende=None):
 FIG_REFERENCE_APTE = fig_reference("bc-ref")
 #: dans la séance 1 de 5e_C2.1 : son a) a déjà fait placer les questions, puis les mots ; le dessin les reprend
 FIG_REFERENCE_SHENZHEN = fig_reference(
-    "bc-ref-s", legende="Le dessin de référence, à retenir&nbsp;: l'<b>utilisateur</b> (à qui le produit rend service), la "
-                        "<b>matière d'œuvre</b> (ce sur quoi il agit), le <b>produit</b>, et la <b>fonction</b> (la fonction "
-                        "d'usage&nbsp;: dans quel but il existe). Ces quatre mots servent pour tous les objets.")
+    "bc-ref-s", legende="Le dessin de référence, à retenir&nbsp;: <br>l'<b>utilisateur</b> (à qui le produit rend service)&nbsp;; <br>la "
+                        "<b>matière d'œuvre</b> (ce sur quoi il agit)&nbsp;; <br>le <b>produit</b>&nbsp;; <br>la <b>fonction</b> (la fonction "
+                        "d'usage&nbsp;: dans quel but il existe). <br>Ces quatre mots servent pour tous les objets.")
 #: la carte des représentations (document du professeur), dans une carte de la page
 FIG_REFERENCE_CARTE = '<div class="card">%s</div>' % fig_reference(
     "bc-ref", legende="Le gabarit de la bête à cornes, rempli avec les quatre mots de référence que les élèves "
@@ -634,16 +634,16 @@ E1 = dict(
         "<b>La phrase du schéma&nbsp;:</b> le vélo-cargo rend service <b>à Léa</b>, en agissant <b>sur ses deux enfants et ses "
         "courses</b>, <b>pour</b> les transporter en ville.",
         "<b>① À qui&nbsp;?</b> → Léa → c'est elle qui se sert du vélo-cargo&nbsp;: l'<b>utilisatrice</b>",
-        "Refusés&nbsp;: « elle l'a acheté » → celui qui paie n'est pas toujours celui à qui l'objet rend service&nbsp;; « la plus "
-        "forte » → la force ne décide de rien&nbsp;; « une pièce du vélo » → Léa reste en dehors de l'objet.",
+        "Refusés&nbsp;: <br>« elle l'a acheté » → celui qui paie n'est pas toujours celui à qui l'objet rend service&nbsp;; <br>« la plus "
+        "forte » → la force ne décide de rien&nbsp;; <br>« une pièce du vélo » → Léa reste en dehors de l'objet.",
         "<b>② Sur quoi&nbsp;?</b> → les enfants et les courses → le vélo-cargo les fait changer de place&nbsp;: la <b>matière "
         "d'œuvre</b>",
-        "Refusés&nbsp;: « ils sont dans le bac » → vrai, mais un bac à l'arrière ne changerait rien&nbsp;; « plus importants » → "
-        "l'importance ne décide pas&nbsp;; « la route ne touche pas » → faux, elle touche les roues, mais elle ne bouge pas.",
+        "Refusés&nbsp;: <br>« ils sont dans le bac » → vrai, mais un bac à l'arrière ne changerait rien&nbsp;; <br>« plus importants » → "
+        "l'importance ne décide pas&nbsp;; <br>« la route ne touche pas » → faux, elle touche les roues, mais elle ne bouge pas.",
         "<b>③ Dans quel but&nbsp;?</b> → « déplacer ses enfants et ses courses d'un bout à l'autre de la ville » → un verbe à "
         "l'infinitif, aucune solution&nbsp;: la <b>fonction</b> d'usage",
-        "Refusés&nbsp;: le bac et les vitesses → des solutions (comment)&nbsp;; « le vélo-cargo de Léa » → le nom de l'objet&nbsp;; "
-        "« résister à la pluie » → une contrainte, pas le but.",
+        "Refusés&nbsp;: <br>le bac et les vitesses → des solutions (comment)&nbsp;; <br>« le vélo-cargo de Léa » → le nom de l'objet&nbsp;; "
+        "<br>« résister à la pluie » → une contrainte, pas le but.",
         ("conclusion", "La bête à cornes se lit comme une phrase&nbsp;: <b>à qui</b> (l'utilisateur) → <b>sur quoi</b> (la "
                        "matière d'œuvre) → <b>pour quoi</b> (la fonction)."),
     ],

@@ -271,7 +271,10 @@ with sync_playwright() as p:
       "bête à cornes" in pg.inner_text("#tachesBandeau").lower())
 
     # — point 1 : la fonction d'usage est nommée —
-    note = pg.evaluate("[...document.querySelectorAll('#s1 p.meta')].map(p=>p.textContent).join(' ')")
+    # (14/11/2026) la note se replie après le billet : elle donnait la réponse avant que l'élève réponde
+    note = pg.evaluate("[...document.querySelectorAll('#s1 p.meta, #s1 details.meta')].map(p=>p.textContent).join(' ')")
+    t("billet : la note qui donne la réponse est repliée, à ouvrir après avoir répondu",
+      pg.evaluate("(()=>{const d=document.querySelector('#s1 details.meta');return !!d && !d.open && /après avoir répondu/.test(d.querySelector('summary').textContent);})()"))
     t("billet : la note nomme la fonction d'usage (EN : use function)",
       "c'est la fonction d'usage" in note and "use function" in note and "principe" in note, note[:120])
     caps = " ".join(pg.text_content("#capsule").split())
