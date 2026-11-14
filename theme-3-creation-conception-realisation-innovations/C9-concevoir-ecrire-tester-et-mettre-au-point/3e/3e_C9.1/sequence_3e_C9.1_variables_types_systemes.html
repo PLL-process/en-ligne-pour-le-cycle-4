@@ -131,7 +131,8 @@
   .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
   .confiance input{accent-color:var(--hl)}
   .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
-  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:var(--sub);font-size:.8em}
+  .credit-photo{color:var(--sub)}   /* 12/11/2026 : #5b7bb8 sur le fond de la carte faisait 3,69:1 */
   .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:1300}
   .skip-link:focus{left:0}
   @media (prefers-reduced-motion: reduce){
@@ -163,7 +164,8 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 @media(max-width:680px){.mem-wrap{grid-template-columns:1fr}}
 /* le positionnement du bilan : les pastilles se détachent du texte, et celle qu'on choisit se voit (12/11/2026 — elles n'avaient aucun style à l'écran) */
 .ae-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--border);padding:8px 0;flex-wrap:wrap}
-.ae-btns{display:flex;gap:6px}
+.ae-btns{display:flex;gap:6px;flex-wrap:wrap}
+.ae-mot{font-size:.85em}
 .ae-b{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:6px 12px;min-height:40px;cursor:pointer;font-family:inherit;font-size:1rem;color:var(--text)}
 .ae-b.sel{background:var(--btn);border-color:var(--hl);box-shadow:0 0 0 2px var(--hl)}
 .mem-code{background:#08132c;border:1px solid #274a8a;border-radius:10px;padding:10px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.9em}
@@ -206,6 +208,13 @@ details.correction>summary{padding-block:10px}
 .bench th,.bench td{border-bottom:1px solid #274a8a;padding:8px 10px;text-align:center}
 .bench th{background:#173666;color:#61dafb}
 .bench .res{font-weight:700}
+/* le banc de la fonction de l'élève (12/11/2026) : la preuve de l'activité 5 */
+.banc-eleve{margin:14px 0}
+.banc-eleve-titre{margin:0 0 6px}
+.banc-eleve-etat{font-weight:600;margin:8px 0;color:var(--sub)}
+.banc-eleve-etat.ok{color:var(--ok)}
+.banc-eleve-etat.ko{color:var(--warn)}
+#bancEleveRun{min-height:44px}
 @media (max-width:699px){   /* sur un téléphone, chaque test est un bloc : le tableau était coupé, « Obtenu » et ▶ hors d'atteinte */
   section.card .bench table,section.card .bench tbody,section.card .bench table td{display:block}
   section.card .bench table tr:first-child{display:none}
@@ -214,7 +223,7 @@ details.correction>summary{padding-block:10px}
   section.card .bench table td{border:0;padding:0;text-align:left;background:none}
   section.card .bench table td:first-child{flex:1 1 100%;font-weight:700}
   section.card .bench table td[data-l]::before{content:attr(data-l) " : ";color:var(--sub);font-weight:400}
-  section.card .bench table td:last-child{margin-left:auto}
+  section.card .bench table td:last-child:not(.res){margin-left:auto}
 }
 figure{width:100%;margin:14px 0}
 figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
@@ -1586,13 +1595,13 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
     est reparti en laissant un code plein de bugs.</p>
     <p>Ton collège est jumelé avec une classe de Manhattan, et leur professeur vous met au défi :
     <b>« Nos élèves n'ont pas trouvé les bugs. <br>Vos élèves de Martinique feront-ils mieux ? »</b>
-    Pour gagner, il faut d'abord maîtriser ce que 9 collégiens sur 10 croient connaître sans
-    la comprendre : <b>la variable</b>. <br>Puis ses <b>types</b>. Puis la <b>mise au point</b> —
+    Pour gagner, il faut d'abord maîtriser une notion qui réserve encore des surprises :
+    <b>la variable</b>. <br>Puis ses <b>types</b>. Puis la <b>mise au point</b> —
     l'art de prouver qu'un programme marche VRAIMENT.</p>
   </div>
   <figure style="margin:14px 0;width:100%">
     <img class="figure" src="Images/mezzanine_96st_mta_ccby.jpg" alt="La mezzanine de la station 96 St : murs bleus à l'œuvre d'art en papiers volants, panneaux Q jaunes avec flèches, et le panneau d'affichage LED suspendu qui indique la date et l'heure" loading="lazy">
-    <figcaption>La vraie mezzanine de 96 St — et suspendu au plafond, LE panneau d'affichage LED que tu vas apprendre à réparer. <br>Repère les ronds Q jaunes et la sortie « 96 Street &amp; 2 Avenue ». <span style="color:#5b7bb8"><br>Photo : MTA (Flickr, « SAS_2665 »), licence CC BY 2.0 — image redimensionnée · flickr.com/photos/mtaphotos/31810433955</span></figcaption>
+    <figcaption>La vraie mezzanine de 96 St — et suspendu au plafond, LE panneau d'affichage LED que tu vas apprendre à réparer. <br>Repère les ronds Q jaunes et la sortie « 96 Street &amp; 2 Avenue ». <span class="credit-photo"><br>Photo : MTA (Flickr, « SAS_2665 »), licence CC BY 2.0 — image redimensionnée · flickr.com/photos/mtaphotos/31810433955</span></figcaption>
   </figure>
   <figure style="margin:14px 0;width:100%">
     <object class="figure" data="Images/ligne_q_plan_simplifie.svg" type="image/svg+xml" aria-label="Plan simplifié de la ligne Q : la station 96 St est marquée TU ES ICI, la ligne descend Manhattan, traverse le pont de Manhattan et va jusqu'à Coney Island" style="width:100%"></object>
@@ -1619,7 +1628,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
   <figure style="margin:14px 0;width:100%">
     <img class="figure" src="Images/train_q_86st_mta_ccby.jpg" alt="Un train R160 de la ligne Q à quai : le rond Q rouge lumineux au-dessus de la porte avant, le drapeau américain, le logo MTA New York City Subway, et sur le mur le nombre 86 de la station 86th Street" loading="lazy">
-    <figcaption>Le train que ton panneau annonce — un R160 de la ligne Q, photographié le jour de l'inauguration (30/12/2016). <br>Lis l'image : le rond <b>Q</b> au-dessus de la cabine, et sur le mur… <br><b>86</b> : la station voisine de la nôtre, une rue plus bas sur la 2e Avenue. <span style="color:#5b7bb8"><br>Photo : MTA (Flickr, « 86th Street Second Av. Subway Station Unveiled »), licence CC BY 2.0 — image redimensionnée · flickr.com/photos/mtaphotos/31863535272</span></figcaption>
+    <figcaption>Le train que ton panneau annonce — un R160 de la ligne Q, photographié le jour de l'inauguration (30/12/2016). <br>Lis l'image : le rond <b>Q</b> au-dessus de la cabine, et sur le mur… <br><b>86</b> : la station voisine de la nôtre, une rue plus bas sur la 2e Avenue. <span class="credit-photo"><br>Photo : MTA (Flickr, « 86th Street Second Av. Subway Station Unveiled »), licence CC BY 2.0 — image redimensionnée · flickr.com/photos/mtaphotos/31863535272</span></figcaption>
   </figure>
 </section>
 
@@ -1668,14 +1677,14 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 </section>
 
 <div class="seance-tabs" role="tablist" id="seances">
-  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — La boîte étiquetée<span id="done-s1"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Les types<span id="done-s2"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Le panneau bugué<span id="done-s3"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4 — Mise au point<span id="done-s4"></span></button>
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1" aria-controls="s1">Séance 1 — La boîte étiquetée<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2" aria-controls="s2">Séance 2 — Les types<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3" aria-controls="s3">Séance 3 — Le panneau bugué<span id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4" aria-controls="s4">Séance 4 — Mise au point<span id="done-s4"></span></button>
 </div>
 
 <!-- ══════ SÉANCE 1 ══════ -->
-<div class="seance-panel active" id="s1" role="tabpanel">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s1">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>📦 Séance 1 — La variable : une boîte étiquetée (3e_C9.1)</h2>
@@ -1706,7 +1715,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       </div>
       <p class="py-legende">🎨 Lis le code en couleurs : <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
       <div>
-        <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:#5b7bb8">— la mémoire est vide : lance l'exécution —</em></div>
+        <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:var(--sub)">— la mémoire est vide : lance l'exécution —</em></div>
         <div class="mem-ecran" id="memEcran" aria-label="Écran du panneau"></div>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn" id="memNext" type="button">▶ Étape suivante</button>
@@ -1862,7 +1871,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
-<div class="seance-panel" id="s2" role="tabpanel">
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
 <p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s2">📖 Les mots de cette séance</a></p>
 <!-- gestes-outil-v3 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau ; n°297 : à la porte de l'outil.
      Depuis le 04/11/2026 l'outil est l'éditeur Python INTÉGRÉ à la page (Vittascience devient facultatif).
@@ -2022,7 +2031,7 @@ print("Train " + "Q", 2 + 1, "min")
       le même chiffre ». Pour l'ordinateur, l'un se calcule, l'autre s'affiche. <code>int("5")</code>
       fait passer du texte au nombre — c'est le décodeur.</p>
     </details>
-    <div class="retenir"><b>🧠 À retenir :</b> le TYPE décide de ce que fait l'opération. int/float → le + additionne ; str → le + colle (concaténation). En cas de doute : <code>type(x)</code>.</div>
+    <div class="retenir"><b>🧠 À retenir :</b> le TYPE décide de ce que fait l'opération. <br>Deux nombres, int ou float → le + additionne : <code>3 + 4.5</code> donne <code>7.5</code>. <br>Deux textes, str → le + colle (concaténation). <br>Un texte et un nombre ne s'additionnent pas : <code>"3" + 4</code> déclenche une erreur de type. <br>En cas de doute : <code>type(x)</code>.</div>
     <p class="critere"><b>🎯 Critère de réussite :</b> je peux prédire le résultat de <code>x + y</code> rien qu'en regardant les guillemets.</p>
   </div>
 </section>
@@ -2030,7 +2039,7 @@ print("Train " + "Q", 2 + 1, "min")
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
-<div class="seance-panel" id="s3" role="tabpanel">
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s3">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🚇 Séance 3 — Répare le panneau du quai 96 St (3e_C9.1)</h2>
@@ -2145,7 +2154,7 @@ print(message, minutes, "min |", temperature_c, "C")
 </div>
 
 <!-- ══════ SÉANCE 4 ══════ -->
-<div class="seance-panel" id="s4" role="tabpanel">
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
 <p class="mots-seance"><a href="lexique_3e_C9.1.html#seance-s4">📖 Les mots de cette séance</a></p>
 <section class="card">
   <h2>🌬 Séance 4 — Du besoin au programme testé : la ventilation de la station (3e_C9.1)</h2>
@@ -2157,7 +2166,7 @@ print(message, minutes, "min |", temperature_c, "C")
     <div class="meta-grid">
       <div><b>Objectif :</b> élaborer un algorithme, le traduire en fonction Python, puis le mettre au point avec un banc de tests — cas limites compris.</div>
       <div><b>Compétence :</b> 3e_C9.1 en entier (élaborer → traduire → tester → mettre au point).</div>
-      <div><b>Production attendue :</b> fonction complétée + 4 tests exécutés + le cas limite tranché.</div>
+      <div><b>Production attendue :</b> la traduction, le cas limite tranché, et TA fonction qui réussit les 7 tests de la page.</div>
       <div><b>Ressources :</b> le document 3 + le banc de tests intégré.</div>
     </div>
     <p class="doc-glisse pp-ecran">↔ Sur un petit écran, fais glisser le document pour le lire en entier.</p>
@@ -2165,7 +2174,7 @@ print(message, minutes, "min |", temperature_c, "C")
       <object class="figure" data="Images/ventilation_station_algo.svg" type="image/svg+xml" aria-label="De l'algorithme au programme structuré et testé" style="width:100%"></object>
       <figcaption>Document 3 — Élaborer, traduire, mettre au point : le trajet complet du besoin au programme prouvé.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. <br>① Complète la traduction Python. <br>② Exécute les 4 tests du banc (ton badge 🔓). <br>③ Tranche le cas limite.</div>
+    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice de simulation &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. <br>① Complète la traduction Python. <br>② Exécute les 4 tests du banc de démonstration (ton badge 🔓). <br>③ Tranche le cas limite. <br>④ Écris TA fonction dans l'éditeur : la page la teste.</div>
     <div class="exo">
       <p><b>① La traduction — complète la fonction :</b></p>
       <pre class="code">def vitesse_ventilation(air, train_arrive):
@@ -2204,19 +2213,19 @@ print(message, minutes, "min |", temperature_c, "C")
   <div class="qcm-option"><input type="radio" name="a5t4" id="a5t4__4" value="ça rend le programme plus rapide" data-pourquoi="Une fonction ne fait pas gagner de temps à l'ordinateur : pense à ce que le banc en fait."><label for="a5t4__4">ça rend le programme plus rapide</label></div>
 </fieldset>
 </div>
-    <div class="consigne"><b>② Le banc de mise au point :</b> exécute les 4 tests (dans l'ordre que tu veux) en cliquant ▶ — la page calcule ce que TA fonction (celle du document 3, avec <code>air &gt; 100</code>) renvoie vraiment.</div>
+    <div class="consigne"><b>② Le banc de démonstration :</b> clique les 4 boutons ▶. <br>Il exécute la fonction du document 3, avec <code>air &gt; 100</code> — pas encore la tienne : elle passe au banc à l'étape ④.</div>
     <div class="bench">
-      <table aria-label="Banc de tests de la fonction vitesse_ventilation">
+      <table aria-label="Banc de démonstration : la fonction du document 3, avec air &gt; 100">
         <tr><th>Test</th><th>air</th><th>train_arrive</th><th>Attendu (besoin)</th><th>Obtenu</th><td></td></tr>
-        <tr><td>T1 — heure de pointe polluée</td><td data-l="air">150</td><td data-l="train_arrive">False</td><td data-l="attendu">3</td><td class="res" id="bt1" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="1" type="button">▶</button></td></tr>
-        <tr><td>T2 — un train approche</td><td data-l="air">60</td><td data-l="train_arrive">True</td><td data-l="attendu">2</td><td class="res" id="bt2" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="2" type="button">▶</button></td></tr>
-        <tr><td>T3 — nuit calme</td><td data-l="air">40</td><td data-l="train_arrive">False</td><td data-l="attendu">1</td><td class="res" id="bt3" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="3" type="button">▶</button></td></tr>
-        <tr><td>T4 — LE CAS LIMITE</td><td data-l="air">100</td><td data-l="train_arrive">False</td><td data-l="attendu">?</td><td class="res" id="bt4" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="4" type="button">▶</button></td></tr>
+        <tr><td>T1 — heure de pointe polluée</td><td data-l="air">150</td><td data-l="train_arrive">False</td><td data-l="attendu">3</td><td class="res" id="bt1" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="1" type="button" aria-label="Exécuter le test T1 du banc de démonstration">▶ T1</button></td></tr>
+        <tr><td>T2 — un train approche</td><td data-l="air">60</td><td data-l="train_arrive">True</td><td data-l="attendu">2</td><td class="res" id="bt2" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="2" type="button" aria-label="Exécuter le test T2 du banc de démonstration">▶ T2</button></td></tr>
+        <tr><td>T3 — nuit calme</td><td data-l="air">40</td><td data-l="train_arrive">False</td><td data-l="attendu">1</td><td class="res" id="bt3" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="3" type="button" aria-label="Exécuter le test T3 du banc de démonstration">▶ T3</button></td></tr>
+        <tr><td>T4 — LE CAS LIMITE</td><td data-l="air">100</td><td data-l="train_arrive">False</td><td data-l="attendu">?</td><td class="res" id="bt4" data-l="obtenu">—</td><td><button class="btn ghost bench-run" data-t="4" type="button" aria-label="Exécuter le test T4 du banc de démonstration">▶ T4</button></td></tr>
       </table>
     </div>
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
-      <p><b>③ Tranche le cas limite :</b> la MTA précise son besoin : « à 100 exactement, l'air est déjà trop pollué : il faut ventiler à fond ».</p>
+      <p><b>③ Tranche le cas limite :</b> à 100 pile, le besoin ne disait rien. <br>La MTA précise : « à 100 exactement, l'air est déjà trop pollué : il faut ventiler à fond ». <br>Le besoin se précise : la fonction doit suivre.</p>
       <fieldset class="qcm-groupe qcm-rangee" id="a5q1" data-melange="1">
   <legend>Le test T4 a montré que la fonction renvoie :</legend>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="2" data-pourquoi="Relance le test T4 du banc et lis la colonne « Obtenu » : aucun train n'arrive."><label for="a5q1__2">2</label></div>
@@ -2238,10 +2247,17 @@ print(message, minutes, "min |", temperature_c, "C")
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__4" value="changer aussi les autres return" data-pourquoi="Les tests T1, T2 et T3 passaient déjà : les autres return répondent bien au besoin."><label for="a5q3__4">changer aussi les autres return</label></div>
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="rien : la correction est évidente" data-pourquoi="Une correction peut casser ailleurs : comment le saurais-tu sans preuve ?"><label for="a5q3__1">rien : la correction est évidente</label></div>
 </fieldset>
+<fieldset class="qcm-groupe qcm-rangee" id="a5q4" data-melange="1">
+  <legend>Air à 150 ET un train qui arrive : deux conditions vraies. La fonction doit renvoyer :</legend>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__1" value="2" data-pourquoi="Le train arrive, mais l'air est pollué aussi : relis le besoin, quelle condition passe en premier ?"><label for="a5q4__1">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__2" value="5" data-pourquoi="Une fonction renvoie une seule valeur : return arrête la fonction, il n'additionne pas deux vitesses."><label for="a5q4__2">5</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__3" value="3"><label for="a5q4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__4" value="une erreur" data-pourquoi="Deux conditions vraies ne gênent pas Python : le premier test vrai décide, les suivants sont ignorés."><label for="a5q4__4">une erreur</label></div>
+</fieldset>
 </div>
 <div class="editeur-py" id="vs3" data-fichier="3e-VARIABLES-act5-TON NOM">
-  <label for="py_a5">🐍 Pour aller au bout : écris la fonction corrigée dans l'éditeur Python, puis exécute ton banc de tests</label>
-  <p class="editeur-py-note">Complète la fonction (avec <code>&gt;=</code>) : pour l'instant elle renvoie 0. <br>Les quatre lignes <code>print(…)</code> sont ton banc de tests personnel, réutilisable à chaque modification : la console doit afficher 3, 2, 1, 3.</p>
+  <label for="py_a5">🐍 ④ La preuve — écris TA fonction corrigée dans l'éditeur Python, puis ▶&nbsp;Exécuter</label>
+  <p class="editeur-py-note">Complète la fonction (avec <code>&gt;=</code>) : pour l'instant, elle renvoie 0. <br>À chaque ▶&nbsp;Exécuter, la console affiche tes <code>print(…)</code>, et la page teste ta fonction dans le tableau ci-dessous.</p>
   <textarea id="py_a5" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">def vitesse_ventilation(air, train_arrive):
     # écris ici la fonction corrigée (avec &gt;=)
     return 0
@@ -2254,6 +2270,23 @@ print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
   <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
+<div class="banc-eleve" id="bancEleve">
+  <p class="banc-eleve-titre"><b>🧪 Le banc de TA fonction</b> : ce qu'elle RENVOIE, comparé au besoin. <br>Prévois T5, T6 et T7 avant d'exécuter.</p>
+  <div class="bench">
+    <table aria-label="Banc de tests de ta fonction vitesse_ventilation : sept appels">
+      <tr><th>Test</th><th>air</th><th>train_arrive</th><th>Attendu (besoin)</th><th>Obtenu (ta fonction)</th></tr>
+      <tr><td>T1</td><td data-l="air">150</td><td data-l="train_arrive">False</td><td data-l="attendu" id="ba1">3</td><td class="res" id="be1" data-l="obtenu">—</td></tr>
+      <tr><td>T2</td><td data-l="air">60</td><td data-l="train_arrive">True</td><td data-l="attendu" id="ba2">2</td><td class="res" id="be2" data-l="obtenu">—</td></tr>
+      <tr><td>T3</td><td data-l="air">40</td><td data-l="train_arrive">False</td><td data-l="attendu" id="ba3">1</td><td class="res" id="be3" data-l="obtenu">—</td></tr>
+      <tr><td>T4 — frontière</td><td data-l="air">100</td><td data-l="train_arrive">False</td><td data-l="attendu" id="ba4">3</td><td class="res" id="be4" data-l="obtenu">—</td></tr>
+      <tr><td>T5 — juste en dessous</td><td data-l="air">99</td><td data-l="train_arrive">False</td><td data-l="attendu" id="ba5">à prévoir</td><td class="res" id="be5" data-l="obtenu">—</td></tr>
+      <tr><td>T6 — juste au-dessus</td><td data-l="air">101</td><td data-l="train_arrive">False</td><td data-l="attendu" id="ba6">à prévoir</td><td class="res" id="be6" data-l="obtenu">—</td></tr>
+      <tr><td>T7 — deux conditions</td><td data-l="air">150</td><td data-l="train_arrive">True</td><td data-l="attendu" id="ba7">à prévoir</td><td class="res" id="be7" data-l="obtenu">—</td></tr>
+    </table>
+  </div>
+  <p class="banc-eleve-etat" id="bancEleveEtat" role="status">Ce tableau se remplit quand tu exécutes ta fonction dans l'éditeur Python.</p>
+  <p class="pp-ecran"><button class="btn ghost" id="bancEleveRun" type="button">🧪 Tester ma fonction (7 appels)</button></p>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>▢1 : « pollué » = l'indice DÉPASSE 100. ▢2 : « à fond », c'est la plus grande vitesse. <br>Pour le T4 : 100 &gt; 100, c'est vrai ou faux ?</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un banc de tests s'écrit AVANT de croire le programme fini : un test par cas du besoin + un test par FRONTIÈRE (ici, exactement 100). <br>Si le besoin dit « à partir de 100 », la condition est <code>&gt;=</code>. <br>Et après toute correction, on rejoue tout : une correction peut casser ailleurs (c'est la non-régression, comme au jardin connecté de 4e).</p></details>
     <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
@@ -2264,12 +2297,23 @@ print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
       <code>&gt;</code>, 100 n'est pas « supérieur à 100 », donc la station ventile doucement dans un air
       déjà pollué.<br>③ Correction <code>&gt;=</code>, puis on REJOUE LES QUATRE TESTS : T1, T2, T3 doivent
       toujours passer (non-régression) et T4 renvoie désormais 3.</p>
+      <p><b>Deux conditions vraies</b> — air à 150 ET un train qui arrive : <b>3</b>. <br>Le besoin dit « air pollué → à fond ; SINON, train qui arrive » : la pollution passe avant. <br>Dans la fonction, le premier test vrai gagne : <code>if air &gt;= 100</code> est lu avant <code>elif train_arrive</code>. <br>Pas 2 : le <code>elif</code> n'est lu que si le premier test est faux. <br>Pas 5 : une fonction ne renvoie qu'une valeur, elle n'additionne pas deux vitesses. <br>Pas une erreur : deux conditions vraies ne gênent pas Python.</p>
+      <p><b>④ Ta fonction</b>, dans l'éditeur :</p>
+      <pre class="code">def vitesse_ventilation(air, train_arrive):
+    if air &gt;= 100:
+        return 3
+    elif train_arrive:
+        return 2
+    else:
+        return 1</pre>
+      <p><b>Les 7 appels</b> de la page : <br>T1 (150, False) donne 3. <br>T2 (60, True) donne 2. <br>T3 (40, False) donne 1. <br>T4 (100, False) donne 3. <br>T5 (99, False) donne 1 : juste sous la frontière, l'air n'est pas encore pollué. <br>T6 (101, False) donne 3 : juste au-dessus. <br>T7 (150, True) donne 3 : la pollution passe avant le train. <br>Un banc ne prouve que les cas qu'il essaie : on choisit donc les frontières (99, 100, 101) et le cas où deux conditions sont vraies.</p>
+      <p><b>Le besoin a-t-il été mal traduit ?</b> Non. Avec « indice &gt; 100 », la première fonction suivait le besoin écrit. <br>C'est le test à la frontière qui a posé la question, et la MTA y a répondu : le besoin s'est précisé, la fonction a suivi.</p>
       <p><b>Erreur classique :</b> écrire <code>air = 100</code> dans la condition — un seul <code>=</code>
       AFFECTE (il remplirait la boîte !), c'est <code>==</code> qui compare. Python te sauvera par une
       erreur… mais pas dans tous les langages.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> élaborer (algorithme en français) → traduire (fonction qui reçoit des variables et renvoie un résultat) → mettre au point (banc de tests écrit À L'AVANCE, cas limites compris, rejoué après CHAQUE correction).</div>
-    <p class="critere"><b>🎯 Critère de réussite :</b> mes 4 tests passent, y compris le cas limite — et je sais expliquer pourquoi on rejoue tout après une correction.</p>
+    <p class="critere"><b>🎯 Critère de réussite :</b> ma fonction réussit les 7 tests de la page. <br>Je sais expliquer pourquoi on rejoue tout après une correction.</p>
   </div>
 </section>
 
@@ -2279,7 +2323,7 @@ print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
   <figure style="margin:14px 0;width:100%">
     <img class="figure" src="Images/coney_island_stillwell_entree_ccby.jpg" alt="L'entrée de la station Coney Island–Stillwell Avenue : la façade historique en briques vernissées blanches avec les grandes lettres CONEY ISLAND et l'inscription BMT Lines" loading="lazy">
-    <figcaption>Le terminus t'attend — la façade de 1919 de Coney Island–Stillwell Avenue, ses lettres légendaires et son inscription « BMT Lines » d'époque. <br>Si tes convertisseurs du défi ci-dessous sont justes, tu sauras exactement dans combien de temps tu peux y être. <span style="color:#5b7bb8"><br>Photo : Kidfly182, licence CC BY 4.0, via Wikimedia Commons — image redimensionnée · commons.wikimedia.org/wiki/File:Coney_Island_Stillwell_Avenue_Entrance_001.jpg</span></figcaption>
+    <figcaption>Le terminus t'attend — la façade de 1919 de Coney Island–Stillwell Avenue, ses lettres légendaires et son inscription « BMT Lines » d'époque. <br>Si tes convertisseurs du défi ci-dessous sont justes, tu sauras exactement dans combien de temps tu peux y être. <span class="credit-photo"><br>Photo : Kidfly182, licence CC BY 4.0, via Wikimedia Commons — image redimensionnée · commons.wikimedia.org/wiki/File:Coney_Island_Stillwell_Avenue_Entrance_001.jpg</span></figcaption>
   </figure>
   <p>Trois défis ouverts, sans vérificateur — pour le plaisir d'aller plus loin :</p>
   <p><b>🗽 Défi convertisseur :</b><br>① Dans l'éditeur Python ci-dessous, écris <code>miles_vers_km(d)</code> (1 mile = 1.609 km) et <code>fahrenheit_vers_celsius(t)</code>.<br>② Convertis un marathon de New York (26.2 miles) et la canicule de juillet (98 °F).<br>Bonus du bonus : écris ton banc de tests AVANT les fonctions.</p>
@@ -2348,8 +2392,8 @@ print("Canicule :", fahrenheit_vers_celsius(98), "°C")
 </div>
 <footer class="footer">
   <p>Atelier 3e_C9.1 · Thème 3 · New York — refonte de la ressource « Vittascience : variables » (enquête
-  Vittascience adaptée par P. Gouacide). <br>Page unique hors-ligne (éditeur
-  Python intégré, Skulpt ; Vittascience en lien facultatif), sauvegarde locale uniquement — aucune donnée envoyée. <br>Images : SVG originaux CC0.</p>
+  Vittascience adaptée par P. Gouacide). <br>Fonctionne sans connexion avec le dossier complet du site : la page, ses styles, ses images et l'éditeur
+  Python intégré (Skulpt). Vittascience est un lien facultatif, vers un autre service. <br>Tes réponses sont enregistrées dans ce navigateur : cette page ne les envoie nulle part. <br>Images : SVG originaux CC0.</p>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
@@ -2371,6 +2415,20 @@ document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click"
    Sans JavaScript, le volet reste ouvert et sans bouton. Un lien direct vers une ancre ouvre la séance qui la porte.
    Avant la fin du chargement, le volet ne se ferme pas encore : un dessin <object> de l'ouverture ne se charge pas dans
    un volet fermé, et la page attendrait sans fin son « load ». Il se ferme au « load » (marque data-fermer-au-chargement). */
+/* les onglets au clavier (12/11/2026) : ← et → changent de séance, Début et Fin vont à la première et à la dernière ;
+   la touche Tab ne s'arrête que sur l'onglet de la séance affichée. */
+{ const onglets = [...document.querySelectorAll(".seance-tab")];
+  const majTab = () => onglets.forEach(o => o.setAttribute("tabindex", o.classList.contains("active") ? "0" : "-1"));
+  onglets.forEach((o, i) => {
+    o.addEventListener("click", majTab);
+    o.addEventListener("keydown", e => {
+      const k = e.key, n = onglets.length;
+      const j = (k === "ArrowRight" || k === "ArrowDown") ? (i + 1) % n : (k === "ArrowLeft" || k === "ArrowUp") ? (i - 1 + n) % n : k === "Home" ? 0 : k === "End" ? n - 1 : -1;
+      if(j < 0) return;
+      e.preventDefault(); onglets[j].click(); onglets[j].focus();
+    });
+  });
+  majTab(); }
 function appliqueSeance(idPanneau){
   const v = document.getElementById("ouverture"); if(!v) return;
   const n = parseInt(String(idPanneau).replace(/[^0-9]/g,""),10) || 1;
@@ -2403,9 +2461,11 @@ function appliqueSeance(idPanneau){
 
 /* ── auto-éval 🔴🟡🟢⭐ ── */
 document.querySelectorAll(".ae-btns").forEach(w => {
-  ["🔴","🟡","🟢","⭐"].forEach(e => {
-    const b = document.createElement("button"); b.type="button"; b.textContent=e; b.className="ae-b";
-    b.addEventListener("click", () => {w.querySelectorAll(".ae-b").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); save();});
+  w.setAttribute("role", "group"); w.setAttribute("aria-label", "Je me positionne : " + ((w.previousElementSibling || {}).textContent || "").trim());
+  [["🔴","pas encore"],["🟡","avec aide"],["🟢","seul·e"],["⭐","je peux l'expliquer"]].forEach(([e, mot]) => {
+    const b = document.createElement("button"); b.type="button"; b.className="ae-b"; b.dataset.v = e; b.setAttribute("aria-pressed", "false");
+    b.textContent = e + " "; const m = document.createElement("span"); m.className = "ae-mot"; m.textContent = mot; b.appendChild(m);
+    b.addEventListener("click", () => {w.querySelectorAll(".ae-b").forEach(x => { x.classList.remove("sel"); x.setAttribute("aria-pressed", "false"); }); b.classList.add("sel"); b.setAttribute("aria-pressed", "true"); save();});
     w.appendChild(b);
   });
 });
@@ -2424,7 +2484,7 @@ let step = -1;
 function renderMem(){
   const bx = $("memBoxes");
   document.querySelectorAll("#memCode div").forEach(d => d.classList.toggle("cur", +d.dataset.l === step));
-  if(step < 0){ bx.innerHTML = '<em style="color:#5b7bb8">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
+  if(step < 0){ bx.innerHTML = '<em style="color:var(--sub)">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
   const st = PROG[step];
   bx.innerHTML = Object.entries(st.boxes).map(([k,v]) =>
     `<span class="mem-box${k===st.chg?" chg":""}"><span class="lbl">${k}</span><span class="val ${String(v)[0]==='"'?"py-str":"py-num"}">${v}</span></span>`).join("");
@@ -2434,12 +2494,41 @@ function renderMem(){
 $("memNext").addEventListener("click", () => { if(step < PROG.length - 1){ step++; renderMem(); } });
 $("memRestart").addEventListener("click", () => { step = -1; renderMem(); });
 
-/* ── suivi ouverture éditeurs (act3/act4) ── */
-["vs1","vs2","vs3","vs4"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
-/* l'éditeur Python intégré (04/11/2026) : une exécution menée jusqu'au bout, sans erreur, ouvre le même verrou */
-document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(/^vs[1-4]$/.test(d.bloc || "") && !d.erreur && !d.arret){ window.__exp[d.bloc] = true; save(); } });
+/* ── les preuves par l'éditeur (12/11/2026, audit de la séquence) ──
+   Trois états distincts : l'outil ouvert, le programme exécuté, le résultat vérifié. Seul le troisième ouvre un verrou.
+   · activité 3 : la console a montré le résultat des trois expériences A, B et C (en une fois ou une par une) ;
+   · activité 4 : le programme de l'éditeur, tel qu'il est écrit maintenant, s'exécute sans erreur et affiche ce que le panneau doit annoncer ;
+   · activité 5 : la fonction de l'élève, appelée 7 fois par la page, renvoie les valeurs attendues (plus bas).
+   Ouvrir Vittascience ne prouve rien : le lien est seulement noté, pour que le message du verrou en tienne compte. */
+["vs1","vs2","vs3","vs4"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp["vitta_" + id] = true; save(); }); });
+const lignesDe = s => String(s || "").split("\n").map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
+const memeCode = (a, b) => String(a || "").replace(/\s+$/, "") === String(b || "").replace(/\s+$/, "");
+const SORTIES_ACT3 = ["7", "34", "Train Q 3 min"], SORTIE_ACT4 = "Q - 96 St 2 min | 25.0 C", SORTIE_ACT4_95 = "Q - 96 St 2 min | 35.0 C";
+const avecVitta = (id, msg, rienDansLaPage) => msg + (rienDansLaPage && window.__exp["vitta_" + id] ? " Tu as ouvert Vittascience : la preuve, elle, vient de l'éditeur de la page — colles-y ton programme, puis ▶ Exécuter." : "");
+document.addEventListener("editeur-py:fin", e => {
+  const d = e.detail || {}, L = lignesDe(d.sortie), propre = !d.erreur && !d.arret;
+  if(d.bloc === "vs1"){
+    const vues = window.__exp.vues3 = window.__exp.vues3 || {};
+    if(propre) SORTIES_ACT3.forEach((x, i) => { if(L.includes(x)) vues[i] = true; });
+    window.__exp.essai3 = true;
+    if(SORTIES_ACT3.every((x, i) => vues[i])) window.__exp.preuve3 = true;
+    save();
+  }
+  if(d.bloc === "vs2"){
+    const p4 = window.__exp.preuve4 = {code: d.code, etat: !propre ? "erreur" : (L.includes(SORTIE_ACT4) ? "rejeu" : "sortie")}; save();
+    // une ligne recopiée dans un print() afficherait la même chose : la page rejoue le programme avec une autre température
+    if(p4.etat === "rejeu" && window.EditeurPython){
+      const variante = String(d.code).replace(/(temperature_f\s*=\s*)77\b/, "$195");
+      window.EditeurPython.executer(variante).then(r => {
+        if(window.__exp.preuve4 !== p4) return;
+        p4.etat = (variante !== d.code && !r.erreur && !r.arret && lignesDe(r.sortie).includes(SORTIE_ACT4_95)) ? "ok" : "fige"; save();
+      });
+    }
+  }
+});
 
-/* ── banc de tests (verrou act5) ── */
+/* ── banc de DÉMONSTRATION (activité 5, étape ②) : la fonction du document 3, avec « > », écrite ici en JavaScript.
+   Il fait découvrir le cas limite. Il ne prouve rien du programme de l'élève : c'est le banc suivant qui le fait. ── */
 function fnVentil(air, train){ if(air > 100) return 3; if(train) return 2; return 1; }
 const BENCH = {1:[150,false,3], 2:[60,true,2], 3:[40,false,1], 4:[100,false,null]};
 window.__exp.bench = window.__exp.bench || {};
@@ -2450,9 +2539,84 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
   if(att === null){ cell.textContent = got + " ⚠"; cell.style.color = "var(--warn)"; }
   else { cell.textContent = got + (got === att ? " ✔" : " ✘"); cell.style.color = got === att ? "var(--ok)" : "var(--ko)"; }
   window.__exp.bench[t] = true;
-  if(Object.keys(window.__exp.bench).length === 4){ window.__exp.tests = true; $("benchBadge").textContent = "🔓 badge de mise au point obtenu — les 4 tests sont exécutés !"; }
+  if(Object.keys(window.__exp.bench).length === 4){ window.__exp.tests = true; $("benchBadge").textContent = "🔓 badge de démonstration obtenu — les 4 tests sont exécutés. Reste l'étape ④ : ta fonction."; }
   save();
 }));
+
+/* ── le banc de la fonction de l'ÉLÈVE (activité 5, étape ④) ──
+   La page exécute le programme de l'éditeur, puis appelle vitesse_ventilation() sept fois et compare ce qu'elle RENVOIE.
+   Un print(3, 2, 1, 3) dans la console ne prouve pas une fonction juste : ici, c'est la valeur de retour qui est jugée.
+   La preuve vaut pour le code testé : s'il change, il faut retester. */
+const BANC_ELEVE = [[150,false,3], [60,true,2], [40,false,1], [100,false,3], [99,false,1], [101,false,3], [150,true,3]];
+const PISTES_BANC = [
+  "relis ce que le besoin demande quand l'air est pollué.",
+  "relis ce que le besoin demande quand un train arrive.",
+  "relis le dernier cas du besoin : ni pollution, ni train.",
+  "compare le besoin précisé par la MTA et ta condition, à la frontière 100.",
+  "99 est juste sous la frontière : l'air n'est pas encore pollué.",
+  "101 est juste au-dessus de la frontière : l'air est pollué.",
+  "deux conditions sont vraies : laquelle le besoin fait-il passer en premier ?"
+];
+const pyBool = b => b ? "True" : "False";
+function codeDuBanc(code){
+  return code + "\n\nprint(\"§banc§\")\nfor _a, _t, _att in [" + BANC_ELEVE.map(t => "(" + t[0] + ", " + pyBool(t[1]) + ", " + t[2] + ")").join(", ") + "]:\n" +
+    "    try:\n        _r = vitesse_ventilation(_a, _t)\n" +
+    "        print(repr(_r) + \"|\" + (\"ok\" if (type(_r) in (int, float) and _r == _att) else \"non\"))\n" +
+    "    except Exception as _e:\n        print(\"!\" + type(_e).__name__ + \"|non\")\n";
+}
+function etatProd(){
+  const p = window.__exp.prod5, ta = $("py_a5"), actuel = ta ? ta.value : "";
+  const inst = window.EditeurPython && window.EditeurPython.instance("py_a5");
+  if(!p) return {ok: false, cls: "", court: "Pas encore testée : écris ta fonction, puis clique ▶ Exécuter.",
+    msg: "Il reste la preuve : écris ta fonction dans l'éditeur Python (étape ④), puis clique ▶ Exécuter — la page l'appellera 7 fois."};
+  if(!memeCode(p.code, actuel)) return {ok: false, cls: "ko", msg: "Ton code a changé depuis le dernier test. Relance ▶ Exécuter pour vérifier cette version."};
+  if(p.etat === "erreur") return {ok: false, cls: "ko", msg: "Ton programme ne va pas encore jusqu'au bout : lis le message de la console, corrige, puis réexécute."};
+  if(!p.ok){
+    const i = (p.res || []).findIndex(x => !x[1]);
+    if(i < 0 || !/def\s+vitesse_ventilation\s*\(/.test(p.code)) return {ok: false, cls: "ko", msg: "La page ne trouve pas de fonction nommée vitesse_ventilation, avec ses deux paramètres (air, train_arrive) : garde ce nom, puis réexécute."};
+    const t = BANC_ELEVE[i], r = p.res[i][0], obtenu = r[0] === "!" ? "une erreur (" + r.slice(1) + ")" : r;
+    if(inst && memeCode(actuel, inst.depart)) return {ok: false, cls: "ko", msg: "Ta fonction renvoie encore 0 : c'est le programme de départ. Écris la fonction corrigée, puis ▶ Exécuter."};
+    return {ok: false, cls: "ko", msg: "Ta fonction s'exécute. Le test T" + (i + 1) + " — vitesse_ventilation(" + t[0] + ", " + pyBool(t[1]) + ") — attend " + t[2] + " et obtient " + obtenu + " : " + PISTES_BANC[i]};
+  }
+  return {ok: true, cls: "ok", msg: "Ta fonction passe les 7 tests. Explique maintenant à ton binôme ton choix pour 100, et pour le cas où les deux conditions sont vraies."};
+}
+function renderBancEleve(){
+  const etat = $("bancEleveEtat"); if(!etat) return;
+  const p = window.__exp.prod5, joue = !!(p && p.res && p.res.length);
+  BANC_ELEVE.forEach((t, i) => {
+    const c = $("be" + (i + 1)), a = $("ba" + (i + 1)), r = joue && p.res[i];
+    if(a) a.textContent = (joue || i < 4) ? t[2] : "à prévoir";
+    if(!c) return;
+    if(!r){ c.textContent = "—"; c.style.color = ""; return; }
+    c.textContent = (r[0][0] === "!" ? "erreur" : r[0]) + (r[1] ? " ✔" : " ✘ — attendu " + t[2]); c.style.color = r[1] ? "var(--ok)" : "var(--ko)";
+  });
+  const e = etatProd();
+  etat.textContent = (e.ok ? "✅ " : e.cls ? "⚠ " : "") + (e.court || e.msg); etat.className = "banc-eleve-etat" + (e.cls ? " " + e.cls : "");
+}
+function testerFonction(code){
+  const etat = $("bancEleveEtat");
+  if(!window.EditeurPython){ if(etat) etat.textContent = "L'éditeur Python n'a pas démarré : recharge la page."; return Promise.resolve(null); }
+  if(etat){ etat.textContent = "⏳ La page appelle ta fonction…"; etat.className = "banc-eleve-etat"; }
+  return window.EditeurPython.executer(codeDuBanc(code)).then(r => {
+    const p = {code: code, res: [], ok: false, etat: "erreur"};
+    if(!r.erreur && !r.arret){
+      const lignes = String(r.sortie || "").split("\n"), i = lignes.lastIndexOf("§banc§");
+      p.res = lignes.slice(i + 1).filter(Boolean).slice(0, BANC_ELEVE.length).map(l => { const k = l.lastIndexOf("|"); return [l.slice(0, k), l.slice(k + 1) === "ok"]; });
+      p.ok = i >= 0 && p.res.length === BANC_ELEVE.length && p.res.every(x => x[1]);
+      p.etat = p.ok ? "ok" : "non";
+    }
+    window.__exp.prod5 = p; renderBancEleve(); save(); return p;
+  });
+}
+document.addEventListener("editeur-py:fin", e => {
+  const d = e.detail || {}; if(d.bloc !== "vs3") return;
+  if(d.erreur || d.arret){ window.__exp.prod5 = {code: d.code, res: [], ok: false, etat: "erreur"}; renderBancEleve(); save(); }
+  else testerFonction(d.code);
+});
+renderBancEleve();
+{ const b = $("bancEleveRun"), ta = $("py_a5");
+  if(b && ta) b.addEventListener("click", () => testerFonction(ta.value));
+  if(ta) ta.addEventListener("input", renderBancEleve); }
 
 /* ── vérificateurs ── */
 /* règle d'or n°13 : coloration façon IDE des listings */
@@ -2499,34 +2663,44 @@ const CHECKS = {
     s += sv("a3r1","7"); s += sv("a3r2","34"); s += sv("a3r3","Train Q 3 min");
     s += sv("a3r4","il les COLLE bout à bout (concaténation)");
     s += sv("a3r5","41 min");
-    const exp = !!window.__exp.vs1;
-    return {score: s, total: 8, exp, expMsg: "Exécute tes 3 expériences dans l'éditeur Python (▶ Exécuter) avant de reporter."};
+    const exp = !!window.__exp.preuve3;
+    return {score: s, total: 8, exp, expMsg: avecVitta("vs1", window.__exp.essai3
+      ? "La console de l'éditeur Python n'a pas encore montré le résultat de tes 3 expériences A, B et C. Remets le programme de départ (↺), puis ▶ Exécuter."
+      : "Exécute tes 3 expériences dans l'éditeur Python (▶ Exécuter) avant de reporter.", !window.__exp.essai3)};
   },
   4(){ let s = 0;
     s += sv("a4b1l","3"); s += sv("a4b1c","minutes = 2 + 1");
     s += sv("a4b2l","5"); s += sv("a4b2c","écrire 1.8, avec un point");
     s += sv("a4b3c","on ne soustrait pas un nombre d'un texte");
     s += sv("a4b4","Q - 96 St 2 min | 25.0 C");
-    const exp = !!window.__exp.vs2;
-    return {score: s, total: 6, exp, expMsg: "Exécute ton programme corrigé dans l'éditeur Python (▶ Exécuter) jusqu'au bout — la preuve par la console est obligatoire."};
+    const p4 = window.__exp.preuve4, meme = !!p4 && memeCode(p4.code, ($("py_a4") || {}).value);
+    const exp = !!p4 && meme && p4.etat === "ok";
+    return {score: s, total: 6, exp, expMsg: avecVitta("vs2",
+      !p4 ? "Exécute ton programme corrigé dans l'éditeur Python (▶ Exécuter) jusqu'au bout — la preuve par la console est obligatoire."
+      : !meme ? "Ton programme a changé depuis ta dernière exécution dans l'éditeur Python : relance ▶ Exécuter pour prouver cette version."
+      : p4.etat === "erreur" ? "Dans l'éditeur Python, ton programme s'arrête encore sur une erreur : lis le message de la console, corrige UN bug, puis réexécute."
+      : p4.etat === "rejeu" ? "La page rejoue ton programme avec une autre température : attends une seconde, puis vérifie de nouveau."
+      : p4.etat === "fige" ? "Ta console affiche la bonne ligne, mais la page a rejoué ton programme avec 95 °F au lieu de 77 °F : la température doit être CALCULÉE par la ligne 5, à partir de temperature_f = 77, pas écrite à la main."
+      : "Dans l'éditeur Python, ton programme s'exécute, mais la console n'affiche pas encore ce que le panneau doit annoncer : compare-la au critère de réussite, en bas de l'activité. Il reste un bug.", !p4)};
   },
   5(){ let s = 0;
     s += sv("a5t1",">"); s += sv("a5t2","3"); s += sv("a5t3","1");
     s += sv("a5t4","on peut la rejouer et la tester à volonté");
     s += sv("a5q1","1"); s += sv("a5q2","air >= 100");
-    s += sv("a5q3","rejouer tous les tests du banc");
+    s += sv("a5q3","rejouer tous les tests du banc"); s += sv("a5q4","3");
     const exp = !!window.__exp.tests;
-    return {score: s, total: 7, exp, expMsg: "Exécute les 4 tests du banc (▶) — le cas limite T4 compris."};
+    return {score: s, total: 8, exp, expMsg: "Exécute les 4 tests du banc de démonstration (▶) — le cas limite T4 compris.", prod: etatProd()};
   }
 };
 const par = {s: []};
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
-  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Toutes les encoches sont vertes. Ouvre la correction pour consolider, puis passe à la suite."; fb.className = "feedback show ok";
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; par.s = par.s.filter(x => x !== n); updateProg(); save(); return; }
+  if(ratio === 1 && r.prod && !r.prod.ok){ fb.textContent = "✔ Questionnaire " + r.score + "/" + r.total + " : tes réponses sont justes. 🔒 L'activité n'est pas encore validée. " + r.prod.msg; fb.className = "feedback show warn"; par.s = par.s.filter(x => x !== n); updateProg(); save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Toutes les encoches sont vertes. Ouvre la correction pour consolider, puis passe à la suite." + (r.prod ? " " + r.prod.msg : ""); fb.className = "feedback show ok";
     if(!par.s.includes(n)){ par.s.push(n); } }
-  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder : reprends ces questions avec l'aide niveau 1, puis re-vérifie."; fb.className = "feedback show warn"; }
-  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : relis le document de l'activité, corrige les réponses marquées ✘ (l'aide niveau 2 te guide pas à pas), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder : reprends ces questions avec l'aide niveau 1, puis re-vérifie."; fb.className = "feedback show warn"; par.s = par.s.filter(x => x !== n); }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : relis le document de l'activité, corrige les réponses marquées ✘ (l'aide niveau 2 te guide pas à pas), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; par.s = par.s.filter(x => x !== n); }
   updateProg(); save();
 }));
 function updateProg(){
@@ -2627,9 +2801,12 @@ function save(){
     o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
   document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
-  document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.textContent; });
-  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
-  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Travail sauvegardé sur CET ordinateur (" + new Date().toLocaleTimeString() + ")"; }
+  document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.dataset.v; });
+  let ecrit = true; try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){ ecrit = false; }
+  const sn = $("savedNote"); if(sn){
+    sn.textContent = ecrit ? "💾 Travail sauvegardé sur CET ordinateur (" + new Date().toLocaleTimeString() + ")"
+      : "⚠ Sauvegarde impossible sur ce navigateur (stockage plein ou bloqué) : imprime ta page (🖨) pour garder une trace.";
+    sn.style.color = ecrit ? "" : "var(--warn)"; }
 }
 function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
@@ -2640,10 +2817,15 @@ function restore(){
   (o.par && o.par.s || []).forEach(n => { if(!par.s.includes(n)) par.s.push(n); });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
   if(window.__exp.memoire){ step = PROG.length - 1; renderMem(); }
-  if(window.__exp.tests){ $("benchBadge").textContent = "🔓 badge de mise au point obtenu — les 4 tests sont exécutés !"; }
+  if(window.__exp.tests){ $("benchBadge").textContent = "🔓 badge de démonstration obtenu — les 4 tests sont exécutés. Reste l'étape ④ : ta fonction."; }
+  renderBancEleve();
+  if(par.s.includes("5") && !etatProd().ok){
+    par.s = par.s.filter(x => x !== "5");
+    const f5 = $("fb5"); if(f5){ f5.textContent = "🔒 L'activité 5 n'est plus validée : la page teste maintenant TA fonction. Écris-la dans l'éditeur Python (étape ④), puis ▶ Exécuter, puis vérifie de nouveau."; f5.className = "feedback show warn"; }
+  }
   Object.entries(o.ae || {}).forEach(([k, v]) => {
     const w = document.querySelector('.ae-btns[data-k="' + k + '"]');
-    if(w) w.querySelectorAll(".ae-b").forEach(b => b.classList.toggle("sel", b.textContent === v));
+    if(w) w.querySelectorAll(".ae-b").forEach(b => { const oui = b.dataset.v === v; b.classList.toggle("sel", oui); b.setAttribute("aria-pressed", oui ? "true" : "false"); });
   });
   updateProg();
   const h = $("hyp1"), r = $("hypRecall");

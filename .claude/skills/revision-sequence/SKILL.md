@@ -104,6 +104,23 @@ corrections réponse → pourquoi → refus un par ligne → le piège.
 - **Code en couleurs** (n°13), **schémas premium** (n°315), **chaînes d'énergie** (n°310) : leurs contrôles verts.
 - **Synthèse élève** : `audit_aeration.py --strict` et deux pages A4 (`synthese-vulgarisee`).
 
+### 5 bis. Les règles de l'audit de `3e_C9.1` (n°322 à n°330, 14/11/2026)
+`3e_C9.1` est la séquence pilote : ces règles y sont appliquées d'abord, puis étendues aux autres à leur révision.
+- **n°322 — une réussite prouve la production réelle** : un verrou s'ouvre sur le résultat vérifié, jamais sur un outil
+  ouvert ni sur une exécution sans erreur ; une fonction est appelée par la page et jugée sur ce qu'elle renvoie ; un
+  code modifié est « à retester ». Le banc de la séquence joue les cas refusés (`return 0`, `print` seul, code modifié).
+- **n°323 — une règle enseignée est juste dans toute sa portée** : page, QCM, lexique et synthèse disent la même chose.
+- **n°324 — un banc de tests couvre les frontières** (juste en dessous, sur, au-dessus) et les conditions qui se croisent.
+- **n°325 — une figure essentielle se lit sur un téléphone** : aucun texte sous 14 px CSS à la taille affichée, à 390 px ;
+  sinon on la recompose ; bouton « Agrandir » et alternative textuelle.
+- **n°326 — une commande se comprend sans son pictogramme** ; onglets au clavier.
+- **n°327 — contraste ≥ 4,5:1 contre le fond affiché**, crédits et textes secondaires compris.
+- **n°328 — la page dit vrai sur elle-même** : pas de chiffre sans source, promesses à leur portée exacte.
+- **n°329 — deux surfaces au plus autour d'une tâche, une action principale.**
+- **n°330 — une compétence de conception se prouve seul** : transfert individuel sans squelette, billet de sortie.
+Le texte complet, et ce que l'audit a mesuré : `JOURNAL_DES_DECISIONS.md`, entrée du 14/11/2026 ; l'audit et le cahier
+des charges : `docs/audits/AUDIT_3e_C9.1_2026-11-12.md`, `docs/audits/CAHIER_DES_CHARGES_ULTRA_PREMIUM_2026-11-12.md`.
+
 ### 6. Lire comme un élève
 Ce que la lecture attentive a trouvé sur les premières séquences, à chercher partout : le « vous » (n°302) ; le style
 télégraphique (« désactive géo inutile ») ; un anglicisme non expliqué (« hover ») ; un encadré qui donne d'avance la

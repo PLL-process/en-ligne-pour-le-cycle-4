@@ -57,6 +57,11 @@ effet à l'écran**, pas par la présence de sa classe CSS (règle n°135).
 | Act. 1 : les 6 étapes du simulateur de mémoire délivrent le badge 🔓 | ✅ |
 | Act. 1 : validée 4/4 avec le vérificateur exact | ✅ |
 | Act. 5 : **refusée** tant que les 4 tests du banc ne sont pas exécutés | ✅ |
+| Audit du 12/11/2026 — act. 5 : `return 0`, un `print(3, 2, 1, 3)`, la fonction avec `>`, le train testé avant la pollution, un code modifié après le test : **refusés**, chacun avec son message ; la fonction juste : validée, 7 cases ✔ | ✅ |
+| Audit — act. 4 : Vittascience seul, la ligne recopiée dans un `print` (rejeu à 95 °F), un bug restant : **refusés** ; une autre correction juste (`minutes = 3`) : acceptée | ✅ |
+| Audit — act. 3 : Vittascience seul, une seule expérience : **refusés** ; les trois expériences vues, même en deux fois : validée | ✅ |
+| Audit — une ancienne validation de l'act. 5, sans fonction testée, est retirée à l'ouverture, avec un message | ✅ |
+| Audit — onglets au clavier (→, Fin, Début), pastilles nommées et annoncées, crédits des photos ≥ 4,5:1, plus de « le + exige le même type » | ✅ |
 | Progression 1/5 · la tâche 1 cochée au tableau de bord | ✅ |
 | **Sauvegarde / restauration** après rechargement (progression + réponses) | ✅ |
 | Aucune sortie réseau hors iframe Vittascience | ✅ |

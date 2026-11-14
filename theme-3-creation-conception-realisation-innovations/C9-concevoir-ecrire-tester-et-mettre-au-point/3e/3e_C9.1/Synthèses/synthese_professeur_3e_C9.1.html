@@ -78,9 +78,9 @@ L'ancienne ressource est archivée (règle d'or n°12), un stub de redirection p
 <tr><th>Act.</th><th>Réponses</th></tr>
 <tr><td>1</td><td>minutes=3 · l'ancien 4 est PERDU (affecter=remplacer) · <code>=</code> = « range dans la boîte » · lecture droite→gauche. <b>Verrou :</b> 6 étapes du simulateur déroulées.</td></tr>
 <tr><td>2</td><td>Table : passages 0→3→5, groupe 3→2 ; la boîte passages change 3 fois ; motif = compteur/accumulation.</td></tr>
-<tr><td>3</td><td>A→7 · B→34 (concaténation) · C→« Train Q 3 min » · + entre str = collage · bug panneau : "4"+"1"→"41 min". <b>Verrou :</b> éditeur ouvert + reports exacts.</td></tr>
-<tr><td>4</td><td>Bug1 L3 (<code>2 + 1</code> sans guillemets) · Bug2 L5 (1.8, point décimal) · Bug3 : "21"−1 = TypeError (str−int) · affichage final : <code>Q - 96 St 2 min | 25.0 C</code>. <b>Verrou :</b> éditeur (preuve console).</td></tr>
-<tr><td>5</td><td>▢1 <code>&gt;</code> · ▢2 3 · ▢3 1 · fonction = rejouable/testable · T4 renvoie 1 (bug frontière) · correction <code>&gt;=</code> · puis REJOUER les 4 tests. <b>Verrou :</b> 4 tests exécutés au banc.</td></tr>
+<tr><td>3</td><td>A→7 · B→34 (concaténation) · C→« Train Q 3 min » · + entre str = collage · bug panneau : "4"+"1"→"41 min". <b>Verrou :</b> la console de l'éditeur de la page a montré les trois résultats (7, 34, Train Q 3 min) + reports exacts. Ouvrir Vittascience ne suffit pas.</td></tr>
+<tr><td>4</td><td>Bug1 L3 (<code>2 + 1</code> sans guillemets) · Bug2 L5 (1.8, point décimal) · Bug3 : "21"−1 = TypeError (str−int) · affichage final : <code>Q - 96 St 2 min | 25.0 C</code>. <b>Verrou :</b> le programme de l'éditeur, tel qu'il est écrit, affiche la bonne ligne ; la page le rejoue avec 95 °F et attend 35.0 (une ligne recopiée dans un <code>print</code> ne passe pas). Toute correction juste est acceptée.</td></tr>
+<tr><td>5</td><td>▢1 <code>&gt;</code> · ▢2 3 · ▢3 1 · fonction = rejouable/testable · T4 renvoie 1 (bug frontière) · correction <code>&gt;=</code> · puis REJOUER les tests · (150, True) → 3 : la pollution passe avant le train. <b>Verrou :</b> les 4 tests du banc de démonstration (la fonction de la page, avec <code>&gt;</code>) ET la fonction de l'élève, appelée 7 fois par la page (99, 100, 101 et le cas des deux conditions compris) : elle doit RENVOYER les valeurs attendues. <code>return 0</code>, un <code>print(3, 2, 1, 3)</code> ou un code modifié depuis le test ne valident pas.</td></tr>
 </table>
 </div>
 

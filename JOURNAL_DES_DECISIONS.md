@@ -30377,3 +30377,92 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Vu en jouant la mission sur un grand écran, non corrigé — à décider.** Sur une tablette ou un poste, la ressource de l'activité s'ouvre au-dessus de chaque question. À l'activité 1, le document 1 et le simulateur précèdent la question : elle commence deux écrans plus bas (1 584 px pour une question). Piste : à partir de 1 000 px de large, la ressource à gauche et la question à droite. Cela touche le moteur, donc les 60 pages. Et ce document contient les réponses (question posée dans #673, toujours ouverte).
 
 **Mesure.** Banc de la page : 61/61 (trois tests de plus, au téléphone) et 34/34. Mode mission : page acceptée, 44 écrans. Charge : séance la plus lourde, 1 130 mots (la ligne d'aide des documents compte à 390 px) ; règles d'or 0 ✘ ; aération 0. Vu à l'écran à 390 px : le banc, le document 1, les prédictions ; à 1 280 px : le banc et le document, inchangés.
+
+---
+
+## 14/11/2026 — Règles d'or n°322 à n°330, tirées de l'audit de `3e_C9.1` ; `3e_C9.1`, première étape : une réussite affichée prouve la production réelle
+
+**Demande de Pascal (12/11, 8 h 34).** Un audit approfondi de `3e_C9.1` (rapport et cahier des charges « ultra premium », rangés dans `docs/audits/AUDIT_3e_C9.1_2026-11-12.md` et `docs/audits/CAHIER_DES_CHARGES_ULTRA_PREMIUM_2026-11-12.md` ; les dix captures citées par le rapport ne sont pas dans le dépôt). « Dégage des règles d'or afin de pouvoir les généraliser pour les prochaines séquences. Pour l'instant, on modifie celle-là. » Puis (12/11, 9 h 33) : « L'impression en PDF peut-être devrait être revue, parce qu'il y a beaucoup de blancs. »
+
+**Ce que l'audit a établi, vérifié sur la page avant correction.**
+- **Critique.** L'activité 5 se validait sans que la fonction de l'élève soit écrite : le banc exécutait une fonction JavaScript de la page (`fnVentil`), et la vérification ne comptait que les quatre clics. Rejoué : questionnaire juste, quatre clics, `return 0` dans l'éditeur → « activité validée ».
+- Les verrous des activités 3 et 4 s'ouvraient par une exécution sans erreur, ou par un clic sur le lien Vittascience.
+- Le QCM, et le lexique qui le recopie, disaient « le + colle (et exige le même type) » : faux, `3 + 4.5` donne `7.5`.
+- Les crédits des photos : `#5b7bb8` sur la carte, 3,69:1.
+- Les quatre boutons du banc s'appelaient « ▶ » ; les pastilles du bilan, 🔴 🟡 🟢 ⭐ seules ; les onglets ne répondaient pas aux flèches.
+- Les quatre schémas : un dessin de 940 unités. Dans un cadre de 254 px, le plus petit texte fait 2,3 à 2,8 px (depuis #677, les documents gardent 760 px et glissent : 6,9 à 8,5 px). À 1 280 px : 7,6 à 9,4 px.
+- « 9 collégiens sur 10 » sans source ; « page unique hors-ligne » et « aucune donnée envoyée », plus larges que ce qui est vrai.
+
+### Les règles
+
+> **Règle d'or n°322 — Une réussite affichée prouve la production réelle.**
+> - Trois états distincts, jamais confondus : l'outil ouvert, le programme exécuté, le résultat vérifié. Seul le dernier ouvre un verrou ou valide une activité.
+> - Une fonction se juge à ce qu'elle RENVOIE : la page l'appelle avec des entrées de test et compare. Un programme qui imprime les valeurs attendues ne passe pas.
+> - Un programme se juge à sa sortie ET à son calcul : rejoué avec une autre donnée, il donne encore le bon résultat. Une ligne recopiée dans un `print` ne passe pas.
+> - Une autre solution juste est acceptée : on compare le comportement, pas le texte du programme.
+> - Un code modifié après le test est « à retester » : la validation vaut pour la version testée.
+> - Ouvrir un outil externe (Vittascience) ne prouve rien.
+> - Un banc qui exécute la fonction de la page, et non celle de l'élève, s'appelle « banc de démonstration » et ne valide rien.
+> - Une validation enregistrée qui ne reposait pas sur la production est retirée à l'ouverture, avec un message qui dit pourquoi.
+> - Contrôle : le banc de la séquence joue chaque cas refusé (`return 0`, `print` seul, fonction fausse, code modifié, outil externe seul) et le cas juste.
+
+> **Règle d'or n°323 — Une règle enseignée est juste dans toute sa portée.**
+> - Elle s'énonce sur les cas étudiés et nomme sa limite : « deux nombres, int ou float : le + additionne ; deux textes : il colle ; un texte et un nombre : erreur ». Jamais « le + exige le même type ».
+> - La page, le QCM, le lexique et la synthèse disent la même chose. Une correction se fait partout à la fois (le lexique recopie le « à retenir » du QCM : on corrige le QCM, puis `generer_lexique.py`).
+> - Une métaphore dit où elle s'arrête.
+
+> **Règle d'or n°324 — Un banc de tests couvre les frontières et les conditions qui se croisent.**
+> - Pour chaque seuil : juste en dessous, sur la frontière, juste au-dessus. Pour chaque priorité : un cas où deux conditions sont vraies.
+> - La page rappelle qu'un banc ne prouve que les cas qu'il essaie.
+> - Quand un test révèle un besoin imprécis, la page le dit : le besoin se précise, la fonction suit — ce n'est pas une faute de traduction.
+
+> **Règle d'or n°325 — Une figure essentielle se lit sur un téléphone.**
+> - À la taille réellement affichée, aucun texte d'une figure sous 14 px CSS. Mesuré à 390, 768 et 1 280 px.
+> - Une planche qui n'y arrive pas est recomposée — cartes en HTML qui passent de quatre colonnes à une, version verticale —, pas réduite ni seulement mise à glisser.
+> - Chaque figure utile a un bouton visible « Agrandir » (clavier, Échap, focus rendu) et une alternative textuelle qui permet de faire l'exercice.
+> - La figure, son commentaire et la question restent proches.
+
+> **Règle d'or n°326 — Une commande se comprend sans son pictogramme.**
+> - Toute commande a un nom qui dit l'action et sa cible : « ▶ T1 », nommé « Exécuter le test T1 du banc de démonstration » ; une pastille porte son mot (« 🟡 avec aide »).
+> - Un choix est annoncé (`aria-pressed`), un statut est écrit (« 1 ✘ — attendu 3 ») : jamais la seule couleur.
+> - Des onglets se manient au clavier : ← →, Début, Fin ; un seul onglet dans l'ordre de tabulation ; chaque onglet relié à son panneau.
+
+> **Règle d'or n°327 — Le contraste se mesure contre le fond affiché.**
+> - Au moins 4,5:1 pour tout texte que l'élève lit : crédits, légendes, commentaires de code, textes d'attente compris.
+> - Pas de couleur écrite en dur pour un texte secondaire : la couleur `--sub` de la page.
+
+> **Règle d'or n°328 — La page dit vrai sur elle-même.**
+> - Pas de chiffre sans source.
+> - Un scénario se présente comme un scénario ; une photo documentaire se distingue du programme simulé que l'élève corrige.
+> - Une promesse dit sa portée exacte : « fonctionne sans connexion avec le dossier complet du site », « tes réponses sont enregistrées dans ce navigateur : cette page ne les envoie nulle part ».
+> - « Sauvegardé » ne s'affiche que si l'écriture a réussi ; sinon, un avertissement et une issue (imprimer).
+
+> **Règle d'or n°329 — Une zone de travail : deux surfaces au plus, une action principale.**
+> - Autour d'une même tâche, deux niveaux de cadre au plus ; les tâches se séparent par l'espace.
+> - Une action principale visible par étape ; les outils secondaires se regroupent.
+
+> **Règle d'or n°330 — Une compétence de conception se prouve seul.**
+> - Après un travail guidé ou en binôme, un court transfert individuel : un besoin neuf, l'algorithme écrit par l'élève, une fonction sans squelette (le squelette reste une aide repliée).
+> - Un billet de sortie individuel, sans aide, vérifie chaque élève.
+
+### Sur `3e_C9.1`, dans cette PR (n°322, 323, 324, 326, 327, 328)
+
+- **Activité 5 (n°322, 324).** Le banc existant devient le « banc de démonstration » : ses boutons disent « ▶ T1 »… et il ne valide plus rien seul. L'éditeur devient l'étape ④, « La preuve » : à chaque ▶ Exécuter sans erreur, la page appelle `vitesse_ventilation` sept fois — 150/False, 60/True, 40/False, 100/False, puis **99/False, 101/False et 150/True** — et juge ce qu'elle renvoie. Le tableau sous l'éditeur montre chaque résultat ; un échec nomme son test, l'attendu, l'obtenu, et une piste. La validation demande le questionnaire juste ET les sept tests réussis par le code tel qu'il est écrit. Une question de plus : (150, True) → 3, la pollution passe avant le train. Le cas limite est présenté comme un besoin qui se précise.
+- **Activité 4 (n°322).** La console doit afficher `Q - 96 St 2 min | 25.0 C`, et la page rejoue le programme avec 95 °F : il doit afficher `35.0`. Une ligne recopiée est refusée ; `minutes = 3` au lieu de `2 + 1` est accepté.
+- **Activité 3 (n°322).** La console doit avoir montré les trois résultats (7, 34, Train Q 3 min), en une ou plusieurs exécutions.
+- **Vittascience** : le lien reste ; l'ouvrir ne valide plus rien, et le message le dit tant que rien n'a été exécuté dans la page.
+- **Anciennes sauvegardes** : une validation de l'activité 5 sans fonction testée est retirée à l'ouverture, avec un message. Celles des activités 3 et 4 restent (l'élève a exécuté dans la page, avec l'ancienne règle).
+- **Le + (n°323).** QCM : « Dans print, la virgule sépare et évalue ; le + colle deux textes, et refuse un texte avec un nombre. » Lexique régénéré. « À retenir » de l'activité 3 : `3 + 4.5` donne `7.5`, `"3" + 4` est une erreur.
+- **Commandes (n°326).** Pastilles « 🔴 pas encore · 🟡 avec aide · 🟢 seul·e · ⭐ je peux l'expliquer », groupe nommé, choix annoncé. Onglets : ← →, Début, Fin.
+- **Contraste (n°327).** Crédits et textes secondaires en `--sub` : 8,28:1 sur la carte (6,36:1 dans le Bonus).
+- **Vrai (n°328).** « 9 collégiens sur 10 » retiré ; le pied de page dit ce que « sans connexion » et « enregistré » veulent dire ; « Sauvegardé » seulement si l'écriture a réussi.
+- Fiche pédagogique, synthèse professeur, rapport de tests : les verrous décrits comme ils sont.
+
+### À venir, sur `3e_C9.1`, avant de généraliser
+
+- **L'impression** (demande du 12/11) : PDF séance par séance, blancs mesurés page par page, puis réduits.
+- **Les quatre schémas (n°325, 329)** : cartes des types en HTML, mémoire et ventilation en version verticale, bouton « Agrandir », alternative textuelle.
+- **La pédagogie (n°323, 330)** : limite de la métaphore de la boîte, expérience `3.5` / comparaison / `type()`, transfert individuel sans squelette, billet de sortie, le scénario présenté comme tel.
+- **Généraliser** : un contrôle par règle au moment de l'étendre (taille des textes de figure à 390 px, contraste des textes secondaires, commandes sans nom, verrous qui s'ouvrent sans résultat).
+
+**Mesure.** Banc de la séquence : 82/82 (61 avant ; 21 tests de plus pour l'audit : chaque cas refusé et le cas juste des activités 3, 4 et 5, l'ancienne sauvegarde, le clavier, les pastilles, le contraste, les textes, la mission) ; banc n°311 : 34/34. Mode mission : page acceptée, 45 écrans, 22 vérifiés par le mode ; 82 pourquoi sur 82. Charge : séance 4, 1 018 → 1 186 mots visibles ; les trois autres inchangées (850, 1 158, 761). Règles d'or 0 ✘ ; aération 0. Contrôles du site : Les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), rejoués sur l'état final. Vu à l'écran : l'activité 5 entière à 1 280 et 390 px ; le banc de l'élève avec une fonction fausse, puis juste.

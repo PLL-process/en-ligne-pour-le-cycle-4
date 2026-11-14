@@ -18,9 +18,9 @@ lecture de programme → mise au point, sur un fil narratif New York (le panneau
 | Séance | Activités | Verrou expérientiel |
 |---|---|---|
 | 1 La boîte étiquetée | 1. Simulateur de mémoire pas-à-pas · 2. Table de suivi | 6 étapes déroulées |
-| 2 Les types | 3. Prédire → tester → reporter (piège des guillemets) | éditeur ouvert + reports exacts |
-| 3 Le panneau bugué | 4. Chasse aux 3 bugs + preuve par la console | éditeur ouvert |
-| 4 Mise au point | 5. Algorithme → fonction → banc de 4 tests + cas limite | 4 tests exécutés |
+| 2 Les types | 3. Prédire → tester → reporter (piège des guillemets) | la console a montré les 3 résultats + reports exacts |
+| 3 Le panneau bugué | 4. Chasse aux 3 bugs + preuve par la console | le programme affiche la bonne ligne, et la recalcule avec 95 °F |
+| 4 Mise au point | 5. Algorithme → fonction → banc de 4 tests + cas limite → la fonction de l'élève testée par la page (7 appels) | banc de démonstration joué + la fonction de l'élève renvoie les 7 valeurs attendues |
 
 ## Versions (règle n°3)
 🅱 éditeur Vittascience dans un nouvel onglet (parcours principal) · 🅲 simulateur + tables au cahier (hors ligne). La version 🅰 (éditeur → carte réelle) est retirée le

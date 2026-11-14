@@ -224,6 +224,11 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
 
 ## Contrôles avant de rendre
 
+- Les règles de l'audit de `3e_C9.1` (n°322 à n°330, 14/11/2026 ; résumé dans le skill `revision-sequence`, étape 5 bis) :
+  une réussite affichée prouve la production réelle ; une règle enseignée est juste dans toute sa portée ; un banc de tests
+  couvre les frontières ; une figure se lit à 390 px (aucun texte sous 14 px) ; une commande se comprend sans pictogramme ;
+  contraste ≥ 4,5:1 ; la page dit vrai sur elle-même ; deux surfaces au plus ; une conception se prouve seul.
+
 - `node _outils/controle_squelette.mjs <dossier>` : aucun défaut D1 à D6 (D6 obligatoire depuis le 04/11/2026, page sans onglets comprise). Relancer avec `--json` pour lire les « à rédiger »
   (Bonus sans champ ou sans corrigé, bilan sans métacognition…) : le rapport texte ne les imprime pas.
 - `python3 _outils/verif_regles_audit.py <dossier>` : compter les ✘, car la sortie vaut 0 même quand il y en a.
