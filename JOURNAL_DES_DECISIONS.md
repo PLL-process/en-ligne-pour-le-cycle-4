@@ -30596,3 +30596,34 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Ce que ça ne règle pas.** Le gain est d'environ 1 % : le blanc qui reste ne vient pas des cas du pilote. Les fiches qui en perdent le plus : `3e_C7.1` séance 3 (10 pages, 592 mm), `5e_C1.2` séance 1 (427 mm), `3e_C1.5` séances 3 et 1, `3e_C4.3` séance 1, `5e_C2.1` séance 2, `4e_C1.1` séance 5, `4e_C1.4` séance 1. Les causes vues sur les planches : un grand bloc qui ne se coupe pas (schéma, encadré) renvoyé en page suivante, des listes de réponses une par ligne, un dernier petit bloc (critère, « À retenir ») seul en fin de fiche. Elles demandent de regarder chaque fiche : c'est l'étape « impression » de la passe de révision, séquence par séquence.
 
 Contrôles : `banc_papier` vert sur les 60 séquences (aucun champ d'écran, aucun texte pâle, aucune première page vide) ; banc de `3e_C9.1` 89 / 89 sans son bloc propre ; le générateur des quatre pages de `3e_C9.2` relancé (pages identiques).
+
+---
+
+## 14/11/2026 — `4e_C1.4`, thème 1 (2/3) : les cinq quiz réécrits, quatre propositions, vérifiés quiz par quiz
+
+**La décision.** Pascal, pour les trois séquences du thème 1 dont les activités ne se vérifiaient pas : « Claude écrit les questions », une PR par page. `5e_C1.3` est fusionnée (#681) ; voici `4e_C1.4`.
+
+**Ce que la page avait.** Cinq quiz (1.f, 3.d, 4.c, 5.c, 6.d), 35 questions à **deux** propositions, la bonne presque toujours en premier, la mauvaise souvent absurde (« Rien », « Un objet », « Cliquer sur tous les liens », « http://phishing.com »). Une seule vérification par section, qui mêlait le quiz aux autres exercices ; le mode mission ne lisait aucune réponse (10 écrans, 0 vérifié).
+
+**Ce qui est écrit.** Les cinq quiz, **7 questions chacun, annoncées** (le 3.d en comptait 7 ; la nouvelle version aussi, grille comprise) ; chaque question garde sa notion et reçoit **quatre propositions plausibles** :
+- **1.f, menaces et solutions** : le phishing défini ; ce qui protège encore un compte dont le mot de passe est parti (la 2FA) ; ce que chiffre un rançongiciel ; ce qui détecte un keylogger ; ce que vise un DDoS, et qui peut le contrer ; ce qu'est un malware ;
+- **3.d, données personnelles** : la définition ; une grille « Range chaque donnée dans sa famille » (identité, contact, sensible, pas une donnée personnelle) ; la position GPS ; le RGPD ;
+- **4.c, protection** : ce qu'ajoute la 2FA ; ce que corrige une mise à jour ; pourquoi la sauvegarde sauve d'un rançongiciel ; à qui le VPN cache l'adresse IP (pas à son fournisseur) ; la force brute ; ce que détecte un antivirus ; le bon réflexe devant « débloque ton compte » ;
+- **5.c, traces** : cookie traceur, navigation privée, VPN, géolocalisation, déconnexion, publications inutiles, proxy ;
+- **6.d, propriété intellectuelle** : droit d'auteur, licence CC, droit à l'image, e-réputation, CC BY, réutiliser une image, le refus d'un ami.
+
+Chaque mauvaise proposition a son pourquoi (97, 20 mots au plus : `mission_4e_C1.4.json`) ; chaque quiz, deux aides graduées, une correction complète repliée (la réponse, puis chaque refus avec sa raison, puis « À retenir ») et un critère de réussite.
+
+**Ce que la page fait.**
+- Chaque quiz se vérifie seul : « quiz validé » quand les 7 réponses sont justes ; chaque question fausse marquée « à revoir », seule.
+- La tâche se coche au **tableau de bord** de la séance (n°30 : la page n'en avait pas).
+- Le **score de la section** compte toujours le quiz (une question, un point) : `blocsDe` et `jugerBloc` lisent les nouvelles réponses.
+- Les réponses se gardent avec les autres champs de la page (sa sauvegarde « cyber4e »), et reviennent au rechargement.
+- La réponse choisie est encadrée ; elle n'est plus peinte en vert fluo avant toute vérification (la feuille de l'ancien quiz disait « juste » à tout ce qu'on cochait).
+- Les modales « 🔑 Correction » des sections renvoient à la correction du quiz au lieu de lister « Q1 … Q7 ».
+
+**Pour le mode mission.** Les sections 1, 3, 4, 5 et 6 sont marquées « activité » ; deux quiz sortent du cadre où ils étaient tombés (une `<div>` sans classe pour le 3.d ; le cadre du jeu des licences pour le 6.d, qui ne se fermait pas avant lui). Mode mission : 10 → **47 écrans, 32 vérifiés, 35 réponses lues**, 97 pourquoi sur 97.
+
+**Mesure.** Banc des quiz (`tests_4e_C1.4_quiz.mjs`, nouveau) : **31 / 31** — les réponses lues dans la page, chacune une fois parmi quatre, la bonne réponse qui change de place ; pour chaque quiz : rien coché, une erreur, tout juste et la tâche cochée, le score de la section ; le rechargement. Banc n°311 : 34 / 34. Règles d'or 0 ✘ ; aération 0 ; hiérarchie 0 ; ordre des propositions : 0 refus. Fiche papier : 6 / 4 / 6 / 4 pages, comme sur `main`. Charge : séance 1, 893 → 1 043 mots visibles ; séance 2, 532 → 839 ; **séance 3, 1 014 → 1 350** (au-dessus du repère). Contrôles du site : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), sur l'état final, après la fusion de `main` (#682, #683).
+
+**L'écart, et la question pour Pascal.** La séance 3 porte deux sections (5, les traces ; 6, la propriété intellectuelle) **et** la clôture (bilan, positionnement, QCM : environ 300 mots, qui ne bougent pas). Le « À retenir » des quiz est déjà replié dans leur correction. Pistes : replier les deux mises en situation des sections 5 et 6 (environ 80 mots) ; ou faire de la section 6 et de la clôture une séance 4.

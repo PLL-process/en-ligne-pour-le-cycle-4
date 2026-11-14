@@ -20,7 +20,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
 | 2 | `5e_C1.3` | 1050 → 1043 → 1199 | 0 | 0 | 5 → 0 | livrée #620 ; #681 : 24 questions fermées vérifiées par la page (thème 1) |
 | 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 |
-| 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations ; #627 répare le jeu des licences (6.c) |
+| 4 | `4e_C1.4` | 1291 → 1056 → 1350 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations ; #627 répare le jeu des licences (6.c) ; #684 : les cinq quiz réécrits (35 questions à quatre propositions, vérifiées quiz par quiz) — séance 3 au-dessus du repère, justifiée |
 | 5 | `3e_C1.5` | 2017 → 1448 | 0 | 0 | 19 → 0 | livrée #624 ; #628 ramène la séance 4 à 1 448 — au-dessus du repère, justifiée |
 | 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées |
 | 7 | `5e_C1.1` | 1629 → 1301 | 0 | 0 | 26 → 0 | livrée #630 — séances 1 et 5 au-dessus du repère, justifiées |
@@ -152,4 +152,9 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   - **5e_C1.3** (#681) : 24 questions fermées (9 / 9 / 6), vérifiées par la page, une correction complète chacune ; la
     tâche se coche au tableau de bord quand tout est juste. Séance 1, 1 043 → 1 199 mots (la grille des huit rôles :
     64 lettres ; le redondant retiré de la vue pour tenir le repère) ; séance 2, 224 → 579 ; séance 3, 645 → 962.
-    Fiche papier 9 → 11 pages. Restent `4e_C1.4` et `3e_C1.5`.
+    Fiche papier 9 → 11 pages.
+  - **4e_C1.4** (#684) : les cinq quiz, 35 questions à deux propositions, deviennent 35 questions à quatre propositions
+    (7 par quiz), vérifiées quiz par quiz ; tableau de bord des tâches ; mode mission 10 → 47 écrans, 35 réponses lues.
+    Séance 1, 893 → 1 043 ; séance 2, 532 → 839 ; **séance 3, 1 014 → 1 350** : deux sections et la clôture (environ
+    300 mots qui ne bougent pas). Pistes : replier les mises en situation des sections 5 et 6, ou une séance 4 (section 6
+    et clôture) — question posée à Pascal. Reste `3e_C1.5`.
