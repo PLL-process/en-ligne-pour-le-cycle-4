@@ -440,18 +440,26 @@ await ctx.close();
     onglet("s4"); await new Promise(r => setTimeout(r, 150));
     const boutons = [...document.querySelectorAll(".bench-run")].map(x => x.getBoundingClientRect());
     const banc = boutons.length === 4 && boutons.every(r => r.width >= 44 && r.height >= 44 && r.left >= 0 && r.right <= innerWidth);
-    onglet("s1"); await new Promise(r => setTimeout(r, 150));
-    const fig = document.querySelector("#act1 figure"), doc = fig.querySelector("object").getBoundingClientRect();
-    const indice = document.querySelector("#act1 .doc-glisse"), glisse = fig.scrollWidth > fig.clientWidth + 100, aide = !!indice && !!indice.offsetParent;
+    /* 14/11/2026 (règle d'or n°325) : les documents sont en HTML ; à 390 px, aucun de leurs textes sous 14 px, aucun ne déborde */
+    const docs = [];
+    for (const s of ["s1", "s2", "s3", "s4"]) { onglet(s); await new Promise(r => setTimeout(r, 150));
+      document.querySelectorAll(".seance-panel.active figure.doc-html, #ouverture figure.doc-html").forEach(fg => {
+        if (!fg.offsetParent || docs.some(x => x.id === fg.id)) return;
+        const tailles = [], marcheur = document.createTreeWalker(fg, NodeFilter.SHOW_TEXT);
+        while (marcheur.nextNode()) { const n = marcheur.currentNode, e = n.parentElement; if (n.textContent.trim() && e.offsetParent) tailles.push(parseFloat(getComputedStyle(e).fontSize)); }
+        const r = fg.getBoundingClientRect();
+        docs.push({ id: fg.id, min: Math.min(...tailles), dedans: r.left >= 0 && r.right <= innerWidth + 0.5 && fg.scrollWidth <= fg.clientWidth + 1 });
+      }); }
     onglet("s2"); await new Promise(r => setTimeout(r, 150));
     const code = [...document.querySelectorAll(".code-ligne")].pop();
-    return { banc, docLarge: Math.round(doc.width), glisse, indice: aide,
+    return { banc, docs, objets: document.querySelectorAll("object.figure").length,
       uneLigne: !!code && code.getClientRects().length === 1 && code.getBoundingClientRect().height < 30,
       debord: document.documentElement.scrollWidth - document.documentElement.clientWidth };
   });
   ok("mobile 390 px : les quatre boutons ▶ du banc de tests sont à l'écran, sans faire glisser, et font 44 px", tel.banc);
-  ok("mobile 390 px : un document garde une largeur lisible et se fait glisser dans son cadre, avec sa ligne d'aide",
-     tel.docLarge >= 700 && tel.glisse && tel.indice && tel.debord === 0, "document " + tel.docLarge + " px · glisse " + tel.glisse + " · aide " + tel.indice + " · débord " + tel.debord);
+  ok("mobile 390 px : les quatre documents sont du texte qui se recompose — aucun texte sous 14 px, aucun ne déborde, plus aucun dessin réduit (règle d'or n°325)",
+     tel.docs.length === 4 && tel.docs.every(x => x.min >= 14 && x.dedans) && tel.objets === 0 && tel.debord === 0,
+     tel.docs.map(x => x.id + " " + x.min + " px" + (x.dedans ? "" : " DÉBORDE")).join(" · ") + " · dessins réduits : " + tel.objets + " · débord " + tel.debord);
   ok("mobile 390 px : le code de l'expérience C tient sur une ligne", tel.uneLigne);
   await pm.close();
   await ctxm.close();
@@ -630,7 +638,7 @@ await ctx.close();
     const lum = c => { const v = c.match(/\d+(\.\d+)?/g).slice(0, 3).map(x => +x / 255).map(x => x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
     const fond = e => { while (e) { const b = getComputedStyle(e).backgroundColor; if (b && !/rgba\(0, 0, 0, 0\)|transparent/.test(b)) return b; e = e.parentElement; } return "rgb(255,255,255)"; };
     return [...document.querySelectorAll(".credit-photo")].map(e => { const a = lum(getComputedStyle(e).color), b = lum(fond(e)); return Math.round((Math.max(a, b) + .05) / (Math.min(a, b) + .05) * 100) / 100; }); });
-  ok("audit · les crédits des photos se lisent : contraste ≥ 4,5:1 sur le fond affiché (3,69:1 avant)", contraste.length === 3 && contraste.every(x => x >= 4.5), contraste.join(" · "));
+  ok("audit · les crédits des photos (et du plan) se lisent : contraste ≥ 4,5:1 sur le fond affiché (3,69:1 avant)", contraste.length >= 3 && contraste.every(x => x >= 4.5), contraste.join(" · "));
   ok("audit · aucune erreur JavaScript pendant ces essais", ea.length === 0, ea.slice(0, 2).join(" | "));
   await pa.close(); await ctxA.close();
 
@@ -655,6 +663,36 @@ await ctx.close();
   ok("mission · act. 5 : l'éditeur et le banc de la fonction de l'élève sont sur le même écran, avec « Vérifier », avant « Je retiens »",
      i5 >= 0 && ecr5[i5].banc && ecr5[i5].verif && /^Je retiens/.test((ecr5[i5 + 1] || {}).titre || ""), ecr5.map(e => e.titre.slice(0, 14) + (e.editeur ? "[éd]" : "") + (e.banc ? "[banc]" : "")).join(" | "));
   await pm5.close(); await ctxM5.close();
+}
+
+/* ═══ Les représentations (14/11/2026, règle d'or n°325, cahier des charges de l'audit) ═══ */
+{
+  const ctxR = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const { page: pr, erreurs: er } = await ouvrir(ctxR, SEQ);
+  const etat = () => pr.evaluate(() => ({ t: document.getElementById("memEtat").textContent, prev: document.getElementById("memPrev").disabled, next: document.getElementById("memNext").disabled }));
+  const e0 = await etat();
+  for (let i = 0; i < 4; i++) await pr.click("#memNext");
+  const e4 = await etat();
+  await pr.click("#memPrev"); const e3 = await etat();
+  for (let i = 0; i < 3; i++) await pr.click("#memNext");
+  const e6 = await etat();
+  await pr.click("#memPrev"); const badge = await pr.evaluate(() => document.getElementById("memBadge").textContent);
+  ok("simulateur : « étape n sur 6 », le changement dit en mots (« 4 devient 3 »), étape précédente ; les boutons se grisent aux deux bouts",
+     e0.prev && !e0.next && /^Étape 4 sur 6 — .*4 - 1 = 3.*4 devient 3/.test(e4.t) && /^Étape 3 sur 6/.test(e3.t) && e6.next && !e6.prev && /badge/.test(badge),
+     e4.t.slice(0, 80));
+  await pr.click("#tab-s2"); await pr.waitForTimeout(150);   // les cartes des types sont dans la séance 2
+  const docs = await pr.evaluate(() => {
+    const txt = id => (document.getElementById(id) || {}).textContent || "";
+    const cartes = [...document.querySelectorAll(".type-carte")].map(c => Math.round(c.getBoundingClientRect().top)), cols = cartes.filter(y => y === cartes[0]).length;
+    return { cols, planQ: /TU ES ICI/.test(txt("planQ")) && /Combien de stations/.test(txt("planQ")) && /environ 50 min/.test(txt("planQ")),
+      doc1: /4 devient 3|REMPLACÉ par 3/.test(txt("doc1")) && /DE DROITE À GAUCHE/.test(txt("doc1")),
+      doc2: /même si ce sont des chiffres/.test(txt("doc2")) && /POINT/.test(txt("doc2")) && /3 \+ 4\.5/.test(txt("doc2")) && /erreur de type/.test(txt("doc2")),
+      doc3: /CAHIER DES CHARGES/.test(txt("doc3")) && /REJOUE TOUS les tests/.test(txt("doc3")) };
+  });
+  ok("documents : le texte des dessins est repris (plan, mémoire, types, ventilation), et les quatre types tiennent sur une ligne à 1 280 px",
+     docs.cols === 4 && docs.planQ && docs.doc1 && docs.doc2 && docs.doc3, JSON.stringify(docs));
+  ok("représentations : aucune erreur JavaScript", er.length === 0, er.slice(0, 2).join(" | "));
+  await pr.close(); await ctxR.close();
 }
 
 verifLiens();
