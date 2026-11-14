@@ -30651,3 +30651,20 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Banc des questions (`tests_3e_C1.5_questions.mjs`, nouveau) : **23 / 23**. Bancs du lot : n°311 34 / 34, séances 45 / 45. Règles d'or 0 ✘ ; aération 0 ; hiérarchie 0 ; ordre des propositions : 0 refus. Fiche papier : 5 pages par séance, comme sur `main`. Charge : séance 1, 868 → 1 009 mots visibles ; **séance 2, 1 098 → 1 234** ; séance 3, 792 → 1 084 ; séance 4 inchangée (1 448, déjà justifiée). Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘). L'accessibilité de la page a d'abord refusé les deux aides de la séance 1, des cibles trop petites au doigt : elles font maintenant 44 px.
 
 **L'écart.** La séance 2 passe le repère de 34 mots : elle porte l'activité 2 et l'exercice d'atelier de la carte mentale (2.d). Une question y a déjà été retirée (le RGPD, que 1 bis travaille). Piste : replier le texte d'introduction de l'activité 2.
+
+---
+
+## 14/11/2026 — `4e_C1.4` : une quatrième séance, « Ma réputation »
+
+**La décision.** Après #684, la séance 3 portait deux sections (5, les traces ; 6, la propriété intellectuelle) et la clôture : 1 350 mots visibles. Deux pistes étaient proposées ; Pascal : « créer une séance 4 ».
+
+**Ce qui change.**
+- Un onglet « Séance 4 — Ma réputation », entre « Séance 3 — Mes traces » et « Hors parcours ».
+- La section 6 (droit à l'image, propriété intellectuelle, jeu des licences, quiz 6.d) et la clôture (Bonus, bilan, positionnement, métacognition, QCM) y sont **déplacées, sans être réécrites**.
+- La séance 3 se termine par le bouton « Séance 4 — Ma réputation › ».
+- Le tableau de bord suit : séance 3, les exercices 5.a et 5.b et le quiz 5.c ; séance 4, les exercices 6.a à 6.c, le quiz 6.d, le bilan.
+- La synthèse professeur dit « 4 séances de 55 minutes » ; le README, les quatre séances.
+
+**Mesure.** Mots visibles : séance 3, 1 350 → **439** ; séance 4, **917** ; les séances 1 et 2 inchangées (1 043, 839). Banc des quiz 31 / 31 (le quiz 6.d attendu en séance 4) ; banc n°311 34 / 34 ; `controle_squelette` : la clôture à la dernière séance ; navigation : chaque séance mène à la suivante. Mode mission : 47 écrans, 35 réponses lues, inchangé. Fiche papier : séance 3, 6 → 2 pages ; séance 4, 5 pages (20 → 21 pages en tout). Règles d'or 0 ✘. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**À savoir.** La séance 3 est maintenant courte (la section 5 seule : environ 30 minutes d'activités) : de la marge pour le transfert ou pour finir la séance 2.
