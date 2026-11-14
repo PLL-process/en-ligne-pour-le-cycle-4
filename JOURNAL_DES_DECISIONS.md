@@ -30627,3 +30627,27 @@ Chaque mauvaise proposition a son pourquoi (97, 20 mots au plus : `mission_4e_C1
 **Mesure.** Banc des quiz (`tests_4e_C1.4_quiz.mjs`, nouveau) : **31 / 31** — les réponses lues dans la page, chacune une fois parmi quatre, la bonne réponse qui change de place ; pour chaque quiz : rien coché, une erreur, tout juste et la tâche cochée, le score de la section ; le rechargement. Banc n°311 : 34 / 34. Règles d'or 0 ✘ ; aération 0 ; hiérarchie 0 ; ordre des propositions : 0 refus. Fiche papier : 6 / 4 / 6 / 4 pages, comme sur `main`. Charge : séance 1, 893 → 1 043 mots visibles ; séance 2, 532 → 839 ; **séance 3, 1 014 → 1 350** (au-dessus du repère). Contrôles du site : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), sur l'état final, après la fusion de `main` (#682, #683).
 
 **L'écart, et la question pour Pascal.** La séance 3 porte deux sections (5, les traces ; 6, la propriété intellectuelle) **et** la clôture (bilan, positionnement, QCM : environ 300 mots, qui ne bougent pas). Le « À retenir » des quiz est déjà replié dans leur correction. Pistes : replier les deux mises en situation des sections 5 et 6 (environ 80 mots) ; ou faire de la section 6 et de la clôture une séance 4.
+
+---
+
+## 14/11/2026 — `3e_C1.5`, thème 1 (3/3) : des questions fermées dans les activités qui ne se vérifiaient pas
+
+**La décision.** Pascal, pour les trois séquences du thème 1 dont les activités ne se vérifiaient pas : « Claude écrit les questions ». `5e_C1.3` (#681) et `4e_C1.4` (#684) sont fusionnées ; voici la dernière.
+
+**Ce que la page avait.** 56 zones de réponse libre ; seules l'activité 1 bis (deux choix) et l'activité 5 (quatre choix) se vérifiaient, avec l'argumentaire. Les activités 1, 2, 3.a et 3.b — une classification à glisser, une dizaine de questions ouvertes avec leur correction à déplier — ne se vérifiaient pas. Le mode mission ne lisait aucune réponse (13 écrans, 0 vérifié).
+
+**Ce qui est écrit.** Quatre blocs « 🔎 Je vérifie », 13 questions à quatre propositions, tirées des textes et des corrections de la page :
+- **séance 1 (3)** : peut-on être invisible sur Internet ; ce qu'est l'e-réputation ; ce qui la protège ;
+- **séance 2 (3)** : une condition pour vendre en ligne sans risque (HTTPS, paiement sécurisé) ; ce que dit le document (Le Monde, 2017) du numérique et des métiers ; le métier le plus touché chez La Redoute (la logistique) ;
+- **séance 3, le document (4)** : la part du numérique dans l'empreinte carbone de la France (environ 4,4 %, données 2022) ; **qui l'a produit** (l'ADEME et l'Arcep ; la page de l'Arcep le relaie) ; la fabrication, première source d'émissions d'un appareil ; nos équipements, première part de l'impact du numérique ;
+- **séance 3, l'impression (3)** : le menu « Pages » ; le recto-verso ; quand un PDF suffit.
+
+Chaque bloc : deux aides graduées, la vérification, une correction complète repliée (la réponse, chaque refus avec sa raison, « À retenir »), un critère de réussite. Chaque mauvaise proposition a son pourquoi (`mission_3e_C1.5.json`) ; ceux des activités 1 bis et 5 reprennent les retours que la page donnait déjà.
+
+**Ce que la page fait.** Un bloc est « validé » quand toutes ses réponses sont justes ; chaque question fausse est marquée « à revoir », seule ; la tâche se coche au tableau de bord de la séance (n°30) ; les réponses se gardent avec la sauvegarde de la page (`saveProgress4`, appelée après chaque choix). La bonne réponse change de place d'une question à l'autre (le banc l'a demandé : 8 sur 13 étaient en deuxième position).
+
+**Pour le mode mission.** Les sections des activités sont marquées « activité » ; les boutons de 1 bis et de l'activité 5 portent `data-check`, leurs questions leur réponse (`data-bonne`), leur message la classe `feedback`. Mode mission : 13 → **27 écrans, 13 vérifiés, 19 réponses lues**, 51 pourquoi sur 51. Les questions de 1 bis et de l'activité 5 restent vérifiées par la page, avec l'argumentaire qu'elles accompagnent : le mode ne les joue pas une à une.
+
+**Mesure.** Banc des questions (`tests_3e_C1.5_questions.mjs`, nouveau) : **23 / 23**. Bancs du lot : n°311 34 / 34, séances 45 / 45. Règles d'or 0 ✘ ; aération 0 ; hiérarchie 0 ; ordre des propositions : 0 refus. Fiche papier : 5 pages par séance, comme sur `main`. Charge : séance 1, 868 → 1 009 mots visibles ; **séance 2, 1 098 → 1 234** ; séance 3, 792 → 1 084 ; séance 4 inchangée (1 448, déjà justifiée). Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘). L'accessibilité de la page a d'abord refusé les deux aides de la séance 1, des cibles trop petites au doigt : elles font maintenant 44 px.
+
+**L'écart.** La séance 2 passe le repère de 34 mots : elle porte l'activité 2 et l'exercice d'atelier de la carte mentale (2.d). Une question y a déjà été retirée (le RGPD, que 1 bis travaille). Piste : replier le texte d'introduction de l'activité 2.
