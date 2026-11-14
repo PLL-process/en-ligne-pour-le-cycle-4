@@ -30,7 +30,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 11 | `4e_C3.1` | 1850 → 1299 | 0 | 0 | 10 → 0 | livrée #630 — séance 1 au-dessus du repère, justifiée |
 | 12 | `3e_C4.1` | 1444 → 1032 | 1 → 0 | 33 → 0 | 6 → 0 | livrée #632 |
 | 13 | `3e_C4.3` | 1928 → 817 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 ; #646 coupe la séance 4 en deux (décision de Pascal du 11/11) : cinq séances, 817 · 460 · 437 · 737 · 551 |
-| 14 | `5e_C2.1` | 2272 | 0 | 0 | 20 | à faire |
+| 14 | `5e_C2.1` | 2272 → 2166 | 0 | 0 | 20 → 0 | #687 — séances 1 (2 166) et 2 (2 004) au-dessus du repère : un exercice d'atelier chacune (bête à cornes, pieuvre) ; question posée à Pascal |
 | 15 | `4e_C4.1` | 2394 → 782 | 1 → 0 | 39 → 0 (22 menus du cahier des charges, voulus) | 11 → 0 | livrée #639 |
 | 16 | `4e_C4.1_book-train` | 2752 → 1510 | 0 | 0 | 14 → 0 | livrée #642 — séances 2 (1 307) et 3 (1 510) au-dessus du repère : exercices à six positions, deux chaînes à étiqueter, fichiers draw.io à télécharger ; le reste est replié |
 | 17 | `3e_C4.7` | 1169 → 1075 | 1 → 0 | 28 → 0 (1 menu d'interface, simulateur) | 8 → 0 | livrée #644 |
@@ -163,3 +163,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
     vérifications de 1 bis et de l'activité 5 lisibles par le mode mission ; mode mission 13 → 27 écrans, 19 réponses
     lues. Séance 1, 868 → 1 009 ; **séance 2, 1 098 → 1 234** (l'activité 2 et l'exercice d'atelier 2.d) ; séance 3,
     792 → 1 084. Le thème 1 est fait.
+- **5e_C2.1** (Shenzhen, la station de vélos), 14/11/2026 (#687) : aération 20 → 0, dont sept textes d'ateliers corrigés à
+  leur source et reportés dans `5e_C3.1`, les deux ateliers de 5e et le cahier ; le billet d'entrée ne donne plus sa
+  réponse (note repliée) ; séance 1, 2 272 → 2 166 ; séance 2, 2 052 → 2 004. Au-dessus du repère : les exercices
+  d'atelier (bête à cornes, environ 700 mots ; pieuvre, environ 1 280) — question posée à Pascal.

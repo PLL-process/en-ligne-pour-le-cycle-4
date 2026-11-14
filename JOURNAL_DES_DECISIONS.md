@@ -30668,3 +30668,18 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : séance 3, 1 350 → **439** ; séance 4, **917** ; les séances 1 et 2 inchangées (1 043, 839). Banc des quiz 31 / 31 (le quiz 6.d attendu en séance 4) ; banc n°311 34 / 34 ; `controle_squelette` : la clôture à la dernière séance ; navigation : chaque séance mène à la suivante. Mode mission : 47 écrans, 35 réponses lues, inchangé. Fiche papier : séance 3, 6 → 2 pages ; séance 4, 5 pages (20 → 21 pages en tout). Règles d'or 0 ✘. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **À savoir.** La séance 3 est maintenant courte (la section 5 seule : environ 30 minutes d'activités) : de la marge pour le transfert ou pour finir la séance 2.
+
+---
+
+## 14/11/2026 — Révision des trois thèmes, 14 : `5e_C2.1` (Shenzhen, la station de vélos)
+
+**D'où ça vient.** La ligne 14 du suivi était restée « à faire » ; l'ordre la place avant `3e_C7.1`.
+
+**Ce qui est fait.**
+- **Aération : 20 → 0.** 92 retours à la ligne posés par `aerer_corrections.py` ; le paragraphe « Quatre familles à couvrir » en liste ; les sept textes restants venaient des exercices d'ateliers incrustés (la bête à cornes du vélo-cargo, le diagramme pieuvre) : corrigés **à leur source** (`donnees_besoin.py`, `donnees_interacteurs.py` : la légende du dessin de référence, les refus un par ligne, « FP1 et la bête à cornes » point par point), puis reportés à l'identique dans `5e_C2.1` et `5e_C3.1` (`incrustations.py --seq`, « à jour »), dans les deux ateliers de 5e et le cahier de 5e. Le générateur a été rejoué dans une copie à part : sur `main`, il ne change rien aux pages ; avec les nouvelles sources, il ne change que ces retours à la ligne.
+- **Le billet d'entrée ne donne plus sa réponse.** Sous la question « Une fonction technique se reconnaît à… », une note expliquait, à découvert, que la bonne réponse était la fonction technique et non la fonction d'usage. Elle se replie : « ⚠️ Deux réponses se ressemblent : pourquoi ? — à ouvrir après avoir répondu ».
+- **Le redondant.** « Pour la séance 2 » (le vélo-cargo reviendra dans le diagramme pieuvre) était dit deux fois, dans l'activité et dans l'introduction de l'exercice b) : la première sort.
+
+**Mesure.** Mots visibles : séance 1, 2 272 → 2 166 ; séance 2, 2 052 → 2 004 ; séances 3 et 4 inchangées (609, 597). Règles d'or 0 ✘ ; aération 20 → 0. Banc du lot 152 / 152 (le test du billet suit la note repliée ; les deux liens des synthèses, en échec le 12/11, passent) ; n°311 34 / 34 ; `5e_C3.1` n°311 27 / 27 ; ateliers 517 / 517 ; mode mission : page acceptée, 46 écrans. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**L'écart, et la question pour Pascal.** Les séances 1 et 2 restent au-dessus du repère : chacune porte un exercice d'atelier incrusté — la bête à cornes du vélo-cargo (environ 700 mots) et le diagramme pieuvre (environ 1 280 mots) — et la séance 1, dix menus du schéma de la bête à cornes (environ 270 mots de propositions). En 5e, ces exercices sont la première rencontre avec les deux outils. Pistes : les garder (écart justifié, comme `5e_C1.2` et son exercice FAST) ; ou replier leurs consignes d'exercice ; ou rééquilibrer avec les séances 3 et 4, légères (environ 600 mots chacune).
