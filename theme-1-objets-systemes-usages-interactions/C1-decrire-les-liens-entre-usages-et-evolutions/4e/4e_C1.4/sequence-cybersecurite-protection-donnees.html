@@ -1791,13 +1791,14 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <button class="seance-tab hors" role="tab" aria-selected="false" aria-controls="shors"
           data-panel="shors" id="tab-shors">Hors parcours<span class="quoi">Python — relève de C9</span></button>
 </div>
+<div id="tachesBandeau" class="pp-ecran" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <p class="seance-avis" id="avis-hors" hidden>⚠️ Ce bloc ne fait pas partie des trois séances de
 cette séquence&nbsp;: la programmation relève de la compétence C9, pas de C1. <br>Il est conservé ici
 parce que des classes l'utilisent déjà. <strong>Ses points ne comptent pas</strong> dans le score de la séquence — c'est un bonus, pas une séance.</p>
 
 <section class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1" data-titre="Séance 1 — Reconnaître">
 <!-- 1. Risques et bonnes pratiques -->
-  <div class="section panel" id="sec1">
+  <div class="section panel activite" id="sec1">
 
   <div class="qcm-question">
     <h2 id="bloc1-risques">🛡️ 1. Risques et bonnes pratiques <span class="badge">Score : <span id="sc1">0</span>/<span id="scm1">…</span></span></h2>
@@ -2053,95 +2054,75 @@ lui-même.</p>
 
     <div class="response-label">Ta justification ici 👇</div><textarea id="mpJust" aria-label="Ma justification sur le mot de passe"></textarea>
 
-    <h3>🔒 <strong> 1.f - Quiz Menaces & Solutions (6 questions)</strong></h3>
-
-    <div class="qcm-block qcm-sec1" role="radiogroup">
-        <div class="qcm-question"><span class="ico" aria-hidden="true">🎣</span> Laquelle de ces propositions décrit le mieux le <em>phishing</em> ?</div>
-        <div class="qcm-option">
-          <input type="radio" name="q1p" value="0" id="q1p0">
-          <label for="q1p0"><span class="ico" aria-hidden="true">❌</span>Accélérer la connexion Internet</label>
-        </div>
-        <div class="qcm-option">
-          <input type="radio" name="q1p" value="1" id="q1p1">
-          <label for="q1p1"><span class="ico" aria-hidden="true">✅</span>Se faire passer pour un service afin de voler des infos</label>
-        </div>
-    </div>
-
-
-  <div class="qcm-block qcm-sec1" role="radiogroup">
-    <div class="qcm-question"><span class="ico" aria-hidden="true">🛡️</span> Q1 : Quelle solution contre le phishing ?</div>
-    <div class="qcm-option">
-      <input type="radio" name="q1a" value="1" id="q1a1">
-      <label for="q1a1"><span class="ico" aria-hidden="true">✅</span> Activer 2FA</label>
-    </div>
-    <div class="qcm-option">
-      <input type="radio" name="q1a" value="0" id="q1a0">
-      <label for="q1a0"><span class="ico" aria-hidden="true">❌</span> Cliquer sur tous les liens</label>
-    </div>
-  </div>
-
-<div class="qcm-block qcm-sec1" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🔒</span> Q2 : Le ransomware chiffre :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q1b" value="1" id="q1b1">
-    <label for="q1b1"><span class="ico" aria-hidden="true">✅</span> Tes fichiers</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q1b" value="0" id="q1b0">
-    <label for="q1b0"><span class="ico" aria-hidden="true">❌</span> Ton mot de passe</label>
-  </div>
+    <h3>🔒 <strong>1.f — Quiz Menaces & Solutions (7 questions)</strong></h3>
+<div class="exo verif-c14" id="quiz1">
+<p class="verif-titre"><b>🔎 Je vérifie</b><span class="pp-ecran"> — 7 questions</span></p>
+<fieldset class="qcm-groupe" id="q1_phishing">
+  <legend>Le phishing (hameçonnage), c'est :</legend>
+  <div class="qcm-option"><input type="radio" name="q1_phishing" id="q1_phishing__1" value="enregistrer en secret ce que tu tapes au clavier" data-pourquoi="Ça, c'est l'enregistreur de frappe (keylogger) : un logiciel caché, pas un faux message."><label for="q1_phishing__1">enregistrer en secret ce que tu tapes au clavier</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_phishing" id="q1_phishing__2" value="saturer un serveur de requêtes pour le bloquer" data-pourquoi="Ça, c'est une attaque DDoS : elle bloque un service, elle ne vole rien."><label for="q1_phishing__2">saturer un serveur de requêtes pour le bloquer</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_phishing" id="q1_phishing__3" value="se faire passer pour un service connu, pour voler tes informations"><label for="q1_phishing__3">se faire passer pour un service connu, pour voler tes informations</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_phishing" id="q1_phishing__4" value="chiffrer tes fichiers, puis demander une rançon" data-pourquoi="Ça, c'est le rançongiciel. Le phishing passe par un faux message qui imite quelqu'un."><label for="q1_phishing__4">chiffrer tes fichiers, puis demander une rançon</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q1_2fa">
+  <legend>Tu as tapé ton mot de passe sur un faux site. Ce qui protège encore ton compte :</legend>
+  <div class="qcm-option"><input type="radio" name="q1_2fa" id="q1_2fa__1" value="un mot de passe plus long" data-pourquoi="L'attaquant a déjà ton mot de passe : sa longueur ne le gêne plus."><label for="q1_2fa__1">un mot de passe plus long</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_2fa" id="q1_2fa__2" value="l&#x27;authentification à deux facteurs (2FA)"><label for="q1_2fa__2">l&#x27;authentification à deux facteurs (2FA)</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_2fa" id="q1_2fa__3" value="une sauvegarde de tes fichiers" data-pourquoi="Une sauvegarde rend tes fichiers ; elle n'empêche personne d'entrer dans ton compte."><label for="q1_2fa__3">une sauvegarde de tes fichiers</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_2fa" id="q1_2fa__4" value="la navigation privée" data-pourquoi="Elle n'efface que ton historique, sur ton appareil : ton mot de passe est déjà parti."><label for="q1_2fa__4">la navigation privée</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q1_rancon">
+  <legend>Un rançongiciel (ransomware) chiffre :</legend>
+  <div class="qcm-option"><input type="radio" name="q1_rancon" id="q1_rancon__1" value="ton mot de passe" data-pourquoi="Il ne vise pas ton mot de passe : il rend illisible ce que tu as enregistré."><label for="q1_rancon__1">ton mot de passe</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_rancon" id="q1_rancon__2" value="ta connexion Internet" data-pourquoi="Ta connexion marche encore : c'est ce que tu as enregistré qui devient illisible."><label for="q1_rancon__2">ta connexion Internet</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_rancon" id="q1_rancon__3" value="tes fichiers, pour te demander une rançon"><label for="q1_rancon__3">tes fichiers, pour te demander une rançon</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_rancon" id="q1_rancon__4" value="l&#x27;écran seulement, sans toucher aux fichiers" data-pourquoi="Les fichiers eux-mêmes sont chiffrés : c'est pour ça qu'une sauvegarde à part te sauve."><label for="q1_rancon__4">l&#x27;écran seulement, sans toucher aux fichiers</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q1_keylogger">
+  <legend>Un enregistreur de frappe (keylogger) s'est installé sur ton ordinateur. Ce qui peut le détecter :</legend>
+  <div class="qcm-option"><input type="radio" name="q1_keylogger" id="q1_keylogger__1" value="un antivirus à jour"><label for="q1_keylogger__1">un antivirus à jour</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_keylogger" id="q1_keylogger__2" value="une sauvegarde" data-pourquoi="Une sauvegarde copie tes fichiers ; elle ne cherche aucun programme caché."><label for="q1_keylogger__2">une sauvegarde</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_keylogger" id="q1_keylogger__3" value="la connexion HTTPS" data-pourquoi="HTTPS protège le trajet ; le keylogger lit tes touches avant, sur ton clavier."><label for="q1_keylogger__3">la connexion HTTPS</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_keylogger" id="q1_keylogger__4" value="un mot de passe plus long" data-pourquoi="Il enregistre chaque touche : un mot de passe long est enregistré aussi."><label for="q1_keylogger__4">un mot de passe plus long</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q1_ddos">
+  <legend>Une attaque DDoS vise :</legend>
+  <div class="qcm-option"><input type="radio" name="q1_ddos" id="q1_ddos__1" value="ton mot de passe" data-pourquoi="Un DDoS ne vole rien : il bloque un service en l'inondant de demandes."><label for="q1_ddos__1">ton mot de passe</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_ddos" id="q1_ddos__2" value="tes fichiers" data-pourquoi="Chiffrer tes fichiers, c'est le rançongiciel. Le DDoS vise un service en ligne."><label for="q1_ddos__2">tes fichiers</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_ddos" id="q1_ddos__3" value="le serveur d&#x27;un service, pour le saturer"><label for="q1_ddos__3">le serveur d&#x27;un service, pour le saturer</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_ddos" id="q1_ddos__4" value="ton clavier" data-pourquoi="Lire ton clavier, c'est le keylogger. Le DDoS vise un service en ligne."><label for="q1_ddos__4">ton clavier</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q1_malware">
+  <legend>Un malware, c'est :</legend>
+  <div class="qcm-option"><input type="radio" name="q1_malware" id="q1_malware__1" value="un antivirus" data-pourquoi="L'antivirus, c'est ce qui détecte les malwares : l'inverse."><label for="q1_malware__1">un antivirus</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_malware" id="q1_malware__2" value="un faux message qui imite un service" data-pourquoi="Un faux message, c'est le phishing : un message, pas un logiciel."><label for="q1_malware__2">un faux message qui imite un service</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_malware" id="q1_malware__3" value="une panne de matériel" data-pourquoi="Une panne n'est pas un programme. Un malware est un programme écrit pour nuire."><label for="q1_malware__3">une panne de matériel</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_malware" id="q1_malware__4" value="un logiciel malveillant, quel qu&#x27;il soit"><label for="q1_malware__4">un logiciel malveillant, quel qu&#x27;il soit</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q1_ddos_qui">
+  <legend>Qui peut contrer une attaque DDoS ?</legend>
+  <div class="qcm-option"><input type="radio" name="q1_ddos_qui" id="q1_ddos_qui__1" value="toi, en activant la 2FA" data-pourquoi="La 2FA protège ton compte. Le DDoS vise le serveur du service, pas toi."><label for="q1_ddos_qui__1">toi, en activant la 2FA</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_ddos_qui" id="q1_ddos_qui__2" value="le service attaqué, avec son hébergeur"><label for="q1_ddos_qui__2">le service attaqué, avec son hébergeur</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_ddos_qui" id="q1_ddos_qui__3" value="toi, en changeant ton mot de passe" data-pourquoi="Le DDoS ne passe pas par ton compte : ton mot de passe n'y change rien."><label for="q1_ddos_qui__3">toi, en changeant ton mot de passe</label></div>
+  <div class="qcm-option"><input type="radio" name="q1_ddos_qui" id="q1_ddos_qui__4" value="personne : il faut attendre" data-pourquoi="Les hébergeurs ont des protections anti-DDoS : le service attaqué peut agir."><label for="q1_ddos_qui__4">personne : il faut attendre</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Repère d'abord ce que vise chaque attaque : un compte, des fichiers, un serveur, un clavier.</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Phishing : un faux message. Rançongiciel : tes fichiers chiffrés. DDoS : un serveur saturé. Keylogger : tes touches enregistrées. <br>La 2FA protège un compte ; l'antivirus cherche des programmes cachés.</p></details>
+<button class="btn check" data-check="q1" type="button">✅ Vérifier le quiz</button>
+<p class="feedback" id="fbq1" role="status"></p>
+<details class="correction"><summary>📖 Correction complète du quiz (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Le phishing (hameçonnage), c&#x27;est :</b> se faire passer pour un service connu, pour voler tes informations. <br>Pas « enregistrer en secret ce que tu tapes au clavier » : ça, c&#x27;est l&#x27;enregistreur de frappe (keylogger) : un logiciel caché, pas un faux message. <br>Pas « saturer un serveur de requêtes pour le bloquer » : ça, c&#x27;est une attaque DDoS : elle bloque un service, elle ne vole rien. <br>Pas « chiffrer tes fichiers, puis demander une rançon » : ça, c&#x27;est le rançongiciel. Le phishing passe par un faux message qui imite quelqu&#x27;un.</p>
+<p><b>Tu as tapé ton mot de passe sur un faux site. Ce qui protège encore ton compte :</b> l&#x27;authentification à deux facteurs (2FA). <br>Pas « un mot de passe plus long » : l&#x27;attaquant a déjà ton mot de passe : sa longueur ne le gêne plus. <br>Pas « une sauvegarde de tes fichiers » : une sauvegarde rend tes fichiers ; elle n&#x27;empêche personne d&#x27;entrer dans ton compte. <br>Pas « la navigation privée » : elle n&#x27;efface que ton historique, sur ton appareil : ton mot de passe est déjà parti.</p>
+<p><b>Un rançongiciel (ransomware) chiffre :</b> tes fichiers, pour te demander une rançon. <br>Pas « ton mot de passe » : il ne vise pas ton mot de passe : il rend illisible ce que tu as enregistré. <br>Pas « ta connexion Internet » : ta connexion marche encore : c&#x27;est ce que tu as enregistré qui devient illisible. <br>Pas « l&#x27;écran seulement, sans toucher aux fichiers » : les fichiers eux-mêmes sont chiffrés : c&#x27;est pour ça qu&#x27;une sauvegarde à part te sauve.</p>
+<p><b>Un enregistreur de frappe (keylogger) s&#x27;est installé sur ton ordinateur. Ce qui peut le détecter :</b> un antivirus à jour. <br>Pas « une sauvegarde » : une sauvegarde copie tes fichiers ; elle ne cherche aucun programme caché. <br>Pas « la connexion HTTPS » : hTTPS protège le trajet ; le keylogger lit tes touches avant, sur ton clavier. <br>Pas « un mot de passe plus long » : il enregistre chaque touche : un mot de passe long est enregistré aussi.</p>
+<p><b>Une attaque DDoS vise :</b> le serveur d&#x27;un service, pour le saturer. <br>Pas « ton mot de passe » : un DDoS ne vole rien : il bloque un service en l&#x27;inondant de demandes. <br>Pas « tes fichiers » : chiffrer tes fichiers, c&#x27;est le rançongiciel. Le DDoS vise un service en ligne. <br>Pas « ton clavier » : lire ton clavier, c&#x27;est le keylogger. Le DDoS vise un service en ligne.</p>
+<p><b>Un malware, c&#x27;est :</b> un logiciel malveillant, quel qu&#x27;il soit. <br>Pas « un antivirus » : l&#x27;antivirus, c&#x27;est ce qui détecte les malwares : l&#x27;inverse. <br>Pas « un faux message qui imite un service » : un faux message, c&#x27;est le phishing : un message, pas un logiciel. <br>Pas « une panne de matériel » : une panne n&#x27;est pas un programme. Un malware est un programme écrit pour nuire.</p>
+<p><b>Qui peut contrer une attaque DDoS ?</b> le service attaqué, avec son hébergeur. <br>Pas « toi, en activant la 2FA » : la 2FA protège ton compte. Le DDoS vise le serveur du service, pas toi. <br>Pas « toi, en changeant ton mot de passe » : le DDoS ne passe pas par ton compte : ton mot de passe n&#x27;y change rien. <br>Pas « personne : il faut attendre » : les hébergeurs ont des protections anti-DDoS : le service attaqué peut agir.</p>
+<div class="retenir"><b>🧠 À retenir :</b> chaque attaque a sa cible : un compte (phishing), des fichiers (rançongiciel), un serveur (DDoS), un clavier (keylogger). <br>La protection se choisit selon la cible.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je relie chaque attaque à sa cible, et je choisis la protection qui va avec.</p>
 </div>
 
-<div class="qcm-block qcm-sec1" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">⌨️</span> Q3 : Solution contre keylogger ?</div>
-  <div class="qcm-option">
-    <input type="radio" name="q1c" value="1" id="q1c1">
-    <label for="q1c1"><span class="ico" aria-hidden="true">✅</span> Antivirus</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q1c" value="0" id="q1c0">
-    <label for="q1c0"><span class="ico" aria-hidden="true">❌</span> Sauvegarde</label>
-  </div>
-</div>
-
-
-<div class="qcm-block qcm-sec1" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🖥️</span> Q4 : DDoS attaque :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q1d" value="1" id="q1d1">
-    <label for="q1d1"><span class="ico" aria-hidden="true">✅</span> Le serveur</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q1d" value="0" id="q1d0">
-    <label for="q1d0"><span class="ico" aria-hidden="true">❌</span> Ton mot de passe</label>
-  </div>
-</div>
-
-
-<div class="qcm-block qcm-sec1" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🐛</span> Q5 : Malware c'est :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q1e" value="1" id="q1e1">
-    <label for="q1e1"><span class="ico" aria-hidden="true">✅</span> Logiciel malveillant</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q1e" value="0" id="q1e0">
-    <label for="q1e0"><span class="ico" aria-hidden="true">❌</span> Antivirus</label>
-  </div>
-</div>
-
-
-<div class="qcm-block qcm-sec1" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🔥</span> Q6 : Qui peut contrer une attaque DDoS ?</div>
-  <div class="qcm-option">
-    <input type="radio" name="q1f" value="1" id="q1f1">
-    <label for="q1f1"><span class="ico" aria-hidden="true">✅</span> Le service attaqué, avec son hébergeur</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q1f" value="0" id="q1f0">
-    <label for="q1f0"><span class="ico" aria-hidden="true">❌</span> Toi, en activant la 2FA</label>
-  </div>
-</div>
 
       <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
         <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help1').style.display='flex'">? Aide</button>
@@ -2194,8 +2175,8 @@ lui-même.</p>
       <p>Des mots qui s'appellent l'un l'autre, comme une ville et son pays, se devinent&nbsp;: les dictionnaires des attaquants contiennent déjà des «&nbsp;combinaison[s] (concaténation, etc.) de mots connus&nbsp;». <br>Une année aussi&nbsp;: l'ANSSI range «&nbsp;une date&nbsp;» parmi les choix faciles à retenir dont l'entropie «&nbsp;se retrouve fortement réduite&nbsp;».</p>
       <p><b>Ni majuscule, ni chiffre&nbsp;?</b> Pour «&nbsp;une phrase de passe de 20 caractères et plus&nbsp;», l'ANSSI envisage de ne pas «&nbsp;imposer de contraintes sur les caractères à utiliser&nbsp;»&nbsp;: c'est la longueur qui travaille.</p>
       <p><b>MonChien!@dore*LesCroquettes#2025! n'est pas sûr</b>, malgré sa longueur et ses symboles : il parle de toi. <br>La CNIL l'écrit en toutes lettres : «&nbsp;Personne ne doit deviner votre mot de passe à partir du nom de votre chien ou de votre film préféré.&nbsp;»</p>
-      <p>Quiz Menaces & Solutions : Q1 Activer 2FA, Q2 Tes fichiers, Q3 Antivirus, Q4 Le serveur, Q5 Logiciel malveillant, Q6 Le service attaqué, avec son hébergeur</p>
-      <p><b>Pourquoi pas «&nbsp;toi&nbsp;» à la Q6&nbsp;?</b> Un DDoS vise le serveur d'un service, pas ton compte&nbsp;: ta 2FA n'y change rien. <br>Ce qui protège, c'est un service anti-DDoS pris «&nbsp;auprès de votre prestataire en cas d'hébergement externe&nbsp;» ou auprès des fournisseurs d'accès (ANSSI)&nbsp;; pendant l'attaque, on filtre les requêtes «&nbsp;au niveau de votre pare-feu ou de votre hébergeur&nbsp;» (Cybermalveillance.gouv.fr).</p>
+      <p><b>Le quiz 1.f</b> : sa correction complète est sous le quiz (« 📖 Correction complète du quiz »).</p>
+      <p><b>Pourquoi pas «&nbsp;toi&nbsp;», à la question «&nbsp;Qui peut contrer une attaque DDoS&nbsp;?&nbsp;»&nbsp;?</b> Un DDoS vise le serveur d'un service, pas ton compte&nbsp;: ta 2FA n'y change rien. <br>Ce qui protège, c'est un service anti-DDoS pris «&nbsp;auprès de votre prestataire en cas d'hébergement externe&nbsp;» ou auprès des fournisseurs d'accès (ANSSI)&nbsp;; pendant l'attaque, on filtre les requêtes «&nbsp;au niveau de votre pare-feu ou de votre hébergeur&nbsp;» (Cybermalveillance.gouv.fr).</p>
       <p style="font-size:.9em"><b>Sources</b>&nbsp;: CNIL, <a href="https://www.cnil.fr/fr/mots-de-passe-recommandations-pour-maitriser-sa-securite">«&nbsp;Mots de passe&nbsp;: recommandations pour maîtriser sa sécurité&nbsp;»</a> (délibération n°&nbsp;2022-100 du 21/07/2022, exemple&nbsp;3)&nbsp;; <br>CNIL, <a href="https://www.cnil.fr/fr/les-conseils-de-la-cnil-pour-un-bon-mot-de-passe">«&nbsp;Les conseils de la CNIL pour un bon mot de passe&nbsp;»</a>&nbsp;; <br>Cybermalveillance.gouv.fr, <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/mots-de-passe">«&nbsp;Pourquoi et comment bien gérer ses mots de passe&nbsp;?&nbsp;»</a>, <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/fiches-reflexes/attaque-en-deni-de-service-ddos">«&nbsp;Attaque DDoS, que faire&nbsp;?&nbsp;»</a> et <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/10-mesures-essentielles-assurer-securite-numerique">«&nbsp;Les 10 mesures essentielles pour assurer votre sécurité numérique&nbsp;»</a> (Wi-Fi public&nbsp;: mesure&nbsp;10).</p>
       <p style="font-size:.9em">ANSSI, <a href="https://messervices.cyber.gouv.fr/documents-guides/anssi_essentiels_denis-de-service-distribues_v2.0.pdf">«&nbsp;Les Essentiels — Dénis de service distribués (DDoS)&nbsp;»</a> et <a href="https://messervices.cyber.gouv.fr/documents-guides/anssi-guide-authentification_multifacteur_et_mots_de_passe.pdf">«&nbsp;Recommandations relatives à l'authentification multifacteur et aux mots de passe&nbsp;»</a> (2021&nbsp;: p.&nbsp;10 attaque par dictionnaire, p.&nbsp;27 choix aléatoire, p.&nbsp;28-29 phrases de passe)&nbsp;; FranceTerme, <a href="https://www.culture.fr/franceterme/terme/INFO692">«&nbsp;cheval de Troie&nbsp;»</a> (<i>Journal officiel</i> du 20/05/2005). <br>Consultés le 23/09/2026.</p>
     </div>
@@ -2409,7 +2390,7 @@ Fin du programme.</code></pre>
   </section>
 <section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" data-titre="Séance 2 — Mes données">
 <!-- 3. Données personnelles -->
-  <div class="section panel" id="sec3">
+  <div class="section panel activite" id="sec3">
     <h2 id="bloc3-donnee-personnelle">🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="sc3">0</span>/<span id="scm3">…</span></span></h2>
 
     <h3>📰 Mise en situation : Le vol de données au collège</h3>
@@ -2505,99 +2486,75 @@ Fin du programme.</code></pre>
   </div>
 
 
-  <div>
 
-    <h3>🔒 <strong> 3.d&nbsp;—&nbsp;Quiz Données Personnelles (7 questions)</strong></h3>
-
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🪪</span> Q1 : Une donnée personnelle identifie :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3a" value="1" id="q3a1">
-    <label for="q3a1"><span class="ico" aria-hidden="true">✅</span> Une personne</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3a" value="0" id="q3a0">
-    <label for="q3a0"><span class="ico" aria-hidden="true">❌</span> Un objet</label>
-  </div>
+    <h3>🔒 <strong>3.d — Quiz Données personnelles (7 questions)</strong></h3>
+<div class="exo verif-c14" id="quiz3">
+<p class="verif-titre"><b>🔎 Je vérifie</b><span class="pp-ecran"> — 7 questions</span></p>
+<fieldset class="qcm-groupe" id="q3_def">
+  <legend>Une donnée personnelle, c'est une information qui :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_def" id="q3_def__1" value="est secrète" data-pourquoi="Ton prénom n'est pas secret, et c'est pourtant une donnée personnelle."><label for="q3_def__1">est secrète</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_def" id="q3_def__2" value="permet d&#x27;identifier une personne, directement ou non"><label for="q3_def__2">permet d&#x27;identifier une personne, directement ou non</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_def" id="q3_def__3" value="est publiée sur Internet" data-pourquoi="Une fiche papier au secrétariat en contient aussi : Internet ne compte pas ici."><label for="q3_def__3">est publiée sur Internet</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_def" id="q3_def__4" value="décrit un objet, sans lien avec une personne" data-pourquoi="Sans lien avec une personne, l'information ne dit rien de quelqu'un."><label for="q3_def__4">décrit un objet, sans lien avec une personne</label></div>
+</fieldset>
+<p>Range chaque donnée dans sa famille :</p>
+<div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>Identité</li><li><b>B</b>Contact</li><li><b>C</b>Sensible</li><li><b>D</b>Pas une donnée personnelle</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="q3_naissance" data-indice="Elle sert à te reconnaître parmi d'autres personnes du même nom.">
+  <legend>Ta date de naissance :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_naissance" id="q3_naissance__1" value="Identité"><label for="q3_naissance__1">A</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_naissance" id="q3_naissance__2" value="Contact"><label for="q3_naissance__2">B</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_naissance" id="q3_naissance__3" value="Sensible"><label for="q3_naissance__3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_naissance" id="q3_naissance__4" value="Pas une donnée personnelle"><label for="q3_naissance__4">D</label></div>
+</fieldset>
+<fieldset class="qcm-groupe qcm-grille" id="q3_sante" data-indice="Une maladie, une allergie : la loi la protège plus que les autres.">
+  <legend>Ton état de santé :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_sante" id="q3_sante__1" value="Identité"><label for="q3_sante__1">A</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_sante" id="q3_sante__2" value="Contact"><label for="q3_sante__2">B</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_sante" id="q3_sante__3" value="Sensible"><label for="q3_sante__3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_sante" id="q3_sante__4" value="Pas une donnée personnelle"><label for="q3_sante__4">D</label></div>
+</fieldset>
+<fieldset class="qcm-groupe qcm-grille" id="q3_opinion" data-indice="Ce que tu penses de la politique : la loi la protège plus que les autres.">
+  <legend>Ton opinion politique :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_opinion" id="q3_opinion__1" value="Identité"><label for="q3_opinion__1">A</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_opinion" id="q3_opinion__2" value="Contact"><label for="q3_opinion__2">B</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_opinion" id="q3_opinion__3" value="Sensible"><label for="q3_opinion__3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_opinion" id="q3_opinion__4" value="Pas une donnée personnelle"><label for="q3_opinion__4">D</label></div>
+</fieldset>
+<fieldset class="qcm-groupe qcm-grille" id="q3_photo" data-indice="Elle sert à te reconnaître.">
+  <legend>Ta photo d'identité :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_photo" id="q3_photo__1" value="Identité"><label for="q3_photo__1">A</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_photo" id="q3_photo__2" value="Contact"><label for="q3_photo__2">B</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_photo" id="q3_photo__3" value="Sensible"><label for="q3_photo__3">C</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_photo" id="q3_photo__4" value="Pas une donnée personnelle"><label for="q3_photo__4">D</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q3_geo">
+  <legend>Ta position GPS, partagée par une application, est :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_geo" id="q3_geo__1" value="une donnée anonyme" data-pourquoi="Elle vient de TON téléphone : elle est liée à toi."><label for="q3_geo__1">une donnée anonyme</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_geo" id="q3_geo__2" value="une donnée publique" data-pourquoi="Personne ne la voit sans l'application : elle n'est pas publique."><label for="q3_geo__2">une donnée publique</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_geo" id="q3_geo__3" value="une donnée personnelle : elle dit où tu es"><label for="q3_geo__3">une donnée personnelle : elle dit où tu es</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_geo" id="q3_geo__4" value="une information, pas une donnée" data-pourquoi="Elle est enregistrée par l'application : c'est une donnée."><label for="q3_geo__4">une information, pas une donnée</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q3_rgpd">
+  <legend>Le RGPD est une loi européenne qui protège :</legend>
+  <div class="qcm-option"><input type="radio" name="q3_rgpd" id="q3_rgpd__1" value="les logiciels contre la copie" data-pourquoi="Protéger une œuvre contre la copie, c'est le droit d'auteur."><label for="q3_rgpd__1">les logiciels contre la copie</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_rgpd" id="q3_rgpd__2" value="les ordinateurs contre les virus" data-pourquoi="Contre les virus, c'est l'antivirus : un logiciel, pas une loi."><label for="q3_rgpd__2">les ordinateurs contre les virus</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_rgpd" id="q3_rgpd__3" value="les sites contre les attaques" data-pourquoi="Une loi ne bloque pas une attaque. Le RGPD dit ce qu'on a le droit de faire de tes données."><label for="q3_rgpd__3">les sites contre les attaques</label></div>
+  <div class="qcm-option"><input type="radio" name="q3_rgpd" id="q3_rgpd__4" value="tes données personnelles"><label for="q3_rgpd__4">tes données personnelles</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Une donnée personnelle dit quelque chose d'une personne : demande-toi « de qui parle-t-elle ? ».</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Identité : ce qui te reconnaît (nom, date de naissance, photo). Contact : ce qui te joint (e-mail, téléphone). <br>Sensible : santé, opinions, religion — la loi les protège plus.</p></details>
+<button class="btn check" data-check="q3" type="button">✅ Vérifier le quiz</button>
+<p class="feedback" id="fbq3" role="status"></p>
+<details class="correction"><summary>📖 Correction complète du quiz (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Une donnée personnelle, c&#x27;est une information qui :</b> permet d&#x27;identifier une personne, directement ou non. <br>Pas « est secrète » : ton prénom n&#x27;est pas secret, et c&#x27;est pourtant une donnée personnelle. <br>Pas « est publiée sur Internet » : une fiche papier au secrétariat en contient aussi : Internet ne compte pas ici. <br>Pas « décrit un objet, sans lien avec une personne » : sans lien avec une personne, l&#x27;information ne dit rien de quelqu&#x27;un.</p>
+<p><b>Range chaque donnée dans sa famille :</b> <br>Identité : ta date de naissance, ta photo d'identité ; <br>Sensible : ton état de santé, ton opinion politique.</p>
+<p><b>Ta position GPS, partagée par une application, est :</b> une donnée personnelle : elle dit où tu es. <br>Pas « une donnée anonyme » : elle vient de TON téléphone : elle est liée à toi. <br>Pas « une donnée publique » : personne ne la voit sans l&#x27;application : elle n&#x27;est pas publique. <br>Pas « une information, pas une donnée » : elle est enregistrée par l&#x27;application : c&#x27;est une donnée.</p>
+<p><b>Le RGPD est une loi européenne qui protège :</b> tes données personnelles. <br>Pas « les logiciels contre la copie » : protéger une œuvre contre la copie, c&#x27;est le droit d&#x27;auteur. <br>Pas « les ordinateurs contre les virus » : contre les virus, c&#x27;est l&#x27;antivirus : un logiciel, pas une loi. <br>Pas « les sites contre les attaques » : une loi ne bloque pas une attaque. Le RGPD dit ce qu&#x27;on a le droit de faire de tes données.</p>
+<div class="retenir"><b>🧠 À retenir :</b> une donnée personnelle permet d'identifier quelqu'un, directement ou non. <br>Les données sensibles (santé, opinions, religion) sont les plus protégées.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je reconnais une donnée personnelle, et je la range dans sa famille.</p>
 </div>
 
-    
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">❤️</span> Q2 : Exemple de donnée sensible :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3b" value="1" id="q3b1">
-    <label for="q3b1"><span class="ico" aria-hidden="true">✅</span> Santé</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3b" value="0" id="q3b0">
-    <label for="q3b0"><span class="ico" aria-hidden="true">❌</span> Couleur préférée</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🛡️</span> Q3 : RGPD protège :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3c" value="1" id="q3c1">
-    <label for="q3c1"><span class="ico" aria-hidden="true">✅</span> Données personnelles</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3c" value="0" id="q3c0">
-    <label for="q3c0"><span class="ico" aria-hidden="true">❌</span> Logiciels</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">📷</span> Q4 : Une photo est une donnée :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3d" value="1" id="q3d1">
-    <label for="q3d1"><span class="ico" aria-hidden="true">✅</span> Personnelle</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3d" value="0" id="q3d0">
-    <label for="q3d0"><span class="ico" aria-hidden="true">❌</span> Publique</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">📍</span> Q5 : La géolocalisation est :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3e" value="1" id="q3e1">
-    <label for="q3e1"><span class="ico" aria-hidden="true">✅</span> Personnelle</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3e" value="0" id="q3e0">
-    <label for="q3e0"><span class="ico" aria-hidden="true">❌</span> Anonyme</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🗳️</span> Q6 : Une opinion politique est :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3f" value="1" id="q3f1">
-    <label for="q3f1"><span class="ico" aria-hidden="true">✅</span> Sensible</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3f" value="0" id="q3f0">
-    <label for="q3f0"><span class="ico" aria-hidden="true">❌</span> Contact</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec3" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🎂</span> Q7 : La date de naissance est :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q3g" value="1" id="q3g1">
-    <label for="q3g1"><span class="ico" aria-hidden="true">✅</span> Identité</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q3g" value="0" id="q3g0">
-    <label for="q3g0"><span class="ico" aria-hidden="true">❌</span> Sensible</label>
-  </div>
-</div>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
@@ -2607,7 +2564,6 @@ Fin du programme.</code></pre>
       <button class="btn btn-secondary" id="rst3" style="padding:6px 10px;font-size:0.8rem;width:auto">Réinitialiser</button>
       <span id="res3" class="badge"></span>
     </div>
-  </div>
 
   <div id="help3" class="modal">
     <div class="box">
@@ -2626,7 +2582,7 @@ Fin du programme.</code></pre>
       <p>Identité : Nom/prénom, Date naissance, Photo d'identité</p>
       <p>Contact : Adresse e‑mail, N° de téléphone, Adresse postale</p>
       <p>Sensibles : Données de santé, Opinion politique, Religion</p>
-      <p>Q1: Une personne, Q2: Santé, Q3: Données personnelles, Q4: Personnelle, Q5: Personnelle, Q6: Sensible, Q7: Identité</p>
+      <p>Le quiz : sa correction complète est sous le quiz (« 📖 Correction complète du quiz »).</p>
     </div>
   </div>
  </div>
@@ -2637,7 +2593,7 @@ Fin du programme.</code></pre>
 
 
   <!-- 4. Protéger ses données personnelles -->
-  <div class="section panel" id="sec4">
+  <div class="section panel activite" id="sec4">
     <h2 id="bloc4-proteger">🔒 4. Protéger ses données personnelles <span class="badge">Score : <span id="sc4">0</span>/<span id="scm4">…</span></span></h2>
 
     <h3>📰 Mise en situation : L'attaque sur ton compte scolaire</h3>
@@ -2738,97 +2694,75 @@ Fin du programme.</code></pre>
     <h3>❓4.b&nbsp;—&nbsp;Quelle est la différence entre un ransomware et un phishing ? (non noté)</h3>
     <div class="response-label">Ta réponse ici 👇</div><textarea id="q4why" aria-label="4.b — Différence entre un rançongiciel et un hameçonnage"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Un rançongiciel ____ , tandis qu'un hameçonnage ____ .</li><li>Le premier s'attaque à ____ , le second à ____ .</li><li>Ce qu'ils ont en commun : ____ .</li></ul></details>
 
-    <h3>🔒 <strong>4.c&nbsp;—&nbsp;Quiz Protection Données (7 questions)</strong></h3>
-
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🔐</span> Q1 : Solution contre brute force :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4a" value="1" id="q4a1">
-    <label for="q4a1"><span class="ico" aria-hidden="true">✅</span> Mot de passe fort</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4a" value="0" id="q4a0">
-    <label for="q4a0"><span class="ico" aria-hidden="true">❌</span> Sauvegarde</label>
-  </div>
+    <h3>🔒 <strong>4.c — Quiz Protection des données (7 questions)</strong></h3>
+<div class="exo verif-c14" id="quiz4">
+<p class="verif-titre"><b>🔎 Je vérifie</b><span class="pp-ecran"> — 7 questions</span></p>
+<fieldset class="qcm-groupe" id="q4_2fa">
+  <legend>La double authentification (2FA) ajoute :</legend>
+  <div class="qcm-option"><input type="radio" name="q4_2fa" id="q4_2fa__1" value="un second mot de passe à retenir" data-pourquoi="La seconde preuve est d'un autre type : ce que tu possèdes (ton téléphone, une clé)."><label for="q4_2fa__1">un second mot de passe à retenir</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_2fa" id="q4_2fa__2" value="une seconde preuve que c&#x27;est bien toi : un code, une appli, une clé"><label for="q4_2fa__2">une seconde preuve que c&#x27;est bien toi : un code, une appli, une clé</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_2fa" id="q4_2fa__3" value="un antivirus" data-pourquoi="La 2FA vérifie qui se connecte ; elle ne cherche pas de virus."><label for="q4_2fa__3">un antivirus</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_2fa" id="q4_2fa__4" value="le chiffrement de tes fichiers" data-pourquoi="Elle protège l'entrée du compte, pas les fichiers enregistrés."><label for="q4_2fa__4">le chiffrement de tes fichiers</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q4_maj">
+  <legend>Une mise à jour de sécurité :</legend>
+  <div class="qcm-option"><input type="radio" name="q4_maj" id="q4_maj__1" value="change seulement l&#x27;apparence du logiciel" data-pourquoi="Certaines changent l'apparence ; celles de sécurité bouchent des failles."><label for="q4_maj__1">change seulement l&#x27;apparence du logiciel</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_maj" id="q4_maj__2" value="ralentit l&#x27;appareil, sans rien protéger" data-pourquoi="Elle peut prendre du temps à s'installer, mais elle ferme une porte d'entrée."><label for="q4_maj__2">ralentit l&#x27;appareil, sans rien protéger</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_maj" id="q4_maj__3" value="corrige une faille que des attaquants pourraient utiliser"><label for="q4_maj__3">corrige une faille que des attaquants pourraient utiliser</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_maj" id="q4_maj__4" value="remplace la sauvegarde" data-pourquoi="Une mise à jour ne copie pas tes fichiers : la sauvegarde reste utile."><label for="q4_maj__4">remplace la sauvegarde</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q4_sauvegarde">
+  <legend>Pourquoi une sauvegarde protège-t-elle d'un rançongiciel ?</legend>
+  <div class="qcm-option"><input type="radio" name="q4_sauvegarde" id="q4_sauvegarde__1" value="elle l&#x27;empêche d&#x27;entrer dans l&#x27;ordinateur" data-pourquoi="Il peut entrer quand même : la sauvegarde agit après."><label for="q4_sauvegarde__1">elle l&#x27;empêche d&#x27;entrer dans l&#x27;ordinateur</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_sauvegarde" id="q4_sauvegarde__2" value="elle supprime le rançongiciel" data-pourquoi="Supprimer un logiciel malveillant, c'est le rôle de l'antivirus."><label for="q4_sauvegarde__2">elle supprime le rançongiciel</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_sauvegarde" id="q4_sauvegarde__3" value="elle chiffre tes fichiers avant lui" data-pourquoi="Chiffrer avant lui ne servirait à rien : il chiffrerait encore."><label for="q4_sauvegarde__3">elle chiffre tes fichiers avant lui</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_sauvegarde" id="q4_sauvegarde__4" value="tu récupères tes fichiers sans payer"><label for="q4_sauvegarde__4">tu récupères tes fichiers sans payer</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q4_vpn">
+  <legend>Le VPN masque ton adresse IP :</legend>
+  <div class="qcm-option"><input type="radio" name="q4_vpn" id="q4_vpn__1" value="aux sites que tu visites, mais pas à son fournisseur"><label for="q4_vpn__1">aux sites que tu visites, mais pas à son fournisseur</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_vpn" id="q4_vpn__2" value="à tout le monde, même à son fournisseur" data-pourquoi="Son fournisseur voit ton adresse et les sites visités : la CNIL le rappelle."><label for="q4_vpn__2">à tout le monde, même à son fournisseur</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_vpn" id="q4_vpn__3" value="à personne : il accélère seulement la connexion" data-pourquoi="Il ne sert pas à aller plus vite : il fait passer ta connexion par un intermédiaire."><label for="q4_vpn__3">à personne : il accélère seulement la connexion</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_vpn" id="q4_vpn__4" value="seulement à tes amis" data-pourquoi="Tes amis ne voient pas ton adresse IP : ce sont les sites qui la voient."><label for="q4_vpn__4">seulement à tes amis</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q4_brute">
+  <legend>Contre une attaque par force brute (essayer des millions de mots de passe) :</legend>
+  <div class="qcm-option"><input type="radio" name="q4_brute" id="q4_brute__1" value="un mot de passe long et unique"><label for="q4_brute__1">un mot de passe long et unique</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_brute" id="q4_brute__2" value="une sauvegarde" data-pourquoi="La sauvegarde rend tes fichiers ; elle n'empêche pas de deviner ton mot de passe."><label for="q4_brute__2">une sauvegarde</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_brute" id="q4_brute__3" value="un VPN" data-pourquoi="L'attaque vise ton compte, pas ton adresse : le VPN n'y change rien."><label for="q4_brute__3">un VPN</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_brute" id="q4_brute__4" value="la navigation privée" data-pourquoi="Elle n'efface que l'historique sur ton appareil : ton compte reste attaquable."><label for="q4_brute__4">la navigation privée</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q4_antivirus">
+  <legend>Un antivirus détecte :</legend>
+  <div class="qcm-option"><input type="radio" name="q4_antivirus" id="q4_antivirus__1" value="les failles des logiciels" data-pourquoi="Les failles, ce sont les mises à jour qui les corrigent."><label for="q4_antivirus__1">les failles des logiciels</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_antivirus" id="q4_antivirus__2" value="les logiciels malveillants qu&#x27;il connaît"><label for="q4_antivirus__2">les logiciels malveillants qu&#x27;il connaît</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_antivirus" id="q4_antivirus__3" value="les mots de passe faibles" data-pourquoi="Il ne lit pas tes mots de passe : il cherche des programmes nuisibles."><label for="q4_antivirus__3">les mots de passe faibles</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_antivirus" id="q4_antivirus__4" value="les mises à jour manquantes" data-pourquoi="Les mises à jour, c'est le système qui les propose ; l'antivirus cherche des programmes."><label for="q4_antivirus__4">les mises à jour manquantes</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q4_lien">
+  <legend>Un message te demande de cliquer pour « débloquer ton compte ». Le bon réflexe :</legend>
+  <div class="qcm-option"><input type="radio" name="q4_lien" id="q4_lien__1" value="cliquer, puis vérifier l&#x27;adresse du site" data-pourquoi="Une fois cliqué, il est trop tard : la page piégée est déjà ouverte."><label for="q4_lien__1">cliquer, puis vérifier l&#x27;adresse du site</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_lien" id="q4_lien__2" value="ne pas cliquer : ouvrir le site toi-même, par son adresse habituelle"><label for="q4_lien__2">ne pas cliquer : ouvrir le site toi-même, par son adresse habituelle</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_lien" id="q4_lien__3" value="répondre pour demander si c&#x27;est vrai" data-pourquoi="L'attaquant répondra que c'est vrai : le message vient de lui."><label for="q4_lien__3">répondre pour demander si c&#x27;est vrai</label></div>
+  <div class="qcm-option"><input type="radio" name="q4_lien" id="q4_lien__4" value="transférer le message à tes amis" data-pourquoi="Tu propagerais le piège à d'autres."><label for="q4_lien__4">transférer le message à tes amis</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour chaque protection, demande-toi : elle agit avant l'attaque, pendant, ou après ?</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Avant : mot de passe long, 2FA, mises à jour, ne pas cliquer. Pendant : l'antivirus. Après : la sauvegarde. <br>Le VPN cache ton adresse aux sites, pas à son fournisseur.</p></details>
+<button class="btn check" data-check="q4" type="button">✅ Vérifier le quiz</button>
+<p class="feedback" id="fbq4" role="status"></p>
+<details class="correction"><summary>📖 Correction complète du quiz (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>La double authentification (2FA) ajoute :</b> une seconde preuve que c&#x27;est bien toi : un code, une appli, une clé. <br>Pas « un second mot de passe à retenir » : la seconde preuve est d&#x27;un autre type : ce que tu possèdes (ton téléphone, une clé). <br>Pas « un antivirus » : la 2FA vérifie qui se connecte ; elle ne cherche pas de virus. <br>Pas « le chiffrement de tes fichiers » : elle protège l&#x27;entrée du compte, pas les fichiers enregistrés.</p>
+<p><b>Une mise à jour de sécurité :</b> corrige une faille que des attaquants pourraient utiliser. <br>Pas « change seulement l&#x27;apparence du logiciel » : certaines changent l&#x27;apparence ; celles de sécurité bouchent des failles. <br>Pas « ralentit l&#x27;appareil, sans rien protéger » : elle peut prendre du temps à s&#x27;installer, mais elle ferme une porte d&#x27;entrée. <br>Pas « remplace la sauvegarde » : une mise à jour ne copie pas tes fichiers : la sauvegarde reste utile.</p>
+<p><b>Pourquoi une sauvegarde protège-t-elle d&#x27;un rançongiciel ?</b> tu récupères tes fichiers sans payer. <br>Pas « elle l&#x27;empêche d&#x27;entrer dans l&#x27;ordinateur » : il peut entrer quand même : la sauvegarde agit après. <br>Pas « elle supprime le rançongiciel » : supprimer un logiciel malveillant, c&#x27;est le rôle de l&#x27;antivirus. <br>Pas « elle chiffre tes fichiers avant lui » : chiffrer avant lui ne servirait à rien : il chiffrerait encore.</p>
+<p><b>Le VPN masque ton adresse IP :</b> aux sites que tu visites, mais pas à son fournisseur. <br>Pas « à tout le monde, même à son fournisseur » : son fournisseur voit ton adresse et les sites visités : la CNIL le rappelle. <br>Pas « à personne : il accélère seulement la connexion » : il ne sert pas à aller plus vite : il fait passer ta connexion par un intermédiaire. <br>Pas « seulement à tes amis » : tes amis ne voient pas ton adresse IP : ce sont les sites qui la voient.</p>
+<p><b>Contre une attaque par force brute (essayer des millions de mots de passe) :</b> un mot de passe long et unique. <br>Pas « une sauvegarde » : la sauvegarde rend tes fichiers ; elle n&#x27;empêche pas de deviner ton mot de passe. <br>Pas « un VPN » : l&#x27;attaque vise ton compte, pas ton adresse : le VPN n&#x27;y change rien. <br>Pas « la navigation privée » : elle n&#x27;efface que l&#x27;historique sur ton appareil : ton compte reste attaquable.</p>
+<p><b>Un antivirus détecte :</b> les logiciels malveillants qu&#x27;il connaît. <br>Pas « les failles des logiciels » : les failles, ce sont les mises à jour qui les corrigent. <br>Pas « les mots de passe faibles » : il ne lit pas tes mots de passe : il cherche des programmes nuisibles. <br>Pas « les mises à jour manquantes » : les mises à jour, c&#x27;est le système qui les propose ; l&#x27;antivirus cherche des programmes.</p>
+<p><b>Un message te demande de cliquer pour « débloquer ton compte ». Le bon réflexe :</b> ne pas cliquer : ouvrir le site toi-même, par son adresse habituelle. <br>Pas « cliquer, puis vérifier l&#x27;adresse du site » : une fois cliqué, il est trop tard : la page piégée est déjà ouverte. <br>Pas « répondre pour demander si c&#x27;est vrai » : l&#x27;attaquant répondra que c&#x27;est vrai : le message vient de lui. <br>Pas « transférer le message à tes amis » : tu propagerais le piège à d&#x27;autres.</p>
+<div class="retenir"><b>🧠 À retenir :</b> se protéger, c'est agir avant (mot de passe, 2FA, mises à jour), pendant (antivirus) et après (sauvegarde).</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je dis ce que fait chaque protection, et ce qu'elle ne fait pas.</p>
 </div>
 
-    
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🔑</span> Q2 : 2FA ajoute :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4b" value="1" id="q4b1">
-    <label for="q4b1"><span class="ico" aria-hidden="true">✅</span> Une seconde preuve</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4b" value="0" id="q4b0">
-    <label for="q4b0"><span class="ico" aria-hidden="true">❌</span> Un mot de passe faible</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🛠️</span> Q3 : Les mises à jour corrigent :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4c" value="1" id="q4c1">
-    <label for="q4c1"><span class="ico" aria-hidden="true">✅</span> Failles de sécurité</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4c" value="0" id="q4c0">
-    <label for="q4c0"><span class="ico" aria-hidden="true">❌</span> Rien</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🗄️</span> Q4 : La sauvegarde protège contre :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4d" value="1" id="q4d1">
-    <label for="q4d1"><span class="ico" aria-hidden="true">✅</span> Ransomware</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4d" value="0" id="q4d0">
-    <label for="q4d0"><span class="ico" aria-hidden="true">❌</span> Phishing</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🦠</span> Q5 : L'antivirus détecte :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4e" value="1" id="q4e1">
-    <label for="q4e1"><span class="ico" aria-hidden="true">✅</span> Malware</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4e" value="0" id="q4e0">
-    <label for="q4e0"><span class="ico" aria-hidden="true">❌</span> Mises à jour</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🕵️</span> Q6 : Le VPN masque :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4f" value="1" id="q4f1">
-    <label for="q4f1"><span class="ico" aria-hidden="true">✅</span> Adresse IP</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4f" value="0" id="q4f0">
-    <label for="q4f0"><span class="ico" aria-hidden="true">❌</span> Mot de passe</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec4" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">💰</span> Q7 : La prudence avec les liens évite :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q4g" value="1" id="q4g1">
-    <label for="q4g1"><span class="ico" aria-hidden="true">✅</span> Phishing</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q4g" value="0" id="q4g0">
-    <label for="q4g0"><span class="ico" aria-hidden="true">❌</span> Sauvegarde</label>
-  </div>
-</div>
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
       <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help4').style.display='flex'">? Aide</button>
@@ -2861,7 +2795,7 @@ Fin du programme.</code></pre>
       <p><b>Malware</b> : Installer antivirus</p>
       <p><b>Suivi IP</b> : Utiliser VPN</p>
       <p><b>Brute force</b> : Mot de passe fort</p>
-      <p>Q1: Mot de passe fort, Q2: Une seconde preuve, Q3: Failles de sécurité, Q4: Ransomware, Q5: Malware, Q6: Adresse IP, Q7: Phishing</p>
+      <p>Le quiz : sa correction complète est sous le quiz (« 📖 Correction complète du quiz »).</p>
       <p>Le VPN masque ton adresse IP aux sites, pas à tout le monde&nbsp;: selon la CNIL, «&nbsp;l'entreprise qui fournit le service conserve la connaissance de votre adresse IP et des sites visités&nbsp;».</p>
       <p style="font-size:.9em"><b>Sources</b>&nbsp;: Cybermalveillance.gouv.fr, <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/10-mesures-essentielles-assurer-securite-numerique">«&nbsp;Les 10 mesures essentielles pour assurer votre sécurité numérique&nbsp;»</a> et <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/mots-de-passe">«&nbsp;Pourquoi et comment bien gérer ses mots de passe&nbsp;?&nbsp;»</a>&nbsp;; CNIL, <a href="https://www.cnil.fr/fr/nouvelles-methodes-de-tracage-en-ligne-quelles-solutions-pour-se-proteger">«&nbsp;Nouvelles méthodes de traçage en ligne&nbsp;: quelles solutions pour se protéger&nbsp;?&nbsp;»</a>. <br>Consultés le 23/09/2026.</p>
     </div>
@@ -2871,7 +2805,7 @@ Fin du programme.</code></pre>
   </section>
 <section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Mes traces">
 <!-- 5. Limiter ses traces en ligne -->
-  <div class="section panel" id="sec5">
+  <div class="section panel activite" id="sec5">
     <h2 id="bloc5-traces">🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="sc5">0</span>/<span id="scm5">…</span></span></h2>
 
     <h3>📰 Mise en situation : Le suivi invisible sur les réseaux</h3>
@@ -2942,96 +2876,75 @@ Fin du programme.</code></pre>
 
 
 
-    <h3>🔒 <strong>5.c — Quiz Traces en Ligne (7 questions)</strong></h3>
-
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🍪</span> Q1 : Les cookies servent à :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5a" value="1" id="q5a1">
-    <label for="q5a1"><span class="ico" aria-hidden="true">✅</span> Suivre navigation</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5a" value="0" id="q5a0">
-    <label for="q5a0"><span class="ico" aria-hidden="true">❌</span> Chiffrer données</label>
-  </div>
+    <h3>🔒 <strong>5.c — Quiz Traces en ligne (7 questions)</strong></h3>
+<div class="exo verif-c14" id="quiz5">
+<p class="verif-titre"><b>🔎 Je vérifie</b><span class="pp-ecran"> — 7 questions</span></p>
+<fieldset class="qcm-groupe" id="q5_cookie">
+  <legend>Un cookie traceur sert à :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_cookie" id="q5_cookie__1" value="chiffrer tes données" data-pourquoi="Chiffrer le trajet, c'est HTTPS. Le cookie est un petit fichier déposé par le site."><label for="q5_cookie__1">chiffrer tes données</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_cookie" id="q5_cookie__2" value="suivre ta navigation d&#x27;un site à l&#x27;autre"><label for="q5_cookie__2">suivre ta navigation d&#x27;un site à l&#x27;autre</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_cookie" id="q5_cookie__3" value="bloquer les publicités" data-pourquoi="C'est l'inverse : il sert à choisir les publicités qu'on te montre."><label for="q5_cookie__3">bloquer les publicités</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_cookie" id="q5_cookie__4" value="protéger ton mot de passe" data-pourquoi="Il ne garde pas ton mot de passe à l'abri : il garde la trace de tes visites."><label for="q5_cookie__4">protéger ton mot de passe</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q5_privee">
+  <legend>La navigation privée cache :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_privee" id="q5_privee__1" value="ton adresse IP à ton fournisseur d&#x27;accès" data-pourquoi="Ton fournisseur d'accès voit toujours ton adresse : la CNIL le rappelle."><label for="q5_privee__1">ton adresse IP à ton fournisseur d&#x27;accès</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_privee" id="q5_privee__2" value="ton identité aux sites où tu te connectes" data-pourquoi="Connecté à ton compte, le site sait que c'est toi."><label for="q5_privee__2">ton identité aux sites où tu te connectes</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_privee" id="q5_privee__3" value="tout ce que tu fais en ligne" data-pourquoi="Le réseau et les sites voient toujours tes visites."><label for="q5_privee__3">tout ce que tu fais en ligne</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_privee" id="q5_privee__4" value="ton historique, sur ton appareil seulement"><label for="q5_privee__4">ton historique, sur ton appareil seulement</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q5_vpn">
+  <legend>Le VPN cache :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_vpn" id="q5_vpn__1" value="tes cookies" data-pourquoi="Les cookies restent dans ton navigateur, VPN ou pas."><label for="q5_vpn__1">tes cookies</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_vpn" id="q5_vpn__2" value="ton adresse IP, aux sites visités"><label for="q5_vpn__2">ton adresse IP, aux sites visités</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_vpn" id="q5_vpn__3" value="ton historique sur ton appareil" data-pourquoi="Effacer l'historique de ton appareil, c'est la navigation privée."><label for="q5_vpn__3">ton historique sur ton appareil</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_vpn" id="q5_vpn__4" value="tes publications" data-pourquoi="Ce que tu publies reste visible : le VPN ne cache que ton adresse."><label for="q5_vpn__4">tes publications</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q5_geo">
+  <legend>La géolocalisation d'une application révèle :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_geo" id="q5_geo__1" value="ton mot de passe" data-pourquoi="Elle ne lit pas tes mots de passe : elle enregistre tes positions."><label for="q5_geo__1">ton mot de passe</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_geo" id="q5_geo__2" value="rien, si l&#x27;application est gratuite" data-pourquoi="Gratuite ou non, elle enregistre tes positions si tu l'autorises."><label for="q5_geo__2">rien, si l&#x27;application est gratuite</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_geo" id="q5_geo__3" value="où tu es, et où tu vas souvent"><label for="q5_geo__3">où tu es, et où tu vas souvent</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_geo" id="q5_geo__4" value="seulement la météo de ta ville" data-pourquoi="La météo n'a besoin que de ta ville ; la position GPS dit bien plus."><label for="q5_geo__4">seulement la météo de ta ville</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q5_deco">
+  <legend>Te déconnecter de ton compte sur un ordinateur partagé évite :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_deco" id="q5_deco__1" value="les mises à jour" data-pourquoi="Les mises à jour n'ont rien à voir avec ta session."><label for="q5_deco__1">les mises à jour</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_deco" id="q5_deco__2" value="que l&#x27;élève suivant utilise ta session ouverte"><label for="q5_deco__2">que l&#x27;élève suivant utilise ta session ouverte</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_deco" id="q5_deco__3" value="les virus" data-pourquoi="Un virus ne s'arrête pas à la déconnexion : c'est l'antivirus qui le cherche."><label for="q5_deco__3">les virus</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_deco" id="q5_deco__4" value="le phishing" data-pourquoi="Le phishing passe par un faux message : la déconnexion n'y change rien."><label for="q5_deco__4">le phishing</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q5_publier">
+  <legend>Publier des infos inutiles (ton collège, tes horaires) :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_publier" id="q5_publier__1" value="rend ton compte plus sûr" data-pourquoi="Plus d'informations, c'est plus de prises pour qui veut te trouver."><label for="q5_publier__1">rend ton compte plus sûr</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_publier" id="q5_publier__2" value="ne change rien si ton compte est privé" data-pourquoi="Un abonné peut copier ou capturer ce que tu publies."><label for="q5_publier__2">ne change rien si ton compte est privé</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_publier" id="q5_publier__3" value="efface tes anciennes traces" data-pourquoi="Une nouvelle publication s'ajoute aux anciennes ; elle n'efface rien."><label for="q5_publier__3">efface tes anciennes traces</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_publier" id="q5_publier__4" value="augmente tes traces, que d&#x27;autres recoupent"><label for="q5_publier__4">augmente tes traces, que d&#x27;autres recoupent</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q5_proxy">
+  <legend>Un proxy, c'est :</legend>
+  <div class="qcm-option"><input type="radio" name="q5_proxy" id="q5_proxy__1" value="un intermédiaire entre toi et le site"><label for="q5_proxy__1">un intermédiaire entre toi et le site</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_proxy" id="q5_proxy__2" value="un chiffrement total de ta connexion" data-pourquoi="Un proxy ne chiffre pas toujours : la CNIL le rappelle."><label for="q5_proxy__2">un chiffrement total de ta connexion</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_proxy" id="q5_proxy__3" value="un antivirus" data-pourquoi="Il ne cherche pas de virus : il fait passer tes demandes."><label for="q5_proxy__3">un antivirus</label></div>
+  <div class="qcm-option"><input type="radio" name="q5_proxy" id="q5_proxy__4" value="un cookie" data-pourquoi="Un cookie est un fichier déposé par le site, pas un relais."><label for="q5_proxy__4">un cookie</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour chaque outil, demande-toi : à QUI cache-t-il quoi ?</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Navigation privée : l'historique, sur ton appareil. VPN : ton adresse, aux sites. Cookie : il suit tes visites. <br>Un proxy fait passer tes demandes ; il ne chiffre pas toujours.</p></details>
+<button class="btn check" data-check="q5" type="button">✅ Vérifier le quiz</button>
+<p class="feedback" id="fbq5" role="status"></p>
+<details class="correction"><summary>📖 Correction complète du quiz (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Un cookie traceur sert à :</b> suivre ta navigation d&#x27;un site à l&#x27;autre. <br>Pas « chiffrer tes données » : chiffrer le trajet, c&#x27;est HTTPS. Le cookie est un petit fichier déposé par le site. <br>Pas « bloquer les publicités » : c&#x27;est l&#x27;inverse : il sert à choisir les publicités qu&#x27;on te montre. <br>Pas « protéger ton mot de passe » : il ne garde pas ton mot de passe à l&#x27;abri : il garde la trace de tes visites.</p>
+<p><b>La navigation privée cache :</b> ton historique, sur ton appareil seulement. <br>Pas « ton adresse IP à ton fournisseur d&#x27;accès » : ton fournisseur d&#x27;accès voit toujours ton adresse : la CNIL le rappelle. <br>Pas « ton identité aux sites où tu te connectes » : connecté à ton compte, le site sait que c&#x27;est toi. <br>Pas « tout ce que tu fais en ligne » : le réseau et les sites voient toujours tes visites.</p>
+<p><b>Le VPN cache :</b> ton adresse IP, aux sites visités. <br>Pas « tes cookies » : les cookies restent dans ton navigateur, VPN ou pas. <br>Pas « ton historique sur ton appareil » : effacer l&#x27;historique de ton appareil, c&#x27;est la navigation privée. <br>Pas « tes publications » : ce que tu publies reste visible : le VPN ne cache que ton adresse.</p>
+<p><b>La géolocalisation d&#x27;une application révèle :</b> où tu es, et où tu vas souvent. <br>Pas « ton mot de passe » : elle ne lit pas tes mots de passe : elle enregistre tes positions. <br>Pas « rien, si l&#x27;application est gratuite » : gratuite ou non, elle enregistre tes positions si tu l&#x27;autorises. <br>Pas « seulement la météo de ta ville » : la météo n&#x27;a besoin que de ta ville ; la position GPS dit bien plus.</p>
+<p><b>Te déconnecter de ton compte sur un ordinateur partagé évite :</b> que l&#x27;élève suivant utilise ta session ouverte. <br>Pas « les mises à jour » : les mises à jour n&#x27;ont rien à voir avec ta session. <br>Pas « les virus » : un virus ne s&#x27;arrête pas à la déconnexion : c&#x27;est l&#x27;antivirus qui le cherche. <br>Pas « le phishing » : le phishing passe par un faux message : la déconnexion n&#x27;y change rien.</p>
+<p><b>Publier des infos inutiles (ton collège, tes horaires) :</b> augmente tes traces, que d&#x27;autres recoupent. <br>Pas « rend ton compte plus sûr » : plus d&#x27;informations, c&#x27;est plus de prises pour qui veut te trouver. <br>Pas « ne change rien si ton compte est privé » : un abonné peut copier ou capturer ce que tu publies. <br>Pas « efface tes anciennes traces » : une nouvelle publication s&#x27;ajoute aux anciennes ; elle n&#x27;efface rien.</p>
+<p><b>Un proxy, c&#x27;est :</b> un intermédiaire entre toi et le site. <br>Pas « un chiffrement total de ta connexion » : un proxy ne chiffre pas toujours : la CNIL le rappelle. <br>Pas « un antivirus » : il ne cherche pas de virus : il fait passer tes demandes. <br>Pas « un cookie » : un cookie est un fichier déposé par le site, pas un relais.</p>
+<div class="retenir"><b>🧠 À retenir :</b> chaque outil cache quelque chose à quelqu'un, jamais tout à tout le monde.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je dis ce que cache chaque outil, et à qui.</p>
 </div>
 
-    
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🕵️</span> Q2 : La navigation privée cache :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5b" value="1" id="q5b1">
-    <label for="q5b1"><span class="ico" aria-hidden="true">✅</span> Historique local</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5b" value="0" id="q5b0">
-    <label for="q5b0"><span class="ico" aria-hidden="true">❌</span> IP au FAI</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🌐</span> Q3 : Le VPN masque :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5c" value="1" id="q5c1">
-    <label for="q5c1"><span class="ico" aria-hidden="true">✅</span> IP</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5c" value="0" id="q5c0">
-    <label for="q5c0"><span class="ico" aria-hidden="true">❌</span> Cookies</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🗺️</span> Q4 : La géolocalisation révèle :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5d" value="1" id="q5d1">
-    <label for="q5d1"><span class="ico" aria-hidden="true">✅</span> Position</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5d" value="0" id="q5d0">
-    <label for="q5d0"><span class="ico" aria-hidden="true">❌</span> Mot de passe</label>
-  </div>
-</div>
-
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🚪</span> Q5 : La déconnexion évite :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5e" value="1" id="q5e1">
-    <label for="q5e1"><span class="ico" aria-hidden="true">✅</span> Sessions ouvertes</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5e" value="0" id="q5e0">
-    <label for="q5e0"><span class="ico" aria-hidden="true">❌</span> Mises à jour</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🔎</span> Q6 : Publier des infos inutiles augmente :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5f" value="1" id="q5f1">
-    <label for="q5f1"><span class="ico" aria-hidden="true">✅</span> Traces</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5f" value="0" id="q5f0">
-    <label for="q5f0"><span class="ico" aria-hidden="true">❌</span> Sécurité</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec5" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🛣️</span> Q7 : Un proxy est comme :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q5g" value="1" id="q5g1">
-    <label for="q5g1"><span class="ico" aria-hidden="true">✅</span> Intermédiaire</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q5g" value="0" id="q5g0">
-    <label for="q5g0"><span class="ico" aria-hidden="true">❌</span> Chiffrement total</label>
-  </div>
-</div>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
@@ -3056,13 +2969,13 @@ Fin du programme.</code></pre>
       <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
       <h3>Correction pour la section 5</h3>
       <p>QCM : VPN, Bloquer cookies, Déconnexion.</p>
-      <p>Q1: Suivre navigation, Q2: Historique local, Q3: IP, Q4: Position, Q5: Sessions ouvertes, Q6: Traces, Q7: Intermédiaire.</p>
+      <p>Le quiz : sa correction complète est sous le quiz (« 📖 Correction complète du quiz »).</p>
       <p style="font-size:.9em">Sources&nbsp;: CNIL, <a href="https://www.cnil.fr/fr/nouvelles-methodes-de-tracage-en-ligne-quelles-solutions-pour-se-proteger">«&nbsp;Nouvelles méthodes de traçage en ligne&nbsp;: quelles solutions pour se protéger&nbsp;?&nbsp;»</a> (proxy, VPN, adresse IP), <a href="https://www.cnil.fr/fr/la-navigation-privee-pour-limiter-les-risques-de-piratage-de-vos-comptes-en-ligne">«&nbsp;La navigation privée pour limiter les risques de piratage de vos comptes en ligne&nbsp;»</a> (ce que la navigation privée ne cache pas au fournisseur d'accès) et la définition <a href="https://www.cnil.fr/fr/definition/cookie">«&nbsp;Cookie&nbsp;»</a>&nbsp;; Cybermalveillance.gouv.fr, <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/mots-de-passe">«&nbsp;Pourquoi et comment bien gérer ses mots de passe&nbsp;?&nbsp;»</a> (fermer ses sessions). <br>Consultés le 23/09/2026.</p>
     </div>
   </div>
 
    <!-- 6. Propriété intellectuelle & e-réputation -->
-  <div class="section panel">
+  <div class="section panel activite" id="sec6">
     <h2 id="bloc6-propriete">⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="sc6">0</span>/<span id="scm6">…</span></span></h2>
     <h3>📰 Mise en situation : La photo virale au collège</h3>
      <div class="qcm-question">
@@ -3235,99 +3148,77 @@ Fin du programme.</code></pre>
         </div>
       </div>
     </div>
+    </div>
 
-
-    <h3>🔒 <strong>6.d — Quiz Propriété Intellectuelle (7 questions)</strong></h3>
-
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">©️</span> Q1 : Le droit d'auteur protège :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6a" value="1" id="q6a1">
-    <label for="q6a1"><span class="ico" aria-hidden="true">✅</span> Œuvres</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6a" value="0" id="q6a0">
-    <label for="q6a0"><span class="ico" aria-hidden="true">❌</span> Objets</label>
-  </div>
+    <h3>🔒 <strong>6.d — Quiz Propriété intellectuelle (7 questions)</strong></h3>
+<div class="exo verif-c14" id="quiz6">
+<p class="verif-titre"><b>🔎 Je vérifie</b><span class="pp-ecran"> — 7 questions</span></p>
+<fieldset class="qcm-groupe" id="q6_auteur">
+  <legend>Le droit d'auteur protège :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_auteur" id="q6_auteur__1" value="les idées seules" data-pourquoi="Une idée n'est pas protégée ; sa forme (le texte, l'image) l'est."><label for="q6_auteur__1">les idées seules</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_auteur" id="q6_auteur__2" value="les œuvres payantes seulement" data-pourquoi="Une œuvre gratuite est protégée aussi."><label for="q6_auteur__2">les œuvres payantes seulement</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_auteur" id="q6_auteur__3" value="les œuvres : textes, images, musiques, vidéos"><label for="q6_auteur__3">les œuvres : textes, images, musiques, vidéos</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_auteur" id="q6_auteur__4" value="les œuvres marquées © seulement" data-pourquoi="La protection est automatique, sans aucune marque."><label for="q6_auteur__4">les œuvres marquées © seulement</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q6_cc">
+  <legend>Une licence Creative Commons permet :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_cc" id="q6_cc__1" value="de partager une œuvre, aux conditions de l&#x27;auteur"><label for="q6_cc__1">de partager une œuvre, aux conditions de l&#x27;auteur</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_cc" id="q6_cc__2" value="de tout copier, sans condition" data-pourquoi="La plupart des licences CC posent des conditions : citer, ne pas vendre…"><label for="q6_cc__2">de tout copier, sans condition</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_cc" id="q6_cc__3" value="de tout vendre" data-pourquoi="Une licence NC interdit de vendre."><label for="q6_cc__3">de tout vendre</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_cc" id="q6_cc__4" value="de ne jamais citer l&#x27;auteur" data-pourquoi="Toutes les licences BY demandent de citer l'auteur."><label for="q6_cc__4">de ne jamais citer l&#x27;auteur</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q6_photo">
+  <legend>Publier la photo d'un camarade sans son accord, c'est :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_photo" id="q6_photo__1" value="permis si la photo est réussie" data-pourquoi="La qualité ne compte pas : c'est son visage, c'est à lui de décider."><label for="q6_photo__1">permis si la photo est réussie</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_photo" id="q6_photo__2" value="permis si tu l&#x27;as prise" data-pourquoi="Avoir pris la photo ne te donne pas le droit sur son image."><label for="q6_photo__2">permis si tu l&#x27;as prise</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_photo" id="q6_photo__3" value="permis sur un compte privé" data-pourquoi="Un compte privé reste une publication : d'autres la voient."><label for="q6_photo__3">permis sur un compte privé</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_photo" id="q6_photo__4" value="interdit : c&#x27;est son droit à l&#x27;image"><label for="q6_photo__4">interdit : c&#x27;est son droit à l&#x27;image</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q6_ereput">
+  <legend>Ton e-réputation dépend :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_ereput" id="q6_ereput__1" value="de ce que tu publies, et de ce qu&#x27;on publie sur toi"><label for="q6_ereput__1">de ce que tu publies, et de ce qu&#x27;on publie sur toi</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_ereput" id="q6_ereput__2" value="de ce que voient tes amis, seulement" data-pourquoi="D'autres que tes amis peuvent voir, copier et partager."><label for="q6_ereput__2">de ce que voient tes amis, seulement</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_ereput" id="q6_ereput__3" value="de ton pseudo, seulement" data-pourquoi="Ce que tu publies compte bien plus que ton pseudo."><label for="q6_ereput__3">de ton pseudo, seulement</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_ereput" id="q6_ereput__4" value="de rien, si tu supprimes tes posts" data-pourquoi="Une publication supprimée a pu être copiée ou capturée avant."><label for="q6_ereput__4">de rien, si tu supprimes tes posts</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q6_ccby">
+  <legend>La licence CC BY exige :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_ccby" id="q6_ccby__1" value="de ne pas modifier l&#x27;œuvre" data-pourquoi="Ne pas modifier, c'est ND. BY demande autre chose."><label for="q6_ccby__1">de ne pas modifier l&#x27;œuvre</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_ccby" id="q6_ccby__2" value="de citer l&#x27;auteur"><label for="q6_ccby__2">de citer l&#x27;auteur</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_ccby" id="q6_ccby__3" value="de ne pas vendre l&#x27;œuvre" data-pourquoi="Ne pas vendre, c'est NC. BY demande autre chose."><label for="q6_ccby__3">de ne pas vendre l&#x27;œuvre</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_ccby" id="q6_ccby__4" value="de partager sous la même licence" data-pourquoi="Même licence au partage, c'est SA. BY demande autre chose."><label for="q6_ccby__4">de partager sous la même licence</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q6_image">
+  <legend>Pour utiliser l'image de quelqu'un d'autre :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_image" id="q6_image__1" value="la publier si un moteur de recherche la montre" data-pourquoi="Trouvée en ligne ne veut pas dire libre : elle reste protégée."><label for="q6_image__1">la publier si un moteur de recherche la montre</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_image" id="q6_image__2" value="changer ses couleurs : elle devient à toi" data-pourquoi="La modifier ne la rend pas à toi : l'auteur garde ses droits."><label for="q6_image__2">changer ses couleurs : elle devient à toi</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_image" id="q6_image__3" value="vérifier sa licence, ou demander à l&#x27;auteur"><label for="q6_image__3">vérifier sa licence, ou demander à l&#x27;auteur</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_image" id="q6_image__4" value="citer le nom du site, seulement" data-pourquoi="Citer le site ne suffit pas sans licence qui le permet."><label for="q6_image__4">citer le nom du site, seulement</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q6_refus">
+  <legend>Ton ami refuse que tu publies une vidéo de lui :</legend>
+  <div class="qcm-option"><input type="radio" name="q6_refus" id="q6_refus__1" value="tu la publies en story, 24 h" data-pourquoi="24 h suffisent pour qu'elle soit copiée : c'est toujours une publication."><label for="q6_refus__1">tu la publies en story, 24 h</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_refus" id="q6_refus__2" value="tu la publies à tes proches seulement" data-pourquoi="Même à quelques amis, c'est une publication sans son accord."><label for="q6_refus__2">tu la publies à tes proches seulement</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_refus" id="q6_refus__3" value="tu ne la publies pas"><label for="q6_refus__3">tu ne la publies pas</label></div>
+  <div class="qcm-option"><input type="radio" name="q6_refus" id="q6_refus__4" value="tu la publies en floutant le décor" data-pourquoi="Flouter le décor ne cache pas ton ami : son refus compte."><label for="q6_refus__4">tu la publies en floutant le décor</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Sépare les deux droits : celui de l'auteur (son œuvre) et celui de la personne filmée (son image).</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>BY : citer l'auteur. NC : pas de vente. ND : pas de modification. SA : même licence. <br>Sans accord de la personne, on ne publie pas son image.</p></details>
+<button class="btn check" data-check="q6" type="button">✅ Vérifier le quiz</button>
+<p class="feedback" id="fbq6" role="status"></p>
+<details class="correction"><summary>📖 Correction complète du quiz (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Le droit d&#x27;auteur protège :</b> les œuvres : textes, images, musiques, vidéos. <br>Pas « les idées seules » : une idée n&#x27;est pas protégée ; sa forme (le texte, l&#x27;image) l&#x27;est. <br>Pas « les œuvres payantes seulement » : une œuvre gratuite est protégée aussi. <br>Pas « les œuvres marquées © seulement » : la protection est automatique, sans aucune marque.</p>
+<p><b>Une licence Creative Commons permet :</b> de partager une œuvre, aux conditions de l&#x27;auteur. <br>Pas « de tout copier, sans condition » : la plupart des licences CC posent des conditions : citer, ne pas vendre… <br>Pas « de tout vendre » : une licence NC interdit de vendre. <br>Pas « de ne jamais citer l&#x27;auteur » : toutes les licences BY demandent de citer l&#x27;auteur.</p>
+<p><b>Publier la photo d&#x27;un camarade sans son accord, c&#x27;est :</b> interdit : c&#x27;est son droit à l&#x27;image. <br>Pas « permis si la photo est réussie » : la qualité ne compte pas : c&#x27;est son visage, c&#x27;est à lui de décider. <br>Pas « permis si tu l&#x27;as prise » : avoir pris la photo ne te donne pas le droit sur son image. <br>Pas « permis sur un compte privé » : un compte privé reste une publication : d&#x27;autres la voient.</p>
+<p><b>Ton e-réputation dépend :</b> de ce que tu publies, et de ce qu&#x27;on publie sur toi. <br>Pas « de ce que voient tes amis, seulement » : d&#x27;autres que tes amis peuvent voir, copier et partager. <br>Pas « de ton pseudo, seulement » : ce que tu publies compte bien plus que ton pseudo. <br>Pas « de rien, si tu supprimes tes posts » : une publication supprimée a pu être copiée ou capturée avant.</p>
+<p><b>La licence CC BY exige :</b> de citer l&#x27;auteur. <br>Pas « de ne pas modifier l&#x27;œuvre » : ne pas modifier, c&#x27;est ND. BY demande autre chose. <br>Pas « de ne pas vendre l&#x27;œuvre » : ne pas vendre, c&#x27;est NC. BY demande autre chose. <br>Pas « de partager sous la même licence » : même licence au partage, c&#x27;est SA. BY demande autre chose.</p>
+<p><b>Pour utiliser l&#x27;image de quelqu&#x27;un d&#x27;autre :</b> vérifier sa licence, ou demander à l&#x27;auteur. <br>Pas « la publier si un moteur de recherche la montre » : trouvée en ligne ne veut pas dire libre : elle reste protégée. <br>Pas « changer ses couleurs : elle devient à toi » : la modifier ne la rend pas à toi : l&#x27;auteur garde ses droits. <br>Pas « citer le nom du site, seulement » : citer le site ne suffit pas sans licence qui le permet.</p>
+<p><b>Ton ami refuse que tu publies une vidéo de lui :</b> tu ne la publies pas. <br>Pas « tu la publies en story, 24 h » : 24 h suffisent pour qu&#x27;elle soit copiée : c&#x27;est toujours une publication. <br>Pas « tu la publies à tes proches seulement » : même à quelques amis, c&#x27;est une publication sans son accord. <br>Pas « tu la publies en floutant le décor » : flouter le décor ne cache pas ton ami : son refus compte.</p>
+<div class="retenir"><b>🧠 À retenir :</b> une œuvre appartient à son auteur ; une image appartient à la personne filmée. <br>On cite, on demande, et sans accord on ne publie pas.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je sais quand citer, quand demander, et quand ne pas publier.</p>
 </div>
 
-    
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🔗</span> Q2 : Creative Commons permet :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6b" value="1" id="q6b1">
-    <label for="q6b1"><span class="ico" aria-hidden="true">✅</span> Partage avec conditions</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6b" value="0" id="q6b0">
-    <label for="q6b0"><span class="ico" aria-hidden="true">❌</span> Copie illimitée</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">📸</span> Q3 : Publier une photo sans accord :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6c" value="1" id="q6c1">
-    <label for="q6c1"><span class="ico" aria-hidden="true">✅</span> Interdit</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6c" value="0" id="q6c0">
-    <label for="q6c0"><span class="ico" aria-hidden="true">❌</span> Autorisé</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🏷️</span> Q4 : L’e-réputation dépend de :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6d" value="1" id="q6d1">
-    <label for="q6d1"><span class="ico" aria-hidden="true">✅</span> Tes posts</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6d" value="0" id="q6d0">
-    <label for="q6d0"><span class="ico" aria-hidden="true">❌</span> Seulement amis</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">❝</span> Q5 : La licence CC-BY exige :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6e" value="1" id="q6e1">
-    <label for="q6e1"><span class="ico" aria-hidden="true">✅</span> Citation</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6e" value="0" id="q6e0">
-    <label for="q6e0"><span class="ico" aria-hidden="true">❌</span> Rien</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🖼️</span> Q6 : Pour utiliser une image d’autrui :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6f" value="1" id="q6f1">
-    <label for="q6f1"><span class="ico" aria-hidden="true">✅</span> Demander autorisation</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6f" value="0" id="q6f0">
-    <label for="q6f0"><span class="ico" aria-hidden="true">❌</span> Publier directement</label>
-  </div>
-</div>
-
-    
-<div class="qcm-block qcm-sec6" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🚫</span> Q7 : Sans accord :</div>
-  <div class="qcm-option">
-    <input type="radio" name="q6g" value="1" id="q6g1">
-    <label for="q6g1"><span class="ico" aria-hidden="true">✅</span> Ne pas publier</label>
-  </div>
-  <div class="qcm-option">
-    <input type="radio" name="q6g" value="0" id="q6g0">
-    <label for="q6g0"><span class="ico" aria-hidden="true">❌</span> Partager</label>
-  </div>
-</div>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
@@ -3336,7 +3227,6 @@ Fin du programme.</code></pre>
       <button class="btn" id="chk6" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
       <span id="res6" class="badge"></span>
     </div>
-  </div>
 
   <div id="help6" class="modal">
     <div class="box">
@@ -3365,7 +3255,7 @@ Fin du programme.</code></pre>
       • Attribution obligatoire : les six licences <b>BY</b> ; CC0 seule n'exige rien.<br>
       • Partage sous même licence : CC BY-SA, CC BY-NC-SA — celles qui portent <b>SA</b>.<br>
       Le piège : une licence va dans plusieurs catégories, CC BY dans trois.</p>
-      <p><b>6.d :</b> Q1 œuvres ; Q2 partage avec conditions ; Q3 interdit ; Q4 tes posts ; Q5 citation ; Q6 demander autorisation ; Q7 ne pas publier.</p>
+      <p><b>6.d :</b> Le quiz : sa correction complète est sous le quiz (« 📖 Correction complète du quiz »).</p>
     </div>
   </div>
 
@@ -4078,13 +3968,14 @@ function toggleAnswer(id){
   e.style.display = (e.style.display === 'block') ? 'none' : 'block';
 }
 
-function blocsDe(n){ return [...document.querySelectorAll('.qcm-block.qcm-sec' + n)]; }
+function blocsDe(n){ return [...document.querySelectorAll('.qcm-block.qcm-sec' + n + ', #quiz' + n + ' fieldset.qcm-groupe')]; }
 
 function jugerBloc(b){
   const inputs = [...b.querySelectorAll('input[type=radio], input[type=checkbox]')];
   if (!inputs.length) return null;
   const repondu = inputs.some(i => i.checked);
-  const juste = i => i.value === '1' || i.value === 'good' || i.dataset.correct === '1';
+  const att = (typeof ATT_C14 === 'object') ? ATT_C14[b.id] : undefined;   // les quiz réécrits le 14/11/2026
+  const juste = i => att !== undefined ? i.value === att : (i.value === '1' || i.value === 'good' || i.dataset.correct === '1');
   const ok = inputs[0].type === 'radio'
     ? inputs.some(i => i.checked && juste(i))
     : inputs.every(i => i.checked === juste(i));
@@ -4620,5 +4511,91 @@ recalc();
 })();
 </script>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<style id="css-verif-c14">
+/* les quiz vérifiés par la page (14/11/2026, thème 1 : décision de Pascal « Claude écrit les questions ») */
+#tachesBandeau{margin:10px 0 14px;padding:9px 15px;background:var(--panel2,#0a1b3d);border:1px solid var(--border,#274a8a);border-radius:12px}
+#tachesBandeau .tb-titre{font-weight:700;color:var(--hl,#61dafb);display:block;margin-bottom:3px}
+#tachesBandeau ul{list-style:none;margin:0;padding:0}
+#tachesBandeau li.faite{opacity:.7}
+.verif-c14{margin:16px 0;padding:14px 16px;border:1px solid var(--border,#274a8a);border-radius:12px;background:var(--panel2,#0a1b3d)}
+.verif-c14 .verif-titre{margin:0 0 10px}
+.verif-c14 fieldset.qcm-groupe{border:0;border-left:3px solid var(--border,#274a8a);border-radius:0;padding:2px 0 2px 11px;margin:10px 0 14px;min-width:0}
+.verif-c14 fieldset.qcm-groupe>legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;white-space:normal}
+.verif-c14 fieldset.qcm-groupe:not(.qcm-grille) .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;border:2px solid transparent;border-radius:9px;background:rgba(255,255,255,.04)}
+.verif-c14 fieldset.qcm-groupe:not(.qcm-grille) .qcm-option input[type=radio]{width:19px;height:19px;margin:2px 0 0;flex-shrink:0;accent-color:var(--hl,#61dafb)}
+.verif-c14 fieldset.qcm-groupe:not(.qcm-grille) .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+.verif-c14 .qcm-option .ico{display:none}
+/* la réponse choisie : un cadre, pas le vert de l'ancien quiz (le vert dirait « juste » avant toute vérification) */
+.verif-c14 .qcm-option input:checked + label{background:none!important;color:inherit!important;font-weight:600}
+.verif-c14 fieldset.qcm-groupe:not(.qcm-grille) .qcm-option:has(input:checked){border-color:var(--hl,#61dafb)}
+/* une grille : les réponses une fois, lettrées ; chaque question, une rangée de lettres */
+.verif-c14 .qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:rgba(255,255,255,.03)}
+.verif-c14 .qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.verif-c14 .qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.verif-c14 .qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.verif-c14 .qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.verif-c14 fieldset.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;row-gap:2px}
+.verif-c14 fieldset.qcm-grille>legend{flex:0 0 100%}
+.verif-c14 fieldset.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:3px;margin:0;padding:3px;width:auto;min-width:0;background:none;border:0}
+.verif-c14 fieldset.qcm-grille .qcm-option input[type=radio]{width:19px;height:19px;margin:0}
+.verif-c14 fieldset.qcm-grille .qcm-option label{flex:none;font-weight:700;padding:0 2px}
+.verif-c14 fieldset.qcm-groupe.ok{border-left:4px solid var(--ok,#81fba1)}
+.verif-c14 fieldset.qcm-groupe.ko{border-left:4px solid var(--warn,#ffd66b)}
+.verif-c14 fieldset.qcm-groupe.ok>legend::after{content:" ✓";color:var(--ok,#81fba1)}
+.verif-c14 fieldset.qcm-groupe.ko>legend::after{content:" — à revoir";color:var(--warn,#ffd66b);font-weight:400}
+.verif-c14 .btn.check{margin:12px 0 4px;min-height:44px}
+.verif-c14 .feedback{margin:6px 0;font-weight:600}
+.verif-c14 .feedback.ok{color:var(--ok,#81fba1)}
+.verif-c14 .feedback.mixte,.verif-c14 .feedback.err{color:var(--warn,#ffd66b)}
+</style>
+<script>
+/* ══ Les quiz des sections 1, 3, 4, 5 et 6, réécrits le 14/11/2026 : quatre propositions, la page vérifie chaque quiz ══
+   Les réponses choisies se gardent avec les autres champs de la page (« cyber4e »). Une question compte aussi un point
+   dans le score de sa section (blocsDe / jugerBloc lisent ATT_C14). */
+const ATTQ1 = {q1_phishing:"se faire passer pour un service connu, pour voler tes informations", q1_2fa:"l'authentification à deux facteurs (2FA)", q1_rancon:"tes fichiers, pour te demander une rançon", q1_keylogger:"un antivirus à jour", q1_ddos:"le serveur d'un service, pour le saturer", q1_malware:"un logiciel malveillant, quel qu'il soit", q1_ddos_qui:"le service attaqué, avec son hébergeur"};
+const ATTQ3 = {q3_def:"permet d'identifier une personne, directement ou non", q3_naissance:"Identité", q3_sante:"Sensible", q3_opinion:"Sensible", q3_photo:"Identité", q3_geo:"une donnée personnelle : elle dit où tu es", q3_rgpd:"tes données personnelles"};
+const ATTQ4 = {q4_2fa:"une seconde preuve que c'est bien toi : un code, une appli, une clé", q4_maj:"corrige une faille que des attaquants pourraient utiliser", q4_sauvegarde:"tu récupères tes fichiers sans payer", q4_vpn:"aux sites que tu visites, mais pas à son fournisseur", q4_brute:"un mot de passe long et unique", q4_antivirus:"les logiciels malveillants qu'il connaît", q4_lien:"ne pas cliquer : ouvrir le site toi-même, par son adresse habituelle"};
+const ATTQ5 = {q5_cookie:"suivre ta navigation d'un site à l'autre", q5_privee:"ton historique, sur ton appareil seulement", q5_vpn:"ton adresse IP, aux sites visités", q5_geo:"où tu es, et où tu vas souvent", q5_deco:"que l'élève suivant utilise ta session ouverte", q5_publier:"augmente tes traces, que d'autres recoupent", q5_proxy:"un intermédiaire entre toi et le site"};
+const ATTQ6 = {q6_auteur:"les œuvres : textes, images, musiques, vidéos", q6_cc:"de partager une œuvre, aux conditions de l'auteur", q6_photo:"interdit : c'est son droit à l'image", q6_ereput:"de ce que tu publies, et de ce qu'on publie sur toi", q6_ccby:"de citer l'auteur", q6_image:"vérifier sa licence, ou demander à l'auteur", q6_refus:"tu ne la publies pas"};
+const ATT_C14 = Object.assign({}, ATTQ1, ATTQ3, ATTQ4, ATTQ5, ATTQ6);
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const ATTENDUES = {q1: ATTQ1, q3: ATTQ3, q4: ATTQ4, q5: ATTQ5, q6: ATTQ6};
+const val = id => { const c = document.querySelector("#" + id + " input[type=radio]:checked"); return c ? c.value : ""; };
+const juste = n => Object.keys(ATTENDUES[n]).every(id => val(id) === ATTENDUES[n][id]);
+function verifier(n){
+  const att = ATTENDUES[n], ids = Object.keys(att), fb = $("fb" + n);
+  const vides = ids.filter(id => !val(id)).length; let justes = 0;
+  ids.forEach(id => { const f = $(id), v = val(id), bon = v === att[id]; if (bon) justes++;
+    f.classList.toggle("ok", !!v && bon); f.classList.toggle("ko", !!v && !bon); });
+  let msg, cls;
+  if (vides){ msg = "Il reste " + vides + " question" + (vides > 1 ? "s" : "") + " sans réponse : réponds à tout, puis vérifie de nouveau."; cls = "mixte"; }
+  else if (justes === ids.length){ msg = "✅ " + justes + " / " + ids.length + " — tout est juste : quiz validé. Ouvre la correction : elle explique aussi les réponses refusées."; cls = "ok"; }
+  else if (justes >= ids.length / 2){ msg = "🟡 " + justes + " / " + ids.length + " — les questions marquées « à revoir » sont à reprendre. Ouvre l'aide de niveau 1, puis vérifie de nouveau."; cls = "mixte"; }
+  else { msg = "🔁 " + justes + " / " + ids.length + " — ce n'est pas encore acquis, et c'est normal. Ouvre l'aide de niveau 2, puis reprends."; cls = "err"; }
+  fb.textContent = msg; fb.className = "feedback show " + cls;
+}
+document.querySelectorAll(".verif-c14 fieldset.qcm-groupe[id]").forEach(f => f.addEventListener("change", () => { f.classList.remove("ok", "ko"); majTaches(); }));
+/* le tableau de bord des tâches de la séance affichée (règle d'or n°30) : un quiz se coche quand toutes ses réponses sont justes */
+const TACHES = {
+  s1: ["Les exercices 1.a à 1.e, puis « Vérifier » la section", {n: "q1", l: "Le quiz Menaces & Solutions"}],
+  s2: ["Les exercices 3.a à 3.c", {n: "q3", l: "Le quiz Données personnelles"}, "L'exercice 4.a et la question 4.b", {n: "q4", l: "Le quiz Protection des données"}],
+  s3: ["Les exercices 5.a et 5.b", {n: "q5", l: "Le quiz Traces en ligne"}, "Les exercices 6.a à 6.c", {n: "q6", l: "Le quiz Propriété intellectuelle"}]
+};
+function majTaches(){
+  const hote = $("tachesBandeau"); if (!hote) return;
+  const o = document.querySelector(".seance-tab.active"), liste = TACHES[o ? o.dataset.panel : ""];
+  if (!liste){ hote.hidden = true; return; }
+  hote.hidden = false;
+  hote.innerHTML = "<span class='tb-titre'>Les tâches de cette séance</span><ul>" + liste.map(x => {
+    const fait = typeof x === "object" && juste(x.n);
+    return "<li class='" + (fait ? "faite" : "") + "'>" + (typeof x === "object" ? (fait ? "☑ " : "☐ ") : "• ") + (typeof x === "object" ? x.l : x) + "</li>"; }).join("") + "</ul>";
+}
+document.querySelectorAll(".seance-tab").forEach(o => o.addEventListener("click", () => setTimeout(majTaches, 0)));
+document.querySelectorAll(".verif-c14 [data-check]").forEach(b => b.addEventListener("click", () => { verifier(b.dataset.check); majTaches(); }));
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(majTaches, 0)); else setTimeout(majTaches, 0);
+})();
+</script>
 </body>
 </html>
