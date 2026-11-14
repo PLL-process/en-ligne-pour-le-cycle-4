@@ -24,9 +24,9 @@ Une équipe scolaire fictive prépare un service de vélos partagés. Les fichie
 
 | Séance | Activité principale | Production attendue |
 |---|---|---|
-| 1 | Identifier les acteurs, données, traitements, supports et informations | Tableau acteur / donnée / traitement / information |
-| 2 | Construire l’arborescence, nommer, versionner et sauvegarder | Capture de l’arborescence + archive ZIP |
-| 3 | Importer, saisir, trier, filtrer et interpréter le CSV | ODS/XLSX transformé + PDF + conclusion |
+| 1 | Identifier les acteurs, données, traitements, supports et informations | Le rôle des huit éléments du service (9 questions vérifiées par la page) + trois phrases sur le système d'information |
+| 2 | Construire l’arborescence, nommer, versionner et sauvegarder | Le plan de rangement (9 questions vérifiées par la page), puis capture de l’arborescence + archive ZIP |
+| 3 | Importer, saisir, trier, filtrer et interpréter le CSV | 6 questions vérifiées par la page (cas limites du critère), ODS/XLSX transformé + PDF + conclusion |
 
 ## 📌 Règle d’or n°7 — CRCN observable, tracé et justifié
 
@@ -100,3 +100,31 @@ séance ouverte et se place à sa fin. Sans JavaScript, la page reste d'un seul 
 départ** dans l'ouverture (champ enregistré, version étayée), que le bilan relit ; dans le bilan, le **retour à
 l'hypothèse**, « **Comment j'ai travaillé** » et « **Je me positionne** » sur 5e_C1.3 et 5e_C1.4 aux quatre niveaux du
 livret scolaire. L'exercice incrusté des ateliers garde ses marques : `incrustations.py --verifier` le dit « à jour ».
+
+## Révision du 14/11/2026 — des questions fermées vérifiées par la page
+
+Décision de Pascal (thème 1) : « Claude écrit les questions ». Chaque activité a reçu un bloc « 🔎 Je vérifie » :
+
+| Activité | Questions | Ce que la page vérifie |
+|---|---|---|
+| 1 | 9 | le rôle de chacun des huit éléments (une grille lettrée A à H), et ce qu'est le système d'information |
+| 2 | 9 | le dossier de chaque fichier du paquet de départ, le nom qui respecte la règle, la case vide (pas un zéro), pourquoi archiver |
+| 3 | 6 | les deux frontières du critère (3 incidents compte ; 35 % ne compte pas), « OU », le nombre de prioritaires, le premier après le tri, filtrer ≠ supprimer |
+
+Chaque bloc a deux aides graduées, une correction complète repliée (la réponse, puis chaque réponse refusée avec sa
+raison) et un critère de réussite. L'activité se coche au tableau de bord des tâches de la séance quand **tout** est juste ;
+les réponses choisies restent dans le navigateur, et « Effacer mes réponses locales » les efface aussi.
+
+**Ce que ces questions ne valident pas** : le CRCN. Elles préparent la manipulation et vérifient la compréhension ; la
+compétence reste validée sur la trace (capture et ZIP pour 1.2, tableur et PDF pour 1.3).
+
+Ce qui a changé autour :
+- séance 1, le « tableau acteur / donnée / traitement / information » n'avait pas de champ : la grille des rôles le
+  remplace (la correction du tableau donnait exactement ces huit rôles) ; « Erreur fréquente » et l'ancienne correction,
+  redites dans la nouvelle correction, sont retirées de la vue ; les trois phrases sur le système ont reçu leur
+  correction (un exemple et les critères) ;
+- séance 3, la conclusion a reçu un exemple et ses critères ; une autre décision est juste si elle s'appuie sur une
+  donnée du fichier ;
+- les réponses de l'activité 3 sont recalculées par le banc depuis `donnees_velos_hangzhou_simulees.csv` : si le
+  fichier change, le banc le dit.
+

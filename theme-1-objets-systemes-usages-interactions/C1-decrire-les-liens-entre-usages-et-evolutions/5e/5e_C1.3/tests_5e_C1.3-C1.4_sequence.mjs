@@ -2,11 +2,13 @@
    passée à trois séances à onglets (vague n°311) : le lot n'avait qu'un contrôle statique (`_outils/test_lot_theme1_5e_c1_3_c1_4.py`).
    Il couvre, comme l'élève : les séances (un onglet, un panneau, la clôture à la dernière seulement, le bouton vers la
    suivante), la sauvegarde (chaque zone [data-save] remplie dans sa séance, relue après rechargement, l'effacement), le
-   positionnement et le retour à l'hypothèse, et l'exercice incrusté des ateliers (la carte mentale, juste puis relu).
+   positionnement et le retour à l'hypothèse, les questions fermées de chaque activité (14/11/2026 : réponses attendues
+   recalculées depuis le fichier de l'activité 3, juste / à revoir, tâche cochée, relues après rechargement), et l'exercice incrusté des ateliers (la carte mentale, juste puis relu).
    Usage : node tests_5e_C1.3-C1.4_sequence.mjs */
 import { chromium } from 'playwright';
 import { pathToFileURL } from 'url';
 import path from 'path';
+import fs from 'fs';
 
 const URL0 = pathToFileURL(path.join(import.meta.dirname, 'sequence_C1.3-C1.4_SI_gestion_donnees.html')).href;
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
@@ -90,14 +92,75 @@ const relu = await p.evaluate((ex) => { const boite = document.querySelector('[d
   return [n, tot]; }, ex);
 ok('les réponses de l\'exercice incrusté survivent au rechargement', relu[0] === relu[1], relu.join(' / '));
 
+// ── les questions fermées vérifiées par la page (révision du 14/11/2026) : chaque activité se valide sur une production
+//    réelle — ses réponses choisies, jugées une à une — et non sur un bouton « j'ai fini » ──
+const ATT = await p.evaluate(() => { for (const s of [...document.scripts]) { const m = s.textContent.match(/const ATT1 = \{[\s\S]*?const ATTENDUES/);
+  if (m) return new Function(m[0].replace('const ATTENDUES', '') + 'return {1:ATT1,2:ATT2,3:ATT3};')(); } return null; });
+ok('les réponses attendues des trois activités se lisent dans la page', ATT && [1, 2, 3].every((n) => Object.keys(ATT[n]).length >= 6),
+  ATT ? [1, 2, 3].map((n) => Object.keys(ATT[n]).length).join(' / ') : '(introuvables)');
+const options = (id) => p.$$eval(`#${id} input[type=radio]`, (l) => l.map((x) => x.value));
+let uniques = true; const detUnique = [];
+for (const n of [1, 2, 3]) for (const [id, v] of Object.entries(ATT[n])) {
+  const o = await options(id); if (o.filter((x) => x === v).length !== 1 || o.length < 3) { uniques = false; detUnique.push(id); }
+}
+ok('chaque réponse attendue est une option, une seule fois, parmi au moins trois', uniques, detUnique.join(', '));
+// les réponses de l'activité 3, recalculées depuis le fichier que l'élève ouvre : « prioritaire » si incidents ≥ 3 OU autonomie < 35 %
+const csv = fs.readFileSync(path.join(import.meta.dirname, 'donnees_velos_hangzhou_simulees.csv'), 'utf8').trim().split('\n').slice(1)
+  .map((l) => l.split(';')).map((c) => ({ id: c[0], inc: +c[3], auto: +c[4] }));
+const prio = (v) => v.inc >= 3 || v.auto < 35;
+const tri = [...csv].sort((a, b2) => b2.inc - a.inc);
+const v = (id) => csv.find((x) => x.id === id);
+ok('activité 3 : le nombre de vélos prioritaires vient du fichier', String(csv.filter(prio).length) === ATT[3].a3_nombre, `${csv.filter(prio).map((x) => x.id).join(', ')} → attendu ${ATT[3].a3_nombre}`);
+ok('activité 3 : le premier vélo après le tri par incidents décroissants vient du fichier', tri[0].id === ATT[3].a3_premier && tri[0].inc > tri[1].inc, `${tri[0].id} (${tri[0].inc}) puis ${tri[1].id} (${tri[1].inc})`);
+ok('activité 3 : les frontières suivent la règle (V-108 à 3 incidents, V-105 à 31 %, un vélo à 35 % et 1 incident)',
+  prio(v('V-108')) && v('V-108').inc === 3 && ATT[3].a3_v108.startsWith('prioritaire')
+  && prio(v('V-105')) && v('V-105').inc < 3 && ATT[3].a3_v105.startsWith('prioritaire')
+  && !prio({ inc: 1, auto: 35 }) && ATT[3].a3_limite.startsWith('non prioritaire'));
+const choisir = (id, val) => p.evaluate(([id, val]) => { const r = [...document.querySelectorAll(`#${id} input[type=radio]`)].find((x) => x.value === val); r.click(); }, [id, val]);
+const fb = async (n) => (await p.locator('#fb' + n).textContent()).trim();
+const bandeau = () => p.evaluate(() => document.getElementById('tachesBandeau').innerText);
+for (const [n, s] of [[1, 's1'], [2, 's2'], [3, 's3']]) {
+  await ouvrir(s);
+  const ids = Object.keys(ATT[n]);
+  ok(`activité ${n} : son bloc a deux aides, une correction et un message, tout replié au départ`, await p.evaluate((n) => {
+    const x = document.querySelector(`[data-check="${n}"]`).closest('.verif-c13');
+    return !!x.querySelector('details.aide1') && !!x.querySelector('details.aide2') && !!x.querySelector('details.correction')
+      && [...x.querySelectorAll('details')].every((d) => !d.open) && !!x.querySelector('#fb' + n); }, n));
+  await p.click(`[data-check="${n}"]`); await p.waitForTimeout(60);
+  ok(`activité ${n} : vérifier sans répondre dit combien de questions restent`, (await fb(n)).startsWith(`Il reste ${ids.length} questions`), await fb(n));
+  for (const id of ids) await choisir(id, ATT[n][id]);
+  const autre = (await options(ids[1])).find((x) => x !== ATT[n][ids[1]]);
+  await choisir(ids[1], autre); await p.click(`[data-check="${n}"]`); await p.waitForTimeout(60);
+  const marques = await p.evaluate((ids) => ids.filter((id) => document.getElementById(id).classList.contains('ko')), ids);
+  ok(`activité ${n} : une réponse fausse → « à revoir », sur cette question seule, et la tâche reste à faire`,
+    (await fb(n)).startsWith('🟡') && marques.length === 1 && marques[0] === ids[1] && !(await bandeau()).includes('☑'), await fb(n));
+  await choisir(ids[1], ATT[n][ids[1]]); await p.click(`[data-check="${n}"]`); await p.waitForTimeout(60);
+  ok(`activité ${n} : tout juste → « activité validée », et la tâche se coche au tableau de bord`,
+    (await fb(n)).includes('activité validée') && (await bandeau()).includes('☑'), (await bandeau()).replace(/\n/g, ' · '));
+}
+await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(250);
+const nAtt = [1, 2, 3].reduce((s, n) => s + Object.keys(ATT[n]).length, 0);
+const rest = await p.evaluate((ATT) => [1, 2, 3].every((n) => Object.entries(ATT[n]).every(([id, v]) => {
+  const c = document.querySelector(`#${id} input[type=radio]:checked`); return c && c.value === v; })), ATT);
+ok(`après rechargement, les ${nAtt} réponses choisies reviennent`, rest);
+const coches = [];
+for (const s of ['s1', 's2', 's3']) { await ouvrir(s); coches.push((await bandeau()).includes('☑')); }
+ok('après rechargement, les trois tâches validées restent cochées', coches.every(Boolean), coches.join(','));
+await ouvrir('s1'); await p.click('[data-check="1"]'); await p.waitForTimeout(60);
+const marqueAvant = await p.evaluate(() => document.getElementById('a1_qr').classList.contains('ok'));
+await choisir('a1_qr', (await options('a1_qr')).find((x) => x !== ATT[1].a1_qr));
+ok('changer une réponse retire sa marque « juste » jusqu\'à la prochaine vérification', marqueAvant && await p.evaluate(() => !document.getElementById('a1_qr').classList.contains('ok')));
+
 // ── l'effacement ─────────────────────────────────────────────────────────
 await ouvrir('s2');
 await p.click('#clear'); await p.waitForTimeout(120);
 const vides = await p.$$eval('[data-save]', (l) => l.every((e) => !e.value));
 const radiosVides = await p.$$eval('.positionnement input[type=radio]', (l) => l.every((r) => !r.checked));
-ok('« Effacer mes réponses locales » vide les zones et le positionnement', vides && radiosVides && await p.evaluate(() => document.getElementById('rappelHyp').hidden));
+const fermeesVides = await p.$$eval('.verif-c13 input[type=radio]', (l) => l.every((r) => !r.checked));
+ok('« Effacer mes réponses locales » vide les zones, le positionnement et les questions fermées', vides && radiosVides && fermeesVides && await p.evaluate(() => document.getElementById('rappelHyp').hidden));
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(250);
-ok('après effacement et rechargement, rien ne revient', await p.$$eval('[data-save]', (l) => l.every((e) => !e.value)) && await p.$$eval('.positionnement input[type=radio]', (l) => l.every((r) => !r.checked)));
+ok('après effacement et rechargement, rien ne revient', await p.$$eval('[data-save]', (l) => l.every((e) => !e.value)) && await p.$$eval('.positionnement input[type=radio]', (l) => l.every((r) => !r.checked))
+  && await p.$$eval('.verif-c13 input[type=radio]', (l) => l.every((r) => !r.checked)) && !(await p.evaluate(() => document.getElementById('tachesBandeau').innerText)).includes('☑'));
 // ── après « Effacer », une nouvelle frappe n'enregistre que ce qu'on tape (04/11/2026) : la mémoire de la page était
 //    gardée, et la première frappe réécrivait toutes les anciennes réponses ──
 for (const z of zones) {

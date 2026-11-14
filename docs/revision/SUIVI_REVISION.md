@@ -18,7 +18,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | N° | Séquence | Séance la plus lourde (mots) | ✘ règles | Menus | Aération | État |
 |---|---|---|---|---|---|---|
 | 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
-| 2 | `5e_C1.3` | 1050 → 1043 | 0 | 0 | 5 → 0 | livrée #620 |
+| 2 | `5e_C1.3` | 1050 → 1043 → 1199 | 0 | 0 | 5 → 0 | livrée #620 ; #681 : 24 questions fermées vérifiées par la page (thème 1) |
 | 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 |
 | 4 | `4e_C1.4` | 1291 → 1056 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations ; #627 répare le jeu des licences (6.c) |
 | 5 | `3e_C1.5` | 2017 → 1448 | 0 | 0 | 19 → 0 | livrée #624 ; #628 ramène la séance 4 à 1 448 — au-dessus du repère, justifiée |
@@ -148,3 +148,8 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 - **4e_C2.1, la quatrième séance** (11/11/2026 ; Pascal : « une 4e »). Le n°23 est réglé : 165 minutes annoncées pour
   220 disponibles. La séance 3 garde l'activité 4 (1 716 → 1 306 mots) ; la séance 4, « Conclure », porte le Bonus, le
   bilan et le QCM (439 mots). La séance 1 reste à 1 548 mots (l'exercice d'atelier du croquis).
+- **Thème 1, les activités qui ne se vérifiaient pas** (14/11/2026 ; Pascal : « Claude écrit les questions »).
+  - **5e_C1.3** (#681) : 24 questions fermées (9 / 9 / 6), vérifiées par la page, une correction complète chacune ; la
+    tâche se coche au tableau de bord quand tout est juste. Séance 1, 1 043 → 1 199 mots (la grille des huit rôles :
+    64 lettres ; le redondant retiré de la vue pour tenir le repère) ; séance 2, 224 → 579 ; séance 3, 645 → 962.
+    Fiche papier 9 → 11 pages. Restent `4e_C1.4` et `3e_C1.5`.

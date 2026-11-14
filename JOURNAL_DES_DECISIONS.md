@@ -30518,3 +30518,36 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 **Mis de côté, pour Pascal.** Le transfert individuel sans squelette (n°330, audit A1) : une fonction `eclairage(lumiere, train_arrive)` écrite seul, testée 6 fois par la page. Il est prêt, sur sa propre branche (`fable/revision/3e-c9-1-transfert`), mais il ajoute environ 10 minutes à une séance 4 déjà pleine (45 minutes d'activité 5, puis le bilan) et 400 mots visibles. À trancher : en séance 4, au début d'une séance suivante, ou à la maison.
 
 **Mesure.** Banc de la séquence : 89/89 (quatre tests de plus : le billet de sortie — 5 questions, sans aide, 5/5 puis 4/5, progression inchangée —, le scénario annoncé, la réponse « disparaît aussi » rejouée dans Python, l'expérience D dans les tests existants) ; banc n°311 : 34/34. Mode mission : page acceptée, 49 écrans ; 88 pourquoi sur 88 (30 questions). Charge : séance 2, 1 352 → 1 411 mots visibles ; séance 3, 761 → 1 027 ; séance 4, 1 431 → 1 455. Règles d'or 0 ✘ ; aération 0 ; hiérarchie 0. Contrôles du site : Les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), rejoués sur l'état final.
+
+---
+
+## 14/11/2026 — `5e_C1.3`, thème 1 (1/3) : chaque activité se vérifie par des questions fermées, et la réussite se gagne réponse par réponse
+
+**La décision.** Pascal, pour les trois séquences du thème 1 dont les activités ne se vérifiaient pas (`5e_C1.3`, `4e_C1.4`, `3e_C1.5`) : « Claude écrit les questions », une PR par page, `5e_C1.3` d'abord. Les règles d'or n°322 à n°330 s'appliquent dès cette page.
+
+**Ce qui a été écrit.** Un bloc « 🔎 Je vérifie » après chaque production attendue, 24 questions en tout :
+- **activité 1 (9)** : le rôle de chacun des huit éléments du service, en grille lettrée A à H (`grilles_radio.py`) ; ce qu'est le système d'information (« des personnes, des règles, des données, des logiciels, des matériels et des réseaux », et non « l'ordinateur et ses logiciels ») ;
+- **activité 2 (9)** : le dossier de chacun des six fichiers du paquet de départ, en grille ; le nom qui respecte la règle `AAAA-MM-JJ_type_contenu_version.ext` ; la case vide de ST-05 (« le capteur n'a rien envoyé : ce n'est pas un zéro ») ; pourquoi archiver l'extraction du 24 février ;
+- **activité 3 (6)** : les deux frontières du critère (n°324 : V-108 à 3 incidents est prioritaire, un vélo à 35 % et 1 incident ne l'est pas), « OU » (V-105 : aucun incident, 31 %), le nombre de prioritaires (4), le premier après le tri (V-104), filtrer = masquer sans effacer.
+
+Chaque bloc : deux aides graduées, la vérification, une correction complète repliée (la réponse, puis chaque réponse refusée avec sa raison), le critère de réussite. Chaque mauvaise proposition a son pourquoi en 20 mots au plus pour le mode mission (`mission_5e_C1.3.json` : 30 pourquoi, 14 indices).
+
+**Ce que la page affiche, et ce qu'elle prouve (n°322, n°328).**
+- « Activité validée » seulement quand **toutes** les réponses sont justes ; chaque question fausse est marquée « à revoir », seule ; changer une réponse retire sa marque jusqu'à la vérification suivante.
+- La tâche se coche alors au tableau de bord de la séance (n°30 : la page n'en avait pas, `verif_regles_audit` le refusait) ; les réponses choisies restent dans le navigateur ; « Effacer mes réponses locales » les efface aussi.
+- Les réponses de l'activité 3 ne sont pas recopiées : le banc les **recalcule** depuis `donnees_velos_hangzhou_simulees.csv` (prioritaire si incidents ≥ 3 OU autonomie < 35 %). Si le fichier change, le banc le dit.
+- Ces questions **ne valident pas le CRCN** : elles préparent la manipulation. La fiche pédagogique et la synthèse professeur le disent ; la compétence se valide toujours sur la trace (capture et ZIP pour 1.2, tableur et PDF pour 1.3).
+- La page disait « un tableau : acteur / donnée produite / traitement / information utilisée » sans champ pour l'écrire (n°67) ; sa correction donnait exactement les huit rôles de la grille. La production attendue dit maintenant ce que l'élève produit : la carte mentale, le rôle des huit éléments, trois phrases sur le système.
+- La carte de sauvegarde disait « réponses textuelles » : elle dit « les zones de réponse et tes choix ».
+
+**Le redondant, et les corrections qui manquaient.**
+- Séance 1 : l'ancienne correction (les huit rôles, mot pour mot ceux de la nouvelle) et « Erreur fréquente » (redite par la question sur le système d'information et sa correction) sortent de la vue ; l'ancienne aide graduée, couverte par les deux nouvelles, aussi.
+- Les trois phrases sur le système d'information n'avaient pas de correction (n°43) : un exemple, les critères (à quoi il sert, trois de ses parties, une conséquence de son absence), le piège.
+- La conclusion de la séance 3 non plus : un exemple et ses critères ; une autre décision est juste si elle s'appuie sur une donnée du fichier (V-112, la batterie la plus faible).
+- Séances 2 et 3 : l'aide et la correction de la manipulation disent ce qu'elles corrigent (« Correction du rangement sur l'ordinateur », « Correction du tableur, du PDF et de la conclusion ») : deux corrections, deux objets (n°329).
+
+**À l'écran.** Les propositions longues prennent le gabarit commun (le bouton à gauche, le texte à côté) ; les questions, un filet à gauche au lieu d'un cadre que l'énoncé sur deux lignes coupait. Vu à 390 et 1 280 px : aucun débordement. Sur papier, « — 9 réponses, puis « Vérifier » » ne s'imprime pas (il n'y a pas de bouton sur une feuille).
+
+**Mesure.** Banc de la séquence : 24 → 44 / 44 (les réponses lues dans la page et présentes une seule fois parmi au moins trois ; les trois réponses de l'activité 3 recalculées depuis le CSV ; pour chaque activité : rien coché, une erreur, tout juste et la tâche cochée ; le rechargement ; l'effacement) ; banc n°311 : 34 / 34. Mode mission : page acceptée, 24 écrans, 44 pourquoi sur 44. Charge : séance 1, 1 043 → 1 199 mots visibles ; séance 2, 224 → 579 ; séance 3, 645 → 962. Règles d'or 0 ✘ (n°30 réglée) ; aération 0 ; hiérarchie 0. Fiche papier : 9 → 11 pages (séance 2 : 1 → 2 ; séance 3 : 3 → 4). Contrôles du site : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘), sur l'état final.
+
+**Pour Pascal.** La quatrième page de la séance 3 ne porte que la licence : le bilan, qui ne se coupe pas, passe en page 3 et pousse la licence. La même question que pour `3e_C9.1` : étendre les règles d'impression compactes (`css-papier-compact`) à toutes les séquences, ou laisser le bilan se couper.
