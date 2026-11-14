@@ -202,3 +202,21 @@ le vérifie — effacer, taper une lettre, recharger : seule la nouvelle valeur 
 rouge sur ce test avant la correction). n°311 **54 / 54**, `controle_squelette` 0 défaut, aucun « à rédiger ».
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 14/11/2026 — les questions fermées vérifiées par la page
+
+- Banc du lot (`tests_5e_C1.3-C1.4_sequence.mjs`) : **44 / 44** (24 avant). Les 20 nouveaux tests :
+  - les réponses attendues se lisent dans la page (9 / 9 / 6), chacune présente une seule fois parmi au moins trois propositions ;
+  - activité 3 : les réponses **recalculées** depuis `donnees_velos_hangzhou_simulees.csv` — 4 prioritaires (V-104, V-105,
+    V-108, V-112), V-104 premier après le tri, V-108 à 3 incidents prioritaire, V-105 à 31 % prioritaire, un vélo à 35 %
+    et 1 incident non prioritaire ;
+  - pour chaque activité : deux aides, une correction et un message, repliés au départ ; rien coché → « Il reste N
+    questions » ; une erreur → « à revoir » sur cette question seule, tâche non cochée ; tout juste → « activité validée »
+    et tâche cochée ;
+  - rechargement : les 24 réponses et les trois tâches cochées reviennent ; changer une réponse retire sa marque ;
+  - « Effacer mes réponses locales » vide aussi les questions fermées et décoche les tâches.
+- Banc n°311 : 34 / 34. Mode mission (`banc_generique.mjs`) : page acceptée, 24 écrans, 44 / 44 pourquoi ;
+  `enrichir.py --verifier` : à jour (30 pourquoi, 14 indices).
+- Fiche papier : 11 pages (5 / 2 / 4) ; la quatrième page de la séance 3 ne porte que la licence.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

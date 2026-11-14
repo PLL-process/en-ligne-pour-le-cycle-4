@@ -1,0 +1,71 @@
+{
+ "_lire": "Données du mode mission pour la séquence 5e_C1.3 (système d'information, vélos de Hangzhou). Posées dans la page par _outils/mode_mission/enrichir.py. « pourquoi » : pourquoi une mauvaise proposition ne convient pas, sans dire la bonne ; « indices » : une piste par ligne de grille.",
+ "indices": {
+  "a1_cycliste": "C'est une personne, au tout début : c'est elle qui demande quelque chose.",
+  "a1_qr": "Il est collé sur le vélo : qu'est-ce qui permet de savoir de QUEL vélo il s'agit ?",
+  "a1_appli": "Elle est sur le téléphone : elle reçoit la demande et la fait partir.",
+  "a1_reseau": "Il relie le téléphone au serveur : il ne décide rien, il fait voyager.",
+  "a1_serveur": "Il reçoit la demande et décide si la location est possible.",
+  "a1_base": "C'est là que tout reste enregistré, location après location.",
+  "a1_tech": "C'est une personne, à la fin : elle répare les vélos signalés.",
+  "a1_tableau": "C'est un écran : il montre l'état des vélos, d'un coup d'œil.",
+  "a2_extraction": "On l'a reçue telle quelle, et personne ne l'a modifiée.",
+  "a2_analyse": "C'est un calcul fait à partir d'un autre fichier.",
+  "a2_rapport": "Il est écrit pour être lu par d'autres personnes.",
+  "a2_plan": "Il accompagne le rapport : il part avec lui.",
+  "a2_vieux": "C'est une version ancienne, gardée pour comparer.",
+  "a2_notes": "Elles ne servent plus au travail, mais on les garde pour mémoire."
+ },
+ "pourquoi": {
+  "a1_si": {
+   "l'ordinateur et ses logiciels": "Sans le cycliste, le technicien et les règles, l'ordinateur ne fait rien circuler : relis le schéma en entier.",
+   "la base de données du serveur": "La base stocke les locations : ce n'est qu'une partie. Qui produit, transporte et utilise l'information ?",
+   "le réseau qui relie les vélos": "Le réseau transporte les données : ce n'est qu'une partie. Cherche aussi les personnes et les règles."
+  },
+  "a2_nom": {
+   "Données_Vélos_2026-03-02_v2.csv": "Des accents, des majuscules, et la date n'est pas en tête : relis la règle de nommage, dans l'ordre.",
+   "2026-03-02 donnees stations hangzhou v2.csv": "La date est en tête, mais il y a des espaces : la règle les remplace par _ et -.",
+   "donnees_stations-hangzhou_v2_2026-03-02.csv": "La date est à la fin : le tri par nom ne rangerait plus les fichiers par date."
+  },
+  "a2_vide": {
+   "la station n'a aucun vélo disponible : on écrit 0": "Écrire 0 inventerait une station vide : regarde la colonne « etat » de ST-05, dans le fichier.",
+   "la station a été supprimée du service": "La ligne ST-05 est toujours dans le fichier : la station existe. Que dit sa colonne « etat » ?",
+   "le fichier est abîmé : il faut le jeter": "Les autres lignes sont complètes : une case vide n'abîme pas le fichier. Lis la colonne « etat »."
+  },
+  "a2_garde": {
+   "parce que son nom dit « NE PAS EFFACER »": "Une consigne écrite dans un nom ne protège rien : c'est le dossier d'archive qui garde le fichier.",
+   "pour la diffuser avec le rapport": "Une archive ne se diffuse pas : ce qui se diffuse va dans 03_exports.",
+   "parce qu'elle est plus complète que la nouvelle": "Elle est seulement plus ancienne : ouvre-la, et compare sa date à celle de l'extraction du 2 mars."
+  },
+  "a3_v108": {
+   "non prioritaire : 3 n'est pas supérieur à 3": "Le critère dit « supérieur OU ÉGAL à 3 » : relis le signe, le 3 compte-t-il ?",
+   "prioritaire, à cause de son autonomie": "52 % n'est pas sous 35 % : c'est une autre colonne qui le rend prioritaire.",
+   "on ne peut pas savoir sans le PDF": "La ligne de V-108 dans le tableur suffit : compare ses incidents au critère."
+  },
+  "a3_v105": {
+   "non prioritaire : il n'a aucun incident": "Avec « OU », une seule condition suffit : regarde aussi son autonomie.",
+   "on ne peut pas savoir : il faut les deux conditions": "« Les deux conditions », ce serait « ET » : le critère dit « OU ».",
+   "prioritaire, parce qu'il est en tête du tri": "Le tri ne décide rien : avec 0 incident, V-105 est en bas. Regarde son autonomie."
+  },
+  "a3_limite": {
+   "prioritaire : 35 %, c'est trop peu": "Le critère dit « inférieure à 35 % » : 35 est-il inférieur à 35 ?",
+   "prioritaire : il a un incident": "Un incident, c'est moins de 3 : cette condition-là est fausse. Regarde l'autre.",
+   "on ne peut pas savoir": "Les deux nombres sont donnés : teste-les un par un contre le critère."
+  },
+  "a3_nombre": {
+   "2": "Tu as compté une seule condition : avec « OU », les incidents ET l'autonomie comptent.",
+   "3": "Il en manque un : as-tu compté V-108, qui a exactement 3 incidents ?",
+   "5": "Un vélo de trop : vérifie les cas limites, 3 incidents compte, 35 % ne compte pas."
+  },
+  "a3_premier": {
+   "V-108": "V-108 a 3 incidents : un autre vélo en a davantage. Relis la colonne des incidents.",
+   "V-101": "V-101 n'a aucun incident : en ordre décroissant, il est tout en bas.",
+   "V-112": "V-112 a 2 incidents : cherche le plus grand nombre de la colonne."
+  },
+  "a3_filtre": {
+   "supprimer les autres lignes du tableur": "Supprimer ferait perdre les données : le filtre, lui, se retire et tout revient.",
+   "changer l'ordre des lignes": "Changer l'ordre des lignes, c'est trier : le filtre en cache une partie.",
+   "colorier les lignes prioritaires": "Colorier ne cache rien : après le filtre, seules les lignes prioritaires sont visibles."
+  }
+ }
+}
