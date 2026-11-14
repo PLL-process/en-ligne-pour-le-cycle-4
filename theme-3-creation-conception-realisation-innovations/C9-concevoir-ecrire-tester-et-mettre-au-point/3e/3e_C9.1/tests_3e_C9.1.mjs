@@ -54,6 +54,8 @@ async function shot(page, nom, selecteur) {
 }
 const url = f => pathToFileURL(path.join(LOT, f)).href;
 const SEQ = "sequence_3e_C9.1_variables_types_systemes.html";
+const PROG4_CORRIGE = 'train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1.8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n';
+const FONCTION5_JUSTE = 'def vitesse_ventilation(air, train_arrive):\n    if air >= 100:\n        return 3\n    elif train_arrive:\n        return 2\n    else:\n        return 1\n';
 const QCM = "qcm_3e_C9.1_variables_types_systemes.html";
 
 /* ── liens locaux (statique) ── */
@@ -269,11 +271,9 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 {
   await page.click("#tab-s3");
   await page.waitForTimeout(150);
-  await page.evaluate(() => {           // ouvre la barre 🧪 sans quitter la page (le lien part dans un onglet)
-    const a = document.querySelector("#vs2 .vs-lien");
-    a.addEventListener("click", e => e.preventDefault(), { once: true });
-    a.click();
-  });
+  // 12/11/2026 (audit) : ouvrir Vittascience ne prouve plus rien ; la preuve est le programme corrigé, exécuté dans la page
+  await executerBloc(page, "vs2", PROG4_CORRIGE);
+  await page.waitForFunction(() => window.__exp.preuve4 && window.__exp.preuve4.etat !== "rejeu", null, { timeout: 15000 });
   for (const [id, v] of [["a4b1l", "3"], ["a4b1c", "minutes = 2 + 1"], ["a4b2l", "5"],
                          ["a4b2c", "écrire 1.8, avec un point"], ["a4b3c", "on ne soustrait pas un nombre d'un texte"],
                          ["a4b4", "Q - 96 St 2 min | 25.0 C"]])
@@ -440,18 +440,26 @@ await ctx.close();
     onglet("s4"); await new Promise(r => setTimeout(r, 150));
     const boutons = [...document.querySelectorAll(".bench-run")].map(x => x.getBoundingClientRect());
     const banc = boutons.length === 4 && boutons.every(r => r.width >= 44 && r.height >= 44 && r.left >= 0 && r.right <= innerWidth);
-    onglet("s1"); await new Promise(r => setTimeout(r, 150));
-    const fig = document.querySelector("#act1 figure"), doc = fig.querySelector("object").getBoundingClientRect();
-    const indice = document.querySelector("#act1 .doc-glisse"), glisse = fig.scrollWidth > fig.clientWidth + 100, aide = !!indice && !!indice.offsetParent;
+    /* 14/11/2026 (règle d'or n°325) : les documents sont en HTML ; à 390 px, aucun de leurs textes sous 14 px, aucun ne déborde */
+    const docs = [];
+    for (const s of ["s1", "s2", "s3", "s4"]) { onglet(s); await new Promise(r => setTimeout(r, 150));
+      document.querySelectorAll(".seance-panel.active figure.doc-html, #ouverture figure.doc-html").forEach(fg => {
+        if (!fg.offsetParent || docs.some(x => x.id === fg.id)) return;
+        const tailles = [], marcheur = document.createTreeWalker(fg, NodeFilter.SHOW_TEXT);
+        while (marcheur.nextNode()) { const n = marcheur.currentNode, e = n.parentElement; if (n.textContent.trim() && e.offsetParent) tailles.push(parseFloat(getComputedStyle(e).fontSize)); }
+        const r = fg.getBoundingClientRect();
+        docs.push({ id: fg.id, min: Math.min(...tailles), dedans: r.left >= 0 && r.right <= innerWidth + 0.5 && fg.scrollWidth <= fg.clientWidth + 1 });
+      }); }
     onglet("s2"); await new Promise(r => setTimeout(r, 150));
     const code = [...document.querySelectorAll(".code-ligne")].pop();
-    return { banc, docLarge: Math.round(doc.width), glisse, indice: aide,
+    return { banc, docs, objets: document.querySelectorAll("object.figure").length,
       uneLigne: !!code && code.getClientRects().length === 1 && code.getBoundingClientRect().height < 30,
       debord: document.documentElement.scrollWidth - document.documentElement.clientWidth };
   });
   ok("mobile 390 px : les quatre boutons ▶ du banc de tests sont à l'écran, sans faire glisser, et font 44 px", tel.banc);
-  ok("mobile 390 px : un document garde une largeur lisible et se fait glisser dans son cadre, avec sa ligne d'aide",
-     tel.docLarge >= 700 && tel.glisse && tel.indice && tel.debord === 0, "document " + tel.docLarge + " px · glisse " + tel.glisse + " · aide " + tel.indice + " · débord " + tel.debord);
+  ok("mobile 390 px : les quatre documents sont du texte qui se recompose — aucun texte sous 14 px, aucun ne déborde, plus aucun dessin réduit (règle d'or n°325)",
+     tel.docs.length === 4 && tel.docs.every(x => x.min >= 14 && x.dedans) && tel.objets === 0 && tel.debord === 0,
+     tel.docs.map(x => x.id + " " + x.min + " px" + (x.dedans ? "" : " DÉBORDE")).join(" · ") + " · dessins réduits : " + tel.objets + " · débord " + tel.debord);
   ok("mobile 390 px : le code de l'expérience C tient sur une ligne", tel.uneLigne);
   await pm.close();
   await ctxm.close();
@@ -514,13 +522,177 @@ await ctx.close();
   await pm.evaluate(k => document.querySelector('#msRail [data-k="' + k + '"]').click(), iEd); await pm.waitForTimeout(200);
   await pm.click("#msVerif"); await pm.waitForTimeout(300);
   const sans = await pm.locator("#fb4").textContent();
-  await executerBloc(pm, "vs2", 'train = "Q"\nquai = "96 St"\nminutes = 2 + 1\ntemperature_f = 77\ntemperature_c = (temperature_f - 32) / 1.8\nmessage = train + " - " + quai\nminutes = minutes - 1\nprint(message, minutes, "min |", temperature_c, "C")\n');
+  await executerBloc(pm, "vs2", PROG4_CORRIGE);
+  await pm.waitForFunction(() => window.__exp.preuve4 && window.__exp.preuve4.etat !== "rejeu", null, { timeout: 15000 });
   await pm.click("#msVerif"); await pm.waitForTimeout(400);
   const avec = await pm.evaluate(() => { const fb = document.getElementById("fb4").getBoundingClientRect(), pied = document.querySelector(".ms-pied").getBoundingClientRect();
     return { texte: document.getElementById("fb4").textContent, lisible: fb.height > 0 && fb.top >= 0 && fb.bottom <= pied.top + 1 }; });
   ok("mission · act. 4 : sur cet écran, la vérification demande l'exécution, puis valide l'activité — son message se lit au-dessus de la barre",
      /🔒[\s\S]*éditeur Python/.test(sans) && /activité validée/.test(avec.texte) && avec.lisible, sans.slice(0, 40) + " → " + avec.texte.slice(0, 40) + (avec.lisible ? "" : " (message caché par la barre)"));
   await pm.close(); await ctxM.close();
+}
+
+/* ═══ Audit du 12/11/2026 : une réussite affichée prouve la production réelle ═══
+   L'audit avait obtenu « activité validée » à l'activité 5 avec une fonction restée à `return 0` : le banc
+   calculait une fonction JavaScript prédéfinie. Maintenant :
+   · activité 5 : la page appelle la fonction de l'élève 7 fois et juge ce qu'elle RENVOIE ;
+   · activité 4 : la console montre la bonne ligne, et le programme, rejoué avec 95 °F, calcule encore ;
+   · activité 3 : la console a montré le résultat des trois expériences ; ouvrir Vittascience ne suffit plus. */
+{
+  const ctxA = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const { page: pa, erreurs: ea } = await ouvrir(ctxA, SEQ);
+  const repondre = async (paires) => { for (const [id, v] of paires) await choisir(pa, "#" + id, v); };
+  const verifier = async (n) => { await pa.click('.btn.check[data-check="' + n + '"]'); await pa.waitForTimeout(200); return (await pa.locator("#fb" + n).textContent()).trim(); };
+  const banc5 = async (code) => { await executerBloc(pa, "vs3", code); await pa.waitForFunction(() => !/⏳/.test(document.getElementById("bancEleveEtat").textContent), null, { timeout: 15000 }); };
+  // la progression enregistrée (la page la sauvegarde après chaque vérification) : la liste des activités validées
+  const valide = async (n) => pa.evaluate((n) => { const o = JSON.parse(localStorage.getItem("seq_3e_C9.1_variables_types_systemes") || "{}"); return !!(o.par && o.par.s.includes(n)); }, String(n));
+
+  /* activité 5 */
+  await pa.click("#tab-s4"); await pa.waitForTimeout(200);
+  await repondre([["a5t1", ">"], ["a5t2", "3"], ["a5t3", "1"], ["a5t4", "on peut la rejouer et la tester à volonté"], ["a5q1", "1"],
+                  ["a5q2", "air >= 100"], ["a5q3", "rejouer tous les tests du banc"], ["a5q4", "3"]]);
+  for (const t of [1, 2, 3, 4]) await pa.click('.bench-run[data-t="' + t + '"]');
+  const sansFonction = await verifier(5);
+  ok("audit · act. 5 : questionnaire juste et banc de démonstration joué, sans fonction écrite → pas validée",
+     /pas encore validée/.test(sansFonction) && /8\/8/.test(sansFonction) && !(await valide(5)), sansFonction.slice(0, 90));
+  const depart5 = await pa.evaluate(() => document.getElementById("py_a5").defaultValue);
+  await banc5(depart5);
+  const zero = await verifier(5);
+  ok("audit · act. 5 : la fonction de départ (`return 0`), exécutée → pas validée, et le message le dit", /renvoie encore 0/.test(zero) && !(await valide(5)), zero.slice(0, 90));
+  await banc5('print(3)\nprint(2)\nprint(1)\nprint(3)\n');
+  const imprime = await verifier(5);
+  ok("audit · act. 5 : un programme qui imprime seulement 3, 2, 1, 3 → pas validé (aucune fonction à appeler)", /ne trouve pas de fonction/.test(imprime) && !(await valide(5)), imprime.slice(0, 90));
+  await banc5(FONCTION5_JUSTE.replace(">=", ">"));
+  const strict = await verifier(5);
+  ok("audit · act. 5 : la fonction avec `>` → le test T4 est nommé, avec l'attendu et l'obtenu", /T4[\s\S]*attend 3 et obtient 1/.test(strict) && !(await valide(5)), strict.slice(0, 120));
+  await banc5('def vitesse_ventilation(air, train_arrive):\n    if train_arrive:\n        return 2\n    if air >= 100:\n        return 3\n    return 1\n');
+  const ordre = await verifier(5);
+  ok("audit · act. 5 : le train testé avant la pollution → le test T7 (150, True) le révèle", /T7[\s\S]*attend 3 et obtient 2/.test(ordre) && !(await valide(5)), ordre.slice(0, 120));
+  await banc5(FONCTION5_JUSTE + '\nprint(vitesse_ventilation(150, False))\n');
+  const juste = await verifier(5);
+  const cases = await pa.evaluate(() => [1, 2, 3, 4, 5, 6, 7].map(i => document.getElementById("be" + i).textContent));
+  ok("audit · act. 5 : la fonction juste → validée, et les 7 cases du banc de l'élève sont ✔",
+     /activité validée/.test(juste) && (await valide(5)) && cases.every(c => /✔/.test(c)), cases.join(" / "));
+  await pa.evaluate(() => { const t = document.getElementById("py_a5"); t.value += "\n# une retouche"; t.dispatchEvent(new Event("input", { bubbles: true })); });
+  const etatModif = await pa.locator("#bancEleveEtat").textContent();
+  const modif = await verifier(5);
+  ok("audit · act. 5 : le code modifié après le test → « à retester », et la vérification ne valide plus",
+     /a changé/.test(etatModif) && /a changé/.test(modif) && !(await valide(5)), modif.slice(0, 90));
+  const etiquettes = await pa.evaluate(() => [...document.querySelectorAll(".bench-run")].map(b => b.getAttribute("aria-label") + " | " + b.textContent));
+  ok("audit · act. 5 : chaque bouton du banc de démonstration dit son test (« ▶ T1 », « Exécuter le test T1 du banc de démonstration »)",
+     etiquettes.length === 4 && etiquettes.every((e, i) => e.includes("test T" + (i + 1)) && e.endsWith("▶ T" + (i + 1))), etiquettes[0]);
+
+  /* activité 4 */
+  await pa.click("#tab-s3"); await pa.waitForTimeout(200);
+  await repondre([["a4b1l", "3"], ["a4b1c", "minutes = 2 + 1"], ["a4b2l", "5"], ["a4b2c", "écrire 1.8, avec un point"],
+                  ["a4b3c", "on ne soustrait pas un nombre d'un texte"], ["a4b4", "Q - 96 St 2 min | 25.0 C"]]);
+  await pa.evaluate(() => { const a = document.querySelector("#vs2 .vs-lien"); a.addEventListener("click", e => e.preventDefault(), { once: true }); a.click(); });
+  const vitta = await verifier(4);
+  ok("audit · act. 4 : ouvrir Vittascience ne valide pas", /🔒/.test(vitta) && !(await valide(4)), vitta.slice(0, 70));
+  const rejeu = async (code) => { await executerBloc(pa, "vs2", code); await pa.waitForFunction(() => window.__exp.preuve4 && window.__exp.preuve4.etat !== "rejeu", null, { timeout: 15000 }); };
+  await rejeu('print("Q - 96 St 2 min | 25.0 C")\n');
+  const recopie = await verifier(4);
+  ok("audit · act. 4 : la bonne ligne recopiée dans un print → refusée (la page rejoue avec 95 °F)", /95 °F/.test(recopie) && !(await valide(4)), recopie.slice(0, 90));
+  await rejeu(PROG4_CORRIGE.replace("1.8", "1,8"));
+  const reste = await verifier(4);
+  ok("audit · act. 4 : un bug restant (la virgule) → refusé : « il reste un bug »", /Il reste un bug/.test(reste) && !(await valide(4)), reste.slice(0, 90));
+  await rejeu(PROG4_CORRIGE.replace("minutes = 2 + 1", "minutes = 3"));
+  const autre = await verifier(4);
+  ok("audit · act. 4 : une autre correction juste (`minutes = 3`) est acceptée", /activité validée/.test(autre) && (await valide(4)), autre.slice(0, 60));
+
+  /* activité 3 */
+  await pa.click("#tab-s2"); await pa.waitForTimeout(200);
+  await repondre([["a3p1", "7"], ["a3p2", "34"], ["a3p3", "Train Q 3 min"], ["a3r1", "7"], ["a3r2", "34"], ["a3r3", "Train Q 3 min"],
+                  ["a3r4", "il les COLLE bout à bout (concaténation)"], ["a3r5", "41 min"]]);
+  await pa.evaluate(() => { const a = document.querySelector("#vs1 .vs-lien"); a.addEventListener("click", e => e.preventDefault(), { once: true }); a.click(); });
+  const vitta3 = await verifier(3);
+  await executerBloc(pa, "vs1", "print(3 + 4)\n");
+  const une = await verifier(3);
+  await executerBloc(pa, "vs1", 'print("3" + "4")\nprint("Train " + "Q", 2 + 1, "min")\n');
+  const trois = await verifier(3);
+  ok("audit · act. 3 : Vittascience seul ou une seule expérience → refusé ; les trois expériences vues (en deux fois) → validée",
+     /🔒/.test(vitta3) && /🔒[\s\S]*3 expériences/.test(une) && /activité validée/.test(trois), une.slice(0, 60) + " → " + trois.slice(0, 30));
+
+  /* une validation de l'activité 5 enregistrée avant le 12/11/2026, sans fonction testée, est retirée à l'ouverture */
+  await pa.evaluate(() => { const K = "seq_3e_C9.1_variables_types_systemes", o = JSON.parse(localStorage.getItem(K));
+    o.par.s = [...new Set([...o.par.s, "5"])]; delete o.exp.prod5; localStorage.setItem(K, JSON.stringify(o)); });
+  await pa.reload(); await pa.waitForTimeout(600);
+  const apres = await pa.evaluate(() => ({ s: document.getElementById("progTxt").textContent + " · " + (document.getElementById("done-s4").textContent ? "s4 ✔" : "s4 —"), fb: document.getElementById("fb5").textContent }));
+  ok("audit · une ancienne validation de l'activité 5, sans fonction testée, est retirée à l'ouverture — et le message le dit",
+     /s4 —/.test(apres.s) && /n'est plus validée/.test(apres.fb), apres.s + " · " + apres.fb.slice(0, 50));
+
+  /* clavier, étiquettes, contraste */
+  await pa.focus("#tab-s1"); await pa.keyboard.press("ArrowRight"); await pa.waitForTimeout(120);
+  const droite = await pa.evaluate(() => [document.activeElement.id, document.querySelector(".seance-tab.active").id]);
+  await pa.keyboard.press("End"); await pa.waitForTimeout(120); const fin = await pa.evaluate(() => document.activeElement.id);
+  await pa.keyboard.press("Home"); await pa.waitForTimeout(120); const debut = await pa.evaluate(() => document.activeElement.id);
+  const aria = await pa.evaluate(() => [...document.querySelectorAll(".seance-tab")].map(t => t.tabIndex + ":" + t.getAttribute("aria-controls") + ":" + document.getElementById(t.getAttribute("aria-controls")).getAttribute("aria-labelledby")));
+  ok("audit · onglets : → passe à la séance suivante, Fin et Début vont aux bouts ; un seul onglet dans l'ordre de tabulation ; onglets et panneaux reliés",
+     droite.join() === "tab-s2,tab-s2" && fin === "tab-s4" && debut === "tab-s1" && aria.filter(x => x.startsWith("0:")).length === 1 && aria.every((x, i) => x.endsWith(":s" + (i + 1) + ":tab-s" + (i + 1))), droite.join() + " · " + fin + " · " + debut + " · " + aria.join(" "));
+  await pa.click("#tab-s4"); await pa.waitForTimeout(150);
+  const pastilles = await pa.evaluate(() => { const w = document.querySelector(".ae-btns"), b = [...w.querySelectorAll(".ae-b")]; b[1].click();
+    return { groupe: w.getAttribute("role") + " · " + w.getAttribute("aria-label"), mots: b.map(x => x.textContent.trim()), presse: b.map(x => x.getAttribute("aria-pressed")) }; });
+  ok("audit · « Je me positionne » : chaque pastille porte son mot (« 🟡 avec aide »…), le groupe est nommé, le choix est annoncé (aria-pressed)",
+     /^group · Je me positionne : /.test(pastilles.groupe) && pastilles.mots.join("|") === "🔴 pas encore|🟡 avec aide|🟢 seul·e|⭐ je peux l'expliquer" && pastilles.presse.join() === "false,true,false,false", pastilles.mots.join(" | "));
+  const contraste = await pa.evaluate(() => {
+    const lum = c => { const v = c.match(/\d+(\.\d+)?/g).slice(0, 3).map(x => +x / 255).map(x => x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+    const fond = e => { while (e) { const b = getComputedStyle(e).backgroundColor; if (b && !/rgba\(0, 0, 0, 0\)|transparent/.test(b)) return b; e = e.parentElement; } return "rgb(255,255,255)"; };
+    return [...document.querySelectorAll(".credit-photo")].map(e => { const a = lum(getComputedStyle(e).color), b = lum(fond(e)); return Math.round((Math.max(a, b) + .05) / (Math.min(a, b) + .05) * 100) / 100; }); });
+  ok("audit · les crédits des photos (et du plan) se lisent : contraste ≥ 4,5:1 sur le fond affiché (3,69:1 avant)", contraste.length >= 3 && contraste.every(x => x >= 4.5), contraste.join(" · "));
+  ok("audit · aucune erreur JavaScript pendant ces essais", ea.length === 0, ea.slice(0, 2).join(" | "));
+  await pa.close(); await ctxA.close();
+
+  /* les textes que l'audit a relevés */
+  const lire = (f) => fs.readFileSync(path.join(LOT, f), "utf8");
+  const qcm = lire("qcm_3e_C9.1_variables_types_systemes.html"), lex = lire("lexique_3e_C9.1.html"), seq = lire(SEQ);
+  ok("audit · plus de « le + exige le même type » (faux : 3 + 4.5 donne 7.5), ni dans le QCM ni dans le lexique",
+     !/même type/.test(qcm) && !/même type/.test(lex) && /3 \+ 4\.5<\/code> donne <code>7\.5/.test(seq));
+  ok("audit · plus de chiffre sans source (« 9 collégiens sur 10 »)", !/collégiens sur 10/.test(seq));
+
+  /* en mission, à 390 px : l'éditeur ET le banc de la fonction de l'élève sont sur l'écran « Avant de vérifier » */
+  const ctxM5 = await nav.newContext({ viewport: { width: 390, height: 844 } });
+  const pm5 = await ctxM5.newPage();
+  await pm5.goto(url(SEQ)); await pm5.waitForTimeout(400);
+  await pm5.click("#btnMission"); await pm5.waitForTimeout(250);
+  await pm5.evaluate(() => [...document.querySelectorAll(".seance-tab")].find(t => t.dataset.panel === "s4").click()); await pm5.waitForTimeout(250);
+  const ecr5 = await pm5.evaluate(async () => { const out = [], rail = () => [...document.querySelectorAll("#msRail [data-k]")];
+    for (let k = 0; k < rail().length; k++) { rail()[k].click(); await new Promise(r => setTimeout(r, 120));
+      out.push({ titre: document.getElementById("msOu").childNodes[0].textContent, editeur: !!document.getElementById("vs3").offsetParent, banc: !!document.getElementById("bancEleve").offsetParent, verif: !document.getElementById("msVerif").hidden }); }
+    return out; });
+  const i5 = ecr5.findIndex(e => e.editeur);
+  ok("mission · act. 5 : l'éditeur et le banc de la fonction de l'élève sont sur le même écran, avec « Vérifier », avant « Je retiens »",
+     i5 >= 0 && ecr5[i5].banc && ecr5[i5].verif && /^Je retiens/.test((ecr5[i5 + 1] || {}).titre || ""), ecr5.map(e => e.titre.slice(0, 14) + (e.editeur ? "[éd]" : "") + (e.banc ? "[banc]" : "")).join(" | "));
+  await pm5.close(); await ctxM5.close();
+}
+
+/* ═══ Les représentations (14/11/2026, règle d'or n°325, cahier des charges de l'audit) ═══ */
+{
+  const ctxR = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const { page: pr, erreurs: er } = await ouvrir(ctxR, SEQ);
+  const etat = () => pr.evaluate(() => ({ t: document.getElementById("memEtat").textContent, prev: document.getElementById("memPrev").disabled, next: document.getElementById("memNext").disabled }));
+  const e0 = await etat();
+  for (let i = 0; i < 4; i++) await pr.click("#memNext");
+  const e4 = await etat();
+  await pr.click("#memPrev"); const e3 = await etat();
+  for (let i = 0; i < 3; i++) await pr.click("#memNext");
+  const e6 = await etat();
+  await pr.click("#memPrev"); const badge = await pr.evaluate(() => document.getElementById("memBadge").textContent);
+  ok("simulateur : « étape n sur 6 », le changement dit en mots (« 4 devient 3 »), étape précédente ; les boutons se grisent aux deux bouts",
+     e0.prev && !e0.next && /^Étape 4 sur 6 — .*4 - 1 = 3.*4 devient 3/.test(e4.t) && /^Étape 3 sur 6/.test(e3.t) && e6.next && !e6.prev && /badge/.test(badge),
+     e4.t.slice(0, 80));
+  await pr.click("#tab-s2"); await pr.waitForTimeout(150);   // les cartes des types sont dans la séance 2
+  const docs = await pr.evaluate(() => {
+    const txt = id => (document.getElementById(id) || {}).textContent || "";
+    const cartes = [...document.querySelectorAll(".type-carte")].map(c => Math.round(c.getBoundingClientRect().top)), cols = cartes.filter(y => y === cartes[0]).length;
+    return { cols, planQ: /TU ES ICI/.test(txt("planQ")) && /Combien de stations/.test(txt("planQ")) && /environ 50 min/.test(txt("planQ")),
+      doc1: /4 devient 3|REMPLACÉ par 3/.test(txt("doc1")) && /DE DROITE À GAUCHE/.test(txt("doc1")),
+      doc2: /même si ce sont des chiffres/.test(txt("doc2")) && /POINT/.test(txt("doc2")) && /3 \+ 4\.5/.test(txt("doc2")) && /erreur de type/.test(txt("doc2")),
+      doc3: /CAHIER DES CHARGES/.test(txt("doc3")) && /REJOUE TOUS les tests/.test(txt("doc3")) };
+  });
+  ok("documents : le texte des dessins est repris (plan, mémoire, types, ventilation), et les quatre types tiennent sur une ligne à 1 280 px",
+     docs.cols === 4 && docs.planQ && docs.doc1 && docs.doc2 && docs.doc3, JSON.stringify(docs));
+  ok("représentations : aucune erreur JavaScript", er.length === 0, er.slice(0, 2).join(" | "));
+  await pr.close(); await ctxR.close();
 }
 
 verifLiens();
