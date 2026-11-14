@@ -30573,3 +30573,26 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Le banc qui le prouve** (`_outils/mode_mission/banc_defaut.mjs`, nouveau), sur les 60 séquences, avec un navigateur d'élève (`navigator.webdriver` faux) : première visite en mission ; imprimée en mission, la même fiche que la page complète ; « 📄 Page complète » retenu au rechargement ; « 🎮 Mode mission » retenu aussi ; « Effacer ma sauvegarde » et un stockage vide ramènent la mission ; un robot de test ouvre la page complète. **60 / 60** : les 60 séquences s'ouvrent en mission (Book Train et les pages « station » de `3e_C9.2` comprises : le moteur reconnaît leurs séances).
 
 **Ce que ça ne change pas.** Le contenu des pages ; la page complète, ses bancs et ses contrôles ; l'impression. `4e_C1.4` et `3e_C1.5` s'ouvrent en mission comme les autres, une carte par écran, avec la vérification de leur section, en attendant leurs questions par activité (la suite du thème 1).
+
+---
+
+## 14/11/2026 — L'impression sans blancs, de `3e_C9.1` à toutes les séquences ; la licence dans le pied de page
+
+**La décision.** Pascal : « appliquer à toutes les séquences les règles d'impression compactes testées sur 3e_C9.1 ». La question venait de `5e_C1.3` (#681) : la quatrième page de la séance 3 ne portait que la licence.
+
+**Ce qui passe dans la fiche papier commune** (`_outils/impression_papier/papier.css` et `papier.js`, reposés sur les 60 séquences ; le bloc propre à `3e_C9.1` est retiré, ses règles vivent maintenant dans la source) :
+- une photo tient à côté de sa légende : `img.figure` (le pilote), ou un `.jpg`, `.jpeg`, `.webp` seul dans sa figure. Les schémas et les captures, presque tous en `.png` et `.svg`, gardent leur largeur : plus petits, leur texte passerait sous 5 points ;
+- une réponse courte en rangée (`.qcm-rangee`) : l'énoncé et ses choix sur une ligne ;
+- un Bonus dont les défis sont repliés ne s'imprime pas : son titre resterait seul ; `.activite-en-ligne` et l'état d'un banc, qui ne parlent que de l'écran, non plus ;
+- « Je me positionne » en pastilles devient des cases (les trois pages qui en ont) ;
+- **la licence passe dans le pied de chaque page** : « Titre · niveau · CC BY-NC-SA 4.0 · © Pascal Gouacide, 2026 », lu dans la mention de la page. Le pied de la page web (thème, licence) ne s'imprime plus, sauf s'il porte des crédits (`3e_C9.1`, `5e_C9.1`). C'est ce qui règle le cas de `5e_C1.3` : la licence ne prend plus de page à elle.
+
+**Deux règles du pilote ne sont pas reprises.** Garder une consigne avec l'exercice qu'elle annonce, et la question directrice avec sa suite (`break-after: avoid`). Mesurées sur les 60 séquences, elles ajoutaient du blanc : une consigne partie en page suivante avec un grand exercice laisse un trou en bas de la précédente. Exemple : `4e_C5.1`, séance 2, passait de 2 à 3 pages, le critère de réussite seul sur la troisième.
+
+**Mesure** (banc au navigateur, les 60 séquences, 172 fiches, avant et après) :
+- **701 → 693 pages** ; 7 fiches plus courtes (`5e_C1.3`, `3e_C3.1`, `3e_C4.1`, Book Train, `3e_C7.1`, `3e_C7.5`, `3e_C9.2`), **aucune plus longue** ;
+- le blanc perdu en cours de fiche (trous de plus de 20 mm et bas des pages qui ne sont pas les dernières) : 20 778 → 20 653 mm.
+
+**Ce que ça ne règle pas.** Le gain est d'environ 1 % : le blanc qui reste ne vient pas des cas du pilote. Les fiches qui en perdent le plus : `3e_C7.1` séance 3 (10 pages, 592 mm), `5e_C1.2` séance 1 (427 mm), `3e_C1.5` séances 3 et 1, `3e_C4.3` séance 1, `5e_C2.1` séance 2, `4e_C1.1` séance 5, `4e_C1.4` séance 1. Les causes vues sur les planches : un grand bloc qui ne se coupe pas (schéma, encadré) renvoyé en page suivante, des listes de réponses une par ligne, un dernier petit bloc (critère, « À retenir ») seul en fin de fiche. Elles demandent de regarder chaque fiche : c'est l'étape « impression » de la passe de révision, séquence par séquence.
+
+Contrôles : `banc_papier` vert sur les 60 séquences (aucun champ d'écran, aucun texte pâle, aucune première page vide) ; banc de `3e_C9.1` 89 / 89 sans son bloc propre ; le générateur des quatre pages de `3e_C9.2` relancé (pages identiques).

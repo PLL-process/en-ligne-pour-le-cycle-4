@@ -45,6 +45,24 @@ Pour une nouvelle séquence : `python3 _outils/impression_papier/poser.py <page>
 Après une retouche de `papier.css` ou `papier.js` : reposer sur toutes les séquences (la liste :
 `find . -name "sequence*.html" -not -path "*/_archive-anciennes-versions/*"`) et relancer le générateur de 3e_C9.2.
 
+## Sans blancs (14/11/2026)
+
+Pilote sur `3e_C9.1` (#679), puis décision de Pascal : « appliquer à toutes les séquences les règles d'impression
+compactes testées sur 3e_C9.1 ». Elles sont dans `papier.css` (fin du fichier) et `papier.js` (le pied) :
+- une photo (`img.figure`, ou un `.jpg`, `.jpeg`, `.webp` seul dans sa figure) tient à côté de sa légende ; les schémas
+  et les captures gardent leur largeur ;
+- une réponse courte en rangée (`.qcm-rangee`) : l'énoncé et ses choix sur une ligne ;
+- un Bonus dont les défis sont repliés ne s'imprime pas (son titre resterait seul) ; ce qui ne parle que de l'écran
+  (`.activite-en-ligne`, l'état d'un banc) non plus ;
+- « Je me positionne » en pastilles devient des cases ;
+- **la licence passe dans le pied de chaque page** (« CC BY-NC-SA 4.0 · © auteur, année ») et le pied de la page web
+  ne s'imprime plus, sauf s'il porte des crédits : seul en fin de fiche, il prenait une page à lui.
+Deux règles du pilote ne sont pas reprises : garder une consigne avec l'exercice qu'elle annonce, et la question
+directrice avec sa suite. Sur les 60 séquences, elles ajoutaient du blanc (une consigne partie avec un grand exercice
+laisse un trou en bas de page).
+
+Mesure (banc au navigateur, 60 séquences, 172 fiches) : 701 → 693 pages ; 7 fiches plus courtes, aucune plus longue.
+
 ## Plan et avancement
 
 - [x] 0. Branche et plan (ce fichier).
