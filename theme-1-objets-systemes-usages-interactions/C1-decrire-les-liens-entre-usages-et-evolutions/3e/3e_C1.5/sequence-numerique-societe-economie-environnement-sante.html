@@ -1567,13 +1567,14 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <button class="seance-tab hors" role="tab" aria-selected="false" aria-controls="shors"
           data-panel="shors" id="tab-shors">Hors parcours<span class="quoi">Python — relève de C9</span></button>
 </div>
+<div id="tachesBandeau" class="pp-ecran" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <p class="seance-avis" id="avis-hors" hidden>⚠️ Ce bloc ne fait pas partie des quatre séances de
 cette séquence&nbsp;: la programmation relève de la compétence C9, pas de C1. <br>Il est conservé ici
 parce que des classes l'utilisent déjà.</p>
 
 <section class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1" data-titre="Séance 1 — Être observé">
 <!-- Section 1: Observation et e‑réputation -->
-  <div class='section'>
+  <div class="section activite">
     <h2>1. Être observé sur Internet <span style="font-size:.8em;opacity:.8">(~18 min)</span></h2>
     <div class='callout'><p>Chaque action que vous effectuez en ligne (likes, commentaires, photos publiées) laisse une trace. <br>Ces traces constituent votre <strong>e‑réputation</strong>, qui peut être consultée par d’autres (camarades, employeurs, écoles…). <br>Respecter les règles de confidentialité et réfléchir avant de publier protège votre image et votre vie privée.</p></div>
     <h3>1.a – Distinguer les bonnes et mauvaises pratiques</h3>
@@ -1607,11 +1608,46 @@ parce que des classes l'utilisent déjà.</p>
     <button class="bouton-correction" onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
     <div class='answer' id='ans3_1b'><p>Il est très difficile d’être invisible car les sites, fournisseurs d’accès et applications conservent des traces de nos connexions. <br>On peut toutefois réduire son empreinte en limitant les publications, en utilisant des paramètres de confidentialité, en choisissant des pseudos, en demandant la suppression de contenus inappropriés et en faisant attention à ce que l’on partage.</p></div>
        </ol>
-  </div>
+  <div class="exo verif-c15" id="verif-s1">
+<p class="verif-titre"><b>🔎 Je vérifie — l'e-réputation</b><span class="pp-ecran"> — 3 questions</span></p>
+<fieldset class="qcm-groupe" id="q15_invisible">
+  <legend>Peut-on être vraiment invisible sur Internet ?</legend>
+  <div class="qcm-option"><input type="radio" name="q15_invisible" id="q15_invisible__1" value="oui, avec un pseudonyme" data-pourquoi="Un pseudonyme cache ton nom, pas tes traces : les sites gardent tes connexions."><label for="q15_invisible__1">oui, avec un pseudonyme</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_invisible" id="q15_invisible__2" value="oui, si on ne publie rien" data-pourquoi="Sans rien publier, tu laisses des traces : connexions, recherches, likes."><label for="q15_invisible__2">oui, si on ne publie rien</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_invisible" id="q15_invisible__3" value="non : chaque action en ligne laisse une trace"><label for="q15_invisible__3">non : chaque action en ligne laisse une trace</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_invisible" id="q15_invisible__4" value="oui, en navigation privée" data-pourquoi="Elle efface l'historique sur ton appareil seulement ; les sites te voient toujours."><label for="q15_invisible__4">oui, en navigation privée</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_ereput">
+  <legend>Ton e-réputation, c&#x27;est :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_ereput" id="q15_ereput__1" value="ce que tu publies, et ce que d&#x27;autres publient sur toi"><label for="q15_ereput__1">ce que tu publies, et ce que d&#x27;autres publient sur toi</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_ereput" id="q15_ereput__2" value="seulement ce que tu publies toi-même" data-pourquoi="Une photo de toi publiée par un camarade compte aussi."><label for="q15_ereput__2">seulement ce que tu publies toi-même</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_ereput" id="q15_ereput__3" value="seulement tes photos" data-pourquoi="Un commentaire, un like, un texte comptent aussi."><label for="q15_ereput__3">seulement tes photos</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_ereput" id="q15_ereput__4" value="le nombre de tes abonnés" data-pourquoi="Le nombre d'abonnés ne dit pas ce qu'on trouve sur toi."><label for="q15_ereput__4">le nombre de tes abonnés</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_mesure">
+  <legend>Ce qui protège le mieux ton e-réputation :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_mesure" id="q15_mesure__1" value="publier beaucoup, pour noyer les mauvaises traces" data-pourquoi="Les anciennes traces restent trouvables : en ajouter n'efface rien."><label for="q15_mesure__1">publier beaucoup, pour noyer les mauvaises traces</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_mesure" id="q15_mesure__2" value="supprimer une publication : elle disparaît partout" data-pourquoi="Une publication supprimée a pu être copiée ou capturée avant."><label for="q15_mesure__2">supprimer une publication : elle disparaît partout</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_mesure" id="q15_mesure__3" value="réfléchir avant de publier, et régler la confidentialité"><label for="q15_mesure__3">réfléchir avant de publier, et régler la confidentialité</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_mesure" id="q15_mesure__4" value="changer souvent de pseudonyme" data-pourquoi="Changer de pseudo n'efface pas ce qui a déjà été publié."><label for="q15_mesure__4">changer souvent de pseudonyme</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Relis les trois phrases d'introduction : ce qui laisse une trace, qui peut la consulter, ce qui la protège.</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Chaque action en ligne laisse une trace, même sans rien publier (connexions, likes, recherches). <br>Ton e-réputation, c'est ce qu'on trouve sur toi : ce que tu publies, et ce que d'autres publient.</p></details>
+<button class="btn check" data-check="s1" type="button">✅ Vérifier</button>
+<p class="feedback" id="fb-s1" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Peut-on être vraiment invisible sur Internet ?</b> non : chaque action en ligne laisse une trace. <br>Pas « oui, avec un pseudonyme » : un pseudonyme cache ton nom, pas tes traces : les sites gardent tes connexions. <br>Pas « oui, si on ne publie rien » : sans rien publier, tu laisses des traces : connexions, recherches, likes. <br>Pas « oui, en navigation privée » : elle efface l&#x27;historique sur ton appareil seulement ; les sites te voient toujours.</p>
+<p><b>Ton e-réputation, c&#x27;est :</b> ce que tu publies, et ce que d&#x27;autres publient sur toi. <br>Pas « seulement ce que tu publies toi-même » : une photo de toi publiée par un camarade compte aussi. <br>Pas « seulement tes photos » : un commentaire, un like, un texte comptent aussi. <br>Pas « le nombre de tes abonnés » : le nombre d&#x27;abonnés ne dit pas ce qu&#x27;on trouve sur toi.</p>
+<p><b>Ce qui protège le mieux ton e-réputation :</b> réfléchir avant de publier, et régler la confidentialité. <br>Pas « publier beaucoup, pour noyer les mauvaises traces » : les anciennes traces restent trouvables : en ajouter n&#x27;efface rien. <br>Pas « supprimer une publication : elle disparaît partout » : une publication supprimée a pu être copiée ou capturée avant. <br>Pas « changer souvent de pseudonyme » : changer de pseudo n&#x27;efface pas ce qui a déjà été publié.</p>
+<div class="retenir"><b>🧠 À retenir :</b> chaque action en ligne laisse une trace. <br>Ton e-réputation se protège avant de publier, et par les réglages de confidentialité.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je dis pourquoi on n'est jamais invisible en ligne, et ce qui protège mon e-réputation.</p>
+</div>
+</div>
 </div>
 <!-- Section 1 bis : ce que la loi change à une application (3e_C1.4), ajoutée le 24/10/2026 dans le temps libre
      de la séance 1. Ids b1_* écrits dans le HTML. Faits juridiques vérifiés sur cnil.fr le 24/10/2026. -->
-<div class="section argu" id="loi-application">
+<div class="section argu activite" id="loi-application">
   <h2>⚖️ 1 bis. Ce que la loi change à une application <span style="font-size:.8em;opacity:.8">(~20 min)</span></h2>
   <div class="meta">
     <b>🎯 Objectif&nbsp;:</b> expliquer dans un argumentaire court comment une contrainte de la société — la loi qui protège les données et l'image des personnes — change la conception d'un objet technique&nbsp;: une application.<br>
@@ -1642,17 +1678,17 @@ parce que des classes l'utilisent déjà.</p>
   </div>
   <p class="critere"><b>✅ Tu as réussi si…</b> tes deux choix sont justes, et ton argumentaire tient en quatre à six lignes&nbsp;: la contrainte de la loi, qui elle protège, au moins deux changements concrets de l'application reliés à la contrainte («&nbsp;c'est pourquoi…&nbsp;»), et une conclusion.</p>
 
-  <fieldset class="qcm-groupe" id="b1_q1">
+  <fieldset class="qcm-groupe" id="b1_q1" data-bonne="Pour publier la photo d'un joueur de moins de 15 ans, il faut son accord et celui d'un parent.">
     <legend>Laquelle est une contrainte sociétale qui pèse sur l'application&nbsp;? <span class="enc" data-pour="b1_q1"></span></legend>
-    <div class="qcm-option"><input type="radio" name="b1_q1" id="b1_q1__1" value="L'application doit tenir dans la mémoire d'un téléphone ancien."><label for="b1_q1__1">L'application doit tenir dans la mémoire d'un téléphone ancien.</label></div>
+    <div class="qcm-option"><input type="radio" name="b1_q1" id="b1_q1__1" value="L'application doit tenir dans la mémoire d'un téléphone ancien." data-pourquoi="C'est une contrainte technique : elle vient de l'appareil, pas de la société."><label for="b1_q1__1">L'application doit tenir dans la mémoire d'un téléphone ancien.</label></div>
     <div class="qcm-option"><input type="radio" name="b1_q1" id="b1_q1__2" value="Pour publier la photo d'un joueur de moins de 15 ans, il faut son accord et celui d'un parent."><label for="b1_q1__2">Pour publier la photo d'un joueur de moins de 15 ans, il faut son accord et celui d'un parent.</label></div>
-    <div class="qcm-option"><input type="radio" name="b1_q1" id="b1_q1__3" value="Le club a choisi le bleu comme couleur de l'application."><label for="b1_q1__3">Le club a choisi le bleu comme couleur de l'application.</label></div>
+    <div class="qcm-option"><input type="radio" name="b1_q1" id="b1_q1__3" value="Le club a choisi le bleu comme couleur de l'application." data-pourquoi="C'est un choix du club : rien, dans la société, ne l'y oblige."><label for="b1_q1__3">Le club a choisi le bleu comme couleur de l'application.</label></div>
   </fieldset>
   <p class="fb" id="b1_q1_fb"></p>
-  <fieldset class="qcm-groupe" id="b1_q2">
+  <fieldset class="qcm-groupe" id="b1_q2" data-bonne="Un bouton « Demander le retrait de ma photo », traité par le club en un mois au plus.">
     <legend>Laquelle de ces modifications de l'application vient vraiment de la loi&nbsp;? <span class="enc" data-pour="b1_q2"></span></legend>
-    <div class="qcm-option"><input type="radio" name="b1_q2" id="b1_q2__1" value="Un filtre qui embellit les photos avant de les publier."><label for="b1_q2__1">Un filtre qui embellit les photos avant de les publier.</label></div>
-    <div class="qcm-option"><input type="radio" name="b1_q2" id="b1_q2__2" value="Une case « J'accepte » déjà cochée pour tout le monde, pour aller plus vite."><label for="b1_q2__2">Une case «&nbsp;J'accepte&nbsp;» déjà cochée pour tout le monde, pour aller plus vite.</label></div>
+    <div class="qcm-option"><input type="radio" name="b1_q2" id="b1_q2__1" value="Un filtre qui embellit les photos avant de les publier." data-pourquoi="C'est un confort : aucune loi ne l'exige."><label for="b1_q2__1">Un filtre qui embellit les photos avant de les publier.</label></div>
+    <div class="qcm-option"><input type="radio" name="b1_q2" id="b1_q2__2" value="Une case « J'accepte » déjà cochée pour tout le monde, pour aller plus vite." data-pourquoi="C'est le contraire de ce que demande la loi : l'accord doit être donné par la personne elle-même ; une case cochée d'avance ne vaut pas accord."><label for="b1_q2__2">Une case «&nbsp;J'accepte&nbsp;» déjà cochée pour tout le monde, pour aller plus vite.</label></div>
     <div class="qcm-option"><input type="radio" name="b1_q2" id="b1_q2__3" value="Un bouton « Demander le retrait de ma photo », traité par le club en un mois au plus."><label for="b1_q2__3">Un bouton «&nbsp;Demander le retrait de ma photo&nbsp;», traité par le club en un mois au plus.</label></div>
   </fieldset>
   <p class="fb" id="b1_q2_fb"></p>
@@ -1686,8 +1722,8 @@ parce que des classes l'utilisent déjà.</p>
       <li>une conclusion <span class="enc" data-pour="b1_conclusion"></span></li>
     </ul>
   </div>
-  <p><button type="button" class="btn-verifier" id="b1_verifier">✔ Vérifier mes réponses</button></p>
-  <div class="retour" id="b1_retour" role="status" aria-live="polite"></div>
+  <button type="button" class="btn-verifier" id="b1_verifier" data-check="b1">✔ Vérifier mes réponses</button>
+  <div class="retour feedback" id="b1_retour" role="status" aria-live="polite"></div>
   <p class="sauve" id="b1_sauve" aria-live="polite"></p>
 
   <details class="aide"><summary>💡 Aide 1 — pour démarrer</summary>
@@ -1840,7 +1876,7 @@ parce que des classes l'utilisent déjà.</p>
     var titre = justes === total ? "🎉 Tout est juste. Ouvre quand même la correction : elle dit pourquoi, et c'est ce qui se retient."
       : (justes >= total / 2 ? "🟡 C'est bien parti : " + justes + " points sur " + total + ". Corrige les lignes marquées ✘, puis vérifie à nouveau."
                              : "🔴 " + justes + " point" + (justes > 1 ? "s" : "") + " sur " + total + " pour l'instant. Relis la consigne, ouvre l'aide 1, puis vérifie à nouveau : on apprend en se corrigeant.");
-    zone.className = "retour " + classe;
+    zone.className = "retour feedback " + classe;
     zone.textContent = "";
     var b = document.createElement("b"); b.textContent = titre; zone.appendChild(b);
     var uniques = msgs.filter(function(m, i){ return msgs.indexOf(m) === i; });
@@ -1864,7 +1900,7 @@ parce que des classes l'utilisent déjà.</p>
   
    
     
-  <div class='section'>
+  <div class="section activite">
     <h2>2. Activités professionnelles <span style="font-size:.8em;opacity:.8">(~49 min)</span></h2>
     
 <h3>⚖️ Une activité professionnelle en ligne</h3>
@@ -1972,7 +2008,42 @@ parce que des classes l'utilisent déjà.</p>
     
     
     
-      <!-- ateliers-representations:debut cm-3e-numerique-societe -->
+      <div class="exo verif-c15" id="verif-s2">
+<p class="verif-titre"><b>🔎 Je vérifie — l'activité en ligne</b><span class="pp-ecran"> — 3 questions</span></p>
+<fieldset class="qcm-groupe" id="q15_https">
+  <legend>Pour vendre en ligne en sécurité, il faut d&#x27;abord :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_https" id="q15_https__1" value="un site rapide et coloré" data-pourquoi="Rapide et beau ne veut pas dire sûr : les données des clients doivent être protégées."><label for="q15_https__1">un site rapide et coloré</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_https" id="q15_https__2" value="un certificat HTTPS et un paiement sécurisé"><label for="q15_https__2">un certificat HTTPS et un paiement sécurisé</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_https" id="q15_https__3" value="beaucoup d&#x27;abonnés" data-pourquoi="Les abonnés font connaître le site ; ils ne le protègent pas."><label for="q15_https__3">beaucoup d&#x27;abonnés</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_https" id="q15_https__4" value="un nom de domaine en .com" data-pourquoi="L'adresse du site ne protège rien : c'est le chiffrement et le paiement qui comptent."><label for="q15_https__4">un nom de domaine en .com</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_metiers">
+  <legend>Selon le document (Le Monde, 2017), le numérique :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_metiers" id="q15_metiers__1" value="supprime tous les métiers" data-pourquoi="Xavier Gendron dit aussi que d'autres métiers apparaissent."><label for="q15_metiers__1">supprime tous les métiers</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_metiers" id="q15_metiers__2" value="ne change rien aux métiers" data-pourquoi="« Tous les métiers sont influencés par le numérique », dit-il."><label for="q15_metiers__2">ne change rien aux métiers</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_metiers" id="q15_metiers__3" value="ne touche que l&#x27;informatique" data-pourquoi="La logistique de La Redoute est citée : ce n'est pas un métier de l'informatique."><label for="q15_metiers__3">ne touche que l&#x27;informatique</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_metiers" id="q15_metiers__4" value="supprime des métiers, en crée, et surtout les transforme"><label for="q15_metiers__4">supprime des métiers, en crée, et surtout les transforme</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_logistique">
+  <legend>Chez La Redoute, le métier le plus influencé par la technologie est :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_logistique" id="q15_logistique__1" value="la logistique"><label for="q15_logistique__1">la logistique</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_logistique" id="q15_logistique__2" value="la vente en magasin" data-pourquoi="Relis la citation de Nathalie Balla : elle parle des entrepôts."><label for="q15_logistique__2">la vente en magasin</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_logistique" id="q15_logistique__3" value="la comptabilité" data-pourquoi="Le document ne parle pas de comptabilité : relis Nathalie Balla."><label for="q15_logistique__3">la comptabilité</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_logistique" id="q15_logistique__4" value="la publicité" data-pourquoi="Le document ne parle pas de publicité : relis Nathalie Balla."><label for="q15_logistique__4">la publicité</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour la première, relis les corrections de 2.b. Pour les deux autres, relis les trois citations du document.</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Sécurité d'un site : hébergement fiable, HTTPS, paiement sécurisé, sauvegardes. <br>Xavier Gendron : des métiers disparaissent, d'autres apparaissent, surtout ils se transforment. Nathalie Balla : la logistique.</p></details>
+<button class="btn check" data-check="s2" type="button">✅ Vérifier</button>
+<p class="feedback" id="fb-s2" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Pour vendre en ligne en sécurité, il faut d&#x27;abord :</b> un certificat HTTPS et un paiement sécurisé. <br>Pas « un site rapide et coloré » : rapide et beau ne veut pas dire sûr : les données des clients doivent être protégées. <br>Pas « beaucoup d&#x27;abonnés » : les abonnés font connaître le site ; ils ne le protègent pas. <br>Pas « un nom de domaine en .com » : l&#x27;adresse du site ne protège rien : c&#x27;est le chiffrement et le paiement qui comptent.</p>
+<p><b>Selon le document (Le Monde, 2017), le numérique :</b> supprime des métiers, en crée, et surtout les transforme. <br>Pas « supprime tous les métiers » : xavier Gendron dit aussi que d&#x27;autres métiers apparaissent. <br>Pas « ne change rien aux métiers » : « Tous les métiers sont influencés par le numérique », dit-il. <br>Pas « ne touche que l&#x27;informatique » : la logistique de La Redoute est citée : ce n&#x27;est pas un métier de l&#x27;informatique.</p>
+<p><b>Chez La Redoute, le métier le plus influencé par la technologie est :</b> la logistique. <br>Pas « la vente en magasin » : relis la citation de Nathalie Balla : elle parle des entrepôts. <br>Pas « la comptabilité » : le document ne parle pas de comptabilité : relis Nathalie Balla. <br>Pas « la publicité » : le document ne parle pas de publicité : relis Nathalie Balla.</p>
+<div class="retenir"><b>🧠 À retenir :</b> vendre en ligne demande un site sûr et le respect des lois. <br>Le numérique transforme les métiers plus qu'il ne les supprime.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je cite une condition pour vendre en ligne sans risque, et un métier que le numérique transforme.</p>
+</div>
+<!-- ateliers-representations:debut cm-3e-numerique-societe -->
 <section class="card atelier-incruste" id="incruste-cm-3e-numerique-societe" aria-labelledby="incruste-cm-3e-numerique-societe-titre"><h3 id="incruste-cm-3e-numerique-societe-titre">2.d – De la carte mentale à l'argumentaire court</h3><p>Pour écrire un <b>argumentaire court</b>, on prépare ses idées dans une <b>carte mentale</b>. <br>Entraîne-toi sur un autre objet technique, la <b>station d'alerte cyclonique</b> d'une commune&nbsp;: trie les feuilles de sa carte, puis écris l'argumentaire. <br>Un peu moins de vingt minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète. La même méthode te resservira à la séance 4.</p><details class="cours"><summary>📘 Le cours — ce qu'il faut savoir</summary><div class="cours-corps"><h3>De la carte à l'argumentaire</h3><ul><li>La carte mentale <b>prépare</b> le texte&nbsp;: chaque branche est une idée possible.</li><li>On choisit une branche <b>positive</b> et une branche <b>négative</b>, avec un exemple chacune.</li><li>Un <b>argumentaire court</b> (5 à 8 lignes)&nbsp;: incidence positive et exemple → connecteur d'opposition, incidence négative et exemple → conclusion qui donne un avis nuancé.</li></ul><h3>Les mots qui relient</h3><div class="defile"><table><tr><th>Pour…</th><th>On écrit</th></tr><tr><td>ajouter une idée</td><td>de plus, aussi, en outre</td></tr><tr><td>opposer</td><td>mais, cependant, pourtant, en revanche, toutefois</td></tr><tr><td>donner un exemple</td><td>par exemple, ainsi</td></tr><tr><td>conclure</td><td>en conclusion, finalement, c'est pourquoi, donc</td></tr></table></div><h3>Une incidence sur la société</h3><ul><li>C'est un effet sur la vie des personnes&nbsp;: leur sécurité, leur argent, leur confiance, l'égalité entre celles qui ont un téléphone et celles qui n'en ont pas.</li><li>Ce que l'objet mesure ou comment il marche n'est <b>pas</b> une incidence&nbsp;: c'est son fonctionnement.</li></ul><h3>Choisir sa représentation</h3><div class="defile"><table><tr><th>Pour…</th><th>On choisit</th></tr><tr><td>organiser des idées, réviser, préparer un exposé</td><td>la carte mentale</td></tr><tr><td>suivre le chemin de l'énergie</td><td>la chaîne d'énergie</td></tr><tr><td>suivre le chemin de l'information</td><td>la chaîne d'information</td></tr><tr><td>montrer l'ordre des opérations et les tests</td><td>l'algorigramme</td></tr><tr><td>montrer ce qui entoure l'objet</td><td>le diagramme des interacteurs extérieurs (pieuvre)</td></tr><tr><td>comparer des valeurs</td><td>un tableau</td></tr></table></div></div><p class="note">Le cours complet, avec les schémas et les mots&nbsp;: <a href="../../../ateliers-representations/carte-mentale/Synthèses/synthese_eleve_carte-mentale.html">la synthèse</a>.</p></details><section class="card exercice" id="cm_3e_e5" data-exo="cm_3e_e5" data-cle="rep_carte-mentale_3e_e5" aria-labelledby="cm_3e_e5-titre"><h4 id="cm_3e_e5-titre">Exercice 1 — De la carte mentale à l'argumentaire court</h4><div class="meta"><b>🎯 Objectif&nbsp;:</b> trier les feuilles d'une carte mentale, puis s'en servir pour écrire un <b>argumentaire court</b> sur l'incidence d'un objet sur la société.<br><b>🧩 Compétence&nbsp;:</b> <span title="Exprimer dans un argumentaire court l’incidence d’un OST sur la société." aria-label="3e_C1.3 : Exprimer dans un argumentaire court l’incidence d’un OST sur la société.">3e_C1.3</span><br><b>✍ Ce que tu produis&nbsp;:</b> six feuilles triées, puis un argumentaire de 5 à 8 lignes.<br><b>Durée&nbsp;:</b> environ 18 minutes, comptées dans celle de l'activité.</div><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>incidence sur la société</dt><dd>l'effet d'un objet sur la vie des personnes&nbsp;: leur sécurité, leur argent, leur confiance, l'égalité entre elles…</dd><dt>argumentaire court</dt><dd>un texte de quelques lignes qui défend un avis en donnant des raisons, des exemples, et une conclusion.</dd><dt>connecteur d'opposition</dt><dd>un mot qui annonce une idée contraire&nbsp;: <i>mais, cependant, pourtant, en revanche, toutefois</i>.</dd><dt>fausse alerte</dt><dd>une alerte donnée alors que le danger n'arrive pas.</dd><dt>station d'alerte cyclonique</dt><dd>un ensemble de capteurs (vent, pluie, pression de l'air) relié à une sirène et à un service de messages, qui prévient la population quand un cyclone approche.</dd><dt>pression</dt><dd>ici, la pression de l'air&nbsp;: quand elle baisse vite, une tempête approche.</dd></dl></details><figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 468" width="960" height="468" class="schema" id="cm-station" role="img" aria-labelledby="cm-station-t cm-station-d" font-family="'Segoe UI',system-ui,Arial,sans-serif"><title id="cm-station-t">Carte mentale : la station d&#x27;alerte cyclonique et la société</title><desc id="cm-station-d">Carte mentale. Au centre : « La station d&#x27;alerte cyclonique ». Cinq branches. À droite : Sécurité (« l&#x27;alerte arrive plus tôt », « évacuer les quartiers bas », « rentrer les bateaux à temps ») ; Coût pour la commune (« achat et pose », « entretien chaque année ») ; Ce qu&#x27;elle mesure (« vent, pluie, pression »). À gauche : Fausses alertes (« on n&#x27;y croit plus », « écoles fermées pour rien ») ; Sans téléphone (« personnes âgées isolées », « une sirène en plus des messages »).</desc><rect x="0" y="0" width="960" height="468" fill="#fbfcff"/><path d="M560.0,234.0 C620.0,234.0 545.0,126.0 587.0,126.0" fill="none" stroke="#1f5fbf" stroke-width="7" stroke-linecap="round"/><path d="M743.0,126.0 C765.0,126.0 755.0,53.0 777.0,53.0" fill="none" stroke="#1f5fbf" stroke-width="2.4"/><rect x="777.0" y="34.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#1f5fbf" stroke-width="1.8"/><text x="855.0" y="53.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="855.0" dy="-0.57em">l&#x27;alerte arrive plus</tspan><tspan x="855.0" dy="1.15em">tôt</tspan></text><path d="M743.0,126.0 C765.0,126.0 755.0,109.0 777.0,109.0" fill="none" stroke="#1f5fbf" stroke-width="2.4"/><rect x="777.0" y="90.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#1f5fbf" stroke-width="1.8"/><text x="855.0" y="109.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="855.0" dy="-0.57em">évacuer les quartiers</tspan><tspan x="855.0" dy="1.15em">bas</tspan></text><path d="M743.0,126.0 C765.0,126.0 755.0,165.0 777.0,165.0" fill="none" stroke="#1f5fbf" stroke-width="2.4"/><rect x="777.0" y="146.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#1f5fbf" stroke-width="1.8"/><text x="855.0" y="165.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="855.0" dy="-0.57em">rentrer les bateaux à</tspan><tspan x="855.0" dy="1.15em">temps</tspan></text><rect x="587.0" y="104.0" width="156" height="44" rx="10" fill="#ffffff" stroke="#1f5fbf" stroke-width="2.6"/><text x="665.0" y="126.0" font-size="14.5" fill="#1f5fbf" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="665.0" dy="-0.00em">Sécurité</tspan></text><path d="M560.0,234.0 C620.0,234.0 545.0,290.0 587.0,290.0" fill="none" stroke="#b35c00" stroke-width="7" stroke-linecap="round"/><path d="M743.0,290.0 C765.0,290.0 755.0,245.0 777.0,245.0" fill="none" stroke="#b35c00" stroke-width="2.4"/><rect x="777.0" y="226.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#b35c00" stroke-width="1.8"/><text x="855.0" y="245.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="855.0" dy="-0.00em">achat et pose</tspan></text><path d="M743.0,290.0 C765.0,290.0 755.0,301.0 777.0,301.0" fill="none" stroke="#b35c00" stroke-width="2.4"/><rect x="777.0" y="282.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#b35c00" stroke-width="1.8"/><text x="855.0" y="301.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="855.0" dy="-0.00em">entretien chaque année</tspan></text><rect x="587.0" y="268.0" width="156" height="44" rx="10" fill="#ffffff" stroke="#b35c00" stroke-width="2.6"/><text x="665.0" y="290.0" font-size="14.5" fill="#b35c00" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="665.0" dy="-0.57em">Coût pour la</tspan><tspan x="665.0" dy="1.15em">commune</tspan></text><path d="M560.0,234.0 C620.0,234.0 545.0,398.0 587.0,398.0" fill="none" stroke="#16753a" stroke-width="7" stroke-linecap="round"/><path d="M743.0,398.0 C765.0,398.0 755.0,381.0 777.0,381.0" fill="none" stroke="#16753a" stroke-width="2.4"/><rect x="777.0" y="362.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#16753a" stroke-width="1.8"/><text x="855.0" y="381.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="855.0" dy="-0.00em">vent, pluie, pression</tspan></text><rect x="587.0" y="376.0" width="156" height="44" rx="10" fill="#ffffff" stroke="#16753a" stroke-width="2.6"/><text x="665.0" y="398.0" font-size="14.5" fill="#16753a" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="665.0" dy="-0.00em">Ce qu&#x27;elle mesure</tspan></text><path d="M400.0,234.0 C340.0,234.0 415.0,166.0 373.0,166.0" fill="none" stroke="#7a3fc7" stroke-width="7" stroke-linecap="round"/><path d="M217.0,166.0 C195.0,166.0 205.0,121.0 183.0,121.0" fill="none" stroke="#7a3fc7" stroke-width="2.4"/><rect x="27.0" y="102.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#7a3fc7" stroke-width="1.8"/><text x="105.0" y="121.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="105.0" dy="-0.00em">on n&#x27;y croit plus</tspan></text><path d="M217.0,166.0 C195.0,166.0 205.0,177.0 183.0,177.0" fill="none" stroke="#7a3fc7" stroke-width="2.4"/><rect x="27.0" y="158.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#7a3fc7" stroke-width="1.8"/><text x="105.0" y="177.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="105.0" dy="-0.57em">écoles fermées pour</tspan><tspan x="105.0" dy="1.15em">rien</tspan></text><rect x="217.0" y="144.0" width="156" height="44" rx="10" fill="#ffffff" stroke="#7a3fc7" stroke-width="2.6"/><text x="295.0" y="166.0" font-size="14.5" fill="#7a3fc7" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="295.0" dy="-0.00em">Fausses alertes</tspan></text><path d="M400.0,234.0 C340.0,234.0 415.0,302.0 373.0,302.0" fill="none" stroke="#b3261e" stroke-width="7" stroke-linecap="round"/><path d="M217.0,302.0 C195.0,302.0 205.0,257.0 183.0,257.0" fill="none" stroke="#b3261e" stroke-width="2.4"/><rect x="27.0" y="238.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#b3261e" stroke-width="1.8"/><text x="105.0" y="257.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="105.0" dy="-0.57em">personnes âgées</tspan><tspan x="105.0" dy="1.15em">isolées</tspan></text><path d="M217.0,302.0 C195.0,302.0 205.0,313.0 183.0,313.0" fill="none" stroke="#b3261e" stroke-width="2.4"/><rect x="27.0" y="294.0" width="156" height="38" rx="19" fill="#ffffff" stroke="#b3261e" stroke-width="1.8"/><text x="105.0" y="313.0" font-size="12.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle"><tspan x="105.0" dy="-0.57em">une sirène en plus des</tspan><tspan x="105.0" dy="1.15em">messages</tspan></text><rect x="217.0" y="280.0" width="156" height="44" rx="10" fill="#ffffff" stroke="#b3261e" stroke-width="2.6"/><text x="295.0" y="302.0" font-size="14.5" fill="#b3261e" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="295.0" dy="-0.00em">Sans téléphone</tspan></text><ellipse cx="480.0" cy="234.0" rx="96" ry="44" fill="#fff8e6" stroke="#a06a00" stroke-width="3"/><text x="480.0" y="234.0" font-size="15.5" fill="#1b2438" text-anchor="middle" dominant-baseline="middle" font-weight="700"><tspan x="480.0" dy="-1.15em">La station</tspan><tspan x="480.0" dy="1.15em">d&#x27;alerte</tspan><tspan x="480.0" dy="1.15em">cyclonique</tspan></text></svg><figcaption>La carte mentale préparée par la classe sur la station d'alerte de la commune. <span class="note">(clique sur l'image pour l'agrandir)</span></figcaption></figure><details class="description"><summary>📝 Ce que montre le schéma, en mots</summary><p>Au centre&nbsp;: « La station d'alerte cyclonique ». <br>Sécurité&nbsp;: l'alerte arrive plus tôt, évacuer les quartiers bas, rentrer les bateaux à temps. <br>Coût pour la commune&nbsp;: achat et pose, entretien chaque année. <br>Ce qu'elle mesure&nbsp;: vent, pluie, pression. <br>Fausses alertes&nbsp;: on n'y croit plus, écoles fermées pour rien. Sans téléphone&nbsp;: personnes âgées isolées, une sirène en plus des messages.</p></details><div><p>La commune installe une <b>station d'alerte cyclonique</b>&nbsp;: dès que le vent forcit et que la pression de l'air chute, elle déclenche une sirène et envoie un message sur les téléphones. <br>La classe a préparé une carte mentale pour répondre à la question du conseil municipal des jeunes&nbsp;: « <b>Cette station est-elle une bonne chose pour les habitants&nbsp;?</b> »</p></div><div class="consigne"><p>Une <b>incidence sur la société</b>, c'est un effet de l'objet sur la vie des personnes. <br><b>Trie d'abord six feuilles de la carte</b>&nbsp;: incidence positive, incidence négative, ou ni l'une ni l'autre (une feuille qui décrit le fonctionnement de la station). <br>Puis <b>écris un argumentaire court</b> de 5 à 8 lignes, à partir de la carte&nbsp;: une incidence positive, une incidence négative introduite par un <b>connecteur d'opposition</b> (mais, cependant, pourtant…), et une <b>conclusion</b>.</p></div><p class="critere"><b>✅ Tu as réussi si…</b> six feuilles bien triées, et un argumentaire qui donne une incidence positive, une négative, un connecteur d'opposition et une conclusion.</p><div class="cles-grille"><p class="cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>une incidence positive pour la société</li><li><b>B</b>une incidence négative pour la société</li><li><b>C</b>ni l'une ni l'autre&nbsp;: c'est le fonctionnement de la station</li></ol></div><fieldset class="qcm-groupe qcm-grille"><legend>« l'alerte arrive plus tôt » <span class="encoche" data-pour="cm_3e_e5__tri_0"></span></legend><div class="options options-grille"><label class="option" for="cm_3e_e5__tri_0-0" title="une incidence positive pour la société"><input type="radio" id="cm_3e_e5__tri_0-0" name="cm_3e_e5__tri_0" value="pos" aria-label="A — une incidence positive pour la société"><span>A</span></label><label class="option" for="cm_3e_e5__tri_0-1" title="une incidence négative pour la société"><input type="radio" id="cm_3e_e5__tri_0-1" name="cm_3e_e5__tri_0" value="neg" aria-label="B — une incidence négative pour la société"><span>B</span></label><label class="option" for="cm_3e_e5__tri_0-2" title="ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><input type="radio" id="cm_3e_e5__tri_0-2" name="cm_3e_e5__tri_0" value="tech" aria-label="C — ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><span>C</span></label></div></fieldset><fieldset class="qcm-groupe qcm-grille"><legend>« écoles fermées pour rien » <span class="encoche" data-pour="cm_3e_e5__tri_1"></span></legend><div class="options options-grille"><label class="option" for="cm_3e_e5__tri_1-0" title="une incidence positive pour la société"><input type="radio" id="cm_3e_e5__tri_1-0" name="cm_3e_e5__tri_1" value="pos" aria-label="A — une incidence positive pour la société"><span>A</span></label><label class="option" for="cm_3e_e5__tri_1-1" title="une incidence négative pour la société"><input type="radio" id="cm_3e_e5__tri_1-1" name="cm_3e_e5__tri_1" value="neg" aria-label="B — une incidence négative pour la société"><span>B</span></label><label class="option" for="cm_3e_e5__tri_1-2" title="ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><input type="radio" id="cm_3e_e5__tri_1-2" name="cm_3e_e5__tri_1" value="tech" aria-label="C — ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><span>C</span></label></div></fieldset><fieldset class="qcm-groupe qcm-grille"><legend>« achat et pose » <span class="encoche" data-pour="cm_3e_e5__tri_2"></span></legend><div class="options options-grille"><label class="option" for="cm_3e_e5__tri_2-0" title="une incidence positive pour la société"><input type="radio" id="cm_3e_e5__tri_2-0" name="cm_3e_e5__tri_2" value="pos" aria-label="A — une incidence positive pour la société"><span>A</span></label><label class="option" for="cm_3e_e5__tri_2-1" title="une incidence négative pour la société"><input type="radio" id="cm_3e_e5__tri_2-1" name="cm_3e_e5__tri_2" value="neg" aria-label="B — une incidence négative pour la société"><span>B</span></label><label class="option" for="cm_3e_e5__tri_2-2" title="ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><input type="radio" id="cm_3e_e5__tri_2-2" name="cm_3e_e5__tri_2" value="tech" aria-label="C — ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><span>C</span></label></div></fieldset><fieldset class="qcm-groupe qcm-grille"><legend>« personnes âgées isolées » <span class="encoche" data-pour="cm_3e_e5__tri_3"></span></legend><div class="options options-grille"><label class="option" for="cm_3e_e5__tri_3-0" title="une incidence positive pour la société"><input type="radio" id="cm_3e_e5__tri_3-0" name="cm_3e_e5__tri_3" value="pos" aria-label="A — une incidence positive pour la société"><span>A</span></label><label class="option" for="cm_3e_e5__tri_3-1" title="une incidence négative pour la société"><input type="radio" id="cm_3e_e5__tri_3-1" name="cm_3e_e5__tri_3" value="neg" aria-label="B — une incidence négative pour la société"><span>B</span></label><label class="option" for="cm_3e_e5__tri_3-2" title="ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><input type="radio" id="cm_3e_e5__tri_3-2" name="cm_3e_e5__tri_3" value="tech" aria-label="C — ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><span>C</span></label></div></fieldset><fieldset class="qcm-groupe qcm-grille"><legend>« une sirène en plus des messages » <span class="encoche" data-pour="cm_3e_e5__tri_4"></span></legend><div class="options options-grille"><label class="option" for="cm_3e_e5__tri_4-0" title="une incidence positive pour la société"><input type="radio" id="cm_3e_e5__tri_4-0" name="cm_3e_e5__tri_4" value="pos" aria-label="A — une incidence positive pour la société"><span>A</span></label><label class="option" for="cm_3e_e5__tri_4-1" title="une incidence négative pour la société"><input type="radio" id="cm_3e_e5__tri_4-1" name="cm_3e_e5__tri_4" value="neg" aria-label="B — une incidence négative pour la société"><span>B</span></label><label class="option" for="cm_3e_e5__tri_4-2" title="ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><input type="radio" id="cm_3e_e5__tri_4-2" name="cm_3e_e5__tri_4" value="tech" aria-label="C — ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><span>C</span></label></div></fieldset><fieldset class="qcm-groupe qcm-grille"><legend>« vent, pluie, pression » <span class="encoche" data-pour="cm_3e_e5__tri_5"></span></legend><div class="options options-grille"><label class="option" for="cm_3e_e5__tri_5-0" title="une incidence positive pour la société"><input type="radio" id="cm_3e_e5__tri_5-0" name="cm_3e_e5__tri_5" value="pos" aria-label="A — une incidence positive pour la société"><span>A</span></label><label class="option" for="cm_3e_e5__tri_5-1" title="une incidence négative pour la société"><input type="radio" id="cm_3e_e5__tri_5-1" name="cm_3e_e5__tri_5" value="neg" aria-label="B — une incidence négative pour la société"><span>B</span></label><label class="option" for="cm_3e_e5__tri_5-2" title="ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><input type="radio" id="cm_3e_e5__tri_5-2" name="cm_3e_e5__tri_5" value="tech" aria-label="C — ni l&#x27;une ni l&#x27;autre : c&#x27;est le fonctionnement de la station"><span>C</span></label></div></fieldset><label class="champ" for="cm_3e_e5__argumentaire">Mon argumentaire court (5 à 8 lignes)&nbsp;: la station d'alerte est-elle une bonne chose pour les habitants&nbsp;? <span class="encoche" data-pour="cm_3e_e5__argumentaire"></span></label><textarea id="cm_3e_e5__argumentaire" name="cm_3e_e5__argumentaire" rows="8" spellcheck="true"></textarea><div class="note">Ce que je regarde dans ta réponse&nbsp;:<ul><li>tu donnes une incidence positive (la sécurité, le temps gagné, la sirène…) <span class="encoche" data-pour="cm_3e_e5__argumentaire::0"></span></li><li>tu donnes une incidence négative (le coût, les fausses alertes, les personnes sans téléphone…) <span class="encoche" data-pour="cm_3e_e5__argumentaire::1"></span></li><li>tu l'introduis par un connecteur d'opposition (mais, cependant, pourtant, en revanche…) <span class="encoche" data-pour="cm_3e_e5__argumentaire::2"></span></li><li>tu termines par une conclusion (donc, en conclusion, finalement…) <span class="encoche" data-pour="cm_3e_e5__argumentaire::3"></span></li></ul></div><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>La station d'alerte protège les habitants, car… Par exemple, …</li><li>Cependant, elle a aussi des inconvénients : …</li><li>En conclusion, je pense que… à condition de…</li></ul></details><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Pour trier, demande-toi&nbsp;: « <b>est-ce un effet sur la vie des personnes&nbsp;?</b> » Si oui, est-il bon ou mauvais pour elles&nbsp;? Si non, c'est du fonctionnement. <br>Pour écrire, prends <b>une branche positive</b> et <b>une branche négative</b> de la carte&nbsp;: ce sont tes deux paragraphes.</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><p>« l'alerte arrive plus tôt » → les habitants ont le temps de se mettre à l'abri → <b>positive</b>.<br>« achat et pose » → c'est l'argent des habitants qui paie → <b>négative</b>.<br>« vent, pluie, pression » → ce que la station mesure → <b>fonctionnement</b>, pas une incidence.<br>Le plan de l'argumentaire&nbsp;: incidence positive + exemple → <b>Cependant</b>, incidence négative + exemple → <b>En conclusion</b>, ton avis, nuancé.</p><div class="critere"><b>🔁 Exercice jumeau, à faire seul ensuite&nbsp;:</b> Écris l'ossature (trois phrases) d'un argumentaire sur les caméras de surveillance du parking du collège&nbsp;: une incidence positive, une négative avec un connecteur d'opposition, une conclusion.</div><label class="champ" for="cm_3e_e5__jumeau">Ma réponse à l'exercice jumeau</label><textarea id="cm_3e_e5__jumeau" name="cm_3e_e5__jumeau" rows="2"></textarea><details class="etayage"><summary>🪜 Version étayée : des débuts de phrase pour t'aider</summary><ul><li>Dans cette nouvelle situation, je pose la même question que dans l'aide 2 : …</li><li>Ma réponse : … parce que …</li></ul></details><details class="correction"><summary>🔍 Correction de l'exercice jumeau</summary>« Les caméras <b>dissuadent les vols</b> de vélos sur le parking. <b>Pourtant</b>, elles filment aussi les élèves et le personnel, qui n'ont pas choisi d'être <b>observés</b>. <b>En conclusion</b>, elles sont utiles si les images sont peu gardées et vues seulement en cas de vol. »</details></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>« l'alerte arrive plus tôt »</b> → les habitants ont le temps de se protéger → <b>positive</b></div><div class="ligne"><b>« une sirène en plus des messages »</b> → même ceux qui n'ont pas de téléphone sont prévenus → <b>positive</b></div><div class="ligne"><b>« écoles fermées pour rien »</b> → une fausse alerte dérange les familles → <b>négative</b></div><div class="ligne"><b>« achat et pose »</b> → c'est l'argent de la commune, donc des habitants → <b>négative</b></div><div class="ligne"><b>« personnes âgées isolées »</b> → sans téléphone, elles ne reçoivent pas le message → <b>négative</b></div><div class="ligne"><b>« vent, pluie, pression »</b> → ce que la station mesure → <b>ni l'une ni l'autre</b>&nbsp;: c'est le fonctionnement, pas un effet sur la vie des personnes</div><div class="ligne"><b>Un argumentaire attendu&nbsp;:</b> <br>« La station d'alerte cyclonique est utile aux habitants, car <b>l'alerte arrive plus tôt</b>&nbsp;: on a le temps d'évacuer les quartiers bas et de rentrer les bateaux. <br>La sirène prévient aussi ceux qui n'ont pas de téléphone. <br><b>Cependant</b>, elle <b>coûte cher</b> à la commune, et une <b>fausse alerte</b> ferme les écoles pour rien&nbsp;: on risque de ne plus y croire. <br><b>En conclusion</b>, c'est une bonne chose, à condition de limiter les fausses alertes. »</div><div class="ligne">Chaque idée du texte vient d'une <b>branche</b> de la carte&nbsp;: Sécurité, Sans téléphone, Coût, Fausses alertes. La branche « Ce qu'elle mesure » ne sert pas&nbsp;: elle décrit l'objet, elle ne dit pas son effet sur la société.</div><div class="ligne conclusion">La carte mentale <b>prépare</b> l'argumentaire&nbsp;: on y choisit une branche positive, une branche négative, on les relie par un connecteur d'opposition, et on conclut.</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> un argumentaire court se prépare avec une carte mentale&nbsp;: une incidence positive, une incidence négative introduite par un <b>connecteur d'opposition</b>, puis une <b>conclusion</b> qui donne un avis nuancé.</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> décrire le fonctionnement de l'objet (« elle mesure le vent ») au lieu de son incidence sur la vie des personnes.</p></section><p class="note">🗺️ Ces exercices viennent de <a href="../../../ateliers-representations/carte-mentale/atelier_3e_carte-mentale.html">l'atelier de 3e « La carte mentale »</a>&nbsp;: ce que tu fais ici s'y retrouve, avec un exercice pour choisir entre la carte mentale et une autre représentation, et le QCM de l'atelier.</p><script type="application/json">{"exercices": {"cm_3e_e5": {"cle": "rep_carte-mentale_3e_e5", "widgets": [{"type": "classer", "items": [{"name": "cm_3e_e5__tri_0", "bonne": "pos", "indice": "« l'alerte arrive plus tôt » : qu'est-ce que cela change pour les habitants ?"}, {"name": "cm_3e_e5__tri_1", "bonne": "neg", "indice": "« écoles fermées pour rien » : qui en subit les effets, et pourquoi ?"}, {"name": "cm_3e_e5__tri_2", "bonne": "neg", "indice": "« achat et pose » : qui paie, avec quel argent ?"}, {"name": "cm_3e_e5__tri_3", "bonne": "neg", "indice": "« personnes âgées isolées » : reçoivent-elles le message sur un téléphone ?"}, {"name": "cm_3e_e5__tri_4", "bonne": "pos", "indice": "« une sirène en plus des messages » : qui entend une sirène sans avoir de téléphone ?"}, {"name": "cm_3e_e5__tri_5", "bonne": "tech", "indice": "« vent, pluie, pression » : est-ce un effet sur la vie des personnes, ou ce que la station mesure ?"}]}, {"type": "texte", "name": "cm_3e_e5__argumentaire", "criteres": [{"motifs": ["plus tot|a temps|proteg|securi|sauv|evacu|a l.abri|bateau|sirene|prevenu|previent|prevenir|vies?\\b|bless"], "min": 1, "manque": "Donne une incidence positive, prise sur la carte : la sécurité, le temps gagné pour se mettre à l'abri…"}, {"motifs": ["cout|cher|prix|argent|impot|budget|entretien|fausses? alertes?|n.y croi|confiance|ecoles? fermees?|pour rien|isole|agee|sans telephone|pas de telephone|exclu|oubli"], "min": 1, "manque": "Donne une incidence négative, prise sur la carte : le coût pour la commune, les fausses alertes, les personnes sans téléphone…"}, {"motifs": ["\\bmais\\b|cependant|pourtant|en revanche|toutefois|neanmoins|par contre|alors que|meme si|malgre"], "min": 1, "manque": "Relie tes deux idées par un connecteur d'opposition : mais, cependant, pourtant, en revanche, toutefois."}, {"motifs": ["en conclusion|pour conclure|finalement|au final|en somme|c.est pourquoi|\\bdonc\\b|\\bainsi\\b|en resume|pour finir"], "min": 1, "manque": "Termine par une conclusion qui donne ton avis : « En conclusion… », « Finalement… », « C'est pourquoi… »."}], "minCar": 220, "interdits": [], "vide": "Ton argumentaire est encore trop court : il faut 5 à 8 lignes, soit quatre ou cinq phrases."}]}}}</script></section>
 <!-- ateliers-representations:fin cm-3e-numerique-societe -->
 
@@ -1996,7 +2067,7 @@ parce que des classes l'utilisent déjà.</p>
   <!-- ========================= -->
 <!-- 3. IMPACT ENVIRONNEMENTAL -->
 <!-- ========================= -->
-<div class="section" id="impact-env">
+<div class="section activite" id="impact-env">
 <!-- ressource: res-3e-C1-5-empreinte -->
 <section class="ressource" id="res-3e-C1-5-empreinte" aria-label="Document de référence : L'empreinte environnementale du numérique">
   <header class="ressource-tete">
@@ -2125,6 +2196,50 @@ parce que des classes l'utilisent déjà.</p>
     Ces services sollicitent fortement les data centers et les réseaux : ils consomment énergie et eau ; réduire ces usages diminue l’empreinte environnementale.
   </div>
 
+  <div class="exo verif-c15" id="verif-s3a">
+<p class="verif-titre"><b>🔎 Je vérifie — les chiffres du document</b><span class="pp-ecran"> — 4 questions</span></p>
+<fieldset class="qcm-groupe" id="q15_part">
+  <legend>En France (données 2022), le numérique représente environ … de l&#x27;empreinte carbone :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_part" id="q15_part__1" value="0,4 %" data-pourquoi="Relis le chiffre : il y a un 4 avant la virgule."><label for="q15_part__1">0,4 %</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_part" id="q15_part__2" value="4,4 %"><label for="q15_part__2">4,4 %</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_part" id="q15_part__3" value="44 %" data-pourquoi="C'est dix fois trop : le numérique n'est pas près de la moitié de l'empreinte du pays."><label for="q15_part__3">44 %</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_part" id="q15_part__4" value="80 %" data-pourquoi="80 %, c'est la part de la fabrication dans les émissions d'un appareil."><label for="q15_part__4">80 %</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_auteur">
+  <legend>Ce chiffre, qui l&#x27;a produit ?</legend>
+  <div class="qcm-option"><input type="radio" name="q15_auteur" id="q15_auteur__1" value="l&#x27;Arcep seule, qui l&#x27;affiche sur sa page" data-pourquoi="La page de l'Arcep relaie le chiffre ; l'étude est menée avec l'ADEME."><label for="q15_auteur__1">l&#x27;Arcep seule, qui l&#x27;affiche sur sa page</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_auteur" id="q15_auteur__2" value="un éditeur de manuels scolaires" data-pourquoi="Le document n'est pas un manuel : c'est la page d'un régulateur, qui cite une étude."><label for="q15_auteur__2">un éditeur de manuels scolaires</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_auteur" id="q15_auteur__3" value="on ne peut pas le savoir" data-pourquoi="La page cite l'étude : cherche qui l'a menée, et quand."><label for="q15_auteur__3">on ne peut pas le savoir</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_auteur" id="q15_auteur__4" value="l&#x27;ADEME et l&#x27;Arcep, dans leur étude commune"><label for="q15_auteur__4">l&#x27;ADEME et l&#x27;Arcep, dans leur étude commune</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_fabrication">
+  <legend>Dans les émissions d&#x27;un appareil numérique, la plus grosse part vient :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_fabrication" id="q15_fabrication__1" value="de sa recharge" data-pourquoi="Recharger pèse peu à côté d'extraire, transformer et assembler les matériaux."><label for="q15_fabrication__1">de sa recharge</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_fabrication" id="q15_fabrication__2" value="de son recyclage" data-pourquoi="Le recyclage arrive en fin de vie ; l'essentiel est émis avant l'achat."><label for="q15_fabrication__2">de son recyclage</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_fabrication" id="q15_fabrication__3" value="de sa fabrication"><label for="q15_fabrication__3">de sa fabrication</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_fabrication" id="q15_fabrication__4" value="de l&#x27;électricité de la box" data-pourquoi="L'usage compte, mais environ 80 % des émissions viennent d'avant l'achat."><label for="q15_fabrication__4">de l&#x27;électricité de la box</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_equip">
+  <legend>La plus grosse part de l&#x27;impact carbone du numérique vient :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_equip" id="q15_equip__1" value="de nos équipements : smartphones, ordinateurs, télévisions"><label for="q15_equip__1">de nos équipements : smartphones, ordinateurs, télévisions</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_equip" id="q15_equip__2" value="des centres de données seuls" data-pourquoi="Environ 46 % : beaucoup, mais un peu moins que nos équipements."><label for="q15_equip__2">des centres de données seuls</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_equip" id="q15_equip__3" value="des réseaux" data-pourquoi="Le document ne les met pas en tête : compare équipements et centres de données."><label for="q15_equip__3">des réseaux</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_equip" id="q15_equip__4" value="des câbles sous-marins" data-pourquoi="Le document n'en parle pas : compare équipements et centres de données."><label for="q15_equip__4">des câbles sous-marins</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour chaque chiffre, retrouve la phrase du document qui le donne, puis qui l'a produit.</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Numérique : environ 4,4 % de l'empreinte carbone de la France (2022), étude de l'ADEME et de l'Arcep. <br>Équipements : environ 50 % ; centres de données : environ 46 %. Fabrication : environ 80 % des émissions d'un appareil.</p></details>
+<button class="btn check" data-check="s3a" type="button">✅ Vérifier</button>
+<p class="feedback" id="fb-s3a" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>En France (données 2022), le numérique représente environ … de l&#x27;empreinte carbone :</b> 4,4 %. <br>Pas « 0,4 % » : relis le chiffre : il y a un 4 avant la virgule. <br>Pas « 44 % » : c&#x27;est dix fois trop : le numérique n&#x27;est pas près de la moitié de l&#x27;empreinte du pays. <br>Pas « 80 % » : 80 %, c&#x27;est la part de la fabrication dans les émissions d&#x27;un appareil.</p>
+<p><b>Ce chiffre, qui l&#x27;a produit ?</b> l&#x27;ADEME et l&#x27;Arcep, dans leur étude commune. <br>Pas « l&#x27;Arcep seule, qui l&#x27;affiche sur sa page » : la page de l&#x27;Arcep relaie le chiffre ; l&#x27;étude est menée avec l&#x27;ADEME. <br>Pas « un éditeur de manuels scolaires » : le document n&#x27;est pas un manuel : c&#x27;est la page d&#x27;un régulateur, qui cite une étude. <br>Pas « on ne peut pas le savoir » : la page cite l&#x27;étude : cherche qui l&#x27;a menée, et quand.</p>
+<p><b>Dans les émissions d&#x27;un appareil numérique, la plus grosse part vient :</b> de sa fabrication. <br>Pas « de sa recharge » : recharger pèse peu à côté d&#x27;extraire, transformer et assembler les matériaux. <br>Pas « de son recyclage » : le recyclage arrive en fin de vie ; l&#x27;essentiel est émis avant l&#x27;achat. <br>Pas « de l&#x27;électricité de la box » : l&#x27;usage compte, mais environ 80 % des émissions viennent d&#x27;avant l&#x27;achat.</p>
+<p><b>La plus grosse part de l&#x27;impact carbone du numérique vient :</b> de nos équipements : smartphones, ordinateurs, télévisions. <br>Pas « des centres de données seuls » : environ 46 % : beaucoup, mais un peu moins que nos équipements. <br>Pas « des réseaux » : le document ne les met pas en tête : compare équipements et centres de données. <br>Pas « des câbles sous-marins » : le document n&#x27;en parle pas : compare équipements et centres de données.</p>
+<div class="retenir"><b>🧠 À retenir :</b> un chiffre se défend avec sa valeur, son unité, qui l'a produit et son année.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je relève un chiffre avec sa valeur, son unité, qui l'a produit et son année.</p>
+</div>
+
   <h3>3.b – Imprimer de manière raisonnée</h3>
   <p>Observez l’écran d’impression (Word/LibreOffice). Répondez :</p>
 
@@ -2236,6 +2351,41 @@ parce que des classes l'utilisent déjà.</p>
 </div>
 
  
+<div class="exo verif-c15" id="verif-s3b">
+<p class="verif-titre"><b>🔎 Je vérifie — imprimer de manière raisonnée</b><span class="pp-ecran"> — 3 questions</span></p>
+<fieldset class="qcm-groupe" id="q15_pages">
+  <legend>Le menu « Pages » de l&#x27;écran d&#x27;impression sert à :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_pages" id="q15_pages__1" value="choisir la police" data-pourquoi="La police se choisit dans le document, pas dans le menu « Pages »."><label for="q15_pages__1">choisir la police</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_pages" id="q15_pages__2" value="imprimer en couleur" data-pourquoi="La couleur se règle ailleurs, dans les options de l'imprimante."><label for="q15_pages__2">imprimer en couleur</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_pages" id="q15_pages__3" value="agrandir le texte" data-pourquoi="Agrandir le texte, c'est la mise en page, pas le choix des pages."><label for="q15_pages__3">agrandir le texte</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_pages" id="q15_pages__4" value="n&#x27;imprimer que les pages utiles"><label for="q15_pages__4">n&#x27;imprimer que les pages utiles</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_papier">
+  <legend>Un réglage qui économise du papier :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_papier" id="q15_papier__1" value="l&#x27;impression en couleur" data-pourquoi="La couleur consomme de l'encre ; elle ne change pas le nombre de feuilles."><label for="q15_papier__1">l&#x27;impression en couleur</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_papier" id="q15_papier__2" value="le recto-verso"><label for="q15_papier__2">le recto-verso</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_papier" id="q15_papier__3" value="la qualité photo" data-pourquoi="La qualité photo consomme plus d'encre, sans économiser une feuille."><label for="q15_papier__3">la qualité photo</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_papier" id="q15_papier__4" value="une police plus grande" data-pourquoi="Une police plus grande allonge le document : plus de feuilles."><label for="q15_papier__4">une police plus grande</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="q15_pdf">
+  <legend>Exporter en PDF plutôt qu&#x27;imprimer, c&#x27;est mieux quand :</legend>
+  <div class="qcm-option"><input type="radio" name="q15_pdf" id="q15_pdf__1" value="le document doit être signé à la main" data-pourquoi="Une signature à la main demande une feuille."><label for="q15_pdf__1">le document doit être signé à la main</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_pdf" id="q15_pdf__2" value="on le dépose sur l&#x27;ENT, ou on le relit à l&#x27;écran"><label for="q15_pdf__2">on le dépose sur l&#x27;ENT, ou on le relit à l&#x27;écran</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_pdf" id="q15_pdf__3" value="on l&#x27;affiche au mur de la classe" data-pourquoi="Un affichage au mur demande une feuille."><label for="q15_pdf__3">on l&#x27;affiche au mur de la classe</label></div>
+  <div class="qcm-option"><input type="radio" name="q15_pdf" id="q15_pdf__4" value="on n&#x27;a pas d&#x27;ordinateur pour le lire" data-pourquoi="Sans écran, un PDF ne se lit pas : il faut le papier."><label for="q15_pdf__4">on n&#x27;a pas d&#x27;ordinateur pour le lire</label></div>
+</fieldset>
+<details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Ouvre l'écran d'impression de ton traitement de texte, et cherche chaque réglage.</p></details>
+<details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Pages » : n'imprimer que les pages utiles. Recto-verso, plusieurs pages par feuille : moins de papier. <br>Un PDF suffit pour déposer sur l'ENT, envoyer, relire ou archiver.</p></details>
+<button class="btn check" data-check="s3b" type="button">✅ Vérifier</button>
+<p class="feedback" id="fb-s3b" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS avoir vérifié)</summary>
+<p><b>Le menu « Pages » de l&#x27;écran d&#x27;impression sert à :</b> n&#x27;imprimer que les pages utiles. <br>Pas « choisir la police » : la police se choisit dans le document, pas dans le menu « Pages ». <br>Pas « imprimer en couleur » : la couleur se règle ailleurs, dans les options de l&#x27;imprimante. <br>Pas « agrandir le texte » : agrandir le texte, c&#x27;est la mise en page, pas le choix des pages.</p>
+<p><b>Un réglage qui économise du papier :</b> le recto-verso. <br>Pas « l&#x27;impression en couleur » : la couleur consomme de l&#x27;encre ; elle ne change pas le nombre de feuilles. <br>Pas « la qualité photo » : la qualité photo consomme plus d&#x27;encre, sans économiser une feuille. <br>Pas « une police plus grande » : une police plus grande allonge le document : plus de feuilles.</p>
+<p><b>Exporter en PDF plutôt qu&#x27;imprimer, c&#x27;est mieux quand :</b> on le dépose sur l&#x27;ENT, ou on le relit à l&#x27;écran. <br>Pas « le document doit être signé à la main » : une signature à la main demande une feuille. <br>Pas « on l&#x27;affiche au mur de la classe » : un affichage au mur demande une feuille. <br>Pas « on n&#x27;a pas d&#x27;ordinateur pour le lire » : sans écran, un PDF ne se lit pas : il faut le papier.</p>
+<div class="retenir"><b>🧠 À retenir :</b> n'imprimer que l'utile, en recto-verso ; un PDF suffit pour partager ou archiver.</div>
+</details>
+<p class="critere"><b>🎯 Critère de réussite :</b> je choisis le réglage qui économise, et je sais quand un PDF suffit.</p>
+</div>
 </div>
   
    
@@ -2247,7 +2397,7 @@ parce que des classes l'utilisent déjà.</p>
 <section class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4" data-titre="Séance 4 — L'argumentaire court">
 <!-- Section 5 : l'argumentaire court (3e_C1.3). Séance ajoutée le 24/10/2026 : la séance 3 dépassait 55 min
      avec la clôture ; celle-ci (Bonus → Bilan → QCM) a suivi la dernière séance. Ids a5_* écrits dans le HTML. -->
-<div class="section argu" id="argumentaire-court">
+<div class="section argu activite" id="argumentaire-court">
   <h2>✍️ Activité 5 — L'argumentaire court <span style="font-size:.8em;opacity:.8">(~25 min)</span></h2>
   <div class="meta">
     <b>🎯 Objectif&nbsp;:</b> écrire un argumentaire court sur l'incidence d'un objet technique sur la société, à partir des trois premières séances.<br>
@@ -2272,32 +2422,32 @@ parce que des classes l'utilisent déjà.</p>
 
   <h3>5.a – Trier ce que les séances ont produit</h3>
   <p class="consigne">Quatre questions. <br>À chaque fois, <b>une seule</b> proposition peut entrer dans un argumentaire honnête.</p>
-  <fieldset class="qcm-groupe" id="a5_q1">
+  <fieldset class="qcm-groupe" id="a5_q1" data-bonne="Une photo publiée en un instant peut exposer la vie privée d'un ami, sans son accord.">
     <legend>Séance 1 — laquelle dit une incidence du smartphone sur la vie des personnes&nbsp;? <span class="enc" data-pour="a5_q1"></span></legend>
-    <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__1" value="Le smartphone enregistre dans chaque photo le lieu où elle a été prise."><label for="a5_q1__1">Le smartphone enregistre dans chaque photo le lieu où elle a été prise.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__1" value="Le smartphone enregistre dans chaque photo le lieu où elle a été prise." data-pourquoi="C'est un fonctionnement : ce que l'appareil fait. Une incidence dit ce que cela change pour quelqu'un."><label for="a5_q1__1">Le smartphone enregistre dans chaque photo le lieu où elle a été prise.</label></div>
     <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__2" value="Une photo publiée en un instant peut exposer la vie privée d'un ami, sans son accord."><label for="a5_q1__2">Une photo publiée en un instant peut exposer la vie privée d'un ami, sans son accord.</label></div>
-    <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__3" value="Un smartphone récent a un appareil photo de plusieurs dizaines de mégapixels."><label for="a5_q1__3">Un smartphone récent a un appareil photo de plusieurs dizaines de mégapixels.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__3" value="Un smartphone récent a un appareil photo de plusieurs dizaines de mégapixels." data-pourquoi="C'est une caractéristique de l'objet : elle ne dit rien de ce qu'il change pour les gens."><label for="a5_q1__3">Un smartphone récent a un appareil photo de plusieurs dizaines de mégapixels.</label></div>
   </fieldset>
   <p class="fb" id="a5_q1_fb"></p>
-  <fieldset class="qcm-groupe" id="a5_q2">
+  <fieldset class="qcm-groupe" id="a5_q2" data-bonne="Vendre et acheter en ligne à toute heure a fait naître des métiers, comme gérer une boutique en ligne, et en a transformé d'autres, comme la logistique des entrepôts.">
     <legend>Séance 2 — laquelle dit une incidence du numérique sur le travail&nbsp;? <span class="enc" data-pour="a5_q2"></span></legend>
     <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__1" value="Vendre et acheter en ligne à toute heure a fait naître des métiers, comme gérer une boutique en ligne, et en a transformé d'autres, comme la logistique des entrepôts."><label for="a5_q2__1">Vendre et acheter en ligne à toute heure a fait naître des métiers, comme gérer une boutique en ligne, et en a transformé d'autres, comme la logistique des entrepôts.</label></div>
-    <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__2" value="Une boutique en ligne a besoin d'un hébergement fiable et d'un certificat HTTPS."><label for="a5_q2__2">Une boutique en ligne a besoin d'un hébergement fiable et d'un certificat HTTPS.</label></div>
-    <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__3" value="Les témoignages sur les métiers ont été publiés par Le Monde le 16 mai 2017."><label for="a5_q2__3">Les témoignages sur les métiers ont été publiés par Le Monde le 16 mai 2017.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__2" value="Une boutique en ligne a besoin d'un hébergement fiable et d'un certificat HTTPS." data-pourquoi="C'est ce qu'il faut pour que la boutique fonctionne : un prérequis technique, pas un effet sur la société."><label for="a5_q2__2">Une boutique en ligne a besoin d'un hébergement fiable et d'un certificat HTTPS.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__3" value="Les témoignages sur les métiers ont été publiés par Le Monde le 16 mai 2017." data-pourquoi="C'est la source et la date du document : utile pour une dernière ligne, mais ce n'est pas une incidence."><label for="a5_q2__3">Les témoignages sur les métiers ont été publiés par Le Monde le 16 mai 2017.</label></div>
   </fieldset>
   <p class="fb" id="a5_q2_fb"></p>
-  <fieldset class="qcm-groupe" id="a5_q3">
+  <fieldset class="qcm-groupe" id="a5_q3" data-bonne="Selon l'étude de l'ADEME et de l'Arcep, le numérique pesait 4,4 % de l'empreinte carbone de la France en 2022.">
     <legend>Séance 3 — quelle phrase donne un chiffre que tu peux défendre devant la classe&nbsp;? <span class="enc" data-pour="a5_q3"></span></legend>
-    <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__1" value="Le numérique, c'est 4,4 % de la pollution."><label for="a5_q3__1">Le numérique, c'est 4,4&nbsp;% de la pollution.</label></div>
-    <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__2" value="D'après la page de l'Arcep, le numérique faisait 4,4 % des émissions en 2025."><label for="a5_q3__2">D'après la page de l'Arcep, le numérique faisait 4,4&nbsp;% des émissions en 2025.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__1" value="Le numérique, c'est 4,4 % de la pollution." data-pourquoi="4,4 % de quoi ? Mesuré par qui, en quelle année ? Sans ces réponses, le chiffre ne se défend pas."><label for="a5_q3__1">Le numérique, c'est 4,4&nbsp;% de la pollution.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__2" value="D'après la page de l'Arcep, le numérique faisait 4,4 % des émissions en 2025." data-pourquoi="Deux confusions : la page relaie l'étude de l'ADEME et de l'Arcep (c'est là que tu as lu le chiffre, pas là qu'il a été mesuré), et 2025 est l'année de publication — les données sont de 2022."><label for="a5_q3__2">D'après la page de l'Arcep, le numérique faisait 4,4&nbsp;% des émissions en 2025.</label></div>
     <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__3" value="Selon l'étude de l'ADEME et de l'Arcep, le numérique pesait 4,4 % de l'empreinte carbone de la France en 2022."><label for="a5_q3__3">Selon l'étude de l'ADEME et de l'Arcep, le numérique pesait 4,4&nbsp;% de l'empreinte carbone de la France en 2022.</label></div>
   </fieldset>
   <p class="fb" id="a5_q3_fb"></p>
-  <fieldset class="qcm-groupe" id="a5_q4">
+  <fieldset class="qcm-groupe" id="a5_q4" data-bonne="Ce que je ne sais pas : ce que vaut ce chiffre pour la Martinique — il n'a pas été calculé pour l'île, et l'électricité d'ici ne vient pas des mêmes sources.">
     <legend>Ta dernière ligne — laquelle nomme honnêtement un angle mort&nbsp;? <span class="enc" data-pour="a5_q4"></span></legend>
-    <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__1" value="Mon argumentaire est complet : il n'y a rien à ajouter."><label for="a5_q4__1">Mon argumentaire est complet&nbsp;: il n'y a rien à ajouter.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__1" value="Mon argumentaire est complet : il n'y a rien à ajouter." data-pourquoi="Aucun argumentaire n'est complet : l'écrire, c'est cacher ce qu'on n'a pas vérifié."><label for="a5_q4__1">Mon argumentaire est complet&nbsp;: il n'y a rien à ajouter.</label></div>
     <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__2" value="Ce que je ne sais pas : ce que vaut ce chiffre pour la Martinique — il n'a pas été calculé pour l'île, et l'électricité d'ici ne vient pas des mêmes sources."><label for="a5_q4__2">Ce que je ne sais pas&nbsp;: ce que vaut ce chiffre pour la Martinique — il n'a pas été calculé pour l'île, et l'électricité d'ici ne vient pas des mêmes sources.</label></div>
-    <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__3" value="Certains pensent le contraire, mais ils se trompent."><label for="a5_q4__3">Certains pensent le contraire, mais ils se trompent.</label></div>
+    <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__3" value="Certains pensent le contraire, mais ils se trompent." data-pourquoi="Ce n'est pas un angle mort : c'est écarter un avis sans raison. Un angle mort, c'est ce que toi, tu ne sais pas."><label for="a5_q4__3">Certains pensent le contraire, mais ils se trompent.</label></div>
   </fieldset>
   <p class="fb" id="a5_q4_fb"></p>
 
@@ -2335,8 +2485,8 @@ parce que des classes l'utilisent déjà.</p>
       <li>une dernière ligne qui dit ce que tu ne sais pas <span class="enc" data-pour="angle"></span></li>
     </ul>
   </div>
-  <p><button type="button" class="btn-verifier" id="a5_verifier">✔ Vérifier mes réponses</button></p>
-  <div class="retour" id="a5_retour" role="status" aria-live="polite"></div>
+  <button type="button" class="btn-verifier" id="a5_verifier" data-check="a5">✔ Vérifier mes réponses</button>
+  <div class="retour feedback" id="a5_retour" role="status" aria-live="polite"></div>
   <p class="sauve" id="a5_sauve" aria-live="polite"></p>
 
   <details class="aide"><summary>💡 Aide 1 — pour démarrer</summary>
@@ -2531,7 +2681,7 @@ parce que des classes l'utilisent déjà.</p>
     var titre = justes === total ? "🎉 Tout est juste. Ouvre quand même la correction : elle dit pourquoi, et c'est ce qui se retient."
       : (justes >= total / 2 ? "🟡 C'est bien parti : " + justes + " points sur " + total + ". Corrige les lignes marquées ✘, puis vérifie à nouveau."
                              : "🔴 " + justes + " point" + (justes > 1 ? "s" : "") + " sur " + total + " pour l'instant. Relis la consigne, ouvre l'aide 1, puis vérifie à nouveau : on apprend en se corrigeant.");
-    zone.className = "retour " + classe;
+    zone.className = "retour feedback " + classe;
     zone.textContent = "";
     var b = document.createElement("b"); b.textContent = titre; zone.appendChild(b);
     var uniques = msgs.filter(function(m, i){ return msgs.indexOf(m) === i; });
@@ -4321,5 +4471,79 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 </script>
 <!-- /ateliers-representations:moteur -->
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<style id="css-verif-c15">
+/* les questions fermées vérifiées par la page (14/11/2026, thème 1 : décision de Pascal « Claude écrit les questions ») */
+#tachesBandeau{margin:10px 0 14px;padding:9px 15px;border:1px solid var(--border,#274a8a);border-radius:12px}
+#tachesBandeau .tb-titre{font-weight:700;display:block;margin-bottom:3px}
+#tachesBandeau ul{list-style:none;margin:0;padding:0}
+#tachesBandeau li.faite{opacity:.7}
+.verif-c15{margin:16px 0;padding:14px 16px;border:1px solid var(--border,#274a8a);border-radius:12px}
+.verif-c15 .verif-titre{margin:0 0 10px}
+.verif-c15 fieldset.qcm-groupe{border:0;border-left:3px solid var(--border,#274a8a);border-radius:0;padding:2px 0 2px 11px;margin:10px 0 14px;min-width:0}
+.verif-c15 fieldset.qcm-groupe>legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;white-space:normal}
+.verif-c15 .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;border:2px solid transparent;border-radius:9px;background:rgba(127,127,127,.08)}
+.verif-c15 .qcm-option:has(input:checked){border-color:var(--hl,#61dafb)}
+.verif-c15 .qcm-option input[type=radio]{width:19px;height:19px;margin:2px 0 0;flex-shrink:0}
+.verif-c15 .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+.verif-c15 fieldset.qcm-groupe.ok{border-left:4px solid var(--ok,#16a34a)}
+.verif-c15 fieldset.qcm-groupe.ko{border-left:4px solid var(--warn,#b45309)}
+.verif-c15 fieldset.qcm-groupe.ok>legend::after{content:" ✓";color:var(--ok,#16a34a)}
+.verif-c15 fieldset.qcm-groupe.ko>legend::after{content:" — à revoir";font-weight:400}
+.verif-c15 .btn.check{margin:12px 0 4px;min-height:44px}
+/* les aides et la correction se touchent au doigt : une cible de 44 px, séparée de la suivante (WCAG 2.5.8) */
+.verif-c15 details>summary{min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer;margin:4px 0}
+.verif-c15 .feedback{margin:6px 0;font-weight:600}
+</style>
+<script>
+/* ══ Les questions fermées des séances 1, 2 et 3 (14/11/2026) : la page vérifie, et les garde avec les autres réponses
+   (saveProgress4). Les questions ouvertes restent : ces questions vérifient que l'élève a compris ce qu'il écrit. ══ */
+const ATT_C15 = {};
+const ATTS1 = {q15_invisible:"non : chaque action en ligne laisse une trace", q15_ereput:"ce que tu publies, et ce que d'autres publient sur toi", q15_mesure:"réfléchir avant de publier, et régler la confidentialité"};
+const ATTS2 = {q15_https:"un certificat HTTPS et un paiement sécurisé", q15_metiers:"supprime des métiers, en crée, et surtout les transforme", q15_logistique:"la logistique"};
+const ATTS3A = {q15_part:"4,4 %", q15_auteur:"l'ADEME et l'Arcep, dans leur étude commune", q15_fabrication:"de sa fabrication", q15_equip:"de nos équipements : smartphones, ordinateurs, télévisions"};
+const ATTS3B = {q15_pages:"n'imprimer que les pages utiles", q15_papier:"le recto-verso", q15_pdf:"on le dépose sur l'ENT, ou on le relit à l'écran"};
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const ATTENDUES = {s1: ATTS1, s2: ATTS2, s3a: ATTS3A, s3b: ATTS3B};
+Object.assign(ATT_C15, ATTS1, ATTS2, ATTS3A, ATTS3B);
+const val = id => { const c = document.querySelector("#" + id + " input[type=radio]:checked"); return c ? c.value : ""; };
+const juste = n => Object.keys(ATTENDUES[n]).every(id => val(id) === ATTENDUES[n][id]);
+let minuterie = null;
+const garder = () => { clearTimeout(minuterie); minuterie = setTimeout(() => { if (typeof saveProgress4 === "function") saveProgress4(); }, 600); };
+function verifier(n){
+  const att = ATTENDUES[n], ids = Object.keys(att), fb = $("fb-" + n);
+  const vides = ids.filter(id => !val(id)).length; let justes = 0;
+  ids.forEach(id => { const f = $(id), v = val(id), bon = v === att[id]; if (bon) justes++;
+    f.classList.toggle("ok", !!v && bon); f.classList.toggle("ko", !!v && !bon); });
+  let msg, cls;
+  if (vides){ msg = "Il reste " + vides + " question" + (vides > 1 ? "s" : "") + " sans réponse : réponds à tout, puis vérifie de nouveau."; cls = "mixte"; }
+  else if (justes === ids.length){ msg = "✅ " + justes + " / " + ids.length + " — tout est juste : c'est validé. Ouvre la correction : elle explique aussi les réponses refusées."; cls = "ok"; }
+  else if (justes >= ids.length / 2){ msg = "🟡 " + justes + " / " + ids.length + " — les questions marquées « à revoir » sont à reprendre. Ouvre l'aide de niveau 1, puis vérifie de nouveau."; cls = "mixte"; }
+  else { msg = "🔁 " + justes + " / " + ids.length + " — ce n'est pas encore acquis, et c'est normal. Ouvre l'aide de niveau 2, puis reprends."; cls = "err"; }
+  fb.textContent = msg; fb.className = "feedback show " + cls;
+}
+document.querySelectorAll(".verif-c15 fieldset.qcm-groupe[id]").forEach(f => f.addEventListener("change", () => { f.classList.remove("ok", "ko"); garder(); majTaches(); }));
+/* le tableau de bord des tâches de la séance affichée (règle d'or n°30) : un bloc se coche quand toutes ses réponses sont justes */
+const TACHES = {
+  s1: ["1.a et 1.b : les pratiques, puis tes deux réponses", {n: "s1", l: "Je vérifie : l'e-réputation"}, "1 bis : deux choix et ton argumentaire"],
+  s2: ["2.a à 2.c : avantages, inconvénients, le document", {n: "s2", l: "Je vérifie : l'activité en ligne et le document"}, "2.d : la carte mentale, puis l'argumentaire"],
+  s3: ["3.a : les questions sur le document", {n: "s3a", l: "Je vérifie : les chiffres du document"}, "3.b : l'écran d'impression", {n: "s3b", l: "Je vérifie : imprimer de manière raisonnée"}],
+  s4: ["5.a : trier ce que les séances ont produit", "5.b : écrire l'argumentaire", "Le bilan et « Je me positionne »"]
+};
+function majTaches(){
+  const hote = $("tachesBandeau"); if (!hote) return;
+  const o = document.querySelector(".seance-tab.active"), liste = TACHES[o ? o.dataset.panel : ""];
+  if (!liste){ hote.hidden = true; return; }
+  hote.hidden = false;
+  hote.innerHTML = "<span class='tb-titre'>Les tâches de cette séance</span><ul>" + liste.map(x => {
+    const fait = typeof x === "object" && juste(x.n);
+    return "<li class='" + (fait ? "faite" : "") + "'>" + (typeof x === "object" ? (fait ? "☑ " : "☐ ") : "• ") + (typeof x === "object" ? x.l : x) + "</li>"; }).join("") + "</ul>";
+}
+document.querySelectorAll(".seance-tab").forEach(o => o.addEventListener("click", () => setTimeout(majTaches, 0)));
+document.querySelectorAll(".verif-c15 [data-check]").forEach(b => b.addEventListener("click", () => { verifier(b.dataset.check); majTaches(); }));
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(majTaches, 0)); else setTimeout(majTaches, 0);
+})();
+</script>
 </body>
 </html>
