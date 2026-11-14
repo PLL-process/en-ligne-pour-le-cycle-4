@@ -36,10 +36,15 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 
 ## Ce qu'il ne fait pas
 
-- Rien tant que l'élève n'a pas appuyé sur « 🎮 Mode mission » : la page s'ouvre comme avant, et son contenu n'est
-  pas touché. Le bouton est dans le cadre « Ma progression » ; quand la page n'a pas ce cadre, il est juste
-  au-dessus des onglets des séances — jamais dans la barre d'outils, jamais entre les onglets et leur séance. « 📄 Page complète », dans la barre de la mission, y ramène.
-  Les contrôles et les bancs du dépôt mesurent et jouent donc la page qui défile.
+- **Allumé d'emblée** (décision de Pascal du 14/11/2026) : à sa première visite, l'élève arrive en mission. « 📄 Page
+  complète », dans la barre de la mission, ramène à la page qui défile, et la page s'en souvient dans ce navigateur ;
+  « 🎮 Mode mission » (dans le cadre « Ma progression », ou juste au-dessus des onglets quand la page n'a pas ce cadre —
+  jamais dans la barre d'outils, jamais entre les onglets et leur séance) y retourne ; « Effacer ma sauvegarde » remet
+  la mission. Le contenu de la page n'est pas touché.
+- **Un robot de test ouvre la page complète** (`navigator.webdriver`) : les contrôles et les bancs du dépôt mesurent et
+  jouent la page qui défile, comme avant ; ceux du mode (`banc_generique.mjs`, `banc_mission.mjs`) l'allument eux-mêmes,
+  et `banc_defaut.mjs` vérifie qu'un navigateur d'élève arrive bien en mission.
+- Une page dont il ne reconnaît pas les séances (Book Train, les pages « station » de `3e_C9.2`) s'ouvre telle quelle.
 - Rien à l'impression : tout ce qui cache est sous `@media screen`. La fiche papier sort entière.
 - Il ne bloque jamais « Suivant », ne chronomètre rien, ne classe personne.
 

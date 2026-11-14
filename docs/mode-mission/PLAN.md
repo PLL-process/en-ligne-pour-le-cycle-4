@@ -81,8 +81,10 @@ ajouté à l'écran d'accueil y échappe. Cela vaut pour tout le dépôt, pas se
       activités à plusieurs zones d'exercice, la vérification placée après les aides. Banc générique
       (`banc_generique.mjs`) : chaque page jouée écran par écran, chaque réponse croisée avec la vérification de la page.
 - [x] Essai sur une vraie tablette, par Pascal (11/11/2026) : « Sur une tablette c'est bon. » Reste l'essai en classe.
-- [ ] Décider de la vue par défaut. L'allumer d'office demande d'apprendre aux bancs et aux contrôles à ouvrir la
-      page complète (`?vue=page`) : ils mesurent et jouent la page qui défile.
+- [x] La vue par défaut (14/11/2026, Pascal : « Le mode mission est pour toutes les séquences déclenché d'emblée ») :
+      l'élève arrive en mission ; « 📄 Page complète » s'en souvient ; « Effacer ma sauvegarde » remet la mission.
+      Un robot de test (`navigator.webdriver`) ouvre la page complète, que les bancs et les contrôles mesurent comme
+      avant ; `banc_defaut.mjs` vérifie le comportement d'un navigateur d'élève sur les 60 séquences.
 - [x] Gabarit « atelier » (`3e_C4.8`, `3e_C6.2`) et ancien gabarit (`div.act` posées dans une seule carte :
       `4e_C6.2`, famille C7/C8) : appris au moteur — une activité est le bloc qui porte un exercice et son bouton
       de vérification, quelle que soit sa classe.

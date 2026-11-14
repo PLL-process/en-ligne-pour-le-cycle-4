@@ -9,8 +9,8 @@ marqueurs « mode-mission … : début / fin » — comme la fiche papier (`_out
 qui le porte déjà le reçoit à jour, à la même place. Rien d'autre dans la page n'est touché, et le bloc ne porte
 aucune donnée propre à la page : les réponses attendues sont lues dans la page elle-même.
 
-Le mode mission est éteint tant que l'élève n'a pas appuyé sur son bouton : la page s'ouvre, se mesure, se teste et
-s'imprime comme avant.
+Le mode mission est allumé d'emblée pour l'élève (14/11/2026) ; un robot de test (`navigator.webdriver`) ouvre la page
+complète, qui se mesure, se teste et s'imprime comme avant.
 """
 import pathlib
 import re
