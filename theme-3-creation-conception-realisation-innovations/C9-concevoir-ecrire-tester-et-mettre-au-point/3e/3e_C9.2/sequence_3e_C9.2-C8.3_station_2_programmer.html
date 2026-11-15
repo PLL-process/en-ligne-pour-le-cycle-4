@@ -1804,9 +1804,9 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <div class="assoc"><fieldset class="qcm-groupe" id="a3_p1b" data-melange="1">
   <legend>À cette vitesse, dans quel niveau la station se trouve-t-elle ?</legend>
   <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__1" value="ouragan : 125 est au-dessus de 118, mais en dessous de 178"><label for="a3_p1b__1">ouragan : 125 est au-dessus de 118, mais en dessous de 178</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__2" value="tempête tropicale"><label for="a3_p1b__2">tempête tropicale</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__3" value="ouragan majeur"><label for="a3_p1b__3">ouragan majeur</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__4" value="veille"><label for="a3_p1b__4">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__2" value="tempête tropicale : 125 est au-dessus de 63, c&#x27;est le premier seuil franchi" data-pourquoi="125 dépasse aussi 118 : le test de 118 passe avant celui de 63."><label for="a3_p1b__2">tempête tropicale : 125 est au-dessus de 63, c'est le premier seuil franchi</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__3" value="ouragan majeur : 125 est déjà un vent très fort pour la Martinique" data-pourquoi="125 n'atteint pas 178."><label for="a3_p1b__3">ouragan majeur : 125 est déjà un vent très fort pour la Martinique</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__4" value="veille : 125 n&#x27;atteint pas encore le dernier seuil, celui de 178" data-pourquoi="125 dépasse 63 et 118 : ce n'est pas la veille."><label for="a3_p1b__4">veille : 125 n'atteint pas encore le dernier seuil, celui de 178</label></div>
 </fieldset></div>
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier1-TON NOM</code> avant de passer au palier 2.</p>
     </div>
@@ -1818,17 +1818,17 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <p>👀 <b>VÉRIFIE au simulateur :</b> quatre positions du potentiomètre → quatre messages. <br>Puis <b>les six frontières</b>, qui sont le vrai test : <b>62</b> puis <b>63</b>, <b>117</b> puis <b>118</b>, <b>177</b> puis <b>178</b>. <br>Au banc d'essai de cette page, fais aussi passer la station par les <b>quatre niveaux</b> (le banc le trace ✔).</p>
       <div class="assoc"><fieldset class="qcm-groupe" id="a3_p2" data-melange="1">
   <legend>Ton camarade a mis le test « ≥ <code>seuilJaune</code> » EN PREMIER. À 200 km/h, son programme annonce…</legend>
-  <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__2" value="ouragan majeur, comme le tien"><label for="a3_p2__2">ouragan majeur, comme le tien</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__2" value="ouragan majeur, comme le tien : l&#x27;ordre des tests ne change pas le résultat" data-pourquoi="Le premier test vrai l'emporte : à 200 km/h, « ≥ seuilJaune » est déjà vrai."><label for="a3_p2__2">ouragan majeur, comme le tien : l'ordre des tests ne change pas le résultat</label></div>
   <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__1" value="tempête tropicale — c&#x27;est le bug, et il coûte DEUX niveaux !"><label for="a3_p2__1">tempête tropicale — c'est le bug, et il coûte DEUX niveaux !</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__3" value="veille"><label for="a3_p2__3">veille</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__4" value="un message d&#x27;erreur"><label for="a3_p2__4">un message d'erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__3" value="veille : à 200 km/h, le premier test répond NON et tout s&#x27;arrête" data-pourquoi="200 dépasse le seuil jaune : le premier test répond OUI."><label for="a3_p2__3">veille : à 200 km/h, le premier test répond NON et tout s'arrête</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p2" id="a3_p2__4" value="un message d&#x27;erreur, car deux tests peuvent répondre OUI à la fois" data-pourquoi="Le programme ne signale rien : il s'arrête au premier test vrai, sans erreur."><label for="a3_p2__4">un message d'erreur, car deux tests peuvent répondre OUI à la fois</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a3_p2b" data-melange="1">
   <legend>Une camarade a utilisé « &gt; <code>seuilRouge</code> » au lieu de « ≥ ». Sur quelle valeur exactement son programme se trompe-t-il ?</legend>
-  <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__4" value="sur aucune : « &gt; » et « ≥ » font la même chose"><label for="a3_p2b__4">sur aucune : « &gt; » et « ≥ » font la même chose</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__2" value="sur toutes les valeurs au-dessus de 178"><label for="a3_p2b__2">sur toutes les valeurs au-dessus de 178</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__4" value="sur aucune : « &gt; » et « ≥ » font la même chose dès qu&#x27;on arrondit la vitesse" data-pourquoi="À 178 pile, « &gt; 178 » répond NON et « ≥ 178 » répond OUI."><label for="a3_p2b__4">sur aucune : « > » et « ≥ » font la même chose dès qu'on arrondit la vitesse</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__2" value="sur toutes les valeurs au-dessus de 178 : elle affiche « ouragan » au lieu d&#x27;« ouragan majeur »" data-pourquoi="Au-dessus de 178, « &gt; » et « ≥ » répondent tous deux OUI."><label for="a3_p2b__2">sur toutes les valeurs au-dessus de 178 : elle affiche « ouragan » au lieu d'« ouragan majeur »</label></div>
   <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__1" value="sur 178 pile, et sur elle seule : elle affiche « ouragan » au lieu d&#x27;« ouragan majeur »"><label for="a3_p2b__1">sur 178 pile, et sur elle seule : elle affiche « ouragan » au lieu d'« ouragan majeur »</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__3" value="sur toutes les valeurs en dessous de 63"><label for="a3_p2b__3">sur toutes les valeurs en dessous de 63</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p2b" id="a3_p2b__3" value="sur toutes les valeurs en dessous de 63" data-pourquoi="Le test du seuil rouge ne change rien sous 63."><label for="a3_p2b__3">sur toutes les valeurs en dessous de 63</label></div>
 </fieldset></div>
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier2-TON NOM</code>. Si un doute : compare bloc à bloc avec la planche, PUIS appelle le professeur.</p>
     </div>
@@ -1867,17 +1867,17 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <p>👀 <b>VÉRIFIE au simulateur :</b> vert seul en dessous de 63, jaune seul dès <b>63</b>, orange seul dès <b>118</b>, rouge <b>+ buzzer</b> dès <b>178</b> — et <b>jamais deux voyants ensemble</b>. <br>Balaye lentement toute la course du potentiomètre en surveillant ce point.</p>
       <div class="assoc"><fieldset class="qcm-groupe" id="a3_p3" data-melange="1">
   <legend>Le vent souffle à 130 km/h. L'état correct de la station est…</legend>
-  <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__4" value="jaune et orange allumés tous les deux"><label for="a3_p3__4">jaune et orange allumés tous les deux</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__2" value="vert allumé, tout le reste éteint"><label for="a3_p3__2">vert allumé, tout le reste éteint</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__3" value="rouge allumé et buzzer qui sonne"><label for="a3_p3__3">rouge allumé et buzzer qui sonne</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__4" value="jaune et orange allumés tous les deux, buzzer muet, écran « OURAGAN » : 130 dépasse 63 et 118" data-pourquoi="Un seul voyant à la fois : le cahier des charges l'impose."><label for="a3_p3__4">jaune et orange allumés tous les deux, buzzer muet, écran « OURAGAN » : 130 dépasse 63 et 118</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__2" value="vert allumé fixe, tout le reste éteint, écran « VEILLE » : l&#x27;alerte n&#x27;a pas encore commencé" data-pourquoi="130 dépasse 118 : l'alerte a commencé."><label for="a3_p3__2">vert allumé fixe, tout le reste éteint, écran « VEILLE » : l'alerte n'a pas encore commencé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__3" value="rouge allumé et pulsant, buzzer qui sonne, écran « OURAGAN MAJEUR » : c&#x27;est déjà un vent violent" data-pourquoi="130 n'atteint pas 178 : le buzzer reste muet."><label for="a3_p3__3">rouge allumé et pulsant, buzzer qui sonne, écran « OURAGAN MAJEUR » : c'est déjà un vent violent</label></div>
   <div class="qcm-option"><input type="radio" name="a3_p3" id="a3_p3__1" value="orange seul allumé et pulsant, les trois autres voyants éteints, buzzer muet, écran « OURAGAN »"><label for="a3_p3__1">orange seul allumé et pulsant, les trois autres voyants éteints, buzzer muet, écran « OURAGAN »</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a3_p3b" data-melange="1">
   <legend>En simulant, tu vois l'orange ET le rouge allumés en même temps. La cause la plus probable :</legend>
-  <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__2" value="le potentiomètre est cassé"><label for="a3_p3b__2">le potentiomètre est cassé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__2" value="le potentiomètre est cassé et envoie deux valeurs à la fois" data-pourquoi="Le potentiomètre donne une seule valeur à la fois : il ne peut pas allumer deux voyants."><label for="a3_p3b__2">le potentiomètre est cassé et envoie deux valeurs à la fois</label></div>
   <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__1" value="un sous-programme allume sa sortie sans éteindre les autres"><label for="a3_p3b__1">un sous-programme allume sa sortie sans éteindre les autres</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__3" value="la boucle tourne trop vite"><label for="a3_p3b__3">la boucle tourne trop vite</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__4" value="il manque le bloc « attendre 200 millisecondes »"><label for="a3_p3b__4">il manque le bloc « attendre 200 millisecondes »</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__3" value="la boucle tourne trop vite pour que l&#x27;œil voie le changement" data-pourquoi="Même lente, la boucle laisserait allumée une sortie qu'on n'éteint pas."><label for="a3_p3b__3">la boucle tourne trop vite pour que l'œil voie le changement</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p3b" id="a3_p3b__4" value="il manque le bloc « attendre 200 millisecondes »" data-pourquoi="Attendre ne change pas quelles sorties sont allumées."><label for="a3_p3b__4">il manque le bloc « attendre 200 millisecondes »</label></div>
 </fieldset></div>
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier3-TON NOM</code>, puis une copie propre et commentée sous <code>3e-STATION-complet-TON NOM</code>. <br>Ton programme commande maintenant un système entier : capteur → décision → écran, voyants et buzzer.</p>
     </div>

@@ -294,3 +294,18 @@ d'origine des propositions (`ORIGINE`), puisque le mélange change leur place.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+## Révision du 15/11/2026, suite — la longueur des bonnes réponses, le pourquoi des erreurs
+
+85 propositions fausses s'allongent d'une raison plausible (la bonne réponse était la plus longue dans 33 questions sur 48) ;
+le mode mission reçoit 135 pourquoi (`mission_3e_C9.2.json`), recopiés dans les quatre pages. Le banc garde ses questions :
+l'ordre d'origine (`ORIGINE`) suit les nouveaux libellés.
+
+- `node tests_3e_C9.2-C8.3.mjs .` : **167 / 167**.
+- `node tests_regle_311_3e_C9.2.mjs` : **34 / 34**.
+- `node tests_pont_en_h.mjs` : **37 / 37**.
+- `node _outils/mode_mission/banc_generique.mjs --detail` sur les cinq pages : chaque mauvaise proposition jouée a son
+  pourquoi (135 / 135 sur la page tout-en-un ; 60, 15, 27 et 33 sur les quatre pages), aucun refus.
+- `audit_aeration.py --strict` : 0 sur les cinq pages.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
