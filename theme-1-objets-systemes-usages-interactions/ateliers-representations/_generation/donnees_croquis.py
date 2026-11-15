@@ -1157,18 +1157,18 @@ E4 = dict(
            "Ton choix → la solution qui répond au plus de lignes, avec deux raisons écrites.</p>"],
     jumeau=dict(consigne="Il faut aussi fixer le petit panneau solaire de la station sur le même poteau. Donne trois principes de "
                          "fixation vraiment différents, en une ligne chacun, et dis lequel tu gardes.",
-                correction="Par exemple&nbsp;: un <b>collier</b> serré autour du poteau, avec une équerre inclinée&nbsp;; une "
-                           "<b>platine</b> au sommet du poteau, le panneau posé dessus&nbsp;; un <b>cadre au sol</b>, à côté du "
-                           "poteau. On peut garder le collier&nbsp;: le panneau reste près du poteau, le vent a peu de prise, et il "
+                correction="Par exemple&nbsp;: <br>un <b>collier</b> serré autour du poteau, avec une équerre inclinée&nbsp;; <br>une "
+                           "<b>platine</b> au sommet du poteau, le panneau posé dessus&nbsp;; <br>un <b>cadre au sol</b>, à côté du "
+                           "poteau. <br>On peut garder le collier&nbsp;: le panneau reste près du poteau, le vent a peu de prise, et il "
                            "se démonte avec une clé. Les deux autres choix sont justes aussi, s'ils sont argumentés."),
     correction=[
         _figure(SIRENE, "Trois croquis possibles, de trois principes différents. Les tiens peuvent être autres.",
                 "<p>Solution 1, collier serré : la sirène est tenue sur le côté du poteau par deux colliers à boulons ; cote : "
-                "diamètre du poteau 60. Solution 2, platine au sommet : une plaque vissée en haut du poteau, la sirène posée "
-                "dessus ; cote : hauteur du poteau 3 m. Solution 3, bras en équerre : un bras de 50 cm renforcé par une jambe de "
-                "force, la sirène accrochée sous son bout. Chaque croquis a une flèche rouge marquée vent.</p>"),
-        "<b>Solution 1, le collier serré</b> → principe&nbsp;: serrer autour du poteau → la sirène reste tout près du poteau → le "
-        "vent a peu de prise sur la fixation → elle se démonte avec une clé",
+                "diamètre du poteau 60. <br>Solution 2, platine au sommet : une plaque vissée en haut du poteau, la sirène posée "
+                "dessus ; cote : hauteur du poteau 3 m. <br>Solution 3, bras en équerre : un bras de 50 cm renforcé par une jambe de "
+                "force, la sirène accrochée sous son bout. <br>Chaque croquis a une flèche rouge marquée vent.</p>"),
+        "<b>Solution 1, le collier serré</b> → principe&nbsp;: serrer autour du poteau. <br>La sirène reste tout près du poteau&nbsp;: le "
+        "vent a peu de prise sur la fixation. <br>Elle se démonte avec une clé.",
         "<b>Solution 2, la platine au sommet</b> → principe&nbsp;: poser sur le haut du poteau → solide, et la sirène domine le "
         "quartier → mais tout l'effort du vent passe par quatre vis",
         "<b>Solution 3, le bras en équerre</b> → principe&nbsp;: accrocher au bout d'un bras → la sirène s'éloigne du poteau → le "

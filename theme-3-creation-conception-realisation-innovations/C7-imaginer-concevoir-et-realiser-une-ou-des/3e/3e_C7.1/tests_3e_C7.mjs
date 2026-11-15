@@ -21,6 +21,34 @@ import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 import { pathToFileURL } from 'node:url';
+// Les questions posées par une liste déroulante sont devenues des boutons radio (n°300, 14/11/2026) : ce shim garde les
+// appels du banc (selectOption, fill, inputValue) — une chaîne vise la valeur ou le libellé, {index} la place.
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -97,7 +125,7 @@ function verifLiens() {
 
 const nav = await chromium.launch();
 async function ouvrir(ctx, fichier) {
-  const page = await ctx.newPage();
+  const page = _groupesRadio(await ctx.newPage());
   const erreurs = [];
   page.on("pageerror", e => erreurs.push(String(e)));
   page.on("console", m => { if (m.type() === "error" && !/net::|ERR_/.test(m.text())) erreurs.push(m.text()); });
@@ -223,9 +251,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — n°26 : le billet d'entrée, hors progression — */
 {
   await ouvrirSeanceDe(page, "#be_1");   // le billet est dans l'ouverture : séance 1
-  await page.selectOption("#be_1", { index: 1 });
-  await page.selectOption("#be_2", { index: 1 });
-  await page.selectOption("#be_3", { index: 1 });
+  // la première proposition (index 0 en boutons radio ; index 1 dans l'ancienne liste, après « — choisir — »)
+  await page.selectOption("#be_1", { index: 0 });
+  await page.selectOption("#be_2", { index: 0 });
+  await page.selectOption("#be_3", { index: 0 });
   await page.click("#btnBillet");
   await page.waitForTimeout(150);
   const fb = (await page.locator("#fbBillet").textContent()) || "";
@@ -359,7 +388,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
     const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
     await ctxA.addInitScript(() => localStorage.setItem("seq_3e_C7_capteur_confort", JSON.stringify({ inputs: {}, exp: { parcours: "a" } })));
-    const pA = await ctxA.newPage();
+    const pA = _groupesRadio(await ctxA.newPage());
     await pA.goto(url(CFG.seq));
     await pA.waitForTimeout(400);
     const classeA = await pA.evaluate(() => document.body.className);
@@ -548,7 +577,7 @@ async function verifierActivite(n) {
       par: { s: ["0", "1", "2", "3", "4", "5"] }
     }));
   });
-  const pV = await ctxV.newPage();
+  const pV = _groupesRadio(await ctxV.newPage());
   const eV = [];
   pV.on("pageerror", e => eV.push(String(e)));
   await pV.goto(url(CFG.seq));
@@ -570,6 +599,8 @@ async function verifierActivite(n) {
   const reseau = [];
   ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
   const { page: pe, erreurs: ee } = await ouvrir(ctxE, CFG.seq);
+  // le Bonus se replie (révision du 14/11/2026) : on l'ouvre, comme l'élève qui a fini
+  await pe.evaluate(() => document.querySelectorAll("details.bonus-replie").forEach((d) => { d.open = true; }));
   await eprouverPose(pe, ["vs1", "vs2"], ok);
   await eprouverEditeurs(pe, [
     { bloc: "vs1", nom: "activité 3b", onglet: "#tab-s2", depart: { sortie: "" },
@@ -587,7 +618,7 @@ async function verifierActivite(n) {
 /* — aucun envoi réseau — */
 {
   const sorties = [];
-  const p2 = await ctx.newPage();
+  const p2 = _groupesRadio(await ctx.newPage());
   p2.on("request", r => { if (/^https?:/.test(r.url())) sorties.push(r.url()); });
   await p2.goto(url(CFG.seq));
   await p2.waitForTimeout(800);
