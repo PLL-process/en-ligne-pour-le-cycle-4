@@ -31098,3 +31098,22 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 863 · 1 846 → 910 · **1 698**. Règles d'or 0 ✘ ; aération 19 → 0. Bancs **38 / 38** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste au-dessus du repère (1 698 mots).** L'atelier, l'outil de la séance, y compte pour 310 mots ; les activités 2 et 3 posent cinq questions dont les propositions sont longues par construction (chacune porte sa raison, pour que la bonne ne se devine pas), environ 660 mots ; la synthèse et le bilan, qui ne se replient pas, environ 500.
+
+## 15/11/2026 — Révision des trois thèmes, 45 : `4e_C7.8` (le jardin publié)
+
+**Le constat.** La page était déjà sur le gabarit commun : 0 ✘ de règles d'or et 0 liste déroulante sur `main`. Il restait :
+- **15 écarts d'aération** ;
+- une séance 2 à 1 705 mots ;
+- la bonne réponse **la plus longue dans 11 questions sur 13**, jusqu'à 24 caractères de plus que les autres ;
+- une grille de quatre lignes pour quatre réponses (ce qu'on n'envoie pas, et pourquoi) : la dernière se devinait ;
+- 17 groupes dont la bonne réponse restait à sa place d'origine.
+
+**Ce qui est fait.**
+- **17 groupes mélangés.**
+- **19 propositions fausses s'allongent** d'une raison plausible, sans devenir justes : « est refusée par le réseau » devient « est refusée par le réseau, qui exige une unité ». Les bonnes réponses et les vérifications ne changent pas. La bonne réponse n'est plus la plus longue nulle part.
+- **Le mode mission explique chaque erreur** (`mission_4e_C7.8.json`) : 39 pourquoi, 4 indices de ligne, **une réponse de trop dans la grille** (« Elle s'envoie, mais seulement une fois par jour, à minuit. »).
+- **Le Bonus se replie** ; **aération : 15 → 0** (48 retours à la ligne) ; les annonces des deux séances passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 872 · 1 705 → 925 · **1 616**. Règles d'or 0 ✘ ; aération 15 → 0. Bancs **46 / 46** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 616 mots).** Le banc du lien, l'outil de la séance, y compte pour 228 mots ; trois activités et leurs neuf questions, environ 650 ; la synthèse et le bilan, qui ne se replient pas, environ 450. Les propositions allongées ajoutent une cinquantaine de mots : c'est le prix d'une bonne réponse qui ne se devine plus.
