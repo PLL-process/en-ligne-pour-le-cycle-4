@@ -31322,3 +31322,23 @@ L'unité jugée est le **bloc de question** (la carte d'activité qui contient u
 **Mesure.** Mots visibles : 860 · 1 528 → **676** · **1 317**. Règles d'or 5 → 0 ✘ ; menus 22 → 0 (cinq commandes de l'établi, déclarées) ; aération 8 → 0. Bancs **40 / 40** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (39 / 40) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
 
 **Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 317 mots).** L'établi, l'outil des deux séances, y compte pour 272 mots ; la synthèse, 160 ; le bilan et le positionnement, 214.
+
+## 15/11/2026 — Révision des trois thèmes, 52 : `5e_C8.1` (la patère du hall)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **16 questions posées par une liste déroulante** (n°300) ;
+- **une question avait deux fois la même réponse** : « Combien d'heures d'atelier demanderait-il ? » proposait deux fois « 10,0 h » ;
+- **la bonne réponse était la plus longue dans 7 questions sur 15**, jusqu'à 45 caractères de plus que les autres ;
+- 13 écarts d'aération ; une séance 2 à 1 400 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 16 listes en boutons radio ; le choix du matériau du simulateur est une commande, il reste une liste (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **trois versions étayées** (`etayage_sequence_5e_C8.1_patere-du-hall.json`).
+- **La réponse en double devient « 24,0 h »** : le prix du PLA en euros, lu à la place de ses heures — une erreur que l'élève peut vraiment faire.
+- **16 groupes mélangés** ; **18 propositions fausses allongées** d'une raison plausible, sans devenir justes. La bonne réponse n'est plus la plus longue que dans une question, dont les réponses sont des noms de matériaux.
+- **Le mode mission explique chaque erreur** (`mission_5e_C8.1.json`) : 47 pourquoi.
+- **Le Bonus se replie** ; **aération : 13 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence lit maintenant les boutons radio d'un groupe (le pas qui joue une réponse fausse) ; son shim joue un vrai clic (`input`, puis `change`).
+
+**Mesure.** Mots visibles : 523 · 1 400 → **518** · **1 364**. Règles d'or 5 → 0 ✘ ; menus 17 → 0 (une commande du simulateur, déclarée) ; aération 13 → 0. Bancs **39 / 39** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 364 mots).** Le simulateur, l'outil de la séance, y compte pour 123 mots ; les deux tableaux de l'activité 3 et de l'activité 4, 125 ; le bilan et le positionnement, 226 ; la synthèse, 119. Les propositions allongées ajoutent une centaine de mots : c'est le prix d'une bonne réponse qui ne se devine plus.
