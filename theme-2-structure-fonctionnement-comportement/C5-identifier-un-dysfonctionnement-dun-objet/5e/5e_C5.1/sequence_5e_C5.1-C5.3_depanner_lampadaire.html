@@ -1246,6 +1246,42 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<style id="css-qcm-c51">
+/* Règle d'or n°300 (révision du 14/11/2026) — une question se lit pendant qu'on y répond : groupe de boutons radio */
+fieldset.qcm-groupe{margin:10px 0 14px;padding:2px 0 2px 11px;min-width:0;border:0;border-left:3px solid var(--border);border-radius:0;background:none}
+fieldset.qcm-groupe>legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600;white-space:normal;font-size:.95em}
+fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee) .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;padding:7px 9px;border:2px solid transparent;border-radius:9px;background:rgba(255,255,255,.04)}
+fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee) .qcm-option:has(input:checked){border-color:var(--hl)}
+fieldset.qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:2px 0 0;flex-shrink:0;accent-color:var(--hl)}
+fieldset.qcm-groupe:not(.qcm-grille):not(.qcm-rangee) .qcm-option label{display:block;margin:0;flex:1;cursor:pointer}
+.qcm-consigne{margin:8px 0 4px;font-size:.92em;color:var(--sub)}
+.qcm-cles{margin:6px 0 8px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl)}
+/* à l'écran seulement : sur papier, la fiche commune met l'énoncé et ses choix sur une même ligne */
+@media screen{fieldset.qcm-grille,fieldset.qcm-rangee{display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;row-gap:2px}
+fieldset.qcm-grille>legend,fieldset.qcm-rangee>legend{flex:0 0 100%}}
+fieldset.qcm-grille .qcm-option,fieldset.qcm-rangee .qcm-option{display:inline-flex;align-items:center;gap:4px;margin:0;padding:6px 4px;min-height:44px;background:none;border:0}
+fieldset.qcm-grille .qcm-option input[type=radio],fieldset.qcm-rangee .qcm-option input[type=radio]{margin:0}
+fieldset.qcm-grille .qcm-option label{flex:none;font-weight:700;padding:0 3px;cursor:pointer}
+fieldset.qcm-rangee .qcm-option label{cursor:pointer;font-size:.92em}
+fieldset.qcm-groupe.ok{border-left:4px solid var(--ok)}
+fieldset.qcm-groupe.ko{border-left:4px solid var(--warn)}
+fieldset.qcm-groupe.ok>legend::after{content:" ✓";color:var(--ok)}
+fieldset.qcm-groupe.ko>legend::after{content:" — à revoir";color:var(--warn);font-weight:400}
+.confiance>fieldset,.confiance>p{flex:1 1 100%}
+/* le positionnement : quatre pastilles en deux rangées égales, plutôt que trois et une */
+.confiance fieldset.qcm-rangee .qcm-option{flex:0 0 calc(50% - 6px);min-width:0}
+ul.refus,ol.refus{margin:4px 0 10px;padding-left:22px}ul.refus li,ol.refus li{margin:3px 0}
+.bilan-champ{margin:10px 0 4px}.bilan-champ label{display:block;margin:0 0 5px;font-size:.92em}
+details.document-replie>summary{color:var(--sub)}
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+@media print{fieldset.qcm-groupe{border-left-color:#999!important}fieldset.qcm-groupe>legend::after{content:none!important}
+  .bilan-champ{break-inside:avoid}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -1394,9 +1430,9 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </div>
     <figure class="figure">
       <object data="Images/lampadaire_six_zones.svg" type="image/svg+xml" aria-label="Le lampadaire en panne avec six zones numérotées à inspecter" style="width:100%"></object>
-      <figcaption>Le lampadaire n°3 photographié lundi matin. Examine chaque zone numérotée AVANT de répondre.</figcaption>
+      <figcaption>Le lampadaire n°3 lundi matin, en dessin. <br>Examine chaque zone numérotée AVANT de répondre.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> a) clique sur les 6 zones de l'inspecteur pour noter ce que tu VOIS (le compteur doit atteindre 6/6) ; b) classe chaque observation ; c) désigne la pièce défectueuse et réponds à la question de sécurité.</div>
+    <div class="consigne"><b>Consigne&nbsp;:</b><br>① Clique sur les 6 zones de l'inspecteur et lis ce que tu VOIS : le compteur doit atteindre 6&nbsp;/&nbsp;6.<br>② Classe chaque observation.<br>③ Désigne la pièce défectueuse, puis réponds à la question de sécurité.</div>
     <div class="exo">
       <h4>a) J'examine zone par zone</h4>
       <div class="simu" style="margin:10px 0">
@@ -1415,26 +1451,72 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
         </div>
       </div>
       <h4>b) Je classe mes observations</h4>
-      <div class="assoc"><label for="z1">Zone 1 — poussière et feuilles sur le panneau :</label><select id="z1"><option value="">— choisir —</option><option>anomalie À NOTER (gêne la recharge, mais n'éteint pas tout)</option><option>état normal, rien à signaler</option><option>panne principale certaine</option></select></div>
-      <div class="assoc"><label for="z2">Zone 2 — lanterne LED, aspect extérieur :</label><select id="z2"><option value="">— choisir —</option><option>état normal, rien à signaler</option><option>anomalie À NOTER</option><option>panne principale certaine</option></select></div>
-      <div class="assoc"><label for="z3">Zone 3 — capot du capteur :</label><select id="z3"><option value="">— choisir —</option><option>anomalie GRAVE : capot fissuré, l'eau de l'orage a pu entrer</option><option>état normal, rien à signaler</option><option>simple trace de doigt</option></select></div>
-      <div class="assoc"><label for="z4">Zone 4 — détecteur de passage :</label><select id="z4"><option value="">— choisir —</option><option>état normal, rien à signaler</option><option>anomalie GRAVE</option><option>il a disparu</option></select></div>
-      <div class="assoc"><label for="z5">Zone 5 — voyant du coffret :</label><select id="z5"><option value="">— choisir —</option><option>anomalie GRAVE : voyant éteint alors qu'il devrait être vert</option><option>état normal, rien à signaler</option><option>le voyant est décoratif</option></select></div>
-      <div class="assoc"><label for="z6">Zone 6 — câble du capteur :</label><select id="z6"><option value="">— choisir —</option><option>anomalie GRAVE : le câble pend, débranché de sa borne</option><option>état normal, un câble pend toujours un peu</option><option>simple salissure</option></select></div>
+      <p class="qcm-consigne">Pour chaque zone, choisis une lettre&nbsp;:</p>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles&nbsp;:</p><ol><li><b>A</b>état normal : rien à signaler</li><li><b>B</b>anomalie à noter : elle gêne, mais n&#x27;explique pas la panne</li><li><b>C</b>anomalie grave : elle peut expliquer la panne</li></ol></div>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="z1" data-indice="Compare avec les lampes n°1 et n°2, juste à côté.">
+        <legend>Zone 1 — poussière et feuilles sur le panneau&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="z1" id="z1__1" value="état normal : rien à signaler"><label for="z1__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="z1" id="z1__2" value="anomalie à noter : elle gêne, mais n&#x27;explique pas la panne"><label for="z1__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="z1" id="z1__3" value="anomalie grave : elle peut expliquer la panne"><label for="z1__3">C</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="z2" data-indice="Regarde la vitre : est-elle propre, intacte ?">
+        <legend>Zone 2 — lanterne LED, aspect extérieur&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="z2" id="z2__1" value="état normal : rien à signaler"><label for="z2__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="z2" id="z2__2" value="anomalie à noter : elle gêne, mais n&#x27;explique pas la panne"><label for="z2__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="z2" id="z2__3" value="anomalie grave : elle peut expliquer la panne"><label for="z2__3">C</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="z3" data-indice="Un capot doit être lisse et bien fermé.">
+        <legend>Zone 3 — capot du capteur&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="z3" id="z3__1" value="état normal : rien à signaler"><label for="z3__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="z3" id="z3__2" value="anomalie à noter : elle gêne, mais n&#x27;explique pas la panne"><label for="z3__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="z3" id="z3__3" value="anomalie grave : elle peut expliquer la panne"><label for="z3__3">C</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="z4" data-indice="Lentille, boîtier, fixation : quelque chose cloche-t-il ?">
+        <legend>Zone 4 — détecteur de passage&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="z4" id="z4__1" value="état normal : rien à signaler"><label for="z4__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="z4" id="z4__2" value="anomalie à noter : elle gêne, mais n&#x27;explique pas la panne"><label for="z4__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="z4" id="z4__3" value="anomalie grave : elle peut expliquer la panne"><label for="z4__3">C</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="z5" data-indice="D'habitude, ce voyant est vert fixe.">
+        <legend>Zone 5 — voyant du coffret&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="z5" id="z5__1" value="état normal : rien à signaler"><label for="z5__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="z5" id="z5__2" value="anomalie à noter : elle gêne, mais n&#x27;explique pas la panne"><label for="z5__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="z5" id="z5__3" value="anomalie grave : elle peut expliquer la panne"><label for="z5__3">C</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="z6" data-indice="Un câble doit être branché sur sa borne.">
+        <legend>Zone 6 — câble du capteur&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="z6" id="z6__1" value="état normal : rien à signaler"><label for="z6__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="z6" id="z6__2" value="anomalie à noter : elle gêne, mais n&#x27;explique pas la panne"><label for="z6__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="z6" id="z6__3" value="anomalie grave : elle peut expliquer la panne"><label for="z6__3">C</label></div>
+      </fieldset>
       <h4>c) Je conclus mon inspection</h4>
-      <div class="assoc"><label for="c1_1">La pièce défectueuse la plus probable est…</label><select id="c1_1"><option value="">— choisir —</option><option>l'ensemble capteur : capot fissuré + câble débranché (l'orage a tout aggravé)</option><option>le panneau solaire, car il est sale</option><option>la lanterne LED, car elle est éteinte</option><option>le mât, car il est vertical</option></select></div>
-      <div class="assoc"><label for="c1_2">Avant de TOUCHER quoi que ce soit pour réparer, on doit…</label><select id="c1_2"><option value="">— choisir —</option><option>couper l'alimentation (interrupteur batterie) et prévenir un adulte</option><option>tirer sur le câble pour vérifier</option><option>arroser le capteur pour le nettoyer</option><option>démonter tout le coffret pour voir</option></select></div>
+      <fieldset class="qcm-groupe" id="c1_1" data-melange="1">
+        <legend>La pièce défectueuse la plus probable est…</legend>
+        <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__1" value="le panneau solaire : sa poussière bloque la recharge" data-pourquoi="Les lampes n°1 et n°2 sont aussi sales, et elles fonctionnent : la poussière gêne, elle n'éteint pas."><label for="c1_1__1">le panneau solaire : sa poussière bloque la recharge</label></div>
+        <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__2" value="la lanterne LED : c&#x27;est elle qui reste éteinte" data-pourquoi="Une lampe éteinte, c'est le symptôme ; sa vitre est intacte : la cause est ailleurs."><label for="c1_1__2">la lanterne LED : c&#x27;est elle qui reste éteinte</label></div>
+        <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__3" value="l&#x27;ensemble capteur : capot fissuré et câble débranché"><label for="c1_1__3">l&#x27;ensemble capteur : capot fissuré et câble débranché</label></div>
+        <div class="qcm-option"><input type="radio" name="c1_1" id="c1_1__4" value="le détecteur de passage : il ne voit plus passer le gardien" data-pourquoi="Son boîtier et sa lentille sont intacts : rien de visible ne l'accuse."><label for="c1_1__4">le détecteur de passage : il ne voit plus passer le gardien</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="c1_2" data-melange="1">
+        <legend>Avant de TOUCHER quoi que ce soit pour réparer, on doit…</legend>
+        <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__1" value="sécher tout de suite le connecteur humide" data-pourquoi="Sécher vient après : on ne met jamais les mains dans un circuit encore alimenté."><label for="c1_2__1">sécher tout de suite le connecteur humide</label></div>
+        <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__2" value="couper l&#x27;alimentation et prévenir un adulte"><label for="c1_2__2">couper l&#x27;alimentation et prévenir un adulte</label></div>
+        <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__3" value="tirer doucement sur le câble pour voir s&#x27;il tient" data-pourquoi="Tirer peut arracher le connecteur, et le circuit est encore alimenté."><label for="c1_2__3">tirer doucement sur le câble pour voir s&#x27;il tient</label></div>
+        <div class="qcm-option"><input type="radio" name="c1_2" id="c1_2__4" value="rebrancher le câble, puisqu&#x27;un clic suffit" data-pourquoi="Rebrancher, c'est déjà réparer : on se protège d'abord, même en très basse tension."><label for="c1_2__4">rebrancher le câble, puisqu&#x27;un clic suffit</label></div>
+      </fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Une ANOMALIE, c'est ce qui est différent de l'état normal : un capot doit être lisse et fermé, un câble doit être branché, le voyant doit être vert. Compare chaque zone à « comment ce devrait être ».</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Trois indices convergent : capot fissuré (zone 3) → l'eau est entrée → connecteur abîmé/débranché (zone 6) → le coffret signale un problème (voyant éteint, zone 5). Le panneau sale (zone 1) est une anomalie à noter… mais les DEUX autres lampes au même endroit fonctionnent : ce n'est pas lui qui éteint tout.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Cherche une histoire qui relie trois zones : une entrée d'eau, une connexion qui lâche, un coffret qui le signale.<br>Pour le panneau sale, regarde les lampes n°1 et n°2 : elles sont aussi sales… et elles fonctionnent.</p></details>
     <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb1" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
-      <p>Zones 2 et 4 : <b>normales</b>. Zone 1 : <b>anomalie à noter</b> (nettoyer le panneau, mais ce n'est pas la panne —
-      les lampes voisines, aussi exposées, fonctionnent). Zones 3, 5, 6 : <b>anomalies graves</b> qui racontent une histoire :
-      le capot fissuré a laissé entrer l'eau de l'orage, le connecteur a lâché, le coffret le signale par son voyant éteint.
-      Pièce défectueuse : <b>l'ensemble capteur (capot + câble)</b>. Et avant de toucher : <b>couper l'alimentation et
-      prévenir un adulte</b> — même en très basse tension, c'est LE réflexe du dépanneur (5e_C5.1).</p>
+      <p><b>b) Le classement des six zones</b></p>
+      <ul class="refus"><li><b>Zone 1 — poussière et feuilles sur le panneau</b> → <b>B, anomalie à noter : elle gêne, mais n&#x27;explique pas la panne</b>. <br>Les lampes n°1 et n°2, aussi sales, fonctionnent : la poussière gêne la recharge, elle n&#x27;éteint pas la lampe. On note qu&#x27;il faudra nettoyer le panneau.</li><li><b>Zone 2 — lanterne LED, aspect extérieur</b> → <b>A, état normal : rien à signaler</b>. <br>Vitre propre, aucune trace noire, aucun impact. Qu&#x27;elle reste éteinte, c&#x27;est le symptôme, pas un défaut de la lanterne.</li><li><b>Zone 3 — capot du capteur</b> → <b>C, anomalie grave : elle peut expliquer la panne</b>. <br>Une fissure traverse le capot, et des gouttelettes sont visibles dedans : l&#x27;eau de l&#x27;orage a pu entrer.</li><li><b>Zone 4 — détecteur de passage</b> → <b>A, état normal : rien à signaler</b>. <br>Lentille propre, boîtier intact et bien fixé : rien de visible ne l&#x27;accuse.</li><li><b>Zone 5 — voyant du coffret</b> → <b>C, anomalie grave : elle peut expliquer la panne</b>. <br>Il est éteint alors qu&#x27;il est d&#x27;habitude vert fixe : le coffret signale un problème.</li><li><b>Zone 6 — câble du capteur</b> → <b>C, anomalie grave : elle peut expliquer la panne</b>. <br>Il pend sous le coffret, son connecteur est sorti de la borne « CAPTEUR », et il est humide.</li></ul>
+      <p><b>c) La conclusion de l'inspection</b></p>
+      <p><b>La pièce défectueuse la plus probable est…</b> → <b>l&#x27;ensemble capteur : capot fissuré et câble débranché</b>. <br>Pourquoi : trois indices racontent la même histoire : le capot fissuré a laissé entrer l&#x27;eau (zone 3), le connecteur a lâché (zone 6), le coffret le signale (zone 5).</p>
+      <ul class="refus"><li>Pas «&nbsp;le panneau solaire : sa poussière bloque la recharge&nbsp;» : les lampes n°1 et n°2 sont aussi sales, et elles fonctionnent : la poussière gêne, elle n&#x27;éteint pas.</li><li>Pas «&nbsp;la lanterne LED : c&#x27;est elle qui reste éteinte&nbsp;» : une lampe éteinte, c&#x27;est le symptôme ; sa vitre est intacte : la cause est ailleurs.</li><li>Pas «&nbsp;le détecteur de passage : il ne voit plus passer le gardien&nbsp;» : son boîtier et sa lentille sont intacts : rien de visible ne l&#x27;accuse.</li></ul>
+      <p><b>Avant de TOUCHER quoi que ce soit pour réparer, on doit…</b> → <b>couper l&#x27;alimentation et prévenir un adulte</b>. <br>Pourquoi : même en très basse tension, c&#x27;est le premier réflexe du dépanneur : on ne touche pas un circuit alimenté, et on ne répare pas seul.</p>
+      <ul class="refus"><li>Pas «&nbsp;sécher tout de suite le connecteur humide&nbsp;» : sécher vient après : on ne met jamais les mains dans un circuit encore alimenté.</li><li>Pas «&nbsp;tirer doucement sur le câble pour voir s&#x27;il tient&nbsp;» : tirer peut arracher le connecteur, et le circuit est encore alimenté.</li><li>Pas «&nbsp;rebrancher le câble, puisqu&#x27;un clic suffit&nbsp;» : rebrancher, c&#x27;est déjà réparer : on se protège d&#x27;abord, même en très basse tension.</li></ul>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> l'inspection visuelle, c'est examiner zone par zone SANS démonter, comparer à l'état normal, noter ce qu'on VOIT et désigner la pièce suspecte. La panne laisse presque toujours un indice visible.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> accuser la première saleté venue (le panneau sale n'éteint pas la lampe) ; confondre « la lampe est éteinte » (le symptôme) avec la cause ; toucher avant d'avoir coupé l'alimentation.</div>
@@ -1458,28 +1540,79 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> protocole ordonné (6 étapes) + réparation simulée réussie + 2 questions de compréhension.</div>
       <div><b>Ressources :</b> le protocole du technicien ci-dessous.</div>
     </div>
-    <figure class="figure">
-      <object data="Images/protocole_six_etapes.svg" type="image/svg+xml" aria-label="Le protocole de réparation fourni en six étapes ordonnées" style="width:100%"></object>
-      <figcaption>Le protocole envoyé par le technicien. La sécurité est TOUJOURS l'étape n°1.</figcaption>
-    </figure>
-    <div class="consigne"><b>Consigne :</b> a) sans regarder le document, remets les étapes dans l'ordre (puis vérifie avec le protocole) ; b) exécute la réparation au simulateur en cliquant les étapes DANS L'ORDRE — une erreur remet à zéro, comme en vrai on s'arrête et on réfléchit ; c) réponds aux questions du dépanneur.</div>
+    <div class="consigne"><b>Consigne&nbsp;:</b><br>① Sans regarder le protocole, remets les étapes dans l'ordre.<br>② Ouvre le protocole du technicien et vérifie ton ordre.<br>③ Fais la réparation au simulateur, une étape après l'autre. Une erreur remet tout à zéro : comme en vrai, on s'arrête et on relit.<br>④ Réponds aux questions du dépanneur.</div>
     <div class="exo">
       <h4>a) Je remets le protocole en ordre</h4>
-      <div class="assoc"><label for="o2_a">« Rebrancher le câble du capteur (jusqu'au clic) » — étape n°</label><select id="o2_a"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o2_b">« Couper l'alimentation (interrupteur batterie) » — étape n°</label><select id="o2_b"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o2_c">« Tester : cacher le capteur, la lampe doit passer en veille » — étape n°</label><select id="o2_c"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o2_d">« Inspecter et sécher le connecteur » — étape n°</label><select id="o2_d"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o2_e">« Remettre l'alimentation (voyant vert) » — étape n°</label><select id="o2_e"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-      <div class="assoc"><label for="o2_f">« Remplacer le capot fissuré par la pièce neuve » — étape n°</label><select id="o2_f"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <p class="qcm-consigne">Pour chaque étape, choisis son numéro (1 = la première, 6 = la dernière)&nbsp;:</p>
+      <fieldset class="qcm-groupe qcm-grille qcm-nombres qcm-rangee" id="o2_a" data-indice="Que faut-il avoir fait avant de rebrancher un connecteur mouillé ?">
+        <legend>« Rebrancher le câble du capteur (jusqu&#x27;au clic) » — étape n°</legend>
+        <div class="qcm-option"><input type="radio" name="o2_a" id="o2_a__1" value="1"><label for="o2_a__1">1</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_a" id="o2_a__2" value="2"><label for="o2_a__2">2</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_a" id="o2_a__3" value="3"><label for="o2_a__3">3</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_a" id="o2_a__4" value="4"><label for="o2_a__4">4</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_a" id="o2_a__5" value="5"><label for="o2_a__5">5</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_a" id="o2_a__6" value="6"><label for="o2_a__6">6</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-nombres qcm-rangee" id="o2_b" data-indice="Quelle étape protège la personne qui répare ?">
+        <legend>« Couper l&#x27;alimentation (interrupteur batterie) » — étape n°</legend>
+        <div class="qcm-option"><input type="radio" name="o2_b" id="o2_b__1" value="1"><label for="o2_b__1">1</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_b" id="o2_b__2" value="2"><label for="o2_b__2">2</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_b" id="o2_b__3" value="3"><label for="o2_b__3">3</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_b" id="o2_b__4" value="4"><label for="o2_b__4">4</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_b" id="o2_b__5" value="5"><label for="o2_b__5">5</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_b" id="o2_b__6" value="6"><label for="o2_b__6">6</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-nombres qcm-rangee" id="o2_c" data-indice="Quelle étape prouve que la réparation a réussi ?">
+        <legend>« Tester : cacher le capteur, la lampe doit passer en veille » — étape n°</legend>
+        <div class="qcm-option"><input type="radio" name="o2_c" id="o2_c__1" value="1"><label for="o2_c__1">1</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_c" id="o2_c__2" value="2"><label for="o2_c__2">2</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_c" id="o2_c__3" value="3"><label for="o2_c__3">3</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_c" id="o2_c__4" value="4"><label for="o2_c__4">4</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_c" id="o2_c__5" value="5"><label for="o2_c__5">5</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_c" id="o2_c__6" value="6"><label for="o2_c__6">6</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-nombres qcm-rangee" id="o2_d" data-indice="On regarde une pièce avant de la remettre en place.">
+        <legend>« Inspecter et sécher le connecteur » — étape n°</legend>
+        <div class="qcm-option"><input type="radio" name="o2_d" id="o2_d__1" value="1"><label for="o2_d__1">1</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_d" id="o2_d__2" value="2"><label for="o2_d__2">2</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_d" id="o2_d__3" value="3"><label for="o2_d__3">3</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_d" id="o2_d__4" value="4"><label for="o2_d__4">4</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_d" id="o2_d__5" value="5"><label for="o2_d__5">5</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_d" id="o2_d__6" value="6"><label for="o2_d__6">6</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-nombres qcm-rangee" id="o2_e" data-indice="On remet le courant quand tous les travaux sont finis.">
+        <legend>« Remettre l&#x27;alimentation (voyant vert) » — étape n°</legend>
+        <div class="qcm-option"><input type="radio" name="o2_e" id="o2_e__1" value="1"><label for="o2_e__1">1</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_e" id="o2_e__2" value="2"><label for="o2_e__2">2</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_e" id="o2_e__3" value="3"><label for="o2_e__3">3</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_e" id="o2_e__4" value="4"><label for="o2_e__4">4</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_e" id="o2_e__5" value="5"><label for="o2_e__5">5</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_e" id="o2_e__6" value="6"><label for="o2_e__6">6</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-nombres qcm-rangee" id="o2_f" data-indice="Le capot protège le capteur : on le pose une fois le câble rebranché.">
+        <legend>« Remplacer le capot fissuré par la pièce neuve » — étape n°</legend>
+        <div class="qcm-option"><input type="radio" name="o2_f" id="o2_f__1" value="1"><label for="o2_f__1">1</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_f" id="o2_f__2" value="2"><label for="o2_f__2">2</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_f" id="o2_f__3" value="3"><label for="o2_f__3">3</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_f" id="o2_f__4" value="4"><label for="o2_f__4">4</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_f" id="o2_f__5" value="5"><label for="o2_f__5">5</label></div>
+        <div class="qcm-option"><input type="radio" name="o2_f" id="o2_f__6" value="6"><label for="o2_f__6">6</label></div>
+      </fieldset>
+      <details class="document-replie" id="protocole-doc"><summary>📄 Le protocole du technicien — ouvre-le APRÈS avoir rangé les étapes, pour vérifier ton ordre</summary>
+        <figure class="figure">
+          <object data="Images/protocole_six_etapes.svg" type="image/svg+xml" aria-label="Le protocole de réparation fourni en six étapes ordonnées" style="width:100%"></object>
+          <figcaption>Le protocole envoyé par le technicien. La sécurité est TOUJOURS l'étape n°1.</figcaption>
+        </figure>
+      </details>
       <h4>b) J'exécute la réparation au simulateur</h4>
       <div class="simu" style="margin:10px 0">
         <div>
-          <button class="btn small ghost repbtn" data-etape="1" type="button">🔌 Couper l'alimentation</button>
-          <button class="btn small ghost repbtn" data-etape="2" type="button">🔍 Inspecter / sécher le connecteur</button>
-          <button class="btn small ghost repbtn" data-etape="3" type="button">🔗 Rebrancher le câble</button>
           <button class="btn small ghost repbtn" data-etape="4" type="button">🧩 Remplacer le capot</button>
-          <button class="btn small ghost repbtn" data-etape="5" type="button">⚡ Remettre l'alimentation</button>
+          <button class="btn small ghost repbtn" data-etape="1" type="button">🔌 Couper l'alimentation</button>
           <button class="btn small ghost repbtn" data-etape="6" type="button">✋ Tester (cacher le capteur)</button>
+          <button class="btn small ghost repbtn" data-etape="3" type="button">🔗 Rebrancher le câble</button>
+          <button class="btn small ghost repbtn" data-etape="5" type="button">⚡ Remettre l'alimentation</button>
+          <button class="btn small ghost repbtn" data-etape="2" type="button">🔍 Inspecter / sécher le connecteur</button>
           <button class="btn small ghost" id="btnRepReset" type="button">↺ Recommencer la réparation</button>
         </div>
         <div class="simu-ecran" aria-live="polite">
@@ -1490,19 +1623,34 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
         </div>
       </div>
       <h4>c) Les questions du dépanneur</h4>
-      <div class="assoc"><label for="q2_1">Pourquoi couper l'alimentation AVANT tout le reste ?</label><select id="q2_1"><option value="">— choisir —</option><option>pour travailler sans risque : jamais les mains dans un circuit alimenté, même en très basse tension</option><option>pour économiser la batterie pendant la réparation</option><option>parce que la lampe éblouit</option><option>ce n'est pas vraiment nécessaire</option></select></div>
-      <div class="assoc"><label for="q2_2">Pourquoi le TEST final fait-il partie du protocole ?</label><select id="q2_2"><option value="">— choisir —</option><option>parce que seul le test PROUVE que la réparation a réussi</option><option>pour user un peu la lampe neuve</option><option>par simple tradition</option><option>pour faire plaisir au gardien</option></select></div>
+      <fieldset class="qcm-groupe" id="q2_1" data-melange="1">
+        <legend>Pourquoi couper l&#x27;alimentation AVANT tout le reste ?</legend>
+        <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__1" value="pour économiser la batterie pendant les travaux" data-pourquoi="La batterie n'est pas en jeu : couper protège la personne qui répare, et le circuit."><label for="q2_1__1">pour économiser la batterie pendant les travaux</label></div>
+        <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__2" value="pour que le voyant du coffret repasse au vert" data-pourquoi="Le voyant repasse au vert quand on REMET l'alimentation, à l'étape 5."><label for="q2_1__2">pour que le voyant du coffret repasse au vert</label></div>
+        <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__3" value="parce que la lampe allumée éblouirait le dépanneur" data-pourquoi="La lampe est en panne, éteinte : le danger, c'est le courant, pas la lumière."><label for="q2_1__3">parce que la lampe allumée éblouirait le dépanneur</label></div>
+        <div class="qcm-option"><input type="radio" name="q2_1" id="q2_1__4" value="pour ne jamais travailler sur un circuit alimenté"><label for="q2_1__4">pour ne jamais travailler sur un circuit alimenté</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="q2_2" data-melange="1">
+        <legend>Pourquoi le TEST final fait-il partie du protocole ?</legend>
+        <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__1" value="parce que seul le test prouve que la réparation a réussi"><label for="q2_2__1">parce que seul le test prouve que la réparation a réussi</label></div>
+        <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__2" value="pour noter l&#x27;heure de fin sur le carnet de chantier du technicien" data-pourquoi="Noter l'heure ne prouve rien : on ne sait pas encore si la lampe réagit."><label for="q2_2__2">pour noter l&#x27;heure de fin sur le carnet de chantier du technicien</label></div>
+        <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__3" value="pour vérifier que le capot neuf a la bonne couleur" data-pourquoi="La couleur ne dit rien du fonctionnement : il faut voir la lampe réagir au capteur."><label for="q2_2__3">pour vérifier que le capot neuf a la bonne couleur</label></div>
+        <div class="qcm-option"><input type="radio" name="q2_2" id="q2_2__4" value="pour roder la lampe avant sa première nuit de service" data-pourquoi="Une lampe LED ne se rode pas : le test sert à vérifier que la panne a disparu."><label for="q2_2__4">pour roder la lampe avant sa première nuit de service</label></div>
+      </fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le protocole raconte une histoire logique : se protéger → comprendre l'état des pièces → remettre en état → protéger pour l'avenir → réalimenter → prouver. Quelle étape ne peut PAS venir avant les autres ?</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre : couper (1) → inspecter/sécher (2) → rebrancher (3) → remplacer le capot (4) → réalimenter (5) → tester (6). Au simulateur, si tu cliques une étape trop tôt, le chantier repart à zéro : c'est voulu — un vrai dépanneur ne « tente » pas une étape au hasard.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Deux étapes ont une place fixe : la première protège (on coupe), la dernière prouve (on teste).<br>Entre les deux : on regarde le connecteur avant de le rebrancher ; on pose le capot neuf avant de remettre le courant.<br>Au simulateur, une étape jouée trop tôt remet le chantier à zéro : c'est voulu, un vrai dépanneur ne « tente » pas une étape au hasard.</p></details>
     <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb2" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Ordre : <b>couper l'alimentation (1)</b> — la sécurité n'attend jamais — puis <b>inspecter/sécher (2)</b>,
-      <b>rebrancher (3)</b>, <b>remplacer le capot (4)</b> pour que la panne ne revienne pas à la prochaine pluie,
-      <b>réalimenter (5)</b> et <b>tester (6)</b> : cacher le capteur simule la nuit, la lampe doit passer en veille.
-      Couper d'abord = travailler sans risque ; tester à la fin = PROUVER la réussite. Suivre un protocole fourni,
-      c'est exactement la compétence 5e_C5.2 — en 3e, tu apprendras à É-CRI-RE ces protocoles toi-même.</p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p><b>a) L'ordre du protocole</b></p>
+      <ol class="refus"><li><b>Couper l&#x27;alimentation</b> : la sécurité d&#x27;abord : on ne travaille jamais sur un circuit alimenté.</li><li><b>Inspecter et sécher le connecteur</b> : on ne remet pas en place une pièce mouillée sans l&#x27;avoir regardée.</li><li><b>Rebrancher le câble du capteur</b> : jusqu&#x27;au clic : le connecteur est propre et sec.</li><li><b>Remplacer le capot fissuré</b> : sinon l&#x27;eau rentrera à la prochaine pluie, et la panne reviendra.</li><li><b>Remettre l&#x27;alimentation</b> : les travaux sont finis : le voyant du coffret repasse au vert.</li><li><b>Tester</b> : cacher le capteur simule la nuit : la lampe doit passer en veille. Seul ce test prouve la réparation.</li></ol>
+      <p><b>c) Les questions du dépanneur</b></p>
+      <p><b>Pourquoi couper l&#x27;alimentation AVANT tout le reste ?</b> → <b>pour ne jamais travailler sur un circuit alimenté</b>. <br>Pourquoi : couper d&#x27;abord, c&#x27;est se protéger, et protéger le circuit, pendant tout le reste du travail.</p>
+      <ul class="refus"><li>Pas «&nbsp;pour économiser la batterie pendant les travaux&nbsp;» : la batterie n&#x27;est pas en jeu : couper protège la personne qui répare, et le circuit.</li><li>Pas «&nbsp;pour que le voyant du coffret repasse au vert&nbsp;» : le voyant repasse au vert quand on REMET l&#x27;alimentation, à l&#x27;étape 5.</li><li>Pas «&nbsp;parce que la lampe allumée éblouirait le dépanneur&nbsp;» : la lampe est en panne, éteinte : le danger, c&#x27;est le courant, pas la lumière.</li></ul>
+      <p><b>Pourquoi le TEST final fait-il partie du protocole ?</b> → <b>parce que seul le test prouve que la réparation a réussi</b>. <br>Pourquoi : tant qu&#x27;on n&#x27;a pas vu la lampe réagir, la réparation n&#x27;est qu&#x27;un espoir. Cacher le capteur simule la nuit : la lampe doit passer en veille.</p>
+      <ul class="refus"><li>Pas «&nbsp;pour noter l&#x27;heure de fin sur le carnet de chantier du technicien&nbsp;» : noter l&#x27;heure ne prouve rien : on ne sait pas encore si la lampe réagit.</li><li>Pas «&nbsp;pour vérifier que le capot neuf a la bonne couleur&nbsp;» : la couleur ne dit rien du fonctionnement : il faut voir la lampe réagir au capteur.</li><li>Pas «&nbsp;pour roder la lampe avant sa première nuit de service&nbsp;» : une lampe LED ne se rode pas : le test sert à vérifier que la panne a disparu.</li></ul>
+      <p>Suivre un protocole fourni, c'est la compétence 5e_C5.2. En 3e, tu apprendras à écrire ces protocoles toi-même.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> un protocole de réparation = des étapes ordonnées, écrites par quelqu'un qui connaît l'objet ET les dangers. On le suit dans l'ordre, sans sauter d'étape, et on finit TOUJOURS par le test.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> rebrancher avant d'avoir coupé l'alimentation ; oublier le capot (la panne reviendrait) ; déclarer « réparé » sans avoir testé.</div>
@@ -1518,7 +1666,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p style="color:var(--hl);font-weight:600">Question directrice : que faire quand la pièce cassée ne se vend plus nulle part ?</p>
 
   <div class="activite" id="act3">
-    <header><span class="num">Activité 3</span><h3>Visite de l'atelier de fabrication de la commune</h3><span class="duree">⏱ 40 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
+    <header><span class="num">Activité 3</span><h3>Visite de l'atelier de fabrication de la commune</h3><span class="duree">⏱ 30 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
     <div class="meta-grid">
       <div><b>Objectif :</b> découvrir les 4 postes de l'atelier, associer chaque procédé à ce qu'il sait faire, et choisir le bon procédé pour le capot.</div>
       <div><b>Compétence :</b> 5e_C5.3.</div>
@@ -1529,29 +1677,77 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <object data="Images/atelier_procedes.svg" type="image/svg+xml" aria-label="Les quatre postes de l'atelier de fabrication et leurs procédés" style="width:100%"></object>
       <figcaption>L'atelier partenaire de la commune. Deux grandes familles : AJOUTER de la matière, ou EN ENLEVER.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> a) associe chaque besoin au bon poste de l'atelier ; b) réponds aux questions du fabricant ; c) au cahier, note les deux familles de procédés avec un exemple chacune.</div>
+    <div class="consigne"><b>Consigne&nbsp;:</b><br>① Associe chaque besoin au bon poste de l'atelier.<br>② Réponds aux questions du fabricant.<br>③ Au cahier, note les deux familles de procédés, avec un exemple chacune.</div>
     <div class="exo">
       <h4>a) Le bon poste pour chaque besoin</h4>
-      <div class="assoc"><label for="a3_1">Refaire le capot du capteur (pièce en volume, introuvable en magasin) :</label><select id="a3_1"><option value="">— choisir —</option><option>imprimante 3D (on ajoute la matière couche par couche)</option><option>découpeuse laser</option><option>perceuse à colonne</option><option>établi de façonnage</option></select></div>
-      <div class="assoc"><label for="a3_2">Découper un joint PLAT dans une plaque souple :</label><select id="a3_2"><option value="">— choisir —</option><option>découpeuse laser (on enlève la matière en découpant)</option><option>imprimante 3D</option><option>perceuse à colonne</option><option>établi de façonnage</option></select></div>
-      <div class="assoc"><label for="a3_3">Percer deux trous de fixation bien verticaux :</label><select id="a3_3"><option value="">— choisir —</option><option>perceuse à colonne (des trous précis et guidés)</option><option>imprimante 3D</option><option>découpeuse laser</option><option>établi de façonnage</option></select></div>
-      <div class="assoc"><label for="a3_4">Adoucir les bords de la pièce fraîchement imprimée :</label><select id="a3_4"><option value="">— choisir —</option><option>établi de façonnage (lime et ponçage de finition)</option><option>imprimante 3D</option><option>découpeuse laser</option><option>perceuse à colonne</option></select></div>
+      <p class="qcm-consigne">Pour chaque besoin, choisis le poste de l'atelier&nbsp;:</p>
+      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles&nbsp;:</p><ol><li><b>A</b>découpeuse laser</li><li><b>B</b>établi de façonnage</li><li><b>C</b>imprimante 3D</li><li><b>D</b>perceuse à colonne</li></ol></div>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="a3_1" data-indice="La pièce est-elle plate, ou en volume ?">
+        <legend>Refaire le capot du capteur (pièce en volume, introuvable en magasin)&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__1" value="découpeuse laser"><label for="a3_1__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__2" value="établi de façonnage"><label for="a3_1__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__3" value="imprimante 3D"><label for="a3_1__3">C</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_1" id="a3_1__4" value="perceuse à colonne"><label for="a3_1__4">D</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="a3_2" data-indice="Une forme plate, découpée dans une plaque : quel poste ?">
+        <legend>Découper un joint PLAT dans une plaque souple&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__1" value="découpeuse laser"><label for="a3_2__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__2" value="établi de façonnage"><label for="a3_2__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__3" value="imprimante 3D"><label for="a3_2__3">C</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_2" id="a3_2__4" value="perceuse à colonne"><label for="a3_2__4">D</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="a3_3" data-indice="Quel poste guide l'outil bien droit ?">
+        <legend>Percer deux trous de fixation bien verticaux&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__1" value="découpeuse laser"><label for="a3_3__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__2" value="établi de façonnage"><label for="a3_3__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__3" value="imprimante 3D"><label for="a3_3__3">C</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_3" id="a3_3__4" value="perceuse à colonne"><label for="a3_3__4">D</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-grille qcm-rangee" id="a3_4" data-indice="Une finition à la main : lime, papier de verre…">
+        <legend>Adoucir les bords de la pièce fraîchement imprimée&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__1" value="découpeuse laser"><label for="a3_4__1">A</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__2" value="établi de façonnage"><label for="a3_4__2">B</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__3" value="imprimante 3D"><label for="a3_4__3">C</label></div>
+        <div class="qcm-option"><input type="radio" name="a3_4" id="a3_4__4" value="perceuse à colonne"><label for="a3_4__4">D</label></div>
+      </fieldset>
       <h4>b) Les questions du fabricant</h4>
-      <div class="assoc"><label for="q3_1">L'impression 3D et la découpe laser appartiennent à deux familles différentes car…</label><select id="q3_1"><option value="">— choisir —</option><option>l'une AJOUTE de la matière (couche par couche), l'autre en ENLÈVE (dans une plaque)</option><option>l'une est électrique et pas l'autre</option><option>l'une est réservée aux adultes, l'autre aux élèves</option><option>il n'y a aucune différence</option></select></div>
-      <div class="assoc"><label for="q3_2">Pourquoi la découpeuse laser ne peut-elle PAS produire le capot ?</label><select id="q3_2"><option value="">— choisir —</option><option>parce qu'elle découpe des plaques : la pièce reste plate, or le capot est en volume</option><option>parce qu'elle est trop lente</option><option>parce que le plexiglas est interdit</option><option>elle le pourrait très bien</option></select></div>
-      <div class="assoc"><label for="q3_3">Dans l'atelier, avant d'utiliser une machine, il faut…</label><select id="q3_3"><option value="">— choisir —</option><option>mettre ses lunettes, attacher ses cheveux, et attendre l'autorisation ET la présence d'un adulte</option><option>appuyer sur tous les boutons pour tester</option><option>juste aller vite pour libérer le poste</option><option>rien de particulier</option></select></div>
+      <fieldset class="qcm-groupe" id="q3_1" data-melange="1">
+        <legend>L&#x27;impression 3D et la découpe laser appartiennent à deux familles différentes car…</legend>
+        <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__1" value="l&#x27;une travaille le plastique, l&#x27;autre seulement les métaux durs" data-pourquoi="La découpeuse laser de l'atelier découpe aussi du plastique et du bois : la matière ne les sépare pas."><label for="q3_1__1">l&#x27;une travaille le plastique, l&#x27;autre seulement les métaux durs</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__2" value="l&#x27;une ajoute de la matière, l&#x27;autre en retire d&#x27;une plaque"><label for="q3_1__2">l&#x27;une ajoute de la matière, l&#x27;autre en retire d&#x27;une plaque</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__3" value="l&#x27;une fonctionne à l&#x27;électricité, l&#x27;autre au gaz" data-pourquoi="Les deux machines fonctionnent à l'électricité : ce n'est pas ce qui les sépare."><label for="q3_1__3">l&#x27;une fonctionne à l&#x27;électricité, l&#x27;autre au gaz</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_1" id="q3_1__4" value="l&#x27;une est réservée aux adultes, l&#x27;autre aux élèves" data-pourquoi="Les deux s'utilisent avec un adulte présent : une famille de procédés dit ce qu'on fait de la matière."><label for="q3_1__4">l&#x27;une est réservée aux adultes, l&#x27;autre aux élèves</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="q3_2" data-melange="1">
+        <legend>Pourquoi la découpeuse laser ne peut-elle PAS produire le capot ?</legend>
+        <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__1" value="parce que son rayon ferait fondre le plastique" data-pourquoi="Elle découpe justement le plastique : ce qui la bloque, c'est la forme du capot, pas sa matière."><label for="q3_2__1">parce que son rayon ferait fondre le plastique</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__2" value="parce qu&#x27;une pièce découpée au laser n&#x27;est pas étanche" data-pourquoi="Le joint découpé au laser sert justement à rendre étanche : le problème est ailleurs."><label for="q3_2__2">parce qu&#x27;une pièce découpée au laser n&#x27;est pas étanche</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__3" value="parce qu&#x27;elle ne découpe que des pièces de plus d&#x27;un mètre de long" data-pourquoi="Elle découpe aussi de petites pièces, comme le joint : sa limite est ailleurs."><label for="q3_2__3">parce qu&#x27;elle ne découpe que des pièces de plus d&#x27;un mètre de long</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_2" id="q3_2__4" value="parce qu&#x27;elle découpe des plaques, et le capot est en volume"><label for="q3_2__4">parce qu&#x27;elle découpe des plaques, et le capot est en volume</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="q3_3" data-melange="1">
+        <legend>Dans l&#x27;atelier, avant d&#x27;utiliser une machine, il faut…</legend>
+        <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__1" value="lancer un essai à vide pour voir comment elle réagit" data-pourquoi="On ne lance aucune machine sans autorisation ni adulte présent, même « pour voir »."><label for="q3_3__1">lancer un essai à vide pour voir comment elle réagit</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__2" value="lire la notice, puis s&#x27;en servir seul si on l&#x27;a comprise" data-pourquoi="La notice aide, mais elle ne remplace ni les protections ni la présence d'un adulte."><label for="q3_3__2">lire la notice, puis s&#x27;en servir seul si on l&#x27;a comprise</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__3" value="s&#x27;équiper et attendre l&#x27;accord d&#x27;un adulte présent"><label for="q3_3__3">s&#x27;équiper et attendre l&#x27;accord d&#x27;un adulte présent</label></div>
+        <div class="qcm-option"><input type="radio" name="q3_3" id="q3_3__4" value="aller vite pour libérer le poste à l&#x27;élève suivant" data-pourquoi="Se presser fait les accidents : la sécurité passe avant, même s'il faut attendre."><label for="q3_3__4">aller vite pour libérer le poste à l&#x27;élève suivant</label></div>
+      </fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pose-toi UNE question par besoin : la pièce est-elle en VOLUME (3D) ou PLATE (laser) ? S'agit-il d'un TROU (perceuse) ou d'une FINITION (établi) ?</p></details>
     <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le capot enveloppe le capteur : c'est un objet en volume → seule l'imprimante 3D, qui construit couche par couche, peut le produire à l'unité. La laser découpe dans une plaque : parfait pour un joint, impossible pour une coque.</p></details>
     <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb3" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Capot → <b>imprimante 3D</b> · joint plat → <b>découpeuse laser</b> · trous → <b>perceuse à colonne</b> ·
-      finition → <b>établi</b>. Deux familles : <b>ajouter</b> la matière (impression 3D) ou <b>l'enlever</b>
-      (découpe, perçage, ponçage). La laser ne fait que du plat — le capot est une coque en volume. Et à l'atelier,
-      la sécurité passe avant tout : lunettes, cheveux attachés, autorisation + adulte présent (5e_C5.3).
-      La pièce sera imprimée en PETG, un plastique qui supporte le soleil et la pluie — tu justifieras ce genre
-      de choix en 3e.</p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p><b>a) Le bon poste pour chaque besoin</b></p>
+      <ul class="refus"><li><b>Refaire le capot du capteur (pièce en volume, introuvable en magasin)</b> → <b>C, imprimante 3D</b>. <br>Le capot est une coque en volume : l&#x27;imprimante 3D le construit couche par couche, à l&#x27;unité.</li><li><b>Découper un joint PLAT dans une plaque souple</b> → <b>A, découpeuse laser</b>. <br>Elle découpe une forme plate dans une plaque : on enlève de la matière.</li><li><b>Percer deux trous de fixation bien verticaux</b> → <b>D, perceuse à colonne</b>. <br>Le foret est guidé par la colonne : les trous sont droits et précis.</li><li><b>Adoucir les bords de la pièce fraîchement imprimée</b> → <b>B, établi de façonnage</b>. <br>Lime et ponçage : la finition se fait à la main, à l&#x27;établi.</li></ul>
+      <p><b>b) Les questions du fabricant</b></p>
+      <p><b>L&#x27;impression 3D et la découpe laser appartiennent à deux familles différentes car…</b> → <b>l&#x27;une ajoute de la matière, l&#x27;autre en retire d&#x27;une plaque</b>. <br>Pourquoi : l&#x27;imprimante 3D ajoute la matière couche par couche ; la découpeuse laser, la perceuse et la lime en enlèvent.</p>
+      <ul class="refus"><li>Pas «&nbsp;l&#x27;une travaille le plastique, l&#x27;autre seulement les métaux durs&nbsp;» : la découpeuse laser de l&#x27;atelier découpe aussi du plastique et du bois : la matière ne les sépare pas.</li><li>Pas «&nbsp;l&#x27;une fonctionne à l&#x27;électricité, l&#x27;autre au gaz&nbsp;» : les deux machines fonctionnent à l&#x27;électricité : ce n&#x27;est pas ce qui les sépare.</li><li>Pas «&nbsp;l&#x27;une est réservée aux adultes, l&#x27;autre aux élèves&nbsp;» : les deux s&#x27;utilisent avec un adulte présent : une famille de procédés dit ce qu&#x27;on fait de la matière.</li></ul>
+      <p><b>Pourquoi la découpeuse laser ne peut-elle PAS produire le capot ?</b> → <b>parce qu&#x27;elle découpe des plaques, et le capot est en volume</b>. <br>Pourquoi : la laser découpe une forme dans une plaque : la pièce reste plate. Le capot enveloppe le capteur : c&#x27;est une coque en volume.</p>
+      <ul class="refus"><li>Pas «&nbsp;parce que son rayon ferait fondre le plastique&nbsp;» : elle découpe justement le plastique : ce qui la bloque, c&#x27;est la forme du capot, pas sa matière.</li><li>Pas «&nbsp;parce qu&#x27;une pièce découpée au laser n&#x27;est pas étanche&nbsp;» : le joint découpé au laser sert justement à rendre étanche : le problème est ailleurs.</li><li>Pas «&nbsp;parce qu&#x27;elle ne découpe que des pièces de plus d&#x27;un mètre de long&nbsp;» : elle découpe aussi de petites pièces, comme le joint : sa limite est ailleurs.</li></ul>
+      <p><b>Dans l&#x27;atelier, avant d&#x27;utiliser une machine, il faut…</b> → <b>s&#x27;équiper et attendre l&#x27;accord d&#x27;un adulte présent</b>. <br>Pourquoi : lunettes, cheveux attachés, autorisation et adulte présent : la sécurité passe avant la machine.</p>
+      <ul class="refus"><li>Pas «&nbsp;lancer un essai à vide pour voir comment elle réagit&nbsp;» : on ne lance aucune machine sans autorisation ni adulte présent, même « pour voir ».</li><li>Pas «&nbsp;lire la notice, puis s&#x27;en servir seul si on l&#x27;a comprise&nbsp;» : la notice aide, mais elle ne remplace ni les protections ni la présence d&#x27;un adulte.</li><li>Pas «&nbsp;aller vite pour libérer le poste à l&#x27;élève suivant&nbsp;» : se presser fait les accidents : la sécurité passe avant, même s&#x27;il faut attendre.</li></ul>
+      <p><b>Pour aller plus loin :</b> le capot sera imprimé en PETG, un plastique qui supporte le soleil et la pluie. <br>Tu justifieras ce genre de choix en 3e.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> un atelier de fabrication permet de REFAIRE une pièce au lieu de jeter l'objet. Deux familles de procédés : AJOUTER de la matière (impression 3D) ou EN ENLEVER (découper, percer, poncer).</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> croire que l'imprimante 3D fait tout (elle est lente, et le plat se découpe bien mieux) ; oublier la finition ; toucher une machine sans autorisation.</div>
@@ -1566,52 +1762,120 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> 4 réponses.</div>
       <div><b>Ressources :</b> aucune — la démarche est dans ta tête maintenant.</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> le feu arrière du vélo du collège ne s'allume plus. Son support en plastique est cassé et la pile est peut-être morte. Applique la démarche du dépanneur.</div>
+    <div class="consigne"><b>Consigne&nbsp;:</b><br>Le feu arrière du vélo du collège ne s'allume plus.<br>Son support en plastique est cassé, et la pile est peut-être usée.<br>Applique la démarche du dépanneur.</div>
     <div class="exo">
-      <div class="assoc"><label for="r4_1">La PREMIÈRE chose à faire est…</label><select id="r4_1"><option value="">— choisir —</option><option>inspecter visuellement : support cassé, contacts verdis, ampoule noircie… sans forcer sur rien</option><option>acheter un vélo neuf</option><option>démonter tout le feu immédiatement</option><option>secouer le vélo pour voir</option></select></div>
-      <div class="assoc"><label for="r4_2">Avant de changer la pile, par sécurité et par méthode, on…</label><select id="r4_2"><option value="">— choisir —</option><option>suit l'ordre du protocole : ouvrir le boîtier comme indiqué, sortir la pile usagée, respecter le sens + et −</option><option>force le boîtier avec un tournevis n'importe où</option><option>met deux piles pour plus de puissance</option><option>mouille les contacts pour mieux conduire</option></select></div>
-      <div class="assoc"><label for="r4_3">Le support en plastique cassé, introuvable en magasin, peut être…</label><select id="r4_3"><option value="">— choisir —</option><option>réimprimé en 3D à l'atelier de la commune, à l'unité et sur mesure</option><option>remplacé par du ruban adhésif pour toujours</option><option>ignoré : le feu tiendra bien tout seul</option><option>découpé dans une plaque plate à la laser</option></select></div>
-      <div class="assoc"><label for="r4_4">La réparation est terminée quand…</label><select id="r4_4"><option value="">— choisir —</option><option>le test final réussit : le feu s'allume et tient sur son support</option><option>toutes les pièces sont rangées</option><option>on a refermé le boîtier, peu importe le reste</option><option>le gardien dit merci</option></select></div>
+      <fieldset class="qcm-groupe" id="r4_1" data-melange="1">
+        <legend>La PREMIÈRE chose à faire est…</legend>
+        <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__1" value="inspecter le feu des yeux, sans rien forcer"><label for="r4_1__1">inspecter le feu des yeux, sans rien forcer</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__2" value="changer la pile, la panne la plus fréquente" data-pourquoi="Changer une pièce au hasard, c'est parier : on observe d'abord, la panne laisse un indice."><label for="r4_1__2">changer la pile, la panne la plus fréquente</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__3" value="démonter tout le feu pour voir l&#x27;intérieur" data-pourquoi="Démonter avant d'observer peut abîmer le feu et effacer les indices."><label for="r4_1__3">démonter tout le feu pour voir l&#x27;intérieur</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_1" id="r4_1__4" value="acheter un feu neuf, c&#x27;est plus simple et plus rapide" data-pourquoi="On répare plutôt que jeter, et rien ne dit encore ce qui est en panne."><label for="r4_1__4">acheter un feu neuf, c&#x27;est plus simple et plus rapide</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="r4_2" data-melange="1">
+        <legend>Avant de changer la pile, par sécurité et par méthode, on…</legend>
+        <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__1" value="ouvre le boîtier au tournevis, là où il cède" data-pourquoi="Forcer le boîtier le casse : le protocole dit comment l'ouvrir."><label for="r4_2__1">ouvre le boîtier au tournevis, là où il cède</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__2" value="met deux piles au lieu d&#x27;une, pour que le feu éclaire plus fort" data-pourquoi="Le feu est prévu pour sa pile : en ajouter une peut l'abîmer."><label for="r4_2__2">met deux piles au lieu d&#x27;une, pour que le feu éclaire plus fort</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__3" value="suit le protocole : ouverture indiquée, sens + et − respecté"><label for="r4_2__3">suit le protocole : ouverture indiquée, sens + et − respecté</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_2" id="r4_2__4" value="mouille les contacts verdis pour qu&#x27;ils conduisent" data-pourquoi="L'eau abîme les contacts : c'est justement l'humidité qui les a verdis."><label for="r4_2__4">mouille les contacts verdis pour qu&#x27;ils conduisent</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="r4_3" data-melange="1">
+        <legend>Le support en plastique cassé, introuvable en magasin, peut être…</legend>
+        <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__1" value="découpé à la laser dans une plaque de plastique" data-pourquoi="Le support est une pièce en volume : la laser ne fait que des pièces plates."><label for="r4_3__1">découpé à la laser dans une plaque de plastique</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__2" value="réimprimé en 3D à l&#x27;atelier, à l&#x27;unité et sur mesure"><label for="r4_3__2">réimprimé en 3D à l&#x27;atelier, à l&#x27;unité et sur mesure</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__3" value="remplacé pour de bon par du ruban adhésif" data-pourquoi="Le ruban lâche sous la pluie et les secousses : c'est une rustine, pas une réparation."><label for="r4_3__3">remplacé pour de bon par du ruban adhésif</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_3" id="r4_3__4" value="percé à la perceuse à colonne pour le réparer" data-pourquoi="La perceuse fait des trous : elle ne refait pas une pièce cassée."><label for="r4_3__4">percé à la perceuse à colonne pour le réparer</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe" id="r4_4" data-melange="1">
+        <legend>La réparation est terminée quand…</legend>
+        <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__1" value="le boîtier est refermé et sa vis serrée" data-pourquoi="Refermer n'est pas prouver : rien ne dit encore que le feu s'allume."><label for="r4_4__1">le boîtier est refermé et sa vis serrée</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__2" value="la pile neuve est en place, dans le bon sens" data-pourquoi="C'est nécessaire, pas suffisant : le support peut lâcher, la lampe peut être grillée."><label for="r4_4__2">la pile neuve est en place, dans le bon sens</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__3" value="les pièces usagées sont rangées ou recyclées" data-pourquoi="Ranger est utile, mais cela ne montre pas que le feu fonctionne."><label for="r4_4__3">les pièces usagées sont rangées ou recyclées</label></div>
+        <div class="qcm-option"><input type="radio" name="r4_4" id="r4_4__4" value="le test réussit : le feu s&#x27;allume et tient bien"><label for="r4_4__4">le test réussit : le feu s&#x27;allume et tient bien</label></div>
+      </fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>C'est la même démarche que le lampadaire : OBSERVER d'abord (sans casser), RÉPARER dans l'ordre du protocole, REFABRIQUER ce qui manque, et PROUVER par le test.</p></details>
     <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb4" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Observer d'abord · suivre le protocole (sens des piles compris !) · réimprimer le support en 3D — une coque en
-      volume, donc pas de laser · et le test final qui PROUVE. Quatre réflexes, un seul métier : dépanneur. Tu viens
-      de boucler la démarche complète : elle te servira pour TOUS les objets techniques de ta vie.</p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+            <p><b>La PREMIÈRE chose à faire est…</b> → <b>inspecter le feu des yeux, sans rien forcer</b>. <br>Pourquoi : comme pour le lampadaire, on observe d&#x27;abord, sans démonter : support cassé, contacts verdis, ampoule noircie…</p>
+      <ul class="refus"><li>Pas «&nbsp;changer la pile, la panne la plus fréquente&nbsp;» : changer une pièce au hasard, c&#x27;est parier : on observe d&#x27;abord, la panne laisse un indice.</li><li>Pas «&nbsp;démonter tout le feu pour voir l&#x27;intérieur&nbsp;» : démonter avant d&#x27;observer peut abîmer le feu et effacer les indices.</li><li>Pas «&nbsp;acheter un feu neuf, c&#x27;est plus simple et plus rapide&nbsp;» : on répare plutôt que jeter, et rien ne dit encore ce qui est en panne.</li></ul>
+      <p><b>Avant de changer la pile, par sécurité et par méthode, on…</b> → <b>suit le protocole : ouverture indiquée, sens + et − respecté</b>. <br>Pourquoi : le protocole dit comment ouvrir sans casser ; une pile posée à l&#x27;envers ne fait pas fonctionner le feu.</p>
+      <ul class="refus"><li>Pas «&nbsp;ouvre le boîtier au tournevis, là où il cède&nbsp;» : forcer le boîtier le casse : le protocole dit comment l&#x27;ouvrir.</li><li>Pas «&nbsp;met deux piles au lieu d&#x27;une, pour que le feu éclaire plus fort&nbsp;» : le feu est prévu pour sa pile : en ajouter une peut l&#x27;abîmer.</li><li>Pas «&nbsp;mouille les contacts verdis pour qu&#x27;ils conduisent&nbsp;» : l&#x27;eau abîme les contacts : c&#x27;est justement l&#x27;humidité qui les a verdis.</li></ul>
+      <p><b>Le support en plastique cassé, introuvable en magasin, peut être…</b> → <b>réimprimé en 3D à l&#x27;atelier, à l&#x27;unité et sur mesure</b>. <br>Pourquoi : le support est une pièce en volume, unique : l&#x27;imprimante 3D la refait à l&#x27;unité.</p>
+      <ul class="refus"><li>Pas «&nbsp;découpé à la laser dans une plaque de plastique&nbsp;» : le support est une pièce en volume : la laser ne fait que des pièces plates.</li><li>Pas «&nbsp;remplacé pour de bon par du ruban adhésif&nbsp;» : le ruban lâche sous la pluie et les secousses : c&#x27;est une rustine, pas une réparation.</li><li>Pas «&nbsp;percé à la perceuse à colonne pour le réparer&nbsp;» : la perceuse fait des trous : elle ne refait pas une pièce cassée.</li></ul>
+      <p><b>La réparation est terminée quand…</b> → <b>le test réussit : le feu s&#x27;allume et tient bien</b>. <br>Pourquoi : seul le test prouve la réparation : le feu s&#x27;allume, et il tient sur son support.</p>
+      <ul class="refus"><li>Pas «&nbsp;le boîtier est refermé et sa vis serrée&nbsp;» : refermer n&#x27;est pas prouver : rien ne dit encore que le feu s&#x27;allume.</li><li>Pas «&nbsp;la pile neuve est en place, dans le bon sens&nbsp;» : c&#x27;est nécessaire, pas suffisant : le support peut lâcher, la lampe peut être grillée.</li><li>Pas «&nbsp;les pièces usagées sont rangées ou recyclées&nbsp;» : ranger est utile, mais cela ne montre pas que le feu fonctionne.</li></ul>
+      <p>Quatre réflexes, un seul métier : observer, suivre le protocole, refabriquer, tester. <br>Cette démarche te servira pour tous les objets techniques de ta vie.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> observer → réparer au protocole → refabriquer si besoin → tester. Réparer plutôt que jeter, c'est bon pour le porte-monnaie ET pour la planète.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
   </div>
 </section>
 
-<section class="card">
+<section class="card bonus" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
   <p>🕵 <b>Défi détective :</b> trouve chez toi un objet qui ne fonctionne plus et note 3 observations PUREMENT visuelles — sans l'ouvrir ni le brancher. Ta liste ferait-elle gagner du temps à un réparateur ?</p>
   <p>📐 <b>Défi conception :</b> dessine sur papier quadrillé le capot de rechange du capteur, avec ses dimensions en millimètres — c'est la première étape avant toute impression 3D.</p>
   <p>👨‍👩‍👧 <b>Défi famille :</b> demande à un adulte la dernière chose qu'il a réparée lui-même : quelle panne, quel outil, quelle pièce ? La réparation est un savoir qui se transmet.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>📖 Ce qu'une bonne réponse contient (à ouvrir après avoir répondu)</summary>
+    <p><b>🕵 Défi détective</b> : une bonne liste ne dit que ce qu'on voit, sans deviner la cause : « le voyant reste éteint », « le câble est tordu près de la prise », « une trace noire autour de l'interrupteur ».<br>Elle fait gagner du temps : le réparateur sait où regarder en premier.</p>
+    <p><b>📐 Défi conception</b> : un bon croquis donne les trois dimensions en millimètres (longueur, largeur, hauteur) et l'épaisseur de la paroi.<br>Il prévoit la place du capteur à l'intérieur, avec un peu de jeu pour qu'il rentre sans forcer.</p>
+    <p><b>👨‍👩‍👧 Défi famille</b> : une bonne réponse nomme la panne (ce qui ne marchait plus), l'outil, la pièce changée ou réparée.<br>Elle dit aussi comment on a vérifié que ça remarchait : c'est la démarche du dépanneur.</p>
+  </details>
+</details>
 </section>
 
 <section class="card" id="bilan">
-  <h2>🏁 Bilan de la séquence</h2>
+  <h2>🏁 Bilan de la séquence <span class="duree">⏱ 10 min</span></h2>
   <div class="bilan-grid">
     <div>
       <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
-      <p>Avais-tu pensé à l'orage, au capot fissuré, au câble ? L'inspection t'a-t-elle donné raison ?</p></div>
-      <p><b>Ce que tu sais faire désormais :</b> repérer une pièce défectueuse avec les yeux (5e_C5.1), réparer en
-      suivant un protocole fourni — sécurité d'abord, test à la fin (5e_C5.2), et t'orienter dans un atelier de
-      fabrication pour refaire une pièce plutôt que jeter l'objet (5e_C5.3). Ton lampadaire est réparé — et la
-      démarche du dépanneur est à toi pour la vie.</p>
+</div>
+      <div class="bilan-champ"><label for="hyp_retour"><b>🔙 Retour à mon hypothèse&nbsp;:</b> avais-tu pensé à l'orage, au capot fissuré, au câble&nbsp;? L'inspection t'a-t-elle donné raison&nbsp;?</label>
+      <textarea id="hyp_retour" rows="3" placeholder="Au départ, je pensais… L'inspection a montré…"></textarea></div>
+      <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><ul>
+        <li>«&nbsp;Au départ, je pensais que la panne venait de ____.&nbsp;»</li>
+        <li>«&nbsp;L'inspection a montré que ____.&nbsp;»</li>
+        <li>«&nbsp;J'avais vu juste / Je m'étais trompé·e, parce que ____.&nbsp;»</li></ul></details>
+      <div class="bilan-champ"><label for="bilan_demarche"><b>🧭 Comment j'ai travaillé&nbsp;:</b> à quel moment as-tu hésité, et qu'est-ce qui t'a aidé à trancher&nbsp;?</label>
+      <textarea id="bilan_demarche" rows="3" placeholder="J'ai hésité quand… Ce qui m'a aidé…"></textarea></div>
+      <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><ul>
+        <li>«&nbsp;J'ai hésité au moment de ____.&nbsp;»</li>
+        <li>«&nbsp;Ce qui m'a aidé à trancher&nbsp;: ____ (une aide, le simulateur, la correction…).&nbsp;»</li>
+        <li>«&nbsp;La prochaine fois, je ____.&nbsp;»</li></ul></details>
+      <p><b>Ce que tu sais faire désormais&nbsp;:</b></p>
+      <ul class="refus"><li>repérer une pièce défectueuse avec les yeux (5e_C5.1)&nbsp;;</li>
+      <li>réparer en suivant un protocole fourni : sécurité d'abord, test à la fin (5e_C5.2)&nbsp;;</li>
+      <li>t'orienter dans un atelier de fabrication, pour refaire une pièce plutôt que jeter l'objet (5e_C5.3).</li></ul>
+      <p>Ton lampadaire est réparé, et la démarche du dépanneur est à toi pour la vie.</p>
       <p class="refs">Revoir l'objet complet : <a href="../../../C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html">« Le lampadaire intelligent »</a> · <a href="../../../C6-comprendre-et-modifier-un-programme-associe/5e/5e_C6.1/sequence_5e_C6.1-C6.3_programmer_lampadaire.html">« Programmer le lampadaire »</a>.</p>
     </div>
     <div class="confiance">
       <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
-      <div class="assoc"><label for="auto1">5e_C5.1 — repérer une pièce défectueuse :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
-      <div class="assoc"><label for="auto2">5e_C5.2 — réparer selon un protocole :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
-      <div class="assoc"><label for="auto3">5e_C5.3 — connaître les procédés de l'atelier :</label><select id="auto3"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <fieldset class="qcm-groupe qcm-rangee positionnement" id="auto1">
+        <legend>5e_C5.1 — repérer une pièce défectueuse&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 fragile"><label for="auto1__1">🔴 fragile</label></div>
+        <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟡 en cours"><label for="auto1__2">🟡 en cours</label></div>
+        <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 solide"><label for="auto1__3">🟢 solide</label></div>
+        <div class="qcm-option"><input type="radio" name="auto1" id="auto1__4" value="⭐ expert"><label for="auto1__4">⭐ expert</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-rangee positionnement" id="auto2">
+        <legend>5e_C5.2 — réparer selon un protocole&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="auto2" id="auto2__1" value="🔴 fragile"><label for="auto2__1">🔴 fragile</label></div>
+        <div class="qcm-option"><input type="radio" name="auto2" id="auto2__2" value="🟡 en cours"><label for="auto2__2">🟡 en cours</label></div>
+        <div class="qcm-option"><input type="radio" name="auto2" id="auto2__3" value="🟢 solide"><label for="auto2__3">🟢 solide</label></div>
+        <div class="qcm-option"><input type="radio" name="auto2" id="auto2__4" value="⭐ expert"><label for="auto2__4">⭐ expert</label></div>
+      </fieldset>
+      <fieldset class="qcm-groupe qcm-rangee positionnement" id="auto3">
+        <legend>5e_C5.3 — connaître les procédés de l&#x27;atelier&nbsp;:</legend>
+        <div class="qcm-option"><input type="radio" name="auto3" id="auto3__1" value="🔴 fragile"><label for="auto3__1">🔴 fragile</label></div>
+        <div class="qcm-option"><input type="radio" name="auto3" id="auto3__2" value="🟡 en cours"><label for="auto3__2">🟡 en cours</label></div>
+        <div class="qcm-option"><input type="radio" name="auto3" id="auto3__3" value="🟢 solide"><label for="auto3__3">🟢 solide</label></div>
+        <div class="qcm-option"><input type="radio" name="auto3" id="auto3__4" value="⭐ expert"><label for="auto3__4">⭐ expert</label></div>
+      </fieldset>
       <p class="refs"><a href="Synthèses/synthese_eleve_5e_C5.1-C5.3.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_5e_C5.1-C5.3.html">👩‍🏫 Synthèse professeur</a></p>
     </div>
   </div>
@@ -1630,13 +1894,25 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
+/* Règle d'or n°300 — le groupe porte sa valeur : ce qui lisait `champ.value` sur l'ancienne liste déroulante lit le
+   bouton coché du groupe ; écrire la valeur coche le bouton. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){ if (!this.classList.contains("qcm-groupe")) return undefined; var c = this.querySelector("input[type=radio]:checked"); return c ? c.value : ""; },
+    set: function(v){ if (!this.classList.contains("qcm-groupe")) return; this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); }); }
+  });
+})();
+</script>
+<script>
 "use strict";
 /* ══════ Sauvegarde ══════ */
 const KEY = "seq_5e_C5.1-C5.3_depanner_lampadaire";
 const $ = id => document.getElementById(id);
 function collect(){
   const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
-  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[id]:not([type=radio]),textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
   return o;
 }
 function save(showNote){
@@ -1736,66 +2012,44 @@ document.querySelectorAll(".repbtn").forEach(btn=>{
 });
 $("btnRepReset").addEventListener("click", ()=>{ repInit(); save(false); });
 
-/* ══════ Vérifications ══════ */
+/* ══════ Vérifications ══════
+   Révision du 14/11/2026 : une question vaut un point ; l'activité n'est validée que si tout est juste (ses critères de
+   réussite le disent : 8/8, 7/7, 4/4) et, pour les activités 1 et 2, si le travail au carnet ou au simulateur est fait.
+   Chaque question fausse est marquée « à revoir ». */
 window.__valid = window.__valid || {};
+const ATT1 = {z1:"anomalie à noter : elle gêne, mais n'explique pas la panne", z2:"état normal : rien à signaler", z3:"anomalie grave : elle peut expliquer la panne", z4:"état normal : rien à signaler", z5:"anomalie grave : elle peut expliquer la panne", z6:"anomalie grave : elle peut expliquer la panne", c1_1:"l'ensemble capteur : capot fissuré et câble débranché", c1_2:"couper l'alimentation et prévenir un adulte"};
+const ATT2 = {o2_a:"3", o2_b:"1", o2_c:"6", o2_d:"2", o2_e:"5", o2_f:"4", q2_1:"pour ne jamais travailler sur un circuit alimenté", q2_2:"parce que seul le test prouve que la réparation a réussi"};
+const ATT3 = {a3_1:"imprimante 3D", a3_2:"découpeuse laser", a3_3:"perceuse à colonne", a3_4:"établi de façonnage", q3_1:"l'une ajoute de la matière, l'autre en retire d'une plaque", q3_2:"parce qu'elle découpe des plaques, et le capot est en volume", q3_3:"s'équiper et attendre l'accord d'un adulte présent"};
+const ATT4 = {r4_1:"inspecter le feu des yeux, sans rien forcer", r4_2:"suit le protocole : ouverture indiquée, sens + et − respecté", r4_3:"réimprimé en 3D à l'atelier, à l'unité et sur mesure", r4_4:"le test réussit : le feu s'allume et tient bien"};
+const ATTENDUS = {1: ATT1, 2: ATT2, 3: ATT3, 4: ATT4};
+const juge = n => { const att = ATTENDUS[n]; return Object.keys(att).filter(id => $(id).value === att[id]).length; };
 const CHECKS = {
   1: function(){
-    let ok=0;
-    const att={z1:"anomalie À NOTER (gêne la recharge, mais n'éteint pas tout)",
-               z2:"état normal, rien à signaler",
-               z3:"anomalie GRAVE : capot fissuré, l'eau de l'orage a pu entrer",
-               z4:"état normal, rien à signaler",
-               z5:"anomalie GRAVE : voyant éteint alors qu'il devrait être vert",
-               z6:"anomalie GRAVE : le câble pend, débranché de sa borne",
-               c1_1:"l'ensemble capteur : capot fissuré + câble débranché (l'orage a tout aggravé)",
-               c1_2:"couper l'alimentation (interrupteur batterie) et prévenir un adulte"};
-    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    const expOk = !!(window.__exp && window.__exp.inspection);
-    return {score:ok,total:8,extra:expOk?"":" Examine VRAIMENT les 6 zones au carnet d'inspection (compteur 6/6) : un dépanneur regarde avant de conclure.",valide:ok>=7&&expOk};
+    const ok = juge(1), total = Object.keys(ATT1).length, expOk = !!(window.__exp && window.__exp.inspection);
+    return {score:ok,total:total,extra:expOk?"":" Examine VRAIMENT les 6 zones au carnet d'inspection (compteur 6/6) : un dépanneur regarde avant de conclure.",valide:ok===total&&expOk};
   },
   2: function(){
-    let ok=0;
-    const att={o2_a:"3",o2_b:"1",o2_c:"6",o2_d:"2",o2_e:"5",o2_f:"4",
-               q2_1:"pour travailler sans risque : jamais les mains dans un circuit alimenté, même en très basse tension",
-               q2_2:"parce que seul le test PROUVE que la réparation a réussi"};
-    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    const expOk = !!(window.__exp && window.__exp.repare);
-    return {score:ok,total:8,extra:expOk?"":" Mène la réparation simulée jusqu'au 6/6 : clique les étapes dans l'ordre du protocole.",valide:ok>=7&&expOk};
+    const ok = juge(2), total = Object.keys(ATT2).length, expOk = !!(window.__exp && window.__exp.repare);
+    return {score:ok,total:total,extra:expOk?"":" Mène la réparation simulée jusqu'au 6/6 : clique les étapes dans l'ordre du protocole.",valide:ok===total&&expOk};
   },
-  3: function(){
-    let ok=0;
-    const att={a3_1:"imprimante 3D (on ajoute la matière couche par couche)",
-               a3_2:"découpeuse laser (on enlève la matière en découpant)",
-               a3_3:"perceuse à colonne (des trous précis et guidés)",
-               a3_4:"établi de façonnage (lime et ponçage de finition)",
-               q3_1:"l'une AJOUTE de la matière (couche par couche), l'autre en ENLÈVE (dans une plaque)",
-               q3_2:"parce qu'elle découpe des plaques : la pièce reste plate, or le capot est en volume",
-               q3_3:"mettre ses lunettes, attacher ses cheveux, et attendre l'autorisation ET la présence d'un adulte"};
-    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    return {score:ok,total:7,valide:ok>=6};
-  },
-  4: function(){
-    let ok=0;
-    const att={r4_1:"inspecter visuellement : support cassé, contacts verdis, ampoule noircie… sans forcer sur rien",
-               r4_2:"suit l'ordre du protocole : ouvrir le boîtier comme indiqué, sortir la pile usagée, respecter le sens + et −",
-               r4_3:"réimprimé en 3D à l'atelier de la commune, à l'unité et sur mesure",
-               r4_4:"le test final réussit : le feu s'allume et tient sur son support"};
-    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    return {score:ok,total:4,valide:ok===4};
-  }
+  3: function(){ const ok = juge(3), total = Object.keys(ATT3).length; return {score:ok,total:total,valide:ok===total}; },
+  4: function(){ const ok = juge(4), total = Object.keys(ATT4).length; return {score:ok,total:total,valide:ok===total}; }
 };
-const ENC_OK=["Excellent : tout est validé !","Bravo, tu as les réflexes du dépanneur !","Très bien : le lampadaire n°3 te dit merci."];
-const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
-const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("fieldset.qcm-groupe[id]").forEach(f => f.addEventListener("change", () => f.classList.remove("ok", "ko")));
 document.querySelectorAll("[data-check]").forEach(btn=>{
   btn.addEventListener("click", ()=>{
-    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
-    let msg = r.score + " / " + r.total + " réponses correctes.";
-    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
-    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
-    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
-    if(r.extra) msg += r.extra;
-    fb.textContent = msg;
+    const n=btn.dataset.check, att=ATTENDUS[n], r=CHECKS[n](), fb=$("fb"+n), ids=Object.keys(att);
+    const vides = ids.filter(id => !$(id).value).length;
+    const niveau = document.querySelector("#act"+n+" details.aide2") ? "2" : "1";
+    ids.forEach(id => { const f=$(id), v=f.value; f.classList.toggle("ok", !!v && v===att[id]); f.classList.toggle("ko", !!v && v!==att[id]); });
+    let msg, cls;
+    if (vides){ msg = "Il reste " + vides + " question" + (vides>1?"s":"") + " sans réponse : réponds à tout, puis vérifie de nouveau."; cls = "mixte"; }
+    else if (r.score === r.total){ msg = "✅ " + r.score + " / " + r.total + " — tout est juste."; cls = r.valide ? "ok" : "mixte";
+      if (r.valide) msg += " Activité validée. Ouvre la correction complète : elle explique aussi les réponses refusées."; }
+    else if (r.score >= r.total/2){ msg = "🟡 " + r.score + " / " + r.total + " — les questions marquées « à revoir » sont à reprendre. Ouvre l'aide de niveau 1, puis vérifie de nouveau."; cls = "mixte"; }
+    else { msg = "🔁 " + r.score + " / " + r.total + " — ce n'est pas encore acquis, et c'est normal. Ouvre l'aide de niveau " + niveau + ", puis reprends."; cls = "err"; }
+    if (r.extra) msg += r.extra;
+    fb.textContent = msg; fb.className = "feedback show " + cls;
     window.__valid[n] = !!r.valide;
     save(false); majProgress();
   });
