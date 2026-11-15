@@ -77,7 +77,7 @@ d'autant.
 | 53 | `5e_C8.2` | 1412 | 5 | 16 | 12 | à faire |
 | 54 | `5e_C9.1` | 1761 | 1 | 24 | 5 | à faire |
 | 55 | `3e_C1.1` | 1451 | 0 | 0 | 23 | à faire |
-| 56 | `3e_C3.1` | 1939 → 1181 | 0 → 0 | 0 → 0 | 19 → 0 | livrée #PRNUM — les deux piqûres de rappel repliées à leur source ; la bonne réponse ne se devine plus à sa longueur (17 raccourcies, 12 leurres allongés) ; 78 pourquoi |
+| 56 | `3e_C3.1` | 1939 → 1181 | 0 → 0 | 0 → 0 | 19 → 0 | livrée #PRNUM — les deux piqûres de rappel repliées à leur source ; la bonne réponse ne se devine plus à sa longueur (18 raccourcies, 18 leurres allongés) ; 78 pourquoi |
 
 ## Notes par séquence
 

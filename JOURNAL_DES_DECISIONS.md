@@ -31184,7 +31184,7 @@ passera dans le schéma pendant sa révision (ligne 51 du suivi).
 
 **Ce qui est fait.**
 - **Les deux piqûres de rappel se replient**, à leur source (`incrustations_lots/bete_a_cornes_mots.py`, `donnees_rappel_cdc.py`, option `replie`), puis `incrustations.py --seq 3e_C3.1` : elles ne servent qu'à qui a oublié les mots. Les deux exercices de méthode (l'alerte cyclonique, la flexibilité), que les vérificateurs exigent, restent à découvert.
-- **La bonne réponse ne se devine plus à sa longueur** : dans 17 questions, c'est elle qui est raccourcie — sa justification est dans la correction, et dans le pourquoi des erreurs ; dans 12, une proposition fausse est allongée. Moins à lire, et plus d'indice. **26 groupes mélangés.**
+- **La bonne réponse ne se devine plus à sa longueur** : dans 18 questions, c'est elle qui est raccourcie — sa justification est dans la correction, et dans le pourquoi des erreurs ; 18 propositions fausses sont allongées (17 questions). Moins à lire, et plus d'indice. **26 groupes mélangés.**
 - **Le mode mission explique chaque erreur** (`mission_3e_C3.1.json`) : 78 pourquoi, sans dire la bonne réponse.
 - **Aération : 18 → 0.** La correction du rappel « le local de Shenzhen » se lit en lignes, corrigée à sa source (`donnees_besoin.py`) et, à l'identique, dans `atelier_bete_a_cornes.html` du lot ; la correction de l'activité 5 et un « à retenir » passent en lignes.
 - Le banc de la séquence suit les bonnes réponses raccourcies.
