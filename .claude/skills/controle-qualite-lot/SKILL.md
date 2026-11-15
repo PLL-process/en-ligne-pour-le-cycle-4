@@ -95,6 +95,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_liens.py [--tout]` | liens et images locaux cités dans le source, ancres |
 | `controle_atteignabilite.py` ⚠ 0 | chaque page est atteignable depuis `index.html` |
 | `controle_fichiers_telechargeables.py` | chaque fichier nommé dans une page se télécharge d'un clic |
+| `controle_correction_complete.py [--strict] [chemin]` ⚠ 0 | n°332 (15/11/2026) : une activité qui fait produire avec un outil a une correction (K1), qui montre la production entière (K2), et donne son fichier (K3). ⚠ par défaut (sortie 0) ; `--strict` fait sortir à 1 sur K1 et K2, pour la vague ; banc `tests_controle_correction_complete.py` |
 | `controle_boutons_vivants.py` ⚠ 0 | chaque bouton appelle une fonction qui existe dans sa page |
 | `controle_verrous.mjs` | n°226 (31/08/2026) : aucun verrou expérientiel ouvert au chargement |
 | `controle_hors_ligne.mjs [--source]` | n°305 (21/09/2026) : aucune ressource chargée depuis Internet |

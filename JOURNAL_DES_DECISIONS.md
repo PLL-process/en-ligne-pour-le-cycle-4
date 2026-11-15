@@ -31319,7 +31319,7 @@ L'unité jugée est le **bloc de question** (la carte d'activité qui contient u
 - **La phrase de la fabrique est retirée** ; **le Bonus se replie** ; **aération : 8 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
 - Le banc de séquence joue maintenant un vrai clic sur un bouton radio (`input`, puis `change`) : la sauvegarde de la page l'entend.
 
-**Mesure.** Mots visibles : 860 · 1 528 → **676** · **1 317**. Règles d'or 5 → 0 ✘ ; menus 22 → 0 (cinq commandes de l'établi, déclarées) ; aération 8 → 0. Bancs **40 / 40** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (39 / 40) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
+**Mesure.** Mots visibles : 860 · 1 528 → **676** · **1 317**. Règles d'or 5 → 0 ✘ ; menus 22 → 0 (cinq commandes de l'établi, déclarées) ; aération 8 → 0. Bancs **40 / 40** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (39 / 40) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 317 mots).** L'établi, l'outil des deux séances, y compte pour 272 mots ; la synthèse, 160 ; le bilan et le positionnement, 214.
 
@@ -31360,3 +31360,72 @@ L'unité jugée est le **bloc de question** (la carte d'activité qui contient u
 - Le banc de séquence lit les boutons radio d'un groupe (l'activité 3) ; son shim joue un vrai clic.
 
 **Mesure.** Mots visibles : 689 · 1 393 → 735 · **1 035** — les deux séances sous le repère. Règles d'or 5 → 0 ✘ ; menus 16 → 0 (une commande du banc, déclarée) ; aération 12 → 0. Bancs **24 / 24** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme avant. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+## 15/11/2026 — Les chaînes d'énergie et d'information : tous les flux animés ; la bibliothèque draw.io aussi
+
+**La demande.** Pascal, le 15/11/2026 (17 h 18) : « Les chaînes d'énergie et chaîne d'information devront être animées (tous les flux), et de préférence faites avec draw.io » ; puis : « la bibliothèque pour ces chaînes dans draw.io ».
+
+**Le relevé.** Les chaînes du site sont de trois sortes : 9 figures écrites par `regenerer_chaines_energie.py` (SVG du site et sources draw.io), le vélo-cargo écrit par son générateur (`5e_C3.1/_generation/figure_iso_velo_cargo/build.mjs`), 3 SVG faits main (la chaîne d'information de la station `3e_C4.3`, celle du Book Train et sa copie dans `fichiers_drawio/`), 3 dessins incorporés dans des pages (les figures 4 et 5 du Book Train, le vélo-cargo de `5e_C3.1`), et les 7 chaînes à compléter (`_outils/chaine_a_completer/`). Les images en PNG ou JPG (photos, captures) ne s'animent pas : elles ne sont pas des chaînes dessinées.
+
+**Ce qui est fait.**
+- **`_outils/animer_flux.py`** : sur chaque flèche d'une chaîne (un trait qui porte une pointe, ou une flèche dessinée d'un seul tracé), des perles claires avancent dans le sens de la flèche, une toutes les 42 unités ; une double flèche (la batterie : charge et décharge) en reçoit dans les deux sens. Le trait d'origine ne change pas : sa couleur, les pointillés de l'ordre, sa pointe restent ce qu'ils disent (n°6, n°310) ; l'animation n'ajoute aucune information que le dessin ne porte déjà (n°119). Les perles disparaissent **à l'impression** et quand le système demande **moins de mouvement** (`prefers-reduced-motion`) ; la feuille d'animation est dans le SVG, rien n'est chargé (n°305). Rejouable ; `--verifier`.
+- **Les générateurs l'appellent eux-mêmes**, pour qu'une régénération ne défasse rien : `regenerer_chaines_energie.py` (9 figures, la figure 4 du Book Train comprise) et le générateur du vélo-cargo. `verifier_chaines_energie.py` : **77 / 77** (dont « les générateurs reproduisent les corrections sans les écraser »).
+- **La chaîne à compléter** dessine ses perles (`.cac-flux`), sauf sur un branchement (« lien », qui ne porte aucun flux) ; l'outil est reposé sur ses 7 pages (`poser.py`), `controle_chaine_a_completer.py` vert.
+- **draw.io** : chaque flèche des sources draw.io des chaînes et des 10 flèches de la **bibliothèque** (`generer_bibliotheque_chaines.py`, Book Train) porte `flowAnimation=1`, l'animation native de draw.io ; `--verifier` refuse désormais une flèche de la bibliothèque qui ne l'a pas (banc 9 / 9). Essayé dans draw.io 32.6 pour Windows, sur le PC de Pascal : la source du lampadaire s'ouvre et s'exporte avec ses flux animés. Le SVG du site reste celui du générateur : l'export SVG de draw.io écrit ses textes en `foreignObject` (refusé par le dépôt) et pèse 1 Mo, contre 30 Ko.
+- **Un contrôle** : `_outils/controle_flux_animes.py` (inscrit dans `rapport_audit.py`) signale toute chaîne du site aux flux fixes. Le skill `chaine-energie-fonctionnelle` le dit.
+
+**Mesure.** 93 tracés animés dans les 9 figures du générateur (une double flèche en compte deux), 25 dans les SVG faits main et le vélo-cargo, 18 dans les dessins des pages ; les 7 chaînes à compléter (jusqu'à 26 flux par page). Dans Chromium : les perles avancent (deux captures à 0,45 s d'écart diffèrent), aucune n'est visible en mouvement réduit ni à l'impression. `controle_schemas.mjs` : 0 ✘ et les mêmes avertissements que `main` sur les 13 dossiers touchés. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+
+## 15/11/2026 — Règle d'or n°332 : la correction montre la production complète, telle que l'outil la rend ; Book Train : les deux chaînes sous les yeux, l'algorigramme et le diaporama modèles ; `controle_correction_complete.py`
+
+**Demandes de Pascal (15/11, de 17 h 36 à 17 h 46), sur `4e_C4.1_book-train`, déclarée prioritaire :**
+- « à cette question, l'élève ne visualise pas la chaîne d'énergie et d'information » ;
+- « la correction doit montrer l'algorigramme complet, de préférence de draw.io car l'élève n'a encore aucune référence » ; « il découvre ces outils » ;
+- « Fais-en une règle d'or et vérifie les autres séances à ce niveau aussi ».
+
+**Vérifié sur la page en ligne (après #717).**
+- Les questions 1.2, 1.3, 2.1 et 2.2 montraient bien un schéma, le schéma d'ensemble (JPG, 1 400 px de large). Mais dans la colonne côte à côte (5 sur 12, environ 360 px), ses textes faisaient 4 px : l'élève voyait une affiche, pas une chaîne. Au téléphone, une vignette de 26 % de l'écran.
+- La correction de 2.2 (la chaîne d'énergie complétée dans draw.io) ne montrait rien : « Compare ton fichier au modèle ».
+- La correction de 2.3 réservait le fichier corrigé au professeur (« Ton professeur dispose aussi du fichier… »).
+- La correction de 3.2 montrait un algorigramme complet, mais dessiné à la main, sans le fichier draw.io.
+- L'activité 4.3 (le diaporama de six diapositives, la production finale) n'avait aucune correction.
+
+### La règle (formulation proposée à Pascal à 17 h 48, à valider)
+
+> **Règle d'or n°332 — La correction montre la production complète, telle que l'outil la rend.**
+> - Quand une activité fait produire quelque chose avec un outil (draw.io, Impress, tableur, Vittascience, éditeur Python…), sa correction montre **la production attendue en entier**, faite avec cet outil : un export, une capture, ou un dessin de même géométrie que le fichier fourni. Jamais une description seule, jamais un morceau.
+> - Le fichier corrigé est **donné à l'élève** (bouton de téléchargement ou lien), pour qu'il l'ouvre dans l'outil et compare.
+> - Pourquoi : l'élève qui découvre l'outil n'a aucune autre référence de ce qu'on attend de lui.
+> - Contrôle : `_outils/controle_correction_complete.py`.
+
+### Book Train
+
+- **Les deux chaînes, sous les yeux à chaque question (1.2, 1.3, 2.1, 2.2).** Une figure dessinée pour la colonne : l'information en haut (ACQUÉRIR, TRAITER, COMMUNIQUER, sur une ligne), l'énergie en colonne (ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE), les composants à côté des blocs, l'ordre qui descend de COMMUNIQUER et arrive sur DISTRIBUER, les flux animés. Muette sur les énergies (« énergie : ? », ce que 2.1 et 2.2 demandent) ; lire le classement (1.2) et les solutions (1.3), c'est la compétence (n°331). Dès 1 000 px, la carte donne la moitié de sa largeur au schéma (au lieu de 5 sur 12) : 13 px pour les fonctions, 11 px pour les composants. Au téléphone, la vignette épinglée s'agrandit au doigt. Le schéma d'ensemble reste le document d'appui, et l'appui de 1.1 (le trajet du livre).
+- **Correction de 2.1** : les deux chaînes complètes, une énergie sur chaque flèche (alternative 480 V ~, continue 24 V ⎓, modulée, rotation, translation).
+- **Correction de 2.2** : le modèle `chaine_energie_book-train.drawio` dessiné en entier (la figure 4, répétée), et son bouton de téléchargement.
+- **Correction de 2.3** : `chaine_information_correction.drawio` se télécharge depuis la correction ; la légende ne le réserve plus au professeur.
+- **Correction de 3.2** : l'algorigramme complet avec les quatre formes de la catégorie Flowchart de draw.io que le guide fait chercher (Terminator, Data, Process, Decision), les couleurs du nuancier de draw.io, les flèches NON qui rejoignent le trait vertical du flux par un point de jonction (auto-vérification ⑥) ; et `algorigramme_book-train_correction.drawio` à télécharger. Un seul générateur écrit le fichier, le dessin (même géométrie) et la page.
+- **Correction de 4.3 (nouvelle)** : le diaporama modèle, six diapositives qui suivent le plan imposé et les règles du guide (trois couleurs, une police, titres 36 pt, texte 24 pt, transition Fondu partout ; l'algorigramme et les deux chaînes insérés en SVG) ; la planche des six vignettes, rendue par LibreOffice ; `book-train_diaporama_modele.odp` à télécharger ; « ton diaporama n'a pas à être identique » et quatre points de comparaison.
+- Deux légendes réparées au passage : « Fig. <br>3 » et « Fig. <br>5 » (un retour à la ligne posé au mauvais endroit par l'aération).
+
+**Outils.**
+- `_outils/regenerer_chaines_energie.py` : la figure `book_deux_chaines` (deux versions) ; `incruster()`, qui pose une figure en ligne dans chaque `<figure data-chaines="…" data-prefixe="…">` d'une page, id préfixés ; `block()` sait mettre le composant à gauche du bloc (`cpos='left'`) et régler sa taille (`csize`) — les figures existantes ne changent pas d'un octet ; seule la figure 4 garde sa source dans `fichiers_drawio/` (avant : tout nom contenant « book-train »). La figure 4 est aussi posée dans la correction de 2.2.
+- `_outils/generer_algorigramme_book_train.py` (+ `--verifier`) : le `.drawio`, le SVG, la figure 3 de la page et les deux fichiers embarqués.
+- `_outils/generer_diaporama_modele_book_train.py` (+ `--verifier`) : la source en ODF à plat (`_generation/diaporama_modele/`, un fichier texte), puis LibreOffice sans écran pour le `.odp`, le PDF et la planche.
+- `_outils/verifier_chaines_energie.py` vérifie les deux nouvelles figures.
+
+**Ce qui n'est pas fait.** Le dessin de l'algorigramme n'est pas un export de draw.io lui-même : il reprend à l'identique la géométrie, les formes et les couleurs du fichier fourni. Lancer le programme draw.io ici a été refusé ; l'export par draw.io (sur le poste de Pascal, ou ici avec son accord) est une question posée dans la PR.
+
+### Le contrôle — `_outils/controle_correction_complete.py` (+ banc 15/15, inscrit dans `rapport_audit.py`)
+
+L'unité jugée est le bloc d'activité de la n°331. Un bloc fait produire avec un outil quand son texte (hors correction, hors questions, hors encadré des rôles) nomme un outil et, à moins de 200 signes, demande de construire, dessiner, créer, programmer, compléter, enregistrer ou exporter. Trois signaux : **K1** aucune correction, **K2** une correction qui décrit sans montrer (ni figure ni programme écrit en entier), **K3** la production montrée sans son fichier. Tous ⚠ par défaut (sortie 0 : la mesure relève des blocs justes par construction, n°248) ; `--strict` fait sortir à 1 sur K1 et K2, pour la vague.
+
+**Mesure.**
+- Book Train, sur `main` : 1 K1 (4.3), 1 K2 (2.2), 2 K3 (2.3, 3.2) — exactement le relevé fait à la main. Après : 0.
+- Tout le site (126 pages élève) : **9 K1, 7 K2, 2 K3 sur 14 pages**. Les tableurs (4e_C1.1, 5e_C1.1, 5e_C1.3, 4e_C2.1, 3e_C4.3 et son Bonus, l'atelier PIX du jardin) ; les échauffements « les quatre gestes de l'éditeur Python » (4e_C6.2, 3e_C7.1, 5e_C7.1, 3e_C9.1, 4e_C9.1, 5e_C9.1) ; « Sous le capot : le C++ que les blocs fabriquent » (les deux pages de 3e_C9.2) ; 4e_C9.1 (la pompe qui s'affole, le réinvestissement) ; le Bonus FreeCAD de 3e_C5.1.
+- Mots visibles du Book Train : séances 1 et 2 de 1 308 et 1 510 → **1 564** et **1 766**. Les 256 mots de plus sont les étiquettes des deux chaînes (deux figures par séance, 128 mots chacune), que la mesure compte comme du texte ; aucun paragraphe n'est ajouté.
+- Bancs : **39 / 39** (séquence), **38 / 38** (n°311), mode mission joué écran par écran, aucun refus ; `verifier_chaines_energie.py` **87 / 87** (un passage a vu deux figures d'autres pages « hors de leur objet HTML » au chargement ; deux nouveaux passages : 87 / 87) ; bancs n°331 **17 / 17** et n°332 **15 / 15**. Sur le lot : schémas 0 ✘, fichiers téléchargeables, liens, médias, hiérarchie, règles visibles, unités, fiche papier ✅, aération 0, règles d'or 0 ✘. Captures regardées à 1 280 et 390 px. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+- Réparé au passage : l'entrée 51 (`5e_C7.5`, #718) avait gardé le marqueur de ses contrôles au lieu de leur phrase.
+
+**Ce qui reste.** La vague n°332 sur les 14 pages relevées (une correction qui montre le tableau, le graphique ou le programme attendu, et son fichier) ; l'export par draw.io lui-même, si Pascal le veut.
