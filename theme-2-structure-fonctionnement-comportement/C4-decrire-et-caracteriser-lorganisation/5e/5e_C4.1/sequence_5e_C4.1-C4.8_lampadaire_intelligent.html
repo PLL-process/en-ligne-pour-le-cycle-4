@@ -1954,6 +1954,411 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<!-- chaine-a-completer v1 : début — les étiquettes posées dans le schéma des chaînes ; source unique : _outils/chaine_a_completer/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Chaîne à compléter — source unique : _outils/chaine_a_completer/chaine.css (poser.py). Ne pas la modifier dans une page.
+   Les couleurs sont celles des schémas du dépôt (n°120) : CONVERTIR violet, ALIMENTER/STOCKER jaune, DISTRIBUER cyan ;
+   énergie orange, information cyan, ordre vert en pointillés. */
+.cac{--cac-energie:#ffb454;--cac-information:#61dafb;--cac-ordre:#81fba1;--cac-stock:#ffd66b;--cac-attente:#5d6f92;
+  --cac-fond:#071633;--cac-bloc:#0d2347;--cac-texte:#e4eaf5;--cac-doux:#9bbefc;--cac-case:#102a55;--cac-ok:#81fba1;--cac-faux:#ffb454;
+  margin:10px 0 14px;display:grid;gap:8px;justify-items:center}
+/* au téléphone, le schéma prend toute la largeur de l'écran : les marges des cartes ne le rétrécissent plus */
+@media (max-width:700px){.cac{width:calc(100vw - 16px);margin-inline:calc(50% - 50vw + 8px);box-sizing:border-box}}
+.cac.cac-pret>.cac-questions{display:none}
+.cac-dessin{position:relative;max-width:100%;container-type:inline-size;background:var(--cac-fond);border:1px solid #274a8a;border-radius:14px;overflow:hidden}
+.cac-traits{position:absolute;inset:0;display:block}
+.cac-calque{position:absolute;inset:0}
+.cac-calque>*{position:absolute;box-sizing:border-box}
+.cac-fleche{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cac-fleche.cac-n-energie{stroke:var(--cac-energie)} .cac-m.cac-n-energie path{fill:var(--cac-energie)}
+.cac-fleche.cac-n-information{stroke:var(--cac-information)} .cac-m.cac-n-information path{fill:var(--cac-information)}
+.cac-fleche.cac-n-ordre{stroke:var(--cac-ordre);stroke-dasharray:7 6} .cac-m.cac-n-ordre path{fill:var(--cac-ordre)}
+.cac-fleche.cac-n-stock{stroke:var(--cac-stock)} .cac-m.cac-n-stock path{fill:var(--cac-stock)}
+.cac-fleche.cac-n-attente{stroke:var(--cac-attente);stroke-dasharray:5 6} .cac-m.cac-n-attente path{fill:var(--cac-attente)}
+.cac-titre{font-weight:800;letter-spacing:.02em;line-height:1.2}
+.cac-titre.attente{opacity:.75}
+.cac-texte{line-height:1.2;text-align:center;color:var(--cac-texte)}
+.cac-texte.gras{font-weight:700}
+.cac-et{line-height:1.2;text-align:center;font-weight:600}
+.cac-et-bas{transform:translate(-50%,-100%)} .cac-et-haut{transform:translate(-50%,0)}
+.cac-et-gauche{transform:translate(-100%,-50%);text-align:right} .cac-et-droite{transform:translate(0,-50%);text-align:left}
+.cac-et-centre{transform:translate(-50%,-50%)}
+.cac-c-energie{color:var(--cac-energie)} .cac-c-information{color:var(--cac-information)} .cac-c-ordre{color:var(--cac-ordre)} .cac-c-stock{color:var(--cac-stock)} .cac-c-attente{color:var(--cac-attente)}
+.cac-et.cac-case,.cac-et.cac-trou{white-space:normal}
+.cac-bloc{display:flex;align-items:center;justify-content:center;padding:4px;border:3px solid var(--cac-coul,#9bbefc);background:var(--cac-bloc);
+  box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.cac-bloc.neutre{--cac-coul:#9bbefc;border-color:#3d64a8}
+.cac-bloc.attente{border-style:dashed;border-color:var(--cac-attente);border-width:2px;background:transparent}
+.cac-fonction{font-weight:800;letter-spacing:.03em;color:var(--cac-coul,#e4eaf5);text-align:center;line-height:1.1}
+.cac-bloc>.cac-case,.cac-bloc>.cac-trou{width:100%;height:100%}
+.cac-bloc>.cac-case{border-color:transparent;background:transparent}
+.cac-bloc>.cac-case:not(.pleine) .cac-q{font-size:1.15em}
+.cac-bloc>.cac-case.pleine,.cac-bloc>.cac-case.juste,.cac-bloc>.cac-case.faux{background:transparent}
+.cac-bloc:has(.cac-case.faux){border-color:var(--cac-faux)}
+.cac-bloc:has(.cac-case:focus-visible),.cac-bloc:has(.cac-case.vise),.cac-bloc:has(.cac-case:hover){border-color:#61dafb;box-shadow:0 0 0 3px rgba(97,218,251,.35)}
+.cac-sous{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.cac-composant{color:var(--cac-texte);line-height:1.2}
+.cac-stock{color:var(--cac-stock);line-height:1.2}
+.cac-sous>.cac-case,.cac-sous>.cac-trou{width:100%}
+/* les cases : dans le dessin, à la place du mot */
+.cac-case,.cac-trou{display:flex;align-items:center;justify-content:center;gap:4px;min-height:1.9em;padding:2px 6px;border-radius:8px;
+  font:inherit;line-height:1.15;text-align:center;color:var(--cac-texte);box-sizing:border-box}
+.cac-case{border:2px dashed var(--cac-doux);background:rgba(16,42,85,.92);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.cac-case:hover,.cac-case:focus-visible,.cac-case.vise{border-color:#61dafb;border-style:solid;background:#163a72}
+.cac-case:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-case.pleine{border-style:solid;border-color:#9bbefc;background:var(--cac-case);font-weight:700}
+.cac-case.juste{border-color:var(--cac-ok);background:rgba(129,251,161,.13);cursor:default;opacity:1}
+.cac-case.faux{border-color:var(--cac-faux);background:rgba(255,180,84,.16)}
+.cac-case .cac-q{font-weight:800;color:var(--cac-doux);opacity:.9}
+.cac-case .cac-marque{font-weight:800} .cac-case.juste .cac-marque{color:var(--cac-ok)} .cac-case.faux .cac-marque{color:var(--cac-faux)}
+.cac-bloc .cac-case.pleine .cac-v{color:var(--cac-coul,#e4eaf5);letter-spacing:.03em}
+.cac-trou{border:1.5px dashed var(--cac-attente);opacity:.45}
+.cac-bloc>.cac-trou{border:0}
+.cac-acquis{font-style:italic}
+.cac-fonction.cac-acquis{letter-spacing:.01em;overflow-wrap:anywhere}
+.cac-case.part{opacity:.4}
+.cac-msg{margin:0;min-height:1.3em;font-size:.95em;color:var(--cac-doux);text-align:center}
+.cac-msg:empty{display:none}
+/* la réserve : collée en bas de l'écran tant qu'il reste des cases */
+.cac-reserve{position:sticky;bottom:calc(var(--cac-bas,10px) + env(safe-area-inset-bottom,0px));z-index:5;width:100%;box-sizing:border-box;
+  background:#0d2347;border:1px solid #274a8a;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:8px 10px;display:grid;gap:6px}
+body.ms .cac-reserve{--cac-bas:84px}
+.cac-reserve-t{margin:0;font-size:.82em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9bbefc}
+.cac-reserve-l{display:flex;flex-wrap:wrap;gap:7px}
+.cac-lab{font:inherit;font-weight:700;color:#e4eaf5;background:#102a55;border:2px solid #3d64a8;border-radius:11px;padding:8px 12px;min-height:44px;
+  cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.cac-lab:hover{border-color:#61dafb}
+.cac-lab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-lab.choisie{border-color:#61dafb;background:#1d4e89;transform:translateY(-2px);box-shadow:0 4px 0 #0a1b3d}
+.cac-lab.part{opacity:.35}
+.cac-geste{color:#9bbefc}
+.cac-fantome{position:fixed;left:0;top:0;z-index:80;pointer-events:none;border:2px solid #61dafb;background:#0d2347;color:#e4eaf5;
+  border-radius:11px;padding:8px 12px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.cac-papier{display:none}
+/* au téléphone, la réserve tient sur une ligne qui défile de côté : le schéma reste visible au-dessus.
+   Un doigt qui glisse de côté fait défiler la réserve ; un doigt qui monte emporte l'étiquette vers sa case. */
+@media (max-width:640px){
+  .cac-reserve{padding:7px 0 8px;gap:5px}
+  .cac-reserve-t{padding-inline:10px;font-size:.74em}
+  .cac-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 4px;scrollbar-width:thin;overscroll-behavior-x:contain}
+  .cac-reserve .cac-lab{flex:none;white-space:nowrap;touch-action:pan-x}
+}
+@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}}
+/* à l'impression : le dessin, en encre, avec ce que l'élève a posé ; les cases vides restent des cases à remplir au stylo */
+@media print{
+  .cac{--cac-energie:#9a4d00;--cac-information:#0a5a75;--cac-ordre:#1a6b36;--cac-stock:#6f5500;--cac-attente:#777;
+    --cac-fond:#fff;--cac-bloc:#fff;--cac-texte:#111;--cac-doux:#444;--cac-case:#fff;break-inside:avoid}
+  .cac .cac-dessin{border-color:#999}
+  html body .cac button.cac-case{display:flex!important;background:#fff!important;color:#111!important;border:1.5px solid #555!important}
+  html body .cac button.cac-case:not(.pleine){border-style:dashed!important}
+  .cac .cac-case .cac-q,.cac .cac-case .cac-marque{visibility:hidden}
+  .cac .cac-bloc{background:#fff!important}
+  .cac .cac-reserve,.cac .cac-msg{display:none!important}
+  .cac .cac-et.cac-trou,.cac .cac-sous>.cac-trou{visibility:hidden}
+  .cac .cac-titre,.cac .cac-fonction,.cac .cac-case .cac-v,.cac .cac-texte{color:#111!important}
+  .cac .cac-c-attente{color:#555!important}
+  .cac .cac-papier{display:block!important;margin:1mm 0 0;font-size:10pt;color:#111}
+  .cac.cac-pret>.cac-questions{display:none!important}
+}
+</style>
+<script>
+/* Chaîne à compléter — l'élève pose les étiquettes DANS le schéma des chaînes d'énergie et d'information.
+   Source unique : _outils/chaine_a_completer/ (chaine.js, chaine.css), posée dans la page par poser.py, entre deux
+   marqueurs. Ne pas la modifier dans une page.
+
+   Pourquoi (demande de Pascal du 15/11/2026) : l'élève répondait à beaucoup de questions sur les chaînes sans avoir
+   le schéma sous les yeux ; il n'en gardait pas l'image, et peinait ensuite à la construire. Ici, le schéma EST la
+   question : les cases sont dans le dessin, le dessin reste sous les yeux, et il se bâtit d'une activité à l'autre
+   (ce qui est trouvé reste écrit, ce qui viendra plus tard se voit en pointillés).
+
+   LA PAGE DÉCLARE
+     1. Le dessin, une fois par page (le même dessin sert à toutes les étapes) :
+        window.CAC_DESSINS = {lampadaire: {large: {vue: [x, y, l, h], ...}, etroit: {vue: [...], max: 520, ...},
+                                           elements: [ ... ]}};
+        Éléments (chacun : id, type, groupe, puis sa géométrie dans `large` et dans `etroit`) :
+          titre  {texte, couleur}                       géométrie {x, y}            (le coin haut gauche du texte)
+          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l}         (le composant SOUS le bloc)
+          fleche {nature, texte, double?}               géométrie {points, ex, ey, ancre, lt?}
+                 nature : energie, information, ordre (pointillés), stock ; ancre : la place de l'étiquette par
+                 rapport au point (ex, ey) — bas (au-dessus du point), haut, gauche, droite ; lt : largeur de la case
+          texte  {texte, gras?, couleur?}               géométrie {x, y, ancre?, l?}      (l : sa largeur)
+        Une géométrie peut redonner texte, composant ou stock pour couper les lignes autrement (\n), sans changer
+        les mots.
+     2. Chaque étape, à la place des questions :
+        <div class="cac" data-cac='{"dessin": "lampadaire",
+                                     "cases": {"convertir-panneau.fonction": "e2_f1", ...},
+                                     "vides": ["g:information"], "reutilisables": true}'>
+          <div class="cac-questions"> … les groupes de boutons radio (fieldset.qcm-groupe) … </div>
+        </div>
+        cases : la partie d'un élément (fonction, composant, stock, texte) → l'id du groupe de boutons radio qui garde
+                la réponse. Poser une étiquette coche le bouton de cette valeur : la sauvegarde, la vérification,
+                le mode mission et l'impression de la page lisent toujours ces groupes.
+        vides : ce qui viendra plus tard (en pointillés, sans texte). Motifs : « id.partie », « id » (tout
+                l'élément), « *.partie », « g:groupe » (tout un groupe : ses blocs et ses flèches en pointillés),
+                « g:groupe.partie ».
+        acquis : {"id.partie": "id du groupe"} — ce que l'élève a trouvé à une étape d'avant reste écrit dans le
+                dessin (sa réponse, en clair ; en pointillés tant qu'il n'a rien posé) : le schéma se bâtit.
+        titres : {id: "autre texte"} pour un titre ou un texte à cette étape (« … à construire en séance 3 »).
+        vue    : {etroit: [x, y, l, h]} — recadrer le dessin à cette étape (au téléphone, la seule chaîne travaillée).
+        reutilisables : une étiquette peut servir plusieurs fois (CONVERTIR, énergie électrique).
+     Sans JavaScript, les questions restent visibles : rien ne se perd.
+
+   LE MODE MISSION voit les groupes de la .cac comme un seul écran (une partie) et les vérifie comme d'habitude :
+   les justes restent, les fausses (classe ms-origine) retournent dans la réserve. Le dessin suit leurs marques.
+
+   GESTES : toucher une étiquette, puis toucher sa case ; ou la faire glisser ; au clavier, Entrée sur l'étiquette
+   mène à la première case vide. Toucher une case pleine la vide (sauf une case déjà juste). */
+(function(){
+  "use strict";
+  if (window.ChaineACompleter) return;
+  var D = document, NS = "http://www.w3.org/2000/svg";
+  var PARTIES = {bloc: ["fonction", "composant", "stock"], fleche: ["texte"], titre: ["texte"], texte: ["texte"]};
+  var DEFAUT = {
+    large:  {seuil: 760, h: 70, rx: 12, ecart: 10, lt: 170, lc: 20,
+             tailles: {titre: 22, fonction: 24, composant: 21, stock: 19, fleche: 20, texte: 21}},
+    etroit: {h: 44, rx: 8, ecart: 6, lt: 104, lc: 12, max: 520,
+             tailles: {titre: 14, fonction: 16, composant: 13.5, stock: 12.5, fleche: 13, texte: 14}}
+  };
+  function $$(s, r){ return [].slice.call((r || D).querySelectorAll(s)); }
+  function cree(nom, attrs, parent){ var e = D.createElementNS(NS, nom); for (var k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function el(t, c, h){ var e = D.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
+  function lignes(t){ return esc(t).replace(/\n/g, "<br>"); }
+  function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
+  function fusion(a, b){ var r = {}, k; for (k in a) r[k] = a[k]; for (k in (b || {})) r[k] = b[k]; return r; }
+  function lireV(f){ var c = f.querySelector("input[type=radio]:checked"); return c ? c.value : ""; }
+  function valeurs(f){ return $$("input[type=radio]", f).map(function(r){ return r.value; }); }
+  /* le texte que l'élève lit : celui du libellé de la proposition (il peut nommer une unité en toutes lettres,
+     n°312, quand la valeur garde le texte que la vérification compare) */
+  function libelle(f, v){ var r = $$("input[type=radio]", f).filter(function(x){ return x.value === v; })[0], l = r && f.querySelector('label[for="' + r.id + '"]'); return l ? net(l.textContent) : v; }
+  function legende(f){ var l = f.querySelector("legend"); return net(l ? l.textContent : f.getAttribute("aria-label") || ""); }
+  function ecrire(f, v){
+    var r = null;
+    $$("input[type=radio]", f).forEach(function(x){ x.checked = (v != null && x.value === v); if (x.checked) r = x; });
+    var cible = r || f;
+    cible.dispatchEvent(new Event("input", {bubbles: true}));
+    cible.dispatchEvent(new Event("change", {bubbles: true}));
+  }
+  function etat(f){ return f.classList.contains("ms-juste") ? "juste" : f.classList.contains("ms-faux") ? "faux" : ""; }
+
+  var choix = null, glisse = null, vientDeGlisser = false;          // l'étiquette choisie : {cac, v}
+
+  function Chaine(racine){
+    var conf = {};
+    try { conf = JSON.parse(racine.getAttribute("data-cac") || "{}"); } catch (e) { console.warn("chaîne à compléter : data-cac illisible", e); return; }
+    var dessin = (window.CAC_DESSINS || {})[conf.dessin];
+    if (!dessin) { console.warn("chaîne à compléter : dessin inconnu", conf.dessin); return; }
+    var cases = conf.cases || {}, vides = conf.vides || [], titres = conf.titres || {}, acquis = conf.acquis || {};
+    var champs = {}, ordre = [];                                       // « id.partie » → fieldset ; ordre de lecture
+    Object.keys(cases).forEach(function(k){ var f = D.getElementById(cases[k]); if (f) { champs[k] = f; ordre.push(k); f.classList.add("ms-origine"); } else console.warn("chaîne à compléter : groupe absent", cases[k]); });
+    if (!ordre.length) return;
+    var etiquettes = [], textes = {};
+    ordre.forEach(function(k){ valeurs(champs[k]).forEach(function(v){ if (etiquettes.indexOf(v) < 0) { etiquettes.push(v); textes[v] = libelle(champs[k], v); } }); });
+    function tx(v){ return textes[v] || v; }
+    var reutil = !!conf.reutilisables;
+    var dispo = "", k = 1, zone, svg, calque, reserve, msg, papier;
+
+    racine.classList.add("cac-pret");
+    zone = el("div", "cac-dessin"); zone.setAttribute("role", "group");
+    zone.setAttribute("aria-label", conf.nom || "Le schéma des chaînes, à compléter avec les étiquettes");
+    msg = el("p", "cac-msg"); msg.setAttribute("aria-live", "polite");
+    reserve = el("div", "cac-reserve");
+    papier = el("p", "cac-papier pp-papier");
+    var q = racine.querySelector(".cac-questions");
+    racine.insertBefore(zone, q); racine.insertBefore(msg, q); racine.insertBefore(reserve, q); racine.insertBefore(papier, q);
+    papier.innerHTML = "<b>Les étiquettes à écrire dans les cases" + (reutil ? " (une étiquette peut servir plusieurs fois)" : "") + "&nbsp;:</b> " + etiquettes.map(function(v){ return esc(tx(v)); }).join(" · ");
+
+    function correspond(m, e, partie){
+      if (m === e.id || m === e.id + "." + partie || m === "*." + partie) return true;
+      if (m.indexOf("g:") === 0) { var g = m.slice(2).split("."); return g[0] === e.groupe && (!g[1] || g[1] === partie); }
+      return false;
+    }
+    function attente(e){ return vides.some(function(m){ return m === "g:" + e.groupe || m === e.id; }); }
+    function sort(e, partie){
+      var cle = e.id + "." + partie;
+      if (champs[cle]) return "case";
+      if (acquis[cle]) return "acquis";
+      return vides.some(function(m){ return correspond(m, e, partie); }) ? "vide" : "vu";
+    }
+
+    function rendre(){
+      var w = racine.clientWidth; if (!w) return;
+      var nd = w >= (dessin.seuil || DEFAUT.large.seuil) && dessin.large ? "large" : "etroit";
+      var G = fusion(DEFAUT[nd], dessin[nd]); G.tailles = fusion(DEFAUT[nd].tailles, (dessin[nd] || {}).tailles);
+      var V = (conf.vue && conf.vue[nd]) || G.vue, larg = nd === "etroit" ? Math.min(w, G.max) : w;
+      k = larg / V[2]; dispo = nd;
+      zone.className = "cac-dessin cac-" + nd;
+      /* le dessin se règle sur sa largeur (unités de conteneur) : il garde ses proportions à l'écran comme sur le papier */
+      zone.style.width = nd === "etroit" ? "min(100%, " + G.max + "px)" : "100%"; zone.style.aspectRatio = V[2] + " / " + V[3]; zone.style.height = "";
+      zone.innerHTML = "";
+      svg = cree("svg", {viewBox: V.join(" "), width: "100%", height: "100%", "aria-hidden": "true", focusable: "false", "class": "cac-traits"}, zone);
+      var defs = cree("defs", {}, svg);
+      ["energie", "information", "ordre", "stock", "attente"].forEach(function(n){
+        var m = cree("marker", {id: "cac-m-" + n + "-" + uid, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse", "class": "cac-m cac-n-" + n}, defs);
+        cree("path", {d: "M0,0 L10,5 L0,10 z"}, m);
+      });
+      calque = el("div", "cac-calque"); zone.appendChild(calque);
+      function px(v){ return Math.round(v / V[2] * 100000) / 1000 + "%"; }          // une largeur, en part du dessin
+      function py(v){ return Math.round(v / V[3] * 100000) / 1000 + "%"; }          // une hauteur
+      function cq(v){ return Math.round(v / V[2] * 100000) / 1000 + "cqw"; }        // une taille qui suit la largeur du dessin
+      function pos(n, x, y){ n.style.left = px(x - V[0]); n.style.top = py(y - V[1]); }
+      function taille(n, t){ n.style.fontSize = "max(11px, " + cq(t) + ")"; }
+      function texte(e, g, cle){ return g[cle] != null ? g[cle] : e[cle]; }
+      function partie(e, g, p, boite, classe, t){
+        var s = sort(e, p);
+        if (attente(e) && s === "vu") s = "vide";
+        if (s === "acquis") {
+          var fa = D.getElementById(acquis[e.id + "." + p]), va = fa ? lireV(fa) : "";
+          if (!va) s = "vide";
+          else { boite.className = classe + " cac-acquis"; boite.textContent = libelle(fa, va); taille(boite, p === "fonction" ? t * .86 : t); return boite; }
+        }
+        if (s === "vu") { boite.className = classe; boite.innerHTML = lignes(titres[e.id] && p === "texte" ? titres[e.id] : texte(e, g, p)); taille(boite, t); return boite; }
+        var c = s === "case" ? el("button", classe + " cac-case") : el("span", classe + " cac-trou");
+        taille(c, t);
+        if (s === "case") {
+          var f = champs[e.id + "." + p], v = lireV(f), st = etat(f);
+          c.type = "button"; c.setAttribute("data-cle", e.id + "." + p);
+          if (v) c.classList.add("pleine"); if (st) c.classList.add(st);
+          if (st === "juste") c.disabled = true;
+          c.innerHTML = v ? '<span class="cac-v">' + esc(tx(v)) + "</span>" + (st === "juste" ? '<span class="cac-marque" aria-hidden="true">✓</span>' : st === "faux" ? '<span class="cac-marque" aria-hidden="true">✗</span>' : "")
+                          : '<span class="cac-q" aria-hidden="true">?</span>';
+          c.setAttribute("aria-label", legende(f) + " : " + (v ? tx(v) + (st === "juste" ? ", juste" : st === "faux" ? ", à revoir" : "") : "case vide"));
+        } else c.setAttribute("aria-hidden", "true");
+        return c;
+      }
+      dessin.elements.forEach(function(e){
+        var g = e[nd]; if (!g) return;
+        var att = attente(e), coul = att ? null : e.couleur;
+        if (e.type === "fleche") {
+          var nat = att ? "attente" : e.nature, d = "M" + g.points.map(function(p){ return p[0] + "," + p[1]; }).join(" L");
+          var tr = cree("path", {d: d, "class": "cac-fleche cac-n-" + nat, "marker-end": "url(#cac-m-" + nat + "-" + uid + ")"}, svg);
+          if (e.double) tr.setAttribute("marker-start", "url(#cac-m-" + nat + "-" + uid + ")");
+          tr.style.strokeWidth = (nd === "large" ? 3.4 : 2.6) / Math.min(1, k * 1.6) + "px";
+          var b = partie(e, g, "texte", el("div"), "cac-et cac-et-" + (g.ancre || "bas") + " cac-c-" + nat, G.tailles.fleche);
+          if (/cac-(case|trou|acquis)/.test(b.className)) b.style.width = px(g.lt || G.lt);
+          pos(b, g.ex, g.ey); calque.appendChild(b);
+        } else if (e.type === "bloc") {
+          var bl = el("div", "cac-bloc" + (att ? " attente" : ""));
+          pos(bl, g.x, g.y); bl.style.width = px(g.l); bl.style.height = py(G.h); bl.style.borderRadius = cq(G.rx);
+          /* la couleur d'une fonction (n°120) se montre quand la fonction est écrite ou trouvée juste : tant qu'elle
+             est à trouver, le bloc reste neutre, sinon la couleur la soufflerait */
+          var sf = sort(e, "fonction"), ff = champs[e.id + ".fonction"];
+          if (coul && (sf === "vu" || (sf === "case" && etat(ff) === "juste"))) bl.style.setProperty("--cac-coul", coul);
+          else if (!att) bl.classList.add("neutre");
+          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", G.tailles.fonction); bl.appendChild(fo);
+          calque.appendChild(bl);
+          var sous = el("div", "cac-sous"); pos(sous, g.x - G.lc / 2, g.y + G.h + G.ecart); sous.style.width = px(g.l + G.lc);
+          if (e.composant != null) sous.appendChild(partie(e, g, "composant", el("div"), "cac-composant", G.tailles.composant));
+          if (e.stock != null) sous.appendChild(partie(e, g, "stock", el("div"), "cac-stock", G.tailles.stock));
+          calque.appendChild(sous);
+        } else {
+          var tx = partie(e, g, "texte", el("div"), (e.type === "titre" ? "cac-titre" : "cac-texte cac-et-" + (g.ancre || "centre")) + (e.gras ? " gras" : "") + (att ? " attente" : ""),
+                          e.type === "titre" ? G.tailles.titre : G.tailles.texte);
+          if (coul) tx.style.color = coul;
+          if (e.type === "titre") tx.style.maxWidth = px(V[0] + V[2] - g.x - 6);
+          else tx.style.width = px(g.l || (nd === "large" ? 220 : 300));          // une largeur à lui : au bord du dessin, il ne se tasse pas
+          pos(tx, g.x, g.y); calque.appendChild(tx);
+        }
+      });
+      peindreReserve();
+    }
+    var uid = Math.random().toString(36).slice(2, 7);
+
+    function peindreReserve(){
+      var pris = ordre.map(function(c){ return lireV(champs[c]); });
+      var finies = ordre.every(function(c){ return etat(champs[c]) === "juste"; });
+      reserve.hidden = finies;
+      if (finies) return;
+      var labs = etiquettes.map(function(v){
+        if (!reutil && pris.indexOf(v) >= 0) return "";
+        var on = !!(choix && choix.cac === api && choix.v === v);
+        return '<button type="button" class="cac-lab' + (on ? " choisie" : "") + '" data-v="' + esc(v) + '" aria-pressed="' + on + '">' + esc(tx(v)) + "</button>";
+      }).join("");
+      var plein = pris.every(Boolean);
+      var trop = reutil ? 0 : etiquettes.length - ordre.length;
+      reserve.innerHTML = '<p class="cac-reserve-t">' + (plein ? "Toutes les cases sont remplies : vérifie." : "Étiquettes" + (reutil ? " — chacune peut servir plusieurs fois" : trop > 0 ? " — attention, " + trop + " en trop" : "")) + "</p>"
+        + '<div class="cac-reserve-l">' + (labs || '<span class="cac-geste">Toutes les étiquettes sont posées.</span>') + "</div>";
+    }
+    function dire(t){ msg.textContent = t || ""; }
+    function premiereVide(){ var c = ordre.filter(function(x){ return !lireV(champs[x]); })[0]; return c ? zone.querySelector('[data-cle="' + c + '"]') : null; }
+    function montrerCase(c){ if (c && c.scrollIntoView) c.scrollIntoView({block: "nearest", inline: "nearest"}); }
+    function poser(cle, v){
+      var f = champs[cle]; if (!f || etat(f) === "juste") return;
+      if (!reutil && v) ordre.forEach(function(o){ if (o !== cle && lireV(champs[o]) === v && etat(champs[o]) !== "juste") { ecrire(champs[o], null); champs[o].classList.remove("ms-faux"); } });
+      f.classList.remove("ms-faux");
+      ecrire(f, v);
+      dire("");
+    }
+    var api = {racine: racine, rendre: rendre, poser: poser, champs: champs, ordre: ordre, etiquettes: etiquettes, peindre: peindreReserve, dispo: function(){ return dispo; }};
+
+    racine.addEventListener("click", function(ev){
+      if (vientDeGlisser) return;
+      var lab = ev.target.closest(".cac-lab");
+      if (lab) {
+        var v = lab.getAttribute("data-v");
+        choix = (choix && choix.cac === api && choix.v === v) ? null : {cac: api, v: v};
+        peindreReserve();
+        if (choix) {
+          dire("« " + tx(v) + " » est prise : touche sa case dans le schéma.");
+          if (ev.detail === 0) { var c0 = premiereVide(); if (c0) { c0.focus({preventScroll: true}); montrerCase(c0); } }
+          else { var b = reserve.querySelector('.cac-lab[data-v="' + CSS.escape(v) + '"]'); if (b) b.focus({preventScroll: true}); }
+        } else dire("");
+        return;
+      }
+      var c = ev.target.closest(".cac-case");
+      if (c && !c.disabled) {
+        var cle = c.getAttribute("data-cle");
+        if (choix && choix.cac === api) { poser(cle, choix.v); choix = null; rendre(); var s = premiereVide(); if (s && ev.detail === 0) s.focus({preventScroll: true}); montrerCase(s); }
+        else if (lireV(champs[cle])) { poser(cle, null); rendre(); }
+        else dire("Choisis d'abord une étiquette, en bas, puis touche cette case.");
+      }
+    });
+    racine.addEventListener("keydown", function(ev){ if (ev.key === "Escape" && choix) { choix = null; peindreReserve(); dire(""); } });
+    // la vérification (mode mission) marque les groupes ; une étiquette fausse est rendue : le dessin suit
+    var obs = new MutationObserver(function(){ rendre(); });
+    ordre.forEach(function(c){ obs.observe(champs[c], {attributes: true, attributeFilter: ["class"]}); });
+    racine.addEventListener("change", function(ev){ if (ev.target.closest(".cac-questions")) rendre(); });
+    if (window.ResizeObserver) new ResizeObserver(function(){ if (racine.clientWidth && racine.clientWidth !== api._w) { api._w = racine.clientWidth; rendre(); } }).observe(racine);
+    rendre();
+    racine._cac = api;
+    return api;
+  }
+
+  /* ── Glisser une étiquette (ou une case pleine) vers une case ── */
+  function caseSous(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".cac-case:not(:disabled)"); }
+  D.addEventListener("pointerdown", function(ev){
+    var src = ev.target.closest(".cac-lab, .cac-case.pleine"); if (!src || src.disabled) return;
+    if (ev.pointerType === "touch" && src.classList.contains("cac-case")) return;      // au doigt, une case pleine se vide en la touchant
+    var r = src.closest(".cac"); if (!r || !r._cac) return;
+    var de = src.getAttribute("data-cle");
+    glisse = {id: ev.pointerId, x: ev.clientX, y: ev.clientY, src: src, api: r._cac, de: de, v: de ? lireV(r._cac.champs[de]) : src.getAttribute("data-v"), f: null};
+  });
+  window.addEventListener("pointermove", function(ev){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return;
+    if (!g.f) { if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "cac-fantome"); g.f.textContent = net((g.src.querySelector(".cac-v") || g.src).textContent); D.body.appendChild(g.f); g.src.classList.add("part"); }
+    g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-70%) rotate(-2deg)";
+    $$(".cac-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+    var c = caseSous(ev); if (c && c.closest(".cac") === g.api.racine) c.classList.add("vise");
+  });
+  function lache(ev, annule){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return; glisse = null; if (!g.f) return;
+    g.f.remove(); vientDeGlisser = true; setTimeout(function(){ vientDeGlisser = false; }, 0);
+    var c = annule ? null : caseSous(ev);
+    if (c && c.closest(".cac") === g.api.racine) { var cle = c.getAttribute("data-cle"); if (g.de && g.de !== cle) g.api.poser(g.de, null); g.api.poser(cle, g.v); }
+    else if (g.de && !annule) g.api.poser(g.de, null);
+    choix = null; g.api.rendre();
+  }
+  window.addEventListener("pointerup", function(ev){ lache(ev, false); });
+  window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
+
+  function init(){ $$(".cac[data-cac]").forEach(function(r){ if (!r._cac) Chaine(r); }); }
+  window.ChaineACompleter = {init: init, Chaine: Chaine};
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
+  // la page remet ses réponses après coup (sauvegarde relue) : le dessin se repeint une fois tout chargé
+  window.addEventListener("load", function(){ $$(".cac").forEach(function(r){ if (r._cac) r._cac.rendre(); }); });
+})();
+</script>
+<!-- chaine-a-completer v1 : fin -->
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -2128,8 +2533,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 </details>
 
 <div class="progress-wrap">
-  <span class="progress-label">Ma progression : <b id="progTxt">0 / 8 activités validées</b></span>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progBar" aria-label="Progression"><div id="progFill"></div></div>
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 9 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="9" aria-valuenow="0" id="progBar" aria-label="Progression"><div id="progFill"></div></div>
 </div>
 
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
@@ -2336,78 +2741,114 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier les constituants de la chaîne d'énergie et la nature des énergies à chaque étape.</div>
       <div><b>Compétences :</b> 5e_C4.2 + 5e_C4.3.</div>
-      <div><b>Production attendue :</b> fonctions associées + 5 natures d'énergie + schéma recopié au cahier.</div>
-      <div><b>Ressources :</b> la partie BASSE du schéma ci-dessus — la chaîne d'ÉNERGIE (à LIRE pour répondre).</div>
+      <div><b>Production attendue :</b> les 5 fonctions et les 6 formes d'énergie posées dans le schéma, puis la chaîne recopiée au cahier.</div>
+      <div><b>Ressources :</b> le schéma des deux chaînes, à compléter : la chaîne d'ÉNERGIE, en bas.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> a) associe les constituants à leurs fonctions ; b) indique la nature de l'énergie à chaque étape ; c) recopie la chaîne au cahier avec ses flèches.</div>
+    <div class="consigne"><b>Consigne :</b> a) pose chaque fonction dans son bloc ; b) pose la forme de l'énergie sur chaque flèche ; c) recopie la chaîne au cahier avec ses flèches.</div>
     <div class="retenir"><b>📐 Règle d'or du schéma :</b> l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
     <div class="exo">
-      <h4>a) Les constituants et leurs fonctions</h4>
-      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>une réponse ne sert à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>STOCKER</li><li><b>B</b>CONVERTIR la lumière en électricité</li><li><b>C</b>TRANSMETTRE un mouvement (engrenages, courroie)</li><li><b>D</b>CONVERTIR l’électricité en lumière</li><li><b>E</b>ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED</li></ol></div>
-<fieldset class="qcm-groupe qcm-grille" id="e2_o1" data-indice="La batterie reçoit de l'électricité le jour et en rend la nuit : entre les deux, elle la garde.">
-  <legend>La batterie</legend>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o1__1" title="STOCKER">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o1__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o1__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o1__4" title="CONVERTIR l’électricité en lumière">D</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o1" id="e2_o1__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o1__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
+      <h4>a) Qui fait quoi ? Pose chaque fonction dans son bloc</h4>
+      <p>Les constituants sont écrits sous les blocs. <br>Pose dans chaque bloc la fonction que son constituant assure. <br>Une étiquette ne va dans aucun bloc.</p>
+<div class="cac" data-cac='{"dessin": "lampadaire", "cases": {"convertir-panneau.fonction": "e2_f1", "alimenter.fonction": "e2_f2", "stocker.fonction": "e2_f3", "distribuer.fonction": "e2_f4", "convertir-led.fonction": "e2_f5"}, "vides": ["g:information", "entree.texte", "conv-alim.texte", "alim-dist.texte", "dist-conv.texte", "sortie.texte", "charge.texte", "stocker.stock"], "titres": {"titre-info": "CHAÎNE D’INFORMATION — tu la construiras en séance 3"}, "reutilisables": true, "vue": {"etroit": [0, 400, 380, 580]}, "nom": "Les deux chaînes du lampadaire : les fonctions à poser dans les blocs du bas"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="e2_f1">
+  <legend>La fonction du panneau solaire</legend>
+  <div class="qcm-option"><input type="radio" name="e2_f1" id="e2_f1__1" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e2_f1__1">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f1" id="e2_f1__2" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e2_f1__2">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f1" id="e2_f1__3" value="CONVERTIR"><label for="e2_f1__3">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f1" id="e2_f1__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e2_f1__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f1" id="e2_f1__5" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e2_f1__5">ALIMENTER</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e2_o2" data-indice="Le panneau solaire reçoit de la lumière et fournit du courant : l'énergie y change de forme.">
-  <legend>Le panneau solaire</legend>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o2__1" title="STOCKER">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o2__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o2__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o2__4" title="CONVERTIR l’électricité en lumière">D</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o2" id="e2_o2__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o2__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
+<fieldset class="qcm-groupe" id="e2_f2">
+  <legend>La fonction du régulateur de charge</legend>
+  <div class="qcm-option"><input type="radio" name="e2_f2" id="e2_f2__1" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e2_f2__1">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f2" id="e2_f2__2" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e2_f2__2">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f2" id="e2_f2__3" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e2_f2__3">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f2" id="e2_f2__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e2_f2__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f2" id="e2_f2__5" value="ALIMENTER"><label for="e2_f2__5">ALIMENTER</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e2_o3" data-indice="Le bloc de LED reçoit du courant et envoie de la lumière : l'énergie y change de forme.">
-  <legend>Le bloc de LED</legend>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o3__1" title="STOCKER">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o3__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o3__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o3__4" title="CONVERTIR l’électricité en lumière">D</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o3" id="e2_o3__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o3__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
+<fieldset class="qcm-groupe" id="e2_f3">
+  <legend>La fonction de la batterie</legend>
+  <div class="qcm-option"><input type="radio" name="e2_f3" id="e2_f3__1" value="STOCKER"><label for="e2_f3__1">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f3" id="e2_f3__2" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e2_f3__2">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f3" id="e2_f3__3" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e2_f3__3">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f3" id="e2_f3__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e2_f3__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f3" id="e2_f3__5" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e2_f3__5">ALIMENTER</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="e2_o4" data-indice="Le régulateur fournit une électricité adaptée ; l'interrupteur la laisse passer, ou non, vers les LED.">
-  <legend>Le régulateur de charge et l’interrupteur commandé : leurs rôles respectifs</legend>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__1" value="STOCKER" aria-label="A — STOCKER"><label for="e2_o4__1" title="STOCKER">A</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__2" value="CONVERTIR la lumière en électricité" aria-label="B — CONVERTIR la lumière en électricité"><label for="e2_o4__2" title="CONVERTIR la lumière en électricité">B</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__3" value="TRANSMETTRE un mouvement (engrenages, courroie)" aria-label="C — TRANSMETTRE un mouvement (engrenages, courroie)"><label for="e2_o4__3" title="TRANSMETTRE un mouvement (engrenages, courroie)">C</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__4" value="CONVERTIR l’électricité en lumière" aria-label="D — CONVERTIR l’électricité en lumière"><label for="e2_o4__4" title="CONVERTIR l’électricité en lumière">D</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_o4" id="e2_o4__5" value="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED" aria-label="E — ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED"><label for="e2_o4__5" title="ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED">E</label></div>
+<fieldset class="qcm-groupe" id="e2_f4">
+  <legend>La fonction de l'interrupteur commandé</legend>
+  <div class="qcm-option"><input type="radio" name="e2_f4" id="e2_f4__1" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e2_f4__1">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f4" id="e2_f4__2" value="DISTRIBUER"><label for="e2_f4__2">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f4" id="e2_f4__3" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e2_f4__3">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f4" id="e2_f4__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e2_f4__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f4" id="e2_f4__5" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e2_f4__5">ALIMENTER</label></div>
 </fieldset>
-      <h4>b) La nature des énergies</h4>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n1" data-indice="Le panneau est tourné vers le soleil : ce qui entre, c'est ce qu'il en reçoit.">
-  <legend>Ce qui ENTRE dans le panneau solaire</legend>
-  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__1" value="énergie lumineuse"><label for="e2_n1__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__2" value="énergie électrique"><label for="e2_n1__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__3" value="énergie chimique"><label for="e2_n1__3">énergie chimique</label></div>
+<fieldset class="qcm-groupe" id="e2_f5">
+  <legend>La fonction du bloc de LED</legend>
+  <div class="qcm-option"><input type="radio" name="e2_f5" id="e2_f5__1" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e2_f5__1">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f5" id="e2_f5__2" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e2_f5__2">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f5" id="e2_f5__3" value="CONVERTIR"><label for="e2_f5__3">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f5" id="e2_f5__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e2_f5__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_f5" id="e2_f5__5" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e2_f5__5">ALIMENTER</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n2" data-indice="Des fils partent du panneau : ce qui sort, c'est ce qui circule dans ces fils.">
-  <legend>Ce qui SORT du panneau solaire</legend>
-  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__1" value="énergie lumineuse"><label for="e2_n2__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__2" value="énergie électrique"><label for="e2_n2__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__3" value="énergie chimique"><label for="e2_n2__3">énergie chimique</label></div>
+</div>
+</div>
+      <h4>b) Sous quelle forme voyage l'énergie ? Pose-la sur les flèches</h4>
+      <p>Les fonctions que tu as posées restent dans les blocs. <br>Pose sur chaque flèche la forme de l'énergie qui y passe. <br>Sous la batterie, pose la forme sous laquelle elle garde l'énergie.</p>
+<div class="cac" data-cac='{"dessin": "lampadaire", "cases": {"entree.texte": "e2_n1", "conv-alim.texte": "e2_n2", "stocker.stock": "e2_n3", "alim-dist.texte": "e2_n4", "dist-conv.texte": "e2_n5", "sortie.texte": "e2_n6"}, "acquis": {"convertir-panneau.fonction": "e2_f1", "alimenter.fonction": "e2_f2", "stocker.fonction": "e2_f3", "distribuer.fonction": "e2_f4", "convertir-led.fonction": "e2_f5"}, "vides": ["g:information", "charge.texte"], "titres": {"titre-info": "CHAÎNE D’INFORMATION — tu la construiras en séance 3"}, "reutilisables": true, "vue": {"etroit": [0, 400, 380, 580]}, "nom": "Les deux chaînes du lampadaire : les formes d&#x27;énergie à poser sur les flèches du bas"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="e2_n1">
+  <legend>La forme de l'énergie qui entre dans le panneau solaire</legend>
+  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__1" value="énergie électrique" data-pourquoi="Le panneau est tourné vers le soleil : ce qui y entre, c'est ce qu'il en reçoit."><label for="e2_n1__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__2" value="énergie mécanique" data-pourquoi="Rien ne bouge dans le lampadaire : il n'y a pas d'énergie mécanique."><label for="e2_n1__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__3" value="énergie lumineuse"><label for="e2_n1__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__4" value="énergie sonore" data-pourquoi="Le lampadaire ne fait aucun bruit : il n'y a pas d'énergie sonore."><label for="e2_n1__4">énergie sonore</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n1" id="e2_n1__5" value="énergie chimique" data-pourquoi="Le panneau est tourné vers le soleil : ce qui y entre, c'est ce qu'il en reçoit."><label for="e2_n1__5">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n3" data-indice="La batterie ne garde ni de la lumière, ni du courant qui circule : pense à ce qu'il y a dans une pile.">
-  <legend>Sous quelle forme la batterie STOCKE l'énergie</legend>
-  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__1" value="énergie lumineuse"><label for="e2_n3__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__2" value="énergie électrique"><label for="e2_n3__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__3" value="énergie chimique"><label for="e2_n3__3">énergie chimique</label></div>
+<fieldset class="qcm-groupe" id="e2_n2">
+  <legend>La forme de l'énergie, du panneau au régulateur</legend>
+  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__1" value="énergie électrique"><label for="e2_n2__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__2" value="énergie mécanique" data-pourquoi="Rien ne bouge dans le lampadaire : il n'y a pas d'énergie mécanique."><label for="e2_n2__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__3" value="énergie lumineuse" data-pourquoi="Entre ces deux blocs, il y a des fils : ce qui passe, c'est ce qui circule dans ces fils."><label for="e2_n2__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__4" value="énergie sonore" data-pourquoi="Le lampadaire ne fait aucun bruit : il n'y a pas d'énergie sonore."><label for="e2_n2__4">énergie sonore</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n2" id="e2_n2__5" value="énergie chimique" data-pourquoi="Entre ces deux blocs, il y a des fils : ce qui passe, c'est ce qui circule dans ces fils."><label for="e2_n2__5">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n4" data-indice="Le bloc de LED est branché par des fils : ce qui entre, c'est ce qui circule dans ces fils.">
-  <legend>Ce qui ENTRE dans le bloc de LED</legend>
-  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__1" value="énergie lumineuse"><label for="e2_n4__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__2" value="énergie électrique"><label for="e2_n4__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__3" value="énergie chimique"><label for="e2_n4__3">énergie chimique</label></div>
+<fieldset class="qcm-groupe" id="e2_n3">
+  <legend>La forme sous laquelle la batterie garde l'énergie</legend>
+  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__1" value="énergie électrique" data-pourquoi="La batterie ne garde ni de la lumière, ni du courant qui circule : pense à ce qu'il y a dans une pile."><label for="e2_n3__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__2" value="énergie mécanique" data-pourquoi="Rien ne bouge dans le lampadaire : il n'y a pas d'énergie mécanique."><label for="e2_n3__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__3" value="énergie lumineuse" data-pourquoi="La batterie ne garde ni de la lumière, ni du courant qui circule : pense à ce qu'il y a dans une pile."><label for="e2_n3__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__4" value="énergie sonore" data-pourquoi="Le lampadaire ne fait aucun bruit : il n'y a pas d'énergie sonore."><label for="e2_n3__4">énergie sonore</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n3" id="e2_n3__5" value="énergie chimique"><label for="e2_n3__5">énergie chimique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-rangee" id="e2_n5" data-indice="Regarde ce que le bloc de LED envoie vers le parking.">
-  <legend>Ce qui SORT du bloc de LED</legend>
-  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__1" value="énergie lumineuse"><label for="e2_n5__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__2" value="énergie électrique"><label for="e2_n5__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__3" value="énergie chimique"><label for="e2_n5__3">énergie chimique</label></div>
+<fieldset class="qcm-groupe" id="e2_n4">
+  <legend>La forme de l'énergie, du régulateur à l'interrupteur</legend>
+  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__1" value="énergie électrique"><label for="e2_n4__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__2" value="énergie mécanique" data-pourquoi="Rien ne bouge dans le lampadaire : il n'y a pas d'énergie mécanique."><label for="e2_n4__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__3" value="énergie lumineuse" data-pourquoi="Entre ces deux blocs, il y a des fils : ce qui passe, c'est ce qui circule dans ces fils."><label for="e2_n4__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__4" value="énergie sonore" data-pourquoi="Le lampadaire ne fait aucun bruit : il n'y a pas d'énergie sonore."><label for="e2_n4__4">énergie sonore</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n4" id="e2_n4__5" value="énergie chimique" data-pourquoi="Entre ces deux blocs, il y a des fils : ce qui passe, c'est ce qui circule dans ces fils."><label for="e2_n4__5">énergie chimique</label></div>
 </fieldset>
-      <label for="e2_cahier" style="display:block;margin-top:8px"><b>c)</b> Recopie la chaîne au cahier, puis résume-la ici en une ligne (avec des flèches →) :</label>
+<fieldset class="qcm-groupe" id="e2_n5">
+  <legend>La forme de l'énergie, de l'interrupteur au bloc de LED</legend>
+  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__1" value="énergie électrique"><label for="e2_n5__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__2" value="énergie mécanique" data-pourquoi="Rien ne bouge dans le lampadaire : il n'y a pas d'énergie mécanique."><label for="e2_n5__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__3" value="énergie lumineuse" data-pourquoi="Entre ces deux blocs, il y a des fils : ce qui passe, c'est ce qui circule dans ces fils."><label for="e2_n5__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__4" value="énergie sonore" data-pourquoi="Le lampadaire ne fait aucun bruit : il n'y a pas d'énergie sonore."><label for="e2_n5__4">énergie sonore</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n5" id="e2_n5__5" value="énergie chimique" data-pourquoi="Entre ces deux blocs, il y a des fils : ce qui passe, c'est ce qui circule dans ces fils."><label for="e2_n5__5">énergie chimique</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e2_n6">
+  <legend>La forme de l'énergie qui sort du bloc de LED</legend>
+  <div class="qcm-option"><input type="radio" name="e2_n6" id="e2_n6__1" value="énergie électrique" data-pourquoi="Regarde ce que le bloc de LED envoie vers le parking."><label for="e2_n6__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n6" id="e2_n6__2" value="énergie mécanique" data-pourquoi="Rien ne bouge dans le lampadaire : il n'y a pas d'énergie mécanique."><label for="e2_n6__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n6" id="e2_n6__3" value="énergie lumineuse"><label for="e2_n6__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n6" id="e2_n6__4" value="énergie sonore" data-pourquoi="Le lampadaire ne fait aucun bruit : il n'y a pas d'énergie sonore."><label for="e2_n6__4">énergie sonore</label></div>
+  <div class="qcm-option"><input type="radio" name="e2_n6" id="e2_n6__5" value="énergie chimique" data-pourquoi="Regarde ce que le bloc de LED envoie vers le parking."><label for="e2_n6__5">énergie chimique</label></div>
+</fieldset>
+</div>
+</div>
+      <h4>c) La chaîne, au cahier puis en une ligne</h4>
+      <label for="e2_cahier" style="display:block;margin-top:8px">Recopie la chaîne au cahier, puis résume-la ici en une ligne, avec des flèches → :</label>
       <textarea id="e2_cahier" placeholder="soleil → panneau → …"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
@@ -2431,12 +2872,14 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <br>Le régulateur de charge → <b>ALIMENTER</b>.
       <br>L'interrupteur commandé → <b>DISTRIBUER</b> vers les LED.
 <br><b>La réponse en trop&nbsp;:</b> TRANSMETTRE un mouvement. Rien ne bouge dans un lampadaire&nbsp;: sa chaîne d'énergie n'a pas cette fonction.</p>
-      <p><b>b) La nature de l'énergie, étape par étape&nbsp;:</b>
+      <p><b>b) La forme de l'énergie, flèche par flèche&nbsp;:</b>
       <br>Ce qui entre dans le panneau solaire&nbsp;: énergie <b>lumineuse</b>.
-      <br>Ce qui en sort&nbsp;: énergie <b>électrique</b>.
-      <br>Ce que la batterie stocke&nbsp;: énergie <b>chimique</b>.
-      <br>Ce qui entre dans le bloc de LED&nbsp;: énergie <b>électrique</b>.
-      <br>Ce qui en sort&nbsp;: énergie <b>lumineuse</b>.</p>
+      <br>Du panneau au régulateur&nbsp;: énergie <b>électrique</b>.
+      <br>Du régulateur à l'interrupteur&nbsp;: énergie <b>électrique</b>.
+      <br>De l'interrupteur au bloc de LED&nbsp;: énergie <b>électrique</b>.
+      <br>Ce que la batterie garde&nbsp;: énergie <b>chimique</b>.
+      <br>Ce qui sort du bloc de LED&nbsp;: énergie <b>lumineuse</b>.
+      <br><b>Les étiquettes en trop&nbsp;:</b> énergie mécanique (rien ne bouge dans le lampadaire) et énergie sonore (il ne fait aucun bruit).</p>
       <p><b>c) La chaîne, dans l'ordre&nbsp;:</b>
       <br>① le soleil,
       <br>② le panneau solaire,
@@ -2451,7 +2894,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> mettre la batterie en premier (l'énergie vient du SOLEIL) ; croire que la batterie stocke « de l'électricité » telle quelle (elle stocke sous forme chimique) ; oublier que la LED convertit.</div>
     <div class="retenir"><b>📌 À retenir :</b> la <b>chaîne d'énergie</b> du lampadaire : <b>convertir</b> (panneau) → <b>alimenter</b> (régulateur, la batterie <b>stocke</b> en branche) → <b>distribuer</b> (interrupteur commandé) → <b>convertir</b> (LED). À chaque étape on sait dire la <b>nature</b> de l'énergie : lumineuse, électrique, chimique.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> l'ordre 4/4, les natures 5/5, et la chaîne recopiée au cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les fonctions 5/5, les formes d'énergie 6/6, et la chaîne recopiée au cahier.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Le lampadaire décide ›</button></p>
@@ -2468,33 +2911,57 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier les constituants de la chaîne d'information et vérifier la règle de décision au simulateur.</div>
       <div><b>Compétence :</b> 5e_C4.5.</div>
-      <div><b>Production attendue :</b> 3 constituants + 4 expériences au simulateur + règle complétée.</div>
-      <div><b>Ressources :</b> la partie HAUTE du schéma des deux chaînes — la chaîne d'INFORMATION + le simulateur ci-dessous.</div>
+      <div><b>Production attendue :</b> les 3 constituants et l'ordre posés dans le schéma + 4 expériences au simulateur + règle complétée.</div>
+      <div><b>Ressources :</b> le schéma des deux chaînes : la chaîne d'INFORMATION, en haut, à compléter ; le simulateur ci-dessous.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> a) identifie les constituants ; b) fais les 4 expériences au simulateur et note l'état de la LED ; c) complète la règle de décision.</div>
+    <div class="consigne"><b>Consigne :</b> a) pose chaque constituant sous sa fonction, dans le schéma ; b) fais les 4 expériences au simulateur et note l'état de la LED ; c) complète la règle de décision.</div>
     <div class="exo">
-      <h4>a) Les constituants de la chaîne d'information</h4>
-      <fieldset class="qcm-groupe" id="e3_1" data-melange="1">
-  <legend>ACQUÉRIR est assuré par…</legend>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__3" value="le bloc de LED" data-pourquoi="Le bloc de LED éclaire : il agit, il ne mesure rien."><label for="e3_1__3">le bloc de LED</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__1" value="le capteur de luminosité et le détecteur de mouvement"><label for="e3_1__1">le capteur de luminosité et le détecteur de mouvement</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__2" value="la batterie" data-pourquoi="La batterie appartient à la chaîne d'énergie : elle ne prélève aucune information."><label for="e3_1__2">la batterie</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__4" value="le mât" data-pourquoi="Le mât porte le lampadaire : il ne mesure rien."><label for="e3_1__4">le mât</label></div>
+      <h4>a) Qui fait quoi en haut ? Pose chaque constituant sous sa fonction</h4>
+      <p>En bas, la chaîne d'énergie de la séance 2, avec tes réponses. <br>Pose sous chaque bloc du haut le constituant qui assure sa fonction. <br>Pose aussi, sur la flèche verte, ce qu'elle porte jusqu'à l'interrupteur. <br>Trois étiquettes sont en trop.</p>
+<div class="cac" data-cac='{"dessin": "lampadaire", "cases": {"acquerir.composant": "e3_1", "traiter.composant": "e3_2", "communiquer.composant": "e3_3", "ordre.texte": "e3_4"}, "acquis": {"convertir-panneau.fonction": "e2_f1", "alimenter.fonction": "e2_f2", "stocker.fonction": "e2_f3", "distribuer.fonction": "e2_f4", "convertir-led.fonction": "e2_f5", "entree.texte": "e2_n1", "conv-alim.texte": "e2_n2", "stocker.stock": "e2_n3", "alim-dist.texte": "e2_n4", "dist-conv.texte": "e2_n5", "sortie.texte": "e2_n6"}, "nom": "Les deux chaînes du lampadaire : les constituants du haut à poser sous leurs blocs"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="e3_1">
+  <legend>Sous ACQUÉRIR : le constituant</legend>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__1" value="la carte électronique" data-pourquoi="Sous ACQUÉRIR va ce qui prend l'information : la lumière du jour et un passage."><label for="e3_1__1">la carte électronique</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__2" value="le panneau solaire" data-pourquoi="Le panneau solaire est en bas, dans la chaîne d'énergie : il ne traite aucune information."><label for="e3_1__2">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__3" value="l&#x27;ordre d&#x27;allumage" data-pourquoi="Sous ACQUÉRIR va ce qui prend l'information : la lumière du jour et un passage."><label for="e3_1__3">l'ordre d'allumage</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__4" value="les capteurs de lumière et de mouvement"><label for="e3_1__4">les capteurs de lumière et de mouvement</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__5" value="la batterie" data-pourquoi="La batterie est en bas, dans la chaîne d'énergie : elle ne traite aucune information."><label for="e3_1__5">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__6" value="la sortie de commande de la carte" data-pourquoi="Sous ACQUÉRIR va ce qui prend l'information : la lumière du jour et un passage."><label for="e3_1__6">la sortie de commande de la carte</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_1" id="e3_1__7" value="de l&#x27;énergie électrique" data-pourquoi="La flèche verte ne porte pas d'énergie : l'énergie passe en bas, dans la chaîne d'énergie."><label for="e3_1__7">de l'énergie électrique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe" id="e3_2" data-melange="1">
-  <legend>TRAITER est assuré par…</legend>
-  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__2" value="le panneau solaire" data-pourquoi="Le panneau solaire fournit l'énergie : il ne compare rien et ne décide rien."><label for="e3_2__2">le panneau solaire</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__3" value="la vitre" data-pourquoi="La vitre protège les LED : elle ne reçoit aucune information."><label for="e3_2__3">la vitre</label></div>
+<fieldset class="qcm-groupe" id="e3_2">
+  <legend>Sous TRAITER : le constituant</legend>
   <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__1" value="la carte électronique"><label for="e3_2__1">la carte électronique</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__4" value="le régulateur" data-pourquoi="Le régulateur gère la charge de la batterie, dans la chaîne d'énergie : il ne décide pas d'allumer."><label for="e3_2__4">le régulateur</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__2" value="le panneau solaire" data-pourquoi="Le panneau solaire est en bas, dans la chaîne d'énergie : il ne traite aucune information."><label for="e3_2__2">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__3" value="l&#x27;ordre d&#x27;allumage" data-pourquoi="Sous TRAITER va ce qui compare les mesures à la règle, puis décide."><label for="e3_2__3">l'ordre d'allumage</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__4" value="les capteurs de lumière et de mouvement" data-pourquoi="Sous TRAITER va ce qui compare les mesures à la règle, puis décide."><label for="e3_2__4">les capteurs de lumière et de mouvement</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__5" value="la batterie" data-pourquoi="La batterie est en bas, dans la chaîne d'énergie : elle ne traite aucune information."><label for="e3_2__5">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__6" value="la sortie de commande de la carte" data-pourquoi="Sous TRAITER va ce qui compare les mesures à la règle, puis décide."><label for="e3_2__6">la sortie de commande de la carte</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_2" id="e3_2__7" value="de l&#x27;énergie électrique" data-pourquoi="La flèche verte ne porte pas d'énergie : l'énergie passe en bas, dans la chaîne d'énergie."><label for="e3_2__7">de l'énergie électrique</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe" id="e3_3" data-melange="1">
-  <legend>La COMMANDE part vers…</legend>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__1" value="le bloc de LED (via l&#x27;interrupteur commandé)"><label for="e3_3__1">le bloc de LED (via l'interrupteur commandé)</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__2" value="le panneau solaire" data-pourquoi="Le panneau solaire ne reçoit aucun ordre : il produit de l'électricité dès qu'il y a de la lumière."><label for="e3_3__2">le panneau solaire</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__4" value="la pluie" data-pourquoi="La pluie, c'est la météo : le lampadaire ne commande pas le temps qu'il fait."><label for="e3_3__4">la pluie</label></div>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__3" value="le mât" data-pourquoi="Le mât ne fait que porter : il n'y a rien à lui commander."><label for="e3_3__3">le mât</label></div>
+<fieldset class="qcm-groupe" id="e3_3">
+  <legend>Sous COMMUNIQUER : le constituant</legend>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__1" value="la carte électronique" data-pourquoi="Sous COMMUNIQUER va ce qui envoie l'ordre vers le bas."><label for="e3_3__1">la carte électronique</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__2" value="le panneau solaire" data-pourquoi="Le panneau solaire est en bas, dans la chaîne d'énergie : il ne traite aucune information."><label for="e3_3__2">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__3" value="l&#x27;ordre d&#x27;allumage" data-pourquoi="Sous COMMUNIQUER va ce qui envoie l'ordre vers le bas."><label for="e3_3__3">l'ordre d'allumage</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__4" value="les capteurs de lumière et de mouvement" data-pourquoi="Sous COMMUNIQUER va ce qui envoie l'ordre vers le bas."><label for="e3_3__4">les capteurs de lumière et de mouvement</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__5" value="la batterie" data-pourquoi="La batterie est en bas, dans la chaîne d'énergie : elle ne traite aucune information."><label for="e3_3__5">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__6" value="la sortie de commande de la carte"><label for="e3_3__6">la sortie de commande de la carte</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__7" value="de l&#x27;énergie électrique" data-pourquoi="La flèche verte ne porte pas d'énergie : l'énergie passe en bas, dans la chaîne d'énergie."><label for="e3_3__7">de l'énergie électrique</label></div>
 </fieldset>
+<fieldset class="qcm-groupe" id="e3_4">
+  <legend>Sur la flèche verte qui descend : ce qu'elle porte</legend>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__1" value="la carte électronique" data-pourquoi="La flèche verte porte une information qui descend vers l'interrupteur."><label for="e3_4__1">la carte électronique</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__2" value="le panneau solaire" data-pourquoi="Le panneau solaire est en bas, dans la chaîne d'énergie : il ne traite aucune information."><label for="e3_4__2">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__3" value="l&#x27;ordre d&#x27;allumage"><label for="e3_4__3">l'ordre d'allumage</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__4" value="les capteurs de lumière et de mouvement" data-pourquoi="La flèche verte porte une information qui descend vers l'interrupteur."><label for="e3_4__4">les capteurs de lumière et de mouvement</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__5" value="la batterie" data-pourquoi="La batterie est en bas, dans la chaîne d'énergie : elle ne traite aucune information."><label for="e3_4__5">la batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__6" value="la sortie de commande de la carte" data-pourquoi="La flèche verte porte une information qui descend vers l'interrupteur."><label for="e3_4__6">la sortie de commande de la carte</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_4" id="e3_4__7" value="de l&#x27;énergie électrique" data-pourquoi="La flèche verte ne porte pas d'énergie : l'énergie passe en bas, dans la chaîne d'énergie."><label for="e3_4__7">de l'énergie électrique</label></div>
+</fieldset>
+</div>
+</div>
       <h4>b) Aux commandes du simulateur !</h4>
       <div class="simu" style="margin:10px 0">
         <div>
@@ -2559,14 +3026,19 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Fais VRAIMENT les 4 expériences : bouge le curseur, clique « passage », regarde la LED. Les capteurs « sentent », la carte « réfléchit », la LED « obéit ».</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le jour, jamais de lumière (même avec un passage : ce serait du gaspillage). <br>La nuit : veille à 30 % pour rassurer ; passage → 100 % pendant 5 s, puis retour en veille.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> capteurs (luminosité + PIR) · carte électronique · bloc de LED via l'interrupteur commandé.</p>
+      <p><b>a)</b> Sous ACQUÉRIR&nbsp;: <b>les capteurs de lumière et de mouvement</b> (le capteur de luminosité et le détecteur de mouvement).
+      <br>Sous TRAITER&nbsp;: <b>la carte électronique</b>.
+      <br>Sous COMMUNIQUER&nbsp;: <b>la sortie de commande de la carte</b>.
+      <br>La flèche verte porte <b>l'ordre d'allumage</b> jusqu'à l'interrupteur commandé, qui DISTRIBUE l'énergie vers les LED.
+      <br><b>Les étiquettes en trop&nbsp;:</b> le panneau solaire et la batterie sont en bas, dans la chaîne d'énergie.
+      <br>« De l'énergie électrique » ne descend pas par la flèche verte&nbsp;: elle porte un ordre, une information.</p>
       <p><b>b)</b> jour sans passage : éteinte · nuit sans passage : veille · nuit + passage : pleine puissance · jour + passage : éteinte (pas de gaspillage !).</p>
       <p><b>c)</b> SI <b>nuit</b> ET <b>passe</b> → pleine puissance ; nuit sans passage → <b>veille</b>.</p>
       <p><b>Le lien avec la séance 2 :</b> la chaîne d'information COMMANDE la chaîne d'énergie (la flèche verte du schéma) : les capteurs et la carte décident, l'énergie exécute. C'est ça, un objet « intelligent ».</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire que le capteur décide (il ne fait que mesurer) ; répondre « pleine puissance » pour jour+passage (la règle vérifie D'ABORD la nuit) ; confondre chaîne d'information et chaîne d'énergie.</div>
     <div class="retenir"><b>📌 À retenir :</b> la <b>chaîne d'information</b> : <b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (carte + règle SI…ALORS) → <b>COMMUNIQUER</b> (ordre envoyé à l'interrupteur de la LED). Elle commande la chaîne d'énergie : c'est elle qui rend l'objet « intelligent ».</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 3 constituants + 4 expériences réellement faites + la règle complète.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 3 constituants et l'ordre + 4 expériences réellement faites + la règle complète.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Ranger les infos du parc ›</button></p>
@@ -2826,6 +3298,130 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card">
   <h2>🏁 Séance 6 — Le lampadaire de bout en bout… et le défi final</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : sais-tu maintenant expliquer tout le lampadaire, de sa fonction d'usage à ses pièces — et analyser de la même façon un objet que tu n'as jamais vu ?</p>
+
+  <div class="activite" id="act9">
+    <header><span class="num">Échauffement</span><h3>Les deux chaînes du lampadaire, de mémoire</h3><span class="duree">⏱ 5 min</span></header>
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
+      <div><b>Objectif :</b> retrouver de mémoire les fonctions des deux chaînes du lampadaire, construites aux séances 2 et 3.</div>
+      <div><b>Compétences :</b> 5e_C4.2 + 5e_C4.5.</div>
+      <div><b>Production attendue :</b> les huit fonctions posées dans leurs blocs.</div>
+      <div><b>Ressources :</b> aucune : c'est de mémoire.</div>
+    </div></details>
+    <div class="consigne"><b>Consigne :</b> les blocs sont vides. <br>Pose dans chacun sa fonction, sans rouvrir les séances 2 et 3.</div>
+    <div class="exo">
+      <h4>Les huit fonctions, à leur place</h4>
+      <p>Les constituants et les formes d'énergie sont écrits. <br>Il manque les fonctions, dans les blocs. <br>Une étiquette ne va dans aucun bloc.</p>
+<div class="cac" data-cac='{"dessin": "lampadaire", "cases": {"acquerir.fonction": "e9_f1", "traiter.fonction": "e9_f2", "communiquer.fonction": "e9_f3", "convertir-panneau.fonction": "e9_f4", "alimenter.fonction": "e9_f5", "stocker.fonction": "e9_f6", "distribuer.fonction": "e9_f7", "convertir-led.fonction": "e9_f8"}, "reutilisables": true, "nom": "Les deux chaînes du lampadaire, de mémoire : les huit fonctions à poser dans les blocs"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="e9_f1">
+  <legend>La fonction des capteurs</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Les capteurs mesurent la lumière et repèrent un passage."><label for="e9_f1__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__2" value="ACQUÉRIR"><label for="e9_f1__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Les capteurs mesurent la lumière et repèrent un passage."><label for="e9_f1__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f1__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__5" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. Les capteurs mesurent la lumière et repèrent un passage."><label for="e9_f1__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. Les capteurs mesurent la lumière et repèrent un passage."><label for="e9_f1__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. Les capteurs mesurent la lumière et repèrent un passage."><label for="e9_f1__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f1" id="e9_f1__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. Les capteurs mesurent la lumière et repèrent un passage."><label for="e9_f1__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f2">
+  <legend>La fonction de la carte électronique</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. La carte électronique compare les mesures à sa règle et décide."><label for="e9_f2__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. La carte électronique compare les mesures à sa règle et décide."><label for="e9_f2__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. La carte électronique compare les mesures à sa règle et décide."><label for="e9_f2__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f2__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__5" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. La carte électronique compare les mesures à sa règle et décide."><label for="e9_f2__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. La carte électronique compare les mesures à sa règle et décide."><label for="e9_f2__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. La carte électronique compare les mesures à sa règle et décide."><label for="e9_f2__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f2" id="e9_f2__8" value="TRAITER"><label for="e9_f2__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f3">
+  <legend>La fonction de la sortie de commande</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. La sortie de commande envoie l'ordre d'allumage vers l'interrupteur."><label for="e9_f3__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. La sortie de commande envoie l'ordre d'allumage vers l'interrupteur."><label for="e9_f3__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. La sortie de commande envoie l'ordre d'allumage vers l'interrupteur."><label for="e9_f3__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f3__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__5" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. La sortie de commande envoie l'ordre d'allumage vers l'interrupteur."><label for="e9_f3__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__6" value="COMMUNIQUER"><label for="e9_f3__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. La sortie de commande envoie l'ordre d'allumage vers l'interrupteur."><label for="e9_f3__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f3" id="e9_f3__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. La sortie de commande envoie l'ordre d'allumage vers l'interrupteur."><label for="e9_f3__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f4">
+  <legend>La fonction du panneau solaire</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e9_f4__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e9_f4__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e9_f4__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f4__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__5" value="CONVERTIR"><label for="e9_f4__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e9_f4__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e9_f4__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f4" id="e9_f4__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. Le panneau solaire reçoit de la lumière et rend du courant."><label for="e9_f4__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f5">
+  <legend>La fonction du régulateur de charge</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e9_f5__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e9_f5__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e9_f5__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f5__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__5" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e9_f5__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e9_f5__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__7" value="ALIMENTER"><label for="e9_f5__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f5" id="e9_f5__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. Le régulateur fournit au reste du lampadaire une électricité adaptée, venue du panneau ou de la batterie."><label for="e9_f5__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f6">
+  <legend>La fonction de la batterie</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e9_f6__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e9_f6__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__3" value="STOCKER"><label for="e9_f6__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f6__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__5" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e9_f6__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e9_f6__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e9_f6__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f6" id="e9_f6__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. La batterie reçoit de l'électricité le jour et en rend la nuit."><label for="e9_f6__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f7">
+  <legend>La fonction de l'interrupteur commandé</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__1" value="DISTRIBUER"><label for="e9_f7__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e9_f7__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e9_f7__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f7__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__5" value="CONVERTIR" data-pourquoi="CONVERTIR, c'est changer la forme de l'énergie. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e9_f7__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e9_f7__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e9_f7__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f7" id="e9_f7__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. L'interrupteur commandé laisse passer le courant vers les LED, ou le coupe."><label for="e9_f7__8">TRAITER</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="e9_f8">
+  <legend>La fonction du bloc de LED</legend>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__1" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie vers les LED, ou la couper. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e9_f8__1">DISTRIBUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__2" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une information : mesurer, détecter. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e9_f8__2">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__3" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie pour plus tard. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e9_f8__3">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__4" value="TRANSMETTRE" data-pourquoi="TRANSMETTRE, c'est faire passer un mouvement (engrenages, courroie) : rien ne bouge dans un lampadaire."><label for="e9_f8__4">TRANSMETTRE</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__5" value="CONVERTIR"><label for="e9_f8__5">CONVERTIR</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__6" value="COMMUNIQUER" data-pourquoi="COMMUNIQUER, c'est envoyer l'ordre plus loin. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e9_f8__6">COMMUNIQUER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__7" value="ALIMENTER" data-pourquoi="ALIMENTER, c'est fournir l'énergie électrique à la suite de la chaîne. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e9_f8__7">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="e9_f8" id="e9_f8__8" value="TRAITER" data-pourquoi="TRAITER, c'est comparer les mesures à une règle et décider. Le bloc de LED reçoit du courant et envoie de la lumière."><label for="e9_f8__8">TRAITER</label></div>
+</fieldset>
+</div>
+</div>
+      <button class="btn small" data-check="9" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb9" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>En haut, l'information&nbsp;: elle est prise par les capteurs, la carte la traite, puis elle part en ordre. <br>En bas, l'énergie&nbsp;: elle change de forme, elle est gardée, puis envoyée vers les LED.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>En haut, la chaîne d'information&nbsp;:</b>
+      <br>les capteurs → <b>ACQUÉRIR</b>&nbsp;;
+      <br>la carte électronique → <b>TRAITER</b>&nbsp;;
+      <br>la sortie de commande → <b>COMMUNIQUER</b>.</p>
+      <p><b>En bas, la chaîne d'énergie&nbsp;:</b>
+      <br>le panneau solaire → <b>CONVERTIR</b>&nbsp;;
+      <br>le régulateur de charge → <b>ALIMENTER</b>&nbsp;;
+      <br>la batterie → <b>STOCKER</b>&nbsp;;
+      <br>l'interrupteur commandé → <b>DISTRIBUER</b>&nbsp;;
+      <br>le bloc de LED → <b>CONVERTIR</b>.</p>
+      <p><b>L'étiquette en trop&nbsp;:</b> TRANSMETTRE un mouvement. Rien ne bouge dans un lampadaire.</p>
+    </details>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les huit fonctions justes, sans avoir rouvert les séances 2 et 3.</div>
+  </div>
 
   <div class="activite" id="act8">
     <header><span class="num">Activité 7</span><h3>Le FAST du lampadaire, complet</h3><span class="duree">⏱ 10 min</span></header>
@@ -3342,21 +3938,27 @@ const CHECKS = {
   },
   2: function(){
     let ok=0;
-    const att={e2_o1:"STOCKER",e2_o2:"CONVERTIR la lumière en électricité",e2_o3:"CONVERTIR l’électricité en lumière",e2_o4:"ALIMENTER (régulateur) puis DISTRIBUER (interrupteur) vers les LED",
-               e2_n1:"énergie lumineuse",e2_n2:"énergie électrique",e2_n3:"énergie chimique",e2_n4:"énergie électrique",e2_n5:"énergie lumineuse"};
+    const att={e2_f1:"CONVERTIR",e2_f2:"ALIMENTER",e2_f3:"STOCKER",e2_f4:"DISTRIBUER",e2_f5:"CONVERTIR",
+               e2_n1:"énergie lumineuse",e2_n2:"énergie électrique",e2_n3:"énergie chimique",e2_n4:"énergie électrique",e2_n5:"énergie électrique",e2_n6:"énergie lumineuse"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const cOk = txt("e2_cahier").length>=15 && txt("e2_cahier").includes("→");
-    return {score:ok,total:9,extra:cOk?"":" Résume aussi ta chaîne avec des flèches → (et recopie-la au cahier).",valide:ok===9&&cOk};
+    return {score:ok,total:11,extra:cOk?"":" Résume aussi ta chaîne avec des flèches → (et recopie-la au cahier).",valide:ok===11&&cOk};
   },
   3: function(){
     let ok=0;
-    const att={e3_1:"le capteur de luminosité et le détecteur de mouvement",e3_2:"la carte électronique",e3_3:"le bloc de LED (via l'interrupteur commandé)",
+    const att={e3_1:"les capteurs de lumière et de mouvement",e3_2:"la carte électronique",e3_3:"la sortie de commande de la carte",e3_4:"l'ordre d'allumage",
                e3_e1:"éteinte",e3_e2:"en veille (faible)",e3_e3:"à pleine puissance",e3_e4:"éteinte",
                e3_r1:"nuit",e3_r2:"passe",e3_r3:"veille"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const e=window.__exp||{};
     const expOk = e["jour"]!==undefined && e["nuit"]!==undefined && e["nuit+passage"]!==undefined;
-    return {score:ok,total:10,extra:expOk?"":" Fais VRAIMENT les expériences au simulateur : jour, nuit, et nuit + passage.",valide:ok===10&&expOk};
+    return {score:ok,total:11,extra:expOk?"":" Fais VRAIMENT les expériences au simulateur : jour, nuit, et nuit + passage.",valide:ok===11&&expOk};
+  },
+  9: function(){
+    let ok=0;
+    const att={e9_f1:"ACQUÉRIR",e9_f2:"TRAITER",e9_f3:"COMMUNIQUER",e9_f4:"CONVERTIR",e9_f5:"ALIMENTER",e9_f6:"STOCKER",e9_f7:"DISTRIBUER",e9_f8:"CONVERTIR"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:8,extra:"",valide:ok===8};
   },
   4: function(){
     let ok=0;
@@ -3420,11 +4022,11 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
 /* ══════ Progression ══════ */
 function majProgress(){
   const v = window.__valid||{};
-  const n = [1,2,3,4,5,6,7,8].filter(k=>v[k]).length;
-  $("progTxt").textContent = n + " / 8 activités validées";
-  $("progFill").style.width = (n/8*100)+"%";
+  const n = [1,2,3,4,5,6,7,8,9].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 9 activités validées";
+  $("progFill").style.width = (n/9*100)+"%";
   $("progBar").setAttribute("aria-valuenow", n);
-  const par = {s1:[1], s2:[2], s3:[3], s4:[4], s5:[5,6], s6:[8,7]};   /* clé 8 = activité 7 (FAST), clé 7 = la sonnette */
+  const par = {s1:[1], s2:[2], s3:[3], s4:[4], s5:[5,6], s6:[9,8,7]};   /* clé 9 = l'échauffement (les deux chaînes de mémoire), clé 8 = activité 7 (FAST), clé 7 = la sonnette */
   Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
 }
 
@@ -3467,7 +4069,7 @@ const TACHES = {
   "s3": {titre:"Séance 3 — La chaîne d'information", taches:[{n:3, libelle:"Suivre la chaîne d'information en direct"}]},
   "s4": {titre:"Séance 4 — Les données du parc", taches:[{n:4, libelle:"Lire et exploiter la table des lampadaires"}]},
   "s5": {titre:"Séance 5 — Le réseau local", taches:[{n:5, libelle:"Identifier les habitants du réseau local"}, {n:6, libelle:"Jouer le jeu du courrier et en tirer la règle de l'adresse unique"}]},
-  "s6": {titre:"Séance 6 — Défi final et bilan", taches:[{n:8, libelle:"Compléter le FAST du lampadaire et écarter l'intrus"}, {n:7, libelle:"Analyser la sonnette connectée du portail"}]}
+  "s6": {titre:"Séance 6 — Défi final et bilan", taches:[{n:9, libelle:"Retrouver de mémoire les deux chaînes du lampadaire"}, {n:8, libelle:"Compléter le FAST du lampadaire et écarter l'intrus"}, {n:7, libelle:"Analyser la sonnette connectée du portail"}]}
 };
 function majTaches(){
   const hote = document.getElementById("tachesBandeau"); if(!hote) return;
@@ -4959,5 +5561,71 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- constructeur de chaîne d’énergie (style et script) : fin -->
+<script>
+/* Le dessin des deux chaînes du lampadaire, pour la chaîne à compléter (_outils/chaine_a_completer/).
+   Le même que l'animation de la séance 2 et que le schéma fixe : l'information en haut, l'énergie en bas, l'ordre
+   qui descend (n°6, n°310). Les fonctions dans les blocs, les composants dessous, les formes d'énergie sur les flèches.
+   Deux dispositions : « large » (en ligne, à partir de 760 px) et « etroit » (en colonne, au téléphone). */
+window.CAC_DESSINS = window.CAC_DESSINS || {};
+window.CAC_DESSINS.lampadaire = (function(){
+  var CYAN = "#61dafb", VIOLET = "#c68ef2", JAUNE = "#ffd66b", VERT = "#81fba1", ORANGE = "#ffb454";
+  return {
+    seuil: 760,
+    large: {vue: [0, 0, 1450, 690]},
+    etroit: {vue: [0, 0, 380, 980], max: 520},
+    elements: [
+      {id: "titre-info", type: "titre", texte: "CHAÎNE D’INFORMATION — en haut (elle décide)", couleur: CYAN,
+       large: {x: 20, y: 14}, etroit: {x: 10, y: 8, texte: "CHAÎNE D’INFORMATION —\nen haut (elle décide)"}},
+      {id: "acquerir", type: "bloc", groupe: "information", fonction: "ACQUÉRIR", composant: "Capteur de luminosité\nDétecteur de mouvement", couleur: CYAN,
+       large: {x: 130, y: 56, l: 230}, etroit: {x: 120, y: 52, l: 160}},
+      {id: "mesures", type: "fleche", groupe: "information", nature: "information", texte: "Mesures",
+       large: {points: [[360, 91], [538, 91]], ex: 449, ey: 80, ancre: "bas", lt: 150},
+       etroit: {points: [[200, 140], [200, 178]], ex: 190, ey: 159, ancre: "gauche", lt: 96}},
+      {id: "traiter", type: "bloc", groupe: "information", fonction: "TRAITER", composant: "Carte électronique\nSi nuit et passage : allumer", couleur: VIOLET,
+       large: {x: 540, y: 56, l: 230}, etroit: {x: 120, y: 182, l: 160}},
+      {id: "decision", type: "fleche", groupe: "information", nature: "information", texte: "Décision",
+       large: {points: [[770, 91], [948, 91]], ex: 859, ey: 80, ancre: "bas", lt: 150},
+       etroit: {points: [[200, 270], [200, 308]], ex: 190, ey: 289, ancre: "gauche", lt: 96}},
+      {id: "communiquer", type: "bloc", groupe: "information", fonction: "COMMUNIQUER", composant: "Sortie de commande\nde la carte", couleur: VERT,
+       large: {x: 950, y: 56, l: 230}, etroit: {x: 120, y: 312, l: 160}},
+      {id: "ordre", type: "fleche", groupe: "information", nature: "ordre", texte: "Ordre d’allumage :\nl’ordre descend",
+       large: {points: [[1180, 91], [1252, 91], [1252, 252], [845, 252], [845, 320]], ex: 1264, ey: 170, ancre: "droite", lt: 176},
+       etroit: {points: [[120, 334], [30, 334], [30, 744], [116, 744]], ex: 36, ey: 516, ancre: "droite", lt: 78, texte: "Ordre\nd’allumage"}},
+      {id: "titre-energie", type: "titre", texte: "CHAÎNE D’ÉNERGIE — en bas (elle obéit)", couleur: ORANGE,
+       large: {x: 20, y: 236}, etroit: {x: 46, y: 412, texte: "CHAÎNE D’ÉNERGIE —\nen bas (elle obéit)"}},
+      {id: "entree", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nlumineuse",
+       large: {points: [[18, 359], [126, 359]], ex: 72, ey: 314, ancre: "bas", lt: 112},
+       etroit: {points: [[200, 452], [200, 490]], ex: 190, ey: 471, ancre: "gauche", lt: 96}},
+      {id: "convertir-panneau", type: "bloc", groupe: "energie", fonction: "CONVERTIR", composant: "Panneau solaire", couleur: VIOLET,
+       large: {x: 130, y: 324, l: 190}, etroit: {x: 120, y: 494, l: 160}},
+      {id: "conv-alim", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[320, 359], [436, 359]], ex: 379, ey: 314, ancre: "bas", lt: 112},
+       etroit: {points: [[200, 566], [200, 604]], ex: 190, ey: 585, ancre: "gauche", lt: 96}},
+      {id: "alimenter", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Régulateur de charge", couleur: JAUNE,
+       large: {x: 440, y: 324, l: 190}, etroit: {x: 120, y: 608, l: 160}},
+      {id: "charge", type: "fleche", groupe: "energie", nature: "stock", double: true, texte: "Énergie électrique\n(charge / décharge)",
+       large: {points: [[632, 382], [694, 382], [694, 560], [634, 560]], ex: 706, ey: 470, ancre: "droite", lt: 190},
+       etroit: {points: [[282, 630], [334, 630], [334, 700]], ex: 334, ey: 622, ancre: "bas", lt: 92, texte: "Énergie\nélectrique\n(charge /\ndécharge)"}},
+      {id: "stocker", type: "bloc", groupe: "energie", fonction: "STOCKER", composant: "Batterie", stock: "Énergie chimique stockée", couleur: JAUNE,
+       large: {x: 440, y: 525, l: 190, stock: "Énergie chimique\nstockée"}, etroit: {x: 292, y: 704, l: 84, stock: "Énergie\nchimique\nstockée"}},
+      {id: "alim-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[630, 359], [746, 359]], ex: 689, ey: 314, ancre: "bas", lt: 112},
+       etroit: {points: [[200, 680], [200, 718]], ex: 190, ey: 699, ancre: "gauche", lt: 96}},
+      {id: "distribuer", type: "bloc", groupe: "energie", fonction: "DISTRIBUER", composant: "Interrupteur commandé", couleur: CYAN,
+       large: {x: 750, y: 324, l: 190}, etroit: {x: 120, y: 722, l: 160}},
+      {id: "dist-conv", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[940, 359], [1056, 359]], ex: 999, ey: 314, ancre: "bas", lt: 112},
+       etroit: {points: [[200, 794], [200, 832]], ex: 190, ey: 813, ancre: "gauche", lt: 96}},
+      {id: "convertir-led", type: "bloc", groupe: "energie", fonction: "CONVERTIR", composant: "Bloc de LED", couleur: VIOLET,
+       large: {x: 1060, y: 324, l: 190}, etroit: {x: 120, y: 836, l: 160}},
+      {id: "sortie", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nlumineuse",
+       large: {points: [[1250, 359], [1348, 359]], ex: 1299, ey: 314, ancre: "bas", lt: 104},
+       etroit: {points: [[200, 908], [200, 946]], ex: 190, ey: 927, ancre: "gauche", lt: 96}},
+      {id: "eclairer", type: "texte", groupe: "energie", texte: "Éclairer\nla zone", gras: true,
+       large: {x: 1400, y: 359, ancre: "centre"}, etroit: {x: 200, y: 964, ancre: "centre", texte: "Éclairer la zone"}}
+    ]
+  };
+})();
+</script>
 </body>
 </html>
