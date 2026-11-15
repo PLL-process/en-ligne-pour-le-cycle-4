@@ -183,3 +183,19 @@ Exécuté le 08/11/2026 (Chromium Playwright, session cloud) : `tests_3e_C7.4_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_verrous`, `controle_rapports_tests` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_3e_2026-11-08/`. Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 15/11/2026 — Révision des trois thèmes (ligne 33 du suivi)
+
+Les cinq questions qui partageaient leurs réponses (le coût de chaque source) forment une grille lettrée
+(`grilles_radio.py`) ; les autres groupes mélangent leurs propositions (`melanger_propositions.py` : la bonne réponse était
+12 fois sur 16 la première). Le pourquoi de chaque erreur est posé pour le mode mission (`mission_3e_C7.4.json`).
+
+Le banc de la séquence échouait sur `main` à 53 / 54 : depuis l'étape 2 de l'audit externe (commit 5430743), la page ne
+dit plus « validée » pour une réponse libre (activité 5). Il suit maintenant la page.
+
+```
+node tests_3e_C7.4_sequence.mjs "$PWD/sequence_3e_C7.4_energie-de-la-station.html" 3e reponses_3e_C7.4.json   →  54 / 54
+node tests_3e_C7.4_qcm.mjs "$PWD/qcm_3e_C7.4_energie-de-la-station.html" 3e_C7.4 3e_C3.2 sequence_3e_C7.4_energie-de-la-station.html   →  32 / 32
+node tests_regle_311_3e_C7.4.mjs   →  34 / 34
+```
+
