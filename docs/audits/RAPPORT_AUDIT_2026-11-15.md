@@ -43,6 +43,8 @@
 
 **Post-scriptum (22 h 20 UTC).** Pendant que ce rapport tournait, #719 et #720 ont été fusionnées (révisions 52 et 53 : 5e_C8.1 et 5e_C8.2 au gabarit commun). Rejoués seuls sur `main` après #720 (`4a32a69`), **sans refaire le rapport complet** : `verif_regles_audit.py` → **4 ✘ sur 4 pages** (3 × n°301 sur 3e_C9.2 pages 1-3, 1 × n°300 : les 24 listes de 5e_C9.1) ; l'ancien gabarit (n°29/30/34) est à **zéro page** ; `bilan_revision.py` → **51 séquences propres sur 56** (restent 5e_C9.1, et 3e_C1.1, 3e_C3.1 pour l'aération). Les autres chiffres de ce rapport datent de 21 h 35, après #718 ; les contrôles du site et les générateurs n'ont pas été rejoués après #720.
 
+**Second post-scriptum (22 h 50 UTC).** #722 (règle d'or n°332, Book Train, flux animés) et #723 (révision 54 : 5e_C9.1 au gabarit commun) ont été fusionnées ensuite. Rejoués seuls sur `main` après #723 (`e13d85d`) : `verif_regles_audit.py` → **3 ✘ sur 3 pages** (n°301 sur 3e_C9.2 pages 1 à 3 : les quatre pages de la station, engendrées, ne se terminent pas toutes par le bilan) ; les 24 listes de 5e_C9.1 sont des boutons radio (n°300 à zéro page) ; `bilan_revision.py` → **52 séquences propres sur 56** (restent 3e_C1.1 et 3e_C3.1 pour l'aération : 23 et 18 écarts ; 3e_C9.2 pour ses trois ✘). Rapport complet non refait.
+
 ## 1. Couverture (pédagogie) — 114 codes
 
 | Thème | COMPLET ET VALIDABLE | COUVERT PAR UNE SÉQUENCE MUTUALISÉE | EXISTANT À AMÉLIORER | À VÉRIFIER PAR L’ENSEIGNANT |

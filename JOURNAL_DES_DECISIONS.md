@@ -31499,7 +31499,8 @@ supprimés ensuite) ; les générateurs relancés dans une copie hors git, jamai
 (sans `axe-core`), les bancs des lots (aucune page touchée), un navigateur réel. **Post-scriptum** : #719 et #720 (5e_C8.1,
 5e_C8.2 au gabarit commun) ont été fusionnées pendant l'audit ; `verif_regles_audit.py` et `bilan_revision.py` rejoués seuls sur
 `main` après #720 : **4 ✘ sur 4 pages** (3 × n°301 sur 3e_C9.2, 24 listes sur 5e_C9.1), ancien gabarit à zéro, **51 séquences
-propres sur 56** ; le reste du rapport date de 21 h 35, après #718.
+propres sur 56** ; le reste du rapport date de 21 h 35, après #718. **Second post-scriptum** : après #722 et #723, rejoués
+de même sur `main` : **3 ✘ sur 3 pages** (n°301 sur 3e_C9.2), **52 séquences propres sur 56**.
 
 **Reste à Pascal.** Fusionner cette PR (rapport + journal) ; cocher les décisions de la section 6 du rapport — d'abord la PR
 d'outils (quatre contrôles) et la collision n°322/323.
