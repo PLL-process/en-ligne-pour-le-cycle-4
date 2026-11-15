@@ -1,0 +1,180 @@
+{
+ "_lire": "Révision du 14/11/2026 (4e_C4.7) : le pourquoi de chaque mauvaise proposition, sans dire la bonne. Écrit dans la page par _outils/mode_mission/enrichir.py.",
+ "pourquoi": {
+  "p5_1": {
+   "l'imprimante, partagée par tous les postes": "L'imprimante est un terminal comme les autres : elle n'a qu'un câble.",
+   "le serveur, le plus puissant des ordinateurs": "Le serveur est un terminal : son câble va, lui aussi, au carrefour.",
+   "le PC du professeur, qui surveille la serre": "Le PC du professeur est un terminal parmi les autres : il n'est pas au centre."
+  },
+  "p5_2": {
+   "commutateurs": "Le commutateur relie les appareils ; eux envoient et reçoivent les messages.",
+   "passerelles": "La passerelle est la porte vers les autres réseaux, pas un appareil qui envoie des mesures.",
+   "adresses": "Une adresse est le numéro d'un appareil, pas l'appareil lui-même."
+  },
+  "p5_3": {
+   "la topologie en anneau": "En anneau, chaque appareil est relié à ses deux voisins, sans centre.",
+   "la topologie en bus": "En bus, tous les appareils sont branchés sur un même câble commun.",
+   "la topologie maillée": "Maillée : chaque appareil est relié à plusieurs autres, sans centre unique."
+  },
+  "p5_4": {
+   "oui, si elles sont dans la même salle": "La salle ne compte pas : avec deux fois la même adresse, le message ne sait pas où aller.",
+   "oui, si ce sont deux machines identiques": "Même identiques, ce sont deux destinataires : chacune doit avoir sa propre adresse.",
+   "oui, si elles ont chacune leur prise": "La prise ne change rien : c'est l'adresse qui désigne le destinataire."
+  },
+  "p5_5": {
+   "non : les deux adresses sont différentes": "Seul le dernier nombre change : les trois premiers sont identiques.",
+   "oui : le 0 final des deux adresses": "Le 0 fait partie de 10 et de 30 : ce n'est pas une partie de l'adresse.",
+   "on ne peut pas le dire sans le masque": "Pas besoin du masque pour voir que les trois premiers nombres sont identiques."
+  },
+  "e1c_1": {
+   "5 : les quatre appareils et le commutateur": "Dans notre plan simple, le commutateur est le carrefour : il ne réclame pas de numéro.",
+   "2 : seulement le serveur et le capteur": "Le PC du professeur et l'imprimante parlent aussi sur le réseau : ils ont besoin d'une adresse.",
+   "1 : uniquement le nouveau capteur d'ambiance de la serre": "Tous ceux qui parlent sur le réseau ont une adresse, pas seulement le nouveau venu."
+  },
+  "e1c_2": {
+   "50 — le dernier nombre de l'adresse": "Le dernier nombre change d'un appareil à l'autre : c'est le numéro de la maison.",
+   "192 — le premier nombre seulement": "192 seul ne suffit pas : la rue, ce sont les trois nombres communs à toute la serre.",
+   "20.50 — les deux derniers nombres de l'adresse": "50 est propre au capteur : il ne peut pas faire partie de la rue commune."
+  },
+  "e1c_3": {
+   "parce que le .1 est le numéro le plus lent": "Aucun numéro n'est plus lent qu'un autre : le .1 est simplement mis de côté.",
+   "parce que les numéros commencent à 10": "Un numéro peut commencer à 2 : seul le .1 est mis de côté, par choix du gestionnaire.",
+   "parce que le .1 désigne toute la rue": "La rue, c'est 192.168.20 ; le .1 est un numéro réservé à la porte de sortie."
+  },
+  "e1c_4": {
+   "le réseau accepte au plus 255 appareils par jour": "Le masque ne compte pas les appareils : il dit où finit la rue dans l'adresse.",
+   "l'adresse est secrète, masquée aux autres appareils": "« Masque » ne veut pas dire « caché » : il découpe l'adresse en rue et maison.",
+   "la vitesse maximale du réseau : 255 mégabits par seconde": "Le masque ne parle pas de vitesse : il sépare la rue du numéro de maison."
+  },
+  "e1_1": {
+   "192.168.20.1": "Le .1 est réservé à la passerelle : aucun appareil ne le reçoit.",
+   "192.168.10.50": "192.168.10, c'est la rue du jardin, pas celle de la serre.",
+   "255.255.255.0": "C'est le masque, pas une adresse d'appareil."
+  },
+  "e1_2": {
+   "parce qu'un serveur doit toujours dépasser .99": "Aucune règle de ce genre : le gestionnaire choisit, tant que le numéro est unique.",
+   "parce que le .100 répond plus vite que le .10": "Le numéro ne change pas la vitesse : c'est une étiquette, pas un réglage.",
+   "c'est une erreur dans le plan de M. Firmin": "Ce n'est pas une erreur : .100 est unique, et dans la bonne rue."
+  },
+  "e1_3": {
+   "oui, s'ils sont allumés à tour de rôle": "Un plan donne un numéro par appareil : le jour où les deux sont allumés, plus rien n'arrive.",
+   "oui, si ce sont deux capteurs exactement identiques": "Deux capteurs identiques restent deux destinataires : chacun son numéro.",
+   "oui, le commutateur saura faire le tri": "Avec deux fois la même adresse, un message pour le .50 n'a plus un seul destinataire."
+  },
+  "e1_4": {
+   "oui, puisque les deux adresses commencent par 192.168": "La rue, ce sont les trois premiers nombres : 20 et 10 diffèrent, ce sont deux rues.",
+   "oui, s'ils sont branchés sur le même commutateur": "Même câblées ensemble, deux rues différentes ne se parlent pas sans passerelle.",
+   "non, car un collège n'a droit qu'à un seul réseau": "Rien n'interdit plusieurs réseaux : c'est la rue différente qui les sépare."
+  },
+  "e1_5": {
+   "une valeur différente pour chaque appareil": "Le masque décrit la rue, commune à tous : il est le même pour chaque habitant.",
+   "192.168.20.1, l'adresse de la passerelle": "C'est l'adresse de la passerelle ; le masque, lui, découpe l'adresse.",
+   "rien : la case masque est facultative": "Sans masque, l'appareil ne sait pas où finit la rue : il fait partie du réglage."
+  },
+  "e2_1": {
+   "3 liaisons": "Compte les appareils reliés au commutateur : PC, serveur, imprimante, capteur.",
+   "5 liaisons": "Le commutateur n'est pas relié à lui-même : une liaison par appareil, pas une de plus.",
+   "8 liaisons": "Une liaison a deux bouts : on la compte une fois, pas deux."
+  },
+  "e2_2": {
+   "une chaîne : chaque appareil relié au suivant": "Ici, aucun appareil n'est relié à un autre appareil : tous vont au commutateur.",
+   "un anneau : la boucle se referme sur elle-même": "Il n'y a pas de boucle : chaque branche s'arrête à un appareil.",
+   "un maillage : chaque appareil relié à tous": "Chaque appareil n'a qu'un câble, vers le commutateur : ce n'est pas un maillage."
+  },
+  "e2_3": {
+   "parce que l'orange signale un câble à remplacer": "L'orange du démarrage n'est pas un défaut : il passe au vert tout seul.",
+   "parce qu'il faut redémarrer le logiciel toutes les 30 s": "Rien à redémarrer : il suffit d'attendre que le port soit prêt.",
+   "parce que l'orange prouve que les adresses sont justes": "La couleur des triangles parle de la liaison, pas des adresses."
+  },
+  "e2_4": {
+   "Copper Cross-Over (câble cuivre croisé)": "Le câble croisé sert entre deux appareils de même type ; vers le commutateur, c'est le câble droit.",
+   "Fiber (fibre optique, pour les grandes distances)": "Les appareils de la serre ont des prises cuivre : la fibre n'y entre pas.",
+   "Serial DCE (liaison série entre routeurs)": "Le câble série relie des routeurs ; il n'y en a pas dans notre montage."
+  },
+  "e2_5": {
+   "oui : les câbles suffisent, les triangles sont verts": "Vert veut dire « liaison prête » : sans adresse, un message ne sait pas où aller.",
+   "oui, mais seulement avec le serveur de la serre": "Le serveur n'a pas plus d'adresse que les autres : pour l'instant, personne ne peut lui écrire.",
+   "non, car il manque un deuxième commutateur": "Un seul commutateur suffit pour quatre appareils : ce qui manque, ce sont les adresses."
+  },
+  "e3_1": {
+   "que le message est parti, sans preuve d'arrivée": "« Reply » est une réponse : elle prouve aussi l'arrivée, et le retour.",
+   "que le serveur est allumé, mais injoignable": "S'il était injoignable, aucune réponse ne reviendrait : on lirait « Request timed out ».",
+   "que l'imprimante a bien imprimé la page": "Le ping vise le serveur et n'imprime rien : il teste l'aller-retour d'un message."
+  },
+  "e3_2": {
+   "4 sur 4": "Tous perdus, on lirait « Request timed out » quatre fois.",
+   "2 sur 4": "Relis la dernière ligne du ping : « Lost = 0 (0% loss) ».",
+   "1 sur 4": "Relis la dernière ligne du ping : aucun paquet n'est perdu."
+  },
+  "e3_3": {
+   "que le réseau est en panne : les temps devraient être égaux": "Quelques millisecondes d'écart sont normales : un réseau en panne ne répondrait pas du tout.",
+   "que l'imprimante est plus proche du commutateur": "Ces écarts ne mesurent pas une distance : ils varient d'un essai à l'autre.",
+   "que le ping est faux au-dessus de 10 ms": "10 ms n'est pas une limite : la réponse est arrivée, le test est valable."
+  },
+  "e3_4": {
+   "192.168.20.50, l'adresse du capteur lui-même": "La passerelle est la porte de sortie, pas le capteur : on y met l'adresse de la porte.",
+   "255.255.255.0, le masque commun à toute la rue": "Le masque a sa propre case : « Default Gateway » attend l'adresse de la porte de sortie.",
+   "192.168.20.100, l'adresse du serveur de la serre": "Le serveur est un habitant de la rue, pas la porte de sortie vers les autres réseaux."
+  },
+  "e3_5": {
+   "parce que le DHCP est un service payant au collège": "Le DHCP n'est pas payant : il donne une adresse qui peut changer, et c'est cela le problème.",
+   "parce qu'une adresse fixe rend le réseau plus rapide": "Fixe ou automatique, la vitesse est la même : ce qui compte, c'est de retrouver le capteur.",
+   "parce que Packet Tracer ne sait pas faire de DHCP": "Packet Tracer sait faire du DHCP : le choix vient du besoin, pas du logiciel."
+  },
+  "e4_1": {
+   "« Reply from » quatre fois, avec des temps très longs": "« Reply » serait une réponse : ici, aucune réponse ne revient.",
+   "un message rouge « réseau cassé » en plein écran": "Packet Tracer n'affiche pas ce message : le symptôme se lit dans les lignes du ping.",
+   "rien du tout : la fenêtre du ping reste vide": "La fenêtre affiche bien quelque chose : quatre lignes « Request timed out »."
+  },
+  "e4_2": {
+   "tout le réseau de la serre est tombé en panne": "Deux pings réussissent : le réseau marche, le problème est localisé.",
+   "le commutateur est cassé et doit être changé": "Le commutateur a livré les deux premiers pings : il fonctionne.",
+   "le ping ne fonctionne plus depuis PC-Prof": "Le ping de PC-Prof a fonctionné deux fois : l'outil n'est pas en cause."
+  },
+  "e4_3": {
+   "éteindre puis rallumer tous les appareils de la serre": "Tout éteindre efface les indices et ne teste aucune hypothèse.",
+   "remplacer le câble du capteur par un câble neuf": "Remplacer, c'est débrancher, et c'est parier : on vérifie d'abord le réglage.",
+   "réinstaller Packet Tracer sur l'ordinateur": "Le logiciel a fonctionné pour les deux autres pings : il n'est pas en cause."
+  },
+  "e4_4": {
+   "il passe tous les autres appareils en 192.168.21": "Changer toute la rue pour un seul appareil, c'est casser le plan : on corrige l'appareil fautif.",
+   "il retire le capteur du montage de la serre": "Le capteur est le but du chantier : on le répare, on ne le supprime pas.",
+   "il note « panne inexpliquée » et referme le fichier": "La panne est expliquée : la rue 21 au lieu de 20. Il reste à corriger et à re-tester."
+  },
+  "e4_5": {
+   "parce que le câble refuse les adresses impaires": "Le câble transporte tout, et la parité n'y est pour rien : c'est la rue qui a changé.",
+   "parce que le commutateur bloque la rue 21 par sécurité": "Le commutateur ne bloque rien : c'est l'appareil qui se croit dans une autre rue.",
+   "parce que le masque du capteur a été effacé par erreur": "Le masque est intact (255.255.255.0) : c'est le troisième nombre de l'adresse qui est faux."
+  },
+  "e5_1": {
+   "tous les triangles sont verts, mais le ping échoue": "Ici, les triangles ne sont pas tous verts : regarde la liaison de l'imprimante.",
+   "l'imprimante a complètement disparu du schéma": "L'imprimante est toujours là : c'est sa liaison qui change de couleur.",
+   "le commutateur clignote en orange depuis le début": "L'orange ne dure que les premières secondes : ici, une liaison reste rouge."
+  },
+  "e5_2": {
+   "oui : c'est encore une erreur dans l'adresse": "L'adresse de l'imprimante est juste : le rouge dit que la liaison elle-même est coupée.",
+   "oui : rouge ou « timeout », c'est la même panne": "Le timeout seul fait penser à l'adresse ; le rouge montre une liaison coupée : deux familles.",
+   "non : c'est une coupure d'électricité du collège": "Le reste de la serre fonctionne : ce n'est pas le courant du collège, c'est une liaison."
+  },
+  "e5_3": {
+   "changer l'adresse de l'imprimante, puis attendre": "L'adresse était juste : changer ce qui marche crée une nouvelle panne.",
+   "recocher On : le vert suffit, pas besoin de test": "Le vert dit « liaison prête », pas « message livré » : seul le ping le prouve.",
+   "remplacer le commutateur par un modèle neuf": "Le commutateur sert bien les trois autres liaisons : la cause est le port de l'imprimante."
+  },
+  "e5_4": {
+   "directement du PC au serveur, en ligne droite": "Il n'y a pas de câble entre le PC et le serveur : tout passe par le centre.",
+   "par l'imprimante, qui relaie les messages": "L'imprimante est un terminal : elle reçoit ses messages, elle n'en relaie pas.",
+   "par la passerelle 192.168.20.1, la porte du quartier": "La passerelle sert à sortir de la rue ; ici, le message reste dans la serre."
+  },
+  "e5_5": {
+   "que le fichier a été bien sauvegardé": "« Successful » juge l'envoi de l'enveloppe, pas l'enregistrement du fichier.",
+   "que la simulation va plus vite que le réel": "Le verdict ne parle pas de vitesse : il dit si l'enveloppe est allée et revenue.",
+   "que le commutateur a bien été remplacé": "Rien n'a été remplacé : le verdict valide le comportement du réseau."
+  },
+  "e5_6": {
+   "parce que la simulation est plus belle à regarder": "L'allure ne compte pas : la simulation permet de tester sans rien abîmer.",
+   "parce que le matériel réel n'existe pas encore": "Le matériel existe : on simule pour ne pas risquer de casser le réseau du collège.",
+   "parce que la simulation donne toujours « Successful »": "Une simulation peut échouer, c'est même son intérêt : elle montre aussi les pannes."
+  }
+ }
+}
