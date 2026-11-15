@@ -31139,3 +31139,24 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 432 · 1 878 · 528 → 493 · **1 320** · 485. Règles d'or 1 → 0 ✘ ; menus 25 → 0 ; aération 22 → 0. Bancs **54 / 54** (séquence), **34 / 34** (n°311) ; `tests_verif_regles_audit.py` **68 / 68**. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste juste au-dessus du repère (1 320 mots).** L'exercice du diagramme des exigences, que le vérificateur de l'activité exige, y compte pour 976 mots, schéma compris : c'est le travail de la séance.
+
+## 15/11/2026 — Révision des trois thèmes, 55 : `3e_C1.1` (Tsinghua, la surveillance des feux)
+
+**Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante. Sur `main` :
+- **23 écarts d'aération** (légendes et corrections d'un seul tenant) ;
+- une séance 2 à 1 433 mots visibles : les 15 captures du tableur, avec leurs légendes, étaient à découvert ;
+- une séance 1 à 1 306 mots : l'exemple qui donnait les réponses des deux premières questions était posé juste avant elles ;
+- dans 26 questions, la bonne réponse était la plus longue : elle se devinait à sa longueur.
+
+**Ce qui est fait.**
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer : les 15 captures du tableur (« 🖼 Le voir en images »), sous chaque geste écrit en toutes lettres (`replier_captures.py`).
+- **L'exemple « amélioration ou rupture »** passe en aide repliée (« si tu bloques sur a) ») : il donnait les réponses de a1_1 et a1_2. L'application à Herschel (découverte, invention, innovation) passe de même en aide de la partie b) : elle disait la réponse de a1_6 avant la question. Les quatre définitions restent à découvert, avant les questions.
+- **La bonne réponse ne se devine plus à sa longueur** : 65 propositions fausses allongées (22 questions) ; dans 4 questions de la séance 1 (be_1, a1_1, a1_2, a1_4), c'est la bonne réponse qui est raccourcie, et ses leurres reviennent à leur forme courte — moins à lire. Le détail ôté de la bonne réponse est dans la correction. **28 groupes mélangés.**
+- **Le mode mission explique chaque erreur** (`mission_3e_C1.1.json`) : 84 pourquoi, sans dire la bonne réponse.
+- **Aération : 23 → 0** (`aerer_legendes.py`, `aerer_corrections.py`, 4 légendes réécrites à la main). La consigne des trois métiers passe en deux lignes ①, ②.
+- Le banc de la séquence suit les quatre bonnes réponses raccourcies.
+
+**Mesure.** Mots visibles : 1 306 · 1 433 · 351 · 469 · 999 → **1 266** · 756 · 461 · 564 · 1 132. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 23 → 0. Bancs **50 / 50** (séquence), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
+
+**Ce qui reste.** **La séance 1 reste juste au-dessus du repère (1 266 mots).** C'est une seule activité de 50 minutes : les quatre définitions enseignées avant d'interroger (n°45), neuf questions, et les trois métiers à lire pour la partie d). La partie d) ne peut pas passer en séance 4 (le transfert la reprend) sans dépasser ses 55 minutes. Les séances 3 à 5 gagnent 95 à 133 mots, ceux des propositions fausses allongées : elles restent sous le repère.
+

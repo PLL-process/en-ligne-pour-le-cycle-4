@@ -76,7 +76,7 @@ d'autant.
 | 52 | `5e_C8.1` | 1421 | 5 | 17 | 13 | à faire |
 | 53 | `5e_C8.2` | 1412 | 5 | 16 | 12 | à faire |
 | 54 | `5e_C9.1` | 1761 | 1 | 24 | 5 | à faire |
-| 55 | `3e_C1.1` | 1451 | 0 | 0 | 23 | à faire |
+| 55 | `3e_C1.1` | 1451 → 1266 | 0 → 0 | 0 → 0 | 23 → 0 | livrée #PRNUM — 15 captures du tableur repliées ; deux exemples qui donnaient les réponses passés en aide ; la bonne réponse ne se devine plus à sa longueur ; séance 1 (1 266) juste au-dessus : une activité de 50 min, définitions à découvert (n°45) |
 | 56 | `3e_C3.1` | 1939 | 0 | 0 | 19 | à faire |
 
 ## Notes par séquence
