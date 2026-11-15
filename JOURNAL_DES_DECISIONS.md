@@ -31479,7 +31479,7 @@ fiche arts plastiques (`spirale_fibonacci.py`) lue comme un schéma : à déclar
 « page N sur M » de `regle4` portée dans `verif_regles_audit.py` (n°301), et `chaine_a_completer`, `indices_qcm`, `axe` inscrits dans
 `rapport_audit.py`. 2) `sauvegarde_locale --corriger` sur les 8 pages (les 3 copies dans `build.py`) ; 5e_C7.4 reposé par
 `poser.py`. 3) La révision continue : 5e_C8.1, 5e_C8.2 (gabarit + listes), 5e_C9.1 (listes), 3e_C1.1 et 3e_C3.1 (aération) — et
-les règles d'or sont à zéro. 4) La vague n°331 (5 ✘ puis 39 ⚠). 5) Registre : renuméroter les n°322/323 du 14/11 en n°332/333 et
+les règles d'or sont à zéro. 4) La vague n°331 (5 ✘ puis 39 ⚠). 5) Registre : renuméroter les n°322/323 du 14/11 en n°333/334 (la n°332 est prise par #722) et
 compléter le tableau de tête. 6) Les 11 lexiques retouchés à la main ; la matrice (5e_C1.3, 4e_C1.4, 3e_C1.5) ; les 4 codes à
 vérifier et la convention `c:"Cx.y"` — décisions en attente depuis le 07/11.
 
