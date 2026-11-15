@@ -31323,6 +31323,44 @@ L'unité jugée est le **bloc de question** (la carte d'activité qui contient u
 
 **Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 317 mots).** L'établi, l'outil des deux séances, y compte pour 272 mots ; la synthèse, 160 ; le bilan et le positionnement, 214.
 
+## 15/11/2026 — Révision des trois thèmes, 52 : `5e_C8.1` (la patère du hall)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **16 questions posées par une liste déroulante** (n°300) ;
+- **une question avait deux fois la même réponse** : « Combien d'heures d'atelier demanderait-il ? » proposait deux fois « 10,0 h » ;
+- **la bonne réponse était la plus longue dans 7 questions sur 15**, jusqu'à 45 caractères de plus que les autres ;
+- 13 écarts d'aération ; une séance 2 à 1 400 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 16 listes en boutons radio ; le choix du matériau du simulateur est une commande, il reste une liste (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **trois versions étayées** (`etayage_sequence_5e_C8.1_patere-du-hall.json`).
+- **La réponse en double devient « 24,0 h »** : le prix du PLA en euros, lu à la place de ses heures — une erreur que l'élève peut vraiment faire.
+- **16 groupes mélangés** ; **18 propositions fausses allongées** d'une raison plausible, sans devenir justes. La bonne réponse n'est plus la plus longue que dans une question, dont les réponses sont des noms de matériaux.
+- **Le mode mission explique chaque erreur** (`mission_5e_C8.1.json`) : 47 pourquoi.
+- **Le Bonus se replie** ; **aération : 13 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence lit maintenant les boutons radio d'un groupe (le pas qui joue une réponse fausse) ; son shim joue un vrai clic (`input`, puis `change`).
+
+**Mesure.** Mots visibles : 523 · 1 400 → **518** · **1 364**. Règles d'or 5 → 0 ✘ ; menus 17 → 0 (une commande du simulateur, déclarée) ; aération 13 → 0. Bancs **39 / 39** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 364 mots).** Le simulateur, l'outil de la séance, y compte pour 123 mots ; les deux tableaux de l'activité 3 et de l'activité 4, 125 ; le bilan et le positionnement, 226 ; la synthèse, 119. Les propositions allongées ajoutent une centaine de mots : c'est le prix d'une bonne réponse qui ne se devine plus.
+
+## 15/11/2026 — Révision des trois thèmes, 53 : `5e_C8.2` (la patère du hall : l'essai de traction)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **15 questions posées par une liste déroulante** (n°300) ;
+- **la grille de l'activité 4 se lisait toute seule** : une réponse nommait son matériau (« Le PVC flue… »), une autre redonnait son relevé (« 51 kg dans le sens des couches » : le PLA) ;
+- des propositions fausses qui n'en étaient pas (« pour qu'elles soient jolies », « la couleur du matériau ») ; la bonne réponse la plus longue dans 6 questions sur 9, jusqu'à 30 caractères de plus ;
+- 12 écarts d'aération ; une séance 2 à 1 393 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 15 listes en boutons radio ; le choix de l'éprouvette du banc est une commande, il reste une liste (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **six versions étayées** (`etayage_sequence_5e_C8.2_patere-du-hall.json`).
+- **La grille de l'activité 4** : « Il flue… », « Solide dans le sens des couches… » — la réponse ne nomme plus sa ligne ; les réponses écrites une fois, lettrées ; une réponse de trop (« Il fond dès qu'il fait plus de 30 °C »), réfutée dans la correction.
+- **12 groupes mélangés** ; **12 propositions fausses** remplacées ou allongées d'une raison plausible : la bonne réponse ne se devine plus à sa longueur.
+- **Le mode mission explique chaque erreur** (`mission_5e_C8.2.json`) : 46 pourquoi, 5 indices de ligne.
+- **Le Bonus se replie** ; **aération : 12 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence lit les boutons radio d'un groupe (l'activité 3) ; son shim joue un vrai clic.
+
+**Mesure.** Mots visibles : 689 · 1 393 → 735 · **1 035** — les deux séances sous le repère. Règles d'or 5 → 0 ✘ ; menus 16 → 0 (une commande du banc, déclarée) ; aération 12 → 0. Bancs **24 / 24** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme avant. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
 ## 15/11/2026 — Audit hebdomadaire : 12 ✘ (−79), 49 séquences propres sur 56 (+42), 11 fichiers de dérive (−62) ; quatre contrôles rouges à cribler (transversal : `docs/audits`)
 
 **Second audit de la boucle du dimanche** (17 h 35 Martinique). `rapport_audit.py --complet --generateurs` sur `main` après #718
@@ -31370,7 +31408,10 @@ bien `<name>` (2 181 questions). `SKILLS_AUDIT.md` n'est pas modifié : le rappo
 `controle_chaine_a_completer.py`, `controle_indices_qcm.mjs`, `bilan_revision.py --md` relancés à part pour lire leurs sorties
 complètes ; `controle_regle4.py` et `controle_sauvegarde_locale.py` rejoués sur l'arbre de #625 et de #637 (`git worktree`,
 supprimés ensuite) ; les générateurs relancés dans une copie hors git, jamais dans le dépôt. **Non exécuté** : `controle_axe.mjs`
-(sans `axe-core`), les bancs des lots (aucune page touchée), un navigateur réel.
+(sans `axe-core`), les bancs des lots (aucune page touchée), un navigateur réel. **Post-scriptum** : #719 et #720 (5e_C8.1,
+5e_C8.2 au gabarit commun) ont été fusionnées pendant l'audit ; `verif_regles_audit.py` et `bilan_revision.py` rejoués seuls sur
+`main` après #720 : **4 ✘ sur 4 pages** (3 × n°301 sur 3e_C9.2, 24 listes sur 5e_C9.1), ancien gabarit à zéro, **51 séquences
+propres sur 56** ; le reste du rapport date de 21 h 35, après #718.
 
 **Reste à Pascal.** Fusionner cette PR (rapport + journal) ; cocher les décisions de la section 6 du rapport — d'abord la PR
 d'outils (quatre contrôles) et la collision n°322/323.

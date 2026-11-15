@@ -73,8 +73,8 @@ d'autant.
 | 49 | `5e_C7.3` | 1694 → 1607 | 5 → 0 | 15 → 0 | 15 → 0 | livrée #715 — migrée au gabarit commun ; deux grilles lettrées, l'une se devinait par la grammaire, l'autre avait deux réponses justes ; une réponse de trop dans chacune ; séance 2 (1 607) au-dessus : le banc, outil de la séance, la synthèse et le bilan |
 | 50 | `5e_C7.4` | 1607 → 1302 | 5 → 0 | 18 → 0 | 16 → 0 | livrée #716 — migrée au gabarit commun ; l'activité 1 se joue dans la chaîne d'énergie de l'indicateur (outil commun de #708) ; séance 2 (1 302) un peu au-dessus : le banc, la synthèse, le bilan |
 | 51 | `5e_C7.5` | 1528 → 1317 | 5 → 0 | 22 → 0 | 8 → 0 | livrée #718 — migrée au gabarit commun ; l'activité 0 dans le schéma du prototype ; l'ordre du montage ne se lit plus à l'écran ; séance 2 (1 317) un peu au-dessus : l'établi, la synthèse, le bilan |
-| 52 | `5e_C8.1` | 1421 | 5 | 17 | 13 | à faire |
-| 53 | `5e_C8.2` | 1412 | 5 | 16 | 12 | à faire |
+| 52 | `5e_C8.1` | 1421 → 1364 | 5 → 0 | 17 → 0 | 13 → 0 | livrée #719 — migrée au gabarit commun ; une réponse en double remplacée ; 18 propositions fausses allongées ; séance 2 (1 364) au-dessus : le simulateur, deux tableaux, la synthèse et le bilan |
+| 53 | `5e_C8.2` | 1412 → 1035 | 5 → 0 | 16 → 0 | 12 → 0 | livrée #720 — migrée au gabarit commun ; la grille de l'activité 4 ne se lit plus toute seule ; 12 propositions fausses remplacées ou allongées ; les deux séances sous le repère |
 | 54 | `5e_C9.1` | 1761 | 1 | 24 | 5 | à faire |
 | 55 | `3e_C1.1` | 1451 | 0 | 0 | 23 | à faire |
 | 56 | `3e_C3.1` | 1939 | 0 | 0 | 19 | à faire |
@@ -297,3 +297,11 @@ d'autant.
   (la carte ne se devine plus au féminin) ; les gestes du montage dans le désordre, deux branchements réunis, un geste
   de vérification avant la mise sous tension ; grille des retraits avec une réponse de trop ; 63 pourquoi ; phrase de
   la fabrique retirée ; Bonus replié ; aération 8 → 0. Séances 860 · 1 528 → 676 · 1 317.
+- **5e_C8.1** (la patère du hall), 15/11/2026 (#719) : migrée au gabarit commun (5 ✘ → 0, 16 listes en boutons radio,
+  le choix du matériau du simulateur déclaré commande, trois versions étayées) ; « 10,0 h » proposé deux fois devient
+  « 24,0 h » (le prix lu à la place des heures) ; 16 groupes mélangés, 18 propositions fausses allongées ; 47 pourquoi ;
+  Bonus replié ; aération 13 → 0. Séances 523 · 1 400 → 518 · 1 364. Reste : la séance 2 au-dessus.
+- **5e_C8.2** (la patère du hall : l'essai de traction), 15/11/2026 (#720) : migrée au gabarit commun (5 ✘ → 0, 15
+  listes en boutons radio, l'éprouvette du banc déclarée commande, six versions étayées) ; la grille de l'activité 4
+  ne nomme plus ses lignes, avec une réponse de trop ; 12 groupes mélangés, 12 propositions fausses remplacées ou
+  allongées ; 46 pourquoi, 5 indices ; Bonus replié ; aération 12 → 0. Séances 689 · 1 393 → 735 · 1 035.

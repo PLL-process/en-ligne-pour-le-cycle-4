@@ -41,6 +41,8 @@
 
 **Ce que ça veut dire.** La semaine a vidé les règles d'or : 12 ✘ sur 6 pages, dont 8 sur les deux dernières pages de l'ancien gabarit, et 3 que le contrôle n°301 compte par construction. Les deux dettes de la semaine dernière (licence dans les générateurs, lien illisible) sont réglées. Ce qui prime maintenant n'est plus une famille de pages mais **quatre contrôles rouges à cribler** : deux sont des contrôles en retard sur les pages (`regle4` ne lit pas `?codes=`, `schemas` compte une spirale de Fibonacci comme un schéma), deux sont des vrais défauts courts (`sauvegarde_locale` : 8 pages ; `chaine_a_completer` : 5e_C7.4 porte une copie de l'outil différente de la source). La couverture et la matrice n'ont pas bougé depuis trois rapports.
 
+**Post-scriptum (22 h 20 UTC).** Pendant que ce rapport tournait, #719 et #720 ont été fusionnées (révisions 52 et 53 : 5e_C8.1 et 5e_C8.2 au gabarit commun). Rejoués seuls sur `main` après #720 (`4a32a69`), **sans refaire le rapport complet** : `verif_regles_audit.py` → **4 ✘ sur 4 pages** (3 × n°301 sur 3e_C9.2 pages 1-3, 1 × n°300 : les 24 listes de 5e_C9.1) ; l'ancien gabarit (n°29/30/34) est à **zéro page** ; `bilan_revision.py` → **51 séquences propres sur 56** (restent 5e_C9.1, et 3e_C1.1, 3e_C3.1 pour l'aération). Les autres chiffres de ce rapport datent de 21 h 35, après #718 ; les contrôles du site et les générateurs n'ont pas été rejoués après #720.
+
 ## 1. Couverture (pédagogie) — 114 codes
 
 | Thème | COMPLET ET VALIDABLE | COUVERT PAR UNE SÉQUENCE MUTUALISÉE | EXISTANT À AMÉLIORER | À VÉRIFIER PAR L’ENSEIGNANT |
