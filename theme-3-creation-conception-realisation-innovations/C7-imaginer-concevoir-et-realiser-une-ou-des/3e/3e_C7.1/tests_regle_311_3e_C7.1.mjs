@@ -7,7 +7,7 @@
    « 🗺 Où j'en suis » (consigne de la vague) : ouvert à la séance 1, replié dès la séance 2 derrière une ligne qui garde
    l'information (« 2 / 8 activités validées »), rouvert d'un clic ou au clavier ; sans JavaScript, ouvert. Le banc mesure aussi
    le premier écran de la séance 2 : à 1280 px, les onglets et l'en-tête de la séance ; à 390 px, la position des onglets.
-   Le lien direct #activite-7 (séance 3) ouvre la séance 3, ouverture repliée.
+   Le lien direct #activite-7 (séance 4 depuis le 15/11/2026) ouvre la séance 4, ouverture repliée.
    Usage : node tests_regle_311_3e_C7.1.mjs [--captures <dossier>] */
 import { chromium } from 'playwright';
 import { pathToFileURL } from 'url';
@@ -101,6 +101,6 @@ await lancerBanc311Theme3({
   texte: 'Mon hypothèse : essai du banc 311.',
   ancreS1: 'seance-1',
   ancreSN: 'activite-7',
-  panneauSN: 's3',
+  panneauSN: 's4',
   outils: ['#identite', '.toolbar', '.choix-parcours-boutons', '#parcoursNote', '#savedNote', '.progress-wrap', '#taches'],
 });

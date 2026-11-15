@@ -30784,3 +30784,23 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Ce qui est fait.** Dans `papier.css`, les trois règles de la photo s'appliquent aussi à `figure.situation-photo` (l'image, sa légende, leur rangée), quelle que soit l'extension. Les schémas et les captures gardent leur largeur. La fiche papier est reposée sur les 60 séquences (`poser.py`) ; le générateur de `3e_C9.2` rend les mêmes quatre pages.
 
 **Mesure** (les 173 fiches imprimées de toutes les séquences, avant et après, `banc_papier.py --pdf`) : **697 → 675 pages** ; 22 séances 1 gagnent une page, aucune fiche n'en prend ; blanc perdu en bas de page 21 328 → 19 523 mm. `controle_impression_papier.py` ✅ ; le banc papier ✅ (en-tête, une séance, aucun champ d'écran, aucun texte pâle, première page remplie).
+
+## 15/11/2026 — `3e_C7.1` : une quatrième séance, « Proposer, puis représenter »
+
+**La décision.** Après #688, la séance 3 donnait 3 147 mots à lire (26 minutes de lecture seule pour 55 minutes) : l'activité 6 (le FAST, avec son exercice d'atelier), l'activité 7 (les croquis, avec le sien), la synthèse, le Bonus, le bilan, puis deux cartes **après** le bilan, contre la n°301. La piste proposée : une séance 4. Pascal, le 15/11/2026 : « Oui pour tout », puis « Tu as carte blanche ».
+
+**Ce qui change.**
+- Un onglet « Séance 4 — Proposer, puis représenter », après « Séance 3 — Contrôler le FAST ».
+- L'activité 7, la synthèse et la clôture (Bonus, bilan, positionnement, métacognition, QCM) y sont **déplacées, sans être réécrites**.
+- Les deux cartes de la suite du projet (« Avant de fabriquer — le TP « Le boîtier étanche » », « Le diagramme de planification des tâches ») remontent **avant le Bonus** : rien à faire après le bilan (n°301).
+- Les en-têtes des séances 3 et 4 disent leur question et leur durée ; la séance 3 se termine par le bouton « Séance 4 — Proposer, puis représenter › ».
+- Le tableau de bord suit (séance 3 : l'activité 6 ; séance 4 : l'activité 7) ; l'étiquette dit « ⏱ 4 séances de 55 min », sa bulle détaille les quatre ; le bilan dit « ces quatre séances » ; le positionnement sur 3e_C7.2, « séances 3 et 4 ».
+- La synthèse professeur, sa copie repliée dans la page (« Ce que dit le programme ») et la fiche pédagogique suivent ; elles disent aussi vrai sur les onglets (la page n'est plus « d'un seul tenant » depuis le 04/11/2026).
+
+**Mesure.** Mots visibles : séances 612 · 1 755 · 3 147 → 612 · 1 755 · **1 024** · 2 213. Banc du lot **82 / 82** (80 avant : l'ordre des cartes avant le Bonus et le bouton vers la séance 4 s'ajoutent) ; banc n°311 **34 / 34** (le lien direct `#activite-7` ouvre la séance 4). Mode mission : 36 écrans, aucun refus. Fiche papier : séance 3, 9 → 3 pages ; séance 4, 6 pages (17 pages en tout, inchangé). Règles d'or 0 ✘ ; aération 0 ; squelette et navigation verts. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**À savoir.** La séance 3 est courte (l'activité 6 : environ 13 minutes) : de la marge pour finir la séance 2, la plus longue à lire (1 755 mots). La séance 4 reste au-dessus du repère : l'exercice d'atelier des croquis (1 438 mots), ajouté à la demande de Pascal le 24/10/2026, y est la pratique de la séance ; il garde son contenu (skill `revision-sequence` : ne pas défaire une décision de Pascal pour tenir le repère).
+
+## 15/11/2026 — `5e_C2.1` : les exercices d'atelier restent
+
+**La décision.** #687 laissait les séances 1 (2 166 mots) et 2 (2 004) au-dessus du repère, à cause d'un exercice d'atelier chacune (la bête à cornes, environ 700 mots ; la pieuvre, environ 1 280), et posait la question. Pascal, le 15/11/2026 : on garde les exercices d'atelier. L'écart est justifié dans le suivi ; le repli des fiches d'activité, décidé le même jour pour toutes les séquences, allège ce qui les entoure.
