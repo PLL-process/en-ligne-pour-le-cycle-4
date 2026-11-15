@@ -30926,6 +30926,34 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 
 **Mesure.** Mots visibles : 756 · 1 348 · 1 041 · 1 138 → 812 · 766 · 663 · **982**. **Toutes les séances passent sous le repère.** Règles d'or 0 ✘ ; aération 28 → 0. Bancs 44 / 44 (43 / 44 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (42 / 42), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : 0 ✘ sur le seul schéma de la page).
 
+## 15/11/2026 — Révision des trois thèmes, 39 : `3e_C9.2` (la station d'alerte cyclonique, programmer et tester)
+
+**Le constat.** La plus grosse séquence du dépôt : huit séances sur une page tout-en-un, et quatre pages engendrées depuis elle (`generer_les_quatre_pages.py`). Sur `main` :
+- **deux ✘ de règles d'or** : n°300 (**62 listes déroulantes** qui posent une question) et n°34 (un texte de remplacement d'image qui contenait « < » et « > », lu comme une balise : l'image paraissait sans alternative) ;
+- **48 écarts d'aération** ;
+- une **séance 3 à 2 504 mots** et une séance 4 à 1 459 : les cinq gestes de Vittascience et leurs 19 captures à découvert, la piqûre de rappel du cahier des charges, le programme de référence en sept captures, le tableau du montage.
+
+**Ce qui est fait.**
+- **n°300** : les 62 listes deviennent des groupes de boutons radio (`migrer_gabarit_306.py --n300`). Les quatre pages engendrées gardent la sauvegarde : le petit script qui donne une valeur au groupe (`fieldset.value`) passe avant le premier `<style>`, dans la partie que le générateur recopie. Les cinq menus qui restent sont des menus voulus (cahier des charges, interface).
+- **n°34** : les « < » et « > » du texte de remplacement sont écrits `&lt;` et `&gt;`.
+- **Places** : 49 groupes mélangés (`melanger_propositions.py`).
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer :
+  - la piqûre de rappel du cahier des charges, à sa source (`replie` de `station-programmee-3e`) : séance 1, **1 132 → 488 mots** ;
+  - les captures des cinq gestes (`replier_captures.py`) : chaque geste reste écrit, ses captures se rangent dessous ;
+  - à la séance 3, le raccourci « transformer la valeur » et le pourquoi des noms de couleur (en approfondissement), le tableau du montage et de ses quatre niveaux ;
+  - à la séance 4, les sept captures du programme de référence : « pour comparer avec le tien, ou pour travailler sans connexion ». L'avertissement sur les voyants que le simulateur dessine tous en vert reste visible ;
+  - le Bonus.
+- **Couper le redondant** : la phrase « Une seule chose demande Internet… » (le bandeau du début de la carte le dit), la phrase sur l'onglet qui s'ouvre (la consigne le dit), la moitié de l'introduction des gestes.
+- **Aération : 48 → 0.**
+- **Les bancs** gardent leurs questions : `_groupesRadio(page)` traduit les anciens `selectOption`, avec l'ordre d'origine des propositions (`ORIGINE`) pour les choix par rang.
+
+**Mesure.** Mots visibles (séances 1 à 8) : 1 132 · 906 · 2 504 · 1 459 · 475 · 898 · 514 · 1 132 → 488 · 879 · **1 416** · 1 132 · 463 · 904 · 499 · 976. Règles d'or 2 → 0 ✘ (page tout-en-un) ; menus 62 → 0 ; aération 48 → 0. Bancs **167 / 167**, **34 / 34** (n°311), **37 / 37** (pont en H), comme sur `main`. Mode mission : les cinq pages jouées écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : 0 ✘ sur les 12 schémas du lot, que cette révision ne touche pas).
+
+**Ce qui reste.**
+- **La séance 3 reste au-dessus du repère (1 416 mots).** C'est une séance d'atelier : les cinq gestes de Vittascience (environ 380 mots) se lisent en faisant, geste par geste ; ce qui reste à découvert, ce sont les consignes des paliers 1 et 2 et leurs questions.
+- **La bonne réponse se devine encore par sa longueur** : elle est la plus longue dans 33 questions sur 48, parfois de 40 à 75 caractères ; la première dans 11. Ce travail, et le pourquoi de chaque erreur pour le mode mission, viennent dans une PR à part, juste après : la conversion n°300 de 62 listes valait d'être livrée seule.
+- Les pages 1 à 3 de la station gardent leur ✘ n°301 : le bilan est à la page 4, par construction (comme sur `main`).
+
 ## 15/11/2026 — Révision des trois thèmes, 40 : `4e_C7.1` (le jardin connecté, concevoir)
 
 **Le constat.** Deux séances sur la page (les quatre autres du projet sont sur l'atelier de planification et le TP « Le dé sur sa pointe »). Sur `main` :

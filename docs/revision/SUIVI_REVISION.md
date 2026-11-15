@@ -60,7 +60,7 @@ d'autant.
 | 36 | `3e_C7.8` | 1530 → 1088 | 0 | 0 | 21 → 0 | livrée #699 — la bonne réponse se devinait (11 fois sur 24 la plus longue, 17 fois la première) : 24 propositions fausses allongées, une remplacée (elle était défendable), une grille avec une réponse de trop, places mélangées, pourquoi des erreurs ; banc réparé (57 → 58 / 58) ; chaque séance sous le repère |
 | 37 | `3e_C8.1` | 1888 → 1243 | 0 | 0 | 23 → 0 | livrée #700 — la bonne réponse se devinait (14 fois sur 17 la première, 10 fois la plus longue) : 24 propositions fausses allongées, places changées, pourquoi des erreurs ; piqûre de rappel repliée à sa source ; séance 3 (1 243) à peine au-dessus : le simulateur y est l'outil de la séance |
 | 38 | `3e_C8.2` | 1414 → 982 | 0 | 0 | 28 → 0 | livrée #701 — la bonne réponse était 9 fois sur 20 la plus longue : 21 propositions fausses allongées, places changées, une grille avec une réponse de trop, pourquoi des erreurs ; piqûre de rappel repliée à sa source ; banc réparé (42 → 44 / 44) ; chaque séance sous le repère |
-| 39 | `3e_C9.2` | 2597 | 2 | 62 | 48 | à faire |
+| 39 | `3e_C9.2` | 2597 → 1416 | 2 → 0 | 62 → 0 | 48 → 0 | livrée #702 — les 62 listes deviennent des boutons radio (les quatre pages engendrées gardent la sauvegarde) ; piqûre de rappel repliée à sa source, captures des gestes et du programme de référence repliées ; séance 3 (1 416) au-dessus : séance d'atelier, les cinq gestes se lisent en faisant ; reste la longueur des bonnes réponses (33 sur 48), PR suivante |
 | 40 | `4e_C7.1` | 1780 → 1488 | 2 → 0 | 22 → 0 | 28 → 0 | livrée #703 — 20 listes en boutons radio (les deux du banc météo restent des commandes) ; le ✘ n°23 était un faux (les « 15 minutes » du rappel) ; piqûre de rappel repliée à sa source, séance 1 1 244 → 580 ; séance 2 (1 488) au-dessus : activité 3, exercice FAST et toute la clôture ; banc n°311 : les onglets de la séance 2 hors du premier écran à 390 px, sur `main` comme ici |
 | 41 | `4e_C7.3` | 1866 | 5 | 13 | 27 | à faire |
 | 42 | `4e_C7.4` | 1582 | 5 | 22 | 23 | à faire |
@@ -231,6 +231,13 @@ d'autant.
   bonnes réponses déplacées hors de la première place ; la grille des angles morts reçoit une réponse de trop ; la piqûre de
   rappel du cahier des charges se replie à sa source ; 43 pourquoi, 5 indices ; Bonus replié ; aération 28 → 0.
   Séances 756 · 1 348 · 1 041 · 1 138 → 812 · 766 · 663 · 982.
+- **3e_C9.2** (la station d'alerte cyclonique), 15/11/2026 (#702) : 62 listes déroulantes deviennent des boutons
+  radio, et les quatre pages engendrées gardent la sauvegarde ; le texte de remplacement à chevrons (n°34) est échappé ;
+  49 groupes mélangés ; piqûre de rappel repliée à sa source ; captures des cinq gestes, programme de référence,
+  tableau du montage, raccourci et pourquoi repliés ; Bonus replié ; aération 48 → 0. Séances 1 132 · 906 · 2 504 ·
+  1 459 · 475 · 898 · 514 · 1 132 → 488 · 879 · 1 416 · 1 132 · 463 · 904 · 499 · 976. La séance 3 reste au-dessus :
+  séance d'atelier, les gestes se lisent en faisant. Reste, pour la PR suivante : la bonne réponse la plus longue dans
+  33 questions sur 48, et le pourquoi des erreurs pour le mode mission.
 - **4e_C7.1** (le jardin connecté, concevoir), 15/11/2026 (#703) : 20 listes deviennent des boutons radio ; le ✘ n°23
   comptait les « (15 minutes au lieu de 5) » du rappel comme des durées : l'écart s'écrit « un quart d'heure au lieu de
   5 minutes » ; piqûre de rappel repliée à sa source ; 14 groupes mélangés, les échelles du tableau des matériaux dans
