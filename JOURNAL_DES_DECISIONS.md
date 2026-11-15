@@ -30888,3 +30888,22 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 - **Le banc de la séquence** échouait sur `main` (57 / 58), comme ceux de `3e_C7.3` à `3e_C7.7` : il suit maintenant la page. Son essai de refus utilise la proposition fausse allongée.
 
 **Mesure.** Mots visibles : 855 · 1 003 · 1 530 → 890 · 1 088 · **1 002** (avec les fiches d'activité, repliées depuis #696). Les séances 1 et 2 prennent quelques mots, à cause des propositions allongées ; la séance 3 en perd 528. **Toutes les séances passent sous le repère.** Règles d'or 0 ✘ ; aération 21 → 0. Bancs 58 / 58 (57 / 58 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (51 / 51), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler).
+
+## 15/11/2026 — Révision des trois thèmes, 38 : `3e_C8.2` (le mât de la station, le protocole)
+
+**Le constat.** Une page sans règle d'or en défaut et sans liste déroulante, mais :
+- la bonne réponse était **la plus longue 9 fois sur 20**, jusqu'à 27 caractères de plus que les autres (« très différentes : il cède des centaines de fois plus tôt en flexion ») ;
+- 28 écarts d'aération ;
+- une séance 2 à 1 348 mots, dont la piqûre de rappel du cahier des charges, en écart avec son générateur ;
+- une grille de cinq lignes pour cinq réponses (les angles morts de chaque profilé) : la dernière se devinait.
+
+**Ce qui est fait.**
+- **21 propositions fausses s'allongent** d'une raison plausible, sans devenir justes : « le temps mis pour monter la charge » devient « le temps mis pour monter la charge jusqu'à la rupture ». Les bonnes réponses et les vérifications ne changent pas. Il reste une question où la bonne réponse est la plus longue, de 5 caractères.
+- **Places** : 15 groupes mélangés, puis 5 bonnes réponses déplacées à la main hors de la première place ; les masses du billet d'entrée (8, 13, 40 kg) vont dans l'ordre croissant.
+- **La grille des angles morts** (`grilles_radio.py`) reçoit une **réponse de trop** (« Le banc essaie le mât à l'intérieur… »).
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `mat-protocole-3e`, puis `incrustations.py --seq 3e_C8.2`) ; le vérificateur de l'activité 2 ne l'exige pas.
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C8.2.json` : 43 pourquoi, 5 indices de ligne, 1 réponse de trop).
+- **Le Bonus se replie** ; **aération : 28 → 0** (74 retours à la ligne, une correction réécrite en lignes).
+- **Le banc de la séquence** échouait sur `main` (43 / 44) pour la réponse libre du REFAIRE ; il suit maintenant la page, et compte six réponses par ligne de la grille.
+
+**Mesure.** Mots visibles : 756 · 1 348 · 1 041 · 1 138 → 812 · 766 · 663 · **982**. **Toutes les séances passent sous le repère.** Règles d'or 0 ✘ ; aération 28 → 0. Bancs 44 / 44 (43 / 44 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (42 / 42), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : 0 ✘ sur le seul schéma de la page).

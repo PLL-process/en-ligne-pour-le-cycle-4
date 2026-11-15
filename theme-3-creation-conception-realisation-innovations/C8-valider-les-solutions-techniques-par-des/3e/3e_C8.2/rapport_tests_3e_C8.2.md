@@ -1,5 +1,7 @@
 # Rapport de tests — 3e_C8.2 « Le mât de la station »
 
+> **Révision du 15/11/2026.** Propositions fausses allongées (la bonne réponse se devinait à sa longueur), places changées, grille avec une réponse de trop, piqûre de rappel et Bonus repliés, aération. Bancs : séquence **44 / 44** (43 / 44 avant : la réponse libre du REFAIRE n'est plus « validée », le banc suit la page), QCM **32 / 32**, n°311 **34 / 34**. Mode mission (`banc_generique.mjs`) : 41 écrans, 42 / 42 pourquoi, aucun refus.
+
 Tests **réels**, joués dans un navigateur Chromium par Playwright, sur les fichiers du lot
 tels qu'ils sont livrés. Les deux scripts sont dans ce dossier : on peut les rejouer.
 

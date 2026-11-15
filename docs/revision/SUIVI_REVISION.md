@@ -59,7 +59,7 @@ d'autant.
 | 35 | `3e_C7.7` | 1959 → 1267 | 0 | 0 | 24 → 0 | livrée #698 — piqûre de rappel repliée à sa source, trois grilles avec une réponse de trop, places mélangées (la bonne réponse était 11 fois sur 18 la première), pourquoi des erreurs ; n°304 ; banc réparé (76 → 77 / 77) ; séances 2 (1 267) et 4 (1 245) à peine au-dessus : l'atelier des moyens (432 mots) est l'outil de chaque séance |
 | 36 | `3e_C7.8` | 1530 → 1088 | 0 | 0 | 21 → 0 | livrée #699 — la bonne réponse se devinait (11 fois sur 24 la plus longue, 17 fois la première) : 24 propositions fausses allongées, une remplacée (elle était défendable), une grille avec une réponse de trop, places mélangées, pourquoi des erreurs ; banc réparé (57 → 58 / 58) ; chaque séance sous le repère |
 | 37 | `3e_C8.1` | 1888 | 0 | 0 | 23 | à faire |
-| 38 | `3e_C8.2` | 1414 | 0 | 0 | 28 | à faire |
+| 38 | `3e_C8.2` | 1414 → 982 | 0 | 0 | 28 → 0 | livrée #701 — la bonne réponse était 9 fois sur 20 la plus longue : 21 propositions fausses allongées, places changées, une grille avec une réponse de trop, pourquoi des erreurs ; piqûre de rappel repliée à sa source ; banc réparé (42 → 44 / 44) ; chaque séance sous le repère |
 | 39 | `3e_C9.2` | 2597 | 2 | 62 | 48 | à faire |
 | 40 | `4e_C7.1` | 1780 | 2 | 22 | 28 | à faire |
 | 41 | `4e_C7.3` | 1866 | 5 | 13 | 27 | à faire |
@@ -221,3 +221,8 @@ d'autant.
   reçoit une réponse de trop ; 19 groupes mélangés ; 51 pourquoi, 6 indices ; Bonus replié ; aération 21 → 0.
   Séances 855 · 1 003 · 1 530 → 890 · 1 088 · 1 002 : les séances 1 et 2 prennent quelques mots (les propositions
   allongées), la séance 3 en perd 528, et toutes passent sous le repère.
+- **3e_C8.2** (le mât de la station, le protocole), 15/11/2026 (#701) : la bonne réponse était 9 fois sur 20 la plus
+  longue (jusqu'à 27 caractères de plus) ; 21 propositions fausses s'allongent d'une raison plausible ; mélange, puis 5
+  bonnes réponses déplacées hors de la première place ; la grille des angles morts reçoit une réponse de trop ; la piqûre de
+  rappel du cahier des charges se replie à sa source ; 43 pourquoi, 5 indices ; Bonus replié ; aération 28 → 0.
+  Séances 756 · 1 348 · 1 041 · 1 138 → 812 · 766 · 663 · 982.

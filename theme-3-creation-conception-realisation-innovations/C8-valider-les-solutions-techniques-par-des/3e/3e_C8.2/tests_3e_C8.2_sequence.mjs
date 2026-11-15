@@ -164,8 +164,11 @@ const ANGLES = await p.evaluate(() => {
   });
   return t;
 });
-ok('les cinq listes de l’activité 4 offrent les mêmes 5 angles morts',
-   Object.values(ANGLES).every(v => v.length === 5), JSON.stringify(Object.keys(ANGLES)));
+// révision du 15/11/2026 : la grille des angles morts a une réponse de trop (cinq lignes, six réponses), pour que la
+// dernière ligne ne se devine pas
+ok('les cinq lignes de l’activité 4 offrent les mêmes 6 réponses (5 angles morts et une de trop)',
+   Object.keys(ANGLES).length === 5 && Object.values(ANGLES).every(v => v.length === 6 && JSON.stringify([...v].sort()) === JSON.stringify([...Object.values(ANGLES)[0]].sort())),
+   JSON.stringify(Object.keys(ANGLES)));
 
 // ── durée, QCM, hypothèse ──────────────────────────────────────────────────
 // 24/10/2026 : « chaque séance a 55 min » (décision de Pascal) — 2 séances de 90 min
@@ -270,8 +273,11 @@ ok('activité 5 validée 4/4', (await p.textContent('#fb5')).includes('4/4'),
 
 await p.fill('#reinv', "La ligne 3 passe a 200 N et la ligne 6 exige 600 N : plus aucun candidat ne passe, il faut un profile plus gros ou des haubans.");
 await p.evaluate(() => document.querySelector('[data-check="6"]').click());
-ok('réinvestissement validé 1/1', (await p.textContent('#fb6')).includes('1/1'),
-   (await p.textContent('#fb6')).slice(0, 50));
+/* une réponse libre n'est plus « validée » par la page (audit externe, étape 2) : elle est enregistrée, et la page dit
+   qu'elle n'est pas corrigée automatiquement (révision du 15/11/2026 : le banc suit la page) */
+{ const fb6 = await p.textContent('#fb6');
+  ok('réinvestissement : réponse libre enregistrée, renvoyée à la correction',
+     /Réponse enregistrée/.test(fb6) ? /pas corrigée automatiquement/.test(fb6) : fb6.includes('1/1'), fb6.slice(0, 50)); }
 
 // ── persistance ────────────────────────────────────────────────────────────
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);

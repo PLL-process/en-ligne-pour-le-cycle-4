@@ -714,6 +714,9 @@ RAPPELS = [
                    dict(bonne="f0", cit="Au-delà de 40 mm, l'anémomètre ne vise plus juste : aucune marge")),
          ]),
     dict(id="mat-protocole-3e", niveau="3e",
+         # révision du 15/11/2026 (la charge de lecture de la séance 2, 1 348 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=C8 + "3e/3e_C8.2/sequence_3e_C8.2_mat-de-la-station.html",
          avant='<section class="card">\n  <h2>✍️ Activité 2 — PROPOSER ton protocole', balise="h2", balise_exo="h3",
          titre="Une ligne du cahier des charges de la mairie",
