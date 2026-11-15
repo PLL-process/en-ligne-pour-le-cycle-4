@@ -50,7 +50,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 31 | `5e_C4.7` | 1807 → 1695 | 1 → 0 | 35 → 0 (la commande du simulateur reste une liste) | 6 → 0 | livrée #691 — la bonne réponse était 23 fois sur 35 la plus longue : 32 questions réécrites (n°144), chaque erreur « à revoir » et expliquée ; Bonus avec son corrigé ; séances 1 et 3 encore au-dessus du repère (1 695 · 1 584) — même question que 4e_C4.7 |
 | 32 | `3e_C7.3` | 1796 → 908 | 0 | 0 | 29 → 0 | livrée #692 — deux grilles, places mélangées (la bonne réponse était 9 fois sur 14 la première), pourquoi des erreurs ; piqûre de rappel du cahier des charges repliée (séance 1, 1 796 → 868) ; banc réparé (67 → 68 / 68) |
 | 33 | `3e_C7.4` | 1220 → 1132 | 0 | 0 | 27 → 0 | livrée #693 — une grille (le coût de chaque source), places mélangées (la bonne réponse était 12 fois sur 16 la première), pourquoi des erreurs ; banc réparé (53 → 54 / 54) |
-| 34 | `3e_C7.5` | 1439 | 0 | 0 | 26 | à faire |
+| 34 | `3e_C7.5` | 1439 → 1311 | 0 | 0 | 26 → 0 | livrée #697 — piqûre de rappel repliée à sa source, trois grilles avec réponses de trop, places mélangées, pourquoi des erreurs ; banc réparé (53 → 54 / 54) ; séance 4 (1 311) au-dessus du repère : l'établi y est l'outil de la séance |
 | 35 | `3e_C7.7` | 1959 | 0 | 0 | 24 | à faire |
 | 36 | `3e_C7.8` | 1530 | 0 | 0 | 21 | à faire |
 | 37 | `3e_C8.1` | 1888 | 0 | 0 | 23 | à faire |
@@ -198,3 +198,9 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 - **3e_C7.4** (l'énergie de la station), 15/11/2026 (#693) : une grille (ce que coûte chaque source), 13 groupes mélangés,
   39 pourquoi pour le mode mission ; aération 27 → 0 ; n°304 ; le banc de la séquence suit la page (réponse libre).
   Séances 681 · 912 · 1 132.
+- **3e_C7.5** (la station qu'il faut équiper), 15/11/2026 (#697) : la piqûre de rappel du cahier des charges se replie à
+  sa source (elle reçoit au passage les corrections aérées du générateur) ; trois grilles (ce qu'impose chaque exigence, le
+  constituant retenu, ce que coûte chaque retrait), avec des réponses de trop pour que la dernière ligne ne se devine pas ;
+  places mélangées ; 15 pourquoi, 12 indices ; Bonus replié ; aération 26 → 0 ; n°304 (« Tu as calculé… en 3e_C7.4 »).
+  Séances 1 286 · 256 · 1 020 · 1 439 → 386 · 257 · 896 · 1 311. Au-dessus du repère : la séance 4, dont l'établi
+  (260 mots) est l'outil même de la séance.

@@ -617,6 +617,9 @@ RAPPELS = [
                    dict(bonne="f0", cit="Au-delà de 60 °C, la carte s'arrête : pas un degré de plus")),
          ]),
     dict(id="station-equiper-3e", niveau="3e",
+         # révision du 15/11/2026 (la charge de lecture de la séance 1, 1 286 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (5 min)&nbsp;: deux lignes du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=C7 + "3e/3e_C7.5/sequence_3e_C7.5_station-a-equiper.html",
          avant='<section class="card">\n  <h2>📋 Activité 0 — Ce que chaque exigence impose', balise="h2", balise_exo="h3",
          titre="Deux lignes du cahier des charges de la commission",

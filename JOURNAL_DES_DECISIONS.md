@@ -30804,3 +30804,26 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 ## 15/11/2026 — `5e_C2.1` : les exercices d'atelier restent
 
 **La décision.** #687 laissait les séances 1 (2 166 mots) et 2 (2 004) au-dessus du repère, à cause d'un exercice d'atelier chacune (la bête à cornes, environ 700 mots ; la pieuvre, environ 1 280), et posait la question. Pascal, le 15/11/2026 : on garde les exercices d'atelier. L'écart est justifié dans le suivi ; le repli des fiches d'activité, décidé le même jour pour toutes les séquences, allège ce qui les entoure.
+
+## 15/11/2026 — Révision des trois thèmes, 34 : `3e_C7.5` (la station qu'il faut équiper)
+
+**Le constat.** Une page sans règle d'or en défaut et sans liste déroulante, mais :
+- 26 écarts d'aération, dont 11 dans la piqûre de rappel du cahier des charges (une incrustation en écart avec son générateur) ;
+- trois séries de questions qui répétaient les mêmes quatre réponses (ce qu'impose chaque exigence, le constituant retenu, ce que coûte chaque retrait) ;
+- la bonne réponse 7 fois sur 18 en première position ;
+- les séances 1 (1 286 mots) et 4 (1 439) au-dessus du repère.
+
+**Ce qui est fait.**
+- **La piqûre de rappel du cahier des charges se replie à sa source** : option `replie` de son entrée (`station-equiper-3e`) dans `donnees_rappel_cdc.py`, puis `incrustations.py --seq 3e_C7.5`, comme pour `3e_C7.3`. Le vérificateur de l'activité 0 ne l'exige pas. L'incrustation, en écart avec son générateur, en reçoit les corrections aérées.
+- **Trois grilles** (`grilles_radio.py`) : les réponses une fois, lettrées ; une rangée de lettres par question. Chaque grille a quatre lignes et quatre réponses : la dernière ligne se devinait. Des **réponses de trop** s'y ajoutent (`enrichir.py`, « leurres ») : l'écran LCD pour l'exigence 1 ; le capteur de pluie et l'écran LCD pour le constituant retenu ; « rien ne change » pour les retraits.
+- **Places** (`melanger_propositions.py`) : 6 groupes mélangés.
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C7.5.json` : 15 pourquoi, 12 indices de ligne, 4 réponses de trop).
+- **Le Bonus se replie** (`replier_bonus.py`).
+- **Aération : 26 → 0** (62 retours à la ligne ; « Suis la chaîne » passe en six lignes numérotées).
+- **n°304** : « Tu as calculé ce genre d'autonomie en 3e_C7.4 » devient « Ce genre d'autonomie se calcule en 3e_C7.4 ».
+- Une phrase sur la fabrique de la page (« Une page ne porte qu'un seul établi : deux exemplaires… ») est coupée, deux fois.
+- **Le banc de la séquence** échouait sur `main` (53 / 54), comme ceux de `3e_C7.3` et `3e_C7.4` : la page ne dit plus « validée » pour une réponse libre. Il suit maintenant la page.
+
+**Mesure.** Mots visibles : 1 286 · 256 · 1 020 · 1 439 → **386** · 257 · 896 · **1 311**. Règles d'or 0 ✘ ; aération 26 → 0. Bancs 54 / 54 (53 / 54 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (21 / 21), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler). Le contrôle des unités (n°312) avait relevé la grille des retraits : sa réponse « 580 mA demandés » dit maintenant « 580 mA (milliampères) demandés », partout.
+
+**Ce qui reste.** La séance 4 reste au-dessus du repère (1 311 mots) : l'établi (260 mots) y est l'outil de la séance, suivi de l'activité 4, du REFAIRE, de la synthèse et du bilan.
