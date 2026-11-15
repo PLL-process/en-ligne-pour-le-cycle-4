@@ -14,6 +14,29 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 
+
+/* Règle d'or n°300 (révision du 15/11/2026) : la prédiction #ph_pred est devenue un groupe de boutons radio
+   (fieldset.qcm-groupe) qui porte sa valeur. selectOption et inputValue visant un groupe cochent ou lisent le bouton de
+   cette valeur ; la valeur vide décoche tout (« sans prédiction »). On vise la valeur, jamais la place. */
+function _groupesRadio(page){
+  const estGroupe = s => page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, s);
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => (typeof sel === 'string' && await estGroupe(sel))
+    ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  const orig = page.selectOption.bind(page);
+  page.selectOption = async (sel, val, ...reste) => {
+    if (!(typeof sel === 'string' && await estGroupe(sel))) return orig(sel, val, ...reste);
+    const ok = await page.evaluate(([s, v]) => {
+      const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+      if (v === '') { inputs.forEach(i => { i.checked = false; }); e.dispatchEvent(new Event('change', {bubbles: true})); return true; }
+      const c = inputs.find(i => i.value === v); if (!c) return false;
+      c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+    }, [sel, String(val)]);
+    if (!ok) throw new Error('aucune proposition « ' + val + ' » dans ' + sel);
+  };
+  return page;
+}
+
 let chromium;
 try { ({ chromium } = await import("playwright")); }
 catch {
@@ -53,7 +76,7 @@ const run = async () => {
   for (const nomPage of PAGES) {
     const court = nomPage.includes("station_1") ? "page 1" : "page tout-en-un";
     const ctx = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
-    const pg = await ctx.newPage();
+    const pg = _groupesRadio(await ctx.newPage());
     const erreurs = [], reseau = [];
     pg.on("pageerror", (e) => erreurs.push(String(e)));
     pg.on("request", (r) => { if (!r.url().startsWith("file:") && !r.url().startsWith("data:")) reseau.push(r.url()); });
@@ -131,7 +154,7 @@ const run = async () => {
   {
     const nomPage = PAGES[0];
     const ctx = await navigateur.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
-    const pg = await ctx.newPage();
+    const pg = _groupesRadio(await ctx.newPage());
     await pg.goto(url(nomPage)); await pg.waitForTimeout(300);
     await pg.evaluate(() => { document.getElementById("pont-en-h").open = true; });
     await pg.focus('.ph-sw[data-sw="A"]');
@@ -152,7 +175,7 @@ const run = async () => {
   }
   {
     const ctx = await navigateur.newContext({ viewport: { width: 390, height: 800 } });
-    const pg = await ctx.newPage();
+    const pg = _groupesRadio(await ctx.newPage());
     const erreurs = [];
     pg.on("pageerror", (e) => erreurs.push(String(e)));
     await pg.goto(url(PAGES[0])); await pg.waitForTimeout(300);
@@ -173,7 +196,7 @@ const run = async () => {
   // mini-quiz
   {
     const ctx = await navigateur.newContext({ viewport: { width: 390, height: 800 } });
-    const pg = await ctx.newPage();
+    const pg = _groupesRadio(await ctx.newPage());
     const erreurs = [];
     pg.on("pageerror", (e) => erreurs.push(String(e)));
     await pg.goto(url("miniquiz_pont_en_h.html")); await pg.waitForTimeout(200);

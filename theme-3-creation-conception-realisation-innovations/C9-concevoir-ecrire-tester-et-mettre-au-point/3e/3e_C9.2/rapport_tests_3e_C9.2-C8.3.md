@@ -273,3 +273,24 @@ seule page » se replie dans un `details` fermé (la page 1 le garde visible) : 
 - Regardé dans Chromium : séance 1 (bloc visible dans le volet ouvert), séance 2 et 8 (replié), page 2 à 390 px.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Révision du 15/11/2026 (ligne 39 du suivi) — boutons radio, replis, aération
+
+Les 62 listes déroulantes qui posaient une question sont des groupes de boutons radio (règle d'or n°300) ; les quatre pages
+engendrées les reçoivent par `generer_les_quatre_pages.py`, avec le script qui donne sa valeur au groupe (il passe avant le
+premier `<style>`, dans la partie recopiée). Le rappel du cahier des charges, les captures des gestes, le programme de
+référence, le tableau du montage et le Bonus sont repliés ; l'aération passe de 48 écarts à 0.
+
+Les bancs n'ont pas changé de questions : un shim `_groupesRadio(page)` en tête de `tests_3e_C9.2-C8.3.mjs` et de
+`tests_pont_en_h.mjs` traduit `selectOption` en un clic sur le bouton radio ; un choix par rang (`{index: n}`) suit l'ordre
+d'origine des propositions (`ORIGINE`), puisque le mélange change leur place.
+
+- `node tests_3e_C9.2-C8.3.mjs .` : **167 / 167**, comme avant.
+- `node tests_regle_311_3e_C9.2.mjs` : **34 / 34**.
+- `node tests_pont_en_h.mjs` : **37 / 37**.
+- `node _outils/mode_mission/banc_generique.mjs` sur les cinq pages : jouées écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘ sur la page tout-en-un ; les pages 1 à 3 gardent leur ✘ n°301 (le bilan est à la page 4).
+- `audit_aeration.py --strict` : 0 sur les cinq pages. `controle_impression_papier.py` : à jour.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

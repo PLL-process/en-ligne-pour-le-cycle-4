@@ -13,6 +13,41 @@ import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { pathToFileURL } from 'node:url';
 
+
+/* Règle d'or n°300 (révision du 15/11/2026) : les 62 questions de la page, posées par des listes déroulantes, sont
+   devenues des groupes de boutons radio (fieldset.qcm-groupe) qui portent leur valeur. selectOption, fill et
+   inputValue visant un groupe cochent ou lisent la proposition de cette valeur. Un { index: n } du banc visait la
+   n-ième ligne de l'ancienne liste (l'invite « — choisis — » était la ligne 0) : ORIGINE garde cet ordre, et l'index
+   devient la VALEUR qui s'y trouvait — le mélange des boutons ne la déplace pas. On vise la valeur, jamais la place. */
+const ORIGINE = {"be_1": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "be_2": ["", "une boîte étiquetée qui garde une valeur", "un câble de la carte", "un type d'écran", "une erreur de programme"], "be_3": ["", "0 et 1023", "0 et 100", "−512 et 512", "0 et 5"], "ph_pred": ["", "sens1", "sens2", "arret", "nsp"], "a1_e1": ["", "comportement (ce que fait la station)", "performance (à quelle vitesse / avec quelle qualité)", "coût", "esthétique"], "a1_e2": ["", "comportement (ce que fait la station)", "performance (à quelle vitesse / avec quelle qualité)", "coût", "esthétique"], "a1_e3": ["", "le cahier des charges de la mairie", "le hasard", "le programme les invente", "le potentiomètre"], "a1_1": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "a1_2": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "a1_3": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "a1_4": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "a1_5": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "a1_6": ["", "Acquérir", "Traiter", "Communiquer", "Alimenter"], "a2_s4": ["", "veille", "ouragan majeur", "tempête tropicale", "panne"], "a2_q1": ["", "losange 178 : NON → losange 118 : OUI → ouragan", "losange 178 : OUI → ouragan majeur", "losange 63 : OUI → ouragan majeur", "aucun losange : veille"], "a2_q2": ["", "parce qu'un vent à 200 km/h doit finir en « ouragan majeur », pas en « ouragan »", "parce que 178 est plus facile à calculer", "par habitude, l'ordre n'a aucun effet", "parce que le losange 63 est en panne"], "a2_q3": ["", "la boucle : la station recommence sans fin", "une erreur de dessin", "le retour du courant électrique", "la fin du programme"], "a2_q4": ["", "une décision, avec deux sorties OUI / NON", "une action", "le début du programme", "un capteur"], "a2_q5": ["", "ouragan majeur : « ≥ 178 » veut dire 178 COMPRIS", "ouragan : 178 n'est pas encore « au-dessus » de 178", "veille : le losange ne répond ni OUI ni NON", "impossible à savoir sans faire tourner le programme"], "a2_q6": ["", "5 : la lecture du vent, puis les quatre niveaux", "3 : les trois losanges", "4 : seulement les quatre niveaux", "1 : la boucle"], "a2_q7": ["", "un commentaire de lecture : il explique le dessin sans faire partie de l'algorigramme", "un rectangle de traitement : une action que la station exécute", "un losange de décision déguisé", "le symbole normalisé de la boucle"], "a2_q8": ["", "elle mesure le vent UNE SEULE FOIS, affiche un niveau, puis ne bouge plus", "elle mesure deux fois plus vite", "rien ne change : la flèche est décorative", "elle repart au DÉBUT toute seule"], "a2_q9": ["", "4 — un par niveau : ouragan majeur, ouragan, tempête tropicale, veille", "3 — un par losange", "1 — l'algorigramme est une ligne droite", "une infinité, puisque la boucle ne s'arrête jamais"], "a2_q10": ["", "dans quel langage on programmera : blocs, C++, Python… le raisonnement, lui, reste le même", "l'ordre dans lequel les tests se font", "ce que le système fait quand aucun seuil n'est atteint", "où se prennent les décisions"], "a3_p1b": ["", "ouragan : 125 est au-dessus de 118, mais en dessous de 178", "tempête tropicale", "ouragan majeur", "veille"], "a3_p2": ["", "tempête tropicale — c'est le bug, et il coûte DEUX niveaux !", "ouragan majeur, comme le tien", "veille", "un message d'erreur"], "a3_p2b": ["", "sur 178 pile, et sur elle seule : elle affiche « ouragan » au lieu d'« ouragan majeur »", "sur toutes les valeurs au-dessus de 178", "sur toutes les valeurs en dessous de 63", "sur aucune : « > » et « ≥ » font la même chose"], "a3_p3": ["", "orange seul allumé et pulsant, les trois autres voyants éteints, buzzer muet, écran « OURAGAN »", "vert allumé, tout le reste éteint", "rouge allumé et buzzer qui sonne", "jaune et orange allumés tous les deux"], "a3_p3b": ["", "un sous-programme allume sa sortie sans éteindre les autres", "le potentiomètre est cassé", "la boucle tourne trop vite", "il manque le bloc « attendre 200 millisecondes »"], "a4_q1": ["", "le buzzer se tait, mais l'écran et le voyant restent en alerte", "toute la station s'éteint", "la station redescend d'un niveau", "rien : le bouton ne sert qu'au démarrage"], "a4_q2": ["", "le changement de niveau est un NOUVEL événement : l'acquittement est effacé", "le bouton est resté coincé", "le programme a un bug", "la batterie est rechargée"], "a4_q3": ["", "le cahier des charges l'exige : l'information visuelle doit rester tant que dure l'alerte", "c'est un oubli du programmeur", "le voyant est trop petit pour s'éteindre", "le bouton ne peut commander qu'une sortie"], "a4_q4": ["", "niveauPrecedent", "vitesseVent", "mesureBrute", "le moniteur série"], "a5_q1": ["", "ils ne changent jamais pendant l'exécution : le programme interdit de les modifier par accident", "pour qu'ils changent tout seuls avec le vent", "parce que « const » rend le programme plus rapide à téléverser", "c'est obligatoire pour tous les nombres"], "a5_q2": ["", "le calcul de conversion de l'échelle du capteur vers l'échelle lisible", "le bloc « si / sinon » du palier 2", "le bloc « répéter indéfiniment »", "le bloc d'affichage sur le moniteur"], "a5_q3": ["", "le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non", "une deuxième boucle", "une erreur de traduction du logiciel de blocs", "un commentaire"], "a5_q4": ["", "la boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit", "le programme devient plus lent, donc plus sûr", "c'est purement décoratif", "ça évite d'utiliser des variables"], "a5_q5": ["", "leur seuil de tempête tropicale est mal réglé (par exemple 118 au lieu de 63) ou le SINON SI a disparu", "le potentiomètre est cassé (la vitesse ne monte plus)", "le moniteur série ment", "le CAN ne sait pas compter au-delà de 100"], "a6_v1": ["", "40 km/h (franchement dans la zone)", "62 km/h (trop près de la frontière pour un test nominal)", "150 km/h", "0 km/h uniquement"], "a6_v2": ["", "117 ET 118 : juste sous la frontière, et pile dessus", "seulement 118", "90 et 150, c'est pareil", "119 seulement, pour être sûr"], "a6_v3": ["", "OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)", "OURAGAN : 178 n'est pas encore « au-dessus »", "au choix du programmeur", "l'écran s'éteint"], "a6_v4": ["", "chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s", "regarder si « ça a l'air rapide »", "compter les blocs du programme", "mesurer la longueur des câbles"], "a6_v5": ["", "il faut prouver que le son se coupe À l'appui ET qu'il repart à l'événement suivant", "le bouton s'use vite", "un seul essai suffirait, mais deux font plus sérieux", "la mairie paie au nombre d'essais"], "a7_r1": ["", "conforme", "non conforme"], "a7_r2": ["", "conforme", "non conforme"], "a7_r3": ["", "conforme", "non conforme"], "a7_r4": ["", "conforme", "non conforme"], "a7_a5": ["", "veille", "tempête tropicale", "ouragan", "ouragan majeur"], "a7_r5": ["", "conforme", "non conforme"], "a7_a6": ["", "veille", "tempête tropicale", "ouragan", "ouragan majeur"], "a7_r6": ["", "conforme", "non conforme"], "a7_a7": ["", "veille", "tempête tropicale", "ouragan", "ouragan majeur"], "a7_r7": ["", "conforme", "non conforme"], "a7_a8": ["", "veille", "tempête tropicale", "ouragan", "ouragan majeur"], "a7_r8": ["", "conforme", "non conforme"], "a7_a9": ["", "veille", "tempête tropicale", "ouragan", "ouragan majeur"], "a7_r9": ["", "conforme", "non conforme"], "a7_a10": ["", "veille", "tempête tropicale", "ouragan", "ouragan majeur"], "a7_r10": ["", "conforme", "non conforme"], "a7_r11": ["", "conforme", "non conforme"], "a7_r12": ["", "conforme", "non conforme"], "a7_r13": ["", "conforme", "non conforme"]};
+function _groupesRadio(page){
+  const estGroupe = s => page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, s);
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => (typeof sel === 'string' && await estGroupe(sel))
+    ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      if (!(typeof sel === 'string' && await estGroupe(sel))) return orig(sel, val, ...reste);
+      let v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      if (v.index !== undefined) {
+        const id = sel.replace(/^#/, ''), liste = ORIGINE[id];
+        if (!liste || liste[v.index] === undefined) throw new Error('pas de ligne ' + v.index + ' dans l\'ancienne liste ' + sel);
+        v = { value: liste[v.index], label: liste[v.index] };
+      }
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition « ' + JSON.stringify(v) + ' » dans ' + sel);
+    };
+  }
+  return page;
+}
+
 /* Playwright : installation locale si présente, sinon installation globale. */
 let chromium;
 try { ({ chromium } = await import("playwright")); }
@@ -67,7 +102,7 @@ const run = async () => {
   verifLiens();
   const navigateur = await chromium.launch();
   const ctx = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
-  const page = await ctx.newPage();
+  const page = _groupesRadio(await ctx.newPage());
   const erreursJS = [];
   page.on("pageerror", e => erreursJS.push(String(e)));
   page.on("dialog", d => d.accept());
@@ -762,7 +797,7 @@ const run = async () => {
   }
   await shot(page, "synthese_eleve");
   const mob = await ctx.browser().newContext({ viewport: { width: 390, height: 844 } });
-  const pm = await mob.newPage();
+  const pm = _groupesRadio(await mob.newPage());
   const errMob = []; pm.on("pageerror", e => errMob.push(String(e)));
   await pm.goto(url(SEQ)); await pm.waitForTimeout(600);
   const debordement = await pm.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
