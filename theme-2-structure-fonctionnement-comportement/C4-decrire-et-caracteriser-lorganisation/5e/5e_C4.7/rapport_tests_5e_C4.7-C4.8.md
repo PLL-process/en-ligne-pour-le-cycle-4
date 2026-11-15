@@ -15,6 +15,19 @@ du schéma du facteur, socle et CRCN en toutes lettres) : 33/33 verts** — dont
 des libellés intégraux du socle (D2/D4) et du repère CRCN verbatim (SEQ-07/07b/07c).
 Seuls des tests réellement exécutés sont déclarés ici (barre qualité du dépôt).
 
+> **Révision du 14/11/2026** (révision des trois thèmes, ligne 31 du suivi). Les questions posées par une liste déroulante
+> sont des groupes de boutons radio (règle d'or n°300) et leurs propositions sont réécrites (n°144 : la bonne réponse
+> était la plus longue 23 fois sur 35). La suite Playwright de 2026 n'est pas dans le dépôt ; un banc neuf l'est :
+> `tests_5e_C4.7_questions.mjs` lit les réponses attendues dans la page (tables `ATT0` à `ATT5`) et vérifie que chaque
+> réponse est une proposition unique, que sa place varie, qu'elle n'est jamais visiblement la plus longue, qu'une erreur
+> est marquée « à revoir » sur sa seule question, que tout juste valide le billet et les activités 1 à 4, et que les
+> réponses reviennent après rechargement.
+>
+> ```
+> node tests_5e_C4.7_questions.mjs   →  20 / 20
+> node tests_regle_311_5e_C4.7.mjs   →  34 / 34
+> ```
+
 ## Séquence (16 tests)
 
 | Test | Vérifie | Résultat |

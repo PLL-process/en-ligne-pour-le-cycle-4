@@ -47,7 +47,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 28 | `3e_C7.1` | 3512 → 3147 | 1 → 0 | 20 → 0 | 12 → 0 | #688 — séance 3 (3 147) très au-dessus du repère : séance 4 proposée à Pascal ; séance 2 (1 755) |
 | 29 | `5e_C5.1` | 1109 → 1040 | 1 → 0 | 30 → 0 | 4 → 0 | livrée #689 — les 30 questions se devinaient (bonne réponse toujours la première et la plus longue) : 11 réécrites (n°144), 3 grilles, validation au tout-juste comme le disent les critères, corrections exhaustives, protocole replié pendant qu'on le range ; bilan avec retour à l'hypothèse et métacognition |
 | 30 | `4e_C4.7` | 2023 → 1791 | 1 → 0 | 40 → 0 (la commande du simulateur reste une liste) | 7 → 0 | livrée #690 — la bonne réponse était 32 fois sur 40 la plus longue : 35 questions réécrites (n°144), chaque erreur « à revoir » et expliquée ; replis (contrat du binôme, cartouche CRCN, lignes Socle, Bonus) ; séances 1, 2 et 4 encore au-dessus du repère (1 647 · 1 791 · 1 470) — question à Pascal : replier les fiches d'activité sur toutes les séquences |
-| 31 | `5e_C4.7` | 1807 | 1 | 35 | 6 | à faire |
+| 31 | `5e_C4.7` | 1807 → 1695 | 1 → 0 | 35 → 0 (la commande du simulateur reste une liste) | 6 → 0 | livrée #691 — la bonne réponse était 23 fois sur 35 la plus longue : 32 questions réécrites (n°144), chaque erreur « à revoir » et expliquée ; Bonus avec son corrigé ; séances 1 et 3 encore au-dessus du repère (1 695 · 1 584) — même question que 4e_C4.7 |
 | 32 | `3e_C7.3` | 1796 | 0 | 0 | 29 | à faire |
 | 33 | `3e_C7.4` | 1220 | 0 | 0 | 27 | à faire |
 | 34 | `3e_C7.5` | 1439 | 0 | 0 | 26 | à faire |
@@ -181,3 +181,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   liste ; corrections question par question ; n°304 (« tu as appris en 5e ») corrigée ; contrat du binôme, cartouche CRCN,
   lignes Socle et Bonus repliés. Séances 1 647 · 1 791 · 918 · 1 470 : les recettes Packet Tracer et les fiches d'activité
   pèsent — question posée à Pascal (replier les fiches d'activité partout).
+- **5e_C4.7** (le réseau de la salle, Packet Tracer), 14/11/2026 (#691) : même famille que `4e_C4.7` — la bonne réponse était
+  23 fois sur 35 la plus longue. 32 questions réécrites, positionnement en boutons, commande du simulateur en liste ;
+  corrections question par question ; n°304 ; lignes Socle, cartouche CRCN et Bonus repliés, le Bonus avec son corrigé.
+  Séances 1 695 · 1 136 · 1 584.
