@@ -7,6 +7,26 @@
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
 <title>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -360,6 +380,19 @@
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1527,7 +1560,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../C8-valider-les-solutions-techniques-par-des/4e/4e_C8.1/synthese_eleve_4e_C8.html#protocole">relis « Comment écrire un protocole de test ? » dans la synthèse 4e_C8.1 à C8.3</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> tu <b>commandes</b> la station d'alerte. Ton programme pilote un <b>système réel</b> — écran, DEL, buzzer — et dialogue avec un <b>humain</b> qui appuie sur un bouton. Puis tu changes de casquette : avant la mise en service, c'est toi qui rédiges le <b>protocole de test</b> qui prouve à la mairie que ça marche.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> tu <b>commandes</b> la station d'alerte. <br>Ton programme pilote un <b>système réel</b> — écran, DEL, buzzer — et dialogue avec un <b>humain</b> qui appuie sur un bouton. <br>Puis tu changes de casquette : avant la mise en service, c'est toi qui rédiges le <b>protocole de test</b> qui prouve à la mairie que ça marche.</p>
   <p class="filet">Un mot à garder en tête : un capteur produit un nombre (de 0 à 1023), une variable garde une valeur en mémoire, et un programme se lit dans l'ordre.</p>
 </section>
 
@@ -1535,9 +1568,27 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <h2 id="billet-titre">🎫 Billet d'entrée (sans note — juste pour savoir d'où tu pars)</h2>
   <p style="font-size:.9em;color:var(--sub)">Trois questions éclair sur les acquis utiles aujourd'hui. Personne ne les note : elles te disent, à toi, ce qu'il faut réviser avant de commencer.</p>
   <div class="exo">
-    <div class="assoc"><label for="be_1">1. Sur la station, l'anémomètre appartient à la fonction…</label><select id="be_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-    <div class="assoc"><label for="be_2">2. Une variable, c'est…</label><select id="be_2"><option value="">— choisir —</option><option>une boîte étiquetée qui garde une valeur</option><option>un câble de la carte</option><option>un type d'écran</option><option>une erreur de programme</option></select></div>
-    <div class="assoc"><label for="be_3">3. <code>analogRead(A1)</code> renvoie un nombre entre…</label><select id="be_3"><option value="">— choisir —</option><option>0 et 1023</option><option>0 et 100</option><option>−512 et 512</option><option>0 et 5</option></select></div>
+    <div class="assoc"><fieldset class="qcm-groupe" id="be_1" data-melange="1">
+  <legend>1. Sur la station, l'anémomètre appartient à la fonction…</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="Acquérir"><label for="be_1__1">Acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="Communiquer"><label for="be_1__3">Communiquer</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="Traiter"><label for="be_1__2">Traiter</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="Alimenter"><label for="be_1__4">Alimenter</label></div>
+</fieldset></div>
+    <div class="assoc"><fieldset class="qcm-groupe" id="be_2" data-melange="1">
+  <legend>2. Une variable, c'est…</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="un câble de la carte"><label for="be_2__2">un câble de la carte</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="un type d&#x27;écran"><label for="be_2__3">un type d'écran</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="une boîte étiquetée qui garde une valeur"><label for="be_2__1">une boîte étiquetée qui garde une valeur</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="une erreur de programme"><label for="be_2__4">une erreur de programme</label></div>
+</fieldset></div>
+    <div class="assoc"><fieldset class="qcm-groupe" id="be_3" data-melange="1">
+  <legend>3. <code>analogRead(A1)</code> renvoie un nombre entre…</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="0 et 5"><label for="be_3__4">0 et 5</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="0 et 100"><label for="be_3__2">0 et 100</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="−512 et 512"><label for="be_3__3">−512 et 512</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="0 et 1023"><label for="be_3__1">0 et 1023</label></div>
+</fieldset></div>
     <button class="btn small" id="btnBillet" style="margin-top:8px">✔ Me situer (sans note)</button>
     <div class="feedback" id="fbBillet" role="status"></div>
   </div>
@@ -1549,9 +1600,8 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Lundi matin, Martinique.</b> Le principal te tend un courrier arrivé au club techno. La mairie a visité
-    l'exposition du Thème 2 — celle où vous aviez expliqué comment fonctionne une station d'alerte cyclonique.
-    Elle ne veut plus une explication&nbsp;: elle veut <b>la station</b>. En vrai, dans la cour, avant la saison cyclonique.</p>
+    <p><b>Lundi matin, Martinique.</b><br>Le principal te tend un courrier arrivé au club techno. <br>La mairie a visité
+    l'exposition du Thème 2 — celle où vous aviez expliqué comment fonctionne une station d'alerte cyclonique. <br>Elle ne veut plus une explication&nbsp;: elle veut <b>la station</b>. En vrai, dans la cour, avant la saison cyclonique.</p>
   <figure class="situation-photo">
     <img src="Images/situation_courrier_mairie.png" width="1536" height="1024" loading="lazy"
          alt="Une enveloppe posée sur le rebord d'une fenêtre. Dehors, la cour d'un collège aux bâtiments clairs, sous un ciel d'orage.">
@@ -1583,13 +1633,13 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <li>Réagir à un changement de vent en <b>moins d'une seconde</b>.</li>
     </ol>
     <p>Avant toute mise en service, vos services fourniront un <b>procès-verbal de recette</b>&nbsp;: la liste des
-    essais réalisés prouvant que le prototype respecte chacune de ces exigences. Vous en établirez
+    essais réalisés prouvant que le prototype respecte chacune de ces exigences. <br>Vous en établirez
     <b>deux exemplaires</b>&nbsp;: l'un pour nos services, l'autre pour la <b>ville jumelée de New York</b>, qui suit
     nos travaux sur le risque cyclonique depuis l'ouragan Sandy.</p>
     <p style="text-align:right">Le maire-adjoint aux risques majeurs</p>
   </div>
-  <p style="font-size:.9em;color:var(--sub)"><b>D'où viennent 63, 118 et 178 ?</b> Ce ne sont pas des nombres inventés pour l'exercice : ce sont les <b>seuils de l'échelle de Saffir-Simpson</b>, celle qui sert à classer les cyclones. <b>63 km/h</b> marque l'entrée en <b>tempête tropicale</b>, <b>118 km/h</b> l'entrée en <b>ouragan</b> (catégorie 1), <b>178 km/h</b> l'<b>ouragan majeur</b> (catégorie 3).</p>
-  <p style="font-size:.9em;color:var(--sub)">Attention toutefois : une vraie <b>vigilance</b> de Météo-France ne se décide pas sur le seul vent — elle croise la pluie, la houle et la trajectoire. Notre prototype, lui, ne mesure que le vent. Et il le mesure avec un <b>potentiomètre qui SIMULE l'anémomètre</b> : tourner le bouton, c'est faire souffler le vent. <i>(Matériel réel de la version 🅰 : très basse tension 5 V (volts) uniquement.)</i></p>
+  <p style="font-size:.9em;color:var(--sub)"><b>D'où viennent 63, 118 et 178 ?</b> Ce ne sont pas des nombres inventés pour l'exercice : ce sont les <b>seuils de l'échelle de Saffir-Simpson</b>, celle qui sert à classer les cyclones. <br><b>63 km/h</b> marque l'entrée en <b>tempête tropicale</b>, <b>118 km/h</b> l'entrée en <b>ouragan</b> (catégorie 1), <b>178 km/h</b> l'<b>ouragan majeur</b> (catégorie 3).</p>
+  <p style="font-size:.9em;color:var(--sub)">Attention toutefois : une vraie <b>vigilance</b> de Météo-France ne se décide pas sur le seul vent — elle croise la pluie, la houle et la trajectoire. <br>Notre prototype, lui, ne mesure que le vent. <br>Et il le mesure avec un <b>potentiomètre qui SIMULE l'anémomètre</b> : tourner le bouton, c'est faire souffler le vent. <i>(Matériel réel de la version 🅰 : très basse tension 5 V (volts) uniquement.)</i></p>
   <p style="font-size:.85em;color:var(--sub)"><i>Le courrier de la mairie est un <b>scénario pédagogique fictif inspiré de situations réelles</b> : la commande, elle, est inventée pour la séquence — les seuils, non.</i></p>
   <div class="retenir" style="margin-top:1rem"><b>🌀 Aux Antilles, la vigilance cyclonique compte CINQ niveaux</b> — et elle ne s'arrête pas au rouge :
     <b>jaune</b> (soyez attentif) → <b>orange</b> (préparez-vous) → <b>rouge</b> (confinement : plus personne dehors)
@@ -1632,10 +1682,10 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
           <span class="niv-glose">Rester chez soi, ne pas circuler, fermer les écoles. Une décision <b>qui engage</b>.</span></div>
       </li>
     </ol>
-    <p style="margin:10px 0 0"><b>Ta station s'arrête au premier niveau.</b> Elle mesure, elle affiche, elle alerte
+    <p style="margin:10px 0 0"><b>Ta station s'arrête au premier niveau.</b><br>Elle mesure, elle affiche, elle alerte
     <i>les gens qui sont devant elle</i> — elle ne prononce ni vigilance ni alerte, et elle ne le pourra jamais :
     ce ne sont pas des mesures, ce sont des <b>décisions humaines</b>, prises par des institutions responsables de
-    leurs conséquences. C'est pour cela que les niveaux de notre prototype s'appellent <b>veille · tempête tropicale ·
+    leurs conséquences. <br>C'est pour cela que les niveaux de notre prototype s'appellent <b>veille · tempête tropicale ·
     ouragan · ouragan majeur</b> — des états du vent — et non « vigilance jaune » ou « alerte rouge ».</p>
     <p style="margin:8px 0 0;font-size:.9em;color:var(--sub)">Source : préfecture de la Martinique, risque cyclonique
     — « les bulletins de vigilance cyclonique sont émis par Météo France », « les alertes à la population sont émises
@@ -1647,14 +1697,14 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     recette. Le second part à <b>New York</b>, ville jumelée avec la commune.</p>
     <p>Le <b>29 octobre 2012</b>, l'ouragan <b>Sandy</b> a poussé la mer dans le sud de Manhattan : environ
     <b>4 mètres d'eau</b> à la pointe de l'île, des stations de métro et des tunnels noyés, des centaines de milliers de
-    foyers privés d'électricité pendant des jours, et <b>plus de quarante morts</b> dans la ville. New York a découvert
-    qu'elle était bien moins préparée au risque cyclonique que les territoires qui le vivent chaque année. Depuis, elle
+    foyers privés d'électricité pendant des jours, et <b>plus de quarante morts</b> dans la ville. <br>New York a découvert
+    qu'elle était bien moins préparée au risque cyclonique que les territoires qui le vivent chaque année. <br>Depuis, elle
     échange avec eux — et la <b>Martinique</b>, où la saison cyclonique revient de juin à novembre, fait partie de ceux
     qu'on appelle.</p>
 
     <details style="margin:.8rem 0">
       <summary>🌀 « Mais New York, ce n'est pas les Caraïbes… » — quatre ouragans qui disent le contraire</summary>
-      <p>Non, New York n'est pas en zone tropicale : aucun cyclone ne s'y <i>forme</i>. Mais les cyclones nés près des
+      <p>Non, New York n'est pas en zone tropicale : aucun cyclone ne s'y <i>forme</i>. <br>Mais les cyclones nés près des
       Antilles <b>remontent la côte Est</b>, et arrivent là-haut affaiblis… sur une ville qui n'est pas faite pour eux.</p>
       <div style="overflow-x:auto">
         <table style="width:100%;border-collapse:collapse">
@@ -1668,8 +1718,8 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
         </table>
       </div>
       <p><b>Ce que ces quatre cas ont en commun</b> — et c'est là que ça t'intéresse : sauf en 1938, <b>le danger n'était
-      pas la force du vent</b>. C'était l'eau : onde de tempête, pluies extrêmes, et surtout une ville avec des milliers
-      de kilomètres de tunnels et de sous-sols sous le niveau de la mer. La Martinique et New York ne sont pas exposées
+      pas la force du vent</b>. <br>C'était l'eau : onde de tempête, pluies extrêmes, et surtout une ville avec des milliers
+      de kilomètres de tunnels et de sous-sols sous le niveau de la mer. <br>La Martinique et New York ne sont pas exposées
       au même danger, alors que le phénomène de départ, lui, est le même.</p>
       <div style="overflow-x:auto">
         <table style="width:100%;border-collapse:collapse">
@@ -1683,13 +1733,13 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
         </table>
       </div>
       <p style="font-size:.9em;color:var(--sub)">Ce tableau explique aussi une limite de <b>notre</b> prototype : il ne
-      mesure que le <b>vent</b>. Il serait déjà utile à Sainte-Luce ; il serait très insuffisant à New York, où il
-      faudrait d'abord mesurer la <b>montée des eaux</b>. Un objet technique ne vaut que pour le besoin auquel il
+      mesure que le <b>vent</b>. <br>Il serait déjà utile à Sainte-Luce ; il serait très insuffisant à New York, où il
+      faudrait d'abord mesurer la <b>montée des eaux</b>. <br>Un objet technique ne vaut que pour le besoin auquel il
       répond — et le besoin, ici, n'est pas le même des deux côtés de l'Atlantique.</p>
     </details>
 
-    <p><b>Ce que New York demande</b> n'est donc pas la station : c'est la <b>recette</b>. Autrement dit, la preuve écrite que
-    l'objet fait ce qu'on lui demande, et la façon de le prouver. Un dossier de recette bien rédigé se lit à
+    <p><b>Ce que New York demande</b> n'est donc pas la station : c'est la <b>recette</b>. <br>Autrement dit, la preuve écrite que
+    l'objet fait ce qu'on lui demande, et la façon de le prouver. <br>Un dossier de recette bien rédigé se lit à
     6&nbsp;800&nbsp;km de distance, par des gens qui n'ont jamais vu le prototype : c'est même là qu'on voit s'il est
     bien rédigé.</p>
     <p style="font-size:.9em;color:var(--sub)">Même esprit que l'atelier « Le pont numérique Martinique → New York »
@@ -1712,7 +1762,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <textarea id="hyp1" placeholder="J'imagine que le programme…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Pour décider, le programme a besoin de connaître ____.</li>
     <li>Il doit comparer cette valeur à ____.</li>
@@ -1723,7 +1773,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <textarea id="hyp2" placeholder="Je testerais…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je testerais d'abord ____ pour vérifier que ____.</li>
     <li>Il faudrait aussi essayer des valeurs ____ parce que ____.</li>
@@ -1747,17 +1797,17 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 
 <section class="card" id="choix-parcours">
   <h2>🔀 Choisis ta façon de vivre la séquence</h2>
-  <p>Les trois parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. Ce que tu choisis ici ne change pas le travail demandé — cela range simplement au second plan ce qui ne te concerne pas.</p>
+  <p>Les trois parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. <br>Ce que tu choisis ici ne change pas le travail demandé — cela range simplement au second plan ce qui ne te concerne pas.</p>
   <p style="font-size:.92em;color:var(--sub)">Le sélecteur <b>🔀 Mon parcours</b> est en haut de page, sous la barre d'outils : il te suit d'une page à l'autre.</p>
   <div class="versions">
     <div class="version va" data-parcours="a"><h4>🅰 Matériel réel</h4>
       <p><b>Un seul montage, de la séance 3 à la séance 8 :</b> Arduino UNO + Grove Base Shield (sélecteur <b>5 V (volts)</b>), potentiomètre sur <b>A1</b>, voyants <b>D6</b> vert · <b>D7</b> jaune · <b>D3</b> orange · <b>D4</b> rouge, buzzer <b>D5</b>, bouton d'acquittement <b>D2</b>, écran LCD RGB sur <b>I2C</b> — programme construit en blocs sur <b>Vittascience</b> et téléversé pour de vrai.</p>
-      <p><b>Ce qui change d'une séance à l'autre</b>, ce n'est pas le câblage : c'est ce que le programme sait faire. Séances 3 et 4, il décide et il affiche ; séance 5, il écoute l'humain.</p>
+      <p><b>Ce qui change d'une séance à l'autre</b>, ce n'est pas le câblage : c'est ce que le programme sait faire. <br>Séances 3 et 4, il décide et il affiche ; séance 5, il écoute l'humain.</p>
       <p style="color:var(--sub)">Sécurité : très basse tension uniquement, jamais de secteur 230 V ; câblage vérifié par le professeur avant branchement USB ; ne jamais brancher ou débrancher un module sous tension.</p></div>
     <div class="version vb" data-parcours="b"><h4>🅱 Simulation</h4>
-      <p>Deux simulateurs, deux rôles : celui de <b>Vittascience</b> pour <b>construire et éprouver ton programme</b> aux séances 3 et 4, et le <b>banc de simulation intégré</b> à cette page pour <b>vivre la station complète</b> — bouton d'acquittement compris. <b>Même échelle des deux côtés</b> (0 à 250 km/h) et <b>mêmes seuils</b> (63, 118, 178) : ce que tu vérifies chez l'un se retrouve chez l'autre. Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
+      <p>Deux simulateurs, deux rôles : celui de <b>Vittascience</b> pour <b>construire et éprouver ton programme</b> aux séances 3 et 4, et le <b>banc de simulation intégré</b> à cette page pour <b>vivre la station complète</b> — bouton d'acquittement compris. <br><b>Même échelle des deux côtés</b> (0 à 250 km/h) et <b>mêmes seuils</b> (63, 118, 178) : ce que tu vérifies chez l'un se retrouve chez l'autre. <br>Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
     <div class="version vc" data-parcours="c"><h4>🅲 Sans matériel</h4>
-      <p>Tout est dans la page : le banc de simulation + des <b>traces d'exécution enregistrées</b> à analyser dans les activités 5 et 7, et les <b>treize captures réelles</b> du programme de référence. Personne n'est pénalisé si le matériel manque — y compris à la maison.</p></div>
+      <p>Tout est dans la page : le banc de simulation + des <b>traces d'exécution enregistrées</b> à analyser dans les activités 5 et 7, et les <b>treize captures réelles</b> du programme de référence. <br>Personne n'est pénalisé si le matériel manque — y compris à la maison.</p></div>
   </div>
   <p style="font-size:.85em;color:var(--sub)">Tu peux changer d'avis à tout moment : ce choix est enregistré avec ton travail, et « Tout afficher » remet tout en place.</p>
 </section>
@@ -1774,6 +1824,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <p style="color:var(--hl);font-weight:600">Question directrice : que doit décider le programme, et à partir de quoi ?</p>
 
 <!-- ateliers-representations:debut rc-station-programmee-3e -->
+<details class="incruste-repliee"><summary>🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu ne sais plus ce qu'est un critère, un niveau, une flexibilité</summary>
 <section class="card atelier-incruste rappel-cdc" id="incruste-rc-station-programmee-3e" aria-labelledby="incruste-rc-station-programmee-3e-titre"><h3 id="incruste-rc-station-programmee-3e-titre">🔁 Piqûre de rappel&nbsp;: le cahier des charges</h3><p>Le programme décidera d'après le <b>cahier des charges</b> de la mairie. Avant de le relire, trois minutes pour retrouver ce que dit chaque case d'une ligne, sur celle du premier seuil.</p><p><b>Ce que dit un cahier des charges, en trois mots&nbsp;:</b> pour chaque fonction, un <b>critère</b>, un <b>niveau</b> et une <b>flexibilité</b>. Les mots de référence&nbsp;:</p><ul class="mots-reference"><li><b>fonction principale (FP)</b>&nbsp;: elle relie deux interacteurs <b>en passant par l'objet</b>&nbsp;: c'est le service rendu.</li><li><b>fonction contrainte (FC)</b>&nbsp;: elle relie l'objet à <b>un seul</b> interacteur&nbsp;: c'est une condition à respecter.</li><li><b>désignation</b>&nbsp;: la phrase de la fonction&nbsp;: elle commence par un <b>verbe à l'infinitif</b> («&nbsp;résister à la pluie&nbsp;»).</li><li><b>critère (on dit aussi critère d'appréciation)</b>&nbsp;: ce que l'on <b>mesure</b> ou contrôle pour savoir si la fonction est remplie.</li><li><b>niveau</b>&nbsp;: la <b>valeur à atteindre</b> pour ce critère (au moins…, au plus…), avec son <b>unité</b>.</li><li><b>flexibilité</b>&nbsp;: l'<b>écart que le client accepte</b> autour du niveau&nbsp;: <b>F0</b> impératif · <b>F1</b> peu négociable · <b>F2</b> négociable · <b>F3</b> très négociable.</li></ul><p class="note">🐙 La leçon complète, avec un cahier des charges entier à compléter&nbsp;: <a href="../../../../theme-1-objets-systemes-usages-interactions/ateliers-representations/interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html#pv_4e_e6">l'atelier de 4e «&nbsp;Le diagramme des interacteurs extérieurs&nbsp;», exercice 6, «&nbsp;Le cahier des charges&nbsp;: critère, niveau, flexibilité&nbsp;», et son cours</a>.</p><section class="card exercice" id="rc_station_programmee_3e" data-exo="rc_station_programmee_3e" data-cle="rep_rappel-cdc_station-programmee-3e" aria-labelledby="rc_station_programmee_3e-titre"><h4 id="rc_station_programmee_3e-titre">Une ligne du cahier des charges de la mairie</h4><details class="fiche-activite"><summary>🗂 La fiche de l'exercice : objectif, compétence, ce que tu produis, durée</summary><div class="meta"><b>🎯 Objectif&nbsp;:</b> retrouver, sur la station, ce que dit chaque case d'une ligne du cahier des charges&nbsp;: la fonction (FP ou FC), sa désignation, son critère, son niveau et sa flexibilité.<br><b>🧩 Compétence&nbsp;:</b> <span title="Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." aria-label="4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs.">4e_C2.2</span><br><b>✍ Ce que tu produis&nbsp;:</b> une ligne du cahier des charges complétée (5 cases).<br><b>Durée&nbsp;:</b> environ 3 minutes, comptées dans celle de l'activité.</div></details><details class="mots"><summary>📖 Les mots de cet exercice</summary><dl><dt>verbe à l'infinitif</dt><dd>la forme du verbe qu'on trouve dans le dictionnaire, sans conjugaison&nbsp;: résister, permettre, prendre, être.</dd><dt>solution technique</dt><dd>le moyen concret choisi pour remplir une fonction&nbsp;: elle dit <b>avec quoi</b>&nbsp;; la fonction dit <b>ce que</b> l'objet doit faire.</dd><dt>interacteur</dt><dd>un élément extérieur à l'objet, qui agit sur lui ou sur lequel il agit (une personne, la pluie, un autre objet…).</dd></dl></details><div class="consigne"><p><b>Complète cette ligne du cahier des charges de la station, directement dans le tableau</b>&nbsp;: chaque case à menu attend une réponse.</p><ul><li><b>Fonction</b>&nbsp;: FP ou FC&nbsp;? Compte les interacteurs écrits dans la case.</li><li><b>Désignation</b>&nbsp;: la phrase qui commence par un <b>verbe à l'infinitif</b> — ni un nom, ni une phrase avec un sujet, ni une solution.</li><li><b>Critère</b>&nbsp;: ce qu'on mesure — ni la valeur à atteindre, ni une solution.</li><li><b>Niveau</b>&nbsp;: un nombre et l'unité de son critère.</li><li><b>Flexibilité</b>&nbsp;: d'après ce que répond la mairie, juste au-dessus du tableau.</li></ul></div><p class="critere"><b>✅ Tu as réussi si…</b> les 5 cases justes, et tu sais dire pourquoi chaque piège ne va pas.</p><div class="tableau-menus"><div><p><b>Ce que répond la mairie</b> à la question «&nbsp;Et si on n'atteint pas tout à fait ce niveau&nbsp;?&nbsp;»</p><ul class="paroles"><li><b>Le premier seuil</b>&nbsp;: «&nbsp;Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart&nbsp;»</li></ul></div><div class="defile"><table class="cdcf"><caption>Le cahier des charges de la station — une ligne à compléter (entre parenthèses&nbsp;: l'interacteur que la fonction concerne)</caption><colgroup><col style="width:14%"><col style="width:27%"><col style="width:22%"><col style="width:19%"><col style="width:18%"></colgroup><thead><tr><th scope="col">Fonction</th><th scope="col">Désignation</th><th scope="col">Critère</th><th scope="col">Niveau</th><th scope="col">Flexibilité</th></tr></thead><tbody><tr><td data-col="Fonction" class="case-menu"><span class="menu-case"><select id="rc_station_programmee_3e__cdcf_0_0" name="rc_station_programmee_3e__cdcf_0_0" aria-label="Ligne 1, le vent et les habitants — Fonction" aria-describedby="rc_station_programmee_3e__cdcf_0_0-retour"><option value="">— choisir —</option><option value="fp">FP</option><option value="fc">FC</option></select><span class="menu-vu" aria-hidden="true"></span><span class="menu-mesure" aria-hidden="true">FP
 FC</span><span class="menu-fleche" aria-hidden="true">▾</span></span> <span class="case-texte">(le vent → les habitants)</span><span class="encoche" data-pour="rc_station_programmee_3e__cdcf_0_0"></span><span class="retour-case" id="rc_station_programmee_3e__cdcf_0_0-retour" data-pour="rc_station_programmee_3e__cdcf_0_0"></span><span class="retour-mesure" aria-hidden="true">interacteurs,
 habitants,
@@ -1811,7 +1862,8 @@ F0</span><span class="menu-fleche" aria-hidden="true">▾</span></span><span cla
 d&#x27;écart » :
 impératif :
 « n&#x27;importe
-cyclones :</span></td></tr></tbody></table></div></div><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Remplis le tableau <b>colonne par colonne</b>. Pour chaque case, relis la définition du mot, juste au-dessus, dans «&nbsp;Les mots du cahier des charges&nbsp;».</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><ul><li><b>Fonction</b>&nbsp;: deux interacteurs reliés en passant par l'objet → FP&nbsp;; un seul → FC.</li><li><b>Désignation</b>&nbsp;: le premier mot est un verbe à l'infinitif (permettre, résister, être…).</li><li><b>Critère</b>&nbsp;: demande-toi «&nbsp;qu'est-ce que je mesurerais&nbsp;?&nbsp;». Une valeur avec «&nbsp;au moins&nbsp;» ou «&nbsp;au plus&nbsp;» est un niveau, pas un critère.</li><li><b>Niveau</b>&nbsp;: un nombre <b>et</b> l'unité du critère&nbsp;: un temps → des secondes ou des minutes&nbsp;; une température → des degrés Celsius.</li><li><b>Flexibilité</b>&nbsp;: aucun écart → F0&nbsp;; un écart à une condition → F1&nbsp;; un petit écart sans condition → F2&nbsp;; un écart large → F3. Elle ne dit pas l'importance de la fonction.</li></ul></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>Ligne 1, le vent et les habitants</b> → FP (le vent → les habitants) · «&nbsp;Annoncer aux habitants le niveau d'alerte du vent&nbsp;» · critère&nbsp;: Vitesse du vent mesurée, en kilomètres par heure · niveau&nbsp;: tempête tropicale à partir de 63 km/h · F0, impératif</div><div class="ligne"><b>Fonction</b> → FP&nbsp;: deux interacteurs reliés <b>en passant par l'objet</b> → le service rendu → <b>FP</b>. Les pièges&nbsp;: FC → Deux interacteurs, le vent → les habitants, reliés en passant par l'objet : c'est la FP, le service rendu, pas une condition.</div><div class="ligne"><b>Désignation</b> → « Annoncer aux habitants le niveau d'alerte du vent »&nbsp;: elle commence par le verbe à l'infinitif «&nbsp;annoncer&nbsp;». Les pièges&nbsp;: « Annonce du niveau d'alerte » → « Annonce » est un nom : une fonction commence par un verbe à l'infinitif, « annoncer » ; « La station annonce le niveau d'alerte » → Cette phrase a un sujet, « la station », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif ; « Un anémomètre relié à la carte » → C'est une solution, pas une fonction : ce sont des constituants, pas le service rendu. La fonction dit ce que l'objet doit faire.</div><div class="ligne"><b>Critère</b> → Vitesse du vent mesurée, en kilomètres par heure&nbsp;: on mesure la vitesse du vent, puis on la compare aux seuils. Les pièges&nbsp;: « À partir de 63 km/h » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; ici : vitesse du vent mesurée, en kilomètres par heure ; « Un écran qui affiche le niveau » est une solution : c'est un constituant qui affiche. Le critère dit ce qu'on mesure, pas avec quoi on y arrive ; « Nombre d'appuis sur le bouton » → Le bouton sert à acquitter l'alarme ; il ne dit rien du vent.</div><div class="ligne"><b>Niveau</b> → tempête tropicale à partir de 63 km/h&nbsp;: un nombre et l'unité de son critère. Les pièges&nbsp;: « tempête tropicale à partir de 63 » → Un nombre sans unité n'est pas un niveau : 63 quoi ? Des kilomètres par heure, des mètres par seconde ? ; « tempête tropicale à partir de 63 mètres par seconde » → 63 mètres par seconde, c'est plus de 220 km/h : l'unité change tout le niveau ; « quand le vent forcit » ne se mesure pas : un niveau, c'est un nombre et son unité.</div><div class="ligne"><b>Flexibilité</b> → F0, impératif&nbsp;: «&nbsp;Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart&nbsp;» → aucun écart accepté. Les pièges&nbsp;: F1 → « Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart, même à une condition. Le niveau est impératif : F0 ; F2 → « Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition ; F3 → « Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : rien n'est négociable ici ; F3 voudrait dire « n'importe quelle valeur me va ».</div><div class="ligne conclusion">Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe à l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) et sa <b>flexibilité</b> (l'écart que le client accepte, de F0 impératif à F3 très négociable).</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> chaque fonction du cahier des charges (FP ou FC) a une <b>désignation</b> qui commence par un <b>verbe à l'infinitif</b>, un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (un nombre et son unité) et une <b>flexibilité</b> (l'écart que le client accepte, de <b>F0</b> impératif à <b>F3</b> très négociable).</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> prendre le niveau («&nbsp;au moins…&nbsp;») pour le critère, écrire un niveau sans unité, ou choisir la flexibilité d'après l'importance de la fonction au lieu de l'écart que le client accepte.</p></section><script type="application/json">{"exercices": {"rc_station_programmee_3e": {"cle": "rep_rappel-cdc_station-programmee-3e", "widgets": [{"type": "tableau", "name": "rc_station_programmee_3e__cdcf", "cases": [{"name": "rc_station_programmee_3e__cdcf_0_0", "bonne": "fp", "indice": null, "retours": {"fc": "Deux interacteurs, le vent → les habitants, reliés en passant par l'objet : c'est la FP, le service rendu, pas une condition."}}, {"name": "rc_station_programmee_3e__cdcf_0_1", "bonne": "bon", "indice": null, "retours": {"nom": "« Annonce » est un nom : une fonction commence par un verbe à l'infinitif, « annoncer ».", "sujet": "Cette phrase a un sujet, « la station », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif.", "solution": "C'est une solution, pas une fonction : ce sont des constituants, pas le service rendu. La fonction dit ce que l'objet doit faire."}}, {"name": "rc_station_programmee_3e__cdcf_0_2", "bonne": "bon", "indice": null, "retours": {"niveau": "« À partir de 63 km/h » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; ici : vitesse du vent mesurée, en kilomètres par heure.", "solution": "« Un écran qui affiche le niveau » est une solution : c'est un constituant qui affiche. Le critère dit ce qu'on mesure, pas avec quoi on y arrive.", "autre": "Le bouton sert à acquitter l'alarme ; il ne dit rien du vent."}}, {"name": "rc_station_programmee_3e__cdcf_0_3", "bonne": "bon", "indice": null, "retours": {"sans_unite": "Un nombre sans unité n'est pas un niveau : 63 quoi ? Des kilomètres par heure, des mètres par seconde ?", "unite": "63 mètres par seconde, c'est plus de 220 km/h : l'unité change tout le niveau.", "vague": "« quand le vent forcit » ne se mesure pas : un niveau, c'est un nombre et son unité."}}, {"name": "rc_station_programmee_3e__cdcf_0_4", "bonne": "f0", "indice": null, "retours": {"f1": "« Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart, même à une condition. Le niveau est impératif : F0.", "f2": "« Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition.", "f3": "« Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : rien n'est négociable ici ; F3 voudrait dire « n'importe quelle valeur me va »."}}], "vide": null}]}}}</script></section>
+cyclones :</span></td></tr></tbody></table></div></div><p><button type="button" class="btn verifier">✔ Vérifier mes réponses</button></p><div class="retour" data-retour aria-live="polite"></div><details class="aide"><summary>💡 Aide 1 — pour démarrer</summary><p>Remplis le tableau <b>colonne par colonne</b>. Pour chaque case, relis la définition du mot, juste au-dessus, dans «&nbsp;Les mots du cahier des charges&nbsp;».</p></details><details class="aide"><summary>💡 Aide 2 — le raisonnement pas à pas</summary><ul><li><b>Fonction</b>&nbsp;: deux interacteurs reliés en passant par l'objet → FP&nbsp;; un seul → FC.</li><li><b>Désignation</b>&nbsp;: le premier mot est un verbe à l'infinitif (permettre, résister, être…).</li><li><b>Critère</b>&nbsp;: demande-toi «&nbsp;qu'est-ce que je mesurerais&nbsp;?&nbsp;». Une valeur avec «&nbsp;au moins&nbsp;» ou «&nbsp;au plus&nbsp;» est un niveau, pas un critère.</li><li><b>Niveau</b>&nbsp;: un nombre <b>et</b> l'unité du critère&nbsp;: un temps → des secondes ou des minutes&nbsp;; une température → des degrés Celsius.</li><li><b>Flexibilité</b>&nbsp;: aucun écart → F0&nbsp;; <br>un écart à une condition → F1&nbsp;; <br>un petit écart sans condition → F2&nbsp;; <br>un écart large → F3. Elle ne dit pas l'importance de la fonction.</li></ul></details><details class="correction"><summary>🔍 La correction complète, et pourquoi</summary><div class="demo"><div class="ligne"><b>Ligne 1, le vent et les habitants</b> → FP (le vent → les habitants) <br>«&nbsp;Annoncer aux habitants le niveau d'alerte du vent&nbsp;» <br>critère&nbsp;: Vitesse du vent mesurée, en kilomètres par heure <br>niveau&nbsp;: tempête tropicale à partir de 63 km/h <br>F0, impératif</div><div class="ligne"><b>Fonction</b> → FP&nbsp;: deux interacteurs reliés <b>en passant par l'objet</b> → le service rendu → <b>FP</b>. <br>Les pièges&nbsp;: <br>FC → Deux interacteurs, le vent → les habitants, reliés en passant par l'objet : c'est la FP, le service rendu, pas une condition.</div><div class="ligne"><b>Désignation</b> → « Annoncer aux habitants le niveau d'alerte du vent »&nbsp;: elle commence par le verbe à l'infinitif «&nbsp;annoncer&nbsp;». <br>Les pièges&nbsp;: <br>« Annonce du niveau d'alerte » → « Annonce » est un nom : une fonction commence par un verbe à l'infinitif, « annoncer »&nbsp;; <br>« La station annonce le niveau d'alerte » → Cette phrase a un sujet, « la station », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif&nbsp;; <br>« Un anémomètre relié à la carte » → C'est une solution, pas une fonction : ce sont des constituants, pas le service rendu. La fonction dit ce que l'objet doit faire.</div><div class="ligne"><b>Critère</b> → Vitesse du vent mesurée, en kilomètres par heure&nbsp;: on mesure la vitesse du vent, puis on la compare aux seuils. <br>Les pièges&nbsp;: <br>« À partir de 63 km/h » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; <br>ici : vitesse du vent mesurée, en kilomètres par heure&nbsp;; <br><br>« Un écran qui affiche le niveau » est une solution : c'est un constituant qui affiche. Le critère dit ce qu'on mesure, pas avec quoi on y arrive&nbsp;; <br>« Nombre d'appuis sur le bouton » → Le bouton sert à acquitter l'alarme ; il ne dit rien du vent.</div><div class="ligne"><b>Niveau</b> → tempête tropicale à partir de 63 km/h&nbsp;: un nombre et l'unité de son critère. <br>Les pièges&nbsp;: <br>« tempête tropicale à partir de 63 » → Un nombre sans unité n'est pas un niveau : 63 quoi ? Des kilomètres par heure, des mètres par seconde ?&nbsp;; <br>« tempête tropicale à partir de 63 mètres par seconde » → 63 mètres par seconde, c'est plus de 220 km/h : l'unité change tout le niveau&nbsp;; <br>« quand le vent forcit » ne se mesure pas : un niveau, c'est un nombre et son unité.</div><div class="ligne"><b>Flexibilité</b> → F0, impératif&nbsp;: «&nbsp;Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart&nbsp;» → aucun écart accepté. <br>Les pièges&nbsp;: <br>F1 → « Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart, même à une condition. Le niveau est impératif : F0&nbsp;; <br>F2 → « Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart n'est accepté ; <br>« négociable » voudrait dire un petit écart sans condition&nbsp;; <br><br>F3 → « Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : rien n'est négociable ici ; F3 voudrait dire « n'importe quelle valeur me va ».</div><div class="ligne conclusion">Chaque ligne du cahier des charges a sa <b>fonction</b> (FP ou FC), sa <b>désignation</b> (un verbe à l'infinitif), son <b>critère</b> (ce qu'on mesure), son <b>niveau</b> (un nombre et son unité) et sa <b>flexibilité</b> (l'écart que le client accepte, de F0 impératif à F3 très négociable).</div></div></details><p class="retenir"><b>📌 À retenir&nbsp;:</b> chaque fonction du cahier des charges (FP ou FC) a une <b>désignation</b> qui commence par un <b>verbe à l'infinitif</b>, un <b>critère</b> (ce qu'on mesure), un <b>niveau</b> (un nombre et son unité) et une <b>flexibilité</b> (l'écart que le client accepte, de <b>F0</b> impératif à <b>F3</b> très négociable).</p><p class="piege"><b>⚠ Le piège classique&nbsp;:</b> prendre le niveau («&nbsp;au moins…&nbsp;») pour le critère, écrire un niveau sans unité, ou choisir la flexibilité d'après l'importance de la fonction au lieu de l'écart que le client accepte.</p></section><script type="application/json">{"exercices": {"rc_station_programmee_3e": {"cle": "rep_rappel-cdc_station-programmee-3e", "widgets": [{"type": "tableau", "name": "rc_station_programmee_3e__cdcf", "cases": [{"name": "rc_station_programmee_3e__cdcf_0_0", "bonne": "fp", "indice": null, "retours": {"fc": "Deux interacteurs, le vent → les habitants, reliés en passant par l'objet : c'est la FP, le service rendu, pas une condition."}}, {"name": "rc_station_programmee_3e__cdcf_0_1", "bonne": "bon", "indice": null, "retours": {"nom": "« Annonce » est un nom : une fonction commence par un verbe à l'infinitif, « annoncer ».", "sujet": "Cette phrase a un sujet, « la station », et un verbe conjugué : une fonction commence directement par son verbe à l'infinitif.", "solution": "C'est une solution, pas une fonction : ce sont des constituants, pas le service rendu. La fonction dit ce que l'objet doit faire."}}, {"name": "rc_station_programmee_3e__cdcf_0_2", "bonne": "bon", "indice": null, "retours": {"niveau": "« À partir de 63 km/h » est un niveau, la valeur à atteindre. Le critère est ce qu'on mesure ; ici : vitesse du vent mesurée, en kilomètres par heure.", "solution": "« Un écran qui affiche le niveau » est une solution : c'est un constituant qui affiche. Le critère dit ce qu'on mesure, pas avec quoi on y arrive.", "autre": "Le bouton sert à acquitter l'alarme ; il ne dit rien du vent."}}, {"name": "rc_station_programmee_3e__cdcf_0_3", "bonne": "bon", "indice": null, "retours": {"sans_unite": "Un nombre sans unité n'est pas un niveau : 63 quoi ? Des kilomètres par heure, des mètres par seconde ?", "unite": "63 mètres par seconde, c'est plus de 220 km/h : l'unité change tout le niveau.", "vague": "« quand le vent forcit » ne se mesure pas : un niveau, c'est un nombre et son unité."}}, {"name": "rc_station_programmee_3e__cdcf_0_4", "bonne": "f0", "indice": null, "retours": {"f1": "« Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart, même à une condition. Le niveau est impératif : F0.", "f2": "« Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : aucun écart n'est accepté ; « négociable » voudrait dire un petit écart sans condition.", "f3": "« Les seuils sont ceux de l'échelle des cyclones : pas un kilomètre par heure d'écart » : rien n'est négociable ici ; F3 voudrait dire « n'importe quelle valeur me va »."}}], "vide": null}]}}}</script></section>
+</details>
 <!-- ateliers-representations:fin rc-station-programmee-3e -->
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Relire le cahier des charges — et poser les deux chaînes</h3><span class="duree">⏱ ~30 min</span></header>
@@ -1824,21 +1876,21 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <img class="figure" src="Images/chaine_info_energie_station.svg" alt="Chaînes de la station. En haut, la chaîne d’information : acquérir sur A1 et D2, traiter par le programme, communiquer par LCD, voyants et buzzer. En bas, la chaîne d’énergie : l’énergie électrique vient de l’USB ; les sorties de la carte et les interfaces des modules commandent sa distribution ; les voyants et le buzzer la convertissent en lumière et en son. L’ordre descend de Traiter vers Distribuer : l’information commande l’énergie." aria-describedby="desc-chaines">
     <details class="description-image" id="desc-chaines">
       <summary>📖 Description détaillée du schéma des deux chaînes</summary>
-      <p><b>En haut, la chaîne d’information.</b> Le signal analogique simulant le vent est acquis sur A1 et numérisé par le CAN 10 bits (0 à 1023). Le bouton sur D2 est une entrée logique (0 ou 1) : il ne passe pas par ce CAN. Le programme traite les mesures et l’acquittement ; le LCD, les voyants et le buzzer communiquent les résultats à l’agent.</p>
-      <p><b>Entre les deux chaînes, l’ordre descend.</b> L’ordre issu de TRAITER descend vers DISTRIBUER : il pilote la distribution de l’énergie par les sorties de la carte et les interfaces des modules. Un transistor de commande peut être intégré au module : l’absence de carte de puissance séparée ne signifie pas l’absence d’interface. Le câblage dépend du module réellement utilisé.</p>
-      <p><b>En bas, la chaîne d’énergie.</b> ALIMENTER : USB 5 V (volts) continu. DISTRIBUER : sorties commandées et interfaces des modules ; le shield Grove assure les raccordements. CONVERTIR : les voyants produisent de la lumière et le buzzer du son. Les flèches portent les énergies électrique, lumineuse et sonore. Aucune transmission mécanique séparée n’est nécessaire dans cette réalisation.</p>
+      <p><b>En haut, la chaîne d’information.</b><br>Le signal analogique simulant le vent est acquis sur A1 et numérisé par le CAN 10 bits (0 à 1023). <br>Le bouton sur D2 est une entrée logique (0 ou 1) : il ne passe pas par ce CAN. Le programme traite les mesures et l’acquittement ; le LCD, les voyants et le buzzer communiquent les résultats à l’agent.</p>
+      <p><b>Entre les deux chaînes, l’ordre descend.</b><br>L’ordre issu de TRAITER descend vers DISTRIBUER : il pilote la distribution de l’énergie par les sorties de la carte et les interfaces des modules. <br>Un transistor de commande peut être intégré au module : l’absence de carte de puissance séparée ne signifie pas l’absence d’interface. <br>Le câblage dépend du module réellement utilisé.</p>
+      <p><b>En bas, la chaîne d’énergie.</b><br>ALIMENTER : USB 5 V (volts) continu. <br>DISTRIBUER : sorties commandées et interfaces des modules ; le shield Grove assure les raccordements. <br>CONVERTIR : les voyants produisent de la lumière et le buzzer du son. <br>Les flèches portent les énergies électrique, lumineuse et sonore. Aucune transmission mécanique séparée n’est nécessaire dans cette réalisation.</p>
     </details>
     <details class="approfondissement" style="margin:1rem 0">
       <summary>🔎 Deux questions que le schéma soulève — et leur réponse complète</summary>
-      <p><b>1. Où arrive la flèche d'ORDRE, et qu'est-ce qui change d'un système à l'autre ?</b> Elle arrive <b>toujours sur DISTRIBUER</b> : l'ordre ne fournit pas d'énergie, il commande le bloc qui la distribue. Ce qui change, c'est le <b>préactionneur</b> — l'organe qui reçoit un petit signal de commande et laisse passer l'énergie — et le schéma le dit <b>sous le bloc</b>. Il peut être <b>la sortie de la carte elle-même</b> : une broche de l'Arduino UNO fournit <b>20 mA</b> de façon nominale (et ne doit jamais dépasser <b>40 mA</b>, sous peine de destruction du microcontrôleur — <a href="https://store.arduino.cc/products/arduino-uno-rev3" target="_blank" rel="noopener">fiche technique officielle</a>), et un voyant se contente justement d'une vingtaine de milliampères. Il peut être <b>intégré au module</b> : le <a href="https://wiki.seeedstudio.com/Grove-Buzzer/" target="_blank" rel="noopener">buzzer Grove V1.1</a> porte son propre transistor. Il peut enfin être <b>une carte séparée</b> — un relais, un pont en H — dès que la puissance dépasse ce que la broche supporte.</p>
-      <p><b>2. Pourquoi n'y a-t-il pas de fonction TRANSMETTRE ?</b> Parce que <b>rien ne se déplace</b>. Transmettre, c'est acheminer et adapter un mouvement — un réducteur, une courroie, une crémaillère. Notre station allume et sonne : la lumière et le son ne sont pas des mouvements qu'il faut conduire quelque part. Un bloc qui n'a rien à faire ne se dessine pas « pour faire complet » : on montre qu'on l'a cherché, et on dit pourquoi il est absent.</p>
+      <p><b>1. Où arrive la flèche d'ORDRE, et qu'est-ce qui change d'un système à l'autre ?</b> Elle arrive <b>toujours sur DISTRIBUER</b> : l'ordre ne fournit pas d'énergie, il commande le bloc qui la distribue. <br>Ce qui change, c'est le <b>préactionneur</b> — l'organe qui reçoit un petit signal de commande et laisse passer l'énergie — et le schéma le dit <b>sous le bloc</b>. <br>Il peut être <b>la sortie de la carte elle-même</b> : une broche de l'Arduino UNO fournit <b>20 mA</b> de façon nominale (et ne doit jamais dépasser <b>40 mA</b>, sous peine de destruction du microcontrôleur — <a href="https://store.arduino.cc/products/arduino-uno-rev3" target="_blank" rel="noopener">fiche technique officielle</a>), et un voyant se contente justement d'une vingtaine de milliampères. <br>Il peut être <b>intégré au module</b> : le <a href="https://wiki.seeedstudio.com/Grove-Buzzer/" target="_blank" rel="noopener">buzzer Grove V1.1</a> porte son propre transistor. <br>Il peut enfin être <b>une carte séparée</b> — un relais, un pont en H — dès que la puissance dépasse ce que la broche supporte.</p>
+      <p><b>2. Pourquoi n'y a-t-il pas de fonction TRANSMETTRE ?</b> Parce que <b>rien ne se déplace</b>. <br>Transmettre, c'est acheminer et adapter un mouvement — un réducteur, une courroie, une crémaillère. <br>Notre station allume et sonne : la lumière et le son ne sont pas des mouvements qu'il faut conduire quelque part. <br>Un bloc qui n'a rien à faire ne se dessine pas « pour faire complet » : on montre qu'on l'a cherché, et on dit pourquoi il est absent.</p>
       <p>La planche ci-dessous compare <b>trois cas</b> — et c'est en les mettant côte à côte qu'on voit la règle apparaître.</p>
       <img class="figure" src="Images/ordre_preactionneur_trois_cas.svg" alt="Trois cas comparés en trois bandes, avec la même chaîne : l'ordre descend de Traiter et arrive toujours sur Distribuer. Cas 1, notre station : Distribuer est la sortie de la carte pour le voyant 5 volts d'environ 20 milliampères, et un transistor intégré au module pour le buzzer Grove ; pas de Transmettre. Cas 2, un gyrophare 12 volts d'environ 1 ampère : Distribuer est une carte relais séparée, alimentée en 12 volts séparés ; un avertissement rappelle qu'un ampère vaut cinquante fois les vingt milliampères nominaux d'une broche. Cas 3, un portail anticyclonique : Distribuer est un pont en H séparé, puis le moteur convertit l'électricité en rotation, puis Transmettre — réducteur et crémaillère — achemine et adapte ce mouvement jusqu'au vantail qui se ferme" aria-describedby="desc-3cas">
       <details class="description-image" id="desc-3cas">
         <summary>📖 Description détaillée de la planche des trois cas</summary>
-        <p><b>① Notre station — un voyant 5 V (≈ 20 mA) et un buzzer Grove.</b> L'ORDRE part de TRAITER (broche D4) et arrive sur <b>DISTRIBUER</b>. Pour le voyant, le préactionneur est <b>la sortie de la carte</b> : la broche commande et alimente, parce que 20 mA suffisent. Pour le buzzer, c'est <b>le transistor intégré au module</b>. CONVERTIR : le voyant et le buzzer. Aucun TRANSMETTRE.</p>
-        <p><b>② Un gyrophare 12 V (≈ 1 A, en ampères).</b> L'ORDRE arrive sur DISTRIBUER, qui est ici une <b>carte relais séparée</b> — le préactionneur. Elle est reliée d'un côté à une <b>alimentation 12 V séparée</b>, de l'autre au gyrophare (CONVERTIR). Brancher le gyrophare en direct détruirait le microcontrôleur : 1 A, c'est <b>50 fois</b> les 20 mA nominaux d'une broche. Le relais ne fabrique pas d'énergie : c'est un <b>interrupteur commandé</b>. Toujours pas de TRANSMETTRE.</p>
-        <p><b>③ Un portail anticyclonique.</b> L'ORDRE arrive sur DISTRIBUER, qui est ici un <b>pont en H séparé</b> (il choisit en plus le sens de rotation). Puis <b>CONVERTIR</b> — le moteur transforme l'électricité en mouvement de rotation —, puis <b>TRANSMETTRE</b> : le réducteur et la crémaillère acheminent ce mouvement jusqu'au vantail et l'adaptent (beaucoup de tours rapides et peu de force deviennent un déplacement lent et fort). Le vantail se ferme.</p>
+        <p><b>① Notre station — un voyant 5 V (≈ 20 mA) et un buzzer Grove.</b><br>L'ORDRE part de TRAITER (broche D4) et arrive sur <b>DISTRIBUER</b>. <br>Pour le voyant, le préactionneur est <b>la sortie de la carte</b> : la broche commande et alimente, parce que 20 mA suffisent. <br>Pour le buzzer, c'est <b>le transistor intégré au module</b>. CONVERTIR : le voyant et le buzzer. <br>Aucun TRANSMETTRE.</p>
+        <p><b>② Un gyrophare 12 V (≈ 1 A, en ampères).</b><br>L'ORDRE arrive sur DISTRIBUER, qui est ici une <b>carte relais séparée</b> — le préactionneur. <br>Elle est reliée d'un côté à une <b>alimentation 12 V séparée</b>, de l'autre au gyrophare (CONVERTIR). <br>Brancher le gyrophare en direct détruirait le microcontrôleur : 1 A, c'est <b>50 fois</b> les 20 mA nominaux d'une broche. <br>Le relais ne fabrique pas d'énergie : c'est un <b>interrupteur commandé</b>. <br>Toujours pas de TRANSMETTRE.</p>
+        <p><b>③ Un portail anticyclonique.</b><br>L'ORDRE arrive sur DISTRIBUER, qui est ici un <b>pont en H séparé</b> (il choisit en plus le sens de rotation). <br>Puis <b>CONVERTIR</b> — le moteur transforme l'électricité en mouvement de rotation —, puis <b>TRANSMETTRE</b> : le réducteur et la crémaillère acheminent ce mouvement jusqu'au vantail et l'adaptent (beaucoup de tours rapides et peu de force deviennent un déplacement lent et fort). <br>Le vantail se ferme.</p>
         <p><b>La règle, en une phrase :</b> la flèche d'ORDRE arrive <b>toujours sur DISTRIBUER</b> ; le préactionneur — sortie de la carte, transistor intégré au module ou carte séparée — se dit sous le bloc.</p>
       </details>
       <p style="font-size:.9em;color:var(--sub)"><b>Source de la valeur des broches :</b> fiche technique officielle de l'Arduino UNO Rev3 — « DC Current per I/O Pin : 20 mA », avec la mention qu'un maximum de 40 mA ne doit jamais être dépassé sous peine de dommage permanent du microcontrôleur.</p>
@@ -1852,24 +1904,23 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <h4>L'idée en cinq phrases</h4>
       <ol class="ph-idee">
         <li><b>Un moteur tourne dans le sens où le courant le traverse.</b> Si le courant entre par l'autre borne, il tourne dans l'autre sens.</li>
-        <li><b>Un pont en H, ce sont 4 interrupteurs autour du moteur,</b> dessinés comme un H : le moteur est la barre du milieu. En haut, <b>A</b> (gauche) et <b>B</b> (droite), reliés au +. En bas, <b>C</b> (gauche) et <b>D</b> (droite), reliés au −.</li>
-        <li><b>A et D fermés :</b> le courant va du + vers le −, en traversant le moteur de gauche à droite. <b>B et C fermés :</b> il le traverse de droite à gauche, donc le moteur tourne dans l'autre sens.</li>
-        <li><b>Un relais simple ne suffit pas pour inverser :</b> c'est un seul interrupteur, il laisse passer le courant ou le coupe, <b>toujours dans le même sens</b>. Le moteur tourne ou s'arrête, mais il ne repart jamais en arrière. Pour inverser, il faut pouvoir changer le sens du courant : c'est le rôle des 4 interrupteurs.</li>
-        <li><b>Attention au court-circuit :</b> si les deux interrupteurs d'un même côté sont fermés (A et C, ou B et D), le courant va du + au − sans traverser le moteur. L'intensité devient énorme, les fils chauffent, la protection saute. Un vrai pont en H l'empêche ; dans le simulateur, tu peux le provoquer pour le voir.</li>
+        <li><b>Un pont en H, ce sont 4 interrupteurs autour du moteur,</b> dessinés comme un H : le moteur est la barre du milieu. <br>En haut, <b>A</b> (gauche) et <b>B</b> (droite), reliés au +. En bas, <b>C</b> (gauche) et <b>D</b> (droite), reliés au −.</li>
+        <li><b>A et D fermés :</b> le courant va du + vers le −, en traversant le moteur de gauche à droite. <br><b>B et C fermés :</b> il le traverse de droite à gauche, donc le moteur tourne dans l'autre sens.</li>
+        <li><b>Un relais simple ne suffit pas pour inverser :</b> c'est un seul interrupteur, il laisse passer le courant ou le coupe, <b>toujours dans le même sens</b>. <br>Le moteur tourne ou s'arrête, mais il ne repart jamais en arrière. <br>Pour inverser, il faut pouvoir changer le sens du courant : c'est le rôle des 4 interrupteurs.</li>
+        <li><b>Attention au court-circuit :</b> si les deux interrupteurs d'un même côté sont fermés (A et C, ou B et D), le courant va du + au − sans traverser le moteur. <br>L'intensité devient énorme, les fils chauffent, la protection saute. Un vrai pont en H l'empêche ; dans le simulateur, tu peux le provoquer pour le voir.</li>
       </ol>
 
       <h4>À toi de jouer</h4>
       <div class="assoc">
-        <label for="ph_pred">Avant de tester (facultatif) : à ton avis, si je ferme A et D, le moteur…</label>
-        <select id="ph_pred">
-          <option value="">— choisir —</option>
-          <option value="sens1">tourne dans le sens 1 (sens des aiguilles d'une montre)</option>
-          <option value="sens2">tourne dans le sens 2 (sens inverse des aiguilles d'une montre)</option>
-          <option value="arret">ne tourne pas</option>
-          <option value="nsp">je ne sais pas encore</option>
-        </select>
+        <fieldset class="qcm-groupe" id="ph_pred" data-melange="1">
+  <legend>Avant de tester (facultatif) : à ton avis, si je ferme A et D, le moteur…</legend>
+  <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__2" value="sens2"><label for="ph_pred__2">tourne dans le sens 2 (sens inverse des aiguilles d'une montre)</label></div>
+  <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__1" value="sens1"><label for="ph_pred__1">tourne dans le sens 1 (sens des aiguilles d'une montre)</label></div>
+  <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__3" value="arret"><label for="ph_pred__3">ne tourne pas</label></div>
+  <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__4" value="nsp"><label for="ph_pred__4">je ne sais pas encore</label></div>
+</fieldset>
       </div>
-      <p class="ph-conseil">Ferme ou ouvre les interrupteurs avec les boutons. Le dessin s'allume, et <b>tout ce qui bouge est aussi écrit</b> dans la phrase sous le dessin. Essaie aussi de fermer deux interrupteurs du même côté : tu ne risques rien, c'est un simulateur.</p>
+      <p class="ph-conseil">Ferme ou ouvre les interrupteurs avec les boutons. <br>Le dessin s'allume, et <b>tout ce qui bouge est aussi écrit</b> dans la phrase sous le dessin. <br>Essaie aussi de fermer deux interrupteurs du même côté : tu ne risques rien, c'est un simulateur.</p>
 
       <div class="ph-sim" id="ph_sim">
         <svg class="ph-svg" id="ph_svg" viewBox="0 0 600 360" role="img" aria-labelledby="ph_t ph_d" focusable="false">
@@ -2039,27 +2090,81 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <details class="approfondissement" style="margin:1rem 0">
       <summary>🔎 Un même composant peut appartenir aux deux analyses</summary>
       <p>Le voyant <b>convertit de l’énergie électrique en lumière</b> dans l’analyse énergétique. Sa couleur <b>communique le niveau d’alerte</b> dans l’analyse informationnelle. Ce sont deux points de vue sur le même composant.</p>
-      <p>La place de l’ordre dépend de la réalisation : sortie commandée de la carte, transistor intégré au module ou préactionneur séparé. Une faible puissance ne suffit pas à déterminer le câblage. Le <a href="https://wiki.seeedstudio.com/Grove-Buzzer/" target="_blank" rel="noopener">buzzer Grove V1.1</a> comporte par exemple un transistor intégré.</p>
+      <p>La place de l’ordre dépend de la réalisation : sortie commandée de la carte, transistor intégré au module ou préactionneur séparé. <br>Une faible puissance ne suffit pas à déterminer le câblage. Le <a href="https://wiki.seeedstudio.com/Grove-Buzzer/" target="_blank" rel="noopener">buzzer Grove V1.1</a> comporte par exemple un transistor intégré.</p>
     </details>
     <div class="consigne"><b>Consigne :</b> a) relis le courrier de la mairie et repère les exigences ; b) place chaque organe dans sa fonction ; c) justifie la place du bouton d'acquittement — c'est LA nouveauté de cette séquence.</div>
     <div class="exo">
       <h4>a) Le courrier, ligne à ligne</h4>
-      <div class="assoc"><label for="a1_e1">« réagir en moins d'une seconde » est une exigence de…</label><select id="a1_e1"><option value="">— choisir —</option><option>comportement (ce que fait la station)</option><option>performance (à quelle vitesse / avec quelle qualité)</option><option>coût</option><option>esthétique</option></select></div>
-      <div class="assoc"><label for="a1_e2">« l'agent peut acquitter l'alarme d'un appui » est une exigence de…</label><select id="a1_e2"><option value="">— choisir —</option><option>comportement (ce que fait la station)</option><option>performance (à quelle vitesse / avec quelle qualité)</option><option>coût</option><option>esthétique</option></select></div>
-      <div class="assoc"><label for="a1_e3">Qui fournit les valeurs 63, 118 et 178 km/h ?</label><select id="a1_e3"><option value="">— choisir —</option><option>le cahier des charges de la mairie</option><option>le hasard</option><option>le programme les invente</option><option>le potentiomètre</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_e1" data-melange="1">
+  <legend>« réagir en moins d'une seconde » est une exigence de…</legend>
+  <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__1" value="comportement (ce que fait la station)"><label for="a1_e1__1">comportement (ce que fait la station)</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__2" value="performance (à quelle vitesse / avec quelle qualité)"><label for="a1_e1__2">performance (à quelle vitesse / avec quelle qualité)</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__4" value="esthétique"><label for="a1_e1__4">esthétique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__3" value="coût"><label for="a1_e1__3">coût</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_e2" data-melange="1">
+  <legend>« l'agent peut acquitter l'alarme d'un appui » est une exigence de…</legend>
+  <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__3" value="coût"><label for="a1_e2__3">coût</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__4" value="esthétique"><label for="a1_e2__4">esthétique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__1" value="comportement (ce que fait la station)"><label for="a1_e2__1">comportement (ce que fait la station)</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__2" value="performance (à quelle vitesse / avec quelle qualité)"><label for="a1_e2__2">performance (à quelle vitesse / avec quelle qualité)</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_e3" data-melange="1">
+  <legend>Qui fournit les valeurs 63, 118 et 178 km/h ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1_e3" id="a1_e3__4" value="le potentiomètre"><label for="a1_e3__4">le potentiomètre</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e3" id="a1_e3__2" value="le hasard"><label for="a1_e3__2">le hasard</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e3" id="a1_e3__3" value="le programme les invente"><label for="a1_e3__3">le programme les invente</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_e3" id="a1_e3__1" value="le cahier des charges de la mairie"><label for="a1_e3__1">le cahier des charges de la mairie</label></div>
+</fieldset></div>
       <h4>b) Chaque organe à sa place</h4>
-      <div class="assoc"><label for="a1_1">Potentiomètre « anémomètre » (A1)</label><select id="a1_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_2">Bouton d'acquittement (D2)</label><select id="a1_2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_3">Microcontrôleur + programme</label><select id="a1_3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_4">Écran LCD RGB (I2C)</label><select id="a1_4"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_5">Les quatre voyants (D6, D7, D3, D4) et le buzzer (D5)</label><select id="a1_5"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_6">Câble USB 5 V</label><select id="a1_6"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_1" data-melange="1">
+  <legend>Potentiomètre « anémomètre » (A1)</legend>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="Acquérir"><label for="a1_1__1">Acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="Alimenter"><label for="a1_1__4">Alimenter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="Communiquer"><label for="a1_1__3">Communiquer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="Traiter"><label for="a1_1__2">Traiter</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_2" data-melange="1">
+  <legend>Bouton d'acquittement (D2)</legend>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="Alimenter"><label for="a1_2__4">Alimenter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="Acquérir"><label for="a1_2__1">Acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="Communiquer"><label for="a1_2__3">Communiquer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="Traiter"><label for="a1_2__2">Traiter</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_3" data-melange="1">
+  <legend>Microcontrôleur + programme</legend>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="Traiter"><label for="a1_3__2">Traiter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="Acquérir"><label for="a1_3__1">Acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="Communiquer"><label for="a1_3__3">Communiquer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="Alimenter"><label for="a1_3__4">Alimenter</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_4" data-melange="1">
+  <legend>Écran LCD RGB (I2C)</legend>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="Traiter"><label for="a1_4__2">Traiter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="Communiquer"><label for="a1_4__3">Communiquer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="Acquérir"><label for="a1_4__1">Acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="Alimenter"><label for="a1_4__4">Alimenter</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_5" data-melange="1">
+  <legend>Les quatre voyants (D6, D7, D3, D4) et le buzzer (D5)</legend>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="Communiquer"><label for="a1_5__3">Communiquer</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="Traiter"><label for="a1_5__2">Traiter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="Alimenter"><label for="a1_5__4">Alimenter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="Acquérir"><label for="a1_5__1">Acquérir</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a1_6" data-melange="1">
+  <legend>Câble USB 5 V</legend>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="Acquérir"><label for="a1_6__1">Acquérir</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="Traiter"><label for="a1_6__2">Traiter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="Alimenter"><label for="a1_6__4">Alimenter</label></div>
+  <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__3" value="Communiquer"><label for="a1_6__3">Communiquer</label></div>
+</fieldset></div>
       <h4>c) La nouveauté</h4>
       <label for="a1_just" style="display:block"><b>Justifie :</b> le bouton d'acquittement fait entrer une information dans la station. Laquelle, et qui la produit ? En quoi est-ce différent de l'anémomètre ?</label>
       <textarea id="a1_just" placeholder="Le bouton fait entrer…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Le bouton fait entrer l'information « ____ », produite par ____.</li>
     <li>L'anémomètre, lui, capte une grandeur ____ ; le bouton capte une décision ____.</li>
@@ -2069,14 +2174,14 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb1" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Comportement = « QUE fait la station ? » ; performance = « à quelle VITESSE, avec quelle précision ? ». Pour b) : cet organe capte-t-il, décide-t-il, diffuse-t-il, ou fournit-il seulement de l'énergie ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le bouton est du côté « Acquérir » : il fait ENTRER une information (l'appui) exactement comme l'anémomètre fait entrer le vent. La différence est la SOURCE : l'anémomètre capte le monde physique, le bouton capte une décision humaine. Le LCD, les voyants et le buzzer font SORTIR l'information : « Communiquer ».</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Comportement = « QUE fait la station ? » ; performance = « à quelle VITESSE, avec quelle précision ? ». <br>Pour b) : cet organe capte-t-il, décide-t-il, diffuse-t-il, ou fournit-il seulement de l'énergie ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le bouton est du côté « Acquérir » : il fait ENTRER une information (l'appui) exactement comme l'anémomètre fait entrer le vent. <br>La différence est la SOURCE : l'anémomètre capte le monde physique, le bouton capte une décision humaine. <br>Le LCD, les voyants et le buzzer font SORTIR l'information : « Communiquer ».</p></details>
     <details class="correction"><summary>✅ Correction complète (à ouvrir après vérification)</summary>
       <p><b>a)</b> « moins d'une seconde » → <b>performance</b> · « acquitter d'un appui » → <b>comportement</b> · 63, 118 et 178 km/h → <b>le cahier des charges de la mairie</b> (jamais le hasard : en séance 8, la recette vérifiera CES valeurs-là).</p>
-      <p><b>b)</b> potentiomètre → Acquérir · bouton → <b>Acquérir</b> · microcontrôleur → Traiter · LCD → Communiquer · les 4 voyants + buzzer → Communiquer · USB → Alimenter.</p>
-      <p><b>c) Justification attendue :</b> le bouton fait entrer l'information « l'agent a pris connaissance de l'alarme », produite par un <b>humain</b>. L'anémomètre capte une grandeur <b>physique</b> (le vent) sans intervention humaine ; le bouton capte une <b>décision humaine</b>. Ce dialogue — la machine alerte, l'humain répond, la machine en tient compte — est l'<b>interaction humain-machine</b> exigée par le programme (3e_C9.2).</p>
+      <p><b>b)</b><br>potentiomètre&nbsp;: Acquérir&nbsp;;<br>bouton&nbsp;: <b>Acquérir</b>&nbsp;;<br>microcontrôleur&nbsp;: Traiter&nbsp;;<br>LCD&nbsp;: Communiquer&nbsp;;<br>les 4 voyants + buzzer&nbsp;: Communiquer&nbsp;;<br>USB&nbsp;: Alimenter.</p>
+      <p><b>c) Justification attendue :</b> le bouton fait entrer l'information « l'agent a pris connaissance de l'alarme », produite par un <b>humain</b>. <br>L'anémomètre capte une grandeur <b>physique</b> (le vent) sans intervention humaine ; le bouton capte une <b>décision humaine</b>. <br>Ce dialogue — la machine alerte, l'humain répond, la machine en tient compte — est l'<b>interaction humain-machine</b> exigée par le programme (3e_C9.2).</p>
       <div class="regle-or-schema" role="note">📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
-      <p><b>Où arrive cette flèche, exactement ?</b> Sur <b>DISTRIBUER</b> : l'ordre <b>descend</b> de TRAITER vers les sorties commandées de la carte et les interfaces des modules, qui distribuent l'énergie ; le voyant et le buzzer (CONVERTIR) la reçoivent ensuite. <b>TRANSMETTRE</b> est absent parce que rien ne se déplace. Les trois cas sont dépliés dans l'encadré 🔎 au-dessus de la consigne.</p>
+      <p><b>Où arrive cette flèche, exactement ?</b> Sur <b>DISTRIBUER</b> : l'ordre <b>descend</b> de TRAITER vers les sorties commandées de la carte et les interfaces des modules, qui distribuent l'énergie ; le voyant et le buzzer (CONVERTIR) la reçoivent ensuite. <br><b>TRANSMETTRE</b> est absent parce que rien ne se déplace. Les trois cas sont dépliés dans l'encadré 🔎 au-dessus de la consigne.</p>
       <p><b>Recopie les deux chaînes dans ton cahier</b> en respectant cette disposition : c'est elle qu'on te demandera au DNB.</p>
       <p><b>Limite :</b> le bouton pourrait aussi être vu comme une « commande » plutôt qu'un capteur — en 3e, on retient qu'il fait ENTRER une information, donc Acquérir.</p>
     </details>
@@ -2109,14 +2214,20 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
         &nbsp;&nbsp;SI vitesse ≥ <input type="number" id="a2_s1" style="width:80px;display:inline-block"> ALORS niveau ← ouragan majeur<br>
         &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" style="width:80px;display:inline-block"> ALORS niveau ← ouragan<br>
         &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s3" style="width:80px;display:inline-block"> ALORS niveau ← tempête tropicale<br>
-        &nbsp;&nbsp;SINON niveau ← <select id="a2_s4" aria-label="niveau si aucun seuil n'est atteint" style="width:150px;display:inline-block"><option value="">— choisir —</option><option>veille</option><option>ouragan majeur</option><option>tempête tropicale</option><option>panne</option></select><br>
+        &nbsp;&nbsp;SINON niveau ← <fieldset class="qcm-groupe" id="a2_s4" data-melange="1">
+  <legend>niveau si aucun seuil n'est atteint</legend>
+  <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__4" value="panne"><label for="a2_s4__4">panne</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__1" value="veille"><label for="a2_s4__1">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__2" value="ouragan majeur"><label for="a2_s4__2">ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__3" value="tempête tropicale"><label for="a2_s4__3">tempête tropicale</label></div>
+</fieldset><br>
         &nbsp;&nbsp;afficher le niveau et la vitesse
       </p>
       <h4>b) Lire l'algorigramme</h4>
       <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station d'alerte : quatre niveaux, trois losanges de décision." aria-describedby="desc-algo">
       <details class="description-image" id="desc-algo">
         <summary>📖 Description détaillée de l'algorigramme (utile si l'image est petite, illisible ou absente)</summary>
-        <p>On lit de haut en bas. Un <b>ovale</b> « DÉBUT », puis un <b>rectangle</b> « Lire la vitesse du vent (A1) »,
+        <p>On lit de haut en bas. <br>Un <b>ovale</b> « DÉBUT », puis un <b>rectangle</b> « Lire la vitesse du vent (A1) »,
         qui convertit la mesure brute 0-1023 en km/h de 0 à 250.</p>
         <p>Vient ensuite une cascade de <b>trois losanges</b> de décision :</p>
         <ol>
@@ -2137,35 +2248,95 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
         rectangle = traitement (action), losange = décision à deux sorties OUI / NON, flèche = sens de lecture,
         bulle pointillée = commentaire.</p>
       </details>
-      <div class="assoc"><label for="a2_q1">Le vent souffle à 130 km/h. Quel chemin l'algorigramme suit-il ?</label><select id="a2_q1"><option value="">— choisir —</option><option>losange 178 : NON → losange 118 : OUI → ouragan</option><option>losange 178 : OUI → ouragan majeur</option><option>losange 63 : OUI → ouragan majeur</option><option>aucun losange : veille</option></select></div>
-      <div class="assoc"><label for="a2_q2">Pourquoi teste-t-on 178 AVANT 118, et 118 avant 63 ?</label><select id="a2_q2"><option value="">— choisir —</option><option>parce qu'un vent à 200 km/h doit finir en « ouragan majeur », pas en « ouragan »</option><option>parce que 178 est plus facile à calculer</option><option>par habitude, l'ordre n'a aucun effet</option><option>parce que le losange 63 est en panne</option></select></div>
-      <div class="assoc"><label for="a2_q3">Que représente la flèche qui remonte vers « Lire la vitesse » ?</label><select id="a2_q3"><option value="">— choisir —</option><option>la boucle : la station recommence sans fin</option><option>une erreur de dessin</option><option>le retour du courant électrique</option><option>la fin du programme</option></select></div>
-      <div class="assoc"><label for="a2_q4">Dans un algorigramme, le losange représente…</label><select id="a2_q4"><option value="">— choisir —</option><option>une décision, avec deux sorties OUI / NON</option><option>une action</option><option>le début du programme</option><option>un capteur</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q1" data-melange="1">
+  <legend>Le vent souffle à 130 km/h. Quel chemin l'algorigramme suit-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q1" id="a2_q1__2" value="losange 178 : OUI → ouragan majeur"><label for="a2_q1__2">losange 178 : OUI → ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q1" id="a2_q1__3" value="losange 63 : OUI → ouragan majeur"><label for="a2_q1__3">losange 63 : OUI → ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q1" id="a2_q1__1" value="losange 178 : NON → losange 118 : OUI → ouragan"><label for="a2_q1__1">losange 178 : NON → losange 118 : OUI → ouragan</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q1" id="a2_q1__4" value="aucun losange : veille"><label for="a2_q1__4">aucun losange : veille</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q2" data-melange="1">
+  <legend>Pourquoi teste-t-on 178 AVANT 118, et 118 avant 63 ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q2" id="a2_q2__3" value="par habitude, l&#x27;ordre n&#x27;a aucun effet"><label for="a2_q2__3">par habitude, l'ordre n'a aucun effet</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q2" id="a2_q2__2" value="parce que 178 est plus facile à calculer"><label for="a2_q2__2">parce que 178 est plus facile à calculer</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q2" id="a2_q2__4" value="parce que le losange 63 est en panne"><label for="a2_q2__4">parce que le losange 63 est en panne</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q2" id="a2_q2__1" value="parce qu&#x27;un vent à 200 km/h doit finir en « ouragan majeur », pas en « ouragan »"><label for="a2_q2__1">parce qu'un vent à 200 km/h doit finir en « ouragan majeur », pas en « ouragan »</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q3" data-melange="1">
+  <legend>Que représente la flèche qui remonte vers « Lire la vitesse » ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q3" id="a2_q3__1" value="la boucle : la station recommence sans fin"><label for="a2_q3__1">la boucle : la station recommence sans fin</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q3" id="a2_q3__3" value="le retour du courant électrique"><label for="a2_q3__3">le retour du courant électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q3" id="a2_q3__4" value="la fin du programme"><label for="a2_q3__4">la fin du programme</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q3" id="a2_q3__2" value="une erreur de dessin"><label for="a2_q3__2">une erreur de dessin</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q4" data-melange="1">
+  <legend>Dans un algorigramme, le losange représente…</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__2" value="une action"><label for="a2_q4__2">une action</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__3" value="le début du programme"><label for="a2_q4__3">le début du programme</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__1" value="une décision, avec deux sorties OUI / NON"><label for="a2_q4__1">une décision, avec deux sorties OUI / NON</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__4" value="un capteur"><label for="a2_q4__4">un capteur</label></div>
+</fieldset></div>
 
       <h4 style="margin-top:18px">c) Lire l'algorigramme au millimètre — six questions de plus</h4>
       <p style="font-size:.92em;color:var(--sub)">Les quatre premières questions t'ont fait suivre un chemin. Ces six-là te font <b>lire les symboles</b> et <b>tester les frontières</b> : c'est exactement le geste demandé au DNB.</p>
-      <div class="assoc"><label for="a2_q5">Le vent souffle à <b>178 km/h PILE</b>. Où l'algorigramme t'emmène-t-il ?</label><select id="a2_q5"><option value="">— choisir —</option><option>ouragan majeur : « ≥ 178 » veut dire 178 COMPRIS</option><option>ouragan : 178 n'est pas encore « au-dessus » de 178</option><option>veille : le losange ne répond ni OUI ni NON</option><option>impossible à savoir sans faire tourner le programme</option></select></div>
-      <div class="assoc"><label for="a2_q6">Combien cet algorigramme compte-t-il de <b>rectangles de traitement</b> ?</label><select id="a2_q6"><option value="">— choisir —</option><option>5 : la lecture du vent, puis les quatre niveaux</option><option>3 : les trois losanges</option><option>4 : seulement les quatre niveaux</option><option>1 : la boucle</option></select></div>
-      <div class="assoc"><label for="a2_q7">La bulle violette en pointillés « 🔁 LA BOUCLE », à gauche du dessin, c'est…</label><select id="a2_q7"><option value="">— choisir —</option><option>un commentaire de lecture : il explique le dessin sans faire partie de l'algorigramme</option><option>un rectangle de traitement : une action que la station exécute</option><option>un losange de décision déguisé</option><option>le symbole normalisé de la boucle</option></select></div>
-      <div class="assoc"><label for="a2_q8">On <b>efface la flèche qui remonte</b>. Que devient la station ?</label><select id="a2_q8"><option value="">— choisir —</option><option>elle mesure le vent UNE SEULE FOIS, affiche un niveau, puis ne bouge plus</option><option>elle mesure deux fois plus vite</option><option>rien ne change : la flèche est décorative</option><option>elle repart au DÉBUT toute seule</option></select></div>
-      <div class="assoc"><label for="a2_q9">Combien de <b>chemins différents</b> peut suivre une mesure, entre la lecture du vent et le retour de boucle ?</label><select id="a2_q9"><option value="">— choisir —</option><option>4 — un par niveau : ouragan majeur, ouragan, tempête tropicale, veille</option><option>3 — un par losange</option><option>1 — l'algorigramme est une ligne droite</option><option>une infinité, puisque la boucle ne s'arrête jamais</option></select></div>
-      <div class="assoc"><label for="a2_q10">Ce qu'un algorigramme ne dit <b>PAS</b> :</label><select id="a2_q10"><option value="">— choisir —</option><option>dans quel langage on programmera : blocs, C++, Python… le raisonnement, lui, reste le même</option><option>l'ordre dans lequel les tests se font</option><option>ce que le système fait quand aucun seuil n'est atteint</option><option>où se prennent les décisions</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q5" data-melange="1">
+  <legend>Le vent souffle à <b>178 km/h PILE</b>. Où l'algorigramme t'emmène-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__2" value="ouragan : 178 n&#x27;est pas encore « au-dessus » de 178"><label for="a2_q5__2">ouragan : 178 n'est pas encore « au-dessus » de 178</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__3" value="veille : le losange ne répond ni OUI ni NON"><label for="a2_q5__3">veille : le losange ne répond ni OUI ni NON</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__1" value="ouragan majeur : « ≥ 178 » veut dire 178 COMPRIS"><label for="a2_q5__1">ouragan majeur : « ≥ 178 » veut dire 178 COMPRIS</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__4" value="impossible à savoir sans faire tourner le programme"><label for="a2_q5__4">impossible à savoir sans faire tourner le programme</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q6" data-melange="1">
+  <legend>Combien cet algorigramme compte-t-il de <b>rectangles de traitement</b> ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q6" id="a2_q6__1" value="5 : la lecture du vent, puis les quatre niveaux"><label for="a2_q6__1">5 : la lecture du vent, puis les quatre niveaux</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q6" id="a2_q6__4" value="1 : la boucle"><label for="a2_q6__4">1 : la boucle</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q6" id="a2_q6__2" value="3 : les trois losanges"><label for="a2_q6__2">3 : les trois losanges</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q6" id="a2_q6__3" value="4 : seulement les quatre niveaux"><label for="a2_q6__3">4 : seulement les quatre niveaux</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q7" data-melange="1">
+  <legend>La bulle violette en pointillés « 🔁 LA BOUCLE », à gauche du dessin, c'est…</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__1" value="un commentaire de lecture : il explique le dessin sans faire partie de l&#x27;algorigramme"><label for="a2_q7__1">un commentaire de lecture : il explique le dessin sans faire partie de l'algorigramme</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__2" value="un rectangle de traitement : une action que la station exécute"><label for="a2_q7__2">un rectangle de traitement : une action que la station exécute</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__4" value="le symbole normalisé de la boucle"><label for="a2_q7__4">le symbole normalisé de la boucle</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__3" value="un losange de décision déguisé"><label for="a2_q7__3">un losange de décision déguisé</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q8" data-melange="1">
+  <legend>On <b>efface la flèche qui remonte</b>. Que devient la station ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q8" id="a2_q8__4" value="elle repart au DÉBUT toute seule"><label for="a2_q8__4">elle repart au DÉBUT toute seule</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q8" id="a2_q8__3" value="rien ne change : la flèche est décorative"><label for="a2_q8__3">rien ne change : la flèche est décorative</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q8" id="a2_q8__1" value="elle mesure le vent UNE SEULE FOIS, affiche un niveau, puis ne bouge plus"><label for="a2_q8__1">elle mesure le vent UNE SEULE FOIS, affiche un niveau, puis ne bouge plus</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q8" id="a2_q8__2" value="elle mesure deux fois plus vite"><label for="a2_q8__2">elle mesure deux fois plus vite</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q9" data-melange="1">
+  <legend>Combien de <b>chemins différents</b> peut suivre une mesure, entre la lecture du vent et le retour de boucle ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q9" id="a2_q9__2" value="3 — un par losange"><label for="a2_q9__2">3 — un par losange</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q9" id="a2_q9__3" value="1 — l&#x27;algorigramme est une ligne droite"><label for="a2_q9__3">1 — l'algorigramme est une ligne droite</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q9" id="a2_q9__1" value="4 — un par niveau : ouragan majeur, ouragan, tempête tropicale, veille"><label for="a2_q9__1">4 — un par niveau : ouragan majeur, ouragan, tempête tropicale, veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q9" id="a2_q9__4" value="une infinité, puisque la boucle ne s&#x27;arrête jamais"><label for="a2_q9__4">une infinité, puisque la boucle ne s'arrête jamais</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q10" data-melange="1">
+  <legend>Ce qu'un algorigramme ne dit <b>PAS</b> :</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__2" value="l&#x27;ordre dans lequel les tests se font"><label for="a2_q10__2">l'ordre dans lequel les tests se font</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__4" value="où se prennent les décisions"><label for="a2_q10__4">où se prennent les décisions</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__3" value="ce que le système fait quand aucun seuil n&#x27;est atteint"><label for="a2_q10__3">ce que le système fait quand aucun seuil n'est atteint</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__1" value="dans quel langage on programmera : blocs, C++, Python… le raisonnement, lui, reste le même"><label for="a2_q10__1">dans quel langage on programmera : blocs, C++, Python… le raisonnement, lui, reste le même</label></div>
+</fieldset></div>
 
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les deux seuils sont écrits noir sur blanc dans le courrier de la mairie. Pour b) : suis le chemin avec le doigt, losange par losange, en répondant OUI ou NON à chaque question. Pour c) : ne devine pas, <b>compte sur le dessin</b> — les rectangles, les chemins possibles — et relis la légende « 🎓 Les symboles » en haut à droite de l'image.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 178 ? NON → on descend au losange suivant. 130 ≥ 118 ? OUI → ouragan. Maintenant imagine 200 km/h avec les losanges INVERSÉS (63 testé d'abord) : 200 ≥ 63 ? OUI → « tempête tropicale »… et les tests 118 et 178 ne sont jamais atteints. Voilà pourquoi l'ordre compte.</p>
-      <p><b>Pour c) :</b> le symbole « ≥ » se lit « supérieur <b>ou égal</b> » — la valeur du seuil est donc DEDANS. Les rectangles se repèrent à leur forme (angles droits) : la lecture du vent en est un, chaque niveau en est un. Une forme <b>en pointillés</b> n'est jamais un symbole d'algorigramme : c'est une note posée à côté du dessin, comme une bulle dans une BD. Et pour compter les chemins : chaque OUI qui sort d'un losange ouvre un chemin, le dernier NON en ouvre un aussi.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les deux seuils sont écrits noir sur blanc dans le courrier de la mairie. <br>Pour b) : suis le chemin avec le doigt, losange par losange, en répondant OUI ou NON à chaque question. <br>Pour c) : ne devine pas, <b>compte sur le dessin</b> — les rectangles, les chemins possibles — et relis la légende « 🎓 Les symboles » en haut à droite de l'image.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 178 ? NON → on descend au losange suivant. <br>130 ≥ 118 ? OUI → ouragan. <br>Maintenant imagine 200 km/h avec les losanges INVERSÉS (63 testé d'abord) : 200 ≥ 63 ? OUI → « tempête tropicale »… et les tests 118 et 178 ne sont jamais atteints. <br>Voilà pourquoi l'ordre compte.</p>
+      <p><b>Pour c) :</b> le symbole « ≥ » se lit « supérieur <b>ou égal</b> » — la valeur du seuil est donc DEDANS. Les rectangles se repèrent à leur forme (angles droits) : la lecture du vent en est un, chaque niveau en est un. <br>Une forme <b>en pointillés</b> n'est jamais un symbole d'algorigramme : c'est une note posée à côté du dessin, comme une bulle dans une BD. Et pour compter les chemins : chaque OUI qui sort d'un losange ouvre un chemin, le dernier NON en ouvre un aussi.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> SI vitesse ≥ <b>178</b> → ouragan majeur ; SINON SI vitesse ≥ <b>118</b> → ouragan ; SINON SI vitesse ≥ <b>63</b> → tempête tropicale ; SINON → <b>veille</b>.</p>
-      <p><b>b)</b> 130 km/h → losange 178 : NON → losange 118 : OUI → <b>ouragan</b>. On teste 178 d'abord car <b>un vent à 200 km/h doit finir en ouragan majeur</b> : si on testait 63 d'abord, 200 ≥ 63 serait vrai et le programme s'arrêterait à « tempête tropicale » — un bug dangereux, et d'autant plus qu'il l'est deux fois ici, avec trois seuils au lieu de deux. La flèche qui remonte est <b>la boucle</b> : une station de surveillance ne s'arrête jamais. Le losange est <b>une décision à deux sorties OUI/NON</b>.</p>
+      <p><b>a)</b> SI vitesse ≥ <b>178</b> → ouragan majeur ; <br>SINON SI vitesse ≥ <b>118</b> → ouragan ; <br>SINON SI vitesse ≥ <b>63</b> → tempête tropicale ; <br>SINON → <b>veille</b>.</p>
+      <p><b>b)</b> 130 km/h → losange 178 : NON → losange 118 : OUI → <b>ouragan</b>. <br>On teste 178 d'abord car <b>un vent à 200 km/h doit finir en ouragan majeur</b>.<br>Si on testait 63 d'abord, 200 ≥ 63 serait vrai et le programme s'arrêterait à « tempête tropicale » — un bug dangereux, et d'autant plus qu'il l'est deux fois ici, avec trois seuils au lieu de deux. <br>La flèche qui remonte est <b>la boucle</b> : une station de surveillance ne s'arrête jamais. <br>Le losange est <b>une décision à deux sorties OUI/NON</b>.</p>
       <p><b>c) Lecture fine — les six réponses.</b></p>
-      <p><b>178 km/h pile → ouragan majeur :</b> « ≥ » se lit « supérieur OU ÉGAL », la valeur du seuil appartient au niveau du dessus. Avec trois seuils, cela fait <b>six frontières</b> à tester — 62/63, 117/118, 177/178 — et tu les retrouveras toutes aux séances 7 et 8.</p>
+      <p><b>178 km/h pile → ouragan majeur :</b> « ≥ » se lit « supérieur OU ÉGAL », la valeur du seuil appartient au niveau du dessus. <br>Avec trois seuils, cela fait <b>six frontières</b> à tester — 62/63, 117/118, 177/178 — et tu les retrouveras toutes aux séances 7 et 8.</p>
       <p><b>5 rectangles :</b> la lecture du vent, puis OURAGAN MAJEUR, OURAGAN, TEMPÊTE TROPICALE et VEILLE ; les losanges ne sont pas des traitements, ils ne <i>font</i> rien, ils <i>demandent</i>.</p>
-      <p><b>La bulle violette en pointillés est un commentaire :</b> elle explique le dessin, elle n'en fait pas partie. Repère infaillible : elle est <b>en pointillés</b> et <b>hors du flux</b> des flèches. Si tu recopies l'algorigramme au propre dans ton cahier, tu peux garder la note… mais pas sous forme de rectangle, sinon tu inventes une action qui n'existe pas.</p>
+      <p><b>La bulle violette en pointillés est un commentaire :</b> elle explique le dessin, elle n'en fait pas partie. <br>Repère infaillible : elle est <b>en pointillés</b> et <b>hors du flux</b> des flèches. <br>Si tu recopies l'algorigramme au propre dans ton cahier, tu peux garder la note… mais pas sous forme de rectangle, sinon tu inventes une action qui n'existe pas.</p>
       <p><b>Sans la flèche de retour</b>, la station mesurerait le vent une seule fois, afficherait un niveau et resterait figée : une station de surveillance sans boucle ne surveille rien.</p>
-      <p><b>4 chemins :</b> OUI du losange 178, OUI du losange 118, OUI du losange 63, NON du losange 63 ; ils se rejoignent avant la boucle. Retiens la règle : <b>autant de chemins que de niveaux</b> — un losange de plus, c'est un niveau de plus.</p>
+      <p><b>4 chemins :</b> OUI du losange 178, OUI du losange 118, OUI du losange 63, NON du losange 63 ; ils se rejoignent avant la boucle. <br>Retiens la règle : <b>autant de chemins que de niveaux</b> — un losange de plus, c'est un niveau de plus.</p>
       <p><b>Ce que l'algorigramme ne dit pas :</b> le langage. Blocs Vittascience, C++ ou Python, le raisonnement dessiné reste identique — c'est justement pour cela qu'on le dessine AVANT de choisir l'outil.</p>
       <p><b>Méthode :</b> élaborer l'algorithme AVANT de programmer, c'est décider des variables, des seuils et de l'ordre des tests en français — quand corriger ne coûte encore rien.</p>
       <p><b>Exemple pour s'en souvenir :</b> un videur vérifie d'abord la carte VIP, puis l'entrée normale : s'il vérifiait l'entrée normale d'abord, les VIP feraient la queue avec tout le monde.</p>
@@ -2175,7 +2346,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <div class="retenir"><b>📌 À retenir :</b> un <b>algorithme</b> s'élabore en français avant d'être traduit en blocs. Dans des SI/SINON en cascade, <b>on teste le seuil le plus haut d'abord</b>. L'<b>algorigramme</b> (🎓 attendu au DNB) le dessine : ovale = début/fin, rectangle = traitement, losange = décision OUI/NON, flèche qui remonte = boucle. <b>Seules ces formes-là sont des symboles</b> : tout ce qui est en pointillés, hors du flux des flèches, n'est qu'un commentaire de lecture. Et « <b>≥</b> » veut dire <b>supérieur OU ÉGAL</b> : le seuil appartient au niveau du dessus.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> algorithme 3/3 et lecture d'algorigramme au moins 9/10 (sur les questions b et c) — et tu sais expliquer à l'oral pourquoi 178 se teste avant 118 (et 118 avant 63), et pourquoi 178 km/h pile déclenche l'ouragan majeur.</div>
     <details class="prof approfondissement"><summary>🎓 Encart DNB — l'algorigramme est un grand classique de l'épreuve</summary>
-      <p>À l'épreuve de sciences du DNB, on te demandera de <b>lire, compléter ou corriger</b> un algorigramme : entrées/sorties, traitements, losanges de décision, boucles. Les gestes travaillés ici (suivre le chemin, vérifier l'ordre des tests, repérer la boucle) sont exactement ceux des sujets. Entraînement complet : les questions illustrées du QCM de cette séquence, puis l'entraînement DNB (dossier 3e_C6.2).</p>
+      <p>À l'épreuve de sciences du DNB, on te demandera de <b>lire, compléter ou corriger</b> un algorigramme : entrées/sorties, traitements, losanges de décision, boucles. <br>Les gestes travaillés ici (suivre le chemin, vérifier l'ordre des tests, repérer la boucle) sont exactement ceux des sujets. <br>Entraînement complet : les questions illustrées du QCM de cette séquence, puis l'entraînement DNB (dossier 3e_C6.2).</p>
     </details>
   </div>
 </section>
@@ -2949,6 +3120,15 @@ function signale(msg){
 .atelier-incruste .option{display:flex;align-items:flex-start;gap:9px;padding:7px 9px;border-radius:8px;border:1px solid transparent;cursor:pointer}
 .atelier-incruste .option:hover{border-color:var(--input-bd);background:rgba(29,78,137,.25)}
 .atelier-incruste .option input{margin-top:.32em;width:1.15em;height:1.15em;flex:0 0 auto;accent-color:#61dafb}
+.atelier-incruste .cles-grille{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--input-bd);border-radius:10px}
+.atelier-incruste .cles-grille .cles-titre{margin:0 0 4px;font-weight:600}
+.atelier-incruste .cles-grille ol{margin:0;padding-left:0;list-style:none}
+.atelier-incruste .cles-grille li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.atelier-incruste .cles-grille li b{display:inline-block;width:1.6em;text-indent:0;color:#61dafb}
+.atelier-incruste .options-grille{flex-direction:row;flex-wrap:wrap;gap:6px}
+.atelier-incruste .options-grille .option{align-items:center;gap:5px;padding:4px 8px;border-color:var(--input-bd)}
+.atelier-incruste .options-grille .option input{margin-top:0}
+.atelier-incruste .options-grille .option span{font-weight:700}
 .atelier-incruste .encoche{display:inline-block;min-width:1.3em;font-weight:700;margin-left:6px}
 .atelier-incruste .encoche.juste{color:var(--ok)}
 .atelier-incruste .encoche.faux{color:var(--err)}
@@ -3054,12 +3234,16 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
+@media print{.atelier-incruste .cles-grille{border-color:#999!important}.atelier-incruste .cles-grille li b{color:#111!important}}
 @media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .ms-case,.atelier-incruste .ms-retours{display:none!important}.atelier-incruste .ms-papier{display:block}.atelier-incruste .ms-dessin svg text[data-car],.atelier-incruste .ms-dessin svg .bac-pointilles{visibility:visible!important}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media (pointer:coarse){.atelier-incruste input,.atelier-incruste textarea,.atelier-incruste select{font-size:16px!important}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
 .atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:var(--hl);font-size:1.02em;margin:4px 0 8px}
 @media print{.atelier-incruste,.atelier-incruste .card.exercice{background:#fff!important;color:#111}.atelier-incruste>h3,.atelier-incruste>h4,.atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:#111}}
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:12px;padding:6px 12px}details.incruste-repliee>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}details.incruste-repliee[open]>summary{margin-bottom:8px}@media print{details.incruste-repliee{border-color:#999}}
 </style>
 <script>
 /* Ateliers des représentations — moteur commun des exercices.

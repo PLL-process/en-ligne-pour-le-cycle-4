@@ -745,6 +745,9 @@ RAPPELS = [
                    dict(bonne="f0", cit="En dessous de 2 m, l'anémomètre lit les turbulences du toit, pas le vent réel")),
          ]),
     dict(id="station-programmee-3e", niveau="3e",
+         # révision du 15/11/2026 (la charge de lecture de la séance 1) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=T3 + "C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.2/sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html",
          avant='  <div class="activite" id="act1">', balise="h3", balise_exo="h4",
          titre="Une ligne du cahier des charges de la mairie",

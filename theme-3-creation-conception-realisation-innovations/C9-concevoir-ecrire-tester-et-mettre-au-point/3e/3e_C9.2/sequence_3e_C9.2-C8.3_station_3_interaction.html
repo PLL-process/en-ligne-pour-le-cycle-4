@@ -7,6 +7,26 @@
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
 <title>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -360,6 +380,19 @@
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1512,7 +1545,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 <div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <section class="card" id="bancCard" aria-labelledby="banc-titre">
   <h2 id="banc-titre">🌀 Le banc d'essai de la station (version 🅱 — toujours disponible)</h2>
-  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 8.</p>
+  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <br><b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 8.</p>
   <div class="banc">
     <div>
       <label for="simVent"><b>🌬 Vitesse du vent simulée (tourne le potentiomètre) :</b></label>
@@ -1537,7 +1570,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
         <span><span class="del-sim rouge" id="simDelRouge"></span> <span style="font-size:.85em">rouge D4</span></span>
         <span class="buzzer-sim" id="simBuz">🔇 buzzer muet</span>
       </div>
-      <p style="font-size:.82em;color:var(--sub);margin:2px 0 8px">Un <b>seul</b> voyant allumé à la fois. Le <b>vert est fixe</b> ; les trois autres <b>pulsent</b> — la pulsation est un signal, pas une décoration. Le niveau est <b>toujours écrit</b> sur l'écran : tu n'as jamais besoin de la couleur seule pour le lire.</p>
+      <p style="font-size:.82em;color:var(--sub);margin:2px 0 8px">Un <b>seul</b> voyant allumé à la fois. <br>Le <b>vert est fixe</b> ; les trois autres <b>pulsent</b> — la pulsation est un signal, pas une décoration. <br>Le niveau est <b>toujours écrit</b> sur l'écran : tu n'as jamais besoin de la couleur seule pour le lire.</p>
       <ul class="verrous-liste" id="verrousListe" aria-label="Expériences tracées au banc">
         <li id="v-lecture">☐ J'ai fait varier le vent et observé la mesure</li>
         <li id="v-niveaux">☐ J'ai atteint les 4 niveaux (veille · tempête tropicale · ouragan · ouragan majeur)</li>
@@ -1568,15 +1601,39 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <p><b>🧪 Les deux expériences au banc d'essai</b> (elles sont tracées ✔) : ① monte le vent au-dessus de 178, laisse sonner, puis <b>ACQUITTE</b> — le son se tait, l'écran reste rouge ; ② redescends sous 178 (à 177 km/h par exemple : la station repasse en ouragan), puis remonte à 178 ou plus — le buzzer <b>repart tout seul</b>.</p>
       <h4>Lire le chronogramme</h4>
       <img class="figure" src="Images/ihm_acquittement_chronogramme.svg" alt="Chronogramme sur quatre lignes : le niveau d'alerte passe par veille, ouragan, ouragan majeur, revient en ouragan puis repasse en ouragan majeur ; le bouton est appuyé brièvement pendant le premier ouragan majeur ; le buzzer sonne du début de l'ouragan majeur jusqu'à l'appui, se tait, puis ressonne au nouvel ouragan majeur ; l'affichage — voyant allumé et niveau écrit sur l'écran — reste présent du début à la fin, sans interruption : « VEILLE » avant l'alerte, puis le niveau">
-      <div class="assoc"><label for="a4_q1">À t3, l'agent appuie sur le bouton. Que se passe-t-il ?</label><select id="a4_q1"><option value="">— choisir —</option><option>le buzzer se tait, mais l'écran et le voyant restent en alerte</option><option>toute la station s'éteint</option><option>la station redescend d'un niveau</option><option>rien : le bouton ne sert qu'au démarrage</option></select></div>
-      <div class="assoc"><label for="a4_q2">À t5, le buzzer repart SANS nouvel appui. Pourquoi ?</label><select id="a4_q2"><option value="">— choisir —</option><option>le changement de niveau est un NOUVEL événement : l'acquittement est effacé</option><option>le bouton est resté coincé</option><option>le programme a un bug</option><option>la batterie est rechargée</option></select></div>
-      <div class="assoc"><label for="a4_q3">Pourquoi le voyant ne s'acquitte-t-il PAS ?</label><select id="a4_q3"><option value="">— choisir —</option><option>le cahier des charges l'exige : l'information visuelle doit rester tant que dure l'alerte</option><option>c'est un oubli du programmeur</option><option>le voyant est trop petit pour s'éteindre</option><option>le bouton ne peut commander qu'une sortie</option></select></div>
-      <div class="assoc"><label for="a4_q4">Quelle variable joue le rôle de « mémoire du tour précédent » ?</label><select id="a4_q4"><option value="">— choisir —</option><option>niveauPrecedent</option><option>vitesseVent</option><option>mesureBrute</option><option>le moniteur série</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a4_q1" data-melange="1">
+  <legend>À t3, l'agent appuie sur le bouton. Que se passe-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_q1" id="a4_q1__3" value="la station redescend d&#x27;un niveau"><label for="a4_q1__3">la station redescend d'un niveau</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q1" id="a4_q1__4" value="rien : le bouton ne sert qu&#x27;au démarrage"><label for="a4_q1__4">rien : le bouton ne sert qu'au démarrage</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q1" id="a4_q1__1" value="le buzzer se tait, mais l&#x27;écran et le voyant restent en alerte"><label for="a4_q1__1">le buzzer se tait, mais l'écran et le voyant restent en alerte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q1" id="a4_q1__2" value="toute la station s&#x27;éteint"><label for="a4_q1__2">toute la station s'éteint</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a4_q2" data-melange="1">
+  <legend>À t5, le buzzer repart SANS nouvel appui. Pourquoi ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_q2" id="a4_q2__4" value="la batterie est rechargée"><label for="a4_q2__4">la batterie est rechargée</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q2" id="a4_q2__2" value="le bouton est resté coincé"><label for="a4_q2__2">le bouton est resté coincé</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q2" id="a4_q2__1" value="le changement de niveau est un NOUVEL événement : l&#x27;acquittement est effacé"><label for="a4_q2__1">le changement de niveau est un NOUVEL événement : l'acquittement est effacé</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q2" id="a4_q2__3" value="le programme a un bug"><label for="a4_q2__3">le programme a un bug</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a4_q3" data-melange="1">
+  <legend>Pourquoi le voyant ne s'acquitte-t-il PAS ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_q3" id="a4_q3__1" value="le cahier des charges l&#x27;exige : l&#x27;information visuelle doit rester tant que dure l&#x27;alerte"><label for="a4_q3__1">le cahier des charges l'exige : l'information visuelle doit rester tant que dure l'alerte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q3" id="a4_q3__3" value="le voyant est trop petit pour s&#x27;éteindre"><label for="a4_q3__3">le voyant est trop petit pour s'éteindre</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q3" id="a4_q3__2" value="c&#x27;est un oubli du programmeur"><label for="a4_q3__2">c'est un oubli du programmeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q3" id="a4_q3__4" value="le bouton ne peut commander qu&#x27;une sortie"><label for="a4_q3__4">le bouton ne peut commander qu'une sortie</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a4_q4" data-melange="1">
+  <legend>Quelle variable joue le rôle de « mémoire du tour précédent » ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_q4" id="a4_q4__1" value="niveauPrecedent"><label for="a4_q4__1">niveauPrecedent</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q4" id="a4_q4__4" value="le moniteur série"><label for="a4_q4__4">le moniteur série</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q4" id="a4_q4__3" value="mesureBrute"><label for="a4_q4__3">mesureBrute</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_q4" id="a4_q4__2" value="vitesseVent"><label for="a4_q4__2">vitesseVent</label></div>
+</fieldset></div>
       <label for="a4_exp" style="display:block;margin-top:10px"><b>Explique</b> avec tes mots : à quoi sert la variable <code>alarmeAcquittee</code>, et quand repasse-t-elle à « faux » ?</label>
       <textarea id="a4_exp" placeholder="alarmeAcquittee sert à…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li><code>alarmeAcquittee</code> sert à retenir que ____.</li>
     <li>Tant qu'elle vaut « vrai », le buzzer ____ même si le niveau est encore ____.</li>
@@ -1586,10 +1643,10 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses (et mes expériences au banc)</button>
       <div class="feedback" id="fb4" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Refais les deux expériences au banc en regardant le chronogramme en même temps : chaque ligne du dessin correspond à ce que tu viens de voir. Le voyant et le buzzer n'obéissent pas à la même règle — c'est voulu.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><code>alarmeAcquittee</code> est un booléen : vrai = « l'agent a répondu ». Le buzzer sonne seulement si (niveau = 3, ouragan majeur) ET (alarmeAcquittee = faux). Et quand <code>niveauAlerte ≠ niveauPrecedent</code>, le programme remet alarmeAcquittee à faux : nouvel événement, nouvel avertissement sonore.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Refais les deux expériences au banc en regardant le chronogramme en même temps : chaque ligne du dessin correspond à ce que tu viens de voir. <br>Le voyant et le buzzer n'obéissent pas à la même règle — c'est voulu.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><code>alarmeAcquittee</code> est un booléen : vrai = « l'agent a répondu ». <br>Le buzzer sonne seulement si (niveau = 3, ouragan majeur) ET (alarmeAcquittee = faux). <br>Et quand <code>niveauAlerte ≠ niveauPrecedent</code>, le programme remet alarmeAcquittee à faux : nouvel événement, nouvel avertissement sonore.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Q1 :</b> le buzzer se tait, l'écran et le voyant restent en alerte — acquitter, c'est répondre, pas éteindre. <b>Q2 :</b> le changement de niveau est un <b>nouvel événement</b> : le programme efface l'acquittement pour re-prévenir. <b>Q3 :</b> le cahier des charges l'exige (« sans jamais éteindre l'affichage ni le signal lumineux ») : le son dérange, on peut le couper ; l'information doit rester. <b>Q4 :</b> <code>niveauPrecedent</code>.</p>
+      <p><b>Q1 :</b> le buzzer se tait, l'écran et le voyant restent en alerte — acquitter, c'est répondre, pas éteindre. <br><b>Q2 :</b> le changement de niveau est un <b>nouvel événement</b> : le programme efface l'acquittement pour re-prévenir. <br><b>Q3 :</b> le cahier des charges l'exige (« sans jamais éteindre l'affichage ni le signal lumineux ») : le son dérange, on peut le couper ; l'information doit rester. <br><b>Q4 :</b> <code>niveauPrecedent</code>.</p>
       <p><b>Explication attendue :</b> <code>alarmeAcquittee</code> retient que l'agent a pris connaissance de l'alarme ; tant qu'elle vaut vrai, le buzzer reste muet même en alerte. Elle repasse à faux quand le niveau CHANGE (<code>niveauAlerte ≠ niveauPrecedent</code>) : un nouvel événement mérite un nouvel avertissement.</p>
       <p><b>Méthode :</b> détecter un événement = comparer l'état actuel à l'état mémorisé du tour précédent. Ce motif (état + mémoire + comparaison) est partout : notifications de téléphone, détecteurs de fumée, alarmes de voiture.</p>
       <p><b>Limite :</b> notre bouton est lu 5 fois par seconde : un appui très bref entre deux lectures pourrait être raté — les vrais systèmes utilisent des interruptions.</p>
@@ -1624,7 +1681,13 @@ const int SEUIL_ROUGE  = 178;  // à partir de 178 : ouragan majeur
 int  vitesseVent   = 0;        // vitesse du vent calculée, en km/h
 int  niveauAlerte  = 0;        // 0 veille · 1 tempête · 2 ouragan · 3 majeur
 bool alarmeAcquittee = false;  // true si l'humain a acquitté l'alarme</pre>
-      <div class="assoc"><label for="a5_q1">Pourquoi les seuils sont-ils déclarés <code>const</code> (constantes) ?</label><select id="a5_q1"><option value="">— choisir —</option><option>ils ne changent jamais pendant l'exécution : le programme interdit de les modifier par accident</option><option>pour qu'ils changent tout seuls avec le vent</option><option>parce que « const » rend le programme plus rapide à téléverser</option><option>c'est obligatoire pour tous les nombres</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a5_q1" data-melange="1">
+  <legend>Pourquoi les seuils sont-ils déclarés <code>const</code> (constantes) ?</legend>
+  <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__3" value="parce que « const » rend le programme plus rapide à téléverser"><label for="a5_q1__3">parce que « const » rend le programme plus rapide à téléverser</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__2" value="pour qu&#x27;ils changent tout seuls avec le vent"><label for="a5_q1__2">pour qu'ils changent tout seuls avec le vent</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__1" value="ils ne changent jamais pendant l&#x27;exécution : le programme interdit de les modifier par accident"><label for="a5_q1__1">ils ne changent jamais pendant l'exécution : le programme interdit de les modifier par accident</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q1" id="a5_q1__4" value="c&#x27;est obligatoire pour tous les nombres"><label for="a5_q1__4">c'est obligatoire pour tous les nombres</label></div>
+</fieldset></div>
       <h4>Extrait 2 — la conversion et la décision (dans <code>loop()</code>)</h4>
 <pre class="code" data-code-colore="arduino">int mesureBrute = analogRead(BROCHE_VENT);          // valeur brute du CAN (0-1023)
 vitesseVent = map(mesureBrute, 0, 1023, 0, 250);    // conversion en km/h
@@ -1637,8 +1700,20 @@ if (vitesseVent &gt;= SEUIL_ROUGE) {
 } else {
   niveauAlerte = 0;                                 // simple veille
 }</pre>
-      <div class="assoc"><label for="a5_q2">La fonction <code>map(…)</code> fait, en une ligne, le travail de quel bloc du palier 1 ?</label><select id="a5_q2"><option value="">— choisir —</option><option>le calcul de conversion de l'échelle du capteur vers l'échelle lisible</option><option>le bloc « si / sinon » du palier 2</option><option>le bloc « répéter indéfiniment »</option><option>le bloc d'affichage sur le moniteur</option></select></div>
-      <div class="assoc"><label for="a5_q3">Le <code>else if</code> traduit exactement…</label><select id="a5_q3"><option value="">— choisir —</option><option>le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non</option><option>une deuxième boucle</option><option>une erreur de traduction du logiciel de blocs</option><option>un commentaire</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a5_q2" data-melange="1">
+  <legend>La fonction <code>map(…)</code> fait, en une ligne, le travail de quel bloc du palier 1 ?</legend>
+  <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__4" value="le bloc d&#x27;affichage sur le moniteur"><label for="a5_q2__4">le bloc d'affichage sur le moniteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__2" value="le bloc « si / sinon » du palier 2"><label for="a5_q2__2">le bloc « si / sinon » du palier 2</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__1" value="le calcul de conversion de l&#x27;échelle du capteur vers l&#x27;échelle lisible"><label for="a5_q2__1">le calcul de conversion de l'échelle du capteur vers l'échelle lisible</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q2" id="a5_q2__3" value="le bloc « répéter indéfiniment »"><label for="a5_q2__3">le bloc « répéter indéfiniment »</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a5_q3" data-melange="1">
+  <legend>Le <code>else if</code> traduit exactement…</legend>
+  <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__2" value="une deuxième boucle"><label for="a5_q3__2">une deuxième boucle</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__3" value="une erreur de traduction du logiciel de blocs"><label for="a5_q3__3">une erreur de traduction du logiciel de blocs</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__4" value="un commentaire"><label for="a5_q3__4">un commentaire</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q3" id="a5_q3__1" value="le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non"><label for="a5_q3__1">le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non</label></div>
+</fieldset></div>
       <h4>Extrait 3 — le sous-programme d'affichage</h4>
 <pre class="code" data-code-colore="arduino">// Sous-programme (fonction) : affiche le niveau et la vitesse sur le LCD
 // — la structuration en sous-programmes est exigée en 3e.
@@ -1651,7 +1726,13 @@ void afficherEtat() {
   ecran.setCursor(0, 1);            // ligne 2 : la mesure
   ecran.print("Vent: "); ecran.print(vitesseVent); ecran.print(" km/h   ");
 }</pre>
-      <div class="assoc"><label for="a5_q4">Quel est l'intérêt de ranger l'affichage dans le sous-programme <code>afficherEtat()</code> ?</label><select id="a5_q4"><option value="">— choisir —</option><option>la boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit</option><option>le programme devient plus lent, donc plus sûr</option><option>c'est purement décoratif</option><option>ça évite d'utiliser des variables</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a5_q4" data-melange="1">
+  <legend>Quel est l'intérêt de ranger l'affichage dans le sous-programme <code>afficherEtat()</code> ?</legend>
+  <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__2" value="le programme devient plus lent, donc plus sûr"><label for="a5_q4__2">le programme devient plus lent, donc plus sûr</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__1" value="la boucle reste lisible, et l&#x27;affichage se teste et se corrige à UN seul endroit"><label for="a5_q4__1">la boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__3" value="c&#x27;est purement décoratif"><label for="a5_q4__3">c'est purement décoratif</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q4" id="a5_q4__4" value="ça évite d&#x27;utiliser des variables"><label for="a5_q4__4">ça évite d'utiliser des variables</label></div>
+</fieldset></div>
       <h4>d) La trace d'exécution (version 🅲 — mise au point au moniteur)</h4>
       <p style="font-size:.9em">Le programme envoie sa trace au moniteur série. Voici ce qu'un binôme a relevé sur SA station <i>(trace enregistrée — données simulées)</i> :</p>
 <pre class="code">vent(km/h)=58   niveau=0
@@ -1660,12 +1741,18 @@ vent(km/h)=95   niveau=0   ⬅ ⚠
 vent(km/h)=112  niveau=0   ⬅ ⚠
 vent(km/h)=131  niveau=2
 vent(km/h)=186  niveau=3</pre>
-      <div class="assoc"><label for="a5_q5">À 71, 95 et 112 km/h, leur station affiche encore « niveau=0 » — alors qu'elle devrait annoncer une tempête tropicale dès 63. Quelle est l'hypothèse de panne la PLUS probable ?</label><select id="a5_q5"><option value="">— choisir —</option><option>leur seuil de tempête tropicale est mal réglé (par exemple 118 au lieu de 63) ou le SINON SI a disparu</option><option>le potentiomètre est cassé (la vitesse ne monte plus)</option><option>le moniteur série ment</option><option>le CAN ne sait pas compter au-delà de 100</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a5_q5" data-melange="1">
+  <legend>À 71, 95 et 112 km/h, leur station affiche encore « niveau=0 » — alors qu'elle devrait annoncer une tempête tropicale dès 63. Quelle est l'hypothèse de panne la PLUS probable ?</legend>
+  <div class="qcm-option"><input type="radio" name="a5_q5" id="a5_q5__2" value="le potentiomètre est cassé (la vitesse ne monte plus)"><label for="a5_q5__2">le potentiomètre est cassé (la vitesse ne monte plus)</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q5" id="a5_q5__1" value="leur seuil de tempête tropicale est mal réglé (par exemple 118 au lieu de 63) ou le SINON SI a disparu"><label for="a5_q5__1">leur seuil de tempête tropicale est mal réglé (par exemple 118 au lieu de 63) ou le SINON SI a disparu</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q5" id="a5_q5__3" value="le moniteur série ment"><label for="a5_q5__3">le moniteur série ment</label></div>
+  <div class="qcm-option"><input type="radio" name="a5_q5" id="a5_q5__4" value="le CAN ne sait pas compter au-delà de 100"><label for="a5_q5__4">le CAN ne sait pas compter au-delà de 100</label></div>
+</fieldset></div>
       <label for="a5_exp" style="display:block;margin-top:10px"><b>Justifie :</b> pourquoi la panne ne peut PAS venir du capteur ni de la conversion ? Appuie-toi sur la trace.</label>
       <textarea id="a5_exp" placeholder="La trace montre que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>La trace montre que la vitesse ____ correctement (58 → 186), donc le capteur et la conversion ____.</li>
     <li>Le problème apparaît entre la vitesse et le ____ : c'est donc la ____ qui est en cause.</li>
@@ -1675,12 +1762,12 @@ vent(km/h)=186  niveau=3</pre>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relie chaque extrait au palier qui l'a construit : extrait 2 = paliers 1 et 2. Pour d) : la colonne « vent » monte normalement — quelle colonne se comporte mal, et quel morceau du programme la fabrique ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La vitesse affichée (58 → 186) prouve que capteur + CAN + conversion marchent. Le niveau reste à 0 sur TOUTE la plage 63-117, là où il devrait valoir 1 : c'est la DÉCISION qui rate. Et comme 131 donne bien niveau 2 et 186 niveau 3, les tests « ≥ 118 » et « ≥ 178 » existent et fonctionnent : le défaut est isolé sur le test « ≥ 63 » — faux, ou absent. <b>Trois lignes de trace ont suffi à innocenter tout le reste de la chaîne.</b></p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relie chaque extrait au palier qui l'a construit : extrait 2 = paliers 1 et 2. <br>Pour d) : la colonne « vent » monte normalement — quelle colonne se comporte mal, et quel morceau du programme la fabrique ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La vitesse affichée (58 → 186) prouve que capteur + CAN + conversion marchent. <br>Le niveau reste à 0 sur TOUTE la plage 63-117, là où il devrait valoir 1 : c'est la DÉCISION qui rate. <br>Et comme 131 donne bien niveau 2 et 186 niveau 3, les tests « ≥ 118 » et « ≥ 178 » existent et fonctionnent : le défaut est isolé sur le test « ≥ 63 » — faux, ou absent. <br><b>Trois lignes de trace ont suffi à innocenter tout le reste de la chaîne.</b></p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <b>Q2 :</b> le calcul de conversion du palier 1 — <code>× 250 ÷ 1023</code> dans les blocs Vittascience, <code>map()</code> côté C++, « réétalonner » dans ArduBlock : trois écritures, une seule idée, la proportionnalité. <b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <b>Q5 :</b> un seuil mal réglé (<code>seuilJaune</code>, <code>seuilOrange</code> ou <code>seuilRouge</code>) ou un SINON SI absent.</p>
-      <p><b>Justification attendue :</b> la trace prouve que la vitesse monte correctement (58 → 71 → 95 → 112 → 131 → 186) : capteur, CAN et conversion fonctionnent. La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. Et puisque 131 déclenche le niveau 2 et 186 le niveau 3, les tests ≥ 118 et ≥ 178 marchent : le défaut est dans le test ≥ 63 — le plus probable étant que <code>seuilJaune</code> ait été réglé à 118 par recopie, ou que sa branche SINON SI ait été supprimée.</p>
-      <p><b>Méthode (mise au point) :</b> la trace du moniteur série découpe la chaîne en tronçons : on cherche le PREMIER endroit où les valeurs deviennent fausses — tout ce qui est en amont est innocenté. C'est exactement le raisonnement du banc de tests de l'atelier 3e_C9.1.</p>
+      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <br><b>Q2 :</b> le calcul de conversion du palier 1 — <code>× 250 ÷ 1023</code> dans les blocs Vittascience, <code>map()</code> côté C++, « réétalonner » dans ArduBlock : trois écritures, une seule idée, la proportionnalité. <br><b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <br><b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <br><b>Q5 :</b> un seuil mal réglé (<code>seuilJaune</code>, <code>seuilOrange</code> ou <code>seuilRouge</code>) ou un SINON SI absent.</p>
+      <p><b>Justification attendue :</b><br>la trace prouve que la vitesse monte correctement (58, 71, 95, 112, 131, puis 186)&nbsp;: capteur, CAN et conversion fonctionnent. <br>La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. <br>Et puisque 131 déclenche le niveau 2 et 186 le niveau 3, les tests ≥ 118 et ≥ 178 marchent.<br>Le défaut est donc dans le test ≥ 63 — le plus probable étant que <code>seuilJaune</code> ait été réglé à 118 par recopie, ou que sa branche SINON SI ait été supprimée.</p>
+      <p><b>Méthode (mise au point) :</b> la trace du moniteur série découpe la chaîne en tronçons : on cherche le PREMIER endroit où les valeurs deviennent fausses — tout ce qui est en amont est innocenté. <br>C'est exactement le raisonnement du banc de tests de l'atelier 3e_C9.1.</p>
       <p><b>Limite :</b> lire le C++ n'est pas au programme de 3e pour l'ÉCRIRE — mais savoir le lire te permet de vérifier ce que tes blocs fabriquent, et c'est un immense avantage au lycée.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> accuser le capteur dès qu'un affichage est faux (lis la trace : le capteur est souvent innocent) ; confondre <code>=</code> (ranger) et <code>==</code> (comparer) dans le C++ ; croire que les blocs et le C++ sont deux programmes différents — c'est le MÊME, dans deux écritures.</div>
@@ -2458,6 +2545,15 @@ function signale(msg){
 .atelier-incruste .option{display:flex;align-items:flex-start;gap:9px;padding:7px 9px;border-radius:8px;border:1px solid transparent;cursor:pointer}
 .atelier-incruste .option:hover{border-color:var(--input-bd);background:rgba(29,78,137,.25)}
 .atelier-incruste .option input{margin-top:.32em;width:1.15em;height:1.15em;flex:0 0 auto;accent-color:#61dafb}
+.atelier-incruste .cles-grille{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--input-bd);border-radius:10px}
+.atelier-incruste .cles-grille .cles-titre{margin:0 0 4px;font-weight:600}
+.atelier-incruste .cles-grille ol{margin:0;padding-left:0;list-style:none}
+.atelier-incruste .cles-grille li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.atelier-incruste .cles-grille li b{display:inline-block;width:1.6em;text-indent:0;color:#61dafb}
+.atelier-incruste .options-grille{flex-direction:row;flex-wrap:wrap;gap:6px}
+.atelier-incruste .options-grille .option{align-items:center;gap:5px;padding:4px 8px;border-color:var(--input-bd)}
+.atelier-incruste .options-grille .option input{margin-top:0}
+.atelier-incruste .options-grille .option span{font-weight:700}
 .atelier-incruste .encoche{display:inline-block;min-width:1.3em;font-weight:700;margin-left:6px}
 .atelier-incruste .encoche.juste{color:var(--ok)}
 .atelier-incruste .encoche.faux{color:var(--err)}
@@ -2563,12 +2659,16 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
+@media print{.atelier-incruste .cles-grille{border-color:#999!important}.atelier-incruste .cles-grille li b{color:#111!important}}
 @media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .ms-case,.atelier-incruste .ms-retours{display:none!important}.atelier-incruste .ms-papier{display:block}.atelier-incruste .ms-dessin svg text[data-car],.atelier-incruste .ms-dessin svg .bac-pointilles{visibility:visible!important}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media (pointer:coarse){.atelier-incruste input,.atelier-incruste textarea,.atelier-incruste select{font-size:16px!important}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
 .atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:var(--hl);font-size:1.02em;margin:4px 0 8px}
 @media print{.atelier-incruste,.atelier-incruste .card.exercice{background:#fff!important;color:#111}.atelier-incruste>h3,.atelier-incruste>h4,.atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:#111}}
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:12px;padding:6px 12px}details.incruste-repliee>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}details.incruste-repliee[open]>summary{margin-bottom:8px}@media print{details.incruste-repliee{border-color:#999}}
 </style>
 <script>
 /* Ateliers des représentations — moteur commun des exercices.

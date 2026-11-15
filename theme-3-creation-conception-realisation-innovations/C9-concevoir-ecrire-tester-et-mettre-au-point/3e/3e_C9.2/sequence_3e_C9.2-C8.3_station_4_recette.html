@@ -7,6 +7,26 @@
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
 <title>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -360,6 +380,19 @@
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1512,7 +1545,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 <div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <section class="card" id="bancCard" aria-labelledby="banc-titre">
   <h2 id="banc-titre">🌀 Le banc d'essai de la station (version 🅱 — toujours disponible)</h2>
-  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 8.</p>
+  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <br><b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 8.</p>
   <div class="banc">
     <div>
       <label for="simVent"><b>🌬 Vitesse du vent simulée (tourne le potentiomètre) :</b></label>
@@ -1537,7 +1570,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
         <span><span class="del-sim rouge" id="simDelRouge"></span> <span style="font-size:.85em">rouge D4</span></span>
         <span class="buzzer-sim" id="simBuz">🔇 buzzer muet</span>
       </div>
-      <p style="font-size:.82em;color:var(--sub);margin:2px 0 8px">Un <b>seul</b> voyant allumé à la fois. Le <b>vert est fixe</b> ; les trois autres <b>pulsent</b> — la pulsation est un signal, pas une décoration. Le niveau est <b>toujours écrit</b> sur l'écran : tu n'as jamais besoin de la couleur seule pour le lire.</p>
+      <p style="font-size:.82em;color:var(--sub);margin:2px 0 8px">Un <b>seul</b> voyant allumé à la fois. <br>Le <b>vert est fixe</b> ; les trois autres <b>pulsent</b> — la pulsation est un signal, pas une décoration. <br>Le niveau est <b>toujours écrit</b> sur l'écran : tu n'as jamais besoin de la couleur seule pour le lire.</p>
       <ul class="verrous-liste" id="verrousListe" aria-label="Expériences tracées au banc">
         <li id="v-lecture">☐ J'ai fait varier le vent et observé la mesure</li>
         <li id="v-niveaux">☐ J'ai atteint les 4 niveaux (veille · tempête tropicale · ouragan · ouragan majeur)</li>
@@ -1566,11 +1599,41 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <div class="consigne"><b>Consigne :</b> c'est TOI l'expert chargé de la recette. a) choisis les valeurs à tester et justifie-les ; b) écris le résultat attendu de chaque essai <b>avant</b> de toucher au banc ; c) rédige la règle de décision du PV. Ton protocole doit couvrir : les <b>4</b> comportements nominaux, les <b>6</b> frontières (deux par seuil), la performance, et l'acquittement (2 essais).</div>
     <div class="exo">
       <h4>a) Les valeurs d'essai</h4>
-      <div class="assoc"><label for="a6_v1">Pour vérifier le comportement « veille », une bonne valeur nominale est…</label><select id="a6_v1"><option value="">— choisir —</option><option>40 km/h (franchement dans la zone)</option><option>62 km/h (trop près de la frontière pour un test nominal)</option><option>150 km/h</option><option>0 km/h uniquement</option></select></div>
-      <div class="assoc"><label for="a6_v2">Autour du seuil de 118 km/h, le protocole doit tester…</label><select id="a6_v2"><option value="">— choisir —</option><option>117 ET 118 : juste sous la frontière, et pile dessus</option><option>seulement 118</option><option>90 et 150, c'est pareil</option><option>119 seulement, pour être sûr</option></select></div>
-      <div class="assoc"><label for="a6_v3">À 178 km/h PILE, le cahier des charges impose…</label><select id="a6_v3"><option value="">— choisir —</option><option>OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)</option><option>OURAGAN : 178 n'est pas encore « au-dessus »</option><option>au choix du programmeur</option><option>l'écran s'éteint</option></select></div>
-      <div class="assoc"><label for="a6_v4">Pour vérifier la PERFORMANCE, l'essai doit…</label><select id="a6_v4"><option value="">— choisir —</option><option>chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s</option><option>regarder si « ça a l'air rapide »</option><option>compter les blocs du programme</option><option>mesurer la longueur des câbles</option></select></div>
-      <div class="assoc"><label for="a6_v5">Pour l'acquittement, il faut DEUX essais parce que…</label><select id="a6_v5"><option value="">— choisir —</option><option>il faut prouver que le son se coupe À l'appui ET qu'il repart à l'événement suivant</option><option>le bouton s'use vite</option><option>un seul essai suffirait, mais deux font plus sérieux</option><option>la mairie paie au nombre d'essais</option></select></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a6_v1" data-melange="1">
+  <legend>Pour vérifier le comportement « veille », une bonne valeur nominale est…</legend>
+  <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__3" value="150 km/h"><label for="a6_v1__3">150 km/h</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__4" value="0 km/h uniquement"><label for="a6_v1__4">0 km/h uniquement</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__2" value="62 km/h (trop près de la frontière pour un test nominal)"><label for="a6_v1__2">62 km/h (trop près de la frontière pour un test nominal)</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__1" value="40 km/h (franchement dans la zone)"><label for="a6_v1__1">40 km/h (franchement dans la zone)</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a6_v2" data-melange="1">
+  <legend>Autour du seuil de 118 km/h, le protocole doit tester…</legend>
+  <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__3" value="90 et 150, c&#x27;est pareil"><label for="a6_v2__3">90 et 150, c'est pareil</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__2" value="seulement 118"><label for="a6_v2__2">seulement 118</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__4" value="119 seulement, pour être sûr"><label for="a6_v2__4">119 seulement, pour être sûr</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__1" value="117 ET 118 : juste sous la frontière, et pile dessus"><label for="a6_v2__1">117 ET 118 : juste sous la frontière, et pile dessus</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a6_v3" data-melange="1">
+  <legend>À 178 km/h PILE, le cahier des charges impose…</legend>
+  <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__3" value="au choix du programmeur"><label for="a6_v3__3">au choix du programmeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__1" value="OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)"><label for="a6_v3__1">OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__2" value="OURAGAN : 178 n&#x27;est pas encore « au-dessus »"><label for="a6_v3__2">OURAGAN : 178 n'est pas encore « au-dessus »</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__4" value="l&#x27;écran s&#x27;éteint"><label for="a6_v3__4">l'écran s'éteint</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a6_v4" data-melange="1">
+  <legend>Pour vérifier la PERFORMANCE, l'essai doit…</legend>
+  <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__3" value="compter les blocs du programme"><label for="a6_v4__3">compter les blocs du programme</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__4" value="mesurer la longueur des câbles"><label for="a6_v4__4">mesurer la longueur des câbles</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__1" value="chronométrer le délai entre le franchissement du seuil et le changement d&#x27;affichage, exigence : moins de 1 s"><label for="a6_v4__1">chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__2" value="regarder si « ça a l&#x27;air rapide »"><label for="a6_v4__2">regarder si « ça a l'air rapide »</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a6_v5" data-melange="1">
+  <legend>Pour l'acquittement, il faut DEUX essais parce que…</legend>
+  <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__4" value="la mairie paie au nombre d&#x27;essais"><label for="a6_v5__4">la mairie paie au nombre d'essais</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__3" value="un seul essai suffirait, mais deux font plus sérieux"><label for="a6_v5__3">un seul essai suffirait, mais deux font plus sérieux</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__2" value="le bouton s&#x27;use vite"><label for="a6_v5__2">le bouton s'use vite</label></div>
+  <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__1" value="il faut prouver que le son se coupe À l&#x27;appui ET qu&#x27;il repart à l&#x27;événement suivant"><label for="a6_v5__1">il faut prouver que le son se coupe À l'appui ET qu'il repart à l'événement suivant</label></div>
+</fieldset></div>
       <h4>b) Mon protocole rédigé</h4>
       <label for="a6_redac" style="display:block">Rédige ton protocole : les essais dans l'ordre, la valeur choisie pour chacun, le résultat attendu, et ta règle de décision (à partir de quand signes-tu « recette prononcée » ?).</label>
       <textarea id="a6_redac" style="min-height:130px" placeholder="Essai 1 : je règle le vent à … , j'attends …&#10;Essai 2 : …&#10;Règle de décision : je prononce la recette si…"></textarea>
@@ -1579,7 +1642,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ce squelette retire l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-le et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Essais nominaux : je règle le vent à ____ (veille), ____ (tempête tropicale), ____ (ouragan), ____ (ouragan majeur) et j'attends respectivement ____.</li>
-    <li>Essais aux frontières : ____ et ____ autour du seuil ____ ; ____ et ____ autour du seuil ____ ; ____ et ____ autour du seuil ____ — parce que c'est là que ____.</li>
+    <li>Essais aux frontières : ____ et ____ autour du seuil ____ ; <br>____ et ____ autour du seuil ____ ; <br>____ et ____ autour du seuil ____ — parce que c'est là que ____.</li>
     <li>Essai de performance : je chronomètre ____ ; l'exigence est ____.</li>
     <li>Essais d'interaction : j'appuie sur le bouton pendant ____ et je vérifie que ____ ; puis je ____ et je vérifie que le buzzer ____.</li>
     <li>Règle de décision : je prononce la recette si ____ essais sur ____ sont réussis, sinon ____.</li>
@@ -1588,12 +1651,12 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relis le courrier de la mairie exigence par exigence : chaque phrase du courrier doit avoir AU MOINS un essai dans ton protocole. Les frontières sont les valeurs où le comportement DOIT changer.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un protocole complet ici : <b>4</b> nominaux (ex. 40, 90, 150, 200) + <b>6</b> frontières (62 et 63 ; 117 et 118 ; 177 et 178) + 1 performance (chrono &lt; 1 s) + 2 interaction (acquitter ; re-déclencher) = <b>13 essais</b>. Compte les frontières : <b>trois seuils × deux essais chacun</b> (juste dessous, pile dessus). « À partir de 178 » = 178 compris : c'est le cahier des charges qui tranche le ≥, pas le programmeur.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relis le courrier de la mairie exigence par exigence : chaque phrase du courrier doit avoir AU MOINS un essai dans ton protocole. <br>Les frontières sont les valeurs où le comportement DOIT changer.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un protocole complet ici : <b>4</b> nominaux (ex. 40, 90, 150, 200) + <b>6</b> frontières (62 et 63 ; <br>117 et 118 ; <br>177 et 178) + 1 performance (chrono &lt; <br>1 s) + 2 interaction (acquitter ; <br>re-déclencher) = <b>13 essais</b>. <br>Compte les frontières : <b>trois seuils × deux essais chacun</b> (juste dessous, pile dessus). <br>« À partir de 178 » = 178 compris : c'est le cahier des charges qui tranche le ≥, pas le programmeur.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> 40 km/h (nominal franc) · 117 ET 118 · OURAGAN MAJEUR à 178 pile (« à partir de » = compris, d'où le ≥ du programme) · chronométrer le délai seuil → affichage (exigence &lt; 1 s) · deux essais d'acquittement (couper À l'appui, repartir à l'événement suivant).</p>
-      <p><b>b) Protocole attendu (exemple) :</b> essais 1-4 nominaux : 40 → veille (écran vert, vert fixe, tout le reste éteint) ; 90 → tempête tropicale (jaune qui pulse, buzzer muet) ; 150 → ouragan (orange qui pulse, buzzer muet) ; 200 → ouragan majeur (rouge qui pulse + buzzer). Essais 5-10 frontières : 62 → veille et 63 → tempête ; 117 → tempête et 118 → ouragan ; 177 → ouragan et 178 → ouragan majeur.</p><p>Essai 11 performance : franchissement de 178, chrono &lt; 1 s. Essais 12-13 interaction : appui sur le bouton pendant l'alarme → le son se coupe, l'écran et le voyant restent ; redescente puis remontée au-dessus de 178 → le buzzer repart. <b>Règle de décision :</b> recette prononcée si 13/13 réussis ; un seul échec = réserve, correction, puis on REJOUE TOUT le protocole (non-régression).</p>
-      <p><b>Méthode :</b> chaque exigence du cahier des charges → au moins un essai ; chaque seuil → deux essais (dessous / dessus), donc trois seuils font six essais ; chaque exigence chiffrée → une mesure, pas une impression.</p>
+      <p><b>a)</b><br>40 km/h (nominal franc)&nbsp;;<br>117 ET 118&nbsp;;<br>OURAGAN MAJEUR à 178 pile (« à partir de » = compris, d'où le ≥ du programme)&nbsp;;<br>chronométrer le délai entre le seuil et l'affichage (exigence &lt; 1 s)&nbsp;;<br>deux essais d'acquittement (couper À l'appui, repartir à l'événement suivant).</p>
+      <p><b>b) Protocole attendu (exemple) :</b> essais 1-4 nominaux : 40 → veille (écran vert, vert fixe, tout le reste éteint) ; <br>90 → tempête tropicale (jaune qui pulse, buzzer muet) ; <br>150 → ouragan (orange qui pulse, buzzer muet) ; <br>200 → ouragan majeur (rouge qui pulse + buzzer). <br>Essais 5-10 frontières : 62 → veille et 63 → tempête ; <br>117 → tempête et 118 → ouragan ; <br>177 → ouragan et 178 → ouragan majeur.</p><p>Essai 11 performance : franchissement de 178, chrono &lt; <br>1 s. Essais 12-13 interaction : appui sur le bouton pendant l'alarme → le son se coupe, l'écran et le voyant restent ; <br>redescente puis remontée au-dessus de 178 → le buzzer repart. <b>Règle de décision :</b> recette prononcée si 13/13 réussis ; <br>un seul échec = réserve, correction, puis on REJOUE TOUT le protocole (non-régression).</p>
+      <p><b>Méthode :</b> chaque exigence du cahier des charges → au moins un essai ; <br>chaque seuil → deux essais (dessous / dessus), donc trois seuils font six essais ; <br>chaque exigence chiffrée → une mesure, pas une impression.</p>
       <p><b>Limite :</b> 13 essais prouvent la conformité au cahier des charges — pas l'absence de TOUT défaut (pluie sur le boîtier, câble arraché… d'autres protocoles existent pour ça).</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> ne tester que les cas nominaux « ça marche chez moi » — les pannes vivent aux frontières ; écrire le résultat attendu APRÈS l'essai (ce n'est plus un test, c'est une impression) ; oublier les essais d'interaction humain-machine ; une règle de décision floue (« si ça a l'air bon »).</div>
@@ -1621,19 +1684,107 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <h4>Le tableau de recette</h4>
       <table class="recette" aria-label="Tableau de recette à remplir">
         <tr><th>N°</th><th>Essai</th><th>Résultat attendu</th><th>Observé ?</th></tr>
-        <tr><td>1</td><td>vent 40 km/h</td><td>écran vert « VEILLE », voyant vert fixe, buzzer muet</td><td><select id="a7_r1" aria-label="résultat observé essai 1"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>2</td><td>vent 90 km/h</td><td>écran jaune, voyant jaune qui pulse, buzzer muet</td><td><select id="a7_r2" aria-label="résultat observé essai 2"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>3</td><td>vent 150 km/h</td><td>écran orange, voyant orange qui pulse, buzzer muet</td><td><select id="a7_r3" aria-label="résultat observé essai 3"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>4</td><td>vent 200 km/h</td><td>écran rouge, voyant rouge qui pulse, buzzer qui sonne</td><td><select id="a7_r4" aria-label="résultat observé essai 4"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>5</td><td>frontière : 62 km/h</td><td><select id="a7_a5" aria-label="résultat attendu essai 5"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r5" aria-label="résultat observé essai 5"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>6</td><td>frontière : 63 km/h</td><td><select id="a7_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r6" aria-label="résultat observé essai 6"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>7</td><td>frontière : 117 km/h</td><td><select id="a7_a7" aria-label="résultat attendu essai 7"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r7" aria-label="résultat observé essai 7"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>8</td><td>frontière : 118 km/h</td><td><select id="a7_a8" aria-label="résultat attendu essai 8"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r8" aria-label="résultat observé essai 8"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>9</td><td>frontière : 177 km/h</td><td><select id="a7_a9" aria-label="résultat attendu essai 9"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r9" aria-label="résultat observé essai 9"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>10</td><td>frontière : 178 km/h</td><td><select id="a7_a10" aria-label="résultat attendu essai 10"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r10" aria-label="résultat observé essai 10"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>11</td><td>performance : chrono seuil → affichage</td><td>moins de 1 seconde</td><td><select id="a7_r11" aria-label="résultat observé essai 11"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>12</td><td>appui pendant l'alarme</td><td>le son se coupe, écran et voyant restent</td><td><select id="a7_r12" aria-label="résultat observé essai 12"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>13</td><td>redescente puis nouvelle alerte</td><td>le buzzer repart sans appui</td><td><select id="a7_r13" aria-label="résultat observé essai 13"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>1</td><td>vent 40 km/h</td><td>écran vert « VEILLE », voyant vert fixe, buzzer muet</td><td><fieldset class="qcm-groupe" id="a7_r1">
+  <legend>résultat observé essai 1</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r1" id="a7_r1__1" value="conforme"><label for="a7_r1__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r1" id="a7_r1__2" value="non conforme"><label for="a7_r1__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>2</td><td>vent 90 km/h</td><td>écran jaune, voyant jaune qui pulse, buzzer muet</td><td><fieldset class="qcm-groupe" id="a7_r2">
+  <legend>résultat observé essai 2</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r2" id="a7_r2__1" value="conforme"><label for="a7_r2__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r2" id="a7_r2__2" value="non conforme"><label for="a7_r2__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>3</td><td>vent 150 km/h</td><td>écran orange, voyant orange qui pulse, buzzer muet</td><td><fieldset class="qcm-groupe" id="a7_r3">
+  <legend>résultat observé essai 3</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r3" id="a7_r3__1" value="conforme"><label for="a7_r3__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r3" id="a7_r3__2" value="non conforme"><label for="a7_r3__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>4</td><td>vent 200 km/h</td><td>écran rouge, voyant rouge qui pulse, buzzer qui sonne</td><td><fieldset class="qcm-groupe" id="a7_r4">
+  <legend>résultat observé essai 4</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r4" id="a7_r4__1" value="conforme"><label for="a7_r4__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r4" id="a7_r4__2" value="non conforme"><label for="a7_r4__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>5</td><td>frontière : 62 km/h</td><td><fieldset class="qcm-groupe" id="a7_a5" data-melange="1">
+  <legend>résultat attendu essai 5</legend>
+  <div class="qcm-option"><input type="radio" name="a7_a5" id="a7_a5__2" value="tempête tropicale"><label for="a7_a5__2">tempête tropicale</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a5" id="a7_a5__3" value="ouragan"><label for="a7_a5__3">ouragan</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a5" id="a7_a5__4" value="ouragan majeur"><label for="a7_a5__4">ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a5" id="a7_a5__1" value="veille"><label for="a7_a5__1">veille</label></div>
+</fieldset></td><td><fieldset class="qcm-groupe" id="a7_r5">
+  <legend>résultat observé essai 5</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r5" id="a7_r5__1" value="conforme"><label for="a7_r5__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r5" id="a7_r5__2" value="non conforme"><label for="a7_r5__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>6</td><td>frontière : 63 km/h</td><td><fieldset class="qcm-groupe" id="a7_a6" data-melange="1">
+  <legend>résultat attendu essai 6</legend>
+  <div class="qcm-option"><input type="radio" name="a7_a6" id="a7_a6__4" value="ouragan majeur"><label for="a7_a6__4">ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a6" id="a7_a6__1" value="veille"><label for="a7_a6__1">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a6" id="a7_a6__3" value="ouragan"><label for="a7_a6__3">ouragan</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a6" id="a7_a6__2" value="tempête tropicale"><label for="a7_a6__2">tempête tropicale</label></div>
+</fieldset></td><td><fieldset class="qcm-groupe" id="a7_r6">
+  <legend>résultat observé essai 6</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r6" id="a7_r6__1" value="conforme"><label for="a7_r6__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r6" id="a7_r6__2" value="non conforme"><label for="a7_r6__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>7</td><td>frontière : 117 km/h</td><td><fieldset class="qcm-groupe" id="a7_a7" data-melange="1">
+  <legend>résultat attendu essai 7</legend>
+  <div class="qcm-option"><input type="radio" name="a7_a7" id="a7_a7__2" value="tempête tropicale"><label for="a7_a7__2">tempête tropicale</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a7" id="a7_a7__1" value="veille"><label for="a7_a7__1">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a7" id="a7_a7__4" value="ouragan majeur"><label for="a7_a7__4">ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a7" id="a7_a7__3" value="ouragan"><label for="a7_a7__3">ouragan</label></div>
+</fieldset></td><td><fieldset class="qcm-groupe" id="a7_r7">
+  <legend>résultat observé essai 7</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r7" id="a7_r7__1" value="conforme"><label for="a7_r7__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r7" id="a7_r7__2" value="non conforme"><label for="a7_r7__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>8</td><td>frontière : 118 km/h</td><td><fieldset class="qcm-groupe" id="a7_a8" data-melange="1">
+  <legend>résultat attendu essai 8</legend>
+  <div class="qcm-option"><input type="radio" name="a7_a8" id="a7_a8__2" value="tempête tropicale"><label for="a7_a8__2">tempête tropicale</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a8" id="a7_a8__4" value="ouragan majeur"><label for="a7_a8__4">ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a8" id="a7_a8__1" value="veille"><label for="a7_a8__1">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a8" id="a7_a8__3" value="ouragan"><label for="a7_a8__3">ouragan</label></div>
+</fieldset></td><td><fieldset class="qcm-groupe" id="a7_r8">
+  <legend>résultat observé essai 8</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r8" id="a7_r8__1" value="conforme"><label for="a7_r8__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r8" id="a7_r8__2" value="non conforme"><label for="a7_r8__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>9</td><td>frontière : 177 km/h</td><td><fieldset class="qcm-groupe" id="a7_a9" data-melange="1">
+  <legend>résultat attendu essai 9</legend>
+  <div class="qcm-option"><input type="radio" name="a7_a9" id="a7_a9__1" value="veille"><label for="a7_a9__1">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a9" id="a7_a9__3" value="ouragan"><label for="a7_a9__3">ouragan</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a9" id="a7_a9__2" value="tempête tropicale"><label for="a7_a9__2">tempête tropicale</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a9" id="a7_a9__4" value="ouragan majeur"><label for="a7_a9__4">ouragan majeur</label></div>
+</fieldset></td><td><fieldset class="qcm-groupe" id="a7_r9">
+  <legend>résultat observé essai 9</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r9" id="a7_r9__1" value="conforme"><label for="a7_r9__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r9" id="a7_r9__2" value="non conforme"><label for="a7_r9__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>10</td><td>frontière : 178 km/h</td><td><fieldset class="qcm-groupe" id="a7_a10" data-melange="1">
+  <legend>résultat attendu essai 10</legend>
+  <div class="qcm-option"><input type="radio" name="a7_a10" id="a7_a10__1" value="veille"><label for="a7_a10__1">veille</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a10" id="a7_a10__4" value="ouragan majeur"><label for="a7_a10__4">ouragan majeur</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a10" id="a7_a10__2" value="tempête tropicale"><label for="a7_a10__2">tempête tropicale</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_a10" id="a7_a10__3" value="ouragan"><label for="a7_a10__3">ouragan</label></div>
+</fieldset></td><td><fieldset class="qcm-groupe" id="a7_r10">
+  <legend>résultat observé essai 10</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r10" id="a7_r10__1" value="conforme"><label for="a7_r10__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r10" id="a7_r10__2" value="non conforme"><label for="a7_r10__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>11</td><td>performance : chrono seuil → affichage</td><td>moins de 1 seconde</td><td><fieldset class="qcm-groupe" id="a7_r11">
+  <legend>résultat observé essai 11</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r11" id="a7_r11__1" value="conforme"><label for="a7_r11__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r11" id="a7_r11__2" value="non conforme"><label for="a7_r11__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>12</td><td>appui pendant l'alarme</td><td>le son se coupe, écran et voyant restent</td><td><fieldset class="qcm-groupe" id="a7_r12">
+  <legend>résultat observé essai 12</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r12" id="a7_r12__1" value="conforme"><label for="a7_r12__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r12" id="a7_r12__2" value="non conforme"><label for="a7_r12__2">non conforme</label></div>
+</fieldset></td></tr>
+        <tr><td>13</td><td>redescente puis nouvelle alerte</td><td>le buzzer repart sans appui</td><td><fieldset class="qcm-groupe" id="a7_r13">
+  <legend>résultat observé essai 13</legend>
+  <div class="qcm-option"><input type="radio" name="a7_r13" id="a7_r13__1" value="conforme"><label for="a7_r13__1">conforme</label></div>
+  <div class="qcm-option"><input type="radio" name="a7_r13" id="a7_r13__2" value="non conforme"><label for="a7_r13__2">non conforme</label></div>
+</fieldset></td></tr>
       </table>
       <h4>Le procès-verbal</h4>
       <label for="a7_pv" style="display:block">Rédige le PV pour la mairie : essais réalisés, résultats, réserves éventuelles, et ta conclusion (« recette prononcée » ou « recette ajournée »).</label>
@@ -1651,18 +1802,18 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier ma recette (essais tracés compris)</button>
       <div class="feedback" id="fb7" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Utilise le champ « valeur exacte » du banc pour viser 62, 63, 117, 118, 177 et 178 pile. Les attendus des essais 5 à 10 se déduisent du courrier : « à partir de 63 », « à partir de 118 », « à partir de 178 » — frontière comprise à chaque fois.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>62 → veille (vert fixe) · 63 → tempête tropicale (jaune) · 117 → tempête tropicale · 118 → ouragan (orange) · 177 → ouragan · 178 → ouragan majeur (rouge + buzzer). Le bouton ⏱ du banc mesure le temps de réponse pour toi (la boucle tourne toutes les 200 ms (millisecondes) : tu devrais mesurer ≈ 0,2-0,4 s, conforme). N'oublie pas : le PV se signe sur ce que tu as OBSERVÉ, pas sur ce que tu espérais.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Utilise le champ « valeur exacte » du banc pour viser 62, 63, 117, 118, 177 et 178 pile. <br>Les attendus des essais 5 à 10 se déduisent du courrier : « à partir de 63 », « à partir de 118 », « à partir de 178 » — frontière comprise à chaque fois.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>62 → veille (vert fixe) · 63 → tempête tropicale (jaune) · 117 → tempête tropicale · 118 → ouragan (orange) · 177 → ouragan · 178 → ouragan majeur (rouge + buzzer). <br>Le bouton ⏱ du banc mesure le temps de réponse pour toi (la boucle tourne toutes les 200 ms (millisecondes) : tu devrais mesurer ≈ 0,2-0,4 s, conforme). <br>N'oublie pas : le PV se signe sur ce que tu as OBSERVÉ, pas sur ce que tu espérais.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Attendus des six frontières :</b> 62 → veille · 63 → tempête tropicale · 117 → tempête tropicale · 118 → ouragan · 177 → ouragan · 178 → ouragan majeur. Un seuil se teste toujours <b>deux fois</b> : juste dessous, et pile dessus. Tous les essais du banc doivent être « conforme » (le programme de référence respecte le cahier des charges) — si tu observes autre chose, note-le : c'est une VRAIE observation, elle va dans le PV.</p>
-      <p><b>PV attendu (exemple) :</b> « Le [date], nous avons exécuté les 13 essais du protocole sur le banc de simulation. 13 essais conformes sur 13. Les frontières confirment : veille jusqu'à 62 km/h, tempête tropicale de 63 à 117, ouragan de 118 à 177, ouragan majeur dès 178. Temps de réponse mesuré ≈ 0,3 s (exigence : &lt; 1 s). L'alarme s'acquitte à l'appui et repart au changement de niveau. Recette prononcée, sans réserve. Signé : l'équipe de recette 3e. »</p>
-      <p><b>🗽 Le second exemplaire.</b> Souviens-toi que le PV part aussi à New York. Relis le tien en te demandant : <b>un lecteur qui n'a jamais vu la station comprendrait-il ce qui a été testé, avec quelles valeurs, et ce qui a été observé ?</b> Si la réponse est non, ce n'est pas le lecteur qui manque d'informations — c'est le PV. Écris les valeurs (62, 63, 117, 118, 177, 178), l'unité (km/h) et les résultats observés, jamais « ça marche ».</p>
+      <p><b>Attendus des six frontières :</b><br>62&nbsp;: veille&nbsp;;<br>63&nbsp;: tempête tropicale&nbsp;;<br>117&nbsp;: tempête tropicale&nbsp;;<br>118&nbsp;: ouragan&nbsp;;<br>177&nbsp;: ouragan&nbsp;;<br>178&nbsp;: ouragan majeur. <br>Un seuil se teste toujours <b>deux fois</b> : juste dessous, et pile dessus. <br>Tous les essais du banc doivent être « conforme » (le programme de référence respecte le cahier des charges) — si tu observes autre chose, note-le : c'est une VRAIE observation, elle va dans le PV.</p>
+      <p><b>PV attendu (exemple) :</b> « Le [date], nous avons exécuté les 13 essais du protocole sur le banc de simulation. <br>13 essais conformes sur 13. <br>Les frontières confirment : veille jusqu'à 62 km/h, tempête tropicale de 63 à 117, ouragan de 118 à 177, ouragan majeur dès 178. <br>Temps de réponse mesuré ≈ 0,3 s (exigence : &lt; 1 s). <br>L'alarme s'acquitte à l'appui et repart au changement de niveau. Recette prononcée, sans réserve. <br>Signé : l'équipe de recette 3e. »</p>
+      <p><b>🗽 Le second exemplaire.</b><br>Souviens-toi que le PV part aussi à New York. <br>Relis le tien en te demandant : <b>un lecteur qui n'a jamais vu la station comprendrait-il ce qui a été testé, avec quelles valeurs, et ce qui a été observé ?</b> <br>Si la réponse est non, ce n'est pas le lecteur qui manque d'informations — c'est le PV.<br>Écris les valeurs (62, 63, 117, 118, 177, 178), l'unité (km/h) et les résultats observés, jamais « ça marche ».</p>
       <details class="description-image" style="margin:14px auto">
         <summary>📸 Les six frontières, prouvées en captures réelles du simulateur</summary>
-        <p>Voici ce que fait le <b>programme de référence</b> aux six valeurs frontières. Ces images n'ont pas été
+        <p>Voici ce que fait le <b>programme de référence</b> aux six valeurs frontières. <br>Ces images n'ont pas été
         retouchées : ce sont des captures du simulateur de Vittascience, prises l'une après l'autre en déplaçant
-        le potentiomètre. Lis-les <b>par paires</b> : c'est le passage d'une image à la suivante qui prouve le
-        « ≥ ». Entre 62 et 63, un seul kilomètre-heure sépare deux niveaux — et c'est exactement le kilomètre-heure
+        le potentiomètre. <br>Lis-les <b>par paires</b> : c'est le passage d'une image à la suivante qui prouve le
+        « ≥ ». <br>Entre 62 et 63, un seul kilomètre-heure sépare deux niveaux — et c'est exactement le kilomètre-heure
         qu'un test « une petite, une moyenne, une grande valeur » n'aurait jamais essayé.</p>
         <figure style="margin:.8rem 0">
           <img class="figure" src="Images/vittascience/C_frontiere_062kmh_brut254.png" alt="Capture d'écran réelle du simulateur Vittascience à 62 km/h : l'écran est vert et affiche VEILLE avec Vent 62 km/h, le potentiomètre indique 254, la broche D6 est ON, les broches D7, D3 et D4 sont OFF, le buzzer est OFF">
@@ -1688,11 +1839,11 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
           <img class="figure" src="Images/vittascience/C_frontiere_178kmh_brut729.png" alt="Capture d'écran réelle du simulateur Vittascience à 178 km/h : l'écran est rouge et affiche OURAGAN MAJEUR avec Vent 178 km/h, le potentiomètre indique 729, la broche D4 est ON, les autres voyants sont OFF, et le buzzer sur D5 est ACTIF">
           <figcaption style="font-size:.9em;color:var(--sub)"><b>178 km/h</b> → écran « OURAGAN MAJEUR », voyant <b>D4 (rouge)</b> seul allumé — niveau <b>ouragan majeur</b>. Valeur brute du potentiomètre : <b>729</b> / 1023.</figcaption>
         </figure>
-        <p style="margin-top:10px"><b>Deux choses à ne pas manquer.</b> ① La <b>valeur brute</b> change à peine
+        <p style="margin-top:10px"><b>Deux choses à ne pas manquer.</b><br>① La <b>valeur brute</b> change à peine
         (725 → 729) alors que le niveau, lui, <b>bascule</b> : le seuil est une falaise, pas une pente.
-        ② Dans le simulateur, <b>les voyants sont tous dessinés en vert</b>, quelle que soit la couleur réelle de la
+        <br>② Dans le simulateur, <b>les voyants sont tous dessinés en vert</b>, quelle que soit la couleur réelle de la
         DEL. Ne juge donc pas à la couleur de l'image : regarde <b>quelle broche est ON</b>, et surtout ce qui est
-        <b>écrit sur l'écran</b>. Une station qui ne parlerait que par la couleur serait illisible — pour le
+        <b>écrit sur l'écran</b>. <br>Une station qui ne parlerait que par la couleur serait illisible — pour le
         simulateur comme pour un daltonien.</p>
       </details>
       <p><b>Méthode :</b> observer PENDANT l'essai, verdict essai par essai, conclusion GLOBALE seulement à la fin — et si un essai échoue après correction du programme, on rejoue TOUT (non-régression, comme en 3e_C9.1).</p>
@@ -1708,36 +1859,38 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <h2>📝 Synthèse de la séquence — à retenir</h2>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 7 — rien de nouveau ici.</p>
   <h4>1. Du besoin au programme (activités 1-3)</h4>
-  <p>Le <b>cahier des charges</b> impose des exigences de <b>comportement</b> et de <b>performance</b> (chiffrées). On <b>élabore l'algorithme</b> en français (seuils, ordre des tests : le plus haut d'abord), on le dessine en <b>algorigramme</b> (🎓 DNB), puis on le traduit en blocs, <b>palier par palier</b>, en testant chaque palier.</p>
+  <p>Le <b>cahier des charges</b> impose des exigences de <b>comportement</b> et de <b>performance</b> (chiffrées). <br>On <b>élabore l'algorithme</b> en français (seuils, ordre des tests : le plus haut d'abord), on le dessine en <b>algorigramme</b> (🎓 DNB), puis on le traduit en blocs, <b>palier par palier</b>, en testant chaque palier.</p>
   <h4>2. Commander un système réel avec un humain dans la boucle (activités 4-5)</h4>
-  <p>Le programme lit des capteurs (A1) ET une entrée humaine (bouton D2). L'<b>acquittement</b> se programme avec un booléen-mémoire (<code>alarmeAcquittee</code>) et la détection d'<b>événement</b> (<code>niveauAlerte ≠ niveauPrecedent</code>). Les blocs deviennent du C++ : la conversion d'échelle → <code>map()</code>, « si / sinon si / sinon » → <code>if / else if / else</code>, affichage dans un <b>sous-programme</b> (<code>afficherEtat()</code>). La <b>mise au point</b> lit la trace du moniteur série pour innocenter la chaîne tronçon par tronçon.</p>
+  <p>Le programme lit des capteurs (A1) ET une entrée humaine (bouton D2). <br>L'<b>acquittement</b> se programme avec un booléen-mémoire (<code>alarmeAcquittee</code>) et la détection d'<b>événement</b> (<code>niveauAlerte ≠ niveauPrecedent</code>). <br>Les blocs deviennent du C++ : la conversion d'échelle → <code>map()</code>, « si / sinon si / sinon » → <code>if / else if / else</code>, affichage dans un <b>sous-programme</b> (<code>afficherEtat()</code>). <br>La <b>mise au point</b> lit la trace du moniteur série pour innocenter la chaîne tronçon par tronçon.</p>
   <h4>3. Prouver : le protocole de test (activités 6-7)</h4>
-  <p>Un <b>protocole de test</b> se rédige AVANT : essais nominaux + <b>cas limites aux frontières</b> (62/63, 117/118, 177/178) + <b>performance mesurée</b> (&lt; 1 s) + interaction humain-machine, chacun avec son résultat ATTENDU. L'exécution remplit le tableau <i>essai / attendu / observé / verdict</i> PENDANT les essais, et le <b>PV de recette</b> conclut : prononcée ou ajournée. Après correction : on rejoue tout (<b>non-régression</b>).</p>
+  <p>Un <b>protocole de test</b> se rédige AVANT : essais nominaux + <b>cas limites aux frontières</b> (62/63, 117/118, 177/178) + <b>performance mesurée</b> (&lt; 1 s) + interaction humain-machine, chacun avec son résultat ATTENDU. L'exécution remplit le tableau <i>essai / attendu / observé / verdict</i> PENDANT les essais, et le <b>PV de recette</b> conclut : prononcée ou ajournée. <br>Après correction : on rejoue tout (<b>non-régression</b>).</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">programme = program</span><span class="tag">capteur = sensor</span><span class="tag">seuil = threshold</span><span class="tag">boucle = loop</span><span class="tag">acquitter = to acknowledge</span><span class="tag">événement = event</span><span class="tag">tester = to test</span><span class="tag">protocole de test = test protocol</span><span class="tag">recette = acceptance test</span><span class="tag">téléverser = to upload</span></p>
 </section>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
   <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
   <p>🟣 <b>Défi « niveau violet » :</b> aux Antilles, la vigilance ne s'arrête pas au rouge — après le rouge vient le
-  <b>violet</b> (confinement absolu), puis le <b>gris</b> (phase de sauvegarde, après le passage). La mairie voudrait
+  <b>violet</b> (confinement absolu), puis le <b>gris</b> (phase de sauvegarde, après le passage). <br>La mairie voudrait
   que le prototype se rapproche de ce vocabulaire réel : un 5<sup>e</sup> niveau « violet » à partir de <b>209 km/h</b> (l'entrée en catégorie 4 de
-  Saffir-Simpson : écran violet, buzzer qui sonne par intermittence). Où insérer le nouveau test dans l'algorigramme, et pourquoi
+  Saffir-Simpson : écran violet, buzzer qui sonne par intermittence). <br>Où insérer le nouveau test dans l'algorigramme, et pourquoi
   À CET ENDROIT ? Et pourquoi le niveau <b>gris</b>, lui, ne peut-il PAS se déduire de la seule vitesse du vent ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 209 » s'insère EN PREMIER, avant « ≥ 178 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « ouragan majeur » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, <b>208 et 209</b> — le protocole passerait ainsi de 13 à 16 essais (un nominal de plus, deux frontières de plus). Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
-  <p><b>Le cas du gris.</b> Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
-  phénomène est passé. Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un
-  jour ordinaire. Une même entrée, plusieurs sorties possibles : la vitesse du vent <b>ne suffit pas</b>. Il faudrait
-  une <b>mémoire</b> (« sommes-nous DÉJÀ passés par le rouge ? ») et une <b>décision humaine</b> en entrée. C'est
+  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 209 » s'insère EN PREMIER, avant « ≥ 178 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « ouragan majeur » sans jamais atteindre « violet ». <br>Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle).<br>Et il faut mettre à jour le protocole de recette : deux nouvelles frontières à tester, <b>208 et 209</b> — le protocole passerait ainsi de 13 à 16 essais (un nominal de plus, deux frontières de plus). <br>Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
+  <p><b>Le cas du gris.</b><br>Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
+  phénomène est passé. <br>Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un
+  jour ordinaire. <br>Une même entrée, plusieurs sorties possibles : la vitesse du vent <b>ne suffit pas</b>. <br>Il faudrait
+  une <b>mémoire</b> (« sommes-nous DÉJÀ passés par le rouge ? ») et une <b>décision humaine</b> en entrée. <br>C'est
   exactement la limite d'une maquette scolaire — et la raison pour laquelle un vrai dispositif d'alerte n'est jamais
   entièrement automatique.</p></details>
-  <p>🔔 <b>Défi « double appui » :</b> l'agent voudrait qu'un DEUXIÈME appui sur le bouton ré-active l'alarme (pour re-prévenir un collègue). Quelle variable faudrait-il faire évoluer, et quel piège guette ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. Erreur classique : tester l'état au lieu du front.</p></details>
+  <p>🔔 <b>Défi « double appui » :</b> l'agent voudrait qu'un DEUXIÈME appui sur le bouton ré-active l'alarme (pour re-prévenir un collègue). <br>Quelle variable faudrait-il faire évoluer, et quel piège guette ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). <br>Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. <br>Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. <br>Erreur classique : tester l'état au lieu du front.</p></details>
   <p>🌬 <b>Défi « anémomètre réel » :</b> pour remplacer le potentiomètre par un vrai anémomètre à coupelles, quelles étapes de ton programme changeraient — et lesquelles ne changeraient PAS ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi anémomètre</summary><p>Change : l'ACQUISITION (un anémomètre à coupelles produit des impulsions à compter, pas une tension à lire — il faudrait compter les tours par seconde) et l'ÉTALONNAGE (convertir des tours/s en km/h selon la doc du capteur). Ne change PAS : la décision (seuils 63, 118 et 178 km/h), l'affichage, l'acquittement, ni le protocole de recette (les mêmes essais restent valables !). C'est l'intérêt de la structuration : chaque étage se remplace sans toucher aux autres. Erreur classique : croire qu'il faut tout réécrire.</p></details>
+  <details class="correction"><summary>✅ Corrigé du défi anémomètre</summary><p>Change : l'ACQUISITION (un anémomètre à coupelles produit des impulsions à compter, pas une tension à lire — il faudrait compter les tours par seconde) et l'ÉTALONNAGE (convertir des tours/s en km/h selon la doc du capteur). <br>Ne change PAS : la décision (seuils 63, 118 et 178 km/h), l'affichage, l'acquittement, ni le protocole de recette (les mêmes essais restent valables !). <br>C'est l'intérêt de la structuration : chaque étage se remplace sans toucher aux autres. <br>Erreur classique : croire qu'il faut tout réécrire.</p></details>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+</details>
 </section>
 
 <section class="card">
@@ -1749,7 +1902,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <textarea id="hyp_retour" placeholder="En fait, pour décider et pour prouver, il faut…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Au départ je pensais que ____.</li>
     <li>Maintenant je sais que ____, parce que ____ me l'a montré.</li>
@@ -1780,7 +1933,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>J'ai appris qu'un programme qui commande un système réel doit ____.</li>
     <li>J'ai appris que l'acquittement se programme avec ____.</li>
@@ -1790,7 +1943,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je sais maintenant traduire un algorithme en ____ palier par palier.</li>
     <li>Je sais maintenant utiliser la trace du moniteur série pour ____.</li>
@@ -1800,7 +1953,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
-  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Je dois encore revoir ____, parce que ____.</li>
     <li>Ce que je n'arrive pas encore à faire seul·e : ____.</li>
@@ -2584,6 +2737,15 @@ function signale(msg){
 .atelier-incruste .option{display:flex;align-items:flex-start;gap:9px;padding:7px 9px;border-radius:8px;border:1px solid transparent;cursor:pointer}
 .atelier-incruste .option:hover{border-color:var(--input-bd);background:rgba(29,78,137,.25)}
 .atelier-incruste .option input{margin-top:.32em;width:1.15em;height:1.15em;flex:0 0 auto;accent-color:#61dafb}
+.atelier-incruste .cles-grille{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--input-bd);border-radius:10px}
+.atelier-incruste .cles-grille .cles-titre{margin:0 0 4px;font-weight:600}
+.atelier-incruste .cles-grille ol{margin:0;padding-left:0;list-style:none}
+.atelier-incruste .cles-grille li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.atelier-incruste .cles-grille li b{display:inline-block;width:1.6em;text-indent:0;color:#61dafb}
+.atelier-incruste .options-grille{flex-direction:row;flex-wrap:wrap;gap:6px}
+.atelier-incruste .options-grille .option{align-items:center;gap:5px;padding:4px 8px;border-color:var(--input-bd)}
+.atelier-incruste .options-grille .option input{margin-top:0}
+.atelier-incruste .options-grille .option span{font-weight:700}
 .atelier-incruste .encoche{display:inline-block;min-width:1.3em;font-weight:700;margin-left:6px}
 .atelier-incruste .encoche.juste{color:var(--ok)}
 .atelier-incruste .encoche.faux{color:var(--err)}
@@ -2689,12 +2851,16 @@ body.essentiel .atelier-incruste details.correction,body.essentiel .atelier-incr
 @media (max-width:640px){.atelier-incruste .tableau-menus table.cdcf,.atelier-incruste .tableau-menus table.cdcf tbody,.atelier-incruste .tableau-menus table.cdcf tr,.atelier-incruste .tableau-menus table.cdcf td,.atelier-incruste .tableau-menus table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus table.cdcf thead{display:none}.atelier-incruste .tableau-menus table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media screen{.atelier-incruste .tableau-menus.en-cartes table.cdcf,.atelier-incruste .tableau-menus.en-cartes table.cdcf tbody,.atelier-incruste .tableau-menus.en-cartes table.cdcf tr,.atelier-incruste .tableau-menus.en-cartes table.cdcf td,.atelier-incruste .tableau-menus.en-cartes table.cdcf caption{display:block;width:100%}.atelier-incruste .tableau-menus.en-cartes table.cdcf thead{display:none}.atelier-incruste .tableau-menus.en-cartes table.cdcf tr{border:1px solid var(--input-bd);border-radius:10px;margin:0 0 10px;padding:2px 12px 8px;background:rgba(11,27,57,.55)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td{border:none;padding:7px 0 3px}.atelier-incruste .tableau-menus.en-cartes table.cdcf td+td{border-top:1px dashed var(--input-bd)}.atelier-incruste .tableau-menus.en-cartes table.cdcf td::before{content:attr(data-col);display:block;font-size:.82em;font-weight:700;color:var(--sub);margin:0 0 3px}}
 @media (max-width:600px){.atelier-incruste .card{padding:12px 12px}}
+@media print{.atelier-incruste .cles-grille{border-color:#999!important}.atelier-incruste .cles-grille li b{color:#111!important}}
 @media print{.atelier-incruste .btn,.atelier-incruste .croquis-outils{display:none!important}.atelier-incruste .card{background:#fff;border-color:#999;break-inside:avoid-page}.atelier-incruste a,.atelier-incruste a:visited{color:#00309e!important}.atelier-incruste textarea,.atelier-incruste input[type=text]{background:#fff;color:#111;border-color:#999}.atelier-incruste fieldset.qcm-groupe legend,.atelier-incruste .consigne b{color:#111}.atelier-incruste .meta,.atelier-incruste .demo .ligne,.atelier-incruste details,.atelier-incruste .verif-liste li{background:#fff!important;color:#111}.atelier-incruste .retenir,.atelier-incruste .piege,.atelier-incruste .critere{background:#fff!important}.atelier-incruste .retenir b{color:#176b2c}.atelier-incruste .piege b{color:#a1122a}.atelier-incruste .critere b{color:#7a5a00}.atelier-incruste .retour{background:#fff!important;color:#111!important}.atelier-incruste .note,.atelier-incruste details summary,.atelier-incruste .retour-option,.atelier-incruste .meta b{color:#1a3a7a!important}.atelier-incruste details.cours summary{color:#111!important}.atelier-incruste .tableau-menus table.cdcf th{background:#fff!important;color:#111}.atelier-incruste .tableau-menus table.cdcf th,.atelier-incruste .tableau-menus table.cdcf td{border-color:#999}.atelier-incruste .tableau-menus table.cdcf tr{break-inside:avoid}.atelier-incruste .tableau-menus table.cdcf caption{color:#1a3a7a}.atelier-incruste .tableau-menus.menus-js .menu-case select,.atelier-incruste .tableau-menus .menu-fleche{display:none!important}.atelier-incruste .tableau-menus.menus-js .menu-case{border:none;padding:0;min-height:0;background:#fff!important}.atelier-incruste .tableau-menus.menus-js .menu-vu{color:#111}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty{min-width:7em;height:1.5em;border-bottom:1px solid #555}.atelier-incruste .tableau-menus.menus-js .menu-vu:empty::before{content:""}.atelier-incruste .tableau-menus .pp-choix{display:none!important}.atelier-incruste .retour-case.visible{color:#a1122a}.atelier-incruste .ms-case,.atelier-incruste .ms-retours{display:none!important}.atelier-incruste .ms-papier{display:block}.atelier-incruste .ms-dessin svg text[data-car],.atelier-incruste .ms-dessin svg .bac-pointilles{visibility:visible!important}.atelier-incruste .encoche.juste{color:#176b2c}.atelier-incruste .encoche.faux{color:#a1122a}.atelier-incruste .encoche.vide{color:#7a5a00}}
+@media (pointer:coarse){.atelier-incruste input,.atelier-incruste textarea,.atelier-incruste select{font-size:16px!important}}
 .atelier-incruste{border-left:5px solid var(--head);}
 .atelier-incruste .card.exercice{background:rgba(10,27,61,.6)}
 .atelier-incruste>h3,.atelier-incruste>h4{color:var(--head);font-size:1.08em;margin:4px 0 8px}
 .atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:var(--hl);font-size:1.02em;margin:4px 0 8px}
 @media print{.atelier-incruste,.atelier-incruste .card.exercice{background:#fff!important;color:#111}.atelier-incruste>h3,.atelier-incruste>h4,.atelier-incruste .card.exercice>h4,.atelier-incruste .card.exercice>h5{color:#111}}
+@media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:12px;padding:6px 12px}details.incruste-repliee>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}details.incruste-repliee[open]>summary{margin-bottom:8px}@media print{details.incruste-repliee{border-color:#999}}
 </style>
 <script>
 /* Ateliers des représentations — moteur commun des exercices.
