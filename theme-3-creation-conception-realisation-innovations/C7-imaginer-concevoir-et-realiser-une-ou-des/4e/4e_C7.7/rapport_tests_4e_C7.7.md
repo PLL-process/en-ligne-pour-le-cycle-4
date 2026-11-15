@@ -145,3 +145,18 @@ Exécuté le 10/11/2026 (Chromium Playwright, session cloud) : `tests_4e_C7.7_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_rapports_tests`, `controle_licence` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_4e_2026-11-10/`. Non exécuté : vrai téléphone, Firefox, Safari, impression réelle.
+
+## Révision du 15/11/2026 (ligne 44 du suivi) — places, aération, mode mission
+
+10 groupes mélangés ; le Bonus se replie ; l'aération passe de 19 écarts à 0 ; la correction de l'activité 2 réfute aussi
+« allonger la fente à 23 mm ». Le mode mission reçoit 21 pourquoi, 7 indices et une réponse de trop dans chacune des deux
+grilles (`mission_4e_C7.7.json`).
+
+- `node tests_4e_C7.7_sequence.mjs "$PWD/sequence_4e_C7.7_support-du-capteur.html" 4e reponses_4e_C7.7.json` : **38 / 38**.
+- `node tests_4e_C7.7_qcm.mjs "$PWD/qcm_4e_C7.7_support-du-capteur.html" 4e_C7.7 4e_C4.3 sequence_4e_C7.7_support-du-capteur.html` : **32 / 32**.
+- `node tests_regle_311_4e_C7.7.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0. `controle_impression_papier.py` : à jour.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
