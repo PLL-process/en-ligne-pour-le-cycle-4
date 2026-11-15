@@ -48,7 +48,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 29 | `5e_C5.1` | 1109 | 1 | 30 | 4 | à faire |
 | 30 | `4e_C4.7` | 2022 | 1 | 40 | 7 | à faire |
 | 31 | `5e_C4.7` | 1807 | 1 | 35 | 6 | à faire |
-| 32 | `3e_C7.3` | 1796 | 0 | 0 | 29 | à faire |
+| 32 | `3e_C7.3` | 1796 → 908 | 0 | 0 | 29 → 0 | livrée #692 — deux grilles, places mélangées (la bonne réponse était 9 fois sur 14 la première), pourquoi des erreurs ; piqûre de rappel du cahier des charges repliée (séance 1, 1 796 → 868) ; banc réparé (67 → 68 / 68) |
 | 33 | `3e_C7.4` | 1220 | 0 | 0 | 27 | à faire |
 | 34 | `3e_C7.5` | 1439 | 0 | 0 | 26 | à faire |
 | 35 | `3e_C7.7` | 1959 | 0 | 0 | 24 | à faire |
@@ -171,3 +171,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   gardent leurs appels par le shim `_groupesRadio`) ; aération 12 → 0, dont quatre textes d'ateliers (FAST, croquis)
   corrigés à leur source ; Bonus replié. Séance 3, 3 512 → 3 147 : les activités 6 et 7 avec leurs exercices d'atelier,
   la clôture, et deux cartes après le bilan — une séance 4 est proposée à Pascal.
+- **3e_C7.3** (le boîtier de la station), 14/11/2026 (#692) : deux grilles (le verdict des matériaux, les trois sorties),
+  8 groupes mélangés, 27 pourquoi pour le mode mission ; la piqûre de rappel du cahier des charges repliée à sa source ;
+  aération 29 → 0 ; « avait écarté … en 3e_C8.2 » (n°304) corrigé ; le banc de la séquence, en échec sur `main` depuis
+  l'étape 2 de l'audit externe, suit la page. Séances 868 · 908 · 779 · 896.

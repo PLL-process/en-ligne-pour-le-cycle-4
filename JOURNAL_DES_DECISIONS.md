@@ -30696,3 +30696,18 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : séance 1, 597 → 612 ; séance 2, 1 730 → 1 755 (les questions converties montrent toutes leurs propositions) ; **séance 3, 3 512 → 3 147**. Règles d'or 1 → 0 ✘ ; menus 20 → 0 ; aération 12 → 0. Bancs du lot 80 / 80 et 34 / 34 ; ateliers FAST et croquis 106 / 106 ; mode mission : page acceptée. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste, et la question pour Pascal.** La séance 3 reste très au-dessus du repère (3 147 mots, environ 24 écrans) : l'activité 6 (le FAST, avec son exercice d'atelier : 931 mots), l'activité 7 (les croquis, avec le sien : 1 419 mots), la synthèse, le Bonus, le bilan, puis deux cartes **après** le bilan — « Avant de fabriquer — le TP « Le boîtier étanche » » et « Le diagramme de planification des tâches » —, contre la n°301 (rien à faire après le bilan). Piste : une **séance 4** — l'activité 7, la synthèse et la clôture — et les deux cartes remontées avant le bilan, comme pour `4e_C2.1` et `4e_C1.4`. La séance 2 (1 755) porte l'échauffement de l'éditeur, l'activité 3 et le réinvestissement.
+
+## 14/11/2026 — Révision des trois thèmes, 32 : `3e_C7.3` (le boîtier de la station)
+
+**Le constat.** Une page déjà soignée (questions en boutons radio depuis la V2, distracteurs plausibles), mais la bonne réponse était **9 fois sur 14 la première** proposition, deux séries de questions répétaient les mêmes longues réponses (le verdict des quatre matériaux, les trois sorties : 25 propositions pour 7 questions), 29 écarts d'aération, et la séance 1 montait à 1 796 mots, dont 651 de piqûre de rappel du cahier des charges.
+
+**Ce qui est fait.**
+- **Grilles** (`grilles_radio.py`) : le verdict des quatre matériaux et ce qu'engage chaque sortie — les réponses une fois, lettrées, une rangée de lettres par question.
+- **Places** (`melanger_propositions.py`) : 8 groupes mélangés ; la bonne réponse n'est plus en tête par défaut.
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C7.3.json`, 27 pourquoi, 7 indices de ligne).
+- **La piqûre de rappel du cahier des charges se replie** (option `replie` de son entrée dans `donnees_rappel_cdc.py`, puis `incrustations.py --seq 3e_C7.3`, comme pour `4e_C2.1` et `4e_C6.2`) ; l'incrustation, « à mettre à jour », reçoit au passage les corrections aérées du générateur.
+- **Aération : 29 → 0** (80 retours à la ligne, deux corrections réécrites en lignes).
+- **n°304** : une proposition disait « l'argument qui avait écarté la barre d'acier en 3e_C8.2 » ; elle dit « l'argument qui écarte une barre d'acier en tête de mât (3e_C8.2) » (page, réponses du banc).
+- **Le banc de la séquence** échouait sur `main` (67 / 68) depuis que la page ne dit plus « validée » pour une réponse libre (audit externe, étape 2) : il suit maintenant la page.
+
+**Mesure.** Mots visibles : 1 796 · 908 · 895 · 896 → 868 · 908 · 779 · 896. Règles d'or 0 ✘ ; aération 29 → 0. Bancs 68 / 68 (67 / 68 sur `main`), 32 / 32, 34 / 34. Mode mission : 28 / 28 pourquoi, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : aucun schéma à juger dans la page).
