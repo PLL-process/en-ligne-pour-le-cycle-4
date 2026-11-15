@@ -50,7 +50,8 @@ Après une retouche de `papier.css` ou `papier.js` : reposer sur toutes les séq
 Pilote sur `3e_C9.1` (#679), puis décision de Pascal : « appliquer à toutes les séquences les règles d'impression
 compactes testées sur 3e_C9.1 ». Elles sont dans `papier.css` (fin du fichier) et `papier.js` (le pied) :
 - une photo (`img.figure`, ou un `.jpg`, `.jpeg`, `.webp` seul dans sa figure) tient à côté de sa légende ; les schémas
-  et les captures gardent leur largeur ;
+  et les captures gardent leur largeur ; **l'image de la situation déclenchante** (`figure.situation-photo`) aussi,
+  même en PNG (décision de Pascal du 15/11/2026 : 22 séances 1 gagnent une page, aucune fiche n'en prend) ;
 - une réponse courte en rangée (`.qcm-rangee`) : l'énoncé et ses choix sur une ligne ;
 - un Bonus dont les défis sont repliés ne s'imprime pas (son titre resterait seul) ; ce qui ne parle que de l'écran
   (`.activite-en-ligne`, l'état d'un banc) non plus ;

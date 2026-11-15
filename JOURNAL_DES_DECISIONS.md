@@ -30760,3 +30760,14 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 - **Le banc de la séquence** échouait sur `main` (67 / 68) depuis que la page ne dit plus « validée » pour une réponse libre (audit externe, étape 2) : il suit maintenant la page.
 
 **Mesure.** Mots visibles : 1 796 · 908 · 895 · 896 → 868 · 908 · 779 · 896. Règles d'or 0 ✘ ; aération 29 → 0. Bancs 68 / 68 (67 / 68 sur `main`), 32 / 32, 34 / 34. Mode mission : 28 / 28 pourquoi, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : aucun schéma à juger dans la page).
+
+## 15/11/2026 — Impression : l'image de la situation déclenchante tient à côté de sa légende
+
+**La décision.** Pascal, le 15/11/2026 (« Oui pour tout », puis « Tu as carte blanche ») : étendre la règle d'impression « sans blancs » (14/11/2026) aux images PNG de la situation déclenchante.
+
+**Le constat.** La règle « sans blancs » range une photo à côté de sa légende (58 mm de large au lieu de la pleine largeur), mais elle ne reconnaissait une photo qu'à son extension (`.jpg`, `.jpeg`, `.webp`) ou à la classe `figure`. L'image de la situation déclenchante, presque toujours un PNG, s'imprimait donc en pleine largeur, en tête de la séance 1 : une demi-page.
+
+**Ce qui est fait.** Dans `papier.css`, les trois règles de la photo s'appliquent aussi à `figure.situation-photo` (l'image, sa légende, leur rangée), quelle que soit l'extension. Les schémas et les captures gardent leur largeur. La fiche papier est reposée sur les 60 séquences (`poser.py`) ; le générateur de `3e_C9.2` rend les mêmes quatre pages.
+
+**Mesure** (les 173 fiches imprimées de toutes les séquences, avant et après, `banc_papier.py --pdf`) : **697 → 675 pages** ; 22 séances 1 gagnent une page, aucune fiche n'en prend ; blanc perdu en bas de page 21 328 → 19 523 mm. `controle_impression_papier.py` ✅ ; le banc papier ✅ (en-tête, une séance, aucun champ d'écran, aucun texte pâle, première page remplie).
+
