@@ -689,6 +689,9 @@ RAPPELS = [
                    dict(bonne="f0", cit="Le support en haut du mât est fait pour ces dimensions : pas un millimètre de plus")),
          ]),
     dict(id="mat-simulation-3e", niveau="3e",
+         # révision du 15/11/2026 (la charge de lecture de la séance 3, 1 825 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=C8 + "3e/3e_C8.1/sequence_3e_C8.1_mat-de-la-station.html",
          avant='<section class="card" id="act4">\n  <h2>⚖️ Activité 4', balise="h2", balise_exo="h3",
          titre="Une ligne du cahier des charges de la mairie",

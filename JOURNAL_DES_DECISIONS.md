@@ -30888,3 +30888,21 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 - **Le banc de la séquence** échouait sur `main` (57 / 58), comme ceux de `3e_C7.3` à `3e_C7.7` : il suit maintenant la page. Son essai de refus utilise la proposition fausse allongée.
 
 **Mesure.** Mots visibles : 855 · 1 003 · 1 530 → 890 · 1 088 · **1 002** (avec les fiches d'activité, repliées depuis #696). Les séances 1 et 2 prennent quelques mots, à cause des propositions allongées ; la séance 3 en perd 528. **Toutes les séances passent sous le repère.** Règles d'or 0 ✘ ; aération 21 → 0. Bancs 58 / 58 (57 / 58 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (51 / 51), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler).
+
+## 15/11/2026 — Révision des trois thèmes, 37 : `3e_C8.1` (le mât de la station, la simulation)
+
+**Le constat.** Une page sans règle d'or en défaut et sans liste déroulante, mais :
+- la bonne réponse se devinait : **la première 14 fois sur 17**, **la plus longue 10 fois**, souvent de loin (141 caractères contre 63 pour « quel profilé disparaît » ; 90 contre 10 pour « quel réglage faut-il changer ») ;
+- 23 écarts d'aération ;
+- une séance 3 à 1 825 mots, dont la piqûre de rappel du cahier des charges, en écart avec son générateur.
+
+**Ce qui est fait.**
+- **24 propositions fausses s'allongent** d'une raison plausible, sans devenir justes. Par exemple, « la hauteur » devient « la hauteur : un mât plus haut reçoit un vent plus fort, c'est la même chose ». Les bonnes réponses et la table des réponses attendues ne changent pas. Il reste six questions où la bonne réponse est la plus longue, de 2 à 7 caractères.
+- **Places** : 14 groupes mélangés (`melanger_propositions.py`), puis 7 bonnes réponses déplacées à la main hors de la première place ; les réponses chiffrées (combien de profilés retenus) vont dans l'ordre croissant.
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `mat-simulation-3e`, puis `incrustations.py --seq 3e_C8.1`) ; le vérificateur de l'activité 4 ne l'exige pas.
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C8.1.json` : 50 pourquoi).
+- **Le Bonus se replie** ; **aération : 23 → 0** (44 retours à la ligne, trois corrections réécrites en lignes) ; l'annonce de la séance 3 passe en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 355 · 760 · 1 825 → 381 · 827 · **1 243**. Les séances 1 et 2 prennent les mots des propositions allongées. Règles d'or 0 ✘ ; aération 23 → 0. Bancs 62 / 62, 32 / 32, 34 / 34 (comme sur `main`). Mode mission : chaque mauvaise proposition jouée a son pourquoi (44 / 44), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** La séance 3 reste à peine au-dessus du repère (1 243 mots). Le simulateur, l'outil de la séance, y compte pour 187 mots, et l'activité 4 pour 412.
