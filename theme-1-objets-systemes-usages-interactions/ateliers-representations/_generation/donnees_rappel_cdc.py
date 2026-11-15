@@ -487,6 +487,9 @@ RAPPELS = [
          ]),
     dict(id="jardin-incomplet-4e", niveau="4e",
          sequence=C7 + "4e/4e_C7.5/sequence_4e_C7.5_jardin-incomplet.html",
+         # révision du 15/11/2026 (la charge de lecture de la séance 1) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (5 min)&nbsp;: deux lignes du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          avant='<section class="card" id="act0">\n  <h2>🧩 Activité 0', balise="h2", balise_exo="h3",
          titre="Deux lignes du cahier des charges du jardin",
          objet="le prototype d'arrosage", client="le club jardin",
