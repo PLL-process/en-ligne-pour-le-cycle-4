@@ -47,7 +47,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 28 | `3e_C7.1` | 3512 → 3147 | 1 → 0 | 20 → 0 | 12 → 0 | #688 — séance 3 (3 147) très au-dessus du repère : séance 4 proposée à Pascal ; séance 2 (1 755) |
 | 29 | `5e_C5.1` | 1109 | 1 | 30 | 4 | à faire |
 | 30 | `4e_C4.7` | 2022 | 1 | 40 | 7 | à faire |
-| 31 | `5e_C4.7` | 1807 | 1 | 35 | 6 | à faire |
+| 31 | `5e_C4.7` | 1807 → 1695 | 1 → 0 | 35 → 0 (la commande du simulateur reste une liste) | 6 → 0 | livrée #691 — la bonne réponse était 23 fois sur 35 la plus longue : 32 questions réécrites (n°144), chaque erreur « à revoir » et expliquée ; Bonus avec son corrigé ; séances 1 et 3 encore au-dessus du repère (1 695 · 1 584) — même question que 4e_C4.7 |
 | 32 | `3e_C7.3` | 1796 | 0 | 0 | 29 | à faire |
 | 33 | `3e_C7.4` | 1220 | 0 | 0 | 27 | à faire |
 | 34 | `3e_C7.5` | 1439 | 0 | 0 | 26 | à faire |
@@ -171,3 +171,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   gardent leurs appels par le shim `_groupesRadio`) ; aération 12 → 0, dont quatre textes d'ateliers (FAST, croquis)
   corrigés à leur source ; Bonus replié. Séance 3, 3 512 → 3 147 : les activités 6 et 7 avec leurs exercices d'atelier,
   la clôture, et deux cartes après le bilan — une séance 4 est proposée à Pascal.
+- **5e_C4.7** (le réseau de la salle, Packet Tracer), 14/11/2026 (#691) : même famille que `4e_C4.7` — la bonne réponse était
+  23 fois sur 35 la plus longue. 32 questions réécrites, positionnement en boutons, commande du simulateur en liste ;
+  corrections question par question ; n°304 ; lignes Socle, cartouche CRCN et Bonus repliés, le Bonus avec son corrigé.
+  Séances 1 695 · 1 136 · 1 584.
