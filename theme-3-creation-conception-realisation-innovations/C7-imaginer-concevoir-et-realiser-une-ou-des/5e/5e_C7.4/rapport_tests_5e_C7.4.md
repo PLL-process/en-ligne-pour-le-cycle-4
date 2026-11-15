@@ -154,3 +154,24 @@ d'outils (« 🖨 Imprimer / PDF ») est posée. La clôture est complétée : u
 - `verif_regles_audit.py` : les mêmes ✘ qu'avant la reprise (vérifié sur `main`), hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Révision du 15/11/2026 (ligne 50 du suivi) — gabarit commun, chaîne d'énergie, grille, mode mission
+
+Migration au gabarit commun (`migrer_gabarit_306.py`, étayage dans `etayage_sequence_5e_C7.4_indicateur-du-hall.json`) :
+17 listes en boutons radio, la liste des sources du banc déclarée commande (`data-interface`). L'activité 1 se joue
+dans la chaîne d'énergie de l'indicateur (`_outils/chaine_a_completer/`, dessin `hall`) : six cases, cinq étiquettes
+réutilisables (énergie chimique, électrique, lumineuse, mécanique, thermique). La grille de l'activité 4 est lettrée,
+avec une réponse de trop. Le mode mission reçoit 53 pourquoi et 4 indices (`mission_5e_C7.4.json`). Bonus et note
+technique du banc repliés ; aération 16 → 0.
+
+- `node tests_5e_C7.4_sequence.mjs "$PWD/sequence_5e_C7.4_indicateur-du-hall.html" 5e "$PWD/reponses_5e_C7.4.json"` : **35 / 35**
+  (34 / 35 sur `main` : le banc attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour
+  une réponse libre. Shim `_groupesRadio(page)` en tête du banc ; `reponses_5e_C7.4.json` : les réponses de
+  l'activité 1 sont maintenant les étiquettes de la chaîne).
+- `node tests_5e_C7.4_qcm.mjs "$PWD/qcm_5e_C7.4_indicateur-du-hall.html" 5e_C7.4 5e_C3.1 sequence_5e_C7.4_indicateur-du-hall.html` : **32 / 32**.
+- `node tests_regle_311_5e_C7.4.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `controle_chaine_a_completer.py`, `controle_ordre_propositions.py`, `controle_unites.py` : verts. `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
