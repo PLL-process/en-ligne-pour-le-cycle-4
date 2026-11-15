@@ -220,6 +220,11 @@ body.essentiel details.referentiel-replie{display:none}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
   fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0} /* 10/11/2026 : les numéros 1 à 6 en rangée */
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -932,7 +937,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1608,12 +1614,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Le réseau local du collège</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier les équipements d'un réseau local et leur rôle, et situer la porte de sortie vers Internet.</div>
       <div><b>Compétence :</b> 3e_C4.7.</div>
       <div><b>Production attendue :</b> 6 rôles attribués + 2 vrai/faux justifiés.</div>
       <div><b>Ressources :</b> schéma du réseau ci-dessous.</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/reseau_college_vers_internet.svg" type="image/svg+xml" aria-label="Schéma : réseau local du collège avec PC, station d'alerte, commutateur et routeur relié par fibre à Internet, représenté comme un maillage de routeurs desservant maison, mairie et réseau mobile">Schéma du réseau local relié à Internet (SVG)</object>
     <div class="consigne"><b>Consigne :</b> observe le schéma puis attribue son rôle à chaque équipement, et réponds aux vrai/faux.</div>
     <div class="exo">
@@ -1679,12 +1685,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Le grand voyage : Sainte-Luce → Paris</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> représenter le trajet réel d'une information à travers Internet, du réseau local au destinataire.</div>
       <div><b>Compétence :</b> 3e_C4.7.</div>
       <div><b>Production attendue :</b> les 6 étapes ordonnées + schéma du trajet recopié dans le cahier + 1 idée reçue corrigée.</div>
       <div><b>Ressources :</b> carte du trajet ci-dessous.</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/trajet_message_martinique_monde.svg" type="image/svg+xml" aria-label="Carte stylisée : trajet du message depuis Sainte-Luce en Martinique, via le réseau de l'opérateur, un câble sous-marin transatlantique, un centre d'échange en Europe, jusqu'au téléphone du destinataire à Paris">Trajet d'un message de la Martinique vers Paris (SVG)</object>
     <div class="consigne"><b>Consigne :</b> l'alerte part de la station pour prévenir la tante de Maëlle à Paris. Remets les 6 étapes du voyage dans l'ordre (place un numéro de 1 à 6 devant chacune), puis réponds.</div>
     <div class="exo">
@@ -1795,12 +1801,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Découpe, expédie, réassemble !</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> comprendre le découpage en paquets numérotés et le réassemblage à l'arrivée.</div>
       <div><b>Compétence :</b> 3e_C4.7 (+ prépare C4.8).</div>
       <div><b>Production attendue :</b> un message réassemblé dans le simulateur + 3 questions justifiées.</div>
       <div><b>Ressources :</b> simulateur ci-dessous.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) écris un court message d'alerte (au moins 12 caractères) et clique sur « Découper et expédier » : les paquets arrivent dans le désordre ! Remets-les dans l'ordre grâce à leur numéro, puis « Réassembler ». b) Réponds ensuite aux questions.</div>
     <div class="exo">
       <label for="simMsg"><b>Ton message d'alerte :</b></label>
@@ -1881,12 +1887,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   plus besoin.</p>
 </section>
 <!-- /roles: 3e_C4-7 --><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> appliquer une table de routage et justifier la nécessité d'un protocole commun.</div>
       <div><b>Compétence :</b> 3e_C4.8.</div>
       <div><b>Production attendue :</b> 4 paquets correctement aiguillés + 1 justification rédigée.</div>
       <div><b>Ressources :</b> schéma de la table de routage ci-dessous. Version débranchée : mêmes règles, par équipes, avec des enveloppes papier.</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/table_routage_jeu.svg" type="image/svg+xml" aria-label="Le routeur R2 reçoit un paquet pour 203.0.113.25 ; sa table de routage indique de passer par R4 ; en cas de panne de R4 la table se met à jour et le trafic passe par R3">La table de routage du routeur R2 (SVG)</object>
     <div class="consigne"><b>Consigne :</b> tu ES le routeur R2. Ta table : réseau <code>198.51.100.x</code> → R1 · réseau <code>203.0.113.x</code> → R4 · tout le reste → R3. Aiguille chaque paquet, puis justifie.</div>
     <div class="exo">
@@ -1960,12 +1966,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Coupe le câble ! (simulateur de panne)</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> constater expérimentalement la résilience du routage et l'expliquer.</div>
       <div><b>Compétence :</b> 3e_C4.8.</div>
       <div><b>Production attendue :</b> 2 expériences menées au simulateur + 2 réponses + 1 explication.</div>
       <div><b>Ressources :</b> simulateur ci-dessous (réseau de 5 routeurs).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la station (reliée à R1) envoie son alerte vers la mairie (reliée à R5). a) Note le chemin choisi. b) Coupe une liaison DU chemin en cliquant dessus, et observe. c) Continue de couper : que se passe-t-il quand plus AUCUN chemin n'existe ? Réponds ensuite.</div>
     <div class="exo">
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
@@ -2034,12 +2040,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act6">
     <header><span class="num">Réinvestissement</span><h3>🗼 Un mail pour Tokyo</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> réutiliser toutes les notions dans une situation entièrement nouvelle, sans modèle.</div>
       <div><b>Compétences :</b> 3e_C4.7 + C4.8 (bilan).</div>
       <div><b>Production attendue :</b> 6 réponses + 1 justification, sans rouvrir les corrections précédentes.</div>
       <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> depuis le lycée de Rivière-Salée, Kylian envoie à sa correspondante de Tokyo un mail avec une photo (3 000 000 octets). Les paquets transportent 1 500 octets de données chacun. Réponds sans recopier les activités précédentes.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="b6_1" data-melange="1">

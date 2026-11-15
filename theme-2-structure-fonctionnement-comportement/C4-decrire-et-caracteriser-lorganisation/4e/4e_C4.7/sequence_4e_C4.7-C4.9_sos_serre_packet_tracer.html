@@ -202,6 +202,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -909,7 +914,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1607,13 +1613,13 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   plus besoin.</p>
 </section>
 <!-- /roles: 4e_C4-7 -->
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> décider, AVANT de toucher au logiciel, quelle adresse recevra chaque appareil de la serre — comme un urbaniste qui numérote les maisons avant de poser les boîtes aux lettres.</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.7 — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local <em>(ici&nbsp;: la partie «&nbsp;préparer le plan&nbsp;»)</em>.</div>
     <div><b>Production&nbsp;:</b> TON plan d'adressage (choix + justification écrite), puis sa comparaison avec le plan de référence de M. Firmin.</div>
     <div><b>Ressources&nbsp;:</b> la recette de conception en 4 étapes, le plan de référence de la serre.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 «&nbsp;conception, création, réalisation&nbsp;» — tu conçois ton propre plan avant de voir la référence · D2 «&nbsp;coopération&nbsp;» — revue de plan croisée avec le binôme voisin.</p></details>
-  </div>
+  </div></details>
 
   <p><b>La règle du jeu (règle d'or de l'atelier)&nbsp;:</b> tu <b>conçois d'abord</b>, tu compares ensuite. <br>Le plan
   de référence n'apparaît qu'à l'étape de lecture — c'est TA proposition qui compte, même différente de la nôtre,
@@ -1818,13 +1824,13 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
 </section>
 <section class="card">
   <h2>🧱 Activité 2 — Construire le réseau d'entraînement de la serre <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> monter dans Packet Tracer le réseau sur lequel toute la suite s'appuie — exactement comme le ferait un technicien sur un réseau d'entraînement «&nbsp;déconnecté du réseau pédagogique&nbsp;».</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.8 — Résoudre des problèmes… dans un réseau informatique (simulation ou réseau local déconnecté) <em>(ici&nbsp;: préparer le banc d'essai)</em>.</div>
     <div><b>Production&nbsp;:</b> le fichier <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">serre_4X_NOM_Prenom.pkt</span> avec 5 équipements nommés et câblés, liaisons vertes.</div>
     <div><b>Ressources&nbsp;:</b> la recette A→G ci-dessous, le schéma du montage terminé.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D2 «&nbsp;outils numériques&nbsp;» — fichier nommé, rangé, réutilisable · D4 «&nbsp;conception, création, réalisation&nbsp;» — du plan papier au montage qui fonctionne.</p></details>
-  </div>
+  </div></details>
 
   <p>La recette est courte&nbsp;: elle suppose les gestes de base de Packet Tracer (l'échauffement ci-dessus les rappelle).
   <br><b>Binômes pilote/copilote&nbsp;:</b> le pilote manipule, le copilote lit la recette à voix haute et
@@ -1950,13 +1956,13 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
 
 <section class="card">
   <h2>⭐ Activité 3 — L'adresse fixe du capteur, passerelle comprise <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> appliquer TON plan d'adressage dans le logiciel — et découvrir la ligne que la 5e laissait vide&nbsp;: la passerelle.</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.7 — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local <em>(le cœur du code)</em>.</div>
     <div><b>Production&nbsp;:</b> les 4 terminaux adressés + LA preuve obligatoire (ping vers le capteur) + deux pings de validation.</div>
     <div><b>Ressources&nbsp;:</b> la fenêtre IP Configuration reconstituée, les transcriptions de ping observées dans le simulateur.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 «&nbsp;démarches scientifiques&nbsp;» — on paramètre, puis on PROUVE par le test · CRCN 5.1 Résoudre des problèmes techniques (niv. 2) — procédure de paramétrage menée seul·e.</p></details>
-  </div>
+  </div></details>
 
   <p><b>Pourquoi une adresse FIXE&nbsp;?</b> Ta tablette, chez toi, reçoit une adresse automatique (DHCP) qui peut
   changer chaque jour — aucune importance, personne ne l'appelle. <br>Mais le capteur de la serre est un
@@ -2085,13 +2091,13 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
 
 <section class="card">
   <h2>🩺 Activité 4 — La clinique du réseau : la panne «&nbsp;mauvaise rue&nbsp;» <span style="font-size:.7em;color:var(--sub)">(~35 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> apprendre LA démarche du dépanneur — quatre étapes, toujours les mêmes — sur une panne que nous avons réellement provoquée.</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.8 — Résoudre des problèmes pour assurer la communication entre les différents terminaux d'un réseau informatique.</div>
     <div><b>Production&nbsp;:</b> un diagnostic complet (symptôme → hypothèse → test → remède) + les deux consultations du mini-simulateur réellement jouées.</div>
     <div><b>Ressources&nbsp;:</b> la boucle du dépanneur, la transcription réelle de la panne, la clinique du réseau (mini-simulateur).</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 «&nbsp;démarches scientifiques&nbsp;» — hypothèse testée avant tout remède · CRCN 5.1 Résoudre des problèmes techniques (niv. 3) — cartouche complet ci-dessous.</p></details>
-  </div>
+  </div></details>
   <details class="cartouche-replie"><summary>🎯 La compétence numérique travaillée ici : CRCN 5.1 Résoudre des problèmes techniques</summary>
   <div class="cartouche-crcn">
     <b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé&nbsp;: 3<br>
@@ -2295,13 +2301,13 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
 
 <section class="card">
   <h2>🧪 Activité 5 — Panne n°2 et validation par la simulation <span style="font-size:.7em;color:var(--sub)">(~35 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> reconnaître une panne d'une AUTRE famille (la liaison), puis compléter la simulation fournie pour prouver que le réseau réparé se comporte comme prévu.</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.9 — Compléter une simulation fournie pour valider le comportement d'un réseau informatique <em>(et 4e_C4.8 pour le dépannage)</em>.</div>
     <div><b>Production&nbsp;:</b> la panne «&nbsp;liaison coupée&nbsp;» réparée + l'enveloppe du mode Simulation ajoutée au fichier fourni et son trajet relevé.</div>
     <div><b>Ressources&nbsp;:</b> le fichier fourni <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">4e_serre_TECHNO-C4.pkt</span>, le schéma de la panne, le trajet de l'enveloppe.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 «&nbsp;démarches scientifiques&nbsp;» — valider un comportement par l'expérience simulée · D2 «&nbsp;outils numériques&nbsp;» — compléter un fichier fourni sans le casser.</p></details>
-  </div>
+  </div></details>
 
   <h3>Le cas réel n°2 — l'imprimante au lien rouge</h3>
   <p>Deuxième consultation à la clinique&nbsp;: cette fois, <b>l'adresse de l'imprimante est parfaite</b>… et pourtant

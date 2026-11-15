@@ -193,6 +193,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -900,7 +905,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1572,13 +1578,13 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   plus besoin.</p>
 </section>
 <!-- /roles: 5e_C4-7 --><span class="duree">⏱ ≈ 20 min</span></header>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> découvrir, en jouant, pourquoi une livraison a besoin d'un destinataire clairement identifié.</div>
     <div><b>Compétence&nbsp;:</b> 5e_C4.8 — Justifier la nécessité d'identifier les terminaux pour communiquer sur un réseau local (activité débranchée et vérification par un outil de simulation).</div>
     <div><b>Production&nbsp;:</b> les rôles du jeu associés aux mots du réseau + une règle rédigée.</div>
     <div><b>Ressources&nbsp;:</b> 5 cartes-prénoms, des enveloppes, le schéma «&nbsp;Le facteur du réseau&nbsp;» ci-dessous.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D2 «&nbsp;Les méthodes et outils pour apprendre&nbsp;» — coopération dans le jeu de rôles (facteur, destinataires, observateur) · D4 «&nbsp;Les systèmes naturels et les systèmes techniques&nbsp;» — première analyse du réseau comme système.</p></details>
-  </div>
+  </div></details>
   <div class="consigne"><b>Consigne (on joue d'abord, on nomme ensuite)&nbsp;:</b> former un groupe de six&nbsp;: un
   <b>facteur</b> debout au centre, quatre <b>destinataires</b> assis aux quatre coins, un <b>observateur</b> qui note.
   <br>① <b>Manche 1&nbsp;:</b> chaque destinataire reçoit une carte-prénom différente. L'observateur écrit un mot,
@@ -1659,13 +1665,13 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <div class="activite">
   <header><span class="num">Activité 2</span><h3>Les appareils de la salle — concevoir son schéma, puis apprendre leurs vrais noms</h3><span class="duree">⏱ ≈ 30 min</span></header>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> nommer les composants d'un réseau local et reconnaître sa forme (sa topologie).</div>
     <div><b>Compétence&nbsp;:</b> 5e_C4.7 — Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie.</div>
     <div><b>Production&nbsp;:</b> TON schéma du réseau conçu au cahier (recette guidée) + description enregistrée, puis le schéma du technicien lu et vérifié.</div>
     <div><b>Ressources&nbsp;:</b> le schéma d'ensemble ci-dessous — c'est le réseau que TU construiras en séance 2.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 «&nbsp;conception, création, réalisation&nbsp;» — CONCEVOIR son schéma avant de lire la référence · D2 — organiser l'information sous forme de schéma normé (traits pleins / pointillés).</p></details>
-  </div>
+  </div></details>
   <div class="consigne"><b>Consigne (dans cet ordre — on conçoit AVANT de regarder la solution)&nbsp;:</b>
   ① lire l'encadré «&nbsp;les 4 mots du réseau&nbsp;»&nbsp;; ② CONCEVOIR ton propre schéma au cahier en suivant la
   recette ci-dessous&nbsp;; ③ seulement ensuite, comparer avec le schéma du technicien et faire l'exercice de lecture.</div>
@@ -1837,13 +1843,13 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 </section>
 <div class="activite">
   <header><span class="num">Activité 3</span><h3>Construire le réseau dans Packet Tracer — le guide qui ne saute aucune étape</h3><span class="duree">⏱ ≈ 45 min</span></header>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> assembler le réseau complet de la salle (composants + liaisons) dans le simulateur.</div>
     <div><b>Compétence&nbsp;:</b> 5e_C4.7 — Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie.</div>
     <div><b>Production&nbsp;:</b> ton fichier <b>reseau_5X_NOM_Prenom.pkt</b> + 4 relevés faits DANS le logiciel.</div>
     <div><b>Ressources&nbsp;:</b> Cisco Packet Tracer 8.2 (un poste pour deux) — guide A→H ci-dessous, capture par capture.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D2 «&nbsp;coopération et réalisation de projets&nbsp;» — binôme pilote/copilote à rôles tournants, protocole suivi pas à pas · D4 «&nbsp;conception, création, réalisation&nbsp;» — réaliser SON schéma en simulation.</p></details>
-  </div>
+  </div></details>
   <div class="consigne"><b>Consigne&nbsp;:</b> suivre le guide étape par étape, à deux&nbsp;: l'un manipule («&nbsp;pilote&nbsp;»), l'autre lit le guide à voix haute («&nbsp;copilote&nbsp;») — échanger les rôles à l'étape E. Les questions 🔎 se répondent en OBSERVANT ton écran&nbsp;: elles prouvent que tu as vraiment fait la manipulation.
   <br>🖊 <b>Important — c'est TON schéma qui se construit&nbsp;:</b> poser les appareils selon le plan que tu as conçu à
   l'activité 2 (ton commutateur au centre, tes terminaux autour). Le guide t'enseigne les GESTES du logiciel, capture
@@ -1974,13 +1980,13 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <div class="activite">
   <header><span class="num">Activité 4</span><h3>Une adresse pour chacun — la rue 192.168.10</h3><span class="duree">⏱ ≈ 20 min</span></header>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> donner à chaque terminal une identification unique&nbsp;: son adresse IP.</div>
     <div><b>Compétence&nbsp;:</b> 5e_C4.8 — Justifier la nécessité d'identifier les terminaux pour communiquer sur un réseau local (activité débranchée et vérification par un outil de simulation).</div>
     <div><b>Production&nbsp;:</b> les 5 terminaux du fichier .pkt adressés selon la table de la salle.</div>
     <div><b>Ressources&nbsp;:</b> la capture «&nbsp;IP Configuration&nbsp;» et l'analogie de la rue, ci-dessous.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 — paramétrer un composant d'un système technique (adresse d'un terminal) · D2 «&nbsp;outils numériques&nbsp;» — utiliser méthodiquement une fenêtre de configuration.</p></details>
-  </div>
+  </div></details>
   <div class="consigne"><b>Consigne&nbsp;:</b> observer d'abord l'image de la rue (en haut à droite de la capture), puis, dans
   Packet Tracer, ouvrir chaque terminal&nbsp;: onglet <b>Desktop</b> → <b>IP Configuration</b> → cocher <b>Static</b> →
   taper l'adresse de la table. Faire les cinq, puis répondre.</div>
@@ -2053,13 +2059,13 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <div class="activite">
   <header><span class="num">Activité 5</span><h3>La preuve par le message — ping, enveloppe… et la panne interdite</h3><span class="duree">⏱ ≈ 25 min</span></header>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> prouver que le réseau livre correctement — et vérifier ce qui casse quand deux adresses sont identiques.</div>
     <div><b>Compétence&nbsp;:</b> 5e_C4.8 — Justifier la nécessité d'identifier les terminaux (vérification par un outil de simulation) · CRCN 5.1 Résoudre des problèmes techniques (voir cartouche).</div>
     <div><b>Production&nbsp;:</b> deux tests ping relevés + le trajet de l'enveloppe observé (dans Packet Tracer ET dans le mini-simulateur ci-dessous).</div>
     <div><b>Ressources&nbsp;:</b> la capture «&nbsp;ping + Simulation&nbsp;», le mini-simulateur d'enveloppe intégré.</div>
     <details class="socle-replie" style="grid-column:1/-1"><summary>Le socle commun travaillé</summary><p>D4 «&nbsp;démarches scientifiques&nbsp;» — hypothèse, expérience du doublon, preuve par le ping · CRCN 5.1 Résoudre des problèmes techniques (niv. 2) — cartouche complet ci-dessous.</p></details>
-  </div>
+  </div></details>
   <details class="cartouche-replie"><summary>🎯 La compétence numérique travaillée ici : CRCN 5.1 Résoudre des problèmes techniques</summary>
   <div class="cartouche-crcn">
     <b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé&nbsp;: 2<br>

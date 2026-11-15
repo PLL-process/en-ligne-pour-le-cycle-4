@@ -152,6 +152,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -834,7 +839,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1517,8 +1523,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act1">
   <h2>🖐️ Activité 1 — Prendre le simulateur en main <span class="chrono">⏱ ~15 min</span></h2>
-  <p><b>Objectif :</b> lire ce que le simulateur affiche. <b>Production :</b> trois réponses
-  justes. <b>Ressource :</b> le simulateur, <a class="lien-outil" href="#simuCard">plus haut</a>.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue, ressources</summary><p><b>Objectif :</b> lire ce que le simulateur affiche. <b>Production :</b> trois réponses
+  justes. <b>Ressource :</b> le simulateur, <a class="lien-outil" href="#simuCard">plus haut</a>.</p></details>
   
 
   <div class="exo">
@@ -1571,8 +1577,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>📊 Activité 2 — Cinq matériaux, une seule contrainte <span class="chrono">⏱ ~20 min</span></h2>
-  <p><b>Objectif :</b> classer les cinq matériaux. <b>Production :</b> le tableau du simulateur
-  rempli. <b>Ressource :</b> le simulateur, <a class="lien-outil" href="#simuCard">plus haut</a>.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue, ressources</summary><p><b>Objectif :</b> classer les cinq matériaux. <b>Production :</b> le tableau du simulateur
+  rempli. <b>Ressource :</b> le simulateur, <a class="lien-outil" href="#simuCard">plus haut</a>.</p></details>
   <div class="exo">
     <h4>Fais, puis réponds</h4>
     <p>Reviens au simulateur. Pour <b>chacun des cinq matériaux</b>, à
@@ -1619,8 +1625,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act3">
   <h2>⚖️ Activité 3 — Le banc ne disait pas la même chose <span class="chrono">⏱ ~20 min</span></h2>
-  <p><b>Objectif :</b> comprendre pourquoi deux instruments justes se contredisent.
-  <b>Production :</b> trois réponses justes. <b>Ressource :</b> tes relevés de 5e_C8.2.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue, ressources</summary><p><b>Objectif :</b> comprendre pourquoi deux instruments justes se contredisent.
+  <b>Production :</b> trois réponses justes. <b>Ressource :</b> tes relevés de 5e_C8.2.</p></details>
   <table class="refs">
     <tr><th>Matériau</th><th>Charge de rupture relevée au banc</th>
       <th>Coefficient sur la rupture</th><th>Décision du banc</th></tr>
@@ -1674,8 +1680,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>🧾 Activité 4 — Choisir, et signer l'avis <span class="chrono">⏱ ~20 min</span></h2>
-  <p><b>Objectif :</b> transformer un classement en décision. <b>Production :</b> un matériau
-  choisi et une réserve écrite. <b>Ressource :</b> le tableau ci-dessous.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue, ressources</summary><p><b>Objectif :</b> transformer un classement en décision. <b>Production :</b> un matériau
+  choisi et une réserve écrite. <b>Ressource :</b> le tableau ci-dessous.</p></details>
   <table class="refs">
     <tr><th>Matériau retenu</th><th>Coût des 40 patères</th>
       <th>Temps d'atelier</th><th>Réserve</th></tr>

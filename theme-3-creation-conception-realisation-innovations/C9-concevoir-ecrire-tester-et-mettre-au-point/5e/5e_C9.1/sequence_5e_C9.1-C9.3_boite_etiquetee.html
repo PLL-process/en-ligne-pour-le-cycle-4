@@ -267,6 +267,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -980,7 +985,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1570,12 +1576,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Exécute le compteur À LA MAIN</h3><span class="duree">⏱ ~20 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> découvrir que chaque variable est une boîte étiquetée, et que le signe = RANGE une valeur dedans.</div>
       <div><b>Compétence :</b> 5e_C9.1 (analyser un programme simple fourni).</div>
       <div><b>Production attendue :</b> les 4 étapes exécutées + 3 réponses.</div>
       <div><b>Ressources :</b> le document 1 + le simulateur.</div>
-    </div>
+    </div></details>
     <figure>
       <object class="figure" data="Images/compteur_cyclone_boites.svg" type="image/svg+xml" aria-label="Le compteur du Cyclone : le programme, les boîtes de la mémoire, le panneau" style="width:100%"></object>
       <figcaption>Document 1 — Le programme, la mémoire (des boîtes étiquetées), le panneau.</figcaption>
@@ -1626,12 +1632,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>La table de suivi — ta méthode du doigt</h3><span class="duree">⏱ ~20 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> suivre un programme SANS ordinateur, avec une table (une colonne par boîte).</div>
       <div><b>Compétence :</b> 5e_C9.1.</div>
       <div><b>Production attendue :</b> 4 cases de la table.</div>
       <div><b>Ressources :</b> ton doigt, ta tête — pas l'ordinateur.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> une deuxième journée au Cyclone. SANS exécuter, suis les boîtes
     ligne par ligne avec ton doigt et complète.</div>
     <pre class="code">places = 24
@@ -1724,12 +1730,12 @@ print("2 + 3 =", 2 + 3)
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter, dans l'éditeur Python</h3><span class="duree">⏱ ~20 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> exécuter tes premiers programmes dans le VRAI éditeur — et découvrir le piège des guillemets.</div>
       <div><b>Compétence :</b> 5e_C9.1 · CRCN 3.4 Programmer (Niv. 1-2) — trace : tes reports enregistrés dans la page.</div>
       <div><b>Production attendue :</b> 2 prédictions + 2 tests réels + 2 reports.</div>
       <div><b>Ressources :</b> l'éditeur Python de la page, ci-dessous.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> ① PRÉDIS chaque résultat. ② dans l'éditeur Python ci-dessous, où les deux expériences sont écrites, clique ▶&nbsp;Exécuter.
     ③ REPORTE ce que la console affiche vraiment.</div>
     <div class="exo">
@@ -1777,12 +1783,12 @@ print("20" + "4")
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Le programme du responsable : réponds-il au besoin ?</h3><span class="duree">⏱ ~25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> TESTER un programme fourni sur plusieurs cas et conclure : répond-il au besoin, oui ou non ?</div>
       <div><b>Compétence :</b> 5e_C9.1 (tester s'il répond au besoin ou au problème posé).</div>
       <div><b>Production attendue :</b> 3 tests exécutés + le verdict.</div>
       <div><b>Ressources :</b> le programme fourni + le banc de tests intégré.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> voici le programme JOINT au message du responsable. Le besoin :
     « après chaque embarquement, afficher le bon nombre de places libres ». Exécute les 3 tests du banc
     (badge 🔓), compare « attendu » et « obtenu », puis rends ton verdict.</div>
@@ -1837,12 +1843,12 @@ print("Places libres :", places)</pre>
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Corriger, adapter… puis commander la barrière</h3><span class="duree">⏱ ~45 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> modifier le programme fourni (C9.2) puis réaliser et mettre au point le programme de la barrière (C9.3).</div>
       <div><b>Compétences :</b> 5e_C9.2 et 5e_C9.3.</div>
       <div><b>Production attendue :</b> 2 modifications + le réglage de la barrière (3 tests) + le programme de la barrière.</div>
       <div><b>Ressources :</b> le document 2 + le banc de la barrière + l'éditeur.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne — partie ① MODIFIER :</b> le responsable valide ton diagnostic et
     annonce du neuf : le Cyclone reçoit un nouveau train de <b>32 places</b>. Deux modifications à faire.</div>
     <div class="exo">

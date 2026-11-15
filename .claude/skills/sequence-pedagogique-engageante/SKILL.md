@@ -100,6 +100,11 @@ aujourd'hui seulement les quatre pages de la station 3e_C9.2, engendrées depuis
 - Pour chaque séance : question directrice, durée, objectif, organisation, matériel, consignes et activités alternées
   (observation → investigation → manipulation ou simulation → conception → test → argumentation). Ajouter les productions
   intermédiaires, les aides de niveau 1 et 2 (`details.aide1`, `details.aide2`) et les critères de réussite.
+- La fiche de chaque activité (objectif, compétence, production attendue, ressources) se range dans un
+  `<details class="fiche-activite">` fermé, sous le titre de l'activité, avec un résumé qui nomme ses rubriques
+  (décision de Pascal du 15/11/2026 : la consigne dit déjà quoi faire). Outil rejouable :
+  `python3 _outils/replier_fiches_activite.py <page> --ecrire` ; un exercice d'atelier incrusté reçoit la même chose de
+  son générateur (`incrustations.py`). Elle ne s'imprime pas (un dépliant fermé ne sort pas sur la fiche papier).
 - Durée : la somme des activités plus la marge de service tient dans le temps disponible (n°23).
 - Chaque production demandée a son champ (n°67) et, si elle est écrite, sa version étayée (n°31). Son corrigé complet
   est replié et vient après l'activité (n°43).

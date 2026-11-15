@@ -159,6 +159,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style>
 /* Expérience de Herschel pas à pas (24/09/2026) */
@@ -1103,7 +1108,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1711,13 +1717,13 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </section>
   <section class="card">
     <h2>🗼 Activité 1 — Ce qui a changé, et ce qui a rompu <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
-    <div class="meta"><b>Objectif</b> distinguer une amélioration d'une innovation de rupture, et
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta"><b>Objectif</b> distinguer une amélioration d'une innovation de rupture, et
     situer une découverte scientifique par rapport à ses usages ·
     <b>Compétences</b> 3e_C1.1 · 3e_C1.2 ·
     <b>Production</b> le tableau des trois régimes, la distance découverte → usage, et trois
     métiers face à la même question ·
     <b>Ressources</b> le schéma de l'expérience de Herschel, et les deux corrigés graphiques de
-    cette activité</div>
+    cette activité</div></details>
 
     <p>Surveiller les feux de végétation ne s'est pas fait de la même façon selon les époques.
     On appelle <b>régime de surveillance</b> une <b>façon de surveiller</b>&nbsp;: qui regarde, avec
@@ -2137,9 +2143,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </section>
   <section class="card">
     <h2>📊 Activité 2 — Ce que les données permettent d'affirmer <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
-    <div class="meta"><b>Objectif</b> construire une matrice de comparabilité avant tout calcul ·
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue, ressources</summary><div class="meta"><b>Objectif</b> construire une matrice de comparabilité avant tout calcul ·
     <b>Production</b> le fichier transformé, et quatre décisions justifiées ·
-    <b>Ressources</b> <a href="donnees_impacts_feux_activites_conflit_3e.csv" download>📊 le jeu de données</a> (public et sourcé)</div>
+    <b>Ressources</b> <a href="donnees_impacts_feux_activites_conflit_3e.csv" download>📊 le jeu de données</a> (public et sourcé)</div></details>
 
     <p>Ouvre le fichier dans un tableur. Il rassemble des indicateurs de <b>trois catégories</b>&nbsp;:
     des feux, des activités humaines, et un conflit. Avant de calculer quoi que ce soit, il faut
@@ -2242,8 +2248,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <p class="mots-seance"><a href="lexique_3e_C1.1.html#seance-s3">📖 Les mots de cette séance</a></p>
   <section class="card">
     <h2>🧮 Activité 3 — Un proxy, et sa critique <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
-    <div class="meta"><b>Objectif</b> construire une estimation, puis en annoncer les limites ·
-    <b>Production</b> le ratio, l'estimation, les équivalences et l'avertissement méthodologique</div>
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue</summary><div class="meta"><b>Objectif</b> construire une estimation, puis en annoncer les limites ·
+    <b>Production</b> le ratio, l'estimation, les équivalences et l'avertissement méthodologique</div></details>
 
     <p>Le <b>JRC/EFFIS</b> — le service de la Commission européenne qui cartographie les feux —
     indique qu'en <b>2023</b>, environ <b>504 002 ha</b> ont brûlé dans l'Union européenne, et que
@@ -2331,9 +2337,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <p class="mots-seance"><a href="lexique_3e_C1.1.html#seance-s4">📖 Les mots de cette séance</a></p>
   <section class="card">
     <h2>⚖️ Activité 4 — Ce qui ne se convertit pas <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
-    <div class="meta"><b>Objectif</b> reconnaître des grandeurs incommensurables, et refuser une
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> reconnaître des grandeurs incommensurables, et refuser une
     conversion abusive · <b>Compétence</b> 3e_C1.4 ·
-    <b>Production</b> le calcul du taux, le ratio critiqué, et ce qu'aucun chiffre ne dit</div>
+    <b>Production</b> le calcul du taux, le ratio critiqué, et ce qu'aucun chiffre ne dit</div></details>
 
     <div class="piege" style="border-left-width:4px;padding:10px 14px;margin:14px 0">
       <p style="margin:0"><b>Avant de commencer — phrase obligatoire, à lire et à garder présente
@@ -2485,10 +2491,10 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <p class="mots-seance"><a href="lexique_3e_C1.1.html#seance-s5">📖 Les mots de cette séance</a></p>
   <section class="card">
     <h2>✍️ Activité 5 — Deux argumentaires courts <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
-    <div class="meta"><b>Objectif</b> exprimer dans un argumentaire court l'incidence d'un OST sur
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> exprimer dans un argumentaire court l'incidence d'un OST sur
     la société, et celle des contraintes sociétales sur l'OST ·
     <b>Compétences</b> 3e_C1.3 · 3e_C1.4 ·
-    <b>Production</b> deux argumentaires de 6 à 8 lignes, appuyés sur les séances précédentes</div>
+    <b>Production</b> deux argumentaires de 6 à 8 lignes, appuyés sur les séances précédentes</div></details>
 
     <p>Quatre familles de solutions sont envisagées pour aider les secours. Chacune a un usage, des
     limites, des données nécessaires et une forme de contrôle humain.</p>

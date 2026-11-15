@@ -30805,6 +30805,23 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 
 **La décision.** #687 laissait les séances 1 (2 166 mots) et 2 (2 004) au-dessus du repère, à cause d'un exercice d'atelier chacune (la bête à cornes, environ 700 mots ; la pieuvre, environ 1 280), et posait la question. Pascal, le 15/11/2026 : on garde les exercices d'atelier. L'écart est justifié dans le suivi ; le repli des fiches d'activité, décidé le même jour pour toutes les séquences, allège ce qui les entoure.
 
+## 15/11/2026 — La fiche de chaque activité se replie, sur toutes les séquences
+
+**La décision.** Pascal, le 15/11/2026 (« Oui pour tout », puis « Tu as carte blanche ») : replier les fiches d'activité sur toutes les séquences, d'un seul outil commun, au lieu de séquence par séquence pendant la révision.
+
+**Le constat.** Chaque activité s'ouvre sur sa fiche : objectif, compétence, production attendue, ressources, parfois la durée ou le socle. De 40 à 130 mots, quatre à dix fois par séquence, toujours à découvert, alors que la consigne qui suit dit déjà quoi faire. C'était une bonne part du texte que l'élève lisait sans en avoir besoin pour faire. Trois formes coexistent : la grille du gabarit commun (`div.meta-grid`, 110 fiches), la fiche en une ligne (`div.meta`, 92, dont 42 dans les exercices d'atelier incrustés) et la fiche en un paragraphe (`<p><b>Objectif&nbsp;:</b>`, 39, familles C7 et C8).
+
+**Ce qui est fait.**
+- **Un outil rejouable**, `_outils/replier_fiches_activite.py` (`--ecrire`, `--etat`) : chaque fiche entre, telle quelle, dans un `<details class="fiche-activite">` fermé, sous un résumé qui nomme ses rubriques — « 🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources ». Une fiche déjà repliée n'est pas touchée ; le style du dépliant se pose avant le premier `</style>` de la page. **241 fiches dans 53 pages** ; rien n'est retiré.
+- **Les exercices d'atelier incrustés** reçoivent la même chose de leur générateur : `moteur.exercice(…, fiche_repliee=True)`, appelé par `incrustations.py` seulement — « 🗂 La fiche de l'exercice : objectif, compétence, ce que tu produis, durée ». Les pages d'atelier gardent leur fiche ouverte. `incrustations.py --verifier` : les 10 incrustations à jour le restent (15 étaient déjà en écart sur `main`, pour d'autres raisons, et le restent).
+- **Le mode mission** range la fiche repliée avec le titre de l'activité, comme la grille d'avant (`mission.js`) ; le bloc est reposé sur les 60 pages (`poser.py`).
+- **`3e_C9.2`** : le générateur des quatre pages rend les mêmes pages que l'outil (vérifié dans une copie).
+- Les skills `sequence-pedagogique-engageante`, `revision-sequence` et `controle-qualite-lot`, et `_outils/METHODE.md`, le disent : une page neuve naît avec ses fiches repliées.
+
+**Mesure** (les 56 pages que mesure `mesurer_charge.mjs`, 192 séances, avant et après) : **−7 868 mots visibles** (−3,8 %) ; médiane par séance 1 009 → 972 ; séances au-delà de 1 200 mots **69 → 63** ; aucune séance n'augmente ; jusqu'à −206 mots dans une séance (`3e_C4.8`, séance 1). Mode mission (`banc_generique.mjs`) : les 60 pages jouées écran par écran, aucun refus. Règles d'or : 36 ✘ sur `main`, 36 après (aucun ajouté) ; `controle_hierarchie`, `controle_competences`, `controle_impression_papier` verts ; aération inchangée. Impression (les 173 fiches de toutes les séquences, `banc_papier.py --pdf`) : **697 → 680 pages** ; 17 fiches gagnent une page, aucune n'en prend. Contrôles du site : les 24 sont verts sur l'état final — les 17 rapides et les 7 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité d'une page à grille d'activité, `3e_C4.1`).
+
+**À savoir.** La fiche d'activité ne s'imprime plus : un dépliant fermé ne sort pas sur la fiche papier. Le professeur l'ouvre d'un tap pour présenter l'activité ; la synthèse professeur garde les compétences et les productions attendues.
+
 ## 15/11/2026 — Révision des trois thèmes, 34 : `3e_C7.5` (la station qu'il faut équiper)
 
 **Le constat.** Une page sans règle d'or en défaut et sans liste déroulante, mais :

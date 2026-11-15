@@ -185,6 +185,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -867,7 +872,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1529,8 +1535,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>📋 Activité 1 — Lire le protocole AVANT d'y toucher ⏱ ~15 min</h2>
-  <p><b>Objectif :</b> comprendre ce qu'on te demande de faire, avant de le faire.
-  <b>Compétence :</b> 5e_C8.2. <b>Production attendue :</b> 4 réponses + une phrase.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> comprendre ce qu'on te demande de faire, avant de le faire.
+  <b>Compétence :</b> 5e_C8.2. <b>Production attendue :</b> 4 réponses + une phrase.</p></details>
 
   <div class="exo">
     <h4>📄 Le protocole d'essai — fourni par le laboratoire</h4>
@@ -1604,8 +1610,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>🧪 Activité 2 — Mettre en œuvre : les cinq relevés ⏱ ~25 min</h2>
-  <p><b>Objectif :</b> appliquer le protocole aux cinq matériaux et relever. <b>Compétence :</b>
-  5e_C8.2. <b>Production attendue :</b> 5 charges de rupture relevées au banc.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> appliquer le protocole aux cinq matériaux et relever. <b>Compétence :</b>
+  5e_C8.2. <b>Production attendue :</b> 5 charges de rupture relevées au banc.</p></details>
   <p>Remonte au banc de l'activité 0. Pour chaque matériau : éprouvette neuve (↺), charge par
   paliers, et note la valeur <b>au moment de la rupture</b>.</p>
 
@@ -1652,8 +1658,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act3">
   <h2>⚖️ Activité 3 — Décider, et le justifier ⏱ ~20 min</h2>
-  <p><b>Objectif :</b> transformer cinq nombres en une décision. <b>Compétences :</b> 5e_C8.2 et
-  5e_C3.1. <b>Production attendue :</b> 3 réponses + une justification chiffrée.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> transformer cinq nombres en une décision. <b>Compétences :</b> 5e_C8.2 et
+  5e_C3.1. <b>Production attendue :</b> 3 réponses + une justification chiffrée.</p></details>
 
   <div class="exo">
     <h4>Le cahier des charges du gestionnaire</h4>
@@ -1708,8 +1714,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>🕳️ Activité 4 — Ce que l'essai ne dit pas ⏱ ~15 min</h2>
-  <p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b> 5e_C3.1.
-  <b>Production attendue :</b> 5 associations.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b> 5e_C3.1.
+  <b>Production attendue :</b> 5 associations.</p></details>
   <p>Les cinq matériaux passent la barre. Pourtant on ne va pas faire la patère en n'importe quoi.
   Associe chaque matériau à la <em>chose que l'essai de traction n'a pas vue</em>.</p>
   <div class="exo">

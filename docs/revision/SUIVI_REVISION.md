@@ -15,6 +15,11 @@ les thèmes de toutes les séquences ». Méthode : skill `revision-sequence`. U
 **État de départ, 08/11/2026** (56 séquences, 188 séances) : médiane 1 134 mots visibles par séance ; **86 séances au-delà
 de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 questions en listes déroulantes et 897 écarts d’aération sur les pages de séquence (914 comptés d'abord : l'audit lisait aussi la description des schémas SVG, corrigé le jour même) ; **1 séquence propre** (5e_C3.1).
 
+**Changement commun, 15/11/2026** (décision de Pascal, #696) : la fiche de chaque activité se replie, sur toutes les
+séquences (`_outils/replier_fiches_activite.py`, 241 fiches dans 53 pages) : −7 868 mots visibles ; séances au-delà de
+1 200 mots, 69 → 63 ; aucune n'augmente. Les chiffres des lignes ci-dessous sont ceux de leur passe ; ils baissent
+d'autant.
+
 | N° | Séquence | Séance la plus lourde (mots) | ✘ règles | Menus | Aération | État |
 |---|---|---|---|---|---|---|
 | 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |

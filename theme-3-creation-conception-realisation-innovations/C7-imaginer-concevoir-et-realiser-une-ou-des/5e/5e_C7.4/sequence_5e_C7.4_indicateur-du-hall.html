@@ -202,6 +202,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -884,7 +889,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1570,8 +1576,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act1">
   <h2>🔁 Activité 1 — D'où vient l'énergie, et sous quelle forme ⏱ ~20 min</h2>
-  <p><b>Objectif :</b> nommer la forme d'énergie au départ de chaque source.
-  <b>Compétence :</b> 5e_C3.1. <b>Production attendue :</b> 5 associations + 1 réponse.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> nommer la forme d'énergie au départ de chaque source.
+  <b>Compétence :</b> 5e_C3.1. <b>Production attendue :</b> 5 associations + 1 réponse.</p></details>
   <p>Une source d'énergie n'est pas de l'électricité : c'est ce qui va <em>devenir</em> de
   l'électricité. Associe chaque source à la forme d'énergie qu'elle contient <b>au départ</b>.</p>
   <div class="exo">
@@ -1662,8 +1668,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act2">
   <h2>📋 Activité 2 — Relever ce que chaque source donne vraiment ⏱ ~20 min</h2>
-  <p><b>Objectif :</b> lire au banc, et écrire ce qu'on a lu. <b>Compétence :</b>
-  5e_C7.4. <b>Production attendue :</b> 5 relevés.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> lire au banc, et écrire ce qu'on a lu. <b>Compétence :</b>
+  5e_C7.4. <b>Production attendue :</b> 5 relevés.</p></details>
   <p><a class="lien-outil" href="#outilBanc">Remonte au banc</a>. Pour chaque source, relève ce que la ligne <b>« Énergie réellement
   disponible »</b> affiche. Attention : pour le panneau, ce n'est pas la même chose —
   c'est une énergie <b>par jour</b>.</p>
@@ -1700,8 +1706,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act3">
   <h2>⚖️ Activité 3 — Choisir, et le dire ⏱ ~20 min</h2>
-  <p><b>Objectif :</b> transformer cinq relevés en une décision. <b>Compétence :</b>
-  5e_C7.4. <b>Production attendue :</b> 3 réponses + une justification.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> transformer cinq relevés en une décision. <b>Compétence :</b>
+  5e_C7.4. <b>Production attendue :</b> 3 réponses + une justification.</p></details>
   <div class="exo" style="background:#173666">
     <h4>Ce que le professeur ajoute</h4>
     <ul>
@@ -1766,8 +1772,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act4">
   <h2>🕳️ Activité 4 — Ce que le banc ne compte pas ⏱ ~10 min</h2>
-  <p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b>
-  5e_C3.1. <b>Production attendue :</b> 4 associations.</p>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b>
+  5e_C3.1. <b>Production attendue :</b> 4 associations.</p></details>
   <p>Le banc ne connaît que des watts-heures. Associe chaque source à ce qu'il <em>ignore</em>
   d'elle.</p>
   <div class="exo">
