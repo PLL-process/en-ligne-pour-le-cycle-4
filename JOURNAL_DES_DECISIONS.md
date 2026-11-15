@@ -30995,3 +30995,17 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 1 597 · 1 665 → **938** · **1 551**. Règles d'or 0 ✘ ; aération 27 → 0. Bancs **44 / 44** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme sur `main`. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler) ; après l'allongement des deux dernières propositions, les 17 rapides et l'accessibilité de la page, rejoués, restent verts.
 
 **Ce qui reste.** **La séance 2 reste au-dessus du repère (1 551 mots).** Le banc des matériaux, l'outil de la séance, y compte pour 332 mots (ses deux tableaux : six exigences, six candidats) ; la synthèse « à retenir » et le bilan, qui ne se replient pas, pour 440.
+
+## 15/11/2026 — Révision des trois thèmes, 39 (suite) : `3e_C9.2`, la longueur des bonnes réponses et le pourquoi des erreurs
+
+**Le constat**, laissé par #702 : sur la page tout-en-un, la bonne réponse était **la plus longue dans 33 questions sur 48**, parfois de 40 à 75 caractères (« chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s » contre « compter les blocs du programme »). Et le mode mission n'avait aucun pourquoi.
+
+**Ce qui est fait.**
+- **85 propositions fausses s'allongent** d'une raison plausible, sans devenir justes : « compter les blocs du programme » devient « compter les blocs du programme : moins il y a de blocs, plus la station réagit vite au franchissement du seuil ». Quatre changent d'idée, plus plausible : « le hasard » devient « le professeur, pour que l'exercice tombe juste » ; « la batterie est rechargée » devient « le bouton n'a coupé le son que pour un temps fixé, puis il revient ».
+  - Les bonnes réponses et les vérifications (`startsWith`) ne changent pas ; aucune proposition fausse ne commence comme la bonne.
+  - Il reste cinq questions où la bonne réponse est la plus longue, de 2 ou 3 caractères : des noms de fonction (« Communiquer ») ou de niveau (« tempête tropicale »).
+- **La correction de l'activité 1** réfute aussi la nouvelle proposition : « Ni le hasard, ni un choix fait pour l'exercice : ce sont les seuils d'une échelle réelle des cyclones. »
+- **Le mode mission explique chaque erreur** : 135 pourquoi (`mission_3e_C9.2.json`), écrits dans la page tout-en-un puis recopiés par `generer_les_quatre_pages.py` dans les quatre pages (60, 15, 27 et 33).
+- **Le banc** : l'ordre d'origine des propositions (`ORIGINE`) suit les nouveaux libellés, pour que les choix par rang visent toujours la même proposition.
+
+**Mesure.** Séance 3 : 1 416 → 1 496 mots (les propositions allongées) ; les autres séances prennent de 40 à 160 mots, toutes sous le repère. Règles d'or 0 ✘ (page tout-en-un) ; aération 0. Bancs **167 / 167**, **34 / 34**, **37 / 37**. Mode mission : chaque mauvaise proposition jouée a son pourquoi (135 / 135 sur la page tout-en-un ; 60, 15, 27, 33 sur les quatre pages), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
