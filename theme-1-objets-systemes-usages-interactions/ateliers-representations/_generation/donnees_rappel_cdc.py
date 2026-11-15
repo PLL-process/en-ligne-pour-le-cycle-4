@@ -659,6 +659,9 @@ RAPPELS = [
                         ecart="60 heures au lieu de 72", condition="la station prévient quand sa batterie faiblit")),
          ]),
     dict(id="produire-boitier-3e", niveau="3e",
+         # révision du 15/11/2026 (la charge de lecture de la séance 2, 1 959 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=C7 + "3e/3e_C7.7/sequence_3e_C7.7_produire-le-boitier.html",
          avant='<section class="card">\n  <h2>✏️ Activité 2 — Corriger le dessin', balise="h2", balise_exo="h3",
          titre="Une ligne du cahier des charges du boîtier",
