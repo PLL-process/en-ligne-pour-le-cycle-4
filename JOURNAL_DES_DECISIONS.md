@@ -31098,3 +31098,25 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 863 · 1 846 → 910 · **1 698**. Règles d'or 0 ✘ ; aération 19 → 0. Bancs **38 / 38** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste au-dessus du repère (1 698 mots).** L'atelier, l'outil de la séance, y compte pour 310 mots ; les activités 2 et 3 posent cinq questions dont les propositions sont longues par construction (chacune porte sa raison, pour que la bonne ne se devine pas), environ 660 mots ; la synthèse et le bilan, qui ne se replient pas, environ 500.
+
+## 15/11/2026 — Révision des trois thèmes, 46 : `4e_C8.1` (le jardin, valider)
+
+**Le constat.** Le pilote des onglets (trois séances de 55 min). Sur `main` :
+- **un ✘ de règle d'or, la n°300** : 16 listes déroulantes qui posent une question, plus 8 menus de l'exercice incrusté du diagramme des exigences, que le vérificateur comptait aussi ;
+- **22 écarts d'aération**, dont six dans les corrections de l'exercice incrusté ;
+- une séance 2 à 1 878 mots, la piqûre de rappel du cahier des charges à découvert.
+
+**Ce qui est fait.**
+- **n°300** : les 16 listes de la page deviennent des boutons radio (`migrer_gabarit_306.py --n300`). La liste du banc virtuel (quel test lancer) est une commande : elle reste une liste, marquée `data-interface`. La fonction `save()` de la page apprend à garder le groupe, pas ses boutons, et à laisser l'exercice incrusté à sa propre mémoire.
+- **La grille « Conforme ? »** (n°317, suite du 31/10/2026) passe elle aussi en boutons radio. Elle garde ce qu'elle avait reçu : l'ordre Oui, Non, Partiel ; le nom de chaque case (sa légende, dite au lecteur d'écran, les en-têtes de la ligne la disent à l'œil) ; le retour écrit sous chaque case (`aria-describedby`) ; la carte par ligne à 390 px.
+- **Les 8 menus de l'exercice incrusté restent des menus.** Son tableau, « Extrait du cahier des charges du jardin, et sa validation », est un cahier des charges complété dans son tableau, comme la n°317 le veut. `verif_regles_audit.py` et `migrer_gabarit_306.py` le reconnaissent désormais (ids `…__valid_<ligne>_<colonne>`, à côté des `…cdcf…`). L'outil de migration l'avait d'abord converti par erreur : l'incrustation est rétablie depuis sa source (`incrustations.py --seq 4e_C8.1`).
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `validation-4e`). Séance 2 : **1 878 → 1 320 mots**.
+- **Places** : 9 groupes mélangés ; la réponse binaire du banc (« sans attendu, peut-on juger ? ») passe en seconde place, et sa proposition fausse s'allonge.
+- **Le mode mission explique chaque erreur** (`mission_4e_C8.1.json`) : 34 pourquoi.
+- **Aération : 22 → 0.** Six corrections de l'exercice du diagramme des exigences sont réécrites à leur source (`donnees_exigences.py` : une idée par phrase, les refus ensemble, le réglage à part), puis, à l'identique, dans l'atelier et le cahier de 4e qui portent le même exercice. Les annonces et la synthèse passent en lignes.
+- **Le Bonus se replie.**
+- **Le script « le groupe porte sa valeur »**, que la migration avait posé à l'intérieur du bloc du mode mission, en sort : `poser.py` l'aurait effacé, et le contrôle du mode mission refusait la page. `migrer_gabarit_306.py` ne pose plus jamais ce script dans un bloc d'outil (mode mission, chaîne à compléter).
+
+**Mesure.** Mots visibles : 432 · 1 878 · 528 → 493 · **1 320** · 485. Règles d'or 1 → 0 ✘ ; menus 25 → 0 ; aération 22 → 0. Bancs **54 / 54** (séquence), **34 / 34** (n°311) ; `tests_verif_regles_audit.py` **68 / 68**. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste juste au-dessus du repère (1 320 mots).** L'exercice du diagramme des exigences, que le vérificateur de l'activité exige, y compte pour 976 mots, schéma compris : c'est le travail de la séance.

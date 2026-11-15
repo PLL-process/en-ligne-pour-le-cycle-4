@@ -623,24 +623,25 @@ E3 = dict(
         "<b>1.4 Sécurité électrique</b> → une tension en volts → <b>T2, mesure au multimètre</b>",
         "<b>T5, l'avis de la gardienne</b> → rien n'est mesuré, aucun seuil → ce n'est pas un test&nbsp;: il ne vérifie aucune exigence",
         "<b>Les autres tests, à chaque ligne</b> → chacun mesure autre chose&nbsp;: T1 des litres, T2 des volts, T3 des gouttes, "
-        "T4 une durée et des outils → un test ne vérifie que l'exigence dont il mesure le critère&nbsp;: T1 ne dit rien de "
-        "l'eau qui entre, T3 rien des volts, T2 rien d'une durée",
-        "<b>1.1</b> → aucune goutte → écart nul → <b>validée</b>&nbsp;: le résultat atteint le niveau → pas «&nbsp;dans la "
-        "marge&nbsp;» ni «&nbsp;hors de la marge&nbsp;»&nbsp;: sans écart, la marge ne sert pas&nbsp;; pas «&nbsp;F0&nbsp;» non "
-        "plus&nbsp;: 1.1 est en F1",
-        "<b>1.2</b> → 11,5&nbsp;L − 10&nbsp;L = écart de +1,5&nbsp;L → la marge F2 s'arrête à 11&nbsp;L → <b>non validée</b>, "
-        "même si c'est presque → pas «&nbsp;atteint&nbsp;» (11,5&nbsp;L, c'est plus que 10&nbsp;L), pas «&nbsp;dans la "
-        "marge&nbsp;» (elle s'arrête à 11&nbsp;L), pas «&nbsp;F0&nbsp;» (1.2 est en F2) → réglage possible&nbsp;: raccourcir "
-        "la durée d'arrosage, puis refaire le test",
-        "<b>1.3</b> → 4&nbsp;min − 2&nbsp;min = +2&nbsp;min → la marge F3 va jusqu'à 5&nbsp;min, sans outil → <b>validée</b> dans "
-        "la marge → pas «&nbsp;atteint&nbsp;» (4&nbsp;min, c'est plus que 2&nbsp;min), pas «&nbsp;hors de la marge&nbsp;» "
-        "(4&nbsp;min sans outil, c'est moins que 5&nbsp;min), pas «&nbsp;F0&nbsp;» (1.3 est en F3)",
-        "<b>1.4</b> → 24&nbsp;V au lieu de 12&nbsp;V → flexibilité <b>F0</b> → aucun écart accepté → <b>non validée</b>. "
+        "T4 une durée et des outils. Un test ne vérifie que l'exigence dont il mesure le critère&nbsp;: T1 ne dit rien de "
+        "l'eau qui entre, T3 rien des volts, T2 rien d'une durée.",
+        "<b>1.1</b> → aucune goutte, écart nul&nbsp;: <b>validée</b>, le résultat atteint le niveau. Pas «&nbsp;dans la "
+        "marge&nbsp;» ni «&nbsp;hors de la marge&nbsp;»&nbsp;: sans écart, la marge ne sert pas. Pas «&nbsp;F0&nbsp;» non "
+        "plus&nbsp;: 1.1 est en F1.",
+        # 15/11/2026 (révision de 4e_C8.1, texte aéré) : une idée par phrase, les refus ensemble, le réglage à part
+        "<b>1.2</b> → 11,5&nbsp;L − 10&nbsp;L = écart de +1,5&nbsp;L. La marge F2 s'arrête à 11&nbsp;L&nbsp;: <b>non validée</b>, "
+        "même si c'est presque. Pas «&nbsp;atteint&nbsp;» (11,5&nbsp;L, c'est plus que 10&nbsp;L), pas «&nbsp;dans la "
+        "marge&nbsp;» (elle s'arrête à 11&nbsp;L), pas «&nbsp;F0&nbsp;» (1.2 est en F2). Réglage possible&nbsp;: raccourcir "
+        "la durée d'arrosage, puis refaire le test.",
+        "<b>1.3</b> → 4&nbsp;min − 2&nbsp;min = +2&nbsp;min. La marge F3 va jusqu'à 5&nbsp;min, sans outil&nbsp;: <b>validée</b> dans "
+        "la marge. Pas «&nbsp;atteint&nbsp;» (4&nbsp;min, c'est plus que 2&nbsp;min), pas «&nbsp;hors de la marge&nbsp;» "
+        "(4&nbsp;min sans outil, c'est moins que 5&nbsp;min), pas «&nbsp;F0&nbsp;» (1.3 est en F3).",
+        "<b>1.4</b> → 24&nbsp;V au lieu de 12&nbsp;V, en flexibilité <b>F0</b>&nbsp;: aucun écart accepté, donc <b>non validée</b>. "
         "24&nbsp;V reste une très basse tension, sans danger au toucher&nbsp;: ce n'est pas la question. Le niveau est "
-        "impératif, et la pompe prévue pour 12&nbsp;V pourrait griller → réglage&nbsp;: brancher l'alimentation de 12&nbsp;V prévue.",
+        "impératif, et la pompe prévue pour 12&nbsp;V pourrait griller. Réglage&nbsp;: brancher l'alimentation de 12&nbsp;V prévue.",
         "<b>1.4, les autres verdicts</b> → pas «&nbsp;atteint&nbsp;» (24&nbsp;V n'est pas 12&nbsp;V), pas «&nbsp;dans la "
-        "marge&nbsp;» (en F0, il n'y a pas de marge) → «&nbsp;hors de la marge&nbsp;» dit bien «&nbsp;non validée&nbsp;», mais "
-        "pour une mauvaise raison&nbsp;: il n'y a pas de marge à dépasser, aucun écart n'est accepté",
+        "marge&nbsp;» (en F0, il n'y a pas de marge). «&nbsp;Hors de la marge&nbsp;» dit bien «&nbsp;non validée&nbsp;», mais "
+        "pour une mauvaise raison&nbsp;: il n'y a pas de marge à dépasser, aucun écart n'est accepté.",
         "<b>Un protocole attendu pour 2.1&nbsp;:</b> «&nbsp;Je lance un arrosage. Dès qu'il s'arrête, je démarre un "
         "<b>chronomètre</b> et je mesure <b>le temps</b> jusqu'à l'arrivée du compte rendu sur le smartphone. L'exigence est "
         "validée si le message arrive en <b>5&nbsp;min au plus</b>.&nbsp;» On peut le refaire sur plusieurs arrosages&nbsp;: "
