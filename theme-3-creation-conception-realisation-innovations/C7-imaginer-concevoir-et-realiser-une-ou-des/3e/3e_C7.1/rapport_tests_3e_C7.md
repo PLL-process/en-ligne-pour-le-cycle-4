@@ -1,5 +1,8 @@
 # Rapport de tests — 3e_C7.1 « Capteur de confort — New York » (3e_C7.1 · 3e_C8.1)
 
+> **Mise à jour du 15/11/2026 — une séance 4.** L'activité 7, la synthèse et la clôture passent en séance 4 ; les deux cartes de la suite du projet remontent avant le Bonus (n°301).
+> Suite du lot : `node tests_3e_C7.mjs .` → **82 / 82** (80 avant : l'ordre des cartes, le bouton vers la séance 4) ; banc n°311 : **34 / 34** (`#activite-7` ouvre la séance 4). Mode mission (`banc_generique.mjs`) : 36 écrans, aucun refus.
+
 > **Mise à jour du 05/11/2026 — l'éditeur Python intégré.** L'onglet Vittascience est remplacé par l'**éditeur Python intégré** (`_ressources-communes/editeur-python/`, moteur Skulpt chargé au premier ▶ Exécuter, hors ligne) ; Vittascience reste un lien facultatif sous chaque éditeur. L'encart des gestes devient « les quatre gestes de l'éditeur Python » (écrire et exécuter, nommer, sortir, retrouver — « Documents › ta classe » écrit aux gestes 3 et 4), avec cinq captures réelles de la page (`captures_gestes.mjs`) et les captures de l'Explorateur reprises. Deux éditeurs (activité 3b, Bonus). Le passage blocs ↔ Python reste proposé dans Vittascience (facultatif, mode mixte). Huit contrôles ajoutés (ALERTE, PRÉ-ALERTE pour T = 27, verrou ouvert par une exécution). Le contrôle de la note lit `.editeur-py-note` et « geste 3 » ; l'encart a 9 captures (12 avant).
 > Suite du lot : `node tests_3e_C7.mjs .` → **79 / 79** (71 avant ; les 71 passent) ; banc n°311 : **34 / 34**, comme avant. Banc du composant : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **54 / 54**. Non testé : un vrai téléphone, Safari, Firefox, une impression réelle, la fenêtre « Ouvrir » de Windows.
 
