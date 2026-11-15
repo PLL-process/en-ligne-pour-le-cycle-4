@@ -152,3 +152,17 @@ Exécuté le 10/11/2026 (Chromium Playwright, session cloud) : `tests_4e_C7.3_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_rapports_tests`, `controle_licence` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_4e_2026-11-10/`. Non exécuté : vrai téléphone, Firefox, Safari, impression réelle.
+
+## Révision du 15/11/2026 (ligne 41 du suivi) — replis, aération, mode mission
+
+La piqûre de rappel du cahier des charges et le Bonus sont repliés ; 7 groupes mélangés ; l'aération passe de 27 écarts à 0.
+Le mode mission reçoit 12 pourquoi, 7 indices et une réponse de trop dans chacune des deux grilles (`mission_4e_C7.3.json`).
+
+- `node tests_4e_C7.3_sequence.mjs "$PWD/sequence_4e_C7.3_bac-du-jardin.html" 4e "$PWD/reponses_4e_C7.3.json"` : **44 / 44**.
+- `node tests_4e_C7.3_qcm.mjs "$PWD/qcm_4e_C7.3_bac-du-jardin.html" 4e_C7.3 4e_C3.2 sequence_4e_C7.3_bac-du-jardin.html` : **32 / 32**.
+- `node tests_regle_311_4e_C7.3.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

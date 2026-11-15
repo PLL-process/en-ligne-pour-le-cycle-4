@@ -30976,3 +30976,22 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Ce qui reste.**
 - **La séance 2 reste au-dessus du repère (1 488 mots).** Elle porte l'activité 3, l'exercice FAST du réinvestissement (son schéma compte à lui seul une centaine de mots), puis toute la clôture : synthèse, Bonus, bilan, positionnement sur les trois codes (environ 330 mots qui ne se replient pas, n°301).
 - **Le banc n°311 de la page bute, sur `main` comme ici**, sur un pas : à 390 px, les onglets de la séance 2 descendent à 1 063 px pour 844 visibles. Au-dessus d'eux, l'ancien en-tête empile l'identité, le mode essentiel, la note de l'ordinateur partagé, le sélecteur de parcours, la progression et « Où j'en suis ». Le banc s'arrête alors avant son relais : lancé à part, le relais donne 34 / 34. Ramener les onglets dans le premier écran demande de revoir cet en-tête : c'est un choix de mise en page, à faire pour toute la famille des pages qui le portent.
+
+## 15/11/2026 — Révision des trois thèmes, 41 : `4e_C7.3` (le bac du jardin)
+
+**Le constat.** La page était déjà sur le gabarit commun (migration du 07-08/11/2026) : 0 ✘ de règles d'or et 0 liste déroulante qui pose une question sur `main` ; ses propositions fausses avaient déjà leur raison plausible. Il restait :
+- **27 écarts d'aération** ;
+- une séance 1 à 1 597 mots, dont la piqûre de rappel du cahier des charges à découvert, et une séance 2 à 1 665 ;
+- deux grilles (« quelle contrainte a fait écrire cette exigence ? », « pourquoi ce candidat est-il recalé ? ») avec autant de réponses que de lignes : la dernière se devinait ;
+- 7 groupes dont la bonne réponse restait à sa place d'origine ;
+- la bonne réponse encore la plus longue dans deux questions, de 8 et 4 caractères.
+
+**Ce qui est fait.**
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `bac-4e`, puis `incrustations.py --seq 4e_C7.3`). Ses cinq minutes comptent dans la durée : 100 min d'activités, plus 10 de service, pour 110. Séance 1 : **1 597 → 938 mots**.
+- **7 groupes mélangés** ; **2 propositions fausses s'allongent** (« … moins sérieux que la tenue à l'eau et au sel »).
+- **Le mode mission explique chaque erreur** (`mission_4e_C7.3.json`) : 12 pourquoi, 7 indices de ligne, et **une réponse de trop dans chacune des deux grilles**.
+- **Le Bonus se replie** ; **aération : 27 → 0** (66 retours à la ligne, quatre corrections réécrites en lignes) ; les annonces des deux séances passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 1 597 · 1 665 → **938** · **1 551**. Règles d'or 0 ✘ ; aération 27 → 0. Bancs **44 / 44** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme sur `main`. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler) ; après l'allongement des deux dernières propositions, les 17 rapides et l'accessibilité de la page, rejoués, restent verts.
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 551 mots).** Le banc des matériaux, l'outil de la séance, y compte pour 332 mots (ses deux tableaux : six exigences, six candidats) ; la synthèse « à retenir » et le bilan, qui ne se replient pas, pour 440.
