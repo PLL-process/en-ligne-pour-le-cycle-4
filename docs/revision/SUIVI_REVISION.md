@@ -71,7 +71,7 @@ d'autant.
 | 47 | `4e_C9.1` | 2909 → 2378 | 1 → 0 | 54 → 0 | 34 → 0 | livrée #713 — 43 questions en boutons radio, les 11 commandes de l'atelier de programmation déclarées (`data-interface`) ; 25 groupes mélangés ; échauffement, rappel de l'algorigramme, rôles et nuit simulée repliés ; 91 pourquoi ; séances 2 et 3 (2 064, 2 378) loin au-dessus : séances d'atelier, l'éditeur et l'atelier sont dans la page — couper une activité ou ajouter une séance, décision de Pascal |
 | 48 | `5e_C7.1` | 1685 → 1239 | 1 → 0 | 17 → 0 | 17 → 0 | livrée #714 — 17 listes en boutons radio ; l'algorigramme ne se lit plus dans l'ordre de la réponse (et `3e_C7.1`, même défaut) ; séance 2 : 1 239 mesurés, dont 109 de légendes pour le lecteur d'écran (1 130 vus) |
 | 49 | `5e_C7.3` | 1694 | 5 | 15 | 15 | à faire |
-| 50 | `5e_C7.4` | 1607 | 5 | 18 | 16 | à faire |
+| 50 | `5e_C7.4` | 1607 → 1302 | 5 → 0 | 18 → 0 | 16 → 0 | livrée #716 — migrée au gabarit commun ; l'activité 1 se joue dans la chaîne d'énergie de l'indicateur (outil commun de #708) ; séance 2 (1 302) un peu au-dessus : le banc, la synthèse, le bilan |
 | 51 | `5e_C7.5` | 1528 | 5 | 22 | 8 | à faire |
 | 52 | `5e_C8.1` | 1421 | 5 | 17 | 13 | à faire |
 | 53 | `5e_C8.2` | 1412 | 5 | 16 | 12 | à faire |
@@ -281,3 +281,8 @@ d'autant.
   validation reliée à ses lignes) ; l'algorigramme mélangé, ses groupes nommés, les énoncés dans les légendes — même
   correction sur `3e_C7.1` ; 31 pourquoi ; consignes en lignes, note Vittascience repliée ; aération 17 → 0. Séances
   274 · 1 685 · 696 → 268 · 1 239 · 658 (séance 2 : 1 130 mots vus, 109 de légendes pour le lecteur d'écran).
+- **5e_C7.4** (l'indicateur du hall), 15/11/2026 (#716) : migrée au gabarit commun (5 ✘ → 0, 17 listes en boutons
+  radio, la liste des sources du banc déclarée commande, quatre versions étayées) ; l'activité 1 se joue dans la chaîne
+  d'énergie de l'indicateur (sources, carte, DEL ; l'énergie stockée sous son composant, celle qui arrive par la
+  gauche), les réponses sans indice ; grille de l'activité 4 avec une réponse de trop ; 53 pourquoi ; Bonus et note
+  technique du banc repliés ; aération 16 → 0. Séances 779 · 1 582 → 544 · 1 302. Reste : la séance 2 un peu au-dessus.
