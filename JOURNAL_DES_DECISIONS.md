@@ -30844,3 +30844,28 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 1 286 · 256 · 1 020 · 1 439 → **386** · 257 · 896 · **1 311**. Règles d'or 0 ✘ ; aération 26 → 0. Bancs 54 / 54 (53 / 54 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (21 / 21), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler). Le contrôle des unités (n°312) avait relevé la grille des retraits : sa réponse « 580 mA demandés » dit maintenant « 580 mA (milliampères) demandés », partout.
 
 **Ce qui reste.** La séance 4 reste au-dessus du repère (1 311 mots) : l'établi (260 mots) y est l'outil de la séance, suivi de l'activité 4, du REFAIRE, de la synthèse et du bilan.
+
+## 15/11/2026 — Révision des trois thèmes, 35 : `3e_C7.7` (produire le boîtier)
+
+**Le constat.** Une page sans règle d'or en défaut et sans liste déroulante, mais :
+- 24 écarts d'aération ;
+- trois séries de questions qui répétaient les mêmes réponses (l'empreinte de chaque moyen, ce qui bloque chaque cote, ce qu'une seule fournée impose) ;
+- la bonne réponse 11 fois sur 18 en première position ;
+- une séance 2 à 1 959 mots, dont la piqûre de rappel du cahier des charges, en écart avec son générateur ;
+- un bloc d'ouverture titré « Ce que tu sais déjà faire », alors que l'élève peut arriver sans avoir fait 3e_C7.3 ni 3e_C7.6 (n°304).
+
+**Ce qui est fait.**
+- **n°304** : le bloc devient « 🔄 Avant de commencer : où en est le projet — et ce qu'on ne refera pas ». Il raconte le projet (le PETG choisi en 3e_C7.3, le dessin de 3e_C7.6) sans rien dire de ce que l'élève a fait, et donne de quoi rattraper : la partie 6 de la synthèse de 3e_C7.3, le TP « Le boîtier étanche ».
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `produire-boitier-3e` dans `donnees_rappel_cdc.py`, puis `incrustations.py --seq 3e_C7.7`). Le vérificateur de l'activité 2 ne l'exige pas. Elle reçoit au passage les corrections aérées du générateur.
+- **Trois grilles** (`grilles_radio.py`), chacune avec une **réponse de trop** (`enrichir.py`, « leurres ») : « aucune empreinte » ; « la buse ne sait pas déposer une paroi de plus de 2 mm » ; « on l'aurait réglé dans le logiciel de découpe ».
+- **Places** (`melanger_propositions.py`) : 8 groupes mélangés.
+- **Deux bonnes réponses raccourcies** : elles avaient 5 et 6 caractères de plus que la plus longue des autres. Le sens ne change pas. Elles sont modifiées partout, dans la page et dans le jeu de réponses du banc :
+  - « parce qu'un avertissement signale un risque sans l'interdire : à nous de le lire » ;
+  - « que les couches imprimées se décollent plus facilement que la matière pleine ».
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C7.7.json` : 24 pourquoi, 10 indices de ligne, 3 réponses de trop).
+- **Le Bonus se replie** ; **aération : 24 → 0** (91 retours à la ligne) ; une phrase sur la fabrique de la page (« Une page ne porte qu'un seul atelier… ») est coupée, deux fois.
+- **Le banc de la séquence** échouait sur `main` (76 / 77) pour la même raison que ceux de `3e_C7.3` à `3e_C7.5` : il suit maintenant la page.
+
+**Mesure.** Mots visibles : 1 123 · 1 959 · 969 · 1 337 → 977 · **1 267** · 903 · **1 245** (avec la fiche de l'exercice incrusté, repliée depuis #696). Règles d'or 0 ✘ ; aération 24 → 0. Bancs 77 / 77 (76 / 77 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (34 / 34), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler).
+
+**Ce qui reste.** Les séances 2 et 4 restent un peu au-dessus du repère (1 267 et 1 245 mots). L'atelier des moyens, l'outil de chaque séance, y compte pour 432 mots.
