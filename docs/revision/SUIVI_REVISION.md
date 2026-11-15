@@ -68,7 +68,7 @@ d'autant.
 | 44 | `4e_C7.7` | 1831 → 1698 | 5 → 0 | 16 → 0 | 19 → 0 | livrée #709 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; une réponse de trop dans les deux grilles ; « allonger la fente à 23 mm » réfuté ; une phrase de la fabrique retirée ; séance 2 (1 698) au-dessus : l'atelier, outil de la séance, des propositions longues par construction, et la clôture |
 | 45 | `4e_C7.8` | 1880 → 1616 | 5 → 0 | 19 → 0 | 15 → 0 | livrée #710 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; la bonne réponse était la plus longue 11 fois sur 13 : 19 propositions fausses allongées ; une réponse de trop dans la grille ; séance 2 (1 616) au-dessus : le banc du lien, outil de la séance, et la clôture |
 | 46 | `4e_C8.1` | 1975 → 1320 | 1 → 0 | 25 → 0 | 22 → 0 | livrée #711 — 16 listes en boutons radio, grille « Conforme ? » comprise (ordre, noms et retours gardés) ; les 8 menus du tableau de l'exercice incrusté reconnus comme voulus (n°317) ; piqûre de rappel repliée ; six corrections de l'exercice aérées à leur source ; séance 2 (1 320) juste au-dessus : l'exercice du diagramme des exigences |
-| 47 | `4e_C9.1` | 2909 | 1 | 54 | 34 | à faire |
+| 47 | `4e_C9.1` | 2909 → 2378 | 1 → 0 | 54 → 0 | 34 → 0 | livrée #713 — 43 questions en boutons radio, les 11 commandes de l'atelier de programmation déclarées (`data-interface`) ; 25 groupes mélangés ; échauffement, rappel de l'algorigramme, rôles et nuit simulée repliés ; 91 pourquoi ; séances 2 et 3 (2 064, 2 378) loin au-dessus : séances d'atelier, l'éditeur et l'atelier sont dans la page — couper une activité ou ajouter une séance, décision de Pascal |
 | 48 | `5e_C7.1` | 1685 | 1 | 17 | 17 | à faire |
 | 49 | `5e_C7.3` | 1694 | 5 | 15 | 15 | à faire |
 | 50 | `5e_C7.4` | 1607 | 5 | 18 | 16 | à faire |
@@ -272,3 +272,8 @@ d'autant.
   l'exercice incrusté sont reconnus comme voulus par la n°317 (`verif_regles_audit.py`, `migrer_gabarit_306.py`) ;
   piqûre de rappel repliée ; 9 groupes mélangés ; 34 pourquoi ; six corrections de l'exercice des exigences aérées à
   leur source et dans l'atelier et le cahier ; aération 22 → 0. Séances 432 · 1 878 · 528 → 493 · 1 320 · 485.
+- **4e_C9.1** (le jardin programmé), 15/11/2026 (#713) : 43 questions deviennent des boutons radio ; les 11 commandes
+  de l'atelier de programmation restent des listes, déclarées `data-interface` ; 25 groupes mélangés ; le pas à pas de
+  l'Explorateur (ouvert d'office), Vittascience facultatif, le rappel de l'algorigramme, les rôles et la nuit simulée
+  repliés ; 91 pourquoi ; aération 34 → 0. Séances 1 127 · 2 562 · 2 782 → 1 089 · 2 064 · 2 378. Reste : les séances
+  2 et 3, séances d'atelier ; les ramener sous le repère demande de couper une activité ou d'ajouter une séance.
