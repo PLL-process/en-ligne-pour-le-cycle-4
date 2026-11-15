@@ -31257,3 +31257,46 @@ L'unité jugée est le **bloc de question** (la carte d'activité qui contient u
 **Mesure sur `main` + ce pilote (194 pages élève) : 5 ✘ sur 4 pages, 38 ⚠ sur 27 pages.** Les 5 ✘ (4 pages) : `3e_C4.3` station d'alerte (« schéma des types ci-dessus », « schéma du parcours de la donnée ci-dessus »), `5e_C4.1` lampadaire (« le schéma du réseau ci-dessus (à LIRE pour répondre) »), `3e_C5.1` SOS station (« schéma des points de test ci-dessus »), `3e_C6.1` programmer l'alerte (« le schéma entrées/sorties »). Même geste que le pilote : répéter la figure dans la carte, muette si la question demande ses étiquettes.
 
 **Ce qui reste.** La vague n°331 sur ces 5 ✘ puis les 38 ⚠ (dans l'ordre des thèmes, par les sessions de révision — pas dans cette PR, pour ne pas croiser les sessions en cours) ; vérifier à l'œil que la figure répétée est bien celle dont parle la question (non mesuré) ; une passe `revision-sequence` pour écrire la n°331 dans le skill `chaine-energie-fonctionnelle` et dans `controle-qualite-lot`.
+## 15/11/2026 — Révision des trois thèmes, 49 : `5e_C7.3` (le banc de la cour)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **15 listes déroulantes** (n°300) ;
+- 15 écarts d'aération ; une séance 2 à 1 694 mots ;
+- **la grille de l'activité 0 se devinait par la grammaire** : quatre réponses commençaient par « elle dit », une seule par « il ne dit » — celle du prix au kilogramme, la seule caractéristique au masculin ;
+- **la grille de l'activité 1 avait deux réponses justes pour le béton** : il chauffe trop (61 °C) et il est trop lourd, comme l'acier ;
+- deux grilles avec autant de réponses que de lignes : la dernière se devinait ;
+- la bonne réponse la plus longue dans 3 questions sur 5 ; et dans l'une, elle seule ne commençait pas par « parce que » ;
+- sous les deux renvois au banc, une phrase de la fabrique (« Une page ne porte qu'un seul banc… »).
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : les 15 listes deviennent des boutons radio, rangés en **deux grilles lettrées** (les réponses écrites une fois) ; le mode essentiel, le tableau de bord, les étiquettes ; **quatre versions étayées** (`etayage_sequence_5e_C7.3_banc-de-la-cour.json`).
+- **La grille de l'activité 0 ne se devine plus** : les réponses disent ce que la caractéristique permet de savoir, sans pronom (« combien pèsera la pièce, une fois sa taille connue »).
+- **Une seule réponse juste par ligne dans l'activité 1** : l'acier « résiste très bien, mais chauffe trop et pèse trop » ; le béton « n'est pas assez résistant, et en plus chauffe et pèse trop ». La correction donne les chiffres (61 °C, 54 kg).
+- **Une réponse de trop dans chaque grille**, réfutée dans la correction : « si on peut recycler la pièce en fin de vie » (aucune colonne du banc ne le dit), « il coûte trop cher pour le budget du collège » (le prix n'est pas une exigence : le béton est même le moins cher).
+- **7 groupes mélangés** ; **9 propositions fausses allongées** d'une raison plausible ; la bonne réponse n'est plus la plus longue nulle part.
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.3.json`) : 47 pourquoi, 9 indices de ligne, 2 réponses de trop.
+- **La phrase de la fabrique est retirée** ; **le Bonus se replie** ; **aération : 15 → 0** ; les annonces des deux séances et les deux exigences de la table de pique-nique passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 1 095 · 1 694 → **840** · **1 607**. Règles d'or 5 → 0 ✘ ; menus 15 → 0 ; aération 15 → 0. Bancs **42 / 42** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (41 / 42) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 607 mots).** Le banc des matériaux, l'outil de la séance, y compte pour 285 mots (ses deux tableaux) ; la synthèse, 279 ; le bilan et le positionnement, environ 200 ; trois activités et le réinvestissement, environ 720.
+
+## 15/11/2026 — Révision des trois thèmes, 50 : `5e_C7.4` (l'indicateur du hall)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **17 questions posées par une liste déroulante** (n°300) ;
+- **l'activité 1 posait une question de chaîne d'énergie sans la chaîne** : associer chaque source à sa forme d'énergie au départ, puis dire ce que la DEL en fait — la correction écrivait la chaîne (« chimique → électrique → lumineuse »), l'élève ne la voyait jamais. Et chaque réponse portait un indice qui la désignait (« chimique aussi — quatre fois la même réaction » pour les quatre piles) ;
+- 16 écarts d'aération ; une séance 2 à 1 582 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 17 listes en boutons radio ; la liste des sources du banc est une commande, elle reste une liste (`data-interface`) ; le relevé du secteur reçoit son énoncé ; mode essentiel, tableau de bord, étiquettes, **quatre versions étayées** (`etayage_sequence_5e_C7.4_indicateur-du-hall.json`).
+- **L'activité 1 se joue dans la chaîne d'énergie de l'indicateur** (l'outil commun de la PR #708, demande de Pascal du même jour) : les cinq sources (ALIMENTER), la carte qui distribue, la DEL qui convertit. L'élève pose sous chaque pile et sous l'accu l'énergie qu'il garde en réserve (n°310 : l'énergie stockée sous son composant), sur la flèche du secteur et sur celle du soleil l'énergie qui arrive — par la gauche —, puis ce que la DEL en fait. Cinq étiquettes, dont deux de trop (énergie mécanique, énergie thermique), réfutées dans la correction. Les réponses ne portent plus d'indice : ce sont les formes d'énergie, rien d'autre.
+- **Les outils de grille et de mélange laissent les chaînes à compléter telles quelles** (`grilles_radio.py`, `melanger_propositions.py`) : leurs groupes portent les étiquettes de la réserve, dans le même ordre.
+- **La grille de l'activité 4 (ce que le banc ne compte pas)** : les réponses écrites une fois, lettrées ; une réponse de trop, réfutée dans la correction.
+- **4 groupes mélangés** ; les trois propositions fausses du choix de la source allongées (la bonne n'est plus la plus longue).
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.4.json`) : 53 pourquoi, dont 24 dans la chaîne, case par case ; 4 indices de ligne.
+- **Le Bonus se replie** ; la note technique du banc (d'où viennent ses chiffres) aussi ; **aération : 16 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 779 · 1 582 → **544** · **1 302**. Règles d'or 5 → 0 ✘ ; menus 18 → 0 (une commande du banc, déclarée) ; aération 16 → 0. Bancs **35 / 35** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (34 / 35) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 302 mots).** Le banc des sources, l'outil de la séance, y compte pour 160 mots (ses deux tableaux) ; la synthèse, 176 ; le bilan et le positionnement, 175 ; l'annonce garde la consigne de sécurité du matériel (🅰).

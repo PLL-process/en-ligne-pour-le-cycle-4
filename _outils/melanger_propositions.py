@@ -58,6 +58,10 @@ def melanger(page, source):
             return m.group(0)
         if any(c in classes.split() for c in FIXES) or 'data-melange' in attrs:
             return m.group(0)
+        # une chaîne à compléter (_outils/chaine_a_completer/) : ses groupes gardent le même ordre, celui de la réserve
+        k = source.rfind('<div class="cac-questions">', 0, m.start())
+        if k >= 0 and '</fieldset>\n</div>\n</div>' not in source[k:m.start()]:
+            return m.group(0)
         options = OPTION.findall(corps)
         if len(options) < 3 or ''.join(options) not in corps:
             return m.group(0)                      # les propositions ne se suivent pas : on ne devine pas
