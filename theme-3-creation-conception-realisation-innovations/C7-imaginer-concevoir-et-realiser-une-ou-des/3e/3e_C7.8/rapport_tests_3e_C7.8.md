@@ -19,6 +19,8 @@ les scripts et le jeu de réponses sont dans ce dossier, on peut tout rejouer.
 > relit plus jamais. Le banc vérifie la clé, la migration, la copie sans effacement, qu'écrire
 > dans 3e_C7.8 ne touche plus `seq_3e_C7_4`, et que la migration ne se rejoue pas.
 
+> **Révision du 15/11/2026.** Propositions fausses allongées (la bonne réponse se devinait à sa longueur), une remplacée, grille avec une réponse de trop, places mélangées, Bonus replié, aération. Bancs : séquence **58 / 58** (57 / 58 avant : la page ne dit plus « validée » pour une réponse libre, le banc la suit), QCM **32 / 32**, n°311 **34 / 34**. Mode mission (`banc_generique.mjs`) : 34 écrans, 51 / 51 pourquoi, aucun refus.
+
 ```bash
 node tests_3e_C7.8_sequence.mjs "$PWD/sequence_3e_C7.8_deux-stations.html" 3e reponses_3e_C7.8.json
 node tests_3e_C7.8_qcm.mjs      "$PWD/qcm_3e_C7.8_deux-stations.html" 3e_C7.8 3e_C8.3 sequence_3e_C7.8_deux-stations.html

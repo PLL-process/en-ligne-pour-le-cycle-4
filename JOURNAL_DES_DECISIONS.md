@@ -30869,3 +30869,22 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 1 123 · 1 959 · 969 · 1 337 → 977 · **1 267** · 903 · **1 245** (avec la fiche de l'exercice incrusté, repliée depuis #696). Règles d'or 0 ✘ ; aération 24 → 0. Bancs 77 / 77 (76 / 77 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (34 / 34), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler).
 
 **Ce qui reste.** Les séances 2 et 4 restent un peu au-dessus du repère (1 267 et 1 245 mots). L'atelier des moyens, l'outil de chaque séance, y compte pour 432 mots.
+
+## 15/11/2026 — Révision des trois thèmes, 36 : `3e_C7.8` (deux stations qui se parlent)
+
+**Le constat.** Une page sans règle d'or en défaut et sans liste déroulante, mais la bonne réponse se devinait :
+- **la plus longue 11 fois sur 24**, souvent de loin (95 caractères contre 50 pour « pourquoi envoyer le niveau » ; 87 contre 38 pour « quel défaut cela réintroduit-il ») ;
+- **la première 17 fois sur 24** ;
+- une proposition fausse défendable : à « les 2 000 dernières mesures jointes à chaque message ? », « utile une fois par jour, pas à chaque message » disait ce que dit la correction ;
+- 21 écarts d'aération ; une séance 3 à 1 530 mots.
+
+**Ce qui est fait.**
+- **24 propositions fausses s'allongent** d'une justification plausible, sans devenir justes. Par exemple, « la sirène ne part jamais » devient « la sirène ne part jamais, puisqu'il manque toujours l'avis de l'autre station ». Les bonnes réponses ne changent pas, ni les vérifications de la page. Il reste deux questions où la bonne réponse est la plus longue, d'un ou deux caractères ; elle est la première dans 7 questions sur 18 (hors grille).
+- **La proposition défendable est remplacée** : « utile : l'autre station en tire une moyenne plus fiable ».
+- **La grille des essais** (`grilles_radio.py`) : six cas, six réponses. Elle reçoit une **réponse de trop** (« La batterie faible… »).
+- **Places** (`melanger_propositions.py`) : 19 groupes mélangés.
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C7.8.json` : 51 pourquoi, 6 indices de ligne, 1 réponse de trop).
+- **Le Bonus se replie** ; **aération : 21 → 0** (79 retours à la ligne).
+- **Le banc de la séquence** échouait sur `main` (57 / 58), comme ceux de `3e_C7.3` à `3e_C7.7` : il suit maintenant la page. Son essai de refus utilise la proposition fausse allongée.
+
+**Mesure.** Mots visibles : 855 · 1 003 · 1 530 → 890 · 1 088 · **1 002** (avec les fiches d'activité, repliées depuis #696). Les séances 1 et 2 prennent quelques mots, à cause des propositions allongées ; la séance 3 en perd 528. **Toutes les séances passent sous le repère.** Règles d'or 0 ✘ ; aération 21 → 0. Bancs 58 / 58 (57 / 58 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (51 / 51), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler).

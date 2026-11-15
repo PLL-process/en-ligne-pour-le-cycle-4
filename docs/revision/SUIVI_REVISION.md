@@ -57,7 +57,7 @@ d'autant.
 | 33 | `3e_C7.4` | 1220 → 1132 | 0 | 0 | 27 → 0 | livrée #693 — une grille (le coût de chaque source), places mélangées (la bonne réponse était 12 fois sur 16 la première), pourquoi des erreurs ; banc réparé (53 → 54 / 54) |
 | 34 | `3e_C7.5` | 1439 → 1311 | 0 | 0 | 26 → 0 | livrée #697 — piqûre de rappel repliée à sa source, trois grilles avec réponses de trop, places mélangées, pourquoi des erreurs ; banc réparé (53 → 54 / 54) ; séance 4 (1 311) au-dessus du repère : l'établi y est l'outil de la séance |
 | 35 | `3e_C7.7` | 1959 → 1267 | 0 | 0 | 24 → 0 | livrée #698 — piqûre de rappel repliée à sa source, trois grilles avec une réponse de trop, places mélangées (la bonne réponse était 11 fois sur 18 la première), pourquoi des erreurs ; n°304 ; banc réparé (76 → 77 / 77) ; séances 2 (1 267) et 4 (1 245) à peine au-dessus : l'atelier des moyens (432 mots) est l'outil de chaque séance |
-| 36 | `3e_C7.8` | 1530 | 0 | 0 | 21 | à faire |
+| 36 | `3e_C7.8` | 1530 → 1088 | 0 | 0 | 21 → 0 | livrée #699 — la bonne réponse se devinait (11 fois sur 24 la plus longue, 17 fois la première) : 24 propositions fausses allongées, une remplacée (elle était défendable), une grille avec une réponse de trop, places mélangées, pourquoi des erreurs ; banc réparé (57 → 58 / 58) ; chaque séance sous le repère |
 | 37 | `3e_C8.1` | 1888 | 0 | 0 | 23 | à faire |
 | 38 | `3e_C8.2` | 1414 | 0 | 0 | 28 | à faire |
 | 39 | `3e_C9.2` | 2597 | 2 | 62 | 48 | à faire |
@@ -215,3 +215,9 @@ d'autant.
   réponses raccourcies (elles étaient nettement les plus longues) ; 24 pourquoi, 10 indices ; Bonus replié ; aération
   24 → 0. n°304 : le bloc « Ce que tu sais déjà faire » devient « Avant de commencer : où en est le projet », avec de quoi
   rattraper (la synthèse de 3e_C7.3, le TP de 3e_C7.6). Séances 1 123 · 1 959 · 969 · 1 337 → 977 · 1 267 · 903 · 1 245.
+- **3e_C7.8** (deux stations qui se parlent), 15/11/2026 (#699) : la bonne réponse était 11 fois sur 24 la plus longue,
+  souvent de loin, et 17 fois la première ; 24 propositions fausses s'allongent d'une justification plausible, une est
+  remplacée (« utile une fois par jour, pas à chaque message » : la correction elle-même le disait) ; la grille des essais
+  reçoit une réponse de trop ; 19 groupes mélangés ; 51 pourquoi, 6 indices ; Bonus replié ; aération 21 → 0.
+  Séances 855 · 1 003 · 1 530 → 890 · 1 088 · 1 002 : les séances 1 et 2 prennent quelques mots (les propositions
+  allongées), la séance 3 en perd 528, et toutes passent sous le repère.
