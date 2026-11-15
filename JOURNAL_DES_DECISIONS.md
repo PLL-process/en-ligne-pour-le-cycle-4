@@ -31199,3 +31199,24 @@ passera dans le schéma pendant sa révision (ligne 51 du suivi).
 **Mesure.** Mots visibles : 1 127 · 2 562 · 2 782 → 1 089 · **2 064** · **2 378**. Règles d'or 1 → 0 ✘ ; menus 54 → 0 (11 commandes d'atelier, déclarées) ; aération 34 → 0. Bancs **124 / 124**, **34 / 34** (n°311). Mode mission : chaque mauvaise proposition jouée a son pourquoi (91 / 91), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **Les séances 2 et 3 restent loin au-dessus du repère (2 064 et 2 378 mots).** Ce sont des séances d'atelier : l'éditeur Python et l'atelier de programmation sont dans la page, avec leur console, leur trace pas à pas et leurs tableaux d'essais ; l'échauffement apprend quatre gestes à faire en lisant. Les ramener sous 1 200 mots demanderait de couper une activité en deux, ou d'ajouter une séance : c'est une décision de progression, je la laisse à Pascal.
+
+## 15/11/2026 — Révision des trois thèmes, 48 : `5e_C7.1` (le mini-projet : l'indicateur de place)
+
+**Le constat.**
+- 1 ✘ de règles d'or : **17 questions posées par une liste déroulante** (n°300) — le billet d'entrée, l'activité 0, la grille de validation, l'algorigramme, le positionnement du bilan ;
+- **l'algorigramme se lisait dans l'ordre de la réponse** : les cinq blocs étaient affichés de DÉBUT à la boucle, il suffisait de les numéroter de haut en bas ;
+- trois groupes avaient leur énoncé hors de leur légende (les deux questions de l'activité 0, la confiance du bilan, posée dans un paragraphe) : le lecteur d'écran lisait « 1, 2, 3 » sans la question ;
+- 17 écarts d'aération ; une séance 2 à 1 685 mots.
+
+**Ce qui est fait.**
+- **Les 17 listes deviennent des boutons radio.** Dans la grille de validation, l'énoncé de chaque case se lit par sa ligne et reste dit au lecteur d'écran.
+- **L'algorigramme est mélangé** : les blocs s'affichent dans le désordre, chacun avec son groupe de rangs (1 à 5), nommé « Rang du bloc « … » ». La correction bloc par bloc ne change pas.
+- **Chaque énoncé dans sa légende**, et plus aucun groupe dans un paragraphe (« Ma confiance, de 1 (pas encore sûr·e) à 4 (tout à fait sûr·e) »).
+- **La même correction sur `3e_C7.1`** (le capteur de confort), qui portait les mêmes défauts : algorigramme mélangé, groupes nommés, énoncés dans les légendes (les deux questions de l'activité 0, la décision globale, la confiance du bilan).
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.1.json`) : 31 pourquoi, dont 4 par bloc de l'algorigramme.
+- **Alléger la séance 2** : les consignes de la grille et de l'éditeur passent en lignes ①, ②, ③ ; la note Vittascience (facultative, Internet nécessaire) se replie sous l'éditeur ; le « pourquoi » de l'encart des gestes perd sa redite.
+- **Aération : 17 → 0.**
+
+**Mesure.** Mots visibles : 274 · 1 685 · 696 → 268 · **1 239** · 658. Dans la séance 2, 109 de ces mots sont les légendes que seul le lecteur d'écran lit (« Rang du bloc… », la ligne de chaque case de la grille) : l'élève en voit **1 130**. Règles d'or 1 → 0 ✘ ; menus 17 → 0 ; aération 17 → 0. Bancs **55 / 55** (séquence) et **34 / 34** (n°311) ; `3e_C7.1` : **82 / 82** et **34 / 34**. Mode mission : les deux pages jouées écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** L'encart des quatre gestes de l'éditeur (360 mots) est commun à six pages : il n'est pas touché ici.

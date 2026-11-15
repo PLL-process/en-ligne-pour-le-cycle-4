@@ -144,3 +144,13 @@ Découpage gardé (activités 0, 1 et 2 | gestes de Vittascience, activité 3 et
 Contrôles du dépôt, sur ce dossier ou sur tout le dépôt : `controle_squelette` 0 défaut (D1 à D6), aucun « à rédiger », aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`, `controle_hors_ligne`, `controle_contraste_liens`, `controle_regles_visibles`, `controle_liens`, `controle_navigation_seances`, `controle_hierarchie`, `controle_unites`, `controle_sigles`, `controle_impression_papier` : verts. `banc_papier.py` : une séance par fiche, 0 texte pâle, 0 champ d'écran imprimé. `verif_regles_audit.py` : les mêmes ✘ qu'avant, hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Correction du 15/11/2026 (avec la révision de `5e_C7.1`) — l'algorigramme et les légendes
+
+L'algorigramme se lisait dans l'ordre de la réponse : ses blocs sont mélangés, chacun avec son groupe de rangs nommé.
+Les énoncés des deux questions de l'activité 0, de la décision globale et de la confiance du bilan passent dans leur
+légende ; plus aucun groupe dans un paragraphe.
+
+- `node tests_3e_C7.mjs .` : **82 / 82**. `node tests_regle_311_3e_C7.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.

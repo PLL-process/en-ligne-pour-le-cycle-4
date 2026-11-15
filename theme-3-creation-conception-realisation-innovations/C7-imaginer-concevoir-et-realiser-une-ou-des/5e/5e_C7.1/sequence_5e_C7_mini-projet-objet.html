@@ -225,6 +225,43 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
+
+/* révision du 15/11/2026 : dans la grille de validation, l'énoncé de chaque case se lit par sa ligne ; il reste dit au lecteur d'écran */
+.grille-conforme fieldset.qcm-groupe{position:relative}
+.visually-hidden{position:absolute;left:0;top:0;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+/* révision du 15/11/2026 : l'algorigramme à remettre en ordre — le bloc se lit sur sa ligne, son rang se choisit dessous, sur une rangée */
+.algostep{flex-wrap:wrap}
+.algostep .algotexte{flex:1 1 10em;font-weight:600}
+.algostep fieldset.algorang{position:relative;flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0}
+.algostep fieldset.algorang .qcm-option{margin:0;padding:6px 12px;align-items:center}
+.algostep fieldset.algorang .qcm-option label{flex:0 0 auto}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -607,6 +644,26 @@ body.essentiel details.referentiel-replie{display:none}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 <link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
@@ -1298,6 +1355,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_5e_C7_mini-projet.html">🧠 QCM</a><a href="lexique_5e_C7.1.html">📖 Lexique</a></nav>
@@ -1342,23 +1404,23 @@ citées mot pour mot&nbsp;:</p>
 <tr><td><b>5e_C9.3</b></td><td>Réaliser et mettre au point un programme simple commandant un OST.</td></tr>
 </table>
 <p style="opacity:.85;font-size:.93em">Cette séquence annonçait auparavant «&nbsp;C7 · C8 · C9&nbsp;»,
-c'est-à-dire <b>douze</b> compétences pour en servir trois. Elle n'en revendique plus que ce qu'elle
+c'est-à-dire <b>douze</b> compétences pour en servir trois. <br>Elle n'en revendique plus que ce qu'elle
 produit&nbsp;: le choix d'un matériau, l'assemblage d'un prototype ou la modification d'un programme
 fourni relèvent d'autres codes, qui restent à créer.</p>
-  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C7.1</code> · <code>5e_C8.3</code> · <code>5e_C9.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C7.1</code> · <code>5e_C8.3</code> · <code>5e_C9.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
 </div>
 </details>
 
 
 <section class="card">
 <h2>📖 Situation déclenchante</h2>
-<p><b>Le hall de la Brooklyn Middle School, huit heures moins dix.</b> Deux cents élèves entrent en
-huit minutes. Contre le mur, vingt casiers ouverts pour poser les sacs — pas de porte, pas de
-serrure, juste des cases carrées. Le problème n'est pas qu'il n'y a pas de place&nbsp;: c'est qu'on
-ne <b>voit pas</b> laquelle est libre. Il faut s'approcher, se pencher, regarder dedans. Alors les
-élèves posent leur sac par terre, devant. Et à huit heures moins cinq, on marche dessus.</p>
+<p><b>Le hall de la Brooklyn Middle School, huit heures moins dix.</b><br>Deux cents élèves entrent en
+huit minutes. <br>Contre le mur, vingt casiers ouverts pour poser les sacs — pas de porte, pas de
+serrure, juste des cases carrées. <br>Le problème n'est pas qu'il n'y a pas de place&nbsp;: c'est qu'on
+ne <b>voit pas</b> laquelle est libre. <br>Il faut s'approcher, se pencher, regarder dedans. Alors les
+élèves posent leur sac par terre, devant. <br>Et à huit heures moins cinq, on marche dessus.</p>
 
-<p>M. Alvarez, qui s'occupe du bâtiment, a compté&nbsp;: <b>trois chutes en un mois</b>. Il a
+<p>M. Alvarez, qui s'occupe du bâtiment, a compté&nbsp;: <b>trois chutes en un mois</b>. <br>Il a
 demandé des casiers fermés — trop cher. Il vient te voir avec une idée à lui&nbsp;:</p>
 
 <blockquote style="border-left:4px solid var(--hl,#61dafb);padding-left:14px;margin:14px 0;font-style:italic">
@@ -1368,11 +1430,11 @@ suivante. Qu'on le voie depuis l'entrée, sans s'approcher.&nbsp;»
 </blockquote>
 
 <p>Voilà l'objet que tu vas construire&nbsp;: <b>un voyant vert ou rouge au-dessus d'une case du
-hall</b>. Rien de plus. Il faut qu'il sache si la case est occupée, et qu'il le dise à trois mètres
+hall</b>. <br>Rien de plus. Il faut qu'il sache si la case est occupée, et qu'il le dise à trois mètres
 de distance.</p>
 
 <p class="note" style="opacity:.85">Ce genre d'objet porte un nom dans le métier&nbsp;: on l'appelle
-un <b>indicateur d'occupation</b>. Tu retrouveras ce mot dans les gares, les parkings et les
+un <b>indicateur d'occupation</b>. <br>Tu retrouveras ce mot dans les gares, les parkings et les
 toilettes d'avion — partout où il faut dire «&nbsp;libre&nbsp;» ou «&nbsp;occupé&nbsp;» sans ouvrir
 la porte.</p>
   <figure class="situation-photo">
@@ -1390,7 +1452,7 @@ la porte.</p>
 <section class="card">
 <h2>💡 Avant de commencer, ton idée à toi</h2>
 <p>Sans réfléchir longtemps&nbsp;: <b>comment ton voyant peut-il savoir qu'un sac est posé dans la
-case&nbsp;?</b> Écris ta première idée, même si elle te paraît bête. On la relira à la fin, et tu
+case&nbsp;?</b> Écris ta première idée, même si elle te paraît bête. <br>On la relira à la fin, et tu
 verras le chemin parcouru.</p>
 <textarea id="idee0" style="min-height:70px;width:100%" aria-label="Comment le voyant peut-il savoir qu'un sac est posé dans la case"></textarea>
 <p class="note" style="opacity:.85">💾 Tes réponses sont enregistrées dans ce navigateur, à chaque
@@ -1399,14 +1461,29 @@ modification.</p>
 
 <section class="card" id="billet">
 <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
-<p>Cette séquence s'appuie sur ce que tu as fait en 6e et à l'école. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<p>Cette séquence s'appuie sur ce que tu as fait en 6e et à l'école. <br><b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
 <div class="exo">
-  <p><label for="be_1">1. Un objet technique répond d'abord à…
-  <select id="be_1"><option value="">— choisir —</option><option>un besoin : quelqu'un a un problème à résoudre</option><option>une envie de faire joli</option><option>une mode</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_2">2. Pour savoir si un objet fonctionne, on…
-  <select id="be_2"><option value="">— choisir —</option><option>l'essaie en suivant un protocole écrit</option><option>le regarde et on devine</option><option>demande au professeur</option><option>je ne sais pas encore</option></select></label></p>
-  <p><label for="be_3">3. « SI la case est occupée ALORS voyant rouge » : cette phrase est…
-  <select id="be_3"><option value="">— choisir —</option><option>une condition — elle décide entre deux cas</option><option>un calcul</option><option>le nom d'un composant</option><option>je ne sais pas encore</option></select></label></p>
+  <fieldset class="qcm-groupe" id="be_1" data-melange="1">
+  <legend>1. Un objet technique répond d'abord à…</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une mode"><label for="be_1__3">une mode</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="un besoin : quelqu&#x27;un a un problème à résoudre"><label for="be_1__1">un besoin : quelqu'un a un problème à résoudre</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une envie de faire joli"><label for="be_1__2">une envie de faire joli</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_2" data-melange="1">
+  <legend>2. Pour savoir si un objet fonctionne, on…</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="le regarde et on devine"><label for="be_2__2">le regarde et on devine</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="demande au professeur"><label for="be_2__3">demande au professeur</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="l&#x27;essaie en suivant un protocole écrit"><label for="be_2__1">l'essaie en suivant un protocole écrit</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
+</fieldset>
+  <fieldset class="qcm-groupe" id="be_3" data-melange="1">
+  <legend>3. « SI la case est occupée ALORS voyant rouge » : cette phrase est…</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="un calcul"><label for="be_3__2">un calcul</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="le nom d&#x27;un composant"><label for="be_3__3">le nom d'un composant</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="une condition — elle décide entre deux cas"><label for="be_3__1">une condition — elle décide entre deux cas</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
+</fieldset>
   <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
   <p class="feedback" id="fbBillet" role="status"></p>
 </div>
@@ -1424,7 +1501,7 @@ modification.</p>
 <section class="card">
 <h2>🔀 Deux façons de vivre la séquence</h2>
 <div class="exo">
-<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur Python, dans la page lui aussi, prend le relais pour le programme (Vittascience reste possible, par un lien). C'est le parcours principal.</p>
+<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur Python, dans la page lui aussi, prend le relais pour le programme (Vittascience reste possible, par un lien). <br>C'est le parcours principal.</p>
 <p data-parcours="c">🅲 <b>Sur papier</b> : croquis et tableau de tests à compléter au cahier — <b>mêmes questions, mêmes validations</b>. Le simulateur reste utilisable pour observer.</p>
 </div>
 <div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
@@ -1460,7 +1537,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <section class="card seance-tete">
 <h2>🧭 Séance 1 — Faire, puis imaginer</h2>
 <p class="question-directrice">Question directrice : comment un voyant peut-il savoir qu'une case est occupée, et quelles solutions imaginer pour le construire ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : le simulateur de place (activité 0, environ 10 min), puis deux solutions imaginées et un choix argumenté (activité 1, environ 30 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① le simulateur de place (activité 0, environ 10 min)&nbsp;; <br>② deux solutions imaginées et un choix argumenté (activité 1, environ 30 min). <br>Avec l'ouverture, la séance tient dans 55 min.</p>
 </section>
 
 <!-- Un outil n'est pas du décor (n°311) : le simulateur de place sert aux séances 1 et 2 (activités 0 et 2, le verrou
@@ -1477,14 +1554,22 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur de place <span class="chrono">⏱ ~10 min</span></h2>
 <div class="exo">
 <p><strong>Consigne&nbsp;:</strong> AVANT toute règle écrite, pose et enlève un sac plusieurs fois, au simulateur juste au-dessus. Observe la LED.</p>
-<p style="margin-top:10px">Q1 — Quand la place est OCCUPÉE, la LED est…
-<select id="a0q1" style="width:auto" aria-label="Q1 de l'activité 0"><option value="">— je choisis —</option><option>rouge</option><option>verte</option><option>éteinte</option></select></p>
-<p>Q2 — Qu'est-ce qui JOUE LE RÔLE du capteur dans ce simulateur&nbsp;?
-<select id="a0q2" style="width:auto" aria-label="Q2 de l'activité 0"><option value="">— je choisis —</option><option>Le bouton qu'on presse</option><option>La LED qui s'allume</option><option>L'écran de l'ordinateur</option></select></p>
+<fieldset class="qcm-groupe" id="a0q1" data-melange="1">
+  <legend>Q1 — Quand la place est OCCUPÉE, la LED est…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="éteinte" data-pourquoi="Pose un sac au simulateur : la LED reste allumée, elle change seulement de couleur."><label for="a0q1__3">éteinte</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="rouge"><label for="a0q1__1">rouge</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="verte" data-pourquoi="Le vert dit « libre, pose ton sac ». Une place occupée dit l'inverse."><label for="a0q1__2">verte</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a0q2" data-melange="1">
+  <legend>Q2 — Qu'est-ce qui JOUE LE RÔLE du capteur dans ce simulateur&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="L&#x27;écran de l&#x27;ordinateur" data-pourquoi="L'écran montre la page : il ne détecte pas si un sac est posé."><label for="a0q2__3">L'écran de l'ordinateur</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="Le bouton qu&#x27;on presse"><label for="a0q2__1">Le bouton qu'on presse</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="La LED qui s&#x27;allume" data-pourquoi="La LED affiche la décision : c'est l'actionneur. Qu'est-ce qui détecte le sac ?"><label for="a0q2__2">La LED qui s'allume</label></div>
+</fieldset>
 <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
 <p class="feedback" id="fb0" role="status"></p>
 <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS tes essais)</summary><div>
-<p>Place occupée → LED <b>rouge</b>&nbsp;; place libre → LED <b>verte</b>. Le <b>bouton</b> joue le rôle du capteur&nbsp;: il DÉTECTE l'état (sac posé ou non). La LED est l'actionneur&nbsp;: elle AFFICHE la décision. Tu viens de faire fonctionner, à la main, la chaîne capteur → décision → affichage.</p></div></details>
+<p>Place occupée → LED <b>rouge</b>&nbsp;; place libre → LED <b>verte</b>. <br>Le <b>bouton</b> joue le rôle du capteur&nbsp;: il DÉTECTE l'état (sac posé ou non). <br>La LED est l'actionneur&nbsp;: elle AFFICHE la décision. Tu viens de faire fonctionner, à la main, la chaîne capteur → décision → affichage.</p></div></details>
 <div class="retenir"><strong>À retenir (COMPRENDRE)&nbsp;:</strong> un <b>capteur</b> détecte un état, une <b>règle SI</b> décide, un <b>actionneur</b> (LED) montre la décision. Tu l'as vécu avant de le nommer.</div>
 </div>
 </section>
@@ -1513,7 +1598,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 </details>
 <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
 <p class="feedback" id="fb1" role="status"></p>
-<details class="correction"><summary>📖 Correction complète</summary><div><p>Exemples&nbsp;: <b>A</b> — bouton-poussoir sous la tablette + LED&nbsp;; <b>B</b> — capteur de distance qui «&nbsp;voit&nbsp;» le sac. Choix argumenté par un critère nommé (simplicité, prix, solidité dans un hall fréquenté). Organiser → plusieurs idées → choix avec critères&nbsp;: une seule idée n'est pas une conception.</p></div></details>
+<details class="correction"><summary>📖 Correction complète</summary><div><p>Exemples&nbsp;: <b>A</b> — bouton-poussoir sous la tablette + LED&nbsp;; <b>B</b> — capteur de distance qui «&nbsp;voit&nbsp;» le sac. <br>Choix argumenté par un critère nommé (simplicité, prix, solidité dans un hall fréquenté). <br>Organiser → plusieurs idées → choix avec critères&nbsp;: une seule idée n'est pas une conception.</p></div></details>
 <div class="retenir"><strong>À retenir&nbsp;:</strong> organiser → plusieurs idées → choix avec critères.</div>
 </div>
 </section>
@@ -1527,30 +1612,55 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <section class="card seance-tete">
 <h2>🧭 Séance 2 — Valider, puis programmer</h2>
 <p class="question-directrice">Question directrice : le voyant fait-il ce qu'on attend, et comment écrire la règle qui le commande ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : la grille de validation, au simulateur (activité 2, environ 25 min), les quatre gestes de l'éditeur Python, puis la règle SI en algorigramme et en programme (activité 3, environ 30 min).</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① la grille de validation, au simulateur (activité 2, environ 25 min)&nbsp;; <br>② les quatre gestes de l'éditeur Python, puis la règle SI en algorigramme et en programme (activité 3, environ 30 min).</p>
 </section>
 
 <section class="card" id="act2">
 <h2>🧪 Activité 2 — Valider <span style="font-size:.72em;opacity:.85">(5e_C8.3)</span> <span class="chrono">⏱ ~25 min</span></h2>
 <div class="exo">
-<p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de place (<a class="lien-outil" href="#outilSimu">en tête de la séance</a> : pose / enlève le sac) et compare, <b>directement dans la grille</b>&nbsp;: écris d'abord l'attendu, puis dis si le simulateur le confirme (<b>conforme</b>&nbsp;: ce que tu observes est ce que tu attendais). Prends enfin la décision globale, sur la dernière ligne.</p>
+<p>Pour chaque ligne de la grille&nbsp;: <br>① PRÉDIS&nbsp;: écris d'abord l'attendu&nbsp;; <br>② VÉRIFIE au simulateur de place (<a class="lien-outil" href="#outilSimu">en tête de la séance</a>&nbsp;: pose / enlève le sac)&nbsp;; <br>③ dis si c'est <b>conforme</b>&nbsp;: ce que tu observes est ce que tu attendais. <br>Prends enfin la décision globale, sur la dernière ligne.</p>
 <div class="grille-conforme"><div class="defile"><table class="refs grille">
 <caption>La grille de validation de la place de rangement, à compléter</caption>
 <thead><tr><th scope="col">Test</th><th scope="col">Attendu</th><th scope="col">Le simulateur confirme-t-il&nbsp;?</th></tr></thead>
 <tbody>
-<tr><td data-col="Test">Poser le sac</td><td data-col="Attendu" class="case-menu"><select id="a2a1" aria-label="Ligne 1, poser le sac — résultat attendu" aria-describedby="a2a1-retour"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select><span class="retour-case" id="a2a1-retour"></span></td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><select id="a2c1" aria-label="Ligne 1, poser le sac — le simulateur confirme-t-il ?" aria-describedby="a2c1-retour"><option value="">—</option><option>Oui</option><option>Non</option></select><span class="retour-case" id="a2c1-retour"></span></td></tr>
-<tr><td data-col="Test">Enlever le sac</td><td data-col="Attendu" class="case-menu"><select id="a2a2" aria-label="Ligne 2, enlever le sac — résultat attendu" aria-describedby="a2a2-retour"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select><span class="retour-case" id="a2a2-retour"></span></td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><select id="a2c2" aria-label="Ligne 2, enlever le sac — le simulateur confirme-t-il ?" aria-describedby="a2c2-retour"><option value="">—</option><option>Oui</option><option>Non</option></select><span class="retour-case" id="a2c2-retour"></span></td></tr>
-<tr><td data-col="Test">Visible à 3 m</td><td data-col="Attendu">Oui (LED assez brillante)</td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><select id="a2c3" aria-label="Ligne 3, visible à 3 mètres — le simulateur confirme-t-il ?" aria-describedby="a2c3-retour"><option value="">—</option><option>Oui</option><option>Non</option></select><span class="retour-case" id="a2c3-retour"></span></td></tr>
+<tr><td data-col="Test">Poser le sac</td><td data-col="Attendu" class="case-menu"><fieldset class="qcm-groupe" id="a2a1" aria-describedby="a2a1-retour">
+  <legend class="visually-hidden">Ligne 1, poser le sac — résultat attendu</legend>
+  <div class="qcm-option"><input type="radio" name="a2a1" id="a2a1__1" value="LED rouge"><label for="a2a1__1">LED rouge</label></div>
+  <div class="qcm-option"><input type="radio" name="a2a1" id="a2a1__2" value="LED verte" data-pourquoi="Un sac posé occupe la place : le vert dirait « libre », c'est l'inverse."><label for="a2a1__2">LED verte</label></div>
+</fieldset><span class="retour-case" id="a2a1-retour"></span></td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><fieldset class="qcm-groupe" id="a2c1" aria-describedby="a2c1-retour">
+  <legend class="visually-hidden">Ligne 1, poser le sac — le simulateur confirme-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2c1" id="a2c1__1" value="Oui"><label for="a2c1__1">Oui</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c1" id="a2c1__2" value="Non" data-pourquoi="Pose le sac au simulateur : la LED devient bien rouge, comme attendu."><label for="a2c1__2">Non</label></div>
+</fieldset><span class="retour-case" id="a2c1-retour"></span></td></tr>
+<tr><td data-col="Test">Enlever le sac</td><td data-col="Attendu" class="case-menu"><fieldset class="qcm-groupe" id="a2a2" aria-describedby="a2a2-retour">
+  <legend class="visually-hidden">Ligne 2, enlever le sac — résultat attendu</legend>
+  <div class="qcm-option"><input type="radio" name="a2a2" id="a2a2__1" value="LED rouge" data-pourquoi="Sac enlevé, rien n'appuie plus sur le capteur : la place redevient libre."><label for="a2a2__1">LED rouge</label></div>
+  <div class="qcm-option"><input type="radio" name="a2a2" id="a2a2__2" value="LED verte"><label for="a2a2__2">LED verte</label></div>
+</fieldset><span class="retour-case" id="a2a2-retour"></span></td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><fieldset class="qcm-groupe" id="a2c2" aria-describedby="a2c2-retour">
+  <legend class="visually-hidden">Ligne 2, enlever le sac — le simulateur confirme-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2c2" id="a2c2__1" value="Oui"><label for="a2c2__1">Oui</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c2" id="a2c2__2" value="Non" data-pourquoi="Enlève le sac au simulateur : la LED redevient bien verte, comme attendu."><label for="a2c2__2">Non</label></div>
+</fieldset><span class="retour-case" id="a2c2-retour"></span></td></tr>
+<tr><td data-col="Test">Visible à 3 m</td><td data-col="Attendu">Oui (LED assez brillante)</td><td data-col="Le simulateur confirme-t-il ?" class="case-menu"><fieldset class="qcm-groupe" id="a2c3" aria-describedby="a2c3-retour">
+  <legend class="visually-hidden">Ligne 3, visible à 3 mètres — le simulateur confirme-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2c3" id="a2c3__1" value="Oui"><label for="a2c3__1">Oui</label></div>
+  <div class="qcm-option"><input type="radio" name="a2c3" id="a2c3__2" value="Non" data-pourquoi="Rien ne contredit l'attendu : la LED se voit depuis le hall, à 3 mètres."><label for="a2c3__2">Non</label></div>
+</fieldset><span class="retour-case" id="a2c3-retour"></span></td></tr>
 </tbody>
-<tfoot><tr><th scope="row" colspan="2">Décision globale sur la place de rangement</th><td data-col="Décision globale" class="case-menu"><select id="a2dec" aria-label="Ligne 4, décision globale sur la place de rangement" aria-describedby="a2dec-retour"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select><span class="retour-case" id="a2dec-retour"></span></td></tr></tfoot>
+<tfoot><tr><th scope="row" colspan="2">Décision globale sur la place de rangement</th><td data-col="Décision globale" class="case-menu"><fieldset class="qcm-groupe" id="a2dec" aria-describedby="a2dec-retour" data-melange="1">
+  <legend class="visually-hidden">Ligne 4, décision globale sur la place de rangement</legend>
+  <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__1" value="Validée"><label for="a2dec__1">Validée</label></div>
+  <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__2" value="À améliorer" data-pourquoi="Aucun test n'a échoué : il n'y a rien à corriger pour l'instant."><label for="a2dec__2">À améliorer</label></div>
+  <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__3" value="Rejetée" data-pourquoi="Aucune ligne n'échoue : rien ne justifie de rejeter la place."><label for="a2dec__3">Rejetée</label></div>
+</fieldset><span class="retour-case" id="a2dec-retour"></span></td></tr></tfoot>
 </table></div></div>
 <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
 <p class="feedback" id="fb2" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
-<p><b>La grille, ligne par ligne</b>&nbsp;: LED rouge · LED verte · Oui · Oui · Oui, puis <b>Validée</b>. Chaque test a son résultat attendu ÉCRIT AVANT d'essayer.</p>
+<p><b>La grille, ligne par ligne</b>&nbsp;: <br>ligne 1, LED rouge, puis Oui&nbsp;; <br>ligne 2, LED verte, puis Oui&nbsp;; <br>ligne 3, Oui&nbsp;; <br>la décision globale, <b>Validée</b>. <br>Chaque test a son résultat attendu ÉCRIT AVANT d'essayer.</p>
 <ul>
-<li><b>Poser le sac</b> → la place devient occupée → attendu&nbsp;: <b>LED rouge</b> (rouge&nbsp;: la place est prise) → le simulateur montre rouge → <b>Oui</b>, conforme.<br>Piège «&nbsp;LED verte&nbsp;» → le vert dit «&nbsp;libre, tu peux poser ton sac&nbsp;»&nbsp;: c'est l'inverse d'une place occupée.</li>
-<li><b>Enlever le sac</b> → la place redevient libre → attendu&nbsp;: <b>LED verte</b> → le simulateur montre vert → <b>Oui</b>.<br>Piège «&nbsp;LED rouge&nbsp;» → une fois le sac enlevé, plus rien n'appuie sur le capteur&nbsp;: la place est libre.</li>
+<li><b>Poser le sac</b> → la place devient occupée. <br>Attendu&nbsp;: <b>LED rouge</b> (rouge&nbsp;: la place est prise). <br>Le simulateur montre rouge&nbsp;: <b>Oui</b>, conforme.<br>Piège «&nbsp;LED verte&nbsp;» → le vert dit «&nbsp;libre, tu peux poser ton sac&nbsp;»&nbsp;: c'est l'inverse d'une place occupée.</li>
+<li><b>Enlever le sac</b> → la place redevient libre. <br>Attendu&nbsp;: <b>LED verte</b>. <br>Le simulateur montre vert&nbsp;: <b>Oui</b>.<br>Piège «&nbsp;LED rouge&nbsp;» → une fois le sac enlevé, plus rien n'appuie sur le capteur&nbsp;: la place est libre.</li>
 <li><b>Visible à 3 m</b> → attendu&nbsp;: la LED se voit depuis le hall → elle est assez brillante → <b>Oui</b>.</li>
 <li>Piège «&nbsp;Non&nbsp;», sur une ligne où l'observé est l'attendu → «&nbsp;conforme&nbsp;» veut dire&nbsp;: ce que j'observe est ce que j'attendais. Si ta prédiction était fausse, c'est elle qu'on corrige, pas le simulateur.</li>
 <li><b>Décision globale</b> → les trois tests sont conformes → <b>Validée</b>.<br>Piège «&nbsp;À améliorer&nbsp;» → aucun test n'a échoué&nbsp;: il n'y a rien à corriger pour l'instant.<br>Piège «&nbsp;Rejetée&nbsp;» → on rejette un objet qui échoue à un test important&nbsp;; ici, tout passe.</li>
@@ -1567,13 +1677,13 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
      éditeur, un vrai : l'élève fait les quatre gestes sur un programme d'essai, et chaque geste réussi se coche. -->
 <section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
   <h2 id="gestes-editeur-python">🧰 Avant l'activité 3 (échauffement) — les quatre gestes de l'éditeur Python</h2>
-  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. <b>Entraîne-toi d'abord ici</b>, sur un petit programme d'essai&nbsp;: l'éditeur d'essai, à côté des gestes (dessous, sur un petit écran), est un vrai, le même que dans l'activité&nbsp;3. Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. Ensuite, dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme, et il ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
+  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>&nbsp;: rien à installer, et il marche sans Internet. <br><b>Entraîne-toi d'abord ici</b>&nbsp;: l'éditeur d'essai est le même que dans l'activité&nbsp;3. <br>Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi.</p>
   <div class="gestes-pratique-atelier">
   <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan" aria-label="Les quatre gestes, à faire dans l'éditeur d'essai">
-    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b> Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></span><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></span></li>
-    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>5e-HALL-essai-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></span></li>
-    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 5E2</b> (ta classe).</span></span></li>
-    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b> Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></span></li>
+    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b><br>Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces. <span class="geste-voir"><br><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <br><i>La première fois, Python met une seconde à se préparer.</i></span><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. <br>Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></span></li>
+    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b><br>Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>5e-HALL-essai-DUPONT</code>. <br>Un fichier sans nom est introuvable la semaine suivante. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <br><i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></span></li>
+    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b><br>La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. <br>Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. <br>Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur. <span class="geste-voir"><br><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 5E2</b> (ta classe).</span></span></li>
+    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b><br>Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. <br>Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». <br>Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></span></li>
   </ol>
   <div class="gestes-pratique-poste">
   <p class="gestes-pratique-bilan" id="gestes-bilan" role="status"></p>
@@ -1587,13 +1697,13 @@ print("2 + 3 =", 2 + 3)
   </div>
   </div>
   </div>
-  <details class="gestes-fenetres" open>
+  <details class="gestes-fenetres">
     <summary>🪟 Le geste 3 pas à pas&nbsp;: ranger ton fichier avec l'Explorateur de Windows</summary>
-    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
+    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. <br>Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
            alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 5e-HALL-DUPONT_202695_52028.py » est sélectionné ; en bas, la taille du fichier.">
-      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <br><i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>5e-HALL-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <br><i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>5e-HALL-DUPONT</code>). <br>La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
     </figure>
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
@@ -1603,21 +1713,22 @@ print("2 + 3 =", 2 + 3)
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
            alt="Fenêtre de l'Explorateur ouverte sur « Documents › 5E2 » : un seul fichier, « 5e-HALL-DUPONT_202695_52028.py », de type Python.File, sélectionné.">
-      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b><br><i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
+      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. <br>Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b><br><i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
     </figure>
     <p><b>Au geste 4</b>, la fenêtre «&nbsp;Ouvrir&nbsp;» est celle de ton poste&nbsp;: <b>Documents</b> est dans sa colonne de gauche, et le dossier de ta classe dedans — le même chemin qu'ici.</p>
   </details>
-  <p class="gestes-vitta"><b>Avec Vittascience (facultatif, Internet nécessaire).</b> Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode mixte</b> (blocs et Python)&nbsp;: construis, <b>Exécuter</b> → le <b>crayon</b>, <code>5e-HALL-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. Pour reprendre&nbsp;: le <b>dossier</b> (Ouvrir) → <b>Depuis votre appareil</b> → <b>Ouvrir…</b> → Documents › ta classe → ton fichier → <b>Oui</b>&nbsp;: les blocs et le Python reviennent.</p>
+  <details class="gestes-vitta"><summary>Avec Vittascience (facultatif, Internet nécessaire)</summary><p>Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode mixte</b> (blocs et Python)&nbsp;: construis, <b>Exécuter</b> → le <b>crayon</b>, <code>5e-HALL-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. <br>Pour reprendre&nbsp;: le <b>dossier</b> (Ouvrir) → <b>Depuis votre appareil</b> → <b>Ouvrir…</b> → Documents › ta classe → ton fichier → <b>Oui</b>&nbsp;: les blocs et le Python reviennent.</p></details>
 </section>
 
 <section class="card" id="act3">
 <h2>💻 Activité 3 — La règle SI en schéma, puis en programme <span style="font-size:.72em;opacity:.85">(5e_C9.3)</span> <span class="chrono">⏱ ~30 min</span></h2>
-<p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
+<p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page.</b> Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
 <!-- Rappel de l'algorigramme (Pascal, 05/11/2026 : « dans l'exercice suivant, rappeler la définition de l'algorigramme »).
      Définition : celle du lexique de 4e_C9.1 (Grand dictionnaire terminologique, OQLF, « algorigramme »). -->
+<details class="rappel-algo-repli"><summary id="rappel-algo-t">📌 Rappel — l'algorigramme <span class="rappel-algo-en">(en anglais&nbsp;: <i lang="en">flowchart</i>)</span> — ses quatre formes</summary>
 <aside class="rappel-algo" aria-labelledby="rappel-algo-t">
-  <p class="rappel-algo-titre" id="rappel-algo-t">📌 Rappel — l'algorigramme <span class="rappel-algo-en">(en anglais&nbsp;: <i lang="en">flowchart</i>)</span></p>
-  <p>Un <b>algorigramme</b> est un <b>dessin qui montre l'ordre des étapes d'un algorithme</b>, avec des formes et des flèches. On le lit de haut en bas, en suivant les flèches. Chaque forme a un sens&nbsp;:</p>
+  
+  <p>Un <b>algorigramme</b> est un <b>dessin qui montre l'ordre des étapes d'un algorithme</b>, avec des formes et des flèches. <br>On le lit de haut en bas, en suivant les flèches. Chaque forme a un sens&nbsp;:</p>
   <ul class="rappel-algo-formes">
     <li><svg viewBox="0 0 64 34" width="64" height="34" aria-hidden="true" focusable="false"><rect x="3" y="5" width="58" height="24" rx="12" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>L'ovale, ou terminal</b>&nbsp;: il commence (ou finit). <i>DÉBUT</i>.</span></li>
     <li><svg viewBox="0 0 64 34" width="64" height="34" aria-hidden="true" focusable="false"><rect x="5" y="5" width="54" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg><span><b>Le rectangle</b>&nbsp;: il fait une action, puis on passe à la suite. <i>Mesurer, allumer une lampe.</i></span></li>
@@ -1626,27 +1737,63 @@ print("2 + 3 =", 2 + 3)
   </ul>
   <p class="rappel-algo-mots">L'<b>algorithme</b> est la suite des étapes&nbsp;; l'<b>algorigramme</b>, son dessin&nbsp;; le <b>programme</b>, sa traduction dans un langage que la machine comprend, comme Python.</p>
 </aside>
+</details>
 <div class="exo">
 <h4>3a — Remets l'algorigramme en ordre (représentation schématique)</h4>
-<p>Ce que le simulateur FAIT se dessine. Numérote les blocs de 1 à 5&nbsp;:</p>
-<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1" aria-label="Rang de l'étape 1 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage de l'indicateur)</span></div>
-<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2" aria-label="Rang de l'étape 2 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Lire le capteur (sac posé ou non)</span></div>
-<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3" aria-label="Rang de l'étape 3 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Place occupée&nbsp;?</span></div>
-<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4" aria-label="Rang de l'étape 4 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → LED rouge</span></div>
-<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5" aria-label="Rang de l'étape 5 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → LED verte, puis revenir à la lecture</span></div>
+<p>Ce que le simulateur FAIT se dessine. <br>Les blocs sont mélangés. <br>Numérote-les de 1 à 5, dans l'ordre où l'indicateur les exécute&nbsp;:</p>
+<div class="algostep"><span class="algoshape">◇ décision</span><span class="algotexte">Place occupée&nbsp;?</span><fieldset class="qcm-groupe algorang" id="a3o3">
+  <legend class="visually-hidden">Rang du bloc « Place occupée&nbsp;? »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__1" value="1" data-pourquoi="Le premier bloc est le terminal DÉBUT."><label for="a3o3__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__2" value="2" data-pourquoi="Pour répondre « occupée ? », il faut d'abord lire le capteur."><label for="a3o3__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__3" value="3"><label for="a3o3__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__4" value="4" data-pourquoi="Les sorties OUI et NON suivent la question, pas l'inverse."><label for="a3o3__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__5" value="5" data-pourquoi="Les sorties OUI et NON suivent la question, pas l'inverse."><label for="a3o3__5">5</label></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">⬭ début</span><span class="algotexte">DÉBUT (au démarrage de l'indicateur)</span><fieldset class="qcm-groupe algorang" id="a3o1">
+  <legend class="visually-hidden">Rang du bloc « DÉBUT (au démarrage de l'indicateur) »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__1" value="1"><label for="a3o1__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__2" value="2" data-pourquoi="Un algorigramme s'ouvre toujours sur son terminal DÉBUT."><label for="a3o1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__3" value="3" data-pourquoi="Un algorigramme s'ouvre toujours sur son terminal DÉBUT."><label for="a3o1__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__4" value="4" data-pourquoi="Un algorigramme s'ouvre toujours sur son terminal DÉBUT."><label for="a3o1__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__5" value="5" data-pourquoi="Un algorigramme s'ouvre toujours sur son terminal DÉBUT."><label for="a3o1__5">5</label></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">▭ action NON</span><span class="algotexte">NON → LED verte, puis revenir à la lecture</span><fieldset class="qcm-groupe algorang" id="a3o5">
+  <legend class="visually-hidden">Rang du bloc « NON → LED verte, puis revenir à la lecture »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__1" value="1" data-pourquoi="Le premier bloc est le terminal DÉBUT."><label for="a3o5__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__2" value="2" data-pourquoi="Lire le capteur vient avant toute action."><label for="a3o5__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__3" value="3" data-pourquoi="La question vient avant ses sorties."><label for="a3o5__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__4" value="4" data-pourquoi="Le bloc NON ferme l'algorigramme : sa flèche remonte à la lecture."><label for="a3o5__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__5" value="5"><label for="a3o5__5">5</label></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><span class="algotexte">Lire le capteur (sac posé ou non)</span><fieldset class="qcm-groupe algorang" id="a3o2">
+  <legend class="visually-hidden">Rang du bloc « Lire le capteur (sac posé ou non) »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__1" value="1" data-pourquoi="Le premier bloc est le terminal DÉBUT."><label for="a3o2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__2" value="2"><label for="a3o2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__3" value="3" data-pourquoi="Pour décider, il faut d'abord savoir si un sac est posé."><label for="a3o2__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__4" value="4" data-pourquoi="La LED s'allume après la lecture et la décision."><label for="a3o2__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__5" value="5" data-pourquoi="Sans lecture, aucune LED ne peut s'allumer : la lecture vient tôt."><label for="a3o2__5">5</label></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">▭ action OUI</span><span class="algotexte">OUI → LED rouge</span><fieldset class="qcm-groupe algorang" id="a3o4">
+  <legend class="visually-hidden">Rang du bloc « OUI → LED rouge »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__1" value="1" data-pourquoi="Le premier bloc est le terminal DÉBUT."><label for="a3o4__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__2" value="2" data-pourquoi="Avant d'allumer, il faut lire le capteur."><label for="a3o4__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__3" value="3" data-pourquoi="L'action OUI répond à la question : elle vient après elle."><label for="a3o4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__4" value="4"><label for="a3o4__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__5" value="5" data-pourquoi="Dans cet algorigramme, la sortie OUI se range avant la sortie NON."><label for="a3o4__5">5</label></div>
+</fieldset></div>
 <button class="btn check" data-check="3" type="button">✅ Vérifier l'algorigramme</button>
 <p class="feedback" id="fb3" role="status"></p>
 <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
-<p><b>1 — DÉBUT</b> (un algorigramme commence par un terminal). <b>2 — Lire le capteur</b> (rectangle&nbsp;: l'ENTRÉE de l'information). <b>3 — Place occupée&nbsp;?</b> (losange&nbsp;: la DÉCISION, toujours deux sorties). <b>4 — OUI → rouge</b> et <b>5 — NON → verte, puis retour</b>&nbsp;: la flèche qui remonte fait la BOUCLE — l'indicateur surveille en continu, comme le simulateur que tu as manipulé.</p></div></details>
+<p><b>1 — DÉBUT</b> (un algorigramme commence par un terminal). <br><b>2 — Lire le capteur</b> (rectangle&nbsp;: l'ENTRÉE de l'information). <br><b>3 — Place occupée&nbsp;?</b> (losange&nbsp;: la DÉCISION, toujours deux sorties). <br><b>4 — OUI → rouge</b> et <b>5 — NON → verte, puis retour</b>&nbsp;: la flèche qui remonte fait la BOUCLE — l'indicateur surveille en continu, comme le simulateur que tu as manipulé.</p></div></details>
 <h4 style="margin-top:14px">3b — Écris la règle, puis fais-la vivre en Python</h4>
 <textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI" aria-label="Mon programme, en pseudo-code"></textarea>
 <div class="editeur-py" id="vs1" data-fichier="5e-HALL-TON NOM">
   <label for="py_regle">🐍 L'éditeur Python de la page — traduis ta règle, puis exécute-la</label>
-  <p class="editeur-py-note">Sous la première ligne, écris la règle en Python (<code>if occupee:</code>, puis <code>else:</code>), avec <code>print("ROUGE")</code> et <code>print("VERT")</code> à la place des LED. ▶&nbsp;Exécuter : la console doit dire ROUGE. Change ensuite <code>True</code> en <code>False</code> et réexécute. Nomme ton fichier 5e-HALL-TON NOM, puis télécharge-le (geste 3). Avec Vittascience (facultatif, mode mixte), construis aussi la règle en blocs et regarde le Python s'écrire — puis l'inverse. Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.</p>
+  <p class="editeur-py-note">① Sous la première ligne, écris la règle en Python&nbsp;: <code>if occupee:</code>, puis <code>else:</code>. <br>② À la place des LED, écris <code>print("ROUGE")</code> et <code>print("VERT")</code>. <br>③ Clique ▶&nbsp;Exécuter&nbsp;: la console doit dire ROUGE. <br>④ Change <code>True</code> en <code>False</code>, puis réexécute. <br>Nomme ton fichier 5e-HALL-TON NOM, puis télécharge-le (geste 3).</p>
   <textarea id="py_regle" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">occupee = True   # sans capteur réel : True, un sac est posé ; False, la case est vide
 # écris ici la règle : SI occupee ALORS print("ROUGE") SINON print("VERT")
 </textarea>
-  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="editeur-py-vitta approfondissement"><summary>🌐 Avec Vittascience (facultatif, Internet nécessaire)</summary><p><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement. <br>En mode mixte, construis la règle en blocs&nbsp;: le Python s'écrit tout seul. <br>Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.</p></details>
   <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
 <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 3b</button>
@@ -1672,7 +1819,7 @@ else:
 <section class="card seance-tete">
 <h2>🧭 Séance 3 — Refaire, conclure</h2>
 <p class="question-directrice">Question directrice : la même règle SI marche-t-elle sur un autre objet ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : le réinvestissement sur le casier de bibliothèque (environ 15 min), puis la synthèse, le Bonus et le bilan ; le TP « Le dé » et l'atelier de planification lancent ensuite la fabrication du support, et le QCM t'attend pour t'entraîner.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① le réinvestissement sur le casier de bibliothèque (environ 15 min)&nbsp;; <br>② la synthèse, le Bonus et le bilan. <br>Ensuite, le TP « Le dé » et l'atelier de planification lancent la fabrication du support, et le QCM t'attend pour t'entraîner.</p>
 </section>
 
 <section class="card" id="reinvestissement">
@@ -1707,49 +1854,50 @@ FIN SI</pre>
 
 <section class="card">
 <h2>📝 Synthèse</h2>
-<p>Améliorer un objet = <b>imaginer (C7)</b> → <b>tester (C8)</b> → <b>règle SI (C9)</b>, à partir d'un vrai besoin de l'école à New York. Tu as d'abord <b>FAIT</b> (le simulateur de place), puis <b>COMPRIS</b> (capteur, décision, actionneur — et leur dessin en algorigramme), puis <b>REFAIT</b> (le casier de bibliothèque)&nbsp;: le concept invariant s'appelle la <b>règle SI</b>, et tu le retrouveras toute l'année sous d'autres habits (blocs, Python, algorigrammes).</p>
+<p>Améliorer un objet = <b>imaginer (C7)</b> → <b>tester (C8)</b> → <b>règle SI (C9)</b>, à partir d'un vrai besoin de l'école à New York. <br>Tu as d'abord <b>FAIT</b> (le simulateur de place). <br>Puis tu as <b>COMPRIS</b> (le capteur, la décision, l'actionneur, et leur dessin en algorigramme). <br>Puis tu as <b>REFAIT</b> (le casier de bibliothèque). <br>Ce qui ne change pas d'un objet à l'autre s'appelle la <b>règle SI</b>&nbsp;: tu la retrouveras toute l'année sous d'autres habits (blocs, Python, algorigrammes).</p>
 </section>
 
 <section class="card">
 <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
 <div class="bonus">
 <p><b>Citoyen&nbsp;:</b> Quel autre objet du collège améliorer, et pour quel besoin&nbsp;?</p>
 <textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 1"></textarea>
 <details class="correction"><summary>✅ Corrigé du défi citoyen</summary><div>
 <p><b>Exemples qui conviennent :</b> un voyant « salle occupée » sur la porte d'une salle de réunion, pour ne pas ouvrir en
-plein cours ; un témoin « poubelle pleine » sur le bac de tri, pour que l'agent sache quand passer ; un rappel lumineux sur le
+plein cours ; <br>un témoin « poubelle pleine » sur le bac de tri, pour que l'agent sache quand passer ; <br>un rappel lumineux sur le
 distributeur de savon vide des toilettes.</p>
-<p><b>Attendus :</b> un objet réel du collège ; le besoin dit avec QUI il gêne et QUOI (« les élèves ne voient pas si… ») ; une
+<p><b>Attendus :</b> un objet réel du collège ; <br>le besoin dit avec QUI il gêne et QUOI (« les élèves ne voient pas si… ») ; <br>une
 amélioration qu'on pourra tester, c'est-à-dire dont on saura dire si elle marche.</p>
-<p><b>Erreurs typiques :</b> donner une solution sans dire le besoin (« mettre une LED ») ; un besoin qui n'en est pas un
-(« faire plus joli ») ; un objet sans lien avec le collège.</p>
+<p><b>Erreurs typiques :</b> donner une solution sans dire le besoin (« mettre une LED ») ; <br>un besoin qui n'en est pas un
+(« faire plus joli ») ; <br>un objet sans lien avec le collège.</p>
 </div></details>
 <p style="margin-top:10px"><b>Technique&nbsp;:</b> Ajoute un test «&nbsp;tenue si on secoue le support&nbsp;» (étape + résultat attendu)&nbsp;:</p>
 <textarea rows="2" id="defi2" placeholder="Ton test — sauvegardé dans la page" aria-label="Défi 2"></textarea>
 <details class="correction"><summary>✅ Corrigé du défi technique</summary><div>
-<p><b>Un test complet, par exemple :</b> étape — sac posé, secouer le support à la main pendant 10 secondes, puis recommencer
-sans sac ; résultat attendu, écrit avant l'essai — le support reste fixé, aucune pièce ne tombe, et le voyant garde sa couleur
+<p><b>Un test complet, par exemple :</b> <br>étape&nbsp;: sac posé, secouer le support à la main pendant 10 secondes, puis recommencer
+sans sac&nbsp;; <br>résultat attendu, écrit avant l'essai&nbsp;: le support reste fixé, aucune pièce ne tombe, et le voyant garde sa couleur
 (rouge avec le sac, vert sans) sans clignoter.</p>
-<p><b>Attendus :</b> une action précise (quoi, pendant combien de temps ou combien de fois) ; les conditions (avec et sans sac) ;
-un résultat attendu qu'on observe par oui ou par non, écrit AVANT d'essayer ; une ligne de plus dans la grille de l'activité 2,
+<p><b>Attendus :</b> une action précise (quoi, pendant combien de temps ou combien de fois) ; <br>les conditions (avec et sans sac) ; <br>un résultat attendu qu'on observe par oui ou par non, écrit AVANT d'essayer ; <br>une ligne de plus dans la grille de l'activité 2,
 comme les trois autres tests.</p>
-<p><b>Erreurs typiques :</b> « ça doit tenir » — ce n'est pas observable ; oublier de regarder le voyant, alors qu'un faux contact
-fait clignoter la LED ; ne pas dire combien de temps on secoue : deux élèves feraient deux tests différents.</p>
+<p><b>Erreurs typiques :</b> « ça doit tenir » — ce n'est pas observable ; <br>oublier de regarder le voyant, alors qu'un faux contact
+fait clignoter la LED ; <br>ne pas dire combien de temps on secoue : deux élèves feraient deux tests différents.</p>
 </div></details>
 <p style="margin-top:10px"><b>New York&nbsp;:</b> Pourquoi un indicateur visible est-il utile dans un hall très fréquenté&nbsp;?</p>
 <textarea rows="2" id="defi3" placeholder="Ton explication — sauvegardée dans la page" aria-label="Défi 3"></textarea>
 <details class="correction"><summary>✅ Corrigé de l'ancrage New York</summary><div>
-<p><b>Parce qu'on choisit sans s'arrêter.</b> Deux cents élèves entrent en huit minutes : celui qui se penche sur chaque case
-bloque ceux qui le suivent, et finit par poser son sac par terre. Un voyant qu'on lit à trois mètres dit tout de suite où
+<p><b>Parce qu'on choisit sans s'arrêter.</b><br>Deux cents élèves entrent en huit minutes : celui qui se penche sur chaque case
+bloque ceux qui le suivent, et finit par poser son sac par terre. <br>Un voyant qu'on lit à trois mètres dit tout de suite où
 aller.</p>
-<p><b>Ce que ça change :</b> plus de sacs devant les cases, donc moins de chutes — M. Alvarez en a compté trois en un mois ; un
-passage plus fluide ; et ni porte ni serrure à acheter.</p>
-<p><b>Attendus :</b> le lien avec la situation (le nombre d'élèves, le temps, les chutes) ; la distance de lecture (depuis
-l'entrée, sans s'approcher) ; au moins une conséquence : la sécurité ou la fluidité.</p>
+<p><b>Ce que ça change :</b> plus de sacs devant les cases, donc moins de chutes — M. Alvarez en a compté trois en un mois ; <br>un
+passage plus fluide ; <br>et ni porte ni serrure à acheter.</p>
+<p><b>Attendus :</b> le lien avec la situation (le nombre d'élèves, le temps, les chutes) ; <br>la distance de lecture (depuis
+l'entrée, sans s'approcher) ; <br>au moins une conséquence : la sécurité ou la fluidité.</p>
 <p><b>Erreurs typiques :</b> « c'est plus joli » ou « c'est moderne » — ce ne sont pas des besoins ; oublier la distance : un
 voyant qu'il faut regarder de près ne sert à rien dans la foule.</p>
 </div></details>
 </div>
+</details>
 </section>
 
 <section class="card">
@@ -1766,25 +1914,31 @@ voyant qu'il faut regarder de près ne sert à rien dans la foule.</p>
 <label><input type="radio" name="pos_c83" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c83" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c83" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c83" value="4"> ⭐ très bonne</label></fieldset>
 <fieldset class="positionnement"><legend>5e_C9.3 — réaliser et mettre au point un programme simple</legend>
 <label><input type="radio" name="pos_c93" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c93" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c93" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c93" value="4"> ⭐ très bonne</label></fieldset>
-<p>Confiance (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Ma confiance"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+<fieldset class="qcm-groupe" id="bilan4">
+  <legend>Ma confiance, de 1 (pas encore sûr·e) à 4 (tout à fait sûr·e)</legend>
+  <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__1" value="1"><label for="bilan4__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__2" value="2"><label for="bilan4__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__3" value="3"><label for="bilan4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__4" value="4"><label for="bilan4__4">4</label></div>
+</fieldset>
 </section>
 
 <section class="card">
 <h2>🎲 Avant de dessiner ton support — le TP « Le dé »</h2>
 <p><b>Pour fabriquer le support</b> de l'indicateur, il faudra le <b>dessiner dans un logiciel de
-conception</b>. On n'apprend pas un logiciel en même temps qu'on invente un objet : ce TP te fait
+conception</b>. <br>On n'apprend pas un logiciel en même temps qu'on invente un objet : ce TP te fait
 donc construire quelque chose de simple, un <b>dé de 50 mm</b>, du plan vide jusqu'à la pièce prête
 à imprimer.</p>
-<p>Trente-cinq étapes, huit paliers. On commence par ranger et nommer son travail, on finit par
-colorer son dé. Chaque étape dit <b>ce que tu dois voir</b> à l'écran — si tu ne le vois pas, tu ne
-continues pas. <b>Aucune question de cours</b> : on apprend l'outil ici, on évalue la notion
+<p>Trente-cinq étapes, huit paliers. <br>On commence par ranger et nommer son travail, on finit par
+colorer son dé. <br>Chaque étape dit <b>ce que tu dois voir</b> à l'écran — si tu ne le vois pas, tu ne
+continues pas. <br><b>Aucune question de cours</b> : on apprend l'outil ici, on évalue la notion
 ailleurs.</p>
 <p><a class="btn" href="../../atelier-cao/tp_5e_de_onshape.html">🎲 Ouvrir le TP « Le dé » (Onshape)</a></p>
 </section>
 
 <section class="card">
 <h2>📅 Le diagramme de planification des tâches — atelier commun</h2>
-<p>Le programme demande, en 5e, de <b>SUIVRE</b> un processus de réalisation d'un objet avec des tâches identifiées. Avant de lancer la fabrication, tu reçois le planning du projet déjà fait. Ton travail : le <b>suivre</b> — savoir à chaque séance ce qui est fini, ce qui est en retard, et ce que ce retard décale.</p>
+<p>Le programme demande, en 5e, de <b>SUIVRE</b> un processus de réalisation d'un objet avec des tâches identifiées. <br>Avant de lancer la fabrication, tu reçois le planning du projet déjà fait. <br>Ton travail : le <b>suivre</b> — savoir à chaque séance ce qui est fini, ce qui est en retard, et ce que ce retard décale.</p>
 <p>Cet atelier est <b>partagé par les trois niveaux</b> : il se place au lancement du projet, dure une séance, et se fait aussi bien avec des bandes de papier qu'avec le logiciel.</p>
 <p><a class="btn" href="../../atelier-planification/atelier_5e_C7.1_planification_taches.html">📅 Ouvrir l'atelier de planification (parcours 5e)</a></p>
 </section>
@@ -1898,7 +2052,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 /* sauvegarde locale (règle n°15) */
 function save(){
   const o = {inputs: {}, exp: window.__exp || {}, par};
-  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => { if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
+    o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
   o.onglet = ongletActif;
