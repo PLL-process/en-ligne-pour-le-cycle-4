@@ -165,3 +165,18 @@ Exécuté le 10/11/2026 (Chromium Playwright, session cloud) : `tests_4e_C7.4_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_rapports_tests`, `controle_licence` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_4e_2026-11-10/`. Non exécuté : vrai téléphone, Firefox, Safari, impression réelle.
+
+## Révision du 15/11/2026 (ligne 42 du suivi) — places, aération, mode mission
+
+10 groupes mélangés ; les réponses chiffrées vont dans l'ordre croissant ; trois propositions fausses s'allongent ; la note
+des sources du banc et le Bonus se replient ; l'aération passe de 23 écarts à 0. Le mode mission reçoit 29 pourquoi,
+5 indices et une réponse de trop dans la grille (`mission_4e_C7.4.json`).
+
+- `node tests_4e_C7.4_sequence.mjs "$PWD/sequence_4e_C7.4_energie-du-jardin.html" 4e reponses_4e_C7.4.json` : **35 / 35**.
+- `node tests_4e_C7.4_qcm.mjs "$PWD/qcm_4e_C7.4_energie-du-jardin.html" 4e_C7.4 4e_C3.1 sequence_4e_C7.4_energie-du-jardin.html` : **32 / 32**.
+- `node tests_regle_311_4e_C7.4.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0. `controle_impression_papier.py` : à jour.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
