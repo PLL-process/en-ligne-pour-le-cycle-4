@@ -572,6 +572,9 @@ RAPPELS = [
                    dict(bonne="f0", cit="Au-delà de 32 °C, les machines s'arrêtent d'elles-mêmes : pas un degré de plus")),
          ]),
     dict(id="boitier-3e", niveau="3e",
+         # révision du 14/11/2026 (la charge de lecture de la séance 1, 1 796 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (5 min)&nbsp;: deux lignes du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=C7 + "3e/3e_C7.3/sequence_3e_C7.3_boitier-de-la-station.html",
          avant='<section class="card">\n  <h2>📐 Activité 0 — L\'épaisseur', balise="h2", balise_exo="h3",
          titre="Deux lignes du cahier des charges du boîtier",
