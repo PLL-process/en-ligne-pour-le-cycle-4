@@ -72,7 +72,7 @@ d'autant.
 | 48 | `5e_C7.1` | 1685 → 1239 | 1 → 0 | 17 → 0 | 17 → 0 | livrée #714 — 17 listes en boutons radio ; l'algorigramme ne se lit plus dans l'ordre de la réponse (et `3e_C7.1`, même défaut) ; séance 2 : 1 239 mesurés, dont 109 de légendes pour le lecteur d'écran (1 130 vus) |
 | 49 | `5e_C7.3` | 1694 → 1607 | 5 → 0 | 15 → 0 | 15 → 0 | livrée #715 — migrée au gabarit commun ; deux grilles lettrées, l'une se devinait par la grammaire, l'autre avait deux réponses justes ; une réponse de trop dans chacune ; séance 2 (1 607) au-dessus : le banc, outil de la séance, la synthèse et le bilan |
 | 50 | `5e_C7.4` | 1607 → 1302 | 5 → 0 | 18 → 0 | 16 → 0 | livrée #716 — migrée au gabarit commun ; l'activité 1 se joue dans la chaîne d'énergie de l'indicateur (outil commun de #708) ; séance 2 (1 302) un peu au-dessus : le banc, la synthèse, le bilan |
-| 51 | `5e_C7.5` | 1528 | 5 | 22 | 8 | à faire |
+| 51 | `5e_C7.5` | 1528 → 1317 | 5 → 0 | 22 → 0 | 8 → 0 | livrée #718 — migrée au gabarit commun ; l'activité 0 dans le schéma du prototype ; l'ordre du montage ne se lit plus à l'écran ; séance 2 (1 317) un peu au-dessus : l'établi, la synthèse, le bilan |
 | 52 | `5e_C8.1` | 1421 | 5 | 17 | 13 | à faire |
 | 53 | `5e_C8.2` | 1412 | 5 | 16 | 12 | à faire |
 | 54 | `5e_C9.1` | 1761 | 1 | 24 | 5 | à faire |
@@ -292,3 +292,8 @@ d'autant.
   d'énergie de l'indicateur (sources, carte, DEL ; l'énergie stockée sous son composant, celle qui arrive par la
   gauche), les réponses sans indice ; grille de l'activité 4 avec une réponse de trop ; 53 pourquoi ; Bonus et note
   technique du banc repliés ; aération 16 → 0. Séances 779 · 1 582 → 544 · 1 302. Reste : la séance 2 un peu au-dessus.
+- **5e_C7.5** (l'éclairage du préau), 15/11/2026 (#718) : migrée au gabarit commun (5 ✘ → 0, 17 listes en boutons
+  radio, les ports de l'établi déclarés commandes, trois versions étayées) ; l'activité 0 dans le schéma du prototype
+  (la carte ne se devine plus au féminin) ; les gestes du montage dans le désordre, deux branchements réunis, un geste
+  de vérification avant la mise sous tension ; grille des retraits avec une réponse de trop ; 63 pourquoi ; phrase de
+  la fabrique retirée ; Bonus replié ; aération 8 → 0. Séances 860 · 1 528 → 676 · 1 317.
