@@ -21,6 +21,36 @@ import { execSync } from "node:child_process";
 import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 import { pathToFileURL } from 'node:url';
 
+/* Révision du 15/11/2026 (n°300) : les listes de la page sont devenues des groupes de boutons radio ; ce shim garde les
+ * questions du banc : selectOption, fill et inputValue visent le groupe comme ils visaient la liste. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;   // comme un clic : input, puis change
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
+
+
 let chromium;
 try { ({ chromium } = await import("playwright")); }
 catch {
@@ -73,7 +103,7 @@ function verifLiens() {
 
 const nav = await chromium.launch();
 async function ouvrir(ctx, fichier) {
-  const page = await ctx.newPage();
+  const page = _groupesRadio(await ctx.newPage());
   const erreurs = [];
   page.on("pageerror", e => erreurs.push(String(e)));
   page.on("console", m => { if (m.type() === "error" && !/net::|ERR_/.test(m.text())) erreurs.push(m.text()); });
@@ -233,7 +263,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   /* un élève qui avait choisi 🅰 avant le retrait : sa sauvegarde dit « a » — dans un contexte à part */
   const ctxA = await nav.newContext({ viewport: { width: 390, height: 844 } });
   await ctxA.addInitScript(() => localStorage.setItem("seq_5e_C9.1-C9.3_boite_etiquetee", JSON.stringify({ exp: { parcours: "a" } })));
-  const pA = await ctxA.newPage();
+  const pA = _groupesRadio(await ctxA.newPage());
   await pA.goto(url(SEQ), { waitUntil: "load" });
   await pA.waitForTimeout(300);
   const classeA = await pA.evaluate(() => document.body.className);
@@ -315,7 +345,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const src = fs.readFileSync(path.join(LOT, SEQ), "utf8");
   const paires = [...src.matchAll(/sv\("([^"]+)","([^"]+)"\)/g)].map(m => [m[1], m[2]]);
   const forme = await page.evaluate((P) => P.map(([id, rep]) => {
-    const o = [...document.querySelectorAll("#" + id + " option")].map(x => x.textContent).filter(x => x && !x.startsWith("—"));
+    const o = [...document.querySelectorAll("#" + id + " option, #" + id + " input[type=radio]")].map(x => x.tagName === "INPUT" ? x.value : x.textContent).filter(x => x && !x.startsWith("—"));   // une liste, ou un groupe de boutons radio (n°300)
     const autres = o.filter(x => x !== rep).map(x => x.length);
     return { id, rang: o.indexOf(rep), detachee: rep.length > Math.max(...autres) + 8 || rep.length < Math.min(...autres) - 8 };
   }), paires);
@@ -392,7 +422,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   ok("restauration : la progression survit au rechargement",
      /^1 \/ 5/.test((await page.locator("#progTxt").textContent()).trim()));
   ok("restauration : les réponses saisies sont restituées",
-     (await page.locator("#a1q1").inputValue()) === "21");
+     (await page.inputValue("#a1q1")) === "21");   // le groupe de boutons radio porte sa valeur (n°300)
 }
 
 /* — 5e_C9.3 : l'activité 5 exige le programme de la barrière écrit par l'élève — */
@@ -438,6 +468,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const reseau = [];
   ctxE.on("request", r => { if (/^https?:/.test(r.url())) reseau.push(r.url()); });
   const { page: pe, erreurs: ee } = await ouvrir(ctxE, SEQ);
+  // le Bonus se replie depuis la révision du 15/11/2026 : on l'ouvre, comme l'élève qui a fini
+  await pe.evaluate(() => document.querySelectorAll("details.bonus-replie").forEach(d => { d.open = true; }));
   await eprouverPose(pe, ["vs1", "vs2", "vs3"], ok);
   await pe.click("#tab-s2"); await pe.waitForTimeout(200);
   for (const [id, v] of [["a3p1", "24"], ["a3p2", "204"], ["a3r1", "24"], ["a3r2", "204"], ["a3r3", "du TEXTE que le + COLLE bout à bout"],
@@ -464,7 +496,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — réseau — */
 {
   const sorties = [];
-  const p2 = await ctx.newPage();
+  const p2 = _groupesRadio(await ctx.newPage());
   p2.on("request", r => { const u = r.url(); if (/^https?:/.test(u)) sorties.push(u); });
   await p2.goto(url(SEQ));
   await p2.waitForTimeout(800);
