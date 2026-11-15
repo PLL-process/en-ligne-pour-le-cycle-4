@@ -31220,3 +31220,40 @@ passera dans le schéma pendant sa révision (ligne 51 du suivi).
 **Mesure.** Mots visibles : 274 · 1 685 · 696 → 268 · **1 239** · 658. Dans la séance 2, 109 de ces mots sont les légendes que seul le lecteur d'écran lit (« Rang du bloc… », la ligne de chaque case de la grille) : l'élève en voit **1 130**. Règles d'or 1 → 0 ✘ ; menus 17 → 0 ; aération 17 → 0. Bancs **55 / 55** (séquence) et **34 / 34** (n°311) ; `3e_C7.1` : **82 / 82** et **34 / 34**. Mode mission : les deux pages jouées écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** L'encart des quatre gestes de l'éditeur (360 mots) est commun à six pages : il n'est pas touché ici.
+
+---
+
+## 15/11/2026 — Règle d'or n°331 (clé de voûte) : l'élève répond le schéma sous les yeux ; pilote Book Train ; `controle_schema_sous_les_yeux.py`
+
+**Demande de Pascal (15/11, 16 h 54), sur `4e_C4.1_book-train` :** « L'élève ne visualise pas la chaîne d'énergie et d'information, il faudrait la représenter tout en affichant la question. Même chose pour les solutions techniques : il ne visualise pas le schéma s'il ne le voit pas là. » Puis : « Il faudrait en faire une règle d'or ou clé de voûte. » Règle validée à 16 h 58 (« Règle d'or n°331 — ok »), livrables validés à 16 h 59 (« 1, 2, 3 ok »).
+
+**Vérifié sur la page avant correction.** Le schéma d'ensemble vivait dans une carte « Document d'appui », trois cartes au-dessus du tableau « quelle solution pour quelle fonction » (1.3) ; l'activité 1.1 disait « le schéma d'ensemble ci-dessus » ; l'activité 2.1 disait « regarde bien les schémas » alors que la chaîne d'énergie (Fig. 4) n'apparaissait qu'en 2.3, deux activités plus bas. Le schéma d'ensemble était recopié en base64 dans la page (332 Ko) alors que `fichiers_drawio/schema_ensemble_book-train.jpg` existe, octet pour octet identique.
+
+### La règle
+
+> **Règle d'or n°331 (clé de voûte) — L'élève répond le schéma sous les yeux.**
+> - Toute question qui porte sur un schéma (schéma d'ensemble, chaîne d'énergie ou d'information, diagramme fonctionnel, algorigramme, programme) affiche ce schéma **dans la même carte**, au-dessus ou à côté de la question. Jamais « regarde le schéma plus haut », jamais dans une autre séance ou un autre onglet.
+> - Grand écran : schéma et question côte à côte. Téléphone : le schéma reste épinglé au-dessus de la question, réduit, avec « Agrandir » (n°325).
+> - Un schéma qui sert à plusieurs activités est répété à chacune : répéter coûte moins que faire défiler.
+> - Le schéma affiché pendant la question est **muet** sur ce que la question demande de produire (étiquettes à placer, énergies à trouver) ; la version complète va dans la correction. Mais une compétence de LECTURE (« à quelle chaîne appartient cet élément ? ») se vérifie sur le document complet : lire la réponse sur le document, c'est la compétence.
+> - Contrôle : `_outils/controle_schema_sous_les_yeux.py` — toute carte qui contient une question ET nomme un schéma sans contenir de figure est signalée.
+
+**Pourquoi clé de voûte et pas règle.** Les compétences C4 (et C6, C9 pour l'algorigramme) sont des compétences de lecture d'un schéma. Sans le schéma sous les yeux, la question teste la mémoire, pas la lecture — et l'élève qui a du mal à lire (constat de septembre) est le premier perdu. Toutes les conventions des chaînes (n°6, n°131, n°310, n°315) supposent silencieusement que l'élève regarde le schéma au moment où il répond.
+
+### Le pilote — `4e_C4.1_book-train` (même PR)
+
+- Le schéma d'ensemble est servi depuis `fichiers_drawio/schema_ensemble_book-train.jpg` et **répété** dans les cartes 1.1, 1.2, 1.3, 2.1 et 2.2 (`figure.schema-sous-les-yeux`). Il est muet sur les énergies (ce que 2.1 et 2.2 demandent) et porte fonctions et solutions (ce que 1.2 et 1.3 demandent de lire). Le « ci-dessus » de 1.1 devient « juste ici ».
+- 3.1 (« chaque forme a un métier ») reçoit la Fig. 2 en version **muette** : les quatre symboles nommés, sans les exemples qui donnaient les réponses ; recomposée sur deux lignes, plus petit texte 16 px à 390 px (n°325).
+- Mise en page : sur téléphone, la figure est `position:sticky` sous la barre de navigation (52 px), 26 vh au plus, légende réduite à « 🔍 Touche le schéma pour l'agrandir » (loupe v2) ; dès 1 000 px, la carte passe en grille `cote-a-cote` — ce qui précède la figure (titre, rôles, compétence, consigne) garde la pleine largeur, la figure épinglée à gauche, tout ce qui la suit à droite (`.schema-sous-les-yeux ~ *`). À l'impression : statique, 9 cm au plus, une colonne.
+- Bancs : `tests_4e_C4.1-C4.2-C4.4_book-train.mjs` **39/39**, `tests_regle_311_4e_C4.1_book-train.mjs` **38/38**, `controle_schemas.mjs` 19 schémas 0 ✘, impression, hors ligne, médias, loupe, liens : verts. Captures regardées à 1 280 et 390 px.
+
+### Le contrôle — `_outils/controle_schema_sous_les_yeux.py` (+ banc 17/17, inscrit dans `rapport_audit.py`)
+
+L'unité jugée est le **bloc de question** (la carte d'activité qui contient un champ de réponse). Deux mesures :
+- **S1 ✘ (fait sortir à 1)** : le bloc nomme un schéma ET le renvoie ailleurs (« ci-dessus », « plus haut », « de la séance 2 », « de l'activité 1.3 ») ET n'a aucune figure.
+- **S2 ⚠ (listé, non bloquant — n°248)** : le bloc nomme un schéma sans figure, sans renvoi. Une partie est juste par construction (« conçois l'algorigramme avant toute référence ») : à juger à l'œil.
+Écartés : la production de l'élève au possessif (« mon algorigramme »), les cellules de tableau et légendes, les corrections repliées, et les blocs qui se font de mémoire (billets, passeports, bilans, « avant de commencer », hypothèses, problématiques, piqûres de rappel — n°330). Compte comme figure : `figure`, `img` (hors `aria-hidden`), `object`/`embed`/`iframe`/`canvas`/`picture`, SVG d'au moins 120 unités, classes `figure`/`schema`.
+
+**Mesure sur `main` + ce pilote (194 pages élève) : 5 ✘ sur 4 pages, 38 ⚠ sur 27 pages.** Les 5 ✘ (4 pages) : `3e_C4.3` station d'alerte (« schéma des types ci-dessus », « schéma du parcours de la donnée ci-dessus »), `5e_C4.1` lampadaire (« le schéma du réseau ci-dessus (à LIRE pour répondre) »), `3e_C5.1` SOS station (« schéma des points de test ci-dessus »), `3e_C6.1` programmer l'alerte (« le schéma entrées/sorties »). Même geste que le pilote : répéter la figure dans la carte, muette si la question demande ses étiquettes.
+
+**Ce qui reste.** La vague n°331 sur ces 5 ✘ puis les 38 ⚠ (dans l'ordre des thèmes, par les sessions de révision — pas dans cette PR, pour ne pas croiser les sessions en cours) ; vérifier à l'œil que la figure répétée est bien celle dont parle la question (non mesuré) ; une passe `revision-sequence` pour écrire la n°331 dans le skill `chaine-energie-fonctionnelle` et dans `controle-qualite-lot`.
