@@ -31174,3 +31174,28 @@ Bancs de `3e_C4.1` : **23 / 23**, **34 / 34**, mode mission sans refus.
 
 **Ce qui reste.** `5e_C7.5` (l'éclairage du préau) est encore sur l'ancien gabarit (listes déroulantes) : sa chaîne
 passera dans le schéma pendant sa révision (ligne 51 du suivi).
+
+## 15/11/2026 — Révision des trois thèmes, 47 : `4e_C9.1` (le jardin programmé)
+
+**Le constat.** Trois séances : écrire le programme de la pompe en Python dans la page, le mettre à l'épreuve, puis le mettre au point (la pompe qui s'affole, les deux seuils). Sur `main` :
+- **un ✘ de règle d'or, la n°300** : 54 listes déroulantes comptées. Parmi elles, 43 posent une question, et 11 sont les commandes de l'atelier de programmation (combien de seuils, la comparaison, la valeur, l'action de chaque branche) ;
+- **34 écarts d'aération** ;
+- des séances 2 et 3 à **2 562 et 2 782 mots**.
+
+**Ce qui est fait.**
+- **n°300** : les 43 questions deviennent des groupes de boutons radio (`migrer_gabarit_306.py --n300`). Les 11 commandes de l'atelier sont des outils, pas des questions : elles restent des listes, marquées `data-interface="commande"`. La sauvegarde de la page (`collect()`, `restore()`) garde déjà chaque bouton coché par son nom : elle n'a rien à changer.
+- **25 groupes mélangés.** Le banc de la page vérifiait déjà que ni la place ni la longueur ne désignent la bonne réponse : il lit maintenant les boutons, et reste vert.
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer :
+  - à l'échauffement, le pas à pas de l'Explorateur de Windows (il était ouvert d'office) et le chemin facultatif par Vittascience ;
+  - le rappel de l'algorigramme et de ses quatre formes ;
+  - les rôles d'un groupe de trois ou quatre ;
+  - l'explication de la nuit simulée du lampadaire (les trois fonctions à appeler restent visibles) ;
+  - le Bonus.
+- **Couper le redondant** dans l'introduction de l'échauffement.
+- **Le mode mission explique chaque erreur** (`mission_4e_C9.1.json`) : 91 pourquoi.
+- **Aération : 34 → 0** (188 retours à la ligne, trois corrections réécrites en lignes). Le programme de la correction à deux seuils devient un bloc `<pre>` : c'est un listing, pas de la prose.
+- **Le banc** garde ses questions : un shim posé sur le prototype de la page coche le bouton de la valeur demandée, pour toutes les pages du banc.
+
+**Mesure.** Mots visibles : 1 127 · 2 562 · 2 782 → 1 089 · **2 064** · **2 378**. Règles d'or 1 → 0 ✘ ; menus 54 → 0 (11 commandes d'atelier, déclarées) ; aération 34 → 0. Bancs **124 / 124**, **34 / 34** (n°311). Mode mission : chaque mauvaise proposition jouée a son pourquoi (91 / 91), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **Les séances 2 et 3 restent loin au-dessus du repère (2 064 et 2 378 mots).** Ce sont des séances d'atelier : l'éditeur Python et l'atelier de programmation sont dans la page, avec leur console, leur trace pas à pas et leurs tableaux d'essais ; l'échauffement apprend quatre gestes à faire en lisant. Les ramener sous 1 200 mots demanderait de couper une activité en deux, ou d'ajouter une séance : c'est une décision de progression, je la laisse à Pascal.

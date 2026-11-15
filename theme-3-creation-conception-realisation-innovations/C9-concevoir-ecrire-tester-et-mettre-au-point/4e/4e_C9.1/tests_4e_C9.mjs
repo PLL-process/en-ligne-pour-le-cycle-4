@@ -20,6 +20,34 @@ catch {
   ({ chromium } = createRequire(import.meta.url)(path.join(racineGlobale, "playwright", "index.js")));
 }
 
+/* Règle d'or n°300 (révision du 15/11/2026) : les questions de la page sont des groupes de boutons radio
+   (fieldset.qcm-groupe) dont chaque bouton porte le texte de sa proposition. selectOption et inputValue visant un
+   groupe cochent ou lisent le bouton de cette valeur ; posé une fois sur le prototype de la page, il vaut pour
+   toutes les pages du banc. Rien d'autre ne change. */
+function _groupesRadio(page){
+  const P = Object.getPrototypeOf(page);
+  if (P.__groupesRadio) return page;
+  P.__groupesRadio = true;
+  const estGroupe = (pg, s) => pg.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, s);
+  const origIV = P.inputValue, origSO = P.selectOption;
+  P.inputValue = async function(sel, ...reste){
+    return (typeof sel === 'string' && await estGroupe(this, sel)) ? this.evaluate(s => document.querySelector(s).value, sel) : origIV.call(this, sel, ...reste);
+  };
+  P.selectOption = async function(sel, val, ...reste){
+    if (!(typeof sel === 'string' && await estGroupe(this, sel))) return origSO.call(this, sel, val, ...reste);
+    const v = (val && typeof val === 'object') ? (val.value ?? val.label) : String(val);
+    const ok = await this.evaluate(([s, v]) => {
+      const e = document.querySelector(s); const ins = [...e.querySelectorAll('input[type=radio]')];
+      if (v === '') { ins.forEach(i => { i.checked = false; }); e.dispatchEvent(new Event('change', {bubbles: true})); return true; }
+      const lib = i => ((e.querySelector('label[for="' + i.id + '"]') || {}).textContent || '').trim();
+      const c = ins.find(i => i.value === v) || ins.find(i => lib(i) === v); if (!c) return false;
+      c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+    }, [sel, String(v)]);
+    if (!ok) throw new Error('aucune proposition « ' + v + ' » dans ' + sel);
+  };
+  return page;
+}
+
 const LOT = path.resolve(process.argv[2] || ".");
 const CAP = path.resolve(process.argv[3] || "/tmp/captures_jardin");
 fs.mkdirSync(CAP, { recursive: true });
@@ -109,7 +137,7 @@ const run = async () => {
   verifLiens();
   const navigateur = await chromium.launch();
   const ctx = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
-  const page = await ctx.newPage();
+  const page = _groupesRadio(await ctx.newPage());
   const erreursJS = [];
   page.on("pageerror", e => erreursJS.push(String(e)));
   page.on("dialog", d => d.accept());
@@ -169,7 +197,9 @@ const run = async () => {
 
   /* ── règles n°144 et n°198 dans les activités : ni le rang ni la longueur ne désignent la bonne réponse ── */
   const forme = await page.evaluate((B) => Object.entries(B).map(([id, rep]) => {
-    const o = [...document.querySelectorAll("#" + id + " option")].map(x => x.textContent)
+    /* n°300 : un groupe de boutons radio porte ses propositions dans ses boutons (révision du 15/11/2026) */
+    const o = ([...document.querySelectorAll("#" + id + " option")].map(x => x.textContent).concat(
+               [...document.querySelectorAll("#" + id + " input[type=radio]")].map(x => x.value)))
       .filter(x => x && !x.startsWith("—") && x !== "je ne sais pas encore");
     const autres = o.filter(x => x !== rep).map(x => x.length);
     return { id, rang: o.indexOf(rep), detachee: rep.length > Math.max(...autres) + 8 || rep.length < Math.min(...autres) - 8 };
