@@ -64,7 +64,7 @@ d'autant.
 | 40 | `4e_C7.1` | 1780 → 1488 | 2 → 0 | 22 → 0 | 28 → 0 | livrée #703 — 20 listes en boutons radio (les deux du banc météo restent des commandes) ; le ✘ n°23 était un faux (les « 15 minutes » du rappel) ; piqûre de rappel repliée à sa source, séance 1 1 244 → 580 ; séance 2 (1 488) au-dessus : activité 3, exercice FAST et toute la clôture ; banc n°311 : les onglets de la séance 2 hors du premier écran à 390 px, sur `main` comme ici |
 | 41 | `4e_C7.3` | 1866 → 1551 | 5 → 0 | 13 → 0 | 27 → 0 | livrée #704 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; piqûre de rappel repliée à sa source, séance 1 1 597 → 938 ; une réponse de trop dans les deux grilles ; séance 2 (1 551) au-dessus : le banc des matériaux, outil de la séance, et la clôture |
 | 42 | `4e_C7.4` | 1582 → 1362 | 5 → 0 | 22 → 0 | 23 → 0 | livrée #706 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; 10 groupes mélangés, réponses chiffrées dans l'ordre, 3 propositions allongées ; une réponse de trop dans la grille ; séance 2 (1 362) au-dessus : le banc, outil de la séance, et la clôture |
-| 43 | `4e_C7.5` | 2077 | 5 | 23 | 25 | à faire |
+| 43 | `4e_C7.5` | 2077 → 1572 | 5 → 0 | 23 → 0 | 25 → 0 | livrée #707 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; piqûre de rappel repliée à sa source, séance 1 1 728 → 1 078 ; une réponse de trop dans la grille ; séance 2 (1 572) au-dessus : l'établi, outil des deux séances (471 mots), et la clôture |
 | 44 | `4e_C7.7` | 1831 | 5 | 16 | 19 | à faire |
 | 45 | `4e_C7.8` | 1880 | 5 | 19 | 15 | à faire |
 | 46 | `4e_C8.1` | 1975 | 1 | 25 | 22 | à faire |
@@ -255,3 +255,7 @@ d'autant.
   mélangés, réponses chiffrées dans l'ordre croissant, 3 propositions fausses allongées ; 29 pourquoi, 5 indices, une
   réponse de trop dans la grille ; note des sources du banc et Bonus repliés ; aération 23 → 0. Séances 1 069 · 1 581
   → 1 028 · 1 362. Reste : la séance 2 au-dessus (le banc, outil de la séance, et la clôture).
+- **4e_C7.5** (le jardin incomplet), 15/11/2026 (#707) : déjà sur le gabarit commun, sans ✘ ni menu ; piqûre de
+  rappel repliée à sa source ; 8 groupes mélangés, 4 propositions allongées ; 18 pourquoi, 6 indices, une réponse de trop dans la grille ; Bonus
+  replié ; aération 25 → 0. Séances 1 728 · 1 655 → 1 078 · 1 572. Reste : la séance 2 au-dessus (l'établi, outil des
+  deux séances, et la clôture).

@@ -31029,3 +31029,22 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 1 069 · 1 581 → 1 028 · **1 362**. Règles d'or 0 ✘ ; aération 23 → 0. Bancs **35 / 35** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme sur `main`. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste au-dessus du repère (1 362 mots).** Le banc de consommation, l'outil de la séance, y compte pour environ 180 mots ; la synthèse « à retenir », le bilan et le renvoi au QCM, qui ne se replient pas, pour près de 500.
+
+## 15/11/2026 — Révision des trois thèmes, 43 : `4e_C7.5` (le jardin incomplet)
+
+**Le constat.** La page était déjà sur le gabarit commun : 0 ✘ de règles d'or et 0 liste déroulante sur `main`. Il restait :
+- **25 écarts d'aération** ;
+- une séance 1 à 1 728 mots, dont la piqûre de rappel du cahier des charges à découvert, et une séance 2 à 1 655 ;
+- une grille de six lignes pour six réponses (la fonction de chaque constituant) : la dernière se devinait ;
+- 8 groupes dont la bonne réponse restait à sa place d'origine ;
+- la bonne réponse **la plus longue** dans deux questions, de 10 et 6 caractères.
+
+**Ce qui est fait.**
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `jardin-incomplet-4e`). Ses cinq minutes comptent : 100 min d'activités, plus 10 de service, pour 110. Séance 1 : **1 728 → 1 078 mots**.
+- **8 groupes mélangés** ; **4 propositions fausses s'allongent** d'une raison plausible (« c'est une redondance de sécurité imposée par la norme électrique des jardins »).
+- **Le mode mission explique chaque erreur** (`mission_4e_C7.5.json`) : 18 pourquoi, 6 indices de ligne, **une réponse de trop dans la grille** (« Communiquer — il affiche la mesure à celui qui passe »).
+- **Le Bonus se replie** ; **aération : 25 → 0** (67 retours à la ligne, une correction réécrite en lignes) ; les annonces des deux séances passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 1 728 · 1 655 → 1 078 · **1 572**. Règles d'or 0 ✘ ; aération 25 → 0. Bancs **41 / 41** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 572 mots).** L'établi, l'outil des deux séances, y compte pour 471 mots, dont 293 pour son catalogue de constituants (ce que chacun fait, son courant, son port) : l'élève y choisit le constituant qui manque. La synthèse et le bilan, qui ne se replient pas, comptent pour 400.
