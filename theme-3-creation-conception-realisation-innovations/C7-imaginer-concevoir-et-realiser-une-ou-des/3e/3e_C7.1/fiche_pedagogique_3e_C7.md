@@ -1,20 +1,27 @@
 # Fiche pédagogique — 3e Capteur de confort scolaire (NY)
 
-**Codes** : 3e_C7.1 (COMPLET) · 3e_C8.1 (COUVERT) · 3e_C7.2 (ENSEIGNÉ en séance 3 ; évalué par le QCM de 3e_C7.6)  
+**Codes** : 3e_C7.1 (COMPLET) · 3e_C8.1 (COUVERT) · 3e_C7.2 (ENSEIGNÉ en séances 3 et 4 ; évalué par le QCM de 3e_C7.6)  
 **Ancrage** : New York — îlot de chaleur / salle scolaire  
-**Durée** : 3 × 55 min sur la page de la séquence (145 min d'activités annoncées) ; le projet se prolonge par le TP « Le boîtier étanche » et l'atelier de planification (une séance)  
+**Durée** : 4 × 55 min sur la page de la séquence (145 min d'activités annoncées) ; le projet se prolonge par le TP « Le boîtier étanche » et l'atelier de planification (une séance)  
 **Socle** : D2 · D4 · D5
 
-## Déroulé en trois séances (depuis le 24/10/2026)
+## Déroulé en quatre séances (trois du 24/10 au 14/11/2026, quatre depuis le 15/11/2026)
 
 | Séance | Activités | Minutes annoncées |
 |---|---|---|
 | 1 — Faire, concevoir, valider | activité 0 (simulateur, 10) · activité 1 (concevoir, 20) · activité 2 (valider par des essais, 25) | 55 / 55 |
 | 2 — L'algorigramme, puis le code | gestes Vittascience · activité 3 (algorigramme, code, mise au point, 30) · REFAIRE (15) | 45 / 55 |
-| 3 — Représenter les solutions | activité 6 (contrôler un FAST, 13) · activité 7 (trois croquis, puis choisir la représentation, 25) · synthèse, Bonus facultatif, bilan (7), renvoi au QCM | 45 / 55 |
+| 3 — Contrôler le FAST | activité 6 (contrôler un FAST, 13) ; le reste : finir la séance 2 | 13 / 55 |
+| 4 — Proposer, puis représenter | activité 7 (trois croquis, puis choisir la représentation, 25) · synthèse · la suite du projet (TP « Le boîtier étanche », atelier de planification) · Bonus facultatif · bilan (7) · renvoi au QCM | 32 / 55 |
 
-La page défile d'un seul tenant (pas d'onglets) : chaque séance s'ouvre par un en-tête « 🗓 Séance N », et se ferme par un
-bouton vers la suivante. La clôture (synthèse → Bonus → bilan → QCM) vient après la séance 3.
+La page a un onglet par séance (depuis le 04/11/2026) : chaque séance s'ouvre par un en-tête « 🗓 Séance N », et se ferme
+par un bouton vers la suivante. La clôture (synthèse → la suite du projet → Bonus → bilan → QCM) vient à la séance 4.
+
+**Pourquoi une séance 4** (révision du 15/11/2026, décision de Pascal). La séance 3 donnait 3 147 mots à lire (26 minutes
+de lecture seule pour 55 minutes) : les deux exercices d'atelier, la synthèse, le Bonus, le bilan, puis deux cartes
+**après** le bilan, contre la n°301. L'activité 7 et la clôture passent en séance 4, déplacées sans être réécrites ; les
+deux cartes de la suite du projet remontent avant le Bonus. La séance 3 est courte : de la marge pour finir la séance 2,
+la plus longue à lire.
 
 **Pourquoi une séance 3.** Demande du professeur (24/10/2026) : aucune des deux séances n'avait le temps d'accueillir un
 exercice des ateliers des représentations (séance 1 pleine, séance 2 à 45 min pour des exercices de 12 à 13 min). La

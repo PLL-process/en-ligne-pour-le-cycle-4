@@ -14,6 +14,11 @@
    verrous des activités 6 et 7 sur les exercices insérés, et la reprise d'une sauvegarde
    faite avant l'ajout.
 
+   15/11/2026 (révision, décision de Pascal) : une séance 4. La séance 3 garde l'activité 6 ;
+   l'activité 7, la synthèse et la clôture passent en séance 4, et les deux cartes de la suite
+   du projet (TP « Le boîtier étanche », atelier de planification) remontent avant le Bonus :
+   rien à faire après le bilan (n°301). Le banc compte 4 séances.
+
    Usage : node tests_3e_C7.mjs [dossier_du_lot] [dossier_captures]                 */
 import fs from "node:fs";
 import path from "node:path";
@@ -64,7 +69,7 @@ const CFG = {
   cle: "seq_3e_C7_capteur_confort",
   captures: "/tmp/captures_3eC7",
   etayages: 6,            // les versions étayées de la page elle-même, hors exercices d'atelier insérés
-  seances: 3,             // séance 3 ajoutée le 24/10/2026 (exercices des ateliers FAST et croquis)
+  seances: 4,             // séance 3 ajoutée le 24/10/2026 (exercices des ateliers FAST et croquis), séance 4 le 15/11/2026
   activites: 8,           // vérificateurs 0 à 7
   formulations: [
     "Élaborer un processus de conception et de réalisation dans une durée, avec des tâches identifiées.",
@@ -210,13 +215,16 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      parSeance.map(s => s.id + " = " + s.min + " min").join(" · "));
 }
 
-/* — la séance 3 : sa place dans la page, la clôture qui la suit, et la navigation entre séances — */
+/* — les séances 3 et 4 : leur place dans la page, la clôture, et la navigation entre séances — */
 {
   const ordre = await page.evaluate(() => {
     const pos = el => el ? [...document.querySelectorAll("*")].indexOf(el) : -1;
     const h2 = re => [...document.querySelectorAll("h2")].find(h => re.test(h.textContent));
     return {
       s3: pos(document.getElementById("seance-3")),
+      s4: pos(document.getElementById("seance-4")),
+      tp: pos(h2(/TP « Le boîtier étanche »/)),
+      planif: pos(h2(/diagramme de planification/)),
       a6: pos(document.getElementById("activite-6")),
       a7: pos(document.getElementById("activite-7")),
       refaire: pos(h2(/REFAIRE/)),
@@ -225,14 +233,16 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
       qcm: pos(h2(/Prêt·e à t.entraîner/))
     };
   });
-  ok("séance 3 : elle suit le REFAIRE et porte les activités 6 et 7",
-     ordre.refaire < ordre.s3 && ordre.s3 < ordre.a6 && ordre.a6 < ordre.a7, JSON.stringify(ordre));
-  ok("séance 3 : la clôture vient après elle, dans l'ordre Bonus → Bilan → QCM",
+  ok("séances 3 et 4 : la séance 3 suit le REFAIRE et porte l'activité 6 ; la séance 4, l'activité 7",
+     ordre.refaire < ordre.s3 && ordre.s3 < ordre.a6 && ordre.a6 < ordre.s4 && ordre.s4 < ordre.a7, JSON.stringify(ordre));
+  ok("séance 4 : la clôture vient après l'activité 7, dans l'ordre Bonus → Bilan → QCM",
      ordre.a7 < ordre.bonus && ordre.bonus < ordre.bilan && ordre.bilan < ordre.qcm);
+  ok("n°301 : les deux cartes de la suite du projet (TP, planification) viennent avant le Bonus, rien à faire après le bilan",
+     ordre.a7 < ordre.tp && ordre.tp < ordre.planif && ordre.planif < ordre.bonus, JSON.stringify(ordre));
   const liens = await page.$$eval("nav.fin-seance a.vers-seance", a => a.map(x => x.getAttribute("href")));
   ok("navigation : chaque séance (sauf la dernière) mène explicitement à la suivante",
-     liens.join(",") === "#seance-2,#seance-3", liens.join(", "));
-  for (const cible of ["#seance-2", "#seance-3"]) {
+     liens.join(",") === "#seance-2,#seance-3,#seance-4", liens.join(", "));
+  for (const cible of ["#seance-2", "#seance-3", "#seance-4"]) {
     await page.click('nav.fin-seance a[href="' + cible + '"]');
     await page.waitForTimeout(250);
     const top = await page.evaluate(s => document.querySelector(s).getBoundingClientRect().top, cible);
@@ -241,10 +251,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   }
   await page.evaluate(() => window.scrollTo(0, 0));
   const blocs = await page.$$eval("section.atelier-incruste", s => s.map(x => x.id));
-  ok("séance 3 : les deux blocs d'exercices d'atelier sont posés (FAST, croquis)",
+  ok("séances 3 et 4 : les deux blocs d'exercices d'atelier sont posés (FAST, croquis)",
      blocs.join(",") === "incruste-fa-3e-capteur-confort,incruste-cq-3e-capteur-confort", blocs.join(", "));
   const intro = await page.$$eval("section.atelier-incruste > p:first-of-type", p => p.map(x => x.textContent));
-  ok("séance 3 : chaque bloc dit qu'il porte sur la station d'alerte cyclonique et le relie au capteur",
+  ok("séances 3 et 4 : chaque bloc dit qu'il porte sur la station d'alerte cyclonique et le relie au capteur",
      intro.length === 2 && intro.every(t => /station d'alerte cyclonique/.test(t) && /capteur/.test(t)));
 }
 
@@ -292,7 +302,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const n = await page.locator("#tachesBandeau .tache").count();
   ok("n°30 : le tableau de bord liste les " + CFG.activites + " activités", n === CFG.activites, n + " tâches");
   const s3 = await page.locator("#tachesBandeau .tache", { hasText: "Séance 3" }).count();
-  ok("n°30 : chaque tâche dit sa séance — 2 tâches en séance 3", s3 === 2, s3 + " tâche(s) « Séance 3 »");
+  const s4 = await page.locator("#tachesBandeau .tache", { hasText: "Séance 4" }).count();
+  ok("n°30 : chaque tâche dit sa séance — une tâche en séance 3, une en séance 4", s3 === 1 && s4 === 1, s3 + " tâche(s) « Séance 3 », " + s4 + " « Séance 4 »");
   ok("n°30 : aucune tâche cochée en début de parcours",
      (await page.locator("#tachesBandeau .tache.fait").count()) === 0);
 }
@@ -470,7 +481,7 @@ if (!CFG.essaisBanc) {
   await page.selectOption("#a3o2", "2");
 }
 
-/* — séance 3 : les vérificateurs des activités 6 et 7 exigent la réussite des exercices insérés.
+/* — séances 3 et 4 : les vérificateurs des activités 6 et 7 exigent la réussite des exercices insérés.
      Les bonnes réponses à cocher sont LUES dans la définition JSON de chaque section ; les
      réponses écrites viennent de CFG.textes (le champ `exemple` de l'atelier). — */
 async function remplirExo(uid) {
@@ -504,7 +515,7 @@ async function verifierActivite(n) {
   return (await page.locator("#fb" + n).textContent()) || "";
 }
 {
-  await ouvrirSeanceDe(page, "#activite-6");   // les activités 6 et 7 sont à la séance 3
+  await ouvrirSeanceDe(page, "#activite-6");   // l'activité 6 est à la séance 3, la 7 à la séance 4
   let fb = await verifierActivite(6);
   ok("séance 3 · act. 6 : refusée (🔒) tant que l'exercice FAST inséré n'est pas réussi",
      /🔒/.test(fb) && /diagramme FAST/.test(fb), fb.slice(0, 80));
@@ -516,24 +527,26 @@ async function verifierActivite(n) {
   fb = await verifierActivite(6);
   ok("séance 3 · act. 6 : validée une fois l'exercice FAST réussi", /activité validée/.test(fb), fb.slice(0, 60));
 
+  await ouvrirSeanceDe(page, "#activite-7");
   fb = await verifierActivite(7);
-  ok("séance 3 · act. 7 : refusée (🔒) tant qu'aucun des deux exercices croquis n'est réussi",
+  ok("séance 4 · act. 7 : refusée (🔒) tant qu'aucun des deux exercices croquis n'est réussi",
      /🔒/.test(fb) && /deux exercices/.test(fb), fb.slice(0, 80));
   const videCq = await verifierExo("cq_3e_e4");
-  ok("séance 3 · act. 7 : les trois croquis, vérifiés à vide, demandent à reprendre", /🔴/.test(videCq), videCq.slice(0, 60));
+  ok("séance 4 · act. 7 : les trois croquis, vérifiés à vide, demandent à reprendre", /🔴/.test(videCq), videCq.slice(0, 60));
   await remplirExo("cq_3e_e4");
   const justeCq = await verifierExo("cq_3e_e4");
-  ok("séance 3 · act. 7 : les trois croquis, remplis juste, sont réussis", /Tout est juste/.test(justeCq), justeCq.slice(0, 60));
+  ok("séance 4 · act. 7 : les trois croquis, remplis juste, sont réussis", /Tout est juste/.test(justeCq), justeCq.slice(0, 60));
   fb = await verifierActivite(7);
-  ok("séance 3 · act. 7 : toujours refusée tant que l'exercice 2 (représentations) n'est pas réussi",
+  ok("séance 4 · act. 7 : toujours refusée tant que l'exercice 2 (représentations) n'est pas réussi",
      /🔒/.test(fb) && /exercice 2/.test(fb), fb.slice(0, 80));
   await remplirExo("cq_3e_e6");
   const justeRep = await verifierExo("cq_3e_e6");
-  ok("séance 3 · act. 7 : l'exercice des représentations, rempli juste, est réussi", /Tout est juste/.test(justeRep), justeRep.slice(0, 60));
+  ok("séance 4 · act. 7 : l'exercice des représentations, rempli juste, est réussi", /Tout est juste/.test(justeRep), justeRep.slice(0, 60));
   fb = await verifierActivite(7);
-  ok("séance 3 · act. 7 : validée une fois les deux exercices réussis", /activité validée/.test(fb), fb.slice(0, 60));
-  ok("séance 3 : le tableau de bord coche les activités 6 et 7",
-     (await page.locator("#tachesBandeau .tache.fait", { hasText: "Séance 3" }).count()) === 2);
+  ok("séance 4 · act. 7 : validée une fois les deux exercices réussis", /activité validée/.test(fb), fb.slice(0, 60));
+  ok("séances 3 et 4 : le tableau de bord coche les activités 6 et 7",
+     (await page.locator("#tachesBandeau .tache.fait", { hasText: "Séance 3" }).count()) === 1
+       && (await page.locator("#tachesBandeau .tache.fait", { hasText: "Séance 4" }).count()) === 1);
   /* le positionnement du bilan, en boutons radio, doit survivre au rechargement */
   await page.check("#pos_c72_3");
   await page.fill("#bilanHyp", "Je garde 28 °C : les essais au simulateur montrent que l'alerte passe au bon moment.");
@@ -606,7 +619,7 @@ async function verifierActivite(n) {
     { bloc: "vs1", nom: "activité 3b", onglet: "#tab-s2", depart: { sortie: "" },
       corrige: { quoi: "ALERTE", sortie: "ALERTE\n",
         code: 'seuil = 28\nT = 32\nif T > seuil:\n    print("ALERTE")\nelse:\n    print("ok")\n' } },
-    { bloc: "vs2", nom: "Bonus", onglet: "#tab-s3", depart: { sortie: "" },
+    { bloc: "vs2", nom: "Bonus", onglet: "#tab-s4", depart: { sortie: "" },
       corrige: { quoi: "PRÉ-ALERTE pour T = 27", sortie: "PRÉ-ALERTE\n",
         code: 'T = 27\nif T > 28:\n    print("ALERTE")\nelif T > 26:\n    print("PRÉ-ALERTE")\nelse:\n    print("ok")\n' } },
   ], ok);
