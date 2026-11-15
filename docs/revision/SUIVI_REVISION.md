@@ -49,7 +49,7 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
 | 30 | `4e_C4.7` | 2023 → 1791 | 1 → 0 | 40 → 0 (la commande du simulateur reste une liste) | 7 → 0 | livrée #690 — la bonne réponse était 32 fois sur 40 la plus longue : 35 questions réécrites (n°144), chaque erreur « à revoir » et expliquée ; replis (contrat du binôme, cartouche CRCN, lignes Socle, Bonus) ; séances 1, 2 et 4 encore au-dessus du repère (1 647 · 1 791 · 1 470) — question à Pascal : replier les fiches d'activité sur toutes les séquences |
 | 31 | `5e_C4.7` | 1807 → 1695 | 1 → 0 | 35 → 0 (la commande du simulateur reste une liste) | 6 → 0 | livrée #691 — la bonne réponse était 23 fois sur 35 la plus longue : 32 questions réécrites (n°144), chaque erreur « à revoir » et expliquée ; Bonus avec son corrigé ; séances 1 et 3 encore au-dessus du repère (1 695 · 1 584) — même question que 4e_C4.7 |
 | 32 | `3e_C7.3` | 1796 → 908 | 0 | 0 | 29 → 0 | livrée #692 — deux grilles, places mélangées (la bonne réponse était 9 fois sur 14 la première), pourquoi des erreurs ; piqûre de rappel du cahier des charges repliée (séance 1, 1 796 → 868) ; banc réparé (67 → 68 / 68) |
-| 33 | `3e_C7.4` | 1220 | 0 | 0 | 27 | à faire |
+| 33 | `3e_C7.4` | 1220 → 1132 | 0 | 0 | 27 → 0 | livrée #693 — une grille (le coût de chaque source), places mélangées (la bonne réponse était 12 fois sur 16 la première), pourquoi des erreurs ; banc réparé (53 → 54 / 54) |
 | 34 | `3e_C7.5` | 1439 | 0 | 0 | 26 | à faire |
 | 35 | `3e_C7.7` | 1959 | 0 | 0 | 24 | à faire |
 | 36 | `3e_C7.8` | 1530 | 0 | 0 | 21 | à faire |
@@ -189,3 +189,6 @@ de 1 200** ; le mode essentiel retire 2 % du texte ; 87 ✘ de règles, 995 ques
   8 groupes mélangés, 27 pourquoi pour le mode mission ; la piqûre de rappel du cahier des charges repliée à sa source ;
   aération 29 → 0 ; « avait écarté … en 3e_C8.2 » (n°304) corrigé ; le banc de la séquence, en échec sur `main` depuis
   l'étape 2 de l'audit externe, suit la page. Séances 868 · 908 · 779 · 896.
+- **3e_C7.4** (l'énergie de la station), 15/11/2026 (#693) : une grille (ce que coûte chaque source), 13 groupes mélangés,
+  39 pourquoi pour le mode mission ; aération 27 → 0 ; n°304 ; le banc de la séquence suit la page (réponse libre).
+  Séances 681 · 912 · 1 132.

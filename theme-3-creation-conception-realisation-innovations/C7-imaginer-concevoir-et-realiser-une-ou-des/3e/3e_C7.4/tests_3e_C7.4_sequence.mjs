@@ -203,8 +203,11 @@ for (const [n, champs] of Object.entries(REP.activites)) {
   }
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), n);
   const fb = await p.textContent('#fb' + n);
-  ok('activité ' + n + ' validée (' + REP.totaux[n] + ')',
-     fb.includes(REP.totaux[n]), fb.slice(0, 75));
+  /* une réponse libre n'est plus « validée » par la page (audit externe, étape 2) : elle est enregistrée, et la page dit
+     qu'elle n'est pas corrigée automatiquement (révision du 15/11/2026 : le banc suit la page) */
+  const libre = /Réponse enregistrée/.test(fb);
+  ok('activité ' + n + (libre ? ' : réponse libre enregistrée, renvoyée à la correction' : ' validée (' + REP.totaux[n] + ')'),
+     libre ? REP.totaux[n] === '1/1' && /pas corrigée automatiquement/.test(fb) : fb.includes(REP.totaux[n]), fb.slice(0, 75));
 }
 
 // ── un relevé approximatif est refusé ─────────────────────────────────────
