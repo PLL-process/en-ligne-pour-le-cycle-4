@@ -31221,6 +31221,30 @@ passera dans le schéma pendant sa révision (ligne 51 du suivi).
 
 **Ce qui reste.** L'encart des quatre gestes de l'éditeur (360 mots) est commun à six pages : il n'est pas touché ici.
 
+## 15/11/2026 — Révision des trois thèmes, 49 : `5e_C7.3` (le banc de la cour)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **15 listes déroulantes** (n°300) ;
+- 15 écarts d'aération ; une séance 2 à 1 694 mots ;
+- **la grille de l'activité 0 se devinait par la grammaire** : quatre réponses commençaient par « elle dit », une seule par « il ne dit » — celle du prix au kilogramme, la seule caractéristique au masculin ;
+- **la grille de l'activité 1 avait deux réponses justes pour le béton** : il chauffe trop (61 °C) et il est trop lourd, comme l'acier ;
+- deux grilles avec autant de réponses que de lignes : la dernière se devinait ;
+- la bonne réponse la plus longue dans 3 questions sur 5 ; et dans l'une, elle seule ne commençait pas par « parce que » ;
+- sous les deux renvois au banc, une phrase de la fabrique (« Une page ne porte qu'un seul banc… »).
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : les 15 listes deviennent des boutons radio, rangés en **deux grilles lettrées** (les réponses écrites une fois) ; le mode essentiel, le tableau de bord, les étiquettes ; **quatre versions étayées** (`etayage_sequence_5e_C7.3_banc-de-la-cour.json`).
+- **La grille de l'activité 0 ne se devine plus** : les réponses disent ce que la caractéristique permet de savoir, sans pronom (« combien pèsera la pièce, une fois sa taille connue »).
+- **Une seule réponse juste par ligne dans l'activité 1** : l'acier « résiste très bien, mais chauffe trop et pèse trop » ; le béton « n'est pas assez résistant, et en plus chauffe et pèse trop ». La correction donne les chiffres (61 °C, 54 kg).
+- **Une réponse de trop dans chaque grille**, réfutée dans la correction : « si on peut recycler la pièce en fin de vie » (aucune colonne du banc ne le dit), « il coûte trop cher pour le budget du collège » (le prix n'est pas une exigence : le béton est même le moins cher).
+- **7 groupes mélangés** ; **9 propositions fausses allongées** d'une raison plausible ; la bonne réponse n'est plus la plus longue nulle part.
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.3.json`) : 47 pourquoi, 9 indices de ligne, 2 réponses de trop.
+- **La phrase de la fabrique est retirée** ; **le Bonus se replie** ; **aération : 15 → 0** ; les annonces des deux séances et les deux exigences de la table de pique-nique passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 1 095 · 1 694 → **840** · **1 607**. Règles d'or 5 → 0 ✘ ; menus 15 → 0 ; aération 15 → 0. Bancs **42 / 42** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (41 / 42) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 607 mots).** Le banc des matériaux, l'outil de la séance, y compte pour 285 mots (ses deux tableaux) ; la synthèse, 279 ; le bilan et le positionnement, environ 200 ; trois activités et le réinvestissement, environ 720.
+
 ## 15/11/2026 — Révision des trois thèmes, 50 : `5e_C7.4` (l'indicateur du hall)
 
 **Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
