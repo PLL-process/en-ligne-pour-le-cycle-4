@@ -67,7 +67,7 @@ d'autant.
 | 43 | `4e_C7.5` | 2077 → 1572 | 5 → 0 | 23 → 0 | 25 → 0 | livrée #707 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; piqûre de rappel repliée à sa source, séance 1 1 728 → 1 078 ; une réponse de trop dans la grille ; séance 2 (1 572) au-dessus : l'établi, outil des deux séances (471 mots), et la clôture |
 | 44 | `4e_C7.7` | 1831 → 1698 | 5 → 0 | 16 → 0 | 19 → 0 | livrée #709 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; une réponse de trop dans les deux grilles ; « allonger la fente à 23 mm » réfuté ; une phrase de la fabrique retirée ; séance 2 (1 698) au-dessus : l'atelier, outil de la séance, des propositions longues par construction, et la clôture |
 | 45 | `4e_C7.8` | 1880 → 1616 | 5 → 0 | 19 → 0 | 15 → 0 | livrée #710 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; la bonne réponse était la plus longue 11 fois sur 13 : 19 propositions fausses allongées ; une réponse de trop dans la grille ; séance 2 (1 616) au-dessus : le banc du lien, outil de la séance, et la clôture |
-| 46 | `4e_C8.1` | 1975 | 1 | 25 | 22 | à faire |
+| 46 | `4e_C8.1` | 1975 → 1320 | 1 → 0 | 25 → 0 | 22 → 0 | livrée #711 — 16 listes en boutons radio, grille « Conforme ? » comprise (ordre, noms et retours gardés) ; les 8 menus du tableau de l'exercice incrusté reconnus comme voulus (n°317) ; piqûre de rappel repliée ; six corrections de l'exercice aérées à leur source ; séance 2 (1 320) juste au-dessus : l'exercice du diagramme des exigences |
 | 47 | `4e_C9.1` | 2909 | 1 | 54 | 34 | à faire |
 | 48 | `5e_C7.1` | 1685 | 1 | 17 | 17 | à faire |
 | 49 | `5e_C7.3` | 1694 | 5 | 15 | 15 | à faire |
@@ -267,3 +267,8 @@ d'autant.
   était la plus longue 11 fois sur 13 : 19 propositions fausses allongées ; 17 groupes mélangés ; 39 pourquoi, 4 indices,
   une réponse de trop dans la grille ; Bonus replié ; aération 15 → 0. Séances 872 · 1 705 → 925 · 1 616. Reste : la
   séance 2 au-dessus (le banc du lien, outil de la séance, et la clôture).
+- **4e_C8.1** (le jardin, valider), 15/11/2026 (#711) : 16 listes deviennent des boutons radio, la grille « Conforme ? »
+  comprise (son ordre, le nom de chaque case et le retour sous chaque case sont gardés) ; les 8 menus du tableau de
+  l'exercice incrusté sont reconnus comme voulus par la n°317 (`verif_regles_audit.py`, `migrer_gabarit_306.py`) ;
+  piqûre de rappel repliée ; 9 groupes mélangés ; 34 pourquoi ; six corrections de l'exercice des exigences aérées à
+  leur source et dans l'atelier et le cahier ; aération 22 → 0. Séances 432 · 1 878 · 528 → 493 · 1 320 · 485.

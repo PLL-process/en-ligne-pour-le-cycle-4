@@ -53,7 +53,8 @@ import os
 import re
 import sys
 
-MENU_VOULU_ID = re.compile(r"(?:^|_)cdcf(?:_|$)|^bc_[^\"]*__(?:aqui|surquoi|objet|but)$|^bac_", re.I)
+# 15/11/2026 : le tableau `valid` de l'exercice 3 des exigences est un cahier des charges complété par menus (n°317)
+MENU_VOULU_ID = re.compile(r"(?:^|_)cdcf(?:_|$)|__valid_\d+_\d+$|^bc_[^\"]*__(?:aqui|surquoi|objet|but)$|^bac_", re.I)
 
 PROTO = """<script>
 /* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
@@ -244,6 +245,10 @@ def poser_proto_css(t):
             m = re.search(r"<!-- fiche-papier [^ ]+ : fin -->", t)
             fin_papier = m.end() if m else -1
         i = t.find("<script", max(fin_papier, 0))
+        # jamais DANS un bloc posé par un outil (mode mission, chaîne à compléter) : poser.py le réécrirait sans lui
+        for m in re.finditer(r"<!-- (mode-mission|chaine-a-completer) [^ ]+ : début.*?<!-- \1 [^ ]+ : fin -->", t, re.S):
+            if m.start() <= i < m.end():
+                i = m.start()
         t = t[:i] + PROTO + t[i:]
     # la feuille des groupes est reconnue à sa règle d'écran NON limitée à #billet ; une règle
     # d'impression (`.qcm-groupe{border:0!important…}` de la fiche papier) ne compte pas

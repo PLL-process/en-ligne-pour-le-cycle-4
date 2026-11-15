@@ -147,3 +147,23 @@ les onglets commencent à 866 px pour un écran de 844 px (avant : 1400 px).
   à la séance 2, même compte que la progression).
 - `controle_squelette` : 0 défaut, aucun « à rédiger ». Verts : `controle_impression`, `controle_verrous`, `controle_impression_papier`, fiche papier
   (`banc_papier.py`), `controle_hors_ligne`, `controle_contraste_liens`, `controle_unites`, `controle_hierarchie`, `controle_sigles`.
+
+## Révision du 15/11/2026 (ligne 46 du suivi) — boutons radio, replis, aération, mode mission
+
+Les 16 listes déroulantes qui posaient une question sont des groupes de boutons radio (règle d'or n°300), la grille
+« Conforme ? » comprise ; `save()` garde le groupe, pas ses boutons. Les 8 menus du tableau de l'exercice incrusté restent des
+menus (n°317) : l'incrustation est rétablie depuis sa source. Le rappel du cahier des charges et le Bonus sont repliés ;
+l'aération passe de 22 écarts à 0 ; le mode mission reçoit 34 pourquoi (`mission_4e_C8.1.json`).
+
+Le banc garde ses questions : un shim `_groupesRadio(page)` coche le bouton de la valeur demandée, un choix par rang (billet
+d'entrée) suit l'ordre d'origine (`ORIGINE`) ; la lecture de la grille « Conforme ? » prend les valeurs de ses boutons et son
+nom dans sa légende.
+
+- `node tests_4e_C8.mjs .` : **54 / 54**.
+- `node tests_regle_311_4e_C8.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `python3 _outils/tests_verif_regles_audit.py` : **68 / 68** (après la reconnaissance des menus `…__valid_…`).
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0. `controle_impression_papier.py` : à jour.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

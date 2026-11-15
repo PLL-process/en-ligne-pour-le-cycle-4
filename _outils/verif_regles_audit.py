@@ -438,8 +438,11 @@ LISTE_DEROULANTE = re.compile(r"<select\b[^>]*>", re.I)
 IDENTIFIANT_SELECT = re.compile(r'<select\b[^>]*\bid="([^"]+)"', re.I)
 #: menus imposés par les n°317 (cahier des charges, `…cdcf…`) et 318 (rappel de la bête à cornes,
 #: `bc_…__aqui|surquoi|objet|but`, `bac_…`) — reconnus à leur id (07/11/2026)
-MENU_VOULU_ID = re.compile(r"(?:^|_)cdcf(?:_|$)|^bc_[^\"]*__(?:aqui|surquoi|objet|but)$|^bac_", re.I)
-MENU_VOULU = re.compile(r'\bid="(?:[^"]*(?:^|_)cdcf(?:_|$)[^"]*|bc_[^"]*__(?:aqui|surquoi|objet|but)|bac_[^"]*)"', re.I)
+#: 15/11/2026 (révision de 4e_C8.1) : le tableau « Extrait du cahier des charges du jardin, et sa validation » de
+#: l'exercice 3 des exigences (widget `tableau` nommé `valid`, ids `ex_4e_e3__valid_<ligne>_<colonne>`) est un cahier
+#: des charges complété dans son tableau, par des menus : la n°317 le veut ainsi, comme les tableaux `…cdcf…`.
+MENU_VOULU_ID = re.compile(r"(?:^|_)cdcf(?:_|$)|__valid_\d+_\d+$|^bc_[^\"]*__(?:aqui|surquoi|objet|but)$|^bac_", re.I)
+MENU_VOULU = re.compile(r'\bid="(?:[^"]*(?:^|_)cdcf(?:_|$)[^"]*|[^"]*__valid_\d+_\d+|bc_[^"]*__(?:aqui|surquoi|objet|but)|bac_[^"]*)"', re.I)
 
 
 def regle_300(src: str) -> tuple[str, str]:

@@ -529,6 +529,9 @@ RAPPELS = [
          ]),
     dict(id="validation-4e", niveau="4e",
          sequence=C8 + "4e/4e_C8.1/sequence_4e_C8_jardin-validation.html",
+         # révision du 15/11/2026 (la charge de lecture de la séance 2) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          avant="<!-- ateliers-representations:debut ex-4e-jardin-validation -->", balise="h3", balise_exo="h4",
          titre="Une ligne du cahier des charges du support",
          objet="le support de capteur", client="Mme Ortiz",
