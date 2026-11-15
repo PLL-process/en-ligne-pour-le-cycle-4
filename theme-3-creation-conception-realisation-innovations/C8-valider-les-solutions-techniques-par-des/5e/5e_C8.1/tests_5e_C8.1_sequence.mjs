@@ -36,8 +36,37 @@ const dit = phrase => plat.includes(norm(phrase));
 const platSynthese = norm(readFileSync(new URL('Synthèses/synthese_professeur_5e_C8.1.html', pathToFileURL(f)), 'utf8'));
 const ditSynthese = phrase => platSynthese.includes(norm(phrase));
 
+/* Révision du 15/11/2026 (n°300) : les listes de la page sont devenues des groupes de boutons radio ; ce shim garde les
+ * questions du banc : selectOption, fill et inputValue visent le groupe comme ils visaient la liste. */
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;   // comme un clic : input, puis change
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
+
 const b = await chromium.launch();
-const p = await b.newPage();
+const p = _groupesRadio(await b.newPage());
 const err = [], fail = [], dlg = [];
 p.on('pageerror', e => err.push(e.message));
 p.on('console', m => { if (m.type() === 'error') err.push('console: ' + m.text()); });
@@ -199,7 +228,7 @@ for (const [n, champs] of Object.entries(REP.activites)) {
 
 /* ── une réponse fausse est refusée ──────────────────────────────────────── */
 const [premierId, bonne] = Object.entries(REP.activites['1'])[0];
-const options = await p.$$eval('#' + premierId + ' option', n => n.map(e => e.value));
+const options = await p.$$eval('#' + premierId + ' option, #' + premierId + ' input[type=radio]', n => n.map(e => e.value));   // une liste, ou un groupe de boutons radio (n°300)
 const fausse = options.filter(o => o && o !== bonne)[0];
 await ouvrirSeanceDe('#' + premierId);
 await p.selectOption('#' + premierId, fausse);

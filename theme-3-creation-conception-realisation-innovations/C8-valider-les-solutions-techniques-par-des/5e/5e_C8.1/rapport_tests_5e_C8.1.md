@@ -75,3 +75,20 @@ aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`,
 (n°29, 30, 31, 34, 300), hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Révision du 15/11/2026 (ligne 52 du suivi) — gabarit commun, places, propositions, mode mission
+
+Migration au gabarit commun (`migrer_gabarit_306.py`, étayage dans `etayage_sequence_5e_C8.1_patere-du-hall.json`) :
+16 listes en boutons radio, le choix du matériau du simulateur déclaré commande (`data-interface`). La réponse en double
+de la question des heures d'atelier devient « 24,0 h ». 16 groupes mélangés, 18 propositions fausses allongées. Le mode
+mission reçoit 47 pourquoi (`mission_5e_C8.1.json`). Bonus replié ; aération 13 → 0.
+
+- `node tests_5e_C8.1_sequence.mjs sequence_5e_C8.1_patere-du-hall.html attendus_5e.json 5e` : **39 / 39** (shim
+  `_groupesRadio(page)` en tête du banc ; le pas de la réponse fausse lit aussi les boutons radio d'un groupe).
+- `node tests_5e_C8.1_qcm.mjs "$PWD/qcm_5e_C8.1_patere-du-hall.html" 5e_C8.1 5e_C3.1 sequence_5e_C8.1_patere-du-hall.html` : **32 / 32**.
+- `node tests_regle_311_5e_C8.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `controle_ordre_propositions.py`, `controle_unites.py` : verts. `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
