@@ -96,3 +96,11 @@ pose les étiquettes dans les blocs, sous les blocs et sur les flèches ; ce qu'
 - `python3 _outils/controle_chaine_a_completer.py` : ✅.
 
 Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.
+
+## 15/11/2026 — le secteur entre par la gauche
+
+Remarque de Pascal sur le schéma de l'alimentation : le secteur arrivait par la droite. Le bloc du secteur passe en haut
+à gauche de la carte de basculement, sa flèche part du bord gauche ; au téléphone, le secteur à gauche, la batterie à
+droite. `node tests_3e_C4.1-C4.2.mjs` : **23 / 23** ; `node tests_regle_311_3e_C4.1.mjs` : **34 / 34** ; banc générique
+du mode mission : aucun refus.
+

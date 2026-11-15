@@ -160,3 +160,17 @@ Le mode mission reçoit 18 pourquoi, 6 indices et une réponse de trop dans la g
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+## Les chaînes sous les yeux, 15/11/2026 — l'activité 0 dans le schéma du prototype
+
+La grille de l'activité 0 (six constituants, sept réponses lettrées) devient la chaîne à compléter commune
+(`_outils/chaine_a_completer/`) : l'élève pose la fonction de chaque constituant dans son bloc. Six étiquettes, dont
+STOCKER de trop ; AGIR sert deux fois. Le mode mission reçoit 30 pourquoi, case par case.
+
+- `node tests_4e_C7.5_sequence.mjs "$PWD/sequence_4e_C7.5_jardin-incomplet.html" 4e reponses_4e_C7.5.json` : **41 / 41**
+  (`reponses_4e_C7.5.json` : les réponses de l'activité 0 sont maintenant les étiquettes, ACQUÉRIR, TRAITER…).
+- `node tests_regle_311_4e_C7.5.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `python3 _outils/controle_chaine_a_completer.py` : vert. `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
