@@ -32,6 +32,10 @@
  *   ⚠ écrasée     une taille de police posée en attribut, écrasée par la feuille de style du SVG (le titre
  *                 qu'on croyait grand ne l'est pas).
  *   ⚠ minuscule   un texte qui ferait moins de 10 px sur un schéma affiché à 800 px de large.
+ *   ⚠ étiquette collée  l'étiquette d'une flèche (un texte hors de tout cadre) à moins de 6 unités de son trait sans le
+ *                 toucher (veille du 15/11/2026 : idée prise de `luffy666code/diagram-design-skill`, MIT, réécrite ici —
+ *                 « une étiquette de flèche ne touche jamais son trait »). Le trait SUR l'étiquette est la traversée ;
+ *                 le fond d'une étiquette qui chevauche un cadre est le contact : les deux étaient déjà mesurés.
  *
  * Score = 3 × ✘ + ⚠. Les schémas sont rangés du pire au meilleur.
  *
@@ -236,6 +240,26 @@ const MESURER = (svg) => {
         if (p.x > b.x && p.x < b.X && p.y > b.y && p.y < b.Y) { vus.add(t); dit('✘', 'traversée', `une flèche passe sur « ${court(t.s)} »`); }
       }
     }
+  }
+  // ⚠ étiquette collée (veille du 15/11/2026) : l'étiquette d'une flèche — un texte libre, hors de tout cadre — posée
+  // à moins de 6 unités de son trait sans le toucher. L'élève ne voit plus si le mot est sur la flèche ou à côté, ni à
+  // quelle flèche il appartient. Le trait qui passe SUR l'étiquette est la « traversée », plus haut ; une étiquette qui
+  // porte un fond opaque est un cadre, et son fond qui chevauche un autre cadre est le « contact ».
+  for (const t of textes) {
+    if (cadres.some(c => contientPt(c.b, t.a))) continue;
+    const n = noyau(t);
+    let best = Infinity;
+    for (const f of fleches) {
+      let L; try { L = f.getTotalLength(); } catch (e) { continue; }
+      const M = f.getScreenCTM(); if (!(L > 0) || !M) continue;
+      const pas = Math.max(1, L / 300);
+      for (let s = 0; s <= L; s += pas) {
+        const q = f.getPointAtLength(s), x = M.a * q.x + M.c * q.y + M.e, y = M.b * q.x + M.d * q.y + M.f;
+        best = Math.min(best, Math.hypot(Math.max(n.x - x, 0, x - n.X), Math.max(n.y - y, 0, y - n.Y)));
+      }
+    }
+    const d = U(best);
+    if (d > 0.5 && d < 6) dit('⚠', 'étiquette collée', `« ${court(t.s)} » à ${d.toFixed(1)} u de sa flèche (6 au moins)`);
   }
   // ✘ trait sur un texte : un trait SANS pointe (un pointillé « include », un lien, une courbe) qui passe sur
   // l'encre d'un texte, sans qu'une forme opaque peinte après lui (le fond de l'étiquette) ne le cache, ni un halo

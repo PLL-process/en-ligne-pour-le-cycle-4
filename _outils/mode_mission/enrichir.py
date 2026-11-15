@@ -21,12 +21,21 @@ Le fichier de données (`mission_<lot>.json`, à côté de la séquence) :
     ligne. Ajoute la réponse à la légende et à chaque ligne, à une place tirée du nom (jamais toujours la dernière),
     relettre A, B, C… et le dit dans le titre de la légende.
 
+Écrire un pourquoi (veille du 15/11/2026 — idée prise de `anthropics/k12-teacher-skills`, skill
+`k12-check-for-understanding`, Apache 2.0, réécrite ici de zéro) : un leurre vient d'une erreur qu'un élève fait
+vraiment (un prérequis qui manque, une confusion du niveau) ; son pourquoi dit ce qui ne va pas DANS CE CAS, puis
+NOMME L'ÉTAPE SUIVANTE, à l'impératif — « Relis la ligne du capteur », « Compare au besoin : 100 exactement ». Un
+pourquoi qui explique sans dire quoi faire laisse l'élève devant son erreur. `--etapes` mesure, sur toutes les
+données `mission_*.json` du dépôt, les pourquoi qui ne nomment aucune étape (mesure, sortie 0) : le repérage est
+mécanique (un verbe à l'impératif en tête d'une proposition, ou une forme en « -toi ») et se relit.
+
 L'outil ne change ni les questions ni les réponses attendues ; il se rejoue sans rien changer. Le mode mission lit
 ces attributs ; le banc générique refuse un « pourquoi » posé sur une bonne réponse.
 
 Usage :
     python3 _outils/mode_mission/enrichir.py <sequence.html> <mission_<lot>.json>            # écrit
     python3 _outils/mode_mission/enrichir.py <sequence.html> <mission_<lot>.json> --verifier # dit si la page est à jour
+    python3 _outils/mode_mission/enrichir.py --etapes [dossier]   # les pourquoi qui ne nomment pas l'étape suivante
 """
 import hashlib
 import html
@@ -40,6 +49,50 @@ RADIO = re.compile(r'<input type="radio"([^>]*?)\svalue="([^"]*)"([^>]*)>')
 CLES = re.compile(r'<div class="qcm-cles"><p class="qcm-cles-titre">(.*?)</p><ol>(.*?)</ol></div>', re.S)
 LETTRES = 'ABCDEFGHIJKL'
 TROP = re.compile(r'&nbsp;; <b>[^<]*aucune ligne</b>')
+
+
+# les impératifs d'une étape suivante (relevés le 15/11/2026 dans les 2 201 pourquoi du dépôt), plus toute forme « -toi »
+IMPERATIFS = set("""lis relis observe regarde coche complète écris relie ouvre clique choisis indique note range place compare
+vérifie teste calcule trace dessine repère associe glisse explique justifie propose cite nomme réponds utilise branche téléverse
+enregistre retrouve souligne entoure classe mesure fais va prends mets lance copie colle remplis sélectionne déplace ajoute
+modifie supprime rédige décris identifie cherche reprends compte pense essaie imagine suis remonte relève examine refais demande
+pose garde retourne isole écoute touche additionne multiplie divise convertis applique attends reviens tape saisis vois relance
+rejoue recompte retiens remets reporte situe localise""".split())
+TETE = re.compile(r"(?:^|[:;.!?—]\s+|,\s+(?:puis|et|alors|donc)\s+|\(\s*)([A-Za-zÀ-ÿ]+(?:-toi|-le|-la|-les)?)\b")
+
+
+def etape_suivante(texte):
+    """le pourquoi nomme-t-il une étape suivante ? un impératif en tête d'une proposition, ou une forme en « -toi »"""
+    for m in TETE.finditer(texte):
+        mot = m.group(1).lower()
+        if mot.endswith('-toi') or mot.split('-')[0] in IMPERATIFS:
+            return True
+    return False
+
+
+def etapes(racine):
+    """mesure : les pourquoi de chaque `mission_*.json` qui ne nomment aucune étape suivante"""
+    fichiers = sorted(pathlib.Path(racine).rglob('mission_*.json'))
+    fichiers = [f for f in fichiers if '_archive' not in str(f)]
+    if not fichiers:
+        print('✘ aucun fichier mission_*.json sous %s : rien n\'a été mesuré' % racine)
+        return 2
+    total, sans_etape = 0, 0
+    lignes = []
+    for f in fichiers:
+        d = json.loads(f.read_text(encoding='utf-8'))
+        textes = [t for r in d.get('pourquoi', {}).values() for t in r.values()]
+        k = sum(1 for t in textes if not etape_suivante(t))
+        total += len(textes)
+        sans_etape += k
+        if textes:
+            exemple = next((t for t in textes if not etape_suivante(t)), '')
+            lignes.append((k / len(textes), f, k, len(textes), exemple))
+    for part, f, k, n, ex in sorted(lignes, key=lambda x: (-x[0], str(x[1]))):
+        print('%3.0f %%  %3d / %3d  %s%s' % (100 * part, k, n, f.parent.name, ('  · « %s »' % ex[:70]) if ex else ''))
+    print('⚠ étape suivante (mesure, hors score) : %d pourquoi sur %d ne nomment aucune étape suivante (%.0f %%), dans %d fichier(s)'
+          % (sans_etape, total, 100 * sans_etape / max(total, 1), len(lignes)))
+    return 0
 
 
 def brut(v):
@@ -150,6 +203,8 @@ def enrichir(page, donnees):
 
 def main(argv):
     args = [a for a in argv if not a.startswith('--')]
+    if '--etapes' in argv:
+        return etapes(args[0] if args else pathlib.Path(__file__).resolve().parents[2])
     if len(args) != 2:
         print(__doc__)
         return 2
@@ -159,6 +214,9 @@ def main(argv):
     apres = enrichir(page, donnees)
     n = (sum(len(v) for v in donnees.get('pourquoi', {}).values()), len(donnees.get('indices', {})),
          sum(len(v) for v in donnees.get('leurres', {}).values()))
+    muets = sum(1 for r in donnees.get('pourquoi', {}).values() for t in r.values() if not etape_suivante(t))
+    if muets:
+        print('⚠ %d pourquoi sur %d ne nomment pas l\'étape suivante (--etapes : la mesure du dépôt)' % (muets, n[0]))
     if '--verifier' in argv:
         print(('✅ à jour' if avant == apres else '✘ la page n\'est pas à jour avec ses données') + ' — %d pourquoi, %d indices, %d leurres' % n)
         return 0 if avant == apres else 1

@@ -38,6 +38,11 @@ la chasse aux tics de l'IA en anglais, les polices.
 
 Ne mélange pas les deux sur une même ligne. Une explication glissée dans une consigne passe à la ligne suivante.
 
+Ces longueurs se mesurent (veille du 15/11/2026, idée prise de `jgsystemsconsulting/plain-language`, MIT, réécrite) :
+`python3 _outils/audit_aeration.py --phrases <page>` compte les **paragraphes de plus de 4 phrases** (P1) et les
+**phrases trop longues** (P2 : plus de 20 mots si elle commence par un impératif, plus de 25 sinon). C'est une mesure,
+hors `--strict` : le découpage en phrases est mécanique, chaque ⚠ se relit.
+
 ## Les règles d'écriture
 
 1. **Une idée par phrase.** Une phrase qui en porte deux se coupe en deux, à la conjonction.
@@ -125,7 +130,7 @@ corrections (réponse, refus un par ligne, pourquoi en lignes).
 
 - [ ] `audit_aeration.py --strict` à zéro sur les pages touchées.
 - [ ] Aucun mot du fond retiré : relire la correction avant et après, chaque idée est toujours là.
-- [ ] Chaque consigne : impératif, 20 mots au plus, une action par ligne, la condition d'abord.
+- [ ] Chaque consigne : impératif, 20 mots au plus, une action par ligne, la condition d'abord (`audit_aeration.py --phrases` : aucun P2 de consigne sur les pages touchées, ou chaque P2 relu).
 - [ ] Chaque légende : une partie par ligne, la note et la mention IA en fin, rien de ce que l'image dit déjà.
 - [ ] `controle_hierarchie.py`, `controle_mode_essentiel.py` et les bancs du lot inchangés ou meilleurs.
 - [ ] Rendu regardé à 390 px : aucune ligne réduite à un mot orphelin sous une image.

@@ -143,7 +143,7 @@ décroche (mot inconnu, phrase trop longue, consigne ambiguë, aller-retour dans
   `python3 _outils/mode_mission/poser.py <page>`, puis `node _outils/mode_mission/banc_generique.mjs <page> --detail`.
   Le banc joue la page écran par écran et croise chaque réponse lue avec la vérification de la page ; lire la liste
   des écrans (le découpage doit avoir du sens). Une page que le banc refuse ne garde pas le bloc : on le dit dans
-  la PR. Puis écrire le pourquoi de chaque erreur (`mission_<lot>.json`, `enrichir.py`).
+  la PR. Puis écrire le pourquoi de chaque erreur (`mission_<lot>.json`, `enrichir.py`) : ce qui ne va pas dans ce cas, puis l'étape suivante à l'impératif (« Relis… », « Compare… » ; `enrichir.py --etapes` mesure ceux qui n'en nomment pas, 15/11/2026).
   Voir `_outils/mode_mission/README.md`.
 - **Revue d'écran en trois tours** (`controle-qualite-lot`) : 390 et 1 280 px, mode essentiel compris.
 - Une PR par séquence (ou par deux ou trois petites), le journal, et la ligne de `docs/revision/SUIVI_REVISION.md` :
