@@ -254,8 +254,8 @@ E1 = dict(
     jumeau=dict(consigne="Le FAST d'une lampe de poche dit&nbsp;: «&nbsp;stocker l'énergie&nbsp;» → «&nbsp;deux piles&nbsp;» et "
                          "«&nbsp;produire la lumière&nbsp;» → «&nbsp;une LED&nbsp;». Pourquoi la lampe a-t-elle deux piles&nbsp;? "
                          "Comment produit-elle la lumière&nbsp;?",
-                correction="Pourquoi deux piles&nbsp;? → je lis vers la gauche → <b>pour stocker l'énergie</b> (et donc éclairer sans "
-                           "câble). Comment produire la lumière&nbsp;? → je lis vers la droite → <b>avec une LED</b>."),
+                correction="Pourquoi deux piles&nbsp;? <br>→ je lis vers la gauche <br>→ <b>pour stocker l'énergie</b> (et donc "
+                           "éclairer sans câble). <br>Comment produire la lumière&nbsp;? <br>→ je lis vers la droite <br>→ <b>avec une LED</b>."),
     correction=[
         "<b>Fonctions</b> (un verbe à l'infinitif)&nbsp;: «&nbsp;détecter un passant&nbsp;», «&nbsp;transmettre l'effort de Léa à la "
         "roue&nbsp;», «&nbsp;capter l'énergie du soleil&nbsp;»",
@@ -266,8 +266,8 @@ E1 = dict(
         "<b>Comment détecter la nuit&nbsp;?</b> → vers la droite → <b>le capteur de luminosité</b>",
         "Pas la carte programmable → elle est sur la ligne «&nbsp;décider quand allumer&nbsp;». Pas le bloc de LED → il produit la "
         "lumière. Pas une horloge → aucune case n'en parle.",
-        "<b>Pourquoi un bloc de LED&nbsp;?</b> → vers la gauche → <b>produire la lumière</b> → encore à gauche → éclairer la rue la "
-        "nuit quand un piéton passe",
+        "<b>Pourquoi un bloc de LED&nbsp;?</b> <br>→ vers la gauche <br>→ <b>produire la lumière</b> <br>→ encore à gauche <br>→ éclairer "
+        "la rue la nuit quand un piéton passe",
         "Pas détecter la nuit, pas stocker l'énergie → ce sont les lignes d'autres solutions. Pas décorer → le lampadaire est éteint le jour.",
         ("conclusion", "Vers la droite, le FAST répond à «&nbsp;<b>comment&nbsp;?</b>&nbsp;» (quelle solution)&nbsp;; vers la gauche, à "
                        "«&nbsp;<b>pourquoi&nbsp;?</b>&nbsp;» (quelle fonction, et à quoi elle sert)."),
@@ -348,8 +348,8 @@ E2 = dict(
         "<b>Stocker l'énergie pour la nuit</b> → <b>la batterie</b> → elle se charge le jour et rend l'énergie la nuit",
         "<b>Capter l'énergie du soleil</b> → <b>le panneau solaire</b> → il capte, mais il ne garde rien",
         "Le piège entre ces deux dernières cases&nbsp;: le panneau <b>capte</b>, la batterie <b>stocke</b>. La nuit, le panneau ne donne plus rien.",
-        "<b>L'intrus</b>&nbsp;: l'interrupteur à bouton → pourquoi&nbsp;? → allumer à la main → la fonction d'usage dit «&nbsp;quand un "
-        "piéton passe&nbsp;», sans geste → aucune ligne ne le demande",
+        "<b>L'intrus</b>&nbsp;: l'interrupteur à bouton <br>→ pourquoi&nbsp;? <br>→ allumer à la main <br>→ la fonction d'usage dit "
+        "«&nbsp;quand un piéton passe&nbsp;», sans geste <br>→ aucune ligne ne le demande",
         "Les autres raisons ne tiennent pas&nbsp;: un interrupteur est bon marché, il est électrique, et c'est bien une solution (un nom).",
         "<b>Pourquoi une batterie&nbsp;?</b> → stocker l'énergie pour la nuit → éclairer la rue la nuit quand un piéton passe",
         ("conclusion", "Une solution a sa place dans le FAST si, en lisant vers la gauche («&nbsp;pourquoi&nbsp;?&nbsp;»), on arrive à la "
