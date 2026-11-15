@@ -1,5 +1,7 @@
 # Rapport de tests — 3e_C8.1
 
+> **Révision du 15/11/2026.** Propositions fausses allongées (la bonne réponse se devinait à sa place et à sa longueur), places changées, piqûre de rappel et Bonus repliés, aération. Bancs : séquence **62 / 62**, QCM **32 / 32**, n°311 **34 / 34**. Mode mission (`banc_generique.mjs`) : 28 écrans, 44 / 44 pourquoi, aucun refus.
+
 Ce rapport ne déclare que des tests **réellement exécutés**, sous Chromium (Playwright), le
 31/08/2026. Les attendus ne sont pas recopiés à la main : ils sont **engendrés par
 `attendus.py`** depuis les modèles Python du lot. Un chiffre corrigé dans le modèle change
