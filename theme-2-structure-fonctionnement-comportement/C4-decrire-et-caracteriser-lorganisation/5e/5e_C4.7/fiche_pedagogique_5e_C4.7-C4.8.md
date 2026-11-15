@@ -73,7 +73,7 @@ Pratique exhaustivement guidée « comme une recette » (règle n°22) : l'élè
 voir la référence, et pose les appareils selon SON plan dans Packet Tracer. Guide logiciel inclusif A→H
 sans étape implicite, chaque geste illustré par une figure fidèle au logiciel
 (règle n°20) ; binômes à rôles tournants ; aides ×2 par activité ; corrections exhaustives ; exercices en
-listes déroulantes exclusivement (DYS) ; navigation clavier + skip-link ; reduced-motion respecté (y compris
+questions à choix exclusivement (DYS), en boutons radio depuis la révision du 14/11/2026 (chaque question fausse est marquée « à revoir ») ; navigation clavier + skip-link ; reduced-motion respecté (y compris
 par l'animation du mini-simulateur) ; impression A4 ; minuteur QCM désactivable ; vocabulaire FR/EN ;
 langue calibrée 12 ans.
 

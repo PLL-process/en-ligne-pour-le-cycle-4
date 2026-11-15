@@ -30729,6 +30729,23 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 
 **Ce qui reste, et la question pour Pascal.** Trois séances restent au-dessus du repère. Ce qui pèse : les recettes Packet Tracer (à garder sous les yeux pendant la manipulation), deux activités par séance en séance 2, et les **fiches d'activité à découvert** (Objectif, Compétence, Production, Ressources : 100 à 130 mots par activité, ici cinq). Les replier serait le plus gros gain, sur toutes les séquences : c'est une décision de forme commune, posée à Pascal.
 
+## 14/11/2026 — Révision des trois thèmes, 31 : `5e_C4.7` (le réseau de la salle, Packet Tracer)
+
+**Le constat.** La même famille que `4e_C4.7` : sur 35 questions posées par une liste déroulante, la bonne réponse était **23 fois la plus longue** (« faire passer quelque chose d'un point à un autre : de l'énergie ou de l'information » contre « décorer l'appareil »), contre la n°144 ; des distracteurs impossibles (« refuse de travailler et rend sa casquette », « les fenêtres de la salle »).
+
+**Ce qui est fait.**
+- **n°300 : 32 questions et le positionnement en boutons radio**, la destination du ping du simulateur restant une liste (une commande, `data-interface`). Les 32 questions sont **réécrites** : mêmes énoncés, mêmes bonnes réponses, ramenées à leur affirmation ; des distracteurs de même longueur et plausibles pour un élève de 5e ; la bonne réponse change de place et n'est plus jamais visiblement la plus longue ; les questions de comptage gardent leurs nombres dans l'ordre.
+- **La vérification** marque chaque question fausse « à revoir » ; réponses attendues dans six tables `ATT0` à `ATT5` (page, banc, mode mission : 81 pourquoi, `mission_5e_C4.7.json`). Le positionnement a ses codes pour légende (ses listes portaient une étiquette recopiée d'une autre question).
+- **Corrections exhaustives** : le récit reste ; la réponse, le pourquoi et chaque refus s'ajoutent, question par question ; le billet d'entrée a sa correction.
+- **n°304** : « ce que tu as vu en 6e » devient « ce qui devrait être en place depuis la 6e ».
+- **Ce qui se replie** : les lignes « Socle » des fiches d'activité, le cartouche CRCN 5.1, le Bonus (avec ce qu'une bonne réponse contient pour ses trois défis — il n'avait pas de corrigé, n°86).
+- **Bilan** : le retour à l'hypothèse reste visible même quand l'hypothèse de départ est vide.
+- **Aération : 6 → 0** (75 retours à la ligne).
+
+**Mesure.** Mots visibles : 1 807 · 1 191 · 1 799 → 1 695 · 1 136 · 1 584. Règles d'or 1 → 0 ✘ ; listes 35 → 0 (plus la commande du simulateur) ; aération 6 → 0. Banc neuf `tests_5e_C4.7_questions.mjs` 20 / 20 ; banc n°311 34 / 34. Mode mission : 53 écrans, 32 réponses croisées avec la page, 81 / 81 pourquoi. Fiche papier : 17 pages (16 avant) — les questions montrent leurs propositions et les textes sont aérés ; une fiche finit sur une page presque vide. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** Les séances 1 et 3 restent au-dessus du repère, pour les mêmes raisons que `4e_C4.7` (les recettes Packet Tracer, les fiches d'activité à découvert) : même question à Pascal.
+
 ## 14/11/2026 — Révision des trois thèmes, 32 : `3e_C7.3` (le boîtier de la station)
 
 **Le constat.** Une page déjà soignée (questions en boutons radio depuis la V2, distracteurs plausibles), mais la bonne réponse était **9 fois sur 14 la première** proposition, deux séries de questions répétaient les mêmes longues réponses (le verdict des quatre matériaux, les trois sorties : 25 propositions pour 7 questions), 29 écarts d'aération, et la séance 1 montait à 1 796 mots, dont 651 de piqûre de rappel du cahier des charges.
