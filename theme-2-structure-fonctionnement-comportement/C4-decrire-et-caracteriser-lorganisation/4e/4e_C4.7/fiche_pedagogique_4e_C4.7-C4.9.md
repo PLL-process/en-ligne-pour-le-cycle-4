@@ -82,8 +82,8 @@ matériel — plan papier + schémas + clinique intégrée. Aucune manipulation 
 
 Règle « concevoir guidé, comme une recette » : l'élève conçoit SON plan avant de voir la référence, chaque
 étape essentielle est illustrée par une figure fidèle au logiciel avec explication exhaustive. Binômes à
-rôles tournants ; aides ×2 par activité ; corrections exhaustives ; exercices en listes déroulantes
-exclusivement (DYS) ; navigation clavier + skip-link ; reduced-motion respecté (clinique comprise) ;
+rôles tournants ; aides ×2 par activité ; corrections exhaustives ; exercices à choix
+exclusivement (DYS), en boutons radio depuis la révision du 14/11/2026 (chaque question fausse est marquée « à revoir ») ; navigation clavier + skip-link ; reduced-motion respecté (clinique comprise) ;
 impression A4 ; minuteur QCM désactivable ; vocabulaire FR/EN ; langue calibrée 13 ans.
 
 ## Évaluation

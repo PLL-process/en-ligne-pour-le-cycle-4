@@ -3,6 +3,19 @@
 **Version 2** (refonte après audit pédagogique externe).
 **Exécution réelle** le 08/08/2026, suite Playwright (Chromium headless) : **54/54 verts**.
 Seuls des tests réellement exécutés sont déclarés ici (barre qualité du dépôt).
+
+> **Révision du 14/11/2026** (révision des trois thèmes, ligne 30 du suivi). Les questions posées par une liste déroulante
+> sont des groupes de boutons radio (règle d'or n°300) et leurs propositions sont réécrites (n°144 : la bonne réponse
+> était la plus longue 32 fois sur 40). La suite Playwright de 2026 n'est pas dans le dépôt ; un banc neuf l'est :
+> `tests_4e_C4.7_questions.mjs` lit les réponses attendues dans la page (tables `ATT0` à `ATT5`) et vérifie que chaque
+> réponse est une proposition unique, que sa place varie, qu'elle n'est jamais visiblement la plus longue, qu'une erreur
+> est marquée « à revoir » sur sa seule question, que tout juste valide le passeport et les activités 1 à 3, et que les
+> réponses reviennent après rechargement.
+>
+> ```
+> node tests_4e_C4.7_questions.mjs   →  20 / 20
+> node tests_regle_311_4e_C4.7.mjs   →  34 / 34
+> ```
 La v1 déclarait 36/36 le 07/08/2026 ; la suite a été étendue de 18 vérifications pour couvrir
 les nouveautés de la v2 (4e séance, passeport, mode essentiel, fichiers .pkt, défi).
 
