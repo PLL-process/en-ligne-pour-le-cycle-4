@@ -114,14 +114,14 @@ const ATT = await p.evaluate(() => {
 });
 const totalChamps = Object.values(ATT).reduce((s, o) => s + Object.keys(o).length, 0);
 ok('5 · les bonnes réponses sont extraites de la page, pas recopiées ici',
-   Object.keys(ATT).length === 8 && totalChamps >= 45,
+   Object.keys(ATT).length === 9 && totalChamps >= 45,
    `${Object.keys(ATT).length} activités · ${totalChamps} champs`);
 
 /* Les activités vivent dans six onglets de séance, et un onglet inactif est
    masqué : il faut l'ouvrir comme un élève le ferait. La répartition est celle
    de `majProgress()` dans la page — s5 porte les clés 5 et 6, s6 les clés 8
    (activité 7, le FAST) et 7 (la sonnette). */
-const SEANCE = { 1: 's1', 2: 's2', 3: 's3', 4: 's4', 5: 's5', 6: 's5', 7: 's6', 8: 's6' };
+const SEANCE = { 1: 's1', 2: 's2', 3: 's3', 4: 's4', 5: 's5', 6: 's5', 7: 's6', 8: 's6', 9: 's6' };
 async function ouvrirSeance(n) {
   await p.click(`.seance-tab[data-panel="${SEANCE[n]}"]`);
   await p.waitForTimeout(120);
@@ -185,11 +185,11 @@ ok('7 · act. 1 validée avec les 9 réponses, la justification et l\'exercice F
 await remplir(2);
 await valider(2);
 ok('8 · act. 2 refusée sans la chaîne fléchée au cahier',
-   !/9 \/ 9 réponses correctes. (Excellent|Bravo|Très bien)/.test(await retour(2)),
+   !/11 \/ 11 réponses correctes. (Excellent|Bravo|Très bien)/.test(await retour(2)),
    (await retour(2)).slice(0, 80));
 await p.fill('#e2_cahier', 'lumineuse → électrique → chimique → électrique → lumineuse');
 await valider(2);
-ok('9 · act. 2 validée (9/9) une fois la chaîne écrite', /9 \/ 9/.test(await retour(2)),
+ok('9 · act. 2 validée (11/11) une fois la chaîne écrite', /11 \/ 11/.test(await retour(2)),
    (await retour(2)).slice(0, 70));
 
 /* ── activité 3 : LE VERROU EXPÉRIENTIEL ─────────────────────────────────── */
@@ -224,8 +224,8 @@ ok('14 · les trois situations sont tracées, et seulement par le geste',
    ['jour', 'nuit', 'nuit+passage'].every(k => k in exp), JSON.stringify(exp));
 
 await valider(3);
-ok('15 · act. 3 validée (10/10) une fois les expériences réellement faites',
-   /10 \/ 10/.test(await retour(3)), (await retour(3)).slice(0, 70));
+ok('15 · act. 3 validée (11/11) une fois les expériences réellement faites',
+   /11 \/ 11/.test(await retour(3)), (await retour(3)).slice(0, 70));
 
 /* ── activités 4 à 7 ─────────────────────────────────────────────────────── */
 await remplir(4);
@@ -286,8 +286,14 @@ ok('20 septies · la sauvegarde de la page ne capte pas les champs des exercices
    capte.length === 0, capte.slice(0, 4).join(' · '));
 
 /* ── progression, hypothèse, persistance ─────────────────────────────────── */
-ok('21 · progression 8 / 8 activités validées',
-   (await p.textContent('#progTxt')).includes('8 / 8'), await p.textContent('#progTxt'));
+/* ── séance 6, l'échauffement (clé 9) : les deux chaînes du lampadaire, de mémoire, posées dans le schéma ── */
+await remplir(9);
+await valider(9);
+ok('20 octies · l\'échauffement de la séance 6 (les deux chaînes de mémoire) validé (8/8)',
+   /8 \/ 8/.test(await retour(9)) && await p.evaluate(() => !!window.__valid[9]), (await retour(9)).slice(0, 70));
+
+ok('21 · progression 9 / 9 activités validées',
+   (await p.textContent('#progTxt')).includes('9 / 9'), await p.textContent('#progTxt'));
 const coches = await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.trim()));
 ok('22 · les six séances portent leur coche', coches.length === 6 && coches.every(c => c === '✔'),
    coches.join('|'));
@@ -306,7 +312,7 @@ await p.waitForTimeout(350);
 ok('24 · les réponses survivent au rechargement',
    (await p.inputValue('#e5_1')) === ATT[5].e5_1, await p.inputValue('#e5_1'));
 ok('25 · les validations survivent au rechargement',
-   (await p.textContent('#progTxt')).includes('8 / 8'), await p.textContent('#progTxt'));
+   (await p.textContent('#progTxt')).includes('9 / 9'), await p.textContent('#progTxt'));
 ok('26 · les traces d\'expériences survivent au rechargement',
    await p.evaluate(() => ['jour', 'nuit', 'nuit+passage'].every(k => k in (window.__exp || {}))));
 const cochesFast = await p.$$eval('#fa_5e_e1 input[type=radio]:checked', l => l.length);
@@ -341,8 +347,8 @@ const decoupe = await p.evaluate(() => {
 ok('31 · six onglets, et le bandeau dit « 6 séances de 55 min »',
    decoupe.ong.join() === 's1,s2,s3,s4,s5,s6' && /6 séances de 55 min/.test(decoupe.bandeau),
    decoupe.ong.join() + ' · ' + decoupe.bandeau);
-ok('32 · chaque séance annonce 55 min d\'activités au plus (s5 : 50, s6 : 35)',
-   decoupe.minutes.every(m => m > 0 && m <= 55) && decoupe.minutes[4] === 50 && decoupe.minutes[5] === 35,
+ok('32 · chaque séance annonce 55 min d\'activités au plus (s5 : 50, s6 : 40)',
+   decoupe.minutes.every(m => m > 0 && m <= 55) && decoupe.minutes[4] === 50 && decoupe.minutes[5] === 40,
    decoupe.minutes.join(' / '));
 await ouvrirSeance(5);
 await p.click('#s5 .vers-seance[data-vers="s6"]');
@@ -374,8 +380,8 @@ await p.waitForTimeout(350);
 const reprise = await p.evaluate(() => ({ prog: document.getElementById('progTxt').textContent,
   s5: document.getElementById('done-s5').textContent.trim(), s6: document.getElementById('done-s6').textContent.trim(),
   e7: document.getElementById('e7_1').value, hyp: document.getElementById('hyp1').value }));
-ok('35 · une sauvegarde de la version à cinq séances se relit : 7 / 8, séance 5 cochée, séance 6 à finir',
-   err.length === errAvant && reprise.prog.includes('7 / 8') && reprise.s5 === '✔' && reprise.s6 === '' &&
+ok('35 · une sauvegarde de la version à cinq séances se relit : 7 / 9, séance 5 cochée, séance 6 à finir',
+   err.length === errAvant && reprise.prog.includes('7 / 9') && reprise.s5 === '✔' && reprise.s6 === '' &&
    reprise.e7.startsWith('la sonnerie') && reprise.hyp === 'Ancienne hypothèse.', JSON.stringify(reprise));
 
 /* ── clôture : le Bonus a un champ et un corrigé complet par défi ; le bilan a son positionnement ── */

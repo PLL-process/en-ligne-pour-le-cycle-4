@@ -1286,6 +1286,411 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<!-- chaine-a-completer v1 : début — les étiquettes posées dans le schéma des chaînes ; source unique : _outils/chaine_a_completer/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Chaîne à compléter — source unique : _outils/chaine_a_completer/chaine.css (poser.py). Ne pas la modifier dans une page.
+   Les couleurs sont celles des schémas du dépôt (n°120) : CONVERTIR violet, ALIMENTER/STOCKER jaune, DISTRIBUER cyan ;
+   énergie orange, information cyan, ordre vert en pointillés. */
+.cac{--cac-energie:#ffb454;--cac-information:#61dafb;--cac-ordre:#81fba1;--cac-stock:#ffd66b;--cac-attente:#5d6f92;
+  --cac-fond:#071633;--cac-bloc:#0d2347;--cac-texte:#e4eaf5;--cac-doux:#9bbefc;--cac-case:#102a55;--cac-ok:#81fba1;--cac-faux:#ffb454;
+  margin:10px 0 14px;display:grid;gap:8px;justify-items:center}
+/* au téléphone, le schéma prend toute la largeur de l'écran : les marges des cartes ne le rétrécissent plus */
+@media (max-width:700px){.cac{width:calc(100vw - 16px);margin-inline:calc(50% - 50vw + 8px);box-sizing:border-box}}
+.cac.cac-pret>.cac-questions{display:none}
+.cac-dessin{position:relative;max-width:100%;container-type:inline-size;background:var(--cac-fond);border:1px solid #274a8a;border-radius:14px;overflow:hidden}
+.cac-traits{position:absolute;inset:0;display:block}
+.cac-calque{position:absolute;inset:0}
+.cac-calque>*{position:absolute;box-sizing:border-box}
+.cac-fleche{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cac-fleche.cac-n-energie{stroke:var(--cac-energie)} .cac-m.cac-n-energie path{fill:var(--cac-energie)}
+.cac-fleche.cac-n-information{stroke:var(--cac-information)} .cac-m.cac-n-information path{fill:var(--cac-information)}
+.cac-fleche.cac-n-ordre{stroke:var(--cac-ordre);stroke-dasharray:7 6} .cac-m.cac-n-ordre path{fill:var(--cac-ordre)}
+.cac-fleche.cac-n-stock{stroke:var(--cac-stock)} .cac-m.cac-n-stock path{fill:var(--cac-stock)}
+.cac-fleche.cac-n-attente{stroke:var(--cac-attente);stroke-dasharray:5 6} .cac-m.cac-n-attente path{fill:var(--cac-attente)}
+.cac-titre{font-weight:800;letter-spacing:.02em;line-height:1.2}
+.cac-titre.attente{opacity:.75}
+.cac-texte{line-height:1.2;text-align:center;color:var(--cac-texte)}
+.cac-texte.gras{font-weight:700}
+.cac-et{line-height:1.2;text-align:center;font-weight:600}
+.cac-et-bas{transform:translate(-50%,-100%)} .cac-et-haut{transform:translate(-50%,0)}
+.cac-et-gauche{transform:translate(-100%,-50%);text-align:right} .cac-et-droite{transform:translate(0,-50%);text-align:left}
+.cac-et-centre{transform:translate(-50%,-50%)}
+.cac-c-energie{color:var(--cac-energie)} .cac-c-information{color:var(--cac-information)} .cac-c-ordre{color:var(--cac-ordre)} .cac-c-stock{color:var(--cac-stock)} .cac-c-attente{color:var(--cac-attente)}
+.cac-et.cac-case,.cac-et.cac-trou{white-space:normal}
+.cac-bloc{display:flex;align-items:center;justify-content:center;padding:4px;border:3px solid var(--cac-coul,#9bbefc);background:var(--cac-bloc);
+  box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.cac-bloc.neutre{--cac-coul:#9bbefc;border-color:#3d64a8}
+.cac-bloc.attente{border-style:dashed;border-color:var(--cac-attente);border-width:2px;background:transparent}
+.cac-fonction{font-weight:800;letter-spacing:.03em;color:var(--cac-coul,#e4eaf5);text-align:center;line-height:1.1}
+.cac-bloc>.cac-case,.cac-bloc>.cac-trou{width:100%;height:100%}
+.cac-bloc>.cac-case{border-color:transparent;background:transparent}
+.cac-bloc>.cac-case:not(.pleine) .cac-q{font-size:1.15em}
+.cac-bloc>.cac-case.pleine,.cac-bloc>.cac-case.juste,.cac-bloc>.cac-case.faux{background:transparent}
+.cac-bloc:has(.cac-case.faux){border-color:var(--cac-faux)}
+.cac-bloc:has(.cac-case:focus-visible),.cac-bloc:has(.cac-case.vise),.cac-bloc:has(.cac-case:hover){border-color:#61dafb;box-shadow:0 0 0 3px rgba(97,218,251,.35)}
+.cac-sous{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.cac-composant{color:var(--cac-texte);line-height:1.2}
+.cac-stock{color:var(--cac-stock);line-height:1.2}
+.cac-sous>.cac-case,.cac-sous>.cac-trou{width:100%}
+/* les cases : dans le dessin, à la place du mot */
+.cac-case,.cac-trou{display:flex;align-items:center;justify-content:center;gap:4px;min-height:1.9em;padding:2px 6px;border-radius:8px;
+  font:inherit;line-height:1.15;text-align:center;color:var(--cac-texte);box-sizing:border-box}
+.cac-case{border:2px dashed var(--cac-doux);background:rgba(16,42,85,.92);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.cac-case:hover,.cac-case:focus-visible,.cac-case.vise{border-color:#61dafb;border-style:solid;background:#163a72}
+.cac-case:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-case.pleine{border-style:solid;border-color:#9bbefc;background:var(--cac-case);font-weight:700}
+.cac-case.juste{border-color:var(--cac-ok);background:rgba(129,251,161,.13);cursor:default;opacity:1}
+.cac-case.faux{border-color:var(--cac-faux);background:rgba(255,180,84,.16)}
+.cac-case .cac-q{font-weight:800;color:var(--cac-doux);opacity:.9}
+.cac-case .cac-marque{font-weight:800} .cac-case.juste .cac-marque{color:var(--cac-ok)} .cac-case.faux .cac-marque{color:var(--cac-faux)}
+.cac-bloc .cac-case.pleine .cac-v{color:var(--cac-coul,#e4eaf5);letter-spacing:.03em}
+.cac-trou{border:1.5px dashed var(--cac-attente);opacity:.45}
+.cac-bloc>.cac-trou{border:0}
+.cac-acquis{font-style:italic}
+.cac-fonction.cac-acquis{letter-spacing:.01em;overflow-wrap:anywhere}
+.cac-case.part{opacity:.4}
+.cac-msg{margin:0;min-height:1.3em;font-size:.95em;color:var(--cac-doux);text-align:center}
+.cac-msg:empty{display:none}
+/* la réserve : collée en bas de l'écran tant qu'il reste des cases */
+.cac-reserve{position:sticky;bottom:calc(var(--cac-bas,10px) + env(safe-area-inset-bottom,0px));z-index:5;width:100%;box-sizing:border-box;
+  background:#0d2347;border:1px solid #274a8a;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:8px 10px;display:grid;gap:6px}
+body.ms .cac-reserve{--cac-bas:84px}
+.cac-reserve-t{margin:0;font-size:.82em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9bbefc}
+.cac-reserve-l{display:flex;flex-wrap:wrap;gap:7px}
+.cac-lab{font:inherit;font-weight:700;color:#e4eaf5;background:#102a55;border:2px solid #3d64a8;border-radius:11px;padding:8px 12px;min-height:44px;
+  cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.cac-lab:hover{border-color:#61dafb}
+.cac-lab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-lab.choisie{border-color:#61dafb;background:#1d4e89;transform:translateY(-2px);box-shadow:0 4px 0 #0a1b3d}
+.cac-lab.part{opacity:.35}
+.cac-geste{color:#9bbefc}
+.cac-fantome{position:fixed;left:0;top:0;z-index:80;pointer-events:none;border:2px solid #61dafb;background:#0d2347;color:#e4eaf5;
+  border-radius:11px;padding:8px 12px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.cac-papier{display:none}
+/* au téléphone, la réserve tient sur une ligne qui défile de côté : le schéma reste visible au-dessus.
+   Un doigt qui glisse de côté fait défiler la réserve ; un doigt qui monte emporte l'étiquette vers sa case. */
+@media (max-width:640px){
+  .cac-reserve{padding:7px 0 8px;gap:5px}
+  .cac-reserve-t{padding-inline:10px;font-size:.74em}
+  .cac-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 4px;scrollbar-width:thin;overscroll-behavior-x:contain}
+  .cac-reserve .cac-lab{flex:none;white-space:nowrap;touch-action:pan-x}
+}
+@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}}
+/* à l'impression : le dessin, en encre, avec ce que l'élève a posé ; les cases vides restent des cases à remplir au stylo */
+@media print{
+  .cac{--cac-energie:#9a4d00;--cac-information:#0a5a75;--cac-ordre:#1a6b36;--cac-stock:#6f5500;--cac-attente:#777;
+    --cac-fond:#fff;--cac-bloc:#fff;--cac-texte:#111;--cac-doux:#444;--cac-case:#fff;break-inside:avoid}
+  .cac .cac-dessin{border-color:#999}
+  html body .cac button.cac-case{display:flex!important;background:#fff!important;color:#111!important;border:1.5px solid #555!important}
+  html body .cac button.cac-case:not(.pleine){border-style:dashed!important}
+  .cac .cac-case .cac-q,.cac .cac-case .cac-marque{visibility:hidden}
+  .cac .cac-bloc{background:#fff!important}
+  .cac .cac-reserve,.cac .cac-msg{display:none!important}
+  .cac .cac-et.cac-trou,.cac .cac-sous>.cac-trou{visibility:hidden}
+  .cac .cac-titre,.cac .cac-fonction,.cac .cac-case .cac-v,.cac .cac-texte{color:#111!important}
+  .cac .cac-c-attente{color:#555!important}
+  .cac .cac-papier{display:block!important;margin:1mm 0 0;font-size:10pt;color:#111}
+  .cac.cac-pret>.cac-questions{display:none!important}
+}
+</style>
+<script>
+/* Chaîne à compléter — l'élève pose les étiquettes DANS le schéma des chaînes d'énergie et d'information.
+   Source unique : _outils/chaine_a_completer/ (chaine.js, chaine.css), posée dans la page par poser.py, entre deux
+   marqueurs. Ne pas la modifier dans une page.
+
+   Pourquoi (demande de Pascal du 15/11/2026) : l'élève répondait à beaucoup de questions sur les chaînes sans avoir
+   le schéma sous les yeux ; il n'en gardait pas l'image, et peinait ensuite à la construire. Ici, le schéma EST la
+   question : les cases sont dans le dessin, le dessin reste sous les yeux, et il se bâtit d'une activité à l'autre
+   (ce qui est trouvé reste écrit, ce qui viendra plus tard se voit en pointillés).
+
+   LA PAGE DÉCLARE
+     1. Le dessin, une fois par page (le même dessin sert à toutes les étapes) :
+        window.CAC_DESSINS = {lampadaire: {large: {vue: [x, y, l, h], ...}, etroit: {vue: [...], max: 520, ...},
+                                           elements: [ ... ]}};
+        Éléments (chacun : id, type, groupe, puis sa géométrie dans `large` et dans `etroit`) :
+          titre  {texte, couleur}                       géométrie {x, y}            (le coin haut gauche du texte)
+          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l}         (le composant SOUS le bloc)
+          fleche {nature, texte, double?}               géométrie {points, ex, ey, ancre, lt?}
+                 nature : energie, information, ordre (pointillés), stock ; ancre : la place de l'étiquette par
+                 rapport au point (ex, ey) — bas (au-dessus du point), haut, gauche, droite ; lt : largeur de la case
+          texte  {texte, gras?, couleur?}               géométrie {x, y, ancre?, l?}      (l : sa largeur)
+        Une géométrie peut redonner texte, composant ou stock pour couper les lignes autrement (\n), sans changer
+        les mots.
+     2. Chaque étape, à la place des questions :
+        <div class="cac" data-cac='{"dessin": "lampadaire",
+                                     "cases": {"convertir-panneau.fonction": "e2_f1", ...},
+                                     "vides": ["g:information"], "reutilisables": true}'>
+          <div class="cac-questions"> … les groupes de boutons radio (fieldset.qcm-groupe) … </div>
+        </div>
+        cases : la partie d'un élément (fonction, composant, stock, texte) → l'id du groupe de boutons radio qui garde
+                la réponse. Poser une étiquette coche le bouton de cette valeur : la sauvegarde, la vérification,
+                le mode mission et l'impression de la page lisent toujours ces groupes.
+        vides : ce qui viendra plus tard (en pointillés, sans texte). Motifs : « id.partie », « id » (tout
+                l'élément), « *.partie », « g:groupe » (tout un groupe : ses blocs et ses flèches en pointillés),
+                « g:groupe.partie ».
+        acquis : {"id.partie": "id du groupe"} — ce que l'élève a trouvé à une étape d'avant reste écrit dans le
+                dessin (sa réponse, en clair ; en pointillés tant qu'il n'a rien posé) : le schéma se bâtit.
+        titres : {id: "autre texte"} pour un titre ou un texte à cette étape (« … à construire en séance 3 »).
+        vue    : {etroit: [x, y, l, h]} — recadrer le dessin à cette étape (au téléphone, la seule chaîne travaillée).
+        reutilisables : une étiquette peut servir plusieurs fois (CONVERTIR, énergie électrique).
+     Sans JavaScript, les questions restent visibles : rien ne se perd.
+
+   LE MODE MISSION voit les groupes de la .cac comme un seul écran (une partie) et les vérifie comme d'habitude :
+   les justes restent, les fausses (classe ms-origine) retournent dans la réserve. Le dessin suit leurs marques.
+
+   GESTES : toucher une étiquette, puis toucher sa case ; ou la faire glisser ; au clavier, Entrée sur l'étiquette
+   mène à la première case vide. Toucher une case pleine la vide (sauf une case déjà juste). */
+(function(){
+  "use strict";
+  if (window.ChaineACompleter) return;
+  var D = document, NS = "http://www.w3.org/2000/svg";
+  var PARTIES = {bloc: ["fonction", "composant", "stock"], fleche: ["texte"], titre: ["texte"], texte: ["texte"]};
+  var DEFAUT = {
+    large:  {seuil: 760, h: 70, rx: 12, ecart: 10, lt: 170, lc: 20,
+             tailles: {titre: 22, fonction: 24, composant: 21, stock: 19, fleche: 20, texte: 21}},
+    etroit: {h: 44, rx: 8, ecart: 6, lt: 104, lc: 12, max: 520,
+             tailles: {titre: 14, fonction: 16, composant: 13.5, stock: 12.5, fleche: 13, texte: 14}}
+  };
+  function $$(s, r){ return [].slice.call((r || D).querySelectorAll(s)); }
+  function cree(nom, attrs, parent){ var e = D.createElementNS(NS, nom); for (var k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function el(t, c, h){ var e = D.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
+  function lignes(t){ return esc(t).replace(/\n/g, "<br>"); }
+  function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
+  function fusion(a, b){ var r = {}, k; for (k in a) r[k] = a[k]; for (k in (b || {})) r[k] = b[k]; return r; }
+  function lireV(f){ var c = f.querySelector("input[type=radio]:checked"); return c ? c.value : ""; }
+  function valeurs(f){ return $$("input[type=radio]", f).map(function(r){ return r.value; }); }
+  /* le texte que l'élève lit : celui du libellé de la proposition (il peut nommer une unité en toutes lettres,
+     n°312, quand la valeur garde le texte que la vérification compare) */
+  function libelle(f, v){ var r = $$("input[type=radio]", f).filter(function(x){ return x.value === v; })[0], l = r && f.querySelector('label[for="' + r.id + '"]'); return l ? net(l.textContent) : v; }
+  function legende(f){ var l = f.querySelector("legend"); return net(l ? l.textContent : f.getAttribute("aria-label") || ""); }
+  function ecrire(f, v){
+    var r = null;
+    $$("input[type=radio]", f).forEach(function(x){ x.checked = (v != null && x.value === v); if (x.checked) r = x; });
+    var cible = r || f;
+    cible.dispatchEvent(new Event("input", {bubbles: true}));
+    cible.dispatchEvent(new Event("change", {bubbles: true}));
+  }
+  function etat(f){ return f.classList.contains("ms-juste") ? "juste" : f.classList.contains("ms-faux") ? "faux" : ""; }
+
+  var choix = null, glisse = null, vientDeGlisser = false;          // l'étiquette choisie : {cac, v}
+
+  function Chaine(racine){
+    var conf = {};
+    try { conf = JSON.parse(racine.getAttribute("data-cac") || "{}"); } catch (e) { console.warn("chaîne à compléter : data-cac illisible", e); return; }
+    var dessin = (window.CAC_DESSINS || {})[conf.dessin];
+    if (!dessin) { console.warn("chaîne à compléter : dessin inconnu", conf.dessin); return; }
+    var cases = conf.cases || {}, vides = conf.vides || [], titres = conf.titres || {}, acquis = conf.acquis || {};
+    var champs = {}, ordre = [];                                       // « id.partie » → fieldset ; ordre de lecture
+    Object.keys(cases).forEach(function(k){ var f = D.getElementById(cases[k]); if (f) { champs[k] = f; ordre.push(k); f.classList.add("ms-origine"); } else console.warn("chaîne à compléter : groupe absent", cases[k]); });
+    if (!ordre.length) return;
+    var etiquettes = [], textes = {};
+    ordre.forEach(function(k){ valeurs(champs[k]).forEach(function(v){ if (etiquettes.indexOf(v) < 0) { etiquettes.push(v); textes[v] = libelle(champs[k], v); } }); });
+    function tx(v){ return textes[v] || v; }
+    var reutil = !!conf.reutilisables;
+    var dispo = "", k = 1, zone, svg, calque, reserve, msg, papier;
+
+    racine.classList.add("cac-pret");
+    zone = el("div", "cac-dessin"); zone.setAttribute("role", "group");
+    zone.setAttribute("aria-label", conf.nom || "Le schéma des chaînes, à compléter avec les étiquettes");
+    msg = el("p", "cac-msg"); msg.setAttribute("aria-live", "polite");
+    reserve = el("div", "cac-reserve");
+    papier = el("p", "cac-papier pp-papier");
+    var q = racine.querySelector(".cac-questions");
+    racine.insertBefore(zone, q); racine.insertBefore(msg, q); racine.insertBefore(reserve, q); racine.insertBefore(papier, q);
+    papier.innerHTML = "<b>Les étiquettes à écrire dans les cases" + (reutil ? " (une étiquette peut servir plusieurs fois)" : "") + "&nbsp;:</b> " + etiquettes.map(function(v){ return esc(tx(v)); }).join(" · ");
+
+    function correspond(m, e, partie){
+      if (m === e.id || m === e.id + "." + partie || m === "*." + partie) return true;
+      if (m.indexOf("g:") === 0) { var g = m.slice(2).split("."); return g[0] === e.groupe && (!g[1] || g[1] === partie); }
+      return false;
+    }
+    function attente(e){ return vides.some(function(m){ return m === "g:" + e.groupe || m === e.id; }); }
+    function sort(e, partie){
+      var cle = e.id + "." + partie;
+      if (champs[cle]) return "case";
+      if (acquis[cle]) return "acquis";
+      return vides.some(function(m){ return correspond(m, e, partie); }) ? "vide" : "vu";
+    }
+
+    function rendre(){
+      var w = racine.clientWidth; if (!w) return;
+      var nd = w >= (dessin.seuil || DEFAUT.large.seuil) && dessin.large ? "large" : "etroit";
+      var G = fusion(DEFAUT[nd], dessin[nd]); G.tailles = fusion(DEFAUT[nd].tailles, (dessin[nd] || {}).tailles);
+      var V = (conf.vue && conf.vue[nd]) || G.vue, larg = nd === "etroit" ? Math.min(w, G.max) : w;
+      k = larg / V[2]; dispo = nd;
+      zone.className = "cac-dessin cac-" + nd;
+      /* le dessin se règle sur sa largeur (unités de conteneur) : il garde ses proportions à l'écran comme sur le papier */
+      zone.style.width = nd === "etroit" ? "min(100%, " + G.max + "px)" : "100%"; zone.style.aspectRatio = V[2] + " / " + V[3]; zone.style.height = "";
+      zone.innerHTML = "";
+      svg = cree("svg", {viewBox: V.join(" "), width: "100%", height: "100%", "aria-hidden": "true", focusable: "false", "class": "cac-traits"}, zone);
+      var defs = cree("defs", {}, svg);
+      ["energie", "information", "ordre", "stock", "attente"].forEach(function(n){
+        var m = cree("marker", {id: "cac-m-" + n + "-" + uid, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse", "class": "cac-m cac-n-" + n}, defs);
+        cree("path", {d: "M0,0 L10,5 L0,10 z"}, m);
+      });
+      calque = el("div", "cac-calque"); zone.appendChild(calque);
+      function px(v){ return Math.round(v / V[2] * 100000) / 1000 + "%"; }          // une largeur, en part du dessin
+      function py(v){ return Math.round(v / V[3] * 100000) / 1000 + "%"; }          // une hauteur
+      function cq(v){ return Math.round(v / V[2] * 100000) / 1000 + "cqw"; }        // une taille qui suit la largeur du dessin
+      function pos(n, x, y){ n.style.left = px(x - V[0]); n.style.top = py(y - V[1]); }
+      function taille(n, t){ n.style.fontSize = "max(11px, " + cq(t) + ")"; }
+      function texte(e, g, cle){ return g[cle] != null ? g[cle] : e[cle]; }
+      function partie(e, g, p, boite, classe, t){
+        var s = sort(e, p);
+        if (attente(e) && s === "vu") s = "vide";
+        if (s === "acquis") {
+          var fa = D.getElementById(acquis[e.id + "." + p]), va = fa ? lireV(fa) : "";
+          if (!va) s = "vide";
+          else { boite.className = classe + " cac-acquis"; boite.textContent = libelle(fa, va); taille(boite, p === "fonction" ? t * .86 : t); return boite; }
+        }
+        if (s === "vu") { boite.className = classe; boite.innerHTML = lignes(titres[e.id] && p === "texte" ? titres[e.id] : texte(e, g, p)); taille(boite, t); return boite; }
+        var c = s === "case" ? el("button", classe + " cac-case") : el("span", classe + " cac-trou");
+        taille(c, t);
+        if (s === "case") {
+          var f = champs[e.id + "." + p], v = lireV(f), st = etat(f);
+          c.type = "button"; c.setAttribute("data-cle", e.id + "." + p);
+          if (v) c.classList.add("pleine"); if (st) c.classList.add(st);
+          if (st === "juste") c.disabled = true;
+          c.innerHTML = v ? '<span class="cac-v">' + esc(tx(v)) + "</span>" + (st === "juste" ? '<span class="cac-marque" aria-hidden="true">✓</span>' : st === "faux" ? '<span class="cac-marque" aria-hidden="true">✗</span>' : "")
+                          : '<span class="cac-q" aria-hidden="true">?</span>';
+          c.setAttribute("aria-label", legende(f) + " : " + (v ? tx(v) + (st === "juste" ? ", juste" : st === "faux" ? ", à revoir" : "") : "case vide"));
+        } else c.setAttribute("aria-hidden", "true");
+        return c;
+      }
+      dessin.elements.forEach(function(e){
+        var g = e[nd]; if (!g) return;
+        var att = attente(e), coul = att ? null : e.couleur;
+        if (e.type === "fleche") {
+          var nat = att ? "attente" : e.nature, d = "M" + g.points.map(function(p){ return p[0] + "," + p[1]; }).join(" L");
+          var tr = cree("path", {d: d, "class": "cac-fleche cac-n-" + nat, "marker-end": "url(#cac-m-" + nat + "-" + uid + ")"}, svg);
+          if (e.double) tr.setAttribute("marker-start", "url(#cac-m-" + nat + "-" + uid + ")");
+          tr.style.strokeWidth = (nd === "large" ? 3.4 : 2.6) / Math.min(1, k * 1.6) + "px";
+          var b = partie(e, g, "texte", el("div"), "cac-et cac-et-" + (g.ancre || "bas") + " cac-c-" + nat, G.tailles.fleche);
+          if (/cac-(case|trou|acquis)/.test(b.className)) b.style.width = px(g.lt || G.lt);
+          pos(b, g.ex, g.ey); calque.appendChild(b);
+        } else if (e.type === "bloc") {
+          var bl = el("div", "cac-bloc" + (att ? " attente" : ""));
+          pos(bl, g.x, g.y); bl.style.width = px(g.l); bl.style.height = py(G.h); bl.style.borderRadius = cq(G.rx);
+          /* la couleur d'une fonction (n°120) se montre quand la fonction est écrite ou trouvée juste : tant qu'elle
+             est à trouver, le bloc reste neutre, sinon la couleur la soufflerait */
+          var sf = sort(e, "fonction"), ff = champs[e.id + ".fonction"];
+          if (coul && (sf === "vu" || (sf === "case" && etat(ff) === "juste"))) bl.style.setProperty("--cac-coul", coul);
+          else if (!att) bl.classList.add("neutre");
+          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", G.tailles.fonction); bl.appendChild(fo);
+          calque.appendChild(bl);
+          var sous = el("div", "cac-sous"); pos(sous, g.x - G.lc / 2, g.y + G.h + G.ecart); sous.style.width = px(g.l + G.lc);
+          if (e.composant != null) sous.appendChild(partie(e, g, "composant", el("div"), "cac-composant", G.tailles.composant));
+          if (e.stock != null) sous.appendChild(partie(e, g, "stock", el("div"), "cac-stock", G.tailles.stock));
+          calque.appendChild(sous);
+        } else {
+          var tx = partie(e, g, "texte", el("div"), (e.type === "titre" ? "cac-titre" : "cac-texte cac-et-" + (g.ancre || "centre")) + (e.gras ? " gras" : "") + (att ? " attente" : ""),
+                          e.type === "titre" ? G.tailles.titre : G.tailles.texte);
+          if (coul) tx.style.color = coul;
+          if (e.type === "titre") tx.style.maxWidth = px(V[0] + V[2] - g.x - 6);
+          else tx.style.width = px(g.l || (nd === "large" ? 220 : 300));          // une largeur à lui : au bord du dessin, il ne se tasse pas
+          pos(tx, g.x, g.y); calque.appendChild(tx);
+        }
+      });
+      peindreReserve();
+    }
+    var uid = Math.random().toString(36).slice(2, 7);
+
+    function peindreReserve(){
+      var pris = ordre.map(function(c){ return lireV(champs[c]); });
+      var finies = ordre.every(function(c){ return etat(champs[c]) === "juste"; });
+      reserve.hidden = finies;
+      if (finies) return;
+      var labs = etiquettes.map(function(v){
+        if (!reutil && pris.indexOf(v) >= 0) return "";
+        var on = !!(choix && choix.cac === api && choix.v === v);
+        return '<button type="button" class="cac-lab' + (on ? " choisie" : "") + '" data-v="' + esc(v) + '" aria-pressed="' + on + '">' + esc(tx(v)) + "</button>";
+      }).join("");
+      var plein = pris.every(Boolean);
+      var trop = reutil ? 0 : etiquettes.length - ordre.length;
+      reserve.innerHTML = '<p class="cac-reserve-t">' + (plein ? "Toutes les cases sont remplies : vérifie." : "Étiquettes" + (reutil ? " — chacune peut servir plusieurs fois" : trop > 0 ? " — attention, " + trop + " en trop" : "")) + "</p>"
+        + '<div class="cac-reserve-l">' + (labs || '<span class="cac-geste">Toutes les étiquettes sont posées.</span>') + "</div>";
+    }
+    function dire(t){ msg.textContent = t || ""; }
+    function premiereVide(){ var c = ordre.filter(function(x){ return !lireV(champs[x]); })[0]; return c ? zone.querySelector('[data-cle="' + c + '"]') : null; }
+    function montrerCase(c){ if (c && c.scrollIntoView) c.scrollIntoView({block: "nearest", inline: "nearest"}); }
+    function poser(cle, v){
+      var f = champs[cle]; if (!f || etat(f) === "juste") return;
+      if (!reutil && v) ordre.forEach(function(o){ if (o !== cle && lireV(champs[o]) === v && etat(champs[o]) !== "juste") { ecrire(champs[o], null); champs[o].classList.remove("ms-faux"); } });
+      f.classList.remove("ms-faux");
+      ecrire(f, v);
+      dire("");
+    }
+    var api = {racine: racine, rendre: rendre, poser: poser, champs: champs, ordre: ordre, etiquettes: etiquettes, peindre: peindreReserve, dispo: function(){ return dispo; }};
+
+    racine.addEventListener("click", function(ev){
+      if (vientDeGlisser) return;
+      var lab = ev.target.closest(".cac-lab");
+      if (lab) {
+        var v = lab.getAttribute("data-v");
+        choix = (choix && choix.cac === api && choix.v === v) ? null : {cac: api, v: v};
+        peindreReserve();
+        if (choix) {
+          dire("« " + tx(v) + " » est prise : touche sa case dans le schéma.");
+          if (ev.detail === 0) { var c0 = premiereVide(); if (c0) { c0.focus({preventScroll: true}); montrerCase(c0); } }
+          else { var b = reserve.querySelector('.cac-lab[data-v="' + CSS.escape(v) + '"]'); if (b) b.focus({preventScroll: true}); }
+        } else dire("");
+        return;
+      }
+      var c = ev.target.closest(".cac-case");
+      if (c && !c.disabled) {
+        var cle = c.getAttribute("data-cle");
+        if (choix && choix.cac === api) { poser(cle, choix.v); choix = null; rendre(); var s = premiereVide(); if (s && ev.detail === 0) s.focus({preventScroll: true}); montrerCase(s); }
+        else if (lireV(champs[cle])) { poser(cle, null); rendre(); }
+        else dire("Choisis d'abord une étiquette, en bas, puis touche cette case.");
+      }
+    });
+    racine.addEventListener("keydown", function(ev){ if (ev.key === "Escape" && choix) { choix = null; peindreReserve(); dire(""); } });
+    // la vérification (mode mission) marque les groupes ; une étiquette fausse est rendue : le dessin suit
+    var obs = new MutationObserver(function(){ rendre(); });
+    ordre.forEach(function(c){ obs.observe(champs[c], {attributes: true, attributeFilter: ["class"]}); });
+    racine.addEventListener("change", function(ev){ if (ev.target.closest(".cac-questions")) rendre(); });
+    if (window.ResizeObserver) new ResizeObserver(function(){ if (racine.clientWidth && racine.clientWidth !== api._w) { api._w = racine.clientWidth; rendre(); } }).observe(racine);
+    rendre();
+    racine._cac = api;
+    return api;
+  }
+
+  /* ── Glisser une étiquette (ou une case pleine) vers une case ── */
+  function caseSous(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".cac-case:not(:disabled)"); }
+  D.addEventListener("pointerdown", function(ev){
+    var src = ev.target.closest(".cac-lab, .cac-case.pleine"); if (!src || src.disabled) return;
+    if (ev.pointerType === "touch" && src.classList.contains("cac-case")) return;      // au doigt, une case pleine se vide en la touchant
+    var r = src.closest(".cac"); if (!r || !r._cac) return;
+    var de = src.getAttribute("data-cle");
+    glisse = {id: ev.pointerId, x: ev.clientX, y: ev.clientY, src: src, api: r._cac, de: de, v: de ? lireV(r._cac.champs[de]) : src.getAttribute("data-v"), f: null};
+  });
+  window.addEventListener("pointermove", function(ev){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return;
+    if (!g.f) { if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "cac-fantome"); g.f.textContent = net((g.src.querySelector(".cac-v") || g.src).textContent); D.body.appendChild(g.f); g.src.classList.add("part"); }
+    g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-70%) rotate(-2deg)";
+    $$(".cac-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+    var c = caseSous(ev); if (c && c.closest(".cac") === g.api.racine) c.classList.add("vise");
+  });
+  function lache(ev, annule){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return; glisse = null; if (!g.f) return;
+    g.f.remove(); vientDeGlisser = true; setTimeout(function(){ vientDeGlisser = false; }, 0);
+    var c = annule ? null : caseSous(ev);
+    if (c && c.closest(".cac") === g.api.racine) { var cle = c.getAttribute("data-cle"); if (g.de && g.de !== cle) g.api.poser(g.de, null); g.api.poser(cle, g.v); }
+    else if (g.de && !annule) g.api.poser(g.de, null);
+    choix = null; g.api.rendre();
+  }
+  window.addEventListener("pointerup", function(ev){ lache(ev, false); });
+  window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
+
+  function init(){ $$(".cac[data-cac]").forEach(function(r){ if (!r._cac) Chaine(r); }); }
+  window.ChaineACompleter = {init: init, Chaine: Chaine};
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
+  // la page remet ses réponses après coup (sauvegarde relue) : le dessin se repeint une fois tout chargé
+  window.addEventListener("load", function(){ $$(".cac").forEach(function(r){ if (r._cac) r._cac.rendre(); }); });
+})();
+</script>
+<!-- chaine-a-completer v1 : fin -->
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -1547,95 +1952,114 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Objectif :</b> élaborer le schéma-bloc de la chaîne d'énergie (choisir les bons blocs, écarter les intrus, ordonner, nommer les natures d'énergie).</div>
       <div><b>Compétence :</b> 3e_C4.1.</div>
       <div><b>Production attendue :</b> 5 blocs placés + 4 natures + 2 intrus identifiés.</div>
-      <div><b>Ressources :</b> le gabarit et la palette ci-dessous.</div>
+      <div><b>Ressources :</b> le schéma de l'alimentation, à compléter ; le gabarit et la palette en une image, repliés.</div>
     </div></details>
+    <details class="approfondissement"><summary>🖼 Le gabarit et la palette, en une image (à imprimer)</summary>
     <figure class="figure">
       <object data="Images/chaine_energie_a_elaborer.svg" type="image/svg+xml" aria-label="Gabarit de schéma-bloc à compléter et palette de blocs disponibles" style="width:100%"></object>
       <figcaption>Le gabarit (en haut) présente les branchements : les numéros sont des repères, pas un ordre de passage. <br>La palette (en bas) : deux composants sont hors du périmètre de l’alimentation.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> a) place chaque bloc de la palette à la bonne position du gabarit ; b) indique la nature de l'énergie à chaque étape ; c) démasque les deux intrus.</div>
+    </details>
+    <div class="consigne"><b>Consigne :</b> a) pose chaque composant sous son bloc, dans le schéma ; b) pose la forme de l'énergie sur chaque flèche ; c) démasque les deux intrus.</div>
     <div class="exo">
       <h4>a) Je place les blocs</h4>
-      <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>le panneau solaire</li><li><b>B</b>la batterie 12 V (volts)</li><li><b>C</b>le régulateur de charge</li><li><b>D</b>le convertisseur 12 V (volts) → 5 V</li><li><b>E</b>le basculement secteur / batterie</li><li><b>F</b>l'ampoule</li><li><b>G</b>le haut-parleur</li></ol></div>
-<fieldset class="qcm-groupe qcm-grille" id="b1_1" data-indice="Convertir, c'est changer la forme de l'énergie : ici, de la lumière entre et de l'électricité sort.">
-  <legend>Position 1 — CONVERTIR (lumière en électricité) :</legend>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_1__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_1__2" title="la batterie 12 V">B</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_1__3" title="le régulateur de charge">C</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_1__4" title="le convertisseur 12 V → 5 V">D</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_1__5" title="le basculement secteur / batterie">E</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_1__6" title="l&#x27;ampoule">F</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_1__7" title="le haut-parleur">G</label></div>
+      <p>Les fonctions sont écrites dans les blocs. <br>Pose sous chaque bloc le composant qui l'assure. <br>Deux étiquettes ne vont sous aucun bloc : ce sont les intrus.</p>
+<div class="cac" data-cac='{"dessin": "alimentation", "cases": {"convertir.composant": "b1_1", "alimenter.composant": "b1_3", "stocker.composant": "b1_2", "distribuer.composant": "b1_5", "convertisseur.composant": "b1_4"}, "vides": ["entree.texte", "conv-alim.texte", "stocker.stock", "sortie.texte"], "nom": "L&#x27;alimentation de la station : les cinq composants à poser sous leurs blocs"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="b1_1" data-indice="Convertir, c'est changer la forme de l'énergie : ici, de la lumière entre et de l'électricité sort.">
+  <legend>Sous CONVERTIR (la lumière en électricité) : le composant</legend>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__1" value="le panneau solaire"><label for="b1_1__1">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__2" value="la batterie 12 V"><label for="b1_1__2">la batterie 12 V (volts)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__3" value="le régulateur de charge"><label for="b1_1__3">le régulateur de charge</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__4" value="le convertisseur 12 V → 5 V"><label for="b1_1__4">le convertisseur 12 V (volts) → 5 V</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__5" value="le basculement secteur / batterie"><label for="b1_1__5">le basculement secteur / batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__6" value="l&#x27;ampoule"><label for="b1_1__6">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_1" id="b1_1__7" value="le haut-parleur"><label for="b1_1__7">le haut-parleur</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="b1_2" data-indice="Stocker, c'est garder l'énergie reçue le jour pour la rendre la nuit ou par ciel couvert.">
-  <legend>Position 2 — STOCKER (branche batterie) :</legend>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_2__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_2__2" title="la batterie 12 V">B</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_2__3" title="le régulateur de charge">C</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_2__4" title="le convertisseur 12 V → 5 V">D</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_2__5" title="le basculement secteur / batterie">E</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_2__6" title="l&#x27;ampoule">F</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_2__7" title="le haut-parleur">G</label></div>
+<fieldset class="qcm-groupe" id="b1_3" data-indice="Réguler la charge, c'est protéger la réserve d'énergie : ni trop remplie, ni vidée jusqu'au bout.">
+  <legend>Sous ALIMENTER (réguler la charge) : le composant</legend>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__1" value="le panneau solaire"><label for="b1_3__1">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__2" value="la batterie 12 V"><label for="b1_3__2">la batterie 12 V (volts)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__3" value="le régulateur de charge"><label for="b1_3__3">le régulateur de charge</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__4" value="le convertisseur 12 V → 5 V"><label for="b1_3__4">le convertisseur 12 V (volts) → 5 V</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__5" value="le basculement secteur / batterie"><label for="b1_3__5">le basculement secteur / batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__6" value="l&#x27;ampoule"><label for="b1_3__6">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__7" value="le haut-parleur"><label for="b1_3__7">le haut-parleur</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="b1_3" data-indice="Réguler la charge, c'est protéger la réserve d'énergie : ni trop remplie, ni vidée jusqu'au bout.">
-  <legend>Position 3 — ALIMENTER (réguler la charge) :</legend>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_3__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_3__2" title="la batterie 12 V">B</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_3__3" title="le régulateur de charge">C</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_3__4" title="le convertisseur 12 V → 5 V">D</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_3__5" title="le basculement secteur / batterie">E</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_3__6" title="l&#x27;ampoule">F</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_3" id="b1_3__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_3__7" title="le haut-parleur">G</label></div>
+<fieldset class="qcm-groupe" id="b1_2" data-indice="Stocker, c'est garder l'énergie reçue le jour pour la rendre la nuit ou par ciel couvert.">
+  <legend>Sous STOCKER (la branche batterie) : le composant</legend>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__1" value="le panneau solaire"><label for="b1_2__1">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__2" value="la batterie 12 V"><label for="b1_2__2">la batterie 12 V (volts)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__3" value="le régulateur de charge"><label for="b1_2__3">le régulateur de charge</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__4" value="le convertisseur 12 V → 5 V"><label for="b1_2__4">le convertisseur 12 V (volts) → 5 V</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__5" value="le basculement secteur / batterie"><label for="b1_2__5">le basculement secteur / batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__6" value="l&#x27;ampoule"><label for="b1_2__6">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_2" id="b1_2__7" value="le haut-parleur"><label for="b1_2__7">le haut-parleur</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="b1_4" data-indice="La carte électronique travaille en 5 V : cherche le bloc qui change la valeur de la tension.">
-  <legend>Position 4 — ALIMENTER (adapter la tension, carte en 5 V) :</legend>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_4__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_4__2" title="la batterie 12 V">B</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_4__3" title="le régulateur de charge">C</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_4__4" title="le convertisseur 12 V → 5 V">D</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_4__5" title="le basculement secteur / batterie">E</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_4__6" title="l&#x27;ampoule">F</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_4__7" title="le haut-parleur">G</label></div>
+<fieldset class="qcm-groupe" id="b1_5" data-indice="Sélectionner la source, c'est choisir d'où vient le courant : du réseau quand il est là, sinon de la réserve.">
+  <legend>Sous DISTRIBUER (sélectionner la source) : le composant</legend>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__1" value="le panneau solaire"><label for="b1_5__1">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__2" value="la batterie 12 V"><label for="b1_5__2">la batterie 12 V (volts)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__3" value="le régulateur de charge"><label for="b1_5__3">le régulateur de charge</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__4" value="le convertisseur 12 V → 5 V"><label for="b1_5__4">le convertisseur 12 V (volts) → 5 V</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__5" value="le basculement secteur / batterie"><label for="b1_5__5">le basculement secteur / batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__6" value="l&#x27;ampoule"><label for="b1_5__6">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__7" value="le haut-parleur"><label for="b1_5__7">le haut-parleur</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe qcm-grille" id="b1_5" data-indice="Sélectionner la source, c'est choisir d'où vient le courant : du réseau quand il est là, sinon de la réserve.">
-  <legend>Position 5 — DISTRIBUER : sélectionner la source disponible :</legend>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__1" value="le panneau solaire" aria-label="A — le panneau solaire"><label for="b1_5__1" title="le panneau solaire">A</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__2" value="la batterie 12 V" aria-label="B — la batterie 12 V (volts)"><label for="b1_5__2" title="la batterie 12 V">B</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__3" value="le régulateur de charge" aria-label="C — le régulateur de charge"><label for="b1_5__3" title="le régulateur de charge">C</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__4" value="le convertisseur 12 V → 5 V" aria-label="D — le convertisseur 12 V (volts) → 5 V"><label for="b1_5__4" title="le convertisseur 12 V → 5 V">D</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__5" value="le basculement secteur / batterie" aria-label="E — le basculement secteur / batterie"><label for="b1_5__5" title="le basculement secteur / batterie">E</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__6" value="l&#x27;ampoule" aria-label="F — l&#x27;ampoule"><label for="b1_5__6" title="l&#x27;ampoule">F</label></div>
-  <div class="qcm-option"><input type="radio" name="b1_5" id="b1_5__7" value="le haut-parleur" aria-label="G — le haut-parleur"><label for="b1_5__7" title="le haut-parleur">G</label></div>
+<fieldset class="qcm-groupe" id="b1_4" data-indice="La carte électronique travaille en 5 V : cherche le bloc qui change la valeur de la tension.">
+  <legend>Sous ALIMENTER (adapter la tension pour la carte en 5 V) : le composant</legend>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__1" value="le panneau solaire"><label for="b1_4__1">le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__2" value="la batterie 12 V"><label for="b1_4__2">la batterie 12 V (volts)</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__3" value="le régulateur de charge"><label for="b1_4__3">le régulateur de charge</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__4" value="le convertisseur 12 V → 5 V"><label for="b1_4__4">le convertisseur 12 V (volts) → 5 V</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__5" value="le basculement secteur / batterie"><label for="b1_4__5">le basculement secteur / batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__6" value="l&#x27;ampoule"><label for="b1_4__6">l'ampoule</label></div>
+  <div class="qcm-option"><input type="radio" name="b1_4" id="b1_4__7" value="le haut-parleur"><label for="b1_4__7">le haut-parleur</label></div>
 </fieldset>
+</div>
+</div>
       <h4>b) Les natures de l'énergie</h4>
-      <fieldset class="qcm-groupe" id="n1_1" data-melange="1">
-  <legend>À l'entrée du panneau :</legend>
-  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__1" value="énergie lumineuse"><label for="n1_1__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__3" value="énergie chimique" data-pourquoi="Aucune réaction chimique n'arrive sur le panneau : demande-toi ce qu'il reçoit du ciel."><label for="n1_1__3">énergie chimique</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__2" value="énergie électrique" data-pourquoi="Aucun fil n'apporte de courant au panneau : la question porte sur ce qu'il reçoit."><label for="n1_1__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__4" value="énergie mécanique" data-pourquoi="Rien ne pousse ni ne fait tourner le panneau : il reste immobile, face au ciel."><label for="n1_1__4">énergie mécanique</label></div>
+      <p>Tes composants restent sous les blocs. <br>Pose sur chaque flèche, et sous la batterie, la forme de l'énergie. <br>Une étiquette peut servir plusieurs fois.</p>
+<div class="cac" data-cac='{"dessin": "alimentation", "cases": {"entree.texte": "n1_1", "conv-alim.texte": "n1_2", "stocker.stock": "n1_3", "sortie.texte": "n1_4"}, "acquis": {"convertir.composant": "b1_1", "alimenter.composant": "b1_3", "stocker.composant": "b1_2", "distribuer.composant": "b1_5", "convertisseur.composant": "b1_4"}, "reutilisables": true, "nom": "L&#x27;alimentation de la station : les formes d&#x27;énergie à poser sur les flèches"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="n1_1">
+  <legend>La forme de l'énergie qui entre dans le panneau</legend>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__1" value="énergie électrique" data-pourquoi="Le panneau est tourné vers le soleil : ce qui y entre, c'est ce qu'il en reçoit."><label for="n1_1__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__2" value="énergie mécanique" data-pourquoi="Rien ne bouge ni ne tourne dans l'alimentation de la station."><label for="n1_1__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__3" value="énergie lumineuse"><label for="n1_1__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__4" value="énergie thermique" data-pourquoi="Ça chauffe un peu, mais ce n'est pas cette chaleur qu'on transmet d'un bloc à l'autre."><label for="n1_1__4">énergie thermique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__5" value="énergie chimique" data-pourquoi="Le panneau est tourné vers le soleil : ce qui y entre, c'est ce qu'il en reçoit."><label for="n1_1__5">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_1" id="n1_1__6" value="énergie sonore" data-pourquoi="L'alimentation ne fait aucun bruit : le son n'est pas une forme qui circule ici."><label for="n1_1__6">énergie sonore</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe" id="n1_2" data-melange="1">
-  <legend>À la sortie du panneau :</legend>
-  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__2" value="énergie électrique"><label for="n1_2__2">énergie électrique</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__4" value="énergie thermique" data-pourquoi="Le panneau chauffe un peu, mais ce n'est pas cette chaleur qu'on récupère dans ses fils."><label for="n1_2__4">énergie thermique</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__1" value="énergie lumineuse" data-pourquoi="Des fils ne transportent pas de lumière : demande-toi ce qui circule dans un câble."><label for="n1_2__1">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__3" value="énergie chimique" data-pourquoi="Le panneau ne contient aucun produit qui réagit : pense à ce que ses deux fils transportent."><label for="n1_2__3">énergie chimique</label></div>
+<fieldset class="qcm-groupe" id="n1_2">
+  <legend>La forme de l'énergie qui sort du panneau</legend>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__1" value="énergie électrique"><label for="n1_2__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__2" value="énergie mécanique" data-pourquoi="Rien ne bouge ni ne tourne dans l'alimentation de la station."><label for="n1_2__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__3" value="énergie lumineuse" data-pourquoi="Deux fils partent du panneau : ce qui en sort, c'est ce qui circule dans ces fils."><label for="n1_2__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__4" value="énergie thermique" data-pourquoi="Ça chauffe un peu, mais ce n'est pas cette chaleur qu'on transmet d'un bloc à l'autre."><label for="n1_2__4">énergie thermique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__5" value="énergie chimique" data-pourquoi="Deux fils partent du panneau : ce qui en sort, c'est ce qui circule dans ces fils."><label for="n1_2__5">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_2" id="n1_2__6" value="énergie sonore" data-pourquoi="L'alimentation ne fait aucun bruit : le son n'est pas une forme qui circule ici."><label for="n1_2__6">énergie sonore</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe" id="n1_3" data-melange="1">
-  <legend>Stockée dans la batterie sous forme…</legend>
-  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__2" value="énergie lumineuse" data-pourquoi="On n'enferme pas de la lumière dans un boîtier : la batterie garde l'énergie autrement."><label for="n1_3__2">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__1" value="énergie chimique"><label for="n1_3__1">énergie chimique</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__4" value="énergie sonore" data-pourquoi="Une batterie ne fait aucun bruit en se chargeant : le son n'est pas une réserve d'énergie."><label for="n1_3__4">énergie sonore</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__3" value="énergie mécanique" data-pourquoi="Rien ne bouge ni ne tourne dans une batterie : l'énergie n'y est pas gardée par un mouvement."><label for="n1_3__3">énergie mécanique</label></div>
+<fieldset class="qcm-groupe" id="n1_3">
+  <legend>La forme sous laquelle la batterie garde l'énergie</legend>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__1" value="énergie électrique" data-pourquoi="Une batterie ne garde ni lumière, ni courant qui circule : pense à ce qu'il y a dans une pile."><label for="n1_3__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__2" value="énergie mécanique" data-pourquoi="Rien ne bouge ni ne tourne dans l'alimentation de la station."><label for="n1_3__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__3" value="énergie lumineuse" data-pourquoi="Une batterie ne garde ni lumière, ni courant qui circule : pense à ce qu'il y a dans une pile."><label for="n1_3__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__4" value="énergie thermique" data-pourquoi="Ça chauffe un peu, mais ce n'est pas cette chaleur qu'on transmet d'un bloc à l'autre."><label for="n1_3__4">énergie thermique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__5" value="énergie chimique"><label for="n1_3__5">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_3" id="n1_3__6" value="énergie sonore" data-pourquoi="L'alimentation ne fait aucun bruit : le son n'est pas une forme qui circule ici."><label for="n1_3__6">énergie sonore</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe" id="n1_4" data-melange="1">
-  <legend>Fournie à la carte électronique :</legend>
-  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__4" value="énergie éolienne" data-pourquoi="L'énergie éolienne vient du vent sur des pales : rien de tel n'alimente la carte."><label for="n1_4__4">énergie éolienne</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__1" value="énergie électrique (en 5 V)"><label for="n1_4__1">énergie électrique (en 5 V)</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__3" value="énergie lumineuse" data-pourquoi="La carte n'a pas besoin d'être éclairée pour fonctionner : regarde ce qui arrive par ses fils."><label for="n1_4__3">énergie lumineuse</label></div>
-  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__2" value="énergie chimique" data-pourquoi="Aucune réaction chimique dans la carte : elle reçoit son énergie par ses deux fils d'alimentation."><label for="n1_4__2">énergie chimique</label></div>
+<fieldset class="qcm-groupe" id="n1_4">
+  <legend>La forme de l'énergie fournie à la carte électronique</legend>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__1" value="énergie électrique"><label for="n1_4__1">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__2" value="énergie mécanique" data-pourquoi="Rien ne bouge ni ne tourne dans l'alimentation de la station."><label for="n1_4__2">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__3" value="énergie lumineuse" data-pourquoi="La carte reçoit son énergie par ses deux fils d'alimentation."><label for="n1_4__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__4" value="énergie thermique" data-pourquoi="Ça chauffe un peu, mais ce n'est pas cette chaleur qu'on transmet d'un bloc à l'autre."><label for="n1_4__4">énergie thermique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__5" value="énergie chimique" data-pourquoi="La carte reçoit son énergie par ses deux fils d'alimentation."><label for="n1_4__5">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="n1_4" id="n1_4__6" value="énergie sonore" data-pourquoi="L'alimentation ne fait aucun bruit : le son n'est pas une forme qui circule ici."><label for="n1_4__6">énergie sonore</label></div>
 </fieldset>
+</div>
+</div>
       <h4>c) Les intrus</h4>
       <fieldset class="qcm-groupe" id="i1_a" data-melange="1">
   <legend>Premier intrus :</legend>
@@ -1661,7 +2085,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       Position 2 : la <b>batterie 12 V</b>. <br>
       Position 3 : le <b>régulateur de charge</b>. <br>
       Position 4 : le <b>convertisseur 12 V → 5 V</b>. <br>
-      Position 5 : le <b>basculement secteur / batterie</b>. <br>Natures : <b>lumineuse → électrique → chimique (stockée) → électrique (5 V)</b>. <br>Hors du périmètre de l’alimentation : <b>l'ampoule et le haut-parleur</b>. <br>Ce sont des récepteurs ; ils pourraient appartenir à la signalisation de la station. <br>En 5e la chaîne était fournie, en 4e on la complétait : en 3e, <b>tu l'as élaborée</b> — c'est exactement 3e_C4.1.</p>
+      Position 5 : le <b>basculement secteur / batterie</b>. <br>Natures : <b>lumineuse → électrique → chimique (stockée) → électrique</b> (en 5 V pour la carte). <br>Hors du périmètre de l’alimentation : <b>l'ampoule et le haut-parleur</b>. <br>Ce sont des récepteurs ; ils pourraient appartenir à la signalisation de la station. <br>En 5e la chaîne était fournie, en 4e on la complétait : en 3e, <b>tu l'as élaborée</b> — c'est exactement 3e_C4.1.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> élaborer une chaîne d'énergie = choisir les blocs UTILES, les ordonner selon les fonctions (convertir → alimenter → distribuer → alimenter, la batterie stockant en branche), et nommer la nature de l'énergie à chaque étape.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> placer la batterie avant le panneau (rien ne la rechargerait) ; oublier le régulateur (batterie détruite en quelques semaines) ; prendre les intrus (une ampoule CONSOMME, elle ne produit pas).</div>
@@ -2129,7 +2553,7 @@ const CHECKS = {
     let ok=0;
     const att={b1_1:"le panneau solaire",b1_2:"la batterie 12 V",b1_3:"le régulateur de charge",
                b1_4:"le convertisseur 12 V → 5 V",b1_5:"le basculement secteur / batterie",
-               n1_1:"énergie lumineuse",n1_2:"énergie électrique",n1_3:"énergie chimique",n1_4:"énergie électrique (en 5 V)"};
+               n1_1:"énergie lumineuse",n1_2:"énergie électrique",n1_3:"énergie chimique",n1_4:"énergie électrique"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const intrus = new Set([$("i1_a").value, $("i1_b").value]);
     const iOk = intrus.has("l'ampoule") && intrus.has("le haut-parleur");
@@ -2333,6 +2757,66 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
   const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
   if(onglet){ onglet.click(); }
 }));
+</script>
+<script>
+/* Le dessin de la chaîne d'énergie de la station (son alimentation), pour la chaîne à compléter
+   (_outils/chaine_a_completer/) : les fonctions dans les blocs, les composants dessous, les formes d'énergie sur les
+   flèches, la batterie en branche de stockage, le secteur en seconde source. En ligne à partir de 760 px, en colonne
+   au téléphone. */
+window.CAC_DESSINS = window.CAC_DESSINS || {};
+window.CAC_DESSINS.alimentation = (function(){
+  var CYAN = "#61dafb", VIOLET = "#c68ef2", JAUNE = "#ffd66b", ORANGE = "#ffb454";
+  return {
+    seuil: 760,
+    large: {vue: [0, 0, 1470, 630]},
+    etroit: {vue: [0, 0, 380, 724], max: 520},
+    elements: [
+      {id: "titre", type: "titre", texte: "CHAÎNE D’ÉNERGIE de la station : son alimentation", couleur: ORANGE,
+       large: {x: 20, y: 14}, etroit: {x: 10, y: 8, texte: "CHAÎNE D’ÉNERGIE de la station :\nson alimentation"}},
+      {id: "entree", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nlumineuse",
+       large: {points: [[16, 235], [126, 235]], ex: 71, ey: 220, ancre: "bas", lt: 110},
+       etroit: {points: [[200, 50], [200, 96]], ex: 190, ey: 73, ancre: "gauche", lt: 150}},
+      {id: "convertir", type: "bloc", groupe: "energie", fonction: "CONVERTIR", composant: "Panneau solaire", couleur: VIOLET,
+       large: {x: 130, y: 200, l: 180}, etroit: {x: 110, y: 100, l: 180}},
+      {id: "conv-alim", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[310, 235], [426, 235]], ex: 368, ey: 220, ancre: "bas", lt: 112},
+       etroit: {points: [[200, 188], [200, 234]], ex: 190, ey: 211, ancre: "gauche", lt: 150}},
+      {id: "alimenter", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Régulateur de charge", couleur: JAUNE,
+       large: {x: 430, y: 200, l: 180}, etroit: {x: 110, y: 238, l: 180}},
+      {id: "charge", type: "fleche", groupe: "energie", nature: "stock", double: true, texte: "Énergie électrique\n(charge / décharge)",
+       large: {points: [[610, 258], [662, 258], [662, 445], [612, 445]], ex: 672, ey: 388, ancre: "droite", lt: 210},
+       etroit: {points: [[110, 260], [50, 260], [50, 336]], ex: 56, ey: 300, ancre: "droite", lt: 10, texte: ""}},
+      {id: "stocker", type: "bloc", groupe: "energie", fonction: "STOCKER", composant: "Batterie 12 V", stock: "Énergie chimique stockée", couleur: JAUNE,
+       large: {x: 430, y: 410, l: 180, stock: "Énergie chimique\nstockée"}, etroit: {x: 6, y: 340, l: 92, stock: "Énergie\nchimique\nstockée"}},
+      {id: "alim-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[610, 235], [826, 235]], ex: 745, ey: 220, ancre: "bas", lt: 140},
+       etroit: {points: [[200, 326], [200, 372]], ex: 190, ey: 349, ancre: "gauche", lt: 84}},
+      {id: "distribuer", type: "bloc", groupe: "energie", fonction: "DISTRIBUER", composant: "Basculement secteur / batterie", couleur: CYAN,
+       large: {x: 830, y: 200, l: 180}, etroit: {x: 110, y: 376, l: 180}},
+      {id: "secteur", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Alimentation secteur\nisolée, 12 V continu", couleur: JAUNE,
+       large: {x: 1150, y: 16, l: 210}},
+      {id: "secteur-txt", type: "texte", groupe: "energie", texte: "Secteur\nisolé\n(12 V)", gras: true,
+       etroit: {x: 338, y: 318, ancre: "centre", l: 84}},
+      {id: "secteur-in", type: "fleche", groupe: "energie", nature: "energie", texte: "Entrée\nsecteur",
+       large: {points: [[1480, 51], [1364, 51]], ex: 1422, ey: 62, ancre: "haut", lt: 110}},
+      {id: "secteur-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie électrique\n(secteur disponible)",
+       large: {points: [[1150, 51], [920, 51], [920, 196]], ex: 910, ey: 120, ancre: "gauche", lt: 10, texte: ""},
+       etroit: {points: [[338, 350], [338, 398], [294, 398]], ex: 338, ey: 410, ancre: "haut", lt: 10, texte: ""}},
+      {id: "dist-conv", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[1010, 235], [1126, 235]], ex: 1068, ey: 220, ancre: "bas", lt: 112},
+       etroit: {points: [[200, 464], [200, 510]], ex: 190, ey: 487, ancre: "gauche", lt: 84}},
+      {id: "convertisseur", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Convertisseur 12 V → 5 V", couleur: JAUNE,
+       large: {x: 1130, y: 200, l: 180}, etroit: {x: 110, y: 514, l: 180}},
+      {id: "sortie", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique (5 V)",
+       large: {points: [[1310, 235], [1400, 235], [1400, 296]], ex: 1355, ey: 220, ancre: "bas", lt: 96},
+       etroit: {points: [[200, 602], [200, 648]], ex: 190, ey: 625, ancre: "gauche", lt: 150}},
+      {id: "fin", type: "texte", groupe: "energie", texte: "Alimenter\nla station", gras: true,
+       large: {x: 1400, y: 330, ancre: "centre", l: 130}, etroit: {x: 200, y: 668, ancre: "centre", texte: "Alimenter la station"}},
+      {id: "unites", type: "texte", texte: "Unités : V (volts)",
+       large: {x: 1340, y: 600, ancre: "centre", l: 240}, etroit: {x: 270, y: 702, ancre: "centre", l: 200}}
+    ]
+  };
+})();
 </script>
 </body>
 </html>

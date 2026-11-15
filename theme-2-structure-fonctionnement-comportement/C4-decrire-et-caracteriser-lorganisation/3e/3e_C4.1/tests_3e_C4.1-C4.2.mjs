@@ -135,12 +135,14 @@ const PROSE = {
 };
 
 const ONGLETS = await p.$$eval('.seance-tab', l => l.map(e => e.dataset.panel));
+/* Un groupe posé dans le schéma d'une chaîne à compléter (révision du 15/11/2026) est caché : on le voit à son schéma. */
+const visible = id => p.evaluate(i => { const e = document.getElementById(i); if (!e) return false; const v = e.closest('.cac.cac-pret') || e; return !!v.offsetParent; }, id).catch(() => false);
 async function ouvrirPour(id) {
-  if (await p.isVisible('#' + id).catch(() => false)) return true;
+  if (await visible(id)) return true;
   for (const panneau of ONGLETS) {
     await p.click(`.seance-tab[data-panel="${panneau}"]`);
     await p.waitForTimeout(90);
-    if (await p.isVisible('#' + id).catch(() => false)) return true;
+    if (await visible(id)) return true;
   }
   return false;
 }

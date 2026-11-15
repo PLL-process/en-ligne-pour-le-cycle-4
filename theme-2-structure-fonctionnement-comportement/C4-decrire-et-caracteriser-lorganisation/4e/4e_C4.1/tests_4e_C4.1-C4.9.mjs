@@ -124,12 +124,14 @@ ok(`4 · ${champs} champs attendus extraits des CHECKS de la page, billet d'entr
    Object.keys(ATT).length === 6 && champs >= 30, String(champs));
 
 const ONGLETS = onglets;
+/* Un groupe posé dans le schéma d'une chaîne à compléter (révision du 15/11/2026) est caché : on le voit à son schéma. */
+const visible = id => p.evaluate(i => { const e = document.getElementById(i); if (!e) return false; const v = e.closest('.cac.cac-pret') || e; return !!v.offsetParent; }, id).catch(() => false);
 async function ouvrirPour(id) {
-  if (await p.isVisible('#' + id).catch(() => false)) return true;
+  if (await visible(id)) return true;
   for (const panneau of ONGLETS) {
     await p.click(`.seance-tab[data-panel="${panneau}"]`);
     await p.waitForTimeout(90);
-    if (await p.isVisible('#' + id).catch(() => false)) return true;
+    if (await visible(id)) return true;
   }
   return false;
 }
@@ -165,8 +167,8 @@ ok('5 bis · le billet fait ne compte pas comme une activité validée — la pr
    await p.textContent('#progTxt'));
 
 await remplir(1); await valider(1);
-ok('6 · activité 1 validée 9 / 9 (chaîne d\'énergie : alimenter, stocker, distribuer, convertir)',
-   /9 \/ 9/.test(await retour(1)) && await valide(1), (await retour(1)).slice(0, 60));
+ok('6 · activité 1 validée 16 / 16 (chaîne d\'énergie, posée dans le schéma : fonctions et formes d\'énergie)',
+   /16 \/ 16/.test(await retour(1)) && await valide(1), (await retour(1)).slice(0, 60));
 
 await remplir(2); await valider(2);
 ok('7 · activité 2 validée 4 / 4 (chaîne d\'information : acquérir, traiter, communiquer)',

@@ -109,3 +109,20 @@ schémas SVG référencés présents. ✅
   identique (aucune requête serveur, liens relatifs).
 - La version 🅰 (sortie parking + maquette Grove) n'est pas testable en
   sandbox : la page l'annonce comme option matérielle sans en dépendre.
+
+## 15/11/2026 — Les chaînes sous les yeux (étiquettes posées dans le schéma)
+
+Les questions des chaînes (activités 2 et 3) se jouent dans le schéma des deux chaînes, construit d'une activité à
+l'autre ; un échauffement de mémoire ouvre la séance 6 (clé 9 de la progression). Outil commun :
+`_outils/chaine_a_completer/`.
+
+- `node tests_5e_C4.1-C4.8_sequence.mjs` : **65 / 65** (activité 2 sur 11 réponses, activité 3 sur 11, progression sur 9,
+  séance 6 à 40 min, un test pour l'échauffement).
+- `node tests_regle_311_5e_C4.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; les quatre schémas
+  joués en étiquettes ; 224 / 224 pourquoi.
+- `python3 _outils/controle_chaine_a_completer.py` : ✅.
+- Fiche papier de la séance 2 imprimée en PDF et regardée : les deux schémas tiennent dans la page, cases vides à
+  remplir au stylo, étiquettes écrites dessous.
+
+Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.

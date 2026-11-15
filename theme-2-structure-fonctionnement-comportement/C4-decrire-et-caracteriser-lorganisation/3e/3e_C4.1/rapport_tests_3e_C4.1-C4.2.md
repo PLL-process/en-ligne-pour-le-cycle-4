@@ -85,3 +85,14 @@ hors barre de progression) et correctif d'affichage du bouton QCM du bilan
 (débordement multi-lignes, corrigé aussi sur les séquences 5e au même gabarit).
 Tests rejoués : bonus validé 3/3, progression inchangée (5 activités), zéro
 erreur JS, display:block confirmé sur le bouton.
+
+## 15/11/2026 — Les chaînes sous les yeux (étiquettes posées dans le schéma)
+
+Les questions de la chaîne se jouent dans le schéma lui-même (outil commun `_outils/chaine_a_completer/`) : l'élève
+pose les étiquettes dans les blocs, sous les blocs et sur les flèches ; ce qu'il a trouvé reste écrit à l'étape suivante.
+
+- Bancs du lot : verts (le banc de la séquence trouve un groupe posé dans le schéma à son schéma).
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; les schémas joués en étiquettes.
+- `python3 _outils/controle_chaine_a_completer.py` : ✅.
+
+Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.

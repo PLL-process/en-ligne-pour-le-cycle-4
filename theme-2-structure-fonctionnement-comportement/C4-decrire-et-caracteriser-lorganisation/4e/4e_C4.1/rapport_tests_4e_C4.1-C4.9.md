@@ -145,3 +145,16 @@ trois pannes » restent ; le serveur est maintenant câblé à la box (il l'éta
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle ; le fichier `.pkt` du jardin (à construire dans
 Packet Tracer, sur le poste de Pascal).
+
+## 15/11/2026 — Les chaînes sous les yeux (étiquettes posées dans le schéma)
+
+Les activités 1 et 2 se jouent dans le schéma des deux chaînes du jardin (outil commun `_outils/chaine_a_completer/`) :
+les fonctions dans les blocs, les formes d'énergie sur les flèches ; la chaîne d'énergie bâtie à l'activité 1 reste
+écrite sous la chaîne d'information de l'activité 2. Le schéma complet se replie après la vérification.
+
+- `node tests_4e_C4.1-C4.9.mjs` : **52 / 52** (activité 1 sur 16 réponses ; le banc trouve un groupe posé dans le schéma à son schéma).
+- `node tests_regle_311_4e_C4.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `python3 _outils/controle_chaine_a_completer.py` : ✅.
+
+Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.

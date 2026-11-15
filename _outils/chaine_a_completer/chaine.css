@@ -1,0 +1,104 @@
+/* Chaîne à compléter — source unique : _outils/chaine_a_completer/chaine.css (poser.py). Ne pas la modifier dans une page.
+   Les couleurs sont celles des schémas du dépôt (n°120) : CONVERTIR violet, ALIMENTER/STOCKER jaune, DISTRIBUER cyan ;
+   énergie orange, information cyan, ordre vert en pointillés. */
+.cac{--cac-energie:#ffb454;--cac-information:#61dafb;--cac-ordre:#81fba1;--cac-stock:#ffd66b;--cac-attente:#5d6f92;
+  --cac-fond:#071633;--cac-bloc:#0d2347;--cac-texte:#e4eaf5;--cac-doux:#9bbefc;--cac-case:#102a55;--cac-ok:#81fba1;--cac-faux:#ffb454;
+  margin:10px 0 14px;display:grid;gap:8px;justify-items:center}
+/* au téléphone, le schéma prend toute la largeur de l'écran : les marges des cartes ne le rétrécissent plus */
+@media (max-width:700px){.cac{width:calc(100vw - 16px);margin-inline:calc(50% - 50vw + 8px);box-sizing:border-box}}
+.cac.cac-pret>.cac-questions{display:none}
+.cac-dessin{position:relative;max-width:100%;container-type:inline-size;background:var(--cac-fond);border:1px solid #274a8a;border-radius:14px;overflow:hidden}
+.cac-traits{position:absolute;inset:0;display:block}
+.cac-calque{position:absolute;inset:0}
+.cac-calque>*{position:absolute;box-sizing:border-box}
+.cac-fleche{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cac-fleche.cac-n-energie{stroke:var(--cac-energie)} .cac-m.cac-n-energie path{fill:var(--cac-energie)}
+.cac-fleche.cac-n-information{stroke:var(--cac-information)} .cac-m.cac-n-information path{fill:var(--cac-information)}
+.cac-fleche.cac-n-ordre{stroke:var(--cac-ordre);stroke-dasharray:7 6} .cac-m.cac-n-ordre path{fill:var(--cac-ordre)}
+.cac-fleche.cac-n-stock{stroke:var(--cac-stock)} .cac-m.cac-n-stock path{fill:var(--cac-stock)}
+.cac-fleche.cac-n-attente{stroke:var(--cac-attente);stroke-dasharray:5 6} .cac-m.cac-n-attente path{fill:var(--cac-attente)}
+.cac-titre{font-weight:800;letter-spacing:.02em;line-height:1.2}
+.cac-titre.attente{opacity:.75}
+.cac-texte{line-height:1.2;text-align:center;color:var(--cac-texte)}
+.cac-texte.gras{font-weight:700}
+.cac-et{line-height:1.2;text-align:center;font-weight:600}
+.cac-et-bas{transform:translate(-50%,-100%)} .cac-et-haut{transform:translate(-50%,0)}
+.cac-et-gauche{transform:translate(-100%,-50%);text-align:right} .cac-et-droite{transform:translate(0,-50%);text-align:left}
+.cac-et-centre{transform:translate(-50%,-50%)}
+.cac-c-energie{color:var(--cac-energie)} .cac-c-information{color:var(--cac-information)} .cac-c-ordre{color:var(--cac-ordre)} .cac-c-stock{color:var(--cac-stock)} .cac-c-attente{color:var(--cac-attente)}
+.cac-et.cac-case,.cac-et.cac-trou{white-space:normal}
+.cac-bloc{display:flex;align-items:center;justify-content:center;padding:4px;border:3px solid var(--cac-coul,#9bbefc);background:var(--cac-bloc);
+  box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.cac-bloc.neutre{--cac-coul:#9bbefc;border-color:#3d64a8}
+.cac-bloc.attente{border-style:dashed;border-color:var(--cac-attente);border-width:2px;background:transparent}
+.cac-fonction{font-weight:800;letter-spacing:.03em;color:var(--cac-coul,#e4eaf5);text-align:center;line-height:1.1}
+.cac-bloc>.cac-case,.cac-bloc>.cac-trou{width:100%;height:100%}
+.cac-bloc>.cac-case{border-color:transparent;background:transparent}
+.cac-bloc>.cac-case:not(.pleine) .cac-q{font-size:1.15em}
+.cac-bloc>.cac-case.pleine,.cac-bloc>.cac-case.juste,.cac-bloc>.cac-case.faux{background:transparent}
+.cac-bloc:has(.cac-case.faux){border-color:var(--cac-faux)}
+.cac-bloc:has(.cac-case:focus-visible),.cac-bloc:has(.cac-case.vise),.cac-bloc:has(.cac-case:hover){border-color:#61dafb;box-shadow:0 0 0 3px rgba(97,218,251,.35)}
+.cac-sous{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.cac-composant{color:var(--cac-texte);line-height:1.2}
+.cac-stock{color:var(--cac-stock);line-height:1.2}
+.cac-sous>.cac-case,.cac-sous>.cac-trou{width:100%}
+/* les cases : dans le dessin, à la place du mot */
+.cac-case,.cac-trou{display:flex;align-items:center;justify-content:center;gap:4px;min-height:1.9em;padding:2px 6px;border-radius:8px;
+  font:inherit;line-height:1.15;text-align:center;color:var(--cac-texte);box-sizing:border-box}
+.cac-case{border:2px dashed var(--cac-doux);background:rgba(16,42,85,.92);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.cac-case:hover,.cac-case:focus-visible,.cac-case.vise{border-color:#61dafb;border-style:solid;background:#163a72}
+.cac-case:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-case.pleine{border-style:solid;border-color:#9bbefc;background:var(--cac-case);font-weight:700}
+.cac-case.juste{border-color:var(--cac-ok);background:rgba(129,251,161,.13);cursor:default;opacity:1}
+.cac-case.faux{border-color:var(--cac-faux);background:rgba(255,180,84,.16)}
+.cac-case .cac-q{font-weight:800;color:var(--cac-doux);opacity:.9}
+.cac-case .cac-marque{font-weight:800} .cac-case.juste .cac-marque{color:var(--cac-ok)} .cac-case.faux .cac-marque{color:var(--cac-faux)}
+.cac-bloc .cac-case.pleine .cac-v{color:var(--cac-coul,#e4eaf5);letter-spacing:.03em}
+.cac-trou{border:1.5px dashed var(--cac-attente);opacity:.45}
+.cac-bloc>.cac-trou{border:0}
+.cac-acquis{font-style:italic}
+.cac-fonction.cac-acquis{letter-spacing:.01em;overflow-wrap:anywhere}
+.cac-case.part{opacity:.4}
+.cac-msg{margin:0;min-height:1.3em;font-size:.95em;color:var(--cac-doux);text-align:center}
+.cac-msg:empty{display:none}
+/* la réserve : collée en bas de l'écran tant qu'il reste des cases */
+.cac-reserve{position:sticky;bottom:calc(var(--cac-bas,10px) + env(safe-area-inset-bottom,0px));z-index:5;width:100%;box-sizing:border-box;
+  background:#0d2347;border:1px solid #274a8a;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:8px 10px;display:grid;gap:6px}
+body.ms .cac-reserve{--cac-bas:84px}
+.cac-reserve-t{margin:0;font-size:.82em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9bbefc}
+.cac-reserve-l{display:flex;flex-wrap:wrap;gap:7px}
+.cac-lab{font:inherit;font-weight:700;color:#e4eaf5;background:#102a55;border:2px solid #3d64a8;border-radius:11px;padding:8px 12px;min-height:44px;
+  cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.cac-lab:hover{border-color:#61dafb}
+.cac-lab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-lab.choisie{border-color:#61dafb;background:#1d4e89;transform:translateY(-2px);box-shadow:0 4px 0 #0a1b3d}
+.cac-lab.part{opacity:.35}
+.cac-geste{color:#9bbefc}
+.cac-fantome{position:fixed;left:0;top:0;z-index:80;pointer-events:none;border:2px solid #61dafb;background:#0d2347;color:#e4eaf5;
+  border-radius:11px;padding:8px 12px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.cac-papier{display:none}
+/* au téléphone, la réserve tient sur une ligne qui défile de côté : le schéma reste visible au-dessus.
+   Un doigt qui glisse de côté fait défiler la réserve ; un doigt qui monte emporte l'étiquette vers sa case. */
+@media (max-width:640px){
+  .cac-reserve{padding:7px 0 8px;gap:5px}
+  .cac-reserve-t{padding-inline:10px;font-size:.74em}
+  .cac-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 4px;scrollbar-width:thin;overscroll-behavior-x:contain}
+  .cac-reserve .cac-lab{flex:none;white-space:nowrap;touch-action:pan-x}
+}
+@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}}
+/* à l'impression : le dessin, en encre, avec ce que l'élève a posé ; les cases vides restent des cases à remplir au stylo */
+@media print{
+  .cac{--cac-energie:#9a4d00;--cac-information:#0a5a75;--cac-ordre:#1a6b36;--cac-stock:#6f5500;--cac-attente:#777;
+    --cac-fond:#fff;--cac-bloc:#fff;--cac-texte:#111;--cac-doux:#444;--cac-case:#fff;break-inside:avoid}
+  .cac .cac-dessin{border-color:#999}
+  html body .cac button.cac-case{display:flex!important;background:#fff!important;color:#111!important;border:1.5px solid #555!important}
+  html body .cac button.cac-case:not(.pleine){border-style:dashed!important}
+  .cac .cac-case .cac-q,.cac .cac-case .cac-marque{visibility:hidden}
+  .cac .cac-bloc{background:#fff!important}
+  .cac .cac-reserve,.cac .cac-msg{display:none!important}
+  .cac .cac-et.cac-trou,.cac .cac-sous>.cac-trou{visibility:hidden}
+  .cac .cac-titre,.cac .cac-fonction,.cac .cac-case .cac-v,.cac .cac-texte{color:#111!important}
+  .cac .cac-c-attente{color:#555!important}
+  .cac .cac-papier{display:block!important;margin:1mm 0 0;font-size:10pt;color:#111}
+  .cac.cac-pret>.cac-questions{display:none!important}
+}
