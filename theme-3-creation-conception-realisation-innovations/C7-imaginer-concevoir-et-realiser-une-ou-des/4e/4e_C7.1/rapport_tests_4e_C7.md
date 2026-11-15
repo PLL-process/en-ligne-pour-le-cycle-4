@@ -117,3 +117,24 @@ Découpage, volet « 📖 Rappel » et clôture complétée : voir la fiche péd
   `controle_sigles`, `controle_navigation_seances` ; `verif_regles_audit.py` : autant de ✘ qu'avant, aucun nouveau.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle. Non fait : le lexique par séance.
+
+## Révision du 15/11/2026 (ligne 40 du suivi) — boutons radio, replis, aération
+
+Les 20 listes déroulantes qui posaient une question sont des groupes de boutons radio (règle d'or n°300) ; les deux listes du
+banc météo restent des commandes (`data-interface`). La piqûre de rappel du cahier des charges est repliée à sa source, le
+Bonus et la description des deux pages suivantes aussi ; l'aération passe de 28 écarts à 0.
+
+Les bancs n'ont pas changé de questions : un shim `_groupesRadio(page)` en tête de `tests_4e_C7.mjs` et de
+`tests_regle_311_4e_C7.1.mjs` coche le bouton radio de la valeur demandée ; un choix par rang (`{index: n}`, billet d'entrée)
+suit l'ordre d'origine des propositions (`ORIGINE`), puisque le mélange change leur place.
+
+- `node tests_4e_C7.mjs .` : **47 / 47**, comme avant.
+- `node tests_regle_311_4e_C7.1.mjs` : « Où j'en suis » **14 / 15**. Le pas en défaut, à 390 px, est celui des onglets de la
+  séance 2, attendus dans le premier écran : ils descendent à 1 063 px pour 844. **Il est en défaut sur `main` aussi**
+  (même page avant la révision : 1 063 px ; 1 005 px dès le 08/11/2026). Le banc s'arrête alors avant son relais ;
+  le relais `lancerBanc311Theme3`, lancé à part avec les mêmes réglages : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; 42 pourquoi.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0. `controle_impression_papier.py` : à jour.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

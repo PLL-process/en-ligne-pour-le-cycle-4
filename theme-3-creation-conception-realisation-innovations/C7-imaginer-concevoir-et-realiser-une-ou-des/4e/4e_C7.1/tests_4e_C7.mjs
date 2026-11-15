@@ -22,6 +22,37 @@ catch {
   ({ chromium } = createRequire(import.meta.url)(path.join(racineGlobale, "playwright", "index.js")));
 }
 
+/* Règle d'or n°300 (révision du 15/11/2026) : les questions de la page sont des groupes de boutons radio
+   (fieldset.qcm-groupe) qui portent leur valeur. selectOption et inputValue visant un groupe cochent ou lisent la
+   proposition de cette valeur (ou de ce libellé). Un choix par rang ({index: n}) suit l'ordre d'origine de la liste
+   (ORIGINE, l'option 0 étant « — choisir — ») : le mélange des propositions a changé leur place. Rien d'autre ne change. */
+const ORIGINE = {
+  be_1: ["— choisir —", "identifier le besoin : à quoi ça sert, et pour qui", "choisir le matériau", "dessiner l'objet fini", "je ne sais pas encore"],
+  be_2: ["— choisir —", "des critères nommés à l'avance", "demander laquelle est la plus jolie", "prendre la première qui marche", "je ne sais pas encore"],
+  be_3: ["— choisir —", "ça n'existe pas dans l'absolu : ça dépend des contraintes du lieu", "c'est le plus solide, toujours", "c'est le moins cher, toujours", "je ne sais pas encore"]
+};
+function _groupesRadio(page){
+  const estGroupe = s => page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, s);
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => (typeof sel === 'string' && await estGroupe(sel))
+    ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  const orig = page.selectOption.bind(page);
+  page.selectOption = async (sel, val, ...reste) => {
+    if (!(typeof sel === 'string' && await estGroupe(sel))) return orig(sel, val, ...reste);
+    let v = (val && typeof val === 'object') ? val : { value: String(val), label: String(val) };
+    if (v.index !== undefined) { const txt = (ORIGINE[sel.replace(/^#/, '')] || [])[v.index]; if (!txt) throw new Error('rang ' + v.index + ' inconnu pour ' + sel); v = { value: txt, label: txt }; }
+    const ok = await page.evaluate(([s, v]) => {
+      const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+      const lib = i => ((e.querySelector('label[for="' + i.id + '"]') || {}).textContent || '').trim();
+      const c = inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+      if (!c) return false;
+      c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+    }, [sel, v]);
+    if (!ok) throw new Error('aucune proposition « ' + JSON.stringify(v) + ' » dans ' + sel);
+  };
+  return page;
+}
+
 /* ── ce qui change d'un lot à l'autre ── */
 const CFG = {
   seq: "sequence_4e_C7_jardin-conception.html",
@@ -86,7 +117,7 @@ function verifLiens() {
 
 const nav = await chromium.launch();
 async function ouvrir(ctx, fichier) {
-  const page = await ctx.newPage();
+  const page = _groupesRadio(await ctx.newPage());
   const erreurs = [];
   page.on("pageerror", e => erreurs.push(String(e)));
   page.on("console", m => { if (m.type() === "error" && !/net::|ERR_/.test(m.text())) erreurs.push(m.text()); });
@@ -352,7 +383,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — aucun envoi réseau — */
 {
   const sorties = [];
-  const p2 = await ctx.newPage();
+  const p2 = _groupesRadio(await ctx.newPage());
   p2.on("request", r => { if (/^https?:/.test(r.url())) sorties.push(r.url()); });
   await p2.goto(url(CFG.seq));
   await p2.waitForTimeout(800);
