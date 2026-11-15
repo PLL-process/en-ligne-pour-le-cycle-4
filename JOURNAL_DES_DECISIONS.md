@@ -31174,3 +31174,22 @@ Bancs de `3e_C4.1` : **23 / 23**, **34 / 34**, mode mission sans refus.
 
 **Ce qui reste.** `5e_C7.5` (l'éclairage du préau) est encore sur l'ancien gabarit (listes déroulantes) : sa chaîne
 passera dans le schéma pendant sa révision (ligne 51 du suivi).
+
+## 15/11/2026 — Révision des trois thèmes, 56 : `3e_C3.1` (Shenzhen, le local des serveurs)
+
+**Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante à convertir (les menus du cahier des charges sont voulus). Sur `main` :
+- une séance 1 à 1 633 mots et une séance 2 à 1 819 : la piqûre de rappel de la bête à cornes (524 mots) et celle du cahier des charges (638 mots) étaient à découvert ;
+- 18 écarts d'aération ;
+- dans 23 questions sur 26, la bonne réponse était la plus longue, souvent de loin (jusqu'à 139 signes) : elle se devinait à sa longueur.
+
+**Ce qui est fait.**
+- **Les deux piqûres de rappel se replient**, à leur source (`incrustations_lots/bete_a_cornes_mots.py`, `donnees_rappel_cdc.py`, option `replie`), puis `incrustations.py --seq 3e_C3.1` : elles ne servent qu'à qui a oublié les mots. Les deux exercices de méthode (l'alerte cyclonique, la flexibilité), que les vérificateurs exigent, restent à découvert.
+- **La bonne réponse ne se devine plus à sa longueur** : dans 17 questions, c'est elle qui est raccourcie — sa justification est dans la correction, et dans le pourquoi des erreurs ; dans 12, une proposition fausse est allongée. Moins à lire, et plus d'indice. **26 groupes mélangés.**
+- **Le mode mission explique chaque erreur** (`mission_3e_C3.1.json`) : 78 pourquoi, sans dire la bonne réponse.
+- **Aération : 18 → 0.** La correction du rappel « le local de Shenzhen » se lit en lignes, corrigée à sa source (`donnees_besoin.py`) et, à l'identique, dans `atelier_bete_a_cornes.html` du lot ; la correction de l'activité 5 et un « à retenir » passent en lignes.
+- Le banc de la séquence suit les bonnes réponses raccourcies.
+
+**Mesure.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136** · **1 181** · 425 · 909. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 18 → 0. Bancs **37 / 37** (séquence), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
+
+**Ce qui reste.** Rien au-dessus du repère. Les notes de fin des incrustations (« 🐂 Ces exercices viennent de l'atelier… », 37 mots) sont communes à plusieurs pages : elles ne sont pas touchées ici.
+

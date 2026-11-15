@@ -63,3 +63,13 @@ une production sur sa seule longueur. Deux cas sont ajoutés au banc : une produ
 (mesures chiffrées avec unité, ou protocole à cinq étapes avec unité, appareil et conditions
 constantes) est validée ; une production longue mais creuse ne l'est pas. Ce qui n'est toujours
 pas testé : que la mesure ait vraiment été faite en classe — cela se relève en salle.
+
+## Révision du 15/11/2026 (révision des trois thèmes, 56)
+
+- `python3 tests_3e_C3.1-C3.4_shenzhen.py` : **37 / 37** ; le banc suit les bonnes réponses raccourcies.
+- `node tests_regle_311_3e_C3.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; 78 pourquoi sur 78 mauvaises propositions.
+- `verif_regles_audit.py` : 0 ✘ ; `audit_aeration.py --strict` (séquence et atelier) : 0 ; `controle_ordre_propositions.py`, `controle_unites.py` : verts ; `incrustations.py --verifier --seq 3e_C3.1` : à jour.
+- `mesurer_charge.mjs` : 1 136 · 1 181 · 425 · 909 mots visibles, chaque séance sous le repère.
+- Non testé : la lecture par un élève en classe ; le rendu sur un autre navigateur que Chromium.
+
