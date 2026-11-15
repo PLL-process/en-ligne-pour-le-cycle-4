@@ -48,14 +48,14 @@ class Diagram:
         # Chaque ligne est un vrai texte SVG : lisible et imprimable sans foreignObject.
         lines = text.split('\n')
         width = max(len(s) for s in lines) * size * .58 + 12
-        left = x - width / 2 if anchor == 'middle' else x
+        left = x - width / 2 if anchor == 'middle' else (x - width if anchor == 'end' else x)
         for i, line in enumerate(lines):
             ry = y + i * (size + 7)
             attrs = f' data-role="{role}"' if role else ''
             attrs += ' font-style="italic"' if italic else ''
             self.parts.append(f'<text x="{x}" y="{ry}" fill="{color}" font-size="{size}" font-weight="{700 if bold else 400}" text-anchor="{anchor}"{attrs}>{escape(line)}</text>')
         style = (1 if bold else 0) + (2 if italic else 0)
-        self.cell(text, f'text;html=0;whiteSpace=wrap;align={"center" if anchor == "middle" else "left"};verticalAlign=middle;fontFamily=Arial;fontColor={color};fontSize={size};fontStyle={style};', left, y-size, width, len(lines)*(size+7))
+        self.cell(text, f'text;html=0;whiteSpace=wrap;align={ {"middle": "center", "end": "right"}.get(anchor, "left")};verticalAlign=middle;fontFamily=Arial;fontColor={color};fontSize={size};fontStyle={style};', left, y-size, width, len(lines)*(size+7))
 
     def panel(self, x, y, w, h, color):
         # Un cadre sous des textes (banc de tests) : à poser AVANT les textes qu'il contient.
@@ -71,14 +71,18 @@ class Diagram:
         self.cell(function, f'rounded=1;arcSize=16;html=0;whiteSpace=wrap;fillColor=none;strokeColor={GREY};strokeWidth=3;dashed=1;dashPattern=8 6;fixDash=1;fontColor={GREY};fontSize=23;fontStyle=1;fontFamily=Arial;', x, y, w, h)
         self.text(x+w/2, y+111, reason, GREY, 19, role='absent', italic=True)
 
-    def block(self, x, y, function, component, color=ORANGE, w=210, stock=False, ident=None):
+    def block(self, x, y, function, component, color=ORANGE, w=210, stock=False, ident=None, csize=21, cpos='below'):
         h = 76
         self.parts.append(f'<g data-role="function"{f" id={chr(34)}{ident}{chr(34)}" if ident else ""}><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{BOX}" stroke="{color}" stroke-width="3"/>')
         lines = function.split('\n')
         self.text(x+w/2, y+(46 if len(lines)==1 else 31), function, color, 23, True)
         self.parts.append('</g>')
         self.cell(function, f'rounded=1;arcSize=16;html=0;whiteSpace=wrap;fillColor={BOX};strokeColor={color};strokeWidth=3;fontColor={color};fontSize=23;fontStyle=1;fontFamily=Arial;', x,y,w,h)
-        self.text(x+w/2, y+111, component, WHITE, 21, role='component')
+        if cpos == 'left':   # chaîne verticale : le composant à gauche du bloc, centré sur sa hauteur
+            n = len(component.split('\n'))
+            self.text(x-16, y+38+csize/3-(n-1)*(csize+7)/2, component, WHITE, csize, anchor='end', role='component')
+        else:
+            self.text(x+w/2, y+111-(21-csize), component, WHITE, csize, role='component')
         if stock:
             self.text(x+w/2, y+111+len(component.split('\n'))*28, 'Énergie chimique\nstockée', YELLOW, 19, role='stock')
 
@@ -87,7 +91,7 @@ class Diagram:
         dash=' stroke-dasharray="8 6"' if dashed else ''
         self.parts.append(f'<path d="{d}" fill="none" stroke="{color}" stroke-width="3" stroke-linejoin="round" marker-end="url(#a{color[1:]})"{f" marker-start={chr(34)}url(#a{color[1:]}){chr(34)}" if both else ""}{dash}/>')
         self.n+=1
-        c=ET.SubElement(self.root,'mxCell',id=str(self.n),style=f'edgeStyle=none;html=0;strokeColor={color};strokeWidth=3;endArrow=block;endFill=1;startArrow={"block" if both else "none"};dashed={1 if dashed else 0};',edge='1',parent='1')
+        c=ET.SubElement(self.root,'mxCell',id=str(self.n),style=f'edgeStyle=none;html=0;strokeColor={color};strokeWidth=3;endArrow=block;endFill=1;startArrow={"block" if both else "none"};dashed={1 if dashed else 0};flowAnimation=1;',edge='1',parent='1')
         g=ET.SubElement(c,'mxGeometry',relative='1',**{'as':'geometry'})
         ET.SubElement(g,'mxPoint',x=str(points[0][0]),y=str(points[0][1]),**{'as':'sourcePoint'})
         ET.SubElement(g,'mxPoint',x=str(points[-1][0]),y=str(points[-1][1]),**{'as':'targetPoint'})
@@ -111,7 +115,7 @@ class Diagram:
         dg.append(self.model)
         native=ET.tostring(mxfile,encoding='unicode')
         source=dest.parent.parent/('_generation/chaines_energie/'+dest.stem+'.drawio')
-        if 'book-train' in dest.name:
+        if dest.name == 'chaine_energie_book-train.svg':
             source=dest.parent.parent/'fichiers_drawio/chaine_energie_book-train.drawio'
         source.parent.mkdir(parents=True,exist_ok=True)
         source.write_text(native+'\n',encoding='utf-8')
@@ -126,8 +130,27 @@ class Diagram:
         _sys.path.insert(0, str(Path(__file__).resolve().parent))
         import legende_unites
         svg = legende_unites.poser(svg)
+        # Demande de Pascal du 15/11/2026 : tous les flux animés (points qui avancent dans le sens de chaque flèche ;
+        # fixes à l'impression et quand le système demande moins de mouvement). La source draw.io porte flowAnimation=1.
+        import animer_flux
+        svg = animer_flux.animer(svg)[0]
         dest.write_text(svg,encoding='utf-8')
         print(path)
+
+
+def incruster(html, svg, marqueur):
+    """Pose le SVG, en ligne, dans chaque <figure data-chaines="marqueur" data-prefixe="P"> de la page (avant sa légende).
+    Les id sont préfixés (P) : la même figure peut revenir plusieurs fois dans la page (règle d'or n°331 : un schéma qui
+    sert à plusieurs activités est répété à chacune). La source draw.io reste dans son fichier : elle n'est pas recopiée."""
+    def remp(m):
+        pref = m.group(2)
+        inline = re.sub(r'\scontent="[^"]*"', '', svg.rstrip('\n'), count=1)
+        for ident in re.findall(r'\bid="([^"]+)"', inline):
+            inline = inline.replace(f'id="{ident}"', f'id="{pref}{ident}"').replace(f'url(#{ident})', f'url(#{pref}{ident})')
+        inline = inline.replace('aria-labelledby="t d"', f'aria-labelledby="{pref}t {pref}d"')
+        return m.group(1) + '\n' + inline + '\n      ' + m.group(3)
+    motif = r'(<figure\b[^>]*data-chaines="%s"[^>]*data-prefixe="([\w-]+)"[^>]*>).*?(<figcaption)' % re.escape(marqueur)
+    return re.subn(motif, remp, html, flags=re.S)
 
 
 def lampadaire():
@@ -362,6 +385,9 @@ def book():
         files['chaine_energie_book-train.drawio']=complete
         files['chaine_energie_a_completer.drawio']=blank
         return 'var FICHIERS = '+json.dumps(files,ensure_ascii=False)+';'
+    # n°332 : la correction de 2.2 montre le modèle complet, tel que le fichier draw.io le dessine
+    html,n=incruster(html,src.read_text(encoding='utf-8'),'modele-energie')
+    if n!=1: raise RuntimeError('Correction 2.2 du Book Train : emplacement du modèle introuvable')
     html,n=re.subn(r'var FICHIERS = (\{[^\n]*\});',downloads,html,count=1)
     if n!=1: raise RuntimeError('Fichiers incorporés du Book Train introuvables')
     page.write_text(html,encoding='utf-8')
@@ -373,6 +399,76 @@ def book():
     q=q.replace('Le bâtiment est alimenté en alternatif : on part du 480 V ~, on ne le fabrique pas.','Le moteur reçoit de l’énergie électrique : il ne précède pas son alimentation.')
     q=q.replace("Le wagonnet n'a pas de batterie : il est alimenté en continu par le rail.",'Les capteurs fournissent des informations ; ils ne constituent pas le départ de cette chaîne d’énergie.')
     quiz.write_text(q,encoding='utf-8')
+
+
+def _book_deux_chaines(complete):
+    """Book Train : les deux chaînes, à lire PENDANT la question (règle d'or n°331, demande de Pascal du 15/11/2026 :
+    « à cette question, l'élève ne visualise pas la chaîne d'énergie et d'information »).
+    Disposition étroite (n°310, piège 8) : elle tient dans la colonne du schéma à côté des questions, et s'agrandit au
+    doigt sur téléphone. L'information en haut (trois blocs), l'énergie en bas (quatre blocs, de haut en bas), l'ordre
+    qui descend et arrive sur DISTRIBUER. La version des questions est muette sur les énergies (ce que 2.1 et 2.2
+    demandent) ; la version complète va dans la correction."""
+    W, H = 770, 1275
+    if complete:
+        entree = 'Réseau du bâtiment : énergie\nélectrique alternative (480 V ~)'
+        energies = ['Énergie électrique\ncontinue (24 V ⎓)', 'Énergie électrique\ncontinue, modulée (24 V ⎓)',
+                    'Énergie mécanique\nde rotation', 'Énergie mécanique\nde translation']
+        resume = ('Les énergies sur les flèches : le réseau du bâtiment apporte de l’énergie électrique alternative (480 V ~) ; '
+                  'ALIMENTER en fait de l’énergie électrique continue (24 V ⎓) ; DISTRIBUER la module sur ordre ; CONVERTIR la change '
+                  'en énergie mécanique de rotation ; TRANSMETTRE la change en énergie mécanique de translation.')
+    else:
+        entree = 'Réseau du bâtiment\nénergie : ?'
+        energies = ['énergie : ?'] * 4
+        resume = 'Les flèches d’énergie portent un point d’interrogation : les énergies sont à trouver.'
+    d = Diagram('Book Train : l’information (en haut)\ncommande l’énergie (en bas)',
+        CONVENTION + ' En haut, la chaîne d’information : ACQUÉRIR (terminal de commande, capteurs du rail) reçoit la demande du lecteur '
+        'et la position du wagonnet ; TRAITER (automate et serveur, destination programmée) décide ; COMMUNIQUER (ordres au variateur, '
+        'écran du comptoir) transmet. L’ordre descend de COMMUNIQUER et arrive sur DISTRIBUER. En bas, la chaîne d’énergie, de haut '
+        'en bas : ALIMENTER (convertisseur 480 V ~ / 24 V ⎓, rail qui alimente), DISTRIBUER (armoire : contacteurs, relais, variateur), '
+        'CONVERTIR (moteur électrique 24 V ⎓), TRANSMETTRE (réducteur et galets), pour déplacer le wagonnet. ' + resume, H, W)
+    # ── en haut : la chaîne d'information
+    d.section(132, 'CHAÎNE D’INFORMATION — en haut : elle décide', CYAN)
+    d.arrow([(120, 158), (120, 196)], CYAN, 'Demande du lecteur, position du wagonnet', 136, 184, lanchor='start')
+    for x, f, comp, col in [(20, 'ACQUÉRIR', 'Terminal de commande\nCapteurs du rail', CYAN),
+                            (275, 'TRAITER', 'Automate et serveur\nDestination\nprogrammée', VIOLET),
+                            (530, 'COMMUNIQUER', 'Ordres au variateur\nÉcran du comptoir', GREEN)]:
+        d.block(x, 200, f, comp, col, w=212, csize=20)
+    d.arrow([(234, 238), (271, 238)], CYAN)
+    d.arrow([(489, 238), (526, 238)], CYAN)
+    # ── l'ordre descend (par la droite, sans traverser un texte) et arrive sur DISTRIBUER
+    xs, yb = 205, [486, 646, 806, 966]          # la chaîne d'énergie, de haut en bas
+    yd = yb[1] + 38
+    d.arrow([(744, 238), (754, 238), (754, yd), (xs + 214, yd)], GREEN, 'Ordres : démarrer,\nralentir, arrêter', 740, yd - 48, dashed=True, lanchor='end')
+    # ── en bas : la chaîne d'énergie
+    d.section(412, 'CHAÎNE D’ÉNERGIE — en bas : elle obéit', ORANGE)
+    cx = xs + 105
+    d.arrow([(cx, 424), (cx, 480)], ORANGE, entree, cx + 16, 446, lanchor='start')
+    for y, f, comp, col in zip(yb, ['ALIMENTER', 'DISTRIBUER', 'CONVERTIR', 'TRANSMETTRE'],
+                               ['Convertisseur\n480 V ~ / 24 V ⎓\nRail qui alimente', 'Armoire :\ncontacteurs,\nrelais, variateur',
+                                'Moteur électrique\n24 V ⎓', 'Réducteur\net galets'], [YELLOW, CYAN, VIOLET, GREEN]):
+        d.block(xs, y, f, comp, col, csize=20, cpos='left')
+    for i, lab in enumerate(energies):
+        y0 = yb[i] + 78
+        y1 = yb[i + 1] - 6 if i < 3 else y0 + 70
+        d.arrow([(cx, y0), (cx, y1)], ORANGE, lab, cx + 16, y0 + 30, lanchor='start')
+    d.text(cx, yb[3] + 180, 'Déplacer le wagonnet', WHITE, 22, True)
+    d.text(W / 2, H - 70, 'L’information en haut, l’énergie en bas : l’ordre descend.', BLUE, 18)
+    d.text(W / 2, H - 40, 'Schéma original CC0 — séquence « Book Train ».', BLUE, 16)
+    nom = 'chaines_book-train_complete.svg' if complete else 'chaines_book-train_question.svg'
+    d.save(C4 / '4e/4e_C4.1_book-train/Images' / nom)
+
+
+def book_deux_chaines():
+    _book_deux_chaines(False)
+    _book_deux_chaines(True)
+    lot = ROOT / C4 / '4e/4e_C4.1_book-train'
+    page = lot / 'sequence_4e_C4.1-C4.2-C4.4_book-train.html'
+    html = page.read_text(encoding='utf-8')
+    html, n = incruster(html, (lot / 'Images/chaines_book-train_question.svg').read_text(encoding='utf-8'), 'question')
+    if n != 4: raise RuntimeError('Book Train : %d figure(s) de question au lieu de 4 (1.2, 1.3, 2.1, 2.2)' % n)
+    html, n = incruster(html, (lot / 'Images/chaines_book-train_complete.svg').read_text(encoding='utf-8'), 'complete')
+    if n != 1: raise RuntimeError('Book Train : la correction de 2.1 n’a pas son emplacement')
+    page.write_text(html, encoding='utf-8')
 
 
 def circuit_eau(d, y, etapes):
@@ -507,7 +603,7 @@ def barriere():
     d.save(C9_5E/'Images/barriere_cyclone_condition.svg')
 
 
-FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, station, trois_cas, book, jardin_programme, arrosage, barriere)}
+FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines)}
 
 if __name__=='__main__':
     import sys

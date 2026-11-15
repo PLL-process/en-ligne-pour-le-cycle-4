@@ -15,6 +15,10 @@ Deux défauts techniques en plus, mesurés dans Chromium (la lecture de draw.io)
 
 CE QUE FAIT CE SCRIPT
 ---------------------
+Depuis le 15/11/2026 (demande de Pascal : « les chaînes d'énergie et d'information devront être animées, tous les
+flux »), chaque flèche porte `flowAnimation=1` : une chaîne montée dans draw.io avec cette bibliothèque a ses flux
+animés, et `--verifier` refuse une flèche qui ne l'est pas.
+
 Il écrit 34 formes conformes aux n°310, n°131 et n°6 : les sept fonctions et STOCKER, chacune avec sa
 ligne de composant dessous ; deux fonctions absentes ; les flèches d'information, de compte rendu, d'ordre
 (qui descend vers DISTRIBUER) et d'énergie, chacune avec sa forme ; l'action finale, le titre et le pied
@@ -130,7 +134,8 @@ def absente(titre, nom, raison):
 
 def fleche(titre, label, c, dashed=False, both=False, vertical=False, size=18):
     e = Entree(titre)
-    st = (f'edgeStyle=none;html=0;strokeColor={c};strokeWidth=3;endArrow=block;endFill=1;'
+    # flowAnimation=1 (15/11/2026, demande de Pascal : tous les flux animés) : draw.io fait avancer le trait de la flèche
+    st = (f'edgeStyle=none;html=0;strokeColor={c};strokeWidth=3;endArrow=block;endFill=1;flowAnimation=1;'
           f'startArrow={"block" if both else "none"};startFill=1;dashed={1 if dashed else 0};'
           f'{"dashPattern=8 6;fixDash=1;" if dashed else ""}fontColor={c};fontSize={size};{FONT}')
     if vertical:  # étiquette à droite du trait, jamais dessus (piège 7) — sans fond, qui masquerait le trait
@@ -272,6 +277,8 @@ def verifier(texte):
                 ecarts.append("bloc hors du vocabulaire des fonctions « %s » : %s" % (v, titre))
             if "dashPattern" in st and "fixDash=1" not in st:
                 ecarts.append("pointillés sans fixDash=1 : %s" % titre)
+            if c.get("edge") == "1" and not re.search(r"(^|;)flowAnimation=1(;|$)", st):
+                ecarts.append("flèche sans animation de flux (flowAnimation=1 attendu) : %s" % titre)
     for attendu in DOIVENT_SE_LIRE:
         if attendu not in valeurs:
             ecarts.append("saut de ligne perdu ou forme absente : %r" % attendu)

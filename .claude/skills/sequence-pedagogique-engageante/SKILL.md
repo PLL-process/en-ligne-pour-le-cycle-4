@@ -108,6 +108,10 @@ aujourd'hui seulement les quatre pages de la station 3e_C9.2, engendrées depuis
 - Durée : la somme des activités plus la marge de service tient dans le temps disponible (n°23).
 - Chaque production demandée a son champ (n°67) et, si elle est écrite, sa version étayée (n°31). Son corrigé complet
   est replié et vient après l'activité (n°43).
+- Une production faite avec un outil (draw.io, Impress, tableur, Vittascience, éditeur Python…) : son corrigé **montre la
+  production entière, telle que l'outil la rend** (export, capture, ou dessin de même géométrie que le fichier fourni),
+  et **donne le fichier corrigé** à télécharger. L'élève qui découvre l'outil n'a aucune autre référence (n°332,
+  15/11/2026 ; `python3 _outils/controle_correction_complete.py`).
 - Question à choix : `<fieldset class="qcm-groupe">`, énoncé dans la `<legend>`, un `input type="radio"` par proposition avec
   son `<label for>`, le même `name` pour tout le groupe, et le texte de la proposition comme `value`. Jamais de `<select>`
   (n°300, 20/09/2026 ; le gabarit est au journal).
