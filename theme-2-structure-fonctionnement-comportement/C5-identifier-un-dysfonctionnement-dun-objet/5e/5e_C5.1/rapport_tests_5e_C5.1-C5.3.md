@@ -21,6 +21,18 @@ attendu). Suite : `tests_lot08.js` — 22 tests, **tous réellement exécutés**
 > (n°226), les réponses extraites de la page et non recopiées, les réfutations parallèles
 > vérifiées question par question, et l'absence de boîte modale sur tout le parcours.
 
+> **Révision du 14/11/2026** (révision des trois thèmes, ligne 29 du suivi). Les trente questions sont des groupes de
+> boutons radio (règle d'or n°300) ; les réponses attendues se lisent dans les tables `ATT1` à `ATT4` de la page. Le banc
+> coche les boutons et gagne **quatre contrôles** : aucune liste déroulante et chaque réponse attendue présente une seule
+> fois ; la bonne réponse change de place (aucune place n'en porte plus de 40 %) ; en séance 2, le protocole est replié
+> pendant qu'on range les étapes et les boutons du simulateur ne sont pas dans l'ordre ; une seule erreur donne 7 / 8, ne
+> valide pas l'activité et marque cette seule question « à revoir ».
+>
+> ```
+> node tests_5e_C5.1-C5.3.mjs      →  30 / 30
+> node tests_regle_311_5e_C5.1.mjs →  34 / 34
+> ```
+
 **Résultat : 22 / 22 réussis · aucune erreur JavaScript sur les deux pages.**
 
 ## Séquence (14 tests)

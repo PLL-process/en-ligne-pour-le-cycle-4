@@ -37,6 +37,8 @@ et sans rien jeter qui puisse être réparé ?
 ## Évaluation
 
 - **Formative** : vérificateurs intégrés (verrous expérientiels : inspection 6/6, réparation 6/6) + auto-positionnement par code.
+  Depuis la révision du 14/11/2026, une activité n'est validée que si toutes ses réponses sont justes (8/8, 8/8, 7/7, 4/4,
+  comme le disent ses critères de réussite ; avant, 7/8 suffisait) ; chaque question fausse est marquée « à revoir ».
 - **Entraînement** : QCM 30 questions (10 par code, 3 illustrées, corrections exhaustives, réponses réparties A/B/C/D).
 - **Sommative** : à construire par l'enseignant (corrigé non publié dans le dépôt public). Item rapide suggéré : remettre le protocole en ordre.
 - **LSU** : saisie par code (C5.1 / C5.2 / C5.3) via les critères de réussite affichés.

@@ -13,9 +13,16 @@
  * y compris une étape jouée trop tôt, qui doit tout remettre à zéro —, les
  * quatre activités remplies, la page rechargée, puis le QCM ouvert et joué.
  *
- * Les bonnes réponses ne sont pas recopiées ici : elles sont extraites des
- * fonctions `CHECKS` de la page. Un test qui recopie ce qu'il doit vérifier
+ * Les bonnes réponses ne sont pas recopiées ici : elles sont lues dans les
+ * tables `ATT1` à `ATT4` de la page (depuis la révision du 14/11/2026 ; avant,
+ * dans les fonctions `CHECKS`). Un test qui recopie ce qu'il doit vérifier
  * cesse de le vérifier.
+ *
+ * Révision du 14/11/2026 (révision des trois thèmes, ligne 29) : les questions
+ * sont des groupes de boutons radio (n°300) ; le banc coche le bouton dont la
+ * valeur est la réponse attendue, et vérifie en plus qu'une seule erreur
+ * empêche la validation et marque sa question « à revoir », que la bonne
+ * réponse change de place, et que le protocole se range sans être sous les yeux.
  *
  * Usage, depuis ce dossier :
  *   node tests_5e_C5.1-C5.3.mjs
@@ -70,32 +77,54 @@ ok(`4 · inspecteur visuel : les ${zones.length} zones examinées → compteur p
    await p.textContent('#inspCompteur'));
 
 /* ── les réponses attendues, LUES dans la page ───────────────────────────── */
-const ATT = await p.evaluate(() => {
-  const out = {};
-  for (const n of Object.keys(CHECKS)) {
-    const m = CHECKS[n].toString().match(/att(?:endu)?\s*=\s*(\{[\s\S]*?\})\s*;/);
-    out[n] = m ? eval('(' + m[1] + ')') : {};
-  }
-  return out;
-});
+const ATT = await p.evaluate(() => JSON.parse(JSON.stringify(ATTENDUS)));
 ok('4 bis · les bonnes réponses sont extraites de la page, pas recopiées ici',
    Object.keys(ATT).length === 4
    && Object.values(ATT).every(o => Object.keys(o).length > 0),
    Object.entries(ATT).map(([k, v]) => `${k}:${Object.keys(v).length}`).join(' · '));
 
 const PANNEAU = { 1: 's1', 2: 's2', 3: 's3', 4: 's3' };
+/* un groupe de boutons radio (n°300) : on coche le bouton dont la valeur est la réponse */
+const cocher = (id, v) => p.evaluate(([id, v]) => {
+  const r = [...document.querySelectorAll(`#${id} input[type=radio]`)].find(x => x.value === v);
+  if (!r) throw new Error(`${id} : aucune proposition « ${v} »`); r.click(); }, [id, v]);
+const coche = id => p.evaluate(id => { const c = document.querySelector(`#${id} input[type=radio]:checked`); return c ? c.value : ''; }, id);
+
+ok('4 ter · aucune question posée par une liste déroulante (n°300) ; chaque réponse attendue est une proposition, une seule fois',
+   (await p.$$eval('body select', l => l.length)) === 0
+   && await p.evaluate(A => Object.values(A).every(t => Object.entries(t).every(([id, v]) =>
+        [...document.querySelectorAll(`#${id} input[type=radio]`)].filter(x => x.value === v).length === 1)), ATT),
+   String(await p.$$eval('body select', l => l.length)));
+const places = await p.evaluate(A => { const n = {}; for (const t of Object.values(A)) for (const [id, v] of Object.entries(t)) {
+  const f = document.getElementById(id); if (f.classList.contains('qcm-grille')) continue;
+  const i = [...f.querySelectorAll('input[type=radio]')].findIndex(x => x.value === v); n[i] = (n[i] || 0) + 1; } return n; }, ATT);
+ok('4 quater · la bonne réponse change de place (aucune place n\'en porte plus de 40 %)',
+   Object.keys(places).length >= 4 && Object.values(places).every(k => k <= 0.4 * Object.values(places).reduce((a, b) => a + b, 0)),
+   JSON.stringify(places));
+await p.click('.seance-tab[data-panel="s2"]'); await p.waitForTimeout(120);
+ok('4 quinquies · séance 2 : le protocole du technicien est replié pendant qu\'on range les étapes, et les boutons du simulateur ne sont pas dans l\'ordre',
+   await p.evaluate(() => { const d = document.getElementById('protocole-doc');
+     return !!d && !d.open && !!d.querySelector('object[data*="protocole_six_etapes"]')
+       && [...document.querySelectorAll('.repbtn')].map(b => b.dataset.etape).join('') !== '123456'; }));
+await p.click('.seance-tab[data-panel="s1"]'); await p.waitForTimeout(120);
 async function remplir(n) {
   await p.click(`.seance-tab[data-panel="${PANNEAU[n]}"]`); await p.waitForTimeout(120);
   for (const [id, v] of Object.entries(ATT[n])) {
-    const balise = await p.$eval('#' + id, e => e.tagName);
-    if (balise === 'SELECT') await p.selectOption('#' + id, v);
-    else await p.fill('#' + id, v);
+    await cocher(id, v);
   }
 }
 const valider = async n => { await p.click(`[data-check="${n}"]`); await p.waitForTimeout(90); };
 const retour = n => p.textContent('#fb' + n);
 
-await remplir(1); await valider(1);
+await remplir(1);
+const z = Object.keys(ATT[1])[2], autre = await p.evaluate(([id, v]) =>
+  [...document.querySelectorAll(`#${id} input[type=radio]`)].map(x => x.value).find(x => x !== v), [z, ATT[1][z]]);
+await cocher(z, autre); await valider(1);
+ok('4 sexies · une seule erreur : 7 / 8, l\'activité n\'est PAS validée, et seule cette question est marquée « à revoir »',
+   /7 \/ 8/.test(await retour(1)) && !(await p.evaluate(() => (window.__valid || {})[1]))
+   && JSON.stringify(await p.$$eval('#act1 fieldset.qcm-groupe.ko', l => l.map(f => f.id))) === JSON.stringify([z]),
+   (await retour(1)).slice(0, 80));
+await cocher(z, ATT[1][z]); await valider(1);
 ok('5 · activité 1 validée 8/8, verrou d\'inspection actif',
    /8 \/ 8/.test(await retour(1)), (await retour(1)).slice(0, 70));
 
@@ -126,7 +155,7 @@ ok('10 · barre de progression : 4 / 4 activités validées',
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(320);
 const premierId = Object.keys(ATT[1])[0];
 ok('11 · rechargement : réponses, validations ET verrous restaurés',
-   (await p.inputValue('#' + premierId)) === ATT[1][premierId]
+   (await coche(premierId)) === ATT[1][premierId]
    && (await p.textContent('#progTxt')).includes('4 / 4')
    && await p.evaluate(() => !!(window.__exp.inspection && window.__exp.repare)),
    await p.textContent('#progTxt'));
