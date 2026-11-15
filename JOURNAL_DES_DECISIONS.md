@@ -31300,3 +31300,25 @@ L'unité jugée est le **bloc de question** (la carte d'activité qui contient u
 **Mesure.** Mots visibles : 779 · 1 582 → **544** · **1 302**. Règles d'or 5 → 0 ✘ ; menus 18 → 0 (une commande du banc, déclarée) ; aération 16 → 0. Bancs **35 / 35** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (34 / 35) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 302 mots).** Le banc des sources, l'outil de la séance, y compte pour 160 mots (ses deux tableaux) ; la synthèse, 176 ; le bilan et le positionnement, 175 ; l'annonce garde la consigne de sécurité du matériel (🅰).
+
+## 15/11/2026 — Révision des trois thèmes, 51 : `5e_C7.5` (l'éclairage du préau)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **17 questions posées par une liste déroulante** (n°300) ;
+- **l'activité 0 (quatre fonctions, pas cinq) se jouait sans le schéma du prototype**, et ses réponses se trahissaient : « elle décide » ne pouvait aller qu'à la carte, seule au féminin ;
+- **l'ordre du montage s'affichait dans l'ordre de la réponse**, et deux gestes (brancher le capteur, brancher la DEL) pouvaient s'échanger sans erreur ;
+- une phrase de la fabrique sous le renvoi à l'établi ; 8 écarts d'aération ; une séance 2 à 1 528 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 17 listes en boutons radio ; les cinq listes de ports de l'établi sont des commandes, elles restent des listes (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **trois versions étayées** (`etayage_sequence_5e_C7.5_eclairage-du-preau.json`).
+- **L'activité 0 se joue dans le schéma du prototype** (l'outil commun, demande de Pascal du même jour) : l'information en haut (la lumière, le capteur, la carte), l'ordre qui descend vers le module DEL, l'énergie en bas — le câble USB, par la gauche. Le Base Shield relie les modules à la carte : une flèche grise, sans flux. Six étiquettes, dont STOCKER de trop, réfutée dans la correction.
+- **L'ordre du montage ne se lit plus à l'écran** : les cinq gestes s'affichent dans le désordre. Les deux branchements n'en font plus qu'un (« le capteur sur A0 et la DEL sur D5 ») ; le troisième geste devient **relire chaque port sur le schéma de câblage, le câble encore débranché** — on vérifie avant de mettre sous tension. Les rangs restent en ligne : l'outil de grille ne lettre plus des rangs ni des nombres.
+- **La grille des retraits** (activité 2) : les réponses écrites une fois, lettrées ; une réponse de trop (« la carte grille aussitôt »), réfutée dans la correction.
+- **5 groupes mélangés**, 4 propositions fausses allongées ; la bonne réponse n'est plus la plus longue.
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.5.json`) : 63 pourquoi, dont 25 dans le schéma, case par case ; 4 indices.
+- **La phrase de la fabrique est retirée** ; **le Bonus se replie** ; **aération : 8 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence joue maintenant un vrai clic sur un bouton radio (`input`, puis `change`) : la sauvegarde de la page l'entend.
+
+**Mesure.** Mots visibles : 860 · 1 528 → **676** · **1 317**. Règles d'or 5 → 0 ✘ ; menus 22 → 0 (cinq commandes de l'établi, déclarées) ; aération 8 → 0. Bancs **40 / 40** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (39 / 40) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
+
+**Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 317 mots).** L'établi, l'outil des deux séances, y compte pour 272 mots ; la synthèse, 160 ; le bilan et le positionnement, 214.
