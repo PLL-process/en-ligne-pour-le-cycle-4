@@ -66,7 +66,7 @@ d'autant.
 | 42 | `4e_C7.4` | 1582 → 1362 | 5 → 0 | 22 → 0 | 23 → 0 | livrée #706 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; 10 groupes mélangés, réponses chiffrées dans l'ordre, 3 propositions allongées ; une réponse de trop dans la grille ; séance 2 (1 362) au-dessus : le banc, outil de la séance, et la clôture |
 | 43 | `4e_C7.5` | 2077 → 1572 | 5 → 0 | 23 → 0 | 25 → 0 | livrée #707 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; piqûre de rappel repliée à sa source, séance 1 1 728 → 1 078 ; une réponse de trop dans la grille ; séance 2 (1 572) au-dessus : l'établi, outil des deux séances (471 mots), et la clôture |
 | 44 | `4e_C7.7` | 1831 → 1698 | 5 → 0 | 16 → 0 | 19 → 0 | livrée #709 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; une réponse de trop dans les deux grilles ; « allonger la fente à 23 mm » réfuté ; une phrase de la fabrique retirée ; séance 2 (1 698) au-dessus : l'atelier, outil de la séance, des propositions longues par construction, et la clôture |
-| 45 | `4e_C7.8` | 1880 | 5 | 19 | 15 | à faire |
+| 45 | `4e_C7.8` | 1880 → 1616 | 5 → 0 | 19 → 0 | 15 → 0 | livrée #710 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; la bonne réponse était la plus longue 11 fois sur 13 : 19 propositions fausses allongées ; une réponse de trop dans la grille ; séance 2 (1 616) au-dessus : le banc du lien, outil de la séance, et la clôture |
 | 46 | `4e_C8.1` | 1975 → 1320 | 1 → 0 | 25 → 0 | 22 → 0 | livrée #711 — 16 listes en boutons radio, grille « Conforme ? » comprise (ordre, noms et retours gardés) ; les 8 menus du tableau de l'exercice incrusté reconnus comme voulus (n°317) ; piqûre de rappel repliée ; six corrections de l'exercice aérées à leur source ; séance 2 (1 320) juste au-dessus : l'exercice du diagramme des exigences |
 | 47 | `4e_C9.1` | 2909 | 1 | 54 | 34 | à faire |
 | 48 | `5e_C7.1` | 1685 | 1 | 17 | 17 | à faire |
@@ -263,6 +263,10 @@ d'autant.
   mélangés ; 21 pourquoi, 7 indices, une réponse de trop dans chacune des deux grilles ; la correction réfute aussi
   « allonger la fente à 23 mm » ; la phrase de la fabrique sous les renvois à l'atelier retirée ; Bonus replié ; aération
   19 → 0. Séances 863 · 1 846 → 910 · 1 698. Reste : la séance 2 au-dessus (l'atelier, les propositions longues, la clôture).
+- **4e_C7.8** (le jardin publié), 15/11/2026 (#710) : déjà sur le gabarit commun, sans ✘ ni menu ; la bonne réponse
+  était la plus longue 11 fois sur 13 : 19 propositions fausses allongées ; 17 groupes mélangés ; 39 pourquoi, 4 indices,
+  une réponse de trop dans la grille ; Bonus replié ; aération 15 → 0. Séances 872 · 1 705 → 925 · 1 616. Reste : la
+  séance 2 au-dessus (le banc du lien, outil de la séance, et la clôture).
 - **4e_C8.1** (le jardin, valider), 15/11/2026 (#711) : 16 listes deviennent des boutons radio, la grille « Conforme ? »
   comprise (son ordre, le nom de chaque case et le retour sous chaque case sont gardés) ; les 8 menus du tableau de
   l'exercice incrusté sont reconnus comme voulus par la n°317 (`verif_regles_audit.py`, `migrer_gabarit_306.py`) ;
