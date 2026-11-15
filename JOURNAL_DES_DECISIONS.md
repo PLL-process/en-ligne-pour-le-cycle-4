@@ -31139,3 +31139,38 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Mots visibles : 432 · 1 878 · 528 → 493 · **1 320** · 485. Règles d'or 1 → 0 ✘ ; menus 25 → 0 ; aération 22 → 0. Bancs **54 / 54** (séquence), **34 / 34** (n°311) ; `tests_verif_regles_audit.py` **68 / 68**. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
 
 **Ce qui reste.** **La séance 2 reste juste au-dessus du repère (1 320 mots).** L'exercice du diagramme des exigences, que le vérificateur de l'activité exige, y compte pour 976 mots, schéma compris : c'est le travail de la séance.
+
+## 15/11/2026 — Les chaînes sous les yeux, suite : le jardin incomplet (`4e_C7.5`)
+
+Suite de la PR #708 (même demande de Pascal : l'élève pose les étiquettes dans le schéma, qu'il a toujours sous les yeux).
+
+**Le constat.** L'activité 0 (« chaque constituant, sa fonction ») était une grille : six constituants, sept réponses
+lettrées A à G, sans le schéma du prototype. L'élève associait des noms à des phrases sans voir où chaque constituant
+se trouve dans la chaîne.
+
+**Ce qui est fait.**
+- **L'activité 0 se joue dans le schéma du prototype** : la commande en haut (le capteur, la carte, l'écran), l'ordre
+  qui descend vers le relais, la puissance en bas (le relais, la pompe, l'alimentation externe). Le constituant est
+  écrit sous chaque bloc ; l'élève pose dans le bloc sa fonction. L'écran porte déjà la sienne (COMMUNIQUER) : il
+  montre où va la mesure.
+- **Six étiquettes, dont une de trop** : AGIR (deux fois, le relais et la pompe — la question qui suit demande
+  pourquoi), ACQUÉRIR, TRAITER, ALIMENTER, RELIER, et **STOCKER**, qui ne va nulle part : le prototype n'a pas de
+  batterie. La correction le dit.
+- **Le Base Shield** est relié à la carte par une flèche grise, sans flux : il branche, il ne transmet ni énergie ni
+  information. L'outil commun reçoit pour cela la nature `lien` ; un bloc étroit peut réduire la taille de sa fonction
+  (`tf`, l'écran au téléphone).
+- **Le mode mission** reçoit 30 pourquoi, case par case (`mission_4e_C7.5.json`) : ce que veut dire la fonction
+  choisie, puis ce que fait vraiment le constituant.
+
+**Mesure.** Séance 1 : 1 078 → **997** mots visibles, 7 → 6,2 écrans. Règles d'or 0 ✘ ; aération 0. Bancs **41 / 41**
+(séquence) et **34 / 34** (n°311) ; le mode mission joue les cinq pages à chaînes, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Remarque de Pascal (15/11/2026, après la fusion de #708).** Sur le schéma de l'alimentation de la station
+(`3e_C4.1`), le secteur arrivait par la droite : « L'alimentation secteur doit aussi venir de la gauche. » L'énergie
+entre par la gauche, comme le soleil. Le bloc du secteur passe en haut à gauche de la carte de basculement, sa flèche
+part du bord gauche. Au téléphone, le secteur arrive à gauche du schéma, la batterie passe à droite. Aucune autre
+flèche d'énergie, d'information ou d'ordre des cinq dessins n'entre plus par la droite (vérifié sur leurs tracés).
+Bancs de `3e_C4.1` : **23 / 23**, **34 / 34**, mode mission sans refus.
+
+**Ce qui reste.** `5e_C7.5` (l'éclairage du préau) est encore sur l'ancien gabarit (listes déroulantes) : sa chaîne
+passera dans le schéma pendant sa révision (ligne 51 du suivi).
