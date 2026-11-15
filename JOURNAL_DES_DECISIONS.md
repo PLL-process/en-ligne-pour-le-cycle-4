@@ -30761,6 +30761,20 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 
 **Mesure.** Mots visibles : 1 796 · 908 · 895 · 896 → 868 · 908 · 779 · 896. Règles d'or 0 ✘ ; aération 29 → 0. Bancs 68 / 68 (67 / 68 sur `main`), 32 / 32, 34 / 34. Mode mission : 28 / 28 pourquoi, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : aucun schéma à juger dans la page).
 
+## 15/11/2026 — Révision des trois thèmes, 33 : `3e_C7.4` (l'énergie de la station)
+
+**Le constat.** Même famille que `3e_C7.3` : questions en boutons radio depuis la V2, distracteurs plausibles, mais la bonne réponse **12 fois sur 16 en première position** ; cinq questions qui répétaient les cinq mêmes longues réponses (le coût de fabrication de chaque source) ; 27 écarts d'aération ; la séance 2 à 1 220 mots.
+
+**Ce qui est fait.**
+- **Une grille** (`grilles_radio.py`) : ce que coûte, à fabriquer et à jeter, chacune des cinq sources — les cinq réponses une fois, lettrées (séance 2 : 1 220 → 912 mots).
+- **Places** (`melanger_propositions.py`) : 13 groupes mélangés.
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_3e_C7.4.json`, 39 pourquoi, 5 indices de ligne).
+- **Aération : 27 → 0** (98 retours à la ligne, une correction réécrite en lignes).
+- **n°304** : « ce que tu as appris à calculer sur le mât » devient « ce qu'on calcule pour le mât ».
+- **Le banc de la séquence** échouait sur `main` (53 / 54) pour la même raison que celui de `3e_C7.3` : la page ne dit plus « validée » pour une réponse libre ; il suit maintenant la page.
+
+**Mesure.** Mots visibles : 681 · 1 220 · 1 132 → 681 · 912 · 1 132. Règles d'or 0 ✘ ; aération 27 → 0. Bancs 54 / 54 (53 / 54 sur `main`), 32 / 32, 34 / 34. Mode mission : chaque mauvaise proposition jouée a son pourquoi (38 / 38), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : la page n'en a aucun à contrôler).
+
 ## 15/11/2026 — Impression : l'image de la situation déclenchante tient à côté de sa légende
 
 **La décision.** Pascal, le 15/11/2026 (« Oui pour tout », puis « Tu as carte blanche ») : étendre la règle d'impression « sans blancs » (14/11/2026) aux images PNG de la situation déclenchante.
@@ -30770,4 +30784,3 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Ce qui est fait.** Dans `papier.css`, les trois règles de la photo s'appliquent aussi à `figure.situation-photo` (l'image, sa légende, leur rangée), quelle que soit l'extension. Les schémas et les captures gardent leur largeur. La fiche papier est reposée sur les 60 séquences (`poser.py`) ; le générateur de `3e_C9.2` rend les mêmes quatre pages.
 
 **Mesure** (les 173 fiches imprimées de toutes les séquences, avant et après, `banc_papier.py --pdf`) : **697 → 675 pages** ; 22 séances 1 gagnent une page, aucune fiche n'en prend ; blanc perdu en bas de page 21 328 → 19 523 mm. `controle_impression_papier.py` ✅ ; le banc papier ✅ (en-tête, une séance, aucun champ d'écran, aucun texte pâle, première page remplie).
-

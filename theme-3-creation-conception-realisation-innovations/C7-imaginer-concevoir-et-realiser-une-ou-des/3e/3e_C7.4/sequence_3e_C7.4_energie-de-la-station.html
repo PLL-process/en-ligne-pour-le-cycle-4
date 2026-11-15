@@ -1332,6 +1332,23 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
 </head>
 <body>
 
@@ -1369,7 +1386,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <tr><td><b>3e_C7.4</b></td><td>Choisir une source d'énergie pour un OST.</td><td>Séance 1 : activités 0 et 1 · séance 2 : activité 2 · séance 3 : activité 4 et REFAIRE</td></tr>
     <tr><td>3e_C3.2 <span style="color:var(--sub)">(appui)</span></td><td>Choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable.</td><td>Séance 2 : activité 3</td></tr>
   </table>
-  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C3.2</code> · <code>3e_C7.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C3.2</code> · <code>3e_C7.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
 </div>
 </details>
 
@@ -1394,20 +1411,20 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <p class="rattrapage">→ pas encore sûr·e ? <a href="../../../../theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/4e/4e_C3.1/Synthèses/synthese_eleve_4e_C3.1-C3.3.html#partie-1">relis la partie 1 de la synthèse 4e_C3.1 à C3.3, « Comment transformer un souhait en critère vérifiable ? »</a></p>
     </li>
   </ul>
-  <p class="change"><b>Dans cette séquence&nbsp;:</b> la station d'alerte cyclonique doit avoir de l'énergie <b>le jour où elle sert</b> — et c'est justement le jour où le courant est coupé. On ne te donne ni liste de sources ni grille : un objet réel, une contrainte réelle, et un avis à signer.</p>
+  <p class="change"><b>Dans cette séquence&nbsp;:</b> la station d'alerte cyclonique doit avoir de l'énergie <b>le jour où elle sert</b> — et c'est justement le jour où le courant est coupé. <br>On ne te donne ni liste de sources ni grille : un objet réel, une contrainte réelle, et un avis à signer.</p>
   <p class="filet">Un mot à garder en tête : une réserve se dimensionne sur le pire cas — calculée sur la moyenne, elle est vide le jour où elle sert.</p>
 </section>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p>La station est en place, en tête de son mât, sur le toit de l'annexe. Elle est branchée
-    sur le secteur (le courant des prises) du bâtiment, par un adaptateur scellé. Tout va bien.</p>
-    <p><b>Puis vient le cyclone.</b> Le vent passe 118 km/h, la station bascule en alerte rouge, le
-    buzzer (un petit haut-parleur qui sonne) sonne — et <b>le réseau électrique tombe</b>. Il tombe toujours : c'est même la
+    <p>La station est en place, en tête de son mât, sur le toit de l'annexe. <br>Elle est branchée
+    sur le secteur (le courant des prises) du bâtiment, par un adaptateur scellé. <br>Tout va bien.</p>
+    <p><b>Puis vient le cyclone.</b><br>Le vent passe 118 km/h, la station bascule en alerte rouge, le
+    buzzer (un petit haut-parleur qui sonne) sonne — et <b>le réseau électrique tombe</b>. <br>Il tombe toujours : c'est même la
     première chose qui tombe.</p>
     <p>« Après un cyclone majeur, dit l'adjoint au maire, le courant revient chez nous en
-    <b>24 à 72 heures</b>. Votre station doit tenir <b>jusqu'au bout</b> — c'est précisément
+    <b>24 à 72 heures</b>. <br>Votre station doit tenir <b>jusqu'au bout</b> — c'est précisément
     pendant ces heures-là qu'elle sert à quelque chose. »</p>
 </div>
   <figure class="situation-photo">
@@ -1423,7 +1440,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
     <p>Première idée, presque toujours : « on met un panneau solaire, c'est autonome ».
-    <b>Écris ce que tu en penses maintenant</b>, avant tout calcul — et garde-la : on la
+    <br><b>Écris ce que tu en penses maintenant</b>, avant tout calcul — et garde-la : on la
     relira au bilan, et elle vaudra peut-être plus que la bonne réponse.</p>
     <textarea aria-label="À mon avis, pour tenir 72 h sans réseau, il faut… parce que…" id="hyp" rows="3" placeholder="À mon avis, pour tenir 72 h sans réseau, il faut… parce que…"></textarea>
 
@@ -1436,13 +1453,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
   <div class="declencheur">
     <ul>
-      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V (volts). Le « secteur », <b>c'est
-        l'adaptateur USB fermé</b>, jamais la prise, jamais le câble d'alimentation. On ne
+      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V (volts). <br>Le « secteur », <b>c'est
+        l'adaptateur USB fermé</b>, jamais la prise, jamais le câble d'alimentation. <br>On ne
         l'ouvre pas, on ne le coupe pas. <b>Côté élève, il n'y a que du 5 V.</b></li>
-      <li><b>Les accus Li-ion ne sont pas des piles.</b> Court-circuités, percés, écrasés ou
-        chargés par un chargeur qui n'est pas le leur, ils s'emballent thermiquement. Un accu
-        qui gonfle, chauffe ou sent : on le pose au sol, loin de tout, et on prévient un adulte.
-        Jamais dans un sac, jamais dans une poche.</li>
+      <li><b>Les accus Li-ion ne sont pas des piles.</b><br>Court-circuités, percés, écrasés ou
+        chargés par un chargeur qui n'est pas le leur, ils s'emballent thermiquement. <br>Un accu
+        qui gonfle, chauffe ou sent : on le pose au sol, loin de tout, et on prévient un adulte. <br>Jamais dans un sac, jamais dans une poche.</li>
       <li>Un montage installé <b>dehors, en Martinique</b> : boîtier fermé, presse-étoupes vers
         le bas, aucun accu accessible sans outil.</li>
       <li>Piles et accus usagés vont au <b>bac de collecte</b>, jamais à la poubelle.</li>
@@ -1454,10 +1470,9 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <ul>
     <li><b>🅰 Avec le matériel</b> — le montage réel sur la paillasse, alimenté tour à tour par
-      chaque source, et un multimètre en série pour lire le courant. Les valeurs mesurées
+      chaque source, et un multimètre en série pour lire le courant. <br>Les valeurs mesurées
       remplacent alors celles du banc : ce sont elles qui font foi.</li>
-    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer.
-      C'est la voie par défaut, et la seule qui permette d'éteindre un consommateur pour voir
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer. <br>C'est la voie par défaut, et la seule qui permette d'éteindre un consommateur pour voir
       ce qu'il pesait.</li>
     <li><b>🅲 Sans écran</b> — les tableaux s'impriment et toutes les valeurs figurent dans les
       corrections. Le travail reste le même : lire, comparer, décider, justifier.</li>
@@ -1468,26 +1483,26 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
-  <fieldset class="qcm-groupe" id="be_1">
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
+  <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Pour comparer des sources d'énergie, on écrit les critères…</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="après avoir choisi sa source préférée"><label for="be_1__1">après avoir choisi sa source préférée</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="avant de regarder les candidats"><label for="be_1__2">avant de regarder les candidats</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="seulement si deux sources se valent"><label for="be_1__3">seulement si deux sources se valent</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="après avoir choisi sa source préférée" data-pourquoi="Écrits après coup, les critères servent à justifier un choix déjà fait : ils ne comparent plus rien."><label for="be_1__1">après avoir choisi sa source préférée</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="seulement si deux sources se valent" data-pourquoi="Sans critères écrits, on ne sait même pas dire si deux sources se valent."><label for="be_1__3">seulement si deux sources se valent</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
       <legend>Au banc, la carte consomme 5,4 wattheures (Wh) par jour, et la pompe 0,025 Wh. Ce qui pèse le plus, c'est…</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="la carte, parce qu&#x27;elle tourne 24 heures sur 24"><label for="be_2__1">la carte, parce qu'elle tourne 24 heures sur 24</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="la pompe, parce qu&#x27;elle tire le plus de courant"><label for="be_2__2">la pompe, parce qu'elle tire le plus de courant</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="les deux à égalité, puisque tout est branché"><label for="be_2__3">les deux à égalité, puisque tout est branché</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="la pompe, parce qu&#x27;elle tire le plus de courant" data-pourquoi="Elle tire beaucoup, mais quelques secondes par jour : l'énergie, c'est le courant multiplié par la durée."><label for="be_2__2">la pompe, parce qu'elle tire le plus de courant</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="les deux à égalité, puisque tout est branché" data-pourquoi="Être branché ne dit rien : compare les deux nombres de wattheures."><label for="be_2__3">les deux à égalité, puisque tout est branché</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
-  <fieldset class="qcm-groupe" id="be_3">
+  <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>Laquelle de ces phrases est une <b>caractéristique</b> utilisable ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="« une batterie de très bonne qualité »"><label for="be_3__1">« une batterie de très bonne qualité »</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="« une autonomie la plus longue possible »"><label for="be_3__2">« une autonomie la plus longue possible »</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="« une autonomie d&#x27;au moins 3 jours »"><label for="be_3__3">« une autonomie d'au moins 3 jours »</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="« une autonomie la plus longue possible »" data-pourquoi="« Le plus possible » ne se vérifie pas : il manque un nombre et son unité."><label for="be_3__2">« une autonomie la plus longue possible »</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="« une batterie de très bonne qualité »" data-pourquoi="« Très bonne » ne se mesure pas : une caractéristique utilisable donne une valeur à atteindre."><label for="be_3__1">« une batterie de très bonne qualité »</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
@@ -1567,8 +1582,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="act0">
   <h2>🖐️ Activité 0 — FAIRE d'abord : quel jour faut-il dimensionner ⏱ ~20 min</h2>
-  <p>Avant toute explication. Le banc compte ce que la station consomme en une
-  journée <b>d'alerte</b> : buzzer et voyant allumés deux heures. Éteins-les, et tu obtiens
+  <p>Avant toute explication. <br>Le banc compte ce que la station consomme en une
+  journée <b>d'alerte</b> : buzzer et voyant allumés deux heures. <br>Éteins-les, et tu obtiens
   une journée calme. <b>Compare les deux, puis passe les cinq sources.</b></p>
   <!-- Un outil n'est pas du décor (n°311) : le banc sert aux séances 1 et 2 (activités 0 à 2). Un seul nœud : à la séance 1,
        il reste ici ; à la séance 2, le script des onglets le place juste après l'en-tête de la séance ; sans JavaScript, il ne bouge pas. -->
@@ -1617,33 +1632,33 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </table>
     <p class="verdict" id="verdict">—</p>
     <p class="detail-src" id="sDetail"></p>
-    <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+    <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. <br>Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. <br>Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
   </div>
   </div><!-- /outil-seance -->
 
   <div class="exo">
 
     <h4>Après avoir essayé</h4>
-    <fieldset class="qcm-groupe" id="a0q1">
+    <fieldset class="qcm-groupe" id="a0q1" data-melange="1">
   <legend><b>1.</b> Entre un jour calme et un jour d'alerte, la consommation…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="est divisée par deux le jour d&#x27;alerte" data-pourquoi="Le jour d'alerte ajoute le buzzer et le voyant : la consommation monte, elle ne baisse pas."><label for="a0q1__4">est divisée par deux le jour d'alerte</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="ne change pas du tout" data-pourquoi="Compare les deux totaux du banc : ils ne sont pas tout à fait égaux."><label for="a0q1__3">ne change pas du tout</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="double : le buzzer consomme autant que tout le reste" data-pourquoi="Le buzzer sonne peu de temps : il ajoute un peu, il ne double pas la journée."><label for="a0q1__2">double : le buzzer consomme autant que tout le reste</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="change peu : 5,64 Wh contre 6,04 Wh"><label for="a0q1__1">change peu : 5,64 contre 6,04 wattheures</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="double : le buzzer consomme autant que tout le reste"><label for="a0q1__2">double : le buzzer consomme autant que tout le reste</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="ne change pas du tout"><label for="a0q1__3">ne change pas du tout</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="est divisée par deux le jour d&#x27;alerte"><label for="a0q1__4">est divisée par deux le jour d'alerte</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a0q2">
+    <fieldset class="qcm-groupe" id="a0q2" data-melange="1">
   <legend><b>2.</b> Pour dimensionner la réserve d'énergie, on prend…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="le jour calme : c&#x27;est le plus fréquent dans l&#x27;année" data-pourquoi="La réserve sert le jour où tout va mal : dimensionner sur le jour calme, c'est tomber en panne ce jour-là."><label for="a0q2__2">le jour calme : c'est le plus fréquent dans l'année</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="la moyenne des deux, c&#x27;est plus juste" data-pourquoi="Une moyenne laisse la station à court le jour d'alerte : on dimensionne sur le pire cas."><label for="a0q2__3">la moyenne des deux, c'est plus juste</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="le jour calme, et on éteindra le buzzer s&#x27;il manque de l&#x27;énergie" data-pourquoi="Le buzzer est l'alerte elle-même : l'éteindre, c'est perdre la fonction de la station."><label for="a0q2__4">le jour calme, et on éteindra le buzzer s'il manque de l'énergie</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="le jour d&#x27;alerte : c&#x27;est le pire, et c&#x27;est celui qui compte"><label for="a0q2__1">le jour d'alerte : c'est le pire, et c'est celui qui compte</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="le jour calme : c&#x27;est le plus fréquent dans l&#x27;année"><label for="a0q2__2">le jour calme : c'est le plus fréquent dans l'année</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="la moyenne des deux, c&#x27;est plus juste"><label for="a0q2__3">la moyenne des deux, c'est plus juste</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="le jour calme, et on éteindra le buzzer s&#x27;il manque de l&#x27;énergie"><label for="a0q2__4">le jour calme, et on éteindra le buzzer s'il manque de l'énergie</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a0q3">
+    <fieldset class="qcm-groupe" id="a0q3" data-melange="1">
   <legend><b>3.</b> Là encore, qu'est-ce qui pèse le plus lourd dans la journée&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__4" value="le voyant d&#x27;alerte, parce qu&#x27;il est très lumineux" data-pourquoi="Très lumineux, mais allumé peu de temps : regarde la durée de fonctionnement."><label for="a0q3__4">le voyant d'alerte, parce qu'il est très lumineux</label></div>
   <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__1" value="la carte, allumée 24 h sur 24"><label for="a0q3__1">la carte, allumée 24 h sur 24</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__2" value="le buzzer, qui fait le plus de bruit"><label for="a0q3__2">le buzzer, qui fait le plus de bruit</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__3" value="l&#x27;anémomètre, qui tourne sans arrêt"><label for="a0q3__3">l'anémomètre, qui tourne sans arrêt</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__4" value="le voyant d&#x27;alerte, parce qu&#x27;il est très lumineux"><label for="a0q3__4">le voyant d'alerte, parce qu'il est très lumineux</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__2" value="le buzzer, qui fait le plus de bruit" data-pourquoi="Le bruit n'est pas l'énergie : le buzzer sonne quelques minutes par jour."><label for="a0q3__2">le buzzer, qui fait le plus de bruit</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q3" id="a0q3__3" value="l&#x27;anémomètre, qui tourne sans arrêt" data-pourquoi="Il tourne avec le vent, mais il consomme très peu de courant : compare les wattheures."><label for="a0q3__3">l'anémomètre, qui tourne sans arrêt</label></div>
 </fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Passe d'abord les cinq sources au banc — on ne dimensionne pas de mémoire.</p>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
@@ -1652,11 +1667,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
       <p><b>1 — 5,64 contre 6,04 Wh</b>, soit 7 % d'écart. Le buzzer fait un bruit énorme et
       consomme 0,30 Wh : c'est 5 % de la journée.</p>
-      <p><b>2 — le jour d'alerte.</b> Une réserve dimensionnée sur la moyenne est vide le jour
-      où elle sert. <b>On dimensionne sur le pire cas, jamais sur le cas courant</b> — c'est la
+      <p><b>2 — le jour d'alerte.</b><br>Une réserve dimensionnée sur la moyenne est vide le jour
+      où elle sert. <br><b>On dimensionne sur le pire cas, jamais sur le cas courant</b> — c'est la
       même règle que le coefficient de sécurité du mât : elle ne protège pas de l'ordinaire,
       elle protège de l'exceptionnel.</p>
-      <p><b>3 — la carte,</b> encore : 5,40 Wh sur 6,04, soit <b>89 %</b>. Tu as peut-être déjà vu ce
+      <p><b>3 — la carte,</b> encore : 5,40 Wh sur 6,04, soit <b>89 %</b>. <br>Tu as peut-être déjà vu ce
       raisonnement en 4<sup>e</sup>, sur le jardin connecté ; sinon, le voici : un petit courant
       qui ne s'arrête jamais bat un gros courant qui dure deux heures.</p>
     </div></details>
@@ -1678,19 +1693,19 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <input type="text" inputmode="decimal" id="a1deux" placeholder="… Wh">
     <p><b>3.</b> Marge que cela laisse, en pourcentage (arrondi à l'unité) :</p>
     <input type="text" inputmode="decimal" id="a1marge" placeholder="… %">
-    <fieldset class="qcm-groupe" id="a1q4">
+    <fieldset class="qcm-groupe" id="a1q4" data-melange="1">
   <legend><b>4.</b> Que dis-tu de cette marge&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="elle est excessive : deux accus, c&#x27;est du gaspillage" data-pourquoi="18,8 contre 18,12 Wh : il reste à peine 4 %, ce n'est pas du gaspillage."><label for="a1q4__4">elle est excessive : deux accus, c'est du gaspillage</label></div>
   <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__1" value="elle est trop faible : un accu vieilli ou un froid inhabituel la mange"><label for="a1q4__1">elle est trop faible : un accu vieilli ou un froid inhabituel la mange</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__2" value="elle est confortable : 18,8 est plus grand que 18,12"><label for="a1q4__2">elle est confortable : 18,8 est plus grand que 18,12</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__3" value="elle est inutile : on n&#x27;a pas besoin de marge sur une batterie"><label for="a1q4__3">elle est inutile : on n'a pas besoin de marge sur une batterie</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="elle est excessive : deux accus, c&#x27;est du gaspillage"><label for="a1q4__4">elle est excessive : deux accus, c'est du gaspillage</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__3" value="elle est inutile : on n&#x27;a pas besoin de marge sur une batterie" data-pourquoi="Une batterie perd de la capacité en vieillissant et au froid : sans marge, elle lâche avant la fin."><label for="a1q4__3">elle est inutile : on n'a pas besoin de marge sur une batterie</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__2" value="elle est confortable : 18,8 est plus grand que 18,12" data-pourquoi="Plus grand, oui, de quelques pourcents seulement : le moindre écart la fait passer sous le besoin."><label for="a1q4__2">elle est confortable : 18,8 est plus grand que 18,12</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a1q5">
+    <fieldset class="qcm-groupe" id="a1q5" data-melange="1">
   <legend><b>5.</b> Avec <b>trois</b> accus (28,2 Wh), la station tiendrait…</legend>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__2" value="72 heures tout juste" data-pourquoi="72 heures, c'est ce que tiennent à peine deux accus : un troisième ajoute plus d'une journée."><label for="a1q5__2">72 heures tout juste</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__3" value="90 heures environ" data-pourquoi="Refais le calcul : 28,2 Wh divisés par la consommation du pire jour, puis multipliés par 24 h."><label for="a1q5__3">90 heures environ</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__4" value="plus de deux semaines" data-pourquoi="Trois accus ne font pas des semaines : divise la réserve par la consommation d'une journée."><label for="a1q5__4">plus de deux semaines</label></div>
   <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__1" value="112 heures, soit 4,7 jours"><label for="a1q5__1">112 heures, soit 4,7 jours</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__2" value="72 heures tout juste"><label for="a1q5__2">72 heures tout juste</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__3" value="90 heures environ"><label for="a1q5__3">90 heures environ</label></div>
-  <div class="qcm-option"><input type="radio" name="a1q5" id="a1q5__4" value="plus de deux semaines"><label for="a1q5__4">plus de deux semaines</label></div>
 </fieldset>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
@@ -1702,11 +1717,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <p><b>4 — trop faible.</b> Tu as peut-être déjà rencontré cette situation en 5<sup>e</sup>,
       avec la patère du hall ; sinon, la voici :</p>
       <div class="declencheur"><p>La patère du hall — le crochet où l'on suspend les sacs — devait
-      porter 40 kg, et le bois cassait à 41. En 3<sup>e</sup>, le mât exigeait 300 N (newtons) et le tube acier galvanisé était
-      recalé pour 1,1 mm de flèche. <b>Tout juste n'est pas assez</b>, et pour la même raison
+      porter 40 kg, et le bois cassait à 41. <br>En 3<sup>e</sup>, le mât exigeait 300 N (newtons) et le tube acier galvanisé était
+      recalé pour 1,1 mm de flèche. <br><b>Tout juste n'est pas assez</b>, et pour la même raison
       à chaque fois : l'éprouvette de l'essai n'a pas les défauts de la pièce réelle.</p></div>
       <p>Ici les défauts sont connus et nommés : un accu perd environ <b>20 % de sa capacité</b>
-      après quelques centaines de cycles ; il en donne moins quand il fait froid ; et la
+      après quelques centaines de cycles ; <br>il en donne moins quand il fait froid ; <br>et la
       consommation réelle dépasse toujours un peu la consommation calculée. Trois raisons de
       ne pas partir avec 3,8 %.</p>
       <p><b>5 — 112 heures.</b> 28,2 ÷ 6,04 = 4,67 jours. On couvre les 72 heures demandées
@@ -1728,7 +1743,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p class="seance-duree">Durée&nbsp;: 55 minutes · activités 2 et 3, soit 55 minutes d'activités.</p>
   <p><b>Ce dont tu repars&nbsp;:</b> un jour d'alerte, la station consomme 6,04&nbsp;Wh (wattheures)&nbsp;; pour tenir 72&nbsp;heures, il lui faut 18,12&nbsp;Wh, et trois accus en donnent 28,2 (activité 1).</p>
   <p><b>La question de la séance&nbsp;:</b> un panneau solaire rend-il la station autonome, et que coûte chaque source sur toute sa vie&nbsp;?</p>
-  <p class="rappel-securite">⚠️ Avec le matériel : côté élève, il n'y a que du 5 V (volts) — le « secteur », c'est l'adaptateur USB fermé, qu'on n'ouvre pas —, et un accu Li-ion ne se court-circuite pas, ne se perce pas et ne s'écrase pas : s'il gonfle, chauffe ou sent, on le pose au sol, loin de tout, et on prévient un adulte. <i><a href="#securite">L'encadré complet</a> est dans le rappel, en haut de page.</i></p>
+  <p class="rappel-securite">⚠️ Avec le matériel : côté élève, il n'y a que du 5 V (volts) — le « secteur », c'est l'adaptateur USB fermé, qu'on n'ouvre pas —, et un accu Li-ion ne se court-circuite pas, ne se perce pas et ne s'écrase pas : s'il gonfle, chauffe ou sent, on le pose au sol, loin de tout, et on prévient un adulte. <i><a href="#securite"><br>L'encadré complet</a> est dans le rappel, en haut de page.</i></p>
 </section>
 
 <section class="card">
@@ -1736,32 +1751,32 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p><b>Objectif :</b> distinguer ce qui <em>recharge</em> de ce qui <em>tient</em>.
   <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 réponses + une phrase.</p>
   <p>« Un panneau solaire, c'est autonome. » C'est la phrase qui vient d'abord, et c'est celle
-  qu'il faut examiner. <a href="#banc">Le banc</a> (activité 0) annonce <b>3,7 Wh (wattheures) par jour</b> pour un panneau de 1 W (watts) crête,
+  qu'il faut examiner. <a href="#banc"><br>Le banc</a> (activité 0) annonce <b>3,7 Wh (wattheures) par jour</b> pour un panneau de 1 W (watts) crête,
   en moyenne annuelle, plein soleil compris.</p>
   <div class="exo">
 
-    <fieldset class="qcm-groupe" id="a2q1">
+    <fieldset class="qcm-groupe" id="a2q1" data-melange="1">
   <legend><b>1.</b> Sous un cyclone, le ciel est couvert d'une couche épaisse et il pleut en
     continu. Un panneau y récolte…</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="plus que d&#x27;habitude : la pluie nettoie le panneau" data-pourquoi="Un panneau propre sous un ciel noir ne reçoit presque plus de lumière."><label for="a2q1__4">plus que d'habitude : la pluie nettoie le panneau</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="à peu près la moitié de sa récolte normale" data-pourquoi="Sous une couche épaisse et une pluie continue, c'est bien moins que la moitié."><label for="a2q1__2">à peu près la moitié de sa récolte normale</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="autant que d&#x27;habitude : la lumière traverse les nuages" data-pourquoi="Une partie seulement traverse : une couverture épaisse en arrête presque tout."><label for="a2q1__3">autant que d'habitude : la lumière traverse les nuages</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="moins d&#x27;un dixième de sa récolte normale"><label for="a2q1__1">moins d'un dixième de sa récolte normale</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="à peu près la moitié de sa récolte normale"><label for="a2q1__2">à peu près la moitié de sa récolte normale</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="autant que d&#x27;habitude : la lumière traverse les nuages"><label for="a2q1__3">autant que d'habitude : la lumière traverse les nuages</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="plus que d&#x27;habitude : la pluie nettoie le panneau"><label for="a2q1__4">plus que d'habitude : la pluie nettoie le panneau</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a2q2">
+    <fieldset class="qcm-groupe" id="a2q2" data-melange="1">
   <legend><b>2.</b> Il y a une seconde raison, purement mécanique, pour ne pas compter sur le
     panneau pendant l'événement. Laquelle&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="le panneau ne fonctionne pas quand il est mouillé" data-pourquoi="Un panneau mouillé fonctionne : la raison mécanique tient au vent."><label for="a2q2__2">le panneau ne fonctionne pas quand il est mouillé</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="une plaque plate exposée à 180 km/h peut être arrachée"><label for="a2q2__1">une plaque plate exposée à 180 km/h peut être arrachée</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="le panneau ne fonctionne pas quand il est mouillé"><label for="a2q2__2">le panneau ne fonctionne pas quand il est mouillé</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="le vent refroidit le panneau et l&#x27;empêche de produire"><label for="a2q2__3">le vent refroidit le panneau et l'empêche de produire</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="le panneau doit être débranché avant chaque cyclone"><label for="a2q2__4">le panneau doit être débranché avant chaque cyclone</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="le panneau doit être débranché avant chaque cyclone" data-pourquoi="Rien n'oblige à le débrancher : la raison mécanique tient à sa forme face au vent."><label for="a2q2__4">le panneau doit être débranché avant chaque cyclone</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="le vent refroidit le panneau et l&#x27;empêche de produire" data-pourquoi="Le froid ne l'empêche pas de produire : la raison est la prise au vent de la plaque."><label for="a2q2__3">le vent refroidit le panneau et l'empêche de produire</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a2q3">
+    <fieldset class="qcm-groupe" id="a2q3" data-melange="1">
   <legend><b>3.</b> Quel est donc le rôle du panneau dans cette station&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="alimenter la station pendant le cyclone, à la place du réseau" data-pourquoi="Pendant le cyclone, il ne produit presque rien, et il peut être arraché : il ne peut pas prendre le relais."><label for="a2q3__2">alimenter la station pendant le cyclone, à la place du réseau</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="recharger la réserve entre deux événements, et soulager le secteur"><label for="a2q3__1">recharger la réserve entre deux événements, et soulager le secteur</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="alimenter la station pendant le cyclone, à la place du réseau"><label for="a2q3__2">alimenter la station pendant le cyclone, à la place du réseau</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="aucun : il ne sert à rien sur cette station"><label for="a2q3__3">aucun : il ne sert à rien sur cette station</label></div>
-  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="remplacer complètement les accus, qui deviennent inutiles"><label for="a2q3__4">remplacer complètement les accus, qui deviennent inutiles</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="aucun : il ne sert à rien sur cette station" data-pourquoi="Il sert en dehors des cyclones : il recharge et il fait économiser du secteur."><label for="a2q3__3">aucun : il ne sert à rien sur cette station</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="remplacer complètement les accus, qui deviennent inutiles" data-pourquoi="La nuit et sous un cyclone, il ne produit pas : la réserve reste indispensable."><label for="a2q3__4">remplacer complètement les accus, qui deviennent inutiles</label></div>
 </fieldset>
     <p><b>En une phrase :</b> quelle est la différence entre une source qui <em>recharge</em> et
     une réserve qui <em>tient</em>&nbsp;?</p>
@@ -1771,19 +1786,19 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <p><b>1 — moins d'un dixième.</b> Sous une couche nuageuse épaisse, l'éclairement tombe à
-      quelques pour cent de sa valeur en plein soleil. Le panneau de 1 W, qui récolte 3,7 Wh un
-      jour normal, en donne alors quelques dixièmes — contre 6,04 Wh consommés. <b>Il ne couvre
+      <p><b>1 — moins d'un dixième.</b><br>Sous une couche nuageuse épaisse, l'éclairement tombe à
+      quelques pour cent de sa valeur en plein soleil. <br>Le panneau de 1 W, qui récolte 3,7 Wh un
+      jour normal, en donne alors quelques dixièmes — contre 6,04 Wh consommés. <br><b>Il ne couvre
       pas 5 % du besoin au moment précis où le besoin existe.</b></p>
       <p><b>2 — le vent.</b> Une plaque plate de plusieurs centaines de cm², exposée à
-      180 km/h, c'est exactement ce que tu as appris à calculer sur le mât : une surface offerte
+      180 km/h, c'est exactement ce qu'on calcule pour le mât : une surface offerte
       au vent. Elle s'arrache, ou elle arrache ce qui la tient.</p>
-      <p><b>3 — recharger entre deux événements.</b> Le panneau est un <b>robinet</b> : il donne
-      un peu, tous les jours. La réserve est un <b>réservoir</b> : elle donne beaucoup, une fois.
+      <p><b>3 — recharger entre deux événements.</b><br>Le panneau est un <b>robinet</b> : il donne
+      un peu, tous les jours. <br>La réserve est un <b>réservoir</b> : elle donne beaucoup, une fois.
       Pendant le cyclone, c'est le réservoir qui travaille ; le reste de l'année, c'est le
       robinet qui le remplit et qui soulage le secteur.</p>
       <p class="retenir">📌 <b>« Autonome » ne veut rien dire tant qu'on n'a pas dit
-      « pendant combien de temps, et dans quelles conditions ».</b> Une installation solaire est
+      « pendant combien de temps, et dans quelles conditions ».</b><br>Une installation solaire est
       autonome les jours de soleil ; elle ne l'est pas les jours où il n'y en a pas — et ce sont
       justement ceux-là qui dimensionnent.</p>
     </div></details>
@@ -1797,45 +1812,46 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p>Une source ne commence pas quand on la branche et ne finit pas quand elle est vide.
   Associe chaque élément à ce que son cycle de vie apporte au dossier.</p>
   <div class="exo">
-    <fieldset class="qcm-groupe" id="a4c0">
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</li><li><b>B</b>Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</li><li><b>C</b>Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</li><li><b>D</b>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</li><li><b>E</b>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a4c0" data-indice="Une pile jetable : que faut-il produire, et que reste-t-il après usage ?">
   <legend><b>Piles alcalines jetables</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c0__1">Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c0__2">Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c0__3">Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c0__4">Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c0__5">Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi." aria-label="A — Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c0__1" title="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine." aria-label="B — Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c0__2" title="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500." aria-label="C — Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c0__3" title="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide." aria-label="D — Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c0__4" title="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c0" id="a4c0__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique." aria-label="E — Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c0__5" title="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique.">E</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a4c1">
+    <fieldset class="qcm-groupe qcm-grille" id="a4c1" data-indice="Un accu se fabrique une fois et se recharge : combien de fois ?">
   <legend><b>Accus Li-ion rechargeables</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c1__1">Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c1__2">Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c1__3">Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c1__4">Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c1__5">Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi." aria-label="A — Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c1__1" title="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine." aria-label="B — Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c1__2" title="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500." aria-label="C — Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c1__3" title="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide." aria-label="D — Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c1__4" title="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c1" id="a4c1__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique." aria-label="E — Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c1__5" title="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique.">E</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a4c2">
+    <fieldset class="qcm-groupe qcm-grille" id="a4c2" data-indice="Le panneau coûte cher à fabriquer : combien d'années produit-il ensuite ?">
   <legend><b>Panneau solaire</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c2__1">Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c2__2">Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c2__3">Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c2__4">Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c2__5">Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi." aria-label="A — Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c2__1" title="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine." aria-label="B — Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c2__2" title="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500." aria-label="C — Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c2__3" title="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide." aria-label="D — Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c2__4" title="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c2" id="a4c2__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique." aria-label="E — Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c2__5" title="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique.">E</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a4c3">
+    <fieldset class="qcm-groupe qcm-grille" id="a4c3" data-indice="Côté station, rien à fabriquer : d'où vient l'électricité du réseau, en Martinique ?">
   <legend><b>Électricité du réseau</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c3__1">Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c3__2">Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c3__3">Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c3__4">Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c3__5">Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi." aria-label="A — Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c3__1" title="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine." aria-label="B — Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c3__2" title="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500." aria-label="C — Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c3__3" title="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide." aria-label="D — Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c3__4" title="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c3" id="a4c3__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique." aria-label="E — Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c3__5" title="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique.">E</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a4c4">
+    <fieldset class="qcm-groupe qcm-grille" id="a4c4" data-indice="Ce n'est pas une source : de quoi est-il fait, et que lui fait l'air salé ?">
   <legend><b>Boîtier étanche et câbles</b></legend>
-  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c4__1">Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c4__2">Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c4__3">Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c4__4">Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</label></div>
-  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c4__5">Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__1" value="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi." aria-label="A — Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."><label for="a4c4__1" title="Ce n&#x27;est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__2" value="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine." aria-label="B — Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."><label for="a4c4__2" title="Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__3" value="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500." aria-label="C — Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500."><label for="a4c4__3" title="Fabrication lourde (lithium, cobalt), mais 500 cycles d&#x27;usage : le coût de fabrication se divise par 500.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__4" value="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide." aria-label="D — Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide."><label for="a4c4__4" title="Fabrication très énergivore, puis vingt ans de production sans rien consommer : c&#x27;est la durée qui décide.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4c4" id="a4c4__5" value="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique." aria-label="E — Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique."><label for="a4c4__5" title="Rien à fabriquer côté station, mais l&#x27;énergie vient d&#x27;ailleurs — en Martinique, encore largement du thermique.">E</label></div>
 </fieldset>
     <p style="margin-top:16px"><b>Le chiffre qui tranche.</b> La station consomme 6,04 Wh (wattheures) par
     jour. Une pile 9 V (volts) en délivre 2,8 utiles. Combien de piles 9 V faudrait-il
@@ -1850,11 +1866,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <p><b>Électricité du réseau</b> — Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</p>
       <p><b>Boîtier étanche et câbles</b> — Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</p>
       <p style="margin-top:12px"><b>Le calcul :</b> 6,04 × 365 = 2 205 Wh par an ; 2 205 ÷ 2,8 =
-      <b>787 piles</b>. Chaque année, pour une seule station. Le débat sur l'écologie du
+      <b>787 piles</b>. <br>Chaque année, pour une seule station. Le débat sur l'écologie du
       lithium se tient — mais il se tient <em>après</em> ce nombre-là, pas à sa place.</p>
       <p class="retenir">📌 <b>Le cycle de vie ne se raisonne pas par matériau, il se raisonne
-      par usage.</b> Le lithium d'un accu est un vrai problème ; 787 piles jetées par an pour le
-      même service en est un autre, et il est plus grand. C'est ce que demande 3e_C3.2 : ne pas
+      par usage.</b><br>Le lithium d'un accu est un vrai problème ; 787 piles jetées par an pour le
+      même service en est un autre, et il est plus grand. <br>C'est ce que demande 3e_C3.2 : ne pas
       argumenter sur ce qu'un objet <em>est</em>, mais sur ce qu'il <em>coûte tout au long de
       sa vie</em>.</p>
     </div></details>
@@ -1872,7 +1888,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card seance-entete" id="seance-3" aria-labelledby="seance-3-titre">
   <h2 id="seance-3-titre">🗓 Séance 3 — L'avis à signer, puis l'îlet</h2>
   <p class="seance-duree">Durée&nbsp;: 55 minutes · l'activité 4 et le REFAIRE, soit 50 minutes d'activités, puis la synthèse, le bilan et le renvoi au QCM.</p>
-  <p><b>Ce dont tu repars&nbsp;:</b> trois accus tiennent 112&nbsp;heures (activité 1)&nbsp;; le panneau recharge, mais il ne tient pas pendant le cyclone (activité 2)&nbsp;; et le cycle de vie se raisonne par usage (activité 3).</p>
+  <p><b>Ce dont tu repars&nbsp;:</b> trois accus tiennent 112&nbsp;heures (activité 1)&nbsp;; <br>le panneau recharge, mais il ne tient pas pendant le cyclone (activité 2)&nbsp;; <br>et le cycle de vie se raisonne par usage (activité 3).</p>
   <p><b>La question de la séance&nbsp;:</b> quelle architecture d'alimentation proposer à la mairie, chiffres à l'appui — et que devient-elle sur un îlet sans secteur&nbsp;?</p>
 </section>
 
@@ -1882,27 +1898,27 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 réponses + un avis rédigé.</p>
   <div class="exo">
 
-    <fieldset class="qcm-groupe" id="a4q1">
+    <fieldset class="qcm-groupe" id="a4q1" data-melange="1">
   <legend><b>Question 1.</b> Quelle est la source <b>normale</b> de la station, les 360 jours par
     an où il ne se passe rien&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="les piles 9 V, qu&#x27;on remplace régulièrement" data-pourquoi="Les piles jetables font un déchet chaque semaine : elles ne sont pas la source normale ici."><label for="a4q1__4">les piles 9 volts, qu'on remplace régulièrement</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="les trois accus, qu&#x27;on recharge une fois par semaine" data-pourquoi="Les accus sont la réserve pour l'événement, pas la source de tous les jours."><label for="a4q1__2">les trois accus, qu'on recharge une fois par semaine</label></div>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="le secteur, complété par le panneau qui le soulage"><label for="a4q1__1">le secteur, complété par le panneau qui le soulage</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="les trois accus, qu&#x27;on recharge une fois par semaine"><label for="a4q1__2">les trois accus, qu'on recharge une fois par semaine</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="le panneau seul : il suffit un jour normal"><label for="a4q1__3">le panneau seul : il suffit un jour normal</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="les piles 9 V, qu&#x27;on remplace régulièrement"><label for="a4q1__4">les piles 9 volts, qu'on remplace régulièrement</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="le panneau seul : il suffit un jour normal" data-pourquoi="Un jour gris, le panneau seul ne couvre pas la consommation : il soulage, il ne suffit pas."><label for="a4q1__3">le panneau seul : il suffit un jour normal</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a4q2">
+    <fieldset class="qcm-groupe" id="a4q2" data-melange="1">
   <legend><b>Question 2.</b> Et le rôle des trois accus&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="alimenter uniquement le buzzer et le voyant d&#x27;alerte" data-pourquoi="Quand le réseau tombe, c'est toute la station qu'il faut faire tenir, pas seulement l'alerte."><label for="a4q2__3">alimenter uniquement le buzzer et le voyant d'alerte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="servir de réserve pour la nuit, quand le panneau ne produit pas" data-pourquoi="La nuit, le secteur est là : la réserve sert quand le réseau tombe."><label for="a4q2__4">servir de réserve pour la nuit, quand le panneau ne produit pas</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="alimenter la station en permanence, le secteur servant de secours" data-pourquoi="C'est l'inverse : le secteur alimente, la réserve prend le relais."><label for="a4q2__2">alimenter la station en permanence, le secteur servant de secours</label></div>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="tenir 112 h quand le réseau tombe, et se recharger le reste du temps"><label for="a4q2__1">tenir 112 h quand le réseau tombe, et se recharger le reste du temps</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="alimenter la station en permanence, le secteur servant de secours"><label for="a4q2__2">alimenter la station en permanence, le secteur servant de secours</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="alimenter uniquement le buzzer et le voyant d&#x27;alerte"><label for="a4q2__3">alimenter uniquement le buzzer et le voyant d'alerte</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="servir de réserve pour la nuit, quand le panneau ne produit pas"><label for="a4q2__4">servir de réserve pour la nuit, quand le panneau ne produit pas</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe" id="a4q3">
+    <fieldset class="qcm-groupe" id="a4q3" data-melange="1">
   <legend><b>Question 3.</b> Ce choix a un coût, qu'il faut annoncer. Lequel est réel&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="le panneau empêche de brancher le secteur" data-pourquoi="Le panneau et le secteur se complètent : l'un n'empêche pas l'autre."><label for="a4q3__3">le panneau empêche de brancher le secteur</label></div>
   <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="les accus vieillissent : il faut les remplacer tous les trois à quatre ans"><label for="a4q3__1">les accus vieillissent : il faut les remplacer tous les trois à quatre ans</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="la station consommera beaucoup plus qu&#x27;avant"><label for="a4q3__2">la station consommera beaucoup plus qu'avant</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="le panneau empêche de brancher le secteur"><label for="a4q3__3">le panneau empêche de brancher le secteur</label></div>
-  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__4" value="il faudra reprogrammer la station chaque année"><label for="a4q3__4">il faudra reprogrammer la station chaque année</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="la station consommera beaucoup plus qu&#x27;avant" data-pourquoi="La consommation ne dépend pas de la source : elle reste celle du banc."><label for="a4q3__2">la station consommera beaucoup plus qu'avant</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__4" value="il faudra reprogrammer la station chaque année" data-pourquoi="La source ne change rien au programme : le coût réel est l'usure des accus."><label for="a4q3__4">il faudra reprogrammer la station chaque année</label></div>
 </fieldset>
     <p><b>Ton avis à la mairie, en quatre phrases.</b> Dis la source normale, la réserve et son
     dimensionnement <b>chiffré</b>, le rôle du panneau, et <b>ce que ton choix coûte</b>.</p>
@@ -1920,12 +1936,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
         <tr><td>Panneau 2 W (watts) crête</td><td>recharger la réserve, soulager le secteur</td><td>7,4 Wh/jour pour 6,04 consommés</td></tr>
       </table>
       <p><b>Ce que le choix coûte, et qu'il faut écrire :</b> trois accus à remplacer tous les
-      trois à quatre ans (et à rapporter en collecte) ; un panneau à fixer, orienter et nettoyer ;
-      un boîtier étanche qui vieillit au sel ; et un circuit de bascule secteur/accu qu'il faut
+      trois à quatre ans (et à rapporter en collecte) ; <br>un panneau à fixer, orienter et nettoyer ; <br>un boîtier étanche qui vieillit au sel ; <br>et un circuit de bascule secteur/accu qu'il faut
       tester — parce qu'un secours jamais testé n'est pas un secours.</p>
       <p class="retenir">📌 <b>Choisir une source pour un OST, ce n'est presque jamais choisir
-      une seule source.</b> C'est répartir les rôles : qui alimente d'habitude, qui prend le
-      relais, qui recharge. Et c'est dire ce que l'ensemble demandera d'entretien, parce que
+      une seule source.</b><br>C'est répartir les rôles : qui alimente d'habitude, qui prend le
+      relais, qui recharge. <br>Et c'est dire ce que l'ensemble demandera d'entretien, parce que
       personne ne signe un devis sans cette phrase-là.</p>
     </div></details>
   </div>
@@ -1934,7 +1949,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~20 min</h2>
 <p>La mairie veut la <b>même station</b> sur un îlet de la baie du Robert : une
-  réserve naturelle, un ponton, aucun bâtiment. <b>Pas de secteur du tout</b>, et personne n'y
+  réserve naturelle, un ponton, aucun bâtiment. <br><b>Pas de secteur du tout</b>, et personne n'y
   va plus d'une fois par mois.</p>
   <p><b>Que devient ton dimensionnement&nbsp;?</b> Dis ce qui change, ce qui ne change pas, et
   quelle décision prendre avant d'agrandir le panneau et la batterie (tu l'as peut-être déjà
@@ -1948,20 +1963,19 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     dimensionnement sur le pire cas, et le fait que le panneau ne produit pas pendant
     l'événement.</p>
     <p><b>Ce qui change, et c'est énorme :</b> il n'y a plus de secteur pour rattraper les
-    mauvais jours. Le panneau ne soulage plus une source principale — <b>il EST la source
-    principale</b>, et il doit couvrir la consommation même en semaine grise. Avec 5,3 h
-    d'équivalent plein soleil en moyenne mais deux à trois fois moins en septembre, un panneau
-    de 2 W (watts) ne suffit plus : il en faut au moins <b>5 W</b>, et une réserve dimensionnée non plus
+    mauvais jours. <br>Le panneau ne soulage plus une source principale — <b>il EST la source
+    principale</b>, et il doit couvrir la consommation même en semaine grise. <br>Avec 5,3 h
+    d'équivalent plein soleil en moyenne, mais deux à trois fois moins en septembre, un panneau
+    de 2 W (watts) ne suffit plus. <br>Il en faut au moins <b>5 W</b>, et une réserve dimensionnée non plus
     sur 72 heures mais sur <b>une semaine sans soleil</b>, soit environ 42 Wh — cinq accus.</p>
     <p><b>La décision à prendre d'abord</b> (celle du jardin connecté, en 4<sup>e</sup>) : avant d'agrandir le panneau et
-    la batterie, <b>regarder la charge</b>. La carte pèse 89 %. Une carte à faible consommation
+    la batterie, <b>regarder la charge</b>. <br>La carte pèse 89 %. <br>Une carte à faible consommation
     (5 mA (milliampères) en moyenne) ferait tomber le besoin de 6,04 à environ 1,2 Wh par jour — et alors un
     panneau de 2 W et deux accus suffiraient largement, sur un îlet où personne ne vient
     dépanner.</p>
     <p class="retenir">📌 <b>Plus l'accès est difficile, plus il est rentable de consommer
-    moins.</b> Sur un site accessible, on ajoute une pile ; sur un îlet, on change la carte.
-    C'est le lieu, encore une fois, qui décide. Tu l'as peut-être déjà vu en 5<sup>e</sup>, avec
-    l'indicateur du hall ; sinon, le voici : le même voyant prend le secteur dans un hall qui a
+    moins.</b><br>Sur un site accessible, on ajoute une pile ; <br>sur un îlet, on change la carte. <br>C'est le lieu, encore une fois, qui décide. <br>Tu l'as peut-être déjà vu en 5<sup>e</sup>, avec
+    l'indicateur du hall ; <br>sinon, le voici : le même voyant prend le secteur dans un hall qui a
     une prise, et un panneau solaire sur un portail à vélos, sans prise et en plein soleil.</p></div></details>
 </section>
 
@@ -1969,18 +1983,18 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>📝 Synthèse — à retenir</h2>
   <ul>
     <li><b>Dimensionner sur le pire cas</b> — une réserve calculée sur la moyenne est vide le
-      jour où elle sert. Ici, le pire cas est le jour d'alerte : 6,04 Wh (wattheures).</li>
+      jour où elle sert. <br>Ici, le pire cas est le jour d'alerte : 6,04 Wh (wattheures).</li>
     <li><b>Le besoin sur une durée</b> — 6,04 Wh/jour × 3 jours = 18,12 Wh pour tenir 72 heures.
       Une autonomie ne s'exprime pas sans la durée exigée.</li>
     <li><b>Tout juste n'est pas assez</b> — deux accus donnent 18,8 Wh pour 18,12 exigés, soit
-      3,8 % de marge, quand un accu vieilli en perd 20 %. Même règle pour une patère dont le bois
+      3,8 % de marge, quand un accu vieilli en perd 20 %. <br>Même règle pour une patère dont le bois
       casse à 41 kg quand on en exige 40, et pour le mât de 3<sup>e</sup>.</li>
     <li><b>Recharger n'est pas tenir</b> — un panneau est un robinet, une batterie un réservoir.
       Sous un cyclone, le robinet est fermé et c'est le réservoir qui travaille.</li>
     <li><b>« Autonome » ne veut rien dire seul</b> — il faut dire pendant combien de temps et
       dans quelles conditions.</li>
     <li><b>Le cycle de vie se raisonne par usage</b> — 787 piles par an pour une station, contre
-      trois accus tous les trois à quatre ans. Le débat sur le lithium se tient après ce nombre.</li>
+      trois accus tous les trois à quatre ans. <br>Le débat sur le lithium se tient après ce nombre.</li>
     <li><b>Une architecture, pas une source</b> — qui alimente d'habitude, qui prend le relais,
       qui recharge. Et ce que l'ensemble coûtera en entretien.</li>
     <li><b>Regarder la charge</b> — plus le site est difficile d'accès, plus il est rentable de
@@ -1992,36 +2006,36 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
   <p><b>⚡ Défi bascule :</b> cherche comment on fait basculer automatiquement une alimentation
-  du secteur vers une batterie sans que l'appareil s'éteigne une seule milliseconde. Écris le
+  du secteur vers une batterie sans que l'appareil s'éteigne une seule milliseconde. <br>Écris le
   nom du composant et ce qu'il faudrait tester pour être sûr qu'il marche.</p>
   <p><b>🌡 Défi température :</b> un accu Li-ion perd de la capacité au froid — mais en
-  Martinique, c'est la <b>chaleur</b> qui l'use. Cherche à partir de quelle température un accu
+  Martinique, c'est la <b>chaleur</b> qui l'use. <br>Cherche à partir de quelle température un accu
   vieillit vite, et dis où tu ne placerais surtout pas le boîtier sur un toit-terrasse.</p>
   <p><b>🔌 Défi Martinique :</b> l'électricité du réseau martiniquais vient encore largement de
-  centrales thermiques. Cherche la part des énergies renouvelables dans le mix de l'île, et dis
+  centrales thermiques. <br>Cherche la part des énergies renouvelables dans le mix de l'île, et dis
   ce que ça change à l'argument « le secteur, c'est plus écologique que des accus ».</p>
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Dans le mix électrique de la Martinique, la part des renouvelables est d'environ … % (source : …). »</li><li>« Cela change l'argument « le secteur, c'est plus écologique » parce que … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du défi bascule — passer du secteur à l'accu sans s'éteindre</summary><div>
-    <p><b>Le composant.</b> Ce qui bascule tout seul, sans coupure, s'appelle une <b>alimentation sans interruption</b> (ASI ; « onduleur » pour un ordinateur, <i lang="en">UPS</i> en anglais). À l'échelle de la station, en 5 V (volts), c'est un petit module d'alimentation à bascule automatique ; le montage le plus simple met deux diodes « en OU » : le secteur et l'accu alimentent la carte chacun par sa diode, et aucun interrupteur n'est à actionner. Un condensateur à l'entrée de la carte tient la tension pendant les quelques millisecondes du passage.</p>
-    <p><b>Ce qu'il faut tester</b>, écrit avant l'essai : la station tourne en alerte (buzzer et voyant allumés : le jour qui consomme le plus) ; on débranche l'adaptateur secteur. <b>Résultat attendu :</b> la carte ne redémarre pas — un compteur de démarrages écrit dans le programme ne bouge pas, et les mesures du vent continuent d'arriver sans trou. Puis on rebranche : même résultat attendu. On refait la coupure plusieurs fois (dix, par exemple), et une fois avec l'accu presque vide.</p>
-    <p><b>Attendus :</b> le nom du composant ; au moins un essai écrit avec son action (couper le secteur pendant que la station tourne) et son résultat attendu, qu'on peut observer (aucun redémarrage) ; l'essai répété, et le retour du secteur testé lui aussi.</p>
-    <p><b>Erreurs typiques :</b> « un interrupteur » — il faudrait quelqu'un pour le basculer, en plein cyclone ; « une batterie plus grosse » — elle stocke davantage, elle ne bascule rien ; un seul essai, ou un essai station éteinte ; oublier le retour du secteur ; écrire « vérifier que ça marche » sans dire ce qu'on regarde.</p>
+    <p><b>Le composant.</b> Ce qui bascule tout seul, sans coupure, s'appelle une <b>alimentation sans interruption</b> (ASI ; <br>« onduleur » pour un ordinateur, <i lang="en">UPS</i> en anglais). <br>À l'échelle de la station, en 5 V (volts), c'est un petit module d'alimentation à bascule automatique ; <br>le montage le plus simple met deux diodes « en OU » : le secteur et l'accu alimentent la carte chacun par sa diode, et aucun interrupteur n'est à actionner. <br>Un condensateur à l'entrée de la carte tient la tension pendant les quelques millisecondes du passage.</p>
+    <p><b>Ce qu'il faut tester</b>, écrit avant l'essai : la station tourne en alerte (buzzer et voyant allumés : le jour qui consomme le plus) ; on débranche l'adaptateur secteur. <br><b>Résultat attendu :</b> la carte ne redémarre pas — un compteur de démarrages écrit dans le programme ne bouge pas, et les mesures du vent continuent d'arriver sans trou. <br>Puis on rebranche : même résultat attendu. On refait la coupure plusieurs fois (dix, par exemple), et une fois avec l'accu presque vide.</p>
+    <p><b>Attendus :</b> le nom du composant ; <br>au moins un essai écrit avec son action (couper le secteur pendant que la station tourne) et son résultat attendu, qu'on peut observer (aucun redémarrage) ; <br>l'essai répété, et le retour du secteur testé lui aussi.</p>
+    <p><b>Erreurs typiques :</b> « un interrupteur » — il faudrait quelqu'un pour le basculer, en plein cyclone ; <br>« une batterie plus grosse » — elle stocke davantage, elle ne bascule rien ; <br>un seul essai, ou un essai station éteinte ; <br>oublier le retour du secteur ; <br>écrire « vérifier que ça marche » sans dire ce qu'on regarde.</p>
   </div></details>
   <details class="correction"><summary>✅ Corrigé du défi température — la chaleur qui use l'accu</summary><div>
-    <p><b>La température, en ordre de grandeur.</b> En général, on ne recharge pas un accu Li-ion au-delà de 45 °C environ. Et chaque heure passée au chaud lui retire de la capacité, pour toujours : au-delà de 40 °C environ, il vieillit nettement plus vite. Le froid, lui, réduit seulement ce que l'accu donne sur le moment.</p>
-    <p><b>Pourquoi c'est un vrai problème ici.</b> L'air de la Martinique est souvent à 30 °C, et un boîtier fermé, en plein soleil, monte au-dessus de l'air : une quinzaine de degrés de plus à midi, environ, n'a rien d'exceptionnel. L'accu passerait ses après-midi autour de 45 °C, voire au-delà.</p>
-    <p><b>Où ne surtout pas le placer :</b> posé sur la dalle du toit-terrasse, qui chauffe au soleil et rayonne sa chaleur ; en plein soleil de midi et de l'après-midi ; dans un boîtier foncé ; contre le régulateur, qui dissipe en chaleur l'énergie qu'il perd (activité 0). <b>Où le placer :</b> à l'ombre — sous le panneau solaire, par exemple, ou du côté du mât que le soleil touche le moins —, dans un boîtier clair, surélevé, presse-étoupes vers le bas.</p>
-    <p><b>Attendus :</b> un ordre de grandeur de température et d'où il vient (la documentation d'un fabricant, par exemple) ; un endroit à éviter, avec sa raison ; un endroit proposé à la place.</p>
-    <p><b>Erreurs typiques :</b> « la chaleur aide la batterie » — elle l'use ; confondre la température de l'air donnée par la météo et celle qui règne dans le boîtier ; mettre le boîtier au soleil « pour qu'il sèche ».</p>
+    <p><b>La température, en ordre de grandeur.</b><br>En général, on ne recharge pas un accu Li-ion au-delà de 45 °C environ. <br>Et chaque heure passée au chaud lui retire de la capacité, pour toujours : au-delà de 40 °C environ, il vieillit nettement plus vite. <br>Le froid, lui, réduit seulement ce que l'accu donne sur le moment.</p>
+    <p><b>Pourquoi c'est un vrai problème ici.</b><br>L'air de la Martinique est souvent à 30 °C, et un boîtier fermé, en plein soleil, monte au-dessus de l'air : une quinzaine de degrés de plus à midi, environ, n'a rien d'exceptionnel. <br>L'accu passerait ses après-midi autour de 45 °C, voire au-delà.</p>
+    <p><b>Où ne surtout pas le placer :</b> posé sur la dalle du toit-terrasse, qui chauffe au soleil et rayonne sa chaleur ; <br>en plein soleil de midi et de l'après-midi ; <br>dans un boîtier foncé ; <br>contre le régulateur, qui dissipe en chaleur l'énergie qu'il perd (activité 0). <br><b>Où le placer :</b> à l'ombre — sous le panneau solaire, par exemple, ou du côté du mât que le soleil touche le moins —, dans un boîtier clair, surélevé, presse-étoupes vers le bas.</p>
+    <p><b>Attendus :</b> un ordre de grandeur de température et d'où il vient (la documentation d'un fabricant, par exemple) ; <br>un endroit à éviter, avec sa raison ; <br>un endroit proposé à la place.</p>
+    <p><b>Erreurs typiques :</b> « la chaleur aide la batterie » — elle l'use ; <br>confondre la température de l'air donnée par la météo et celle qui règne dans le boîtier ; <br>mettre le boîtier au soleil « pour qu'il sèche ».</p>
   </div></details>
   <details class="correction"><summary>✅ Corrigé du défi Martinique — d'où vient l'électricité du réseau</summary><div>
-    <p><b>Le chiffre.</b> En 2024, environ <b>un quart</b> de l'électricité produite en Martinique venait d'énergies renouvelables — biomasse, soleil, vent, déchets (source : EDF Martinique, bilan de l'année 2024 publié le 26 mars 2025). Le reste vient surtout de centrales thermiques qui brûlent du fioul. Une bonne réponse donne un chiffre, sa source et son année : il change d'une année à l'autre.</p>
-    <p><b>Ce que ça change à l'argument.</b> « Le secteur, c'est plus écologique que des accus » n'est pas vrai d'office : en Martinique, la plupart des wattheures du réseau viennent du fioul. Mais l'argument se chiffre. La station consomme 6,04 Wh (wattheures) par jour, soit 6,04 × 365 ≈ 2 205 Wh, environ 2,2 kWh (kilowattheures) par an : très peu. Ce qui pèse, c'est ce qu'on fabrique et ce qu'on jette — les 787 piles par an de l'activité 3 —, bien plus que l'origine de ces quelques kilowattheures. Et le panneau, qui recharge les accus, réduit justement la part prise au réseau.</p>
-    <p><b>Attendus :</b> un chiffre sourcé et daté ; la conclusion que l'argument ne vaut pas tel quel en Martinique ; une comparaison des quantités en jeu.</p>
-    <p><b>Erreurs typiques :</b> prendre le chiffre de la France hexagonale, où l'électricité vient surtout du nucléaire et des barrages, et l'appliquer à l'île ; un chiffre sans source ni année ; conclure « les accus sont plus écologiques » sans rien comparer.</p>
+    <p><b>Le chiffre.</b> En 2024, environ <b>un quart</b> de l'électricité produite en Martinique venait d'énergies renouvelables — biomasse, soleil, vent, déchets (source : EDF Martinique, bilan de l'année 2024 publié le 26 mars 2025). <br>Le reste vient surtout de centrales thermiques qui brûlent du fioul. Une bonne réponse donne un chiffre, sa source et son année : il change d'une année à l'autre.</p>
+    <p><b>Ce que ça change à l'argument.</b><br>« Le secteur, c'est plus écologique que des accus » n'est pas vrai d'office : en Martinique, la plupart des wattheures du réseau viennent du fioul. <br>Mais l'argument se chiffre. <br>La station consomme 6,04 Wh (wattheures) par jour, soit 6,04 × 365 ≈ 2 205 Wh, environ 2,2 kWh (kilowattheures) par an : très peu. <br>Ce qui pèse, c'est ce qu'on fabrique et ce qu'on jette — les 787 piles par an de l'activité 3 —, bien plus que l'origine de ces quelques kilowattheures. <br>Et le panneau, qui recharge les accus, réduit justement la part prise au réseau.</p>
+    <p><b>Attendus :</b> un chiffre sourcé et daté ; <br>la conclusion que l'argument ne vaut pas tel quel en Martinique ; <br>une comparaison des quantités en jeu.</p>
+    <p><b>Erreurs typiques :</b> prendre le chiffre de la France hexagonale, où l'électricité vient surtout du nucléaire et des barrages, et l'appliquer à l'île ; <br>un chiffre sans source ni année ; <br>conclure « les accus sont plus écologiques » sans rien comparer.</p>
   </div></details>
 </section>
 
@@ -2029,7 +2043,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>🙋 Mon bilan personnel</h2>
   <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
 <p>Tu avais écrit ce que tu pensais de « on met un panneau solaire, c'est
-  autonome ». Relis-le. Ce n'était pas faux — c'était incomplet, et c'est presque toujours
+  autonome ». <br>Relis-le. Ce n'était pas faux — c'était incomplet, et c'est presque toujours
   ainsi que les idées reçues fonctionnent : elles sont vraies dans un cas et fausses au moment
   où ça compte.</p>
   <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
