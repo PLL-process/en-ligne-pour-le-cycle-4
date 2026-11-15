@@ -31009,3 +31009,23 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 - **Le banc** : l'ordre d'origine des propositions (`ORIGINE`) suit les nouveaux libellés, pour que les choix par rang visent toujours la même proposition.
 
 **Mesure.** Séance 3 : 1 416 → 1 496 mots (les propositions allongées) ; les autres séances prennent de 40 à 160 mots, toutes sous le repère. Règles d'or 0 ✘ (page tout-en-un) ; aération 0. Bancs **167 / 167**, **34 / 34**, **37 / 37**. Mode mission : chaque mauvaise proposition jouée a son pourquoi (135 / 135 sur la page tout-en-un ; 60, 15, 27, 33 sur les quatre pages), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+## 15/11/2026 — Révision des trois thèmes, 42 : `4e_C7.4` (l'énergie du jardin)
+
+**Le constat.** La page était déjà sur le gabarit commun : 0 ✘ de règles d'or et 0 liste déroulante sur `main`. Il restait :
+- **23 écarts d'aération** ;
+- une séance 2 à 1 581 mots ;
+- la bonne réponse **la plus longue** de « Et pourtant le secteur pose un problème… » (66 caractères contre 46) ;
+- deux questions à réponses chiffrées dans le désordre, et 10 groupes dont la bonne réponse restait à sa place d'origine ;
+- une grille de cinq lignes pour cinq réponses (l'autonomie de chaque source) : la dernière se devinait.
+
+**Ce qui est fait.**
+- **Places** : 10 groupes mélangés ; les réponses chiffrées (le total après extinction, ce qui manque au panneau) vont dans l'ordre croissant.
+- **Trois propositions fausses s'allongent** d'une raison plausible : « il n'est pas assez puissant pour la pompe » devient « il n'est pas assez puissant pour faire tourner la pompe en même temps que la carte ».
+- **Le mode mission explique chaque erreur** (`mission_4e_C7.4.json`) : 29 pourquoi, 5 indices de ligne, **une réponse de trop dans la grille** (« trois jours entiers, puis il faut la changer »).
+- **Replier ce qui ne sert qu'au besoin** : la note des sources du banc (« D'où viennent les valeurs du banc ? », en approfondissement) et le Bonus.
+- **Aération : 23 → 0** (91 retours à la ligne, deux corrections réécrites en lignes) ; les annonces des deux séances passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 1 069 · 1 581 → 1 028 · **1 362**. Règles d'or 0 ✘ ; aération 23 → 0. Bancs **35 / 35** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme sur `main`. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 362 mots).** Le banc de consommation, l'outil de la séance, y compte pour environ 180 mots ; la synthèse « à retenir », le bilan et le renvoi au QCM, qui ne se replient pas, pour près de 500.

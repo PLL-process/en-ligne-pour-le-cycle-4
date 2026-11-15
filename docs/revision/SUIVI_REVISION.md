@@ -63,7 +63,7 @@ d'autant.
 | 39 | `3e_C9.2` | 2597 → 1496 | 2 → 0 | 62 → 0 | 48 → 0 | livrée #702 et #705 — les 62 listes deviennent des boutons radio (les quatre pages engendrées gardent la sauvegarde) ; piqûre de rappel repliée à sa source, captures des gestes et du programme de référence repliées ; puis 85 propositions fausses allongées (la bonne réponse était la plus longue 33 fois sur 48) et 135 pourquoi ; séance 3 (1 496) au-dessus : séance d'atelier, les cinq gestes se lisent en faisant |
 | 40 | `4e_C7.1` | 1780 → 1488 | 2 → 0 | 22 → 0 | 28 → 0 | livrée #703 — 20 listes en boutons radio (les deux du banc météo restent des commandes) ; le ✘ n°23 était un faux (les « 15 minutes » du rappel) ; piqûre de rappel repliée à sa source, séance 1 1 244 → 580 ; séance 2 (1 488) au-dessus : activité 3, exercice FAST et toute la clôture ; banc n°311 : les onglets de la séance 2 hors du premier écran à 390 px, sur `main` comme ici |
 | 41 | `4e_C7.3` | 1866 → 1551 | 5 → 0 | 13 → 0 | 27 → 0 | livrée #704 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; piqûre de rappel repliée à sa source, séance 1 1 597 → 938 ; une réponse de trop dans les deux grilles ; séance 2 (1 551) au-dessus : le banc des matériaux, outil de la séance, et la clôture |
-| 42 | `4e_C7.4` | 1582 | 5 | 22 | 23 | à faire |
+| 42 | `4e_C7.4` | 1582 → 1362 | 5 → 0 | 22 → 0 | 23 → 0 | livrée #706 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; 10 groupes mélangés, réponses chiffrées dans l'ordre, 3 propositions allongées ; une réponse de trop dans la grille ; séance 2 (1 362) au-dessus : le banc, outil de la séance, et la clôture |
 | 43 | `4e_C7.5` | 2077 | 5 | 23 | 25 | à faire |
 | 44 | `4e_C7.7` | 1831 | 5 | 16 | 19 | à faire |
 | 45 | `4e_C7.8` | 1880 | 5 | 19 | 15 | à faire |
@@ -251,3 +251,7 @@ d'autant.
   repliée à sa source ; 7 groupes mélangés, 2 propositions allongées ; 12 pourquoi, 7 indices, une réponse de trop dans chacune des deux grilles ;
   Bonus replié ; aération 27 → 0. Séances 1 597 · 1 665 → 938 · 1 551. Reste : la séance 2 au-dessus (le banc des
   matériaux, outil de la séance, 332 mots ; la synthèse et le bilan, 440).
+- **4e_C7.4** (l'énergie du jardin), 15/11/2026 (#706) : déjà sur le gabarit commun, sans ✘ ni menu ; 10 groupes
+  mélangés, réponses chiffrées dans l'ordre croissant, 3 propositions fausses allongées ; 29 pourquoi, 5 indices, une
+  réponse de trop dans la grille ; note des sources du banc et Bonus repliés ; aération 23 → 0. Séances 1 069 · 1 581
+  → 1 028 · 1 362. Reste : la séance 2 au-dessus (le banc, outil de la séance, et la clôture).
