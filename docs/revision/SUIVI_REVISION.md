@@ -62,7 +62,7 @@ d'autant.
 | 38 | `3e_C8.2` | 1414 → 982 | 0 | 0 | 28 → 0 | livrée #701 — la bonne réponse était 9 fois sur 20 la plus longue : 21 propositions fausses allongées, places changées, une grille avec une réponse de trop, pourquoi des erreurs ; piqûre de rappel repliée à sa source ; banc réparé (42 → 44 / 44) ; chaque séance sous le repère |
 | 39 | `3e_C9.2` | 2597 → 1416 | 2 → 0 | 62 → 0 | 48 → 0 | livrée #702 — les 62 listes deviennent des boutons radio (les quatre pages engendrées gardent la sauvegarde) ; piqûre de rappel repliée à sa source, captures des gestes et du programme de référence repliées ; séance 3 (1 416) au-dessus : séance d'atelier, les cinq gestes se lisent en faisant ; reste la longueur des bonnes réponses (33 sur 48), PR suivante |
 | 40 | `4e_C7.1` | 1780 → 1488 | 2 → 0 | 22 → 0 | 28 → 0 | livrée #703 — 20 listes en boutons radio (les deux du banc météo restent des commandes) ; le ✘ n°23 était un faux (les « 15 minutes » du rappel) ; piqûre de rappel repliée à sa source, séance 1 1 244 → 580 ; séance 2 (1 488) au-dessus : activité 3, exercice FAST et toute la clôture ; banc n°311 : les onglets de la séance 2 hors du premier écran à 390 px, sur `main` comme ici |
-| 41 | `4e_C7.3` | 1866 | 5 | 13 | 27 | à faire |
+| 41 | `4e_C7.3` | 1866 → 1551 | 5 → 0 | 13 → 0 | 27 → 0 | livrée #704 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; piqûre de rappel repliée à sa source, séance 1 1 597 → 938 ; une réponse de trop dans les deux grilles ; séance 2 (1 551) au-dessus : le banc des matériaux, outil de la séance, et la clôture |
 | 42 | `4e_C7.4` | 1582 | 5 | 22 | 23 | à faire |
 | 43 | `4e_C7.5` | 2077 | 5 | 23 | 25 | à faire |
 | 44 | `4e_C7.7` | 1831 | 5 | 16 | 19 | à faire |
@@ -244,3 +244,7 @@ d'autant.
   l'ordre ; billet d'entrée sans « En 5e, on commençait par » ; 42 pourquoi ; Bonus replié ; aération 28 → 0. Séances
   1 244 · 1 726 → 580 · 1 488. Reste : la séance 2 au-dessus (la clôture n'est pas repliable), et l'en-tête de l'ancien
   gabarit qui pousse les onglets hors du premier écran à 390 px (banc n°311, sur `main` aussi).
+- **4e_C7.3** (le bac du jardin), 15/11/2026 (#704) : déjà sur le gabarit commun, sans ✘ ni menu ; piqûre de rappel
+  repliée à sa source ; 7 groupes mélangés, 2 propositions allongées ; 12 pourquoi, 7 indices, une réponse de trop dans chacune des deux grilles ;
+  Bonus replié ; aération 27 → 0. Séances 1 597 · 1 665 → 938 · 1 551. Reste : la séance 2 au-dessus (le banc des
+  matériaux, outil de la séance, 332 mots ; la synthèse et le bilan, 440).
