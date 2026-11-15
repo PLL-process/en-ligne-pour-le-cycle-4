@@ -725,8 +725,8 @@ E6 = dict(
         "<b>Erreur 1, branche 2</b> → «&nbsp;le programme d'alerte&nbsp;» est un nom → une case de fonction commence par un verbe → "
         "<b>décider du niveau d'alerte</b>",
         "<b>Erreur 2, branche 4</b> → comment stocker l'énergie pour la nuit&nbsp;? → le panneau capte, il ne garde rien → <b>la batterie 12 V</b>",
-        "<b>Erreur 3, branche 6</b> → pourquoi éclairer la rue&nbsp;? → cela ne ramène pas à «&nbsp;prévenir les habitants&nbsp;» → la "
-        "branche vient d'un autre objet → <b>on la supprime</b>",
+        "<b>Erreur 3, branche 6</b> → pourquoi éclairer la rue&nbsp;? <br>Cela ne ramène pas à «&nbsp;prévenir les habitants&nbsp;»&nbsp;: la "
+        "branche vient d'un autre objet. <br>→ <b>on la supprime</b>",
         "<b>Pas d'erreur, branche 3</b> → trois solutions reliées par «&nbsp;ou&nbsp;» → une alternative est permise dans un FAST → on garde, "
         "et on choisira (exercice suivant)",
         "<b>Pas d'erreur, branches 1 et 5</b> → un verbe, et une solution qui répond au «&nbsp;comment&nbsp;?&nbsp;». Le panneau solaire "

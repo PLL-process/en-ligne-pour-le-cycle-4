@@ -13,6 +13,34 @@ import { chromium } from 'playwright';
 import { pathToFileURL } from 'url';
 import path from 'path';
 import { lancerBanc311Theme3 } from '../../../banc_regle_311_theme3.mjs';
+// Les questions posées par une liste déroulante sont devenues des boutons radio (n°300, 14/11/2026) : ce shim garde les
+// appels du banc (selectOption, fill, inputValue) — une chaîne vise la valeur ou le libellé, {index} la place.
+function _groupesRadio(page){
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => {
+    const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    return groupe ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  };
+  for (const nom of ['selectOption', 'fill']) {
+    const orig = page[nom].bind(page);
+    page[nom] = async (sel, val, ...reste) => {
+      const groupe = typeof sel === 'string' && await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+      if (!groupe) return orig(sel, val, ...reste);
+      // comme Playwright sur un <select> : une chaîne vise la valeur OU le libellé ; {index}, {value}, {label} sont acceptés
+      const v = (val && typeof val === 'object') ? val : { label: String(val), value: String(val) };
+      const ok = await page.evaluate(([s, v]) => {
+        const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+        const lib = i => (e.querySelector('label[for="' + i.id + '"]') || {}).textContent?.trim();
+        const c = v.index !== undefined ? inputs[v.index]
+          : inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+        if (!c) return false;
+        c.checked = true; c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+      }, [sel, v]);
+      if (!ok) throw new Error('aucune proposition \u00ab ' + JSON.stringify(v) + ' \u00bb dans ' + sel);
+    };
+  }
+  return page;
+}
 
 const PAGE = 'sequence_3e_C7_capteur-confort-ny.html';
 const URL0 = pathToFileURL(path.join(import.meta.dirname, PAGE)).href;
@@ -27,7 +55,7 @@ const URL0 = pathToFileURL(path.join(import.meta.dirname, PAGE)).href;
       debord: document.documentElement.scrollWidth - innerWidth };
   });
   for (const [w, h] of [[1280, 900], [390, 844]]) {
-    const p = await b.newPage({ viewport: { width: w, height: h } }); const err = [];
+    const p = _groupesRadio(await b.newPage({ viewport: { width: w, height: h } })); const err = [];
     p.on('pageerror', (e) => err.push(String(e).slice(0, 80)));
     await p.goto(URL0); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(150);
     let e = await lire(p);
