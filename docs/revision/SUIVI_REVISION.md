@@ -70,7 +70,7 @@ d'autant.
 | 46 | `4e_C8.1` | 1975 → 1320 | 1 → 0 | 25 → 0 | 22 → 0 | livrée #711 — 16 listes en boutons radio, grille « Conforme ? » comprise (ordre, noms et retours gardés) ; les 8 menus du tableau de l'exercice incrusté reconnus comme voulus (n°317) ; piqûre de rappel repliée ; six corrections de l'exercice aérées à leur source ; séance 2 (1 320) juste au-dessus : l'exercice du diagramme des exigences |
 | 47 | `4e_C9.1` | 2909 → 2378 | 1 → 0 | 54 → 0 | 34 → 0 | livrée #713 — 43 questions en boutons radio, les 11 commandes de l'atelier de programmation déclarées (`data-interface`) ; 25 groupes mélangés ; échauffement, rappel de l'algorigramme, rôles et nuit simulée repliés ; 91 pourquoi ; séances 2 et 3 (2 064, 2 378) loin au-dessus : séances d'atelier, l'éditeur et l'atelier sont dans la page — couper une activité ou ajouter une séance, décision de Pascal |
 | 48 | `5e_C7.1` | 1685 → 1239 | 1 → 0 | 17 → 0 | 17 → 0 | livrée #714 — 17 listes en boutons radio ; l'algorigramme ne se lit plus dans l'ordre de la réponse (et `3e_C7.1`, même défaut) ; séance 2 : 1 239 mesurés, dont 109 de légendes pour le lecteur d'écran (1 130 vus) |
-| 49 | `5e_C7.3` | 1694 | 5 | 15 | 15 | à faire |
+| 49 | `5e_C7.3` | 1694 → 1607 | 5 → 0 | 15 → 0 | 15 → 0 | livrée #715 — migrée au gabarit commun ; deux grilles lettrées, l'une se devinait par la grammaire, l'autre avait deux réponses justes ; une réponse de trop dans chacune ; séance 2 (1 607) au-dessus : le banc, outil de la séance, la synthèse et le bilan |
 | 50 | `5e_C7.4` | 1607 | 5 | 18 | 16 | à faire |
 | 51 | `5e_C7.5` | 1528 | 5 | 22 | 8 | à faire |
 | 52 | `5e_C8.1` | 1421 | 5 | 17 | 13 | à faire |
@@ -281,3 +281,9 @@ d'autant.
   validation reliée à ses lignes) ; l'algorigramme mélangé, ses groupes nommés, les énoncés dans les légendes — même
   correction sur `3e_C7.1` ; 31 pourquoi ; consignes en lignes, note Vittascience repliée ; aération 17 → 0. Séances
   274 · 1 685 · 696 → 268 · 1 239 · 658 (séance 2 : 1 130 mots vus, 109 de légendes pour le lecteur d'écran).
+- **5e_C7.3** (le banc de la cour), 15/11/2026 (#715) : migrée au gabarit commun (5 ✘ → 0, 15 listes en boutons
+  radio, rangées en deux grilles lettrées, quatre versions étayées) ; la grille de l'activité 0 ne se devine plus par
+  la grammaire ; une seule réponse juste par ligne dans l'activité 1 (l'acier et le béton) ; une réponse de trop dans
+  chaque grille ; 7 groupes mélangés, 9 propositions allongées ; 47 pourquoi, 9 indices ; la phrase de la fabrique
+  retirée ; Bonus replié ; aération 15 → 0. Séances 1 095 · 1 694 → 840 · 1 607. Reste : la séance 2 au-dessus (le
+  banc, la synthèse, le bilan).
