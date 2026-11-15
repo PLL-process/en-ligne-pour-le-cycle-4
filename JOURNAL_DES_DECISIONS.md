@@ -31077,3 +31077,24 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 **Mesure.** Lampadaire : bancs **65 / 65** (séquence, dont un test pour l'échauffement) et **34 / 34** (n°311) ; séance 2 : 604 → 634 mots visibles ; séance 3 : 430 → 507 ; séance 6 : 1 981 → 2 171 (l'échauffement). Station : `3e_C4.1` bancs **23 / 23** et **34 / 34** (le banc trouve un groupe posé dans le schéma à son schéma) ; `3e_C4.3` bancs **23 / 23** et **34 / 34**. Jardin : bancs **52 / 52** (activité 1 sur 16 réponses) et **34 / 34**. Les quatre pages jouées en mode mission écran par écran, aucun refus ; `controle_chaine_a_completer.py` vert ; 0 ✘ de règles d'or et aération 0 sur les pages de la station et du jardin. Les étiquettes montrent le libellé de la proposition : « la batterie 12 V (volts) » se lit en toutes lettres (n°312), la vérification compare toujours la valeur. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité des quatre pages, schémas : 0 ✘).
 
 **Ce qui reste.** `4e_C7.5` (le jardin incomplet) et `5e_C7.5` (l'éclairage du préau), avec le même outil, dans une PR suivante. Les manipulations dans le schéma (le simulateur de la séance 3 qui allume les flèches) : à proposer après l'avis de Pascal sur ce premier lot.
+
+## 15/11/2026 — Révision des trois thèmes, 44 : `4e_C7.7` (le support du capteur)
+
+**Le constat.** La page était déjà sur le gabarit commun : 0 ✘ de règles d'or et 0 liste déroulante sur `main`. Il restait :
+- **19 écarts d'aération** ;
+- une séance 2 à 1 846 mots ;
+- deux grilles (« ce que chaque moyen ne sait pas faire », « pourquoi ce moyen est écarté ») avec autant de réponses que de lignes : la dernière se devinait ;
+- 10 groupes dont la bonne réponse restait à sa place d'origine ;
+- sous les deux renvois à l'atelier, une phrase de la fabrique (« Une page ne porte qu'un seul atelier : deux exemplaires, ce seraient deux instruments qui répondent au même nom ») ;
+- une proposition fausse que la correction ne réfutait pas : « allonger la fente à 23 mm ».
+
+**Ce qui est fait.**
+- **10 groupes mélangés.**
+- **Le mode mission explique chaque erreur** (`mission_4e_C7.7.json`) : 21 pourquoi, 7 indices de ligne, **une réponse de trop dans chacune des deux grilles**.
+- **La correction de l'activité 2 réfute aussi « allonger la fente à 23 mm »** : le même fichier sert aux deux moyens ; à la découpe laser, la fente sortirait à 23 mm, et la sonde y flotterait.
+- **Couper le redondant** : la phrase de la fabrique sous les deux renvois à l'atelier.
+- **Le Bonus se replie** ; **aération : 19 → 0** (87 retours à la ligne, une correction réécrite en lignes) ; les annonces des deux séances passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 863 · 1 846 → 910 · **1 698**. Règles d'or 0 ✘ ; aération 19 → 0. Bancs **38 / 38** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 698 mots).** L'atelier, l'outil de la séance, y compte pour 310 mots ; les activités 2 et 3 posent cinq questions dont les propositions sont longues par construction (chacune porte sa raison, pour que la bonne ne se devine pas), environ 660 mots ; la synthèse et le bilan, qui ne se replient pas, environ 500.
