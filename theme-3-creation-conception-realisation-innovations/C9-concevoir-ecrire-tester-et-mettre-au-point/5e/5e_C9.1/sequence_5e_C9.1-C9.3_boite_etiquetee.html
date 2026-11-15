@@ -272,6 +272,33 @@ body.essentiel details.referentiel-replie{display:none}
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -685,6 +712,26 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
 <!-- fiche-papier v1 : fin -->
 <link rel="stylesheet" href="../../../../_ressources-communes/editeur-python/editeur-python.css">
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
 <!-- mode-mission v1 : début — un exercice à la fois ; source unique : _outils/mode_mission/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1373,6 +1420,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -1444,7 +1496,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <tr><td><b>5e_C9.3</b></td><td>Réaliser et mettre au point un programme simple commandant un OST (objet ou système technique).</td><td>Activité 5 ②</td></tr>
   </table>
   
-  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C9.1</code> · <code>5e_C9.2</code> · <code>5e_C9.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C9.1</code> · <code>5e_C9.2</code> · <code>5e_C9.3</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
 </div>
 </details>
 
@@ -1459,18 +1511,32 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card" id="billet">
   <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p>Cet atelier s'appuie sur ce que tu as programmé à l'école et en 6e, souvent par blocs.
-  Trois questions pour savoir, toi comme le professeur, sur quoi on peut s'appuyer.
-  <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore »
+  <p>Cet atelier s'appuie sur ce que tu as programmé à l'école et en 6e, souvent par blocs. <br>Trois questions pour savoir, toi comme le professeur, sur quoi on peut s'appuyer.
+  <br><b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore »
   est une réponse utile.</p>
   <div class="exo">
-    <label for="be_1" style="display:block;margin:8px 0">1. Dans un programme, quand on écrit <code>score = 10</code>, cela veut dire…
-      <select id="be_1"><option value="">— choisir —</option><option>score est égal à 10, comme en mathématiques</option><option>range le nombre 10 dans une boîte nommée score</option><option>affiche le nombre 10 à l'écran de la console</option><option>je ne sais pas encore</option></select></label>
-    <label for="be_2" style="display:block;margin:8px 0">2. Un programme qui affiche un résultat FAUX…
-      <select id="be_2"><option value="">— choisir —</option><option>s'arrête forcément avec un message d'erreur rouge</option><option>ne démarre jamais, l'ordinateur le refuse</option><option>peut très bien tourner sans aucun message</option><option>je ne sais pas encore</option></select></label>
-    <label for="be_3" style="display:block;margin:8px 0">3. Pour savoir si un programme fait ce qu'on lui demande, le mieux est de…
-      <select id="be_3"><option value="">— choisir —</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>relire le programme attentivement, sans l'exécuter</option><option>écrire ce qu'on ATTEND, puis exécuter et comparer</option><option>je ne sais pas encore</option></select></label>
-    <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+    <fieldset class="qcm-groupe" id="be_1" data-melange="1">
+  <legend>1. Dans un programme, quand on écrit <code>score = 10</code>, cela veut dire…</legend>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="affiche le nombre 10 à l&#x27;écran de la console"><label for="be_1__3">affiche le nombre 10 à l'écran de la console</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="score est égal à 10, comme en mathématiques"><label for="be_1__1">score est égal à 10, comme en mathématiques</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="range le nombre 10 dans une boîte nommée score"><label for="be_1__2">range le nombre 10 dans une boîte nommée score</label></div>
+  <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="be_2" data-melange="1">
+  <legend>2. Un programme qui affiche un résultat FAUX…</legend>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="peut très bien tourner sans aucun message"><label for="be_2__3">peut très bien tourner sans aucun message</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="ne démarre jamais, l&#x27;ordinateur le refuse"><label for="be_2__2">ne démarre jamais, l'ordinateur le refuse</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="s&#x27;arrête forcément avec un message d&#x27;erreur rouge"><label for="be_2__1">s'arrête forcément avec un message d'erreur rouge</label></div>
+  <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="be_3" data-melange="1">
+  <legend>3. Pour savoir si un programme fait ce qu'on lui demande, le mieux est de…</legend>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="écrire ce qu&#x27;on ATTEND, puis exécuter et comparer"><label for="be_3__3">écrire ce qu'on ATTEND, puis exécuter et comparer</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="relire le programme attentivement, sans l&#x27;exécuter"><label for="be_3__2">relire le programme attentivement, sans l'exécuter</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="le lancer une fois et regarder si ça a l&#x27;air bon"><label for="be_3__1">le lancer une fois et regarder si ça a l'air bon</label></div>
+  <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
+</fieldset>
+<button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
     <p class="feedback" id="fbBillet" role="status"></p>
   </div>
 </section>
@@ -1478,14 +1544,14 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
   <div class="declencheur">
-    <p><b>Coney Island, au bout de la ligne Q du métro de New York.</b> Là, face à l'océan, tourne
+    <p><b>Coney Island, au bout de la ligne Q du métro de New York.</b><br>Là, face à l'océan, tourne
     depuis 1927 le <b>Cyclone</b> : un grand-huit en bois, classé monument historique, que les
-    New-Yorkais adorent. Un train de <b>24 places</b>, des files d'attente immenses… et un
+    New-Yorkais adorent. <br>Un train de <b>24 places</b>, des files d'attente immenses… et un
     <b>compteur de places libres</b> flambant neuf, installé cet été.</p>
     <p>Sauf que le compteur délire : il affiche <b>« 87 places libres »</b> pour un train de 24 sièges,
     et parfois la barrière laisse entrer des visiteurs alors que le train est COMPLET. Le responsable
     du parc écrit à votre classe, jumelée avec une école de Brooklyn : <b>« Le programme est court,
-    il est joint à ce message. Quelqu'un peut-il le LIRE et me dire ce qui ne va pas ? »</b></p>
+    il est joint à ce message. <br>Quelqu'un peut-il le LIRE et me dire ce qui ne va pas ? »</b></p>
     <p>Lire un programme, le tester, le corriger : c'est un métier — et il commence par un secret
     que 9 collégiens sur 10 ignorent : <b>la variable, une simple boîte étiquetée</b>.</p>
   </div>
@@ -1519,8 +1585,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>🪜 Où tu en es dans le cycle</h2>
   <details class="approfondissement">
     <summary>🪜 Où mène cet atelier — les trois années du cycle en un tableau</summary>
-    <p>La difficulté du cycle ne tient pas à des programmes plus longs. Elle tient à
-    <b>ce qu'on retire</b> de ce qu'on te fournit au départ. Lis la dernière colonne de haut en bas :</p>
+    <p>La difficulté du cycle ne tient pas à des programmes plus longs. <br>Elle tient à
+    <b>ce qu'on retire</b> de ce qu'on te fournit au départ. <br>Lis la dernière colonne de haut en bas :</p>
     <table>
       <tr><th>Niveau</th><th>Le verbe</th><th>Ce qu'on te fournit</th></tr>
       <tr><td><b>5e (ici)</b></td><td><b>analyser</b> un programme fourni, et le <b>tester</b></td><td><b>tout</b> : le programme existe déjà</td></tr>
@@ -1528,8 +1594,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <tr><td>4e</td><td><b>modifier</b> un <i>algorithme</i>, puis le <b>traduire</b></td><td>l'algorithme, amputé d'une exigence</td></tr>
       <tr><td>3e</td><td><b>élaborer</b>, traduire, tester, mettre au point</td><td><b>rien que le besoin</b></td></tr>
     </table>
-    <p>Autrement dit : cette année, on te donne le programme et on t'apprend à le <b>lire</b>.
-    C'est le geste le plus utile de tous — et le seul qui serve encore quand le programme
+    <p>Autrement dit : cette année, on te donne le programme et on t'apprend à le <b>lire</b>. <br>C'est le geste le plus utile de tous — et le seul qui serve encore quand le programme
     vient de quelqu'un d'autre.</p>
   </details>
 </section>
@@ -1537,7 +1602,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card">
   <h2>🔀 Deux façons de vivre l'atelier</h2>
   <div class="donnees">
-    <p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python <b>de la page</b> (tu tapes ton programme, ▶&nbsp;Exécuter, la console est en dessous) : cherche les <b>éditeurs 🐍</b> des séances 2 et 3 ; Vittascience reste possible, par un lien, si tu préfères. C'est le parcours principal.</p>
+    <p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python <b>de la page</b> (tu tapes ton programme, ▶&nbsp;Exécuter, la console est en dessous) : cherche les <b>éditeurs 🐍</b> des séances 2 et 3 ; Vittascience reste possible, par un lien, si tu préfères. <br>C'est le parcours principal.</p>
     <p data-parcours="c">🅲 <b>Sans matériel</b> : les schémas + les tables de suivi à compléter au cahier.</p>
   </div>
   <div class="retenir"><b>📡 La méthode de l'atelier — prédire → tester → reporter :</b> tu PRÉDIS d'abord
@@ -1608,15 +1673,30 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       </div>
     </div>
     <div class="exo">
-      <label for="a1q1">1. Après la ligne 3, la boîte <code>places</code> contient :
-      <select id="a1q1"><option value="">— je choisis —</option><option>24</option><option>21</option><option>24 et 21</option><option>3</option></select></label>
-      <label for="a1q2">2. Où est passé le 24 qui était dans la boîte ?
-      <select id="a1q2"><option value="">— je choisis —</option><option>il est caché derrière le 21, dans la boîte</option><option>il est parti dans l'autre boîte, montes</option><option>il a été remplacé par 21 : il n'existe plus</option><option>il s'affiche à l'écran, à la place de 21</option></select></label>
-      <label for="a1q3">3. En Python, le signe <code>=</code> veut dire :
-      <select id="a1q3"><option value="">— je choisis —</option><option>« compare les deux nombres »</option><option>« est égal à », comme en maths</option><option>« affiche le résultat à l'écran »</option><option>« RANGE cette valeur dans la boîte »</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a1q1" data-melange="1">
+  <legend>1. Après la ligne 3, la boîte <code>places</code> contient :</legend>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="24 et 21" data-pourquoi="Une boîte ne garde qu'une valeur à la fois."><label for="a1q1__3">24 et 21</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="3" data-pourquoi="3, c'est ce que contient montes, pas places."><label for="a1q1__4">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="21"><label for="a1q1__2">21</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="24" data-pourquoi="24, c'était avant la ligne 3 : relis ce qu'elle range dans la boîte."><label for="a1q1__1">24</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1q2" data-melange="1">
+  <legend>2. Où est passé le 24 qui était dans la boîte ?</legend>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="il est parti dans l&#x27;autre boîte, montes" data-pourquoi="Ranger dans places ne touche pas à montes."><label for="a1q2__2">il est parti dans l'autre boîte, montes</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="il est caché derrière le 21, dans la boîte" data-pourquoi="Une boîte ne garde qu'une valeur : l'ancienne est perdue."><label for="a1q2__1">il est caché derrière le 21, dans la boîte</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__4" value="il s&#x27;affiche à l&#x27;écran, à la place de 21" data-pourquoi="Rien ne s'affiche sans print : la ligne 3 range, elle n'affiche pas."><label for="a1q2__4">il s'affiche à l'écran, à la place de 21</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="il a été remplacé par 21 : il n&#x27;existe plus"><label for="a1q2__3">il a été remplacé par 21 : il n'existe plus</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1q3" data-melange="1">
+  <legend>3. En Python, le signe <code>=</code> veut dire :</legend>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="« affiche le résultat à l&#x27;écran »" data-pourquoi="Afficher, c'est le travail de print, pas du signe =."><label for="a1q3__3">« affiche le résultat à l'écran »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="« compare les deux nombres, à gauche et à droite »" data-pourquoi="Comparer s'écrit == en Python : un seul = range."><label for="a1q3__1">« compare les deux nombres, à gauche et à droite »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="« RANGE cette valeur dans la boîte »"><label for="a1q3__4">« RANGE cette valeur dans la boîte »</label></div>
+  <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="« est égal à », comme en maths" data-pourquoi="En maths, = constate ; en Python, = range : places = places - 3 serait faux en maths."><label for="a1q3__2">« est égal à », comme en maths</label></div>
+</fieldset>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Rejoue le simulateur et regarde UNIQUEMENT la boîte <code>places</code> à la ligne 3 : combien de nombres vois-tu dedans en même temps ?</p></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Ligne 3 : Python calcule d'abord la partie DROITE (places − montes = 24 − 3 = 21), puis il RANGE 21 dans la boîte de gauche. Le 24 est remplacé : perdu, comme quand tu réécris par-dessus un mot effacé.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Ligne 3 : Python calcule d'abord la partie DROITE (places − montes = 24 − 3 = 21), puis il RANGE 21 dans la boîte de gauche. <br>Le 24 est remplacé : perdu, comme quand tu réécris par-dessus un mot effacé.</p></details>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <p class="feedback" id="fb1" role="status"></p>
     <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
@@ -1646,17 +1726,37 @@ places = places - montes
 descendus = 2
 places = places + descendus</pre>
     <div class="exo">
-      <label for="a2q1">1. Après la ligne 3, <code>places</code> vaut :
-      <select id="a2q1"><option value="">—</option><option>24</option><option>19</option><option>29</option><option>5</option></select></label>
-      <label for="a2q2">2. Que fait la ligne 5 ?
-      <select id="a2q2"><option value="">—</option><option>elle AJOUTE les 2 places libérées au total</option><option>elle enlève encore 2 places à la boîte places</option><option>elle efface la boîte places et recommence</option><option>elle affiche le résultat dans la console</option></select></label>
-      <label for="a2q3">3. À la fin, <code>places</code> vaut :
-      <select id="a2q3"><option value="">—</option><option>17</option><option>19</option><option>21</option><option>24</option></select></label>
-      <label for="a2q4">4. Combien de fois le contenu de la boîte <code>places</code> a-t-il changé (ligne 1 comprise) ?
-      <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a2q1">
+  <legend>1. Après la ligne 3, <code>places</code> vaut :</legend>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="24" data-pourquoi="24, c'est avant la ligne 3 : fais le calcul de la partie droite."><label for="a2q1__1">24</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="19"><label for="a2q1__2">19</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="29" data-pourquoi="Ceux qui montent prennent des places : la boîte diminue."><label for="a2q1__3">29</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="5" data-pourquoi="5, c'est le nombre de ceux qui montent, pas ce qui reste."><label for="a2q1__4">5</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a2q2" data-melange="1">
+  <legend>2. Que fait la ligne 5 ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="elle affiche le résultat dans la console" data-pourquoi="Sans print, rien ne s'affiche : la ligne 5 range."><label for="a2q2__4">elle affiche le résultat dans la console</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="elle efface la boîte places et recommence" data-pourquoi="La ligne 5 part de l'ancienne valeur : elle ne recommence pas."><label for="a2q2__3">elle efface la boîte places et recommence</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="elle enlève encore 2 places à la boîte places" data-pourquoi="Relis le signe de la ligne 5."><label for="a2q2__2">elle enlève encore 2 places à la boîte places</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="elle AJOUTE les 2 places libérées au total"><label for="a2q2__1">elle AJOUTE les 2 places libérées au total</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a2q3">
+  <legend>3. À la fin, <code>places</code> vaut :</legend>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="17" data-pourquoi="Les descendus libèrent des places : relis le signe de la ligne 5."><label for="a2q3__1">17</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="19" data-pourquoi="19, c'est avant la ligne 5 : il reste les places libérées."><label for="a2q3__2">19</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="21"><label for="a2q3__3">21</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__4" value="24" data-pourquoi="La boîte a changé en route : refais la table de suivi."><label for="a2q3__4">24</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a2q4" data-melange="1">
+  <legend>4. Combien de fois le contenu de la boîte <code>places</code> a-t-il changé (ligne 1 comprise) ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__1" value="1 fois" data-pourquoi="Compte chaque ligne qui range quelque chose dans places, la ligne 1 comprise."><label for="a2q4__1">1 fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__2" value="2 fois" data-pourquoi="Compte chaque ligne qui range quelque chose dans places, la ligne 1 comprise."><label for="a2q4__2">2 fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__4" value="5 fois" data-pourquoi="Seules certaines lignes rangent dans places : les autres touchent une autre boîte."><label for="a2q4__4">5 fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a2q4" id="a2q4__3" value="3 fois"><label for="a2q4__3">3 fois</label></div>
+</fieldset>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais deux colonnes au brouillon : <code>places</code> et <code>montes/descendus</code>. Remplis ligne par ligne, sans sauter.</p></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>L3 : 24 − 5 = 19 → dans places. L5 : 19 + 2 = 21 → dans places. La boîte a reçu 24, puis 19, puis 21 : trois rangements.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>L3 : 24 − 5 = 19 → dans places. L5 : 19 + 2 = 21 → dans places. <br>La boîte a reçu 24, puis 19, puis 21 : trois rangements.</p></details>
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <p class="feedback" id="fb2" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
@@ -1681,13 +1781,13 @@ places = places + descendus</pre>
      éditeur, un vrai : l'élève fait les quatre gestes sur un programme d'essai, et chaque geste réussi se coche. -->
 <section class="card gestes-outil" aria-labelledby="gestes-editeur-python">
   <h2 id="gestes-editeur-python">🧰 Avant la séance 2 (échauffement) — les quatre gestes de l'éditeur Python</h2>
-  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>, à chaque activité qui fait écrire un programme&nbsp;: rien à ouvrir, rien à installer, et il marche sans Internet. <b>Entraîne-toi d'abord ici</b>, sur un petit programme d'essai&nbsp;: l'éditeur d'essai, à côté des gestes (dessous, sur un petit écran), est un vrai, le même que dans l'activité&nbsp;3. Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. Ensuite, dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme, et il ne se perdra pas — ni pendant la séance, ni la semaine suivante.</p>
+  <p class="pourquoi">L'éditeur Python est <b>dans la page</b>&nbsp;: rien à installer, et il marche sans Internet. <br><b>Entraîne-toi d'abord ici</b>&nbsp;: l'éditeur d'essai est le même que dans l'activité&nbsp;3. <br>Fais les quatre gestes dans l'ordre&nbsp;: chacun se coche quand il est réussi. <br>Dans l'activité&nbsp;3, tu referas les mêmes avec ton vrai programme.</p>
   <div class="gestes-pratique-atelier">
   <ol class="gestes-pratique" data-editeur="py_echauffement" data-bilan="gestes-bilan" aria-label="Les quatre gestes, à faire dans l'éditeur d'essai">
-    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b> Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <i>La première fois, Python met une seconde à se préparer.</i></span><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></span></li>
-    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b> Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>5e-BOITE-essai-DUPONT</code>. Un fichier sans nom est introuvable la semaine suivante. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></span></li>
-    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b> La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 5E2</b> (ta classe).</span></span></li>
-    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b> Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></span></li>
+    <li data-geste="1" data-si-inchange="▶ a marché. Pour cocher le geste 1, remplace d'abord Camille par ton prénom, puis ▶ Exécuter encore."><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>1. Écrire et exécuter.</b><br>Dans la zone de code, remplace <code>Camille</code> par ton prénom (garde les guillemets), puis clique <b>▶&nbsp;Exécuter</b>. <b>Tab</b> décale de 4 espaces. <span class="geste-voir"><br><b>Ce que tu dois voir&nbsp;:</b> dans la console, «&nbsp;Bonjour&nbsp;», ton prénom, puis «&nbsp;2 + 3 = 5&nbsp;», puis «&nbsp;✔&nbsp;Terminé&nbsp;». <br><i>La première fois, Python met une seconde à se préparer.</i></span><span class="geste-plus"><b>Et si tu te trompes&nbsp;?</b> Efface un guillemet, puis ▶&nbsp;: la console explique l'erreur, et sa ligne est marquée dans la marge. <br>Remets le guillemet. <b>⏹&nbsp;Arrêter</b> interrompt un programme qui tourne sans fin.</span></span></li>
+    <li data-geste="2"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>2. Nommer.</b><br>Dans <b>📄&nbsp;Nom du fichier</b>, au-dessus de la zone, remplace <code>TON&nbsp;NOM</code> par ton nom&nbsp;: <code>5e-BOITE-essai-DUPONT</code>. <br>Un fichier sans nom est introuvable la semaine suivante. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton nom dans le champ, juste avant «&nbsp;.py&nbsp;». <br><i>DUPONT est un exemple&nbsp;: mets ton nom.</i></span></span></li>
+    <li data-geste="3"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>3. Sortir.</b><br>La page garde ton programme sur <b>cet</b> ordinateur seulement&nbsp;: pour l'emporter, clique <b>⬇&nbsp;Télécharger mon .py</b>. <br>Ton fichier arrive dans <b>Téléchargements</b>, au nom que tu lui as donné — le navigateur l'y range sans rien demander. <br>Range-le tout de suite dans <b>Documents › ta classe</b>, avec l'Explorateur de fichiers&nbsp;: c'est expliqué pas à pas, avec les captures, plus bas, sous l'éditeur. <span class="geste-voir"><br><b>Ce que tu dois voir&nbsp;:</b> sous les boutons, la phrase «&nbsp;⬇ … part dans ton dossier Téléchargements&nbsp;», puis, dans l'Explorateur, ton fichier dans <b>Documents › 5E2</b> (ta classe).</span></span></li>
+    <li data-geste="4"><span class="geste-coche" aria-hidden="true">☐</span><span class="geste-texte"><b>4. Retrouver.</b><br>Fais comme si c'était la semaine suivante&nbsp;: clique <b>↺&nbsp;Remettre le code de départ</b>, deux fois — ton prénom disparaît. <br>Puis clique <b>📂&nbsp;Ouvrir mon .py</b>&nbsp;: dans la fenêtre «&nbsp;Ouvrir&nbsp;» de Windows, clique <b>Documents</b> dans la colonne de gauche, double-clique <b>le dossier de ta classe</b> — celui où tu l'as rangé au geste&nbsp;3 —, clique ton fichier, puis <b>Ouvrir</b>. <span class="geste-voir"><b>Ce que tu dois voir&nbsp;:</b> ton prénom revient dans le programme, et sous les boutons, «&nbsp;📂 … est ouvert&nbsp;: ton programme est revenu dans l'éditeur&nbsp;». <br>Tu l'as cherché <b>là où tu l'avais rangé</b>&nbsp;: c'est tout le secret.</span></span></li>
   </ol>
   <div class="gestes-pratique-poste">
   <p class="gestes-pratique-bilan" id="gestes-bilan" role="status"></p>
@@ -1701,13 +1801,13 @@ print("2 + 3 =", 2 + 3)
   </div>
   </div>
   </div>
-  <details class="gestes-fenetres" open>
+  <details class="gestes-fenetres">
     <summary>🪟 Le geste 3 pas à pas&nbsp;: ranger ton fichier avec l'Explorateur de Windows</summary>
-    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
+    <p>Ouvre l'<b>Explorateur de fichiers</b> (le dossier jaune de la barre des tâches, ou les touches <b>Windows&nbsp;+&nbsp;E</b>), clique <b>Téléchargements</b>, clique ton fichier une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b>. <br>Va dans <b>Documents</b>, entre dans <b>le dossier de ta classe (exemple&nbsp;: 5E2)</b>, puis <b>Ctrl&nbsp;+&nbsp;V</b>.<br>Si ce dossier n'existe pas encore, crée-le d'abord&nbsp;: dans Documents, <b>Nouveau → Dossier</b>, tape le nom de ta classe, puis Entrée.</p>
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4b_sortir_telechargements.png" width="1400" height="523" loading="lazy"
            alt="Fenêtre de l'Explorateur de fichiers de Windows, en thème sombre, ouverte sur « Téléchargements » et rétrécie : sous « Aujourd'hui », le fichier « 5e-BOITE-DUPONT_202694_221325.py » est sélectionné ; en bas, « 1 élément sélectionné 581 octet(s) ».">
-      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <br><i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>5e-BOITE-act3-DUPONT</code>). La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
+      <figcaption><b>Ce que tu dois voir&nbsp;:</b> ton fichier <code>.py</code> dans <b>Téléchargements</b>. Clique-le une fois, puis <b>Ctrl&nbsp;+&nbsp;X</b> pour le couper. <br><i>Sur cette capture, le fichier vient de Vittascience, qui ajoute des chiffres à la fin du nom&nbsp;; celui de la page porte simplement le nom que tu as tapé (<code>5e-BOITE-act3-DUPONT</code>). <br>La fenêtre est rétrécie pour ne montrer que ce fichier.</i></figcaption>
     </figure>
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4c_sortir_nouveau_dossier.png" width="1400" height="457" loading="lazy"
@@ -1717,11 +1817,11 @@ print("2 + 3 =", 2 + 3)
     <figure class="geste-capture">
       <img src="Images/geste_vitta_4e_sortir_resultat.png" width="1400" height="538" loading="lazy"
            alt="Fenêtre de l'Explorateur ouverte sur « Documents › 5E2 » : un seul fichier, « 5e-BOITE-DUPONT_202694_221325.py », de type Python.File, 581 octets, sélectionné.">
-      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b><br><i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
+      <figcaption><b>Comment savoir que c'est fait&nbsp;:</b> en haut, <b>Documents › 5E2</b>&nbsp;; dans la liste, ton fichier <code>.py</code>. <br>Il n'est plus dans Téléchargements&nbsp;: il est rangé. <b>Retiens ce chemin&nbsp;: c'est là que tu le chercheras au geste 4.</b><br><i>Sur la capture, le nom porte les chiffres de Vittascience.</i></figcaption>
     </figure>
     <p><b>Au geste 4</b>, la fenêtre «&nbsp;Ouvrir&nbsp;» est celle de ton poste&nbsp;: <b>Documents</b> est dans sa colonne de gauche, et le dossier de ta classe dedans — le même chemin qu'ici.</p>
   </details>
-  <p class="gestes-vitta"><b>Avec Vittascience (facultatif, Internet nécessaire).</b> Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode code</b>&nbsp;: efface <code>print('Bonjour&nbsp;!')</code>, écris, <b>Exécuter</b> → le <b>crayon</b>, <code>5e-BOITE-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. Pour reprendre&nbsp;: <b>📂&nbsp;Ouvrir mon .py</b> dans la page (son en-tête est retiré), puis <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;C</b> ici et <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;V</b> là-bas — son «&nbsp;Ouvrir → Depuis votre appareil&nbsp;» remettrait <code>print('Bonjour&nbsp;!')</code>.</p>
+  <details class="gestes-vitta"><summary>Avec Vittascience (facultatif, Internet nécessaire)</summary><p>Le lien «&nbsp;Vittascience, si tu préfères&nbsp;» ouvre son éditeur en <b>mode code</b>&nbsp;: efface <code>print('Bonjour&nbsp;!')</code>, écris, <b>Exécuter</b> → le <b>crayon</b>, <code>5e-BOITE-TON&nbsp;NOM</code> → la <b>disquette</b>, <b>Télécharger</b> → Téléchargements → Documents › ta classe. <br>Pour reprendre&nbsp;: <b>📂&nbsp;Ouvrir mon .py</b> dans la page (son en-tête est retiré), puis <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;C</b> ici et <b>Ctrl&nbsp;+&nbsp;A</b>, <b>Ctrl&nbsp;+&nbsp;V</b> là-bas — son «&nbsp;Ouvrir → Depuis votre appareil&nbsp;» remettrait <code>print('Bonjour&nbsp;!')</code>.</p></details>
 </section>
 <section class="card">
   <h2>🔎 Séance 2 — Lire et TESTER le programme fourni (5e_C9.1)</h2>
@@ -1740,39 +1840,65 @@ print("2 + 3 =", 2 + 3)
     ③ REPORTE ce que la console affiche vraiment.</div>
     <div class="exo">
       <p><b>Expérience A :</b> <code>print(20 + 4)</code></p>
-      <label for="a3p1">① Je prédis :
-      <select id="a3p1"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
-      <p><b>Expérience B :</b> <code>print("20" + "4")</code></p>
-      <label for="a3p2">① Je prédis :
-      <select id="a3p2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a3p1" data-melange="1">
+  <legend>① Je prédis :</legend>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__2" value="204"><label for="a3p1__2">204</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="une erreur"><label for="a3p1__3">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__1" value="24"><label for="a3p1__1">24</label></div>
+</fieldset>
+<p><b>Expérience B :</b> <code>print("20" + "4")</code></p>
+      <fieldset class="qcm-groupe" id="a3p2" data-melange="1">
+  <legend>① Je prédis :</legend>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__1" value="24"><label for="a3p2__1">24</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="une erreur"><label for="a3p2__3">une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__2" value="204"><label for="a3p2__2">204</label></div>
+</fieldset>
+</div>
 <div class="editeur-py" id="vs1" data-fichier="5e-BOITE-act3-TON NOM">
   <label for="py_a3">🐍 ② L'éditeur Python de la page — tes deux expériences, prêtes à exécuter</label>
   <p class="editeur-py-note">Clique ▶&nbsp;Exécuter : la console affiche une ligne par expérience, A puis B. Tu peux aussi en inventer d'autres.</p>
   <textarea id="py_a3" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">print(20 + 4)
 print("20" + "4")
 </textarea>
-  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="editeur-py-vitta approfondissement"><summary>🌐 Avec Vittascience (facultatif, Internet nécessaire)</summary><p><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p></details>
   <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
     <div class="exo">
       <p><b>③ Je reporte :</b></p>
-      <label for="a3r1">Expérience A a affiché :
-      <select id="a3r1"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
-      <label for="a3r2">Expérience B a affiché :
-      <select id="a3r2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
-      <label for="a3r3">Conclusion — entre guillemets, « 20 » et « 4 » sont :
-      <select id="a3r3"><option value="">—</option><option>des nombres qu'on additionne</option><option>des noms de boîtes (de variables)</option><option>du TEXTE que le + COLLE bout à bout</option><option>des erreurs que Python refuse</option></select></label>
-      <label for="a3r4">Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…
-      <select id="a3r4"><option value="">—</option><option>la mauvaise étiquette de boîte</option><option>trop de visiteurs dans le train</option><option>un écran trop petit pour le nombre</option><option>des guillemets autour des nombres</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a3r1" data-melange="1">
+  <legend>Expérience A a affiché :</legend>
+  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__2" value="204" data-pourquoi="Sans guillemets, 20 et 4 sont des nombres : le + additionne."><label for="a3r1__2">204</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__1" value="24"><label for="a3r1__1">24</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__3" value="une erreur" data-pourquoi="Python accepte d'additionner deux nombres : exécute l'expérience A."><label for="a3r1__3">une erreur</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a3r2" data-melange="1">
+  <legend>Expérience B a affiché :</legend>
+  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__1" value="24" data-pourquoi="Avec des guillemets, « 20 » et « 4 » sont du texte : exécute l'expérience B."><label for="a3r2__1">24</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__2" value="204"><label for="a3r2__2">204</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__3" value="une erreur" data-pourquoi="Python accepte de coller deux textes : exécute l'expérience B."><label for="a3r2__3">une erreur</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a3r3" data-melange="1">
+  <legend>Conclusion — entre guillemets, « 20 » et « 4 » sont :</legend>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__1" value="des nombres qu&#x27;on additionne" data-pourquoi="Additionnés, 20 et 4 donneraient 24 : l'expérience B a donné autre chose."><label for="a3r3__1">des nombres qu'on additionne</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__3" value="du TEXTE que le + COLLE bout à bout"><label for="a3r3__3">du TEXTE que le + COLLE bout à bout</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__4" value="des erreurs que Python refuse" data-pourquoi="Python n'a rien refusé : il a affiché un résultat."><label for="a3r3__4">des erreurs que Python refuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__2" value="des noms de boîtes (de variables) à ouvrir" data-pourquoi="Un nom de boîte s'écrit sans guillemets : avec, c'est du texte."><label for="a3r3__2">des noms de boîtes (de variables) à ouvrir</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a3r4" data-melange="1">
+  <legend>Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…</legend>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__3" value="un écran trop petit pour le nombre" data-pourquoi="L'écran affiche ce qu'on lui donne : c'est le calcul qui a collé."><label for="a3r4__3">un écran trop petit pour le nombre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__4" value="des guillemets autour des nombres"><label for="a3r4__4">des guillemets autour des nombres</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__1" value="la mauvaise étiquette de boîte" data-pourquoi="L'étiquette ne colle rien : c'est le + entre deux textes qui colle."><label for="a3r4__1">la mauvaise étiquette de boîte</label></div>
+  <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__2" value="trop de visiteurs dans le train" data-pourquoi="Le nombre de visiteurs ne fabrique pas un 87 collé."><label for="a3r4__2">trop de visiteurs dans le train</label></div>
+</fieldset>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde bien les guillemets. En Python, TOUT ce qui est entre guillemets est du TEXTE — même des chiffres.</p></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Sans éditeur (version 🅲) : applique la règle. 20 + 4 = deux nombres → addition → 24. « 20 » + « 4 » = deux textes → collage → « 204 ». Reporte ces valeurs.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Sans éditeur (version 🅲) : applique la règle. <br>20 + 4 = deux nombres → addition → 24. « 20 » + « 4 » = deux textes → collage → « 204 ». <br>Reporte ces valeurs.</p></details>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <p class="feedback" id="fb3" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>A : <b>24</b> (addition de nombres). B : <b>204</b> — pas deux-cent-quatre : le TEXTE « 20 » collé
-      au TEXTE « 4 ». Entre guillemets = texte, et le + COLLE les textes. Un compteur qui « colle » au lieu
+      <p>A : <b>24</b> (addition de nombres). <br>B : <b>204</b> — pas deux-cent-quatre : le TEXTE « 20 » collé
+      au TEXTE « 4 ». <br>Entre guillemets = texte, et le + COLLE les textes. Un compteur qui « colle » au lieu
       de calculer : voilà comment on affiche n'importe quoi.</p>
       <p><b>Erreur classique :</b> penser que « ce sont les mêmes chiffres, donc c'est pareil ». Pour
       l'ordinateur, 4 se calcule ; « 4 » s'affiche.</p>
@@ -1808,21 +1934,36 @@ print("Places libres :", places)</pre>
     </div>
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
-      <label for="a4q1">1. Le test T3 montre que le programme :
-      <select id="a4q1"><option value="">—</option><option>fonctionne parfaitement dans tous les cas</option><option>enlève les descendus au lieu de les ajouter</option><option>affiche du texte collé au lieu d'un nombre</option><option>ne démarre pas : il y a une erreur</option></select></label>
-      <label for="a4q2">2. Quelqu'un qui DESCEND du manège, ça devrait :
-      <select id="a4q2"><option value="">—</option><option>occuper une place de plus dans le train</option><option>ne rien changer au nombre de places</option><option>libérer une place : places + descendus</option><option>fermer la barrière du manège</option></select></label>
-      <label for="a4q3">3. Ton verdict de technicien :
-      <select id="a4q3"><option value="">—</option><option>il répond au besoin, car T1 et T2 passent</option><option>impossible de conclure avec seulement 3 tests</option><option>il faut changer d'ordinateur et recommencer</option><option>il ne répond pas au besoin : la ligne 5 est fausse</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a4q1" data-melange="1">
+  <legend>1. Le test T3 montre que le programme :</legend>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="enlève les descendus au lieu de les ajouter"><label for="a4q1__2">enlève les descendus au lieu de les ajouter</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="ne démarre pas : il y a une erreur" data-pourquoi="Le programme s'exécute et affiche un résultat : il démarre."><label for="a4q1__4">ne démarre pas : il y a une erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="fonctionne parfaitement dans tous les cas" data-pourquoi="Compare ATTENDU et OBTENU au test T3."><label for="a4q1__1">fonctionne parfaitement dans tous les cas</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="affiche du texte collé au lieu d&#x27;un nombre" data-pourquoi="Le résultat est bien un nombre : regarde s'il est juste."><label for="a4q1__3">affiche du texte collé au lieu d'un nombre</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a4q2" data-melange="1">
+  <legend>2. Quelqu'un qui DESCEND du manège, ça devrait :</legend>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="occuper une place de plus dans le train" data-pourquoi="Quelqu'un qui descend quitte sa place."><label for="a4q2__1">occuper une place de plus dans le train</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="ne rien changer au nombre de places" data-pourquoi="Descendre libère une place."><label for="a4q2__2">ne rien changer au nombre de places</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="libérer une place : places + descendus"><label for="a4q2__3">libérer une place : places + descendus</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="fermer la barrière du manège" data-pourquoi="La barrière, c'est la séance 3 : ici, on compte les places."><label for="a4q2__4">fermer la barrière du manège</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a4q3" data-melange="1">
+  <legend>3. Ton verdict de technicien :</legend>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="impossible de conclure avec seulement 3 tests, il en faut plus" data-pourquoi="Un seul test qui échoue suffit à dire non."><label for="a4q3__2">impossible de conclure avec seulement 3 tests, il en faut plus</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="il répond au besoin, car T1 et T2 passent sans erreur" data-pourquoi="T3 échoue : un programme doit passer tous les tests."><label for="a4q3__1">il répond au besoin, car T1 et T2 passent sans erreur</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="il faut changer d&#x27;ordinateur et recommencer" data-pourquoi="L'ordinateur n'y est pour rien : c'est une ligne du programme."><label for="a4q3__3">il faut changer d'ordinateur et recommencer</label></div>
+  <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__4" value="il ne répond pas au besoin : la ligne 5 est fausse"><label for="a4q3__4">il ne répond pas au besoin : la ligne 5 est fausse</label></div>
+</fieldset>
+</div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde T3 : « attendu 23 » mais qu'as-tu OBTENU ? Puis relis la ligne 5 : un moins… pour des gens qui LIBÈRENT des places ?</p></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Le technicien compare toujours ATTENDU (ce que le besoin demande) et OBTENU (ce que le programme fait). S'ils diffèrent sur UN SEUL test, le programme ne répond pas au besoin — même s'il « marche » sur les autres.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Le technicien compare toujours ATTENDU (ce que le besoin demande) et OBTENU (ce que le programme fait). <br>S'ils diffèrent sur UN SEUL test, le programme ne répond pas au besoin — même s'il « marche » sur les autres.</p></details>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <p class="feedback" id="fb4" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
       <p>T1 → 24 ✔, T2 → 21 ✔, T3 → <b>19 au lieu de 23</b> ✘ : la ligne 5 SOUSTRAIT les descendus alors
-      qu'ils LIBÈRENT des places. Verdict : le programme <b>ne répond pas au besoin</b> ; la ligne 5 doit
-      devenir <code>places = places + descendus</code>. Un seul test qui échoue suffit à conclure.</p>
+      qu'ils LIBÈRENT des places. <br>Verdict : le programme <b>ne répond pas au besoin</b> ; la ligne 5 doit
+      devenir <code>places = places + descendus</code>. <br>Un seul test qui échoue suffit à conclure.</p>
       <p><b>Erreur classique :</b> s'arrêter après T1 et T2 (« ça marche ! ») — le bug attendait le
       premier visiteur qui descend. C'est POUR ÇA qu'on teste plusieurs cas.</p>
     </details>
@@ -1852,13 +1993,28 @@ print("Places libres :", places)</pre>
     <div class="consigne"><b>Consigne — partie ① MODIFIER :</b> le responsable valide ton diagnostic et
     annonce du neuf : le Cyclone reçoit un nouveau train de <b>32 places</b>. Deux modifications à faire.</div>
     <div class="exo">
-      <label for="a5q1">1. Pour corriger le bug des descendus, la ligne 5 devient :
-      <select id="a5q1"><option value="">—</option><option>places = places - descendus</option><option>descendus = places</option><option>places = places + descendus</option><option>places = descendus - places</option></select></label>
-      <label for="a5q2">2. Pour le nouveau train de 32 places, il faut modifier :
-      <select id="a5q2"><option value="">—</option><option>la ligne 2 : montes = 32</option><option>la ligne 1 : places = 32</option><option>la ligne 6 : print(32)</option><option>toutes les lignes du programme</option></select></label>
-      <label for="a5q3">3. Pourquoi ne change-t-on QUE cette ligne-là ?
-      <select id="a5q3"><option value="">—</option><option>parce que c'est la ligne la plus courte à changer</option><option>parce que Python interdit de changer les autres</option><option>parce que le nombre de sièges n'est écrit qu'une fois</option><option>par habitude : les techniciens font toujours ainsi</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a5q1" data-melange="1">
+  <legend>1. Pour corriger le bug des descendus, la ligne 5 devient :</legend>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="places = places + descendus"><label for="a5q1__3">places = places + descendus</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="places = places - descendus" data-pourquoi="C'est la ligne fausse : elle enlève ceux qui libèrent une place."><label for="a5q1__1">places = places - descendus</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="places = descendus - places" data-pourquoi="L'ordre compte : relis le besoin."><label for="a5q1__4">places = descendus - places</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="descendus = places" data-pourquoi="Cette ligne change descendus, pas places."><label for="a5q1__2">descendus = places</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a5q2" data-melange="1">
+  <legend>2. Pour le nouveau train de 32 places, il faut modifier :</legend>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__4" value="toutes les lignes du programme" data-pourquoi="Le nombre de sièges n'est écrit qu'à un endroit."><label for="a5q2__4">toutes les lignes du programme</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__2" value="la ligne 1 : places = 32"><label for="a5q2__2">la ligne 1 : places = 32</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__3" value="la ligne 6 : print(32)" data-pourquoi="Afficher 32 ne change pas ce que contient la boîte."><label for="a5q2__3">la ligne 6 : print(32)</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__1" value="la ligne 2 : montes = 32" data-pourquoi="montes compte ceux qui montent, pas les sièges du train."><label for="a5q2__1">la ligne 2 : montes = 32</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a5q3" data-melange="1">
+  <legend>3. Pourquoi ne change-t-on QUE cette ligne-là ?</legend>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="parce que c&#x27;est la ligne la plus courte à changer" data-pourquoi="La longueur de la ligne n'a rien à voir : regarde où le 32 doit aller."><label for="a5q3__1">parce que c'est la ligne la plus courte à changer</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__3" value="parce que le nombre de sièges n&#x27;est écrit qu&#x27;une fois"><label for="a5q3__3">parce que le nombre de sièges n'est écrit qu'une fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__2" value="parce que Python interdit de changer les autres lignes déjà testées" data-pourquoi="Python n'interdit rien : on pourrait les changer, mais il n'y a rien à y changer."><label for="a5q3__2">parce que Python interdit de changer les autres lignes déjà testées</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__4" value="par habitude : les techniciens font toujours ainsi" data-pourquoi="Ce n'est pas une habitude : c'est la force d'une variable."><label for="a5q3__4">par habitude : les techniciens font toujours ainsi</label></div>
+</fieldset>
+</div>
     <figure>
       <object class="figure" data="Images/barriere_cyclone_condition.svg" type="image/svg+xml" aria-label="La barrière du Cyclone commandée par la variable places : en haut, la chaîne d'information — ACQUÉRIR, le compteur des montées et des descentes ; TRAITER, le programme et sa variable places, SI places est plus grand que 0, OUVRIR, SINON, FERMER ; COMMUNIQUER, le panneau COMPLET. L'ordre descend de TRAITER et arrive sur DISTRIBUER. En bas, la chaîne d'énergie — ALIMENTER, DISTRIBUER (la commande du moteur), CONVERTIR (le moteur), TRANSMETTRE (le réducteur), puis la barrière s'ouvre ou se ferme. À droite, le banc de trois tests : 10, 32 et 0 places, le cas limite" style="width:100%"></object>
       <figcaption>Document 2 — Ta variable commande la barrière : l'information en haut, l'énergie en bas, l'ordre qui descend.</figcaption>
@@ -1876,11 +2032,21 @@ print("Places libres :", places)</pre>
     </div>
     <p id="barrBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
-      <label for="a5q4">4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :
-      <select id="a5q4"><option value="">—</option><option>vraie : la barrière s'ouvre</option><option>fausse : la barrière se ferme</option><option>impossible à calculer pour Python</option><option>une erreur, car 0 n'est pas un nombre</option></select></label>
-      <label for="a5q5">5. Pourquoi le test B3 est-il LE plus important ?
-      <select id="a5q5"><option value="">—</option><option>parce que 0 est un nombre plus simple à tester</option><option>il ne l'est pas : B1 suffit à conclure</option><option>parce qu'il est le dernier de la liste</option><option>c'est le cas frontière, pile à la limite</option></select></label>
-    </div>
+      <fieldset class="qcm-groupe" id="a5q4" data-melange="1">
+  <legend>4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :</legend>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__1" value="vraie : la barrière s&#x27;ouvre" data-pourquoi="0 n'est pas plus grand que 0."><label for="a5q4__1">vraie : la barrière s'ouvre</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__3" value="impossible à calculer pour Python" data-pourquoi="Python compare 0 et 0 sans peine."><label for="a5q4__3">impossible à calculer pour Python</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__4" value="une erreur, car 0 n&#x27;est pas un nombre" data-pourquoi="0 est un nombre comme un autre."><label for="a5q4__4">une erreur, car 0 n'est pas un nombre</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__2" value="fausse : la barrière se ferme"><label for="a5q4__2">fausse : la barrière se ferme</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a5q5" data-melange="1">
+  <legend>5. Pourquoi le test B3 est-il LE plus important ?</legend>
+  <div class="qcm-option"><input type="radio" name="a5q5" id="a5q5__3" value="parce qu&#x27;il est le dernier de la liste" data-pourquoi="Sa place dans la liste ne compte pas : regarde sa valeur."><label for="a5q5__3">parce qu'il est le dernier de la liste</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q5" id="a5q5__2" value="il ne l&#x27;est pas : B1 suffit à conclure" data-pourquoi="B1 ne dit rien de ce qui se passe à la limite."><label for="a5q5__2">il ne l'est pas : B1 suffit à conclure</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q5" id="a5q5__1" value="parce que 0 est un nombre plus simple à tester" data-pourquoi="Ce n'est pas une question de facilité : 0 est pile à la limite."><label for="a5q5__1">parce que 0 est un nombre plus simple à tester</label></div>
+  <div class="qcm-option"><input type="radio" name="a5q5" id="a5q5__4" value="c&#x27;est le cas frontière, pile à la limite"><label for="a5q5__4">c'est le cas frontière, pile à la limite</label></div>
+</fieldset>
+</div>
     <div class="consigne"><b>Consigne — partie ③ ÉCRIRE LE PROGRAMME DE LA BARRIÈRE :</b> la règle est donnée en français ; à toi de l'écrire en Python. La barrière n'est pas encore branchée : <code>print("OUVERTE")</code> et <code>print("FERMÉE")</code> jouent son rôle.</div>
     <p><b>La règle :</b> SI il reste au moins une place, ALORS ouvrir la barrière, SINON la fermer.</p>
     <div class="exo">
@@ -1890,7 +2056,7 @@ print("Places libres :", places)</pre>
   <textarea id="progBarr" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">places = 10
 # écris ici la condition : SI il reste au moins une place, ALORS print("OUVERTE"), SINON print("FERMÉE")
 </textarea>
-  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="editeur-py-vitta approfondissement"><summary>🌐 Avec Vittascience (facultatif, Internet nécessaire)</summary><p><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p></details>
   <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
       <details class="etayage">
@@ -1904,14 +2070,12 @@ else:
       </details>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><ul><li>Partie ① : qui LIBÈRE des places, le + ou le − ?</li><li>Partie ② : 0 &gt; 0… vrai ou faux ? Compte sur tes doigts.</li><li>Partie ③ : en Python, SI s'écrit <code>if</code> et SINON s'écrit <code>else</code> ; n'oublie pas les deux-points et le décalage des lignes <code>print</code>.</li></ul></details>
-    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un réglage se prouve par des tests choisis À L'AVANCE : un cas normal, un cas facile, et le cas FRONTIÈRE (ici : zéro pile). Si les trois passent, la barrière est réglée. C'est la même idée que le grand banc de tests que tu retrouveras en 3e.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un réglage se prouve par des tests choisis À L'AVANCE : un cas normal, un cas facile, et le cas FRONTIÈRE (ici : zéro pile). <br>Si les trois passent, la barrière est réglée. C'est la même idée que le grand banc de tests que tu retrouveras en 3e.</p></details>
     <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
     <p class="feedback" id="fb5" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>① Ligne 5 → <code>places = places + descendus</code> ; nouveau train → <b>ligne 1</b> :
-      <code>places = 32</code> — et seulement elle, car le nombre de sièges n'est écrit qu'à UN endroit
-      (c'est la force des variables !). ② B1 OUVERTE ✔, B2 OUVERTE ✔, B3 : 0 &gt; 0 est FAUX →
-      <b>FERMÉE</b> ✔ — le cas frontière protège le manège du visiteur de trop.</p>
+      <p>① Ligne 5 → <code>places = places + descendus</code>. <br>Nouveau train → <b>ligne 1</b> : <code>places = 32</code>, et seulement elle. <br>Pourquoi : le nombre de sièges n'est écrit qu'à UN endroit (c'est la force des variables !).</p>
+      <p>② B1 OUVERTE ✔, B2 OUVERTE ✔. <br>B3 : 0 &gt; 0 est FAUX → <b>FERMÉE</b> ✔. <br>Le cas frontière protège le manège du visiteur de trop.</p>
       <p>③ Un programme de barrière qui marche (il y en a d'autres) :</p>
 <pre class="code">places = 0
 if places &gt; 0:
@@ -1929,15 +2093,16 @@ else:
 
 <section class="card" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
   <p>Trois défis ouverts, sans vérificateur :</p>
   <p><b>🍽 Défi famille :</b> prends trois boîtes de cuisine, étiquette-les <code>places</code>,
-  <code>montes</code>, <code>descendus</code>, et des papiers pour les valeurs. Fais exécuter le programme
-  de l'activité 2 à quelqu'un de ta famille — toi, tu es l'ordinateur qui lit les lignes. L'ancienne
+  <code>montes</code>, <code>descendus</code>, et des papiers pour les valeurs. <br>Fais exécuter le programme
+  de l'activité 2 à quelqu'un de ta famille — toi, tu es l'ordinateur qui lit les lignes. <br>L'ancienne
   valeur va à la poubelle : si on te demande pourquoi, tu sauras répondre.</p>
   <p><b>🎟 Défi compteur de classe :</b> dans l'éditeur, écris le compteur de TA classe (28 élèves ?
   écris-le pour que le professeur n'ait qu'UNE ligne à changer l'an prochain).</p>
-  <p><b>🎢 Défi curieux :</b> le vrai Cyclone a ouvert en 1927 et il est toujours en bois. Dans l'éditeur,
+  <p><b>🎢 Défi curieux :</b> le vrai Cyclone a ouvert en 1927 et il est toujours en bois. <br>Dans l'éditeur,
   calcule son âge avec une variable <code>annee = 2026</code> — puis écris le programme pour que le calcul
   reste juste TOUTES les années suivantes.</p>
 <div class="editeur-py" id="vs3" data-fichier="5e-BOITE-bonus-TON NOM">
@@ -1946,7 +2111,7 @@ else:
   <textarea id="py_bonus" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off"># Écris ici le défi que tu as choisi, puis ▶ Exécuter.
 annee = 2026
 </textarea>
-  <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
+  <details class="editeur-py-vitta approfondissement"><summary>🌐 Avec Vittascience (facultatif, Internet nécessaire)</summary><p><a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p></details>
   <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
@@ -1960,6 +2125,7 @@ annee = 2026
       <li>Ce que j'ai trouvé : ____ .</li>
     </ul>
   </details>
+</details>
 </section>
 
 <section class="card" id="bilan">
@@ -1988,24 +2154,22 @@ annee = 2026
   <div class="donnees">
     <p><b>🧭 Et après ?</b> En 3e, le même voyage t'attend en plus grand :
     <a href="../../3e/3e_C9.1/sequence_3e_C9.1_variables_types_systemes.html">l'atelier « Variables, types
-    et systèmes »</a> — le panneau du métro, les types, les fonctions et le grand banc de mise au point.
-    Tu y reconnaîtras tes boîtes.</p>
+    et systèmes »</a> — le panneau du métro, les types, les fonctions et le grand banc de mise au point. <br>Tu y reconnaîtras tes boîtes.</p>
   </div>
 </section>
 
 <section class="card" id="entrainement">
   <h2>🧠 Prêt·e à t'entraîner ?</h2>
   <p>Le QCM de l'atelier t'attend : <b>30 questions</b> (dont <b>3 illustrées</b>), en 3 familles —
-  la boîte, lire et tester, modifier et régler. Corrections détaillées qui expliquent chaque piège,
+  la boîte, lire et tester, modifier et régler. <br>Corrections détaillées qui expliquent chaque piège,
   sauvegarde automatique.</p>
   <a class="btn qcm" href="qcm_5e_C9.1-C9.3_boite_etiquetee.html">🧠 M'entraîner avec le QCM (30 questions)</a>
 </section>
 
 </div>
 <footer class="footer">
-  <p>Atelier 5e_C9.1 → C9.3 · Thème 3 · New York — Arc variables, marche 5e (la marche 3e est en ligne).
-  Page unique hors-ligne (éditeur Python intégré, Skulpt ; Vittascience en lien facultatif), sauvegarde locale uniquement — aucune donnée
-  envoyée. Images : SVG originaux CC0 ; photo Coney Island : Kidfly182, CC BY 4.0 (Wikimedia Commons).</p>
+  <p>Atelier 5e_C9.1 → C9.3 · Thème 3 · New York — Arc variables, marche 5e (la marche 3e est en ligne). <br>Page unique hors-ligne (éditeur Python intégré, Skulpt ; <br>Vittascience en lien facultatif), sauvegarde locale uniquement — aucune donnée
+  envoyée. Images : SVG originaux CC0 ; <br>photo Coney Island : Kidfly182, CC BY 4.0 (Wikimedia Commons).</p>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
@@ -2306,7 +2470,9 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 }));
 function save(){
   const o = {inputs: {}, par, exp: window.__exp || {}, ae: {}};
-  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => { if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
+    o.inputs[e.id] = e.value; });
   document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.textContent; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Travail sauvegardé sur CET ordinateur (" + new Date().toLocaleTimeString() + ")"; }

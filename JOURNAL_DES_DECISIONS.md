@@ -31429,3 +31429,22 @@ L'unité jugée est le bloc d'activité de la n°331. Un bloc fait produire avec
 - Réparé au passage : l'entrée 51 (`5e_C7.5`, #718) avait gardé le marqueur de ses contrôles au lieu de leur phrase.
 
 **Ce qui reste.** La vague n°332 sur les 14 pages relevées (une correction qui montre le tableau, le graphique ou le programme attendu, et son fichier) ; l'export par draw.io lui-même, si Pascal le veut.
+
+## 15/11/2026 — Révision des trois thèmes, 54 : `5e_C9.1` (la boîte étiquetée)
+
+**Le constat.** La page était sur le gabarit commun. Sur `main` :
+- **un ✘ de règle d'or, la n°300** : 24 questions posées par une liste déroulante ;
+- 5 écarts d'aération ;
+- une séance 2 à 1 678 mots et une séance 3 à 1 246 : à l'échauffement, le pas à pas de l'Explorateur de Windows était ouvert d'office, et chaque éditeur portait sa note Vittascience à découvert ; le Bonus de la séance 3 aussi.
+
+**Ce qui est fait.**
+- **n°300** : les 24 questions deviennent des groupes de boutons radio (`migrer_gabarit_306.py --n300`).
+- **22 groupes mélangés** ; 5 propositions fausses allongées : la bonne réponse ne se devine plus à sa longueur.
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer : le pas à pas de l'Explorateur, la note Vittascience de l'échauffement et celle de chaque éditeur (facultatives, Internet nécessaire), le Bonus. Le « pourquoi » de l'encart des gestes perd sa redite.
+- **Le mode mission explique chaque erreur** (`mission_5e_C9.1.json`) : 55 pourquoi.
+- **Aération : 5 → 0.**
+- Le banc garde ses questions (shim `_groupesRadio(page)`, sur les trois pages qu'il ouvre) ; il ouvre le Bonus replié avant d'en éprouver l'éditeur.
+
+**Mesure.** Mots visibles : 550 · 1 678 · 1 246 → 539 · **1 282** · 923. Règles d'or 1 → 0 ✘ ; menus 24 → 0 ; aération 5 → 0. Bancs **66 / 66**, **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste juste au-dessus du repère (1 282 mots).** L'encart des quatre gestes de l'éditeur, commun à six pages, y compte pour 453 mots (les gestes et l'éditeur d'essai) : c'est l'échauffement de la séance, il n'est pas touché ici.

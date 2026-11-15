@@ -75,7 +75,7 @@ d'autant.
 | 51 | `5e_C7.5` | 1528 → 1317 | 5 → 0 | 22 → 0 | 8 → 0 | livrée #718 — migrée au gabarit commun ; l'activité 0 dans le schéma du prototype ; l'ordre du montage ne se lit plus à l'écran ; séance 2 (1 317) un peu au-dessus : l'établi, la synthèse, le bilan |
 | 52 | `5e_C8.1` | 1421 → 1364 | 5 → 0 | 17 → 0 | 13 → 0 | livrée #719 — migrée au gabarit commun ; une réponse en double remplacée ; 18 propositions fausses allongées ; séance 2 (1 364) au-dessus : le simulateur, deux tableaux, la synthèse et le bilan |
 | 53 | `5e_C8.2` | 1412 → 1035 | 5 → 0 | 16 → 0 | 12 → 0 | livrée #720 — migrée au gabarit commun ; la grille de l'activité 4 ne se lit plus toute seule ; 12 propositions fausses remplacées ou allongées ; les deux séances sous le repère |
-| 54 | `5e_C9.1` | 1761 | 1 | 24 | 5 | à faire |
+| 54 | `5e_C9.1` | 1761 → 1282 | 1 → 0 | 24 → 0 | 5 → 0 | livrée #723 — 24 listes en boutons radio ; pas à pas de l'Explorateur, notes Vittascience et Bonus repliés ; séance 2 (1 282) juste au-dessus : l'encart des gestes, commun à six pages |
 | 55 | `3e_C1.1` | 1451 | 0 | 0 | 23 | à faire |
 | 56 | `3e_C3.1` | 1939 | 0 | 0 | 19 | à faire |
 
@@ -305,3 +305,6 @@ d'autant.
   listes en boutons radio, l'éprouvette du banc déclarée commande, six versions étayées) ; la grille de l'activité 4
   ne nomme plus ses lignes, avec une réponse de trop ; 12 groupes mélangés, 12 propositions fausses remplacées ou
   allongées ; 46 pourquoi, 5 indices ; Bonus replié ; aération 12 → 0. Séances 689 · 1 393 → 735 · 1 035.
+- **5e_C9.1** (la boîte étiquetée), 15/11/2026 (#723) : 24 listes en boutons radio ; 22 groupes mélangés, 5 propositions
+  allongées ; le pas à pas de l'Explorateur, les notes Vittascience et le Bonus repliés ; 55 pourquoi ; aération 5 → 0.
+  Séances 550 · 1 678 · 1 246 → 539 · 1 282 · 923. Reste : la séance 2 juste au-dessus (l'encart des gestes).
