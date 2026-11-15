@@ -332,6 +332,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- lecteur-pas-a-pas v1 : début — lecteur commun des animations pas à pas ; source unique : _outils/lecteur_pas_a_pas/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1254,7 +1259,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1831,8 +1837,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 
 <section class="card">
   <h2>🔬 Activité 1 — Une fonction, trois principes <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
-  <div class="meta"><b>Objectif</b> comparer des principes techniques pour une même fonction ·
-  <b>Compétence</b> 5e_C1.2 · <b>Production</b> le principe retenu pour le collège, et sa justification</div>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> comparer des principes techniques pour une même fonction ·
+  <b>Compétence</b> 5e_C1.2 · <b>Production</b> le principe retenu pour le collège, et sa justification</div></details>
 
   <p>Le collège doit choisir son capteur. <br>Trois appareils existent, et <b>ils remplissent la même
   fonction</b>&nbsp;: mesurer la concentration de poussières dans l'air. <br>Ils n'emploient pas le même
@@ -2396,8 +2402,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 </section>
 <section class="card">
   <h2>🧹 Activité 2 — Collecter, trier, analyser <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
-  <div class="meta"><b>Objectif</b> nettoyer un jeu de données avant de l'exploiter ·
-  <b>Compétence</b> 5e_C1.1 · <b>Production</b> les anomalies repérées, et les moyennes après nettoyage</div>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> nettoyer un jeu de données avant de l'exploiter ·
+  <b>Compétence</b> 5e_C1.1 · <b>Production</b> les anomalies repérées, et les moyennes après nettoyage</div></details>
 
   <p>Le capteur tourne depuis une semaine. Le fichier
   <a href="releves_air_chengdu_simules.csv" download title="Télécharger releves_air_chengdu_simules.csv">📥&nbsp;<code>releves_air_chengdu_simules.csv</code></a> contient <b>90 relevés</b>&nbsp;: jour, heure,
@@ -2609,8 +2615,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
 <section class="card">
   <h2>🗂️ Activité 3 — Ranger, et retrouver <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
-  <div class="meta"><b>Objectif</b> concevoir une arborescence et des noms qui se retrouvent ·
-  <b>Compétence</b> 5e_C1.4 · <b>Production</b> l'arborescence rangée, et trois règles de nommage</div>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> concevoir une arborescence et des noms qui se retrouvent ·
+  <b>Compétence</b> 5e_C1.4 · <b>Production</b> l'arborescence rangée, et trois règles de nommage</div></details>
 
   <p>Trois semaines de relevés, et le dossier du professeur ressemble à ceci
   (<a href="arborescence_actuelle_simulee.csv" download title="Télécharger arborescence_actuelle_simulee.csv">📥&nbsp;<code>arborescence_actuelle_simulee.csv</code></a>)&nbsp;: <b>14 entrées</b>, dont
@@ -2717,8 +2723,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
 <section class="card">
   <h2>🔗 Activité 4 — Le chemin de la donnée <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
-  <div class="meta"><b>Objectif</b> décrire le rôle d'un système d'information dans le partage ·
-  <b>Compétence</b> 5e_C1.3 · <b>Production</b> les quatre étages, et qui a le droit de faire quoi</div>
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> décrire le rôle d'un système d'information dans le partage ·
+  <b>Compétence</b> 5e_C1.3 · <b>Production</b> les quatre étages, et qui a le droit de faire quoi</div></details>
 
   <p>Le capteur mesure. <br>Le tableur calcule. <br>Le graphique s'affiche sur l'ENT. Entre les deux, il y a
   des fichiers, un serveur, des personnes et des droits&nbsp;: <b>c'est cela, un système
@@ -2820,9 +2826,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <div class="seance-panel" id="s5" role="tabpanel" aria-labelledby="tab-s5">
 <section class="card">
   <h2>🔒 Activité 5 — Protéger, puis répondre <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
-  <div class="meta"><b>Objectif</b> sécuriser un environnement numérique, puis assumer une
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><div class="meta"><b>Objectif</b> sécuriser un environnement numérique, puis assumer une
   publication · <b>Compétences</b> 5e_C1.5 et 5e_C1.6 · <b>Production</b> les mesures de sécurité, et
-  la décision de publication justifiée</div>
+  la décision de publication justifiée</div></details>
 
   <p><b>Ce qui s'est passé.</b><br>Le fichier de relevés a été déposé sur l'ENT du collège pour que
   chacun puisse travailler dessus. <br>Trois jours plus tard, le professeur l'ouvre&nbsp;: <b>quatre

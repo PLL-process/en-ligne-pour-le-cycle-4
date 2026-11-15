@@ -66,7 +66,8 @@ Parmi les plus récentes, celles qui changent la forme de toute séquence :
 sous le titre ; le référentiel complet va dans la synthèse professeur ; depuis
 l'amendement du 07/11/2026, sa copie revient sur la page, **repliée** dans un
 `details.referentiel-replie` fermé sous les étiquettes — outil
-`_outils/replier_referentiel.py`) ·
+`_outils/replier_referentiel.py` ; depuis le 15/11/2026, la fiche de chaque
+activité se replie aussi, `_outils/replier_fiches_activite.py`) ·
 **299** un contrôle qui n'a rien vérifié est en panne, pas vert (codes 0/1/2) ·
 **300** une question à choix est un groupe de boutons radio dans un
 `<fieldset>`, jamais une liste déroulante · **301** le bilan clôt la séquence ·

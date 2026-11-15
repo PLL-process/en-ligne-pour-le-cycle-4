@@ -195,6 +195,11 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -884,7 +889,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1421,12 +1427,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>La carte d'identité du programme</h3><span class="duree">⏱ 35 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier les données UTILISÉES et PRODUITES par le programme du lampadaire, et repérer ses paramètres.</div>
       <div><b>Compétence :</b> 5e_C6.1.</div>
       <div><b>Production attendue :</b> 6 données classées + 2 lectures précises.</div>
       <div><b>Ressources :</b> le programme par blocs ci-dessous.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/programme_blocs_lampadaire.svg" type="image/svg+xml" aria-label="Le programme par blocs du lampadaire avec ses paramètres" style="width:100%"></object>
       <figcaption>Le vrai programme de ton lampadaire de la séquence précédente — les paramètres sont encadrés en jaune.</figcaption>
@@ -1517,12 +1523,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>L'algorithme en langage naturel</h3><span class="duree">⏱ 40 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> traduire le programme par blocs en un algorithme en langage naturel, dans le bon ordre.</div>
       <div><b>Compétence :</b> 5e_C6.2.</div>
       <div><b>Production attendue :</b> 6 étapes ordonnées + 3 mots-clés placés.</div>
       <div><b>Ressources :</b> le programme par blocs de l'activité 1 (reviens-y autant que nécessaire).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) numérote les étapes de l'algorithme dans l'ordre du programme (1 à 6) ; b) place les bons mots-clés dans les phrases à trous ; c) recopie l'algorithme complet au cahier ; d) associe chaque étape à sa FORME d'algorigramme.</div>
     <div class="exo">
       <h4>d) Chaque étape a sa forme — l'algorigramme du lampadaire</h4>
@@ -1669,12 +1675,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Aux commandes des paramètres — au simulateur</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> modifier SEUIL_NUIT et DURÉE, prédire l'effet, puis le VÉRIFIER au simulateur (mission de la mairie incluse).</div>
       <div><b>Compétence :</b> 5e_C6.3.</div>
       <div><b>Production attendue :</b> 3 prédictions + la mission mairie réussie au simulateur.</div>
       <div><b>Ressources :</b> le document « paramètres et effets » + le simulateur.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/parametres_et_effets.svg" type="image/svg+xml" aria-label="Effets de la modification des paramètres seuil et durée" style="width:100%"></object>
       <figcaption>Chaque paramètre est un compromis : service rendu contre énergie consommée.</figcaption>
@@ -1744,12 +1750,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Réinvestissement — l'arrosage du jardin pédagogique</h3><span class="duree">⏱ 15 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer la lecture de programme et le réglage de paramètre à un autre objet.</div>
       <div><b>Compétences :</b> 5e_C6.1 → C6.3 (transfert).</div>
       <div><b>Production attendue :</b> 4 réponses.</div>
       <div><b>Ressources :</b> aucune — tout est dans ta tête maintenant.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> le programme de l'arrosage automatique du jardin dit : « mesurer l'humidité ; SI humidité &lt; SEUIL_SEC (= 40) : arroser pendant DURÉE_ARROSAGE (= 60 s) ; SINON : ne rien faire ; recommencer ». Réponds en concepteur.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="r4_1" data-melange="1">

@@ -196,6 +196,11 @@
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -893,7 +898,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1537,12 +1543,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Le schéma-bloc, c'est toi qui l'élabores</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> élaborer le schéma-bloc de la chaîne d'énergie (choisir les bons blocs, écarter les intrus, ordonner, nommer les natures d'énergie).</div>
       <div><b>Compétence :</b> 3e_C4.1.</div>
       <div><b>Production attendue :</b> 5 blocs placés + 4 natures + 2 intrus identifiés.</div>
       <div><b>Ressources :</b> le gabarit et la palette ci-dessous.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/chaine_energie_a_elaborer.svg" type="image/svg+xml" aria-label="Gabarit de schéma-bloc à compléter et palette de blocs disponibles" style="width:100%"></object>
       <figcaption>Le gabarit (en haut) présente les branchements : les numéros sont des repères, pas un ordre de passage. <br>La palette (en bas) : deux composants sont hors du périmètre de l’alimentation.</figcaption>
@@ -1664,12 +1670,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Dimensionner pour tenir 72 h — au simulateur</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> calculer l'énergie nécessaire pour 72 h d'autonomie et choisir la batterie, puis VÉRIFIER au simulateur de coupure.</div>
       <div><b>Compétence :</b> 3e_C4.1 (dimensionner, c'est élaborer sérieusement).</div>
       <div><b>Production attendue :</b> 2 calculs + 1 choix de batterie + 2 essais au simulateur (un qui échoue, un qui réussit).</div>
       <div><b>Ressources :</b> conso de la station : 6 W en continu ; batterie 12 V (volts) ; énergie (Wh) = puissance (W) × durée (h) ; capacité (Ah) = énergie (Wh) ÷ tension (V).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) calcule l'énergie pour 72 h puis la capacité minimale ; b) choisis la batterie du commerce ; c) au simulateur, teste D'ABORD une configuration insuffisante, PUIS ta solution — la page vérifie que tu as vraiment fait les deux essais.</div>
     <div class="exo">
       <h4>a) Mes calculs de concepteur</h4>
@@ -1716,12 +1722,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <div class="activite" id="act6">
     <header><span class="num">Bonus</span><h3>La loi d'Ohm au chevet de la station — pont avec la physique</h3><span class="duree">⏱ 20 min (facultatif)</span></header>
     <details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini les activités 1 et 2</summary>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> utiliser U = R × I sur un cas RÉEL de la station : le courant consommé, la chute de tension dans le câble, le choix du fusible.</div>
       <div><b>Pont interdisciplinaire :</b> physique-chimie (électricité) — souvent survolée faute de temps : ici, elle sert à quelque chose de concret.</div>
       <div><b>Production attendue :</b> 3 calculs de technicien.</div>
       <div><b>Ressources :</b> P = U × I (puissance) · U = R × I (loi d'Ohm) · la station consomme 6 W sous 12 V (volts) · le câble mesure R = 0,4 Ω.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) calcule le courant absorbé par la station ; b) calcule la tension « perdue » dans le câble grâce à la loi d'Ohm ; c) choisis le fusible qui protège sans gêner.</div>
     <div class="exo">
       <div class="assoc"><label for="b6_1">a) Courant absorbé : I = P ÷ U = 6 W ÷ 12 V = … A</label><input type="number" id="b6_1" min="0" max="10" step="0.1" inputmode="decimal"></div>
@@ -1759,12 +1765,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Lire les contraintes du site</h3><span class="duree">⏱ 15 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> associer chaque contrainte du site à l'exigence qu'elle impose aux matériaux.</div>
       <div><b>Compétence :</b> 3e_C4.2 (les contraintes d'abord, les choix ensuite).</div>
       <div><b>Production attendue :</b> 5 associations contrainte → exigence.</div>
       <div><b>Ressources :</b> le document du site ci-dessous.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/contraintes_site_cyclonique.svg" type="image/svg+xml" aria-label="La station et les contraintes du site : vent, embruns, UV, chaleur, environnement" style="width:100%"></object>
       <figcaption>Cinq contraintes pèsent sur chaque pièce de la station.</figcaption>
@@ -1825,12 +1831,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Choisir et justifier : matériau + procédé, pièce par pièce</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> pour 4 pièces de la station, choisir le matériau ET le procédé de mise en forme, puis rédiger une justification croisée.</div>
       <div><b>Compétence :</b> 3e_C4.2.</div>
       <div><b>Production attendue :</b> 8 choix + 1 justification rédigée.</div>
       <div><b>Ressources :</b> l'abaque matériaux &amp; procédés ci-dessous.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/materiaux_procedes_abaque.svg" type="image/svg+xml" aria-label="Abaque des matériaux et procédés pour les pièces de la station" style="width:100%"></object>
       <figcaption>L'abaque du bureau d'études : matériau, procédé, et le POURQUOI.</figcaption>
@@ -1924,12 +1930,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Réinvestissement — la borne solaire du stade</h3><span class="duree">⏱ 15 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer la démarche à un objet voisin : la borne d'éclairage solaire du stade municipal (200 exemplaires prévus).</div>
       <div><b>Compétences :</b> 3e_C4.1 + C4.2 (transfert).</div>
       <div><b>Production attendue :</b> 5 réponses de concepteur.</div>
       <div><b>Ressources :</b> tout ce que tu viens d'apprendre — sans document.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la mairie veut 200 bornes solaires pour le stade. Réponds en concepteur.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="r5_1" data-melange="1">

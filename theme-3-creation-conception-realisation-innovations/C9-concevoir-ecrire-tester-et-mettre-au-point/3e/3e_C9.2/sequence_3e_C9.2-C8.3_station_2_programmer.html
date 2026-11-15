@@ -355,6 +355,11 @@
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1035,7 +1040,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1688,12 +1694,12 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="activite" id="act3">
     <header><span class="num">Activité 3 · première partie</span><h3>Le programme en blocs sur Vittascience — paliers 1 et 2 : lire le vent, décider du niveau</h3><span class="duree">⏱ ~35 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Cette activité demande une connexion Internet</b> — l'éditeur Vittascience est en ligne. <b>Sans connexion&nbsp;:</b> suis le Plan B, plus bas (« Pas de connexion ? ») : les planches de paliers, les captures réelles et le banc d'essai de cette page.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> construire, dans <b>Vittascience (interface Arduino, mode BLOCS)</b>, le programme qui lit le vent, décide du niveau et déclenche l'alerte — et le vérifier dans le <b>simulateur intégré</b>.</div>
       <div><b>Compétence :</b> 3e_C9.2 — réaliser un programme commandant un système réel.</div>
       <div><b>Production attendue :</b> les 4 programmes enregistrés sur Vittascience (<code>3e-STATION-palier1</code> … <code>3e-STATION-complet</code>, suivis de TON NOM) + les <b>4 niveaux</b> et les <b>6 frontières</b> obtenus au simulateur + le <b>journal de tes paliers</b> (au bas de l'activité, à la séance 4).</div>
       <div><b>Ressources :</b> l'interface Vittascience, par le lien ci-dessous, les 4 planches de paliers, et le banc d'essai de la station (en haut de page).</div>
-    </div>
+    </div></details>
 
     <div class="retenir"><b>📏 Une seule échelle, une seule station.</b> Tu programmes en <b>km/h</b>, du début à la fin — dans l'éditeur, au banc d'essai, dans le protocole de recette et dans le procès-verbal. Il n'y a pas d'échelle « d'exercice » à côté de l'échelle « réelle » : c'est la même, et chaque nombre porte son unité.
       <div style="overflow-x:auto;margin-top:10px">

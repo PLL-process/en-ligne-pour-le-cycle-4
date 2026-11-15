@@ -355,6 +355,11 @@
 .situation-photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:10px;border:1px solid var(--border)}
 .situation-photo figcaption{margin:6px 0 0;font-size:.92em;line-height:1.5;max-width:640px}
 @media print{.situation-photo{break-inside:avoid}.situation-photo img{max-width:60%}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1035,7 +1040,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1550,12 +1556,12 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Le bouton d'acquittement — un événement, une mémoire</h3><span class="duree">⏱ ~40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> programmer l'acquittement (palier 4) et comprendre la notion d'événement « le niveau vient de changer ».</div>
       <div><b>Compétence :</b> 3e_C9.2 — l'interaction entre un humain et une machine, au cœur du programme.</div>
       <div><b>Production attendue :</b> palier 4 ajouté au programme + les 2 expériences d'acquittement tracées au banc.</div>
       <div><b>Ressources :</b> la planche du palier 4 + le chronogramme + le banc d'essai.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) ajoute le palier 4 à ton programme (ou reproduis-le au banc d'essai) ; b) fais les DEUX expériences : acquitter une alarme, puis déclencher une NOUVELLE alerte ; c) lis le chronogramme et réponds.</div>
     <img class="figure" src="Images/blocs_palier4_acquitter.svg" alt="Reconstitution schématique du palier 4 : un bloc si le bouton D2 est appuyé range vrai dans alarmeAcquittee ; un bloc si niveauAlerte est différent de niveauPrecedent range faux dans alarmeAcquittee ; le buzzer D5 sonne si le niveau vaut 3 (ouragan majeur) et que l'alarme n'est pas acquittée ; enfin niveauPrecedent mémorise niveauAlerte ; à droite les trois constats attendus : le buzzer sonne, l'appui le coupe, une nouvelle alerte le fait repartir">
     <div class="exo">
@@ -1602,12 +1608,12 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Sous le capot : lire le C++ que les blocs fabriquent</h3><span class="duree">⏱ ~35 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> retrouver dans le C++ généré les structures construites en blocs, et utiliser le moniteur série pour la mise au point.</div>
       <div><b>Compétence :</b> 3e_C9.2 — mettre au point : comprendre ce que la machine exécute vraiment.</div>
       <div><b>Production attendue :</b> lecture guidée vérifiée + une trace d'exécution interprétée.</div>
       <div><b>Ressources :</b> extraits du programme de référence commenté (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino" download>le fichier complet</a>).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> qu'ils viennent de Vittascience ou d'un autre logiciel de blocs, tes blocs sont traduits en <b>C++</b> avant d'entrer dans la carte — la bascule <b>BLOCS / CODE</b> de Vittascience te le montre en direct. Lis les trois extraits du programme de référence — c'est le même programme que le tien, écrit dans la langue de la machine — puis réponds. Version 🅲 : la trace d'exécution en d) remplace le moniteur série réel.</div>
     <div class="exo">
       <h4>Extrait 1 — les constantes et les variables (le début du fichier)</h4>

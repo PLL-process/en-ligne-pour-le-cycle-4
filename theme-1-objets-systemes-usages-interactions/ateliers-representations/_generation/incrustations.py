@@ -99,7 +99,7 @@ def section(inc):
         # la piqûre de rappel du cahier des charges : un exercice hors série, décrit dans donnees_rappel_cdc.py
         import donnees_rappel_cdc as rc
         r = next(x for x in rc.RAPPELS if x["id"] == inc["rappel"])
-        return moteur.rappel_cdc(r, (DEPOT / inc["sequence"]).parent, inc["balise"], inc["balise_exo"])
+        return moteur.rappel_cdc(r, (DEPOT / inc["sequence"]).parent, inc["balise"], inc["balise_exo"], fiche_repliee=True)
     at = importlib.import_module("donnees_" + inc["module"])
     niv = inc["niveau"]
     N = at.NIVEAUX[niv]
@@ -124,7 +124,8 @@ def section(inc):
         cle = "rep_%s_%s_%s" % (at.SLUG, niv, ex["id"])
         # Les minutes de l'exercice sont déjà comptées dans celles de l'activité qui l'accueille :
         # elles s'écrivent dans la ligne « Durée », pas dans le titre.
-        html, df = moteur.exercice(ex, numeros[exo], uid, cle, balise=inc["balise_exo"], duree_au_titre=False)
+        # la fiche de l'exercice se replie dans la séquence (décision de Pascal du 15/11/2026)
+        html, df = moteur.exercice(ex, numeros[exo], uid, cle, balise=inc["balise_exo"], duree_au_titre=False, fiche_repliee=True)
         h.append(html)
         defs[uid] = df
     page = build.page_niveau(at, niv)

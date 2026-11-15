@@ -282,6 +282,11 @@ details.referentiel-replie p{margin:8px 0}
 body.essentiel details.referentiel-replie{display:none}
 @media print{details.referentiel-replie{display:none}}
 @media(prefers-reduced-motion:reduce){details.referentiel-replie>summary::before{transition:none}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -1823,7 +1828,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -2432,12 +2438,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Les deux chaînes du jardin — et le relais qui les sépare</h3><span class="duree">⏱ ~20 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> situer chaque organe du jardin connecté dans sa fonction, et comprendre pourquoi la pompe ne se branche pas sur une broche.</div>
       <div><b>Compétence :</b> préalable aux trois codes C9 — comprendre le système avant de le programmer (le programme officiel suppose l'objet connu).</div>
       <div><b>Production attendue :</b> les organes classés + une justification écrite sur le rôle du relais.</div>
       <div><b>Ressources :</b> le schéma des deux chaînes ci-dessous.</div>
-    </div>
+    </div></details>
     <img class="figure" src="Images/chaines_jardin_programme.svg" alt="Schéma des deux chaînes du jardin connecté : en haut la chaîne d'information — l'humidité du sol et l'heure entrent dans ACQUÉRIR, puis TRAITER avec les seuils 35 et 45, puis COMMUNIQUER qui affiche POMPE ON ou OFF vers le jardinier ; l'ordre descend de TRAITER et arrive sur DISTRIBUER ; en bas la chaîne d'énergie — l'énergie électrique entre dans ALIMENTER, une alimentation 12 V séparée, passe à DISTRIBUER, le relais, puis à CONVERTIR, la pompe 12 V, qui fournit de l'énergie mécanique pour mettre l'eau en mouvement ; TRANSMETTRE est absent, dessiné en pointillés ; à part, le circuit d'eau va du réservoir à la pompe puis au sol du jardin" aria-describedby="desc-chaines-j">
     <details class="description-image" id="desc-chaines-j">
       <summary>📖 Description détaillée du schéma</summary>
@@ -2491,12 +2497,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>De la règle à l'algorigramme — dessiner avant d'écrire</h3><span class="duree">⏱ ~25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> traduire une règle de décision en algorigramme normalisé, puis en pseudo-code.</div>
       <div><b>Compétence :</b> <b>4e_C9.1</b> — <i>modifier</i> un algorithme permettant de répondre au besoin posé.</div>
       <div><b>Production attendue :</b> l'algorigramme lu bloc par bloc + ton pseudo-code avec la plage horaire.</div>
       <div><b>Ressources :</b> l'algorigramme ci-dessous — c'est le même programme que tu écriras, mais dessiné.</div>
-    </div>
+    </div></details>
     <img class="figure" src="Images/algorigramme_arrosage.svg" alt="Algorigramme de l'arrosage en cinq blocs numérotés : 1 le terminal DÉBUT ; 2 un rectangle « mesurer l'humidité H et lire l'heure » ; 3 un losange « H inférieur à 40 ET heure comprise entre 6 et 10 ? » accompagné d'une bulle de commentaire en pointillés expliquant que le ET vit à l'intérieur de la question ; 4 sur la sortie OUI, un rectangle « allumer la pompe » ; 5 sur la sortie NON, un rectangle « éteindre la pompe » ; les deux chemins se rejoignent et une flèche remonte vers le bloc 2, formant la boucle de surveillance, sans aucun bloc FIN" aria-describedby="desc-algo-j">
     <details class="description-image" id="desc-algo-j">
       <summary>📖 Description détaillée de l'algorigramme</summary>
@@ -2639,12 +2645,12 @@ print("2 + 3 =", 2 + 3)
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Écrire et exécuter — des blocs au Python</h3><span class="duree">⏱ ~30 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> écrire le programme dans l'éditeur Python de la page, l'exécuter, et retrouver dans le code chaque élément de l'algorigramme.</div>
       <div><b>Compétence :</b> <b>4e_C9.2</b> — <i>traduire</i> un algorithme en un programme.</div>
       <div><b>Production attendue :</b> le programme téléchargé sous ton nom + le journal de ce que tu as observé.</div>
       <div><b>Ressources :</b> l'éditeur Python de la page, ci-dessous, et le banc d'essai de la page (en haut).</div>
-    </div>
+    </div></details>
     <!-- Rappel de l'algorigramme (Pascal, 05/11/2026 : « dans l'exercice suivant, rappeler la définition de l'algorigramme »).
          Définition : celle du lexique de 4e_C9.1 (Grand dictionnaire terminologique, OQLF, « algorigramme »). -->
     <aside class="rappel-algo" aria-labelledby="rappel-algo-t">
@@ -2735,12 +2741,12 @@ heure = <span class="num">8</span>
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Tester — construire le jeu d'essais qui prouve</h3><span class="duree">⏱ ~25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> concevoir un jeu d'essais complet, écrire les résultats ATTENDUS avant l'exécution, puis exécuter et comparer.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> un programme commandant un système réel.</div>
       <div><b>Production attendue :</b> le tableau d'essais rempli — colonne « attendu » AVANT, colonne « observé » PENDANT.</div>
       <div><b>Ressources :</b> l'anatomie d'un jeu de tests ci-dessous + le banc d'essai de cette page.</div>
-    </div>
+    </div></details>
     <img class="figure" src="Images/jeu_de_tests_anatomie.svg" alt="Anatomie d'un jeu de tests : une droite graduée de l'humidité de 0 à 100 % portant le seuil de 40, avec quatre points d'essai — 25 % et 55 % en cas nominaux, puis 39 % et 40 % serrés contre le seuil en cas frontières ; en dessous, un tableau à quatre colonnes scénario, entrées, résultat attendu, résultat observé, avec quatre lignes dont la dernière, le cas frontière, a sa colonne observé vide ; deux encadrés rappellent que la colonne attendu se remplit avant de lancer, et que la quatrième famille oubliée est le cas absurde" aria-describedby="desc-tests-j">
     <details class="description-image" id="desc-tests-j">
       <summary>📖 Description détaillée de la planche</summary>
@@ -2838,12 +2844,12 @@ heure = <span class="num">8</span>
   plus besoin.</p>
 </section>
 <!-- /roles: 4e_C9-1 --><span class="duree">⏱ ~30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier l'écart entre le comportement observé (la pompe s'affole : elle s'allume et s'éteint sans arrêt) et le comportement acceptable, en trouver la cause, corriger par l'hystérésis, puis re-tester.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> · et <b>4e_C9.1</b> — <i>modifier</i> l'algorithme pour corriger.</div>
       <div><b>Production attendue :</b> le diagnostic écrit + le programme à deux seuils, construit dans l'atelier + la preuve, dans l'atelier, que la pompe ne s'affole plus.</div>
       <div><b>Ressources :</b> la trace d'exécution ci-dessous, le chronogramme, et l'atelier du programme, juste sous l'animation.</div>
-    </div>
+    </div></details>
 
     <div class="consigne"><b>Consigne :</b> a) lis la trace et dis ce qui cloche ; b) comprends pourquoi avec le chronogramme ; c) construis la correction <b>dans l'atelier</b>, sous l'animation ; d) <b>prouve-le</b> : exécute le programme de départ, puis le tien, sur la même mesure qui tremble.</div>
     <div class="exo">
@@ -3223,12 +3229,12 @@ pompe_allumee = <span class="kw">False</span>
 
   <div class="activite" id="act6">
     <header><span class="num">Activité 6</span><h3>Réinvestir — le même squelette, un autre objet</h3><span class="duree">⏱ ~25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer la structure « deux seuils + bande morte » sur un système différent, sans modèle fourni.</div>
       <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>réaliser</i> un programme commandant un autre système réel.</div>
       <div><b>Production attendue :</b> le programme du lampadaire, écrit <b>sans squelette</b>.</div>
       <div><b>Ressources :</b> ce que tu viens d'écrire — et l'éditeur Python de la page, qui simule le lampadaire pendant une nuit.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> un <b>lampadaire</b> de la cour doit s'allumer quand la nuit tombe et s'éteindre au petit jour. Il est équipé d'un capteur de luminosité qui renvoie L, de 0 (nuit noire) à 100 (plein soleil). Le même problème de clignotement se poserait au crépuscule. <b>Écris son programme</b> dans l'éditeur Python ci-dessous, puis ▶&nbsp;Exécuter&nbsp;: la page joue une nuit entière, de 18&nbsp;h&nbsp;30 à 6&nbsp;h&nbsp;45, et la console dit chaque fois que le lampadaire s'allume ou s'éteint, puis le bilan. Aucun squelette cette fois&nbsp;: c'est à toi de choisir la structure — et les valeurs. Nomme ton fichier <code>4e-LAMPADAIRE-TON NOM</code>, puis télécharge-le (geste 3).</div>
     <div class="exo">
       <!-- Pascal, 05/11/2026 : l'activité 6 a l'éditeur Python intégré (règle d'or n°320). La page simule la carte du

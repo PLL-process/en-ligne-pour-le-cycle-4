@@ -180,6 +180,11 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -860,7 +865,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1423,12 +1429,12 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>L'inspection visuelle du lampadaire n°3</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> examiner les 6 zones de l'objet, classer chaque observation (normal / anomalie) et désigner la ou les pièces défectueuses.</div>
       <div><b>Compétence :</b> 5e_C5.1.</div>
       <div><b>Production attendue :</b> 6 zones examinées + 6 classements + la pièce désignée.</div>
       <div><b>Ressources :</b> l'image d'inspection + le témoignage du gardien.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/lampadaire_six_zones.svg" type="image/svg+xml" aria-label="Le lampadaire en panne avec six zones numérotées à inspecter" style="width:100%"></object>
       <figcaption>Le lampadaire n°3 lundi matin, en dessin. <br>Examine chaque zone numérotée AVANT de répondre.</figcaption>
@@ -1535,12 +1541,12 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>La réparation, étape par étape</h3><span class="duree">⏱ 40 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> remettre le protocole en ordre, puis l'exécuter au simulateur — dans l'ordre, sans sauter d'étape — jusqu'au test final réussi.</div>
       <div><b>Compétence :</b> 5e_C5.2.</div>
       <div><b>Production attendue :</b> protocole ordonné (6 étapes) + réparation simulée réussie + 2 questions de compréhension.</div>
       <div><b>Ressources :</b> le protocole du technicien ci-dessous.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne&nbsp;:</b><br>① Sans regarder le protocole, remets les étapes dans l'ordre.<br>② Ouvre le protocole du technicien et vérifie ton ordre.<br>③ Fais la réparation au simulateur, une étape après l'autre. Une erreur remet tout à zéro : comme en vrai, on s'arrête et on relit.<br>④ Réponds aux questions du dépanneur.</div>
     <div class="exo">
       <h4>a) Je remets le protocole en ordre</h4>
@@ -1668,12 +1674,12 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Visite de l'atelier de fabrication de la commune</h3><span class="duree">⏱ 30 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> découvrir les 4 postes de l'atelier, associer chaque procédé à ce qu'il sait faire, et choisir le bon procédé pour le capot.</div>
       <div><b>Compétence :</b> 5e_C5.3.</div>
       <div><b>Production attendue :</b> 4 associations + 3 choix raisonnés.</div>
       <div><b>Ressources :</b> le plan de l'atelier ci-dessous.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/atelier_procedes.svg" type="image/svg+xml" aria-label="Les quatre postes de l'atelier de fabrication et leurs procédés" style="width:100%"></object>
       <figcaption>L'atelier partenaire de la commune. Deux grandes familles : AJOUTER de la matière, ou EN ENLEVER.</figcaption>
@@ -1757,12 +1763,12 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Réinvestissement — le vélo du collège</h3><span class="duree">⏱ 15 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer la démarche complète du dépanneur à un autre objet.</div>
       <div><b>Compétences :</b> 5e_C5.1 → C5.3 (transfert).</div>
       <div><b>Production attendue :</b> 4 réponses.</div>
       <div><b>Ressources :</b> aucune — la démarche est dans ta tête maintenant.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne&nbsp;:</b><br>Le feu arrière du vélo du collège ne s'allume plus.<br>Son support en plastique est cassé, et la pile est peut-être usée.<br>Applique la démarche du dépanneur.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="r4_1" data-melange="1">

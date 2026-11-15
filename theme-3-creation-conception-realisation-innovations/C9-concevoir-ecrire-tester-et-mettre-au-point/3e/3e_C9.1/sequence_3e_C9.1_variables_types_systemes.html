@@ -332,6 +332,11 @@ body.essentiel details.referentiel-replie{display:none}
   details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
   details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
   @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="regle-311">
   /* Règle d'or n°311 — à partir de la séance 2, l'élève voit sa séance, pas le décor.
@@ -1090,7 +1095,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1900,12 +1906,12 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Exécute le programme À LA MAIN — le simulateur de mémoire</h3><span class="duree">⏱ ~25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> comprendre qu'une variable est une boîte étiquetée, et qu'affecter = REMPLACER son contenu.</div>
       <div><b>Compétence :</b> 3e_C9.1 (analyser avant d'élaborer).</div>
       <div><b>Production attendue :</b> les 6 étapes exécutées + 4 lectures de mémoire.</div>
       <div><b>Ressources :</b> le simulateur ci-dessous + le document 1.</div>
-    </div>
+    </div></details>
     <figure class="doc-html doc-memoire" id="doc1" aria-labelledby="doc1-titre">
       <p class="doc-titre" id="doc1-titre">La variable : une <b>BOÎTE ÉTIQUETÉE</b> dans la mémoire</p>
       <div class="mem-trois">
@@ -2041,12 +2047,12 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
   plus besoin.</p>
 </section>
 <!-- /roles: 3e_C9-1 --><span class="duree">⏱ ~25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> suivre les valeurs d'un programme ligne par ligne AVEC UNE TABLE — la méthode qui marche à tous les coups.</div>
       <div><b>Compétence :</b> 3e_C9.1.</div>
       <div><b>Production attendue :</b> la table de suivi complète et les 5 réponses.</div>
       <div><b>Ressources :</b> le programme ci-dessous, ton cerveau, PAS l'ordinateur.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> voici le programme du compteur de voyageurs du tourniquet. SANS l'exécuter, complète la table de suivi : la valeur de chaque variable APRÈS chaque ligne.</div>
     <pre class="code">1  passages = 0
 2  groupe = 3
@@ -2171,12 +2177,12 @@ print("2 + 3 =", 2 + 3)
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter : le piège des guillemets</h3><span class="duree">⏱ ~45 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> distinguer les types (int, float, str, bool) et découvrir EXPÉRIMENTALEMENT ce que fait <code>+</code> selon le type.</div>
       <div><b>Compétence :</b> 3e_C9.1 · CRCN 3.4 Programmer (Niv. 3) — trace : tes reports d'expérience enregistrés dans la page.</div>
       <div><b>Production attendue :</b> 4 prédictions + 4 tests réels + 4 reports.</div>
       <div><b>Ressources :</b> le document 2 + l'éditeur Python de la page, ci-dessous.</div>
-    </div>
+    </div></details>
     <figure class="doc-html doc-types" id="doc2" aria-labelledby="doc2-titre">
       <p class="doc-titre" id="doc2-titre">Que peut-on faire avec une valeur ? <b>Ça dépend de son TYPE.</b></p>
       <div class="types-cartes">
@@ -2340,12 +2346,12 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>La chasse aux bugs — analyse le programme du stagiaire</h3><span class="duree">⏱ ~45 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> analyser un programme réel, localiser 3 bugs de natures différentes, les corriger, PROUVER la correction dans l'éditeur.</div>
       <div><b>Compétence :</b> 3e_C9.1 (tester, mettre au point).</div>
       <div><b>Production attendue :</b> 3 bugs identifiés et corrigés + test réel.</div>
       <div><b>Ressources :</b> le programme du panneau + l'éditeur Python de la page.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> voici le programme laissé par le stagiaire. <br>Le panneau doit afficher le train, le quai, le temps d'attente en minutes et la température en °C. <br>① Trouve les 3 bugs 🔎 : pour chacun, choisis sa LIGNE, puis sa CORRECTION. <br>② Corrige le programme dans l'éditeur Python, plus bas : il y est déjà, bugs compris. <br>③ Exécute-le, pour PROUVER qu'il affiche la bonne chose (badge 🔓).</div>
     <pre class="code">1  train = "Q"
 2  quai = "96 St"
@@ -2518,12 +2524,12 @@ print(message, minutes, "min |", temperature_c, "C")
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Élaborer, traduire, mettre au point — le banc de tests</h3><span class="duree">⏱ ~45 min</span></header>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> élaborer un algorithme, le traduire en fonction Python, puis le mettre au point avec un banc de tests — cas limites compris.</div>
       <div><b>Compétence :</b> 3e_C9.1 en entier (élaborer → traduire → tester → mettre au point).</div>
       <div><b>Production attendue :</b> la traduction, le cas limite tranché, et TA fonction qui réussit les 7 tests de la page.</div>
       <div><b>Ressources :</b> le document 3 + le banc de tests intégré.</div>
-    </div>
+    </div></details>
     <figure class="doc-html doc-chaine" id="doc3" aria-labelledby="doc3-titre">
       <p class="doc-titre" id="doc3-titre">Du besoin au programme <b>TESTÉ</b> — la ventilation de la station 96 St</p>
       <ol class="chaine-etapes">

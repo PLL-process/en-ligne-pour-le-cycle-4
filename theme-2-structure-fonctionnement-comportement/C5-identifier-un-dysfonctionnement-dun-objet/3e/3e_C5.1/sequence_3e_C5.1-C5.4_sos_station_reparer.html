@@ -219,6 +219,11 @@ body.essentiel details.referentiel-replie{display:none}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
   fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0} /* 11/11/2026 : les numéros en rangée */
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -904,7 +909,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1596,12 +1602,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>L'enquête commence : lire les symptômes</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> distinguer symptôme et hypothèse, et utiliser les constats pour innocenter des éléments.</div>
       <div><b>Compétence :</b> 3e_C5.1 — formuler des hypothèses expliquant un dysfonctionnement.</div>
       <div><b>Production attendue :</b> 4 déductions + 3 hypothèses classées.</div>
       <div><b>Ressources :</b> relevé des symptômes ci-dessous (à LIRE pour répondre).</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/station_en_panne_symptomes.svg" type="image/svg+xml" aria-label="Relevé des 4 symptômes après le cyclone : sirène muette, LED d'alimentation allumée, mesures encore reçues par l'application, support de girouette cassé">Relevé des symptômes de la station (SVG)</object>
     <div class="consigne"><b>Consigne :</b> a) à partir des constats 2 et 3 du schéma, réponds aux déductions ; b) classe ensuite les hypothèses restantes dans l'ordre où il faudra les tester.</div>
     <div class="exo">
@@ -1669,12 +1675,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Lire l'arbre de diagnostic</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> suivre un organigramme de diagnostic et prévoir sa conclusion selon les réponses.</div>
       <div><b>Compétence :</b> 3e_C5.1 (+ lecture d'algorigramme, lien 3e_C6.2).</div>
       <div><b>Production attendue :</b> 3 parcours de l'arbre + 1 justification.</div>
       <div><b>Ressources :</b> arbre de diagnostic ci-dessous (à LIRE pour répondre).</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/arbre_diagnostic_sirene.svg" type="image/svg+xml" aria-label="Organigramme de diagnostic de la sirène muette, avec trois questions successives : LED allumée ?, ordre envoyé ?, câble intact ?">Arbre de diagnostic de la sirène (SVG)</object>
     <div class="consigne"><b>Consigne :</b> parcours l'arbre pour chaque situation et donne la conclusion atteinte, puis justifie l'ordre des questions.</div>
     <div class="exo">
@@ -1737,12 +1743,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Rédiger le protocole</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> ordonner et rédiger un protocole de dépannage réutilisable, en respectant les règles de sécurité.</div>
       <div><b>Compétence :</b> 3e_C5.2 — proposer un protocole de dépannage puis de réparation.</div>
       <div><b>Production attendue :</b> protocole ordonné + règle de localisation complétée + protocole rédigé pour une 2e panne.</div>
       <div><b>Ressources :</b> schéma des points de test ci-dessus (à LIRE pour répondre).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) remets les étapes du protocole dans l'ordre ; b) complète la règle de localisation ; c) réponds aux questions de sécurité ; d) rédige un protocole pour la panne de la pompe du jardin connecté.</div>
     <div class="exo">
       <h4>a) Ordonner le protocole (1 → 5)</h4>
@@ -1858,12 +1864,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>La clinique de la sirène</h3><span class="duree">⏱ 40 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> appliquer réellement le protocole : mesurer, localiser, réparer, retester.</div>
       <div><b>Compétence :</b> 3e_C5.3 — réaliser le dépannage ou la réparation d'un système défectueux.</div>
       <div><b>Production attendue :</b> 2 pannes résolues au simulateur + 2 questions.</div>
       <div><b>Ressources :</b> simulateur ci-dessous — les valeurs attendues sont : T1 ≈ 12 V (volts) · T2 ≈ 12 V · T3 = signal présent · T4 ≈ 12 V pendant le test.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la panne n°1 est active. a) Mesure les points T1 → T4 <b>dans l'ordre</b> ; b) désigne l'élément défectueux ; c) remplace-le et relance le test complet. Puis résous la panne n°2. Le compteur de mesures t'indique ton efficacité : un bon dépanneur ne mesure pas au hasard !</div>
     <div class="exo">
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center">
@@ -1925,12 +1931,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Du plan coté à la pièce refabriquée</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> lire un plan coté, choisir un procédé de fabrication adapté et justifier le choix du matériau.</div>
       <div><b>Compétence :</b> 3e_C5.4 — réaliser une pièce sur mesure pour réparer un objet technique.</div>
       <div><b>Production attendue :</b> 4 cotes relevées + choix de procédé justifié + choix de matériau.</div>
       <div><b>Ressources :</b> plan coté et comparatif des procédés ci-dessous (à LIRE pour répondre).</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/plan_cote_support_girouette.svg" type="image/svg+xml" aria-label="Plan coté du support de girouette : platine 60 par 40 par 8 millimètres, deux trous diamètre 5 entraxe 40, fût diamètre 12 hauteur 35, alésage diamètre 6">Plan coté du support de girouette (SVG)</object>
     <div class="consigne"><b>Consigne :</b> a) relève les cotes demandées sur le plan ; b) choisis le procédé selon chaque contexte à l'aide du comparatif ; c) choisis le matériau.</div>
     <div class="exo">
@@ -1987,12 +1993,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act6">
     <header><span class="num">Réinvestissement</span><h3>🌬 Le ventilateur du CDI</h3><span class="duree">⏱ 25 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> dérouler seul·e la démarche complète de diagnostic-réparation sur un objet nouveau.</div>
       <div><b>Compétences :</b> 3e_C5.1 + C5.2 + C5.3 (bilan).</div>
       <div><b>Production attendue :</b> 5 réponses + 1 décision argumentée.</div>
       <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> le ventilateur sur pied du CDI (alimentation par bloc secteur basse tension 12 V, en volts) ne tourne plus. Constats : le voyant du bloc d'alimentation est allumé ; en position 2, on entend un léger bourdonnement ; les pales tournent librement à la main. Réponds sans rouvrir les corrections.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="c6_1" data-melange="1">
