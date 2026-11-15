@@ -1,5 +1,7 @@
 # Rapport de tests — 3e_C7.5 « La station qu'il faut équiper »
 
+> **Révision du 15/11/2026.** Grilles, réponses de trop, places mélangées, piqûre de rappel et Bonus repliés, aération. Bancs : séquence **54 / 54** (53 / 54 avant : la page ne dit plus « validée » pour une réponse libre, le banc la suit), QCM **32 / 32**, n°311 **34 / 34**. Mode mission (`banc_generique.mjs`) : 26 écrans, 21 / 21 pourquoi, aucun refus.
+
 Tests **réels**, joués dans un navigateur Chromium par Playwright, sur les fichiers du lot tels
 qu'ils sont livrés. Cette page est la sortie de la dernière exécution, recopiée telle quelle —
 les scripts et le jeu de réponses sont dans ce dossier, on peut tout rejouer.
