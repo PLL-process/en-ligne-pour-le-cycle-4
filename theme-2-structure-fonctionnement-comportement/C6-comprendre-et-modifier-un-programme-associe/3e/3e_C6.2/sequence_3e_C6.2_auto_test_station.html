@@ -240,6 +240,11 @@ body.essentiel details.referentiel-replie{display:none}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -952,7 +957,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1576,12 +1582,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <section class="card">
   <h2>🔎 Activité 1 — De quoi l'auto-test a-t-il besoin&nbsp;? <span style="font-size:.7em;color:var(--sub)">(~20 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> identifier ce qui entre dans l'algorithme et ce qui doit en sortir, avant d'écrire la moindre ligne.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité (phase d'analyse).</div>
     <div><b>Production&nbsp;:</b> les entrées et les sorties classées + la liste des organes à tester.</div>
     <div><b>Ressources&nbsp;:</b> la description de la station ci-dessous.</div>
-  </div>
+  </div></details>
 
   <div class="ressource">
     <h4>La station, telle qu'elle est aujourd'hui</h4>
@@ -1699,12 +1705,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   plus besoin.</p>
 </section>
 <!-- /roles: 3e_C6-2 -->
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> concevoir soi-même l'enchaînement de l'auto-test, puis le confronter à une référence.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité.</div>
     <div><b>Production&nbsp;:</b> l'algorigramme rédigé en toutes lettres + la revue croisée du binôme voisin.</div>
     <div><b>Ressources&nbsp;:</b> les quatre symboles normalisés, dans le rappel ci-dessous.</div>
-  </div>
+  </div></details>
 
   <details class="ressource rappel-replie">
     <summary><b>📐 Rappel — les quatre symboles de l'algorigramme, et rien d'autre</b></summary>
@@ -1811,12 +1817,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <section class="card">
   <h2>⌨️ Activité 3 — Écrire l'algorithme, instruction par instruction <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> traduire son algorigramme en un programme complet et exécutable.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité.</div>
     <div><b>Production&nbsp;:</b> les huit lignes du programme remises dans l'ordre + la ligne manquante rédigée.</div>
     <div><b>Ressources&nbsp;:</b> ton algorigramme de l'activité 2.</div>
-  </div>
+  </div></details>
 
   <div class="consigne"><b>Consigne&nbsp;:</b> voici les instructions de l'auto-test, dans le désordre.
   Donne à chacune son rang d'exécution, de 1 à 8. Attention&nbsp;: <b>l'indentation compte</b> — les lignes
@@ -1958,12 +1964,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <section class="card">
   <h2>🧪 Activité 4 — Le banc d'essai&nbsp;: mon algorithme face à la panne <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> éprouver l'algorithme sur des pannes qu'on provoque soi-même.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C6.2 — l'algorithme n'est validé que s'il se comporte correctement.</div>
     <div><b>Production&nbsp;:</b> deux essais obligatoires au banc + la lecture du journal produit.</div>
     <div><b>Ressources&nbsp;:</b> le banc d'essai ci-dessous, intégré à la page (hors ligne).</div>
-  </div>
+  </div></details>
 
   <div class="consigne"><b>Consigne&nbsp;:</b> mets des organes en panne, lance l'auto-test, et lis le journal.
   <b>Deux essais sont obligatoires</b> pour valider cette activité&nbsp;: un essai <b>sans aucune panne</b>,
@@ -2047,12 +2053,12 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <section class="card">
   <h2>🔬 Activité 5 — Les cas limites, et le message qu'un humain doit comprendre <span style="font-size:.7em;color:var(--sub)">(~35 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> éprouver l'algorithme là où il casse, et rédiger une sortie utilisable par un non-technicien.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C6.2 — un algorithme n'est fini que quand il tient face aux cas limites.</div>
     <div><b>Production&nbsp;:</b> le tableau de suivi complété + le message au gardien rédigé.</div>
     <div><b>Ressources&nbsp;:</b> le banc d'essai de l'activité 4.</div>
-  </div>
+  </div></details>
 
   <div class="ressource">
     <h4>Le tableau de suivi des variables — l'outil du programmeur</h4>

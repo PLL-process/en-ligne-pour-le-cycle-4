@@ -245,6 +245,11 @@ body.essentiel details.referentiel-replie{display:none}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
   fieldset.qcm-groupe.qcm-rangee>.qcm-option{display:inline-flex!important;width:auto!important;margin:0 8px 6px 0} /* 11/11/2026 : deux réponses courtes en rangée */
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -952,7 +957,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1663,12 +1669,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>La carte d'identité du programme</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier les données utilisées (entrées) et produites (sorties) par le programme d'alerte.</div>
       <div><b>Compétence :</b> 3e_C6.1.</div>
       <div><b>Production attendue :</b> 6 classements + 2 numéros de lignes relevés dans CodeLab.</div>
       <div><b>Ressources :</b> le programme dans CodeLab ci-dessus + le schéma entrées/sorties.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> <button class="btn small ghost" type="button" data-hl="6-7">✨ Surligner les lignes 6-7</button> <button class="btn small ghost" type="button" data-hl="20-23">✨ Surligner les lignes 20-23</button> — lis le programme dans CodeLab, puis classe chaque donnée et relève les lignes demandées.</div>
     <div class="exo">
       <fieldset class="qcm-groupe qcm-rangee" id="d1_1">
@@ -1727,12 +1733,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Tracer l'exécution à la main</h3><span class="duree">⏱ 20 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> prédire les sorties du programme pour des entrées données — sans l'exécuter.</div>
       <div><b>Compétence :</b> 3e_C6.1 (+ prépare la validation de C6.3).</div>
       <div><b>Production attendue :</b> 2 traces d'exécution + 1 justification.</div>
       <div><b>Ressources :</b> le programme dans CodeLab — <button class="btn small ghost" type="button" data-hl="12-18">✨ Surligner les lignes 12-18</button></div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> suis le programme ligne à ligne « dans ta tête » (ou au brouillon) pour chaque situation, et donne les valeurs produites.</div>
     <div class="exo">
       <p><b>Situation A :</b> <code>vent_kmh = 95</code></p>
@@ -1794,12 +1800,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Premier geste : modifier un paramètre</h3><span class="duree">⏱ 15 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> modifier un paramètre du programme et prédire l'effet de la modification.</div>
       <div><b>Compétence :</b> 3e_C6.3.</div>
       <div><b>Production attendue :</b> le seuil modifié dans CodeLab + l'effet prédit.</div>
       <div><b>Ressources :</b> CodeLab — <button class="btn small ghost" type="button" data-hl="2-4">✨ Surligner les lignes 2-4</button></div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> Météo-France recalibre ses niveaux : le seuil orange passe de 50 à <b>60 km/h</b>. Dans CodeLab, <b>modifie la ligne 2</b> en conséquence, puis réponds.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="d3_1" data-melange="1">
@@ -1830,12 +1836,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>La nouvelle fonctionnalité : le gyrophare gradué</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> compléter le programme pour implémenter l'alerte graduée de l'algorigramme.</div>
       <div><b>Compétence :</b> 3e_C6.3 — modifier le programme associé à une nouvelle fonctionnalité.</div>
       <div><b>Production attendue :</b> le programme v2 complet dans CodeLab (4 ajouts).</div>
       <div><b>Ressources :</b> l'algorigramme ci-dessus — c'est TA spécification.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> implémente l'algorigramme dans CodeLab, en 4 ajouts :
       ① après la ligne 10, crée la variable <code>gyrophare_actif = False</code> ;
       ② dans la branche <b>violette</b>, ajoute <code>gyrophare_actif = True</code> ;
@@ -1898,12 +1904,12 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Dérouler le plan de tests</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> valider le programme v2 par des jeux d'essai calculés à la main, en visant les valeurs frontières.</div>
       <div><b>Compétence :</b> 3e_C6.3 — tester et valider la modification.</div>
       <div><b>Production attendue :</b> 5 sorties attendues + le diagnostic d'un bug.</div>
       <div><b>Ressources :</b> TON programme v2 dans CodeLab (seuil orange = 60) + le schéma du plan de tests.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) calcule À LA MAIN la sortie attendue de ta v2 pour chaque jeu d'essai ; b) analyse ensuite le bug du schéma.</div>
     <div class="exo">
       <h4>a) Sorties attendues de TA v2 (seuil orange = 60)</h4>
@@ -1978,12 +1984,12 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
 
   <div class="activite" id="act6">
     <header><span class="num">Réinvestissement</span><h3>🌊 Le programme de la bouée</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> réutiliser toute la démarche C6.1 → C6.3 sur un programme jamais vu.</div>
       <div><b>Compétences :</b> 3e_C6.1 + C6.3 (bilan).</div>
       <div><b>Production attendue :</b> 6 réponses, sans rouvrir les corrections.</div>
       <div><b>Ressources :</b> uniquement le programme ci-dessous — c'est volontaire !</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme. Lis-le, puis réponds.</div>
     <div class="exo">
       <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff" data-code-colore="python">SEUIL_HOULE = 4

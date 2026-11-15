@@ -219,6 +219,11 @@ body.essentiel details.referentiel-replie{display:none}
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -916,7 +921,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1615,12 +1621,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Décoder la station</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier le rôle de chaque constituant visible de la station.</div>
       <div><b>Compétence :</b> 3e_C4.3 — Décrire un OST en caractérisant sa chaîne d’information.</div>
       <div><b>Production attendue :</b> tableau des rôles complété + 1 phrase de justification.</div>
       <div><b>Ressources :</b> schéma annoté ci-dessous.</div>
-    </div>
+    </div></details>
     <object class="figure" data="Images/station_alerte_annotee.svg" type="image/svg+xml" aria-label="Schéma annoté de la station d'alerte cyclonique : anémomètre, panneau solaire, pluviomètre, antenne, boîtier électronique, sirène">Schéma annoté de la station (SVG)</object>
     <div class="consigne"><b>Consigne :</b> observe le schéma, puis attribue à chacun des 8 éléments sa <b>fonction</b> dans la station : <b>Acquérir</b> (capter une grandeur), <b>Traiter</b> (décider), <b>Communiquer</b> (diffuser), ou <b>Alimenter</b> (fournir l'énergie). Justifie ensuite le cas du panneau solaire.</div>
     <div class="exo">
@@ -1721,12 +1727,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Construire la chaîne d'information</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> ordonner les fonctions de la chaîne d'information et nommer la nature des signaux échangés.</div>
       <div><b>Compétence :</b> 3e_C4.3.</div>
       <div><b>Production attendue :</b> chaîne complète (fonctions + signaux) + schéma recopié dans le cahier.</div>
       <div><b>Ressources :</b> schéma bloc ci-dessous (à compléter d'abord, à vérifier ensuite).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> remets les fonctions dans l'ordre de circulation de l'information, puis indique la <b>nature du signal</b> à chaque étape. Termine par l'exemple chiffré.</div>
     <div class="exo">
       <p><b>a) L'ordre des fonctions :</b></p>
@@ -1811,12 +1817,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Manipuler le convertisseur analogique → numérique</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> associer une grandeur analogique à la donnée numérique produite par le CAN, et inversement.</div>
       <div><b>Compétence :</b> 3e_C4.4 — Associer des grandeurs analogiques issues d’un OST à des données exploitables.</div>
       <div><b>Production attendue :</b> 2 lectures de simulateur + 3 calculs vérifiés + 1 explication rédigée.</div>
       <div><b>Ressources :</b> simulateur ci-dessous (version 🅲) — ou montage Arduino/Grove (🅰), VittaScience (🅱).</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> déplace le curseur du simulateur pour reproduire les situations demandées, lis les valeurs, puis effectue les calculs. Le baromètre simulé mesure de <b>868 hPa (hectopascals)</b> à <b>1018 hPa</b> et son CAN travaille sur <b>10 bits</b> (0 à 1023).</div>
 
     <div class="exo">
@@ -1897,12 +1903,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Typer, nommer, coder</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> choisir le bon type de donnée, un bon descripteur, et coder une information en binaire.</div>
       <div><b>Compétence :</b> 3e_C4.5 — Représenter sous forme de données les informations de diverses natures utilisées par un OST.</div>
       <div><b>Production attendue :</b> 6 typages + 1 enregistrement complet + le codage binaire de la vigilance.</div>
       <div><b>Ressources :</b> schéma des types ci-dessus.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) attribue un type à chaque information ; b) construis l'enregistrement d'une mesure ; c) code les niveaux de vigilance en binaire.</div>
     <div class="exo">
       <h4>a) Quel type pour quelle information ?</h4>
@@ -2003,12 +2009,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>Le bon format pour la bonne information</h3><span class="duree">⏱ 20 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> associer chaque nature d'information à un format de fichier adapté et distinguer transmission et stockage.</div>
       <div><b>Compétence :</b> 3e_C4.6 — Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, nombre) afin de comprendre le fonctionnement de l’OST.</div>
       <div><b>Production attendue :</b> 5 associations + 2 vrai/faux justifiés.</div>
       <div><b>Ressources :</b> schéma du parcours de la donnée ci-dessus.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> a) choisis le format le plus adapté à chaque fichier produit par le système d'alerte ; b) réponds par vrai ou faux et corrige mentalement les affirmations fausses.</div>
     <div class="exo">
       <h4>a) Associer format et information</h4>
@@ -2081,12 +2087,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act6">
     <header><span class="num">Activité 6</span><h3>Enquête dans les données : la nuit du cyclone</h3><span class="duree">⏱ 35 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> exploiter une table de données réaliste pour reconstituer l'événement et vérifier le comportement de la station.</div>
       <div><b>Compétences :</b> 3e_C4.6 (exploiter des fichiers de données) + 3e_C4.5 (lire une table structurée).</div>
       <div><b>Production attendue :</b> 4 réponses chiffrées + 1 conclusion argumentée.</div>
       <div><b>Ressources :</b> table ci-dessous (48 h de mesures simulées) — aussi en <a href="donnees/mesures_station_48h_simulees.csv">.csv</a>, <a href="donnees/mesures_station_48h_simulees.ods">.ods</a> (LibreOffice) et <a href="donnees/mesures_station_48h_simulees.xlsx">.xlsx</a>.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la station a enregistré 48 h de mesures pendant l'approche d'un cyclone (données <b>simulées</b> à but pédagogique). Fouille la table (ou ouvre le fichier dans LibreOffice Calc) et réponds. Chaque ligne est un <b>enregistrement</b> horodaté.</div>
     <div class="exo">
       <details class="bonus-replie" id="table48h"><summary>📊 La table des 48 h de mesures — ouvre-la pour fouiller (48 lignes, 6 colonnes)</summary>
@@ -2140,12 +2146,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p style="color:var(--hl);font-weight:600">Question directrice : sais-tu refaire toute la démarche, seul, sur un système que tu n'as jamais vu ?</p>
   <div class="activite" id="act7">
     <header><span class="num">Réinvestissement</span><h3>🌊 La bouée houlographe de Sainte-Anne</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> réutiliser TOUTES les notions de la séquence dans une situation nouvelle, sans modèle à recopier.</div>
       <div><b>Compétences :</b> 3e_C4.3 + C4.4 + C4.5 + C4.6 (bilan).</div>
       <div><b>Production attendue :</b> chaîne d'information + calcul CAN + choix de données et de format, justifiés.</div>
       <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la commune de Sainte-Anne installe une <b>bouée houlographe</b> : elle mesure la hauteur des vagues (houle cyclonique) grâce à un accéléromètre, et transmet ses mesures par liaison satellite aux pêcheurs et à la mairie. Réponds sans recopier les corrections précédentes : la situation a changé !</div>
     <div class="exo">
       <h4>a) Sa chaîne d'information</h4>

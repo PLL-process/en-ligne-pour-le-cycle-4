@@ -197,6 +197,11 @@
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -886,7 +891,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1533,12 +1539,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Du symptôme au protocole : construis TA méthode</h3><span class="duree">⏱ 45 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> lister les causes possibles, ordonner des tests discriminants du plus rapide au plus long, puis exécuter SON protocole jusqu'à isoler la cause.</div>
       <div><b>Compétence :</b> 4e_C5.1 — proposer un protocole permettant de vérifier l'origine d'un dysfonctionnement.</div>
       <div><b>Production attendue :</b> protocole ordonné (6 tests) + cause isolée par le simulateur + 2 questions de méthode.</div>
       <div><b>Ressources :</b> l'image des symptômes + les résultats de tes tests au poste de diagnostic.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/jardin_symptomes.svg" type="image/svg+xml" aria-label="Le jardin connecté en panne : plants flétris, réservoir plein, écran affichant humidité 78 % et arrosage OK, pompe muette, capteur planté en terre" style="width:100%"></object>
       <figcaption>Le carré potager mardi matin. Trois faits se contredisent : sol sec, réservoir plein, écran « tout va bien ». Observe AVANT de répondre.</figcaption>
@@ -1668,12 +1674,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Le remplacement en autonomie : méthode et preuves</h3><span class="duree">⏱ 45 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> organiser soi-même le remplacement du capteur (la pièce neuve est fournie, PAS la méthode), l'exécuter au simulateur et prouver la réparation par un test final.</div>
       <div><b>Compétence :</b> 4e_C5.2 — remplacer une pièce défectueuse sans protocole fourni.</div>
       <div><b>Production attendue :</b> ordre des 6 gestes construit + remplacement simulé réussi + 2 questions de méthode.</div>
       <div><b>Ressources :</b> les vignettes des gestes (non ordonnées — c'est fait exprès !).</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/remplacement_capteur.svg" type="image/svg+xml" aria-label="Six vignettes non ordonnées montrant les gestes du remplacement du capteur d'humidité, avec le rappel très basse tension uniquement" style="width:100%"></object>
       <figcaption>Les 6 gestes du remplacement — présentés DANS LE DÉSORDRE. En 4e, c'est toi qui construis l'ordre.</figcaption>
@@ -1801,12 +1807,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Le clip-support cassé : quel procédé pour le refaire ?</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> comparer trois procédés candidats selon des critères (forme, tenue au jardin, temps, matériel du labo), choisir en justifiant, et ordonner la mini-gamme de fabrication.</div>
       <div><b>Compétence :</b> 4e_C5.3 — choisir les procédés de réalisation et les mettre en œuvre.</div>
       <div><b>Production attendue :</b> un choix de procédé justifié + la gamme dans l'ordre + la règle de sécurité de l'atelier.</div>
       <div><b>Ressources :</b> l'image des trois procédés candidats et de leurs critères.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/choix_procedes_support.svg" type="image/svg+xml" aria-label="Trois procédés candidats pour refabriquer le clip-support du capteur : impression 3D en PETG, découpe et pliage de PVC, taille dans le bois, comparés selon la forme, la tenue au jardin et le temps" style="width:100%"></object>
       <figcaption>Mauvaise nouvelle en extrayant l'ancien capteur : son clip-support a cassé — et le fabricant ne le vend plus. Bonne nouvelle : l'atelier du collège a trois façons de le refaire.</figcaption>
@@ -1890,12 +1896,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Réinvestissement — la lampe du CDI t'appelle</h3><span class="duree">⏱ 15 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transposer la démarche complète (protocole → remplacement → refabrication) sur un objet différent, sans aide.</div>
       <div><b>Compétence :</b> 4e_C5.1 + C5.2 + C5.3 (transfert).</div>
       <div><b>Production attendue :</b> 4 décisions de dépanneur, transposées correctement.</div>
       <div><b>Ressources :</b> aucune — c'est un transfert : tout est déjà dans ta tête.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> la lampe de bureau du CDI ne s'allume plus (ampoule LED neuve fournie par la documentaliste, bouton-poussoir fendu). Transpose ta démarche.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="r4_1" data-melange="1">

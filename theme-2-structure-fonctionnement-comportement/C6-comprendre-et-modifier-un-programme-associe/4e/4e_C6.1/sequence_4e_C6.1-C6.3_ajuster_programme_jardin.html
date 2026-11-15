@@ -200,6 +200,11 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
   .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
   @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
     .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -901,7 +906,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1632,12 +1638,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act1">
     <header><span class="num">Activité 1</span><h3>Lire les relevés comme un détective des données</h3><span class="duree">⏱ 30 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> repérer les deux anomalies dans les relevés de la semaine et relier chacune à sa cause DANS le programme.</div>
       <div><b>Compétence :</b> 4e_C6.1 — analyser les données et en déduire des modifications à apporter au programme.</div>
       <div><b>Production attendue :</b> 2 anomalies nommées + 2 causes logicielles désignées.</div>
       <div><b>Ressources :</b> la courbe des relevés du mardi et du mercredi.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/releves_jardin.svg" type="image/svg+xml" aria-label="Courbe des relevés : l'humidité oscille autour du seuil unique de 40 % avec 47 démarrages de pompe entre 6 h et 9 h, et un arrosage part à 13 h en plein soleil" style="width:100%"></object>
       <figcaption>Les relevés de la clé USB. Deux anomalies s'y cachent — les données ne mentent pas, elles RACONTENT.</figcaption>
@@ -1700,12 +1706,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>Déduire les modifications : deux seuils et une plage horaire</h3><span class="duree">⏱ 25 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> traduire chaque anomalie en modification PRÉCISE du programme : l'hystérésis (deux seuils) et la plage horaire.</div>
       <div><b>Compétence :</b> 4e_C6.1 (suite) — de l'analyse à la spécification de la modification.</div>
       <div><b>Production attendue :</b> l'algorithme corrigé, complété ligne à ligne.</div>
       <div><b>Ressources :</b> le schéma de l'hystérésis (un seuil vs deux seuils).</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/hysteresis_deux_seuils.svg" type="image/svg+xml" aria-label="Comparaison entre un seuil unique à 40 pour cent qui fait battre la pompe et deux seuils à 35 et 45 pour cent qui la stabilisent" style="width:100%"></object>
       <figcaption>Le remède au battement : DEUX seuils au lieu d'un. La pompe démarre sous 35 %, ne s'arrête qu'au-dessus de 45 % — entre les deux, elle ne change pas d'avis.</figcaption>
@@ -1842,12 +1848,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act3">
     <header><span class="num">Activité 3</span><h3>Le banc de test : quatre scénarios avant le vrai jardin</h3><span class="duree">⏱ 40 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> appliquer la méthode de validation — sauvegarder, modifier, jouer les 4 scénarios en simulation, puis valider en réel sans régression.</div>
       <div><b>Compétence :</b> 4e_C6.3 — tester et valider, dans un environnement simulé ou réel, une modification du programme.</div>
       <div><b>Production attendue :</b> les 4 scénarios joués au banc (verrou) + le tableau des résultats + 2 questions de méthode.</div>
       <div><b>Ressources :</b> l'image de la méthode de validation en 5 étapes.</div>
-    </div>
+    </div></details>
     <figure class="figure">
       <object data="Images/banc_test_scenarios.svg" type="image/svg+xml" aria-label="La méthode de validation en cinq étapes : sauvegarder le programme, modifier, tester les quatre scénarios en simulation, valider en réel sur le plant témoin, vérifier la non-régression" style="width:100%"></object>
       <figcaption>La méthode du club : on ne touche JAMAIS au programme du vrai jardin sans sauvegarde… ni sans scénarios de test.</figcaption>
@@ -1933,12 +1939,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
   <div class="activite" id="act4">
     <header><span class="num">Activité 4</span><h3>Réinvestissement — le lampadaire clignote au crépuscule</h3><span class="duree">⏱ 15 min</span></header>
-    <div class="meta-grid">
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer l'analyse de données et l'hystérésis sur un autre objet, sans aide.</div>
       <div><b>Compétence :</b> 4e_C6.1 + C6.3 (transfert).</div>
       <div><b>Production attendue :</b> 4 décisions correctes.</div>
       <div><b>Ressources :</b> aucune — le raisonnement est le même, seul l'objet change.</div>
-    </div>
+    </div></details>
     <div class="consigne"><b>Consigne :</b> les relevés d'un lampadaire de parking montrent qu'il s'allume et s'éteint 30 fois au crépuscule, autour de son seuil unique de 30 lux. Transpose ta démarche.</div>
     <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em;margin:10px 0">
     <p style="margin:0 0 6px"><b style="color:var(--hl)">📏 Mesurer la lumière en lux&nbsp;:</b> ce lampadaire de parking mesure l'<b>éclairement</b> en <b>lux</b>, comme celui de 5e. <br>Au crépuscule, quand un lampadaire s'allume, il reste environ 10 à 50 lux&nbsp;: d'où des seuils de 20 et 40 lux.</p>

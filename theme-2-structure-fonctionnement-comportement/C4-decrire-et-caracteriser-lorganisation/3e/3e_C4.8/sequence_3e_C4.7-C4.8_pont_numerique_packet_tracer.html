@@ -210,6 +210,11 @@ body.essentiel details.referentiel-replie{display:none}
   details.erreurs-repliees>summary{cursor:pointer;font-weight:700;padding:8px 0;min-height:40px;display:flex;align-items:center}
   details.erreurs-repliees>summary:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
   @media (max-width:480px){details.erreurs-repliees{padding:4px 6px}}
+
+/* la fiche de l'activité, repliée (15/11/2026, _outils/replier_fiches_activite.py) */
+details.fiche-activite{margin:6px 0 10px}
+details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
+details.fiche-activite[open]>summary{margin-bottom:6px}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -922,7 +927,8 @@ function activite(A, E){
   }
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -1590,13 +1596,13 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   plus besoin.</p>
 </section>
 <!-- /roles: 3e_C4-8 -->
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources, socle</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> dessiner, AVANT de toucher au logiciel, l'architecture qui relie deux réseaux — comme un ingénieur qui trace le pont avant de le construire.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.7 — Identifier et représenter la circulation d'une information dans le réseau Internet <em>(ici&nbsp;: représenter l'architecture du voyage)</em>.</div>
     <div><b>Production&nbsp;:</b> TON schéma à deux réseaux (choix + justification écrite), puis sa comparaison avec le schéma de référence.</div>
     <div><b>Ressources&nbsp;:</b> la recette de conception en 4 étapes, le schéma de référence Martinique → New York.</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — l'élève conçoit son architecture avant de voir la référence · D2 «&nbsp;coopération&nbsp;» — revue de schéma croisée avec le binôme voisin.</div>
-  </div>
+  </div></details>
 
   <p><b>La règle du jeu (règle d'or de l'atelier)&nbsp;:</b> tu <b>conçois d'abord</b>, tu compares ensuite. <br>Le schéma de référence n'apparaît qu'à l'étape de lecture — c'est TA proposition qui compte, tant qu'elle
   respecte les lois du réseau.</p>
@@ -1726,13 +1732,13 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 
 <section class="card">
   <h2>🛃 Activité 2 — Le jeu du poste-frontière (table de routage DONNÉE) <span style="font-size:.7em;color:var(--sub)">(~20 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources, socle</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> jouer le routeur, table en main — et découvrir pourquoi, sans elle, aucun message ne franchit la frontière. Activité débranchée&nbsp;: aucune machine.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.8 — Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée, table de routage donnée) <em>(le libellé au pied de la lettre)</em>.</div>
     <div><b>Production&nbsp;:</b> les décisions du poste-frontière (4 enveloppes triées) + la justification rédigée de la nécessité du routage.</div>
     <div><b>Ressources&nbsp;:</b> les tables de routage RÉELLES de nos deux routeurs (données ci-dessous).</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D2 «&nbsp;coopération&nbsp;» — jeu de rôles à trois (expéditeur, routeur, destinataire) · D4 «&nbsp;démarches scientifiques&nbsp;» — la règle se découvre en jouant, puis se formalise.</div>
-  </div>
+  </div></details>
 
   <p><b>Mise en scène&nbsp;:</b> un élève joue <b>R-MQ</b>, le poste-frontière martiniquais. <br>Devant lui, SA table de
   routage — celle, exacte, de notre vrai routeur. <br>Les autres élèves lui apportent des enveloppes. <br>Pour chaque
@@ -1841,13 +1847,13 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 </section>
 <section class="card">
   <h2>🧱 Activité 3 — Construire le pont dans Packet Tracer <span style="font-size:.7em;color:var(--sub)">(~45 min, le cœur de la séance)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources, socle</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> monter les DEUX réseaux et leur pont, puis configurer les routeurs — interfaces ET routes statiques — par la fenêtre graphique.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.8 — Justifier la nécessité d'un protocole de routage… <em>(ici&nbsp;: donner corps aux tables du jeu — nos routes statiques sont les lignes que tu as manipulées en act. 2)</em>.</div>
     <div><b>Production&nbsp;:</b> le fichier <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">pont_3X_NOM_Prenom.pkt</span>&nbsp;: 6 équipements, 5 liaisons vertes, 2 routeurs configurés.</div>
     <div><b>Ressources&nbsp;:</b> la recette A→H, les fenêtres reconstituées de nos configurations réelles.</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — du schéma conçu au montage qui route · D2 «&nbsp;outils numériques&nbsp;» — fichier nommé, configurations relues à deux.</div>
-  </div>
+  </div></details>
 
   <p><b>Binômes pilote/copilote&nbsp;:</b> le pilote manipule, le copilote lit la recette et vérifie chaque valeur
   saisie (une erreur d'un chiffre = la panne de la 4e&nbsp;!)&nbsp;; échange des rôles à l'étape E.</p>
@@ -1948,13 +1954,13 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 
 <section class="card">
   <h2>🧾 Activité 4 — Les preuves du voyage : ping, TTL et tracert <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources, socle</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> lire les trois preuves qu'un technicien rapporte — et apprendre à interpréter les indices cachés (les deux premiers échecs, le TTL, les sauts).</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.7 — Identifier et représenter la circulation d'une information dans le réseau Internet <em>(et 3e_C4.8&nbsp;: chaque preuve traverse les tables de routage)</em>.</div>
     <div><b>Production&nbsp;:</b> les trois preuves relevées et interprétées (ping, TTL=126, tracert 3 sauts).</div>
     <div><b>Ressources&nbsp;:</b> la transcription intégrale et réelle de notre session (figure ci-dessous).</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — interpréter des mesures, y compris les échecs · CRCN 5.1 Résoudre des problèmes techniques (niv. 3) — cartouche complet ci-dessous.</div>
-  </div>
+  </div></details>
   <div class="cartouche-crcn">
     <b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé&nbsp;: 3<br>
     <span style="font-style:italic">Repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;»
@@ -2035,13 +2041,13 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 
 <section class="card">
   <h2>🎬 Activité 5 — La simulation saut par saut, et le poste-frontière à l'épreuve <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
-  <div class="meta-grid">
+  <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources, socle</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> voir le voyage complet image par image dans la simulation, puis prouver — en le vivant — que sans sa table, le routeur détruit le message.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.7 (représenter la circulation) et 3e_C4.8 (justifier la nécessité du routage) — la synthèse des deux.</div>
     <div><b>Production&nbsp;:</b> le trajet relevé dans l'Event List + les DEUX expériences du poste-frontière réellement jouées.</div>
     <div><b>Ressources&nbsp;:</b> notre Event List réelle, le mini-simulateur du poste-frontière, le fichier fourni <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">3e_routage_MQ_NY_TECHNO-C4.pkt</span>.</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — l'expérience contrôlée (avec/sans table) comme preuve · D2 «&nbsp;outils numériques&nbsp;» — compléter le fichier fourni.</div>
-  </div>
+  </div></details>
 
   <p>Dans Packet Tracer, ouvre le fichier fourni
   <a href="3e_routage_MQ_NY_TECHNO-C4.pkt" download>📦 3e_routage_MQ_NY_TECHNO-C4.pkt</a> (notre montage réel,

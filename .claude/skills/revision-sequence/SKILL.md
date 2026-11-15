@@ -61,6 +61,9 @@ redondant.
     la clé `replie` du rappel dans `donnees_rappel_cdc.py`), **seulement si le vérificateur de l'activité ne l'exige
     pas** (chercher sa clé `rep_…` dans le script de la page) : l'option `replie="…"` de son entrée, puis
     `python3 incrustations.py --seq <code>` (le texte du résumé dit ce qu'elle contient et à qui elle sert) ;
+  - la fiche de chaque activité (objectif, compétence, production attendue, ressources) : repliée sur toutes les
+    séquences le 15/11/2026 (décision de Pascal) ; `python3 _outils/replier_fiches_activite.py <page>` dit s'il en reste
+    une, `--ecrire` la replie ;
   - le Bonus : `python3 _outils/replier_bonus.py <page> --ecrire`. Son titre reste visible à sa place (la clôture se
     lit Bonus → Bilan → QCM) ; ses défis, ses champs et son corrigé se déplient « quand tu as fini ». Un banc qui
     remplit les champs du Bonus ouvre d'abord le `<details>`, comme l'élève ;
