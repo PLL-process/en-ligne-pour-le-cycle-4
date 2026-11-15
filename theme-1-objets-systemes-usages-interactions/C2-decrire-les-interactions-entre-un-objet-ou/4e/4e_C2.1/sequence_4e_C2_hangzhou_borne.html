@@ -305,10 +305,11 @@ body.essentiel details.referentiel-replie{display:none}
      d'impression compactes ») : rien ne disparaît qui serve à l'élève ; les photos rapetissent ; les titres restent avec
      leur suite. Les documents dessinés (schémas, captures) gardent leur largeur : plus petits, leur texte passerait sous
      5 points. ═══ */
-  /* une photo documentaire tient à côté de sa légende, au lieu d'occuper une demi-page */
-  html body figure:has(> img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"])){display:flex!important;gap:4mm;align-items:flex-start;break-inside:avoid;margin:2mm 0!important}
-  html body figure > img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"]){width:58mm!important;max-height:44mm!important;object-fit:cover;flex:none;margin:0!important}
-  html body figure:has(> img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"])) > figcaption{flex:1;text-align:left!important;margin:0!important;font-size:8.5pt!important}
+  /* une photo documentaire tient à côté de sa légende, au lieu d'occuper une demi-page ; l'image de la situation
+     déclenchante aussi, même en PNG (décision de Pascal du 15/11/2026 : 53 séquences l'imprimaient en pleine largeur) */
+  html body figure:has(> img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"])),html body figure.situation-photo:has(> img){display:flex!important;gap:4mm;align-items:flex-start;break-inside:avoid;margin:2mm 0!important}
+  html body figure > img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"]),html body figure.situation-photo > img{width:58mm!important;max-height:44mm!important;object-fit:cover;flex:none;margin:0!important}
+  html body figure:has(> img:is(.figure,[src$=".jpg"],[src$=".jpeg"],[src$=".webp"],[src$=".JPG"])) > figcaption,html body figure.situation-photo:has(> img) > figcaption{flex:1;text-align:left!important;margin:0!important;font-size:8.5pt!important}
   /* une réponse courte en rangée : l'énoncé et ses choix sur une même ligne, quand ils y tiennent */
   html body fieldset.qcm-groupe.qcm-rangee > legend{float:left!important;width:auto!important;margin:0 3mm .6mm 0!important;padding:0!important}
   html body fieldset.qcm-groupe.qcm-rangee > .qcm-option{display:inline-flex!important;width:auto!important;margin:0 4mm .6mm 0!important}
