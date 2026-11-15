@@ -17,7 +17,7 @@
 
 ## Depuis la semaine dernière
 
-*Rapport précédent : `RAPPORT_AUDIT_2026-11-08.md` (main du 08/11 à 21 h 35 UTC, après #625, `--complet --generateurs`). Celui-ci : `--complet --generateurs`, main du 15/11 à 21 h 35 UTC (17 h 35 Martinique), après #718 (`d03a574`). Les six contrôles Playwright ont tourné (Chromium 153, `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`). Les quatre contrôles ajoutés à `rapport_audit.py` cette semaine (`sauvegarde_locale`, `ordre_propositions`, `mode_mission`, `schema_sous_les_yeux`) tournent pour la première fois dans un rapport : leurs rouges ne sont pas forcément nouveaux sur `main` — c'est écrit, ligne par ligne, dans le crible.*
+*Rapport précédent : `RAPPORT_AUDIT_2026-11-08.md` (main du 08/11 à 21 h 35 UTC, après #625, `--complet --generateurs`). Celui-ci : `--complet --generateurs`, main du 15/11 à 21 h 35 UTC (17 h 35 Martinique), après #718 (`d03a574`). Les six contrôles Playwright ont tourné (Chromium 153, `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`). Les six contrôles ajoutés à `rapport_audit.py` cette semaine (`gestes_outil`, `licence`, `sauvegarde_locale`, `ordre_propositions`, `mode_mission`, `schema_sous_les_yeux` — 20 + 6 contrôles le 08/11, 26 + 6 ce soir) tournent pour la première fois dans un rapport : leurs rouges ne sont pas forcément nouveaux sur `main` — c'est écrit, ligne par ligne, dans le crible.*
 
 | Ligne du résumé | 08/11 | 15/11 | Lecture |
 |---|---|---|---|
