@@ -30953,3 +30953,26 @@ Chaque bloc : deux aides graduées, la vérification, une correction complète r
 - **La séance 3 reste au-dessus du repère (1 416 mots).** C'est une séance d'atelier : les cinq gestes de Vittascience (environ 380 mots) se lisent en faisant, geste par geste ; ce qui reste à découvert, ce sont les consignes des paliers 1 et 2 et leurs questions.
 - **La bonne réponse se devine encore par sa longueur** : elle est la plus longue dans 33 questions sur 48, parfois de 40 à 75 caractères ; la première dans 11. Ce travail, et le pourquoi de chaque erreur pour le mode mission, viennent dans une PR à part, juste après : la conversion n°300 de 62 listes valait d'être livrée seule.
 - Les pages 1 à 3 de la station gardent leur ✘ n°301 : le bilan est à la page 4, par construction (comme sur `main`).
+
+## 15/11/2026 — Révision des trois thèmes, 40 : `4e_C7.1` (le jardin connecté, concevoir)
+
+**Le constat.** Deux séances sur la page (les quatre autres du projet sont sur l'atelier de planification et le TP « Le dé sur sa pointe »). Sur `main` :
+- **deux ✘ de règles d'or** : n°300 (**20 listes déroulantes** qui posent une question) et n°23 (« 145 min annoncés pour 110 ») ; ce second ✘ était un faux : la règle comptait trois fois les « (15 minutes au lieu de 5) » de la piqûre de rappel du cahier des charges, qui ne sont pas des durées d'activité. Les activités font 100 min, plus 10 de service : 110 ;
+- **28 écarts d'aération** ;
+- une séance 1 à 1 244 mots, dont la piqûre de rappel à découvert, et une séance 2 à 1 726.
+
+**Ce qui est fait.**
+- **n°300** : les 20 listes deviennent des groupes de boutons radio (`migrer_gabarit_306.py --n300`). Les deux listes du banc météo (matériau, météo) sont des commandes, pas des questions : elles restent des listes, marquées `data-interface`.
+- **La piqûre de rappel du cahier des charges se replie à sa source** (`replie` de `jardin-conception-4e`) : elle est facultative, son résumé ne compte pas de durée. Son écart s'écrit « un quart d'heure au lieu de 5 minutes », les mots de la cliente : la n°23 ne le prend plus pour une durée. Séance 1 : **1 244 → 580 mots**.
+- **Places** : 14 groupes mélangés ; les neuf cases du tableau des matériaux gardent leur échelle dans l'ordre (Faible, Moyenne, Bonne · Facile, Moyenne, Difficile · Faible, Moyen, Élevé), et leur énoncé, que les en-têtes du tableau disent déjà, n'est plus lu que par le lecteur d'écran.
+- **Le billet d'entrée** : deux propositions fausses s'allongent d'une raison plausible (la bonne réponse y était la plus longue de 29 et 35 caractères) ; la première question ne dit plus « En 5e, on commençait par… » : « Avant de fabriquer quoi que ce soit, on commence par… ».
+- **Le pourquoi de chaque erreur** pour le mode mission (`mission_4e_C7.1.json` : 42 pourquoi).
+- **Couper le redondant** : les annonces des deux séances passent en lignes ①, ②, ③ ; « Et après cette page » ne redit plus ce que disent les deux cartes de fin ; ces deux cartes gardent leur lien et replient leur description ; l'introduction de l'exercice FAST incrusté (à sa source, `incrustations_lots/fast_et_flexibilite.py`) ne redit plus la consigne.
+- **Le Bonus se replie** ; **aération : 28 → 0** (63 retours à la ligne, deux corrections réécrites en lignes, la synthèse en lignes).
+- **Les bancs** gardent leurs questions : `_groupesRadio(page)` coche le bouton de la valeur ; un choix par rang suit l'ordre d'origine (`ORIGINE`).
+
+**Mesure.** Mots visibles : 1 244 · 1 726 → **580** · **1 488**. Règles d'or 2 → 0 ✘ ; menus 20 → 0 ; aération 28 → 0. Bancs : **47 / 47** (séquence) ; banc n°311 : « Où j'en suis » 14 / 15, le pas en défaut étant celui des onglets à 390 px, en défaut sur `main` aussi ; son relais, lancé à part, **34 / 34**. Mode mission : chaque mauvaise proposition jouée a son pourquoi (42 / 42), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page ; schémas : 0 ✘ sur les 5 du lot).
+
+**Ce qui reste.**
+- **La séance 2 reste au-dessus du repère (1 488 mots).** Elle porte l'activité 3, l'exercice FAST du réinvestissement (son schéma compte à lui seul une centaine de mots), puis toute la clôture : synthèse, Bonus, bilan, positionnement sur les trois codes (environ 330 mots qui ne se replient pas, n°301).
+- **Le banc n°311 de la page bute, sur `main` comme ici**, sur un pas : à 390 px, les onglets de la séance 2 descendent à 1 063 px pour 844 visibles. Au-dessus d'eux, l'ancien en-tête empile l'identité, le mode essentiel, la note de l'ordinateur partagé, le sélecteur de parcours, la progression et « Où j'en suis ». Le banc s'arrête alors avant son relais : lancé à part, le relais donne 34 / 34. Ramener les onglets dans le premier écran demande de revoir cet en-tête : c'est un choix de mise en page, à faire pour toute la famille des pages qui le portent.

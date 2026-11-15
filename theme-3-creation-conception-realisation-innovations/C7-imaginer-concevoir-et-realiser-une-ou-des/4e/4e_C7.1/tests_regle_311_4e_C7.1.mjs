@@ -14,6 +14,21 @@ import { pathToFileURL } from 'url';
 import path from 'path';
 import { lancerBanc311Theme3 } from '../../../banc_regle_311_theme3.mjs';
 
+/* Règle d'or n°300 (révision du 15/11/2026) : les questions de l'activité 0 sont des groupes de boutons radio
+   (fieldset.qcm-groupe). selectOption visant un groupe coche la proposition de cette valeur. */
+function _groupesRadio(page){
+  const orig = page.selectOption.bind(page);
+  page.selectOption = async (sel, val, ...reste) => {
+    const groupe = await page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, sel);
+    if (!groupe) return orig(sel, val, ...reste);
+    const ok = await page.evaluate(([s, v]) => {
+      const c = [...document.querySelectorAll(s + ' input[type=radio]')].find(i => i.value === v); if (!c) return false;
+      c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+    }, [sel, String(val)]);
+    if (!ok) throw new Error('aucune proposition « ' + val + ' » dans ' + sel);
+  };
+  return page;
+}
 const PAGE = 'sequence_4e_C7_jardin-conception.html';
 
 async function ouJenSuis() {
@@ -26,7 +41,7 @@ async function ouJenSuis() {
   });
   const b = await chromium.launch();
   for (const [w, h] of [[1280, 900], [390, 844]]) {
-    const p = await b.newPage({ viewport: { width: w, height: h } }); const err = [];
+    const p = _groupesRadio(await b.newPage({ viewport: { width: w, height: h } })); const err = [];
     p.on('pageerror', (e) => err.push(String(e).slice(0, 80)));
     await p.goto(URL0); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(150);
     let e = await lire(p);

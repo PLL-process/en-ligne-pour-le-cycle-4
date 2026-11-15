@@ -399,6 +399,9 @@ RAPPELS = [
          ]),
     dict(id="jardin-conception-4e", niveau="4e",
          sequence=C7 + "4e/4e_C7.1/sequence_4e_C7_jardin-conception.html",
+         # révision du 15/11/2026 (la charge de lecture de la séance 1) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel, facultative&nbsp;: deux lignes du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          avant='<section class="card" id="act2">\n<h2>✏️ Activité 2', balise="h2", balise_exo="h3",
          titre="Deux lignes du cahier des charges du boîtier de la sonde",
          objet="le boîtier de la sonde", client="Mme Ortiz",
@@ -437,7 +440,7 @@ RAPPELS = [
                                               "(min)."),
                         vague="Vite"),
                    dict(bonne="f3", cit="Même un quart d'heure : je ne la change qu'une fois par an",
-                        ecart="15 minutes au lieu de 5")),
+                        ecart="un quart d'heure au lieu de 5 minutes")),
          ]),
     dict(id="bac-4e", niveau="4e",
          sequence=C7 + "4e/4e_C7.3/sequence_4e_C7.3_bac-du-jardin.html",

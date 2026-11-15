@@ -69,11 +69,10 @@ ENTREES = [
          avant='<div class="exo">\n<p>Nouveau besoin&nbsp;: une <b>jardinière de balcon</b>',
          balise="h3", balise_exo="h4",
          titre="Refaire sur un système qui existe&nbsp;: lui ajouter une fonction",
-         intro="La sonde que protège ton boîtier sert à arroser tout seul quand la terre est sèche. Voici un "
-               "système d'arrosage de ce genre, déjà construit, dans le jardin partagé d'un autre quartier&nbsp;: "
-               "sa gardienne lui demande une <b>nouvelle fonction</b>. Tu complètes son <b>diagramme FAST</b> — "
-               "la fonction qui manque, sa solution, et ce qui change ailleurs —, puis tu déroules la démarche "
-               "sur la jardinière de balcon. Un exercice d'environ un quart d'heure&nbsp;; il se vérifie tout "
-               "seul et a sa correction complète.",
+         # 15/11/2026 (révision, charge de lecture de la séance 2) : l'introduction ne redit plus la consigne
+         intro="La sonde que protège ton boîtier arrose toute seule quand la terre est sèche. Voici un système de ce "
+               "genre, dans le jardin partagé d'un autre quartier&nbsp;: sa gardienne lui demande une <b>nouvelle "
+               "fonction</b>. Tu complètes son <b>diagramme FAST</b>, puis tu déroules la démarche sur la jardinière "
+               "de balcon. Un exercice d'environ un quart d'heure, qui se vérifie tout seul et a sa correction complète.",
          suite="l'exercice qui relie chaque constituant de ce système à sa fonction, et le QCM de l'atelier"),
 ]
