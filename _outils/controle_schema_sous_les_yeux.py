@@ -46,6 +46,10 @@ un appui, c'est un corrigé) ; qu'elle reste visible pendant qu'on répond (épi
 côte : `.schema-sous-les-yeux` et `.carte.cote-a-cote` du pilote Book Train) ; sa lisibilité
 (n°325, `controle_schemas.mjs`).
 
+  S3  schéma replié (⚠, listé — ajout du 15/11/2026, Pascal : « le mettre dehors », le schéma hors des dépliants) — le
+      bloc a des figures, mais toutes dans un <details> fermé qui n'est ni une correction, ni une aide, ni les pièges :
+      l'élève ne les voit pas en répondant.
+
 Usage : python3 _outils/controle_schema_sous_les_yeux.py [--muet] [--json] [chemin…]
 Sortie : 0 aucun renvoi hors bloc · 1 au moins un ✘ S1 · 2 rien pu lire (règle n°299).
 """
@@ -166,6 +170,43 @@ def a_une_figure(bloc: Tag) -> bool:
     return False
 
 
+#: un dépliant qui PEUT garder sa figure fermée : la correction, les aides, les pièges (ils s'ouvrent après coup)
+#: les dévoilements voulus (« à ouvrir après l'expérience », « après avoir rangé les étapes », « après l'animation ») et les
+#: guides de gestes (captures d'un logiciel, fenêtres de Windows, guide pas à pas) : ce ne sont pas des schémas à lire pour répondre
+DEPLIANTS_PERMIS = ("correction", "corrige", "corrigé", "aide", "aide1", "aide2", "pieges-replies", "pieges", "bonus-replie",
+                    "geste-images", "gestes-fenetres", "guide-replie", "hpp-observe", "document-replie", "ppa-fixe")
+
+
+def figures_repliees(bloc: Tag):
+    """(figures visibles, figures repliées) du bloc, hors corrections et aides : une figure est repliée quand un
+    <details> fermé la cache (S3 — Pascal, 15/11/2026, « le mettre dehors » : le schéma hors des dépliants)."""
+    visibles, repliees = 0, 0
+    for f in bloc.find_all(["figure", "img", "svg", "object", "picture", "canvas"]):
+        if f.name == "img" and f.get("aria-hidden") == "true":
+            continue
+        if f.name == "svg" and (f.get("aria-hidden") == "true" or largeur_svg(f) < LARGEUR_ICONE):
+            continue
+        if f.find_parent("figure") is not None and f.name != "figure":
+            continue   # la figure compte une fois, par son <figure>
+        d = f.find_parent("details")
+        cache = None
+        while d is not None and d is not bloc and bloc in d.parents:
+            classes = d.get("class") or []
+            if any(c in DEPLIANTS_PERMIS or c.startswith("aide") for c in classes):
+                cache = "permis"
+                break
+            if not d.has_attr("open"):
+                cache = "replie"
+            d = d.find_parent("details")
+        if cache == "permis":
+            continue
+        if cache == "replie":
+            repliees += 1
+        else:
+            visibles += 1
+    return visibles, repliees
+
+
 def titre_de(bloc: Tag) -> str:
     h = bloc.find(["h2", "h3", "h4", "legend"])
     t = re.sub(r"\s+", " ", h.get_text(" ")).strip() if h else ""
@@ -182,6 +223,11 @@ def ecarts_page(html: str):
         if bloc is None or id(bloc) in vus:
             continue
         vus.add(id(bloc))
+        vis, rep = figures_repliees(bloc)
+        if rep and not vis and not BLOCS_DE_MEMOIRE.search(titre_de(bloc) + " " + " ".join(bloc.get("class") or [])):
+            ecarts.append({"code": "S3", "bloc": titre_de(bloc), "detail": "%d figure(s), toutes dans un dépliant fermé" % rep,
+                           "extrait": ""})
+            continue
         if a_une_figure(bloc):
             continue
         if BLOCS_DE_MEMOIRE.search(titre_de(bloc) + " " + " ".join(bloc.get("class") or []) + " " + (bloc.get("id") or "")):
@@ -209,7 +255,7 @@ def main(argv=None):
     if not liste:
         print("EN PANNE : aucune page élève lue (règle n°299).")
         return 2
-    s1, s2, par_page = 0, 0, {}
+    s1, s2, s3, par_page = 0, 0, 0, {}
     for chemin in liste:
         try:
             html = open(chemin, encoding="utf-8", errors="replace").read()
@@ -220,8 +266,9 @@ def main(argv=None):
             par_page[os.path.relpath(chemin, DEPOT).replace(os.sep, "/")] = e
             s1 += sum(1 for x in e if x["code"] == "S1")
             s2 += sum(1 for x in e if x["code"] == "S2")
+            s3 += sum(1 for x in e if x["code"] == "S3")
     if en_json:
-        print(json.dumps({"pages_lues": len(liste), "S1": s1, "S2": s2, "par_page": par_page},
+        print(json.dumps({"pages_lues": len(liste), "S1": s1, "S2": s2, "S3": s3, "par_page": par_page},
                          ensure_ascii=False, indent=1))
     else:
         print("%d page(s) lues — règle d'or n°331, l'élève répond le schéma sous les yeux" % len(liste))
@@ -229,11 +276,12 @@ def main(argv=None):
             for page, e in par_page.items():
                 print("\n%s" % page)
                 for x in e:
-                    signe = "✘ S1 renvoi vers un schéma hors du bloc" if x["code"] == "S1" else "⚠ S2 schéma nommé, aucune figure dans le bloc"
+                    signe = {"S1": "✘ S1 renvoi vers un schéma hors du bloc", "S2": "⚠ S2 schéma nommé, aucune figure dans le bloc",
+                             "S3": "⚠ S3 schéma replié : la figure est dans un dépliant fermé"}[x["code"]]
                     print("  %s — %s — %s\n     « %s »" % (signe, x["bloc"], x["detail"], x["extrait"]))
-        print("\n%d ✘ (renvoi explicite vers un schéma qui n'est pas dans le bloc) · %d ⚠ (schéma nommé sans figure : à juger) · %d page(s) concernées"
-              % (s1, s2, len(par_page)))
-        if not s1 and not s2:
+        print("\n%d ✘ (renvoi explicite vers un schéma qui n'est pas dans le bloc) · %d ⚠ (schéma nommé sans figure : à juger) · %d ⚠ S3 (schéma replié) · %d page(s) concernées"
+              % (s1, s2, s3, len(par_page)))
+        if not s1 and not s2 and not s3:
             print("✅ chaque bloc de question qui nomme un schéma le montre")
     return 1 if s1 else 0
 

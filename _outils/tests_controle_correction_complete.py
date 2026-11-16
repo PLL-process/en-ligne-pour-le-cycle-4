@@ -102,6 +102,9 @@ def main():
         {SEQ: page('<section class="panneau"><p>Construis le diaporama dans Impress.</p>' + FAIT
                    + carte("Activité 4.3", "<p>Construis le diaporama dans Impress.</p>" + FAIT + correction(FIG + BOUTON))
                    + "</section>")}, 0, "✅")
+    cas("l'encart « les quatre gestes » (un échauffement, l'éditeur en vrai) n'est pas jugé",
+        {SEQ: page('<section class="card gestes-outil"><h2>Les quatre gestes de l\'éditeur Python</h2>'
+                   "<p>Écris ton prénom dans l'éditeur Python, puis exécute.</p>" + FAIT + "</section>")}, 0, "✅")
     cas("un billet d'entrée se fait de mémoire : il n'est pas jugé",
         {SEQ: page(carte("🎫 Billet d'entrée", CONSIGNE + FAIT))}, 0, "✅")
 

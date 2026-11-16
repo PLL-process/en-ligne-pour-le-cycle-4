@@ -102,6 +102,10 @@ def ecarts_page(html: str):
         titre = n331.titre_de(bloc)
         if n331.BLOCS_DE_MEMOIRE.search(titre + " " + " ".join(bloc.get("class") or []) + " " + (bloc.get("id") or "")):
             continue
+        # l'encart « les quatre gestes » : un échauffement sur un éditeur d'essai, qui dit lui-même ce qu'on doit voir ;
+        # l'éditeur y est en vrai, jamais en image (décision du 05/11/2026)
+        if "gestes-outil" in (bloc.get("class") or []):
+            continue
         # un panneau de séance qui contient des cartes d'activité n'est pas une activité : ses cartes sont jugées une à une
         if any(c in CARTES for d in bloc.find_all(True) for c in (d.get("class") or [])):
             continue
