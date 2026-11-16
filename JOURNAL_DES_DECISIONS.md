@@ -31825,3 +31825,18 @@ La vérification de la page ne change pas (011 attendu).
 **Mesure.** `incrustations.py --verifier` : toutes les pages à jour. `audit_aeration.py --strict` sur les cinq pages : 1 → 0 (la légende-bloc de `carte_des_representations`).
 
 **Vérifications.** Bancs : `4e_C4.1` 52 / 52, `3e_C1.5` 23 / 23, les quatre bancs n°311 à 34 / 34. `banc_rappels_cdc.py` 302 / 302. Mode mission sur les quatre séquences : aucun refus. `verif_regles_audit.py` : 0 ✘ avant comme après. `controle_consigne_question.py` : inchangé (289 C1, tous au thème 1, la vague suivante).
+
+## 15/11/2026 — Règle d'or n°322 étendue aux QCM : la note « ordinateur partagé » et un bouton qui efface tout, nom compris
+
+**La demande.** Pascal, le 15/11/2026, sur ce que la règle n°322 laissait « à décider » depuis le 10/11 (73 QCM sans note poste partagé, 4 `confirm()`) : « Tu as carte blanche ».
+
+**Ce que la mesure a montré.** La décision du 10/11 supposait que les QCM « ne gardent qu'un score ». Lu dans le code du gabarit maison : un QCM garde dans le navigateur **le nom, le prénom, la classe, la date, chaque réponse et le temps**. Et « ♻ Recommencer entièrement » efface les réponses mais **garde le nom** : sur un poste partagé, l'élève suivant ouvrait le QCM au nom du précédent, et aucun bouton ne l'effaçait. La raison de l'exception tombait ; la règle s'applique.
+
+**Ce qui change.**
+- **72 QCM du gabarit maison** (`const QUESTIONS`) : sous `#savedNote`, juste sous le nom de l'élève, la note `data-note="poste-partage"` (« un autre élève … verra ton nom et tes réponses ») et le bouton **« 🗑 Effacer ma sauvegarde »** (`#btnEffacer`). Il efface en deux clics (`demande()`, déjà dans chaque QCM : le premier annonce dans `#savedNote`, le second dans les six secondes retire la clé et recharge), sans boîte modale. La note ne s'imprime pas. Posé par `controle_sauvegarde_locale.py --corriger`, qui connaît maintenant ce gabarit.
+- **Le gabarit des ateliers** (`gabarit_qcm.tpl`) porte le même bloc : `build_qcm.py --tous`, rejoué dans une copie à part, l'écrit à l'identique dans les 7 QCM des ateliers. Les générateurs de lot (`build_qcm.py <gabarit.html> <sortie>`) partent d'une page de QCM existante : ils le gardent.
+- **Le QCM hérité `qcm_algorigrammes_domotique.html`** (`4e_C6.2`) : la note, en haut de page ; elle renvoie à son bouton « 🗑 Effacer toute ma progression », au bilan final.
+- **Les deux `confirm()` réels** (`_outils/dnb_gabarit.html` et `3e_C6.2/entrainement_dnb_algorigrammes.html`, son produit) : remplacés en deux clics par `_outils/sans_modale.py`. Les deux autres étaient le mot « confirm() » dans un commentaire qui explique `demande` : le contrôle ne lit plus que le code (`sans_modale.code_seul`).
+- **Le contrôle** (`controle_sauvegarde_locale.py`) : un QCM sans note est désormais un refus, comme une séquence ou un atelier. **Le skill** `qcm-html-accessible` le dit, dans « Contrôler ».
+
+**Mesure.** `controle_sauvegarde_locale.py` : **73 QCM sans note → 0 ; 4 `confirm()` → 0 ; 0 refus** (163 pages qui écrivent dans le navigateur).
