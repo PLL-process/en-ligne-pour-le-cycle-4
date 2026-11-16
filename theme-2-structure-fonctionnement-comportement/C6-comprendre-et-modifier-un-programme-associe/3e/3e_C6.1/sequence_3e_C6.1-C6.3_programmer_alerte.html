@@ -1932,17 +1932,20 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
 <section class="card">
   <h2>🧪 Séance 3 — Prouver que ça marche : le plan de tests</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment être SÛR que la v2 fait ce qu'on attend — et n'a rien cassé ?</p>
-  <object class="figure" data="Images/plan_de_tests_jeux_essai.svg" type="image/svg+xml" aria-label="Plan de tests avec cinq jeux d'essai encadrant les seuils : 45, 50, 51, 118, 119 ; le test à 118 révèle un bug">Le plan de tests et ses jeux d'essai (SVG)</object>
-
-  <div class="activite" id="act5">
+  <div class="activite cote-a-cote" id="act5">
     <header><span class="num">Activité 5</span><h3>Dérouler le plan de tests</h3><span class="duree">⏱ 30 min</span></header>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> valider le programme v2 par des jeux d'essai calculés à la main, en visant les valeurs frontières.</div>
       <div><b>Compétence :</b> 3e_C6.3 — tester et valider la modification.</div>
       <div><b>Production attendue :</b> 5 sorties attendues + le diagnostic d'un bug.</div>
-      <div><b>Ressources :</b> TON programme v2 dans CodeLab (seuil orange = 60) + le schéma du plan de tests.</div>
+      <div><b>Ressources :</b> TON programme v2 dans CodeLab (seuil orange = 60) + le schéma du plan de tests, juste ici (le schéma complet est dans la correction).</div>
     </div></details>
     <div class="consigne"><b>Consigne :</b> a) calcule À LA MAIN la sortie attendue de ta v2 pour chaque jeu d'essai ; b) analyse ensuite le bug du schéma.</div>
+    <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux">
+      <object class="figure" data="Images/plan_de_tests_jeux_essai_muet.svg" type="image/svg+xml" aria-label="Plan de tests de la version 1 avec cinq jeux d'essai : 45, 50, 51, 118, 119, la sortie attendue, la sortie obtenue et le verdict. Le test n°4, à 118, obtient violette au lieu de rouge. Deux questions restent à résoudre : pourquoi ces valeurs, et d'où vient le bug.">Le plan de tests de la v1 et ses jeux d'essai — à analyser (SVG)</object>
+      <figcaption>Le plan de tests de la v1 (seuil orange = 50) : un exemple. <br>Ses valeurs 118 et 119 servent aussi à vérifier que ta v2 n'a rien cassé.</figcaption>
+      <p class="agrandir"><a href="Images/plan_de_tests_jeux_essai_muet.svg" target="_blank" rel="noopener">🔍 Ouvrir le schéma en grand</a></p>
+    </figure>
     <div class="exo">
       <h4>a) Sorties attendues de TA v2 (seuil orange = 60)</h4>
       <fieldset class="qcm-groupe" id="d5_1" data-melange="1">
@@ -2001,6 +2004,8 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour chaque valeur, redéroule les tests de TA v2 dans l'ordre (rappel : tous les &gt; sont stricts, et ton seuil orange vaut 60 depuis l'activité 3).</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>55 : rien (55&gt;60 faux). <br>60 : rien (60&gt;60 faux — frontière !). <br>61 : orange+gyro. 118 : rouge+sirène (118&gt;118 faux, 118&gt;90 vrai). 119 : violette+les deux. <br>Le schéma obtient violette à 118 : seul un ≥ l'explique.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Le schéma complet</b>&nbsp;: compare-le avec tes réponses.</p>
+      <object class="figure" data="Images/plan_de_tests_jeux_essai.svg" type="image/svg+xml" aria-label="Plan de tests avec cinq jeux d'essai encadrant les seuils : 45, 50, 51, 118, 119 ; le test à 118 révèle un bug : un ≥ écrit au lieu de &gt;">Le plan de tests et ses jeux d'essai (SVG)</object>
       <p><b>a)</b> 55 km/h : verte/jaune, rien. <br>
       60 km/h : verte/jaune, rien — 60 &gt; 60 est faux, la frontière est exclue. <br>
       61 km/h : orange + gyrophare. <br>

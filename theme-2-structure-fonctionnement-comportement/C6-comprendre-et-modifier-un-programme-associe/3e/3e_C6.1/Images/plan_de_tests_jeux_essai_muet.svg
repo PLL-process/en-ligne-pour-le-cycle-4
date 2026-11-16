@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 420" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Le plan de tests : des jeux d'essai pour valider le programme — à analyser</title>
+  <desc id="d">Tableau de plan de tests avec cinq jeux d'essai : pour chaque test, la valeur d'entrée vent en kilomètres par heure, la sortie attendue calculée à la main, la sortie obtenue en exécutant le programme, et le verdict. Les valeurs choisies encadrent les seuils : 45, 50, 51, 118, 119. En bas, deux questions à résoudre : pourquoi ces valeurs-là, et d'où vient le bug du test n°4.</desc>
+  <rect width="940" height="420" fill="#050f24"/>
+  <text x="470" y="34" fill="#81aaff" font-size="20" font-weight="bold" text-anchor="middle">Valider par un plan de tests : les jeux d'essai</text>
+
+  <g font-size="12" text-anchor="middle">
+    <rect x="60" y="60" width="110" height="36" rx="8" fill="#173666"/><text x="115" y="83" fill="#61dafb" font-weight="bold">Test</text>
+    <rect x="180" y="60" width="128" height="36" rx="8" fill="#173666"/><text x="244" y="83" fill="#61dafb" font-weight="bold">Entrée vent_kmh</text>
+    <rect x="318" y="60" width="248" height="36" rx="8" fill="#173666"/><text x="442" y="83" fill="#61dafb" font-weight="bold">Sortie ATTENDUE (à la main)</text>
+    <rect x="576" y="60" width="190" height="36" rx="8" fill="#173666"/><text x="671" y="83" fill="#61dafb" font-weight="bold">Sortie OBTENUE</text>
+    <rect x="776" y="60" width="96" height="36" rx="8" fill="#173666"/><text x="824" y="83" fill="#61dafb" font-weight="bold">Verdict</text>
+  </g>
+  <g font-size="12" text-anchor="middle" font-family="monospace">
+    <g><rect x="60" y="104" width="110" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="115" y="127" fill="#e4eaf5">n°1</text>
+       <rect x="180" y="104" width="128" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="244" y="127" fill="#ffd66b">45</text>
+       <rect x="318" y="104" width="248" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="442" y="127" fill="#81fba1">verte/jaune</text>
+       <rect x="576" y="104" width="190" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="671" y="127" fill="#81fba1">verte/jaune</text>
+       <rect x="776" y="104" width="96" height="36" rx="8" fill="#123322" stroke="#81fba1"/><text x="824" y="127" fill="#81fba1">✔</text></g>
+    <g><rect x="60" y="148" width="110" height="36" rx="8" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/><text x="115" y="171" fill="#ffd66b">n°2 frontière</text>
+       <rect x="180" y="148" width="128" height="36" rx="8" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/><text x="244" y="171" fill="#ffd66b">50</text>
+       <rect x="318" y="148" width="248" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="442" y="171" fill="#81fba1">verte/jaune (50 n'est PAS &gt; 50)</text>
+       <rect x="576" y="148" width="190" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="671" y="171" fill="#81fba1">verte/jaune</text>
+       <rect x="776" y="148" width="96" height="36" rx="8" fill="#123322" stroke="#81fba1"/><text x="824" y="171" fill="#81fba1">✔</text></g>
+    <g><rect x="60" y="192" width="110" height="36" rx="8" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/><text x="115" y="215" fill="#ffd66b">n°3 frontière</text>
+       <rect x="180" y="192" width="128" height="36" rx="8" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/><text x="244" y="215" fill="#ffd66b">51</text>
+       <rect x="318" y="192" width="248" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="442" y="215" fill="#ffb454">orange + gyrophare</text>
+       <rect x="576" y="192" width="190" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="671" y="215" fill="#ffb454">orange + gyrophare</text>
+       <rect x="776" y="192" width="96" height="36" rx="8" fill="#123322" stroke="#81fba1"/><text x="824" y="215" fill="#81fba1">✔</text></g>
+    <g><rect x="60" y="236" width="110" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="115" y="259" fill="#e4eaf5">n°4</text>
+       <rect x="180" y="236" width="128" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="244" y="259" fill="#ffd66b">118</text>
+       <rect x="318" y="236" width="248" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="442" y="259" fill="#ff7b88">rouge (118 n'est PAS &gt; 118)</text>
+       <rect x="576" y="236" width="190" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="671" y="259" fill="#c68ef2">violette ✘</text>
+       <rect x="776" y="236" width="96" height="36" rx="8" fill="#3a1218" stroke="#ff7b88"/><text x="824" y="259" fill="#ff7b88">✘ BUG !</text></g>
+    <g><rect x="60" y="280" width="110" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="115" y="303" fill="#e4eaf5">n°5</text>
+       <rect x="180" y="280" width="128" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="244" y="303" fill="#ffd66b">119</text>
+       <rect x="318" y="280" width="248" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="442" y="303" fill="#c68ef2">violette + sirène + gyro</text>
+       <rect x="576" y="280" width="190" height="36" rx="8" fill="#0d2347" stroke="#274a8a"/><text x="671" y="303" fill="#c68ef2">violette + sirène + gyro</text>
+       <rect x="776" y="280" width="96" height="36" rx="8" fill="#123322" stroke="#81fba1"/><text x="824" y="303" fill="#81fba1">✔</text></g>
+  </g>
+
+  <rect x="60" y="334" width="820" height="72" rx="12" fill="#173666" stroke="#274a8a"/>
+  <text x="470" y="354" fill="#e4eaf5" font-size="12" text-anchor="middle">Les valeurs choisies : 45, 50, 51, 118, 119. <tspan fill="#ffd66b" font-weight="bold">Pourquoi celles-là ?</tspan> (question b)</text>
+  <text x="470" y="372" fill="#e4eaf5" font-size="12" text-anchor="middle">Le test n°4 obtient « violette » au lieu de « rouge » : <tspan fill="#ffd66b" font-weight="bold">d'où vient le bug ?</tspan> (question b)</text>
+  <text x="470" y="395" fill="#9bbefc" font-size="11" text-anchor="middle">La sortie ATTENDUE se calcule À LA MAIN avant d'exécuter : sinon on ne teste rien, on constate.</text>
+<style><![CDATA[
+/* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026) —
+   Un objet embarqué applique le media print de la page qui l'appelle : ce
+   bloc ne change RIEN à l'écran, et blanchit le fond du schéma sur le papier
+   en fonçant ses couleurs claires, teinte gardée. Mesuré le 02/09 : une image
+   appelée par la balise img ne le fait pas — ces schémas-là ne sont pas ici. */
+@media print{
+  *:not(text):not(tspan)[fill="#050f24"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#0d2347"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#123322"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#173666"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#3a1218"]{fill:#ffffff}
+  text[fill="#61dafb"],tspan[fill="#61dafb"],[fill="#61dafb"] text,[fill="#61dafb"] tspan{fill:#047fa0}
+  text[fill="#81aaff"],tspan[fill="#81aaff"],[fill="#81aaff"] text,[fill="#81aaff"] tspan{fill:#2069ff}
+  text[fill="#81fba1"],tspan[fill="#81fba1"],[fill="#81fba1"] text,[fill="#81fba1"] tspan{fill:#048827}
+  [stroke="#81fba1"]{stroke:#048827}
+  text[fill="#9bbefc"],tspan[fill="#9bbefc"],[fill="#9bbefc"] text,[fill="#9bbefc"] tspan{fill:#1a6af8}
+  text[fill="#c68ef2"],tspan[fill="#c68ef2"],[fill="#c68ef2"] text,[fill="#c68ef2"] tspan{fill:#a145ea}
+  text[fill="#e4eaf5"],tspan[fill="#e4eaf5"],[fill="#e4eaf5"] text,[fill="#e4eaf5"] tspan{fill:#4b73bc}
+  text[fill="#ff7b88"],tspan[fill="#ff7b88"],[fill="#ff7b88"] text,[fill="#ff7b88"] tspan{fill:#eb0017}
+  [stroke="#ff7b88"]{stroke:#eb0017}
+  text[fill="#ffb454"],tspan[fill="#ffb454"],[fill="#ffb454"] text,[fill="#ffb454"] tspan{fill:#b06300}
+  text[fill="#ffd66b"],tspan[fill="#ffd66b"],[fill="#ffd66b"] text,[fill="#ffd66b"] tspan{fill:#996f00}
+  [stroke="#ffd66b"]{stroke:#996f00}
+}
+]]></style>
+</svg>

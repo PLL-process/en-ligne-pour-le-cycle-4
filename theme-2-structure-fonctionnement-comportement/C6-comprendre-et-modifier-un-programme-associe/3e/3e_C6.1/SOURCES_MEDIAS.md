@@ -9,6 +9,7 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 | `Images/programme_entrees_sorties_muet.svg` | SVG original (Fable) | image-objet : entrées/sorties à identifier (act. 1, QCM) | CC0 | version **muette** de `programme_entrees_sorties.svg` (les six données en « ? »), affichée avec les questions de l'activité 1 — règle d'or n°331, 15/11/2026 ; la version complète est dans la correction |
 | `Images/algorigramme_alerte_graduee.svg` | SVG original (Fable) | image-objet : LA spécification à implémenter (act. 4, QCM) | CC0 | ~6 Ko |
 | `Images/plan_de_tests_jeux_essai.svg` | SVG original (Fable) | image-objet : plan de tests à lire, bug à diagnostiquer (act. 5, QCM) | CC0 | ~6 Ko |
+| `Images/plan_de_tests_jeux_essai_muet.svg` | SVG original (Fable) | image-objet : plan de tests à analyser (act. 5) | CC0 | version **muette** de `plan_de_tests_jeux_essai.svg` (l'encart ne dit plus pourquoi ces valeurs ni la cause du bug : il pose les deux questions), affichée avec les questions de l'activité 5 ; la version complète est dans sa correction (règle d'or n°331, 15/11/2026) · ~6 Ko |
 
 Le code source affiché (programme v1/v2, programme de la bouée) est une création
 originale du lot, en Python réel, avec fonctions fictives explicites

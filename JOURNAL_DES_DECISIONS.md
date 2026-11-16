@@ -31897,3 +31897,20 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 - `tests_controle_mouvement.py` **13 / 13** (dont le repli « no-preference » de la loupe, qu'un premier jet relevait à tort) ; `controle_mouvement.py` sur le site : sortie 0 ; `py_compile` des deux scripts.
 - Aucune page du site touchée : `controle_medias`, `controle_licence`, `controle_atteignabilite`, `controle_regles_visibles`, `controle_fichiers_telechargeables`, `controle_sigles` verts.
 - Le pilote : construit hors du dépôt avec le kit au commit audité ; aucune erreur JavaScript, thème sombre et clair, lisible à 390 px ; 85 Ko.
+
+## 15/11/2026 — Vague n°331, 2e passe : les 41 ⚠ du schéma sous les yeux, lus un par un
+
+**La demande.** Pascal, le 15/11/2026, sur ce que la vague n°331 (#732) laissait à juger — 38 ⚠ S2 (schéma nommé sans figure) et 3 ⚠ S3 (schéma replié) : « Tu as carte blanche ».
+
+**Ce que la lecture a trouvé.**
+- **6 venaient d'une limite du contrôle.** La chaîne à compléter (`div.cac[data-cac]`) est un schéma dessiné DANS le bloc par son moteur ; le contrôle ne la voyait pas. D'où 3 S2 (`4e_C4.1` activité 2, `5e_C4.1` activités 2 et 3) et les 3 S3 (`3e_C4.1`, `3e_C4.3`, `4e_C4.1` : la figure repliée y était le schéma complet « pour te corriger » ou le gabarit à imprimer, à bon droit). Le contrôle la compte désormais comme figure visible.
+- **3 étaient à corriger** :
+  - `3e_C6.1`, activité 5 « Dérouler le plan de tests » : le schéma du plan de tests était posé **au-dessus** de l'activité, et son encart **donnait deux réponses** (« un bon jeu d'essai vise les valeurs frontières », « a-t-on écrit ≥ au lieu de > ? »). Il entre dans l'activité, côte à côte avec les questions, en version **muette** (`plan_de_tests_jeux_essai_muet.svg` : l'encart pose les deux questions au lieu d'y répondre) ; la version complète passe dans la correction. Le tableau des jeux d'essai reste : c'est l'exemple de la v1, et ses valeurs 118 et 119 servent à la non-régression de la v2.
+  - `3e_C9.2`, Bonus, défi « niveau violet » : « Où insérer le nouveau test dans l'algorigramme ? » — l'algorigramme était à l'activité 2, deux séances plus haut. Il est posé dans le défi. Modifié dans la page tout-en-un, puis `generer_les_quatre_pages.py` (qui redonnait à l'identique les quatre pages avant la modification) : la page 4 le reçoit.
+- **31 sont justes**, et nommés avec leur raison dans `JUGES` (`controle_schema_sous_les_yeux.py`) : questions de connaissance (les symboles de l'algorigramme, ce qu'un diagramme de cas d'utilisation ne montre pas), production de l'élève (l'algorigramme à concevoir « avant toute référence », le diagramme de l'atelier que le Bonus fait compléter, les étapes à remettre en ordre), définitions et titres de cours, un chemin de menu du tableur (« Insertion → Diagramme → Ligne »), un transfert fait de mémoire. Ils sortent du compte des ⚠ et se relisent avec `--juges`. Un titre changé fait revenir le ⚠ : on le relit alors.
+
+**Mesure.** `controle_schema_sous_les_yeux.py` : **0 ✘ · 38 ⚠ S2 → 0 · 3 ⚠ S3 → 0** ; 31 blocs jugés justes. Banc du contrôle : **28 / 28** (sept cas nouveaux : la chaîne à compléter visible, cachée, sans `data-cac` ; un bloc jugé, un autre de la même page, un renvoi S1 qu'aucun jugement n'absout). Le skill `controle-qualite-lot` le dit.
+
+**Vérifications.** `3e_C6.1` : bancs 35 / 35 (le compte des SVG passe à 5 : le muet et le complet) et 34 / 34. `3e_C9.2` : 167 / 167 (dont l'union des champs des quatre pages, identique à la page tout-en-un) et 34 / 34. Mode mission sans refus (`3e_C6.1`, la page tout-en-un et la page 4 de `3e_C9.2`). `verif_regles_audit.py` 0 ✘ ; `audit_aeration.py --strict` 0 ; `controle_schemas.mjs` 0 ✘ sur `3e_C6.1`. Capture de l'activité 5 à 1 280 px : le plan de tests à gauche, les questions à droite.
+
+**Ce qui reste, hors de cette vague.** Sous l'activité 5 de `3e_C6.1`, l'encadré « À retenir », visible, dit « jeux d'essai visant les valeurs frontières » : il répond à la question « pourquoi 49/50/51 ? ». C'est la forme de tout le gabarit (l'encadré suit l'activité, ouvert) ; le décider vaut pour toutes les séquences — question pour Pascal.
