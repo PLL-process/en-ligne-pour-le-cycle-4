@@ -40,6 +40,11 @@ const CAS = {
   // deux chaînes de trois blocs alignés, AVEC des flèches : six entités, pas un tableau
   chaines: svg([0, 1, 2].map(i => cadre(20 + i * 190, 40, 130, 50, 'Info ' + (i + 1)) + cadre(20 + i * 190, 170, 130, 50, 'Énergie ' + (i + 1))).join('')
     + [0, 1].map(i => `<path d="M${158 + i * 190} 65 H ${202 + i * 190}" stroke="#336" stroke-width="2" fill="none" marker-end="url(#m)"/><path d="M${158 + i * 190} 195 H ${202 + i * 190}" stroke="#336" stroke-width="2" fill="none" marker-end="url(#m)"/>`).join('')),
+  // l'étiquette d'une flèche (15/11/2026) : collée à 3 unités de son trait, puis bien posée à 10 unités
+  etiquetteCollee: svg(cadre(20, 120, 140, 60, 'Départ') + cadre(440, 120, 140, 60, 'Arrivée')
+    + `<path d="M168 150 H 432" stroke="#336" stroke-width="2" fill="none" marker-end="url(#m)"/><text x="250" y="144">énergie</text>`),
+  etiquettePosee: svg(cadre(20, 120, 140, 60, 'Départ') + cadre(440, 120, 140, 60, 'Arrivée')
+    + `<path d="M168 150 H 432" stroke="#336" stroke-width="2" fill="none" marker-end="url(#m)"/><text x="250" y="136">énergie</text>`),
   // un tableau de douze cellules : douze cadres, aucune entité
   grandTableau: svg(Array.from({ length: 12 }, (_, i) => cadre(20 + (i % 4) * 130, 30 + Math.floor(i / 4) * 40, 130, 40, 'Case ' + (i + 1))).join('')),
 };
@@ -61,6 +66,8 @@ t('cellules d\'un tableau bord contre bord : rien', R.tableau.croix === 0, JSON.
 t('taille en attribut écrasée par la feuille de style : ⚠ écrasée', R.ecrasee.defauts.some(d => d.type === 'écrasée'));
 t('une pastille sur le coin d\'un cadre : pas un contact', R.pastille.croix === 0, JSON.stringify(R.pastille.defauts));
 t('un cadre dans un autre : pas un contact', R.inclus.croix === 0, JSON.stringify(R.inclus.defauts));
+t('étiquette à 3 unités de sa flèche : ⚠ étiquette collée', R.etiquetteCollee.defauts.some(d => d.type === 'étiquette collée') && R.etiquetteCollee.croix === 0, JSON.stringify(R.etiquetteCollee.defauts));
+t('étiquette à 10 unités de sa flèche : rien', R.etiquettePosee.score === 0, JSON.stringify(R.etiquettePosee.defauts));
 // ── la charge : une mesure, jamais un défaut ──
 t('schéma propre : 2 entités, 4 mots, pas chargé', R.propre.entites === 2 && R.propre.mots === 4 && R.propre.charge === false, JSON.stringify([R.propre.entites, R.propre.mots, R.propre.charge]));
 t('dix boîtes séparées : 10 entités, chargé', R.charge.entites === 10 && R.charge.charge === true, JSON.stringify([R.charge.entites, R.charge.charge]));

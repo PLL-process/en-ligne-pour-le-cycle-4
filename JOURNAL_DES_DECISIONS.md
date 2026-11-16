@@ -31449,6 +31449,31 @@ L'unité jugée est le bloc d'activité de la n°331. Un bloc fait produire avec
 
 **Ce qui reste.** **La séance 2 reste juste au-dessus du repère (1 282 mots).** L'encart des quatre gestes de l'éditeur, commun à six pages, y compte pour 453 mots (les gestes et l'éditeur d'essai) : c'est l'échauffement de la séance, il n'est pas touché ici.
 
+## 15/11/2026 — Veille du 15/11 installée : cinq idées réécrites dans nos outils et nos skills (suite de l'audit hebdomadaire, PR #721)
+
+**La demande.** Pascal, le 15/11/2026 (18 h 41) : « Audit hebdomadaire du 15/11/2026 — Installer ce qui est dans l'audit », puis « Modifier ce qu'il recommande » et « Après l'installation ». Ce lot est l'installation ; les chantiers recommandés suivent dans d'autres PR.
+
+**Ce qui est installé.** Aucune skill ni aucun plugin tiers : l'audit n'en recommandait aucun (neuf serveurs MCP distants dans le plugin `k12-education`, cadres américains, licences ou chartes étrangères). Les cinq idées qu'il retenait sont réécrites de zéro, en français, dans nos fichiers :
+
+1. **Deux portes de vérification d'une question** (`anthropics/k12-teacher-skills`, `k12-check-for-understanding`, Apache 2.0) → `qcm-html-accessible` : porte A, une seule réponse défendable (écrire pour chaque proposition « le meilleur argument POUR qu'elle soit juste », sur la banque relue dans la page) ; porte B, chaque leurre est un vrai raisonnement d'élève, et sa réfutation nomme l'erreur puis l'étape suivante.
+2. **Le pourquoi d'erreur nomme l'étape suivante** (même source) → `_outils/mode_mission/enrichir.py` : la règle dans sa docstring et dans `README.md` du mode mission, et une mesure `--etapes` (un impératif en tête d'une proposition, ou une forme en « -toi »). `revision-sequence` le dit à l'étape du pourquoi.
+3. **La place par longueur, cible 15 / 15 / 70** (`danielcregg/moodle-mcq`, MIT) → `controle_ordre_propositions.py` (séquences, `--longueur` pour la liste) et `controle_longueurs.py` (QCM) : la bonne réponse strictement la plus longue, la plus courte, ou au milieu ; ⚠ au-delà de 40 % de « la plus longue ». Seuil de 40 % et non 30 % : à quatre propositions, le hasard donne 25 %, et dépasse 30 % une fois sur cinq sur 30 questions, 40 % une fois sur vingt.
+4. **Phrases par paragraphe et mots par phrase** (`jgsystemsconsulting/plain-language`, MIT ; suite de `francais-simple`, 08/11) → `audit_aeration.py --phrases` : P1, paragraphe de plus de 4 phrases ; P2, consigne de plus de 20 mots ou explication de plus de 25. Hors `--strict` et hors `bilan_revision.py`. `texte-clair-et-aere` et `controle-qualite-lot` le disent.
+5. **L'étiquette posée sur son trait** (`luffy666code/diagram-design-skill`, MIT) → `controle_schemas.mjs` : ⚠ « étiquette collée », un texte hors de tout cadre à moins de 6 unités de sa flèche sans la toucher. L'autre moitié de l'idée (le fond d'une étiquette qui chevauche un cadre) était déjà le « contact ». Banc `tests_controle_schemas.mjs` : deux cas de plus.
+
+**Toutes les nouvelles mesures sont des ⚠ : aucune sortie ne change.** C'était dit à Pascal avant de commencer : rien ne passe au rouge sans son avis.
+
+**Mesure (15/11/2026, sur `main` après #722).**
+- Place par longueur, **séquences** : sur 569 groupes de 3 propositions ou plus (25 pages dont la table `const att` se lit), la bonne réponse est **la plus longue 70 %**, la plus courte 3 %, au milieu 27 % ; **17 pages** au-delà de 40 %, dont cinq à 100 % ou presque (5e_C1.1, 4e_C1.1, 3e_C4.8, 3e_C1.1, 4e_C2.1). Un élève qui coche la plus longue y a tout juste sans lire : c'est le défaut de la règle n°144, passé des QCM aux séquences par la conversion n°300. **Vrai défaut, nouveau** ; il se corrige en réécrivant des propositions, pas en les réordonnant.
+- Place par longueur, **QCM** : 2 181 questions, la plus longue 35 %, la plus courte 14 % ; 21 banques au-delà de 40 % (la pire : `qcm_3e_C7.6_le-boitier.html`, 20 fois sur 30).
+- Phrases : 279 paragraphes de plus de 4 phrases, 321 consignes de plus de 20 mots, 4 112 explications de plus de 25 mots, sur 269 pages. Le découpage est mécanique ; un échantillon relu sur 4e_C1.1 montre de vraies phrases longues (26 à 39 mots).
+- Pourquoi d'erreur : **1 845 sur 2 201 (84 %)** expliquent sans nommer d'étape suivante.
+- Schémas : **5 étiquettes collées dans 2 schémas** (`3e_C4.3/Images/station_alerte_annotee.svg` : trois flèches qui partent du bout de leur texte, vu sur le rendu ; `3e_C6.2/Images/algorigramme_auto_test.svg` : « oui », « non » à 3 unités). ⚠ 570 → 575, ✘ inchangés (10, la spirale de Fibonacci).
+
+**Contrôles exécutés.** `controle_ordre_propositions.py` (sortie 0, dernière ligne inchangée) ; `controle_longueurs.py` (0, inchangée) ; `audit_aeration.py` sur le site (0, dernière ligne inchangée) et `--strict` sur 5e_C7.5 (0) ; `bilan_revision.py` : **51 séquences propres sur 56**, comme sur `main` ; `controle_schemas.mjs` sur les trois thèmes (sortie 1 comme sur `main` : la spirale) ; `tests_controle_schemas.mjs` **24 / 24** ; `enrichir.py --verifier` sur les 38 pages enrichies qui l'étaient : toutes à jour, comme sur `main` (`4e_C7.5` n'est pas à jour de `mission_4e_C7.5.json` sur `main` non plus : constat, pas touché) ; `py_compile` des quatre scripts Python.
+
+**Ce qui reste, à Pascal.** Les trois idées du 08/11 (quatre niveaux d'une correction, grille de charge cognitive, trois niveaux de vocabulaire), toujours en attente. Passer une de ces mesures en refus, quand la révision l'aura vidée. La réécriture des propositions des 17 pages et des pourquoi sans étape suivante : à la révision, page par page.
+
 ## 15/11/2026 — Audit hebdomadaire : 12 ✘ (−79), 49 séquences propres sur 56 (+42), 11 fichiers de dérive (−62) ; quatre contrôles rouges à cribler (transversal : `docs/audits`)
 
 **Second audit de la boucle du dimanche** (17 h 35 Martinique). `rapport_audit.py --complet --generateurs` sur `main` après #718
@@ -31479,7 +31504,7 @@ fiche arts plastiques (`spirale_fibonacci.py`) lue comme un schéma : à déclar
 « page N sur M » de `regle4` portée dans `verif_regles_audit.py` (n°301), et `chaine_a_completer`, `indices_qcm`, `axe` inscrits dans
 `rapport_audit.py`. 2) `sauvegarde_locale --corriger` sur les 8 pages (les 3 copies dans `build.py`) ; 5e_C7.4 reposé par
 `poser.py`. 3) La révision continue : 5e_C8.1, 5e_C8.2 (gabarit + listes), 5e_C9.1 (listes), 3e_C1.1 et 3e_C3.1 (aération) — et
-les règles d'or sont à zéro. 4) La vague n°331 (5 ✘ puis 39 ⚠). 5) Registre : renuméroter les n°322/323 du 14/11 en n°332/333 et
+les règles d'or sont à zéro. 4) La vague n°331 (5 ✘ puis 39 ⚠). 5) Registre : renuméroter les n°322/323 du 14/11 en n°334/335 (n°332 prise par #722, n°333 par « une consigne par question ») et
 compléter le tableau de tête. 6) Les 11 lexiques retouchés à la main ; la matrice (5e_C1.3, 4e_C1.4, 3e_C1.5) ; les 4 codes à
 vérifier et la convention `c:"Cx.y"` — décisions en attente depuis le 07/11.
 
