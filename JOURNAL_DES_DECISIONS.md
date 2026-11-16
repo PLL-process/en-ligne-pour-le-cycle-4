@@ -31799,6 +31799,33 @@ Les deux autres (`5e_C4.1` le réseau local, `3e_C5.1` les points de test) serve
 - Mode mission : `banc_generique.mjs` sur les neuf séquences, jouées écran par écran, **aucun refus**.
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le dossier du FAST).
 
+## 15/11/2026 — `3e_C4.3`, activité 4 c) : la question ne donne plus sa réponse
+
+**La demande.** Pascal, le 15/11/2026, sur les questions laissées par la vague n°331 : « Tu as carte blanche ». La vague l'avait relevé : la question c) écrivait « rouge = 011 » juste avant de demander le code du rouge, et le schéma muet l'affichait aussi.
+
+**Ce qui change.**
+- **La consigne** : les niveaux se codent en comptant en binaire, de 0 à 4, dans l'ordre de gravité. Elle donne quatre codes (verte 000, jaune 001, orange 010, violette 100) ; l'élève trouve celui du rouge.
+- **Le schéma muet** (`types_et_codage_donnees_muet.svg`) : la case du rouge porte « ??? », dans le dessin, dans sa description et dans le libellé de la page. Le schéma complet de la correction garde « 011 ».
+- **Ce qui le donnait encore, sous l'exercice** : l'encadré des erreurs fréquentes (« confondre la valeur (3) et son écriture binaire (011) » → compter les niveaux à partir de 1) et le critère de réussite (« le codage 011 » → « le code du rouge trouvé en comptant en binaire »).
+- **Les aides** : niveau 1, « il vient juste après l'orange : quel nombre suit 010 ? » ; niveau 2, « écris 3 en binaire sur 3 bits : combien de 4, de 2 et de 1 ? », sans écrire la réponse.
+- **La correction**, exhaustive : la réponse, le pourquoi (les cinq niveaux et leur valeur), 010 et 100 refusés un par ligne, le piège (le « 4e niveau » vaut 3) ; et pour les 12 niveaux, 3 bits et 12 bits refusés.
+
+La vérification de la page ne change pas (011 attendu).
+
+**Vérifications.** Bancs de `3e_C4.3` : 23 / 23 et 34 / 34. Mode mission sans refus. `verif_regles_audit.py` 0 ✘, `audit_aeration.py --strict` 0, `controle_schemas.mjs` 0 ✘, `controle_schema_sous_les_yeux.py` 0 ✘, `controle_consigne_question.py` : `3e_C4.3` absent.
+
+## 15/11/2026 — Les incrustations en retard rattrapées (cinq pages)
+
+**La demande.** Pascal, le 15/11/2026, sur le retard que l'audit hebdomadaire et la PR #733 avaient laissé « à décider » : « Tu as carte blanche ».
+
+**Ce qui était en retard.** `incrustations.py --verifier` nommait cinq pages après #733 : `carte_des_representations`, `4e_C1.1`, `4e_C3.1`, `3e_C1.5`, `4e_C4.1`. Le retard venait de l'aération posée à la source le 10/11/2026 (`incrustations.py` passe chaque incrustation par `aerer_corrections.aerer`) : ces pages n'avaient pas été rejouées depuis.
+
+**Ce qui change**, lu jeton par jeton avant d'écrire : des retours à la ligne entre les phrases (`<br>`), aucun mot changé — 1 dans `carte_des_representations`, 16 dans `4e_C4.1` (le cahier des charges et la pieuvre du jardin) — ; une espace en fin de phrase dans `4e_C1.1` et `4e_C3.1` ; une ligne vide en moins dans le moteur des exercices (`3e_C1.5`, `4e_C4.1`). Rien n'y défait une correction faite à la main. Écrit par `incrustations.py --seq …`, sans `build.py`.
+
+**Mesure.** `incrustations.py --verifier` : toutes les pages à jour. `audit_aeration.py --strict` sur les cinq pages : 1 → 0 (la légende-bloc de `carte_des_representations`).
+
+**Vérifications.** Bancs : `4e_C4.1` 52 / 52, `3e_C1.5` 23 / 23, les quatre bancs n°311 à 34 / 34. `banc_rappels_cdc.py` 302 / 302. Mode mission sur les quatre séquences : aucun refus. `verif_regles_audit.py` : 0 ✘ avant comme après. `controle_consigne_question.py` : inchangé (289 C1, tous au thème 1, la vague suivante).
+
 ## 15/11/2026 — Règle d'or n°335, la vague du thème 1 : les C1, les C2 et les C3, une consigne par question
 
 **La demande.** Pascal, le 15/11/2026 : « Tout le thème 2 et 3 […] Puis thème 1 », avec le choix « tout réécrire » pour la règle d'or n°335 (une consigne par question, une à la fois). Le thème 1 vient en dernier : ses pages attendaient que les révisions en cours sur les mêmes séquences (`3e_C1.1` #728, `3e_C3.1` #729) soient livrées, et les ateliers de représentation incrustés (#733).

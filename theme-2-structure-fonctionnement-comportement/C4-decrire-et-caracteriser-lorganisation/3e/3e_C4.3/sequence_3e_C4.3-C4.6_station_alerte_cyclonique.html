@@ -2364,8 +2364,8 @@ body.ms .cac-reserve{--cac-bas:84px}
     </div></details>
     <div class="consigne"><b>Consigne :</b> a) attribue un type à chaque information ; b) construis l'enregistrement d'une mesure ; c) code les niveaux de vigilance en binaire.</div>
         <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux">
-      <object class="figure" data="Images/types_et_codage_donnees_muet.svg" type="image/svg+xml" aria-label="Tableau à compléter : pour chaque information de la station, l&#x27;exemple de valeur est donné, le type de donnée et le descripteur sont à trouver. En bas, le codage de la vigilance sur 3 bits : 000 verte, 001 jaune, 010 orange, 011 rouge, 100 violette.">Types de données de la station et codage binaire de la vigilance — à compléter (SVG)</object>
-      <figcaption>Le tableau des types, à compléter : l'exemple de valeur te guide. Le code de la vigilance, en bas, sert à la question c).</figcaption>
+      <object class="figure" data="Images/types_et_codage_donnees_muet.svg" type="image/svg+xml" aria-label="Tableau à compléter : pour chaque information de la station, l&#x27;exemple de valeur est donné, le type de donnée et le descripteur sont à trouver. En bas, le codage de la vigilance sur 3 bits : 000 verte, 001 jaune, 010 orange, le code du rouge est à trouver, 100 violette.">Types de données de la station et codage binaire de la vigilance — à compléter (SVG)</object>
+      <figcaption>Le tableau des types, à compléter : l'exemple de valeur te guide. <br>Le code de la vigilance, en bas, sert à la question c) : celui du rouge est caché.</figcaption>
       <p class="agrandir"><a href="Images/types_et_codage_donnees_muet.svg" target="_blank" rel="noopener">🔍 Ouvrir le schéma en grand</a></p>
     </figure>
     <div class="exo">
@@ -2431,7 +2431,7 @@ body.ms .cac-reserve{--cac-bas:84px}
 </fieldset>
 
       <h4>c) Coder la vigilance en binaire (3 bits)</h4>
-      <p>En suivant le code du schéma (verte = 000, jaune = 001, orange = 010, rouge = 011, violette = 100), code <b>rouge</b> :</p>
+      <p>Les niveaux se codent en comptant en binaire, de 0 à 4, dans l'ordre de gravité. <br>Le schéma donne le code de quatre niveaux : verte = 000, jaune = 001, orange = 010, violette = 100. <br>Trouve le code du <b>rouge</b>, caché sur le schéma :</p>
       <div class="bin-inputs" role="group" aria-label="Trois bits pour coder le niveau rouge">
         <input type="text" id="a4_b1" maxlength="1" inputmode="numeric" aria-label="bit 1">
         <input type="text" id="a4_b2" maxlength="1" inputmode="numeric" aria-label="bit 2">
@@ -2441,21 +2441,22 @@ body.ms .cac-reserve{--cac-bas:84px}
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb4" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un nombre <em>avec virgule</em> n'est pas un entier. <br>« vrai/faux » n'a que deux valeurs possibles : c'est la définition d'un type précis. <br>Pour c) : combien de valeurs différentes peut-on coder avec n bits ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Rouge est le 4e niveau en partant de 0 : verte=0, jaune=1, orange=2, rouge=3 → 3 en binaire s'écrit 011. <br>Pour 12 niveaux : 3 bits → 8 valeurs (pas assez), 4 bits → 16 valeurs (suffisant).</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un nombre <em>avec virgule</em> n'est pas un entier. <br>« vrai/faux » n'a que deux valeurs possibles : c'est la définition d'un type précis. <br>Pour c), le rouge : il vient juste après l'orange. Quel nombre suit 010 quand on compte en binaire ? <br>Pour c), les 12 niveaux : combien de valeurs différentes peut-on coder avec n bits ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Rouge est le 4e niveau en partant de 0 : verte = 0, jaune = 1, orange = 2, rouge = 3. <br>Écris 3 en binaire sur 3 bits : combien de 4, de 2 et de 1 faut-il ? <br>Pour 12 niveaux : 3 bits → 8 valeurs (pas assez), 4 bits → 16 valeurs (suffisant).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>Le schéma complet</b>&nbsp;: compare-le avec tes réponses.</p>
       <object class="figure" data="Images/types_et_codage_donnees.svg" type="image/svg+xml" aria-label="Tableau des types de données de la station : nombre entier pour le vent, décimal pour la pression, texte pour la commune, booléen pour l'alerte, date et heure pour l'horodatage, et codage binaire des niveaux de vigilance sur 3 bits">Types de données de la station et codage binaire de la vigilance (SVG)</object>
 
       <p><b>a)</b> Le vent : un entier. <br>La pression : un décimal. <br>La commune : du texte. <br>La sirène : un booléen. <br>Le moment : une date + une heure. <br>Le numéro de station : un entier.</p>
       <p><b>b)</b> <code>vent_kmh</code> : explicite (on sait ce que c'est ET l'unité), sans espace ni accent — utilisable dans tous les logiciels. <br><code>v</code> est trop court (illisible dans 6 mois). <br>« la vitesse du vent » contient des espaces (source d'erreurs). <br>« données2 » ne dit rien.</p>
-      <p><b>c)</b> rouge = <b>011</b> (car rouge est la valeur n°3 et 3 = 0×4 + 1×2 + 1×1). Pour 12 niveaux : <b>4 bits</b>, car 2³ = 8 &lt; 12 ≤ 16 = 2⁴.</p>
+      <p><b>c) Le rouge</b> = <b>011</b>. <br>Pourquoi : les niveaux comptent en binaire dans l'ordre de gravité — verte 000 (0), jaune 001 (1), orange 010 (2), <b>rouge 011 (3)</b>, violette 100 (4). <br>Vérifie : 0×4 + 1×2 + 1×1 = 3. <br><b>010</b> est refusé : c'est l'orange (2). <br><b>100</b> est refusé : c'est la violette (4). <br>Le piège : voir le rouge comme le « 4e niveau » et écrire 4 = 100 ; on compte à partir de 0, donc le 4e niveau vaut 3.</p>
+      <p><b>c) Les 12 niveaux</b> : <b>4 bits</b>, car 2³ = 8 &lt; 12 ≤ 16 = 2⁴. <br>3 bits sont refusés : 8 valeurs seulement, il manque 4 niveaux. <br>12 bits sont refusés : on compte les combinaisons, pas les niveaux.</p>
       <p><b>Raisonnement à connaître :</b> pour coder V valeurs, on cherche le plus petit n tel que 2ⁿ ≥ V.</p>
       <p><b>Exemple :</b> les 26 lettres de l'alphabet demandent 5 bits (2⁵ = 32 ≥ 26) ; c'est exactement ainsi que fonctionnent les codes informatiques comme l'ASCII (7 bits pour 128 caractères).</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> typer « 987.4 » comme entier ; choisir un descripteur avec espaces/accents ; confondre la <em>valeur</em> (3) et son <em>écriture binaire</em> (011) ; répondre « 12 bits pour 12 niveaux » (il faut compter les combinaisons, pas les niveaux !).</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> typer « 987.4 » comme entier ; choisir un descripteur avec espaces/accents ; compter les niveaux à partir de 1 au lieu de 0 (le code se décale d'un cran) ; répondre « 12 bits pour 12 niveaux » (il faut compter les combinaisons, pas les niveaux !).</div>
     <div class="retenir"><b>📌 À retenir :</b> une information se représente par une <b>donnée typée</b> (entier, décimal, texte/<i>string</i>, booléen/<i>boolean</i>, date) désignée par un <b>descripteur</b> explicite. Avec n bits on code <b>2ⁿ</b> valeurs. Un <b>enregistrement</b> = une ligne regroupant toutes les données d'un même événement.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 6 typages justes, le bon descripteur, le codage 011 et la réponse « 4 bits » justifiée par 2⁴ = 16.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 typages justes, le bon descripteur, le code du rouge trouvé en comptant en binaire, et le nombre de bits pour 12 niveaux justifié par une puissance de 2.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Fichiers &amp; enquête ›</button></p>
