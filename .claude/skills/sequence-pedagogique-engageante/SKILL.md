@@ -218,6 +218,28 @@ La synthèse « à retenir » se place avant le Bonus (pratique de `3e_C5.1` et 
 - Note /20 : la version précédente de ce skill exigeait dans la séquence une note /20 à pondération paramétrable. Aucune règle
   d'or ne la porte, et aucune des 60 séquences n'en a (relevé du 23/10/2026) : la note /20 est celle du QCM du lot.
 
+## Le mouvement (veille du 16/11/2026)
+
+Référence : la skill `motion-design` de Pascal (LottieFiles, licence MIT, commit audité `f9a8a04`), dont **l'adaptation
+pour les pages élèves prime** ; ce qui suit en est le résumé pour une séquence. Le mouvement sert à comprendre, jamais à
+décorer.
+- **Une animation dit une seule chose** : le sens d'un flux, un changement d'état, une réussite, une erreur. Rien ne
+  passe par le mouvement seul : le dessin ou le texte le dit aussi (n°119).
+- **Pas de couche décorative** : ni fond qui bouge, ni pulsation pour attirer l'œil, ni particules, éclat, flou ou glitch.
+- **Un seul mouvement principal par étape** (celui que l'élève doit regarder), au plus un secondaire discret.
+- **Durées** : le retour d'un geste (touche, bouton, QCM) 100 à 150 ms ; l'apparition d'un bloc 200 à 350 ms ; une
+  secousse d'erreur 300 à 450 ms, deux ou trois allers-retours, sans rebond. **Une étape de schéma animé : 600 à
+  1 200 ms, puis une pause** ; l'étape suivante part au clic de l'élève (ou à la fin de la phrase de voix off), jamais
+  toute seule en rafale.
+- **Courbes** : calmes par défaut (« Corporate », sans rebond ; le rebond pour une réussite seulement) ; ce qui entre
+  ralentit en arrivant (`ease-out`), ce qui sort accélère (`ease-in`). **Linéaire seulement pour un mouvement
+  continu** : un flux d'énergie, une rotation, une barre qui avance.
+- **« Moins de mouvement »** (`@media (prefers-reduced-motion: reduce)`) : chaque animation a son repli — l'état final
+  de l'étape, tout de suite, sans déplacement ni boucle.
+- **Une boucle sans fin à côté d'un texte à lire** (plus de cinq secondes) s'arrête d'un bouton (WCAG 2.2.2).
+- **Impression** : ce qui s'anime garde son schéma fixe sur le papier.
+- Mesure : `_outils/controle_mouvement.py` (⚠ seulement) — M1, une animation sans repli ; M2, une boucle sans bouton.
+
 ## Interdits
 
 - Recopier un contenu, un exercice ou une illustration de Nathan ou d'un autre éditeur.
