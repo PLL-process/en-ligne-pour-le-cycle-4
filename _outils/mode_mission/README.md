@@ -11,7 +11,9 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
   incrusté, le départ (objectif, ressources, consigne), puis **une question par écran** — chacune porte sa propre
   consigne, une à la fois (règle d'or n°335), et montre la ressource de l'activité (schéma, document), ouverte par
   défaut, téléphone compris (règle d'or n°331, 15/11/2026 ; « 📎 Masquer la ressource » la replie ; un bloc de la
-  ressource qui porte lui-même une question reste sur l'écran de départ) —, puis « je retiens »
+  ressource qui porte lui-même une question reste sur l'écran de départ ; **les trous d'un même code** — « ▢1 — … »,
+  « Trou ① — … » — ont chacun leur écran, le code redit au-dessus et le trou en cours marqué dans le code, décision
+  de Pascal du 16/11/2026) —, puis « je retiens »
   (correction, erreurs fréquentes, à retenir, critère) ; enfin chaque autre carte (synthèse, Bonus, bilan, QCM).
 - **Habille** une grille de boutons radio (`.qcm-cles` + `fieldset.qcm-grille`) en **étiquettes à poser** : on
   touche l'étiquette puis sa case, on la glisse, ou on fait les deux au clavier. Poser une étiquette coche le

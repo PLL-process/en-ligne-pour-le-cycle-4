@@ -31947,3 +31947,38 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 - Les bancs des trois lots : `4e_C7.5` 41 / 41, 32 / 32 et 34 / 34 ; `4e_C2.1` et `3e_C2.1` 34 / 34. Les bancs Python de `4e_C2.1` (62 / 65) et `3e_C2.1` (55 / 58) ont **les mêmes trois échecs que `main`**, dans des fichiers que le lot ne touche pas (la légende des badges, n°298 ; les liens des deux synthèses).
 - Mode mission : les trois pages jouées écran par écran, aucun refus ; chacune à jour de son fichier de mission (`enrichir.py --verifier`).
 - Contrôles du site, sur les deux lots réunis : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `4e_C2.1`).
+
+## 16/11/2026 — Règle d'or n°335 validée ; une question à la fois jusqu'aux trous : un écran par trou
+
+**Les décisions.** Pascal, le 16/11/2026, aux deux questions laissées dans #727 :
+1. la formulation de la n°335 (« une consigne par question, une à la fois », telle qu'au journal du 15/11) : « oui » — **la règle est validée** ;
+2. « une à la fois » pour les trous d'un même code (`3e_C9.1`, séance 4 : ▢1, ▢2, ▢3 sur un seul écran, avec le code) : « tu as carte blanche ».
+
+**Le choix fait sur la carte blanche : un écran par trou.**
+- Chaque trou a son écran ; **le code qu'il complète est redit au-dessus**, et **le trou en cours y est marqué** (fond jaune, bord orange) : l'élève voit où va sa réponse sans chercher.
+- Les trous se reconnaissent à leur énoncé : « ▢1 — … » (la marque ▢1 est dans le code) ou « Trou ① — … » (la marque ①, dans un `.trou-num`). Deux séquences en ont aujourd'hui : `3e_C9.1` (▢1 à ▢3) et `4e_C6.2` (Trou ① à ③).
+- **Les autres séries restent ensemble sur un écran** : ranger des lignes ou des étapes (« Quelle position, de 1 à 5, donnes-tu à cette ligne ? ») demande de les voir toutes pour les comparer ; une séparation obligerait l'élève à retenir ses rangs d'un écran à l'autre. Les traces et les classements en série (« Que vaut `groupe` après la ligne 4 ? », « à quelle chaîne appartient-il ? ») restent aussi groupés : ils peuvent passer à un écran chacun si Pascal le veut, sans autre changement que la liste des énoncés reconnus.
+- Le texte du code ne change pas : la marque n'existe qu'en mission ; la page complète, la fiche papier et la sauvegarde sont les mêmes.
+- `_outils/mode_mission/mission.js` (`trou()`, `marquerTrou()`), `mission.css`, `README.md` ; bloc reposé sur les pages qui portent le mode mission (`poser.py`, rien d'autre ne change hors de ses marqueurs).
+
+**Vérifications.**
+- Mode mission : `poser.py --verifier` sur les 60 pages ; `banc_generique.mjs`, **60 pages jouées écran par écran, aucun refus** ; `banc_defaut.mjs` : les 60 s'ouvrent en mission ; `banc_mission.mjs` 46 / 50, **les mêmes quatre échecs que sur `main`** (tests 14 et 15).
+- Vu à 390 px, en mission : `3e_C9.1` (séance 4, ▢1, ▢2, ▢3, chacun sur son écran, le bon marqué) et `4e_C6.2` (séance 2, Trou ① à ③) ; aucune erreur JavaScript.
+- Bancs des lots : `3e_C9.1` 89 / 89 et 34 / 34 ; `4e_C6.2` 56 / 56 et 34 / 34 ; `4e_C1.4` 31 / 31 et 34 / 34.
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `3e_C9.1`).
+
+## 16/11/2026 — Le mouvement, sur la carte blanche : chaque boucle s'arrête d'un bouton, les pulsations décoratives s'arrêtent seules
+
+**La décision.** Pascal, le 16/11/2026 (00 h 22), aux trois suites de la veille motion : « tu as carte blanche ». Ce qui est choisi, selon sa skill `motion-design` (adaptation pour les pages élèves : pas de pulsation décorative ; « moins de mouvement » montre l'état final) et le critère WCAG 2.2.2 (une boucle de plus de cinq secondes s'arrête) :
+1. **Un bouton « ⏸️ Figer les animations »** dans le mode mission : un petit ⏸️ dans sa barre (à côté de « 📄 Page complète »), et « ⏸️ Figer les animations » à côté du bouton de la mission en page complète. Il fige d'un coup toutes les boucles de la page (les flux des chaînes, le moteur qui tourne, le buzzer, la LED qui clignote…), là où elles en sont ; « ▶️ Relancer les animations » les remet en marche. Le choix vaut pour tout le site, sur cet appareil. Le bouton n'apparaît que sur une page qui a une boucle. Rien ne s'ajoute dans la barre d'outils ni entre les onglets et les panneaux (D5).
+2. **Les pulsations décoratives s'arrêtent seules** : l'indication « l'éditeur s'ouvre dans un nouvel onglet » (`vsPulse`, gabarit Vittascience et 21 pages) et le badge « nouveau » de l'index (`nvpulse`, à sa source `make_index.py`) pulsent deux fois, puis restent ; le curseur du terminal du Bonus de `4e_C1.4` clignote cinq fois.
+3. **Les trois animations sans repli en reçoivent un** : le terminal du Bonus de `4e_C1.4` (le texte paraît entier, le curseur fixe), la lueur de réussite du TP mBot2 de `3e_C9.1`.
+4. Les boucles qui disent quelque chose (un flux, un moteur, un court-circuit plus rapide) restent des boucles : elles s'arrêtent du bouton.
+
+**Mesure** (`controle_mouvement.py`) : ⚠ M1 3 → **0** ; ⚠ M2 35 pages → **0**. Restent 16 images SVG en boucle (les chaînes animées affichées en image) : une image ne reçoit pas l'ordre de la page ; elles ont leur repli « moins de mouvement ».
+
+**Vérifications.**
+- Le bouton, essayé sur `5e_C4.1` en page complète : les 20 boucles de la page (les flux de la chaîne à compléter) passent en pause, puis repartent ; le choix survit au rechargement ; à 390 px, ⏸️ tient dans la barre de la mission à côté de « 📄 Page complète », le compteur sur une ligne.
+- `controle_mouvement.py` : M1 0, M2 0 ; `tests_controle_mouvement.py` 13 / 13 ; les bancs et les 25 contrôles ci-dessus portent aussi ces changements (les pages au gabarit Vittascience, l'index, le Bonus de `4e_C1.4`, le TP de `3e_C9.1`).
+
+**Au passage.** Le suivi de la révision (`docs/revision/SUIVI_REVISION.md`) disait « livré #739 » pour le lot 1 de la deuxième passe : il est arrivé sur `main` avec le lot 2 (#740, qui le contenait) ; #739 est fermée. Corrigé.
