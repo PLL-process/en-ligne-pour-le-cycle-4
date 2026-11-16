@@ -695,7 +695,7 @@ await ctx.close();
   await pr.close(); await ctxR.close();
 }
 
-/* ═══ La pédagogie (14/11/2026, audit : A2, A4, B3, G3 ; règles d'or n°323, n°328, n°330) ═══ */
+/* ═══ La pédagogie (14/11/2026, audit : A2, A4, B3, G3 ; règles d'or n°334 (écrite n°323 le 14/11), n°328, n°330) ═══ */
 {
   const ctxP = await nav.newContext({ viewport: { width: 1280, height: 900 } });
   const { page: pp, erreurs: ep } = await ouvrir(ctxP, SEQ);

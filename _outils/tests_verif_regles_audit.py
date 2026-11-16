@@ -261,6 +261,20 @@ def main():
     cas("une séquence à bilan et sans Bonus passe", lambda: (
         lambda e: None if e[0] == "OK" else "état %s — %s" % e)(etat_301(BILAN)))
 
+    # Audit du 15/11/2026 (#721) : les pages 1 à 3 de `3e_C9.2` se déclarent
+    # « Page N sur 4 » ; leur bilan vit en page 4, jugée à son tour.
+    ETAPE = '<p>Page 2 sur 4 — programmer</p><section><h2>Activité</h2></section>'
+    cas("une étape « Page 2 sur 4 » sans bilan est SANS OBJET, pas refusée", lambda: (
+        lambda e: None if e[0] == "SANS OBJET" and "étape" in e[1]
+        else "état %s — %s" % e)(V.regle_301(page(ETAPE))))
+    cas("la DERNIÈRE page « Page 4 sur 4 » sans bilan reste refusée", lambda: (
+        lambda e: None if e[0] == "ECHEC" and "aucun bilan" in e[1]
+        else "état %s — %s" % e)(V.regle_301(page(ETAPE.replace("Page 2", "Page 4")))))
+    cas("« Page 2 sur 4 » cachée dans un script ne fait pas une étape", lambda: (
+        lambda e: None if e[0] == "ECHEC"
+        else "état %s — %s" % e)(V.regle_301(page('<script>// Page 2 sur 4</script>'
+                                                  '<section><h2>Activité</h2></section>'))))
+
     cas("le bilan est reconnu sous ses autres écritures — « Mon auto-positionnement »", lambda: (
         lambda e: None if e[0] == "OK" else "état %s — %s" % e)(
             etat_301('<section><h3>Mon auto-positionnement</h3><textarea id="ap1"></textarea></section>')))
