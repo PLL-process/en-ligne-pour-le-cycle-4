@@ -31575,32 +31575,6 @@ d'outils (quatre contrôles) et la collision n°322/323.
 
 **Non exécutés.** Un vrai poste partagé de la salle ; `rapport_audit.py` complet.
 
-<<<<<<< HEAD
-## 15/11/2026 — Révision des trois thèmes, 55 : `3e_C1.1` (Tsinghua, la surveillance des feux)
-
-**Deux sessions, une révision (PR #728).** Commencée cet après-midi par une session (branche `fable/revision/3e-c1-1`, commit « WIP » de 16 h, sans PR), reprise le soir par une autre, à la demande de Pascal sur l'audit hebdomadaire (#721 : « Modifier ce qu'il recommande », puis « Fais les »). La seconde a trouvé la branche en voulant pousser la sienne : elle a gardé le travail de la première (plus complet sur deux points), l'a remise sur le `main` du jour, et y a ajouté ce qu'elle avait en plus. Passe complète, skill `revision-sequence`.
-
-**Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante. Sur `main` :
-- **23 écarts d'aération** (légendes et corrections d'un seul tenant) ;
-- une séance 2 à 1 433 mots visibles : les 15 captures du tableur, avec leurs légendes, étaient à découvert ;
-- une séance 1 à 1 306 mots : l'exemple qui donnait les réponses des deux premières questions était posé juste avant elles ;
-- dans 26 questions, la bonne réponse était la plus longue : elle se devinait à sa longueur.
-
-**Ce qui est fait.**
-- **Replier ce qui ne sert qu'au besoin**, sans rien retirer : les 15 captures du tableur (« 🖼 Le voir en images »), sous chaque geste écrit en toutes lettres (`replier_captures.py`) ; le Bonus (`replier_bonus.py`, son titre reste à sa place).
-- **L'exemple « amélioration ou rupture »** passe en aide repliée (« si tu bloques sur a) ») : il donnait les réponses de a1_1 et a1_2. L'application à Herschel (découverte, invention, innovation) passe de même en aide de la partie b) : elle disait la réponse de a1_6 avant la question. Les quatre définitions restent à découvert, avant les questions.
-- **La bonne réponse ne se devine plus à sa longueur** : 65 propositions fausses allongées (22 questions) ; dans 4 questions de la séance 1 (be_1, a1_1, a1_2, a1_4), c'est la bonne réponse qui est raccourcie, et ses leurres reviennent à leur forme courte. Le détail ôté de la bonne réponse est dans la correction. 28 groupes mélangés.
-- **Le mode mission explique chaque erreur** (`mission_3e_C1.1.json`) : 84 pourquoi, sans dire la bonne réponse — **et chacun nomme maintenant l'étape suivante** à l'impératif (« Relis la définition de l'évolution technologique. », « Compare les unités… », « Calcule 78 % de 250 000. ») : 71 sur 84 n'en nommaient pas, 0 aujourd'hui (`enrichir.py --etapes`). C'est l'idée de la veille installée par #724, appliquée pour la première fois à une séquence entière.
-- **Aération : 23 → 0** (`aerer_legendes.py`, `aerer_corrections.py`, 4 légendes réécrites à la main). Les consignes de la production c) et des trois métiers passent en lignes ①, ②, ③, ④.
-- Le banc de la séquence suit les quatre bonnes réponses raccourcies.
-- **Outil réparé en passant** : `_outils/grilles_radio.py` portait sur `main` un conflit de fusion non résolu (marqueurs `<<<<<<<` en ligne 97, venus de la révision 51) et ne se lançait plus (`SyntaxError`). Gardée la version la plus complète, celle qui laisse les rangs et les nombres en ligne.
-
-**Mesure.** Mots visibles par séance : 1 306 · 1 433 · 351 · 469 · 999 → **1 259** · 756 · 461 · 564 · **1 000**. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 23 → 0 ; pourquoi sans étape suivante 71 → 0.
-
-**Contrôles exécutés.** Bancs du lot : `tests_3e_C1.1-C1.4_tsinghua.py` **50 / 50**, `tests_regle_311_3e_C1.1.mjs` **34 / 34** ; mode mission : `poser.py` (à jour), `enrichir.py --verifier` (à jour, 84 pourquoi), `banc_generique.mjs --detail` (cinq séances jouées écran par écran, aucun refus) ; `verif_regles_audit.py` (0 ✘), `audit_aeration.py --strict` (0), `controle_ordre_propositions.py`, `controle_mode_essentiel`, `hierarchie`, `liens`, `tactile`, `licence`, `impression_papier`, `mode_mission`, `regles_visibles`, `boutons_vivants` (tous à 0) ; `controle_squelette.mjs`, `controle_verrous.mjs`, `controle_impression.mjs` sur la page (0). Revue d'écran à 390 px : l'encart des quatre mots, les questions de a) et b).
-
-**Ce qui reste.** **La séance 1 reste juste au-dessus du repère (1 259 mots).** C'est une seule activité de 50 minutes : les quatre définitions enseignées avant d'interroger (n°45), neuf questions dont les leurres sont désormais aussi longs que la bonne réponse, et les trois métiers à lire pour la partie d). La partie d) ne peut pas passer en séance 4 (le transfert la reprend) sans dépasser ses 55 minutes. **Non exécutés** : une lecture complète à 1 280 px ; la lecture par un élève en classe.
-=======
 ## 15/11/2026 — Règle d'or n°335 : une consigne par question, une à la fois ; `3e_C9.1` et `4e_C9.1` à la hauteur du Book Train (n°331, n°332, n°335), `5e_C9.1` réécrit ; en mission, la ressource de l'activité ouverte par défaut
 
 **Demandes de Pascal (15/11, à la suite de #722).**
@@ -31694,4 +31668,28 @@ Des formes revenaient ; elles ont reçu la même réponse partout :
 - Les bancs de tous les lots touchés, lancés comme leur rapport de tests le dit : verts, sauf trois écarts **présents aussi sur `main`** : `tests_regle_311_4e_C7.1.mjs` (séance 2 : les onglets sous le premier écran, à 1 063 px pour 844), `tests_3e_C8.1_qcm.mjs` et `tests_5e_C8.1_qcm.mjs` (« le lien vers la séquence pointe le bon fichier », 30 / 32). `tests_5e_C7.5_sequence.mjs` a donné 37 / 40 sous charge, 40 / 40 rejoué seul.
 - La station : 167 / 167, pont en H 37 / 37, n°311 34 / 34 ; le générateur rejoué sur la source d'avant ne changeait rien (pas de dérive).
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de la station).
->>>>>>> origin/main
+
+## 15/11/2026 — Révision des trois thèmes, 55 : `3e_C1.1` (Tsinghua, la surveillance des feux)
+
+**Deux sessions, une révision (PR #728).** Commencée cet après-midi par une session (branche `fable/revision/3e-c1-1`, commit « WIP » de 16 h, sans PR), reprise le soir par une autre, à la demande de Pascal sur l'audit hebdomadaire (#721 : « Modifier ce qu'il recommande », puis « Fais les »). La seconde a trouvé la branche en voulant pousser la sienne : elle a gardé le travail de la première (plus complet sur deux points), l'a remise sur le `main` du jour, et y a ajouté ce qu'elle avait en plus. Passe complète, skill `revision-sequence`.
+
+**Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante. Sur `main` :
+- **23 écarts d'aération** (légendes et corrections d'un seul tenant) ;
+- une séance 2 à 1 433 mots visibles : les 15 captures du tableur, avec leurs légendes, étaient à découvert ;
+- une séance 1 à 1 306 mots : l'exemple qui donnait les réponses des deux premières questions était posé juste avant elles ;
+- dans 26 questions, la bonne réponse était la plus longue : elle se devinait à sa longueur.
+
+**Ce qui est fait.**
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer : les 15 captures du tableur (« 🖼 Le voir en images »), sous chaque geste écrit en toutes lettres (`replier_captures.py`) ; le Bonus (`replier_bonus.py`, son titre reste à sa place).
+- **L'exemple « amélioration ou rupture »** passe en aide repliée (« si tu bloques sur a) ») : il donnait les réponses de a1_1 et a1_2. L'application à Herschel (découverte, invention, innovation) passe de même en aide de la partie b) : elle disait la réponse de a1_6 avant la question. Les quatre définitions restent à découvert, avant les questions.
+- **La bonne réponse ne se devine plus à sa longueur** : 65 propositions fausses allongées (22 questions) ; dans 4 questions de la séance 1 (be_1, a1_1, a1_2, a1_4), c'est la bonne réponse qui est raccourcie, et ses leurres reviennent à leur forme courte. Le détail ôté de la bonne réponse est dans la correction. 28 groupes mélangés.
+- **Le mode mission explique chaque erreur** (`mission_3e_C1.1.json`) : 84 pourquoi, sans dire la bonne réponse — **et chacun nomme maintenant l'étape suivante** à l'impératif (« Relis la définition de l'évolution technologique. », « Compare les unités… », « Calcule 78 % de 250 000. ») : 71 sur 84 n'en nommaient pas, 0 aujourd'hui (`enrichir.py --etapes`). C'est l'idée de la veille installée par #724, appliquée pour la première fois à une séquence entière.
+- **Aération : 23 → 0** (`aerer_legendes.py`, `aerer_corrections.py`, 4 légendes réécrites à la main). Les consignes de la production c) et des trois métiers passent en lignes ①, ②, ③, ④.
+- Le banc de la séquence suit les quatre bonnes réponses raccourcies.
+- **Outil réparé en passant** : `_outils/grilles_radio.py` portait sur `main` un conflit de fusion non résolu (marqueurs `<<<<<<<` en ligne 97, venus de la révision 51) et ne se lançait plus (`SyntaxError`). Gardée la version la plus complète, celle qui laisse les rangs et les nombres en ligne.
+
+**Mesure.** Mots visibles par séance : 1 306 · 1 433 · 351 · 469 · 999 → **1 259** · 756 · 461 · 564 · **1 000**. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 23 → 0 ; pourquoi sans étape suivante 71 → 0.
+
+**Contrôles exécutés.** Bancs du lot : `tests_3e_C1.1-C1.4_tsinghua.py` **50 / 50**, `tests_regle_311_3e_C1.1.mjs` **34 / 34** ; mode mission : `poser.py` (à jour), `enrichir.py --verifier` (à jour, 84 pourquoi), `banc_generique.mjs --detail` (cinq séances jouées écran par écran, aucun refus) ; `verif_regles_audit.py` (0 ✘), `audit_aeration.py --strict` (0), `controle_ordre_propositions.py`, `controle_mode_essentiel`, `hierarchie`, `liens`, `tactile`, `licence`, `impression_papier`, `mode_mission`, `regles_visibles`, `boutons_vivants` (tous à 0) ; `controle_squelette.mjs`, `controle_verrous.mjs`, `controle_impression.mjs` sur la page (0). Revue d'écran à 390 px : l'encart des quatre mots, les questions de a) et b).
+
+**Ce qui reste.** **La séance 1 reste juste au-dessus du repère (1 259 mots).** C'est une seule activité de 50 minutes : les quatre définitions enseignées avant d'interroger (n°45), neuf questions dont les leurres sont désormais aussi longs que la bonne réponse, et les trois métiers à lire pour la partie d). La partie d) ne peut pas passer en séance 4 (le transfert la reprend) sans dépasser ses 55 minutes. **Non exécutés** : une lecture complète à 1 280 px ; la lecture par un élève en classe.
