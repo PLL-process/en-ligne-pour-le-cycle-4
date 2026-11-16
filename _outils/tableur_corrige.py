@@ -118,6 +118,39 @@ def texte_long(feuille, plage: str):
     r.Rows.OptimalHeight = True
 
 
+def trier(feuille, plage: str, colonne: int, croissant: bool = True):
+    """Données → Trier… sur la plage (titres compris : la 1re ligne reste en tête) ; colonne : 0 pour la 1re."""
+    from com.sun.star.table import TableSortField  # type: ignore
+    r = feuille.getCellRangeByName(plage)
+    champ = TableSortField()
+    champ.Field = colonne
+    champ.IsAscending = croissant
+    champ.IsCaseSensitive = False
+    desc = r.createSortDescriptor()
+    for p in desc:
+        if p.Name == "SortFields":
+            p.Value = uno.Any("[]com.sun.star.table.TableSortField", (champ,))
+        elif p.Name == "ContainsHeader":
+            p.Value = True
+    r.sort(desc)
+
+
+def filtrer_egal(feuille, plage: str, colonne: int, valeur: str):
+    """Données → Filtre standard : ne garder visibles que les lignes où la colonne vaut `valeur` (titres compris)."""
+    from com.sun.star.sheet import TableFilterField  # type: ignore
+    from com.sun.star.sheet.FilterOperator import EQUAL  # type: ignore
+    r = feuille.getCellRangeByName(plage)
+    champ = TableFilterField()
+    champ.Field = colonne
+    champ.Operator = EQUAL
+    champ.IsNumeric = False
+    champ.StringValue = valeur
+    desc = r.createFilterDescriptor(True)
+    desc.ContainsHeader = True
+    desc.FilterFields = (champ,)
+    r.filter(desc)
+
+
 def adresse(feuille, plage: str) -> CellRangeAddress:
     return feuille.getCellRangeByName(plage).RangeAddress
 
@@ -209,21 +242,23 @@ class Calc:
                                     pv("FilterData", donnees)),))
         return (largeur_px, hauteur_px)
 
+    def exporter_pdf(self, doc, feuille: str, pdf: str, plage: str = None):
+        """La feuille (ou sa plage) exportée en PDF par Calc — ce que l'élève obtient par Fichier → Exporter au format
+        PDF. Les lignes masquées par un filtre ne sont pas imprimées, comme chez lui."""
+        f = doc.Sheets.getByName(feuille)
+        mise_en_page(doc, f)
+        cible = f.getCellRangeByName(plage) if plage else f
+        filtre = uno.Any("[]com.sun.star.beans.PropertyValue", (pv("Selection", cible),))
+        os.makedirs(os.path.dirname(os.path.abspath(pdf)), exist_ok=True)
+        uno.invoke(doc, "storeToURL", (uno.systemPathToFileUrl(os.path.abspath(pdf)),
+                                        (pv("FilterName", "calc_pdf_Export"), pv("FilterData", filtre))))
+
     def capture(self, doc, feuille: str, png: str, plage: str = None, dpi: int = 160):
         """La feuille (ou sa plage) exportée en PDF par Calc, puis en PNG rogné à son contenu."""
         from PIL import Image, ImageChops
-        f = doc.Sheets.getByName(feuille)
-        mise_en_page(doc, f)
-        donnees = []
-        if plage:
-            donnees.append(pv("Selection", f.getCellRangeByName(plage)))
-        else:
-            donnees.append(pv("Selection", f))
         tmp = tempfile.mkdtemp(prefix="cap-")
         pdf = os.path.join(tmp, "c.pdf")
-        filtre = uno.Any("[]com.sun.star.beans.PropertyValue", tuple(donnees))
-        uno.invoke(doc, "storeToURL", (uno.systemPathToFileUrl(pdf),
-                                        (pv("FilterName", "calc_pdf_Export"), pv("FilterData", filtre))))
+        self.exporter_pdf(doc, feuille, pdf, plage)
         subprocess.run(["pdftoppm", "-png", "-r", str(dpi), "-f", "1", "-l", "1", pdf, os.path.join(tmp, "p")], check=True)
         brut = [x for x in os.listdir(tmp) if x.startswith("p") and x.endswith(".png")][0]
         im = Image.open(os.path.join(tmp, brut)).convert("RGB")
