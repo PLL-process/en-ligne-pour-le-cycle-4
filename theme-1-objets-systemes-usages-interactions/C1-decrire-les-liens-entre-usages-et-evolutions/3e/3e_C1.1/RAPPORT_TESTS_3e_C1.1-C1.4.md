@@ -67,8 +67,8 @@ correction de deux pavés de plus de 110 mots dans la correction de l'activité 
 
 - `python3 tests_3e_C1.1-C1.4_tsinghua.py` : **50 / 50** ; le banc suit les quatre bonnes réponses raccourcies (be_1, a1_1, a1_2, a1_4).
 - `node tests_regle_311_3e_C1.1.mjs` : **34 / 34**.
-- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; 84 pourquoi sur 84 mauvaises propositions.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; 84 pourquoi sur 84 mauvaises propositions, chacun avec son étape suivante (`enrichir.py --etapes` : 0 sans étape).
 - `verif_regles_audit.py` : 0 ✘ ; `audit_aeration.py --strict` : 0 ; `controle_ordre_propositions.py`, `controle_unites.py` : verts.
-- `mesurer_charge.mjs` : 1 266 · 756 · 461 · 564 · 1 132 mots visibles (séance 1 au-dessus du repère, écart dit au suivi).
+- `mesurer_charge.mjs` : 1 259 · 756 · 461 · 564 · 1 000 mots visibles (séance 1 au-dessus du repère, écart dit au suivi).
 - Non testé : la lecture par un élève en classe ; le rendu sur un autre navigateur que Chromium.
 
