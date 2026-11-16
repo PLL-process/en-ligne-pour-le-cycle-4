@@ -1196,15 +1196,23 @@ function marquerTrou(s){
    elle reste repliée et une ligne dit où elle est et quand elle s'ouvrira : on essaie d'abord, on se corrige ensuite. */
 var CORR = "details.correction, details.corrige, details.correction-complete";
 function corrections(s){ var o = []; s.n.forEach(function(n){ if (!n.matches) return; if (n.matches(CORR)) o.push(n); $$(CORR, n).forEach(function(c){ if (o.indexOf(c) < 0) o.push(c); }); }); return o; }
-function activiteVerifiee(A){ return ecrans.some(function(e){ return e.t === "partie" && e.act === A && e.dernier && M.fait[e.id]; }); }
+/* un écran qui se vérifie : des réponses connues, ou la vérification de la page sous sa dernière question */
+function verifiable(e){ return e.t === "partie" && (e.champs.some(function(f){ return cle(f) !== undefined; }) || (e.dernier && !!e.check)); }
+/* l'activité est vérifiée quand chacun de ses écrans qui se vérifie l'a été ; une activité sans rien à vérifier (des
+   réponses écrites) ouvre sa correction dès l'écran « je retiens » : l'élève compare avec ce qu'il a écrit */
+function etatActivite(A){
+  var vs = ecrans.filter(function(e){ return e.t === "partie" && e.act === A && verifiable(e); });
+  return !vs.length ? "ecrit" : vs.every(function(e){ return M.fait[e.id]; }) ? "verifiee" : "a-faire";
+}
 function ouvrirCorrections(s, A){
   var cs = corrections(s); if (!cs.length) return;
-  var ok = activiteVerifiee(A);
+  var et = etatActivite(A), ok = et !== "a-faire";
   if (ok) cs.forEach(function(c){ if (!c._msOuverte){ c.open = true; c._msOuverte = true; } });
   var note = s._msCorNote;
   if (!note){ note = s._msCorNote = el("p", "ms-cor-note ms-seul"); cs[0].parentNode.insertBefore(note, cs[0]); s.n.push(note); ecrans.tous.push(note); }
-  note.textContent = ok ? "✅ Ta correction est ouverte juste en dessous : compare-la avec tes réponses, une par une."
-                        : "🔎 La correction est juste en dessous. Réponds d'abord aux questions et vérifie : elle s'ouvrira toute seule.";
+  note.textContent = et === "verifiee" ? "✅ Ta correction est ouverte juste en dessous : compare-la avec tes réponses, une par une."
+                   : et === "ecrit" ? "✅ Ta correction est ouverte juste en dessous : compare-la avec ce que tu as écrit, ligne par ligne."
+                   : "🔎 La correction est juste en dessous. Réponds d'abord aux questions et vérifie : elle s'ouvrira toute seule.";
 }
 
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
@@ -1303,8 +1311,8 @@ function verifier(){
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
     s.check.click();
     if (s.fb && net(s.fb.textContent) && s.fb.scrollIntoView){ s.fb.classList.add("ms-message"); s.fb.scrollIntoView({ block:"nearest" }); }
-    if (s.act) ouvrirCorrections(s, s.act);          // une correction posée sous la dernière question s'ouvre aussi (n°336)
   }
+  if (s.act) ouvrirCorrections(s, s.act);          // une correction posée sous la question s'ouvre aussi (n°336)
   $$(".ms-etq", panneau).forEach(peindre); barre();
   if (gain){ var b = el("span", "ms-gain"); b.textContent = "+" + gain; $("#msGains").appendChild(b); setTimeout(function(){ b.remove(); }, 1600); }
   $("#msSuiv").focus({ preventScroll:true });

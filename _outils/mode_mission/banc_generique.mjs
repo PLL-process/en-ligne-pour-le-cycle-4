@@ -85,8 +85,9 @@ for (const PAGE of pages) {
       if (e.ecran && e.ecran.t === 'retenir') {
         const c = await p.evaluate(ACTIF => { const L = [...document.querySelectorAll(ACTIF + ' details.correction, ' + ACTIF + ' details.corrige, ' + ACTIF + ' details.correction-complete')].filter(x => x.offsetParent);
           return { n: L.length, fermees: L.filter(x => !x.open).length }; }, ACTIF);
-        if (c.n && verifieDernier && c.fermees) refus.push(`${ou} : l'activité est vérifiée, mais ${c.fermees} correction(s) restent repliées (n°336)`);
-        if (c.n && verifieDernier && !c.fermees) nCorOuvertes += c.n;
+        // le banc a répondu juste et vérifié chaque écran de l'activité (ou elle n'avait rien à vérifier) : ouverte
+        if (c.n && c.fermees) refus.push(`${ou} : l'activité est vérifiée, mais ${c.fermees} correction(s) restent repliées (n°336)`);
+        if (c.n && !c.fermees) nCorOuvertes += c.n;
         verifieDernier = false;
       }
       let issue = '';
