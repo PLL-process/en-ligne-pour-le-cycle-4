@@ -121,7 +121,13 @@ séquence — modèle : `5e_C4.1/mission_5e_C4.1.json` — puis :
 
 ```bash
 python3 _outils/mode_mission/enrichir.py <sequence.html> <mission_<lot>.json>      # --verifier : dit si la page est à jour
+python3 _outils/mode_mission/enrichir.py --etapes                                  # les pourquoi sans étape suivante (mesure)
 ```
+
+**Un pourquoi nomme l'étape suivante** (veille du 15/11/2026, idée de `k12-check-for-understanding`, Apache 2.0,
+réécrite). Le leurre vient d'une erreur qu'un élève fait vraiment ; son pourquoi dit ce qui ne va pas dans ce cas,
+puis ce qu'il faut faire, à l'impératif : « Il mesure la lumière : relis ce que le besoin demande de détecter. » Mesuré
+le 15/11/2026 : 1 845 pourquoi sur 2 201 (84 %) expliquent sans nommer d'étape — à reprendre lot par lot, à la révision.
 
 | Clé | Ce qu'on écrit | Où cela va | Ce que voit l'élève en mission |
 |---|---|---|---|

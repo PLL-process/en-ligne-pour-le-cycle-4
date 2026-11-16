@@ -183,13 +183,41 @@ def nom_panneau(at):
     return "atelier_%s.html" % at.NOM_PANNEAU
 
 
+#: Règle d'or n°322 (sauvegarde locale, 10/11/2026) : un panneau qui porte un rappel incrusté garde la réponse de
+#: l'élève dans le navigateur ; il sait donc l'effacer, en deux clics et sans boîte modale, et prévient du poste
+#: partagé (texte canonique de `_outils/controle_sauvegarde_locale.py`). Posé ici et non à la main (n°283) : audit
+#: hebdomadaire du 15/11/2026 (#721), les trois panneaux de la bête à cornes étaient refusés.
+EFFACER_PANNEAU = (
+    '<div class="card"><p><button class="btn" id="btnReset" type="button" style="border:0;cursor:pointer;font:inherit;'
+    'font-weight:700" title="Effacer définitivement ce rappel, ici et dans ta séquence. Un second clic te sera demandé.">'
+    '🗑 Effacer ma sauvegarde</button></p>\n'
+    '<p class="note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève '
+    'qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux '
+    'garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p></div>')
+SCRIPT_EFFACER_PANNEAU = """<script>
+/* Effacer le rappel (sa réponse et son croquis), en deux clics et sans boîte modale (règle d'or n°322 ; posé par build.py). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cle = %s, arme = 0, texte = b.textContent;
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ try { localStorage.removeItem(cle); localStorage.removeItem(cle + "__croquis"); } catch (e) {} location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
+</script>"""
+
+
 def rappel_panneau(at, niv, code, d):
     """La piqûre de rappel d'un panneau de code (`RAPPEL_PANNEAU` du module, Pascal le 04/11/2026) : l'exercice sur l'objet
     de la séquence du code, incrusté comme dans la séquence (même clé de sauvegarde), avec le moteur des exercices.
-    Rend (section, moteur) ; deux chaînes vides si le code n'a pas de rappel."""
+    Rend (section, moteur, clé de sauvegarde) ; trois chaînes vides si le code n'a pas de rappel."""
     exo = getattr(at, "RAPPEL_PANNEAU", {}).get(code)
     if not exo:
-        return "", ""
+        return "", "", ""
     import incrustations
     ex = next(x for x in at.NIVEAUX[niv]["exercices"] + getattr(at, "RAPPELS", []) if x["id"] == exo)
     uid = "%s_%s_%s" % (at.COURT, niv, ex["id"])
@@ -200,7 +228,7 @@ def rappel_panneau(at, niv, code, d):
                '<p>Deux à trois minutes pour retrouver les mots de référence de la bête à cornes. Ce que tu fais ici se '
                'retrouve dans ta séquence.</p>%s<script type="application/json">%s</script></section>'
                % (uid, uid, uid, html, json.dumps({"exercices": {uid: df}}, ensure_ascii=False).replace("</", "<\\/")))
-    return section, incrustations.bloc_moteur()
+    return section, incrustations.bloc_moteur(), cle
 
 
 def ecrire_panneaux(at):
@@ -234,9 +262,11 @@ def ecrire_panneaux(at):
                 'et se retrouve aussi dans <a href="%s">ton cahier de %s</a>, qui rassemble les exercices de toutes les représentations.</p></div>'
                 % (len(N["exercices"]), sum(x["duree"] for x in N["exercices"]), moteur.rel(d, cahier(niv)), niv),
             ]
-            rappel, kit = rappel_panneau(at, niv, code, d)
+            rappel, kit, cle_rappel = rappel_panneau(at, niv, code, d)
             if rappel:
                 corps.append(rappel)
+                corps.append(EFFACER_PANNEAU)
+                kit += "\n" + SCRIPT_EFFACER_PANNEAU % json.dumps(cle_rappel)
             if n:
                 corps.append('<div class="card"><p>Pour t\'entraîner ensuite&nbsp;: <a href="%s">&#129504; le QCM de l\'atelier</a> — '
                              '%d questions, dont %d illustrées. Il va de la 5e à la 3e&nbsp;: tu peux ne garder que les questions de '

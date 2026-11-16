@@ -136,3 +136,23 @@ replié du Bonus (la phrase exacte de l'établi pour le capteur sur A1, relue su
 - `verif_regles_audit.py` : les mêmes ✘ qu'avant la reprise (vérifié sur `main`), hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Révision du 15/11/2026 (ligne 51 du suivi) — gabarit commun, schéma du prototype, ordre du montage, mode mission
+
+Migration au gabarit commun (`migrer_gabarit_306.py`, étayage dans `etayage_sequence_5e_C7.5_eclairage-du-preau.json`) :
+17 listes en boutons radio, les cinq listes de ports de l'établi déclarées commandes (`data-interface`). L'activité 0 se
+joue dans le schéma du prototype (`_outils/chaine_a_completer/`, dessin `preau`). L'activité 3 affiche les gestes dans
+le désordre ; les deux branchements réunis, un geste de vérification avant la mise sous tension. La grille des retraits
+est lettrée, avec une réponse de trop. Le mode mission reçoit 63 pourquoi et 4 indices (`mission_5e_C7.5.json`).
+Phrase de la fabrique retirée ; Bonus replié ; aération 8 → 0.
+
+- `node tests_5e_C7.5_sequence.mjs "$PWD/sequence_5e_C7.5_eclairage-du-preau.html" 5e reponses_5e_C7.5.json` : **40 / 40**
+  (39 / 40 sur `main` : le banc attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour
+  une réponse libre. Shim `_groupesRadio(page)` en tête du banc, qui joue un vrai clic : `input`, puis `change`).
+- `node tests_5e_C7.5_qcm.mjs …` : **32 / 32**.
+- `node tests_regle_311_5e_C7.5.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `controle_chaine_a_completer.py`, `controle_ordre_propositions.py`, `controle_unites.py` : verts. `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

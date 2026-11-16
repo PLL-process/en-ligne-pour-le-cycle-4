@@ -33,7 +33,9 @@ chaînes, et qu'il y manipule.
 
 1. Le dessin, une fois par page, dans un `<script>` : `window.CAC_DESSINS.<nom> = {seuil, large: {vue}, etroit:
    {vue, max}, elements: [...]}`. Le mode d'emploi des éléments (titre, bloc, flèche, texte) est en tête de
-   `chaine.js`. Modèle : le lampadaire, `5e_C4.1`.
+   `chaine.js`. Modèle : le lampadaire, `5e_C4.1`. Une flèche peut aussi être un simple branchement, sans flux
+   (`nature: "lien"`, gris pointillé : le Base Shield du jardin, `4e_C7.5`) ; un bloc étroit peut réduire sa fonction
+   (`tf`, la taille en unités du dessin).
 2. À la place des questions :
 
 ```html

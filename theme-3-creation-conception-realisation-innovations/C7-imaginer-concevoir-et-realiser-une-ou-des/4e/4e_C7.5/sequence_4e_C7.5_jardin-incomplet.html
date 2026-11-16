@@ -1359,6 +1359,423 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
 details.bonus-replie[open]>summary{margin-bottom:8px}
 </style>
+<!-- chaine-a-completer v1 : début — les étiquettes posées dans le schéma des chaînes ; source unique : _outils/chaine_a_completer/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Chaîne à compléter — source unique : _outils/chaine_a_completer/chaine.css (poser.py). Ne pas la modifier dans une page.
+   Les couleurs sont celles des schémas du dépôt (n°120) : CONVERTIR violet, ALIMENTER/STOCKER jaune, DISTRIBUER cyan ;
+   énergie orange, information cyan, ordre vert en pointillés. */
+.cac{--cac-energie:#ffb454;--cac-information:#61dafb;--cac-ordre:#81fba1;--cac-stock:#ffd66b;--cac-attente:#5d6f92;
+  --cac-fond:#071633;--cac-bloc:#0d2347;--cac-texte:#e4eaf5;--cac-doux:#9bbefc;--cac-case:#102a55;--cac-ok:#81fba1;--cac-faux:#ffb454;
+  margin:10px 0 14px;display:grid;gap:8px;justify-items:center}
+/* au téléphone, le schéma prend toute la largeur de l'écran : les marges des cartes ne le rétrécissent plus */
+@media (max-width:700px){.cac{width:calc(100vw - 16px);margin-inline:calc(50% - 50vw + 8px);box-sizing:border-box}}
+.cac.cac-pret>.cac-questions{display:none}
+.cac-dessin{position:relative;max-width:100%;container-type:inline-size;background:var(--cac-fond);border:1px solid #274a8a;border-radius:14px;overflow:hidden}
+.cac-traits{position:absolute;inset:0;display:block}
+.cac-calque{position:absolute;inset:0}
+.cac-calque>*{position:absolute;box-sizing:border-box}
+.cac-fleche{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cac-fleche.cac-n-energie{stroke:var(--cac-energie)} .cac-m.cac-n-energie path{fill:var(--cac-energie)}
+.cac-fleche.cac-n-information{stroke:var(--cac-information)} .cac-m.cac-n-information path{fill:var(--cac-information)}
+.cac-fleche.cac-n-ordre{stroke:var(--cac-ordre);stroke-dasharray:7 6} .cac-m.cac-n-ordre path{fill:var(--cac-ordre)}
+.cac-fleche.cac-n-stock{stroke:var(--cac-stock)} .cac-m.cac-n-stock path{fill:var(--cac-stock)}
+.cac-fleche.cac-n-lien{stroke:#9aa5b8;stroke-dasharray:2 6} .cac-m.cac-n-lien path{fill:#9aa5b8}
+.cac-fleche.cac-n-attente{stroke:var(--cac-attente);stroke-dasharray:5 6} .cac-m.cac-n-attente path{fill:var(--cac-attente)}
+/* les flux animés (15/11/2026) : des perles claires tous les 42 unités, qui avancent ; fixes à l'impression et quand le système demande moins de mouvement */
+.cac-flux{fill:none;stroke:#fff;stroke-opacity:.9;stroke-linecap:round;stroke-dasharray:.1 42;animation:cac-flux 1.6s linear infinite;pointer-events:none}
+.cac-flux.retour{animation-direction:reverse;animation-delay:-.8s}
+@keyframes cac-flux{from{stroke-dashoffset:42.1}to{stroke-dashoffset:0}}
+.cac-titre{font-weight:800;letter-spacing:.02em;line-height:1.2}
+.cac-titre.attente{opacity:.75}
+.cac-texte{line-height:1.2;text-align:center;color:var(--cac-texte)}
+.cac-texte.gras{font-weight:700}
+.cac-et{line-height:1.2;text-align:center;font-weight:600}
+.cac-et-bas{transform:translate(-50%,-100%)} .cac-et-haut{transform:translate(-50%,0)}
+.cac-et-gauche{transform:translate(-100%,-50%);text-align:right} .cac-et-droite{transform:translate(0,-50%);text-align:left}
+.cac-et-centre{transform:translate(-50%,-50%)}
+.cac-c-energie{color:var(--cac-energie)} .cac-c-information{color:var(--cac-information)} .cac-c-ordre{color:var(--cac-ordre)} .cac-c-stock{color:var(--cac-stock)} .cac-c-attente{color:var(--cac-attente)}
+.cac-et.cac-case,.cac-et.cac-trou{white-space:normal}
+.cac-bloc{display:flex;align-items:center;justify-content:center;padding:4px;border:3px solid var(--cac-coul,#9bbefc);background:var(--cac-bloc);
+  box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.cac-bloc.neutre{--cac-coul:#9bbefc;border-color:#3d64a8}
+.cac-bloc.attente{border-style:dashed;border-color:var(--cac-attente);border-width:2px;background:transparent}
+.cac-fonction{font-weight:800;letter-spacing:.03em;color:var(--cac-coul,#e4eaf5);text-align:center;line-height:1.1}
+.cac-bloc>.cac-case,.cac-bloc>.cac-trou{width:100%;height:100%}
+.cac-bloc>.cac-case{border-color:transparent;background:transparent}
+.cac-bloc>.cac-case:not(.pleine) .cac-q{font-size:1.15em}
+.cac-bloc>.cac-case.pleine,.cac-bloc>.cac-case.juste,.cac-bloc>.cac-case.faux{background:transparent}
+.cac-bloc:has(.cac-case.faux){border-color:var(--cac-faux)}
+.cac-bloc:has(.cac-case:focus-visible),.cac-bloc:has(.cac-case.vise),.cac-bloc:has(.cac-case:hover){border-color:#61dafb;box-shadow:0 0 0 3px rgba(97,218,251,.35)}
+.cac-sous{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.cac-composant{color:var(--cac-texte);line-height:1.2}
+.cac-stock{color:var(--cac-stock);line-height:1.2}
+.cac-sous>.cac-case,.cac-sous>.cac-trou{width:100%}
+/* les cases : dans le dessin, à la place du mot */
+.cac-case,.cac-trou{display:flex;align-items:center;justify-content:center;gap:4px;min-height:1.9em;padding:2px 6px;border-radius:8px;
+  font:inherit;line-height:1.15;text-align:center;color:var(--cac-texte);box-sizing:border-box}
+.cac-case{border:2px dashed var(--cac-doux);background:rgba(16,42,85,.92);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.cac-case:hover,.cac-case:focus-visible,.cac-case.vise{border-color:#61dafb;border-style:solid;background:#163a72}
+.cac-case:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-case.pleine{border-style:solid;border-color:#9bbefc;background:var(--cac-case);font-weight:700}
+.cac-case.juste{border-color:var(--cac-ok);background:rgba(129,251,161,.13);cursor:default;opacity:1}
+.cac-case.faux{border-color:var(--cac-faux);background:rgba(255,180,84,.16)}
+.cac-case .cac-q{font-weight:800;color:var(--cac-doux);opacity:.9}
+.cac-case .cac-marque{font-weight:800} .cac-case.juste .cac-marque{color:var(--cac-ok)} .cac-case.faux .cac-marque{color:var(--cac-faux)}
+.cac-bloc .cac-case.pleine .cac-v{color:var(--cac-coul,#e4eaf5);letter-spacing:.03em}
+.cac-trou{border:1.5px dashed var(--cac-attente);opacity:.45}
+.cac-bloc>.cac-trou{border:0}
+.cac-acquis{font-style:italic}
+.cac-fonction.cac-acquis{letter-spacing:.01em;overflow-wrap:anywhere}
+.cac-case.part{opacity:.4}
+.cac-msg{margin:0;min-height:1.3em;font-size:.95em;color:var(--cac-doux);text-align:center}
+.cac-msg:empty{display:none}
+/* la réserve : collée en bas de l'écran tant qu'il reste des cases */
+.cac-reserve{position:sticky;bottom:calc(var(--cac-bas,10px) + env(safe-area-inset-bottom,0px));z-index:5;width:100%;box-sizing:border-box;
+  background:#0d2347;border:1px solid #274a8a;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:8px 10px;display:grid;gap:6px}
+body.ms .cac-reserve{--cac-bas:84px}
+.cac-reserve-t{margin:0;font-size:.82em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9bbefc}
+.cac-reserve-l{display:flex;flex-wrap:wrap;gap:7px}
+.cac-lab{font:inherit;font-weight:700;color:#e4eaf5;background:#102a55;border:2px solid #3d64a8;border-radius:11px;padding:8px 12px;min-height:44px;
+  cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.cac-lab:hover{border-color:#61dafb}
+.cac-lab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-lab.choisie{border-color:#61dafb;background:#1d4e89;transform:translateY(-2px);box-shadow:0 4px 0 #0a1b3d}
+.cac-lab.part{opacity:.35}
+.cac-geste{color:#9bbefc}
+.cac-fantome{position:fixed;left:0;top:0;z-index:80;pointer-events:none;border:2px solid #61dafb;background:#0d2347;color:#e4eaf5;
+  border-radius:11px;padding:8px 12px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.cac-papier{display:none}
+/* au téléphone, la réserve tient sur une ligne qui défile de côté : le schéma reste visible au-dessus.
+   Un doigt qui glisse de côté fait défiler la réserve ; un doigt qui monte emporte l'étiquette vers sa case. */
+@media (max-width:640px){
+  .cac-reserve{padding:7px 0 8px;gap:5px}
+  .cac-reserve-t{padding-inline:10px;font-size:.74em}
+  .cac-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 4px;scrollbar-width:thin;overscroll-behavior-x:contain}
+  .cac-reserve .cac-lab{flex:none;white-space:nowrap;touch-action:pan-x}
+}
+@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}.cac-flux{display:none}}
+/* à l'impression : le dessin, en encre, avec ce que l'élève a posé ; les cases vides restent des cases à remplir au stylo */
+@media print{.cac-flux{display:none}}
+@media print{
+  .cac{--cac-energie:#9a4d00;--cac-information:#0a5a75;--cac-ordre:#1a6b36;--cac-stock:#6f5500;--cac-attente:#777;
+    --cac-fond:#fff;--cac-bloc:#fff;--cac-texte:#111;--cac-doux:#444;--cac-case:#fff;break-inside:avoid}
+  .cac .cac-dessin{border-color:#999}
+  html body .cac button.cac-case{display:flex!important;background:#fff!important;color:#111!important;border:1.5px solid #555!important}
+  html body .cac button.cac-case:not(.pleine){border-style:dashed!important}
+  .cac .cac-case .cac-q,.cac .cac-case .cac-marque{visibility:hidden}
+  .cac .cac-bloc{background:#fff!important}
+  .cac .cac-reserve,.cac .cac-msg{display:none!important}
+  .cac .cac-et.cac-trou,.cac .cac-sous>.cac-trou{visibility:hidden}
+  .cac .cac-titre,.cac .cac-fonction,.cac .cac-case .cac-v,.cac .cac-texte{color:#111!important}
+  .cac .cac-c-attente{color:#555!important}
+  .cac .cac-papier{display:block!important;margin:1mm 0 0;font-size:10pt;color:#111}
+  .cac.cac-pret>.cac-questions{display:none!important}
+}
+</style>
+<script>
+/* Chaîne à compléter — l'élève pose les étiquettes DANS le schéma des chaînes d'énergie et d'information.
+   Source unique : _outils/chaine_a_completer/ (chaine.js, chaine.css), posée dans la page par poser.py, entre deux
+   marqueurs. Ne pas la modifier dans une page.
+
+   Pourquoi (demande de Pascal du 15/11/2026) : l'élève répondait à beaucoup de questions sur les chaînes sans avoir
+   le schéma sous les yeux ; il n'en gardait pas l'image, et peinait ensuite à la construire. Ici, le schéma EST la
+   question : les cases sont dans le dessin, le dessin reste sous les yeux, et il se bâtit d'une activité à l'autre
+   (ce qui est trouvé reste écrit, ce qui viendra plus tard se voit en pointillés).
+
+   LA PAGE DÉCLARE
+     1. Le dessin, une fois par page (le même dessin sert à toutes les étapes) :
+        window.CAC_DESSINS = {lampadaire: {large: {vue: [x, y, l, h], ...}, etroit: {vue: [...], max: 520, ...},
+                                           elements: [ ... ]}};
+        Éléments (chacun : id, type, groupe, puis sa géométrie dans `large` et dans `etroit`) :
+          titre  {texte, couleur}                       géométrie {x, y}            (le coin haut gauche du texte)
+          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l, tf?}    (le composant SOUS le bloc ; tf : taille de la fonction)
+          fleche {nature, texte, double?}               géométrie {points, ex, ey, ancre, lt?}
+                 nature : energie, information, ordre (pointillés), stock, lien (un branchement, sans flux) ; ancre : la place de l'étiquette par
+                 rapport au point (ex, ey) — bas (au-dessus du point), haut, gauche, droite ; lt : largeur de la case
+          texte  {texte, gras?, couleur?}               géométrie {x, y, ancre?, l?}      (l : sa largeur)
+        Une géométrie peut redonner texte, composant ou stock pour couper les lignes autrement (\n), sans changer
+        les mots.
+     2. Chaque étape, à la place des questions :
+        <div class="cac" data-cac='{"dessin": "lampadaire",
+                                     "cases": {"convertir-panneau.fonction": "e2_f1", ...},
+                                     "vides": ["g:information"], "reutilisables": true}'>
+          <div class="cac-questions"> … les groupes de boutons radio (fieldset.qcm-groupe) … </div>
+        </div>
+        cases : la partie d'un élément (fonction, composant, stock, texte) → l'id du groupe de boutons radio qui garde
+                la réponse. Poser une étiquette coche le bouton de cette valeur : la sauvegarde, la vérification,
+                le mode mission et l'impression de la page lisent toujours ces groupes.
+        vides : ce qui viendra plus tard (en pointillés, sans texte). Motifs : « id.partie », « id » (tout
+                l'élément), « *.partie », « g:groupe » (tout un groupe : ses blocs et ses flèches en pointillés),
+                « g:groupe.partie ».
+        acquis : {"id.partie": "id du groupe"} — ce que l'élève a trouvé à une étape d'avant reste écrit dans le
+                dessin (sa réponse, en clair ; en pointillés tant qu'il n'a rien posé) : le schéma se bâtit.
+        titres : {id: "autre texte"} pour un titre ou un texte à cette étape (« … à construire en séance 3 »).
+        vue    : {etroit: [x, y, l, h]} — recadrer le dessin à cette étape (au téléphone, la seule chaîne travaillée).
+        reutilisables : une étiquette peut servir plusieurs fois (CONVERTIR, énergie électrique).
+     Sans JavaScript, les questions restent visibles : rien ne se perd.
+
+   LE MODE MISSION voit les groupes de la .cac comme un seul écran (une partie) et les vérifie comme d'habitude :
+   les justes restent, les fausses (classe ms-origine) retournent dans la réserve. Le dessin suit leurs marques.
+
+   GESTES : toucher une étiquette, puis toucher sa case ; ou la faire glisser ; au clavier, Entrée sur l'étiquette
+   mène à la première case vide. Toucher une case pleine la vide (sauf une case déjà juste). */
+(function(){
+  "use strict";
+  if (window.ChaineACompleter) return;
+  var D = document, NS = "http://www.w3.org/2000/svg";
+  var PARTIES = {bloc: ["fonction", "composant", "stock"], fleche: ["texte"], titre: ["texte"], texte: ["texte"]};
+  var DEFAUT = {
+    large:  {seuil: 760, h: 70, rx: 12, ecart: 10, lt: 170, lc: 20,
+             tailles: {titre: 22, fonction: 24, composant: 21, stock: 19, fleche: 20, texte: 21}},
+    etroit: {h: 44, rx: 8, ecart: 6, lt: 104, lc: 12, max: 520,
+             tailles: {titre: 14, fonction: 16, composant: 13.5, stock: 12.5, fleche: 13, texte: 14}}
+  };
+  function $$(s, r){ return [].slice.call((r || D).querySelectorAll(s)); }
+  function cree(nom, attrs, parent){ var e = D.createElementNS(NS, nom); for (var k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function el(t, c, h){ var e = D.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
+  function lignes(t){ return esc(t).replace(/\n/g, "<br>"); }
+  function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
+  function fusion(a, b){ var r = {}, k; for (k in a) r[k] = a[k]; for (k in (b || {})) r[k] = b[k]; return r; }
+  function lireV(f){ var c = f.querySelector("input[type=radio]:checked"); return c ? c.value : ""; }
+  function valeurs(f){ return $$("input[type=radio]", f).map(function(r){ return r.value; }); }
+  /* le texte que l'élève lit : celui du libellé de la proposition (il peut nommer une unité en toutes lettres,
+     n°312, quand la valeur garde le texte que la vérification compare) */
+  function libelle(f, v){ var r = $$("input[type=radio]", f).filter(function(x){ return x.value === v; })[0], l = r && f.querySelector('label[for="' + r.id + '"]'); return l ? net(l.textContent) : v; }
+  function legende(f){ var l = f.querySelector("legend"); return net(l ? l.textContent : f.getAttribute("aria-label") || ""); }
+  function ecrire(f, v){
+    var r = null;
+    $$("input[type=radio]", f).forEach(function(x){ x.checked = (v != null && x.value === v); if (x.checked) r = x; });
+    var cible = r || f;
+    cible.dispatchEvent(new Event("input", {bubbles: true}));
+    cible.dispatchEvent(new Event("change", {bubbles: true}));
+  }
+  function etat(f){ return f.classList.contains("ms-juste") ? "juste" : f.classList.contains("ms-faux") ? "faux" : ""; }
+
+  var choix = null, glisse = null, vientDeGlisser = false;          // l'étiquette choisie : {cac, v}
+
+  function Chaine(racine){
+    var conf = {};
+    try { conf = JSON.parse(racine.getAttribute("data-cac") || "{}"); } catch (e) { console.warn("chaîne à compléter : data-cac illisible", e); return; }
+    var dessin = (window.CAC_DESSINS || {})[conf.dessin];
+    if (!dessin) { console.warn("chaîne à compléter : dessin inconnu", conf.dessin); return; }
+    var cases = conf.cases || {}, vides = conf.vides || [], titres = conf.titres || {}, acquis = conf.acquis || {};
+    var champs = {}, ordre = [];                                       // « id.partie » → fieldset ; ordre de lecture
+    Object.keys(cases).forEach(function(k){ var f = D.getElementById(cases[k]); if (f) { champs[k] = f; ordre.push(k); f.classList.add("ms-origine"); } else console.warn("chaîne à compléter : groupe absent", cases[k]); });
+    if (!ordre.length) return;
+    var etiquettes = [], textes = {};
+    ordre.forEach(function(k){ valeurs(champs[k]).forEach(function(v){ if (etiquettes.indexOf(v) < 0) { etiquettes.push(v); textes[v] = libelle(champs[k], v); } }); });
+    function tx(v){ return textes[v] || v; }
+    var reutil = !!conf.reutilisables;
+    var dispo = "", k = 1, zone, svg, calque, reserve, msg, papier;
+
+    racine.classList.add("cac-pret");
+    zone = el("div", "cac-dessin"); zone.setAttribute("role", "group");
+    zone.setAttribute("aria-label", conf.nom || "Le schéma des chaînes, à compléter avec les étiquettes");
+    msg = el("p", "cac-msg"); msg.setAttribute("aria-live", "polite");
+    reserve = el("div", "cac-reserve");
+    papier = el("p", "cac-papier pp-papier");
+    var q = racine.querySelector(".cac-questions");
+    racine.insertBefore(zone, q); racine.insertBefore(msg, q); racine.insertBefore(reserve, q); racine.insertBefore(papier, q);
+    papier.innerHTML = "<b>Les étiquettes à écrire dans les cases" + (reutil ? " (une étiquette peut servir plusieurs fois)" : "") + "&nbsp;:</b> " + etiquettes.map(function(v){ return esc(tx(v)); }).join(" · ");
+
+    function correspond(m, e, partie){
+      if (m === e.id || m === e.id + "." + partie || m === "*." + partie) return true;
+      if (m.indexOf("g:") === 0) { var g = m.slice(2).split("."); return g[0] === e.groupe && (!g[1] || g[1] === partie); }
+      return false;
+    }
+    function attente(e){ return vides.some(function(m){ return m === "g:" + e.groupe || m === e.id; }); }
+    function sort(e, partie){
+      var cle = e.id + "." + partie;
+      if (champs[cle]) return "case";
+      if (acquis[cle]) return "acquis";
+      return vides.some(function(m){ return correspond(m, e, partie); }) ? "vide" : "vu";
+    }
+
+    function rendre(){
+      var w = racine.clientWidth; if (!w) return;
+      var nd = w >= (dessin.seuil || DEFAUT.large.seuil) && dessin.large ? "large" : "etroit";
+      var G = fusion(DEFAUT[nd], dessin[nd]); G.tailles = fusion(DEFAUT[nd].tailles, (dessin[nd] || {}).tailles);
+      var V = (conf.vue && conf.vue[nd]) || G.vue, larg = nd === "etroit" ? Math.min(w, G.max) : w;
+      k = larg / V[2]; dispo = nd;
+      zone.className = "cac-dessin cac-" + nd;
+      /* le dessin se règle sur sa largeur (unités de conteneur) : il garde ses proportions à l'écran comme sur le papier */
+      zone.style.width = nd === "etroit" ? "min(100%, " + G.max + "px)" : "100%"; zone.style.aspectRatio = V[2] + " / " + V[3]; zone.style.height = "";
+      zone.innerHTML = "";
+      svg = cree("svg", {viewBox: V.join(" "), width: "100%", height: "100%", "aria-hidden": "true", focusable: "false", "class": "cac-traits"}, zone);
+      var defs = cree("defs", {}, svg);
+      ["energie", "information", "ordre", "stock", "lien", "attente"].forEach(function(n){
+        var m = cree("marker", {id: "cac-m-" + n + "-" + uid, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse", "class": "cac-m cac-n-" + n}, defs);
+        cree("path", {d: "M0,0 L10,5 L0,10 z"}, m);
+      });
+      calque = el("div", "cac-calque"); zone.appendChild(calque);
+      function px(v){ return Math.round(v / V[2] * 100000) / 1000 + "%"; }          // une largeur, en part du dessin
+      function py(v){ return Math.round(v / V[3] * 100000) / 1000 + "%"; }          // une hauteur
+      function cq(v){ return Math.round(v / V[2] * 100000) / 1000 + "cqw"; }        // une taille qui suit la largeur du dessin
+      function pos(n, x, y){ n.style.left = px(x - V[0]); n.style.top = py(y - V[1]); }
+      function taille(n, t){ n.style.fontSize = "max(11px, " + cq(t) + ")"; }
+      function texte(e, g, cle){ return g[cle] != null ? g[cle] : e[cle]; }
+      function partie(e, g, p, boite, classe, t){
+        var s = sort(e, p);
+        if (attente(e) && s === "vu") s = "vide";
+        if (s === "acquis") {
+          var fa = D.getElementById(acquis[e.id + "." + p]), va = fa ? lireV(fa) : "";
+          if (!va) s = "vide";
+          else { boite.className = classe + " cac-acquis"; boite.textContent = libelle(fa, va); taille(boite, p === "fonction" ? t * .86 : t); return boite; }
+        }
+        if (s === "vu") { boite.className = classe; boite.innerHTML = lignes(titres[e.id] && p === "texte" ? titres[e.id] : texte(e, g, p)); taille(boite, t); return boite; }
+        var c = s === "case" ? el("button", classe + " cac-case") : el("span", classe + " cac-trou");
+        taille(c, t);
+        if (s === "case") {
+          var f = champs[e.id + "." + p], v = lireV(f), st = etat(f);
+          c.type = "button"; c.setAttribute("data-cle", e.id + "." + p);
+          if (v) c.classList.add("pleine"); if (st) c.classList.add(st);
+          if (st === "juste") c.disabled = true;
+          c.innerHTML = v ? '<span class="cac-v">' + esc(tx(v)) + "</span>" + (st === "juste" ? '<span class="cac-marque" aria-hidden="true">✓</span>' : st === "faux" ? '<span class="cac-marque" aria-hidden="true">✗</span>' : "")
+                          : '<span class="cac-q" aria-hidden="true">?</span>';
+          c.setAttribute("aria-label", legende(f) + " : " + (v ? tx(v) + (st === "juste" ? ", juste" : st === "faux" ? ", à revoir" : "") : "case vide"));
+        } else c.setAttribute("aria-hidden", "true");
+        return c;
+      }
+      dessin.elements.forEach(function(e){
+        var g = e[nd]; if (!g) return;
+        var att = attente(e), coul = att ? null : e.couleur;
+        if (e.type === "fleche") {
+          var nat = att ? "attente" : e.nature, d = "M" + g.points.map(function(p){ return p[0] + "," + p[1]; }).join(" L");
+          var tr = cree("path", {d: d, "class": "cac-fleche cac-n-" + nat, "marker-end": "url(#cac-m-" + nat + "-" + uid + ")"}, svg);
+          if (e.double) tr.setAttribute("marker-start", "url(#cac-m-" + nat + "-" + uid + ")");
+          tr.style.strokeWidth = (nd === "large" ? 3.4 : 2.6) / Math.min(1, k * 1.6) + "px";
+          /* les flux animés (demande de Pascal du 15/11/2026) : des perles claires avancent dans le sens de la flèche,
+             dans les deux sens pour une double flèche ; un branchement (« lien ») ne porte aucun flux, il reste fixe */
+          if (nat !== "lien") (e.double ? ["", " retour"] : [""]).forEach(function(sens){
+            var fl = cree("path", {d: d, "class": "cac-flux" + sens, "aria-hidden": "true"}, svg);
+            fl.style.strokeWidth = ((nd === "large" ? 3.4 : 2.6) + 3) / Math.min(1, k * 1.6) + "px";
+          });
+          var b = partie(e, g, "texte", el("div"), "cac-et cac-et-" + (g.ancre || "bas") + " cac-c-" + nat, G.tailles.fleche);
+          if (/cac-(case|trou|acquis)/.test(b.className)) b.style.width = px(g.lt || G.lt);
+          pos(b, g.ex, g.ey); calque.appendChild(b);
+        } else if (e.type === "bloc") {
+          var bl = el("div", "cac-bloc" + (att ? " attente" : ""));
+          pos(bl, g.x, g.y); bl.style.width = px(g.l); bl.style.height = py(G.h); bl.style.borderRadius = cq(G.rx);
+          /* la couleur d'une fonction (n°120) se montre quand la fonction est écrite ou trouvée juste : tant qu'elle
+             est à trouver, le bloc reste neutre, sinon la couleur la soufflerait */
+          var sf = sort(e, "fonction"), ff = champs[e.id + ".fonction"];
+          if (coul && (sf === "vu" || (sf === "case" && etat(ff) === "juste"))) bl.style.setProperty("--cac-coul", coul);
+          else if (!att) bl.classList.add("neutre");
+          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", g.tf || G.tailles.fonction); bl.appendChild(fo);
+          calque.appendChild(bl);
+          var sous = el("div", "cac-sous"); pos(sous, g.x - G.lc / 2, g.y + G.h + G.ecart); sous.style.width = px(g.l + G.lc);
+          if (e.composant != null) sous.appendChild(partie(e, g, "composant", el("div"), "cac-composant", G.tailles.composant));
+          if (e.stock != null) sous.appendChild(partie(e, g, "stock", el("div"), "cac-stock", G.tailles.stock));
+          calque.appendChild(sous);
+        } else {
+          var tx = partie(e, g, "texte", el("div"), (e.type === "titre" ? "cac-titre" : "cac-texte cac-et-" + (g.ancre || "centre")) + (e.gras ? " gras" : "") + (att ? " attente" : ""),
+                          e.type === "titre" ? G.tailles.titre : G.tailles.texte);
+          if (coul) tx.style.color = coul;
+          if (e.type === "titre") tx.style.maxWidth = px(V[0] + V[2] - g.x - 6);
+          else tx.style.width = px(g.l || (nd === "large" ? 220 : 300));          // une largeur à lui : au bord du dessin, il ne se tasse pas
+          pos(tx, g.x, g.y); calque.appendChild(tx);
+        }
+      });
+      peindreReserve();
+    }
+    var uid = Math.random().toString(36).slice(2, 7);
+
+    function peindreReserve(){
+      var pris = ordre.map(function(c){ return lireV(champs[c]); });
+      var finies = ordre.every(function(c){ return etat(champs[c]) === "juste"; });
+      reserve.hidden = finies;
+      if (finies) return;
+      var labs = etiquettes.map(function(v){
+        if (!reutil && pris.indexOf(v) >= 0) return "";
+        var on = !!(choix && choix.cac === api && choix.v === v);
+        return '<button type="button" class="cac-lab' + (on ? " choisie" : "") + '" data-v="' + esc(v) + '" aria-pressed="' + on + '">' + esc(tx(v)) + "</button>";
+      }).join("");
+      var plein = pris.every(Boolean);
+      var trop = reutil ? 0 : etiquettes.length - ordre.length;
+      reserve.innerHTML = '<p class="cac-reserve-t">' + (plein ? "Toutes les cases sont remplies : vérifie." : "Étiquettes" + (reutil ? " — chacune peut servir plusieurs fois" : trop > 0 ? " — attention, " + trop + " en trop" : "")) + "</p>"
+        + '<div class="cac-reserve-l">' + (labs || '<span class="cac-geste">Toutes les étiquettes sont posées.</span>') + "</div>";
+    }
+    function dire(t){ msg.textContent = t || ""; }
+    function premiereVide(){ var c = ordre.filter(function(x){ return !lireV(champs[x]); })[0]; return c ? zone.querySelector('[data-cle="' + c + '"]') : null; }
+    function montrerCase(c){ if (c && c.scrollIntoView) c.scrollIntoView({block: "nearest", inline: "nearest"}); }
+    function poser(cle, v){
+      var f = champs[cle]; if (!f || etat(f) === "juste") return;
+      if (!reutil && v) ordre.forEach(function(o){ if (o !== cle && lireV(champs[o]) === v && etat(champs[o]) !== "juste") { ecrire(champs[o], null); champs[o].classList.remove("ms-faux"); } });
+      f.classList.remove("ms-faux");
+      ecrire(f, v);
+      dire("");
+    }
+    var api = {racine: racine, rendre: rendre, poser: poser, champs: champs, ordre: ordre, etiquettes: etiquettes, peindre: peindreReserve, dispo: function(){ return dispo; }};
+
+    racine.addEventListener("click", function(ev){
+      if (vientDeGlisser) return;
+      var lab = ev.target.closest(".cac-lab");
+      if (lab) {
+        var v = lab.getAttribute("data-v");
+        choix = (choix && choix.cac === api && choix.v === v) ? null : {cac: api, v: v};
+        peindreReserve();
+        if (choix) {
+          dire("« " + tx(v) + " » est prise : touche sa case dans le schéma.");
+          if (ev.detail === 0) { var c0 = premiereVide(); if (c0) { c0.focus({preventScroll: true}); montrerCase(c0); } }
+          else { var b = reserve.querySelector('.cac-lab[data-v="' + CSS.escape(v) + '"]'); if (b) b.focus({preventScroll: true}); }
+        } else dire("");
+        return;
+      }
+      var c = ev.target.closest(".cac-case");
+      if (c && !c.disabled) {
+        var cle = c.getAttribute("data-cle");
+        if (choix && choix.cac === api) { poser(cle, choix.v); choix = null; rendre(); var s = premiereVide(); if (s && ev.detail === 0) s.focus({preventScroll: true}); montrerCase(s); }
+        else if (lireV(champs[cle])) { poser(cle, null); rendre(); }
+        else dire("Choisis d'abord une étiquette, en bas, puis touche cette case.");
+      }
+    });
+    racine.addEventListener("keydown", function(ev){ if (ev.key === "Escape" && choix) { choix = null; peindreReserve(); dire(""); } });
+    // la vérification (mode mission) marque les groupes ; une étiquette fausse est rendue : le dessin suit
+    var obs = new MutationObserver(function(){ rendre(); });
+    ordre.forEach(function(c){ obs.observe(champs[c], {attributes: true, attributeFilter: ["class"]}); });
+    racine.addEventListener("change", function(ev){ if (ev.target.closest(".cac-questions")) rendre(); });
+    if (window.ResizeObserver) new ResizeObserver(function(){ if (racine.clientWidth && racine.clientWidth !== api._w) { api._w = racine.clientWidth; rendre(); } }).observe(racine);
+    rendre();
+    racine._cac = api;
+    return api;
+  }
+
+  /* ── Glisser une étiquette (ou une case pleine) vers une case ── */
+  function caseSous(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".cac-case:not(:disabled)"); }
+  D.addEventListener("pointerdown", function(ev){
+    var src = ev.target.closest(".cac-lab, .cac-case.pleine"); if (!src || src.disabled) return;
+    if (ev.pointerType === "touch" && src.classList.contains("cac-case")) return;      // au doigt, une case pleine se vide en la touchant
+    var r = src.closest(".cac"); if (!r || !r._cac) return;
+    var de = src.getAttribute("data-cle");
+    glisse = {id: ev.pointerId, x: ev.clientX, y: ev.clientY, src: src, api: r._cac, de: de, v: de ? lireV(r._cac.champs[de]) : src.getAttribute("data-v"), f: null};
+  });
+  window.addEventListener("pointermove", function(ev){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return;
+    if (!g.f) { if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "cac-fantome"); g.f.textContent = net((g.src.querySelector(".cac-v") || g.src).textContent); D.body.appendChild(g.f); g.src.classList.add("part"); }
+    g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-70%) rotate(-2deg)";
+    $$(".cac-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+    var c = caseSous(ev); if (c && c.closest(".cac") === g.api.racine) c.classList.add("vise");
+  });
+  function lache(ev, annule){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return; glisse = null; if (!g.f) return;
+    g.f.remove(); vientDeGlisser = true; setTimeout(function(){ vientDeGlisser = false; }, 0);
+    var c = annule ? null : caseSous(ev);
+    if (c && c.closest(".cac") === g.api.racine) { var cle = c.getAttribute("data-cle"); if (g.de && g.de !== cle) g.api.poser(g.de, null); g.api.poser(cle, g.v); }
+    else if (g.de && !annule) g.api.poser(g.de, null);
+    choix = null; g.api.rendre();
+  }
+  window.addEventListener("pointerup", function(ev){ lache(ev, false); });
+  window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
+
+  function init(){ $$(".cac[data-cac]").forEach(function(r){ if (!r._cac) Chaine(r); }); }
+  window.ChaineACompleter = {init: init, Chaine: Chaine};
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
+  // la page remet ses réponses après coup (sauvegarde relue) : le dessin se repeint une fois tout chargé
+  window.addEventListener("load", function(){ $$(".cac").forEach(function(r){ if (r._cac) r._cac.rendre(); }); });
+})();
+</script>
+<!-- chaine-a-completer v1 : fin -->
 </head>
 <body>
 
@@ -1727,68 +2144,65 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   l'humidité du sol descend sous 35 %, et afficher la mesure »</b>.</p>
   <div class="exo">
 
-    <p>Associe chaque constituant à sa fonction dans la chaîne.</p>
-    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>une réponse ne sert à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>Acquérir — il prend la mesure sur laquelle on décide</li><li><b>B</b>Agir — elle produit l'effet attendu dans le jardin</li><li><b>C</b>Communiquer — il affiche la mesure à celui qui passe</li><li><b>D</b>Agir — il laisse passer la puissance sur ordre de la carte</li><li><b>E</b>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</li><li><b>F</b>Relier — il ne tient aucune des quatre fonctions</li><li><b>G</b>Traiter — elle compare la mesure au seuil et décide</li></ol></div>
-<fieldset class="qcm-groupe qcm-grille" id="a0r0" data-indice="Le capteur ne décide rien et ne pousse rien : que fait-il de l'humidité du sol ?">
-  <legend><b>Le capteur d'humidité du sol</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r0__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="Agir — elle produit l'effet attendu dans le jardin" aria-label="B — Agir — elle produit l'effet attendu dans le jardin"><label for="a0r0__2" title="Agir — elle produit l'effet attendu dans le jardin">B</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="Communiquer — il affiche la mesure à celui qui passe" aria-label="C — Communiquer — il affiche la mesure à celui qui passe"><label for="a0r0__3" title="Communiquer — il affiche la mesure à celui qui passe">C</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="D — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r0__4" title="Agir — il laisse passer la puissance sur ordre de la carte">D</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__5" value="Alimenter — elle fournit le courant que l'USB ne peut pas fournir" aria-label="E — Alimenter — elle fournit le courant que l'USB ne peut pas fournir"><label for="a0r0__5" title="Alimenter — elle fournit le courant que l'USB ne peut pas fournir">E</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__6" value="Relier — il ne tient aucune des quatre fonctions" aria-label="F — Relier — il ne tient aucune des quatre fonctions"><label for="a0r0__6" title="Relier — il ne tient aucune des quatre fonctions">F</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__7" value="Traiter — elle compare la mesure au seuil et décide" aria-label="G — Traiter — elle compare la mesure au seuil et décide"><label for="a0r0__7" title="Traiter — elle compare la mesure au seuil et décide">G</label></div>
+    <p>Le constituant est écrit sous chaque bloc. <br>Pose dans chaque bloc sa fonction. <br>Une étiquette ne va dans aucun bloc.</p>
+<div class="cac" data-cac='{"dessin": "prototype", "cases": {"capteur.fonction": "a0r0", "carte.fonction": "a0r1", "relais.fonction": "a0r2", "pompe.fonction": "a0r3", "alim.fonction": "a0r4", "shield.fonction": "a0r5"}, "reutilisables": true, "nom": "Le prototype du jardin : les six fonctions à poser dans les blocs"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="a0r0">
+  <legend>La fonction du capteur d'humidité du sol</legend>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="AGIR"><label for="a0r0__1">AGIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="STOCKER"><label for="a0r0__2">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="ACQUÉRIR"><label for="a0r0__3">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__4" value="RELIER"><label for="a0r0__4">RELIER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__5" value="ALIMENTER"><label for="a0r0__5">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__6" value="TRAITER"><label for="a0r0__6">TRAITER</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe qcm-grille" id="a0r1" data-indice="La carte reçoit la mesure : que fait-elle avec ?">
-  <legend><b>La carte Arduino UNO</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r1__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="Agir — elle produit l'effet attendu dans le jardin" aria-label="B — Agir — elle produit l'effet attendu dans le jardin"><label for="a0r1__2" title="Agir — elle produit l'effet attendu dans le jardin">B</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="Communiquer — il affiche la mesure à celui qui passe" aria-label="C — Communiquer — il affiche la mesure à celui qui passe"><label for="a0r1__3" title="Communiquer — il affiche la mesure à celui qui passe">C</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="D — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r1__4" title="Agir — il laisse passer la puissance sur ordre de la carte">D</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__5" value="Alimenter — elle fournit le courant que l'USB ne peut pas fournir" aria-label="E — Alimenter — elle fournit le courant que l'USB ne peut pas fournir"><label for="a0r1__5" title="Alimenter — elle fournit le courant que l'USB ne peut pas fournir">E</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__6" value="Relier — il ne tient aucune des quatre fonctions" aria-label="F — Relier — il ne tient aucune des quatre fonctions"><label for="a0r1__6" title="Relier — il ne tient aucune des quatre fonctions">F</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__7" value="Traiter — elle compare la mesure au seuil et décide" aria-label="G — Traiter — elle compare la mesure au seuil et décide"><label for="a0r1__7" title="Traiter — elle compare la mesure au seuil et décide">G</label></div>
+<fieldset class="qcm-groupe" id="a0r1">
+  <legend>La fonction de la carte Arduino UNO</legend>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="AGIR"><label for="a0r1__1">AGIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="STOCKER"><label for="a0r1__2">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="ACQUÉRIR"><label for="a0r1__3">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__4" value="RELIER"><label for="a0r1__4">RELIER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__5" value="ALIMENTER"><label for="a0r1__5">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__6" value="TRAITER"><label for="a0r1__6">TRAITER</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe qcm-grille" id="a0r2" data-indice="Le relais ne pousse pas l'eau lui-même : il obéit à la carte.">
-  <legend><b>Le module relais</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r2__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="Agir — elle produit l'effet attendu dans le jardin" aria-label="B — Agir — elle produit l'effet attendu dans le jardin"><label for="a0r2__2" title="Agir — elle produit l'effet attendu dans le jardin">B</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="Communiquer — il affiche la mesure à celui qui passe" aria-label="C — Communiquer — il affiche la mesure à celui qui passe"><label for="a0r2__3" title="Communiquer — il affiche la mesure à celui qui passe">C</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="D — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r2__4" title="Agir — il laisse passer la puissance sur ordre de la carte">D</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__5" value="Alimenter — elle fournit le courant que l'USB ne peut pas fournir" aria-label="E — Alimenter — elle fournit le courant que l'USB ne peut pas fournir"><label for="a0r2__5" title="Alimenter — elle fournit le courant que l'USB ne peut pas fournir">E</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__6" value="Relier — il ne tient aucune des quatre fonctions" aria-label="F — Relier — il ne tient aucune des quatre fonctions"><label for="a0r2__6" title="Relier — il ne tient aucune des quatre fonctions">F</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__7" value="Traiter — elle compare la mesure au seuil et décide" aria-label="G — Traiter — elle compare la mesure au seuil et décide"><label for="a0r2__7" title="Traiter — elle compare la mesure au seuil et décide">G</label></div>
+<fieldset class="qcm-groupe" id="a0r2">
+  <legend>La fonction du module relais</legend>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="AGIR"><label for="a0r2__1">AGIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="STOCKER"><label for="a0r2__2">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="ACQUÉRIR"><label for="a0r2__3">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__4" value="RELIER"><label for="a0r2__4">RELIER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__5" value="ALIMENTER"><label for="a0r2__5">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__6" value="TRAITER"><label for="a0r2__6">TRAITER</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe qcm-grille" id="a0r3" data-indice="C'est elle qui produit ce qu'on attend du jardin.">
-  <legend><b>La pompe immergée</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r3__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="Agir — elle produit l'effet attendu dans le jardin" aria-label="B — Agir — elle produit l'effet attendu dans le jardin"><label for="a0r3__2" title="Agir — elle produit l'effet attendu dans le jardin">B</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="Communiquer — il affiche la mesure à celui qui passe" aria-label="C — Communiquer — il affiche la mesure à celui qui passe"><label for="a0r3__3" title="Communiquer — il affiche la mesure à celui qui passe">C</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="D — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r3__4" title="Agir — il laisse passer la puissance sur ordre de la carte">D</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__5" value="Alimenter — elle fournit le courant que l'USB ne peut pas fournir" aria-label="E — Alimenter — elle fournit le courant que l'USB ne peut pas fournir"><label for="a0r3__5" title="Alimenter — elle fournit le courant que l'USB ne peut pas fournir">E</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__6" value="Relier — il ne tient aucune des quatre fonctions" aria-label="F — Relier — il ne tient aucune des quatre fonctions"><label for="a0r3__6" title="Relier — il ne tient aucune des quatre fonctions">F</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__7" value="Traiter — elle compare la mesure au seuil et décide" aria-label="G — Traiter — elle compare la mesure au seuil et décide"><label for="a0r3__7" title="Traiter — elle compare la mesure au seuil et décide">G</label></div>
+<fieldset class="qcm-groupe" id="a0r3">
+  <legend>La fonction de la pompe immergée</legend>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="AGIR"><label for="a0r3__1">AGIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="STOCKER"><label for="a0r3__2">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="ACQUÉRIR"><label for="a0r3__3">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__4" value="RELIER"><label for="a0r3__4">RELIER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__5" value="ALIMENTER"><label for="a0r3__5">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__6" value="TRAITER"><label for="a0r3__6">TRAITER</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe qcm-grille" id="a0r4" data-indice="L'USB ne suffit pas pour la pompe : qui apporte le courant qui manque ?">
-  <legend><b>L'alimentation externe 5 V (volts) / 2 A (ampères)</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r4__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__2" value="Agir — elle produit l'effet attendu dans le jardin" aria-label="B — Agir — elle produit l'effet attendu dans le jardin"><label for="a0r4__2" title="Agir — elle produit l'effet attendu dans le jardin">B</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__3" value="Communiquer — il affiche la mesure à celui qui passe" aria-label="C — Communiquer — il affiche la mesure à celui qui passe"><label for="a0r4__3" title="Communiquer — il affiche la mesure à celui qui passe">C</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__4" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="D — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r4__4" title="Agir — il laisse passer la puissance sur ordre de la carte">D</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__5" value="Alimenter — elle fournit le courant que l'USB ne peut pas fournir" aria-label="E — Alimenter — elle fournit le courant que l'USB ne peut pas fournir"><label for="a0r4__5" title="Alimenter — elle fournit le courant que l'USB ne peut pas fournir">E</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__6" value="Relier — il ne tient aucune des quatre fonctions" aria-label="F — Relier — il ne tient aucune des quatre fonctions"><label for="a0r4__6" title="Relier — il ne tient aucune des quatre fonctions">F</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__7" value="Traiter — elle compare la mesure au seuil et décide" aria-label="G — Traiter — elle compare la mesure au seuil et décide"><label for="a0r4__7" title="Traiter — elle compare la mesure au seuil et décide">G</label></div>
+<fieldset class="qcm-groupe" id="a0r4">
+  <legend>La fonction de l'alimentation externe 5 V (volts) / 2 A (ampères)</legend>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__1" value="AGIR"><label for="a0r4__1">AGIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__2" value="STOCKER"><label for="a0r4__2">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__3" value="ACQUÉRIR"><label for="a0r4__3">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__4" value="RELIER"><label for="a0r4__4">RELIER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__5" value="ALIMENTER"><label for="a0r4__5">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__6" value="TRAITER"><label for="a0r4__6">TRAITER</label></div>
 </fieldset>
-    <fieldset class="qcm-groupe qcm-grille" id="a0r5" data-indice="Il ne mesure, ne décide, n'agit ni n'alimente : il branche.">
-  <legend><b>Le Base Shield V2</b></legend>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__1" value="Acquérir — il prend la mesure sur laquelle on décide" aria-label="A — Acquérir — il prend la mesure sur laquelle on décide"><label for="a0r5__1" title="Acquérir — il prend la mesure sur laquelle on décide">A</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__2" value="Agir — elle produit l'effet attendu dans le jardin" aria-label="B — Agir — elle produit l'effet attendu dans le jardin"><label for="a0r5__2" title="Agir — elle produit l'effet attendu dans le jardin">B</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__3" value="Communiquer — il affiche la mesure à celui qui passe" aria-label="C — Communiquer — il affiche la mesure à celui qui passe"><label for="a0r5__3" title="Communiquer — il affiche la mesure à celui qui passe">C</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__4" value="Agir — il laisse passer la puissance sur ordre de la carte" aria-label="D — Agir — il laisse passer la puissance sur ordre de la carte"><label for="a0r5__4" title="Agir — il laisse passer la puissance sur ordre de la carte">D</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__5" value="Alimenter — elle fournit le courant que l'USB ne peut pas fournir" aria-label="E — Alimenter — elle fournit le courant que l'USB ne peut pas fournir"><label for="a0r5__5" title="Alimenter — elle fournit le courant que l'USB ne peut pas fournir">E</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__6" value="Relier — il ne tient aucune des quatre fonctions" aria-label="F — Relier — il ne tient aucune des quatre fonctions"><label for="a0r5__6" title="Relier — il ne tient aucune des quatre fonctions">F</label></div>
-  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__7" value="Traiter — elle compare la mesure au seuil et décide" aria-label="G — Traiter — elle compare la mesure au seuil et décide"><label for="a0r5__7" title="Traiter — elle compare la mesure au seuil et décide">G</label></div>
+<fieldset class="qcm-groupe" id="a0r5">
+  <legend>La fonction du Base Shield V2</legend>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__1" value="AGIR"><label for="a0r5__1">AGIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__2" value="STOCKER"><label for="a0r5__2">STOCKER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__3" value="ACQUÉRIR"><label for="a0r5__3">ACQUÉRIR</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__4" value="RELIER"><label for="a0r5__4">RELIER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__5" value="ALIMENTER"><label for="a0r5__5">ALIMENTER</label></div>
+  <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__6" value="TRAITER"><label for="a0r5__6">TRAITER</label></div>
 </fieldset>
+</div>
+</div>
     <fieldset class="qcm-groupe" id="a0q1" data-melange="1">
   <legend><b>Et une question qui compte :</b> deux constituants portent ici
     la fonction « agir ». Pourquoi le prototype a-t-il besoin des deux ?</legend>
@@ -1801,12 +2215,13 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <p><b>Le capteur d'humidité du sol</b> — Acquérir — il prend la mesure sur laquelle on décide</p>
-      <p><b>La carte Arduino UNO</b> — Traiter — elle compare la mesure au seuil et décide</p>
-      <p><b>Le module relais</b> — Agir — il laisse passer la puissance sur ordre de la carte</p>
-      <p><b>La pompe immergée</b> — Agir — elle produit l'effet attendu dans le jardin</p>
-      <p><b>L'alimentation externe 5 V / 2 A</b> — Alimenter — elle fournit le courant que l'USB ne peut pas fournir</p>
-      <p><b>Le Base Shield V2</b> — Relier — il ne tient aucune des quatre fonctions</p>
+      <p><b>Le capteur d'humidité du sol</b> — <b>ACQUÉRIR</b> : il prend la mesure sur laquelle on décide.</p>
+      <p><b>La carte Arduino UNO</b> — <b>TRAITER</b> : elle compare la mesure au seuil et décide.</p>
+      <p><b>Le module relais</b> — <b>AGIR</b> : il laisse passer la puissance sur ordre de la carte.</p>
+      <p><b>La pompe immergée</b> — <b>AGIR</b> : elle produit l'effet attendu dans le jardin.</p>
+      <p><b>L'alimentation externe 5 V / 2 A</b> — <b>ALIMENTER</b> : elle fournit le courant que l'USB ne peut pas fournir.</p>
+      <p><b>Le Base Shield V2</b> — <b>RELIER</b> : il ne tient aucune des quatre fonctions, il branche les modules sur la carte.</p>
+      <p>L'étiquette en trop : <b>STOCKER</b>. Le prototype n'a pas de batterie : rien n'y garde l'énergie pour plus tard.</p>
       <p style="margin-top:10px"><b>Le relais et la pompe ne font pas double emploi.</b><br>Une
       sortie de carte délivre au mieux 20 mA (milliampères) — de quoi allumer une DEL, pas de quoi faire
       tourner une pompe qui en demande 700. <br>Le relais est l'organe qui <b>sépare la décision de
@@ -2311,7 +2726,7 @@ document.getElementById("cas").addEventListener("change", e => {
 
 const CHECKS = {
   0(){ let s = 0;
-       s += sv("a0r0", "Acquérir — il prend la mesure sur laquelle on décide"); s += sv("a0r1", "Traiter — elle compare la mesure au seuil et décide"); s += sv("a0r2", "Agir — il laisse passer la puissance sur ordre de la carte"); s += sv("a0r3", "Agir — elle produit l'effet attendu dans le jardin"); s += sv("a0r4", "Alimenter — elle fournit le courant que l'USB ne peut pas fournir"); s += sv("a0r5", "Relier — il ne tient aucune des quatre fonctions"); s += sv("a0q1","la carte commande de très faibles intensités, la pompe en demande beaucoup");
+       s += sv("a0r0", "ACQUÉRIR"); s += sv("a0r1", "TRAITER"); s += sv("a0r2", "AGIR"); s += sv("a0r3", "AGIR"); s += sv("a0r4", "ALIMENTER"); s += sv("a0r5", "RELIER"); s += sv("a0q1","la carte commande de très faibles intensités, la pompe en demande beaucoup");
        return {score: s, total: 7, exp: true}; },
   1(){ let s = 0;
        s += sv("a1q1","acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule"); s += sv("a1q2","le module relais"); s += sv("pt_relais","D4");
@@ -3199,6 +3614,68 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
     arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
     setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
   });
+})();
+</script>
+<script>
+/* Le dessin du prototype du jardin, pour la chaîne à compléter (_outils/chaine_a_completer/) : la commande en haut
+   (le capteur, la carte, l'écran), l'ordre qui descend vers le relais, la puissance en bas (le relais, la pompe,
+   l'alimentation externe). La fonction dans le bloc, le constituant dessous. En ligne à partir de 760 px, en colonne
+   au téléphone. */
+window.CAC_DESSINS = window.CAC_DESSINS || {};
+window.CAC_DESSINS.prototype = (function(){
+  var CYAN = "#61dafb", VIOLET = "#c68ef2", JAUNE = "#ffd66b", VERT = "#81fba1", ORANGE = "#ffb454", GRIS = "#9aa5b8";
+  return {
+    seuil: 760,
+    large: {vue: [0, 0, 1480, 560]},
+    etroit: {vue: [0, 0, 440, 572], max: 560},
+    elements: [
+      {id: "titre", type: "titre", texte: "LE PROTOTYPE DU JARDIN : chaque constituant, sa fonction", couleur: CYAN,
+       large: {x: 20, y: 14}, etroit: {x: 10, y: 8, texte: "LE PROTOTYPE DU JARDIN :\nchaque constituant, sa fonction"}},
+      {id: "sol", type: "texte", texte: "Le sol\n(humidité)", gras: true,
+       large: {x: 74, y: 105, ancre: "centre", l: 110}},
+      {id: "vers-capteur", type: "fleche", nature: "information", texte: "",
+       large: {points: [[130, 105], [176, 105]], ex: 150, ey: 95, ancre: "bas", lt: 10}},
+      {id: "capteur", type: "bloc", fonction: "ACQUÉRIR", composant: "Capteur d’humidité\ndu sol", couleur: CYAN,
+       large: {x: 180, y: 70, l: 210}, etroit: {x: 130, y: 52, l: 172, composant: "Capteur d’humidité du sol"}},
+      {id: "mesure", type: "fleche", nature: "information", texte: "la mesure",
+       large: {points: [[390, 105], [506, 105]], ex: 448, ey: 94, ancre: "bas", lt: 112},
+       etroit: {points: [[240, 126], [240, 160]], ex: 230, ey: 143, ancre: "gauche", lt: 110}},
+      {id: "carte", type: "bloc", fonction: "TRAITER", composant: "Carte Arduino UNO", couleur: VIOLET,
+       large: {x: 510, y: 70, l: 210}, etroit: {x: 150, y: 164, l: 180}},
+      {id: "shield", type: "bloc", fonction: "RELIER", composant: "Base Shield V2", couleur: GRIS,
+       large: {x: 180, y: 300, l: 210}, etroit: {x: 4, y: 164, l: 116}},
+      {id: "lien", type: "fleche", nature: "lien", double: true, texte: "il branche les modules\nsur la carte",
+       large: {points: [[390, 335], [462, 335], [462, 128], [508, 128]], ex: 450, ey: 232, ancre: "gauche", lt: 160},
+       etroit: {points: [[120, 186], [148, 186]], ex: 134, ey: 176, ancre: "bas", lt: 10, texte: ""}},
+      {id: "ecran", type: "bloc", fonction: "COMMUNIQUER", composant: "Écran LCD", couleur: VERT,
+       large: {x: 860, y: 20, l: 210}, etroit: {x: 308, y: 52, l: 130, tf: 11}},
+      {id: "vers-ecran", type: "fleche", nature: "information", texte: "la mesure\nà afficher",
+       large: {points: [[720, 90], [790, 90], [790, 55], [856, 55]], ex: 790, ey: 46, ancre: "bas", lt: 120},
+       etroit: {points: [[330, 186], [373, 186], [373, 126]], ex: 380, ey: 160, ancre: "droite", lt: 10, texte: ""}},
+      {id: "ordre", type: "fleche", nature: "ordre", texte: "l’ordre\nd’arroser",
+       large: {points: [[720, 125], [790, 125], [790, 245], [856, 245]], ex: 800, ey: 185, ancre: "droite", lt: 110},
+       etroit: {points: [[240, 238], [240, 276]], ex: 230, ey: 257, ancre: "gauche", lt: 110}},
+      {id: "relais", type: "bloc", fonction: "AGIR", composant: "Module relais", couleur: ORANGE,
+       large: {x: 860, y: 210, l: 210}, etroit: {x: 150, y: 280, l: 180}},
+      {id: "puissance", type: "fleche", nature: "energie", texte: "la puissance",
+       large: {points: [[1070, 245], [1186, 245]], ex: 1128, ey: 234, ancre: "bas", lt: 112},
+       etroit: {points: [[240, 354], [240, 392]], ex: 230, ey: 373, ancre: "gauche", lt: 110}},
+      {id: "pompe", type: "bloc", fonction: "AGIR", composant: "Pompe immergée", couleur: ORANGE,
+       large: {x: 1190, y: 210, l: 210}, etroit: {x: 150, y: 396, l: 180}},
+      {id: "eau", type: "fleche", nature: "energie", texte: "",
+       large: {points: [[1400, 245], [1440, 245], [1440, 330]], ex: 1450, ey: 290, ancre: "droite", lt: 10},
+       etroit: {points: [[240, 470], [240, 500]], ex: 230, ey: 485, ancre: "gauche", lt: 10}},
+      {id: "arrose", type: "texte", texte: "L’eau arrose\nle bac", gras: true,
+       large: {x: 1420, y: 362, ancre: "centre", l: 130}, etroit: {x: 240, y: 518, ancre: "centre", texte: "L’eau arrose le bac"}},
+      {id: "alim", type: "bloc", fonction: "ALIMENTER", composant: "Alimentation externe\n5 V / 2 A", couleur: JAUNE,
+       large: {x: 860, y: 400, l: 210}, etroit: {x: 4, y: 400, l: 140}},
+      {id: "alim-relais", type: "fleche", nature: "energie", texte: "le courant\nde la pompe",
+       large: {points: [[1040, 398], [1040, 282]], ex: 1050, ey: 350, ancre: "droite", lt: 130},
+       etroit: {points: [[74, 398], [74, 302], [148, 302]], ex: 80, ey: 350, ancre: "droite", lt: 10, texte: ""}},
+      {id: "unites", type: "texte", texte: "Unités : V (volts) · A (ampères)",
+       large: {x: 1300, y: 534, ancre: "centre", l: 380}, etroit: {x: 220, y: 556, ancre: "centre", l: 420}}
+    ]
+  };
 })();
 </script>
 </body>

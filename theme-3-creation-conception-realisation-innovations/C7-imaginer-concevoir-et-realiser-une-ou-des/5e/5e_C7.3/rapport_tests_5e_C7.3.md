@@ -142,3 +142,24 @@ valeurs relues sur le banc), « Comment j'ai travaillé », et « Je me position
 - `verif_regles_audit.py` : les mêmes ✘ qu'avant la reprise (vérifié sur `main`), hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Révision du 15/11/2026 (ligne 49 du suivi) — gabarit commun, grilles, places, aération, mode mission
+
+Migration au gabarit commun (`migrer_gabarit_306.py`, étayage dans `etayage_sequence_5e_C7.3_banc-de-la-cour.json`) :
+15 listes en boutons radio, rangées en deux grilles lettrées (`grilles_radio.py`) ; mode essentiel, tableau de bord,
+étiquettes, quatre versions étayées. Les réponses de la grille de l'activité 0 ne portent plus de pronom (« elle dit » /
+« il ne dit » trahissait la ligne du prix) ; dans l'activité 1, l'acier et le béton ont chacun une seule réponse juste.
+Une réponse de trop dans chaque grille, réfutée dans la correction ; 7 groupes mélangés, 9 propositions fausses
+allongées. Le mode mission reçoit 47 pourquoi, 9 indices, 2 leurres (`mission_5e_C7.3.json`). La phrase de la fabrique
+sous les renvois au banc est retirée ; le Bonus se replie ; aération 15 → 0.
+
+- `node tests_5e_C7.3_sequence.mjs "$PWD/sequence_5e_C7.3_banc-de-la-cour.html" 5e reponses_5e_C7.3.json` : **42 / 42**
+  (41 / 42 sur `main` : le banc attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour
+  une réponse libre. Shim `_groupesRadio(page)` en tête du banc ; `reponses_5e_C7.3.json` accordé aux nouveaux textes).
+- `node tests_5e_C7.3_qcm.mjs "$PWD/qcm_5e_C7.3_banc-de-la-cour.html" 5e_C7.3 5e_C4.4 sequence_5e_C7.3_banc-de-la-cour.html` : **32 / 32**.
+- `node tests_regle_311_5e_C7.3.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

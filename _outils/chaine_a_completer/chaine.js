@@ -13,9 +13,9 @@
                                            elements: [ ... ]}};
         Éléments (chacun : id, type, groupe, puis sa géométrie dans `large` et dans `etroit`) :
           titre  {texte, couleur}                       géométrie {x, y}            (le coin haut gauche du texte)
-          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l}         (le composant SOUS le bloc)
+          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l, tf?}    (le composant SOUS le bloc ; tf : taille de la fonction)
           fleche {nature, texte, double?}               géométrie {points, ex, ey, ancre, lt?}
-                 nature : energie, information, ordre (pointillés), stock ; ancre : la place de l'étiquette par
+                 nature : energie, information, ordre (pointillés), stock, lien (un branchement, sans flux) ; ancre : la place de l'étiquette par
                  rapport au point (ex, ey) — bas (au-dessus du point), haut, gauche, droite ; lt : largeur de la case
           texte  {texte, gras?, couleur?}               géométrie {x, y, ancre?, l?}      (l : sa largeur)
         Une géométrie peut redonner texte, composant ou stock pour couper les lignes autrement (\n), sans changer
@@ -129,7 +129,7 @@
       zone.innerHTML = "";
       svg = cree("svg", {viewBox: V.join(" "), width: "100%", height: "100%", "aria-hidden": "true", focusable: "false", "class": "cac-traits"}, zone);
       var defs = cree("defs", {}, svg);
-      ["energie", "information", "ordre", "stock", "attente"].forEach(function(n){
+      ["energie", "information", "ordre", "stock", "lien", "attente"].forEach(function(n){
         var m = cree("marker", {id: "cac-m-" + n + "-" + uid, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse", "class": "cac-m cac-n-" + n}, defs);
         cree("path", {d: "M0,0 L10,5 L0,10 z"}, m);
       });
@@ -170,6 +170,12 @@
           var tr = cree("path", {d: d, "class": "cac-fleche cac-n-" + nat, "marker-end": "url(#cac-m-" + nat + "-" + uid + ")"}, svg);
           if (e.double) tr.setAttribute("marker-start", "url(#cac-m-" + nat + "-" + uid + ")");
           tr.style.strokeWidth = (nd === "large" ? 3.4 : 2.6) / Math.min(1, k * 1.6) + "px";
+          /* les flux animés (demande de Pascal du 15/11/2026) : des perles claires avancent dans le sens de la flèche,
+             dans les deux sens pour une double flèche ; un branchement (« lien ») ne porte aucun flux, il reste fixe */
+          if (nat !== "lien") (e.double ? ["", " retour"] : [""]).forEach(function(sens){
+            var fl = cree("path", {d: d, "class": "cac-flux" + sens, "aria-hidden": "true"}, svg);
+            fl.style.strokeWidth = ((nd === "large" ? 3.4 : 2.6) + 3) / Math.min(1, k * 1.6) + "px";
+          });
           var b = partie(e, g, "texte", el("div"), "cac-et cac-et-" + (g.ancre || "bas") + " cac-c-" + nat, G.tailles.fleche);
           if (/cac-(case|trou|acquis)/.test(b.className)) b.style.width = px(g.lt || G.lt);
           pos(b, g.ex, g.ey); calque.appendChild(b);
@@ -181,7 +187,7 @@
           var sf = sort(e, "fonction"), ff = champs[e.id + ".fonction"];
           if (coul && (sf === "vu" || (sf === "case" && etat(ff) === "juste"))) bl.style.setProperty("--cac-coul", coul);
           else if (!att) bl.classList.add("neutre");
-          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", G.tailles.fonction); bl.appendChild(fo);
+          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", g.tf || G.tailles.fonction); bl.appendChild(fo);
           calque.appendChild(bl);
           var sous = el("div", "cac-sous"); pos(sous, g.x - G.lc / 2, g.y + G.h + G.ecart); sous.style.width = px(g.l + G.lc);
           if (e.composant != null) sous.appendChild(partie(e, g, "composant", el("div"), "cac-composant", G.tailles.composant));

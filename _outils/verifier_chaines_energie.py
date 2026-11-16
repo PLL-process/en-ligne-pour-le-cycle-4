@@ -16,7 +16,7 @@ ROOT=Path(__file__).resolve().parents[1]
 LOT=ROOT/'theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/5e/5e_C3.1'
 FONCTIONS_PERMISES={'ACQUÉRIR','TRAITER','COMMUNIQUER','ALIMENTER','STOCKER','DISTRIBUER','CONVERTIR','TRANSMETTRE'}
 INFO_ET_ENERGIE={'chaines_energie_information_lampadaire.svg','chaines_jardin_connecte.svg','chaine_info_energie_station.svg','chaine_energie_book-train.svg',
-                 'chaines_jardin_programme.svg','schema_chaines_arrosage.svg','barriere_cyclone_condition.svg'}
+                 'chaines_jardin_programme.svg','schema_chaines_arrosage.svg','barriere_cyclone_condition.svg','chaines_book-train_question.svg','chaines_book-train_complete.svg'}
 # Chemins explicites : un nom de fichier peut exister dans deux lots (jusqu'au 29/10/2026, deux chaines_jardin_connecte.svg,
 # et next(glob) ne vérifiait que le premier). Les six premières figures gardent leur rang : FILES[0], [1], [2], [4] servent plus bas.
 T2C4='theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation'
@@ -31,7 +31,10 @@ CHEMINS=[T2C4+'/5e/5e_C4.1/Images/chaines_energie_information_lampadaire.svg',
          # 29/10/2026 : les trois schémas faits main entrés dans le générateur (n°310)
          T3C9+'/4e/4e_C9.1/Images/chaines_jardin_programme.svg',
          'theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/Images/schema_chaines_arrosage.svg',
-         T3C9+'/5e/5e_C9.1/Images/barriere_cyclone_condition.svg']
+         T3C9+'/5e/5e_C9.1/Images/barriere_cyclone_condition.svg',
+         # 15/11/2026 : les deux chaînes du Book Train, sous les yeux pendant les questions (n°331), et leur version complète
+         T2C4+'/4e/4e_C4.1_book-train/Images/chaines_book-train_question.svg',
+         T2C4+'/4e/4e_C4.1_book-train/Images/chaines_book-train_complete.svg']
 FILES=[ROOT/c for c in CHEMINS]
 OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else None
 if OUT:OUT.mkdir(parents=True,exist_ok=True)

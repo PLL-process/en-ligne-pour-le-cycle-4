@@ -141,3 +141,20 @@ les onglets commencent à 866 px pour un écran de 844 px (avant : 1377 px).
   à la séance 2, même compte que la progression).
 - `controle_squelette` : 0 défaut, aucun « à rédiger ». Verts : `controle_impression`, `controle_verrous`, `controle_impression_papier`, fiche papier
   (`banc_papier.py`), `controle_hors_ligne`, `controle_contraste_liens`, `controle_unites`, `controle_hierarchie`, `controle_sigles`.
+
+## Révision du 15/11/2026 (ligne 48 du suivi) — boutons radio, algorigramme mélangé, aération, mode mission
+
+17 listes déroulantes deviennent des boutons radio (n°300) ; dans la grille de validation, chaque case se lit par sa
+ligne. L'algorigramme ne se lit plus dans l'ordre de la réponse : ses blocs sont mélangés, chacun avec son groupe de
+rangs nommé. Chaque énoncé est dans sa légende, aucun groupe dans un paragraphe. Les consignes de la grille et de
+l'éditeur passent en lignes, la note Vittascience se replie sous l'éditeur. Aération : 17 écarts → 0. Le mode mission
+reçoit 31 pourquoi (`mission_5e_C7.1.json`).
+
+- `node tests_5e_C7.mjs .` : **55 / 55** (le test de la note de l'éditeur lit maintenant tout l'éditeur : la note
+  Vittascience y est repliée).
+- `node tests_regle_311_5e_C7.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+- `mesurer_charge.mjs` : 268 · 1 239 · 658 mots (séance 2 : 109 mots de légendes pour le lecteur d'écran, 1 130 vus).
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

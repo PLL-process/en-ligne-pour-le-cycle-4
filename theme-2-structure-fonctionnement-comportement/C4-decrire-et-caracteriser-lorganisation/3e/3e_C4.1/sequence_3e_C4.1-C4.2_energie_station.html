@@ -1306,7 +1306,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 .cac-fleche.cac-n-information{stroke:var(--cac-information)} .cac-m.cac-n-information path{fill:var(--cac-information)}
 .cac-fleche.cac-n-ordre{stroke:var(--cac-ordre);stroke-dasharray:7 6} .cac-m.cac-n-ordre path{fill:var(--cac-ordre)}
 .cac-fleche.cac-n-stock{stroke:var(--cac-stock)} .cac-m.cac-n-stock path{fill:var(--cac-stock)}
+.cac-fleche.cac-n-lien{stroke:#9aa5b8;stroke-dasharray:2 6} .cac-m.cac-n-lien path{fill:#9aa5b8}
 .cac-fleche.cac-n-attente{stroke:var(--cac-attente);stroke-dasharray:5 6} .cac-m.cac-n-attente path{fill:var(--cac-attente)}
+/* les flux animés (15/11/2026) : des perles claires tous les 42 unités, qui avancent ; fixes à l'impression et quand le système demande moins de mouvement */
+.cac-flux{fill:none;stroke:#fff;stroke-opacity:.9;stroke-linecap:round;stroke-dasharray:.1 42;animation:cac-flux 1.6s linear infinite;pointer-events:none}
+.cac-flux.retour{animation-direction:reverse;animation-delay:-.8s}
+@keyframes cac-flux{from{stroke-dashoffset:42.1}to{stroke-dashoffset:0}}
 .cac-titre{font-weight:800;letter-spacing:.02em;line-height:1.2}
 .cac-titre.attente{opacity:.75}
 .cac-texte{line-height:1.2;text-align:center;color:var(--cac-texte)}
@@ -1375,8 +1380,9 @@ body.ms .cac-reserve{--cac-bas:84px}
   .cac-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 4px;scrollbar-width:thin;overscroll-behavior-x:contain}
   .cac-reserve .cac-lab{flex:none;white-space:nowrap;touch-action:pan-x}
 }
-@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}}
+@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}.cac-flux{display:none}}
 /* à l'impression : le dessin, en encre, avec ce que l'élève a posé ; les cases vides restent des cases à remplir au stylo */
+@media print{.cac-flux{display:none}}
 @media print{
   .cac{--cac-energie:#9a4d00;--cac-information:#0a5a75;--cac-ordre:#1a6b36;--cac-stock:#6f5500;--cac-attente:#777;
     --cac-fond:#fff;--cac-bloc:#fff;--cac-texte:#111;--cac-doux:#444;--cac-case:#fff;break-inside:avoid}
@@ -1409,9 +1415,9 @@ body.ms .cac-reserve{--cac-bas:84px}
                                            elements: [ ... ]}};
         Éléments (chacun : id, type, groupe, puis sa géométrie dans `large` et dans `etroit`) :
           titre  {texte, couleur}                       géométrie {x, y}            (le coin haut gauche du texte)
-          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l}         (le composant SOUS le bloc)
+          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l, tf?}    (le composant SOUS le bloc ; tf : taille de la fonction)
           fleche {nature, texte, double?}               géométrie {points, ex, ey, ancre, lt?}
-                 nature : energie, information, ordre (pointillés), stock ; ancre : la place de l'étiquette par
+                 nature : energie, information, ordre (pointillés), stock, lien (un branchement, sans flux) ; ancre : la place de l'étiquette par
                  rapport au point (ex, ey) — bas (au-dessus du point), haut, gauche, droite ; lt : largeur de la case
           texte  {texte, gras?, couleur?}               géométrie {x, y, ancre?, l?}      (l : sa largeur)
         Une géométrie peut redonner texte, composant ou stock pour couper les lignes autrement (\n), sans changer
@@ -1525,7 +1531,7 @@ body.ms .cac-reserve{--cac-bas:84px}
       zone.innerHTML = "";
       svg = cree("svg", {viewBox: V.join(" "), width: "100%", height: "100%", "aria-hidden": "true", focusable: "false", "class": "cac-traits"}, zone);
       var defs = cree("defs", {}, svg);
-      ["energie", "information", "ordre", "stock", "attente"].forEach(function(n){
+      ["energie", "information", "ordre", "stock", "lien", "attente"].forEach(function(n){
         var m = cree("marker", {id: "cac-m-" + n + "-" + uid, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse", "class": "cac-m cac-n-" + n}, defs);
         cree("path", {d: "M0,0 L10,5 L0,10 z"}, m);
       });
@@ -1566,6 +1572,12 @@ body.ms .cac-reserve{--cac-bas:84px}
           var tr = cree("path", {d: d, "class": "cac-fleche cac-n-" + nat, "marker-end": "url(#cac-m-" + nat + "-" + uid + ")"}, svg);
           if (e.double) tr.setAttribute("marker-start", "url(#cac-m-" + nat + "-" + uid + ")");
           tr.style.strokeWidth = (nd === "large" ? 3.4 : 2.6) / Math.min(1, k * 1.6) + "px";
+          /* les flux animés (demande de Pascal du 15/11/2026) : des perles claires avancent dans le sens de la flèche,
+             dans les deux sens pour une double flèche ; un branchement (« lien ») ne porte aucun flux, il reste fixe */
+          if (nat !== "lien") (e.double ? ["", " retour"] : [""]).forEach(function(sens){
+            var fl = cree("path", {d: d, "class": "cac-flux" + sens, "aria-hidden": "true"}, svg);
+            fl.style.strokeWidth = ((nd === "large" ? 3.4 : 2.6) + 3) / Math.min(1, k * 1.6) + "px";
+          });
           var b = partie(e, g, "texte", el("div"), "cac-et cac-et-" + (g.ancre || "bas") + " cac-c-" + nat, G.tailles.fleche);
           if (/cac-(case|trou|acquis)/.test(b.className)) b.style.width = px(g.lt || G.lt);
           pos(b, g.ex, g.ey); calque.appendChild(b);
@@ -1577,7 +1589,7 @@ body.ms .cac-reserve{--cac-bas:84px}
           var sf = sort(e, "fonction"), ff = champs[e.id + ".fonction"];
           if (coul && (sf === "vu" || (sf === "case" && etat(ff) === "juste"))) bl.style.setProperty("--cac-coul", coul);
           else if (!att) bl.classList.add("neutre");
-          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", G.tailles.fonction); bl.appendChild(fo);
+          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", g.tf || G.tailles.fonction); bl.appendChild(fo);
           calque.appendChild(bl);
           var sous = el("div", "cac-sous"); pos(sous, g.x - G.lc / 2, g.y + G.h + G.ecart); sous.style.width = px(g.l + G.lc);
           if (e.composant != null) sous.appendChild(partie(e, g, "composant", el("div"), "cac-composant", G.tailles.composant));
@@ -2769,7 +2781,7 @@ window.CAC_DESSINS.alimentation = (function(){
   return {
     seuil: 760,
     large: {vue: [0, 0, 1470, 630]},
-    etroit: {vue: [0, 0, 380, 724], max: 520},
+    etroit: {vue: [0, 0, 420, 724], max: 520},
     elements: [
       {id: "titre", type: "titre", texte: "CHAÎNE D’ÉNERGIE de la station : son alimentation", couleur: ORANGE,
        large: {x: 20, y: 14}, etroit: {x: 10, y: 8, texte: "CHAÎNE D’ÉNERGIE de la station :\nson alimentation"}},
@@ -2785,23 +2797,23 @@ window.CAC_DESSINS.alimentation = (function(){
        large: {x: 430, y: 200, l: 180}, etroit: {x: 110, y: 238, l: 180}},
       {id: "charge", type: "fleche", groupe: "energie", nature: "stock", double: true, texte: "Énergie électrique\n(charge / décharge)",
        large: {points: [[610, 258], [662, 258], [662, 445], [612, 445]], ex: 672, ey: 388, ancre: "droite", lt: 210},
-       etroit: {points: [[110, 260], [50, 260], [50, 336]], ex: 56, ey: 300, ancre: "droite", lt: 10, texte: ""}},
+       etroit: {points: [[290, 260], [356, 260], [356, 286]], ex: 362, ey: 270, ancre: "droite", lt: 10, texte: ""}},
       {id: "stocker", type: "bloc", groupe: "energie", fonction: "STOCKER", composant: "Batterie 12 V", stock: "Énergie chimique stockée", couleur: JAUNE,
-       large: {x: 430, y: 410, l: 180, stock: "Énergie chimique\nstockée"}, etroit: {x: 6, y: 340, l: 92, stock: "Énergie\nchimique\nstockée"}},
+       large: {x: 430, y: 410, l: 180, stock: "Énergie chimique\nstockée"}, etroit: {x: 304, y: 290, l: 104, composant: "Batterie 12 V", stock: "Énergie\nchimique\nstockée"}},
       {id: "alim-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
-       large: {points: [[610, 235], [826, 235]], ex: 745, ey: 220, ancre: "bas", lt: 140},
+       large: {points: [[610, 235], [826, 235]], ex: 745, ey: 250, ancre: "haut", lt: 140},
        etroit: {points: [[200, 326], [200, 372]], ex: 190, ey: 349, ancre: "gauche", lt: 84}},
       {id: "distribuer", type: "bloc", groupe: "energie", fonction: "DISTRIBUER", composant: "Basculement secteur / batterie", couleur: CYAN,
        large: {x: 830, y: 200, l: 180}, etroit: {x: 110, y: 376, l: 180}},
       {id: "secteur", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Alimentation secteur\nisolée, 12 V continu", couleur: JAUNE,
-       large: {x: 1150, y: 16, l: 210}},
+       large: {x: 640, y: 70, l: 210}},
       {id: "secteur-txt", type: "texte", groupe: "energie", texte: "Secteur\nisolé\n(12 V)", gras: true,
-       etroit: {x: 338, y: 318, ancre: "centre", l: 84}},
+       etroit: {x: 46, y: 318, ancre: "centre", l: 88}},
       {id: "secteur-in", type: "fleche", groupe: "energie", nature: "energie", texte: "Entrée\nsecteur",
-       large: {points: [[1480, 51], [1364, 51]], ex: 1422, ey: 62, ancre: "haut", lt: 110}},
+       large: {points: [[16, 105], [636, 105]], ex: 80, ey: 115, ancre: "haut", lt: 110}},
       {id: "secteur-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie électrique\n(secteur disponible)",
-       large: {points: [[1150, 51], [920, 51], [920, 196]], ex: 910, ey: 120, ancre: "gauche", lt: 10, texte: ""},
-       etroit: {points: [[338, 350], [338, 398], [294, 398]], ex: 338, ey: 410, ancre: "haut", lt: 10, texte: ""}},
+       large: {points: [[850, 105], [920, 105], [920, 196]], ex: 930, ey: 150, ancre: "droite", lt: 10, texte: ""},
+       etroit: {points: [[46, 350], [46, 398], [106, 398]], ex: 46, ey: 410, ancre: "haut", lt: 10, texte: ""}},
       {id: "dist-conv", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
        large: {points: [[1010, 235], [1126, 235]], ex: 1068, ey: 220, ancre: "bas", lt: 112},
        etroit: {points: [[200, 464], [200, 510]], ex: 190, ey: 487, ancre: "gauche", lt: 84}},

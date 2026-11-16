@@ -11,9 +11,15 @@ aucun hotlinking.
 | `fichiers_drawio/chaine_energie_book-train.drawio` | Source draw.io | fichier modifiable du diagramme d'énergie — l'enseignant peut l'adapter à un autre système | CC0 | ~5 Ko |
 | `fichiers_drawio/chaine_energie_a_completer.drawio` | Source draw.io | version à trous distribuée aux élèves | CC0 | ~8 Ko |
 | `fichiers_drawio/chaine_information_a_completer.drawio` | Source draw.io | version à trous de la chaîne d'information (act. 2.3 : ajouter les capteurs) | CC0 | ~5 Ko |
-| `fichiers_drawio/chaine_information_correction.drawio` | Source draw.io | corrigé enseignant de l'act. 2.3 | CC0 | ~5 Ko |
+| `fichiers_drawio/chaine_information_correction.drawio` | Source draw.io | corrigé de l'act. 2.3, téléchargeable par l'élève depuis la correction (règle n°332, 15/11/2026) | CC0 | ~5 Ko |
+| `Images/chaines_book-train_question.svg` | SVG original, écrit par `_outils/regenerer_chaines_energie.py` (source draw.io : `_generation/chaines_energie/`) | les deux chaînes du Book Train, disposition étroite, muettes sur les énergies : sous les yeux pendant les questions 1.2, 1.3, 2.1 et 2.2 (règle n°331), flux animés | CC0 | ~28 Ko |
+| `Images/chaines_book-train_complete.svg` | SVG original, même générateur | les deux chaînes complètes, énergies sur chaque flèche : correction de 2.1, diapo 5 du diaporama modèle | CC0 | ~29 Ko |
+| `Images/algorigramme_book-train_correction.svg` | SVG original, écrit par `_outils/generer_algorigramme_book_train.py` | l'algorigramme corrigé du trajet, formes Flowchart de draw.io : correction de 3.2 (règle n°332) | CC0 | ~6 Ko |
+| `fichiers_drawio/algorigramme_book-train_correction.drawio` | Source draw.io, même générateur | le même algorigramme, modifiable, téléchargeable depuis la correction de 3.2 | CC0 | ~9 Ko |
+| `fichiers_modeles/book-train_diaporama_modele.odp` | Diaporama LibreOffice Impress, écrit par `_outils/generer_diaporama_modele_book_train.py` (source : `_generation/diaporama_modele/book-train_diaporama_modele.fodp`) | le diaporama modèle de 4.3, six diapositives selon le plan imposé, téléchargeable depuis la correction | CC0 | ~212 Ko |
+| `Images/book-train_diaporama_modele.png` | Planche PNG des six diapositives, rendue par LibreOffice, même générateur | correction de 4.3 : le diaporama modèle vu d'un coup d'œil | CC0 | ~138 Ko |
 | `fichiers_drawio/bibliotheque_chaines_book-train.xml` | Bibliothèque de formes draw.io, écrite par `_outils/generer_bibliotheque_chaines.py` | 34 formes des chaînes d'information et d'énergie (fonctions, composant dessous, formes d'énergie, fonction absente, flèche d'ordre), réutilisables pour tout autre système étudié | CC0 | ~26 Ko |
-| `fichiers_drawio/schema_ensemble_book-train.jpg` | Image d'étude | schéma en coupe du parcours (tunnel, montée verticale, stations) — **généré avec une IA à partir de sources documentaires, puis vérifié et corrigé par l'enseignant** | production du lot | ~249 Ko |
+| `fichiers_drawio/schema_ensemble_book-train.jpg` | Image d'étude | schéma d'ensemble des deux chaînes, affiché par la page (document d'appui, puis répété dans l'activité 1.1 — règle n°331 ; en 1.2, 1.3, 2.1 et 2.2, les deux chaînes du Book Train le remplacent depuis le 15/11/2026) — **généré avec une IA à partir de sources documentaires, puis vérifié et corrigé par l'enseignant** | production du lot | ~249 Ko |
 
 ## Deux points d'honnêteté
 

@@ -276,3 +276,22 @@ les onze menus des blocs, qui ne sont pas des questions mais les champs d'un éd
 
 **Non vérifié** : l'écoute de la nouvelle prise de l'étape 9 (à faire par Pascal) ; un vrai téléphone, Safari, Firefox ;
 une impression sur papier.
+
+## Révision du 15/11/2026 (ligne 47 du suivi) — boutons radio, replis, aération, mode mission
+
+Les 43 listes déroulantes qui posaient une question sont des groupes de boutons radio (règle d'or n°300) ; les 11 commandes
+de l'atelier de programmation restent des listes, déclarées `data-interface="commande"`. 25 groupes mélangés ; l'échauffement,
+le rappel de l'algorigramme, les rôles, la nuit simulée et le Bonus se replient ; l'aération passe de 34 écarts à 0 ; le mode
+mission reçoit 91 pourquoi (`mission_4e_C9.1.json`).
+
+Le banc garde ses questions : un shim `_groupesRadio(page)`, posé sur le prototype de la page, coche le bouton de la valeur
+demandée pour toutes les pages du banc ; la vérification « ni le rang ni la longueur ne désignent la bonne réponse » lit
+les boutons.
+
+- `node tests_4e_C9.mjs .` : **124 / 124**.
+- `node tests_regle_311_4e_C9.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs --detail` : chaque mauvaise proposition jouée a son pourquoi (91 / 91), aucun refus.
+- `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0. `controle_impression_papier.py` : à jour.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

@@ -23,6 +23,37 @@ catch {
   ({ chromium } = createRequire(import.meta.url)(path.join(racineGlobale, "playwright", "index.js")));
 }
 
+/* Règle d'or n°300 (révision du 15/11/2026) : les questions de la page sont des groupes de boutons radio
+   (fieldset.qcm-groupe) qui portent leur valeur. selectOption et inputValue visant un groupe cochent ou lisent la
+   proposition de cette valeur (ou de ce libellé). Un choix par rang ({index: n}) suit l'ordre d'origine de la liste
+   (ORIGINE, l'option 0 étant « — choisir — ») : le mélange des propositions a changé leur place. Rien d'autre ne change. */
+const ORIGINE = {
+  be_1: ["— choisir —", "un besoin : quelqu'un a un problème à résoudre", "une envie de faire joli", "une mode", "je ne sais pas encore"],
+  be_2: ["— choisir —", "l'essaie en suivant un protocole écrit", "le regarde et on devine", "demande au professeur", "je ne sais pas encore"],
+  be_3: ["— choisir —", "une condition — elle décide entre deux cas", "un calcul", "le nom d'un composant", "je ne sais pas encore"]
+};
+function _groupesRadio(page){
+  const estGroupe = s => page.evaluate(s => { const e = document.querySelector(s); return !!(e && e.tagName === 'FIELDSET' && e.classList.contains('qcm-groupe')); }, s);
+  const origIV = page.inputValue.bind(page);
+  page.inputValue = async (sel, ...reste) => (typeof sel === 'string' && await estGroupe(sel))
+    ? page.evaluate(s => document.querySelector(s).value, sel) : origIV(sel, ...reste);
+  const orig = page.selectOption.bind(page);
+  page.selectOption = async (sel, val, ...reste) => {
+    if (!(typeof sel === 'string' && await estGroupe(sel))) return orig(sel, val, ...reste);
+    let v = (val && typeof val === 'object') ? val : { value: String(val), label: String(val) };
+    if (v.index !== undefined) { const txt = (ORIGINE[sel.replace(/^#/, '')] || [])[v.index]; if (!txt) throw new Error('rang ' + v.index + ' inconnu pour ' + sel); v = { value: txt, label: txt }; }
+    const ok = await page.evaluate(([s, v]) => {
+      const e = document.querySelector(s); const inputs = [...e.querySelectorAll('input[type=radio]')];
+      const lib = i => ((e.querySelector('label[for="' + i.id + '"]') || {}).textContent || '').trim();
+      const c = inputs.find(i => i.value === v.value) || inputs.find(i => lib(i) === v.label);
+      if (!c) return false;
+      c.checked = true; c.dispatchEvent(new Event('input', {bubbles: true})); c.dispatchEvent(new Event('change', {bubbles: true})); return true;
+    }, [sel, v]);
+    if (!ok) throw new Error('aucune proposition « ' + JSON.stringify(v) + ' » dans ' + sel);
+  };
+  return page;
+}
+
 /* ── ce qui change d'un lot à l'autre ── */
 const CFG = {
   seq: "sequence_5e_C7_mini-projet-objet.html",
@@ -82,7 +113,7 @@ function verifLiens() {
 
 const nav = await chromium.launch();
 async function ouvrir(ctx, fichier) {
-  const page = await ctx.newPage();
+  const page = _groupesRadio(await ctx.newPage());
   const erreurs = [];
   page.on("pageerror", e => erreurs.push(String(e)));
   page.on("console", m => { if (m.type() === "error" && !/net::|ERR_/.test(m.text())) erreurs.push(m.text()); });
@@ -224,7 +255,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
     const texte = await page.evaluate(() => document.body.textContent);
     ok("gestes · plus de version 🅰 : ni bouton, ni carte, ni « Avec le matériel »",
        choix === "b,c,tous" && !/🅰/.test(texte) && !/Avec le matériel/i.test(texte), "boutons : " + choix);
-    const note = await page.locator("#vs1 .editeur-py-note").first().textContent();   // l'éditeur Python intégré (04/11/2026)
+    const note = (await page.locator("#vs1").first().textContent()).replace(/\s+/g, " ");   // l'éditeur Python intégré (04/11/2026) ; la note Vittascience se replie dessous (15/11/2026)
     ok("gestes · l'activité 3 limite le volet Python (Vittascience, facultatif) et demande de nommer puis télécharger (geste 3 de l'éditeur intégré)",
        note.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.")
        && note.includes("Nomme ton fichier 5e-HALL-TON NOM, puis télécharge-le (geste 3)."), note.trim().slice(0, 120));
@@ -369,9 +400,12 @@ if (!CFG.essaisBanc) {
   const BONNES = [["#a2a1", "LED rouge"], ["#a2c1", "Oui"], ["#a2a2", "LED verte"], ["#a2c2", "Oui"], ["#a2c3", "Oui"], ["#a2dec", "Validée"]];
   const grille = await page.evaluate(ids => ids.map(id => {
     const s = document.querySelector(id);
-    return { id, label: s.getAttribute("aria-label") || "", decrit: s.getAttribute("aria-describedby"),
+    /* n°300 (révision du 15/11/2026) : chaque case est un groupe de boutons radio ; son nom est sa légende */
+    const opts = s.options ? [...s.options].map(o => o.value) : [...s.querySelectorAll("input[type=radio]")].map(i => i.value);
+    return { id, label: s.getAttribute("aria-label") || ((s.querySelector("legend") || {}).textContent || "").trim(),
+             decrit: s.getAttribute("aria-describedby"),
              dansGrille: !!s.closest(".grille-conforme table td.case-menu"),
-             valeurs: [...s.options].map(o => o.value).filter(Boolean) };
+             valeurs: opts.filter(Boolean) };
   }), BONNES.map(b => b[0]));
   ok("act. 2 : les 6 menus de la grille sont dans ses cases (décision globale comprise), nommés « Ligne n, … » "
      + "et reliés à leur case de retour",
@@ -427,7 +461,7 @@ if (!CFG.essaisBanc) {
 /* — aucun envoi réseau — */
 {
   const sorties = [];
-  const p2 = await ctx.newPage();
+  const p2 = _groupesRadio(await ctx.newPage());
   p2.on("request", r => { if (/^https?:/.test(r.url())) sorties.push(r.url()); });
   await p2.goto(url(CFG.seq));
   await p2.waitForTimeout(800);

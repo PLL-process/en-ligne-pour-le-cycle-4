@@ -107,12 +107,12 @@ corrections réponse → pourquoi → refus un par ligne → le piège.
 - **Code en couleurs** (n°13), **schémas premium** (n°315), **chaînes d'énergie** (n°310) : leurs contrôles verts.
 - **Synthèse élève** : `audit_aeration.py --strict` et deux pages A4 (`synthese-vulgarisee`).
 
-### 5 bis. Les règles de l'audit de `3e_C9.1` (n°322 à n°330, 14/11/2026)
+### 5 bis. Les règles de l'audit de `3e_C9.1` (n°324 à n°330, n°333 et n°334, 14/11/2026)
 `3e_C9.1` est la séquence pilote : ces règles y sont appliquées d'abord, puis étendues aux autres à leur révision.
-- **n°322 — une réussite prouve la production réelle** : un verrou s'ouvre sur le résultat vérifié, jamais sur un outil
+- **n°333 — une réussite prouve la production réelle** : un verrou s'ouvre sur le résultat vérifié, jamais sur un outil
   ouvert ni sur une exécution sans erreur ; une fonction est appelée par la page et jugée sur ce qu'elle renvoie ; un
   code modifié est « à retester ». Le banc de la séquence joue les cas refusés (`return 0`, `print` seul, code modifié).
-- **n°323 — une règle enseignée est juste dans toute sa portée** : page, QCM, lexique et synthèse disent la même chose.
+- **n°334 — une règle enseignée est juste dans toute sa portée** : page, QCM, lexique et synthèse disent la même chose.
 - **n°324 — un banc de tests couvre les frontières** (juste en dessous, sur, au-dessus) et les conditions qui se croisent.
 - **n°325 — une figure essentielle se lit sur un téléphone** : aucun texte sous 14 px CSS à la taille affichée, à 390 px ;
   sinon on la recompose ; bouton « Agrandir » et alternative textuelle.
@@ -143,7 +143,7 @@ décroche (mot inconnu, phrase trop longue, consigne ambiguë, aller-retour dans
   `python3 _outils/mode_mission/poser.py <page>`, puis `node _outils/mode_mission/banc_generique.mjs <page> --detail`.
   Le banc joue la page écran par écran et croise chaque réponse lue avec la vérification de la page ; lire la liste
   des écrans (le découpage doit avoir du sens). Une page que le banc refuse ne garde pas le bloc : on le dit dans
-  la PR. Puis écrire le pourquoi de chaque erreur (`mission_<lot>.json`, `enrichir.py`).
+  la PR. Puis écrire le pourquoi de chaque erreur (`mission_<lot>.json`, `enrichir.py`) : ce qui ne va pas dans ce cas, puis l'étape suivante à l'impératif (« Relis… », « Compare… » ; `enrichir.py --etapes` mesure ceux qui n'en nomment pas, 15/11/2026).
   Voir `_outils/mode_mission/README.md`.
 - **Revue d'écran en trois tours** (`controle-qualite-lot`) : 390 et 1 280 px, mode essentiel compris.
 - Une PR par séquence (ou par deux ou trois petites), le journal, et la ligne de `docs/revision/SUIVI_REVISION.md` :

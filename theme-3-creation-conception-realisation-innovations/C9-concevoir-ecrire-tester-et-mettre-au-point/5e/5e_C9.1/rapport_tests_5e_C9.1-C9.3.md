@@ -167,3 +167,18 @@ les onglets commencent à 837 px pour un écran de 844 px (avant : 1314 px).
   à la séance 2, même compte que la progression).
 - `controle_squelette` : 0 défaut ; le signalement d'ordre de l'ouverture et les trois « à rédiger » de la clôture sont ceux de `main`, hors de ce changement. Verts : `controle_impression`, `controle_verrous`, `controle_impression_papier`, fiche papier
   (`banc_papier.py`), `controle_hors_ligne`, `controle_contraste_liens`, `controle_unites`, `controle_hierarchie`, `controle_sigles`.
+
+## Révision du 15/11/2026 (ligne 54 du suivi) — boutons radio, replis, mode mission
+
+24 listes en boutons radio (`migrer_gabarit_306.py --n300`) ; 22 groupes mélangés, 5 propositions fausses allongées.
+Repliés : le pas à pas de l'Explorateur de Windows, les notes Vittascience (échauffement et éditeurs), le Bonus. Le mode
+mission reçoit 55 pourquoi (`mission_5e_C9.1.json`). Aération 5 → 0.
+
+- `node tests_5e_C9.1-C9.3.mjs .` : **66 / 66** (shim `_groupesRadio(page)` sur les trois pages ouvertes ; la lecture
+  des propositions et de la valeur restaurée passe par le groupe ; le Bonus replié est ouvert avant d'éprouver son éditeur).
+- `node tests_regle_311_5e_C9.1.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `controle_ordre_propositions.py`, `controle_unites.py`, `controle_mode_mission.py` : verts. `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

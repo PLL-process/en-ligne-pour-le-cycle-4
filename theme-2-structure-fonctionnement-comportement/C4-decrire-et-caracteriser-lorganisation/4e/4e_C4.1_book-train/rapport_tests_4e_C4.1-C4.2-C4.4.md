@@ -241,3 +241,26 @@ d'imprimer.
   sigles, compétences, mode essentiel.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Reprise du 15/11/2026 — le schéma sous les yeux (règle d'or n°331, pilote)
+
+Constat de Pascal : l'élève ne voit ni la chaîne d'énergie ni le diagramme fonctionnel au moment où il répond. Mesuré
+sur la page de `main` par `_outils/controle_schema_sous_les_yeux.py` : 7 blocs de question nommaient un schéma sans en
+contenir (1.1 « schéma d'ensemble ci-dessus », 1.2, 1.3, 2.2, 3.1, 4.2, bilan) ; la chaîne d'énergie (Fig. 4) n'apparaissait
+qu'en 2.3, deux activités après le tableau 2.1 qui disait « regarde bien les schémas ».
+
+- Le schéma d'ensemble est servi depuis `fichiers_drawio/schema_ensemble_book-train.jpg` (il était recopié en base64 dans
+  la page : 332 Ko de moins) et **répété** dans les cartes 1.1, 1.2, 1.3, 2.1 et 2.2 (`figure.schema-sous-les-yeux`). Il est
+  muet sur les énergies, ce que demandent 2.1 et 2.2 ; il porte les fonctions et les solutions, ce que 1.2 et 1.3 demandent de
+  LIRE (compétence de lecture : le document complet reste).
+- 3.1 reçoit la Fig. 2 en version **muette** (les quatre symboles nommés, sans leurs exemples qui donnaient les réponses),
+  recomposée sur deux lignes : plus petit texte 16 px à 390 px, 19 px à 1 280 px (mesuré, n°325).
+- Téléphone : la figure reste épinglée sous la barre de navigation (`top:52px`), 26 vh au plus, légende réduite à
+  « 🔍 Touche le schéma pour l'agrandir » (loupe v2). Dès 1 000 px : `carte.cote-a-cote`, figure à gauche épinglée,
+  question à droite ; ce qui précède la figure (titre, rôles, compétence, consigne) garde la pleine largeur.
+- `node tests_4e_C4.1-C4.2-C4.4_book-train.mjs` : **39 / 39** · `node tests_regle_311_4e_C4.1_book-train.mjs` : **38 / 38** ·
+  `controle_schemas.mjs` : 19 schémas, 0 ✘ · `controle_impression.mjs`, `controle_hors_ligne.mjs`, `controle_medias.py`,
+  `controle_loupe.py`, `controle_liens.py` : verts · `controle_schema_sous_les_yeux.py` sur le dossier : 0 ✘, 0 ⚠.
+- Captures à 1 280 et 390 px (2.1 défilée, 3.1) regardées avant livraison ; aucun défilement horizontal.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

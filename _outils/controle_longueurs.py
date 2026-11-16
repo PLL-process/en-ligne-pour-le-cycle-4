@@ -26,6 +26,13 @@ séquence, deux ou trois questions, la liste `var BONNES` dans son script) sont 
 sais pas encore ». Un billet est court : une seule question détachée suffit à le signaler (28/10/2026). Les billets
 plus anciens, écrits comme l'activité 0 de leur page avec leur propre moteur, ne sont pas lus ici.
 
+**Place par longueur** (mesure, hors refus — veille du 15/11/2026, idée prise de `danielcregg/moodle-mcq`, MIT,
+réécrite) : la bonne réponse STRICTEMENT la plus longue, strictement la plus courte, ou au milieu, même d'un seul
+caractère. La cible écrite est 15 / 15 / 70. Une banque est signalée ⚠ au-delà de 40 % de « la plus longue » (le
+hasard en donne 25 % à quatre propositions, et dépasse 40 % une fois sur vingt sur 30 questions). Le signalement ne
+change pas la sortie : il dit l'habitude d'écriture que l'écart visible ne voit pas. Même mesure, sur les séquences,
+dans `controle_ordre_propositions.py`.
+
 Usage : python3 _outils/controle_longueurs.py [chemin]
 """
 
@@ -39,6 +46,7 @@ RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
 ECART_VISIBLE = 8      # caractères : en deçà, aucun élève ne fait la différence
 SEUIL_ALERTE = 0.15    # part de questions détachées au-delà de laquelle on signale
+SEUIL_LONGUEUR = 0.40  # part de questions où la bonne réponse est strictement la plus longue, au-delà : ⚠ (mesure)
 
 
 def banques(racine):
@@ -57,7 +65,7 @@ def mesurer(chemin):
     if not m:
         return None
     seg = t[m.end():]
-    detachees, ecarts, plus_longues = 0, [], 0
+    detachees, ecarts, plus_longues, longue_stricte, courte_stricte = 0, [], 0, 0, 0
     for oraw, r in re.findall(r"o:\s*(\[[^\]]*\])\s*,\s*r:\s*(\d)", seg):
         try:
             o = json.loads(oraw)
@@ -73,10 +81,13 @@ def mesurer(chemin):
             detachees += 1
         if bonne == max(L):
             plus_longues += 1
+        longue_stricte += bonne > max(autres)
+        courte_stricte += bonne < min(autres)
     if not ecarts:
         return None
     return dict(fichier=os.path.basename(chemin), questions=len(ecarts),
                 detachees=detachees, plus_longues=plus_longues,
+                longue_stricte=longue_stricte, courte_stricte=courte_stricte,
                 ecart=sum(ecarts) / len(ecarts))
 
 
@@ -139,6 +150,15 @@ def main(argv):
     print()
     print("%d banques mesurées · seuil d'alerte : %.0f %% de questions détachées"
           % (len(mesures), 100 * SEUIL_ALERTE))
+
+    nq = sum(m["questions"] for m in mesures)
+    longues = [m for m in mesures if m["longue_stricte"] / m["questions"] > SEUIL_LONGUEUR]
+    print("⚠ place par longueur (mesure, hors refus) : sur %d question(s), la bonne réponse est la plus longue %.0f %%, "
+          "la plus courte %.0f %%, au milieu %.0f %% (cible 15 / 15 / 70) · %d banque(s) au-delà de %.0f %% de « la plus longue »"
+          % (nq, 100 * sum(m["longue_stricte"] for m in mesures) / nq, 100 * sum(m["courte_stricte"] for m in mesures) / nq,
+             100 * (nq - sum(m["longue_stricte"] + m["courte_stricte"] for m in mesures)) / nq, len(longues), 100 * SEUIL_LONGUEUR))
+    for m in sorted(longues, key=lambda x: -x["longue_stricte"] / x["questions"]):
+        print("     ⚠ %-52s la plus longue %d fois sur %d" % (m["fichier"][:50], m["longue_stricte"], m["questions"]))
 
     billets = [b for b in (mesurer_billet(p) for p in pages_a_billet(racine)) if b]
     billets_signales = [b for b in billets if b[2]]

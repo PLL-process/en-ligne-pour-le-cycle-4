@@ -6,6 +6,7 @@ description: Créer ou compléter un QCM HTML autonome pour le dépôt cycle 4 (
 # QCM HTML accessible
 
 Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311.
+Complété le 15/11/2026 (veille) : deux portes de vérification, place par longueur.
 
 ## Deux usages, deux régimes
 
@@ -51,6 +52,26 @@ Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu
   options qui la portent reçoivent le nom : aucune ne doit se distinguer. Si UNE SEULE option porte l'unité,
   elle s'y écrit en toutes lettres, sans parenthèse (« il ne manipule que du 5 volts ») : une parenthèse la
   distinguerait, un rappel dans l'énoncé la désignerait (le contrôle refuse l'option seule nommée).
+
+## Deux portes avant de livrer une question (veille du 15/11/2026)
+
+Idée prise de `anthropics/k12-teacher-skills` (skill `k12-check-for-understanding`, Apache 2.0), réécrite ici de
+zéro. Les deux portes se passent sur le **fichier écrit** — la banque relue dans la page (`const QUESTIONS`), question
+par question —, jamais de mémoire de ce qu'on croit avoir écrit.
+
+- **Porte A — une seule réponse défendable.** Pour chaque proposition, écrire au brouillon le meilleur argument POUR
+  qu'elle soit juste. Si l'argument d'un distracteur tient dans le cas de la question, la question a deux bonnes
+  réponses : réécrire l'énoncé (préciser le cas) ou le distracteur. La réfutation `d` répond à cet argument-là, pas à
+  un argument plus faible. La réfutation seule ne suffisait pas : deux bonnes réponses ont été vues le 15/11/2026
+  sur 5e_C7.3 et 3e_C7.8.
+- **Porte B — chaque leurre est un vrai raisonnement d'élève.** Nommer, pour chaque distracteur, l'erreur qui y
+  mène : un prérequis qui manque, ou une confusion propre au niveau. Un distracteur qu'aucun élève ne choisirait ne
+  mesure rien ; un distracteur absurde désigne la bonne réponse. La réfutation `d` nomme cette erreur, puis l'étape
+  suivante, à l'impératif (« Relis la ligne du capteur »), comme le pourquoi du mode mission
+  (`_outils/mode_mission/enrichir.py --etapes`).
+- L'énoncé tient en une phrase courte : 15 mots environ en 5e et en 4e, 20 au plus. `audit_aeration.py --phrases`
+  mesure les phrases des pages.
+- Une question sur schéma : le SVG porte `role="img"`, un `<title>` et un `<desc>` qui disent ce qu'il montre.
 
 ## En-tête standard (règle d'or n°2, 22/07/2026)
 
@@ -135,7 +156,10 @@ Répartition des bonnes réponses (n°137) :
 - `python3 _outils/controle_echantillonnage.py` — codes évaluables (≥ 5 questions) ou seulement
   mobilisés (n°202). N'interdit rien.
 - `python3 _outils/controle_longueurs.py` — bonnes réponses détachées par leur longueur (n°144,
-  n°198) ; banque signalée au-delà de 15 %.
+  n°198) ; banque signalée au-delà de 15 %. Et la **place par longueur** (15/11/2026, mesure) : la bonne réponse
+  strictement la plus longue, la plus courte, ou au milieu — cible 15 / 15 / 70 ; ⚠ au-delà de 40 % de « la plus
+  longue ». En écrivant une banque, viser cette cible : la bonne réponse est parfois la plus courte, le plus souvent
+  au milieu. Même mesure dans les séquences : `controle_ordre_propositions.py --longueur`.
 - `node _outils/mesures_qcm.mjs` — position des bonnes réponses (n°137).
 - `node _outils/controle_indices_qcm.mjs --muet` — mots absolus, écho de l'énoncé, propositions fourre-tout
   (11/11/2026). Sortie 1 si une banque livre sa bonne réponse par ses mots ; 2 si aucune banque n'est lue.
