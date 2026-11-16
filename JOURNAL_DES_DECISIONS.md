@@ -31577,7 +31577,7 @@ d'outils (quatre contrôles) et la collision n°322/323.
 
 ## 15/11/2026 — Révision des trois thèmes, 56 : `3e_C3.1` (Shenzhen, le local des serveurs)
 
-**Deux sessions, une révision.** Commencée cet après-midi par une session (branche `fable/revision/3e-c3-1`, deux commits « WIP » de 16 h 31, sans PR), reprise le soir par une autre à la demande de Pascal (#721 : « Modifier ce qu'il recommande », puis « Fais les »), comme la révision 55. Le travail de l'après-midi est gardé, remis sur le `main` du jour ; ce que la reprise ajoute est dit en fin d'entrée.
+**Deux sessions, une révision (PR #729).** Commencée cet après-midi par une session (branche `fable/revision/3e-c3-1`, deux commits « WIP » de 16 h 31, sans PR), reprise le soir par une autre à la demande de Pascal (#721 : « Modifier ce qu'il recommande », puis « Fais les »), comme la révision 55. Le travail de l'après-midi est gardé, remis sur le `main` du jour ; ce que la reprise ajoute est dit en fin d'entrée.
 
 **Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante à convertir (les menus du cahier des charges sont voulus). Sur `main` :
 - une séance 1 à 1 633 mots et une séance 2 à 1 819 : la piqûre de rappel de la bête à cornes (524 mots) et celle du cahier des charges (638 mots) étaient à découvert ;
