@@ -29,6 +29,12 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
   aucune flèche ne traverse un cadre ou un texte, un repère vit à part sans flèche, les tailles écrites sont celles qu'on voit —
   `node _outils/controle_schemas.mjs <dossier du lot> --planche <dossier>` ; puis chaque schéma regardé sur la planche :
   simple et vulgarisé (lisible par un élève de 6e), pédagogique, beau ; refait avec le meilleur outil disponible ;
+- l'élève répond le schéma sous les yeux (n°331, clé de voûte, 15/11/2026) : toute question qui porte sur un schéma
+  l'affiche **dans le même bloc** (`figure.schema-sous-les-yeux`, épinglée sur téléphone, à gauche des questions sur grand
+  écran), jamais « ci-dessus » ; répété à chaque activité qui le lit ; **muet** sur ce que la question fait produire
+  (étiquettes, types, formats, énergies à trouver), la version complète dans la correction — sauf une compétence de
+  LECTURE, qui se vérifie sur le document complet. `python3 _outils/controle_schema_sous_les_yeux.py` : 0 ✘ ; chaque ⚠
+  (schéma nommé sans figure, schéma replié) se juge à l'œil ;
 - toute synthèse élève se lit par un élève de 6e et tient sur deux pages A4 (n°316, révisée le 29/10/2026) : carte
   « Ce que je dois retenir », puis chaque partie de l'exemple vers la règle (titre-question, exemple de la séquence en
   deux lignes, encadré « À retenir », le piège en une ligne), un seul lexique à la fin — voir le skill
