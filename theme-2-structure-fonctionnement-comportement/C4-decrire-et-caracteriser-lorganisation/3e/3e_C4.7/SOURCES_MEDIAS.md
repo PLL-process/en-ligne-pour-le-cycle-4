@@ -11,6 +11,7 @@ de Google Images ou de site tiers ; aucun hotlinking ; aucune carte protégée r
 | `Images/decoupage_en_paquets.svg` | SVG original | Création Fable | CC0 | Découpage en paquets numérotés et réassemblage | ~7 Ko |
 | `Images/table_routage_jeu.svg` | SVG original | Création Fable | CC0 | Table de routage de R2 et choix de la route | ~6 Ko |
 | Simulateur SVG intégré (activité 5) | SVG inline original | Création Fable | CC0 | Réseau de 5 routeurs aux liaisons cliquables | inline |
+| `Images/trajet_alerte_schema_fleche_corrige.svg` | SVG | création originale (Fable) | CC0 | « Schéma fléché du trajet de l'alerte » — corrigé du « grand voyage » (règle d'or n°336, 16/11/2026) | ~5 Ko |
 
 Notes : adresses IP des exemples prises dans les plages réservées à la documentation
 (192.168.x.x, 198.51.100.x, 203.0.113.x, 172.16.x.x) ; l'affirmation « ~99 % du trafic

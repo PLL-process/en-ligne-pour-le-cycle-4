@@ -230,6 +230,30 @@ def carte_badge(ident="cm-badge"):
 
 CM_BADGE_A_FAIRE = carte_badge()
 
+# Règle d'or n°336 (16/11/2026) : la correction d'un dessin montre le dessin. Les deux défis du Bonus font dessiner une
+# carte mentale ; leur correction en montre une, juste, avec les exemples que la correction écrit.
+CM_BADGE_CORRIGE = figures.carte_mentale(
+    "cm-badge-c", "Des clés au badge",
+    [("Avantages", ["badge perdu désactivé", "on sait qui est entré"]),
+     ("Inconvénients", ["bloqué si panne de courant", "des données sur les entrées"])],
+    "Une carte mentale possible du badge de la salle de technologie",
+    "Carte mentale corrigée. Au centre : « Des clés au badge ». Deux branches. Avantages : « badge perdu "
+    "désactivé » et « on sait qui est entré ». Inconvénients : « bloqué si panne de courant » et « des données sur les "
+    "entrées ». Chaque branche porte un mot, chaque feuille quelques mots-clés.")
+
+CM_CARTABLE_CORRIGE = figures.carte_mentale(
+    "cm-cartable-c", "Mon cartable",
+    [("Cahiers", ["cahier de techno", "cahier de maths"]),
+     ("Livres", ["manuel de français"]),
+     ("Trousse", ["règle 30 cm", "calculatrice"]),
+     ("Affaires de sport", ["baskets"]),
+     ("Goûter", ["gourde", "compote"])],
+    "Une carte mentale possible du cartable",
+    "Carte mentale corrigée, un exemple parmi d'autres. Au centre : « Mon cartable ». Cinq branches. Cahiers : « cahier de "
+    "techno », « cahier de maths ». Livres : « manuel de français ». Trousse : « règle 30 cm », « calculatrice ». "
+    "Affaires de sport : « baskets ». Goûter : « gourde », « compote ». Chaque branche porte un mot, chaque feuille "
+    "quelques mots-clés.")
+
 # 3e — la station d'alerte cyclonique et la société
 CM_STATION = figures.carte_mentale(
     "cm-station", "La station d'alerte cyclonique",
@@ -1040,7 +1064,10 @@ NIVEAUX = {
                     consigne="<p>Dessine sur ton cahier la carte mentale de ton cartable&nbsp;: au centre, « Mon cartable »&nbsp;; "
                              "<b>quatre branches</b> au moins, avec un mot chacune. Puis dis quel objet tu as eu du mal à ranger, "
                              "et pourquoi.</p>",
-                    correction=["<b>Centre</b> → « Mon cartable »",
+                    correction=['<figure class="figure">' + CM_CARTABLE_CORRIGE + '<figcaption>Une carte possible&nbsp;: '
+                                'la tienne aura d\'autres branches, mais la même forme — un sujet au centre, un mot par '
+                                'branche, des mots-clés dans les feuilles.</figcaption></figure>',
+                                "<b>Centre</b> → « Mon cartable »",
                                 "<b>Des branches possibles</b> → Cahiers, Livres, Trousse, Affaires de sport, Goûter",
                                 "<b>Feuilles</b> → en mots-clés&nbsp;: « cahier de techno », « règle 30 cm », « gourde »",
                                 "<b>Un objet difficile</b> → la calculatrice&nbsp;: Trousse ou Maths&nbsp;? Les deux branches "
@@ -1109,7 +1136,9 @@ NIVEAUX = {
                                  groupe="Branche «&nbsp;Inconvénients&nbsp;»", exemple="des données sur les entrées")],
                     amorces=["Un avantage&nbsp;: ce que le badge fait mieux que la clé — pour le collège, pour les élèves…",
                              "Un inconvénient&nbsp;: ce dont le badge a besoin pour marcher, ou ce qu'il garde en mémoire…"],
-                    correction=["<b>Centre</b> → « Des clés au badge »",
+                    correction=['<figure class="figure">' + CM_BADGE_CORRIGE + '<figcaption>Une carte possible du badge, '
+                                'avec les exemples ci-dessous.</figcaption></figure>',
+                                "<b>Centre</b> → « Des clés au badge »",
                                 "<b>Avantages</b> → « badge perdu désactivé », « on sait qui est entré »",
                                 "<b>Inconvénients</b> → « bloqué si panne de courant », « des données sur les entrées »",
                                 ("conclusion", "« On sait qui est entré » est un avantage pour le collège, mais aussi une donnée "

@@ -79,7 +79,9 @@ redondant.
 
 ### 4. Aérer le texte
 Skill `texte-clair-et-aere` : consignes à l'impératif, 20 mots au plus, une action par ligne ; légendes en lignes ;
-corrections réponse → pourquoi → refus un par ligne → le piège.
+corrections réponse → pourquoi → refus un par ligne → le piège ; quand la réponse se dessine (schéma, chaîne,
+algorigramme, croquis, carte mentale), la correction montre le dessin complet, et la capture quand c'est un outil
+(n°336 et n°332 : `controle_correction_illustree.py`, `controle_correction_complete.py`).
 - `python3 _outils/aerer_legendes.py <page> --ecrire` et `python3 _outils/aerer_corrections.py <page> --partout --ecrire`
   posent les retours à la ligne (entre les parties d'une légende ; entre les phrases d'une correction, d'une consigne,
   d'une définition, d'une légende de plus de 35 mots ; après chaque « ; » d'une correction), sans changer un mot ; ils
