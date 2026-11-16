@@ -98,6 +98,26 @@ def mise_en_page(doc, feuille, paysage=True):
         pass
 
 
+def format_fr(doc, feuille, plage: str, code: str):
+    """Un format de nombre écrit à la française (« 0,00 », « # ##0 », « AAAA-MM-JJ HH:MM ») : ce que l'élève voit."""
+    from com.sun.star.lang import Locale  # type: ignore
+    loc = Locale("fr", "FR", "")
+    nf = doc.NumberFormats
+    cle = nf.queryKey(code, loc, False)
+    if cle == -1:
+        cle = nf.addNew(code, loc)
+    feuille.getCellRangeByName(plage).NumberFormat = cle
+
+
+def texte_long(feuille, plage: str):
+    """Une plage fusionnée où le texte revient à la ligne (un avertissement, une conclusion), hauteur ajustée."""
+    r = feuille.getCellRangeByName(plage)
+    r.merge(True)
+    r.IsTextWrapped = True
+    r.VertJustify = 1                      # com.sun.star.table.CellVertJustify.TOP
+    r.Rows.OptimalHeight = True
+
+
 def adresse(feuille, plage: str) -> CellRangeAddress:
     return feuille.getCellRangeByName(plage).RangeAddress
 
@@ -145,13 +165,16 @@ class Calc:
                 self.proc.kill()
         shutil.rmtree(self.profil, ignore_errors=True)
 
-    def ouvrir(self, chemin: str, separateur: str = None):
+    def ouvrir(self, chemin: str, separateur: str = None, decimale: str = "."):
+        """decimale : « . » quand le CSV écrit 1011.5 (lu en anglais, en-US), « , » quand il écrit 0,142 (lu en
+        français, fr-FR) — sinon Calc lit 0,142 comme 142, ou 1011.5 comme du texte."""
         args = [pv("Hidden", True)]
         if chemin.lower().endswith(".csv"):
-            # séparateur, guillemets, UTF-8 (76), première ligne 1 ; les nombres « 1011.5 » lus en anglais (en-US)
+            # séparateur, guillemets, UTF-8 (76), première ligne 1, la langue qui lit les nombres
             sep = str(ord(separateur or ";"))
+            langue = 1036 if decimale == "," else 1033
             args += [pv("FilterName", "Text - txt - csv (StarCalc)"),
-                     pv("FilterOptions", "%s,34,76,1,,1033,false,true" % sep)]
+                     pv("FilterOptions", "%s,34,76,1,,%d,false,true" % (sep, langue))]
         return self.desktop.loadComponentFromURL(uno.systemPathToFileUrl(os.path.abspath(chemin)), "_blank", 0, tuple(args))
 
     def nouveau(self):
