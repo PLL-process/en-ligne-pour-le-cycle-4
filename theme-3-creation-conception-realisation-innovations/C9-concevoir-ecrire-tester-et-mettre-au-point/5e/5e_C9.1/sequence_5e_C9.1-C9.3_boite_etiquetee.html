@@ -1068,8 +1068,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1083,7 +1086,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1225,9 +1228,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1516,21 +1519,21 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   est une réponse utile.</p>
   <div class="exo">
     <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-  <legend>1. Dans un programme, quand on écrit <code>score = 10</code>, cela veut dire…</legend>
+  <legend>1. Dans un programme, que veut dire <code>score = 10</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="affiche le nombre 10 à l&#x27;écran de la console"><label for="be_1__3">affiche le nombre 10 à l'écran de la console</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="score est égal à 10, comme en mathématiques"><label for="be_1__1">score est égal à 10, comme en mathématiques</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="range le nombre 10 dans une boîte nommée score"><label for="be_1__2">range le nombre 10 dans une boîte nommée score</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-  <legend>2. Un programme qui affiche un résultat FAUX…</legend>
+  <legend>2. Que peut faire un programme qui affiche un résultat FAUX ?</legend>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="peut très bien tourner sans aucun message"><label for="be_2__3">peut très bien tourner sans aucun message</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="ne démarre jamais, l&#x27;ordinateur le refuse"><label for="be_2__2">ne démarre jamais, l'ordinateur le refuse</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="s&#x27;arrête forcément avec un message d&#x27;erreur rouge"><label for="be_2__1">s'arrête forcément avec un message d'erreur rouge</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-  <legend>3. Pour savoir si un programme fait ce qu'on lui demande, le mieux est de…</legend>
+  <legend>3. Que faut-il faire pour savoir si un programme fait ce qu'on lui demande ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="écrire ce qu&#x27;on ATTEND, puis exécuter et comparer"><label for="be_3__3">écrire ce qu'on ATTEND, puis exécuter et comparer</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="relire le programme attentivement, sans l&#x27;exécuter"><label for="be_3__2">relire le programme attentivement, sans l'exécuter</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="le lancer une fois et regarder si ça a l&#x27;air bon"><label for="be_3__1">le lancer une fois et regarder si ça a l'air bon</label></div>
@@ -1674,7 +1677,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
     </div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a1q1" data-melange="1">
-  <legend>1. Après la ligne 3, la boîte <code>places</code> contient :</legend>
+  <legend>1. Que contient la boîte <code>places</code> après la ligne 3 ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__3" value="24 et 21" data-pourquoi="Une boîte ne garde qu'une valeur à la fois."><label for="a1q1__3">24 et 21</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__4" value="3" data-pourquoi="3, c'est ce que contient montes, pas places."><label for="a1q1__4">3</label></div>
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__2" value="21"><label for="a1q1__2">21</label></div>
@@ -1688,7 +1691,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="il a été remplacé par 21 : il n&#x27;existe plus"><label for="a1q2__3">il a été remplacé par 21 : il n'existe plus</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a1q3" data-melange="1">
-  <legend>3. En Python, le signe <code>=</code> veut dire :</legend>
+  <legend>3. En Python, que veut dire le signe <code>=</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="« affiche le résultat à l&#x27;écran »" data-pourquoi="Afficher, c'est le travail de print, pas du signe =."><label for="a1q3__3">« affiche le résultat à l'écran »</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="« compare les deux nombres, à gauche et à droite »" data-pourquoi="Comparer s'écrit == en Python : un seul = range."><label for="a1q3__1">« compare les deux nombres, à gauche et à droite »</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="« RANGE cette valeur dans la boîte »"><label for="a1q3__4">« RANGE cette valeur dans la boîte »</label></div>
@@ -1727,7 +1730,7 @@ descendus = 2
 places = places + descendus</pre>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a2q1">
-  <legend>1. Après la ligne 3, <code>places</code> vaut :</legend>
+  <legend>1. Que vaut <code>places</code> après la ligne 3 ?</legend>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="24" data-pourquoi="24, c'est avant la ligne 3 : fais le calcul de la partie droite."><label for="a2q1__1">24</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="19"><label for="a2q1__2">19</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="29" data-pourquoi="Ceux qui montent prennent des places : la boîte diminue."><label for="a2q1__3">29</label></div>
@@ -1741,7 +1744,7 @@ places = places + descendus</pre>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="elle AJOUTE les 2 places libérées au total"><label for="a2q2__1">elle AJOUTE les 2 places libérées au total</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a2q3">
-  <legend>3. À la fin, <code>places</code> vaut :</legend>
+  <legend>3. Que vaut <code>places</code> à la fin ?</legend>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="17" data-pourquoi="Les descendus libèrent des places : relis le signe de la ligne 5."><label for="a2q3__1">17</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="19" data-pourquoi="19, c'est avant la ligne 5 : il reste les places libérées."><label for="a2q3__2">19</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="21"><label for="a2q3__3">21</label></div>
@@ -1841,14 +1844,14 @@ print("2 + 3 =", 2 + 3)
     <div class="exo">
       <p><b>Expérience A :</b> <code>print(20 + 4)</code></p>
       <fieldset class="qcm-groupe" id="a3p1" data-melange="1">
-  <legend>① Je prédis :</legend>
+  <legend>① Prédis : qu'affichera l'expérience A, <code>print(20 + 4)</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__2" value="204"><label for="a3p1__2">204</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="une erreur"><label for="a3p1__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__1" value="24"><label for="a3p1__1">24</label></div>
 </fieldset>
 <p><b>Expérience B :</b> <code>print("20" + "4")</code></p>
       <fieldset class="qcm-groupe" id="a3p2" data-melange="1">
-  <legend>① Je prédis :</legend>
+  <legend>① Prédis : qu'affichera l'expérience B, <code>print("20" + "4")</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__1" value="24"><label for="a3p2__1">24</label></div>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="une erreur"><label for="a3p2__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__2" value="204"><label for="a3p2__2">204</label></div>
@@ -1866,26 +1869,26 @@ print("20" + "4")
     <div class="exo">
       <p><b>③ Je reporte :</b></p>
       <fieldset class="qcm-groupe" id="a3r1" data-melange="1">
-  <legend>Expérience A a affiché :</legend>
+  <legend>Qu'a affiché l'expérience A ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__2" value="204" data-pourquoi="Sans guillemets, 20 et 4 sont des nombres : le + additionne."><label for="a3r1__2">204</label></div>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__1" value="24"><label for="a3r1__1">24</label></div>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__3" value="une erreur" data-pourquoi="Python accepte d'additionner deux nombres : exécute l'expérience A."><label for="a3r1__3">une erreur</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r2" data-melange="1">
-  <legend>Expérience B a affiché :</legend>
+  <legend>Qu'a affiché l'expérience B ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__1" value="24" data-pourquoi="Avec des guillemets, « 20 » et « 4 » sont du texte : exécute l'expérience B."><label for="a3r2__1">24</label></div>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__2" value="204"><label for="a3r2__2">204</label></div>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__3" value="une erreur" data-pourquoi="Python accepte de coller deux textes : exécute l'expérience B."><label for="a3r2__3">une erreur</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r3" data-melange="1">
-  <legend>Conclusion — entre guillemets, « 20 » et « 4 » sont :</legend>
+  <legend>Conclusion — entre guillemets, que sont « 20 » et « 4 » ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__1" value="des nombres qu&#x27;on additionne" data-pourquoi="Additionnés, 20 et 4 donneraient 24 : l'expérience B a donné autre chose."><label for="a3r3__1">des nombres qu'on additionne</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__3" value="du TEXTE que le + COLLE bout à bout"><label for="a3r3__3">du TEXTE que le + COLLE bout à bout</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__4" value="des erreurs que Python refuse" data-pourquoi="Python n'a rien refusé : il a affiché un résultat."><label for="a3r3__4">des erreurs que Python refuse</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__2" value="des noms de boîtes (de variables) à ouvrir" data-pourquoi="Un nom de boîte s'écrit sans guillemets : avec, c'est du texte."><label for="a3r3__2">des noms de boîtes (de variables) à ouvrir</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r4" data-melange="1">
-  <legend>Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…</legend>
+  <legend>Et voilà le premier indice du compteur fou : il affiche « 87 » en collant « 8 » et « 7 ». Qu'a donc mis quelqu'un ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__3" value="un écran trop petit pour le nombre" data-pourquoi="L'écran affiche ce qu'on lui donne : c'est le calcul qui a collé."><label for="a3r4__3">un écran trop petit pour le nombre</label></div>
   <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__4" value="des guillemets autour des nombres"><label for="a3r4__4">des guillemets autour des nombres</label></div>
   <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__1" value="la mauvaise étiquette de boîte" data-pourquoi="L'étiquette ne colle rien : c'est le + entre deux textes qui colle."><label for="a3r4__1">la mauvaise étiquette de boîte</label></div>
@@ -1935,21 +1938,21 @@ print("Places libres :", places)</pre>
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a4q1" data-melange="1">
-  <legend>1. Le test T3 montre que le programme :</legend>
+  <legend>1. Que montre le test T3 sur le programme ?</legend>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__2" value="enlève les descendus au lieu de les ajouter"><label for="a4q1__2">enlève les descendus au lieu de les ajouter</label></div>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__4" value="ne démarre pas : il y a une erreur" data-pourquoi="Le programme s'exécute et affiche un résultat : il démarre."><label for="a4q1__4">ne démarre pas : il y a une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__1" value="fonctionne parfaitement dans tous les cas" data-pourquoi="Compare ATTENDU et OBTENU au test T3."><label for="a4q1__1">fonctionne parfaitement dans tous les cas</label></div>
   <div class="qcm-option"><input type="radio" name="a4q1" id="a4q1__3" value="affiche du texte collé au lieu d&#x27;un nombre" data-pourquoi="Le résultat est bien un nombre : regarde s'il est juste."><label for="a4q1__3">affiche du texte collé au lieu d'un nombre</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4q2" data-melange="1">
-  <legend>2. Quelqu'un qui DESCEND du manège, ça devrait :</legend>
+  <legend>2. Quand quelqu'un DESCEND du manège, que devrait-il se passer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="occuper une place de plus dans le train" data-pourquoi="Quelqu'un qui descend quitte sa place."><label for="a4q2__1">occuper une place de plus dans le train</label></div>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="ne rien changer au nombre de places" data-pourquoi="Descendre libère une place."><label for="a4q2__2">ne rien changer au nombre de places</label></div>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="libérer une place : places + descendus"><label for="a4q2__3">libérer une place : places + descendus</label></div>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__4" value="fermer la barrière du manège" data-pourquoi="La barrière, c'est la séance 3 : ici, on compte les places."><label for="a4q2__4">fermer la barrière du manège</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4q3" data-melange="1">
-  <legend>3. Ton verdict de technicien :</legend>
+  <legend>3. Quel est ton verdict de technicien ?</legend>
   <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__2" value="impossible de conclure avec seulement 3 tests, il en faut plus" data-pourquoi="Un seul test qui échoue suffit à dire non."><label for="a4q3__2">impossible de conclure avec seulement 3 tests, il en faut plus</label></div>
   <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__1" value="il répond au besoin, car T1 et T2 passent sans erreur" data-pourquoi="T3 échoue : un programme doit passer tous les tests."><label for="a4q3__1">il répond au besoin, car T1 et T2 passent sans erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a4q3" id="a4q3__3" value="il faut changer d&#x27;ordinateur et recommencer" data-pourquoi="L'ordinateur n'y est pour rien : c'est une ligne du programme."><label for="a4q3__3">il faut changer d'ordinateur et recommencer</label></div>
@@ -1994,14 +1997,14 @@ print("Places libres :", places)</pre>
     annonce du neuf : le Cyclone reçoit un nouveau train de <b>32 places</b>. Deux modifications à faire.</div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a5q1" data-melange="1">
-  <legend>1. Pour corriger le bug des descendus, la ligne 5 devient :</legend>
+  <legend>1. Pour corriger le bug des descendus, que devient la ligne 5 ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="places = places + descendus"><label for="a5q1__3">places = places + descendus</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="places = places - descendus" data-pourquoi="C'est la ligne fausse : elle enlève ceux qui libèrent une place."><label for="a5q1__1">places = places - descendus</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="places = descendus - places" data-pourquoi="L'ordre compte : relis le besoin."><label for="a5q1__4">places = descendus - places</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="descendus = places" data-pourquoi="Cette ligne change descendus, pas places."><label for="a5q1__2">descendus = places</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a5q2" data-melange="1">
-  <legend>2. Pour le nouveau train de 32 places, il faut modifier :</legend>
+  <legend>2. Pour le nouveau train de 32 places, que faut-il modifier ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__4" value="toutes les lignes du programme" data-pourquoi="Le nombre de sièges n'est écrit qu'à un endroit."><label for="a5q2__4">toutes les lignes du programme</label></div>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__2" value="la ligne 1 : places = 32"><label for="a5q2__2">la ligne 1 : places = 32</label></div>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__3" value="la ligne 6 : print(32)" data-pourquoi="Afficher 32 ne change pas ce que contient la boîte."><label for="a5q2__3">la ligne 6 : print(32)</label></div>
@@ -2033,7 +2036,7 @@ print("Places libres :", places)</pre>
     <p id="barrBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a5q4" data-melange="1">
-  <legend>4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :</legend>
+  <legend>4. À <code>places = 0</code>, que vaut la condition <code>places &gt; 0</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__1" value="vraie : la barrière s&#x27;ouvre" data-pourquoi="0 n'est pas plus grand que 0."><label for="a5q4__1">vraie : la barrière s'ouvre</label></div>
   <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__3" value="impossible à calculer pour Python" data-pourquoi="Python compare 0 et 0 sans peine."><label for="a5q4__3">impossible à calculer pour Python</label></div>
   <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__4" value="une erreur, car 0 n&#x27;est pas un nombre" data-pourquoi="0 est un nombre comme un autre."><label for="a5q4__4">une erreur, car 0 n'est pas un nombre</label></div>

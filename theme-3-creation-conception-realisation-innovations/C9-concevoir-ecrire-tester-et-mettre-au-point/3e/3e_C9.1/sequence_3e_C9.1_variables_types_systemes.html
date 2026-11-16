@@ -1131,8 +1131,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1146,7 +1149,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1288,9 +1291,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1735,21 +1738,21 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
   <p>Cet atelier s'appuie sur des notions de 5e et de 4e. <br>Trois questions pour savoir, toi comme le professeur, sur quoi on peut s'appuyer. <br><b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas » est une réponse utile.</p>
   <div class="exo">
     <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-  <legend>1. En 5e, tu as rencontré la <b>boîte étiquetée</b>. Une variable, c'est…</legend>
+  <legend>1. En 5e, tu as rencontré la <b>boîte étiquetée</b>. Qu'est-ce qu'une variable ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="un nombre qui change tout seul, au hasard"><label for="be_1__1">un nombre qui change tout seul, au hasard</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une ligne écrite dans le programme"><label for="be_1__3">une ligne écrite dans le programme</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un nom, et une valeur qu&#x27;on peut remplacer"><label for="be_1__2">un nom, et une valeur qu'on peut remplacer</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-  <legend>2. En 4e, au jardin connecté, une pompe arrose la terre quand elle est trop sèche. Son premier programme la mettait en marche et l'arrêtait sans cesse. Un programme qui donne un mauvais résultat…</legend>
+  <legend>2. En 4e, au jardin connecté, une pompe arrose la terre quand elle est trop sèche. Son premier programme la mettait en marche et l'arrêtait sans cesse. Que peut faire un programme qui donne un mauvais résultat ?</legend>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="peut tourner sans planter, et se tromper"><label for="be_2__3">peut tourner sans planter, et se tromper</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="s&#x27;arrête toujours avec un message d&#x27;erreur"><label for="be_2__1">s'arrête toujours avec un message d'erreur</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="ne démarre jamais : l&#x27;ordinateur le refuse"><label for="be_2__2">ne démarre jamais : l'ordinateur le refuse</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-  <legend>3. Pour prouver qu'un programme marche, il faut…</legend>
+  <legend>3. Que faut-il faire pour prouver qu'un programme marche ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="le lancer une fois et regarder si ça a l&#x27;air bon"><label for="be_3__1">le lancer une fois et regarder si ça a l'air bon</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="écrire les résultats attendus AVANT de l&#x27;exécuter"><label for="be_3__3">écrire les résultats attendus AVANT de l'exécuter</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="compter ses lignes et vérifier leur nombre"><label for="be_3__2">compter ses lignes et vérifier leur nombre</label></div>
@@ -1985,14 +1988,14 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="il est retourné dans le programme" data-pourquoi="Le programme ne change pas pendant l'exécution : seules les boîtes de la mémoire changent."><label for="a1q2__3">il est retourné dans le programme</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a1q3" data-melange="1">
-  <legend>3. Le signe <code>=</code> en Python signifie :</legend>
+  <legend>3. Que signifie le signe <code>=</code> en Python ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__3" value="« compare les deux côtés du signe »" data-pourquoi="Pour comparer, Python a un autre signe, le double égal == : ici, une boîte change de contenu."><label for="a1q3__3">« compare les deux côtés du signe »</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__1" value="« mets cette valeur dans la boîte »"><label for="a1q3__1">« mets cette valeur dans la boîte »</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__2" value="« est égal à », comme en maths" data-pourquoi="En maths, minutes = minutes - 1 serait impossible : ici pourtant, le simulateur l'exécute sans problème."><label for="a1q3__2">« est égal à », comme en maths</label></div>
   <div class="qcm-option"><input type="radio" name="a1q3" id="a1q3__4" value="« affiche la valeur à l&#x27;écran »" data-pourquoi="Pour afficher, le programme utilise print, à la dernière ligne : le signe = ne montre rien à l'écran."><label for="a1q3__4">« affiche la valeur à l'écran »</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a1q4" data-melange="1">
-  <legend>4. <code>minutes = minutes - 1</code> se lit :</legend>
+  <legend>4. Dans quel sens se lit <code>minutes = minutes - 1</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__4" value="c&#x27;est une équation impossible à résoudre" data-pourquoi="Ce n'est pas une équation, c'est un ordre : le simulateur l'a exécuté sans se bloquer."><label for="a1q4__4">c'est une équation impossible à résoudre</label></div>
   <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__2" value="de droite à gauche : je calcule, puis je range"><label for="a1q4__2">de droite à gauche : je calcule, puis je range</label></div>
   <div class="qcm-option"><input type="radio" name="a1q4" id="a1q4__1" value="de gauche à droite, comme une phrase française" data-pourquoi="Pour ranger une valeur, Python doit d'abord la connaître : quel côté du = contient le calcul ?"><label for="a1q4__1">de gauche à droite, comme une phrase française</label></div>
@@ -2061,21 +2064,21 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
 5  passages = passages + groupe</pre>
     <div class="exo">
       <fieldset class="qcm-groupe" id="a2q1" data-melange="1">
-  <legend>Après la ligne 3, <code>passages</code> vaut :</legend>
+  <legend>Que vaut <code>passages</code> après la ligne 3 ?</legend>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__1" value="0" data-pourquoi="0, c'est la valeur après la ligne 1 : la ligne 3 range autre chose dans passages."><label for="a2q1__1">0</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__2" value="6" data-pourquoi="Tu as compté groupe deux fois : à la ligne 3, que vaut passages juste avant le calcul ?"><label for="a2q1__2">6</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__4" value="« passages + groupe »" data-pourquoi="Une boîte contient une valeur, pas un calcul : Python fait l'addition avant de ranger."><label for="a2q1__4">« passages + groupe »</label></div>
   <div class="qcm-option"><input type="radio" name="a2q1" id="a2q1__3" value="3"><label for="a2q1__3">3</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a2q2">
-  <legend>Après la ligne 4, <code>groupe</code> vaut :</legend>
+  <legend>Que vaut <code>groupe</code> après la ligne 4 ?</legend>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__1" value="3" data-pourquoi="Tu donnes la valeur d'avant la ligne 4 : cette ligne range un nouveau résultat dans groupe."><label for="a2q2__1">3</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__2" value="1" data-pourquoi="La ligne 4 ne retire 1 qu'une seule fois : pars de la valeur rangée à la ligne 2."><label for="a2q2__2">1</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__3" value="0" data-pourquoi="Tu as lu la boîte passages, à son départ : ici, on te demande la boîte groupe."><label for="a2q2__3">0</label></div>
   <div class="qcm-option"><input type="radio" name="a2q2" id="a2q2__4" value="2"><label for="a2q2__4">2</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a2q3">
-  <legend>Après la ligne 5, <code>passages</code> vaut :</legend>
+  <legend>Que vaut <code>passages</code> après la ligne 5 ?</legend>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__1" value="6" data-pourquoi="Tu as repris l'ancienne valeur de groupe : la ligne 4 l'a changée. Relis ta table."><label for="a2q3__1">6</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__2" value="5"><label for="a2q3__2">5</label></div>
   <div class="qcm-option"><input type="radio" name="a2q3" id="a2q3__3" value="3" data-pourquoi="Tu donnes passages avant la ligne 5 : cette ligne lui ajoute encore la valeur de groupe."><label for="a2q3__3">3</label></div>
@@ -2101,7 +2104,18 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
     <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
     <p class="feedback" id="fb2" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Table de suivi :<br>ligne 1 → passages = 0<br>ligne 2 → groupe = 3<br>ligne 3 → passages = <b>3</b><br>ligne 4 → groupe = <b>2</b><br>ligne 5 → passages = <b>5</b>.</p>
+      <table class="table-suivi">
+        <caption>La table de suivi complète : la valeur de chaque boîte APRÈS chaque ligne</caption>
+        <thead><tr><th scope="col">Ligne</th><th scope="col"><code>passages</code></th><th scope="col"><code>groupe</code></th></tr></thead>
+        <tbody>
+          <tr><th scope="row">1 · <code>passages = 0</code></th><td>0</td><td>—</td></tr>
+          <tr><th scope="row">2 · <code>groupe = 3</code></th><td>0</td><td>3</td></tr>
+          <tr><th scope="row">3 · <code>passages = passages + groupe</code></th><td><b>3</b></td><td>3</td></tr>
+          <tr><th scope="row">4 · <code>groupe = groupe - 1</code></th><td>3</td><td><b>2</b></td></tr>
+          <tr><th scope="row">5 · <code>passages = passages + groupe</code></th><td><b>5</b></td><td>2</td></tr>
+        </tbody>
+      </table>
+      <p>En gras : la boîte que la ligne vient de changer. <br>Les autres cases recopient la valeur d'au-dessus : une boîte garde sa valeur tant qu'aucune ligne ne la remplace.</p>
       <p>La boîte <code>passages</code> a changé <b>3 fois</b> (0, puis 3, puis 5). <br>Le programme <b>accumule</b> : c'est le motif « compteur », le plus utile de toute la programmation
       (points d'un jeu, voyageurs d'une station, mesures d'un capteur…).</p>
       <p><b>Erreur classique :</b> répondre 6 à la ligne 5 en utilisant l'ANCIEN groupe (3) — la table
@@ -2230,21 +2244,21 @@ print("2 + 3 =", 2 + 3)
     <div class="exo">
       <p><b>Expérience A :</b> <code class="code-ligne">print(3 + 4)</code></p>
       <fieldset class="qcm-groupe qcm-rangee" id="a3p1" data-melange="1">
-  <legend>① Je prédis :</legend>
+  <legend>① Prédis : qu'affichera l'expérience A, <code>print(3 + 4)</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__2" value="7"><label for="a3p1__2">7</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__3" value="une erreur"><label for="a3p1__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3p1" id="a3p1__1" value="34"><label for="a3p1__1">34</label></div>
 </fieldset>
 <p><b>Expérience B :</b> <code class="code-ligne">print("3" + "4")</code></p>
       <fieldset class="qcm-groupe qcm-rangee" id="a3p2" data-melange="1">
-  <legend>① Je prédis :</legend>
+  <legend>① Prédis : qu'affichera l'expérience B, <code>print("3" + "4")</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__3" value="une erreur"><label for="a3p2__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__2" value="7"><label for="a3p2__2">7</label></div>
   <div class="qcm-option"><input type="radio" name="a3p2" id="a3p2__1" value="34"><label for="a3p2__1">34</label></div>
 </fieldset>
 <p><b>Expérience C :</b> <code class="code-ligne">print("Train " + "Q", 2 + 1, "min")</code></p>
       <fieldset class="qcm-groupe" id="a3p3" data-melange="1">
-  <legend>① Je prédis :</legend>
+  <legend>① Prédis : qu'affichera l'expérience C, <code>print("Train " + "Q", 2 + 1, "min")</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__3" value="Train Q 3 min"><label for="a3p3__3">Train Q 3 min</label></div>
   <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__1" value="Train Q 21 min"><label for="a3p3__1">Train Q 21 min</label></div>
   <div class="qcm-option"><input type="radio" name="a3p3" id="a3p3__4" value="une erreur"><label for="a3p3__4">une erreur</label></div>
@@ -2252,7 +2266,7 @@ print("2 + 3 =", 2 + 3)
 </fieldset>
 <p><b>Expérience D :</b> <code class="code-ligne">print(type(3 + 4.5), 3 + 4.5 &gt; 7)</code> <br><i>type(…) répond par le TYPE d'une valeur.</i></p>
 <fieldset class="qcm-groupe" id="a3p4" data-melange="1">
-  <legend>① Je prédis :</legend>
+  <legend>① Prédis : qu'affichera l'expérience D, <code>print(type(3 + 4.5), 3 + 4.5 &gt; 7)</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="a3p4" id="a3p4__2" value="&lt;class &#x27;int&#x27;&gt; True"><label for="a3p4__2">&lt;class 'int'&gt; True</label></div>
   <div class="qcm-option"><input type="radio" name="a3p4" id="a3p4__1" value="&lt;class &#x27;float&#x27;&gt; True"><label for="a3p4__1">&lt;class 'float'&gt; True</label></div>
   <div class="qcm-option"><input type="radio" name="a3p4" id="a3p4__3" value="&lt;class &#x27;float&#x27;&gt; False"><label for="a3p4__3">&lt;class 'float'&gt; False</label></div>
@@ -2274,26 +2288,26 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
     <div class="exo">
       <p><b>③ Je reporte ce que la console a affiché :</b></p>
       <fieldset class="qcm-groupe qcm-rangee" id="a3r1" data-melange="1">
-  <legend>Expérience A a affiché :</legend>
+  <legend>Qu'a affiché la console pour l'expérience A ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__2" value="7"><label for="a3r1__2">7</label></div>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__3" value="une erreur" data-pourquoi="Relance ▶ Exécuter et lis la première ligne de la console : y a-t-il un message d'erreur ?"><label for="a3r1__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3r1" id="a3r1__1" value="34" data-pourquoi="Ici, 3 et 4 n'ont pas de guillemets : relis la première ligne de la console."><label for="a3r1__1">34</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a3r2" data-melange="1">
-  <legend>Expérience B a affiché :</legend>
+  <legend>Qu'a affiché la console pour l'expérience B ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__2" value="7" data-pourquoi="Ici, 3 et 4 sont entre guillemets : relis la deuxième ligne de la console."><label for="a3r2__2">7</label></div>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__3" value="une erreur" data-pourquoi="Relance ▶ Exécuter : la deuxième ligne de la console n'est pas un message d'erreur."><label for="a3r2__3">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3r2" id="a3r2__1" value="34"><label for="a3r2__1">34</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r3" data-melange="1">
-  <legend>Expérience C a affiché :</legend>
+  <legend>Qu'a affiché la console pour l'expérience C ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__4" value="une erreur" data-pourquoi="Relance ▶ Exécuter : la troisième ligne de la console n'est pas un message d'erreur."><label for="a3r3__4">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__3" value="Train Q 3 min"><label for="a3r3__3">Train Q 3 min</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__2" value="TrainQ3min" data-pourquoi="Regarde les espaces dans la console : la virgule de print en ajoute un entre chaque élément."><label for="a3r3__2">TrainQ3min</label></div>
   <div class="qcm-option"><input type="radio" name="a3r3" id="a3r3__1" value="Train Q 21 min" data-pourquoi="2 et 1 n'ont pas de guillemets : ce sont des nombres. Relis la console."><label for="a3r3__1">Train Q 21 min</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a3r6" data-melange="1">
-  <legend>Expérience D a affiché :</legend>
+  <legend>Qu'a affiché la console pour l'expérience D ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r6" id="a3r6__2" value="&lt;class &#x27;int&#x27;&gt; True" data-pourquoi="3 + 4.5 mêle un entier et un nombre à virgule : relis la quatrième ligne de la console."><label for="a3r6__2">&lt;class 'int'&gt; True</label></div>
   <div class="qcm-option"><input type="radio" name="a3r6" id="a3r6__1" value="&lt;class &#x27;float&#x27;&gt; True"><label for="a3r6__1">&lt;class 'float'&gt; True</label></div>
   <div class="qcm-option"><input type="radio" name="a3r6" id="a3r6__3" value="&lt;class &#x27;float&#x27;&gt; False" data-pourquoi="7.5 est-il plus grand que 7 ? Relis la quatrième ligne de la console."><label for="a3r6__3">&lt;class 'float'&gt; False</label></div>
@@ -2307,7 +2321,7 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
   <div class="qcm-option"><input type="radio" name="a3r4" id="a3r4__2" value="il provoque toujours une erreur de type" data-pourquoi="L'expérience B met un + entre deux textes : la console a-t-elle affiché une erreur ?"><label for="a3r4__2">il provoque toujours une erreur de type</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a3r5" data-melange="1">
-  <legend>Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Le panneau affiche donc :</legend>
+  <legend>Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Qu'affiche donc le panneau ?</legend>
   <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__2" value="4 min" data-pourquoi="Le + ne fait pas disparaître le &quot;1&quot; : que fait-il entre deux textes ?"><label for="a3r5__2">4 min</label></div>
   <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__1" value="5 min" data-pourquoi="5 serait le résultat sans guillemets : ici, &quot;4&quot; et &quot;1&quot; sont des textes."><label for="a3r5__1">5 min</label></div>
   <div class="qcm-option"><input type="radio" name="a3r5" id="a3r5__3" value="41 min"><label for="a3r5__3">41 min</label></div>
@@ -2319,6 +2333,10 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <p class="feedback" id="fb3" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
+      <figure class="correction-outil">
+        <img src="Images/correction_editeur_act3.png" width="844" height="676" alt="L&#x27;éditeur Python de l&#x27;activité 3 après ▶ Exécuter : les quatre expériences, et la console qui affiche 7, puis 34, puis « Train Q 3 min », puis « &lt;class &#x27;float&#x27;&gt; True »." loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">
+        <figcaption>L'éditeur, après ▶ Exécuter : la console affiche une ligne par expérience, A, B, C, D.</figcaption>
+      </figure>
       <p>A : <b>7</b> (int + int = addition). <br>B : <b>34</b> — pas « trente-quatre » : le TEXTE « 34 »,
       les deux caractères collés (concaténation). <br>C : <b>Train Q 3 min</b> — <code>"Train " + "Q"</code>
       colle les textes, <code>2 + 1</code> additionne les nombres, et la virgule de <code>print</code>
@@ -2364,14 +2382,14 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
     <div class="exo">
       <p><b>🔎 Bug n°1 — les minutes fantômes.</b></p>
       <fieldset class="qcm-groupe qcm-rangee" id="a4b1l">
-  <legend>Il se cache à la ligne :</legend>
+  <legend>À quelle ligne se cache le bug n°1 ?</legend>
   <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__1" value="1" data-pourquoi="La ligne 1 range le nom du train : cherche où minutes reçoit sa première valeur."><label for="a4b1l__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__2" value="6" data-pourquoi="La ligne 6 fabrique le message, avec train et quai : elle ne touche pas à minutes."><label for="a4b1l__2">6</label></div>
   <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__3" value="3"><label for="a4b1l__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="a4b1l" id="a4b1l__4" value="8" data-pourquoi="La ligne 8 affiche seulement : les minutes sont déjà fausses avant elle. Remonte le programme."><label for="a4b1l__4">8</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4b1c" data-melange="1">
-  <legend>La correction :</legend>
+  <legend>Quelle correction répare le bug n°1 ?</legend>
   <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__3" value="minutes = 2 + 1"><label for="a4b1c__3">minutes = 2 + 1</label></div>
   <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__4" value="supprimer la ligne 3" data-pourquoi="Sans la ligne 3, la boîte minutes n'existe plus : la ligne 7 ne pourrait rien calculer."><label for="a4b1c__4">supprimer la ligne 3</label></div>
   <div class="qcm-option"><input type="radio" name="a4b1c" id="a4b1c__1" value="minutes = &quot;2 + 1&quot;" data-pourquoi="Entre guillemets, tout est du texte : Python ne ferait pas le calcul, il garderait les caractères."><label for="a4b1c__1">minutes = "2 + 1"</label></div>
@@ -2379,14 +2397,14 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
 </fieldset>
 <p><b>🔎 Bug n°2 — la virgule qui trompe.</b> Attention : pour celui-ci, Python n'affiche aucune erreur.</p>
       <fieldset class="qcm-groupe qcm-rangee" id="a4b2l">
-  <legend>Il se cache à la ligne :</legend>
+  <legend>À quelle ligne se cache le bug n°2 ?</legend>
   <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__1" value="4" data-pourquoi="À la ligne 4, 77 est un nombre entier bien écrit : cherche un nombre décimal."><label for="a4b2l__1">4</label></div>
   <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__2" value="6" data-pourquoi="Ligne 6 : aucun nombre, seulement des textes collés. Cherche un nombre décimal mal écrit."><label for="a4b2l__2">6</label></div>
   <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__3" value="7" data-pourquoi="La ligne 7, c'est le bug n°3, et lui déclenche une erreur : ici, Python ne dit rien."><label for="a4b2l__3">7</label></div>
   <div class="qcm-option"><input type="radio" name="a4b2l" id="a4b2l__4" value="5"><label for="a4b2l__4">5</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4b2c" data-melange="1">
-  <legend>La correction :</legend>
+  <legend>Quelle correction répare le bug n°2 ?</legend>
   <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__2" value="écrire 1.8, avec un point"><label for="a4b2c__2">écrire 1.8, avec un point</label></div>
   <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__3" value="mettre 1,8 entre guillemets" data-pourquoi="Entre guillemets, 1,8 devient un texte : relis la carte float du document 2."><label for="a4b2c__3">mettre 1,8 entre guillemets</label></div>
   <div class="qcm-option"><input type="radio" name="a4b2c" id="a4b2c__4" value="remplacer / par ×" data-pourquoi="Le signe / fait bien la division de la formule : le défaut est dans l'écriture d'un nombre."><label for="a4b2c__4">remplacer / par ×</label></div>
@@ -2402,14 +2420,14 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
 </fieldset>
 <p><b>🔗 Une cause, deux symptômes.</b></p>
 <fieldset class="qcm-groupe" id="a4b5" data-melange="1">
-  <legend>Si tu corriges SEULEMENT la ligne 3 (<code>minutes = 2 + 1</code>), l'erreur de la ligne 7 :</legend>
+  <legend>Si tu corriges SEULEMENT la ligne 3 (<code>minutes = 2 + 1</code>), que devient l'erreur de la ligne 7 ?</legend>
   <div class="qcm-option"><input type="radio" name="a4b5" id="a4b5__2" value="reste : il faut corriger la ligne 7 à part" data-pourquoi="Refais la table de suivi : après la ligne 3 corrigée, minutes est-il un texte ou un nombre ?"><label for="a4b5__2">reste : il faut corriger la ligne 7 à part</label></div>
   <div class="qcm-option"><input type="radio" name="a4b5" id="a4b5__3" value="se déplace à la ligne 8" data-pourquoi="La ligne 8 affiche, elle ne calcule rien d'impossible : regarde le type de minutes, ligne 7."><label for="a4b5__3">se déplace à la ligne 8</label></div>
   <div class="qcm-option"><input type="radio" name="a4b5" id="a4b5__1" value="disparaît aussi : minutes est devenu un nombre"><label for="a4b5__1">disparaît aussi : minutes est devenu un nombre</label></div>
   <div class="qcm-option"><input type="radio" name="a4b5" id="a4b5__4" value="devient une erreur à la ligne 5" data-pourquoi="Avec 1,8, la ligne 5 ne s'arrête pas : c'est un bug silencieux. Regarde plutôt la ligne 7."><label for="a4b5__4">devient une erreur à la ligne 5</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a4b4" data-melange="1">
-  <legend>Une fois les 3 bugs corrigés, la ligne 8 affiche :</legend>
+  <legend>Une fois les 3 bugs corrigés, qu'affiche la ligne 8 ?</legend>
   <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__2" value="Q - 96 St 2 min | 25.0 C"><label for="a4b4__2">Q - 96 St 2 min | 25.0 C</label></div>
   <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__3" value="Q96St2min25C" data-pourquoi="print sépare ses éléments par un espace, et message contient déjà un tiret : regarde la ligne 6."><label for="a4b4__3">Q96St2min25C</label></div>
   <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__1" value="Q - 96 St 21 min | 25.0 C" data-pourquoi="Une fois corrigée, la ligne 3 ne colle plus rien : refais la table de suivi de minutes."><label for="a4b4__1">Q - 96 St 21 min | 25.0 C</label></div>
@@ -2437,6 +2455,11 @@ print(message, minutes, "min |", temperature_c, "C")
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <p class="feedback" id="fb4" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
+      <figure class="correction-outil">
+        <img src="Images/correction_editeur_act4.png" width="844" height="747" alt="L&#x27;éditeur Python de l&#x27;activité 4 avec le programme corrigé : ligne 3, minutes = 2 + 1 ; ligne 5, temperature_c = (temperature_f - 32) / 1.8 ; le reste inchangé. Après ▶ Exécuter, la console affiche « Q - 96 St 2 min | 25.0 C », puis « Terminé »." loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">
+        <figcaption>Le programme corrigé, dans l'éditeur de la page, exécuté : deux lignes changent (3 et 5), et la console donne le bon panneau.</figcaption>
+      </figure>
+      <p class="correction-fichier">📥 <a href="corriges_py/3e-VARIABLES-act4-correction.py" download>3e-VARIABLES-act4-correction.py</a> — le programme corrigé : ouvre-le avec 📂 Ouvrir mon .py, dans l'éditeur, pour le comparer au tien.</p>
       <p>Bug 1 : <b>ligne 3</b>, <code>"2" + "1"</code> colle les textes → <code>"21"</code> ; <br>correction :
       <code>minutes = 2 + 1</code>. <br>Bug 2 : <b>ligne 5</b>, <code>1,8</code> — en Python la virgule sépare des
       éléments, elle ne fait pas les décimales ; <br>correction : <code>1.8</code>. <br>Bug 3 : avec la ligne 3
@@ -2466,21 +2489,21 @@ print(message, minutes, "min |", temperature_c, "C")
 4  texte = "Train " + "Q"</pre>
   <div class="exo">
 <fieldset class="qcm-groupe qcm-rangee" id="bs1" data-melange="1">
-  <legend>Après la ligne 4, <code>attente</code> vaut :</legend>
+  <legend>Que vaut <code>attente</code> après la ligne 4 ?</legend>
   <div class="qcm-option"><input type="radio" name="bs1" id="bs1__2" value="4"><label for="bs1__2">4</label></div>
   <div class="qcm-option"><input type="radio" name="bs1" id="bs1__1" value="3"><label for="bs1__1">3</label></div>
   <div class="qcm-option"><input type="radio" name="bs1" id="bs1__3" value="5"><label for="bs1__3">5</label></div>
   <div class="qcm-option"><input type="radio" name="bs1" id="bs1__4" value="attente - 1"><label for="bs1__4">attente - 1</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="bs2" data-melange="1">
-  <legend><code>copie</code> vaut :</legend>
+  <legend>Que vaut <code>copie</code> après la ligne 4 ?</legend>
   <div class="qcm-option"><input type="radio" name="bs2" id="bs2__2" value="3"><label for="bs2__2">3</label></div>
   <div class="qcm-option"><input type="radio" name="bs2" id="bs2__3" value="attente"><label for="bs2__3">attente</label></div>
   <div class="qcm-option"><input type="radio" name="bs2" id="bs2__1" value="4"><label for="bs2__1">4</label></div>
   <div class="qcm-option"><input type="radio" name="bs2" id="bs2__4" value="rien : elle est vide"><label for="bs2__4">rien : elle est vide</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="bs3" data-melange="1">
-  <legend><code>texte</code> vaut :</legend>
+  <legend>Que vaut <code>texte</code> après la ligne 4 ?</legend>
   <div class="qcm-option"><input type="radio" name="bs3" id="bs3__2" value="&quot;TrainQ&quot;"><label for="bs3__2">"TrainQ"</label></div>
   <div class="qcm-option"><input type="radio" name="bs3" id="bs3__1" value="&quot;Train Q&quot;"><label for="bs3__1">"Train Q"</label></div>
   <div class="qcm-option"><input type="radio" name="bs3" id="bs3__3" value="&quot;Train + Q&quot;"><label for="bs3__3">"Train + Q"</label></div>
@@ -2579,21 +2602,21 @@ print(message, minutes, "min |", temperature_c, "C")
     else:
         return ▢3</pre>
       <fieldset class="qcm-groupe qcm-rangee" id="a5t1" data-melange="1">
-  <legend>▢1 :</legend>
+  <legend>▢1 — Quel signe met-on en ▢1 pour tester « l'air dépasse 100 » ?</legend>
   <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__3" value="&gt;"><label for="a5t1__3">&gt;</label></div>
   <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__2" value="==" data-pourquoi="Le signe == vérifie « exactement 100 » : le besoin parle d'un indice qui dépasse 100."><label for="a5t1__2">==</label></div>
   <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__4" value="=" data-pourquoi="Un seul = range une valeur dans une boîte : dans un if, il faut un signe qui compare."><label for="a5t1__4">=</label></div>
   <div class="qcm-option"><input type="radio" name="a5t1" id="a5t1__1" value="&lt;" data-pourquoi="Avec &lt;, la ventilation à fond partirait quand l'air est propre : relis la consigne."><label for="a5t1__1">&lt;</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a5t2" data-melange="1">
-  <legend>▢2 :</legend>
+  <legend>▢2 — Quelle vitesse la fonction renvoie-t-elle quand l'air est pollué (ventiler à fond) ?</legend>
   <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__1" value="1" data-pourquoi="Relis la consigne : quelle vitesse demande-t-elle quand l'air est pollué ?"><label for="a5t2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__3" value="3"><label for="a5t2__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__2" value="2" data-pourquoi="Cette vitesse est déjà renvoyée plus bas, pour le train qui arrive : relis la consigne."><label for="a5t2__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a5t2" id="a5t2__4" value="&quot;3&quot;" data-pourquoi="Entre guillemets, c'est un texte : la ventilation attend un nombre, comme le return 2 plus bas."><label for="a5t2__4">"3"</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a5t3">
-  <legend>▢3 :</legend>
+  <legend>▢3 — Quelle vitesse renvoie-t-elle sinon, quand aucun train n'arrive (ventiler doucement) ?</legend>
   <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__1" value="0" data-pourquoi="La consigne ne prévoit pas d'arrêt : même sans pollution ni train, la ventilation tourne."><label for="a5t3__1">0</label></div>
   <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__2" value="1"><label for="a5t3__2">1</label></div>
   <div class="qcm-option"><input type="radio" name="a5t3" id="a5t3__3" value="2" data-pourquoi="Cette vitesse est déjà renvoyée juste au-dessus, quand un train arrive : le else traite le reste."><label for="a5t3__3">2</label></div>
@@ -2621,14 +2644,14 @@ print(message, minutes, "min |", temperature_c, "C")
     <div class="exo">
       <p><b>③ Tranche le cas limite :</b> à 100 pile, le besoin ne disait rien. <br>La MTA précise : « à 100 exactement, l'air est déjà trop pollué : il faut ventiler à fond ». <br>Le besoin se précise : la fonction doit suivre.</p>
       <fieldset class="qcm-groupe qcm-rangee" id="a5q1" data-melange="1">
-  <legend>Le test T4 a montré que la fonction renvoie :</legend>
+  <legend>Que renvoie la fonction au test T4 ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="2" data-pourquoi="Relance le test T4 du banc et lis la colonne « Obtenu » : aucun train n'arrive."><label for="a5q1__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="une erreur" data-pourquoi="Le banc n'affiche pas d'erreur : relance le test T4 et lis la colonne « Obtenu »."><label for="a5q1__4">une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__1" value="3" data-pourquoi="Le besoin attend bien 3, mais la colonne « Obtenu » du test T4 dit autre chose."><label for="a5q1__1">3</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="1"><label for="a5q1__3">1</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a5q2" data-melange="1">
-  <legend>Pour respecter le besoin, il faut corriger la condition en :</legend>
+  <legend>En quoi faut-il corriger la condition pour respecter le besoin ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__4" value="air &lt; 100" data-pourquoi="Avec &lt;, la ventilation à fond partirait quand l'air est propre : c'est l'inverse du besoin."><label for="a5q2__4">air &lt; 100</label></div>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__3" value="air &gt;= 100"><label for="a5q2__3">air &gt;= 100</label></div>
   <div class="qcm-option"><input type="radio" name="a5q2" id="a5q2__1" value="air &gt; 99.9" data-pourquoi="C'est une astuce fragile : 99,95 déclencherait aussi. Le besoin dit « à 100 exactement », et au-dessus."><label for="a5q2__1">air &gt; 99.9</label></div>
@@ -2642,7 +2665,7 @@ print(message, minutes, "min |", temperature_c, "C")
   <div class="qcm-option"><input type="radio" name="a5q3" id="a5q3__1" value="rien : la correction est évidente" data-pourquoi="Une correction peut casser ailleurs : comment le saurais-tu sans preuve ?"><label for="a5q3__1">rien : la correction est évidente</label></div>
 </fieldset>
 <fieldset class="qcm-groupe qcm-rangee" id="a5q4" data-melange="1">
-  <legend>Air à 150 ET un train qui arrive : deux conditions vraies. La fonction doit renvoyer :</legend>
+  <legend>Air à 150 ET un train qui arrive : deux conditions vraies. Que doit renvoyer la fonction ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__1" value="2" data-pourquoi="Le train arrive, mais l'air est pollué aussi : relis le besoin, quelle condition passe en premier ?"><label for="a5q4__1">2</label></div>
   <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__2" value="5" data-pourquoi="Une fonction renvoie une seule valeur : return arrête la fonction, il n'additionne pas deux vitesses."><label for="a5q4__2">5</label></div>
   <div class="qcm-option"><input type="radio" name="a5q4" id="a5q4__3" value="3"><label for="a5q4__3">3</label></div>
@@ -2686,6 +2709,11 @@ print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
     <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
     <p class="feedback" id="fb5" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
+      <figure class="correction-outil">
+        <img src="Images/correction_editeur_act5.png" width="844" height="856" alt="L&#x27;éditeur Python de l&#x27;activité 5 avec la fonction corrigée : si air &gt;= 100, elle renvoie 3 ; sinon, si train_arrive, elle renvoie 2 ; sinon, elle renvoie 1. Puis les quatre appels T1 à T4. Après ▶ Exécuter, la console affiche 3, 2, 1, 3." loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">
+        <figcaption>Ta fonction corrigée, dans l'éditeur, exécutée : les quatre appels donnent 3, 2, 1, 3 — le cas limite T4 compris.</figcaption>
+      </figure>
+      <p class="correction-fichier">📥 <a href="corriges_py/3e-VARIABLES-act5-correction.py" download>3e-VARIABLES-act5-correction.py</a> — la fonction corrigée et ses quatre appels : ouvre-le avec 📂 Ouvrir mon .py, dans l'éditeur, pour le comparer au tien.</p>
       <p>① <code>if air &gt; 100: return 3</code> / <code>else: return 1</code> — et une fonction parce
       qu'elle se REJOUE et se teste à volonté.<br>② T1→3 ✔, T2→2 ✔, T3→1 ✔, T4→<b>1</b> : avec
       <code>&gt;</code>, 100 n'est pas « supérieur à 100 », donc la station ventile doucement dans un air
@@ -2719,7 +2747,7 @@ print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
     <img class="figure" src="Images/coney_island_stillwell_entree_ccby.jpg" alt="L'entrée de la station Coney Island–Stillwell Avenue : la façade historique en briques vernissées blanches avec les grandes lettres CONEY ISLAND et l'inscription BMT Lines" loading="lazy">
     <figcaption>Le terminus t'attend — la façade de 1919 de Coney Island–Stillwell Avenue, ses lettres légendaires et son inscription « BMT Lines » d'époque. <br>Si tes convertisseurs du défi ci-dessous sont justes, tu sauras exactement dans combien de temps tu peux y être. <span class="credit-photo"><br>Photo : Kidfly182, licence CC BY 4.0, via Wikimedia Commons — image redimensionnée · commons.wikimedia.org/wiki/File:Coney_Island_Stillwell_Avenue_Entrance_001.jpg</span></figcaption>
   </figure>
-  <p>Trois défis ouverts, sans vérificateur — pour le plaisir d'aller plus loin :</p>
+  <p>Trois défis ouverts, pour le plaisir d'aller plus loin — leurs corrigés sont repliés sous ta réponse :</p>
   <p><b>🗽 Défi convertisseur :</b><br>① Dans l'éditeur Python ci-dessous, écris <code>miles_vers_km(d)</code> (1 mile = 1.609 km) et <code>fahrenheit_vers_celsius(t)</code>.<br>② Convertis un marathon de New York (26.2 miles) et la canicule de juillet (98 °F).<br>Bonus du bonus : écris ton banc de tests AVANT les fonctions.</p>
   <p><b>🎫 Défi MetroCard :</b> une carte coûte 1 $, chaque trajet 2.90 $.<br>① Écris <code>prix_total(nb_trajets)</code>.<br>② Ajoute la règle « au-delà de 12 trajets par semaine, les suivants sont gratuits ».<br>③ Quels cas limites ton banc de tests doit-il couvrir ?</p>
   <p><b>👨‍👩‍👧 Défi famille :</b><br>① Prends trois vraies boîtes de cuisine, étiquetées <code>train</code>, <code>minutes</code>, <code>quai</code>, et des papiers comme valeurs.<br>② Fais exécuter le programme de l'activité 1 à quelqu'un de ta famille : toi, tu joues le processeur qui lit les lignes.<br>S'il comprend pourquoi l'ancien papier va à la poubelle, vous avez gagné tous les deux.</p>
@@ -2741,6 +2769,16 @@ print("Canicule :", fahrenheit_vers_celsius(98), "°C")
 </div>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Les corrigés des défis — à ouvrir après avoir cherché</summary><div class="contenu">
+      <figure class="correction-outil">
+        <img src="Images/correction_editeur_bonus.png" width="856" height="1012" alt="L&#x27;éditeur du Bonus avec une correction possible des deux défis de programmation : miles_vers_km renvoie round(d * 1.609, 2) ; fahrenheit_vers_celsius renvoie round((t - 32) / 1.8, 1) ; prix_total compte au plus 12 trajets payants. La console affiche « Marathon : 42.16 km », « Canicule : 36.7 °C », puis le prix pour 0, 1, 12, 13 et 20 trajets : 1.0, 3.9, 35.8, 35.8 et 35.8 dollars." loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">
+        <figcaption>Une correction possible des deux défis de programmation, exécutée dans l'éditeur du Bonus.</figcaption>
+      </figure>
+      <p class="correction-fichier">📥 <a href="corriges_py/3e-VARIABLES-bonus-correction.py" download>3e-VARIABLES-bonus-correction.py</a> — les deux défis corrigés : ouvre-le avec 📂 Ouvrir mon .py, dans l'éditeur, pour le comparer au tien.</p>
+      <p><b>🗽 Convertisseur.</b> <br>Le marathon fait 42,16 km (26,2 × 1,609). <br>La canicule de 98 °F fait 36,7 °C : la formule du panneau de l'activité 4. <br><code>round(…, 2)</code> arrondit à deux chiffres après la virgule : sans lui, l'ordinateur affiche 42.155800000000006, parce qu'il calcule en binaire.</p>
+      <p><b>🎫 MetroCard.</b> <br>Au-delà de 12 trajets, les suivants sont gratuits : on compte au plus 12 trajets payants, <code>min(nb_trajets, 12)</code>. <br>Le banc teste 0 trajet (la carte seule, 1 $), 1 trajet, <b>la frontière 12</b>, <b>juste après, 13</b>, et loin après, 20 : à 12, 13 et 20, le prix ne bouge plus (35,80 $). <br>Le cas limite, c'est 12 et 13 : c'est là qu'un <code>&gt;</code> mis pour un <code>&gt;=</code> se trahirait.</p>
+      <p><b>👨‍👩‍👧 Famille.</b> <br>Le défi est réussi si ta famille dit, sans aide, pourquoi l'ancien papier va à la poubelle à la ligne 3 : une boîte ne garde qu'une valeur.</p>
+  </div></details>
 </details>
 </section>
 

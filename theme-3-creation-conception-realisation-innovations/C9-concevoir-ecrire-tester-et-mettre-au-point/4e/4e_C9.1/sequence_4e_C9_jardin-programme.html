@@ -1911,8 +1911,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1926,7 +1929,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -2068,9 +2071,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -2351,21 +2354,21 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
   <p>Trois questions sur ce que tu es censé savoir en arrivant. <br><b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> : elles servent à savoir, toi comme le professeur, sur quoi s'appuyer. <br>Réponds franchement — « je ne sais pas » est une réponse utile.</p>
   <div class="assoc"><fieldset class="qcm-groupe" id="be_1" data-melange="1">
-  <legend>Une <b>variable</b>, en informatique, c'est…</legend>
+  <legend>Qu'est-ce qu'une <b>variable</b>, en informatique ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="un nombre qui change tout seul, au hasard"><label for="be_1__1">un nombre qui change tout seul, au hasard</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une boîte qui porte un nom et contient une valeur"><label for="be_1__2">une boîte qui porte un nom et contient une valeur</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une erreur que le programme doit corriger"><label for="be_1__3">une erreur que le programme doit corriger</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
 </fieldset></div>
   <div class="assoc"><fieldset class="qcm-groupe" id="be_2" data-melange="1">
-  <legend>Dans « SI la température &lt; 5 ALORS allumer le chauffage », le mot SI introduit…</legend>
+  <legend>Dans « SI la température &lt; 5 ALORS allumer le chauffage », qu'introduit le mot SI ?</legend>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="une condition : une question vraie ou fausse"><label for="be_2__3">une condition : une question vraie ou fausse</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="une boucle qui répète des instructions"><label for="be_2__1">une boucle qui répète des instructions</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="le nom d&#x27;une variable du programme"><label for="be_2__2">le nom d'une variable du programme</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
 </fieldset></div>
   <div class="assoc"><fieldset class="qcm-groupe" id="be_3" data-melange="1">
-  <legend>Un capteur d'humidité, dans la chaîne d'information, occupe la fonction…</legend>
+  <legend>Dans la chaîne d'information, quelle fonction occupe un capteur d'humidité ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="TRAITER"><label for="be_3__1">TRAITER</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="ACQUÉRIR"><label for="be_3__2">ACQUÉRIR</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="COMMUNIQUER"><label for="be_3__3">COMMUNIQUER</label></div>
@@ -2527,7 +2530,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
     <div class="exo">
       <h4>a) Chaque organe à sa place</h4>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_1" data-melange="1">
-  <legend>Le capteur d'humidité planté dans la terre</legend>
+  <legend>Dans quelle fonction places-tu le capteur d'humidité planté dans la terre ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="TRAITER" data-pourquoi="Le capteur ne décide rien : il prend une mesure."><label for="a1_1__2">TRAITER</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="COMMUNIQUER" data-pourquoi="Il ne s'adresse pas au jardinier : il renseigne la carte."><label for="a1_1__3">COMMUNIQUER</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__7" value="TRANSMETTRE" data-pourquoi="Il ne transmet aucun mouvement."><label for="a1_1__7">TRANSMETTRE</label></div>
@@ -2537,7 +2540,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="ALIMENTER" data-pourquoi="Il ne fournit pas d'énergie au système."><label for="a1_1__4">ALIMENTER</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_2" data-melange="1">
-  <legend>La carte et son programme</legend>
+  <legend>Dans quelle fonction places-tu la carte et son programme ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__7" value="TRANSMETTRE" data-pourquoi="La carte ne transmet aucun mouvement."><label for="a1_2__7">TRANSMETTRE</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="ALIMENTER" data-pourquoi="Elle consomme de l'énergie, elle n'en fournit pas."><label for="a1_2__4">ALIMENTER</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="COMMUNIQUER" data-pourquoi="Elle décide ; d'autres constituants montrent l'état au jardinier."><label for="a1_2__3">COMMUNIQUER</label></div>
@@ -2547,7 +2550,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__6" value="CONVERTIR" data-pourquoi="Elle ne transforme pas l'énergie en mouvement."><label for="a1_2__6">CONVERTIR</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_3" data-melange="1">
-  <legend>L'affichage « POMPE ON » et le voyant</legend>
+  <legend>Dans quelle fonction places-tu l'affichage « POMPE ON » et le voyant ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__6" value="CONVERTIR" data-pourquoi="L'affichage n'actionne rien : il informe."><label for="a1_3__6">CONVERTIR</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="COMMUNIQUER"><label for="a1_3__3">COMMUNIQUER</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__7" value="TRANSMETTRE" data-pourquoi="Il ne transmet aucun mouvement."><label for="a1_3__7">TRANSMETTRE</label></div>
@@ -2557,7 +2560,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="ALIMENTER" data-pourquoi="Il consomme de l'énergie, il n'en fournit pas."><label for="a1_3__4">ALIMENTER</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_4" data-melange="1">
-  <legend>Le moteur de la pompe</legend>
+  <legend>Dans quelle fonction places-tu le moteur de la pompe ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="ACQUÉRIR" data-pourquoi="Le moteur ne mesure rien."><label for="a1_4__1">ACQUÉRIR</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__6" value="CONVERTIR"><label for="a1_4__6">CONVERTIR</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__7" value="TRANSMETTRE" data-pourquoi="Il produit le mouvement ; le transmettre, c'est le faire passer plus loin."><label for="a1_4__7">TRANSMETTRE</label></div>
@@ -2567,7 +2570,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="TRAITER" data-pourquoi="Il ne décide rien : il obéit."><label for="a1_4__2">TRAITER</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_5" data-melange="1">
-  <legend>Le relais</legend>
+  <legend>Dans quelle fonction places-tu le relais ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="ACQUÉRIR" data-pourquoi="Le relais ne mesure rien."><label for="a1_5__1">ACQUÉRIR</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__5" value="DISTRIBUER"><label for="a1_5__5">DISTRIBUER</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="COMMUNIQUER" data-pourquoi="Il ne s'adresse pas au jardinier."><label for="a1_5__3">COMMUNIQUER</label></div>
@@ -2645,7 +2648,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       <h4>a) L'ordre des blocs</h4>
       <p style="font-size:.92em;color:var(--sub)">Numérote de 1 à 5 dans l'ordre où le programme les parcourt.</p>
       <div class="assoc"><fieldset class="qcm-groupe" id="ag1">
-  <legend>⬭ terminal — DÉBUT (au démarrage du système)</legend>
+  <legend>Quel numéro, de 1 à 5, donnes-tu au bloc ⬭ terminal « DÉBUT » (au démarrage du système) ?</legend>
   <div class="qcm-option"><input type="radio" name="ag1" id="ag1__1" value="1"><label for="ag1__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="ag1" id="ag1__2" value="2"><label for="ag1__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="ag1" id="ag1__3" value="3"><label for="ag1__3">3</label></div>
@@ -2653,7 +2656,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="ag1" id="ag1__5" value="5"><label for="ag1__5">5</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="ag2">
-  <legend>▭ traitement — Mesurer l'humidité H et lire l'heure</legend>
+  <legend>Quel numéro, de 1 à 5, donnes-tu au bloc ▭ traitement « Mesurer l'humidité H et lire l'heure » ?</legend>
   <div class="qcm-option"><input type="radio" name="ag2" id="ag2__1" value="1"><label for="ag2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="ag2" id="ag2__2" value="2"><label for="ag2__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="ag2" id="ag2__3" value="3"><label for="ag2__3">3</label></div>
@@ -2661,7 +2664,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="ag2" id="ag2__5" value="5"><label for="ag2__5">5</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="ag3">
-  <legend>◇ décision — H &lt; 40 ET heure entre 6 et 10 ?</legend>
+  <legend>Quel numéro, de 1 à 5, donnes-tu au bloc ◇ décision « H &lt; 40 ET heure entre 6 et 10 ? » ?</legend>
   <div class="qcm-option"><input type="radio" name="ag3" id="ag3__1" value="1"><label for="ag3__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="ag3" id="ag3__2" value="2"><label for="ag3__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="ag3" id="ag3__3" value="3"><label for="ag3__3">3</label></div>
@@ -2669,7 +2672,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="ag3" id="ag3__5" value="5"><label for="ag3__5">5</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="ag4">
-  <legend>▭ action sur OUI — allumer la pompe</legend>
+  <legend>Quel numéro, de 1 à 5, donnes-tu au bloc ▭ « allumer la pompe » (l'action sur OUI) ?</legend>
   <div class="qcm-option"><input type="radio" name="ag4" id="ag4__1" value="1"><label for="ag4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="ag4" id="ag4__2" value="2"><label for="ag4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="ag4" id="ag4__3" value="3"><label for="ag4__3">3</label></div>
@@ -2677,7 +2680,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="ag4" id="ag4__5" value="5"><label for="ag4__5">5</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="ag5">
-  <legend>▭ action sur NON — éteindre la pompe</legend>
+  <legend>Quel numéro, de 1 à 5, donnes-tu au bloc ▭ « éteindre la pompe » (l'action sur NON) ?</legend>
   <div class="qcm-option"><input type="radio" name="ag5" id="ag5__1" value="1"><label for="ag5__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="ag5" id="ag5__2" value="2"><label for="ag5__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="ag5" id="ag5__3" value="3"><label for="ag5__3">3</label></div>
@@ -2875,6 +2878,10 @@ heure = 8
 
     <div class="exo">
       <h4>a) Retrouver l'algorigramme dans le code</h4>
+      <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux" style="max-width:420px;margin:.4rem auto .8rem">
+        <img src="Images/algorigramme_arrosage.svg" alt="Algorigramme de l'arrosage en cinq blocs numérotés : 1 le terminal DÉBUT ; 2 un rectangle « mesurer l'humidité H et lire l'heure » ; 3 un losange « H inférieur à 40 ET heure comprise entre 6 et 10 ? » accompagné d'une bulle de commentaire en pointillés expliquant que le ET vit à l'intérieur de la question ; 4 sur la sortie OUI, un rectangle « allumer la pompe » ; 5 sur la sortie NON, un rectangle « éteindre la pompe » ; les deux chemins se rejoignent et une flèche remonte vers le bloc 2, formant la boucle de surveillance, sans aucun bloc FIN" style="display:block;width:100%;height:auto;background:#fff;border-radius:8px">
+        <figcaption>L'algorigramme de l'activité 2, sous les yeux : cherche dans le code la ligne qui fait chaque bloc. Clique dessus pour l'agrandir.</figcaption>
+      </figure>
       <p>Voici le programme de référence, en Python. Chaque question porte sur <b>une</b> ligne.</p>
       <div class="py"><span class="cmt"># --- les réglages, écrits une seule fois, tout en haut ---</span>
 SEUIL = <span class="num">40</span>
@@ -2938,6 +2945,11 @@ heure = <span class="num">8</span>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : relis le code ligne à ligne en te demandant, à chaque fois, « quel bloc de l'algorigramme est-ce ? ». <br>Pour b) : au banc d'essai, mets l'humidité à 25 puis fais glisser l'heure de 8 h à 23 h sans rien changer d'autre — et regarde.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Une <b>constante</b> écrite en haut (<code>SEUIL</code>) est un réglage ; un nombre écrit au milieu d'un test est un piège pour plus tard — le jour où le réglage change, il faudra le retrouver. <br>Et pour le <code>or</code> : demande-toi ce que devient <code>H &lt; 40 or heure &gt;= 6</code> quand H vaut 90 et qu'il est 8 h. <br>Le banc te le montrera en une seconde.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+      <figure class="correction-outil">
+        <img src="Images/correction_editeur_act3.png" width="844" height="902" alt="L&#x27;éditeur Python de l&#x27;activité 3 avec la décision écrite : si H &lt; SEUIL et heure &gt;= HEURE_DEBUT et heure &lt;= HEURE_FIN, print(&quot;POMPE ON&quot;) ; sinon, print(&quot;POMPE OFF&quot;). Avec H = 25 et heure = 8, après ▶ Exécuter, la console affiche « POMPE ON », puis « Terminé »." loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">
+        <figcaption>Le programme complet, la décision écrite, dans l'éditeur de la page : avec H = 25 et heure = 8, la console affiche POMPE ON.</figcaption>
+      </figure>
+      <p class="correction-fichier">📥 <a href="corriges_py/4e-JARDIN-correction.py" download>4e-JARDIN-correction.py</a> — le programme complet : ouvre-le avec 📂 Ouvrir mon .py, dans l'éditeur, pour le comparer au tien.</p>
       <p><b>Q1 :</b> pour n'avoir <b>qu'un seul endroit</b> à modifier. <br>Le jour où le professeur décide que 40 était trop bas, on change une ligne — pas cinq, disséminées. <br>C'est aussi ce qui rend le programme lisible : <code>H &lt; SEUIL</code> se lit, <code>H &lt; 40</code> se déchiffre. </p>
       <p></p>
       <p><b>Q2 :</b> le <b>losange</b>.</p>
@@ -2970,72 +2982,73 @@ heure = <span class="num">8</span>
     <div class="consigne"><b>Consigne :</b> a) remplis la colonne <b>ATTENDU</b> — <u>avant</u> de toucher au banc ; b) exécute chaque essai au banc d'essai de cette page et remplis <b>OBSERVÉ</b> ; c) réponds aux deux questions de méthode.</div>
     <div class="exo">
       <h4>a) et b) Le tableau d'essais</h4>
+      <p class="consigne-tableau">① Choisis le résultat ATTENDU de chaque essai, avant de lancer.<br>② Lance l'essai au banc, puis choisis le résultat OBSERVÉ.</p>
       <table class="recette" aria-label="Tableau d'essais à remplir">
         <tr><th>N°</th><th>Scénario</th><th>Entrées</th><th>ATTENDU (avant)</th><th>OBSERVÉ (pendant)</th></tr>
         <tr><td>1</td><td>sol sec, le matin</td><td>H = 25 · 8 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a1">
-  <legend>résultat attendu essai 1</legend>
+  <legend>Essai 1 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a1" id="a4_a1__1" value="pompe ON"><label for="a4_a1__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a1" id="a4_a1__2" value="pompe OFF" data-pourquoi="Sol sec, et l'heure est dans la plage : relis la règle."><label for="a4_a1__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o1">
-  <legend>résultat observé essai 1</legend>
+  <legend>Essai 1 : quel résultat OBSERVES-tu au banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_o1" id="a4_o1__1" value="conforme"><label for="a4_o1__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a4_o1" id="a4_o1__2" value="non conforme"><label for="a4_o1__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>2</td><td>sol humide, le matin</td><td>H = 55 · 8 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a2">
-  <legend>résultat attendu essai 2</legend>
+  <legend>Essai 2 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a2" id="a4_a2__1" value="pompe ON" data-pourquoi="Le sol est humide : rien à arroser."><label for="a4_a2__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a2" id="a4_a2__2" value="pompe OFF"><label for="a4_a2__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o2">
-  <legend>résultat observé essai 2</legend>
+  <legend>Essai 2 : quel résultat OBSERVES-tu au banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_o2" id="a4_o2__1" value="conforme"><label for="a4_o2__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a4_o2" id="a4_o2__2" value="non conforme"><label for="a4_o2__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>3</td><td>sol sec, mais la NUIT</td><td>H = 25 · 23 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a3">
-  <legend>résultat attendu essai 3</legend>
+  <legend>Essai 3 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a3" id="a4_a3__1" value="pompe ON" data-pourquoi="L'heure sort de la plage : même sol sec, on n'arrose pas."><label for="a4_a3__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a3" id="a4_a3__2" value="pompe OFF"><label for="a4_a3__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o3">
-  <legend>résultat observé essai 3</legend>
+  <legend>Essai 3 : quel résultat OBSERVES-tu au banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_o3" id="a4_o3__1" value="conforme"><label for="a4_o3__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a4_o3" id="a4_o3__2" value="non conforme"><label for="a4_o3__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>4</td><td><b>frontière</b> — juste sous le seuil</td><td>H = 39 · 7 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a4">
-  <legend>résultat attendu essai 4</legend>
+  <legend>Essai 4 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a4" id="a4_a4__1" value="pompe ON"><label for="a4_a4__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a4" id="a4_a4__2" value="pompe OFF" data-pourquoi="39 est sous 40, et l'heure est dans la plage."><label for="a4_a4__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o4">
-  <legend>résultat observé essai 4</legend>
+  <legend>Essai 4 : quel résultat OBSERVES-tu au banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_o4" id="a4_o4__1" value="conforme"><label for="a4_o4__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a4_o4" id="a4_o4__2" value="non conforme"><label for="a4_o4__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>5</td><td><b>frontière</b> — sur le seuil pile</td><td>H = 40 · 7 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a5">
-  <legend>résultat attendu essai 5</legend>
+  <legend>Essai 5 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a5" id="a4_a5__1" value="pompe ON" data-pourquoi="40 &lt; 40 est faux : relis la condition."><label for="a4_a5__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a5" id="a4_a5__2" value="pompe OFF"><label for="a4_a5__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o5">
-  <legend>résultat observé essai 5</legend>
+  <legend>Essai 5 : quel résultat OBSERVES-tu au banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_o5" id="a4_o5__1" value="conforme"><label for="a4_o5__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a4_o5" id="a4_o5__2" value="non conforme"><label for="a4_o5__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>6</td><td><b>absurde</b> — capteur débranché</td><td>H = 250 · 8 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a6" data-melange="1">
-  <legend>résultat attendu essai 6</legend>
+  <legend>Essai 6 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a6" id="a4_a6__2" value="le programme s&#x27;arrête avec une erreur" data-pourquoi="250 est un nombre comme un autre : le programme ne plante pas."><label for="a4_a6__2">le programme s'arrête avec une erreur</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a6" id="a4_a6__3" value="pompe OFF, sans aucun message d&#x27;alerte"><label for="a4_a6__3">pompe OFF, sans aucun message d'alerte</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a6" id="a4_a6__1" value="pompe ON, car 250 est une valeur extrême" data-pourquoi="250 n'est pas sous 40 : la condition est fausse."><label for="a4_a6__1">pompe ON, car 250 est une valeur extrême</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o6">
-  <legend>résultat observé essai 6</legend>
+  <legend>Essai 6 : quel résultat OBSERVES-tu au banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__1" value="conforme"><label for="a4_o6__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__2" value="non conforme"><label for="a4_o6__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -3504,6 +3517,7 @@ pompe_allumee = <span class="kw">False</span>
     <span class="kw">else</span>:
         <span class="kw">pass</span>   <span class="cmt"># rien : la pompe garde son état</span>
     <span class="fn">commander_relais</span>(pompe_allumee)</pre>
+      <p class="correction-fichier">📥 <a href="corriges_py/4e-POMPE-correction.py" download>4e-POMPE-correction.py</a> — le programme à deux seuils, en Python : il appelle lire_humidite() et commander_relais(), que l'atelier de la page (ou la carte) fournit.</p>
       <p><b>Q4 :</b> entre les deux seuils, on ne fait <b>rien</b> — et c'est précisément ce « rien » qui calme la pompe. Dans le Python, c'est le <code>pass</code>. </p>
       <p><b>Q5 :</b> pour garder un état, il faut une <b>mémoire</b> : une variable qui retient si la pompe est allumée. <br>Ici, c'est <code>pompe_allumee</code>, posée à <code>False</code> une seule fois, avant la boucle : à chaque tour, le <code>pass</code> la laisse telle qu'elle était. <br>Sans elle, le programme repartirait de zéro à chaque tour et ne saurait pas quoi « garder ».</p>
       <p><b>d) Ce que montre l'atelier, sur les deux essais :</b></p>
@@ -3658,6 +3672,12 @@ def eteindre_lampadaire():
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends ton programme de la pompe et demande-toi, ligne par ligne : qu'est-ce qui change ? Regarde la grandeur mesurée, les valeurs des seuils, le nom de l'action. <br>Et le <b>sens</b> de la comparaison : change-t-il vraiment ?</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour la pompe, « sec » = valeur <b>basse</b> = on allume. <br>Pour le lampadaire, « sombre » = valeur <b>basse</b> = on allume aussi. <br>Le sens ne s'inverse donc pas tant qu'on y réfléchit bien : dans les deux cas, on agit quand la mesure est basse. <br>Ce qui change, ce sont les <b>valeurs</b> : la nuit tombe vers L = 20, le jour se lève vers L = 60 — et ce large écart n'est pas un hasard, le crépuscule est long.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+
+      <figure class="correction-outil">
+        <img src="Images/correction_editeur_act6.png" width="810" height="766" alt="L&#x27;éditeur Python de l&#x27;activité 6 avec le programme du lampadaire : SEUIL_BAS = 20, SEUIL_HAUT = 60, une boucle while True qui lit la luminosité L, allume si L &lt; SEUIL_BAS, éteint si L &gt; SEUIL_HAUT, et ne change rien entre les deux. Après ▶ Exécuter sur la nuit simulée, la console affiche : 19 h 10, L = 18, le lampadaire s&#x27;allume ; 6 h 09, L = 61, le lampadaire s&#x27;éteint ; puis le bilan : un basculement le soir, un le matin." loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px">
+        <figcaption>Le programme du lampadaire, exécuté sur la nuit simulée : un seul basculement le soir, un seul le matin.</figcaption>
+      </figure>
+      <p class="correction-fichier">📥 <a href="corriges_py/4e-LAMPADAIRE-correction.py" download>4e-LAMPADAIRE-correction.py</a> — le programme du lampadaire : ouvre-le avec 📂 Ouvrir mon .py, dans l'éditeur, pour le comparer au tien.</p>
       <p><b>Programme attendu, en Python (une version parmi d'autres) :</b></p>
       <div class="py">SEUIL_BAS = <span class="num">20</span>      <span class="cmt"># il fait vraiment sombre</span>
 SEUIL_HAUT = <span class="num">60</span>     <span class="cmt"># il fait vraiment jour</span>
