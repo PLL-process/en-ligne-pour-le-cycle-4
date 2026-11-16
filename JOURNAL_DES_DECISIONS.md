@@ -32077,3 +32077,31 @@ séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées ave
 - Bancs des pages touchées : `3e_C4.1` 23 / 23 ; `3e_C4.3` 23 / 23 ; `3e_C4.7` 35 / 35 (le compte des SVG passe à 5 : le schéma fléché) ; `4e_C4.1` 52 / 52 ; `5e_C4.1` 65 / 65 et QCM 25 / 25 ; `5e_C6.1` 32 / 32 ; `4e_C7.5` 32 / 32 et 41 / 41 ; `5e_C7.4` 32 / 32 et 35 / 35 ; `5e_C7.5` 32 / 32 et 40 / 40 ; les bancs n°311 à 34 / 34 ; l'atelier carte mentale 54 / 54 (`banc_ateliers.py`).
 - L'atelier carte mentale : `build.py carte_mentale`, rejoué dans une copie à part, redonnait les pages à l'identique avant la modification ; après, seules les deux pages de niveau changent, d'une ligne chacune (le corrigé du Bonus).
 - Contrôles : `verif_regles_audit.py` 0 ✘ sur les pages touchées ; aération 0 ; liens, licence, mode mission, chaîne à compléter, règle n°4, sauvegarde locale, consignes : ✅ ; schéma sous les yeux 0 ✘ 0 ⚠ (le corrigé d'un défi du Bonus, `details.corrige-bonus`, est un dépliant permis) ; registre des règles : prochain n°337.
+
+## 16/11/2026 — Le lampadaire pièce par pièce, posé aussi dans la séquence de 5e_C4.1
+
+**La décision.** Pascal, le 16/11/2026 (06 h 24), à la question laissée ouverte par #745 (poser aussi la figure dans la séquence, comme #744 l'a fait pour les freins de `5e_C1.2`) : « Oui ».
+
+**Où, et pourquoi là.**
+- **Activité 1, séance 1, juste sous le schéma annoté** (« Le lampadaire annoté : fonctions et solutions »), dans un dépliant fermé : « 🔍 Le lampadaire en vrai, pièce par pièce : ouvre son coffret (figure à manipuler) ».
+- **Elle ne montre aucune réponse de plus** (n°177) : la partie a) se fait en lisant le schéma annoté, qui donne déjà toutes les paires fonction → solution (son aide de niveau 1 le dit : « Le schéma donne toutes les paires ! ») ; la figure ne dit aucun matériau (partie b).
+- **Ce qu'elle ajoute** : chaque pièce à sa place sur le vrai lampadaire, et ce que cache le coffret (batterie, régulateur, carte, interrupteur), que le schéma ne montre pas (n°85 : l'élève voit l'objet).
+- **Pas dans l'ouverture** : sa liste des pièces répondrait à l'hypothèse « où trouve-t-il son énergie la nuit ? ».
+- **Repliée et marquée `approfondissement`** : la séance 1 est déjà au-dessus du repère de 1 200 mots visibles (1 211) ; repliée, la figure n'y ajoute que la ligne de son titre (1 211 → 1 226) ; le mode essentiel la cache (1 194 avant comme après) ; **`pp-ecran`** : la fiche papier garde le schéma annoté, pas le cadre.
+- En mode mission, elle suit le schéma annoté comme ressource de l'activité (« 📎 »), sur chaque écran de question.
+
+**Comment.**
+- Un **cadre** (`iframe`) vers `lampadaire_en_pieces.html`, comme les freins de #744. La page sait qu'elle est dans un cadre : elle prend le fond bleu nuit de la séquence, garde son titre pour les lecteurs d'écran seulement, cache le lien de retour, et donne sa hauteur à la séquence (pas de barre de défilement dans le cadre).
+- **Sur un téléphone (560 px et moins)**, le cadre laisserait moins de 250 px à la figure : ses numéros ne se liraient plus. Le cadre s'efface et un lien ouvre la figure en grand, sur sa page, dans un nouvel onglet (la séquence reste où elle était).
+- **Sur la page de la figure, à 480 px et moins**, les pastilles numérotées grandissent (rayon 8,6 → 11,5, chiffres 9,6 → 12,5) ; l'écart minimal entre deux centres, mesuré lampadaire ouvert, est de 30,5 unités : elles ne se touchent pas. Le chiffre est centré dans sa pastille quelle que soit sa taille. À 360 px et moins, le titre du cadre s'efface (il chevauchait « Fig 1 ») : le titre de la page le dit.
+
+**Au passage, une correction.** La figure disait « le lampadaire **de la cour** » ; tout le lot dit « le lampadaire **du parking** » (la situation déclenchante, le QCM, les synthèses, la fiche pédagogique). C'était une erreur de #745 : la page, sa fiche A4 et `SOURCES_MEDIAS.md` disent maintenant « du parking ».
+
+**Vérifications.**
+- Contrôles du site : les 25 sont verts sur l'état final (les 17 rapides et les 8 longs, dont l'accessibilité de la séquence et celle de la page de la figure : aucun défaut ; schémas : 0 ✘).
+- Bancs du lot : séquence **65 / 65**, n°311 **34 / 34**, QCM **25 / 25**.
+- Mode mission : `poser.py --verifier` et `enrichir.py --verifier` à jour ; `banc_generique.mjs`, la page jouée écran par écran, aucun refus, 224 / 224 pourquoi.
+- `verif_regles_audit.py` 0 ✘ ; `audit_aeration.py --strict` 0.
+- Charge (`mesurer_charge.mjs`) : séance 1, 1 211 → 1 226 mots visibles ; essentiel 1 194 → 1 194 ; les autres séances inchangées.
+- Revue d'écran : à 1 280 px, le dépliant ouvert, le cadre à la hauteur de la figure (sans barre), le lampadaire ouvert dans le cadre ; à 600 px, le cadre (434 px de large) ; à 390 et 560 px, le lien à la place du cadre ; la page de la figure à 390 px (pastilles grandies, lampadaire ouvert) et à 320 px (titre du cadre effacé) ; aucune erreur JavaScript.
+- La fiche A4 : une page, « du parking », refaite et regardée.
