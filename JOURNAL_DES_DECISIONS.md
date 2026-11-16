@@ -31859,3 +31859,24 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 - Les bancs des 14 lots, lancés comme leur rapport de tests le dit : **verts** — les bancs n°311 à 34 / 34 (`4e_C1.1` et `5e_C1.5` rejoués seuls : sous charge, ils n'avaient rien rendu), `4e_C1.4` 31 / 31, `5e_C1.5` QCM 34 / 34 ; les bancs Python : `3e_C1.1` 50 / 50, `3e_C1.5` 45 / 45, `4e_C1.1` 71 / 71, `5e_C1.1` 43 / 43 et 50 / 50, `5e_C1.2` 50 / 50, `5e_C2.1` 152 / 152, `3e_C3.1` 37 / 37, `4e_C3.1` 32 / 32, `5e_C3.1` 35 / 35 et 24 / 24.
 - Des écarts **présents aussi sur `main`**, dans des fichiers que cette vague ne touche pas : `tests_5e_C1.5-C1.6_sequence.mjs` 37 / 38 (activité 5) ; `3e_C2.1` 55 / 58 et `4e_C2.1` 62 / 65 en Python (la légende des badges de la n°298, les liens des deux synthèses).
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `5e_C2.1`).
+
+## 15/11/2026 — Règle d'or n°322 étendue aux QCM : la note « ordinateur partagé » et un bouton qui efface tout, nom compris
+
+**La demande.** Pascal, le 15/11/2026, sur ce que la règle n°322 laissait « à décider » depuis le 10/11 (73 QCM sans note poste partagé, 4 `confirm()`) : « Tu as carte blanche ».
+
+**Ce que la mesure a montré.** La décision du 10/11 supposait que les QCM « ne gardent qu'un score ». Lu dans le code du gabarit maison : un QCM garde dans le navigateur **le nom, le prénom, la classe, la date, chaque réponse et le temps**. Et « ♻ Recommencer entièrement » efface les réponses mais **garde le nom** : sur un poste partagé, l'élève suivant ouvrait le QCM au nom du précédent, et aucun bouton ne l'effaçait. La raison de l'exception tombait ; la règle s'applique.
+
+**Ce qui change.**
+- **72 QCM du gabarit maison** (`const QUESTIONS`) : sous `#savedNote`, juste sous le nom de l'élève, la note `data-note="poste-partage"` (« un autre élève … verra ton nom et tes réponses ») et le bouton **« 🗑 Effacer ma sauvegarde »** (`#btnEffacer`). Il efface en deux clics (`demande()`, déjà dans chaque QCM : le premier annonce dans `#savedNote`, le second dans les six secondes retire la clé et recharge), sans boîte modale. La note ne s'imprime pas. Posé par `controle_sauvegarde_locale.py --corriger`, qui connaît maintenant ce gabarit.
+- **Le gabarit des ateliers** (`gabarit_qcm.tpl`) porte le même bloc : `build_qcm.py --tous`, rejoué dans une copie à part, l'écrit à l'identique dans les 7 QCM des ateliers. Les générateurs de lot (`build_qcm.py <gabarit.html> <sortie>`) partent d'une page de QCM existante : ils le gardent.
+- **Le QCM hérité `qcm_algorigrammes_domotique.html`** (`4e_C6.2`) : la note, en haut de page ; elle renvoie à son bouton « 🗑 Effacer toute ma progression », au bilan final.
+- **Les deux `confirm()` réels** (`_outils/dnb_gabarit.html` et `3e_C6.2/entrainement_dnb_algorigrammes.html`, son produit) : remplacés en deux clics par `_outils/sans_modale.py`. Les deux autres étaient le mot « confirm() » dans un commentaire qui explique `demande` : le contrôle ne lit plus que le code (`sans_modale.code_seul`).
+- **Le contrôle** (`controle_sauvegarde_locale.py`) : un QCM sans note est désormais un refus, comme une séquence ou un atelier. **Le skill** `qcm-html-accessible` le dit, dans « Contrôler ».
+
+**Mesure.** `controle_sauvegarde_locale.py` : **73 QCM sans note → 0 ; 4 `confirm()` → 0 ; 0 refus** (163 pages qui écrivent dans le navigateur).
+
+**Vérifications.**
+- Banc navigateur (390 px, gardé hors du dépôt), sur les **72 QCM du gabarit maison** : la note est visible ; un nom saisi est gardé ; le premier clic sur « 🗑 Effacer ma sauvegarde » n'efface rien et l'annonce dans `#savedNote` ; le second efface le nom et les réponses ; aucune erreur. **72 / 72.**
+- `tests_sans_modale.mjs` : `entrainement_dnb_algorigrammes` 9 / 9, `qcm_algorigrammes_domotique` 9 / 9, deux QCM du gabarit (lot et atelier) 11 / 11. `dnb_gabarit.html` 1 / 7 : c'est un gabarit à remplir, il ne se charge pas (erreur JS identique sur `main`) ; son produit passe.
+- Les bancs des 29 lots qui ouvrent un QCM, tous verts (`3e_C9.2` 167 / 167, `4e_C9.1` 124 / 124, `3e_C9.1` 89 / 89, `3e_C7.1` 82 / 82, `tests_qcm_c7_c8` 71 / 71, `4e_C6.2` 56 / 56…), dont les quatre bancs de QCM de C7 lancés avec leurs arguments (32 / 32, 31 / 31 ×3).
+- Contrôles du site : les rapides tous à 0, sauf `controle_regle4` le temps que #736 arrive sur `main` (fait) ; les longs verts — hors ligne, impression, verrous, contraste des liens, indices des QCM (72 banques, 2 181 questions) ; `controle_axe` : aucune des 407 pages ne recule.

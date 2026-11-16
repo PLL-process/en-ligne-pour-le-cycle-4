@@ -163,6 +163,7 @@
   <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -1064,6 +1065,15 @@ setMode(etat.mode||"complet");
     armer();
   }
 })();
+</script>
+<script>/* Règle d'or n°322 (15/11/2026) : effacer TOUTE la sauvegarde de ce QCM — le nom, les réponses, le temps —
+   en deux clics (`demande`), sans boîte modale. « ♻ Recommencer entièrement » garde le nom : il ne suffit pas sur un poste partagé. */
+document.getElementById("btnEffacer").addEventListener("click", function () {
+  if (demande("effacer-sauvegarde", "Effacer de ce navigateur ton nom, tes réponses et ton temps ?")) {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  }
+});
 </script>
 </body>
 </html>
