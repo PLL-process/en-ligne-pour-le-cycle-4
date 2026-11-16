@@ -31826,6 +31826,16 @@ La vérification de la page ne change pas (011 attendu).
 
 **Vérifications.** Bancs : `4e_C4.1` 52 / 52, `3e_C1.5` 23 / 23, les quatre bancs n°311 à 34 / 34. `banc_rappels_cdc.py` 302 / 302. Mode mission sur les quatre séquences : aucun refus. `verif_regles_audit.py` : 0 ✘ avant comme après. `controle_consigne_question.py` : inchangé (289 C1, tous au thème 1, la vague suivante).
 
+## 15/11/2026 — Règle n°4 : les trois panneaux de la bête à cornes ne sont pas des séquences
+
+**La demande.** Pascal, le 15/11/2026, sur la question laissée par l'audit hebdomadaire (#721) — « 3 copies `atelier_bete_a_cornes` sans bloc « Prêt·e » ni Bonus, à juger » : « Tu as carte blanche ».
+
+**Ce qui a été jugé.** Les quatre `atelier_bete_a_cornes.html` (`5e_C3.3`, `4e_C1.3`, `3e_C3.1`, `4e_C3.1`) sont des **panneaux** engendrés par `build.py` : rangés dans le dossier d'un code, ils mènent par leur bouton à l'atelier des représentations (`atelier_<niveau>_besoin-bete-a-cornes.html`). Celui de 5e fait 4 Ko et passait déjà pour page-pointeur ; les trois autres pèsent 80 Ko parce qu'ils portent un rappel incrusté (« 🧠 Avant l'atelier »). Ce ne sont pas des séquences : la clôture — « Prêt·e à t'entraîner », le Bonus, le bouton QCM — est dans l'atelier, que le contrôle juge et trouve conforme. Leur ajouter les deux blocs mettrait le QCM **avant** l'atelier, ce que Pascal reprochait le 30/08 (« le QCM est proposé presque sur toutes les pages »).
+
+**Ce qui change** (`_outils/controle_regle4.py`) : une famille écartée de plus, « panneau vers un atelier » — une page `atelier_*.html` hors des ateliers, dont le bouton mène à `ateliers-representations/…/atelier_….html`. Deux garde-fous : la cible doit exister ; une page qui porte une activité (`class="activite"`) reste jugée. Aucune page modifiée.
+
+**Mesure.** `controle_regle4.py` : **3 écarts → 0** (84 pages jugées, conformes ; 37 écartées, chacune pour sa raison, dont les 3 panneaux). Banc `tests_controle_regle4.py` : **25 / 25**, dont quatre cas nouveaux — le panneau écarté, le panneau sans atelier refusé, la page « atelier_ » à activité jugée, le lien sans bouton qui ne fait pas un panneau.
+
 ## 15/11/2026 — Règle d'or n°335, la vague du thème 1 : les C1, les C2 et les C3, une consigne par question
 
 **La demande.** Pascal, le 15/11/2026 : « Tout le thème 2 et 3 […] Puis thème 1 », avec le choix « tout réécrire » pour la règle d'or n°335 (une consigne par question, une à la fois). Le thème 1 vient en dernier : ses pages attendaient que les révisions en cours sur les mêmes séquences (`3e_C1.1` #728, `3e_C3.1` #729) soient livrées, et les ateliers de représentation incrustés (#733).
