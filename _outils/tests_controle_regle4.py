@@ -132,6 +132,15 @@ def main():
         True, "avant la région finale")
     cas("deux liens QCM tous deux dans la région finale ne sont pas un écart",
         page(apres=PRET + '<p>Voir aussi <a href="qcm_x.html">le QCM</a>.</p>' + BONUS), False)
+    # ══ LA SEPTIÈME (audit du 15/11/2026) : LE PARAMÈTRE APRÈS « .html » ═══════
+    # Les 18 ateliers des représentations portent `qcm_fast.html?codes=3e_C7.2`.
+    cas("un bouton QCM avec « ?codes=… » après .html est bien le bouton",
+        page(apres=PRET.replace('qcm_x.html', 'qcm_fast.html?codes=3e_C7.2') + BONUS), False)
+    cas("un bouton QCM avec « #ancre » après .html est bien le bouton",
+        page(apres=PRET.replace('qcm_x.html', 'qcm_x.html#debut') + BONUS), False)
+    cas("un lien « ?codes=… » au début de la page reste un écart",
+        page(avant='<p><a href="qcm_fast.html?codes=3e_C7.2">le QCM</a></p>', apres=PRET + BONUS),
+        True, "avant la région finale")
     cas("un renvoi interne vers #pret-a-s-entrainer n'est pas un lien vers le QCM",
         page(avant='<p>le QCM (<a href="#pret-a-s-entrainer">en bas de cette page</a>)</p>',
              apres=PRET + BONUS), False)
