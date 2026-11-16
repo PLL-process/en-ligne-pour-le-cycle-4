@@ -105,6 +105,34 @@ def main():
                          "<details class='guide-replie'><summary>Guide</summary>" + FIG + "</details>"
                          "<details class='ppa-fixe'><summary>À ouvrir après l'animation</summary>" + FIG + "</details>" + RADIO))}, 0, absent="S3 schéma replié :")
 
+    # — la chaîne à compléter (15/11/2026) : le schéma est dessiné DANS le bloc par son moteur
+    CAC = "<div class=\"cac\" data-cac='{\"id\":\"x\"}'><div class=\"cac-questions\"></div></div>"
+    cas("S2 · une chaîne à compléter (div.cac[data-cac]) est le schéma du bloc",
+        {SEQ: page(carte("Remonter la chaîne d'énergie", "<p>Pose chaque fonction dans son bloc.</p>" + CAC + RADIO))}, 0,
+        absent="S2 schéma nommé")
+    cas("S3 · la chaîne à compléter visible + le schéma complet replié « pour te corriger » : rien à signaler",
+        {SEQ: page(carte("Construire la chaîne d'information", "<p>Complète la chaîne d'information.</p>" + CAC
+                         + REPLIE + RADIO))}, 0, absent="S3 schéma replié :")
+    cas("S3 · une chaîne à compléter cachée dans un dépliant fermé reste un schéma replié",
+        {SEQ: page(carte("Activité 2", "<p>Complète la chaîne d'énergie.</p><details><summary>Le schéma</summary>" + CAC
+                         + "</details>" + REPLIE + RADIO))}, 0, "⚠ S3")
+    cas("S2 · un div.cac SANS data-cac n'est pas une chaîne dessinée",
+        {SEQ: page(carte("Activité 2", "<p>Complète la chaîne d'énergie.</p><div class='cac'></div>" + RADIO))}, 0, "⚠ S2")
+
+    # — les blocs jugés justes (JUGES, 15/11/2026) : hors du compte, lisibles avec --juges
+    ancien_juges = C.JUGES
+    C.JUGES = {SEQ: {"Activité 9 — Concevoir": "conception sans modèle, voulue"}}
+    try:
+        cas("S2 · un bloc nommé dans JUGES sort du compte des ⚠",
+            {SEQ: page(carte("Activité 9 — Concevoir l'algorigramme", "<p>Dessine l'algorigramme.</p>" + RADIO))}, 0,
+            "1 bloc(s) jugés justes", absent="⚠ S2 schéma nommé")
+        cas("S2 · un autre bloc de la même page reste à juger",
+            {SEQ: page(carte("Activité 3 — Lire", "<p>Complète l'algorigramme.</p>" + RADIO))}, 0, "⚠ S2")
+        cas("S1 · JUGES n'absout jamais un renvoi hors bloc",
+            {SEQ: page(carte("Activité 9 — Concevoir l'algorigramme", "<p>Regarde l'algorigramme ci-dessus.</p>" + RADIO))}, 1, "✘ S1")
+    finally:
+        C.JUGES = ancien_juges
+
     # — le point d'entrée parle et sort proprement (n°299). Sur le dépôt réel, 1 est une sortie
     #    légitime tant qu'il reste des renvois hors bloc à corriger : seuls 2 (rien lu) et une
     #    sortie muette sont des pannes.

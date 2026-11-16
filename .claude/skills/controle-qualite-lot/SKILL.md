@@ -34,7 +34,9 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
   écran), jamais « ci-dessus » ; répété à chaque activité qui le lit ; **muet** sur ce que la question fait produire
   (étiquettes, types, formats, énergies à trouver), la version complète dans la correction — sauf une compétence de
   LECTURE, qui se vérifie sur le document complet. `python3 _outils/controle_schema_sous_les_yeux.py` : 0 ✘ ; chaque ⚠
-  (schéma nommé sans figure, schéma replié) se juge à l'œil ;
+  (schéma nommé sans figure, schéma replié) se juge à l'œil : corrigé dans la page, ou, s'il est juste (question de
+  connaissance, production de l'élève, chemin de menu…), nommé dans `JUGES` avec sa raison (`--juges` les relit). Une
+  chaîne à compléter (`div.cac[data-cac]`) compte comme le schéma du bloc ;
 - toute synthèse élève se lit par un élève de 6e et tient sur deux pages A4 (n°316, révisée le 29/10/2026) : carte
   « Ce que je dois retenir », puis chaque partie de l'exemple vers la règle (titre-question, exemple de la séquence en
   deux lignes, encadré « À retenir », le piège en une ligne), un seul lexique à la fin — voir le skill

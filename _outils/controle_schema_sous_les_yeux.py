@@ -50,7 +50,16 @@ côte : `.schema-sous-les-yeux` et `.carte.cote-a-cote` du pilote Book Train) ; 
       bloc a des figures, mais toutes dans un <details> fermé qui n'est ni une correction, ni une aide, ni les pièges :
       l'élève ne les voit pas en répondant.
 
-Usage : python3 _outils/controle_schema_sous_les_yeux.py [--muet] [--json] [chemin…]
+LA CHAÎNE À COMPLÉTER (15/11/2026) : `div.cac[data-cac]` est un schéma dessiné dans le bloc par le moteur
+`_outils/chaine_a_completer/` — l'élève y pose ses réponses. Elle compte comme figure, visible : trois ⚠ S2
+(« Remonter la chaîne d'énergie »…) et les trois ⚠ S3 (la figure repliée y était le schéma complet « pour te
+corriger ») tombaient sur elle.
+
+LES BLOCS JUGÉS (15/11/2026, carte blanche de Pascal) : les ⚠ S2 ont été lus un par un. Ceux qui étaient justes
+sont nommés dans JUGES, avec leur raison (une question de connaissance, la production de l'élève, un chemin de
+menu…) : ils sortent du compte et se lisent avec `--juges`. Les autres ont été corrigés dans les pages.
+
+Usage : python3 _outils/controle_schema_sous_les_yeux.py [--muet] [--json] [--juges] [chemin…]
 Sortie : 0 aucun renvoi hors bloc · 1 au moins un ✘ S1 · 2 rien pu lire (règle n°299).
 """
 from __future__ import annotations
@@ -86,6 +95,81 @@ HORS_MENTION = ("td", "th", "figcaption")
 BLOCS_DE_MEMOIRE = re.compile(r"(billet|bilan|auto-positionne|passeport|avant de commencer|ce que je v[ée]rifie|"
                               r"hypoth[èe]se|probl[ée]matique|piq[ûu]re de rappel)", re.IGNORECASE)
 LARGEUR_ICONE = 120
+#: la chaîne à compléter (`_outils/chaine_a_completer/`) : le schéma est dessiné DANS le bloc par le moteur, à
+#: partir de `data-cac` — l'élève y pose ses réponses. C'est le schéma sous les yeux par excellence (15/11/2026).
+CHAINE_A_COMPLETER = "div.cac[data-cac]"
+
+#: Les ⚠ S2 lus un par un le 15/11/2026 (carte blanche de Pascal) et jugés justes : la page, le début du titre
+#: du bloc, la raison. Ils sortent du compte des ⚠ et restent listés à part. Un titre changé fait revenir le ⚠ :
+#: on le relit alors. Ce qui était à corriger l'a été (vague n°331, 2e passe, journal du 15/11/2026).
+T1 = "theme-1-objets-systemes-usages-interactions/"
+T2 = "theme-2-structure-fonctionnement-comportement/"
+T3 = "theme-3-creation-conception-realisation-innovations/"
+A = T1 + "ateliers-representations/"
+JUGES = {
+    T1 + "C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html": {
+        "4. Données, sécurité et Python": "« Schéma : if url… » est le patron d'un code, pas un schéma à lire"},
+    T1 + "C2-decrire-les-interactions-entre-un-objet-ou/3e/3e_C2.1/sequence_3e_C2_pekin_borne.html": {
+        "Question 1 — « Qui se sert de la borne": "question de connaissance : ce qu'un diagramme de cas d'utilisation ne montre pas"},
+    T1 + "C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/sequence_4e_C2_hangzhou_borne.html": {
+        "🔀 Activité 3 — Écrire l'algorithme du parcours": "l'algorigramme est la production de l'élève"},
+    T1 + "C3-caracteriser-et-choisir-un-objet-ou-un/3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html": {
+        "⚖️ Activité 2 — Évaluer selon des exigences": "un lien vers un autre exercice de l'atelier, pas un schéma à lire"},
+    A + "cas-utilisation-sysml/atelier_3e_cas-utilisation-sysml.html": {
+        "Exercice 1 — Choisir le mode de représentation": "question de connaissance : ce qu'un diagramme de cas d'utilisation ne montre pas",
+        "🎁 Bonus (facultatif": "le diagramme est celui que l'élève a construit dans l'atelier"},
+    A + "cas-utilisation-sysml/atelier_4e_cas-utilisation-sysml.html": {
+        "Exercice 1 — Du verbatim au cas d'utilisation": "« schémas » est dans la définition du lexique de l'exercice",
+        "🎁 Bonus (facultatif": "le diagramme est celui que l'élève a construit dans l'atelier"},
+    A + "exigences-sysml/atelier_4e_exigences-sysml.html": {
+        "🎁 Bonus (facultatif": "le diagramme fautif est décrit en toutes lettres dans le défi ; l'autre est celui de l'élève"},
+    A + "interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html": {
+        "Exercice 3 — Ce que le concepteur a oublié": "le diagramme pieuvre est l'outil de raisonnement de l'élève : il nomme l'interacteur oublié",
+        "🎁 Bonus (facultatif": "le diagramme est celui que l'élève a construit dans l'atelier"},
+    A + "interacteurs-pieuvre/atelier_5e_interacteurs-pieuvre.html": {
+        "Exercice 2 — Classer les interacteurs": "« les fausses bulles d'un diagramme écartées » est la production attendue"},
+    T2 + "C4-decrire-et-caracteriser-lorganisation/3e/3e_C4.3/sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html": {
+        "🎁 Bonus (facultatif": "« Insertion → Diagramme → Ligne » est un chemin de menu du tableur"},
+    T2 + "C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html": {
+        "Enquête sur quatre pièces du jardin": "« Du diagramme pieuvre aux contraintes » est un titre du cours incrusté"},
+    T2 + "C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html": {
+        "🔔 La sonnette connectée": "transfert : l'élève applique les fonctions de la chaîne à un objet nouveau, de mémoire"},
+    T2 + "C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.2/entrainement_dnb_algorigrammes.html": {
+        "Exercice 3 — Début et fin": "question de connaissance sur les symboles de l'algorigramme",
+        "Exercice 6 — Le mot-clé de départ": "question de connaissance ; l'algorigramme n'est cité que dans les aides",
+        "Exercice 7 — Le mot-clé de répétition": "question de connaissance ; l'algorigramme n'est cité que dans les aides",
+        "Exercice 8 — L'ordre de lecture": "question de connaissance sur la lecture d'un algorigramme",
+        "Exercice 9 — Lire un algorithme simple": "« le schéma de base entrée → traitement → sortie » est une phrase de la correction",
+        "Exercice 21 — L'indentation": "question de connaissance ; l'algorigramme n'est cité que dans l'aide"},
+    T2 + "C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.2/sequence_3e_C6.2_auto_test_station.html": {
+        "✏️ Activité 2 — CONCEVOIR l'algorigramme": "conception sans modèle, voulue (« avant toute référence »)"},
+    T2 + "C6-comprendre-et-modifier-un-programme-associe/5e/5e_C6.1/sequence_5e_C6.1-C6.3_programmer_lampadaire.html": {
+        "L'algorithme en langage naturel": "les formes de l'algorigramme sont dessinées dans les propositions (◇ ▭ ⬭)"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html": {
+        "📐 Activité 3 — L'algorigramme, puis le code": "l'algorigramme est la production de l'élève ; ses formes sont rappelées dans le bloc"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/sequence_4e_C7_jardin-conception.html": {
+        "📐 Activité 1 — La démarche de projet en diagramme de flux": "le diagramme à remettre en ordre est dans le bloc, en étapes numérotées"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html": {
+        "💻 Activité 3 — La règle SI en schéma": "l'algorigramme à remettre en ordre est dans le bloc, en étapes numérotées"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.5/sequence_5e_C7.5_eclairage-du-preau.html": {
+        "🔒 Activité 3 — L'ordre du montage": "« relire chaque port sur le schéma de câblage » est une étape à ranger, pas un schéma à lire"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/atelier_3e_C7.1_planification_taches.html": {
+        "✂ Activité 1 — Le planning en bandes de papier": "le diagramme de planification est la production de l'élève"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/atelier_4e_C7.1_planification_taches.html": {
+        "✂ Activité 1 — Le planning en bandes de papier": "le diagramme de planification est la production de l'élève"},
+    T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/atelier_5e_C7.1_planification_taches.html": {
+        "✂ Activité 1 — Le planning en bandes de papier": "le diagramme de planification est la production de l'élève"},
+    T3 + "C8-valider-les-solutions-techniques-par-des/4e/4e_C8.1/sequence_4e_C8_jardin-validation.html": {
+        "📐 Activité 1 — Le protocole en diagramme de flux": "le diagramme à remettre en ordre est dans le bloc, en étapes numérotées"},
+}
+
+
+def juge(page: str, bloc: str):
+    """La raison écrite, si ce bloc de cette page a été jugé juste ; sinon None."""
+    for debut, raison in JUGES.get(page, {}).items():
+        if bloc.startswith(debut):
+            return raison
+    return None
 
 
 def pages(racines):
@@ -157,6 +241,8 @@ def largeur_svg(svg: Tag) -> float:
 def a_une_figure(bloc: Tag) -> bool:
     if bloc.find(["figure", "canvas", "picture", "object", "embed", "iframe"]):
         return True
+    if bloc.select_one(CHAINE_A_COMPLETER):
+        return True
     if bloc.find(class_=lambda c: c in ("figure", "schema", "schéma", "diagramme")):
         return True
     for img in bloc.find_all("img"):
@@ -203,6 +289,10 @@ def figures_repliees(bloc: Tag):
         if cache == "replie":
             repliees += 1
         else:
+            visibles += 1
+    # la chaîne à compléter, dessinée dans le bloc : visible sauf si un dépliant fermé (non permis) la cache
+    for c in bloc.select(CHAINE_A_COMPLETER):
+        if not any(not d.has_attr("open") for d in c.find_parents("details") if bloc in d.parents):
             visibles += 1
     return visibles, repliees
 
@@ -255,20 +345,28 @@ def main(argv=None):
     if not liste:
         print("EN PANNE : aucune page élève lue (règle n°299).")
         return 2
-    s1, s2, s3, par_page = 0, 0, 0, {}
+    s1, s2, s3, par_page, juges = 0, 0, 0, {}, []
     for chemin in liste:
         try:
             html = open(chemin, encoding="utf-8", errors="replace").read()
         except OSError:
             continue
-        e = ecarts_page(html)
+        rel = os.path.relpath(chemin, DEPOT).replace(os.sep, "/")
+        e = []
+        for x in ecarts_page(html):
+            raison = juge(rel, x["bloc"]) if x["code"] == "S2" else None
+            if raison:
+                juges.append((rel, x["bloc"], raison))
+            else:
+                e.append(x)
         if e:
-            par_page[os.path.relpath(chemin, DEPOT).replace(os.sep, "/")] = e
+            par_page[rel] = e
             s1 += sum(1 for x in e if x["code"] == "S1")
             s2 += sum(1 for x in e if x["code"] == "S2")
             s3 += sum(1 for x in e if x["code"] == "S3")
     if en_json:
-        print(json.dumps({"pages_lues": len(liste), "S1": s1, "S2": s2, "S3": s3, "par_page": par_page},
+        print(json.dumps({"pages_lues": len(liste), "S1": s1, "S2": s2, "S3": s3, "par_page": par_page,
+                          "juges": [{"page": p, "bloc": b, "raison": r} for p, b, r in juges]},
                          ensure_ascii=False, indent=1))
     else:
         print("%d page(s) lues — règle d'or n°331, l'élève répond le schéma sous les yeux" % len(liste))
@@ -279,8 +377,12 @@ def main(argv=None):
                     signe = {"S1": "✘ S1 renvoi vers un schéma hors du bloc", "S2": "⚠ S2 schéma nommé, aucune figure dans le bloc",
                              "S3": "⚠ S3 schéma replié : la figure est dans un dépliant fermé"}[x["code"]]
                     print("  %s — %s — %s\n     « %s »" % (signe, x["bloc"], x["detail"], x["extrait"]))
-        print("\n%d ✘ (renvoi explicite vers un schéma qui n'est pas dans le bloc) · %d ⚠ (schéma nommé sans figure : à juger) · %d ⚠ S3 (schéma replié) · %d page(s) concernées"
-              % (s1, s2, s3, len(par_page)))
+        if juges and "--juges" in argv:
+            print("\nJugés justes, un par un (JUGES) :")
+            for p, b_, r in juges:
+                print("  ✓ %s — %s\n     %s" % (p.split("/")[-1], b_, r))
+        print("\n%d ✘ (renvoi explicite vers un schéma qui n'est pas dans le bloc) · %d ⚠ (schéma nommé sans figure : à juger) · %d ⚠ S3 (schéma replié) · %d page(s) concernées · %d bloc(s) jugés justes (--juges pour les lire)"
+              % (s1, s2, s3, len(par_page), len(juges)))
         if not s1 and not s2 and not s3:
             print("✅ chaque bloc de question qui nomme un schéma le montre")
     return 1 if s1 else 0
