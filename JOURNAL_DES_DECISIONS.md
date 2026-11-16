@@ -31798,3 +31798,18 @@ Les deux autres (`5e_C4.1` le réseau local, `3e_C5.1` les points de test) serve
 - `banc_rappels_cdc.py` : **302 / 302** (rejoué seul : sous la charge des contrôles, le rappel de `4e_C2.1` dépassait son délai).
 - Mode mission : `banc_generique.mjs` sur les neuf séquences, jouées écran par écran, **aucun refus**.
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le dossier du FAST).
+
+## 15/11/2026 — `3e_C4.3`, activité 4 c) : la question ne donne plus sa réponse
+
+**La demande.** Pascal, le 15/11/2026, sur les questions laissées par la vague n°331 : « Tu as carte blanche ». La vague l'avait relevé : la question c) écrivait « rouge = 011 » juste avant de demander le code du rouge, et le schéma muet l'affichait aussi.
+
+**Ce qui change.**
+- **La consigne** : les niveaux se codent en comptant en binaire, de 0 à 4, dans l'ordre de gravité. Elle donne quatre codes (verte 000, jaune 001, orange 010, violette 100) ; l'élève trouve celui du rouge.
+- **Le schéma muet** (`types_et_codage_donnees_muet.svg`) : la case du rouge porte « ??? », dans le dessin, dans sa description et dans le libellé de la page. Le schéma complet de la correction garde « 011 ».
+- **Ce qui le donnait encore, sous l'exercice** : l'encadré des erreurs fréquentes (« confondre la valeur (3) et son écriture binaire (011) » → compter les niveaux à partir de 1) et le critère de réussite (« le codage 011 » → « le code du rouge trouvé en comptant en binaire »).
+- **Les aides** : niveau 1, « il vient juste après l'orange : quel nombre suit 010 ? » ; niveau 2, « écris 3 en binaire sur 3 bits : combien de 4, de 2 et de 1 ? », sans écrire la réponse.
+- **La correction**, exhaustive : la réponse, le pourquoi (les cinq niveaux et leur valeur), 010 et 100 refusés un par ligne, le piège (le « 4e niveau » vaut 3) ; et pour les 12 niveaux, 3 bits et 12 bits refusés.
+
+La vérification de la page ne change pas (011 attendu).
+
+**Vérifications.** Bancs de `3e_C4.3` : 23 / 23 et 34 / 34. Mode mission sans refus. `verif_regles_audit.py` 0 ✘, `audit_aeration.py --strict` 0, `controle_schemas.mjs` 0 ✘, `controle_schema_sous_les_yeux.py` 0 ✘, `controle_consigne_question.py` : `3e_C4.3` absent.
