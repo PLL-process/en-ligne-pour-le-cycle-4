@@ -31501,3 +31501,59 @@ L'unité jugée est le bloc d'activité de la n°331. Un bloc fait produire avec
 **Non exécutés.** `rapport_audit.py` complet (une heure ; les contrôles touchés ont été lancés un par un) ; aucun banc de lot (une seule page touchée, d'un attribut invisible).
 
 **Ce qui reste, à Pascal.** Les 3 copies `atelier_bete_a_cornes.html` sans bloc « Prêt·e » ni Bonus ; le chantier 2 (sauvegarde locale, n°322, 8 pages) suit dans une autre PR.
+
+## 15/11/2026 — Audit hebdomadaire : 12 ✘ (−79), 49 séquences propres sur 56 (+42), 11 fichiers de dérive (−62) ; quatre contrôles rouges à cribler (transversal : `docs/audits`)
+
+**Second audit de la boucle du dimanche** (17 h 35 Martinique). `rapport_audit.py --complet --generateurs` sur `main` après #718
+(`d03a574`) : `docs/audits/RAPPORT_AUDIT_2026-11-15.md`, avec la section « Depuis la semaine dernière », le crible reporté du
+08/11 et la veille. Rien n'est corrigé, rien n'est fusionné.
+
+**Ce qui a bougé depuis le 08/11** (83 PR fusionnées, #627 → #718). ✘ de règles d'or **91 → 12**, 39 → 6 pages : la révision
+des trois thèmes a pris 45 séquences (révisions 7 à 51, plus 4 bis et 5 bis) et la V2 de 4e (#635) ; listes n°300 **1 030 → 57** sur 3 pages
+(5e_C8.1, 5e_C8.2, 5e_C9.1 — les prochaines du suivi) ; ancien gabarit **11 → 2 pages** (les mêmes) ; n°23 à zéro ; n°301 :
+les 3 pages intermédiaires de 3e_C9.2, comptées par construction. `bilan_revision.py` : **7 → 49 séquences propres sur 56**.
+Les deux dettes de la semaine dernière sont réglées : licence posée par les générateurs (#637 ; dérive **73 → 11**, les 11
+lexiques retouchés à la main du 07/11) et lien « CC BY-NC-SA » lisible (#638 ; `contraste_liens` 93 → 0). Couverture, preuves
+des COUVERT, matrice : inchangées pour le troisième rapport (4 codes à vérifier, 19 non mesurables, 3 à améliorer, 107 annotés).
+
+**Quatre contrôles rouges, criblés.** (1) `controle_regle4.py`, 21 pages — **contrôle périmé** : `LIEN_QCM` ne lit pas le
+`?codes=…` que les 18 ateliers des représentations portent après `qcm_….html` (vérifié : 18/18 passent avec une expression
+tolérante ; ces écarts étaient déjà là le 08/11, le rapport ne montrait que la dernière ligne) ; 3 copies `atelier_bete_a_cornes`
+sans bloc « Prêt·e » ni Bonus, à juger. (2) `controle_schemas.mjs`, 1 schéma, 10 ✘, inchangé — la spirale de Fibonacci de la
+fiche arts plastiques (`spirale_fibonacci.py`) lue comme un schéma : à déclarer hors score. (3) `controle_sauvegarde_locale.py`
+(n°322), 15 refus sur 8 pages, **déjà présents au #637** (rejoué sur son arbre) : 3e_C1.5, 4e_C1.4 et son bonus 2FA, atelier Pix
+4e_C4.1, QCM hérité 4e_C6.2, 3 copies d'atelier (dans `build.py`) ; `--corriger` existe. (4) `controle_schema_sous_les_yeux.py`
+(n°331, née aujourd'hui) : 5 ✘, 39 ⚠, la vague annoncée. Hors rapport, relancés à part : `controle_chaine_a_completer.py` **✘**
+(5e_C7.4 porte une copie de l'outil différente de la source — `poser.py` à relancer) ; `controle_indices_qcm.mjs` ✅ ;
+`controle_axe.mjs` non exécuté (`axe-core` absent). Vu en lisant le journal : **n°322 et n°323 attribués deux fois** (10/11 et
+14/11), le registre de tête s'arrêtant au n°21 ; un marqueur `CONTROLES_ICI` oublié dans l'entrée de #718.
+
+**Chantiers proposés, dans l'ordre.** 1) Une PR d'outils : `regle4` lit `?codes=`, la spirale hors score dans `schemas`, l'exemption
+« page N sur M » de `regle4` portée dans `verif_regles_audit.py` (n°301), et `chaine_a_completer`, `indices_qcm`, `axe` inscrits dans
+`rapport_audit.py`. 2) `sauvegarde_locale --corriger` sur les 8 pages (les 3 copies dans `build.py`) ; 5e_C7.4 reposé par
+`poser.py`. 3) La révision continue : 5e_C8.1, 5e_C8.2 (gabarit + listes), 5e_C9.1 (listes), 3e_C1.1 et 3e_C3.1 (aération) — et
+les règles d'or sont à zéro. 4) La vague n°331 (5 ✘ puis 39 ⚠). 5) Registre : renuméroter les n°322/323 du 14/11 en n°333/334 (la n°332 est prise par #722 ; fait par #725) et
+compléter le tableau de tête. 6) Les 11 lexiques retouchés à la main ; la matrice (5e_C1.3, 4e_C1.4, 3e_C1.5) ; les 4 codes à
+vérifier et la convention `c:"Cx.y"` — décisions en attente depuis le 07/11.
+
+**Veille** (lecture seule, onze dépôts clonés, rien exécuté, rien installé) : aucun à installer ; cinq idées à réécrire de zéro
+— les deux portes de vérification d'un item (`anthropics/k12-teacher-skills`, Apache 2.0, source des deux skills `k12-*` du
+compte : `k12-check-for-understanding` et `k12-lesson-prep` y sont nouveaux) pour `qcm-html-accessible` ; la place par longueur
+15/15/70 (`moodle-mcq`) pour `controle_ordre_propositions.py` ; phrases par paragraphe et mots par phrase (`plain-language`,
+suite de `francais-simple`) pour `audit_aeration.py` ; l'étiquette posée sur son trait (`diagram-design-skill`, dérivé hors
+ligne) pour `controle_schemas.mjs` ; le pourquoi d'erreur qui nomme l'étape suivante pour le mode mission. L'export Éléa écrit
+bien `<name>` (2 181 questions). `SKILLS_AUDIT.md` n'est pas modifié : le rapport propose.
+
+**Vérifié.** Le rapport a tourné une fois, complet avec générateurs (≈ 28 min, Chromium 153) ; `verif_regles_audit.py`,
+`controle_regle4.py`, `controle_sauvegarde_locale.py`, `controle_schemas.mjs`, `controle_schema_sous_les_yeux.py`,
+`controle_chaine_a_completer.py`, `controle_indices_qcm.mjs`, `bilan_revision.py --md` relancés à part pour lire leurs sorties
+complètes ; `controle_regle4.py` et `controle_sauvegarde_locale.py` rejoués sur l'arbre de #625 et de #637 (`git worktree`,
+supprimés ensuite) ; les générateurs relancés dans une copie hors git, jamais dans le dépôt. **Non exécuté** : `controle_axe.mjs`
+(sans `axe-core`), les bancs des lots (aucune page touchée), un navigateur réel. **Post-scriptum** : #719 et #720 (5e_C8.1,
+5e_C8.2 au gabarit commun) ont été fusionnées pendant l'audit ; `verif_regles_audit.py` et `bilan_revision.py` rejoués seuls sur
+`main` après #720 : **4 ✘ sur 4 pages** (3 × n°301 sur 3e_C9.2, 24 listes sur 5e_C9.1), ancien gabarit à zéro, **51 séquences
+propres sur 56** ; le reste du rapport date de 21 h 35, après #718. **Second post-scriptum** : après #722 et #723, rejoués
+de même sur `main` : **3 ✘ sur 3 pages** (n°301 sur 3e_C9.2), **52 séquences propres sur 56**.
+
+**Reste à Pascal.** Fusionner cette PR (rapport + journal) ; cocher les décisions de la section 6 du rapport — d'abord la PR
+d'outils (quatre contrôles) et la collision n°322/323.
