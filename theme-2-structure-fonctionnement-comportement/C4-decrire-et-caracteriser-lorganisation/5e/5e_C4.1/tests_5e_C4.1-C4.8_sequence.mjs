@@ -370,7 +370,7 @@ ok('34 · la sonnette, la synthèse, le Bonus, le bilan et le QCM sont en séanc
 await p.evaluate(() => {
   localStorage.removeItem('rep_fast_5e_e2');
   localStorage.setItem('seq_5e_C4.1-C4.8_lampadaire', JSON.stringify({
-    inputs: { e5_1: 'terminaux', e7_1: 'la sonnerie (haut-parleur) de la vie scolaire', hyp1: 'Ancienne hypothèse.' },
+    inputs: { e5_1: 'terminaux', e7_1: 'la sonnerie de la vie scolaire', hyp1: 'Ancienne hypothèse.' },
     radios: { confiance: '3' }, valid: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true },
     exp: { jour: 'eteint', nuit: 'veille', 'nuit+passage': 'fort' } }));
 });

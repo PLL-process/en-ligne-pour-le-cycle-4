@@ -119,11 +119,11 @@ with sync_playwright() as p:
 
     # ── le vérificateur de l'activité 3 juge une MESURE, pas une longueur (audit du 08/09, A01) ──
     # Avant le 09/09, cinq choix justes et 60 caractères validaient l'activité, sans un chiffre.
-    ATT3 = {"a3_1":"parce qu'on ne compare que ce qui est égal par ailleurs : changer la charge, c'est changer deux choses à la fois",
-            "a3_2":"parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable",
+    ATT3 = {"a3_1":"parce qu'on ne change qu'une chose à la fois",
+            "a3_2":"parce qu'une mesure seule peut être ratée",
             "a3_3":"rien : il compare deux conditions différentes, pas deux véhicules", "a3_4":"S3, le robot",
-            "a3_5":"que les distances varient dans le même sens que les masses — sans pouvoir dire pourquoi : freins, pneus et empattement changent aussi",
-            "a3_6":"le rayon de braquage : c'est lui qui dit si le véhicule peut tourner"}
+            "a3_5":"que distance et masse vont dans le même sens",
+            "a3_6":"le rayon de braquage"}
     def verif3(conclusion):
         return pg.evaluate("""([att, conc])=>{ for (const [id,v] of Object.entries(att)) { const s=document.getElementById(id); s.value=v; }
             const ta=document.getElementById('a3_conc'); ta.value=conc; return CHECKS[3](); }""", [ATT3, conclusion])
