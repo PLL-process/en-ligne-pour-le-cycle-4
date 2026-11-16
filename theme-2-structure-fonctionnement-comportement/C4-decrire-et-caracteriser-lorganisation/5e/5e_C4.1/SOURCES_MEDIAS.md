@@ -67,3 +67,16 @@ Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C5-id
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_lampadaire_solaire.png` | Un lampadaire solaire de parking au crépuscule : panneau solaire en haut du mât, tête à LED allumée, boîtier gris. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a solar-powered LED street lamp in a small school car park in Martinique at dusk, seen from a few meters away so the lamp head and its solar panel are large and clearly visible in the frame: a small solar panel mounted on top of the pole, an LED lamp head glowing softly, a small light sensor and a small motion detector on the lamp head, a grey technical box on the pole, tropical vegetation behind, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Le lampadaire pièce par pièce : figure isométrique et fiche A4 (16/11/2026)
+
+| Fichier | Ce qu'il montre | Provenance | Droits |
+|---|---|---|---|
+| `lampadaire_en_pieces.html` | Le lampadaire de la cour en vue isométrique, 13 pièces numérotées et nommées ; un bouton l'ouvre (le coffret montre la batterie, le régulateur, la carte et l'interrupteur ; les pièces du haut s'écartent). | **Dessin original**, construit par programme (`_generation/lampadaire_en_pieces/build.mjs`), avec le kit Anatomy | Dessin : CC BY-NC-SA 4.0, Pascal Gouacide. Le code du kit, inclus dans la page : **licence MIT, © 2026 Ryan** (texte de la licence en tête du script de la page) |
+| `lampadaire_fiche_A4.pdf` | La même figure en dessin expliqué A4 : ouverte, fermée en médaillon, la liste des pièces, les caractéristiques, trois étapes (le jour, la nuit, un passage). | Imprimée depuis la figure claire (`imprimer_fiche.mjs` : `scripts/print.mjs` du kit, mots passés en français, PDF par Chromium) | Comme la figure |
+
+- **Kit** : github.com/wheresryan22/anatomy, **commit audité `1482e84`** (skill `anatomy` de Pascal, 16/11/2026). Il n'est pas versé dans
+  le dépôt : la construction le lit dans `ANATOMY_DIR` (par défaut `~/.cache/anatomy-1482e84`). Aucune publication dans la galerie du kit.
+- **Rien n'est chargé depuis Internet** : la page porte son script et ses styles.
+- **Les mots** viennent de la séquence (son FAST, ses chaînes, son simulateur : 80 lux, 10 lux, environ 5 s) ; aucune dimension n'est donnée
+  (« pas à l'échelle » sur la fiche).
