@@ -65,12 +65,14 @@ def jouer(racine, tolerees=None):
 def main():
     echecs, controles = [], 0
 
-    def cas(titre, contenu, doit_refuser, attendu="", nom="sequence_x.html", tolerees=None):
-        """Une page seule dans un dépôt jetable, jugée."""
+    def cas(titre, contenu, doit_refuser, attendu="", nom="sequence_x.html", tolerees=None, autres=None):
+        """Une page seule dans un dépôt jetable, jugée (`autres` : des pages voisines, non jugées ici)."""
         nonlocal controles
         controles += 1
         with tempfile.TemporaryDirectory() as tmp:
             ecrire(tmp, nom, contenu)
+            for chemin, texte_autre in (autres or {}).items():
+                ecrire(tmp, chemin, texte_autre)
             code, texte = jouer(tmp, tolerees)
         if doit_refuser and code == 0:
             echecs.append("%s : acceptée, alors qu'il fallait refuser\n     %s"
@@ -162,6 +164,30 @@ def main():
     cas("une page nommée dans TOLEREES est écartée avec sa raison",
         page(), False, "tolérée par déclaration",
         tolerees={"sequence_x.html": "raison écrite, et ce qui la débloquera"})
+
+    # ══ LES PANNEAUX VERS UN ATELIER (15/11/2026) ═════════════════════════════
+    # `4e_C3.1/atelier_bete_a_cornes.html` : 80 Ko, un rappel incrusté, un bouton vers
+    # l'atelier des représentations. La clôture est dans l'atelier, jugé à part.
+    ATELIER = "t1/ateliers-representations/besoin/atelier_4e_besoin.html"
+    PANNEAU = ('<main><h1>Le besoin</h1><p><a class="btn" href="../ateliers-representations/besoin/'
+               'atelier_4e_besoin.html">Ouvrir l\'atelier de 4e</a></p>'
+               '<section class="card atelier-incruste"><h2>🧠 Avant l\'atelier : un rappel</h2>'
+               '<p>' + "un exercice de rappel. " * 400 + '</p></section>'
+               '<p>Pour t\'entraîner ensuite : <a href="../ateliers-representations/besoin/qcm_besoin.html">'
+               'le QCM</a></p></main>')
+    cas("un panneau qui mène à l'atelier des représentations est écarté, non jugé",
+        page(avant=PANNEAU, corps=""), False, "panneau vers un atelier",
+        nom="t1/C3/atelier_bete_a_cornes.html", autres={ATELIER: page(apres=PRET + BONUS)})
+    cas("un panneau dont l'atelier n'existe pas est jugé, et refusé",
+        page(avant=PANNEAU, corps=""), True, "pas de bloc « Prêt·e",
+        nom="t1/C3/atelier_bete_a_cornes.html")
+    cas("une page « atelier_ » qui porte une activité est jugée, même avec le bouton",
+        page(avant=PANNEAU + '<div class="activite" id="act1"><h3>Activité 1</h3></div>', corps=""),
+        True, "pas de bloc « Prêt·e",
+        nom="t1/C3/atelier_bete_a_cornes.html", autres={ATELIER: page(apres=PRET + BONUS)})
+    cas("un lien sans class=\"btn\" vers l'atelier ne fait pas un panneau",
+        page(avant=PANNEAU.replace('class="btn" ', ''), corps=""), True, "pas de bloc « Prêt·e",
+        nom="t1/C3/atelier_bete_a_cornes.html", autres={ATELIER: page(apres=PRET + BONUS)})
 
     # ══ ce que le contrôle ne regarde pas ════════════════════════════════════
     cas("un QCM d'une autre page ne se juge pas ici (seuls sequence/tp/atelier)",
