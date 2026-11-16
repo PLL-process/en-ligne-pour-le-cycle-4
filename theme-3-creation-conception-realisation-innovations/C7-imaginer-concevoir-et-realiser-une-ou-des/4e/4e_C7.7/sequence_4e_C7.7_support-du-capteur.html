@@ -1007,8 +1007,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1022,7 +1025,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1164,9 +1167,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1495,21 +1498,21 @@ cette pièce — et pas pour la raison qu'on croit. <br>Les deux qui restent la 
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-      <legend>Dans un logiciel de modélisation 3D, toute pièce commence par…</legend>
+      <legend>Dans un logiciel de modélisation 3D, par quoi commence toute pièce ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une extrusion, pour donner du volume"><label for="be_1__1">une extrusion, pour donner du volume</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une esquisse en 2D, sur un plan"><label for="be_1__3">une esquisse en 2D, sur un plan</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un congé, pour arrondir les arêtes"><label for="be_1__2">un congé, pour arrondir les arêtes</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-      <legend>Pour l'imprimante 3D, on exporte la pièce…</legend>
+      <legend>Pour l'imprimante 3D, comment exporte-t-on la pièce ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="au format STL, en pouces"><label for="be_2__3">au format STL, en pouces</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="en image PNG, vue de face"><label for="be_2__1">en image PNG, vue de face</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="au format STL, en millimètres"><label for="be_2__2">au format STL, en millimètres</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-      <legend>Le PVC appartient à la famille des…</legend>
+      <legend>À quelle famille de matériaux appartient le PVC ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="céramiques (le verre, la porcelaine)"><label for="be_3__3">céramiques (le verre, la porcelaine)</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="métaux (l&#x27;acier, l&#x27;aluminium)"><label for="be_3__2">métaux (l'acier, l'aluminium)</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="polymères (les plastiques)"><label for="be_3__1">polymères (les plastiques)</label></div>
@@ -1975,7 +1978,7 @@ cette pièce — et pas pour la raison qu'on croit. <br>Les deux qui restent la 
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"></p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>4e_C7.7 — choisir les moyens et produire la forme voulue :</b></legend>
+  <legend><b>4e_C7.7 — choisir les moyens et produire la forme voulue :</b> où en suis-je ?</legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide"><label for="pos__1">🔴 Maîtrise insuffisante — je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je confronte le dessin aux moyens si l&#x27;on m&#x27;aide à relire le domaine de chacun"><label for="pos__2">🟠 Maîtrise fragile — je confronte le dessin aux moyens si l'on m'aide à relire le domaine de chacun</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je confronte un dessin aux moyens de l&#x27;atelier et je dis ce que chacun en fera"><label for="pos__3">🟢 Maîtrise satisfaisante — je confronte un dessin aux moyens de l'atelier et je dis ce que chacun en fera</label></div>

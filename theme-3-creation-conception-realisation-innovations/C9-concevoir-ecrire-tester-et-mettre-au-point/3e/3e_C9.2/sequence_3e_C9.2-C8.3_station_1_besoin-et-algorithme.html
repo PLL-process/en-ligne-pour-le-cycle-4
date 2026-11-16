@@ -1109,8 +1109,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1124,7 +1127,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1266,9 +1269,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1569,21 +1572,21 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <p style="font-size:.9em;color:var(--sub)">Trois questions éclair sur les acquis utiles aujourd'hui. Personne ne les note : elles te disent, à toi, ce qu'il faut réviser avant de commencer.</p>
   <div class="exo">
     <div class="assoc"><fieldset class="qcm-groupe" id="be_1" data-melange="1">
-  <legend>1. Sur la station, l'anémomètre appartient à la fonction…</legend>
+  <legend>1. Sur la station, à quelle fonction appartient l'anémomètre ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="Acquérir"><label for="be_1__1">Acquérir</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="Communiquer"><label for="be_1__3">Communiquer</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="Traiter"><label for="be_1__2">Traiter</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="Alimenter"><label for="be_1__4">Alimenter</label></div>
 </fieldset></div>
     <div class="assoc"><fieldset class="qcm-groupe" id="be_2" data-melange="1">
-  <legend>2. Une variable, c'est…</legend>
+  <legend>2. Qu'est-ce qu'une variable ?</legend>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="un câble de la carte qui transporte la valeur"><label for="be_2__2">un câble de la carte qui transporte la valeur</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="un type d&#x27;écran qui affiche les nombres"><label for="be_2__3">un type d'écran qui affiche les nombres</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="une boîte étiquetée qui garde une valeur"><label for="be_2__1">une boîte étiquetée qui garde une valeur</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="une erreur de programme signalée par le logiciel"><label for="be_2__4">une erreur de programme signalée par le logiciel</label></div>
 </fieldset></div>
     <div class="assoc"><fieldset class="qcm-groupe" id="be_3" data-melange="1">
-  <legend>3. <code>analogRead(A1)</code> renvoie un nombre entre…</legend>
+  <legend>3. Entre quelles valeurs se trouve le nombre que renvoie <code>analogRead(A1)</code> ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="0 et 5"><label for="be_3__4">0 et 5</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="0 et 100"><label for="be_3__2">0 et 100</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="−512 et 512"><label for="be_3__3">−512 et 512</label></div>
@@ -1913,7 +1916,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <h4>À toi de jouer</h4>
       <div class="assoc">
         <fieldset class="qcm-groupe" id="ph_pred" data-melange="1">
-  <legend>Avant de tester (facultatif) : à ton avis, si je ferme A et D, le moteur…</legend>
+  <legend>Avant de tester (facultatif) : à ton avis, si je ferme A et D, que fait le moteur ?</legend>
   <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__2" value="sens2"><label for="ph_pred__2">tourne dans le sens 2 (sens inverse des aiguilles d'une montre)</label></div>
   <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__1" value="sens1"><label for="ph_pred__1">tourne dans le sens 1 (sens des aiguilles d'une montre)</label></div>
   <div class="qcm-option"><input type="radio" name="ph_pred" id="ph_pred__3" value="arret"><label for="ph_pred__3">ne tourne pas</label></div>
@@ -2096,14 +2099,14 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <div class="exo">
       <h4>a) Le courrier, ligne à ligne</h4>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_e1" data-melange="1">
-  <legend>« réagir en moins d'une seconde » est une exigence de…</legend>
+  <legend>« Réagir en moins d'une seconde » : de quel type d'exigence s'agit-il ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__1" value="comportement (ce que fait la station)" data-pourquoi="Le comportement dit ce que fait la station ; ici, la phrase dit en combien de temps."><label for="a1_e1__1">comportement (ce que fait la station)</label></div>
   <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__2" value="performance (à quelle vitesse / avec quelle qualité)"><label for="a1_e1__2">performance (à quelle vitesse / avec quelle qualité)</label></div>
   <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__4" value="esthétique (l&#x27;allure de la station, ses couleurs)" data-pourquoi="Le délai de réaction ne se voit pas sur l'allure de la station."><label for="a1_e1__4">esthétique (l'allure de la station, ses couleurs)</label></div>
   <div class="qcm-option"><input type="radio" name="a1_e1" id="a1_e1__3" value="coût (le prix des composants et du montage)" data-pourquoi="Une seconde n'est pas un prix : relis ce que la phrase mesure."><label for="a1_e1__3">coût (le prix des composants et du montage)</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_e2" data-melange="1">
-  <legend>« l'agent peut acquitter l'alarme d'un appui » est une exigence de…</legend>
+  <legend>« L'agent peut acquitter l'alarme d'un appui » : de quel type d'exigence s'agit-il ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__3" value="coût (le prix des composants et du montage)" data-pourquoi="Acquitter d'un appui ne dit rien du prix de la station."><label for="a1_e2__3">coût (le prix des composants et du montage)</label></div>
   <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__4" value="esthétique (l&#x27;allure de la station, ses couleurs)" data-pourquoi="L'appui sur le bouton ne change pas l'allure de la station."><label for="a1_e2__4">esthétique (l'allure de la station, ses couleurs)</label></div>
   <div class="qcm-option"><input type="radio" name="a1_e2" id="a1_e2__1" value="comportement (ce que fait la station)"><label for="a1_e2__1">comportement (ce que fait la station)</label></div>
@@ -2118,42 +2121,42 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
 </fieldset></div>
       <h4>b) Chaque organe à sa place</h4>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_1" data-melange="1">
-  <legend>Potentiomètre « anémomètre » (A1)</legend>
+  <legend>À quelle fonction appartient le potentiomètre « anémomètre » (A1) ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__1" value="Acquérir"><label for="a1_1__1">Acquérir</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__4" value="Alimenter" data-pourquoi="Le potentiomètre ne fournit pas l'énergie : il donne une mesure."><label for="a1_1__4">Alimenter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__3" value="Communiquer" data-pourquoi="Il ne renseigne pas l'habitant : il renseigne la carte."><label for="a1_1__3">Communiquer</label></div>
   <div class="qcm-option"><input type="radio" name="a1_1" id="a1_1__2" value="Traiter" data-pourquoi="Il ne décide rien : c'est la carte qui traite sa valeur."><label for="a1_1__2">Traiter</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_2" data-melange="1">
-  <legend>Bouton d'acquittement (D2)</legend>
+  <legend>À quelle fonction appartient le bouton d'acquittement (D2) ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__4" value="Alimenter" data-pourquoi="Le bouton ne fournit pas d'énergie à la station."><label for="a1_2__4">Alimenter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__1" value="Acquérir"><label for="a1_2__1">Acquérir</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__3" value="Communiquer" data-pourquoi="Le bouton ne montre rien à l'habitant : il fait entrer un ordre de l'agent."><label for="a1_2__3">Communiquer</label></div>
   <div class="qcm-option"><input type="radio" name="a1_2" id="a1_2__2" value="Traiter" data-pourquoi="Le bouton ne décide pas : il transmet l'appui à la carte."><label for="a1_2__2">Traiter</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_3" data-melange="1">
-  <legend>Microcontrôleur + programme</legend>
+  <legend>À quelle fonction appartient le microcontrôleur et son programme ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__2" value="Traiter"><label for="a1_3__2">Traiter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__1" value="Acquérir" data-pourquoi="Le microcontrôleur ne mesure pas le vent : il reçoit la mesure."><label for="a1_3__1">Acquérir</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__3" value="Communiquer" data-pourquoi="Il ne s'adresse pas à l'habitant : d'autres composants le font."><label for="a1_3__3">Communiquer</label></div>
   <div class="qcm-option"><input type="radio" name="a1_3" id="a1_3__4" value="Alimenter" data-pourquoi="Il consomme de l'énergie, il n'en fournit pas."><label for="a1_3__4">Alimenter</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_4" data-melange="1">
-  <legend>Écran LCD RGB (I2C)</legend>
+  <legend>À quelle fonction appartient l'écran LCD RGB (I2C) ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__2" value="Traiter" data-pourquoi="L'écran affiche ce que la carte a décidé : il ne décide rien."><label for="a1_4__2">Traiter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__3" value="Communiquer"><label for="a1_4__3">Communiquer</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__1" value="Acquérir" data-pourquoi="L'écran ne mesure rien : il montre."><label for="a1_4__1">Acquérir</label></div>
   <div class="qcm-option"><input type="radio" name="a1_4" id="a1_4__4" value="Alimenter" data-pourquoi="L'écran ne fournit pas l'énergie : il en consomme."><label for="a1_4__4">Alimenter</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_5" data-melange="1">
-  <legend>Les quatre voyants (D6, D7, D3, D4) et le buzzer (D5)</legend>
+  <legend>À quelle fonction appartiennent les quatre voyants (D6, D7, D3, D4) et le buzzer (D5) ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__3" value="Communiquer"><label for="a1_5__3">Communiquer</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="Traiter" data-pourquoi="Les voyants et le buzzer ne décident rien : ils annoncent."><label for="a1_5__2">Traiter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__4" value="Alimenter" data-pourquoi="Ils consomment de l'énergie, ils n'en fournissent pas."><label for="a1_5__4">Alimenter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="Acquérir" data-pourquoi="Ils ne mesurent rien : ils s'adressent aux habitants."><label for="a1_5__1">Acquérir</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a1_6" data-melange="1">
-  <legend>Câble USB 5 V</legend>
+  <legend>À quelle fonction appartient le câble USB 5 V ?</legend>
   <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__1" value="Acquérir" data-pourquoi="Le câble ne mesure rien : il apporte quelque chose à toute la station."><label for="a1_6__1">Acquérir</label></div>
   <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__2" value="Traiter" data-pourquoi="Le câble ne décide rien."><label for="a1_6__2">Traiter</label></div>
   <div class="qcm-option"><input type="radio" name="a1_6" id="a1_6__4" value="Alimenter"><label for="a1_6__4">Alimenter</label></div>
@@ -2215,7 +2218,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
         &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" style="width:80px;display:inline-block"> ALORS niveau ← ouragan<br>
         &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s3" style="width:80px;display:inline-block"> ALORS niveau ← tempête tropicale<br>
         &nbsp;&nbsp;SINON niveau ← <fieldset class="qcm-groupe" id="a2_s4" data-melange="1">
-  <legend>niveau si aucun seuil n'est atteint</legend>
+  <legend>Quel niveau annonce la station si aucun seuil n'est atteint ?</legend>
   <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__4" value="panne" data-pourquoi="Aucun seuil atteint, c'est un vent faible : la station fonctionne normalement."><label for="a2_s4__4">panne</label></div>
   <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__1" value="veille"><label for="a2_s4__1">veille</label></div>
   <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__2" value="ouragan majeur" data-pourquoi="Le niveau le plus haut demande le seuil le plus haut : ici, aucun n'est atteint."><label for="a2_s4__2">ouragan majeur</label></div>
@@ -2270,7 +2273,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a2_q3" id="a2_q3__2" value="une erreur de dessin, à effacer du schéma" data-pourquoi="Sans elle, la station ne mesurerait le vent qu'une fois."><label for="a2_q3__2">une erreur de dessin, à effacer du schéma</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a2_q4" data-melange="1">
-  <legend>Dans un algorigramme, le losange représente…</legend>
+  <legend>Dans un algorigramme, que représente le losange ?</legend>
   <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__2" value="une action, que la station exécute à coup sûr" data-pourquoi="Une action se dessine dans un rectangle."><label for="a2_q4__2">une action, que la station exécute à coup sûr</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__3" value="le début du programme, d&#x27;où partent les flèches" data-pourquoi="Le début se dessine dans un ovale."><label for="a2_q4__3">le début du programme, d'où partent les flèches</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__1" value="une décision, avec deux sorties OUI / NON"><label for="a2_q4__1">une décision, avec deux sorties OUI / NON</label></div>
@@ -2294,7 +2297,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a2_q6" id="a2_q6__3" value="4 : les quatre niveaux, la lecture n&#x27;en est pas un" data-pourquoi="Lire la vitesse du vent est aussi un traitement."><label for="a2_q6__3">4 : les quatre niveaux, la lecture n'en est pas un</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a2_q7" data-melange="1">
-  <legend>La bulle violette en pointillés « 🔁 LA BOUCLE », à gauche du dessin, c'est…</legend>
+  <legend>La bulle violette en pointillés « 🔁 LA BOUCLE », à gauche du dessin : qu'est-ce que c'est ?</legend>
   <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__1" value="un commentaire de lecture : il explique le dessin sans faire partie de l&#x27;algorigramme"><label for="a2_q7__1">un commentaire de lecture : il explique le dessin sans faire partie de l'algorigramme</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__2" value="un rectangle de traitement : une action que la station exécute à chaque tour de boucle" data-pourquoi="La bulle est en pointillés et hors des flèches : la station ne l'exécute pas."><label for="a2_q7__2">un rectangle de traitement : une action que la station exécute à chaque tour de boucle</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q7" id="a2_q7__4" value="le symbole normalisé de la boucle, qu&#x27;on doit dessiner dans tout algorigramme" data-pourquoi="La boucle se dessine par la flèche qui remonte, pas par une bulle."><label for="a2_q7__4">le symbole normalisé de la boucle, qu'on doit dessiner dans tout algorigramme</label></div>
@@ -2315,7 +2318,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a2_q9" id="a2_q9__4" value="une infinité, puisque la boucle ne s&#x27;arrête jamais et repasse sans cesse" data-pourquoi="Chaque tour suit un seul chemin parmi un petit nombre : compte les niveaux."><label for="a2_q9__4">une infinité, puisque la boucle ne s'arrête jamais et repasse sans cesse</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a2_q10" data-melange="1">
-  <legend>Ce qu'un algorigramme ne dit <b>PAS</b> :</legend>
+  <legend>Que ne dit <b>PAS</b> un algorigramme ?</legend>
   <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__2" value="l&#x27;ordre dans lequel les tests se font : c&#x27;est au programmeur de le décider ensuite" data-pourquoi="L'ordre des tests se lit sur l'algorigramme, de haut en bas."><label for="a2_q10__2">l'ordre dans lequel les tests se font : c'est au programmeur de le décider ensuite</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__4" value="où se prennent les décisions : les losanges ne disent pas quelle question ils posent" data-pourquoi="Les décisions sont les losanges : l'algorigramme les montre."><label for="a2_q10__4">où se prennent les décisions : les losanges ne disent pas quelle question ils posent</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q10" id="a2_q10__3" value="ce que le système fait quand aucun seuil n&#x27;est atteint : ce cas-là n&#x27;a pas de rectangle à lui" data-pourquoi="Le dernier SINON y figure : c'est la veille."><label for="a2_q10__3">ce que le système fait quand aucun seuil n'est atteint : ce cas-là n'a pas de rectangle à lui</label></div>

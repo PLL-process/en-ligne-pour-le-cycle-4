@@ -922,8 +922,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -937,7 +940,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1079,9 +1082,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1436,21 +1439,21 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-      <legend>Pour savoir lequel de deux bois est le plus solide, on les essaie…</legend>
+      <legend>Pour savoir lequel de deux bois est le plus solide, comment les essaie-t-on ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="en tapant dessus jusqu&#x27;à ce que l&#x27;un casse"><label for="be_1__2">en tapant dessus jusqu'à ce que l'un casse</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="avec les morceaux qu&#x27;on trouve dans l&#x27;atelier"><label for="be_1__1">avec les morceaux qu'on trouve dans l'atelier</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="avec des morceaux identiques, de la même façon"><label for="be_1__3">avec des morceaux identiques, de la même façon</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-      <legend>La <b>charge de rupture</b> d'un crochet, c'est…</legend>
+      <legend>Qu'est-ce que la <b>charge de rupture</b> d'un crochet ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="son propre poids, sans rien accrocher"><label for="be_2__3">son propre poids, sans rien accrocher</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="la charge qu&#x27;il porte d&#x27;habitude"><label for="be_2__1">la charge qu'il porte d'habitude</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="la charge à partir de laquelle il casse"><label for="be_2__2">la charge à partir de laquelle il casse</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-      <legend>On fait tenir à une patère bien plus que le sac qu'elle portera, parce que…</legend>
+      <legend>Pourquoi fait-on tenir à une patère bien plus que le sac qu'elle portera ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="le sac pèsera toujours exactement la même chose"><label for="be_3__3">le sac pèsera toujours exactement la même chose</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="une patère plus solide est aussi plus jolie"><label for="be_3__2">une patère plus solide est aussi plus jolie</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="on ne connaît ni la vraie charge ni la vraie pièce"><label for="be_3__1">on ne connaît ni la vraie charge ni la vraie pièce</label></div>
@@ -1624,7 +1627,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a1q1" id="a1q1__1" value="11,8 MPa"><label for="a1q1__1">11,8 MPa (mégapascals)</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1q2" data-melange="1">
-  <legend>2. En passant à l'acier doux, la contrainte affichée…</legend>
+  <legend>2. En passant à l'acier doux, que fait la contrainte affichée ?</legend>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__3" value="augmente beaucoup" data-pourquoi="Regarde la ligne « contrainte » avant et après : le nombre est-il différent ?"><label for="a1q2__3">augmente beaucoup</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__1" value="ne change pas"><label for="a1q2__1">ne change pas</label></div>
   <div class="qcm-option"><input type="radio" name="a1q2" id="a1q2__2" value="diminue beaucoup" data-pourquoi="Regarde la ligne « contrainte » avant et après : le nombre est-il différent ?"><label for="a1q2__2">diminue beaucoup</label></div>
@@ -1848,7 +1851,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   60 mm, charge prévue 25 kg.</p>
   <div class="exo">
     <fieldset class="qcm-groupe" id="a5q1" data-melange="1">
-  <legend>1. Sans calculer, la contrainte dans le bras sera…</legend>
+  <legend>1. Sans calculer, que sera la contrainte dans le bras ?</legend>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__2" value="la même : c&#x27;est toujours de la flexion, et la forme du bras ne change pas" data-pourquoi="La formule contient la charge et la longueur : les deux augmentent."><label for="a5q1__2">la même : c'est toujours de la flexion, et la forme du bras ne change pas</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__4" value="impossible à dire sans connaître le matériau de l&#x27;étagère et sa limite" data-pourquoi="La contrainte ne dépend pas du matériau : relis la formule."><label for="a5q1__4">impossible à dire sans connaître le matériau de l'étagère et sa limite</label></div>
   <div class="qcm-option"><input type="radio" name="a5q1" id="a5q1__3" value="plus petite : une étagère est plus solide qu&#x27;un crochet, elle a deux appuis" data-pourquoi="Même principe, bras plus long, charge plus lourde : la contrainte grandit."><label for="a5q1__3">plus petite : une étagère est plus solide qu'un crochet, elle a deux appuis</label></div>
@@ -1941,7 +1944,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h3>📍 Je me positionne</h3>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"><fieldset class="qcm-groupe" id="auto1">
-  <legend>5e_C8.1 — utiliser une simulation fournie pour valider la tenue mécanique d’un matériau :</legend>
+  <legend>5e_C8.1 — utiliser une simulation fournie pour valider la tenue mécanique d’un matériau : où en suis-je ?</legend>
   <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore lire ce que le simulateur affiche"><label for="auto1__1">🔴 Maîtrise insuffisante — je ne sais pas encore lire ce que le simulateur affiche</label></div>
   <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟠 Maîtrise fragile — je lis la contrainte et le coefficient, avec l&#x27;aide de la correction"><label for="auto1__2">🟠 Maîtrise fragile — je lis la contrainte et le coefficient, avec l'aide de la correction</label></div>
   <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 Maîtrise satisfaisante — j&#x27;utilise le simulateur seul·e et je dis si un matériau est retenu"><label for="auto1__3">🟢 Maîtrise satisfaisante — j'utilise le simulateur seul·e et je dis si un matériau est retenu</label></div>

@@ -977,8 +977,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -992,7 +995,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1134,9 +1137,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1890,7 +1893,7 @@ luminosité (il mesure s'il fait clair ou sombre), une DEL (une diode électrolu
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
-      <legend>Avant de brancher ou de débrancher un module sur la carte, on…</legend>
+      <legend>Que fait-on avant de brancher ou de débrancher un module sur la carte ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="laisse tout branché pour voir l&#x27;effet"><label for="be_1__1">laisse tout branché pour voir l'effet</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="coupe l&#x27;alimentation de la carte"><label for="be_1__2">coupe l'alimentation de la carte</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="secoue le câble pour vérifier le contact"><label for="be_1__3">secoue le câble pour vérifier le contact</label></div>
@@ -1904,7 +1907,7 @@ luminosité (il mesure s'il fait clair ou sombre), une DEL (une diode électrolu
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
-      <legend>Le programme lit le capteur sur A0, mais tu l'as branché sur A1. Il se passe…</legend>
+      <legend>Le programme lit le capteur sur A0, mais tu l'as branché sur A1. Que se passe-t-il ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="rien, et aucun message ne le signale"><label for="be_3__1">rien, et aucun message ne le signale</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="un message d&#x27;erreur s&#x27;affiche à l&#x27;écran"><label for="be_3__2">un message d'erreur s'affiche à l'écran</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="la carte trouve le capteur toute seule"><label for="be_3__3">la carte trouve le capteur toute seule</label></div>
@@ -2034,7 +2037,7 @@ sinon
 <div class="cac" data-cac='{"dessin": "preau", "cases": {"capteur.fonction": "a0f0", "carte.fonction": "a0f1", "del.fonction": "a0f2", "usb.fonction": "a0f3", "shield.fonction": "a0f4"}, "nom": "Le prototype du préau : les cinq fonctions à poser dans les blocs"}'>
 <div class="cac-questions">
 <fieldset class="qcm-groupe" id="a0f0">
-  <legend>La fonction du capteur de luminosité</legend>
+  <legend>Quelle fonction remplit le capteur de luminosité ?</legend>
   <div class="qcm-option"><input type="radio" name="a0f0" id="a0f0__1" value="AGIR" data-pourquoi="AGIR, c'est produire un effet dans le monde réel. Le capteur mesure la lumière du préau."><label for="a0f0__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0f0" id="a0f0__2" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie : le prototype n'a pas de batterie. Le capteur mesure la lumière du préau."><label for="a0f0__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0f0" id="a0f0__3" value="ACQUÉRIR"><label for="a0f0__3">ACQUÉRIR</label></div>
@@ -2043,7 +2046,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a0f0" id="a0f0__6" value="TRAITER" data-pourquoi="TRAITER, c'est décider quoi faire de la mesure. Le capteur mesure la lumière du préau."><label for="a0f0__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0f1">
-  <legend>La fonction de la carte Arduino UNO</legend>
+  <legend>Quelle fonction remplit la carte Arduino UNO ?</legend>
   <div class="qcm-option"><input type="radio" name="a0f1" id="a0f1__1" value="AGIR" data-pourquoi="AGIR, c'est produire un effet dans le monde réel. La carte reçoit la mesure et décide d'allumer."><label for="a0f1__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0f1" id="a0f1__2" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie : le prototype n'a pas de batterie. La carte reçoit la mesure et décide d'allumer."><label for="a0f1__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0f1" id="a0f1__3" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une mesure. La carte reçoit la mesure et décide d'allumer."><label for="a0f1__3">ACQUÉRIR</label></div>
@@ -2052,7 +2055,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a0f1" id="a0f1__6" value="TRAITER"><label for="a0f1__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0f2">
-  <legend>La fonction du module DEL</legend>
+  <legend>Quelle fonction remplit le module DEL ?</legend>
   <div class="qcm-option"><input type="radio" name="a0f2" id="a0f2__1" value="AGIR"><label for="a0f2__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0f2" id="a0f2__2" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie : le prototype n'a pas de batterie. Le module DEL éclaire le préau."><label for="a0f2__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0f2" id="a0f2__3" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une mesure. Le module DEL éclaire le préau."><label for="a0f2__3">ACQUÉRIR</label></div>
@@ -2061,7 +2064,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a0f2" id="a0f2__6" value="TRAITER" data-pourquoi="TRAITER, c'est décider quoi faire de la mesure. Le module DEL éclaire le préau."><label for="a0f2__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0f3">
-  <legend>La fonction du câble USB</legend>
+  <legend>Quelle fonction remplit le câble USB ?</legend>
   <div class="qcm-option"><input type="radio" name="a0f3" id="a0f3__1" value="AGIR" data-pourquoi="AGIR, c'est produire un effet dans le monde réel. Le câble USB apporte le courant aux autres constituants."><label for="a0f3__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0f3" id="a0f3__2" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie : le prototype n'a pas de batterie. Le câble USB apporte le courant aux autres constituants."><label for="a0f3__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0f3" id="a0f3__3" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une mesure. Le câble USB apporte le courant aux autres constituants."><label for="a0f3__3">ACQUÉRIR</label></div>
@@ -2070,7 +2073,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a0f3" id="a0f3__6" value="TRAITER" data-pourquoi="TRAITER, c'est décider quoi faire de la mesure. Le câble USB apporte le courant aux autres constituants."><label for="a0f3__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0f4">
-  <legend>La fonction du Base Shield V2</legend>
+  <legend>Quelle fonction remplit le Base Shield V2 ?</legend>
   <div class="qcm-option"><input type="radio" name="a0f4" id="a0f4__1" value="AGIR" data-pourquoi="AGIR, c'est produire un effet dans le monde réel. Le Base Shield branche les modules sur la carte."><label for="a0f4__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0f4" id="a0f4__2" value="STOCKER" data-pourquoi="STOCKER, c'est garder l'énergie : le prototype n'a pas de batterie. Le Base Shield branche les modules sur la carte."><label for="a0f4__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0f4" id="a0f4__3" value="ACQUÉRIR" data-pourquoi="ACQUÉRIR, c'est prendre une mesure. Le Base Shield branche les modules sur la carte."><label for="a0f4__3">ACQUÉRIR</label></div>
@@ -2219,7 +2222,7 @@ sinon
   <div class="exo">
 
     <fieldset class="qcm-groupe" id="a3o3" data-melange="1">
-  <legend><b>Relier le câble USB à l'ordinateur</b></legend>
+  <legend><b>Relier le câble USB à l'ordinateur</b> : à quel rang le fais-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__5" value="5e" data-pourquoi="Le câble se relie quand tout est monté et relu : on câble hors tension."><label for="a3o3__5">5e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__1" value="1er" data-pourquoi="Le câble se relie quand tout est monté et relu : on câble hors tension."><label for="a3o3__1">1er</label></div>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__4" value="4e"><label for="a3o3__4">4e</label></div>
@@ -2227,7 +2230,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__3" value="3e" data-pourquoi="Le câble se relie quand tout est monté et relu : on câble hors tension."><label for="a3o3__3">3e</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3o4" data-melange="1">
-  <legend><b>Masquer le capteur avec la main pour vérifier que la DEL s'allume</b></legend>
+  <legend><b>Masquer le capteur avec la main pour vérifier que la DEL s'allume</b> : à quel rang le fais-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__4" value="4e" data-pourquoi="Le dernier geste n'est pas un branchement : c'est la vérification, sous tension."><label for="a3o4__4">4e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__2" value="2e" data-pourquoi="Le dernier geste n'est pas un branchement : c'est la vérification, sous tension."><label for="a3o4__2">2e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__1" value="1er" data-pourquoi="Le dernier geste n'est pas un branchement : c'est la vérification, sous tension."><label for="a3o4__1">1er</label></div>
@@ -2235,7 +2238,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__3" value="3e" data-pourquoi="Le dernier geste n'est pas un branchement : c'est la vérification, sous tension."><label for="a3o4__3">3e</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3o0" data-melange="1">
-  <legend><b>Emboîter le Base Shield sur la carte, rien n'étant alimenté</b></legend>
+  <legend><b>Emboîter le Base Shield sur la carte, rien n'étant alimenté</b> : à quel rang le fais-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o0" id="a3o0__2" value="2e" data-pourquoi="On emboîte le Base Shield d'abord : les modules se branchent dessus."><label for="a3o0__2">2e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o0" id="a3o0__5" value="5e" data-pourquoi="On emboîte le Base Shield d'abord : les modules se branchent dessus."><label for="a3o0__5">5e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o0" id="a3o0__3" value="3e" data-pourquoi="On emboîte le Base Shield d'abord : les modules se branchent dessus."><label for="a3o0__3">3e</label></div>
@@ -2243,7 +2246,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a3o0" id="a3o0__1" value="1er"><label for="a3o0__1">1er</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3o2" data-melange="1">
-  <legend><b>Relire chaque port sur le schéma de câblage, le câble encore débranché</b></legend>
+  <legend><b>Relire chaque port sur le schéma de câblage, le câble encore débranché</b> : à quel rang le fais-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__1" value="1er" data-pourquoi="On relit les ports une fois les modules branchés, et avant de mettre sous tension."><label for="a3o2__1">1er</label></div>
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__3" value="3e"><label for="a3o2__3">3e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__5" value="5e" data-pourquoi="On relit les ports une fois les modules branchés, et avant de mettre sous tension."><label for="a3o2__5">5e</label></div>
@@ -2251,7 +2254,7 @@ sinon
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__2" value="2e" data-pourquoi="On relit les ports une fois les modules branchés, et avant de mettre sous tension."><label for="a3o2__2">2e</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3o1" data-melange="1">
-  <legend><b>Brancher le capteur de luminosité sur A0 et le module DEL sur D5</b></legend>
+  <legend><b>Brancher le capteur de luminosité sur A0 et le module DEL sur D5</b> : à quel rang le fais-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__3" value="3e" data-pourquoi="Les modules se branchent sur le Base Shield, une fois emboîté, et avant toute vérification."><label for="a3o1__3">3e</label></div>
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__1" value="1er" data-pourquoi="Les modules se branchent sur le Base Shield, une fois emboîté, et avant toute vérification."><label for="a3o1__1">1er</label></div>
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__5" value="5e" data-pourquoi="Les modules se branchent sur le Base Shield, une fois emboîté, et avant toute vérification."><label for="a3o1__5">5e</label></div>
@@ -2373,7 +2376,7 @@ sinon
   <input id="bilanMeta" placeholder="J'ai hésité sur… / ce qui m'a surpris, c'est…">
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.5 :</b></p>
 <fieldset class="qcm-groupe" id="pos">
-  <legend>Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</legend>
+  <legend>Choisis le niveau qui décrit ce que tu fais aujourd'hui. <br/>Les quatre niveaux sont ceux du livret scolaire : <br/>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br/>Aucun n'est une note.</legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore dire à quoi sert chaque constituant"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore dire à quoi sert chaque constituant</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je nomme les quatre fonctions, mais le choix du port me résiste encore, ou je ne le fais que si on me rappelle où le programme lit la mesure"><label for="pos__2">🟠 Maîtrise fragile — je nomme les quatre fonctions, mais le choix du port me résiste encore, ou je ne le fais que si on me rappelle où le programme lit la mesure</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je place seul·e chaque constituant fourni sur un port du bon type, et je vérifie que le prototype fonctionne"><label for="pos__3">🟢 Maîtrise satisfaisante — je place seul·e chaque constituant fourni sur un port du bon type, et je vérifie que le prototype fonctionne</label></div>

@@ -75,7 +75,7 @@ CONTROLES_PY = ["controle_liens.py", "controle_regles_visibles.py", "controle_ta
                 "controle_ordre_propositions.py", "controle_mode_mission.py",
                 "controle_schema_sous_les_yeux.py", "controle_flux_animes.py",
                 "controle_correction_complete.py", "controle_chaine_a_completer.py",
-                "registre_regles.py"]
+                "registre_regles.py", "controle_consigne_question.py"]
 #: `controle_indices_qcm.mjs` et `controle_axe.mjs` inscrits le 15/11/2026 (audit #721). Le second dit « en panne »
 #: (sortie 2) tant qu'`axe-core` manque à la session : c'est la vérité (règle n°299), pas un rouge à cribler.
 CONTROLES_MJS = ["controle_squelette.mjs", "controle_hors_ligne.mjs", "controle_impression.mjs",

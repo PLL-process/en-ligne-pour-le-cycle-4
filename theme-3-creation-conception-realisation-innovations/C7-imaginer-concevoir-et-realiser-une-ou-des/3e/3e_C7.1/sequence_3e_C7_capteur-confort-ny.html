@@ -1035,8 +1035,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1050,7 +1053,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1192,9 +1195,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1541,21 +1544,21 @@ qu'une température mesurée.</p>
 <p>Cette séquence s'appuie sur ce que tu as fait en 4e — concevoir un support, puis le valider par des tests. <br><b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
 <div class="exo">
   <fieldset class="qcm-groupe" id="be_1">
-  <legend>1. Élaborer un processus de conception, cela veut dire…</legend>
+  <legend>1. Que veut dire « élaborer un processus de conception » ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="écrire soi-même les tâches, leur ordre et leur durée"><label for="be_1__1">écrire soi-même les tâches, leur ordre et leur durée</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="suivre un planning donné par le professeur"><label for="be_1__2">suivre un planning donné par le professeur</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="fabriquer le plus vite possible"><label for="be_1__3">fabriquer le plus vite possible</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_2">
-  <legend>2. Une simulation sert à…</legend>
+  <legend>2. À quoi sert une simulation ?</legend>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="essayer sans fabriquer, pour éliminer les mauvaises pistes"><label for="be_2__1">essayer sans fabriquer, pour éliminer les mauvaises pistes</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="remplacer définitivement les essais réels"><label for="be_2__2">remplacer définitivement les essais réels</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="faire joli dans le compte rendu"><label for="be_2__3">faire joli dans le compte rendu</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_3">
-  <legend>3. Un essai n'a de valeur que si…</legend>
+  <legend>3. À quelle condition un essai a-t-il de la valeur ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="le résultat attendu a été écrit AVANT"><label for="be_3__1">le résultat attendu a été écrit AVANT</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="on le refait plusieurs fois"><label for="be_3__2">on le refait plusieurs fois</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="le professeur le valide"><label for="be_3__3">le professeur le valide</label></div>
@@ -1638,7 +1641,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="32 °C"><label for="a0q1__4">32 °C</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0q2">
-  <legend>Q2 — Quand tu REDESCENDS sous cette température, la LED…</legend>
+  <legend>Q2 — Quand tu REDESCENDS sous cette température, que fait la LED ?</legend>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="reste allumée pour toujours"><label for="a0q2__1">reste allumée pour toujours</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="s&#x27;éteint aussitôt"><label for="a0q2__2">s'éteint aussitôt</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="clignote sans fin"><label for="a0q2__3">clignote sans fin</label></div>
@@ -1751,7 +1754,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 </fieldset></td></tr>
 </table>
 <fieldset class="qcm-groupe" id="a2dec">
-  <legend>Décision globale, d'après tes quatre essais</legend>
+  <legend>D'après tes quatre essais, quelle est ta décision globale ?</legend>
   <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__1" value="Validée"><label for="a2dec__1">Validée</label></div>
   <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__2" value="À améliorer"><label for="a2dec__2">À améliorer</label></div>
   <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__3" value="Rejetée"><label for="a2dec__3">Rejetée</label></div>
@@ -1860,7 +1863,7 @@ print("2 + 3 =", 2 + 3)
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__5" value="5"><label for="a3o3__5">5</label></div>
 </fieldset></div>
 <div class="algostep"><span class="algoshape">⬭ début</span><span class="algotexte">DÉBUT (au démarrage du capteur)</span><fieldset class="qcm-groupe algorang" id="a3o1">
-  <legend class="visually-hidden">Rang du bloc « DÉBUT (au démarrage du capteur) »</legend>
+  <legend class="visually-hidden">Quel rang donnes-tu au bloc « DÉBUT (au démarrage du capteur) » ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__1" value="1"><label for="a3o1__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__2" value="2"><label for="a3o1__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__3" value="3"><label for="a3o1__3">3</label></div>
@@ -1868,7 +1871,7 @@ print("2 + 3 =", 2 + 3)
   <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__5" value="5"><label for="a3o1__5">5</label></div>
 </fieldset></div>
 <div class="algostep"><span class="algoshape">▭ action NON</span><span class="algotexte">NON → éteindre la LED, puis revenir à la mesure</span><fieldset class="qcm-groupe algorang" id="a3o5">
-  <legend class="visually-hidden">Rang du bloc « NON → éteindre la LED, puis revenir à la mesure »</legend>
+  <legend class="visually-hidden">Quel rang donnes-tu au bloc « NON → éteindre la LED, puis revenir à la mesure » ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__1" value="1"><label for="a3o5__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__2" value="2"><label for="a3o5__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__3" value="3"><label for="a3o5__3">3</label></div>
@@ -1876,7 +1879,7 @@ print("2 + 3 =", 2 + 3)
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__5" value="5"><label for="a3o5__5">5</label></div>
 </fieldset></div>
 <div class="algostep"><span class="algoshape">▭ traitement</span><span class="algotexte">Mesurer la température T de la salle</span><fieldset class="qcm-groupe algorang" id="a3o2">
-  <legend class="visually-hidden">Rang du bloc « Mesurer la température T de la salle »</legend>
+  <legend class="visually-hidden">Quel rang donnes-tu au bloc « Mesurer la température T de la salle » ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__1" value="1"><label for="a3o2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__2" value="2"><label for="a3o2__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__3" value="3"><label for="a3o2__3">3</label></div>
@@ -1884,7 +1887,7 @@ print("2 + 3 =", 2 + 3)
   <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__5" value="5"><label for="a3o2__5">5</label></div>
 </fieldset></div>
 <div class="algostep"><span class="algoshape">▭ action OUI</span><span class="algotexte">OUI → allumer la LED d'alerte</span><fieldset class="qcm-groupe algorang" id="a3o4">
-  <legend class="visually-hidden">Rang du bloc « OUI → allumer la LED d'alerte »</legend>
+  <legend class="visually-hidden">Quel rang donnes-tu au bloc « OUI → allumer la LED d'alerte » ?</legend>
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__1" value="1"><label for="a3o4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__2" value="2"><label for="a3o4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__3" value="3"><label for="a3o4__3">3</label></div>
@@ -2118,28 +2121,28 @@ else:
 <h3>Je me positionne</h3>
 <p>Pour chaque compétence travaillée, coche la phrase qui te ressemble aujourd'hui. Ce n'est pas une note&nbsp;: c'est ce que tu diras au professeur.</p>
 <fieldset class="qcm-groupe">
-  <legend>3e_C7.1 — J'élabore un processus de conception, sans planning fourni (séance 1)</legend>
+  <legend>3e_C7.1 — J'élabore un processus de conception, sans planning fourni (séance 1) : où en suis-je ?</legend>
   <label for="pos_c71_1"><input type="radio" id="pos_c71_1" name="pos_c71" value="Je ne sais pas encore le faire"> Je ne sais pas encore le faire</label>
   <label for="pos_c71_2"><input type="radio" id="pos_c71_2" name="pos_c71" value="Je sais le faire avec une aide"> Je sais le faire avec une aide</label>
   <label for="pos_c71_3"><input type="radio" id="pos_c71_3" name="pos_c71" value="Je sais le faire seul·e"> Je sais le faire seul·e</label>
   <label for="pos_c71_4"><input type="radio" id="pos_c71_4" name="pos_c71" value="Je sais l'expliquer à quelqu'un"> Je sais l'expliquer à quelqu'un</label>
 </fieldset>
 <fieldset class="qcm-groupe">
-  <legend>3e_C8.1 — Je valide une solution par une simulation et des essais prédits à l'avance (séances 1 et 2)</legend>
+  <legend>3e_C8.1 — Je valide une solution par une simulation et des essais prédits à l'avance (séances 1 et 2) : où en suis-je ?</legend>
   <label for="pos_c81_1"><input type="radio" id="pos_c81_1" name="pos_c81" value="Je ne sais pas encore le faire"> Je ne sais pas encore le faire</label>
   <label for="pos_c81_2"><input type="radio" id="pos_c81_2" name="pos_c81" value="Je sais le faire avec une aide"> Je sais le faire avec une aide</label>
   <label for="pos_c81_3"><input type="radio" id="pos_c81_3" name="pos_c81" value="Je sais le faire seul·e"> Je sais le faire seul·e</label>
   <label for="pos_c81_4"><input type="radio" id="pos_c81_4" name="pos_c81" value="Je sais l'expliquer à quelqu'un"> Je sais l'expliquer à quelqu'un</label>
 </fieldset>
 <fieldset class="qcm-groupe">
-  <legend>3e_C7.2 — Je propose plusieurs solutions et je choisis la représentation qui convient (séances 3 et 4)</legend>
+  <legend>3e_C7.2 — Je propose plusieurs solutions et je choisis la représentation qui convient (séances 3 et 4) : où en suis-je ?</legend>
   <label for="pos_c72_1"><input type="radio" id="pos_c72_1" name="pos_c72" value="Je ne sais pas encore le faire"> Je ne sais pas encore le faire</label>
   <label for="pos_c72_2"><input type="radio" id="pos_c72_2" name="pos_c72" value="Je sais le faire avec une aide"> Je sais le faire avec une aide</label>
   <label for="pos_c72_3"><input type="radio" id="pos_c72_3" name="pos_c72" value="Je sais le faire seul·e"> Je sais le faire seul·e</label>
   <label for="pos_c72_4"><input type="radio" id="pos_c72_4" name="pos_c72" value="Je sais l'expliquer à quelqu'un"> Je sais l'expliquer à quelqu'un</label>
 </fieldset>
 <fieldset class="qcm-groupe" id="bilan4">
-  <legend>Ma confiance en CRCN 3.4 Programmer, de 1 (pas encore sûr·e) à 4 (tout à fait sûr·e)</legend>
+  <legend>Quelle confiance ai-je en CRCN 3.4 Programmer, de 1 (pas encore sûr·e) à 4 (tout à fait sûr·e) ?</legend>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__1" value="1"><label for="bilan4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__2" value="2"><label for="bilan4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__3" value="3"><label for="bilan4__3">3</label></div>

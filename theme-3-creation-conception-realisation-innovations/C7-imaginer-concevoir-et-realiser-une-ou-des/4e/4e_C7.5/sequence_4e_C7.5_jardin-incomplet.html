@@ -1002,8 +1002,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1017,7 +1020,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1159,9 +1162,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1974,7 +1977,7 @@ façon.</p>
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-      <legend>Dans un prototype, la carte remplit la fonction…</legend>
+      <legend>Dans un prototype, quelle fonction remplit la carte ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="TRAITER"><label for="be_1__1">TRAITER</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="AGIR"><label for="be_1__3">AGIR</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="ACQUÉRIR"><label for="be_1__2">ACQUÉRIR</label></div>
@@ -1988,7 +1991,7 @@ façon.</p>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-      <legend>Un capteur dont la valeur varie continûment se branche sur…</legend>
+      <legend>Un capteur dont la valeur varie continûment : sur quoi se branche-t-il ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="une sortie numérique (D2 à D8)"><label for="be_3__1">une sortie numérique (D2 à D8)</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="une entrée analogique (A0 à A3)"><label for="be_3__2">une entrée analogique (A0 à A3)</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="n&#x27;importe quel port de la carte"><label for="be_3__3">n'importe quel port de la carte</label></div>
@@ -2148,7 +2151,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
 <div class="cac" data-cac='{"dessin": "prototype", "cases": {"capteur.fonction": "a0r0", "carte.fonction": "a0r1", "relais.fonction": "a0r2", "pompe.fonction": "a0r3", "alim.fonction": "a0r4", "shield.fonction": "a0r5"}, "reutilisables": true, "nom": "Le prototype du jardin : les six fonctions à poser dans les blocs"}'>
 <div class="cac-questions">
 <fieldset class="qcm-groupe" id="a0r0">
-  <legend>La fonction du capteur d'humidité du sol</legend>
+  <legend>Quelle fonction remplit le capteur d'humidité du sol ?</legend>
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__1" value="AGIR"><label for="a0r0__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__2" value="STOCKER"><label for="a0r0__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__3" value="ACQUÉRIR"><label for="a0r0__3">ACQUÉRIR</label></div>
@@ -2157,7 +2160,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a0r0" id="a0r0__6" value="TRAITER"><label for="a0r0__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0r1">
-  <legend>La fonction de la carte Arduino UNO</legend>
+  <legend>Quelle fonction remplit la carte Arduino UNO ?</legend>
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__1" value="AGIR"><label for="a0r1__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__2" value="STOCKER"><label for="a0r1__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__3" value="ACQUÉRIR"><label for="a0r1__3">ACQUÉRIR</label></div>
@@ -2166,7 +2169,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a0r1" id="a0r1__6" value="TRAITER"><label for="a0r1__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0r2">
-  <legend>La fonction du module relais</legend>
+  <legend>Quelle fonction remplit le module relais ?</legend>
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__1" value="AGIR"><label for="a0r2__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__2" value="STOCKER"><label for="a0r2__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__3" value="ACQUÉRIR"><label for="a0r2__3">ACQUÉRIR</label></div>
@@ -2175,7 +2178,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a0r2" id="a0r2__6" value="TRAITER"><label for="a0r2__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0r3">
-  <legend>La fonction de la pompe immergée</legend>
+  <legend>Quelle fonction remplit la pompe immergée ?</legend>
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__1" value="AGIR"><label for="a0r3__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__2" value="STOCKER"><label for="a0r3__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__3" value="ACQUÉRIR"><label for="a0r3__3">ACQUÉRIR</label></div>
@@ -2184,7 +2187,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a0r3" id="a0r3__6" value="TRAITER"><label for="a0r3__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0r4">
-  <legend>La fonction de l'alimentation externe 5 V (volts) / 2 A (ampères)</legend>
+  <legend>Quelle fonction remplit l'alimentation externe 5 V (volts) / 2 A (ampères) ?</legend>
   <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__1" value="AGIR"><label for="a0r4__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__2" value="STOCKER"><label for="a0r4__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__3" value="ACQUÉRIR"><label for="a0r4__3">ACQUÉRIR</label></div>
@@ -2193,7 +2196,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
   <div class="qcm-option"><input type="radio" name="a0r4" id="a0r4__6" value="TRAITER"><label for="a0r4__6">TRAITER</label></div>
 </fieldset>
 <fieldset class="qcm-groupe" id="a0r5">
-  <legend>La fonction du Base Shield V2</legend>
+  <legend>Quelle fonction remplit le Base Shield V2 ?</legend>
   <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__1" value="AGIR"><label for="a0r5__1">AGIR</label></div>
   <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__2" value="STOCKER"><label for="a0r5__2">STOCKER</label></div>
   <div class="qcm-option"><input type="radio" name="a0r5" id="a0r5__3" value="ACQUÉRIR"><label for="a0r5__3">ACQUÉRIR</label></div>
@@ -2512,7 +2515,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"></p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>4e_C7.5 — identifier les constituants manquants dans un prototype et le compléter :</b></legend>
+  <legend><b>4e_C7.5 — identifier les constituants manquants dans un prototype et le compléter :</b> où en suis-je ?</legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je reconnais les fonctions, mais je pars encore du montage plutôt que du besoin"><label for="pos__1">🔴 Maîtrise insuffisante — je reconnais les fonctions, mais je pars encore du montage plutôt que du besoin</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je trouve le manque quand on me rappelle le cahier des charges"><label for="pos__2">🟠 Maîtrise fragile — je trouve le manque quand on me rappelle le cahier des charges</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je pars d&#x27;un symptôme, j&#x27;élimine les fonctions déjà tenues, et je nomme le constituant qui manque"><label for="pos__3">🟢 Maîtrise satisfaisante — je pars d'un symptôme, j'élimine les fonctions déjà tenues, et je nomme le constituant qui manque</label></div>

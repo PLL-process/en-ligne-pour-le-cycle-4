@@ -944,8 +944,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -959,7 +962,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1101,9 +1104,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1436,21 +1439,21 @@ professeur, sur quoi on peut s'appuyer. <br><b>Elles ne comptent pas dans ta pro
 notées</b> — « je ne sais pas encore » est une réponse utile.</p>
 <div class="exo">
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-  <legend>1. Avant de fabriquer quoi que ce soit, on commence par…</legend>
+  <legend>1. Avant de fabriquer quoi que ce soit, par quoi commence-t-on ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="dessiner l&#x27;objet fini, pour que tout le monde voie le résultat"><label for="be_1__3">dessiner l'objet fini, pour que tout le monde voie le résultat</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="identifier le besoin : à quoi ça sert, et pour qui"><label for="be_1__1">identifier le besoin : à quoi ça sert, et pour qui</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="choisir le matériau, pour savoir ce qu&#x27;on pourra fabriquer"><label for="be_1__2">choisir le matériau, pour savoir ce qu'on pourra fabriquer</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-  <legend>2. Pour choisir entre deux solutions, il faut…</legend>
+  <legend>2. Que faut-il pour choisir entre deux solutions ?</legend>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="prendre la première qui marche"><label for="be_2__3">prendre la première qui marche</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="demander laquelle est la plus jolie"><label for="be_2__2">demander laquelle est la plus jolie</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="des critères nommés à l&#x27;avance"><label for="be_2__1">des critères nommés à l'avance</label></div>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-  <legend>3. Un matériau « le meilleur »…</legend>
+  <legend>3. Existe-t-il un matériau « le meilleur » ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="ça n&#x27;existe pas dans l&#x27;absolu : ça dépend des contraintes du lieu"><label for="be_3__1">ça n'existe pas dans l'absolu : ça dépend des contraintes du lieu</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="c&#x27;est le moins cher, toujours : le budget décide avant tout le reste"><label for="be_3__3">c'est le moins cher, toujours : le budget décide avant tout le reste</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="c&#x27;est le plus solide, toujours : un matériau qui résiste convient partout"><label for="be_3__2">c'est le plus solide, toujours : un matériau qui résiste convient partout</label></div>
@@ -1550,7 +1553,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <h4>1a — Remets la démarche en ordre (représentation schématique)</h4>
 <p>La démarche que tu suivras pendant les six séances du projet se DESSINE. <br>Numérote les étapes de 1 à 5&nbsp;:</p>
 <div class="algostep"><span class="algoshape">⬭ début</span><fieldset class="qcm-groupe" id="a1o1">
-  <legend>Rang de l'étape « Identifier le BESOIN »</legend>
+  <legend>Quel rang donnes-tu à l'étape « Identifier le BESOIN » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__1" value="1"><label for="a1o1__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__2" value="2" data-pourquoi="Avant d'imaginer des solutions, il faut savoir à quoi l'objet servira, et pour qui."><label for="a1o1__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__3" value="3" data-pourquoi="On ne choisit pas une solution avant de savoir à quel besoin elle répond."><label for="a1o1__3">3</label></div>
@@ -1558,7 +1561,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__5" value="5" data-pourquoi="Tester quoi ? Sans le besoin, on ne sait pas ce que l'objet doit réussir."><label for="a1o1__5">5</label></div>
 </fieldset><span>Identifier le BESOIN (à quoi ça sert, pour qui)</span></div>
 <div class="algostep"><span class="algoshape">▭ traitement</span><fieldset class="qcm-groupe" id="a1o2">
-  <legend>Rang de l'étape « Imaginer PLUSIEURS solutions »</legend>
+  <legend>Quel rang donnes-tu à l'étape « Imaginer PLUSIEURS solutions » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__1" value="1" data-pourquoi="Imaginer quoi ? Il faut d'abord savoir à quel besoin répondre."><label for="a1o2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__2" value="2"><label for="a1o2__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__3" value="3" data-pourquoi="Pour choisir, il faut déjà avoir plusieurs solutions sous les yeux."><label for="a1o2__3">3</label></div>
@@ -1566,7 +1569,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__5" value="5" data-pourquoi="Il n'y a rien à tester tant qu'aucune solution n'est imaginée."><label for="a1o2__5">5</label></div>
 </fieldset><span>Imaginer PLUSIEURS solutions (A, B…)</span></div>
 <div class="algostep"><span class="algoshape">◇ décision</span><fieldset class="qcm-groupe" id="a1o3">
-  <legend>Rang de l'étape « CHOISIR avec des critères »</legend>
+  <legend>Quel rang donnes-tu à l'étape « CHOISIR avec des critères » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__1" value="1" data-pourquoi="Choisir entre quoi ? Ni le besoin ni les solutions ne sont encore là."><label for="a1o3__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__2" value="2" data-pourquoi="Pour choisir, il faut d'abord imaginer plusieurs solutions."><label for="a1o3__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__3" value="3"><label for="a1o3__3">3</label></div>
@@ -1574,7 +1577,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__5" value="5" data-pourquoi="Le test vérifie le prototype : le choix a eu lieu bien avant."><label for="a1o3__5">5</label></div>
 </fieldset><span>CHOISIR avec des critères (la solution passe-t-elle&nbsp;?)</span></div>
 <div class="algostep"><span class="algoshape">▭ traitement</span><fieldset class="qcm-groupe" id="a1o4">
-  <legend>Rang de l'étape « RÉALISER le prototype »</legend>
+  <legend>Quel rang donnes-tu à l'étape « RÉALISER le prototype » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o4" id="a1o4__1" value="1" data-pourquoi="Réaliser en premier, c'est fabriquer sans savoir à quoi l'objet sert."><label for="a1o4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o4" id="a1o4__2" value="2" data-pourquoi="On ne réalise pas toutes les idées : il faut d'abord choisir."><label for="a1o4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o4" id="a1o4__3" value="3" data-pourquoi="Le choix se fait avec les critères : la réalisation vient juste après lui."><label for="a1o4__3">3</label></div>
@@ -1582,7 +1585,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o4" id="a1o4__5" value="5" data-pourquoi="On teste ce qui existe : le prototype doit être réalisé avant."><label for="a1o4__5">5</label></div>
 </fieldset><span>RÉALISER le prototype</span></div>
 <div class="algostep"><span class="algoshape">▭ + retour</span><fieldset class="qcm-groupe" id="a1o5">
-  <legend>Rang de l'étape « TESTER »</legend>
+  <legend>Quel rang donnes-tu à l'étape « TESTER » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o5" id="a1o5__1" value="1" data-pourquoi="Tester en premier ? Il n'y a encore rien à tester."><label for="a1o5__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o5" id="a1o5__2" value="2" data-pourquoi="Une idée ne se teste pas comme un objet : il faut d'abord la réaliser."><label for="a1o5__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o5" id="a1o5__3" value="3" data-pourquoi="Le test porte sur le prototype réalisé, pas sur le choix."><label for="a1o5__3">3</label></div>
@@ -1851,7 +1854,7 @@ impératif.</span></td></tr></tbody></table></div></div><p><button type="button"
 <fieldset class="positionnement"><legend>4e_C7.3 — comparer différents matériaux pour choisir le plus adapté</legend>
 <label><input type="radio" name="pos_c73" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c73" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c73" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c73" value="4"> ⭐ très bonne</label></fieldset>
 <p>Confiance CRCN 3.1 Développer des documents textuels (1-4)&nbsp;: <fieldset class="qcm-groupe" id="bilan4">
-  <legend>Ma confiance en CRCN 3.1 Développer des documents textuels, de 1 à 4</legend>
+  <legend>Quelle confiance ai-je en CRCN 3.1 Développer des documents textuels, de 1 à 4 ?</legend>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__1" value="1"><label for="bilan4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__2" value="2"><label for="bilan4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__3" value="3"><label for="bilan4__3">3</label></div>

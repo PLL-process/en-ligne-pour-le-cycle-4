@@ -991,8 +991,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1006,7 +1009,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1148,9 +1151,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1501,21 +1504,21 @@ cahier des charges de <em>votre</em> collège.</p>
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-      <legend>Dans le jardin connecté, le capteur d'humidité remplit la fonction…</legend>
+      <legend>Dans le jardin connecté, quelle fonction remplit le capteur d'humidité ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="TRAITER" data-pourquoi="Traiter, c'est décider à partir d'une mesure : le capteur, lui, prend la mesure."><label for="be_1__1">TRAITER</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="ALIMENTER" data-pourquoi="Alimenter, c'est fournir l'énergie : le capteur n'en fournit pas, il en consomme."><label for="be_1__2">ALIMENTER</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="ACQUÉRIR"><label for="be_1__3">ACQUÉRIR</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-      <legend>Un montage demande 800 milliampères (mA) au total, et le port USB en fournit 500. Le montage…</legend>
+      <legend>Un montage demande 800 milliampères (mA) au total, et le port USB en fournit 500. Que fait le montage ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="marche normalement : le port USB s&#x27;adapte à la demande" data-pourquoi="Une source a une limite : au-delà de ce qu'elle fournit, elle ne s'adapte pas."><label for="be_2__3">marche normalement : le port USB s'adapte à la demande</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="redémarre quand la pompe démarre : la source ne suit pas"><label for="be_2__2">redémarre quand la pompe démarre : la source ne suit pas</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="marche, mais un peu moins vite qu&#x27;avec une pile" data-pourquoi="Un courant qui manque ne ralentit pas la carte : il la fait décrocher."><label for="be_2__1">marche, mais un peu moins vite qu'avec une pile</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-      <legend>Pour faire tourner une pompe depuis une sortie de la carte, on passe par…</legend>
+      <legend>Pour faire tourner une pompe depuis une sortie de la carte, par quoi passe-t-on ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="un relais, qui ferme le circuit de la pompe"><label for="be_3__1">un relais, qui ferme le circuit de la pompe</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="un deuxième fil sur la même sortie, pour doubler" data-pourquoi="Un fil de plus ne donne pas plus de courant : la sortie reste aussi faible."><label for="be_3__2">un deuxième fil sur la même sortie, pour doubler</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="rien : une sortie de la carte suffit à la pompe" data-pourquoi="Une sortie de la carte donne quelques dizaines de milliampères : bien trop peu pour un moteur."><label for="be_3__3">rien : une sortie de la carte suffit à la pompe</label></div>
@@ -1758,6 +1761,7 @@ condition</span></td></tr></tbody></table></div></div><p><button type="button" c
   commission.</p>
   <div class="exo">
 
+    <p class="consigne-grille">Pour chaque ligne, choisis le constituant que tu retiens.</p>
     <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>2 réponses ne servent à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>l'anémomètre</li><li><b>B</b>la batterie et le panneau solaire</li><li><b>C</b>le bandeau de 8 DEL</li><li><b>D</b>le capteur de pluie</li><li><b>E</b>l'écran LCD</li><li><b>F</b>le module carte SD</li></ol></div>
 <fieldset class="qcm-groupe qcm-grille" id="a1x0" data-indice="La grandeur du seuil, c'est la vitesse du vent.">
   <legend><b>Pour mesurer la grandeur du seuil, je retiens…</b></legend>
@@ -2133,7 +2137,7 @@ sinon
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en choisissant les constituants au moment de … »</li><li>« Ce qui m'a surpris dans les refus de l'établi, c'est que … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>Je me positionne sur 3e_C7.5 :</b></legend>
+  <legend><b>Je me positionne sur 3e_C7.5 :</b> quelle phrase me décrit le mieux ?</legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore par où prendre un catalogue plus large que le besoin"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore par où prendre un catalogue plus large que le besoin</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je sais assembler correctement, mais je choisis encore d&#x27;après ce qui est disponible"><label for="pos__2">🟠 Maîtrise fragile — je sais assembler correctement, mais je choisis encore d'après ce qui est disponible</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟠 Maîtrise fragile — je sais choisir quand on m&#x27;aide à relire le cahier des charges exigence par exigence"><label for="pos__3">🟠 Maîtrise fragile — je sais choisir quand on m'aide à relire le cahier des charges exigence par exigence</label></div>

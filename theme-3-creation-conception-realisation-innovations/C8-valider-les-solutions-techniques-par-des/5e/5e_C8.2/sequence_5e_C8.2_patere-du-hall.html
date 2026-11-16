@@ -955,8 +955,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -970,7 +973,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1112,9 +1115,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1445,14 +1448,14 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-      <legend>Une fiche de réparation dit : 1. couper l'alimentation ; 2. dévisser ; 3. remplacer. Tu commences par…</legend>
+      <legend>Une fiche de réparation dit : 1. couper l'alimentation ; 2. dévisser ; 3. remplacer. Par quoi commences-tu ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="couper l&#x27;alimentation, l&#x27;étape n°1"><label for="be_1__1">couper l'alimentation, l'étape n°1</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="l&#x27;étape qui te semble la plus rapide"><label for="be_1__2">l'étape qui te semble la plus rapide</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="remplacer la pièce, puisque c&#x27;est le but"><label for="be_1__3">remplacer la pièce, puisque c'est le but</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-      <legend>Pour comparer le freinage de deux vélos, on garde identiques…</legend>
+      <legend>Pour comparer le freinage de deux vélos, que garde-t-on identique ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="la charge, le sol et la vitesse : seul le vélo change"><label for="be_2__3">la charge, le sol et la vitesse : seul le vélo change</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="seulement le cycliste, le reste peut changer"><label for="be_2__2">seulement le cycliste, le reste peut changer</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="rien : on essaie chaque vélo là où on se trouve"><label for="be_2__1">rien : on essaie chaque vélo là où on se trouve</label></div>
@@ -1596,13 +1599,13 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="exo">
     <h4>Après avoir cassé trois éprouvettes</h4>
     <fieldset class="qcm-groupe" id="a0q1" data-melange="1">
-  <legend>À charge égale, deux matériaux différents…</legend>
+  <legend>À charge égale, que font deux matériaux différents ?</legend>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="ne cassent jamais" data-pourquoi="Toutes les éprouvettes ont fini par casser : relis tes trois essais."><label for="a0q1__3">ne cassent jamais</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="cassent toujours au même moment" data-pourquoi="Relis tes trois relevés : la charge de rupture change d'un matériau à l'autre."><label for="a0q1__1">cassent toujours au même moment</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="ne cassent pas au même moment"><label for="a0q1__2">ne cassent pas au même moment</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0q2" data-melange="1">
-  <legend>Ce que le banc mesure, c'est…</legend>
+  <legend>Que mesure le banc ?</legend>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="la couleur que prend le matériau quand on l&#x27;étire jusqu&#x27;au bout" data-pourquoi="Le banc ne regarde pas la couleur : il lit une charge, en kilogrammes."><label for="a0q2__1">la couleur que prend le matériau quand on l'étire jusqu'au bout</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="la charge à partir de laquelle l&#x27;éprouvette casse"><label for="a0q2__2">la charge à partir de laquelle l'éprouvette casse</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="le poids de l&#x27;éprouvette, pesée avant et après l&#x27;essai" data-pourquoi="Le banc ne pèse pas l'éprouvette : il note la charge qu'elle supporte."><label for="a0q2__4">le poids de l'éprouvette, pesée avant et après l'essai</label></div>
@@ -1791,9 +1794,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h2>🕳️ Activité 4 — Ce que l'essai ne dit pas ⏱ ~15 min</h2>
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b> 5e_C3.1.
   <b>Production attendue :</b> 5 associations.</p></details>
-  <p>Les cinq matériaux passent la barre. Pourtant on ne va pas faire la patère en n'importe quoi.
-  Associe chaque matériau à la <em>chose que l'essai de traction n'a pas vue</em>.</p>
+  <p>Les cinq matériaux passent la barre. Pourtant on ne va pas faire la patère en n'importe quoi.</p>
   <div class="exo">
+    <p class="consigne-grille">Associe chaque matériau à la <em>chose que l'essai de traction n'a pas vue</em>.</p>
     <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>une réponse ne sert à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>Solide dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</li><li><b>B</b>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</li><li><b>C</b>Il fond dès qu'il fait plus de 30 °C dans le hall.</li><li><b>D</b>Il flue : sous une charge permanente, il se déforme lentement pendant des mois.</li><li><b>E</b>Léger et solide, mais il se raye et se plie définitivement avant de casser.</li><li><b>F</b>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</li></ol></div>
 <fieldset class="qcm-groupe qcm-grille" id="a4q0" data-indice="Une pièce naturelle peut cacher un défaut.">
   <legend><b>Bois (pin)</b></legend>
@@ -1937,7 +1940,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai hésité en suivant le protocole au moment où … »</li><li>« Ce qui m'a surpris dans mes cinq relevés, c'est … »</li><li>« La prochaine fois, je vérifierai d'abord … »</li></ul></details>
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>Je me positionne sur 5e_C8.2 — mettre en œuvre un protocole fourni :</b></legend>
+  <legend><b>Je me positionne sur 5e_C8.2 — mettre en œuvre un protocole fourni :</b> quelle phrase me décrit le mieux ?</legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore quoi noter, ni quand"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore quoi noter, ni quand</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — j&#x27;y arrive avec le protocole sous les yeux, ligne par ligne"><label for="pos__2">🟠 Maîtrise fragile — j'y arrive avec le protocole sous les yeux, ligne par ligne</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — j&#x27;applique le protocole seul·e et je relève juste"><label for="pos__3">🟢 Maîtrise satisfaisante — j'applique le protocole seul·e et je relève juste</label></div>

@@ -1243,8 +1243,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1258,7 +1261,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1400,9 +1403,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1822,7 +1825,7 @@ professeur, sur quoi on peut s'appuyer. <br><b>Elles ne comptent pas dans ta pro
 notées</b> — « je ne sais pas encore » est une réponse utile.</p>
 <div class="exo">
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-  <legend>1. Un prototype, c'est…</legend>
+  <legend>1. Qu'est-ce qu'un prototype ?</legend>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="un premier exemplaire fabriqué pour être mis à l&#x27;épreuve"><label for="be_1__1">un premier exemplaire fabriqué pour être mis à l'épreuve</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un dessin de l&#x27;objet"><label for="be_1__3">un dessin de l'objet</label></div>
   <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="le produit fini, prêt à vendre"><label for="be_1__2">le produit fini, prêt à vendre</label></div>
@@ -1836,7 +1839,7 @@ notées</b> — « je ne sais pas encore » est une réponse utile.</p>
   <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
 </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-  <legend>3. Pour savoir si un essai est réussi, il faut…</legend>
+  <legend>3. Que faut-il pour savoir si un essai est réussi ?</legend>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="avoir écrit le résultat attendu AVANT de lancer l&#x27;essai"><label for="be_3__1">avoir écrit le résultat attendu AVANT de lancer l'essai</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="refaire l&#x27;essai plusieurs fois"><label for="be_3__3">refaire l'essai plusieurs fois</label></div>
   <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="regarder si ça a l&#x27;air de marcher"><label for="be_3__2">regarder si ça a l'air de marcher</label></div>
@@ -1992,7 +1995,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <div class="exo">
 <h4>1a — Remets le raisonnement de validation en ordre (représentation schématique)</h4>
 <div class="algostep"><span class="algoshape">⬭ début</span><fieldset class="qcm-groupe" id="a1o1">
-  <legend>Rang de l'étape « DÉBUT (prototype prêt) »</legend>
+  <legend>Quel rang donnes-tu à l'étape « DÉBUT (prototype prêt) » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__1" value="1"><label for="a1o1__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__2" value="2" data-pourquoi="Avant d'écrire l'attendu, il faut un prototype prêt à tester."><label for="a1o1__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__3" value="3" data-pourquoi="On n'exécute rien tant que le prototype n'est pas prêt."><label for="a1o1__3">3</label></div>
@@ -2000,7 +2003,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o1" id="a1o1__5" value="5" data-pourquoi="La décision vient à la fin, pas au début."><label for="a1o1__5">5</label></div>
 </fieldset><span>DÉBUT (prototype prêt)</span></div>
 <div class="algostep"><span class="algoshape">▭ traitement</span><fieldset class="qcm-groupe" id="a1o2">
-  <legend>Rang de l'étape « Écrire le résultat attendu »</legend>
+  <legend>Quel rang donnes-tu à l'étape « Écrire le résultat attendu » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__1" value="1" data-pourquoi="L'attendu s'écrit une fois le prototype prêt, juste avant le test."><label for="a1o2__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__2" value="2"><label for="a1o2__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__3" value="3" data-pourquoi="Écrit après le test, l'attendu épouserait le résultat."><label for="a1o2__3">3</label></div>
@@ -2008,7 +2011,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o2" id="a1o2__5" value="5" data-pourquoi="Sans attendu, on ne peut rien décider."><label for="a1o2__5">5</label></div>
 </fieldset><span>Écrire le résultat ATTENDU du test</span></div>
 <div class="algostep"><span class="algoshape">▭ traitement</span><fieldset class="qcm-groupe" id="a1o3">
-  <legend>Rang de l'étape « Exécuter le test et noter l'observé »</legend>
+  <legend>Quel rang donnes-tu à l'étape « Exécuter le test et noter l'observé » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__1" value="1" data-pourquoi="On teste un prototype prêt, avec un attendu déjà écrit."><label for="a1o3__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__2" value="2" data-pourquoi="Avant d'exécuter, il faut savoir ce qu'on attend."><label for="a1o3__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o3" id="a1o3__3" value="3"><label for="a1o3__3">3</label></div>
@@ -2024,7 +2027,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a1o4" id="a1o4__5" value="5" data-pourquoi="La décision dépend de cette comparaison : elle vient après."><label for="a1o4__5">5</label></div>
 </fieldset><span>Observé = attendu&nbsp;?</span></div>
 <div class="algostep"><span class="algoshape">▭ sorties</span><fieldset class="qcm-groupe" id="a1o5">
-  <legend>Rang de l'étape « Valider ou améliorer puis retester »</legend>
+  <legend>Quel rang donnes-tu à l'étape « Valider ou améliorer puis retester » ?</legend>
   <div class="qcm-option"><input type="radio" name="a1o5" id="a1o5__1" value="1" data-pourquoi="On ne valide pas un prototype qu'on n'a pas testé."><label for="a1o5__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a1o5" id="a1o5__2" value="2" data-pourquoi="Rien n'est observé : il n'y a rien à valider."><label for="a1o5__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a1o5" id="a1o5__3" value="3" data-pourquoi="Après le test, il reste à comparer."><label for="a1o5__3">3</label></div>
@@ -2334,7 +2337,7 @@ tension ?</span></td></tr></tbody></table></div></div><label class="champ" for=
 <fieldset class="positionnement"><legend>4e_C8.3 — proposer un protocole de test</legend>
 <label><input type="radio" name="pos_c83" value="1"> 1</label> <label><input type="radio" name="pos_c83" value="2"> 2</label> <label><input type="radio" name="pos_c83" value="3"> 3</label> <label><input type="radio" name="pos_c83" value="4"> 4</label></fieldset>
 <p>Confiance CRCN 1.3 Traiter des données (1-4)&nbsp;: <fieldset class="qcm-groupe" id="bilan4">
-  <legend>Auto-positionnement 4</legend>
+  <legend>Quelle confiance ai-je en CRCN 1.3 Traiter des données, de 1 à 4 ?</legend>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__1" value="1"><label for="bilan4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__2" value="2"><label for="bilan4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__3" value="3"><label for="bilan4__3">3</label></div>
