@@ -32105,3 +32105,27 @@ séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées ave
 - Charge (`mesurer_charge.mjs`) : séance 1, 1 211 → 1 226 mots visibles ; essentiel 1 194 → 1 194 ; les autres séances inchangées.
 - Revue d'écran : à 1 280 px, le dépliant ouvert, le cadre à la hauteur de la figure (sans barre), le lampadaire ouvert dans le cadre ; à 600 px, le cadre (434 px de large) ; à 390 et 560 px, le lien à la place du cadre ; la page de la figure à 390 px (pastilles grandies, lampadaire ouvert) et à 320 px (titre du cadre effacé) ; aucune erreur JavaScript.
 - La fiche A4 : une page, « du parking », refaite et regardée.
+
+## 16/11/2026 — La station d'alerte pièce par pièce : la figure isométrique de 3e_C4.3, selon la skill `anatomy`
+
+Demande de Pascal, 16/11/2026 : « station » (la station d'alerte de 3e, prochain objet proposé par l'audit des skills).
+
+- **L'audit se trompait** : il disait « aucune image de la station ». Elle en a trois : la photo sur le toit (7 pages),
+  la photo sous la tempête (`3e_C4.1`) et le schéma annoté (`3e_C4.3`). Ce qu'aucune image ne montrait : **l'intérieur du
+  coffret**, dont les séquences parlent (batterie 12 V, régulateur de charge, convertisseur 12 V → 5 V, fusible,
+  microcontrôleur, baromètre, module radio).
+- **La figure** (`3e_C4.3/station_en_pieces.html`, générateur `_generation/station_en_pieces/build.mjs`, sur le modèle
+  du lampadaire de `5e_C4.1`, #745 et #747) : la station sur le toit du collège, 18 pièces numérotées. Un bouton ouvre
+  le coffret : la porte s'écarte, ses 7 pièces sortent et se rangent en colonne. Fiche A4 d'une page : `station_fiche_A4.pdf`.
+- **Elle ne donne aucune réponse** : chaque pièce est décrite par sa place (« tout en haut du mât », « au bout du bras »,
+  « en bas du coffret »), jamais par sa fonction (l'activité 1 de `3e_C4.3` fait classer Acquérir, Traiter, Communiquer,
+  Alimenter), ni par son matériau ou ses valeurs (`3e_C4.1` fait choisir le mât et le coffret, et calculer la batterie et
+  le fusible : ni 40 Ah ni 1 A n'y sont écrits).
+- **Où** : activité 1, séance 1, sous le schéma annoté, dans un dépliant fermé (« 🔍 La station en vrai, pièce par pièce :
+  ouvre son coffret »). Un cadre ; sur un téléphone, un lien vers la page de la figure. Le mode essentiel la cache, la fiche
+  papier ne l'imprime pas, le mode mission la montre avec le schéma comme ressource de l'activité.
+- **Mouvement** : rien ne bouge sans un geste de l'élève ; « moins de mouvement » donne l'état final tout de suite ; les
+  deux boucles du kit, inutiles ici, sont retirées de la page (M2 0).
+- **Pas fait ici** : la station dans les autres séquences (`3e_C4.1`, `3e_C5.1`, `3e_C6.1`, `3e_C6.2`, et celles du
+  thème 3) ; anatomy-reveal. Décisions de Pascal.
+- Vérifications : `rapport_tests_3e_C4.3-C4.6.md`, section du 16/11/2026.

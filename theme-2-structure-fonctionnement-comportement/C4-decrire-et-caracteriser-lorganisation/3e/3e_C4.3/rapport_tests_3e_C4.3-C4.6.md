@@ -111,3 +111,42 @@ pose les étiquettes dans les blocs, sous les blocs et sur les flèches ; ce qu'
 - `python3 _outils/controle_chaine_a_completer.py` : ✅.
 
 Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.
+
+## 16/11/2026 — La station pièce par pièce (figure Anatomy, activité 1)
+
+Une figure à manipuler, `station_en_pieces.html`, posée dans l'activité 1 (séance 1) sous le schéma annoté, dans un
+dépliant fermé (`#a1-figure-station`, cadre ; sur un téléphone, un lien vers la page de la figure). Un bouton ouvre le
+coffret : la porte s'écarte et ses 7 pièces sortent en colonne. 18 pièces numérotées, nommées sous la figure par leur
+place, jamais par leur fonction (l'activité la fait trouver), ni leur matériau ni leurs valeurs (`3e_C4.1`).
+Fiche A4 : `station_fiche_A4.pdf`, une page.
+
+**Contrôles et bancs, sur la branche** :
+
+- Bancs du lot, lancés depuis leur dossier : `tests_3e_C4.3-C4.6.mjs` 23 / 23 (sortie 0) ; `tests_regle_311_3e_C4.3.mjs` 34 / 34 (sortie 0).
+- Mode mission : `poser.py --verifier` ✅ ; `enrichir.py … mission_3e_C4.3.json --verifier` ✅ ; `banc_generique.mjs` : la page
+  jouée écran par écran, aucun refus (61 / 61 pourquoi). Sur les écrans de l'activité 1, la figure suit le schéma annoté
+  comme ressource (« 📎 »).
+- `controle_schemas.mjs` sortie 0 : la figure est déclarée illustration (`data-illustration`), hors score.
+- `controle_axe.mjs` sortie 0 (6 pages, la page de la figure comprise) ; `controle_hors_ligne.mjs` sortie 0 ;
+  `controle_impression.mjs` sortie 0 (la page de la figure imprime en clair).
+- `controle_mouvement.py` : M1 0, M2 0 sur le dossier. Les deux boucles du kit (flux, pulsation), inutiles ici, sont
+  retirées de la page. « 1 image SVG en boucle » existait avant ce lot (le dossier `Images/` n'est pas touché).
+- `mesurer_charge.mjs` : aucune séance au-delà de 1 200 mots visibles (le dépliant est fermé ; le mode essentiel le cache,
+  classe `approfondissement`). `audit_aeration.py --strict` ✅ ; `verif_regles_audit.py` 0 ✘.
+- Contrôles Python de `_outils/` : tous à 0 sauf `controle_flux_animes.py`, qui refuse
+  `5e/5e_C4.1/Images/chaine_ventilateur_corrige.svg` : le même refus existe sur `main`, hors de ce lot.
+- `impression_papier/banc_papier.py --filtre 3e_C4.3` : sortie 1, « séance 1 — 6 champs d'écran imprimés (boutons) ».
+  Le même refus existe sur `main`, avant ce lot ; la figure n'est pas imprimée (classe `pp-ecran`).
+
+**Revue d'écran en trois tours** (captures dans `_outils/captures_station_anatomy_2026-11-16/`) :
+
+1. Tour 1 : le bas de la planche était un toit vide (un quart de la hauteur) ; le numéro de la sirène tombait sous le
+   pavillon, près du câble ; le fusible et le baromètre, sortis du coffret, étaient trop petits pour se reconnaître.
+2. Tour 2 : toit réduit (la figure grandit), numéro 7 à côté du pavillon, fusible et baromètre grossis. Mesuré coffret
+   ouvert : l'écart minimal entre deux pastilles est de 42 px à 1 280 px et de 23 px à 390 px, pour un rayon de 11 et 8 px :
+   elles ne se touchent pas.
+3. Tour 3 : ce qui reste — le dépliant ouvert fait environ 1 700 px de haut à 1 280 px (la liste de 18 pièces) ; les
+   pièces 12 à 17 restent de petites silhouettes, leur nom est dans la liste.
+
+Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari ; la validation HTML ; le parcours au clavier à la
+main (le bouton et la figure s'ouvrent à Espace et à Entrée, vérifié par script seulement).
