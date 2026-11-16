@@ -80,6 +80,10 @@
   details.correction summary{color:var(--ok)}
   details.prof{background:#1c1030;border-color:#6a3fa0}
   details.prof summary{color:#e2b8ff}
+  .fig-station-iso{display:block;width:100%;height:1500px;border:0;margin:8px 0}
+  /* sur un téléphone, le cadre laisse trop peu de place à la figure : ses numéros ne se liraient plus ; elle s'ouvre sur sa page */
+  .fig-station-lien{display:none;margin:10px 0 4px;font-weight:600}
+  @media (max-width:560px){.fig-station-iso{display:none}.fig-station-lien{display:block}}
   .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
   .retenir b{color:var(--ok)}
   .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
@@ -1746,6 +1750,27 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Ressources :</b> relevé des symptômes ci-dessous (à LIRE pour répondre).</div>
     </div></details>
     <object class="figure" data="Images/station_en_panne_symptomes.svg" type="image/svg+xml" aria-label="Relevé des 4 symptômes après le cyclone : sirène muette, LED d'alimentation allumée, mesures encore reçues par l'application, support de girouette cassé">Relevé des symptômes de la station (SVG)</object>
+    <details class="figure-objet approfondissement pp-ecran" id="a1-figure-station"><summary>🔍 La station en vrai, pièce par pièce&nbsp;: ouvre son coffret (figure à manipuler)</summary>
+      <p>Le relevé dit ce qu'on constate. <br>La figure montre la station avant le cyclone, la girouette encore droite&nbsp;: chaque pièce à sa place, et ce que cache le coffret.</p>
+      <ol>
+        <li>Touche «&nbsp;🔧 Ouvrir le coffret&nbsp;».</li>
+        <li>Repère les pièces dont parle l'activité&nbsp;: la LED, la sirène, son câble, le fusible.</li>
+        <li>Cherche chaque numéro dans la liste sous la figure.</li>
+      </ol>
+      <p class="fig-station-lien">📱 Sur un téléphone, la figure s'ouvre en grand, sur sa page&nbsp;: <br><a href="../../../C4-decrire-et-caracteriser-lorganisation/3e/3e_C4.3/station_en_pieces.html" target="_blank" rel="noopener">🔍 La station pièce par pièce</a>.</p>
+      <iframe class="fig-station-iso" src="../../../C4-decrire-et-caracteriser-lorganisation/3e/3e_C4.3/station_en_pieces.html" loading="lazy"
+        title="La station d'alerte du collège, pièce par pièce : figure à manipuler"></iframe>
+      <script>
+        // la figure dit sa hauteur ; le cadre la prend (pas de barre de défilement dans le cadre)
+        addEventListener("message", function (e) {
+          var h = e.data && e.data.stationIso;
+          if (!h) return;
+          document.querySelectorAll(".fig-station-iso").forEach(function (f) {
+            if (f.contentWindow === e.source) f.style.height = Math.ceil(h) + "px";
+          });
+        });
+      </script>
+    </details>
     <div class="consigne"><b>Consigne :</b> a) à partir des constats 2 et 3 du schéma, réponds aux déductions ; b) classe ensuite les hypothèses restantes dans l'ordre où il faudra les tester.</div>
     <div class="exo">
       <h4>a) Ce que les constats nous apprennent</h4>
