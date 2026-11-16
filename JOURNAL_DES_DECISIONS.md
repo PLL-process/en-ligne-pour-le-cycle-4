@@ -32106,6 +32106,33 @@ séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées ave
 - Revue d'écran : à 1 280 px, le dépliant ouvert, le cadre à la hauteur de la figure (sans barre), le lampadaire ouvert dans le cadre ; à 600 px, le cadre (434 px de large) ; à 390 et 560 px, le lien à la place du cadre ; la page de la figure à 390 px (pastilles grandies, lampadaire ouvert) et à 320 px (titre du cadre effacé) ; aucune erreur JavaScript.
 - La fiche A4 : une page, « du parking », refaite et regardée.
 
+## 16/11/2026 — La vague n°332 achevée : les corrigés faits DANS l'outil — Calc, le STL, le C++ — et leur fichier
+
+**La demande.** Pascal, le 16/11/2026, avec la règle n°336 : « et les corrections : si un schéma ou une capture d'écran est nécessaire, cela doit être fait ». Le contrôle `controle_correction_complete.py` (n°332) relevait encore **7 blocs** : 2 sans correction (K1), 5 dont la correction décrivait la production sans la montrer (K2).
+
+**L'outil : `_outils/tableur_corrige.py`.** Il pilote LibreOffice Calc sans écran (`soffice --headless`, par UNO). Il ouvre le fichier de l'élève (un CSV à point décimal, ou à virgule : `decimale=","`, sinon Calc lit 0,142 comme 142), y fait ce que l'élève devait faire — formules, tri, filtre, couleurs, graphique —, enregistre le classeur corrigé (.ods), exporte un PDF, et rogne une capture PNG. **La capture est celle de Calc** (sa feuille telle qu'il l'imprime, ou son graphique exporté par lui), pas un dessin qui lui ressemble. Il ferme ses documents en sortant : une erreur ne laisse plus de verrou `.~lock…#` à côté du fichier de l'élève. Chaque lot garde son générateur (`_generation/corrige_tableur*.py`) : le corrigé se refait d'une commande.
+
+**Ce qui est fait, page par page.**
+- `3e_C4.3`, activité 6 « la nuit du cyclone » : les réponses par formules (INDEX/EQUIV, MIN, MAX) et les lignes qui les portent, colorées selon la vigilance ; le **graphique vent/pression** du défi du Bonus (la « pince », pression sur l'axe secondaire) ; le corrigé des deux autres défis. Le classeur de l'élève `.ods` gardait chaque nombre **en texte** : MIN et MAX, que la correction conseille, y rendaient 0. Il est réécrit avec de vrais nombres et de vraies dates.
+- `4e_C1.1`, activité 2 : l'estimation par proxy, étape par étape (résultat, formule, et l'avertissement **à côté du résultat**).
+- `5e_C1.1`, activité 2 : les quatre anomalies (gardées dans le fichier, colorées et annotées) et les deux moyennes, formule par formule — dans l'ordre de la page (la moyenne en C92).
+- `5e_C1.3`, activité 3 : le tableur transformé (statut saisi, tri par incidents décroissants) et **la page du PDF filtré** ; les deux fichiers donnés (le filtre se retire, rien n'a été supprimé).
+- `4e_C4.1`, atelier Pix du jardin : les trois ateliers et le Bonus **n'avaient aucune correction**. Chacune s'ouvre quand l'atelier est vérifié (n°336) ; celle de l'atelier 1 montre le tri et la moyenne dans Calc, avec son fichier. **La question 3 désignait la colonne de la pompe** (`C2:C9`) : l'humidité est en `B2:B9` — la question le dit désormais (n°334).
+- `3e_C5.1`, Bonus : le défi FreeCAD a son corrigé — le pas à pas en Part Design (Protrusion, Cavité, export STL), **le fichier `support_girouette_corrige.stl`** (calculé d'après le plan coté par opérations booléennes, bibliothèque manifold3d ; volume vérifié, 21 853 mm³ pour 21 855 attendus) et sa vue 3D. Le défi citoyen (indice de réparabilité, et l'indice de durabilité qui le remplace depuis 2025 pour les téléviseurs et les lave-linge) et le défi repair café (Eco-Mobil, au Lamentin) ont leur réponse.
+- `3e_C9.2`, « Sous le capot » (page tout-en-un et page 3, refaite par son générateur) : la ligne fautive et sa réparation en C++ (`seuilJaune` dans les blocs, `SEUIL_JAUNE` dans le C++), la branche SINON SI à remettre, et **la trace du moniteur rejouée après la réparation** — une réparation n'est finie que quand la trace le prouve.
+- Au passage : une correction de `5e_C1.1` (séance 1) remise en lignes (aération).
+
+**Ce qui reste, à dire.**
+- Les captures de Calc sont **l'export de la feuille** (les cellules, sans la fenêtre de Calc), sur fond blanc ; les captures de gestes de Pascal (11-13/09) montrent, elles, la fenêtre réelle en mode sombre. Ce sont deux usages différents : le geste montre où cliquer, le corrigé montre le résultat.
+- À 390 px, un tableau large se lit petit : chaque capture a son lien « 🔍 Ouvrir la capture en grand » et une alternative textuelle qui donne toutes les valeurs.
+- La vue 3D du support **n'est pas une capture de FreeCAD** (FreeCAD ne s'installe pas dans l'environnement de travail) : c'est la vue du fichier STL corrigé, tracée par three.js ; `SOURCES_MEDIAS.md` le dit.
+
+**Vérifications.**
+- `controle_correction_complete.py` sur les 126 pages : **0 K1 · 0 K2 · 0 K3**.
+- Bancs : `3e_C4.3` 23 / 23 ; `4e_C1.1` 71 / 71 ; `5e_C1.1` 43 / 43 ; `5e_C1.3` 44 / 44 ; `4e_C4.1` 52 / 52 ; `3e_C5.1` 34 / 34 ; `3e_C9.2` 167 / 167 ; les bancs n°311 à 34 / 34. L'atelier Pix, que nul banc ne couvrait, joué par un banc gardé hors du dépôt : tri réel, vérification, correction ouverte, aucune erreur JavaScript, aucun débordement à 390 px.
+- Mode mission joué écran par écran sur les pages touchées : aucun refus.
+- Contrôles : règles d'or 0 manquement sur les sept lots ; aération 0 ; liens, médias, licence, fichiers téléchargeables, sauvegarde locale ✅ ; chaque capture regardée.
+
 ## 16/11/2026 — La station d'alerte pièce par pièce : la figure isométrique de 3e_C4.3, selon la skill `anatomy`
 
 Demande de Pascal, 16/11/2026 : « station » (la station d'alerte de 3e, prochain objet proposé par l'audit des skills).

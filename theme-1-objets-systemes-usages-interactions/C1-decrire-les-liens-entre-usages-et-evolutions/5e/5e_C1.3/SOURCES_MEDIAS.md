@@ -7,12 +7,16 @@
 | `Images/schema_systeme_information_velos.svg` | Comprendre le rôle des acteurs, données, traitements, réseau et stockage | SVG original créé pour le lot ; aucun média externe | < 3 Ko |
 | `Images/arborescence_donnees_velos.svg` | Visualiser l’organisation des dossiers (dossiers dessinés, redessiné le 29/10/2026, règle d’or n°315) | SVG original créé pour le lot ; aucun média externe | < 3 Ko |
 | `Images/extrait_donnees_velos.svg` | Question illustrée et règle de priorité | SVG original créé pour le lot ; aucun média externe | < 4 Ko |
+| `Images/capture_corrige_velos_tries.png` | Corrigé de l'activité 3 : le tableur transformé (statut saisi, tri par incidents décroissants), tel que LibreOffice Calc l'imprime — règles d'or n°332 et n°336, 16/11/2026 | capture de Calc fabriquée par `_generation/corrige_tableur.py` (export PDF de la plage, rasterisé par `pdftoppm`, rogné) ; CC0 | 67 Ko |
+| `Images/capture_corrige_velos_pdf_filtre.png` | Corrigé de l'activité 3 : la page du PDF filtré (les quatre vélos prioritaires) ; le PDF lui-même, `velos_prioritaires_corrige.pdf`, et le tableur, `donnees_velos_hangzhou_corrige.ods`, sont donnés avec la correction | page du PDF exporté par Calc (même générateur), rasterisée ; CC0 | 41 Ko |
 
 Les SVG sont locaux, légers, imprimables en niveaux de gris et possèdent un titre, une description ou un texte alternatif dans les pages HTML.
 
 ## Données
 
 `donnees_velos_hangzhou_simulees.csv` est un jeu entièrement inventé pour l’apprentissage. Les stations, identifiants et valeurs ne décrivent aucun service réel. Le fichier ne contient aucune donnée personnelle.
+
+Le corrigé de l'activité 3 en dérive (16/11/2026) : `donnees_velos_hangzhou_corrige.ods` (statut saisi, trié, filtré) et `velos_prioritaires_corrige.pdf`, fabriqués par LibreOffice Calc via `_generation/corrige_tableur.py` ; mêmes données inventées, CC0.
 
 ## Inspiration CRCN / PIX
 

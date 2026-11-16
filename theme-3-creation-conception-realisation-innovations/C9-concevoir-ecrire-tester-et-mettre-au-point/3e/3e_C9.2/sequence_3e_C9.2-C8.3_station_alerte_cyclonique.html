@@ -3143,6 +3143,23 @@ vent(km/h)=186  niveau=3</pre>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <br><b>Q2 :</b> le calcul de conversion du palier 1 — <code>× 250 ÷ 1023</code> dans les blocs Vittascience, <code>map()</code> côté C++, « réétalonner » dans ArduBlock : trois écritures, une seule idée, la proportionnalité. <br><b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <br><b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <br><b>Q5 :</b> un seuil mal réglé (<code>seuilJaune</code>, <code>seuilOrange</code> ou <code>seuilRouge</code>) ou un SINON SI absent.</p>
       <p><b>Justification attendue :</b><br>la trace prouve que la vitesse monte correctement (58, 71, 95, 112, 131, puis 186)&nbsp;: capteur, CAN et conversion fonctionnent. <br>La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. <br>Et puisque 131 déclenche le niveau 2 et 186 le niveau 3, les tests ≥ 118 et ≥ 178 marchent.<br>Le défaut est donc dans le test ≥ 63 — le plus probable étant que <code>seuilJaune</code> ait été réglé à 118 par recopie, ou que sa branche SINON SI ait été supprimée.</p>
+      <p><b>La réparation, dans le code.</b> <br>Dans tes blocs, c'est la variable <code>seuilJaune</code>&nbsp;; dans le C++, la constante <code>SEUIL_JAUNE</code>. <br>Si le seuil a été recopié de travers&nbsp;:</p>
+<pre class="code" data-code-colore="arduino">// leur station : le seuil jaune recopié sur le seuil orange
+const int SEUIL_JAUNE  = 118;  // ✘ 118, c'est le seuil ORANGE
+// réparé : la valeur du cahier des charges
+const int SEUIL_JAUNE  = 63;   // ✔ tempête tropicale dès 63 km/h</pre>
+      <p>Si c'est la branche qui manque, on la remet entre le test orange et le dernier SINON&nbsp;:</p>
+<pre class="code" data-code-colore="arduino">} else if (vitesseVent &gt;= SEUIL_JAUNE) {
+  niveauAlerte = 1;            // tempête tropicale
+} else {</pre>
+      <p><b>La preuve</b>&nbsp;: la trace, rejouée avec le même vent après la réparation.</p>
+<pre class="code">vent(km/h)=58   niveau=0
+vent(km/h)=71   niveau=1   ✔
+vent(km/h)=95   niveau=1   ✔
+vent(km/h)=112  niveau=1   ✔
+vent(km/h)=131  niveau=2
+vent(km/h)=186  niveau=3</pre>
+      <p>Chaque vitesse tombe dans le niveau du cahier des charges&nbsp;: 71, 95 et 112 sont entre 63 et 118, donc niveau 1. <br>Une réparation n'est finie que quand la trace le prouve.</p>
       <p><b>Méthode (mise au point) :</b> la trace du moniteur série découpe la chaîne en tronçons : on cherche le PREMIER endroit où les valeurs deviennent fausses — tout ce qui est en amont est innocenté. <br>C'est exactement le raisonnement du banc de tests de l'atelier 3e_C9.1.</p>
       <p><b>Limite :</b> lire le C++ n'est pas au programme de 3e pour l'ÉCRIRE — mais savoir le lire te permet de vérifier ce que tes blocs fabriquent, et c'est un immense avantage au lycée.</p>
     </details>
