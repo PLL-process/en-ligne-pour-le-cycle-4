@@ -154,6 +154,17 @@ class Calc:
         return self
 
     def __exit__(self, *exc):
+        # fermer chaque document d'abord : sinon, après une erreur, Calc laisse un verrou « .~lock.<fichier># » à côté
+        # du fichier de l'élève, et le prochain passage ne peut plus l'ouvrir
+        try:
+            e = self.desktop.Components.createEnumeration()
+            while e.hasMoreElements():
+                try:
+                    e.nextElement().close(True)
+                except Exception:
+                    pass
+        except Exception:
+            pass
         try:
             self.desktop.terminate()
         except Exception:
