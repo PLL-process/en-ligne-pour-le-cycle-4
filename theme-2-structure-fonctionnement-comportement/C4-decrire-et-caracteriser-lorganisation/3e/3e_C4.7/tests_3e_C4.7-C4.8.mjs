@@ -319,8 +319,9 @@ ok(`23 · les ${liens.length} liens internes existent`, casses.length === 0,
 const svg = await p.$$eval('img[src$=".svg"], object[data$=".svg"]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('data')));
 const svgAbsents = svg.filter(s => !fs.existsSync(path.join(ICI, s)));
+// 5 depuis la règle d'or n°336 (16/11/2026) : le schéma fléché du trajet de l'alerte, dans la correction du « grand voyage ».
 ok(`24 · les ${svg.length} SVG référencés existent sur le disque`,
-   svg.length === 4 && svgAbsents.length === 0, svgAbsents.join(' · '));
+   svg.length === 5 && svgAbsents.length === 0, svgAbsents.join(' · '));
 
 const distantes = await p.$$eval('[src], link[href], object[data], iframe[src]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('href') || e.getAttribute('data'))
