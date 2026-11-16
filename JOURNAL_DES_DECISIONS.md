@@ -31577,7 +31577,7 @@ d'outils (quatre contrôles) et la collision n°322/323.
 
 ## 15/11/2026 — Révision des trois thèmes, 55 : `3e_C1.1` (Tsinghua, la surveillance des feux)
 
-**Deux sessions, une révision.** Commencée cet après-midi par une session (branche `fable/revision/3e-c1-1`, commit « WIP » de 16 h, sans PR), reprise le soir par une autre, à la demande de Pascal sur l'audit hebdomadaire (#721 : « Modifier ce qu'il recommande », puis « Fais les »). La seconde a trouvé la branche en voulant pousser la sienne : elle a gardé le travail de la première (plus complet sur deux points), l'a remise sur le `main` du jour, et y a ajouté ce qu'elle avait en plus. Passe complète, skill `revision-sequence`.
+**Deux sessions, une révision (PR #728).** Commencée cet après-midi par une session (branche `fable/revision/3e-c1-1`, commit « WIP » de 16 h, sans PR), reprise le soir par une autre, à la demande de Pascal sur l'audit hebdomadaire (#721 : « Modifier ce qu'il recommande », puis « Fais les »). La seconde a trouvé la branche en voulant pousser la sienne : elle a gardé le travail de la première (plus complet sur deux points), l'a remise sur le `main` du jour, et y a ajouté ce qu'elle avait en plus. Passe complète, skill `revision-sequence`.
 
 **Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante. Sur `main` :
 - **23 écarts d'aération** (légendes et corrections d'un seul tenant) ;
