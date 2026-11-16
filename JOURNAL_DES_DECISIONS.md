@@ -31875,3 +31875,20 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 **Après la fusion de la vague n°335 du thème 1 (#737, 16/11).** Les conflits venaient de questions dont le lot changeait les propositions et la vague l'énoncé : chaque question garde les propositions et les pourquoi du lot, et prend l'énoncé de la vague — les légendes des six pages sont toutes celles de `main`, sauf la question du seuil de `3e_C7.1` (voulue). Le cahier de 5e est reconstruit hors du dépôt sur les sources fusionnées ; `incrustations.py --verifier` : tout à jour. Bancs rejoués : mêmes résultats ; mode mission : les six pages jouées écran par écran, aucun refus.
 
 **Ce qui reste.** Les séances les plus lourdes de ces six séquences portent un exercice d'atelier (la bête à cornes, la pieuvre, le FAST, les croquis), gardé à découvert par décision de Pascal ; la passe n'y retire rien. Les gains de lecture viennent des bonnes réponses raccourcies (−51 et −41 mots sur les séances les plus lourdes de `5e_C3.1` et `5e_C1.2`).
+
+## 16/11/2026 — Révision des trois thèmes, deuxième passe, lot 2 : `4e_C7.5`, `4e_C2.1`, `3e_C2.1`
+
+**La décision.** La même que le lot 1 : Pascal, le 15/11/2026, « une deuxième passe en commençant par les plus lourdes, sur tout avec tes nouveaux outils ». Le lot 2 prend les trois suivantes dans l'ordre du suivi, sur l'état de `main` après la vague n°335 du thème 1 (#737) et le lot 1 (#739), qu'il contient.
+
+**Ce qui est fait.**
+- **`4e_C7.5`** (le jardin incomplet) : les 30 mauvaises propositions de la chaîne à compléter reçoivent leur pourquoi, sans dire la bonne réponse. La page était en retard sur son fichier de mission (`enrichir.py --verifier` : ✘ sur `main`, relevé le 15/11) : elle est à jour.
+- **`4e_C2.1`** (la borne de Hangzhou) : 21 questions rééquilibrées — « tout ce qui, à l'extérieur de l'objet, entre en relation avec lui » devient « ce qui, hors de l'objet, entre en relation avec lui », et « chacune des pièces qui composent l'objet » s'allonge d'« une à une » ; 69 pourquoi.
+- **`3e_C2.1`** (la borne de Pékin) : 20 questions rééquilibrées, 63 pourquoi.
+- Les vérificateurs des pages suivent les nouveaux textes ; les énoncés de la n°335 sont gardés tels quels (vérifié, question par question, contre la vague du thème 1).
+
+**Mesure** (avec les énoncés de la n°335). Séance la plus lourde : 1 576 · 1 477 · 1 362 → 1 576 · **1 451** · 1 363. Bonnes réponses plus longues de 10 signes ou plus que toutes les autres : 37 → 0. Mauvaises propositions sans pourquoi : 162 → 0.
+
+**Vérifications.**
+- Les bancs des trois lots : `4e_C7.5` 41 / 41, 32 / 32 et 34 / 34 ; `4e_C2.1` et `3e_C2.1` 34 / 34. Les bancs Python de `4e_C2.1` (62 / 65) et `3e_C2.1` (55 / 58) ont **les mêmes trois échecs que `main`**, dans des fichiers que le lot ne touche pas (la légende des badges, n°298 ; les liens des deux synthèses).
+- Mode mission : les trois pages jouées écran par écran, aucun refus ; chacune à jour de son fichier de mission (`enrichir.py --verifier`).
+- Contrôles du site, sur les deux lots réunis : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `4e_C2.1`).
