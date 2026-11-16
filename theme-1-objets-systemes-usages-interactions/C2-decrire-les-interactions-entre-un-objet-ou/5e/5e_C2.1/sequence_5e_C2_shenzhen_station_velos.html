@@ -1027,8 +1027,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1042,7 +1045,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1184,9 +1187,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){

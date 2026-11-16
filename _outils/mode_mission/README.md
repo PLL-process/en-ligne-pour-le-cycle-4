@@ -8,7 +8,10 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 ## Ce que le bloc fait
 
 - **Découpe** chaque séance en écrans : la séance (et la situation de départ) ; pour chaque activité l'atelier
-  incrusté, le départ (objectif, ressources, consigne), puis **une question par écran**, puis « je retiens »
+  incrusté, le départ (objectif, ressources, consigne), puis **une question par écran** — chacune porte sa propre
+  consigne, une à la fois (règle d'or n°335), et montre la ressource de l'activité (schéma, document), ouverte par
+  défaut, téléphone compris (règle d'or n°331, 15/11/2026 ; « 📎 Masquer la ressource » la replie ; un bloc de la
+  ressource qui porte lui-même une question reste sur l'écran de départ) —, puis « je retiens »
   (correction, erreurs fréquentes, à retenir, critère) ; enfin chaque autre carte (synthèse, Bonus, bilan, QCM).
 - **Habille** une grille de boutons radio (`.qcm-cles` + `fieldset.qcm-grille`) en **étiquettes à poser** : on
   touche l'étiquette puis sa case, on la glisse, ou on fait les deux au clavier. Poser une étiquette coche le
