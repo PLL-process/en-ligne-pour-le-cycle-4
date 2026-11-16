@@ -224,6 +224,28 @@ body.essentiel details.referentiel-replie{display:none}
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+/* ══ Règle d'or n°331 — l'élève répond le schéma sous les yeux (vague du 15/11/2026, d'après le pilote Book Train) ══ */
+.schema-sous-les-yeux{margin:.4rem 0 .9rem;position:sticky;top:0;z-index:3;background:var(--card,var(--panel,#0d2347));
+  padding:.3rem 0 .2rem;border-radius:12px}
+.schema-sous-les-yeux object.figure{margin:0 auto;max-height:30vh}
+.schema-sous-les-yeux figcaption{font-size:.85rem;opacity:.85;margin-top:.3rem}
+.schema-sous-les-yeux .agrandir{margin:.2rem 0 0;text-align:center;font-size:.9rem}
+.schema-sous-les-yeux .agrandir a{color:var(--hl,#61dafb)}
+@media(max-width:999px){ /* épinglé sur téléphone : le schéma reste au-dessus des questions, réduit */
+  .schema-sous-les-yeux object.figure{max-height:26vh}
+  .schema-sous-les-yeux figcaption{display:none}
+}
+@media(min-width:1000px){ /* grand écran : le schéma à gauche, les questions à sa droite */
+  .activite.cote-a-cote{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:1.2rem;row-gap:0;align-items:start}
+  .activite.cote-a-cote>*{grid-column:1/-1;min-width:0}
+  .activite.cote-a-cote>.schema-sous-les-yeux{grid-column:1;grid-row:span 80;top:12px;margin:0}
+  .activite.cote-a-cote>.schema-sous-les-yeux object.figure{max-height:none}
+  .activite.cote-a-cote>.schema-sous-les-yeux~*{grid-column:2}
+}
+body.ms .schema-sous-les-yeux{position:static}   /* le mode mission a sa propre tête épinglée */
+@media print{.schema-sous-les-yeux{position:static;break-inside:avoid}.schema-sous-les-yeux .agrandir{display:none}
+  .activite.cote-a-cote{display:block}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -2331,17 +2353,21 @@ body.ms .cac-reserve{--cac-bas:84px}
 <section class="card">
   <h2>🗂 Séance 3 — Représenter les informations en données</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment décrire TOUT ce que « sait » la station (mesures, lieu, alerte, heure) avec des données bien organisées ?</p>
-  <object class="figure" data="Images/types_et_codage_donnees.svg" type="image/svg+xml" aria-label="Tableau des types de données de la station : nombre entier pour le vent, décimal pour la pression, texte pour la commune, booléen pour l'alerte, date et heure pour l'horodatage, et codage binaire des niveaux de vigilance sur 3 bits">Types de données de la station et codage binaire de la vigilance (SVG)</object>
 
-  <div class="activite" id="act4">
+  <div class="activite cote-a-cote" id="act4">
     <header><span class="num">Activité 4</span><h3>Typer, nommer, coder</h3><span class="duree">⏱ 40 min</span></header>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> choisir le bon type de donnée, un bon descripteur, et coder une information en binaire.</div>
       <div><b>Compétence :</b> 3e_C4.5 — Représenter sous forme de données les informations de diverses natures utilisées par un OST.</div>
       <div><b>Production attendue :</b> 6 typages + 1 enregistrement complet + le codage binaire de la vigilance.</div>
-      <div><b>Ressources :</b> schéma des types ci-dessus.</div>
+      <div><b>Ressources :</b> le schéma des types, à compléter, juste ici (le schéma complet est dans la correction).</div>
     </div></details>
     <div class="consigne"><b>Consigne :</b> a) attribue un type à chaque information ; b) construis l'enregistrement d'une mesure ; c) code les niveaux de vigilance en binaire.</div>
+        <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux">
+      <object class="figure" data="Images/types_et_codage_donnees_muet.svg" type="image/svg+xml" aria-label="Tableau à compléter : pour chaque information de la station, l&#x27;exemple de valeur est donné, le type de donnée et le descripteur sont à trouver. En bas, le codage de la vigilance sur 3 bits : 000 verte, 001 jaune, 010 orange, 011 rouge, 100 violette.">Types de données de la station et codage binaire de la vigilance — à compléter (SVG)</object>
+      <figcaption>Le tableau des types, à compléter : l'exemple de valeur te guide. Le code de la vigilance, en bas, sert à la question c).</figcaption>
+      <p class="agrandir"><a href="Images/types_et_codage_donnees_muet.svg" target="_blank" rel="noopener">🔍 Ouvrir le schéma en grand</a></p>
+    </figure>
     <div class="exo">
       <h4>a) Quel type pour quelle information ?</h4>
       <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;:</p><ol><li><b>A</b>nombre entier</li><li><b>B</b>nombre décimal</li><li><b>C</b>texte</li><li><b>D</b>booléen</li><li><b>E</b>date + heure</li></ol></div>
@@ -2418,6 +2444,9 @@ body.ms .cac-reserve{--cac-bas:84px}
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un nombre <em>avec virgule</em> n'est pas un entier. <br>« vrai/faux » n'a que deux valeurs possibles : c'est la définition d'un type précis. <br>Pour c) : combien de valeurs différentes peut-on coder avec n bits ?</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Rouge est le 4e niveau en partant de 0 : verte=0, jaune=1, orange=2, rouge=3 → 3 en binaire s'écrit 011. <br>Pour 12 niveaux : 3 bits → 8 valeurs (pas assez), 4 bits → 16 valeurs (suffisant).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Le schéma complet</b>&nbsp;: compare-le avec tes réponses.</p>
+      <object class="figure" data="Images/types_et_codage_donnees.svg" type="image/svg+xml" aria-label="Tableau des types de données de la station : nombre entier pour le vent, décimal pour la pression, texte pour la commune, booléen pour l'alerte, date et heure pour l'horodatage, et codage binaire des niveaux de vigilance sur 3 bits">Types de données de la station et codage binaire de la vigilance (SVG)</object>
+
       <p><b>a)</b> Le vent : un entier. <br>La pression : un décimal. <br>La commune : du texte. <br>La sirène : un booléen. <br>Le moment : une date + une heure. <br>Le numéro de station : un entier.</p>
       <p><b>b)</b> <code>vent_kmh</code> : explicite (on sait ce que c'est ET l'unité), sans espace ni accent — utilisable dans tous les logiciels. <br><code>v</code> est trop court (illisible dans 6 mois). <br>« la vitesse du vent » contient des espaces (source d'erreurs). <br>« données2 » ne dit rien.</p>
       <p><b>c)</b> rouge = <b>011</b> (car rouge est la valeur n°3 et 3 = 0×4 + 1×2 + 1×1). Pour 12 niveaux : <b>4 bits</b>, car 2³ = 8 &lt; 12 ≤ 16 = 2⁴.</p>
@@ -2437,17 +2466,21 @@ body.ms .cac-reserve{--cac-bas:84px}
 <section class="card">
   <h2>📦 Séance 4 — Fichiers : mise en forme, transmission, stockage</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : sous quelle forme les données voyagent-elles et où sont-elles conservées ?</p>
-  <object class="figure" data="Images/transmission_stockage_fichiers.svg" type="image/svg+xml" aria-label="Parcours de la donnée : la station met en forme un fichier CSV, le transmet par radio à la passerelle puis par Internet au serveur qui stocke les fichiers, consultés par téléphones et ordinateurs ; encart des formats de fichiers csv, json, png, mp3">Parcours de la donnée : mise en forme, transmission, stockage (SVG)</object>
 
-  <div class="activite" id="act5">
+  <div class="activite cote-a-cote" id="act5">
     <header><span class="num">Activité 5</span><h3>Le bon format pour la bonne information</h3><span class="duree">⏱ 20 min</span></header>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> associer chaque nature d'information à un format de fichier adapté et distinguer transmission et stockage.</div>
       <div><b>Compétence :</b> 3e_C4.6 — Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, nombre) afin de comprendre le fonctionnement de l’OST.</div>
       <div><b>Production attendue :</b> 5 associations + 2 vrai/faux justifiés.</div>
-      <div><b>Ressources :</b> schéma du parcours de la donnée ci-dessus.</div>
+      <div><b>Ressources :</b> le schéma du parcours de la donnée, juste ici — les extensions sont à trouver (le schéma complet est dans la correction).</div>
     </div></details>
     <div class="consigne"><b>Consigne :</b> a) choisis le format le plus adapté à chaque fichier produit par le système d'alerte ; b) réponds par vrai ou faux et corrige mentalement les affirmations fausses.</div>
+        <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux">
+      <object class="figure" data="Images/transmission_stockage_fichiers_muet.svg" type="image/svg+xml" aria-label="Parcours de la donnée, extensions à trouver : la station met en forme ses mesures dans un fichier, le transmet par radio à la passerelle, qui l&#x27;envoie par Internet au serveur ; une copie reste sur la station. Encart : quatre natures d&#x27;information, tableau, message structuré, image, son, dont le format est à trouver.">Parcours de la donnée : mise en forme, transmission, stockage — à compléter (SVG)</object>
+      <figcaption>Le parcours de la donnée : il sert à la question b). Les extensions, en point d'interrogation, sont ce que la question a) te demande.</figcaption>
+      <p class="agrandir"><a href="Images/transmission_stockage_fichiers_muet.svg" target="_blank" rel="noopener">🔍 Ouvrir le schéma en grand</a></p>
+    </figure>
     <div class="exo">
       <h4>a) Associer format et information</h4>
       <p class="consigne-grille">Choisis le format le plus adapté à chaque fichier produit par le système d'alerte.</p>
@@ -2504,6 +2537,9 @@ body.ms .cac-reserve{--cac-bas:84px}
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi ce que <em>contient</em> le fichier : des lignes et colonnes ? une image ? du son ? un petit message organisé ? un document mis en page ?</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Transmettre un fichier, c'est en envoyer une <b>copie</b> : l'original reste sur place. <br>Et si l'antenne est arrachée par le vent, seule la copie <em>locale</em> (carte mémoire) survivra — d'où l'intérêt du double stockage.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Le schéma complet</b>&nbsp;: compare-le avec tes réponses.</p>
+      <object class="figure" data="Images/transmission_stockage_fichiers.svg" type="image/svg+xml" aria-label="Parcours de la donnée : la station met en forme un fichier CSV, le transmet par radio à la passerelle puis par Internet au serveur qui stocke les fichiers, consultés par téléphones et ordinateurs ; encart des formats de fichiers csv, json, png, mp3">Parcours de la donnée : mise en forme, transmission, stockage (SVG)</object>
+
       <p><b>a)</b> Le tableau : <b>.csv</b> (texte tabulé, lisible par tous les tableurs). <br>
       La carte : <b>.png</b> (image). <br>
       Le message sonore : <b>.mp3</b> (son compressé). <br>

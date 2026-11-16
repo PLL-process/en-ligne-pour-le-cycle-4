@@ -84,6 +84,10 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    versions — muette sur les énergies pour les questions, complète pour la correction (n°331). `incruster(html, svg,
    marqueur)` pose une figure en ligne dans chaque `<figure data-chaines="marqueur" data-prefixe="P">` d'une page, id
    préfixés : un schéma répété à chaque activité qui le lit.
+   **La règle n°331 (15/11/2026), pour toute chaîne montrée avec une question** : la chaîne est dans le bloc de la question
+   (`figure.schema-sous-les-yeux`), jamais « ci-dessus » ; muette sur ce que la question demande (fonctions, énergies,
+   composants à placer), complète dans la correction ; complète si la question fait LIRE la chaîne. Le contrôle :
+   `_outils/controle_schema_sous_les_yeux.py`.
    Classe `Diagram` : `block(x, y, fonction, composant, couleur, stock=…)`, `absent(x, y, fonction, raison)` (pointillés grisés,
    n°131), `arrow(points, couleur, étiquette, …)`, `section(…)`, `text(…)`, `panel(…)` (un cadre sous des textes) ; `circuit_eau(…)`
    pose le circuit d'eau à part. Il écrit aussi la **source draw.io** (`_generation/chaines_energie/`, `fichiers_drawio/` pour le Book Train).
