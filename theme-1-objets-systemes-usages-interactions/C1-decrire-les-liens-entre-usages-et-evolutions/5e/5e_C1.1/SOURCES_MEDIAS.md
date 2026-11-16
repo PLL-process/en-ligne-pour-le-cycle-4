@@ -89,6 +89,7 @@ ce dossier. Le volet de navigation, qui listait des dossiers personnels, est mas
 | `Images/geste_activite2_formule_1_saisie.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 | activité 2, geste Moyenne — =MOYENNE(C2:C91) en cours de saisie en C92, pas encore validée (fenêtre entière) | CC0 | 107 Ko |
 | `Images/geste_activite2_formule_2_resultat.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 | activité 2, geste Moyenne — résultat 27,363333333 dans C92, la formule encore dans la barre (fenêtre entière) | CC0 | 108 Ko |
 | `Images/geste_activite2_formule_3_erreur_sans_egal.png` | capture d'écran réelle, LibreOffice Calc 26.2.5.2 (fr), mode sombre, 13/09/2026 | activité 2, geste Moyenne — erreur typique : MOYENNE(C2:C91) sans le =, affiché comme du texte en C93 (fenêtre entière) | CC0 | 108 Ko |
+| `Images/capture_corrige_anomalies_moyennes.png` | capture de LibreOffice Calc (export PDF de la feuille « Corrigé », rasterisé par `pdftoppm`, rogné), fabriquée par `_generation/corrige_tableur.py` le 16/11/2026 | corrigé de l'activité 2 : les quatre anomalies et ce qui ne va pas, puis chaque résultat et sa formule — règles d'or n°332 et n°336 ; le fichier qu'elle montre, `releves_air_chengdu_corrige.ods`, est donné avec la correction | CC0 | 114 Ko |
 
 ## L'animation des trois principes et sa voix (activité 1, ajoutée le 25/10/2026)
 

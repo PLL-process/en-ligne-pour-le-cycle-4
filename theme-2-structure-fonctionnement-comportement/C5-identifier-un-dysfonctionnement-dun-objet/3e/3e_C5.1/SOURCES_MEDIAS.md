@@ -11,6 +11,7 @@ de Google Images ou de site tiers ; aucun hotlinking.
 | `Images/chaine_sirene_points_test.svg` | SVG original (Fable) | image-objet : points de test à exploiter (act. 3-4, QCM) | CC0 | ~5 Ko |
 | `Images/plan_cote_support_girouette.svg` | SVG original (Fable) | image-objet : cotes à relever (act. 5, QCM) | CC0 | ~5 Ko |
 | `Images/procedes_fabrication_piece.svg` | SVG original (Fable) | image-objet : comparatif à lire (act. 5, QCM) | CC0 | ~6 Ko |
+| `Images/capture_corrige_support_girouette_3d.png` | vue 3D calculée (16/11/2026) : le maillage du fichier `support_girouette_corrige.stl`, tracé par three.js dans Chromium — `_generation/corrige_support_girouette.py` (pièce construite par opérations booléennes, bibliothèque manifold3d, d'après les cotes du plan coté) | corrigé du défi FreeCAD du Bonus : le support terminé ; le STL est donné avec la correction (règles d'or n°332 et n°336). Ce n'est pas une capture de FreeCAD : c'est la vue du STL que FreeCAD exporterait pour cette pièce | CC0 | ~30 Ko |
 
 Alt/desc intégrés à chaque SVG et aux balises d'appel ; lisibilité en niveaux de gris
 vérifiée (étiquettes textuelles systématiques) ; valeurs électriques cohérentes (12 V TBT).

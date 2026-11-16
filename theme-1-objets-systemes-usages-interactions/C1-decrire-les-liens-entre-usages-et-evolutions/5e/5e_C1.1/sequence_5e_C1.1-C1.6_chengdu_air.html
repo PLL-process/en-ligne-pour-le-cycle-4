@@ -2389,9 +2389,9 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p><b>Deux raisons</b>&nbsp;: elle répond en <b>5 secondes</b>, donc elle permet une décision le
     matin même&nbsp;; et elle coûte <b>25 €</b>, ce qu'un collège peut engager sans dossier.</p>
     <p><b>Ce qu'on accepte de perdre</b>&nbsp;: la précision (± 10 % contre ± 2 %), et la maîtrise de
-    l'encrassement — la mesure dérivera lentement, sans rien signaler. Il faudra donc <b>comparer
-    régulièrement</b> à une mesure de référence (la station officielle la plus proche, par exemple)
-    et, quand l'écart devient trop grand, <b>remplacer le module</b> ou le faire entretenir à
+    l'encrassement — la mesure dérivera lentement, sans rien signaler. <br>Il faudra donc <b>comparer
+    régulièrement</b> à une mesure de référence (la station officielle la plus proche, par exemple).
+    <br>Quand l'écart devient trop grand, <b>remplacer le module</b> ou le faire entretenir à
     l'extérieur&nbsp;: le boîtier est fermé, on ne le nettoie pas soi-même.</p>
     <p><b>P2, la gravimétrie</b>, est <i>plus juste</i> et pourtant inadaptée&nbsp;: 24 h pour un
     seul résultat, on saurait toujours la veille. Un appareil meilleur qui ne rend pas le service
@@ -2716,6 +2716,13 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     </ol>
     <p><b>Les moyennes</b>&nbsp;: <b>27,4 µg/m³</b> avec les valeurs fausses, <b>25,2 µg/m³</b> sans. <br>L'écart paraît petit — 2,2 µg/m³ — et il vient de <b>deux valeurs sur quatre-vingt-dix</b> (−4,2 et 251). <br>C'est exactement pour cela qu'il est dangereux&nbsp;: <b>une moyenne calculée sur des données
     sales n'a pas l'air fausse.</b><br>Rien ne signale l'erreur.</p>
+    <p><b>Dans le tableur</b>&nbsp;: les quatre anomalies, puis les formules de la page et ce qu'elles rendent.</p>
+    <figure class="capture-corrige" style="margin:.4rem auto .7rem;max-width:760px;text-align:center">
+      <img class="figure" src="Images/capture_corrige_anomalies_moyennes.png" alt="Capture de LibreOffice Calc, feuille Corrigé. En haut, les quatre anomalies, colorées : mercredi 11:00, moins 4,2, impossible car une concentration n&#x27;est jamais négative ; vendredi de 09:00 à 14:00, 23,7, la même valeur six heures de suite, capteur figé à vérifier ; lundi 14:00, aucune ligne, relevé manquant que l&#x27;on signale sans rien inventer ; dimanche 16:00, 251,0, virgule décalée, 25,1 devenu 251. En bas, ce que le tableur calcule, avec la formule : moyenne de toutes les valeurs 27,4 par =MOYENNE(C2:C91) ; moyenne sans les valeurs fausses 25,2 par =MOYENNE.SI.ENS(C2:C91;C2:C91;&quot;&gt;0&quot;;C2:C91;&quot;&lt;200&quot;) ; écart 2,2 par =C92-C93 ; maximum 251,0 par =MAX(C2:C91) ; nombre de relevés 90 par =NB(C2:C91) ; lignes du lundi 12 par =NB.SI(A2:A91;&quot;lundi&quot;)." loading="lazy" style="max-width:100%;height:auto;border:1px solid #9aa5b8;border-radius:6px;background:#fff">
+      <figcaption style="font-size:.9em">La capture de Calc&nbsp;: chaque anomalie et ce qui ne va pas, puis chaque résultat et sa formule.</figcaption>
+      <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/capture_corrige_anomalies_moyennes.png" target="_blank" rel="noopener">🔍 Ouvrir la capture en grand</a></p>
+    </figure>
+    <p>📥 <a href="releves_air_chengdu_corrige.ods" download>Le fichier corrigé (.ods)</a>&nbsp;: feuille «&nbsp;releves&nbsp;», les anomalies <b>gardées</b> dans le fichier, colorées, avec leur note, et les formules sous la colonne (à partir de C92)&nbsp;; feuille «&nbsp;Corrigé&nbsp;», la capture ci-dessus.</p>
     <p><b>Ce qu'on fait des valeurs fausses</b>&nbsp;: on les <b>écarte du calcul</b>, mais on les
     <b>garde dans le fichier</b> avec une note. Les effacer, c'est perdre la trace d'un
     dysfonctionnement du capteur — et c'est justement ce qu'il faut signaler au technicien.</p>

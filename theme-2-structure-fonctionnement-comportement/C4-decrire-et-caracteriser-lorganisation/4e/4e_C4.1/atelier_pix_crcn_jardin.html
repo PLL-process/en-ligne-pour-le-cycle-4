@@ -40,6 +40,10 @@ select:focus{outline:3px solid var(--jaune)}
 .verif:focus{outline:3px solid var(--jaune)}
 .retour{margin-top:10px;font-weight:bold;min-height:1.4em}
 .ok{color:var(--vert)}.ko{color:#C00000}
+details.correction,details.corrige-bonus{border:2px solid var(--vert);border-radius:10px;background:#F0F7EC;padding:8px 16px;margin:14px 0}
+details.correction>summary,details.corrige-bonus>summary{cursor:pointer;font-weight:bold;color:var(--vert)}
+details.correction ol,details.corrige-bonus ol{padding-left:1.3em}
+.piege{border-left:4px solid var(--orange);padding:4px 10px;background:#FDF3E7}
 .trace{background:#fff;border:2px dashed var(--vert);border-radius:12px;padding:16px 20px;margin:30px 0}
 textarea{width:100%;min-height:170px;font-family:'Courier New',monospace;font-size:.85rem;border:1px solid #B9C7DC;border-radius:8px;padding:10px}
 .note-poste{font-size:.92em;margin:8px 0 0}
@@ -122,10 +126,24 @@ footer{text-align:center;color:#667;padding:20px;font-size:.85rem}
 <select id="q1a"><option value="">— choisis —</option><option>La barre de formule</option><option value="ok">La cellule vide où la donnée doit apparaître</option><option>Le bouton « Trier »</option><option>La référence de la colonne</option></select>
 <label for="q1b">2. Trie la colonne Humidité en ordre CROISSANT (avec le bouton ⇅). Quelle heure arrive en première ligne ?</label>
 <select id="q1b"><option value="">— choisis —</option><option>06 h</option><option value="ok">13 h</option><option>10 h</option><option>18 h</option></select>
-<label for="q1c">3. Quelle formule donne l'humidité MOYENNE de la journée (valeurs en C2 à C9) ?</label>
-<select id="q1c"><option value="">— choisis —</option><option>=SOMME(C2:C9)</option><option value="ok">=MOYENNE(C2:C9)</option><option>=MAX(C2:C9)</option><option>=MOYENNE(C2+C9)</option></select>
+<label for="q1c">3. Dans le tableur, l'heure est en colonne A, l'humidité en B, la pompe en C. Quelle formule donne l'humidité MOYENNE de la journée (valeurs en B2 à B9) ?</label>
+<select id="q1c"><option value="">— choisis —</option><option>=SOMME(B2:B9)</option><option value="ok">=MOYENNE(B2:B9)</option><option>=MAX(B2:B9)</option><option>=MOYENNE(B2+B9)</option></select>
 <button class="verif" type="button" onclick="verifier(1)">✅ Vérifier l'atelier 1</button>
 <p class="retour" id="r1" role="status"></p>
+<details class="correction" id="cor1"><summary>✅ Correction de l'atelier 1 — elle s'ouvre quand tu as vérifié</summary>
+<p><b>1. La cellule vide où la donnée doit apparaître.</b> <br>Dans un tableur, on choisit d'abord <b>où</b> écrire, puis on tape&nbsp;: la barre de formule montre alors ce que tu écris. <br>Refusé&nbsp;: <br>la barre de formule d'abord — elle modifie la cellule déjà sélectionnée, et tu écrases une autre donnée&nbsp;; <br>«&nbsp;Trier&nbsp;» et la référence de colonne ne saisissent rien.</p>
+<p><b>2. 13 h</b> (33&nbsp;%), la plus sèche de la journée. <br>Refusé&nbsp;: <br>06 h (62&nbsp;%) arrive en tête du tri <i>décroissant</i>, pas du croissant&nbsp;; <br>10 h et 18 h sont au milieu.</p>
+<p><b>3. =MOYENNE(B2:B9)</b>, qui rend <b>48,25&nbsp;%</b>. <br>Refusé&nbsp;: <br>=SOMME(B2:B9) rend le total (386), pas une moyenne&nbsp;; <br>=MAX(B2:B9) rend la plus grande valeur (62)&nbsp;; <br>=MOYENNE(B2+B9) fait la moyenne d'<b>un seul</b> nombre, B2&nbsp;+&nbsp;B9. <br>Le «&nbsp;:&nbsp;» désigne toute la plage de B2 à B9&nbsp;; le «&nbsp;+&nbsp;» additionne deux cellules.</p>
+<p><b>Dans le tableur</b>&nbsp;: les huit relevés triés par humidité croissante, et la moyenne par sa formule.</p>
+<figure class="capture-corrige" style="margin:.4rem auto .7rem;max-width:520px;text-align:center">
+  <img class="figure" src="Images/capture_corrige_atelier_pix_tri.png" alt="Capture de LibreOffice Calc : trois colonnes, Heure, Humidité en pourcentage, Pompe, triées par humidité croissante. 13 h, 33, ON ; 12 h, 38, ON ; 14 h, 41, ON — ces trois lignes sont surlignées en jaune ; puis 10 h, 47, OFF ; 16 h, 52, OFF ; 08 h, 55, OFF ; 18 h, 58, OFF ; 06 h, 62, OFF. En dessous : Moyenne, 48,25, avec la formule =MOYENNE(B2:B9)." loading="lazy" style="max-width:100%;height:auto;border:1px solid #9aa5b8;border-radius:6px;background:#fff">
+  <figcaption style="font-size:.9em">Le tableau trié dans Calc&nbsp;: les trois «&nbsp;ON&nbsp;» arrivent ensemble, en tête.</figcaption>
+  <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/capture_corrige_atelier_pix_tri.png" target="_blank" rel="noopener">🔍 Ouvrir la capture en grand</a></p>
+</figure>
+<p>📥 <a href="atelier_pix_releves_corrige.ods" download>Le fichier corrigé (.ods)</a>&nbsp;: les huit relevés, triés, et la moyenne.</p>
+<p><b>Ce que le tri montre à Mme Berthé</b>&nbsp;: les trois relevés où la pompe tourne sont les trois plus secs (33, 38 et 41&nbsp;%). <br>Ce mercredi, la pompe n'arrose que quand le sol en a besoin&nbsp;: le tableau ne montre pas de gaspillage.</p>
+<p class="piege">⚠️ <b>Le piège</b>&nbsp;: lire le tableau dans l'ordre des heures. La relation entre l'humidité et la pompe ne saute aux yeux qu'une fois trié par humidité.</p>
+</details>
 </div>
 </section>
 
@@ -150,6 +168,19 @@ FIN SI</pre>
 </div>
 <button class="verif" type="button" onclick="verifier(2)">✅ Vérifier l'atelier 2</button>
 <p class="retour" id="r2" role="status"></p>
+<details class="correction" id="cor2"><summary>✅ Correction de l'atelier 2 — elle s'ouvre quand tu as vérifié</summary>
+<p><b>L'algorithme complet</b>&nbsp;:</p>
+<pre data-code-colore="algo" style="white-space:pre-wrap">SI humidité &lt; 35 ALORS
+    DÉMARRER la pompe
+SINON SI humidité ≥ 45 ALORS
+    ARRÊTER la pompe
+SINON
+    NE RIEN CHANGER (garder l'état)
+FIN SI</pre>
+<p><b>Pourquoi deux seuils</b>&nbsp;: entre 35 et 45&nbsp;%, la pompe <b>garde son état</b>. <br>Si elle arrosait, elle continue jusqu'à 45&nbsp;%&nbsp;; si elle était arrêtée, elle attend 35&nbsp;%. <br>L'écart entre les deux seuils s'appelle une <b>hystérésis</b>&nbsp;: il supprime le battement autour de 40&nbsp;%.</p>
+<p><b>Refusé</b>&nbsp;: <br>«&nbsp;&gt; 35&nbsp;» démarrerait la pompe quand le sol est déjà humide&nbsp;; <br>«&nbsp;= 40&nbsp;» n'est presque jamais vrai exactement&nbsp;; <br>«&nbsp;&lt; 45&nbsp;» ferait démarrer dès 44&nbsp;%, et le battement revient&nbsp;; <br>DÉMARRER ou ARRÊTER entre les deux seuils, c'est revenir à un seul seuil.</p>
+<p class="piege">⚠️ <b>Le piège</b>&nbsp;: croire que le dernier SINON ne sert à rien. C'est lui, «&nbsp;ne rien changer&nbsp;», qui supprime le battement.</p>
+</details>
 </div>
 </section>
 
@@ -175,6 +206,14 @@ FIN SI</pre>
 <select id="q3e"><option value="">— choisis —</option><option>Le câble USB</option><option>Le port USB de l'ordinateur</option><option value="ok">La carte du jardin elle-même</option><option>Le logiciel</option></select>
 <button class="verif" type="button" onclick="verifier(3)">✅ Vérifier l'atelier 3</button>
 <p class="retour" id="r3" role="status"></p>
+<details class="correction" id="cor3"><summary>✅ Correction de l'atelier 3 — elle s'ouvre quand tu as vérifié</summary>
+<p><b>La démarche, du plus simple au plus lourd</b>&nbsp;:</p>
+<ol><li>Vérifier que le câble USB est bien branché des deux côtés.</li><li>Essayer un autre port USB, puis un autre câble.</li><li>Redémarrer le logiciel, puis l'ordinateur.</li><li>Tester la même chaîne avec une autre carte, pour isoler la panne.</li></ol>
+<p><b>Pourquoi cet ordre</b>&nbsp;: on commence par ce qui est rapide et gratuit, et on ne change <b>qu'un élément à la fois</b>. <br>Ainsi, quand ça remarche, on sait ce qui était en panne.</p>
+<p><b>Le coupable&nbsp;: la carte du jardin elle-même.</b> <br>Le câble marche avec une autre carte&nbsp;: ce n'est pas lui. <br>Le port et le câble marchent avec une autre carte&nbsp;: ce n'est ni le port, ni le logiciel. <br>Il ne reste qu'un élément non disculpé&nbsp;: la carte.</p>
+<p><b>Refusé</b>&nbsp;: <br>réinstaller le logiciel ou le système en premier (long, et sans effet sur un câble débranché)&nbsp;; <br>racheter une carte avant d'avoir isolé la panne (une dépense sans preuve)&nbsp;; <br>débrancher le capteur d'humidité (il ne touche pas la liaison USB)&nbsp;; <br>abandonner.</p>
+<p class="piege">⚠️ <b>Le piège</b>&nbsp;: changer plusieurs choses d'un coup. Si la carte réapparaît, tu ne sais plus laquelle a réglé le problème.</p>
+</details>
 </div>
 </section>
 
@@ -218,6 +257,11 @@ FIN SI</pre>
     tout ce que le jardin <b>ne saurait plus</b> le jour où la sonde d'humidité tombe en panne sans
     que personne s'en aperçoive — et propose un signe simple qui préviendrait.</li>
   </ol>
+  <details class="corrige-bonus"><summary>🔍 Voir la correction des trois défis</summary>
+  <p><b>1. Le tableau qui ment sans mentir.</b> <br>Par exemple&nbsp;: trier par heure et <b>cacher la colonne Humidité</b>. On ne voit plus que «&nbsp;12 h, 13 h, 14 h&nbsp;: ON&nbsp;»&nbsp;: on croit que la pompe part à l'heure du déjeuner, quel que soit le sol. <br>Pour être honnête, il fallait montrer l'humidité à côté de la pompe, triée&nbsp;: les trois «&nbsp;ON&nbsp;» sont les trois relevés les plus secs. <br>Aucune valeur n'est fausse&nbsp;: c'est la <b>relation</b> entre deux colonnes qu'on a cachée.</p>
+  <p><b>2. L'algorithme du voisin.</b> <br>Tomates (peu d'eau)&nbsp;: SI humidité &lt; 30 ALORS démarrer, SINON SI humidité ≥ 40 ALORS arrêter, SINON ne rien changer. <br>Concombres (beaucoup d'eau)&nbsp;: les mêmes lignes, avec 45 et 60. <br>Les valeurs sont des exemples&nbsp;: seuls les <b>deux seuils</b> changent, la <b>structure</b> reste la même. Ce sont des paramètres.</p>
+  <p><b>3. La donnée qui manque.</b> Sans la sonde, le jardin ne sait plus&nbsp;: <br>l'humidité réelle du sol&nbsp;; <br>quand démarrer, ni quand arrêter la pompe (elle reste dans son dernier état&nbsp;: noyade ou sécheresse)&nbsp;; <br>si ses relevés et sa trace sont vrais. <br>Un signe simple&nbsp;: si la valeur ne bouge plus pendant plusieurs heures, ou sort de 0-100&nbsp;%, allumer une LED rouge «&nbsp;sonde à vérifier&nbsp;».</p>
+  </details>
 </section>
 
 </main>
@@ -252,6 +296,7 @@ function verifier(n){
   r.textContent = bons === ids.length ? "✔ Atelier réussi (" + etat.scores[n] + ") — compétence observable, trace enregistrée." : "✘ " + etat.scores[n] + " — corrige puis re-vérifie (aide : relis le cartouche CRCN).";
   r.className = "retour " + (bons === ids.length ? "ok" : "ko");
   sauver();
+  const cor = document.getElementById("cor" + n); if (cor) cor.open = true;   /* n°336 : vérifié, la correction s'ouvre */
 }
 function genererTrace(){
   const nom = document.getElementById("nom").value.trim() || "(non renseigné)";
