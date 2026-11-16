@@ -50,7 +50,7 @@ for (const PAGE of pages) {
   const avant = await caches();
   await p.click('#btnMission'); await p.waitForTimeout(250);
   const onglets = await p.evaluate(GAB => GAB.T ? [...document.querySelectorAll(GAB.T)].map(t => t.getAttribute(GAB.de)) : [...document.querySelectorAll(GAB.P)].map(P => P.id), GAB);
-  let nEcrans = 0, nVerifies = 0, nEtq = 0, nEcrits = 0, nPage = 0;
+  let nEcrans = 0, nVerifies = 0, nEtq = 0, nEcrits = 0, nPage = 0, nCorOuvertes = 0, verifieDernier = false;
   for (const id of onglets) {
     if (GAB.T) await p.evaluate(([GAB, i]) => [...document.querySelectorAll(GAB.T)].find(t => t.getAttribute(GAB.de) === i).click(), [GAB, id]);
     else if (await p.evaluate(([ACTIF, i]) => (document.querySelector(ACTIF) || {}).id !== i, [ACTIF, id])) await p.click('#msSuiv');      // sans onglets : « Séance suivante → » y mène
@@ -81,6 +81,15 @@ for (const PAGE of pages) {
       if (e.large) refus.push(`${ou} : défilement de côté à 390 px`);
       if (e.exo && e.checks) refus.push(`${ou} : le bouton de vérification de la page est visible dans un écran de question`);
       if (e.ecran && e.ecran.t === 'retenir' && e.avantVerif.length) refus.push(`${ou} : un outil qui sert avant la vérification n'arrive qu'après elle, sur l'écran « je retiens » — ${e.avantVerif.join(', ')}`);
+      // n°336 (16/11/2026) : une activité vérifiée montre sa correction OUVERTE, sur l'écran « je retiens »
+      if (e.ecran && e.ecran.t === 'retenir') {
+        const c = await p.evaluate(ACTIF => { const L = [...document.querySelectorAll(ACTIF + ' details.correction, ' + ACTIF + ' details.corrige, ' + ACTIF + ' details.correction-complete')].filter(x => x.offsetParent);
+          return { n: L.length, fermees: L.filter(x => !x.open).length }; }, ACTIF);
+        // le banc a répondu juste et vérifié chaque écran de l'activité (ou elle n'avait rien à vérifier) : ouverte
+        if (c.n && c.fermees) refus.push(`${ou} : l'activité est vérifiée, mais ${c.fermees} correction(s) restent repliées (n°336)`);
+        if (c.n && !c.fermees) nCorOuvertes += c.n;
+        verifieDernier = false;
+      }
       let issue = '';
       if (e.verif && (e.etq || e.avecCle.length)) {
         // répondre juste, comme un élève qui sait : étiquettes posées une à une, boutons radio cochés
@@ -100,6 +109,7 @@ for (const PAGE of pages) {
         if (r.ok) { nVerifies++; if (e.etq) nEtq++; issue = '✓'; } else { refus.push(`${ou} : les bonnes réponses ne sont pas acceptées — ${r.texte}`); issue = '✗'; await p.waitForTimeout(2100); }
       } else if (e.exo) { nEcrits++; issue = e.verif ? 'vérif. de la page' : 'écrit'; if (e.verif) { await p.click('#msVerif'); await p.waitForTimeout(140); } }
       // à la dernière question d'une zone, c'est la vérification de la page qui parle : son message doit se voir ici
+      if (e.verif && e.ecran && e.ecran.dernier && e.ecran.check) verifieDernier = true;
       if (e.verif && e.ecran && e.ecran.dernier && e.ecran.check) {
         const fb = await p.evaluate(([ACTIF, MESSAGE]) => { const P = document.querySelector(ACTIF); return [...P.querySelectorAll(MESSAGE)].filter(x => x.offsetParent && x.textContent.trim()).length; }, [ACTIF, MESSAGE]);
         if (fb) nPage++; else refus.push(`${ou} : dernière question de la zone, mais le message de la vérification de la page ne s'affiche pas`);
@@ -145,7 +155,7 @@ for (const PAGE of pages) {
   if (sortie.ms || sortie.seuls || restes.length) refus.push(`retour à la page complète : ${JSON.stringify(sortie)} ; blocs restés cachés dans ${restes.join(', ') || 'aucune séance'}`);
   err.slice(0, 3).forEach(m => refus.push('erreur JavaScript : ' + m.slice(0, 140)));
 
-  console.log(`${refus.length ? '❌' : '✅'} ${path.relative(RACINE, PAGE)}\n   ${onglets.length} séance(s) · ${nEcrans} écrans · ${nVerifies} écrans vérifiés par le mode (dont ${nEtq} à étiquettes) · ${nEcrits} écrans écrits ou vérifiés par la page · ${nPage} vérifications de la page déclenchées · ${Object.keys(cles).length} réponses lues${croise.sans ? '' : ', croisées avec la page'}`);
+  console.log(`${refus.length ? '❌' : '✅'} ${path.relative(RACINE, PAGE)}\n   ${onglets.length} séance(s) · ${nEcrans} écrans · ${nVerifies} écrans vérifiés par le mode (dont ${nEtq} à étiquettes) · ${nEcrits} écrans écrits ou vérifiés par la page · ${nPage} vérifications de la page déclenchées · ${nCorOuvertes} corrections ouvertes après vérification · ${Object.keys(cles).length} réponses lues${croise.sans ? '' : ', croisées avec la page'}`);
   refus.forEach(m => console.log('   ✘ ' + m)); notes.forEach(m => console.log('   · ' + m)); ecransVus.forEach(m => console.log(m));
   refusTotal += refus.length; await ctx.close();
 }

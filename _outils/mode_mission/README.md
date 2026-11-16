@@ -15,6 +15,11 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
   « Trou ① — … » — ont chacun leur écran, le code redit au-dessus et le trou en cours marqué dans le code, décision
   de Pascal du 16/11/2026) —, puis « je retiens »
   (correction, erreurs fréquentes, à retenir, critère) ; enfin chaque autre carte (synthèse, Bonus, bilan, QCM).
+- **Ouvre la correction** une fois l'activité vérifiée (règle d'or n°336, 16/11/2026 — Pascal : « le mode mission ne
+  contient pas les corrections » ; elles y étaient, repliées, et passaient inaperçues) : dès que la dernière question a
+  lancé la vérification de la page, la correction s'ouvre d'elle-même, sous la dernière question comme sur l'écran
+  « je retiens ». Avant, elle reste repliée, et une ligne dit où elle est et quand elle s'ouvrira. Le banc le refuse
+  autrement (« l'activité est vérifiée, mais … correction(s) restent repliées »).
 - **Habille** une grille de boutons radio (`.qcm-cles` + `fieldset.qcm-grille`) en **étiquettes à poser** : on
   touche l'étiquette puis sa case, on la glisse, ou on fait les deux au clavier. Poser une étiquette coche le
   bouton radio de la page : la sauvegarde, la vérification et l'impression de la page ne voient aucune différence.

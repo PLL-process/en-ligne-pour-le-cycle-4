@@ -2,9 +2,9 @@
 
 > Fichier **engendré** par `python3 _outils/registre_regles.py` à partir de `JOURNAL_DES_DECISIONS.md` — ne pas l'éditer à la main : le journal fait foi (règle n°10). Le titre est la première définition trouvée dans le journal, coupée à 140 caractères ; le texte complet est à la ligne indiquée.
 
-**Prochain numéro libre : n°336.** Le réserver en tête du lot qui l'introduit (tableau du journal), puis relancer ce script.
+**Prochain numéro libre : n°337.** Le réserver en tête du lot qui l'introduit (tableau du journal), puis relancer ce script.
 
-323 numéros définis, du n°1 au n°335.
+324 numéros définis, du n°1 au n°336.
 
 ## Sans définition trouvée
 
@@ -339,3 +339,4 @@ n°156, n°157, n°158, n°159, n°160, n°161, n°162, n°163, n°164, n°165, 
 | 333 | Une réussite affichée prouve la production réelle | registre de tête | 27 |
 | 334 | Une règle enseignée est juste dans toute sa portée | registre de tête | 28 |
 | 335 | une consigne par question, une à la fois ; 3e_C9.1 et 4e_C9.1 à la hauteur du Book Train (n°331, n°332, n°335), 5e_C9.1 réécrit ; en mission… | 15/11/2026 | 31578 |
+| 336 | la correction se voit ; quand la réponse se dessine, elle montre le dessin | 16/11/2026 | 31986 |

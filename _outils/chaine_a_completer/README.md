@@ -8,6 +8,10 @@ chaînes, et qu'il y manipule.
 
 ## Ce que fait l'outil
 
+- **La correction montre la chaîne complète** (règle d'or n°336, 16/11/2026) : en tête de la correction de
+  l'activité (`details.correction`), le moteur dessine la dernière étape SANS case — chaque partie porte le texte du
+  dessin, c'est-à-dire la bonne réponse, couleurs comprises. Rien à écrire dans la page : `"corrige": true` dans
+  `data-cac` dessine ce corrigé, et le moteur le pose de lui-même (sauf si la correction porte déjà sa figure).
 - **Le schéma est la question.** Les cases sont à la place des mots : la fonction dans le bloc, le composant dessous,
   la forme d'énergie sur la flèche, ce que porte la flèche d'ordre. L'élève touche une étiquette, puis sa case ; ou il
   la fait glisser ; au clavier, Entrée sur l'étiquette mène à la première case vide.
