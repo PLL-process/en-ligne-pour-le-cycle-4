@@ -31826,6 +31826,40 @@ La vérification de la page ne change pas (011 attendu).
 
 **Vérifications.** Bancs : `4e_C4.1` 52 / 52, `3e_C1.5` 23 / 23, les quatre bancs n°311 à 34 / 34. `banc_rappels_cdc.py` 302 / 302. Mode mission sur les quatre séquences : aucun refus. `verif_regles_audit.py` : 0 ✘ avant comme après. `controle_consigne_question.py` : inchangé (289 C1, tous au thème 1, la vague suivante).
 
+## 15/11/2026 — Règle n°4 : les trois panneaux de la bête à cornes ne sont pas des séquences
+
+**La demande.** Pascal, le 15/11/2026, sur la question laissée par l'audit hebdomadaire (#721) — « 3 copies `atelier_bete_a_cornes` sans bloc « Prêt·e » ni Bonus, à juger » : « Tu as carte blanche ».
+
+**Ce qui a été jugé.** Les quatre `atelier_bete_a_cornes.html` (`5e_C3.3`, `4e_C1.3`, `3e_C3.1`, `4e_C3.1`) sont des **panneaux** engendrés par `build.py` : rangés dans le dossier d'un code, ils mènent par leur bouton à l'atelier des représentations (`atelier_<niveau>_besoin-bete-a-cornes.html`). Celui de 5e fait 4 Ko et passait déjà pour page-pointeur ; les trois autres pèsent 80 Ko parce qu'ils portent un rappel incrusté (« 🧠 Avant l'atelier »). Ce ne sont pas des séquences : la clôture — « Prêt·e à t'entraîner », le Bonus, le bouton QCM — est dans l'atelier, que le contrôle juge et trouve conforme. Leur ajouter les deux blocs mettrait le QCM **avant** l'atelier, ce que Pascal reprochait le 30/08 (« le QCM est proposé presque sur toutes les pages »).
+
+**Ce qui change** (`_outils/controle_regle4.py`) : une famille écartée de plus, « panneau vers un atelier » — une page `atelier_*.html` hors des ateliers, dont le bouton mène à `ateliers-representations/…/atelier_….html`. Deux garde-fous : la cible doit exister ; une page qui porte une activité (`class="activite"`) reste jugée. Aucune page modifiée.
+
+**Mesure.** `controle_regle4.py` : **3 écarts → 0** (84 pages jugées, conformes ; 37 écartées, chacune pour sa raison, dont les 3 panneaux). Banc `tests_controle_regle4.py` : **25 / 25**, dont quatre cas nouveaux — le panneau écarté, le panneau sans atelier refusé, la page « atelier_ » à activité jugée, le lien sans bouton qui ne fait pas un panneau.
+
+## 15/11/2026 — Règle d'or n°335, la vague du thème 1 : les C1, les C2 et les C3, une consigne par question
+
+**La demande.** Pascal, le 15/11/2026 : « Tout le thème 2 et 3 […] Puis thème 1 », avec le choix « tout réécrire » pour la règle d'or n°335 (une consigne par question, une à la fois). Le thème 1 vient en dernier : ses pages attendaient que les révisions en cours sur les mêmes séquences (`3e_C1.1` #728, `3e_C3.1` #729) soient livrées, et les ateliers de représentation incrustés (#733).
+
+**Ce qui change.** **290 énoncés** réécrits sur les **14 séquences** du thème 1, chacun en vraie question ou en consigne à l'impératif :
+- **C1** : `3e_C1.1` (les feux de Tsinghua), `3e_C1.5` (le numérique et la société), `4e_C1.1` (les feux de Tsinghua), `4e_C1.4` (la cybersécurité), `5e_C1.1` (l'air de Chengdu), `5e_C1.2` (le freinage à Sainte-Luce), `5e_C1.3` (le système d'information), `5e_C1.5` (le compte du club).
+- **C2** : `3e_C2.1` (la borne de Pékin), `4e_C2.1` (la borne de Hangzhou), `5e_C2.1` (la station de vélos de Shenzhen).
+- **C3** : `3e_C3.1` (Shenzhen), `4e_C3.1` (Hangzhou), `5e_C3.1` (Shanghai).
+
+Les formes, les mêmes que dans les thèmes 2 et 3 :
+- la phrase à compléter devient une question : « L'atténuation bêta est très précise, mais : » → « L'atténuation bêta est très précise. Quel est son défaut ? » ; « La double authentification (2FA) ajoute : » → « Qu'ajoute la double authentification (2FA) ? » ;
+- le cas posé, puis sa question : « Écarter une solution dès le recensement parce qu'elle « a l'air trop chère » : qu'est-ce que cela fait ? » ;
+- les modes de représentation à reconnaître (`3e_C2.1`) : « Une feuille divisée en quatre cases […] : quel mode de représentation est-ce ? » ;
+- le bilan garde son « je » : « 5e_C2.1 — faire la liste des interacteurs : où en suis-je ? ».
+
+Le gras, les termes du lexique et les espaces insécables sont gardés ; les propositions, les corrections et les vérificateurs ne bougent pas.
+
+**Mesure** (`controle_consigne_question.py`) : thème 1, **396 C1 et 7 C2 → 0** — 290 dans les séquences, réécrits ici ; les autres sont des questions des ateliers incrustés (bête à cornes, pieuvre, croquis, FAST, carte mentale…), corrigées à leur source par #733, déjà fusionnée. **Sur le site entier (194 pages) : 0 C1 et 0 C2** — les trois thèmes sont à zéro.
+
+**Vérifications.**
+- Les bancs des 14 lots, lancés comme leur rapport de tests le dit : **verts** — les bancs n°311 à 34 / 34 (`4e_C1.1` et `5e_C1.5` rejoués seuls : sous charge, ils n'avaient rien rendu), `4e_C1.4` 31 / 31, `5e_C1.5` QCM 34 / 34 ; les bancs Python : `3e_C1.1` 50 / 50, `3e_C1.5` 45 / 45, `4e_C1.1` 71 / 71, `5e_C1.1` 43 / 43 et 50 / 50, `5e_C1.2` 50 / 50, `5e_C2.1` 152 / 152, `3e_C3.1` 37 / 37, `4e_C3.1` 32 / 32, `5e_C3.1` 35 / 35 et 24 / 24.
+- Des écarts **présents aussi sur `main`**, dans des fichiers que cette vague ne touche pas : `tests_5e_C1.5-C1.6_sequence.mjs` 37 / 38 (activité 5) ; `3e_C2.1` 55 / 58 et `4e_C2.1` 62 / 65 en Python (la légende des badges de la n°298, les liens des deux synthèses).
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `5e_C2.1`).
+
 ## 15/11/2026 — Règle d'or n°322 étendue aux QCM : la note « ordinateur partagé » et un bouton qui efface tout, nom compris
 
 **La demande.** Pascal, le 15/11/2026, sur ce que la règle n°322 laissait « à décider » depuis le 10/11 (73 QCM sans note poste partagé, 4 `confirm()`) : « Tu as carte blanche ».
@@ -31840,3 +31874,9 @@ La vérification de la page ne change pas (011 attendu).
 - **Le contrôle** (`controle_sauvegarde_locale.py`) : un QCM sans note est désormais un refus, comme une séquence ou un atelier. **Le skill** `qcm-html-accessible` le dit, dans « Contrôler ».
 
 **Mesure.** `controle_sauvegarde_locale.py` : **73 QCM sans note → 0 ; 4 `confirm()` → 0 ; 0 refus** (163 pages qui écrivent dans le navigateur).
+
+**Vérifications.**
+- Banc navigateur (390 px, gardé hors du dépôt), sur les **72 QCM du gabarit maison** : la note est visible ; un nom saisi est gardé ; le premier clic sur « 🗑 Effacer ma sauvegarde » n'efface rien et l'annonce dans `#savedNote` ; le second efface le nom et les réponses ; aucune erreur. **72 / 72.**
+- `tests_sans_modale.mjs` : `entrainement_dnb_algorigrammes` 9 / 9, `qcm_algorigrammes_domotique` 9 / 9, deux QCM du gabarit (lot et atelier) 11 / 11. `dnb_gabarit.html` 1 / 7 : c'est un gabarit à remplir, il ne se charge pas (erreur JS identique sur `main`) ; son produit passe.
+- Les bancs des 29 lots qui ouvrent un QCM, tous verts (`3e_C9.2` 167 / 167, `4e_C9.1` 124 / 124, `3e_C9.1` 89 / 89, `3e_C7.1` 82 / 82, `tests_qcm_c7_c8` 71 / 71, `4e_C6.2` 56 / 56…), dont les quatre bancs de QCM de C7 lancés avec leurs arguments (32 / 32, 31 / 31 ×3).
+- Contrôles du site : les rapides tous à 0, sauf `controle_regle4` le temps que #736 arrive sur `main` (fait) ; les longs verts — hors ligne, impression, verrous, contraste des liens, indices des QCM (72 banques, 2 181 questions) ; `controle_axe` : aucune des 407 pages ne recule.
