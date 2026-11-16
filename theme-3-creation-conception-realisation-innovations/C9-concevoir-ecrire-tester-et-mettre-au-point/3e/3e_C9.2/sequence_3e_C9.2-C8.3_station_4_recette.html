@@ -1881,6 +1881,11 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   que le prototype se rapproche de ce vocabulaire réel : un 5<sup>e</sup> niveau « violet » à partir de <b>209 km/h</b> (l'entrée en catégorie 4 de
   Saffir-Simpson : écran violet, buzzer qui sonne par intermittence). <br>Où insérer le nouveau test dans l'algorigramme, et pourquoi
   À CET ENDROIT ? Et pourquoi le niveau <b>gris</b>, lui, ne peut-il PAS se déduire de la seule vitesse du vent ?</p>
+  <figure class="figure-defi" data-regle="schema-sous-les-yeux" style="margin:.6rem auto;max-width:620px;text-align:center">
+    <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station d'alerte : quatre niveaux, trois losanges de décision." loading="lazy" style="max-width:100%;height:auto">
+    <figcaption style="font-size:.88em;opacity:.9">L'algorigramme de la station, celui de l'activité 2 : <br>cherche où le test du violet doit prendre place.</figcaption>
+    <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/algorigramme_alerte.svg" target="_blank" rel="noopener">🔍 Ouvrir l'algorigramme en grand</a></p>
+  </figure>
   <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 209 » s'insère EN PREMIER, avant « ≥ 178 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « ouragan majeur » sans jamais atteindre « violet ». <br>Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle).<br>Et il faut mettre à jour le protocole de recette : deux nouvelles frontières à tester, <b>208 et 209</b> — le protocole passerait ainsi de 13 à 16 essais (un nominal de plus, deux frontières de plus). <br>Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
   <p><b>Le cas du gris.</b><br>Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
   phénomène est passé. <br>Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un

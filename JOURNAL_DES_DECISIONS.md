@@ -31860,6 +31860,61 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 - Des écarts **présents aussi sur `main`**, dans des fichiers que cette vague ne touche pas : `tests_5e_C1.5-C1.6_sequence.mjs` 37 / 38 (activité 5) ; `3e_C2.1` 55 / 58 et `4e_C2.1` 62 / 65 en Python (la légende des badges de la n°298, les liens des deux synthèses).
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `5e_C2.1`).
 
+## 15/11/2026 — Règle d'or n°322 étendue aux QCM : la note « ordinateur partagé » et un bouton qui efface tout, nom compris
+
+**La demande.** Pascal, le 15/11/2026, sur ce que la règle n°322 laissait « à décider » depuis le 10/11 (73 QCM sans note poste partagé, 4 `confirm()`) : « Tu as carte blanche ».
+
+**Ce que la mesure a montré.** La décision du 10/11 supposait que les QCM « ne gardent qu'un score ». Lu dans le code du gabarit maison : un QCM garde dans le navigateur **le nom, le prénom, la classe, la date, chaque réponse et le temps**. Et « ♻ Recommencer entièrement » efface les réponses mais **garde le nom** : sur un poste partagé, l'élève suivant ouvrait le QCM au nom du précédent, et aucun bouton ne l'effaçait. La raison de l'exception tombait ; la règle s'applique.
+
+**Ce qui change.**
+- **72 QCM du gabarit maison** (`const QUESTIONS`) : sous `#savedNote`, juste sous le nom de l'élève, la note `data-note="poste-partage"` (« un autre élève … verra ton nom et tes réponses ») et le bouton **« 🗑 Effacer ma sauvegarde »** (`#btnEffacer`). Il efface en deux clics (`demande()`, déjà dans chaque QCM : le premier annonce dans `#savedNote`, le second dans les six secondes retire la clé et recharge), sans boîte modale. La note ne s'imprime pas. Posé par `controle_sauvegarde_locale.py --corriger`, qui connaît maintenant ce gabarit.
+- **Le gabarit des ateliers** (`gabarit_qcm.tpl`) porte le même bloc : `build_qcm.py --tous`, rejoué dans une copie à part, l'écrit à l'identique dans les 7 QCM des ateliers. Les générateurs de lot (`build_qcm.py <gabarit.html> <sortie>`) partent d'une page de QCM existante : ils le gardent.
+- **Le QCM hérité `qcm_algorigrammes_domotique.html`** (`4e_C6.2`) : la note, en haut de page ; elle renvoie à son bouton « 🗑 Effacer toute ma progression », au bilan final.
+- **Les deux `confirm()` réels** (`_outils/dnb_gabarit.html` et `3e_C6.2/entrainement_dnb_algorigrammes.html`, son produit) : remplacés en deux clics par `_outils/sans_modale.py`. Les deux autres étaient le mot « confirm() » dans un commentaire qui explique `demande` : le contrôle ne lit plus que le code (`sans_modale.code_seul`).
+- **Le contrôle** (`controle_sauvegarde_locale.py`) : un QCM sans note est désormais un refus, comme une séquence ou un atelier. **Le skill** `qcm-html-accessible` le dit, dans « Contrôler ».
+
+**Mesure.** `controle_sauvegarde_locale.py` : **73 QCM sans note → 0 ; 4 `confirm()` → 0 ; 0 refus** (163 pages qui écrivent dans le navigateur).
+
+**Vérifications.**
+- Banc navigateur (390 px, gardé hors du dépôt), sur les **72 QCM du gabarit maison** : la note est visible ; un nom saisi est gardé ; le premier clic sur « 🗑 Effacer ma sauvegarde » n'efface rien et l'annonce dans `#savedNote` ; le second efface le nom et les réponses ; aucune erreur. **72 / 72.**
+- `tests_sans_modale.mjs` : `entrainement_dnb_algorigrammes` 9 / 9, `qcm_algorigrammes_domotique` 9 / 9, deux QCM du gabarit (lot et atelier) 11 / 11. `dnb_gabarit.html` 1 / 7 : c'est un gabarit à remplir, il ne se charge pas (erreur JS identique sur `main`) ; son produit passe.
+- Les bancs des 29 lots qui ouvrent un QCM, tous verts (`3e_C9.2` 167 / 167, `4e_C9.1` 124 / 124, `3e_C9.1` 89 / 89, `3e_C7.1` 82 / 82, `tests_qcm_c7_c8` 71 / 71, `4e_C6.2` 56 / 56…), dont les quatre bancs de QCM de C7 lancés avec leurs arguments (32 / 32, 31 / 31 ×3).
+- Contrôles du site : les rapides tous à 0, sauf `controle_regle4` le temps que #736 arrive sur `main` (fait) ; les longs verts — hors ligne, impression, verrous, contraste des liens, indices des QCM (72 banques, 2 181 questions) ; `controle_axe` : aucune des 407 pages ne recule.
+
+## 16/11/2026 — Veille du 16/11 installée : le motion design (une mesure, des skills, un pilote isométrique)
+
+**La demande.** Pascal, le 16/11/2026 : une liste de vingt dépôts « pour faire de Fable 5.2 un studio de motion design » (skills, 3D, effets, mouvement, son, export), puis « installe la veille motion », après le tri proposé : deux dépôts retenus, les autres écartés pour le site (bibliothèques à embarquer dans chaque page, 3D lourde, vidéo et son, ou partie utile payante) ; les outils vidéo (Remotion, HyperFrames, Manim, WhisperX, FFmpeg) gardés pour le jour où le site ferait des capsules.
+
+**Ce qui est installé.** Aucune skill ni aucun outil tiers tel quel : les idées sont réécrites en français, dans nos fichiers (`docs/veille/2026-11-16-motion/README.md` dit tout, sources et commits).
+1. **`lottiefiles/motion-design-skill`** (MIT) → `sequence-pedagogique-engageante`, nouvelle section « Le mouvement » (une animation dit une seule chose ; durées ; courbes ; cascade sous une demi-seconde ; un repli « moins de mouvement » pour chaque animation ; un bouton pour arrêter une boucle de plus de cinq secondes, WCAG 2.2.2) ; `chaine-energie-fonctionnelle` (la vitesse des perles : linéaire, la même partout) ; `controle-qualite-lot` ; et **`_outils/controle_mouvement.py`**, banc `tests_controle_mouvement.py` 11 / 11, inscrit au rapport d'audit — **⚠ seulement, sortie 0**.
+2. **`wheresryan22/anatomy`** (MIT) → **un pilote**, hors du site : le lampadaire de `5e_C4.1` en figure isométrique, ses constituants et les trois états du simulateur de la séquence (jour 80 lux, nuit 10 lux, nuit + passage). Script et captures dans `docs/veille/2026-11-16-motion/` ; la page n'entre pas dans le site sans la décision de Pascal.
+
+**Mesure (sur `main`, 16/11/2026).** 237 pages animées, 461 animations. ⚠ M1 : 3 animations sans repli « moins de mouvement » (le terminal du Bonus de `4e_C1.4`, le TP mBot2 de `3e_C9.1`) ; la loupe des images, posée sous `prefers-reduced-motion: no-preference`, est son propre repli (relevée à tort par le premier jet de la mesure, corrigé, banc 13 / 13). ⚠ M2 : 35 pages HTML dont une boucle sans fin ne s'arrête d'aucun bouton (le gabarit Vittascience, les flux des chaînes, d'autres boucles), et 16 images SVG en boucle (les chaînes animées) ; toutes ont leur repli « moins de mouvement », sauf le curseur du terminal de `4e_C1.4`.
+
+**Les suites.** Trois questions posées à Pascal : (1) donner leur repli aux animations qui n'en ont pas ; (2) un bouton « ⏸ » pour arrêter les animations ; (3) le pilote isométrique — le verser, le refaire ou s'arrêter là (sa méthode veut des figures très détaillées, l'inverse des schémas premium, et une figure de l'objet ne remplace pas la chaîne d'énergie). Réponse : « tu as carte blanche » (16/11, 00 h 22) ; c'est l'objet d'une PR à part. Le même soir, Pascal installe dans ses skills les versions auditées de `motion-design` (commit `f9a8a04`) et `anatomy` (commit `1482e84`), avec ses règles pour les pages élèves : `sequence-pedagogique-engageante` y renvoie, et le pilote n'avance plus d'étape tout seul (règle 3 de son adaptation).
+
+**Vérifications.**
+- `tests_controle_mouvement.py` **13 / 13** (dont le repli « no-preference » de la loupe, qu'un premier jet relevait à tort) ; `controle_mouvement.py` sur le site : sortie 0 ; `py_compile` des deux scripts.
+- Aucune page du site touchée : `controle_medias`, `controle_licence`, `controle_atteignabilite`, `controle_regles_visibles`, `controle_fichiers_telechargeables`, `controle_sigles` verts.
+- Le pilote : construit hors du dépôt avec le kit au commit audité ; aucune erreur JavaScript, thème sombre et clair, lisible à 390 px ; 85 Ko.
+
+## 15/11/2026 — Vague n°331, 2e passe : les 41 ⚠ du schéma sous les yeux, lus un par un
+
+**La demande.** Pascal, le 15/11/2026, sur ce que la vague n°331 (#732) laissait à juger — 38 ⚠ S2 (schéma nommé sans figure) et 3 ⚠ S3 (schéma replié) : « Tu as carte blanche ».
+
+**Ce que la lecture a trouvé.**
+- **6 venaient d'une limite du contrôle.** La chaîne à compléter (`div.cac[data-cac]`) est un schéma dessiné DANS le bloc par son moteur ; le contrôle ne la voyait pas. D'où 3 S2 (`4e_C4.1` activité 2, `5e_C4.1` activités 2 et 3) et les 3 S3 (`3e_C4.1`, `3e_C4.3`, `4e_C4.1` : la figure repliée y était le schéma complet « pour te corriger » ou le gabarit à imprimer, à bon droit). Le contrôle la compte désormais comme figure visible.
+- **3 étaient à corriger** :
+  - `3e_C6.1`, activité 5 « Dérouler le plan de tests » : le schéma du plan de tests était posé **au-dessus** de l'activité, et son encart **donnait deux réponses** (« un bon jeu d'essai vise les valeurs frontières », « a-t-on écrit ≥ au lieu de > ? »). Il entre dans l'activité, côte à côte avec les questions, en version **muette** (`plan_de_tests_jeux_essai_muet.svg` : l'encart pose les deux questions au lieu d'y répondre) ; la version complète passe dans la correction. Le tableau des jeux d'essai reste : c'est l'exemple de la v1, et ses valeurs 118 et 119 servent à la non-régression de la v2.
+  - `3e_C9.2`, Bonus, défi « niveau violet » : « Où insérer le nouveau test dans l'algorigramme ? » — l'algorigramme était à l'activité 2, deux séances plus haut. Il est posé dans le défi. Modifié dans la page tout-en-un, puis `generer_les_quatre_pages.py` (qui redonnait à l'identique les quatre pages avant la modification) : la page 4 le reçoit.
+- **31 sont justes**, et nommés avec leur raison dans `JUGES` (`controle_schema_sous_les_yeux.py`) : questions de connaissance (les symboles de l'algorigramme, ce qu'un diagramme de cas d'utilisation ne montre pas), production de l'élève (l'algorigramme à concevoir « avant toute référence », le diagramme de l'atelier que le Bonus fait compléter, les étapes à remettre en ordre), définitions et titres de cours, un chemin de menu du tableur (« Insertion → Diagramme → Ligne »), un transfert fait de mémoire. Ils sortent du compte des ⚠ et se relisent avec `--juges`. Un titre changé fait revenir le ⚠ : on le relit alors.
+
+**Mesure.** `controle_schema_sous_les_yeux.py` : **0 ✘ · 38 ⚠ S2 → 0 · 3 ⚠ S3 → 0** ; 31 blocs jugés justes. Banc du contrôle : **28 / 28** (sept cas nouveaux : la chaîne à compléter visible, cachée, sans `data-cac` ; un bloc jugé, un autre de la même page, un renvoi S1 qu'aucun jugement n'absout). Le skill `controle-qualite-lot` le dit.
+
+**Vérifications.** `3e_C6.1` : bancs 35 / 35 (le compte des SVG passe à 5 : le muet et le complet) et 34 / 34. `3e_C9.2` : 167 / 167 (dont l'union des champs des quatre pages, identique à la page tout-en-un) et 34 / 34. Mode mission sans refus (`3e_C6.1`, la page tout-en-un et la page 4 de `3e_C9.2`). `verif_regles_audit.py` 0 ✘ ; `audit_aeration.py --strict` 0 ; `controle_schemas.mjs` 0 ✘ sur `3e_C6.1`. Capture de l'activité 5 à 1 280 px : le plan de tests à gauche, les questions à droite.
+
+**Ce qui reste, hors de cette vague.** Sous l'activité 5 de `3e_C6.1`, l'encadré « À retenir », visible, dit « jeux d'essai visant les valeurs frontières » : il répond à la question « pourquoi 49/50/51 ? ». C'est la forme de tout le gabarit (l'encadré suit l'activité, ouvert) ; le décider vaut pour toutes les séquences — question pour Pascal.
+
 ## 15/11/2026 — Révision des trois thèmes, deuxième passe, lot 1 : `5e_C4.1`, `3e_C7.1`, `5e_C2.1`, `5e_C3.1`, `5e_C1.2`, `4e_C1.1`
 
 **La décision.** Pascal, le 15/11/2026 : « une deuxième passe en commençant par les plus lourdes, sur tout avec tes nouveaux outils, ainsi tu pourras améliorer toutes les séquences ». Le suivi (`docs/revision/SUIVI_REVISION.md`, « Deuxième passe ») dit la méthode et la mesure de départ : sur les 56 séquences de `main`, 560 questions sur 1 094 où la bonne réponse est la plus longue (353 de plus de 10 signes) et 1 296 mauvaises propositions sans « pourquoi ».

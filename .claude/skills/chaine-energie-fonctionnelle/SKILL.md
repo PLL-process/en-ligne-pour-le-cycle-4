@@ -122,6 +122,12 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
   de draw.io écrit ses textes en `foreignObject` et pèse un mégaoctet (essai du 15/11/2026, draw.io 32.6 pour Windows).
 - **Un nouveau schéma de chaîne**, fait main : `python3 _outils/animer_flux.py <fichier.svg|page.html> --ecrire`, puis
   `--verifier` (0 : chaque chaîne lue a ses flux animés).
+- **Le mouvement des perles** (veille du 16/11/2026 ; skill `motion-design` de Pascal, résumée dans
+  `sequence-pedagogique-engageante`, « Le mouvement ») : la vitesse **linéaire** est la bonne pour un flux continu,
+  et **la même dans toutes les chaînes** — 1,6 s par motif dans celles d'`animer_flux.py` et de la chaîne à
+  compléter (relevé du 16/11) : une perle plus rapide laisserait croire à plus de puissance, sauf si c'est voulu et dit. Le guide conseille qu'au plus un tiers des éléments bougent ensemble ; « tous les flux animés » est la
+  décision de Pascal (15/11) et prime. Les flux bouclent sans fin : `controle_mouvement.py` les compte parmi les
+  boucles qu'aucun bouton n'arrête (⚠ M2, WCAG 2.2.2), en attendant la décision d'un bouton « ⏸ ».
 
 ## Vérifier
 
