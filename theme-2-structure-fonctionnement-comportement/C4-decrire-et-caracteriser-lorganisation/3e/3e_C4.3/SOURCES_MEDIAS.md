@@ -10,7 +10,9 @@ de Google Images ou d'un site tiers. Aucun hotlinking.
 | `Images/chaine_information_station.svg` | SVG original | Création Fable pour ce projet | CC0 | Chaîne d'information Acquérir→Traiter→Communiquer avec natures de signaux | ~6 Ko |
 | `Images/signal_analogique_vers_donnee.svg` | SVG original | Création Fable pour ce projet | CC0 | Conversion analogique→numérique (CAN 10 bits) avec formule | ~6 Ko |
 | `Images/types_et_codage_donnees.svg` | SVG original | Création Fable pour ce projet | CC0 | Types de données de la station + codage binaire de la vigilance | ~7 Ko |
+| `Images/types_et_codage_donnees_muet.svg` | SVG original | Création Fable pour ce projet | CC0 | Types de données de la station + codage binaire de la vigilance | version **muette** de `types_et_codage_donnees.svg` (types et descripteurs en « ? »), affichée avec les questions de l'activité 4 — règle d'or n°331, 15/11/2026 ; la version complète est dans la correction |
 | `Images/transmission_stockage_fichiers.svg` | SVG original | Création Fable pour ce projet | CC0 | Parcours de la donnée : mise en forme, transmission, stockage, formats | ~7 Ko |
+| `Images/transmission_stockage_fichiers_muet.svg` | SVG original | Création Fable pour ce projet | CC0 | Parcours de la donnée : mise en forme, transmission, stockage, formats | version **muette** de `transmission_stockage_fichiers.svg` (extensions en « ? »), affichée avec les questions de l'activité 5 — règle d'or n°331, 15/11/2026 ; la version complète est dans la correction |
 | `donnees/mesures_station_48h_simulees.csv/.ods/.xlsx` | Jeu de données | **Données SIMULÉES** générées par script (graine fixe), ordres de grandeur réalistes d'un épisode cyclonique aux Antilles | CC0 | En-tête du fichier signale explicitement la simulation | 3-8 Ko |
 
 Notes de conformité :
