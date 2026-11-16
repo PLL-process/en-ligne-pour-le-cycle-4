@@ -558,6 +558,9 @@ RAPPELS = [
          ]),
     # ── 3e
     dict(id="shenzhen-3e", niveau="3e",
+         # révision du 15/11/2026 (la charge de lecture de la séance 2, 1 819 mots) : le rappel ne sert qu'à qui a oublié
+         replie="🔁 Piqûre de rappel (3 min)&nbsp;: une ligne du cahier des charges, en tableau à menus — ouvre-la si tu "
+                "ne sais plus ce qu'est un critère, un niveau, une flexibilité",
          sequence=T1 + "C3-caracteriser-et-choisir-un-objet-ou-un/3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
          avant="<!-- ateliers-representations:debut ex-3e-shenzhen-c3 -->", balise="h4", balise_exo="h5",
          titre="Une ligne du cahier des charges du local",

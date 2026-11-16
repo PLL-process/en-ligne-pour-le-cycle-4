@@ -63,6 +63,9 @@ ENTREES = [
          sequence=C3 + "3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html", avant=debut("bc-3e-shenzhen-c3"),
          balise="h4", balise_exo="h5",
          titre="🧠 Piqûre de rappel&nbsp;: les mots de la bête à cornes, sur le local des serveurs",
+         # révision du 15/11/2026 (la charge de lecture de la séance 1, 1 633 mots) : le rappel ne sert qu'à qui a oublié les mots
+         replie="🧠 Piqûre de rappel (2 à 3 min)&nbsp;: les quatre mots de la bête à cornes — ouvre-la si tu ne les as "
+                "plus en tête",
          intro="Établir une liste commence par un besoin bien écrit, dans une bête à cornes. Avant, retrouve ses quatre "
                "<b>mots de référence</b> — utilisateur, matière d'œuvre, produit, fonction — sur <b>ton</b> problème, le "
                "local des serveurs. Deux à trois minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",

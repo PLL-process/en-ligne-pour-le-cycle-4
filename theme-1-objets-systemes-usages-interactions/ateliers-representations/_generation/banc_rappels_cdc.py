@@ -81,7 +81,10 @@ def donnees(r):
       % (premier, a_pieges), premier < a_pieges)
 
 
+# Un rappel replié (option `replie`, révision du 15/11/2026) s'ouvre comme l'élève l'ouvre : le banc déplie d'abord
+# chaque <details> qui le contient, puis active l'onglet de sa séance.
 JS_OUVRIR = """id => { const el = document.getElementById(id); if (!el) return false;
+  for (let a = el; a; a = a.parentElement) if (a.tagName === 'DETAILS' && !a.open) a.open = true;
   const pn = el.closest('[role=tabpanel], .seance-panel, .panneau');
   if (pn && !el.offsetParent) {
     const tab = document.querySelector('[role=tab][data-panel="' + pn.id + '"], [aria-controls="' + pn.id + '"], #tab-' + pn.id);
