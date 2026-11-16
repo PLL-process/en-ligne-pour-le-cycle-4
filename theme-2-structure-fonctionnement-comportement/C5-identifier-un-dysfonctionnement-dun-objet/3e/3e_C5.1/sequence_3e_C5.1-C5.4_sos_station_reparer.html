@@ -2095,7 +2095,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <p><b>a)</b> longueur 60 mm · entraxe 40 mm · trous Ø5 mm · alésage Ø6 mm.</p>
       <p><b>b)</b> Notre pièce : <b>impression 3D</b> — unique, de forme complexe. <br>L'imprimante de la salle, une FlashForge Adventurer 5M Pro, la produit&nbsp;: 60&nbsp;mm de long tiennent largement dans ses 220&nbsp;×&nbsp;220&nbsp;×&nbsp;220&nbsp;mm. <br>La pièce provisoire : <b>découpe + assemblage</b>. <br>La grande série : <b>moulage</b>.</p>
       <p><b>c)</b> plastique résistant aux UV (ASA, ou ABS traité anti-UV) : l'acier nu rouille avec les embruns, le carton ne survivrait pas à la première pluie, le PLA standard ramollit au soleil tropical (60 °C au soleil direct sur un toit !).</p>
-      <p><b>Version 🅱 :</b> dans FreeCAD, la pièce se modélise en 3 opérations : esquisse du rectangle 60×40 extrudée sur 8 mm, cylindre Ø12 h35, perçages Ø5 et alésage Ø6. Export STL → impression.</p>
+      <p><b>Version 🅱 :</b> dans FreeCAD, la pièce se modélise en 3 opérations : esquisse du rectangle 60×40 extrudée sur 8 mm, cylindre Ø12 h35, perçages Ø5 et alésage Ø6. Export STL → impression. <br>Le pas à pas, la vue 3D de la pièce terminée et <a href="support_girouette_corrige.stl" download>son fichier STL</a> sont dans le corrigé du Bonus.</p>
       <p><b>Version 🅲 :</b> imprime le plan à l'échelle 1:1 et découpe le gabarit papier : pose-le sur le mât pour vérifier que l'entraxe tombe juste — c'est exactement le rôle d'un prototype.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre diamètre des trous (Ø5) et alésage (Ø6) ; oublier l'entraxe (la cote critique !) ; choisir l'impression 3D pour la grande série (des heures par pièce…) ; choisir un matériau sans penser à l'environnement réel de la pièce.</div>
@@ -2200,6 +2200,24 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p>🔧 <b>Défi repair café :</b> renseigne-toi : existe-t-il un « repair café » en Martinique ? Quels objets y répare-t-on le plus ?</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé des trois défis</summary>
+      <p><b>♻ Défi citoyen</b>&nbsp;: l'indice de réparabilité est une note sur 10, sur l'étiquette ou la fiche du produit. <br>Elle compte la facilité à démonter, la notice d'entretien, la disponibilité et le prix des pièces détachées. <br>À qualité égale, on choisit la note la plus haute&nbsp;: l'appareil se répare plus facilement, donc dure plus longtemps. <br>Attention&nbsp;: depuis 2025, les téléviseurs et les lave-linge portent à la place un <b>indice de durabilité</b>, qui ajoute la fiabilité.</p>
+      <p><b>🖥 Défi FreeCAD</b>&nbsp;: la pièce, opération par opération (atelier Part Design)&nbsp;:</p>
+      <ol>
+        <li>esquisse d'un rectangle 60&nbsp;×&nbsp;40, puis <b>Protrusion</b> de 8&nbsp;mm&nbsp;: la platine&nbsp;;</li>
+        <li>sur la face du dessus, esquisse d'un cercle Ø12 au centre, puis Protrusion de 35&nbsp;mm&nbsp;: le fût&nbsp;;</li>
+        <li>deux cercles Ø5 à 20&nbsp;mm de part et d'autre du centre (entraxe 40), puis <b>Cavité</b> «&nbsp;à travers tout&nbsp;»&nbsp;: les trous de fixation&nbsp;;</li>
+        <li>sur le sommet du fût, un cercle Ø6, puis Cavité de 35&nbsp;mm&nbsp;: l'alésage&nbsp;;</li>
+        <li>sélectionne le corps, puis Fichier → Exporter → <b>STL Mesh (*.stl)</b>.</li>
+      </ol>
+      <figure class="capture-corrige" style="margin:.4rem auto .7rem;max-width:560px;text-align:center">
+        <img class="figure" src="Images/capture_corrige_support_girouette_3d.png" alt="Vue 3D du support de girouette modélisé : une platine rectangulaire grise de 60 sur 40 millimètres et 8 d&#x27;épaisseur, percée de deux petits trous traversants de diamètre 5, à 40 millimètres l&#x27;un de l&#x27;autre ; au centre, un fût cylindrique de diamètre 12 et haut de 35 millimètres, creusé sur toute sa hauteur d&#x27;un alésage de diamètre 6." loading="lazy" style="max-width:100%;height:auto;border:1px solid #9aa5b8;border-radius:6px;background:#fff">
+        <figcaption style="font-size:.9em">Le support terminé&nbsp;: la vue 3D du fichier STL corrigé.</figcaption>
+        <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/capture_corrige_support_girouette_3d.png" target="_blank" rel="noopener">🔍 Ouvrir la capture en grand</a></p>
+      </figure>
+      <p>Vérifie ton modèle&nbsp;: hauteur totale 43&nbsp;mm (8&nbsp;+&nbsp;35)&nbsp;; volume ≈ 21,9&nbsp;cm³. <br>📥 <a href="support_girouette_corrige.stl" download>Le fichier STL corrigé</a>&nbsp;: ouvre-le dans FreeCAD ou dans le logiciel de l'imprimante pour le comparer au tien.</p>
+      <p><b>🔧 Défi repair café</b>&nbsp;: oui. L'association <b>Eco-Mobil</b> anime un Repair Café au Lamentin, avec des «&nbsp;brunchs de la réparation&nbsp;» certains samedis. <br>On y répare surtout le petit électroménager et l'électronique (fer à repasser, grille-pain, radio, lampe…), les vélos, les ordinateurs, et des vêtements. <br>Les réparations sont gratuites, avec une boîte à dons. <br>Ces informations datent des articles de 2019-2020&nbsp;: vérifie les horaires avant d'y aller.</p>
+  </details>
 </details>
 </section>
 
