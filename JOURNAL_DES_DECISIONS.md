@@ -32000,7 +32000,10 @@ séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées ave
   par un fondu seul de 0,35 s, courbe `ease` dans les deux sens. Elle monte maintenant de 6 unités en 0,6 s
   (courbe qui décélère) et disparaît en 0,4 s (courbe qui accélère), sans bouger ; sous « moins de mouvement »,
   rien ne bouge. Reposé par `poser.py` dans les six pages ; `4e_C9.1`, en retard sur la source sur `main`
-  (`controle_lecteur_pas_a_pas` refusait), est remis à jour du même coup.
+  (`controle_lecteur_pas_a_pas` refusait), est remis à jour du même coup. Son correctif n°300 (le groupe de
+  boutons radio porte sa valeur) vivait dans le bloc du lecteur et a été effacé en le reposant (banc 97 / 124) :
+  il est remis juste avant le bloc, et le banc revient à 124 / 124. Les boucles et les replis (M1, M2) sont l'objet
+  de l'entrée précédente (#743) : ce lot n'y touche pas.
 - **anatomy, `5e_C1.2`** : la figure « Trois freins, la même roue » (`Images/freins_iso.html`, posée par un cadre
   dans l'activité 1, nouvelle version 🅱 « pas de vélo sous la main »). La roue avant d'un vélo du collège, dans
   un range-vélo, avec un frein à patins, à disque ou à tambour. L'élève serre le levier : le levier tourne, puis
@@ -32018,3 +32021,9 @@ séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées ave
   sans enfreindre n°174-175 (un film qui se déroule seul est un spectacle) et n°182 (les vidéos d'Alain Le Berre
   montrent déjà le fonctionnement). L'audit propose de l'essayer sur la station d'alerte de 3e, dont aucune page
   ne montre l'objet (n°85), quand le thème 2 viendra.
+- **Vérifié sur la branche reposée sur `main` (#743)** : les 39 contrôles Python de `_outils/` sortent à 0 ;
+  bancs `5e_C1.2` 50 / 50 et 34 / 34, `4e_C9.1` 124 / 124 et 34 / 34 ; banc commun du lecteur vert (6 animations,
+  1 280 et 390 px, mouvement réduit, impression) ; `controle_mouvement` M1 0, M2 0 ; `controle_schemas`,
+  `controle_hors_ligne` et `controle_axe` verts sur `5e_C1.2`. Revue d'écran en trois tours sur la figure
+  (captures dans `_outils/captures_skills_motion_anatomy_2026-11-16/`) ; ce qui reste au troisième tour est écrit
+  dans `rapport_tests_5e_C1.2.md`.

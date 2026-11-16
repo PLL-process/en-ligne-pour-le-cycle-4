@@ -24,7 +24,7 @@ schéma compare), n°102 (impression claire).
 |---|---|---|
 | Lecteur pas à pas commun (`_outils/lecteur_pas_a_pas/`) — 6 animations : Herschel 3e_C1.1, trois principes 5e_C1.1, vélo-cargo 5e_C3.1, lampadaire 5e_C4.1, jardin 4e_C8.1 et 4e_C9.1 | Une partie du dessin apparaissait par un fondu seul de 0,35 s, courbe `ease` dans les deux sens. Le skill demande : ni opacité seule, ce qui entre ralentit, ce qui sort accélère, une étape de schéma de 0,6 à 1,2 s. | ✅ **Fait dans ce lot** : apparition en 0,6 s avec une montée de 6 unités (courbe qui décélère), disparition en 0,4 s (courbe qui accélère), rien ne bouge sous « moins de mouvement ». Banc commun vert. |
 | Relais animé (4e_C7.4, 7.5, 9.1, 6.1) | Déjà conforme : l'aimant ferme la lame en accélérant, le ressort la relève en ralentissant, mouvement réduit respecté. | Rien. |
-| Thème 1, mesure de la PR #741 | M1 : le terminal de `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` (`blink`, `typing`) n'a pas de repli. M2 : boucles sans bouton d'arrêt dans 5e_C1.5 (`vsPulse`) et 5e_C3.1 (`flux-avance`, `vppLueur`). | Laissé à la PR « suites de la veille » annoncée par #741 (repli des trois animations, bouton « ⏸ Arrêter les animations »), pour ne pas toucher deux fois les mêmes pages. |
+| Thème 1, mesure de la PR #741 | M1 : le terminal de `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` n'avait pas de repli. M2 : boucles sans bouton d'arrêt dans 5e_C1.5 (`vsPulse`) et 5e_C3.1 (`flux-avance`, `vppLueur`). | Fait à part par la PR #743 (carte blanche du 16/11) : bouton « ⏸️ Figer les animations », pulsations qui s'arrêtent seules, replis posés ; M1 et M2 à 0 sur `main`. Rien de plus ici. |
 
 ## 2. anatomy — l'objet réel en figure isométrique
 
