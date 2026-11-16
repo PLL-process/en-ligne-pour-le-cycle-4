@@ -31982,3 +31982,39 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 - `controle_mouvement.py` : M1 0, M2 0 ; `tests_controle_mouvement.py` 13 / 13 ; les bancs et les 25 contrôles ci-dessus portent aussi ces changements (les pages au gabarit Vittascience, l'index, le Bonus de `4e_C1.4`, le TP de `3e_C9.1`).
 
 **Au passage.** Le suivi de la révision (`docs/revision/SUIVI_REVISION.md`) disait « livré #739 » pour le lot 1 de la deuxième passe : il est arrivé sur `main` avec le lot 2 (#740, qui le contenait) ; #739 est fermée. Corrigé.
+
+## 16/11/2026 — Les skills motion design dans le thème 1 : le lecteur pas à pas et « Trois freins, la même roue » (`5e_C1.2`)
+
+**La décision.** Pascal, le 16/11/2026, a installé trois skills repérés dans une liste « motion design »
+(`motion-design` de LottieFiles, `anatomy`, `anatomy-reveal`), audités et épinglés sur leur commit, puis :
+« Audit dans quelles séquences tu pourrais utiliser ces skills et utilise-les », et « les mêmes séquences sont
+prioritaires » — le thème 1 d'abord, dans l'ordre habituel. La veille du même jour (#741) avait déjà versé
+motion-design dans les skills du dépôt et mesuré le mouvement : ce lot ne refait pas ce travail.
+
+**L'audit** : `docs/audits/AUDIT_SKILLS_MOTION_ANATOMY_2026-11-16.md` — les 60 pages de séquence, séquence par
+séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées avec les n°1, 85, 119, 174-177, 179, 182.
+
+**Ce qui est fait.**
+- **motion-design, le lecteur pas à pas commun** (six animations : Herschel `3e_C1.1`, trois principes `5e_C1.1`,
+  vélo-cargo `5e_C3.1`, lampadaire `5e_C4.1`, jardin `4e_C8.1` et `4e_C9.1`) : une partie du dessin apparaissait
+  par un fondu seul de 0,35 s, courbe `ease` dans les deux sens. Elle monte maintenant de 6 unités en 0,6 s
+  (courbe qui décélère) et disparaît en 0,4 s (courbe qui accélère), sans bouger ; sous « moins de mouvement »,
+  rien ne bouge. Reposé par `poser.py` dans les six pages ; `4e_C9.1`, en retard sur la source sur `main`
+  (`controle_lecteur_pas_a_pas` refusait), est remis à jour du même coup.
+- **anatomy, `5e_C1.2`** : la figure « Trois freins, la même roue » (`Images/freins_iso.html`, posée par un cadre
+  dans l'activité 1, nouvelle version 🅱 « pas de vélo sous la main »). La roue avant d'un vélo du collège, dans
+  un range-vélo, avec un frein à patins, à disque ou à tambour. L'élève serre le levier : le levier tourne, puis
+  ce qui frotte vient toucher ; un trait s'allume de l'axe à l'endroit qui frotte, et la ligne du bas dit la
+  distance (28,5 cm, 7 cm, 3,5 cm) ou l'écart au repos (2 mm, moins d'1 mm, environ 1 mm). Une loupe montre la
+  coupe de l'endroit qui frotte. Elle ne nomme pas les deux pièces qui se touchent ni l'endroit de la chaleur :
+  c'est le relevé de l'élève (n°177). Le tableau des versions dit « 🅱 Figure » au lieu de « 🅱 Photos », qui
+  renvoyait à un « schéma coté » absent.
+- **Les cotes** sont vraies et écrites dans le générateur (`_generation/freins_iso/build.mjs`) : roue ETRTO 559
+  (26 pouces), disque Ø 160 mm, tambour Ø 70 mm, écart patin-jante 2 mm (celui du relevé 🅲 de la séquence).
+- **Déclarée illustration** (`data-illustration`, n°315) : une vue isométrique de l'objet réel, dont les pièces se
+  touchent comme sur le vrai vélo ; les schémas de la séquence restent des schémas. Sans cette déclaration,
+  `controle_schemas.mjs` comptait 288 ✘ « contact » sur la figure.
+- **anatomy-reveal n'est pas utilisé** : dans le thème 1, aucun film de démontage ne fait mieux que la figure
+  sans enfreindre n°174-175 (un film qui se déroule seul est un spectacle) et n°182 (les vidéos d'Alain Le Berre
+  montrent déjà le fonctionnement). L'audit propose de l'essayer sur la station d'alerte de 3e, dont aucune page
+  ne montre l'objet (n°85), quand le thème 2 viendra.

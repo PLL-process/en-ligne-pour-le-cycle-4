@@ -44,7 +44,7 @@ const pathOf3 = (pts, P, closed = false) => k.pathOf(pts.map((p) => k.iso(p, P))
 const grp = (attrs, body) => `<g ${Object.entries(attrs).map(([a, v]) => `${a}="${v}"`).join(" ")}>${body}</g>`;
 const pin = (n, at, P) => {
   const [x, y] = k.iso(at, P);
-  return `<g class="fr-pin" data-n="${n}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8.6"/><text x="${x.toFixed(1)}" y="${(y + 3.9).toFixed(1)}">${n}</text></g>`;
+  return `<g class="fr-pin" data-n="${n}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8.6"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${n}</text></g>`;
 };
 
 // un grand anneau (pneu, jante) : les facettes visibles, puis ses contours tracés à part, plus légers que l'enveloppe du kit
@@ -328,24 +328,24 @@ const PIECES = {
     { n: 3, nom: "la jante (le bord de la roue, en métal)", at: () => W(R_JANTE - 12, -62 * DEG, L_JANTE) },
     { n: 4, nom: "le pneu", at: () => W(R_PNEU - 16, -105 * DEG, L_PNEU) },
     { n: 5, nom: "le moyeu (le centre de la roue)", at: () => W(30, 235 * DEG, 0) },
-    { n: 6, nom: "la fourche", at: () => [0, FOURCHE_Y + 12, TE_Z - 90] },
+    { n: 6, nom: "la fourche (elle tient la roue par son axe)", at: () => [0, FOURCHE_Y + 12, TE_Z - 90] },
   ],
   patins: [
-    { n: 2, nom: "le câble dans sa gaine", at: () => [52, 110, TE_Z + 60] },
+    { n: 2, nom: "le câble, dans sa gaine (le tube qui le guide)", at: () => [52, 110, TE_Z + 60] },
     { n: 7, nom: "les deux bras du frein", at: () => [24, FOURCHE_Y + 2, R_PNEU + 248] },
-    { n: 8, nom: "les patins de caoutchouc", at: () => [40, L_JANTE + 6, R_PISTE + R_PNEU] },
+    { n: 8, nom: "les patins (deux blocs de caoutchouc)", at: () => [40, L_JANTE + 6, R_PISTE + R_PNEU] },
   ],
   disque: [
     { n: 2, nom: "la durite (un tuyau rempli de liquide de frein)", at: () => [40, 110, TE_Z + 40] },
     { n: 7, nom: "le disque, fixé au moyeu", at: () => W(DISQUE.rOut - 6, 120 * DEG, DISQUE.s + 1) },
-    { n: 8, nom: "l'étrier, fixé à la fourche", at: () => [W(DISQUE.piste, ETRIER_A, 0)[0] - 4, DISQUE.s + 14, W(DISQUE.piste, ETRIER_A, 0)[2] + 26] },
-    { n: 9, nom: "les plaquettes, dans l'étrier (loupe)", at: null },
+    { n: 8, nom: "l'étrier (une pince fixée à la fourche)", at: () => [W(DISQUE.piste, ETRIER_A, 0)[0] - 4, DISQUE.s + 14, W(DISQUE.piste, ETRIER_A, 0)[2] + 26] },
+    { n: 9, nom: "les plaquettes (deux pastilles qui frottent), dans l'étrier : voir la loupe", at: null },
   ],
   tambour: [
-    { n: 2, nom: "le câble dans sa gaine", at: () => [40, FOURCHE_Y + 16, TE_Z - 40] },
+    { n: 2, nom: "le câble, dans sa gaine (le tube qui le guide)", at: () => [40, FOURCHE_Y + 16, TE_Z - 40] },
     { n: 7, nom: "le tambour, fermé, dans le moyeu", at: () => W(TAMBOUR.rExt + 10, 225 * DEG, TAMBOUR.s1) },
-    { n: 8, nom: "le levier de came", at: () => levierCamePts(0)[1] },
-    { n: 9, nom: "les mâchoires, cachées dans le tambour (loupe)", at: null },
+    { n: 8, nom: "le levier de came (il fait tourner la came, en haut dans la loupe)", at: () => levierCamePts(0)[1] },
+    { n: 9, nom: "les mâchoires (deux pièces en arc, garnies), cachées dans le tambour : voir la loupe", at: null },
   ],
 };
 
@@ -367,6 +367,9 @@ function loupe(frein) {
     + `<circle class="fr-loupe-bord" cx="${LP / 2}" cy="${LP / 2}" r="${LP / 2 - 2}"/><text class="fr-loupe-mot" x="${LP / 2}" y="${LP - 12}">${{ patins: "coupe de la jante", disque: "coupe de l'étrier", tambour: "flasque ôtée" }[frein]}</text></svg>`;
 }
 
+// une illustration de l'objet réel, pas un schéma : déclarée pour le contrôle n°315 (_outils/controle_schemas.mjs)
+const ILLUSTRATION = "vue isométrique de l'objet réel (skill anatomy) : ses pièces se touchent comme sur le vrai vélo ; les schémas de la séquence restent à part";
+const illustration = (svg) => svg.replace("<svg ", `<svg data-illustration="${ILLUSTRATION}" `);
 const LABEL = {
   patins: "La roue avant d'un vélo, posée dans un range-vélo, avec un frein à patins : deux bras fixés à la fourche portent chacun un patin de caoutchouc, de part et d'autre de la jante. Un câble relie le levier du guidon aux bras.",
   disque: "La même roue avec un frein à disque : un disque fixé au moyeu tourne avec la roue ; un étrier fixé à la fourche l'encadre et porte deux plaquettes. Une durite relie le levier du guidon à l'étrier.",
@@ -375,11 +378,14 @@ const LABEL = {
 
 // ── La page à poser dans la séquence (iframe) ────────────────────────────────
 const CSS = `
-html,body{margin:0;background:transparent}
+html,body{margin:0;background:#050f24}
+.iso[data-theme="dark"]{--anatomy-muted:#9a9a9a}
+.fr-legende li{color:#d4d8e0}
+.fr-cache{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .iso{--anatomy-weight:1px}
 .iso-solid>.iso-fill{fill-rule:evenodd}
 body{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--anatomy-text)}
-.fr{max-width:760px;margin:0 auto;padding:4px}
+.fr{max-width:600px;margin:0 auto;padding:4px}
 .fr-choix{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
 .fr-choix button,.fr-serrer{font:inherit;font-size:15px;min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid var(--anatomy-muted);background:var(--anatomy-card);color:var(--anatomy-strong);cursor:pointer}
 .fr-choix button[aria-pressed="true"]{outline:2px solid var(--anatomy-strong);outline-offset:1px;font-weight:600}
@@ -388,6 +394,7 @@ body{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:va
 .iso-stage{position:relative;touch-action:pan-y;cursor:pointer;outline:none}
 .iso-stage:focus-visible{outline:1px solid var(--anatomy-muted);outline-offset:6px}
 .fr-vue[hidden]{display:none}
+.iso-plate-corner[data-corner="hint"]:empty{display:none}
 .fr-loupe{position:absolute;right:0;top:0;width:34%;max-width:200px;height:auto}
 .fr-loupe-fond{fill:var(--anatomy-card);stroke:none}
 .fr-loupe-bord{fill:none;stroke:var(--anatomy-muted);stroke-width:1.2}
@@ -408,18 +415,21 @@ body{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:va
 .fr-serre [data-part="piste"]{opacity:1}
 .fr-serre [data-part="cable"] .iso-line,.fr-serre [data-part="gaine"] .iso-line{stroke:var(--anatomy-strong)}
 .fr-pin circle{fill:var(--anatomy-strong);stroke:var(--anatomy-card);stroke-width:1.4}
-.fr-pin text{fill:var(--anatomy-card);font:700 11.5px system-ui,sans-serif;text-anchor:middle}
+.fr-pin text{fill:var(--anatomy-card);font:700 11.5px system-ui,sans-serif;text-anchor:middle;dominant-baseline:central}
 .fr-legende{margin:10px 0 0;padding:0 0 0 1.6em}
 .fr-legende li{margin:2px 0}
 .fr-legende[hidden]{display:none}
 .fr-legende-papier{display:none}
-.fr-mention{margin:12px 0 0;font-size:12px;color:var(--anatomy-muted)}
+.fr-mention{margin:4px 0 0;font-size:12px;color:var(--anatomy-muted)}
+.licence-cc{color:var(--anatomy-muted)}
 @media (prefers-reduced-motion: reduce){[data-part="piste"]{transition:none}}
 @media (max-width:560px){
   .iso-plate-corner[data-corner="readout"]{white-space:normal;left:0;text-align:right;line-height:1.35}
   .iso-plate-corner[data-corner="hint"]{display:none}
   .iso-plate{padding-bottom:64px}
   .fr-loupe{width:44%}
+  .fr-pin circle{r:17px}
+  .fr-pin text{font-size:21px}
 }
 @media print{
   .iso{__CLAIR__}
@@ -441,15 +451,15 @@ body{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:va
 
 const choix = Object.entries(FREINS).map(([f, x], i) => `<button type="button" data-frein="${f}" aria-pressed="${i === 0}">${x.nom}</button>`).join("");
 const vues = Object.keys(FREINS).map((f, i) => `<div class="fr-vue" data-vue="${f}" data-nom="${FREINS[f].nom}"${i ? " hidden" : ""}>`
-  + k.figureSvg({ width: VW, height: VH, label: LABEL[f], body: [vue(f)] }) + loupe(f) + `</div>`).join("");
+  + illustration(k.figureSvg({ width: VW, height: VH, label: LABEL[f], body: [vue(f)] })) + loupe(f) + `</div>`).join("");
 const legendes = Object.keys(FREINS).map((f, i) => `<ol class="fr-legende" data-legende="${f}" data-nom="${FREINS[f].nom}"${i ? " hidden" : ""}>`
   + [...PIECES.commun, ...PIECES[f]].sort((a, b) => a.n - b.n).map((p) => `<li value="${p.n}">${p.nom}</li>`).join("") + `</ol>`).join("");
 
-const corps = `<div class="fr">`
+const corps = `<main class="fr"><h1 class="fr-cache">Trois freins, la même roue</h1>`
   + `<div class="fr-choix" role="group" aria-label="Choisir le frein">${choix}</div>`
   + k.plateHtml({
     fig: "Fig 1", title: "Trois freins, la même roue",
-    hint: "Touche la roue : le levier se serre",
+    hint: "",
     readout: "Frein à patins · levier relâché",
     body: `<div class="iso-stage" tabindex="0" role="group" aria-label="La roue et son frein. Espace ou Entrée serre et relâche le levier ; les touches 1, 2 et 3 changent de frein.">${vues}</div>`
       + `<button type="button" class="fr-serrer" aria-pressed="false">✊ Serrer le levier</button>`,
@@ -458,8 +468,12 @@ const corps = `<div class="fr">`
   + `<div class="fr-legende-papier"><p><b>Pour les trois :</b> 1 levier de frein · 3 jante · 4 pneu · 5 moyeu · 6 fourche</p>`
   + `<p><b>Patins :</b> 2 câble · 7 bras · 8 patins</p><p><b>Disque :</b> 2 durite · 7 disque · 8 étrier · 9 plaquettes</p>`
   + `<p><b>Tambour :</b> 2 câble · 7 tambour · 8 levier de came · 9 mâchoires</p></div>`
-  + `<p class="fr-mention">Dessin original, licence CC BY-NC-SA 4.0 (P. Gouacide). Dessiné avec le kit Anatomy © 2026 Ryan, licence MIT.</p>`
-  + `</div>`;
+  // la mention du dépôt (règle d'or n°321), recopiée de _outils/licence_cc.py (MENTION), puis celle du kit
+  + `<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style>`
+  + `<p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> `
+  + `— © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>`
+  + `<p class="fr-mention">Dessin original, écrit pour cette séquence. Dessiné avec le kit Anatomy © 2026 Ryan, licence MIT.</p>`
+  + `</main>`;
 
 const live = `
 /* Kit Anatomy © 2026 Ryan — licence MIT (github.com/wheresryan22/anatomy, commit 1482e84). Le reste : CC BY-NC-SA 4.0. */
@@ -554,7 +568,7 @@ writeFileSync(CLAIRE, page("light"));   // pour la fiche A4 (print.mjs lit la pa
 
 // ── La planche fixe, pour l'impression de la séquence (thème clair, les trois freins côte à côte, serrés) ──
 const PW = VW * 3 + LP;
-const planche = `<svg xmlns="http://www.w3.org/2000/svg" class="iso" data-theme="light" viewBox="0 0 ${VW * 3} ${VH + 60}" role="img" `
+const planche = `<svg xmlns="http://www.w3.org/2000/svg" data-illustration="${ILLUSTRATION}" class="iso" data-theme="light" viewBox="0 0 ${VW * 3} ${VH + 60}" role="img" `
   + `aria-label="Les trois freins sur la même roue : à patins, à disque, à tambour. Les numéros renvoient à la légende de la séquence.">`
   + `<style>${ISO_CSS}${CSS.replace("__CLAIR__", CLAIR)}.fr-titre{font:700 22px system-ui,sans-serif;fill:#111;text-anchor:middle}</style><rect width="100%" height="100%" fill="#fff"/>`
   + Object.keys(FREINS).map((f, i) => `<g transform="translate(${i * VW} 40)"><text class="fr-titre" x="${VW / 2}" y="-12">${FREINS[f].nom}</text>${vue(f)}`
