@@ -1670,7 +1670,9 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <div class="container">
 <div class="toolbar">
   <button class="btn-essentiel" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn-essentiel" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
 </div>
+<p class="saved-note" data-note="poste-partage" style="max-width:1000px;margin:4px auto 14px;padding:0 16px;font-size:.92em;line-height:1.5">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 </div>
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -4606,6 +4608,33 @@ function majTaches(){
 document.querySelectorAll(".seance-tab").forEach(o => o.addEventListener("click", () => setTimeout(majTaches, 0)));
 document.querySelectorAll(".verif-c14 [data-check]").forEach(b => b.addEventListener("click", () => { verifier(b.dataset.check); majTaches(); }));
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(majTaches, 0)); else setTimeout(majTaches, 0);
+})();
+</script>
+<script>
+/* « 🗑 Effacer ma sauvegarde » : tout ce que cette page garde dans le navigateur, en deux clics et sans boîte modale
+   (règle d'or n°322 ; audit hebdomadaire du 15/11/2026). Les clés effacées : celles de la page, celle du mode mission,
+   et celles des exercices incrustés (attribut data-cle, et leur croquis). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cles = ["cyber4e", "seance_4e_C1.4", "essentiel_4e_C1.4"], arme = 0, texte = b.textContent;
+  cles.push("mission:" + (decodeURIComponent(location.pathname).split("/").pop() || "page"));
+  function effacer(){
+    var prefixes = [].map.call(document.querySelectorAll("[data-cle]"), function(e){ return e.getAttribute("data-cle"); });
+    try {
+      for (var i = localStorage.length - 1; i >= 0; i--){
+        var k = localStorage.key(i);
+        if (cles.indexOf(k) >= 0 || prefixes.some(function(p){ return p && k.indexOf(p) === 0; })) localStorage.removeItem(k);
+      }
+    } catch (e) {}
+  }
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ effacer(); location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
 })();
 </script>
 </body>
