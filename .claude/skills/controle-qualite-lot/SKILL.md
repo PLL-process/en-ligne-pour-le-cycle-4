@@ -155,6 +155,10 @@ pour Node, les `.mjs` tombent en `ERR_MODULE_NOT_FOUND` (constaté le 23/10/2026
 `controle_axe.mjs` demande en plus le paquet `axe-core` (licence MPL-2.0, non versionné dans le dépôt) : `npm install axe-core` dans le dossier
 parent du dépôt, ou `AXE_CORE=/chemin/vers/axe.min.js`. Sans lui il sort à 2 (en panne), jamais à 0.
 
+**Le mouvement** (veille du 16/11/2026) : `python3 _outils/controle_mouvement.py <dossier du lot>` — ⚠ M1, une animation
+sans repli « moins de mouvement » ; ⚠ M2, une boucle sans fin qu'aucun bouton n'arrête. Sortie toujours 0 : c'est une
+mesure, à citer dans le rapport ; banc `tests_controle_mouvement.py`.
+
 ## Hors outils : bancs du lot et vérifications à la main
 
 - Bancs du lot (`tests_<lot>.mjs` ou `.py`), lancés comme on les lance vraiment, en sous-processus (n°299, second corollaire).
