@@ -31813,3 +31813,15 @@ Les deux autres (`5e_C4.1` le réseau local, `3e_C5.1` les points de test) serve
 La vérification de la page ne change pas (011 attendu).
 
 **Vérifications.** Bancs de `3e_C4.3` : 23 / 23 et 34 / 34. Mode mission sans refus. `verif_regles_audit.py` 0 ✘, `audit_aeration.py --strict` 0, `controle_schemas.mjs` 0 ✘, `controle_schema_sous_les_yeux.py` 0 ✘, `controle_consigne_question.py` : `3e_C4.3` absent.
+
+## 15/11/2026 — Les incrustations en retard rattrapées (cinq pages)
+
+**La demande.** Pascal, le 15/11/2026, sur le retard que l'audit hebdomadaire et la PR #733 avaient laissé « à décider » : « Tu as carte blanche ».
+
+**Ce qui était en retard.** `incrustations.py --verifier` nommait cinq pages après #733 : `carte_des_representations`, `4e_C1.1`, `4e_C3.1`, `3e_C1.5`, `4e_C4.1`. Le retard venait de l'aération posée à la source le 10/11/2026 (`incrustations.py` passe chaque incrustation par `aerer_corrections.aerer`) : ces pages n'avaient pas été rejouées depuis.
+
+**Ce qui change**, lu jeton par jeton avant d'écrire : des retours à la ligne entre les phrases (`<br>`), aucun mot changé — 1 dans `carte_des_representations`, 16 dans `4e_C4.1` (le cahier des charges et la pieuvre du jardin) — ; une espace en fin de phrase dans `4e_C1.1` et `4e_C3.1` ; une ligne vide en moins dans le moteur des exercices (`3e_C1.5`, `4e_C4.1`). Rien n'y défait une correction faite à la main. Écrit par `incrustations.py --seq …`, sans `build.py`.
+
+**Mesure.** `incrustations.py --verifier` : toutes les pages à jour. `audit_aeration.py --strict` sur les cinq pages : 1 → 0 (la légende-bloc de `carte_des_representations`).
+
+**Vérifications.** Bancs : `4e_C4.1` 52 / 52, `3e_C1.5` 23 / 23, les quatre bancs n°311 à 34 / 34. `banc_rappels_cdc.py` 302 / 302. Mode mission sur les quatre séquences : aucun refus. `verif_regles_audit.py` : 0 ✘ avant comme après. `controle_consigne_question.py` : inchangé (289 C1, tous au thème 1, la vague suivante).
