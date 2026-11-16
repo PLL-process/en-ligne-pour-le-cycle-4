@@ -227,7 +227,7 @@ function activite(A, E){
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
-  if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, n:header.concat(fin) });
+  if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, act:A, n:header.concat(fin) });
 }
 /* Une partie se joue pas à pas : chaque question à choix sur son écran, chaque jeu d'étiquettes sur le sien, une
    série de réponses courtes (rangée) ensemble, un écrit (zone de texte et sa version étayée) sur le sien.
@@ -442,10 +442,29 @@ function marquerTrou(s){
     });
   });
 }
+/* ═══ La correction se voit (règle d'or n°336, 16/11/2026) ═══
+   Pascal : « le mode mission ne contient pas les corrections ». Elles y étaient, repliées sous leur titre sur l'écran
+   « je retiens », et passaient inaperçues. Une fois l'activité vérifiée (la dernière question a lancé la vérification
+   de la page), sa correction s'ouvre d'elle-même, sur l'écran « je retiens » comme sous la dernière question. Avant,
+   elle reste repliée et une ligne dit où elle est et quand elle s'ouvrira : on essaie d'abord, on se corrige ensuite. */
+var CORR = "details.correction, details.corrige, details.correction-complete";
+function corrections(s){ var o = []; s.n.forEach(function(n){ if (!n.matches) return; if (n.matches(CORR)) o.push(n); $$(CORR, n).forEach(function(c){ if (o.indexOf(c) < 0) o.push(c); }); }); return o; }
+function activiteVerifiee(A){ return ecrans.some(function(e){ return e.t === "partie" && e.act === A && e.dernier && M.fait[e.id]; }); }
+function ouvrirCorrections(s, A){
+  var cs = corrections(s); if (!cs.length) return;
+  var ok = activiteVerifiee(A);
+  if (ok) cs.forEach(function(c){ if (!c._msOuverte){ c.open = true; c._msOuverte = true; } });
+  var note = s._msCorNote;
+  if (!note){ note = s._msCorNote = el("p", "ms-cor-note ms-seul"); cs[0].parentNode.insertBefore(note, cs[0]); s.n.push(note); ecrans.tous.push(note); }
+  note.textContent = ok ? "✅ Ta correction est ouverte juste en dessous : compare-la avec tes réponses, une par une."
+                        : "🔎 La correction est juste en dessous. Réponds d'abord aux questions et vérifie : elle s'ouvrira toute seule.";
+}
+
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
   var s = ecrans[k], vis = [];
+  if (s.t === "retenir" && s.act) ouvrirCorrections(s, s.act);
   s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
@@ -537,6 +556,7 @@ function verifier(){
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
     s.check.click();
     if (s.fb && net(s.fb.textContent) && s.fb.scrollIntoView){ s.fb.classList.add("ms-message"); s.fb.scrollIntoView({ block:"nearest" }); }
+    if (s.act) ouvrirCorrections(s, s.act);          // une correction posée sous la dernière question s'ouvre aussi (n°336)
   }
   $$(".ms-etq", panneau).forEach(peindre); barre();
   if (gain){ var b = el("span", "ms-gain"); b.textContent = "+" + gain; $("#msGains").appendChild(b); setTimeout(function(){ b.remove(); }, 1600); }

@@ -743,6 +743,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   @keyframes ms-secoue{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
   .ms-case.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
   body.ms details.ms-pousse{outline:2px solid var(--warn,#ffd66b);outline-offset:3px;border-radius:10px}
+  .ms-cor-note{margin:.2rem 0 .5rem;font-weight:700;color:var(--ok,#81fba1)}
   .ms-coche{width:22px;height:22px;flex:none;fill:none;stroke:var(--ok,#81fba1);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
   .ms-reserve{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--panel,#0d2347);border:1px solid var(--border,#274a8a);border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:9px 12px;display:grid;gap:7px}
   .ms-reserve-t{margin:0;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--sub,#9bbefc)}
@@ -1004,7 +1005,7 @@ function activite(A, E){
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
-  if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, n:header.concat(fin) });
+  if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, act:A, n:header.concat(fin) });
 }
 /* Une partie se joue pas à pas : chaque question à choix sur son écran, chaque jeu d'étiquettes sur le sien, une
    série de réponses courtes (rangée) ensemble, un écrit (zone de texte et sa version étayée) sur le sien.
@@ -1219,10 +1220,29 @@ function marquerTrou(s){
     });
   });
 }
+/* ═══ La correction se voit (règle d'or n°336, 16/11/2026) ═══
+   Pascal : « le mode mission ne contient pas les corrections ». Elles y étaient, repliées sous leur titre sur l'écran
+   « je retiens », et passaient inaperçues. Une fois l'activité vérifiée (la dernière question a lancé la vérification
+   de la page), sa correction s'ouvre d'elle-même, sur l'écran « je retiens » comme sous la dernière question. Avant,
+   elle reste repliée et une ligne dit où elle est et quand elle s'ouvrira : on essaie d'abord, on se corrige ensuite. */
+var CORR = "details.correction, details.corrige, details.correction-complete";
+function corrections(s){ var o = []; s.n.forEach(function(n){ if (!n.matches) return; if (n.matches(CORR)) o.push(n); $$(CORR, n).forEach(function(c){ if (o.indexOf(c) < 0) o.push(c); }); }); return o; }
+function activiteVerifiee(A){ return ecrans.some(function(e){ return e.t === "partie" && e.act === A && e.dernier && M.fait[e.id]; }); }
+function ouvrirCorrections(s, A){
+  var cs = corrections(s); if (!cs.length) return;
+  var ok = activiteVerifiee(A);
+  if (ok) cs.forEach(function(c){ if (!c._msOuverte){ c.open = true; c._msOuverte = true; } });
+  var note = s._msCorNote;
+  if (!note){ note = s._msCorNote = el("p", "ms-cor-note ms-seul"); cs[0].parentNode.insertBefore(note, cs[0]); s.n.push(note); ecrans.tous.push(note); }
+  note.textContent = ok ? "✅ Ta correction est ouverte juste en dessous : compare-la avec tes réponses, une par une."
+                        : "🔎 La correction est juste en dessous. Réponds d'abord aux questions et vérifie : elle s'ouvrira toute seule.";
+}
+
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
   var s = ecrans[k], vis = [];
+  if (s.t === "retenir" && s.act) ouvrirCorrections(s, s.act);
   s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
@@ -1314,6 +1334,7 @@ function verifier(){
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
     s.check.click();
     if (s.fb && net(s.fb.textContent) && s.fb.scrollIntoView){ s.fb.classList.add("ms-message"); s.fb.scrollIntoView({ block:"nearest" }); }
+    if (s.act) ouvrirCorrections(s, s.act);          // une correction posée sous la dernière question s'ouvre aussi (n°336)
   }
   $$(".ms-etq", panneau).forEach(peindre); barre();
   if (gain){ var b = el("span", "ms-gain"); b.textContent = "+" + gain; $("#msGains").appendChild(b); setTimeout(function(){ b.remove(); }, 1600); }
@@ -1858,6 +1879,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Le message part TOUJOURS du réseau local (routeur du collège = étape 1), et finit TOUJOURS chez le destinataire. Entre les deux : d'abord l'île, puis l'océan, puis l'Europe.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : collège (1) → opérateur antillais (2) → câble sous-marin (3) → point d'atterrissage/centre d'échange (4) → routeurs français (5) → téléphone (6). <br>Les numéros du SVG t'aident à vérifier.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Le schéma fléché attendu au cahier</b>&nbsp;:</p>
+      <figure class="schema-corrige" style="margin:.4rem auto .8rem;max-width:460px;text-align:center">
+          <img class="figure" src="Images/trajet_alerte_schema_fleche_corrige.svg" alt="Schéma fléché du trajet de l'alerte, de haut en bas : la station d'alerte de Sainte-Luce, le routeur du réseau local, le réseau de l'opérateur antillais, le câble sous-marin au fond de l'Atlantique, le centre d'échange Internet en Europe, la box de la tante à Paris, son téléphone." loading="lazy" style="max-width:100%;height:auto">
+          <figcaption style="font-size:.9em">Sept étapes, une flèche entre chacune&nbsp;: c'est ce schéma que ta légende décrit.</figcaption>
+          <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/trajet_alerte_schema_fleche_corrige.svg" target="_blank" rel="noopener">🔍 Ouvrir le schéma en grand</a></p>
+        </figure>
       <p><b>Ordre :</b> <br>
       1. de la station au routeur du collège ; <br>
       2. l'opérateur antillais ; <br>
