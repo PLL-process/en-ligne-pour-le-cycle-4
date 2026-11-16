@@ -68,14 +68,14 @@ d'autant.
 | 44 | `4e_C7.7` | 1831 → 1698 | 5 → 0 | 16 → 0 | 19 → 0 | livrée #709 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; une réponse de trop dans les deux grilles ; « allonger la fente à 23 mm » réfuté ; une phrase de la fabrique retirée ; séance 2 (1 698) au-dessus : l'atelier, outil de la séance, des propositions longues par construction, et la clôture |
 | 45 | `4e_C7.8` | 1880 → 1616 | 5 → 0 | 19 → 0 | 15 → 0 | livrée #710 — ✘ et menus déjà à 0 sur `main` (migration du 07/11) ; la bonne réponse était la plus longue 11 fois sur 13 : 19 propositions fausses allongées ; une réponse de trop dans la grille ; séance 2 (1 616) au-dessus : le banc du lien, outil de la séance, et la clôture |
 | 46 | `4e_C8.1` | 1975 → 1320 | 1 → 0 | 25 → 0 | 22 → 0 | livrée #711 — 16 listes en boutons radio, grille « Conforme ? » comprise (ordre, noms et retours gardés) ; les 8 menus du tableau de l'exercice incrusté reconnus comme voulus (n°317) ; piqûre de rappel repliée ; six corrections de l'exercice aérées à leur source ; séance 2 (1 320) juste au-dessus : l'exercice du diagramme des exigences |
-| 47 | `4e_C9.1` | 2909 | 1 | 54 | 34 | à faire |
-| 48 | `5e_C7.1` | 1685 | 1 | 17 | 17 | à faire |
-| 49 | `5e_C7.3` | 1694 | 5 | 15 | 15 | à faire |
-| 50 | `5e_C7.4` | 1607 | 5 | 18 | 16 | à faire |
-| 51 | `5e_C7.5` | 1528 | 5 | 22 | 8 | à faire |
-| 52 | `5e_C8.1` | 1421 | 5 | 17 | 13 | à faire |
-| 53 | `5e_C8.2` | 1412 | 5 | 16 | 12 | à faire |
-| 54 | `5e_C9.1` | 1761 | 1 | 24 | 5 | à faire |
+| 47 | `4e_C9.1` | 2909 → 2378 | 1 → 0 | 54 → 0 | 34 → 0 | livrée #713 — 43 questions en boutons radio, les 11 commandes de l'atelier de programmation déclarées (`data-interface`) ; 25 groupes mélangés ; échauffement, rappel de l'algorigramme, rôles et nuit simulée repliés ; 91 pourquoi ; séances 2 et 3 (2 064, 2 378) loin au-dessus : séances d'atelier, l'éditeur et l'atelier sont dans la page — couper une activité ou ajouter une séance, décision de Pascal |
+| 48 | `5e_C7.1` | 1685 → 1239 | 1 → 0 | 17 → 0 | 17 → 0 | livrée #714 — 17 listes en boutons radio ; l'algorigramme ne se lit plus dans l'ordre de la réponse (et `3e_C7.1`, même défaut) ; séance 2 : 1 239 mesurés, dont 109 de légendes pour le lecteur d'écran (1 130 vus) |
+| 49 | `5e_C7.3` | 1694 → 1607 | 5 → 0 | 15 → 0 | 15 → 0 | livrée #715 — migrée au gabarit commun ; deux grilles lettrées, l'une se devinait par la grammaire, l'autre avait deux réponses justes ; une réponse de trop dans chacune ; séance 2 (1 607) au-dessus : le banc, outil de la séance, la synthèse et le bilan |
+| 50 | `5e_C7.4` | 1607 → 1302 | 5 → 0 | 18 → 0 | 16 → 0 | livrée #716 — migrée au gabarit commun ; l'activité 1 se joue dans la chaîne d'énergie de l'indicateur (outil commun de #708) ; séance 2 (1 302) un peu au-dessus : le banc, la synthèse, le bilan |
+| 51 | `5e_C7.5` | 1528 → 1317 | 5 → 0 | 22 → 0 | 8 → 0 | livrée #718 — migrée au gabarit commun ; l'activité 0 dans le schéma du prototype ; l'ordre du montage ne se lit plus à l'écran ; séance 2 (1 317) un peu au-dessus : l'établi, la synthèse, le bilan |
+| 52 | `5e_C8.1` | 1421 → 1364 | 5 → 0 | 17 → 0 | 13 → 0 | livrée #719 — migrée au gabarit commun ; une réponse en double remplacée ; 18 propositions fausses allongées ; séance 2 (1 364) au-dessus : le simulateur, deux tableaux, la synthèse et le bilan |
+| 53 | `5e_C8.2` | 1412 → 1035 | 5 → 0 | 16 → 0 | 12 → 0 | livrée #720 — migrée au gabarit commun ; la grille de l'activité 4 ne se lit plus toute seule ; 12 propositions fausses remplacées ou allongées ; les deux séances sous le repère |
+| 54 | `5e_C9.1` | 1761 → 1282 | 1 → 0 | 24 → 0 | 5 → 0 | livrée #723 — 24 listes en boutons radio ; pas à pas de l'Explorateur, notes Vittascience et Bonus repliés ; séance 2 (1 282) juste au-dessus : l'encart des gestes, commun à six pages |
 | 55 | `3e_C1.1` | 1451 | 0 | 0 | 23 | à faire |
 | 56 | `3e_C3.1` | 1939 → 1181 | 0 → 0 | 0 → 0 | 19 → 0 | livrée #PRNUM — les deux piqûres de rappel repliées à leur source ; la bonne réponse ne se devine plus à sa longueur (18 raccourcies, 18 leurres allongés) ; 78 pourquoi |
 
@@ -272,3 +272,39 @@ d'autant.
   l'exercice incrusté sont reconnus comme voulus par la n°317 (`verif_regles_audit.py`, `migrer_gabarit_306.py`) ;
   piqûre de rappel repliée ; 9 groupes mélangés ; 34 pourquoi ; six corrections de l'exercice des exigences aérées à
   leur source et dans l'atelier et le cahier ; aération 22 → 0. Séances 432 · 1 878 · 528 → 493 · 1 320 · 485.
+- **4e_C9.1** (le jardin programmé), 15/11/2026 (#713) : 43 questions deviennent des boutons radio ; les 11 commandes
+  de l'atelier de programmation restent des listes, déclarées `data-interface` ; 25 groupes mélangés ; le pas à pas de
+  l'Explorateur (ouvert d'office), Vittascience facultatif, le rappel de l'algorigramme, les rôles et la nuit simulée
+  repliés ; 91 pourquoi ; aération 34 → 0. Séances 1 127 · 2 562 · 2 782 → 1 089 · 2 064 · 2 378. Reste : les séances
+  2 et 3, séances d'atelier ; les ramener sous le repère demande de couper une activité ou d'ajouter une séance.
+- **5e_C7.1** (le mini-projet : l'indicateur de place), 15/11/2026 (#714) : 17 listes en boutons radio (grille de
+  validation reliée à ses lignes) ; l'algorigramme mélangé, ses groupes nommés, les énoncés dans les légendes — même
+  correction sur `3e_C7.1` ; 31 pourquoi ; consignes en lignes, note Vittascience repliée ; aération 17 → 0. Séances
+  274 · 1 685 · 696 → 268 · 1 239 · 658 (séance 2 : 1 130 mots vus, 109 de légendes pour le lecteur d'écran).
+- **5e_C7.3** (le banc de la cour), 15/11/2026 (#715) : migrée au gabarit commun (5 ✘ → 0, 15 listes en boutons
+  radio, rangées en deux grilles lettrées, quatre versions étayées) ; la grille de l'activité 0 ne se devine plus par
+  la grammaire ; une seule réponse juste par ligne dans l'activité 1 (l'acier et le béton) ; une réponse de trop dans
+  chaque grille ; 7 groupes mélangés, 9 propositions allongées ; 47 pourquoi, 9 indices ; la phrase de la fabrique
+  retirée ; Bonus replié ; aération 15 → 0. Séances 1 095 · 1 694 → 840 · 1 607. Reste : la séance 2 au-dessus (le
+  banc, la synthèse, le bilan).
+- **5e_C7.4** (l'indicateur du hall), 15/11/2026 (#716) : migrée au gabarit commun (5 ✘ → 0, 17 listes en boutons
+  radio, la liste des sources du banc déclarée commande, quatre versions étayées) ; l'activité 1 se joue dans la chaîne
+  d'énergie de l'indicateur (sources, carte, DEL ; l'énergie stockée sous son composant, celle qui arrive par la
+  gauche), les réponses sans indice ; grille de l'activité 4 avec une réponse de trop ; 53 pourquoi ; Bonus et note
+  technique du banc repliés ; aération 16 → 0. Séances 779 · 1 582 → 544 · 1 302. Reste : la séance 2 un peu au-dessus.
+- **5e_C7.5** (l'éclairage du préau), 15/11/2026 (#718) : migrée au gabarit commun (5 ✘ → 0, 17 listes en boutons
+  radio, les ports de l'établi déclarés commandes, trois versions étayées) ; l'activité 0 dans le schéma du prototype
+  (la carte ne se devine plus au féminin) ; les gestes du montage dans le désordre, deux branchements réunis, un geste
+  de vérification avant la mise sous tension ; grille des retraits avec une réponse de trop ; 63 pourquoi ; phrase de
+  la fabrique retirée ; Bonus replié ; aération 8 → 0. Séances 860 · 1 528 → 676 · 1 317.
+- **5e_C8.1** (la patère du hall), 15/11/2026 (#719) : migrée au gabarit commun (5 ✘ → 0, 16 listes en boutons radio,
+  le choix du matériau du simulateur déclaré commande, trois versions étayées) ; « 10,0 h » proposé deux fois devient
+  « 24,0 h » (le prix lu à la place des heures) ; 16 groupes mélangés, 18 propositions fausses allongées ; 47 pourquoi ;
+  Bonus replié ; aération 13 → 0. Séances 523 · 1 400 → 518 · 1 364. Reste : la séance 2 au-dessus.
+- **5e_C8.2** (la patère du hall : l'essai de traction), 15/11/2026 (#720) : migrée au gabarit commun (5 ✘ → 0, 15
+  listes en boutons radio, l'éprouvette du banc déclarée commande, six versions étayées) ; la grille de l'activité 4
+  ne nomme plus ses lignes, avec une réponse de trop ; 12 groupes mélangés, 12 propositions fausses remplacées ou
+  allongées ; 46 pourquoi, 5 indices ; Bonus replié ; aération 12 → 0. Séances 689 · 1 393 → 735 · 1 035.
+- **5e_C9.1** (la boîte étiquetée), 15/11/2026 (#723) : 24 listes en boutons radio ; 22 groupes mélangés, 5 propositions
+  allongées ; le pas à pas de l'Explorateur, les notes Vittascience et le Bonus repliés ; 55 pourquoi ; aération 5 → 0.
+  Séances 550 · 1 678 · 1 246 → 539 · 1 282 · 923. Reste : la séance 2 juste au-dessus (l'encart des gestes).

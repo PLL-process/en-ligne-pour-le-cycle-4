@@ -42,6 +42,7 @@ select:focus{outline:3px solid var(--jaune)}
 .ok{color:var(--vert)}.ko{color:#C00000}
 .trace{background:#fff;border:2px dashed var(--vert);border-radius:12px;padding:16px 20px;margin:30px 0}
 textarea{width:100%;min-height:170px;font-family:'Courier New',monospace;font-size:.85rem;border:1px solid #B9C7DC;border-radius:8px;padding:10px}
+.note-poste{font-size:.92em;margin:8px 0 0}
 .gen{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-weight:bold;cursor:pointer}
 footer{text-align:center;color:#667;padding:20px;font-size:.85rem}
 @media print{header{background:#fff;color:#000}.verif,.gen,th button{display:none}}
@@ -186,6 +187,8 @@ FIN SI</pre>
 <input id="nom" type="text" style="padding:8px;border:2px solid var(--bleu2);border-radius:8px" placeholder="Ex. : Maëlys D." aria-label="Prénom et initiale">
 <p><button class="gen" type="button" onclick="genererTrace()">📋 Générer ma trace Pix</button></p>
 <textarea id="sortie" readonly aria-label="Trace générée à copier"></textarea>
+<p><button class="gen" id="btnReset" type="button" title="Effacer définitivement ton prénom, tes réponses et tes tris enregistrés dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p>
+<p class="note-poste" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 </div>
 
 
@@ -225,7 +228,7 @@ FIN SI</pre>
 "use strict";
 const CLE = "atelier_pix_4e_jardin";
 const DONNEES = [["06 h",62,"OFF"],["08 h",55,"OFF"],["10 h",47,"OFF"],["12 h",38,"ON"],["13 h",33,"ON"],["14 h",41,"ON"],["16 h",52,"OFF"],["18 h",58,"OFF"]];
-let etat = JSON.parse(localStorage.getItem(CLE) || "{}");
+let etat = {}; try { etat = JSON.parse(localStorage.getItem(CLE) || "{}") || {}; } catch (e) {}
 etat.tris = etat.tris || []; etat.reponses = etat.reponses || {}; etat.scores = etat.scores || {};
 
 function rendre(lignes){
@@ -266,10 +269,37 @@ function genererTrace(){
   l.push("  Diagnostic final : " + (etat.reponses.q3e||"…"));
   document.getElementById("sortie").value = l.join("\n");
 }
-function sauver(){ localStorage.setItem(CLE, JSON.stringify(etat)); }
+function sauver(){ try { localStorage.setItem(CLE, JSON.stringify(etat)); } catch (e) {} }
 rendre(DONNEES);
 if (etat.nom) document.getElementById("nom").value = etat.nom;
 for (const [id, txt] of Object.entries(etat.reponses)){ const s = document.getElementById(id); if (s) for (const o of s.options) if (o.text === txt) s.value = o.value || o.text; }
+</script>
+<script>
+/* « 🗑 Effacer ma sauvegarde » : tout ce que cette page garde dans le navigateur, en deux clics et sans boîte modale
+   (règle d'or n°322 ; audit hebdomadaire du 15/11/2026). Les clés effacées : celles de la page, celle du mode mission,
+   et celles des exercices incrustés (attribut data-cle, et leur croquis). */
+(function(){
+  "use strict";
+  var b = document.getElementById("btnReset"); if (!b) return;
+  var cles = ["atelier_pix_4e_jardin"], arme = 0, texte = b.textContent;
+  cles.push("mission:" + (decodeURIComponent(location.pathname).split("/").pop() || "page"));
+  function effacer(){
+    var prefixes = [].map.call(document.querySelectorAll("[data-cle]"), function(e){ return e.getAttribute("data-cle"); });
+    try {
+      for (var i = localStorage.length - 1; i >= 0; i--){
+        var k = localStorage.key(i);
+        if (cles.indexOf(k) >= 0 || prefixes.some(function(p){ return p && k.indexOf(p) === 0; })) localStorage.removeItem(k);
+      }
+    } catch (e) {}
+  }
+  b.setAttribute("aria-live", "polite");
+  b.addEventListener("click", function(){
+    var t = Date.now();
+    if (arme && t - arme < 6000){ effacer(); location.reload(); return; }
+    arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
+    setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
+  });
+})();
 </script>
 </body>
 </html>

@@ -24,8 +24,11 @@
 | 19 | Consignes a l infinitif (verbe d action en tete de chaque consigne) | ChatGPT/Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
 | 20 | Guides logiciels inclusifs pas-a-pas (A->H, captures, aucune etape implicite) | Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
 | 21 | Convocation systematique des skills - avant toute creation d exercice et toute redaction relevant des trois themes, convoquer les skills pertinents (curriculum-assessment-cycle4, methode-fable, explicit-instruction, questioning-discussion, dnb-technologie, skill-crcn-2026, manuels-2024-mecaniques) et faire arbitrer toute etiquette de competence par _outils/data_competences.py ; aucun code pose de memoire | Pascal (decision du 02/08/2026), redaction Fable | 🔄 PR en cours |
+| 333 | Une réussite affichée prouve la production réelle | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°322 le 14/11, numéro déjà pris le 10/11 |
+| 334 | Une règle enseignée est juste dans toute sa portée | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°323 le 14/11, numéro déjà pris le 10/11 |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
+**Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
 
 *À relire au début de chaque session de travail. Une entrée par décision
 structurante. Les décisions « pédagogiques ou matérielles » restent à Pascal ;
@@ -30382,6 +30385,8 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 
 ## 14/11/2026 — Règles d'or n°322 à n°330, tirées de l'audit de `3e_C9.1` ; `3e_C9.1`, première étape : une réussite affichée prouve la production réelle
 
+*Note du 15/11/2026 (audit #721) : les n°322 et n°323 de cette entrée doublaient celles du 10/11 ; elles sont **renumérotées n°333 et n°334**. Dans cette entrée et celles du 14 et du 15/11 qui citent l'audit de `3e_C9.1`, lire « n°322 » comme n°333 et « n°323 » comme n°334. Les n°324 à n°330 ne changent pas.*
+
 **Demande de Pascal (12/11, 8 h 34).** Un audit approfondi de `3e_C9.1` (rapport et cahier des charges « ultra premium », rangés dans `docs/audits/AUDIT_3e_C9.1_2026-11-12.md` et `docs/audits/CAHIER_DES_CHARGES_ULTRA_PREMIUM_2026-11-12.md` ; les dix captures citées par le rapport ne sont pas dans le dépôt). « Dégage des règles d'or afin de pouvoir les généraliser pour les prochaines séquences. Pour l'instant, on modifie celle-là. » Puis (12/11, 9 h 33) : « L'impression en PDF peut-être devrait être revue, parce qu'il y a beaucoup de blancs. »
 
 **Ce que l'audit a établi, vérifié sur la page avant correction.**
@@ -30395,7 +30400,7 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 
 ### Les règles
 
-> **Règle d'or n°322 — Une réussite affichée prouve la production réelle.**
+> **Règle d'or n°322 — Une réussite affichée prouve la production réelle.** *(renumérotée n°333 le 15/11/2026 : le n°322 était pris depuis le 10/11)*
 > - Trois états distincts, jamais confondus : l'outil ouvert, le programme exécuté, le résultat vérifié. Seul le dernier ouvre un verrou ou valide une activité.
 > - Une fonction se juge à ce qu'elle RENVOIE : la page l'appelle avec des entrées de test et compare. Un programme qui imprime les valeurs attendues ne passe pas.
 > - Un programme se juge à sa sortie ET à son calcul : rejoué avec une autre donnée, il donne encore le bon résultat. Une ligne recopiée dans un `print` ne passe pas.
@@ -30406,7 +30411,7 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 > - Une validation enregistrée qui ne reposait pas sur la production est retirée à l'ouverture, avec un message qui dit pourquoi.
 > - Contrôle : le banc de la séquence joue chaque cas refusé (`return 0`, `print` seul, fonction fausse, code modifié, outil externe seul) et le cas juste.
 
-> **Règle d'or n°323 — Une règle enseignée est juste dans toute sa portée.**
+> **Règle d'or n°323 — Une règle enseignée est juste dans toute sa portée.** *(renumérotée n°334 le 15/11/2026 : le n°323 était pris depuis le 10/11)*
 > - Elle s'énonce sur les cas étudiés et nomme sa limite : « deux nombres, int ou float : le + additionne ; deux textes : il colle ; un texte et un nombre : erreur ». Jamais « le + exige le même type ».
 > - La page, le QCM, le lexique et la synthèse disent la même chose. Une correction se fait partout à la fois (le lexique recopie le « à retenir » du QCM : on corrige le QCM, puis `generer_lexique.py`).
 > - Une métaphore dit où elle s'arrête.
@@ -31175,6 +31180,401 @@ Bancs de `3e_C4.1` : **23 / 23**, **34 / 34**, mode mission sans refus.
 **Ce qui reste.** `5e_C7.5` (l'éclairage du préau) est encore sur l'ancien gabarit (listes déroulantes) : sa chaîne
 passera dans le schéma pendant sa révision (ligne 51 du suivi).
 
+## 15/11/2026 — Révision des trois thèmes, 47 : `4e_C9.1` (le jardin programmé)
+
+**Le constat.** Trois séances : écrire le programme de la pompe en Python dans la page, le mettre à l'épreuve, puis le mettre au point (la pompe qui s'affole, les deux seuils). Sur `main` :
+- **un ✘ de règle d'or, la n°300** : 54 listes déroulantes comptées. Parmi elles, 43 posent une question, et 11 sont les commandes de l'atelier de programmation (combien de seuils, la comparaison, la valeur, l'action de chaque branche) ;
+- **34 écarts d'aération** ;
+- des séances 2 et 3 à **2 562 et 2 782 mots**.
+
+**Ce qui est fait.**
+- **n°300** : les 43 questions deviennent des groupes de boutons radio (`migrer_gabarit_306.py --n300`). Les 11 commandes de l'atelier sont des outils, pas des questions : elles restent des listes, marquées `data-interface="commande"`. La sauvegarde de la page (`collect()`, `restore()`) garde déjà chaque bouton coché par son nom : elle n'a rien à changer.
+- **25 groupes mélangés.** Le banc de la page vérifiait déjà que ni la place ni la longueur ne désignent la bonne réponse : il lit maintenant les boutons, et reste vert.
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer :
+  - à l'échauffement, le pas à pas de l'Explorateur de Windows (il était ouvert d'office) et le chemin facultatif par Vittascience ;
+  - le rappel de l'algorigramme et de ses quatre formes ;
+  - les rôles d'un groupe de trois ou quatre ;
+  - l'explication de la nuit simulée du lampadaire (les trois fonctions à appeler restent visibles) ;
+  - le Bonus.
+- **Couper le redondant** dans l'introduction de l'échauffement.
+- **Le mode mission explique chaque erreur** (`mission_4e_C9.1.json`) : 91 pourquoi.
+- **Aération : 34 → 0** (188 retours à la ligne, trois corrections réécrites en lignes). Le programme de la correction à deux seuils devient un bloc `<pre>` : c'est un listing, pas de la prose.
+- **Le banc** garde ses questions : un shim posé sur le prototype de la page coche le bouton de la valeur demandée, pour toutes les pages du banc.
+
+**Mesure.** Mots visibles : 1 127 · 2 562 · 2 782 → 1 089 · **2 064** · **2 378**. Règles d'or 1 → 0 ✘ ; menus 54 → 0 (11 commandes d'atelier, déclarées) ; aération 34 → 0. Bancs **124 / 124**, **34 / 34** (n°311). Mode mission : chaque mauvaise proposition jouée a son pourquoi (91 / 91), aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **Les séances 2 et 3 restent loin au-dessus du repère (2 064 et 2 378 mots).** Ce sont des séances d'atelier : l'éditeur Python et l'atelier de programmation sont dans la page, avec leur console, leur trace pas à pas et leurs tableaux d'essais ; l'échauffement apprend quatre gestes à faire en lisant. Les ramener sous 1 200 mots demanderait de couper une activité en deux, ou d'ajouter une séance : c'est une décision de progression, je la laisse à Pascal.
+
+## 15/11/2026 — Révision des trois thèmes, 48 : `5e_C7.1` (le mini-projet : l'indicateur de place)
+
+**Le constat.**
+- 1 ✘ de règles d'or : **17 questions posées par une liste déroulante** (n°300) — le billet d'entrée, l'activité 0, la grille de validation, l'algorigramme, le positionnement du bilan ;
+- **l'algorigramme se lisait dans l'ordre de la réponse** : les cinq blocs étaient affichés de DÉBUT à la boucle, il suffisait de les numéroter de haut en bas ;
+- trois groupes avaient leur énoncé hors de leur légende (les deux questions de l'activité 0, la confiance du bilan, posée dans un paragraphe) : le lecteur d'écran lisait « 1, 2, 3 » sans la question ;
+- 17 écarts d'aération ; une séance 2 à 1 685 mots.
+
+**Ce qui est fait.**
+- **Les 17 listes deviennent des boutons radio.** Dans la grille de validation, l'énoncé de chaque case se lit par sa ligne et reste dit au lecteur d'écran.
+- **L'algorigramme est mélangé** : les blocs s'affichent dans le désordre, chacun avec son groupe de rangs (1 à 5), nommé « Rang du bloc « … » ». La correction bloc par bloc ne change pas.
+- **Chaque énoncé dans sa légende**, et plus aucun groupe dans un paragraphe (« Ma confiance, de 1 (pas encore sûr·e) à 4 (tout à fait sûr·e) »).
+- **La même correction sur `3e_C7.1`** (le capteur de confort), qui portait les mêmes défauts : algorigramme mélangé, groupes nommés, énoncés dans les légendes (les deux questions de l'activité 0, la décision globale, la confiance du bilan).
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.1.json`) : 31 pourquoi, dont 4 par bloc de l'algorigramme.
+- **Alléger la séance 2** : les consignes de la grille et de l'éditeur passent en lignes ①, ②, ③ ; la note Vittascience (facultative, Internet nécessaire) se replie sous l'éditeur ; le « pourquoi » de l'encart des gestes perd sa redite.
+- **Aération : 17 → 0.**
+
+**Mesure.** Mots visibles : 274 · 1 685 · 696 → 268 · **1 239** · 658. Dans la séance 2, 109 de ces mots sont les légendes que seul le lecteur d'écran lit (« Rang du bloc… », la ligne de chaque case de la grille) : l'élève en voit **1 130**. Règles d'or 1 → 0 ✘ ; menus 17 → 0 ; aération 17 → 0. Bancs **55 / 55** (séquence) et **34 / 34** (n°311) ; `3e_C7.1` : **82 / 82** et **34 / 34**. Mode mission : les deux pages jouées écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** L'encart des quatre gestes de l'éditeur (360 mots) est commun à six pages : il n'est pas touché ici.
+
+---
+
+## 15/11/2026 — Règle d'or n°331 (clé de voûte) : l'élève répond le schéma sous les yeux ; pilote Book Train ; `controle_schema_sous_les_yeux.py`
+
+**Demande de Pascal (15/11, 16 h 54), sur `4e_C4.1_book-train` :** « L'élève ne visualise pas la chaîne d'énergie et d'information, il faudrait la représenter tout en affichant la question. Même chose pour les solutions techniques : il ne visualise pas le schéma s'il ne le voit pas là. » Puis : « Il faudrait en faire une règle d'or ou clé de voûte. » Règle validée à 16 h 58 (« Règle d'or n°331 — ok »), livrables validés à 16 h 59 (« 1, 2, 3 ok »).
+
+**Vérifié sur la page avant correction.** Le schéma d'ensemble vivait dans une carte « Document d'appui », trois cartes au-dessus du tableau « quelle solution pour quelle fonction » (1.3) ; l'activité 1.1 disait « le schéma d'ensemble ci-dessus » ; l'activité 2.1 disait « regarde bien les schémas » alors que la chaîne d'énergie (Fig. 4) n'apparaissait qu'en 2.3, deux activités plus bas. Le schéma d'ensemble était recopié en base64 dans la page (332 Ko) alors que `fichiers_drawio/schema_ensemble_book-train.jpg` existe, octet pour octet identique.
+
+### La règle
+
+> **Règle d'or n°331 (clé de voûte) — L'élève répond le schéma sous les yeux.**
+> - Toute question qui porte sur un schéma (schéma d'ensemble, chaîne d'énergie ou d'information, diagramme fonctionnel, algorigramme, programme) affiche ce schéma **dans la même carte**, au-dessus ou à côté de la question. Jamais « regarde le schéma plus haut », jamais dans une autre séance ou un autre onglet.
+> - Grand écran : schéma et question côte à côte. Téléphone : le schéma reste épinglé au-dessus de la question, réduit, avec « Agrandir » (n°325).
+> - Un schéma qui sert à plusieurs activités est répété à chacune : répéter coûte moins que faire défiler.
+> - Le schéma affiché pendant la question est **muet** sur ce que la question demande de produire (étiquettes à placer, énergies à trouver) ; la version complète va dans la correction. Mais une compétence de LECTURE (« à quelle chaîne appartient cet élément ? ») se vérifie sur le document complet : lire la réponse sur le document, c'est la compétence.
+> - Contrôle : `_outils/controle_schema_sous_les_yeux.py` — toute carte qui contient une question ET nomme un schéma sans contenir de figure est signalée.
+
+**Pourquoi clé de voûte et pas règle.** Les compétences C4 (et C6, C9 pour l'algorigramme) sont des compétences de lecture d'un schéma. Sans le schéma sous les yeux, la question teste la mémoire, pas la lecture — et l'élève qui a du mal à lire (constat de septembre) est le premier perdu. Toutes les conventions des chaînes (n°6, n°131, n°310, n°315) supposent silencieusement que l'élève regarde le schéma au moment où il répond.
+
+### Le pilote — `4e_C4.1_book-train` (même PR)
+
+- Le schéma d'ensemble est servi depuis `fichiers_drawio/schema_ensemble_book-train.jpg` et **répété** dans les cartes 1.1, 1.2, 1.3, 2.1 et 2.2 (`figure.schema-sous-les-yeux`). Il est muet sur les énergies (ce que 2.1 et 2.2 demandent) et porte fonctions et solutions (ce que 1.2 et 1.3 demandent de lire). Le « ci-dessus » de 1.1 devient « juste ici ».
+- 3.1 (« chaque forme a un métier ») reçoit la Fig. 2 en version **muette** : les quatre symboles nommés, sans les exemples qui donnaient les réponses ; recomposée sur deux lignes, plus petit texte 16 px à 390 px (n°325).
+- Mise en page : sur téléphone, la figure est `position:sticky` sous la barre de navigation (52 px), 26 vh au plus, légende réduite à « 🔍 Touche le schéma pour l'agrandir » (loupe v2) ; dès 1 000 px, la carte passe en grille `cote-a-cote` — ce qui précède la figure (titre, rôles, compétence, consigne) garde la pleine largeur, la figure épinglée à gauche, tout ce qui la suit à droite (`.schema-sous-les-yeux ~ *`). À l'impression : statique, 9 cm au plus, une colonne.
+- Bancs : `tests_4e_C4.1-C4.2-C4.4_book-train.mjs` **39/39**, `tests_regle_311_4e_C4.1_book-train.mjs` **38/38**, `controle_schemas.mjs` 19 schémas 0 ✘, impression, hors ligne, médias, loupe, liens : verts. Captures regardées à 1 280 et 390 px.
+
+### Le contrôle — `_outils/controle_schema_sous_les_yeux.py` (+ banc 17/17, inscrit dans `rapport_audit.py`)
+
+L'unité jugée est le **bloc de question** (la carte d'activité qui contient un champ de réponse). Deux mesures :
+- **S1 ✘ (fait sortir à 1)** : le bloc nomme un schéma ET le renvoie ailleurs (« ci-dessus », « plus haut », « de la séance 2 », « de l'activité 1.3 ») ET n'a aucune figure.
+- **S2 ⚠ (listé, non bloquant — n°248)** : le bloc nomme un schéma sans figure, sans renvoi. Une partie est juste par construction (« conçois l'algorigramme avant toute référence ») : à juger à l'œil.
+Écartés : la production de l'élève au possessif (« mon algorigramme »), les cellules de tableau et légendes, les corrections repliées, et les blocs qui se font de mémoire (billets, passeports, bilans, « avant de commencer », hypothèses, problématiques, piqûres de rappel — n°330). Compte comme figure : `figure`, `img` (hors `aria-hidden`), `object`/`embed`/`iframe`/`canvas`/`picture`, SVG d'au moins 120 unités, classes `figure`/`schema`.
+
+**Mesure sur `main` + ce pilote (194 pages élève) : 5 ✘ sur 4 pages, 38 ⚠ sur 27 pages.** Les 5 ✘ (4 pages) : `3e_C4.3` station d'alerte (« schéma des types ci-dessus », « schéma du parcours de la donnée ci-dessus »), `5e_C4.1` lampadaire (« le schéma du réseau ci-dessus (à LIRE pour répondre) »), `3e_C5.1` SOS station (« schéma des points de test ci-dessus »), `3e_C6.1` programmer l'alerte (« le schéma entrées/sorties »). Même geste que le pilote : répéter la figure dans la carte, muette si la question demande ses étiquettes.
+
+**Ce qui reste.** La vague n°331 sur ces 5 ✘ puis les 38 ⚠ (dans l'ordre des thèmes, par les sessions de révision — pas dans cette PR, pour ne pas croiser les sessions en cours) ; vérifier à l'œil que la figure répétée est bien celle dont parle la question (non mesuré) ; une passe `revision-sequence` pour écrire la n°331 dans le skill `chaine-energie-fonctionnelle` et dans `controle-qualite-lot`.
+## 15/11/2026 — Révision des trois thèmes, 49 : `5e_C7.3` (le banc de la cour)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **15 listes déroulantes** (n°300) ;
+- 15 écarts d'aération ; une séance 2 à 1 694 mots ;
+- **la grille de l'activité 0 se devinait par la grammaire** : quatre réponses commençaient par « elle dit », une seule par « il ne dit » — celle du prix au kilogramme, la seule caractéristique au masculin ;
+- **la grille de l'activité 1 avait deux réponses justes pour le béton** : il chauffe trop (61 °C) et il est trop lourd, comme l'acier ;
+- deux grilles avec autant de réponses que de lignes : la dernière se devinait ;
+- la bonne réponse la plus longue dans 3 questions sur 5 ; et dans l'une, elle seule ne commençait pas par « parce que » ;
+- sous les deux renvois au banc, une phrase de la fabrique (« Une page ne porte qu'un seul banc… »).
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : les 15 listes deviennent des boutons radio, rangés en **deux grilles lettrées** (les réponses écrites une fois) ; le mode essentiel, le tableau de bord, les étiquettes ; **quatre versions étayées** (`etayage_sequence_5e_C7.3_banc-de-la-cour.json`).
+- **La grille de l'activité 0 ne se devine plus** : les réponses disent ce que la caractéristique permet de savoir, sans pronom (« combien pèsera la pièce, une fois sa taille connue »).
+- **Une seule réponse juste par ligne dans l'activité 1** : l'acier « résiste très bien, mais chauffe trop et pèse trop » ; le béton « n'est pas assez résistant, et en plus chauffe et pèse trop ». La correction donne les chiffres (61 °C, 54 kg).
+- **Une réponse de trop dans chaque grille**, réfutée dans la correction : « si on peut recycler la pièce en fin de vie » (aucune colonne du banc ne le dit), « il coûte trop cher pour le budget du collège » (le prix n'est pas une exigence : le béton est même le moins cher).
+- **7 groupes mélangés** ; **9 propositions fausses allongées** d'une raison plausible ; la bonne réponse n'est plus la plus longue nulle part.
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.3.json`) : 47 pourquoi, 9 indices de ligne, 2 réponses de trop.
+- **La phrase de la fabrique est retirée** ; **le Bonus se replie** ; **aération : 15 → 0** ; les annonces des deux séances et les deux exigences de la table de pique-nique passent en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 1 095 · 1 694 → **840** · **1 607**. Règles d'or 5 → 0 ✘ ; menus 15 → 0 ; aération 15 → 0. Bancs **42 / 42** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (41 / 42) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 607 mots).** Le banc des matériaux, l'outil de la séance, y compte pour 285 mots (ses deux tableaux) ; la synthèse, 279 ; le bilan et le positionnement, environ 200 ; trois activités et le réinvestissement, environ 720.
+
+## 15/11/2026 — Révision des trois thèmes, 50 : `5e_C7.4` (l'indicateur du hall)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **17 questions posées par une liste déroulante** (n°300) ;
+- **l'activité 1 posait une question de chaîne d'énergie sans la chaîne** : associer chaque source à sa forme d'énergie au départ, puis dire ce que la DEL en fait — la correction écrivait la chaîne (« chimique → électrique → lumineuse »), l'élève ne la voyait jamais. Et chaque réponse portait un indice qui la désignait (« chimique aussi — quatre fois la même réaction » pour les quatre piles) ;
+- 16 écarts d'aération ; une séance 2 à 1 582 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 17 listes en boutons radio ; la liste des sources du banc est une commande, elle reste une liste (`data-interface`) ; le relevé du secteur reçoit son énoncé ; mode essentiel, tableau de bord, étiquettes, **quatre versions étayées** (`etayage_sequence_5e_C7.4_indicateur-du-hall.json`).
+- **L'activité 1 se joue dans la chaîne d'énergie de l'indicateur** (l'outil commun de la PR #708, demande de Pascal du même jour) : les cinq sources (ALIMENTER), la carte qui distribue, la DEL qui convertit. L'élève pose sous chaque pile et sous l'accu l'énergie qu'il garde en réserve (n°310 : l'énergie stockée sous son composant), sur la flèche du secteur et sur celle du soleil l'énergie qui arrive — par la gauche —, puis ce que la DEL en fait. Cinq étiquettes, dont deux de trop (énergie mécanique, énergie thermique), réfutées dans la correction. Les réponses ne portent plus d'indice : ce sont les formes d'énergie, rien d'autre.
+- **Les outils de grille et de mélange laissent les chaînes à compléter telles quelles** (`grilles_radio.py`, `melanger_propositions.py`) : leurs groupes portent les étiquettes de la réserve, dans le même ordre.
+- **La grille de l'activité 4 (ce que le banc ne compte pas)** : les réponses écrites une fois, lettrées ; une réponse de trop, réfutée dans la correction.
+- **4 groupes mélangés** ; les trois propositions fausses du choix de la source allongées (la bonne n'est plus la plus longue).
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.4.json`) : 53 pourquoi, dont 24 dans la chaîne, case par case ; 4 indices de ligne.
+- **Le Bonus se replie** ; la note technique du banc (d'où viennent ses chiffres) aussi ; **aération : 16 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+
+**Mesure.** Mots visibles : 779 · 1 582 → **544** · **1 302**. Règles d'or 5 → 0 ✘ ; menus 18 → 0 (une commande du banc, déclarée) ; aération 16 → 0. Bancs **35 / 35** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (34 / 35) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 302 mots).** Le banc des sources, l'outil de la séance, y compte pour 160 mots (ses deux tableaux) ; la synthèse, 176 ; le bilan et le positionnement, 175 ; l'annonce garde la consigne de sécurité du matériel (🅰).
+
+## 15/11/2026 — Révision des trois thèmes, 51 : `5e_C7.5` (l'éclairage du préau)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **17 questions posées par une liste déroulante** (n°300) ;
+- **l'activité 0 (quatre fonctions, pas cinq) se jouait sans le schéma du prototype**, et ses réponses se trahissaient : « elle décide » ne pouvait aller qu'à la carte, seule au féminin ;
+- **l'ordre du montage s'affichait dans l'ordre de la réponse**, et deux gestes (brancher le capteur, brancher la DEL) pouvaient s'échanger sans erreur ;
+- une phrase de la fabrique sous le renvoi à l'établi ; 8 écarts d'aération ; une séance 2 à 1 528 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 17 listes en boutons radio ; les cinq listes de ports de l'établi sont des commandes, elles restent des listes (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **trois versions étayées** (`etayage_sequence_5e_C7.5_eclairage-du-preau.json`).
+- **L'activité 0 se joue dans le schéma du prototype** (l'outil commun, demande de Pascal du même jour) : l'information en haut (la lumière, le capteur, la carte), l'ordre qui descend vers le module DEL, l'énergie en bas — le câble USB, par la gauche. Le Base Shield relie les modules à la carte : une flèche grise, sans flux. Six étiquettes, dont STOCKER de trop, réfutée dans la correction.
+- **L'ordre du montage ne se lit plus à l'écran** : les cinq gestes s'affichent dans le désordre. Les deux branchements n'en font plus qu'un (« le capteur sur A0 et la DEL sur D5 ») ; le troisième geste devient **relire chaque port sur le schéma de câblage, le câble encore débranché** — on vérifie avant de mettre sous tension. Les rangs restent en ligne : l'outil de grille ne lettre plus des rangs ni des nombres.
+- **La grille des retraits** (activité 2) : les réponses écrites une fois, lettrées ; une réponse de trop (« la carte grille aussitôt »), réfutée dans la correction.
+- **5 groupes mélangés**, 4 propositions fausses allongées ; la bonne réponse n'est plus la plus longue.
+- **Le mode mission explique chaque erreur** (`mission_5e_C7.5.json`) : 63 pourquoi, dont 25 dans le schéma, case par case ; 4 indices.
+- **La phrase de la fabrique est retirée** ; **le Bonus se replie** ; **aération : 8 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence joue maintenant un vrai clic sur un bouton radio (`input`, puis `change`) : la sauvegarde de la page l'entend.
+
+**Mesure.** Mots visibles : 860 · 1 528 → **676** · **1 317**. Règles d'or 5 → 0 ✘ ; menus 22 → 0 (cinq commandes de l'établi, déclarées) ; aération 8 → 0. Bancs **40 / 40** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Le banc de séquence échouait déjà sur `main` (39 / 40) : il attendait « 1/1 » sous le réinvestissement, la page dit « Réponse enregistrée » pour une réponse libre ; il est accordé. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste un peu au-dessus du repère (1 317 mots).** L'établi, l'outil des deux séances, y compte pour 272 mots ; la synthèse, 160 ; le bilan et le positionnement, 214.
+
+## 15/11/2026 — Révision des trois thèmes, 52 : `5e_C8.1` (la patère du hall)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **16 questions posées par une liste déroulante** (n°300) ;
+- **une question avait deux fois la même réponse** : « Combien d'heures d'atelier demanderait-il ? » proposait deux fois « 10,0 h » ;
+- **la bonne réponse était la plus longue dans 7 questions sur 15**, jusqu'à 45 caractères de plus que les autres ;
+- 13 écarts d'aération ; une séance 2 à 1 400 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 16 listes en boutons radio ; le choix du matériau du simulateur est une commande, il reste une liste (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **trois versions étayées** (`etayage_sequence_5e_C8.1_patere-du-hall.json`).
+- **La réponse en double devient « 24,0 h »** : le prix du PLA en euros, lu à la place de ses heures — une erreur que l'élève peut vraiment faire.
+- **16 groupes mélangés** ; **18 propositions fausses allongées** d'une raison plausible, sans devenir justes. La bonne réponse n'est plus la plus longue que dans une question, dont les réponses sont des noms de matériaux.
+- **Le mode mission explique chaque erreur** (`mission_5e_C8.1.json`) : 47 pourquoi.
+- **Le Bonus se replie** ; **aération : 13 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence lit maintenant les boutons radio d'un groupe (le pas qui joue une réponse fausse) ; son shim joue un vrai clic (`input`, puis `change`).
+
+**Mesure.** Mots visibles : 523 · 1 400 → **518** · **1 364**. Règles d'or 5 → 0 ✘ ; menus 17 → 0 (une commande du simulateur, déclarée) ; aération 13 → 0. Bancs **39 / 39** (séquence), **32 / 32** (QCM), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste au-dessus du repère (1 364 mots).** Le simulateur, l'outil de la séance, y compte pour 123 mots ; les deux tableaux de l'activité 3 et de l'activité 4, 125 ; le bilan et le positionnement, 226 ; la synthèse, 119. Les propositions allongées ajoutent une centaine de mots : c'est le prix d'une bonne réponse qui ne se devine plus.
+
+## 15/11/2026 — Révision des trois thèmes, 53 : `5e_C8.2` (la patère du hall : l'essai de traction)
+
+**Le constat.** La page était encore sur l'ancien gabarit. Sur `main` :
+- **5 ✘ de règles d'or** : pas de mode essentiel (n°29), pas de tableau de bord (n°30), pas de versions étayées (n°31), des champs sans étiquette (n°34), **15 questions posées par une liste déroulante** (n°300) ;
+- **la grille de l'activité 4 se lisait toute seule** : une réponse nommait son matériau (« Le PVC flue… »), une autre redonnait son relevé (« 51 kg dans le sens des couches » : le PLA) ;
+- des propositions fausses qui n'en étaient pas (« pour qu'elles soient jolies », « la couleur du matériau ») ; la bonne réponse la plus longue dans 6 questions sur 9, jusqu'à 30 caractères de plus ;
+- 12 écarts d'aération ; une séance 2 à 1 393 mots.
+
+**Ce qui est fait.**
+- **Migration au gabarit commun** (`migrer_gabarit_306.py`) : 15 listes en boutons radio ; le choix de l'éprouvette du banc est une commande, il reste une liste (`data-interface`) ; mode essentiel, tableau de bord, étiquettes, **six versions étayées** (`etayage_sequence_5e_C8.2_patere-du-hall.json`).
+- **La grille de l'activité 4** : « Il flue… », « Solide dans le sens des couches… » — la réponse ne nomme plus sa ligne ; les réponses écrites une fois, lettrées ; une réponse de trop (« Il fond dès qu'il fait plus de 30 °C »), réfutée dans la correction.
+- **12 groupes mélangés** ; **12 propositions fausses** remplacées ou allongées d'une raison plausible : la bonne réponse ne se devine plus à sa longueur.
+- **Le mode mission explique chaque erreur** (`mission_5e_C8.2.json`) : 46 pourquoi, 5 indices de ligne.
+- **Le Bonus se replie** ; **aération : 12 → 0** ; les annonces des deux séances en lignes ①, ②, ③.
+- Le banc de séquence lit les boutons radio d'un groupe (l'activité 3) ; son shim joue un vrai clic.
+
+**Mesure.** Mots visibles : 689 · 1 393 → 735 · **1 035** — les deux séances sous le repère. Règles d'or 5 → 0 ✘ ; menus 16 → 0 (une commande du banc, déclarée) ; aération 12 → 0. Bancs **24 / 24** (séquence), **32 / 32** (QCM), **34 / 34** (n°311), comme avant. Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+## 15/11/2026 — Les chaînes d'énergie et d'information : tous les flux animés ; la bibliothèque draw.io aussi
+
+**La demande.** Pascal, le 15/11/2026 (17 h 18) : « Les chaînes d'énergie et chaîne d'information devront être animées (tous les flux), et de préférence faites avec draw.io » ; puis : « la bibliothèque pour ces chaînes dans draw.io ».
+
+**Le relevé.** Les chaînes du site sont de trois sortes : 9 figures écrites par `regenerer_chaines_energie.py` (SVG du site et sources draw.io), le vélo-cargo écrit par son générateur (`5e_C3.1/_generation/figure_iso_velo_cargo/build.mjs`), 3 SVG faits main (la chaîne d'information de la station `3e_C4.3`, celle du Book Train et sa copie dans `fichiers_drawio/`), 3 dessins incorporés dans des pages (les figures 4 et 5 du Book Train, le vélo-cargo de `5e_C3.1`), et les 7 chaînes à compléter (`_outils/chaine_a_completer/`). Les images en PNG ou JPG (photos, captures) ne s'animent pas : elles ne sont pas des chaînes dessinées.
+
+**Ce qui est fait.**
+- **`_outils/animer_flux.py`** : sur chaque flèche d'une chaîne (un trait qui porte une pointe, ou une flèche dessinée d'un seul tracé), des perles claires avancent dans le sens de la flèche, une toutes les 42 unités ; une double flèche (la batterie : charge et décharge) en reçoit dans les deux sens. Le trait d'origine ne change pas : sa couleur, les pointillés de l'ordre, sa pointe restent ce qu'ils disent (n°6, n°310) ; l'animation n'ajoute aucune information que le dessin ne porte déjà (n°119). Les perles disparaissent **à l'impression** et quand le système demande **moins de mouvement** (`prefers-reduced-motion`) ; la feuille d'animation est dans le SVG, rien n'est chargé (n°305). Rejouable ; `--verifier`.
+- **Les générateurs l'appellent eux-mêmes**, pour qu'une régénération ne défasse rien : `regenerer_chaines_energie.py` (9 figures, la figure 4 du Book Train comprise) et le générateur du vélo-cargo. `verifier_chaines_energie.py` : **77 / 77** (dont « les générateurs reproduisent les corrections sans les écraser »).
+- **La chaîne à compléter** dessine ses perles (`.cac-flux`), sauf sur un branchement (« lien », qui ne porte aucun flux) ; l'outil est reposé sur ses 7 pages (`poser.py`), `controle_chaine_a_completer.py` vert.
+- **draw.io** : chaque flèche des sources draw.io des chaînes et des 10 flèches de la **bibliothèque** (`generer_bibliotheque_chaines.py`, Book Train) porte `flowAnimation=1`, l'animation native de draw.io ; `--verifier` refuse désormais une flèche de la bibliothèque qui ne l'a pas (banc 9 / 9). Essayé dans draw.io 32.6 pour Windows, sur le PC de Pascal : la source du lampadaire s'ouvre et s'exporte avec ses flux animés. Le SVG du site reste celui du générateur : l'export SVG de draw.io écrit ses textes en `foreignObject` (refusé par le dépôt) et pèse 1 Mo, contre 30 Ko.
+- **Un contrôle** : `_outils/controle_flux_animes.py` (inscrit dans `rapport_audit.py`) signale toute chaîne du site aux flux fixes. Le skill `chaine-energie-fonctionnelle` le dit.
+
+**Mesure.** 93 tracés animés dans les 9 figures du générateur (une double flèche en compte deux), 25 dans les SVG faits main et le vélo-cargo, 18 dans les dessins des pages ; les 7 chaînes à compléter (jusqu'à 26 flux par page). Dans Chromium : les perles avancent (deux captures à 0,45 s d'écart diffèrent), aucune n'est visible en mouvement réduit ni à l'impression. `controle_schemas.mjs` : 0 ✘ et les mêmes avertissements que `main` sur les 13 dossiers touchés. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+
+## 15/11/2026 — Règle d'or n°332 : la correction montre la production complète, telle que l'outil la rend ; Book Train : les deux chaînes sous les yeux, l'algorigramme et le diaporama modèles ; `controle_correction_complete.py`
+
+**Demandes de Pascal (15/11, de 17 h 36 à 17 h 46), sur `4e_C4.1_book-train`, déclarée prioritaire :**
+- « à cette question, l'élève ne visualise pas la chaîne d'énergie et d'information » ;
+- « la correction doit montrer l'algorigramme complet, de préférence de draw.io car l'élève n'a encore aucune référence » ; « il découvre ces outils » ;
+- « Fais-en une règle d'or et vérifie les autres séances à ce niveau aussi ».
+
+**Vérifié sur la page en ligne (après #717).**
+- Les questions 1.2, 1.3, 2.1 et 2.2 montraient bien un schéma, le schéma d'ensemble (JPG, 1 400 px de large). Mais dans la colonne côte à côte (5 sur 12, environ 360 px), ses textes faisaient 4 px : l'élève voyait une affiche, pas une chaîne. Au téléphone, une vignette de 26 % de l'écran.
+- La correction de 2.2 (la chaîne d'énergie complétée dans draw.io) ne montrait rien : « Compare ton fichier au modèle ».
+- La correction de 2.3 réservait le fichier corrigé au professeur (« Ton professeur dispose aussi du fichier… »).
+- La correction de 3.2 montrait un algorigramme complet, mais dessiné à la main, sans le fichier draw.io.
+- L'activité 4.3 (le diaporama de six diapositives, la production finale) n'avait aucune correction.
+
+### La règle (formulation proposée à Pascal à 17 h 48, à valider)
+
+> **Règle d'or n°332 — La correction montre la production complète, telle que l'outil la rend.**
+> - Quand une activité fait produire quelque chose avec un outil (draw.io, Impress, tableur, Vittascience, éditeur Python…), sa correction montre **la production attendue en entier**, faite avec cet outil : un export, une capture, ou un dessin de même géométrie que le fichier fourni. Jamais une description seule, jamais un morceau.
+> - Le fichier corrigé est **donné à l'élève** (bouton de téléchargement ou lien), pour qu'il l'ouvre dans l'outil et compare.
+> - Pourquoi : l'élève qui découvre l'outil n'a aucune autre référence de ce qu'on attend de lui.
+> - Contrôle : `_outils/controle_correction_complete.py`.
+
+### Book Train
+
+- **Les deux chaînes, sous les yeux à chaque question (1.2, 1.3, 2.1, 2.2).** Une figure dessinée pour la colonne : l'information en haut (ACQUÉRIR, TRAITER, COMMUNIQUER, sur une ligne), l'énergie en colonne (ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE), les composants à côté des blocs, l'ordre qui descend de COMMUNIQUER et arrive sur DISTRIBUER, les flux animés. Muette sur les énergies (« énergie : ? », ce que 2.1 et 2.2 demandent) ; lire le classement (1.2) et les solutions (1.3), c'est la compétence (n°331). Dès 1 000 px, la carte donne la moitié de sa largeur au schéma (au lieu de 5 sur 12) : 13 px pour les fonctions, 11 px pour les composants. Au téléphone, la vignette épinglée s'agrandit au doigt. Le schéma d'ensemble reste le document d'appui, et l'appui de 1.1 (le trajet du livre).
+- **Correction de 2.1** : les deux chaînes complètes, une énergie sur chaque flèche (alternative 480 V ~, continue 24 V ⎓, modulée, rotation, translation).
+- **Correction de 2.2** : le modèle `chaine_energie_book-train.drawio` dessiné en entier (la figure 4, répétée), et son bouton de téléchargement.
+- **Correction de 2.3** : `chaine_information_correction.drawio` se télécharge depuis la correction ; la légende ne le réserve plus au professeur.
+- **Correction de 3.2** : l'algorigramme complet avec les quatre formes de la catégorie Flowchart de draw.io que le guide fait chercher (Terminator, Data, Process, Decision), les couleurs du nuancier de draw.io, les flèches NON qui rejoignent le trait vertical du flux par un point de jonction (auto-vérification ⑥) ; et `algorigramme_book-train_correction.drawio` à télécharger. Un seul générateur écrit le fichier, le dessin (même géométrie) et la page.
+- **Correction de 4.3 (nouvelle)** : le diaporama modèle, six diapositives qui suivent le plan imposé et les règles du guide (trois couleurs, une police, titres 36 pt, texte 24 pt, transition Fondu partout ; l'algorigramme et les deux chaînes insérés en SVG) ; la planche des six vignettes, rendue par LibreOffice ; `book-train_diaporama_modele.odp` à télécharger ; « ton diaporama n'a pas à être identique » et quatre points de comparaison.
+- Deux légendes réparées au passage : « Fig. <br>3 » et « Fig. <br>5 » (un retour à la ligne posé au mauvais endroit par l'aération).
+
+**Outils.**
+- `_outils/regenerer_chaines_energie.py` : la figure `book_deux_chaines` (deux versions) ; `incruster()`, qui pose une figure en ligne dans chaque `<figure data-chaines="…" data-prefixe="…">` d'une page, id préfixés ; `block()` sait mettre le composant à gauche du bloc (`cpos='left'`) et régler sa taille (`csize`) — les figures existantes ne changent pas d'un octet ; seule la figure 4 garde sa source dans `fichiers_drawio/` (avant : tout nom contenant « book-train »). La figure 4 est aussi posée dans la correction de 2.2.
+- `_outils/generer_algorigramme_book_train.py` (+ `--verifier`) : le `.drawio`, le SVG, la figure 3 de la page et les deux fichiers embarqués.
+- `_outils/generer_diaporama_modele_book_train.py` (+ `--verifier`) : la source en ODF à plat (`_generation/diaporama_modele/`, un fichier texte), puis LibreOffice sans écran pour le `.odp`, le PDF et la planche.
+- `_outils/verifier_chaines_energie.py` vérifie les deux nouvelles figures.
+
+**Ce qui n'est pas fait.** Le dessin de l'algorigramme n'est pas un export de draw.io lui-même : il reprend à l'identique la géométrie, les formes et les couleurs du fichier fourni. Lancer le programme draw.io ici a été refusé ; l'export par draw.io (sur le poste de Pascal, ou ici avec son accord) est une question posée dans la PR.
+
+### Le contrôle — `_outils/controle_correction_complete.py` (+ banc 15/15, inscrit dans `rapport_audit.py`)
+
+L'unité jugée est le bloc d'activité de la n°331. Un bloc fait produire avec un outil quand son texte (hors correction, hors questions, hors encadré des rôles) nomme un outil et, à moins de 200 signes, demande de construire, dessiner, créer, programmer, compléter, enregistrer ou exporter. Trois signaux : **K1** aucune correction, **K2** une correction qui décrit sans montrer (ni figure ni programme écrit en entier), **K3** la production montrée sans son fichier. Tous ⚠ par défaut (sortie 0 : la mesure relève des blocs justes par construction, n°248) ; `--strict` fait sortir à 1 sur K1 et K2, pour la vague.
+
+**Mesure.**
+- Book Train, sur `main` : 1 K1 (4.3), 1 K2 (2.2), 2 K3 (2.3, 3.2) — exactement le relevé fait à la main. Après : 0.
+- Tout le site (126 pages élève) : **9 K1, 7 K2, 2 K3 sur 14 pages**. Les tableurs (4e_C1.1, 5e_C1.1, 5e_C1.3, 4e_C2.1, 3e_C4.3 et son Bonus, l'atelier PIX du jardin) ; les échauffements « les quatre gestes de l'éditeur Python » (4e_C6.2, 3e_C7.1, 5e_C7.1, 3e_C9.1, 4e_C9.1, 5e_C9.1) ; « Sous le capot : le C++ que les blocs fabriquent » (les deux pages de 3e_C9.2) ; 4e_C9.1 (la pompe qui s'affole, le réinvestissement) ; le Bonus FreeCAD de 3e_C5.1.
+- Mots visibles du Book Train : séances 1 et 2 de 1 308 et 1 510 → **1 564** et **1 766**. Les 256 mots de plus sont les étiquettes des deux chaînes (deux figures par séance, 128 mots chacune), que la mesure compte comme du texte ; aucun paragraphe n'est ajouté.
+- Bancs : **39 / 39** (séquence), **38 / 38** (n°311), mode mission joué écran par écran, aucun refus ; `verifier_chaines_energie.py` **87 / 87** (un passage a vu deux figures d'autres pages « hors de leur objet HTML » au chargement ; deux nouveaux passages : 87 / 87) ; bancs n°331 **17 / 17** et n°332 **15 / 15**. Sur le lot : schémas 0 ✘, fichiers téléchargeables, liens, médias, hiérarchie, règles visibles, unités, fiche papier ✅, aération 0, règles d'or 0 ✘. Captures regardées à 1 280 et 390 px. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+- Réparé au passage : l'entrée 51 (`5e_C7.5`, #718) avait gardé le marqueur de ses contrôles au lieu de leur phrase.
+
+**Ce qui reste.** La vague n°332 sur les 14 pages relevées (une correction qui montre le tableau, le graphique ou le programme attendu, et son fichier) ; l'export par draw.io lui-même, si Pascal le veut.
+
+## 15/11/2026 — Révision des trois thèmes, 54 : `5e_C9.1` (la boîte étiquetée)
+
+**Le constat.** La page était sur le gabarit commun. Sur `main` :
+- **un ✘ de règle d'or, la n°300** : 24 questions posées par une liste déroulante ;
+- 5 écarts d'aération ;
+- une séance 2 à 1 678 mots et une séance 3 à 1 246 : à l'échauffement, le pas à pas de l'Explorateur de Windows était ouvert d'office, et chaque éditeur portait sa note Vittascience à découvert ; le Bonus de la séance 3 aussi.
+
+**Ce qui est fait.**
+- **n°300** : les 24 questions deviennent des groupes de boutons radio (`migrer_gabarit_306.py --n300`).
+- **22 groupes mélangés** ; 5 propositions fausses allongées : la bonne réponse ne se devine plus à sa longueur.
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer : le pas à pas de l'Explorateur, la note Vittascience de l'échauffement et celle de chaque éditeur (facultatives, Internet nécessaire), le Bonus. Le « pourquoi » de l'encart des gestes perd sa redite.
+- **Le mode mission explique chaque erreur** (`mission_5e_C9.1.json`) : 55 pourquoi.
+- **Aération : 5 → 0.**
+- Le banc garde ses questions (shim `_groupesRadio(page)`, sur les trois pages qu'il ouvre) ; il ouvre le Bonus replié avant d'en éprouver l'éditeur.
+
+**Mesure.** Mots visibles : 550 · 1 678 · 1 246 → 539 · **1 282** · 923. Règles d'or 1 → 0 ✘ ; menus 24 → 0 ; aération 5 → 0. Bancs **66 / 66**, **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Ce qui reste.** **La séance 2 reste juste au-dessus du repère (1 282 mots).** L'encart des quatre gestes de l'éditeur, commun à six pages, y compte pour 453 mots (les gestes et l'éditeur d'essai) : c'est l'échauffement de la séance, il n'est pas touché ici.
+
+## 15/11/2026 — Veille du 15/11 installée : cinq idées réécrites dans nos outils et nos skills (suite de l'audit hebdomadaire, PR #721)
+
+**La demande.** Pascal, le 15/11/2026 (18 h 41) : « Audit hebdomadaire du 15/11/2026 — Installer ce qui est dans l'audit », puis « Modifier ce qu'il recommande » et « Après l'installation ». Ce lot est l'installation ; les chantiers recommandés suivent dans d'autres PR.
+
+**Ce qui est installé.** Aucune skill ni aucun plugin tiers : l'audit n'en recommandait aucun (neuf serveurs MCP distants dans le plugin `k12-education`, cadres américains, licences ou chartes étrangères). Les cinq idées qu'il retenait sont réécrites de zéro, en français, dans nos fichiers :
+
+1. **Deux portes de vérification d'une question** (`anthropics/k12-teacher-skills`, `k12-check-for-understanding`, Apache 2.0) → `qcm-html-accessible` : porte A, une seule réponse défendable (écrire pour chaque proposition « le meilleur argument POUR qu'elle soit juste », sur la banque relue dans la page) ; porte B, chaque leurre est un vrai raisonnement d'élève, et sa réfutation nomme l'erreur puis l'étape suivante.
+2. **Le pourquoi d'erreur nomme l'étape suivante** (même source) → `_outils/mode_mission/enrichir.py` : la règle dans sa docstring et dans `README.md` du mode mission, et une mesure `--etapes` (un impératif en tête d'une proposition, ou une forme en « -toi »). `revision-sequence` le dit à l'étape du pourquoi.
+3. **La place par longueur, cible 15 / 15 / 70** (`danielcregg/moodle-mcq`, MIT) → `controle_ordre_propositions.py` (séquences, `--longueur` pour la liste) et `controle_longueurs.py` (QCM) : la bonne réponse strictement la plus longue, la plus courte, ou au milieu ; ⚠ au-delà de 40 % de « la plus longue ». Seuil de 40 % et non 30 % : à quatre propositions, le hasard donne 25 %, et dépasse 30 % une fois sur cinq sur 30 questions, 40 % une fois sur vingt.
+4. **Phrases par paragraphe et mots par phrase** (`jgsystemsconsulting/plain-language`, MIT ; suite de `francais-simple`, 08/11) → `audit_aeration.py --phrases` : P1, paragraphe de plus de 4 phrases ; P2, consigne de plus de 20 mots ou explication de plus de 25. Hors `--strict` et hors `bilan_revision.py`. `texte-clair-et-aere` et `controle-qualite-lot` le disent.
+5. **L'étiquette posée sur son trait** (`luffy666code/diagram-design-skill`, MIT) → `controle_schemas.mjs` : ⚠ « étiquette collée », un texte hors de tout cadre à moins de 6 unités de sa flèche sans la toucher. L'autre moitié de l'idée (le fond d'une étiquette qui chevauche un cadre) était déjà le « contact ». Banc `tests_controle_schemas.mjs` : deux cas de plus.
+
+**Toutes les nouvelles mesures sont des ⚠ : aucune sortie ne change.** C'était dit à Pascal avant de commencer : rien ne passe au rouge sans son avis.
+
+**Mesure (15/11/2026, sur `main` après #722).**
+- Place par longueur, **séquences** : sur 569 groupes de 3 propositions ou plus (25 pages dont la table `const att` se lit), la bonne réponse est **la plus longue 70 %**, la plus courte 3 %, au milieu 27 % ; **17 pages** au-delà de 40 %, dont cinq à 100 % ou presque (5e_C1.1, 4e_C1.1, 3e_C4.8, 3e_C1.1, 4e_C2.1). Un élève qui coche la plus longue y a tout juste sans lire : c'est le défaut de la règle n°144, passé des QCM aux séquences par la conversion n°300. **Vrai défaut, nouveau** ; il se corrige en réécrivant des propositions, pas en les réordonnant.
+- Place par longueur, **QCM** : 2 181 questions, la plus longue 35 %, la plus courte 14 % ; 21 banques au-delà de 40 % (la pire : `qcm_3e_C7.6_le-boitier.html`, 20 fois sur 30).
+- Phrases : 279 paragraphes de plus de 4 phrases, 321 consignes de plus de 20 mots, 4 112 explications de plus de 25 mots, sur 269 pages. Le découpage est mécanique ; un échantillon relu sur 4e_C1.1 montre de vraies phrases longues (26 à 39 mots).
+- Pourquoi d'erreur : **1 845 sur 2 201 (84 %)** expliquent sans nommer d'étape suivante.
+- Schémas : **5 étiquettes collées dans 2 schémas** (`3e_C4.3/Images/station_alerte_annotee.svg` : trois flèches qui partent du bout de leur texte, vu sur le rendu ; `3e_C6.2/Images/algorigramme_auto_test.svg` : « oui », « non » à 3 unités). ⚠ 570 → 575, ✘ inchangés (10, la spirale de Fibonacci).
+
+**Contrôles exécutés.** `controle_ordre_propositions.py` (sortie 0, dernière ligne inchangée) ; `controle_longueurs.py` (0, inchangée) ; `audit_aeration.py` sur le site (0, dernière ligne inchangée) et `--strict` sur 5e_C7.5 (0) ; `bilan_revision.py` : **51 séquences propres sur 56**, comme sur `main` ; `controle_schemas.mjs` sur les trois thèmes (sortie 1 comme sur `main` : la spirale) ; `tests_controle_schemas.mjs` **24 / 24** ; `enrichir.py --verifier` sur les 38 pages enrichies qui l'étaient : toutes à jour, comme sur `main` (`4e_C7.5` n'est pas à jour de `mission_4e_C7.5.json` sur `main` non plus : constat, pas touché) ; `py_compile` des quatre scripts Python.
+
+**Ce qui reste, à Pascal.** Les trois idées du 08/11 (quatre niveaux d'une correction, grille de charge cognitive, trois niveaux de vocabulaire), toujours en attente. Passer une de ces mesures en refus, quand la révision l'aura vidée. La réécriture des propositions des 17 pages et des pourquoi sans étape suivante : à la révision, page par page.
+
+## 15/11/2026 — Audit du 15/11, chantiers 1 et 5 : quatre contrôles remis à jour, le registre des règles d'or engendré, n°322/n°323 du 14/11 renumérotées n°333/n°334 (suite de la PR #721)
+
+**La demande.** Pascal, le 15/11/2026 : « Modifier ce qu'il recommande », puis « Après l'installation ». L'installation est la PR #724 ; ce lot applique les **chantiers 1 et 5** du rapport `docs/audits/RAPPORT_AUDIT_2026-11-15.md` (PR #721). Lot transversal (`_outils/`, `.claude/skills/`, `docs/`, une page du thème 3, le journal), branche sans motif de thème.
+
+**Chantier 1 — les contrôles qui mesuraient mal.**
+- **`controle_regle4.py`** lit `qcm_….html?codes=…` (et `#ancre`) : les 18 ateliers des représentations retrouvent leur bouton. **21 écarts → 3**, les 3 copies `atelier_bete_a_cornes.html` (4e_C1.3, 3e_C3.1, 4e_C3.1), qui n'ont ni bloc « Prêt·e » ni Bonus : la question « gabarit voulu ou oubli de `build.py` ? » reste à Pascal. Banc : 3 cas de plus (erreur n°6 de la docstring), 20 / 21 — le cas restant est « le dépôt réel passe », rouge pour ces 3 pages, comme sur `main` (17 / 18).
+- **`verif_regles_audit.py`, n°301** : une page qui se déclare « Page N sur M », N < M, est SANS OBJET — son bilan se juge sur la page M. C'est l'exemption de `controle_regle4.py`, même motif. Les pages 1 à 3 de `3e_C9.2` perdent leur ✘ par construction : **les règles d'or passent à 0 manquement sur 60 séquences** (3 → 0). Banc : 3 cas de plus, 71 / 71.
+- **`controle_schemas.mjs`** : un `<svg>` qui porte `data-illustration="<pourquoi>"` sort du score, compté et nommé à part ; une balise HTML dans le SVG reste un ✘. La spirale de Fibonacci de `atelier-cao/fiche_arts_tp_4e_socle.html` la porte (dans la page et dans `_generation/spirale_fibonacci.py`, sortie identique à la page) : **10 ✘ → 0**, sortie 1 → 0 ; ⚠ 575, inchangés. Corrigé en passant : la ligne « N fichiers SVG, M écrits dans des pages » comptait mal. Banc : 3 cas de plus, 27 / 27.
+- **`rapport_audit.py`** lit désormais `controle_chaine_a_completer.py`, `registre_regles.py` (dans `CONTROLES_PY`), `controle_indices_qcm.mjs` et `controle_axe.mjs` (dans `CONTROLES_MJS`). `controle_axe.mjs` sort « EN PANNE » (sortie 2) tant qu'`axe-core` manque à la session : c'est la vérité (n°299), pas un rouge à cribler.
+- Le défaut de **5e_C7.4** (copie de l'outil « chaîne à compléter » différente de la source) est déjà réglé sur `main` : `controle_chaine_a_completer.py` sort à 0 ce soir. Rien à reposer.
+
+**Chantier 5 — le registre des règles d'or.**
+- **Les n°322 et n°323 du 14/11 (audit de `3e_C9.1`) deviennent n°333 et n°334** — le n°332 a été pris entre-temps par #722. Les n°322 (sauvegarde locale) et n°323 (place des bonnes réponses) du 10/11 gardent leur numéro : ils étaient les premiers. L'entrée du 14/11 n'est pas réécrite : une note sous son titre et une mention « renumérotée » sur les deux définitions ; les skills `revision-sequence` et `sequence-pedagogique-engageante` et le commentaire du banc de `3e_C9.1` portent les nouveaux numéros. Les n°333 et n°334 sont réservés dans le tableau de tête.
+- **`_outils/registre_regles.py`** (nouveau) lit toutes les définitions du journal (tableau de tête, titres, exergues, puces, phrases) et engendre **`docs/REGISTRE_DES_REGLES_OR.md`** (`--ecrire`) : **322 numéros définis, du n°1 au n°334**, 12 sans définition trouvée (n°156 à n°166, déclarés jamais écrits le 13/08 ; n°260, jamais cité). `--prochain` donne le prochain numéro libre (**n°335**). Sans option, il **refuse un numéro introduit deux fois** sous deux titres sans mot commun : rejoué sur le journal d'avant ce lot, il trouve exactement les n°322 et n°323, et rien d'autre (un premier essai qui comptait aussi les puces de compte rendu en trouvait onze, dont neuf faux : la règle est écrite dans sa docstring). Banc : `tests_registre_regles.py`, 10 / 10.
+- Le tableau de tête du journal dit désormais où lire les n°22 à n°332 et comment prendre un numéro.
+- Le marqueur `CONTROLES_ICI` de l'entrée de #718 n'est plus dans le journal : réglé avant ce lot.
+
+**Contrôles exécutés.** `controle_regle4.py` (1, 21 → 3 écarts) ; `verif_regles_audit.py` (0, 3 → 0 manquement) ; `controle_schemas.mjs` sur les trois thèmes (0, 489 schémas, 1 illustration déclarée) ; `controle_chaine_a_completer.py` (0) ; `controle_axe.mjs` (2, EN PANNE, axe-core absent) ; `registre_regles.py` (0) ; les bancs `tests_controle_regle4.py`, `tests_verif_regles_audit.py`, `tests_controle_schemas.mjs`, `tests_registre_regles.py` ; `controle_regles_visibles.py`, `controle_licence.py`, `controle_impression_papier.py`, `controle_rapports_tests.py` ; `py_compile`.
+
+**Non exécutés.** `rapport_audit.py` complet (une heure ; les contrôles touchés ont été lancés un par un) ; aucun banc de lot (une seule page touchée, d'un attribut invisible).
+
+**Ce qui reste, à Pascal.** Les 3 copies `atelier_bete_a_cornes.html` sans bloc « Prêt·e » ni Bonus ; le chantier 2 (sauvegarde locale, n°322, 8 pages) suit dans une autre PR.
+
+## 15/11/2026 — Audit hebdomadaire : 12 ✘ (−79), 49 séquences propres sur 56 (+42), 11 fichiers de dérive (−62) ; quatre contrôles rouges à cribler (transversal : `docs/audits`)
+
+**Second audit de la boucle du dimanche** (17 h 35 Martinique). `rapport_audit.py --complet --generateurs` sur `main` après #718
+(`d03a574`) : `docs/audits/RAPPORT_AUDIT_2026-11-15.md`, avec la section « Depuis la semaine dernière », le crible reporté du
+08/11 et la veille. Rien n'est corrigé, rien n'est fusionné.
+
+**Ce qui a bougé depuis le 08/11** (83 PR fusionnées, #627 → #718). ✘ de règles d'or **91 → 12**, 39 → 6 pages : la révision
+des trois thèmes a pris 45 séquences (révisions 7 à 51, plus 4 bis et 5 bis) et la V2 de 4e (#635) ; listes n°300 **1 030 → 57** sur 3 pages
+(5e_C8.1, 5e_C8.2, 5e_C9.1 — les prochaines du suivi) ; ancien gabarit **11 → 2 pages** (les mêmes) ; n°23 à zéro ; n°301 :
+les 3 pages intermédiaires de 3e_C9.2, comptées par construction. `bilan_revision.py` : **7 → 49 séquences propres sur 56**.
+Les deux dettes de la semaine dernière sont réglées : licence posée par les générateurs (#637 ; dérive **73 → 11**, les 11
+lexiques retouchés à la main du 07/11) et lien « CC BY-NC-SA » lisible (#638 ; `contraste_liens` 93 → 0). Couverture, preuves
+des COUVERT, matrice : inchangées pour le troisième rapport (4 codes à vérifier, 19 non mesurables, 3 à améliorer, 107 annotés).
+
+**Quatre contrôles rouges, criblés.** (1) `controle_regle4.py`, 21 pages — **contrôle périmé** : `LIEN_QCM` ne lit pas le
+`?codes=…` que les 18 ateliers des représentations portent après `qcm_….html` (vérifié : 18/18 passent avec une expression
+tolérante ; ces écarts étaient déjà là le 08/11, le rapport ne montrait que la dernière ligne) ; 3 copies `atelier_bete_a_cornes`
+sans bloc « Prêt·e » ni Bonus, à juger. (2) `controle_schemas.mjs`, 1 schéma, 10 ✘, inchangé — la spirale de Fibonacci de la
+fiche arts plastiques (`spirale_fibonacci.py`) lue comme un schéma : à déclarer hors score. (3) `controle_sauvegarde_locale.py`
+(n°322), 15 refus sur 8 pages, **déjà présents au #637** (rejoué sur son arbre) : 3e_C1.5, 4e_C1.4 et son bonus 2FA, atelier Pix
+4e_C4.1, QCM hérité 4e_C6.2, 3 copies d'atelier (dans `build.py`) ; `--corriger` existe. (4) `controle_schema_sous_les_yeux.py`
+(n°331, née aujourd'hui) : 5 ✘, 39 ⚠, la vague annoncée. Hors rapport, relancés à part : `controle_chaine_a_completer.py` **✘**
+(5e_C7.4 porte une copie de l'outil différente de la source — `poser.py` à relancer) ; `controle_indices_qcm.mjs` ✅ ;
+`controle_axe.mjs` non exécuté (`axe-core` absent). Vu en lisant le journal : **n°322 et n°323 attribués deux fois** (10/11 et
+14/11), le registre de tête s'arrêtant au n°21 ; un marqueur `CONTROLES_ICI` oublié dans l'entrée de #718.
+
+**Chantiers proposés, dans l'ordre.** 1) Une PR d'outils : `regle4` lit `?codes=`, la spirale hors score dans `schemas`, l'exemption
+« page N sur M » de `regle4` portée dans `verif_regles_audit.py` (n°301), et `chaine_a_completer`, `indices_qcm`, `axe` inscrits dans
+`rapport_audit.py`. 2) `sauvegarde_locale --corriger` sur les 8 pages (les 3 copies dans `build.py`) ; 5e_C7.4 reposé par
+`poser.py`. 3) La révision continue : 5e_C8.1, 5e_C8.2 (gabarit + listes), 5e_C9.1 (listes), 3e_C1.1 et 3e_C3.1 (aération) — et
+les règles d'or sont à zéro. 4) La vague n°331 (5 ✘ puis 39 ⚠). 5) Registre : renuméroter les n°322/323 du 14/11 en n°333/334 (la n°332 est prise par #722 ; fait par #725) et
+compléter le tableau de tête. 6) Les 11 lexiques retouchés à la main ; la matrice (5e_C1.3, 4e_C1.4, 3e_C1.5) ; les 4 codes à
+vérifier et la convention `c:"Cx.y"` — décisions en attente depuis le 07/11.
+
+**Veille** (lecture seule, onze dépôts clonés, rien exécuté, rien installé) : aucun à installer ; cinq idées à réécrire de zéro
+— les deux portes de vérification d'un item (`anthropics/k12-teacher-skills`, Apache 2.0, source des deux skills `k12-*` du
+compte : `k12-check-for-understanding` et `k12-lesson-prep` y sont nouveaux) pour `qcm-html-accessible` ; la place par longueur
+15/15/70 (`moodle-mcq`) pour `controle_ordre_propositions.py` ; phrases par paragraphe et mots par phrase (`plain-language`,
+suite de `francais-simple`) pour `audit_aeration.py` ; l'étiquette posée sur son trait (`diagram-design-skill`, dérivé hors
+ligne) pour `controle_schemas.mjs` ; le pourquoi d'erreur qui nomme l'étape suivante pour le mode mission. L'export Éléa écrit
+bien `<name>` (2 181 questions). `SKILLS_AUDIT.md` n'est pas modifié : le rapport propose.
+
+**Vérifié.** Le rapport a tourné une fois, complet avec générateurs (≈ 28 min, Chromium 153) ; `verif_regles_audit.py`,
+`controle_regle4.py`, `controle_sauvegarde_locale.py`, `controle_schemas.mjs`, `controle_schema_sous_les_yeux.py`,
+`controle_chaine_a_completer.py`, `controle_indices_qcm.mjs`, `bilan_revision.py --md` relancés à part pour lire leurs sorties
+complètes ; `controle_regle4.py` et `controle_sauvegarde_locale.py` rejoués sur l'arbre de #625 et de #637 (`git worktree`,
+supprimés ensuite) ; les générateurs relancés dans une copie hors git, jamais dans le dépôt. **Non exécuté** : `controle_axe.mjs`
+(sans `axe-core`), les bancs des lots (aucune page touchée), un navigateur réel. **Post-scriptum** : #719 et #720 (5e_C8.1,
+5e_C8.2 au gabarit commun) ont été fusionnées pendant l'audit ; `verif_regles_audit.py` et `bilan_revision.py` rejoués seuls sur
+`main` après #720 : **4 ✘ sur 4 pages** (3 × n°301 sur 3e_C9.2, 24 listes sur 5e_C9.1), ancien gabarit à zéro, **51 séquences
+propres sur 56** ; le reste du rapport date de 21 h 35, après #718. **Second post-scriptum** : après #722 et #723, rejoués
+de même sur `main` : **3 ✘ sur 3 pages** (n°301 sur 3e_C9.2), **52 séquences propres sur 56**.
+
+**Reste à Pascal.** Fusionner cette PR (rapport + journal) ; cocher les décisions de la section 6 du rapport — d'abord la PR
+d'outils (quatre contrôles) et la collision n°322/323.
+
+## 15/11/2026 — Audit du 15/11, chantier 2 : la sauvegarde locale (n°322) sur les 8 pages qui restaient (suite de la PR #721)
+
+**La demande.** Pascal, le 15/11/2026 : « Modifier ce qu'il recommande ». Le rapport `docs/audits/RAPPORT_AUDIT_2026-11-15.md` (PR #721) relevait **15 refus de `controle_sauvegarde_locale.py` sur 8 pages**, présents depuis le lot A05 (#637) : `--corriger` ne les répare pas, aucune ne suit un gabarit connu. Lot transversal (thèmes 1 et 2, un générateur), branche sans motif de thème.
+
+**Ce qui est fait, page par page.**
+- **`3e_C1.5`** et **`4e_C1.4`** (les séquences) : « 🗑 Effacer ma sauvegarde » rejoint « Mode essentiel » dans la barre, et la note « Ordinateur partagé » la suit (texte canonique, une marge pour le téléphone). Le bouton efface en deux clics, sans boîte modale, **tout** ce que la page garde : ses clés (`reponses_3e_C1.5` / `cyber4e`, la séance, le mode essentiel), celle du mode mission, et celles des exercices incrustés (attribut `data-cle`, et leur croquis). Les clés des autres pages restent.
+- **Le bonus 2FA de `4e_C1.4`** ne gardait qu'un drapeau « validé » : sur un poste partagé, l'élève suivant trouvait la pastille déjà verte. Le drapeau passe en `sessionStorage` (le temps de l'onglet) et l'ancien est retiré au chargement : la page n'écrit plus rien dans `localStorage`, il n'y a plus rien à effacer ni à annoncer.
+- **L'atelier Pix de `4e_C4.1`** (prénom, réponses, tris) : bouton et note sous la trace ; lecture et écriture de la sauvegarde sous `try/catch`.
+- **Le QCM hérité `qcm_algorigrammes_domotique.html` (`4e_C6.2`)** effaçait déjà toute sa progression (« Réinitialiser », en deux clics par `demande()`) ; le contrôle ne reconnaissait pas ce nom. Le bouton reçoit l'identifiant commun et dit ce qu'il fait : « 🗑 Effacer toute ma progression ».
+- **Les 3 panneaux `atelier_bete_a_cornes.html`** (`4e_C1.3`, `3e_C3.1`, `4e_C3.1`) sont engendrés : la réparation est dans `ateliers-representations/_generation/build.py` (n°283) — un panneau qui porte un rappel incrusté reçoit le bouton, la note et le script ; `python3 build.py besoin` ne change que ces 3 pages (le panneau de `5e_C3.3`, sans rappel, n'écrit rien).
+
+**Mesure.** `controle_sauvegarde_locale.py` : **15 refus → 0**, sortie 1 → 0 (163 pages qui écrivent dans le navigateur, une de moins : le bonus 2FA). Restent comptés, sans refus : 4 `confirm()` et 73 QCM sans note poste partagé — la décision du 10/11 reste à Pascal.
+
+**Contrôles exécutés.** Banc du lot (`banc_effacement.mjs`, gardé hors du dépôt, Chromium à 390 px) : **55 / 55** — sur les 7 pages à bouton, un seul `#btnReset`, la note, un premier clic qui n'efface rien, un second qui efface ce que l'élève avait enregistré, la clé d'une autre page intacte, aucune boîte modale, aucune erreur JS ; sur le bonus 2FA, l'ancien drapeau retiré et la pastille grise pour l'élève suivant. Bancs des lots : `tests_3e_C1.5_questions.mjs` 23 / 23, `tests_3e_C1.5_seances.py` 45 / 45, `tests_regle_311_3e_C1.5.mjs` 34 / 34, `tests_4e_C1.4_quiz.mjs` 31 / 31, `tests_regle_311_4e_C1.4.mjs` 34 / 34, `tests_4e_C4.1-C4.9.mjs` 52 / 52, `tests_4e_C6.2.mjs` 56 / 56, `banc_ateliers.py besoin` 128 / 128. Contrôles : `controle_sauvegarde_locale.py`, `controle_boutons_vivants.py`, `controle_tactile.py`, `controle_regles_visibles.py`, `controle_mode_mission.py`, `controle_hierarchie.py`, `controle_liens.py`, `controle_licence.py`, `controle_impression_papier.py` (tous à 0) ; `controle_regle4.py` (1 : après #725, restent les 3 panneaux `atelier_bete_a_cornes.html` sans bloc « Prêt·e » ni Bonus — question à Pascal, inchangée) ; `controle_squelette.mjs`, `controle_hors_ligne.mjs`, `controle_verrous.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs` sur le dépôt entier (résultats dans la PR). Captures à 390 px : le bouton et la note sur `3e_C1.5`, `4e_C1.4`, l'atelier Pix et un panneau.
+
+**Non exécutés.** Un vrai poste partagé de la salle ; `rapport_audit.py` complet.
+
 ## 15/11/2026 — Révision des trois thèmes, 56 : `3e_C3.1` (Shenzhen, le local des serveurs)
 
 **Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante à convertir (les menus du cahier des charges sont voulus). Sur `main` :
@@ -31192,4 +31592,3 @@ passera dans le schéma pendant sa révision (ligne 51 du suivi).
 **Mesure.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136** · **1 181** · 425 · 909. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 18 → 0. Bancs **37 / 37** (séquence), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
 
 **Ce qui reste.** Rien au-dessus du repère. Les notes de fin des incrustations (« 🐂 Ces exercices viennent de l'atelier… », 37 mots) sont communes à plusieurs pages : elles ne sont pas touchées ici.
-

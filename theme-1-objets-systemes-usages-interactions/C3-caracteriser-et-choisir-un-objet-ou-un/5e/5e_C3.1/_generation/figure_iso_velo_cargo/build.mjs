@@ -7,6 +7,7 @@
 // Relancé, il redonne les mêmes fichiers à l'octet près. Le kit (iso-kit, lathe, tube, audit) est une copie du skill
 // Anatomy (licence MIT : LICENSE, commit : VERSION) ; le dessin produit ici est original, CC0.
 import { readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as k from "./iso-kit.mjs";
@@ -604,3 +605,8 @@ if (process.argv.includes("--poids")) {
   writeFileSync(FIXE, fixe);
   console.log("schéma fixe", (Buffer.byteLength(fixe) / 1024).toFixed(1), "Ko");
 }
+
+// ── Les flux animés (demande de Pascal du 15/11/2026) : des perles avancent sur les quatre flèches d'énergie, dans le
+// schéma fixe et dans le dessin de la page ; fixes à l'impression et quand le système demande moins de mouvement.
+// L'outil commun du dépôt s'en charge, après chaque écriture, pour que ce générateur ne les efface pas.
+execFileSync("python3", [join(HERE, "..", "..", "..", "..", "..", "..", "_outils", "animer_flux.py"), FIXE, PAGE, "--ecrire"], { stdio: "inherit" });

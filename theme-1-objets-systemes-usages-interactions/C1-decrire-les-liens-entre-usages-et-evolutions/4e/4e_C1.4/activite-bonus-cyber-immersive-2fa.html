@@ -352,9 +352,10 @@ else:
   const badge2fa = document.getElementById('chk2fa');
   function setValidated(){
     badge2fa.classList.add('validated');
-    localStorage.setItem('cyber_v5_2fa_valid','1');
+    try { sessionStorage.setItem('cyber_v5_2fa_valid','1'); } catch (e) {}   // le temps de l'onglet : rien ne reste pour l'élève suivant (n°322)
   }
-  if(localStorage.getItem('cyber_v5_2fa_valid')==='1'){ setValidated(); }
+  try { localStorage.removeItem('cyber_v5_2fa_valid'); } catch (e) {}   // l'ancien drapeau, laissé par une version précédente
+  try { if(sessionStorage.getItem('cyber_v5_2fa_valid')==='1'){ setValidated(); } } catch (e) {}
   chkBtn?.addEventListener('click',()=>{
     const boxes = [...document.querySelectorAll('input[name="q2fa"]')];
     const ok = boxes.find(b=>b.value==='v' && b.checked) && !boxes.find(b=>b.value!=='v' && b.checked);

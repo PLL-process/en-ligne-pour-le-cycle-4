@@ -32,6 +32,10 @@
  *   ⚠ écrasée     une taille de police posée en attribut, écrasée par la feuille de style du SVG (le titre
  *                 qu'on croyait grand ne l'est pas).
  *   ⚠ minuscule   un texte qui ferait moins de 10 px sur un schéma affiché à 800 px de large.
+ *   ⚠ étiquette collée  l'étiquette d'une flèche (un texte hors de tout cadre) à moins de 6 unités de son trait sans le
+ *                 toucher (veille du 15/11/2026 : idée prise de `luffy666code/diagram-design-skill`, MIT, réécrite ici —
+ *                 « une étiquette de flèche ne touche jamais son trait »). Le trait SUR l'étiquette est la traversée ;
+ *                 le fond d'une étiquette qui chevauche un cadre est le contact : les deux étaient déjà mesurés.
  *
  * Score = 3 × ✘ + ⚠. Les schémas sont rangés du pire au meilleur.
  *
@@ -57,6 +61,11 @@
  * -------------
  * Chaque fichier .svg, et chaque schéma écrit dans une page (.html) — un <svg> d'au moins 200 × 80 unités qui
  * porte au moins deux textes. L'archive, node_modules et les dossiers de captures ne sont pas lus.
+ *
+ * Une ILLUSTRATION n'est pas un schéma : un <svg> qui porte `data-illustration="<pourquoi>"` est compté à part,
+ * hors score (audit du 15/11/2026, #721 : la spirale de Fibonacci de `fiche_arts_tp_4e_socle.html`, des carrés bord
+ * à bord et leurs cotes, faisait 10 ✘ « contact » à elle seule). La déclaration se lit dans le code, se voit dans la
+ * sortie, et ne couvre jamais une balise HTML dans le SVG, qui reste un ✘.
  *
  * Usage : node _outils/controle_schemas.mjs [dossier ou fichier…] [--json fichier] [--planche dossier] [--charge [n]] [--muet]
  * Sortie : 0 aucun ✘ · 1 au moins un ✘ · 2 rien n'a pu être lu (règle n°299).
@@ -237,6 +246,26 @@ const MESURER = (svg) => {
       }
     }
   }
+  // ⚠ étiquette collée (veille du 15/11/2026) : l'étiquette d'une flèche — un texte libre, hors de tout cadre — posée
+  // à moins de 6 unités de son trait sans le toucher. L'élève ne voit plus si le mot est sur la flèche ou à côté, ni à
+  // quelle flèche il appartient. Le trait qui passe SUR l'étiquette est la « traversée », plus haut ; une étiquette qui
+  // porte un fond opaque est un cadre, et son fond qui chevauche un autre cadre est le « contact ».
+  for (const t of textes) {
+    if (cadres.some(c => contientPt(c.b, t.a))) continue;
+    const n = noyau(t);
+    let best = Infinity;
+    for (const f of fleches) {
+      let L; try { L = f.getTotalLength(); } catch (e) { continue; }
+      const M = f.getScreenCTM(); if (!(L > 0) || !M) continue;
+      const pas = Math.max(1, L / 300);
+      for (let s = 0; s <= L; s += pas) {
+        const q = f.getPointAtLength(s), x = M.a * q.x + M.c * q.y + M.e, y = M.b * q.x + M.d * q.y + M.f;
+        best = Math.min(best, Math.hypot(Math.max(n.x - x, 0, x - n.X), Math.max(n.y - y, 0, y - n.Y)));
+      }
+    }
+    const d = U(best);
+    if (d > 0.5 && d < 6) dit('⚠', 'étiquette collée', `« ${court(t.s)} » à ${d.toFixed(1)} u de sa flèche (6 au moins)`);
+  }
   // ✘ trait sur un texte : un trait SANS pointe (un pointillé « include », un lien, une courbe) qui passe sur
   // l'encre d'un texte, sans qu'une forme opaque peinte après lui (le fond de l'étiquette) ne le cache, ni un halo
   // autour du texte. Les flèches, elles, sont mesurées plus haut.
@@ -328,7 +357,7 @@ async function main(argv) {
   // Une capture « page entière » d'un document SVG attend des polices qui ne viennent jamais (Chromium) : on capture
   // donc une zone (clip), en coordonnées de la fenêtre.
   const capturer = async (fichier, b) => p.screenshot({ path: fichier, clip: b, timeout: 10000 });
-  const resultats = [];
+  const resultats = [], illustrations = [];
   let n = 0;
   for (const f of svgs) {
     try {
@@ -337,9 +366,11 @@ async function main(argv) {
       // la fenêtre prend les proportions du schéma : 1 000 px de large
       const vb = await p.evaluate(() => { const v = document.documentElement.viewBox; return v && v.baseVal && v.baseVal.width ? [v.baseVal.width, v.baseVal.height] : null; });
       if (vb) await p.setViewportSize({ width: 1000, height: Math.max(100, Math.min(4000, Math.round(1000 * vb[1] / vb[0]))) });
+      const nom = path.relative(RACINE, f);
+      const ill = await p.evaluate(() => document.documentElement.getAttribute('data-illustration'));
+      if (ill !== null) { illustrations.push({ schema: nom, pourquoi: ill }); continue; }
       const m = await p.evaluate(`(${MESURER})(document.documentElement)`);
       if (!m) continue;
-      const nom = path.relative(RACINE, f);
       const r = { schema: nom, ...m };
       if (planche) {
         r.image = `s${String(++n).padStart(4, '0')}.png`;
@@ -360,6 +391,7 @@ async function main(argv) {
           if (!svg || svg.closest('svg') !== svg || svg.parentElement.closest('svg')) return null;
           const vb = svg.viewBox && svg.viewBox.baseVal;
           if (!vb || vb.width < 200 || vb.height < 80 || svg.querySelectorAll('text').length < 2) return null;
+          if (svg.hasAttribute('data-illustration')) return { illustration: svg.getAttribute('data-illustration') };
           for (let a = svg; a; a = a.parentElement) {           // rendre visible ce qui est replié ou masqué
             if (a.tagName === 'DETAILS') a.open = true;
             if (a.hidden) a.hidden = false;
@@ -369,6 +401,7 @@ async function main(argv) {
           return eval(src)(svg);
         }, [i, `(${MESURER})`]);
         if (!m) continue;
+        if (m.illustration !== undefined) { illustrations.push({ schema: `${path.relative(RACINE, f)} › svg n°${i + 1}`, pourquoi: m.illustration }); continue; }
         const r = { schema: `${path.relative(RACINE, f)} › svg n°${i + 1}`, ...m };
         if (planche) {
           r.image = `s${String(++n).padStart(4, '0')}.png`;
@@ -430,8 +463,10 @@ async function main(argv) {
       for (const d of r.defauts) (parType[d.g + ' ' + d.type] ||= []).push(d.detail);
       for (const [t, l] of Object.entries(parType)) console.log(`       ${t} ×${l.length} — ${l[0]}`);
     }
-    console.log(`\n${resultats.length} schémas lus (${svgs.length} fichiers SVG, ${resultats.length - svgs.length} écrits dans ${pages.length} pages)`);
+    { const dansPages = resultats.filter(r => r.schema.includes(' › ')).length;
+      console.log(`\n${resultats.length} schémas lus (${resultats.length - dansPages} fichiers SVG, ${dansPages} écrits dans ${pages.length} pages)`); }
     console.log(`${touches} schéma(s) avec au moins un ✘ · ${croix} ✘ · ${resultats.reduce((s, r) => s + r.alertes, 0)} ⚠`);
+    if (illustrations.length) console.log(`${illustrations.length} illustration(s) déclarée(s), hors score (data-illustration) : ${illustrations.map(x => x.schema + ' — ' + x.pourquoi).join(' ; ')}`);
   }
   if (mesures.length && (!muet || nCharge)) {
     console.log(`charge (mesure, hors score) : ${charges.length} schéma(s) sur ${mesures.length} au-dessus du repère (${REPERE_ENTITES} entités ou ${REPERE_FLECHES} flèches) · médiane ${mediane(mesures.map(r => r.entites))} entité(s), ${mediane(mesures.map(r => r.mots))} mot(s)`);

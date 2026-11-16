@@ -145,3 +145,21 @@ aucun signalement ; `controle_impression` (0 page refusée), `controle_verrous`,
 (n°29, 30, 31, 34, 300), hors périmètre de cette vague.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Révision du 15/11/2026 (ligne 53 du suivi) — gabarit commun, grille, propositions, mode mission
+
+Migration au gabarit commun (`migrer_gabarit_306.py`, étayage dans `etayage_sequence_5e_C8.2_patere-du-hall.json`) :
+15 listes en boutons radio, le choix de l'éprouvette du banc déclaré commande (`data-interface`). La grille de
+l'activité 4 ne nomme plus ses lignes (« Il flue… », « Solide dans le sens des couches… »), lettrée, avec une réponse de
+trop. 12 groupes mélangés, 12 propositions fausses remplacées ou allongées. Le mode mission reçoit 46 pourquoi et
+5 indices (`mission_5e_C8.2.json`). Bonus replié ; aération 12 → 0.
+
+- `node tests_5e_C8.2_sequence.mjs sequence_5e_C8.2_patere-du-hall.html` : **24 / 24** (shim `_groupesRadio(page)` en
+  tête du banc ; l'activité 3 lit les boutons radio d'un groupe).
+- `node tests_5e_C8.2_qcm.mjs "$PWD/qcm_5e_C8.2_patere-du-hall.html" C8.2 C3.1 sequence_5e_C8.2_patere-du-hall.html` : **32 / 32**.
+- `node tests_regle_311_5e_C8.2.mjs` : **34 / 34**.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
+- `controle_ordre_propositions.py`, `controle_unites.py` : verts. `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

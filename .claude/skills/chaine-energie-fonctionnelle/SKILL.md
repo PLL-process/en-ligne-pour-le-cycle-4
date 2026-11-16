@@ -7,6 +7,7 @@ description: Dessiner ou corriger tout schéma de chaîne d'énergie du dépôt 
 
 Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311. Mis à jour le 29/10/2026 :
 les trois schémas faits main (4e_C9.1, 4e_C6.2, 5e_C9.1) sont entrés dans le générateur ; le générateur dessine la fonction absente.
+Mis à jour le 15/11/2026 : **tous les flux sont animés** (demande de Pascal), voir « Les flux animés » plus bas.
 
 > **Règle d'or n°310 (21/10/2026).** Dans une chaîne d'énergie, les blocs disent ce qui est fait, les flèches disent ce qui circule.
 > Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes
@@ -78,6 +79,11 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    et QCM compris), et depuis le 29/10/2026 le jardin programmé (`4e_C9.1`, `chaines_jardin_programme.svg` — nom distinct de celui
    de `4e_C4.1`), l'arrosage (`4e_C6.2`) et la barrière du Cyclone (`5e_C9.1`, avec son banc de tests).
    `python _outils/regenerer_chaines_energie.py jardin_programme` ne produit que la figure nommée (noms dans `FIGURES`).
+   Depuis le 15/11/2026, `book_deux_chaines` : les deux chaînes du Book Train en **disposition étroite** (l'information en
+   haut sur une ligne, l'énergie en colonne, composants à gauche des blocs : `block(…, cpos='left', csize=20)`), en deux
+   versions — muette sur les énergies pour les questions, complète pour la correction (n°331). `incruster(html, svg,
+   marqueur)` pose une figure en ligne dans chaque `<figure data-chaines="marqueur" data-prefixe="P">` d'une page, id
+   préfixés : un schéma répété à chaque activité qui le lit.
    Classe `Diagram` : `block(x, y, fonction, composant, couleur, stock=…)`, `absent(x, y, fonction, raison)` (pointillés grisés,
    n°131), `arrow(points, couleur, étiquette, …)`, `section(…)`, `text(…)`, `panel(…)` (un cadre sous des textes) ; `circuit_eau(…)`
    pose le circuit d'eau à part. Il écrit aussi la **source draw.io** (`_generation/chaines_energie/`, `fichiers_drawio/` pour le Book Train).
@@ -96,10 +102,28 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    mêmes fonctions, mêmes composants, mêmes énergies. Un QCM dont l'énoncé change **change aussi sa bonne réponse** : le dire
    dans le journal, liste avant / après.
 
+## Les flux animés (demande de Pascal du 15/11/2026)
+
+« Les chaînes d'énergie et chaîne d'information devront être animées (tous les flux), et de préférence faites avec draw.io »,
+« la bibliothèque pour ces chaînes dans draw.io ».
+- **Sur le site** : `_outils/animer_flux.py` pose, sur chaque flèche d'un schéma de chaîne, des perles claires qui avancent
+  dans le sens de la flèche (deux trains, un dans chaque sens, sur une double flèche ; un branchement « lien » n'en porte pas).
+  Le trait d'origine ne change pas : couleur, pointillés de l'ordre, pointe. Les perles disparaissent à l'impression et quand
+  le système demande moins de mouvement (`prefers-reduced-motion`) ; elles ne portent aucune information que le dessin ne
+  porte déjà (n°119). Les générateurs l'appellent eux-mêmes : `regenerer_chaines_energie.py`, le vélo-cargo (`build.mjs`) ;
+  la chaîne à compléter (`_outils/chaine_a_completer/`) dessine les siennes (`.cac-flux`).
+- **Dans draw.io** : chaque flèche des sources (`_generation/chaines_energie/*.drawio`, `fichiers_drawio/`) et de la
+  bibliothèque (`generer_bibliotheque_chaines.py`, que `--verifier` contrôle) porte `flowAnimation=1`, l'animation native de
+  draw.io : une chaîne montée avec la bibliothèque a ses flux animés. Le SVG du site reste celui du générateur : l'export SVG
+  de draw.io écrit ses textes en `foreignObject` et pèse un mégaoctet (essai du 15/11/2026, draw.io 32.6 pour Windows).
+- **Un nouveau schéma de chaîne**, fait main : `python3 _outils/animer_flux.py <fichier.svg|page.html> --ecrire`, puis
+  `--verifier` (0 : chaque chaîne lue a ses flux animés).
+
 ## Vérifier
 
 ```
 python _outils/regenerer_chaines_energie.py     # écrit les six figures, les sources draw.io, la figure et le QCM du Book Train
+python3 _outils/animer_flux.py --verifier <fichiers>   # chaque chaîne a ses flux animés
 python _outils/verifier_chaines_energie.py      # textes dans le cadre, énergies hors des blocs, convention dite ET dessinée, impression, objets HTML, scène 6
 ```
 

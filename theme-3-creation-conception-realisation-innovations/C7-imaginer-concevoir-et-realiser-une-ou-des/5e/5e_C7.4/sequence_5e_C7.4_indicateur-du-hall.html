@@ -207,6 +207,33 @@ body.essentiel details.referentiel-replie{display:none}
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+  /* Règle d'or n°300 — une question se lit pendant qu'on y répond : groupe de boutons radio */
+  .qcm-groupe{margin:10px 0 14px;padding:0 0 0 11px;min-width:0;border:0;
+    border-left:3px solid var(--border);border-radius:0;background:none}
+  .qcm-groupe legend{display:block;width:100%;padding:0;margin:0 0 6px;font-weight:600}
+  .qcm-groupe .qcm-option{display:flex;align-items:flex-start;gap:9px;margin:5px 0;
+    padding:7px 9px;border:2px solid transparent;border-radius:9px;background:var(--panel2,#0a1b3d)}
+  .qcm-groupe .qcm-option:hover,.qcm-groupe .qcm-option:focus-within{border-color:var(--hl)}
+  .qcm-groupe .qcm-option input[type=radio]{width:19px;height:19px;margin:1px 0 0;flex-shrink:0;accent-color:var(--hl)}
+  .qcm-groupe .qcm-option label{display:block;margin:0;flex:1;cursor:pointer;color:var(--text);font-size:1em;font-weight:400}
+  .qcm-groupe.ok{border-left-color:var(--ok)}.qcm-groupe.ko{border-left-color:var(--err)}
+  @media print{.qcm-groupe,.qcm-groupe .qcm-option{background:#fff!important;border-color:#999!important;box-shadow:none!important}
+    .qcm-groupe legend,.qcm-groupe .qcm-option label{color:#111!important}}
+
+  /* Règle d'or n°29 — mode essentiel : les corrections et les compléments se masquent, rien ne se perd */
+  body.essentiel details.correction,body.essentiel .approfondissement,body.essentiel .bonus-complement{display:none}
+  /* Règle d'or n°30 — la barre compte, ce bandeau situe */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:var(--panel,#0d2347);
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* Règle d'or n°31 — version étayée : des phrases à compléter, repliées */
+  details.etayage{margin:8px 0 12px;padding:6px 12px;border-left:4px solid var(--hl);border-radius:8px}
+  details.etayage summary{cursor:pointer;color:var(--hl);font-weight:600}
+  details.etayage ul{margin:6px 0;padding-left:22px}details.etayage li{margin:5px 0}
+  @media print{#tachesBandeau{display:none}details.etayage{border-color:#999!important}details.etayage summary{color:#047fa0!important}}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -589,6 +616,26 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
 </script>
 <!-- fiche-papier v1 : fin -->
 <!-- Séances à onglets (vague n°311 du 04/11/2026) : cette classe dit que le JavaScript tourne ; sans elle, la page reste d'un seul tenant. -->
+<script>
+/* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
+   lisait ou écrivait `champ.value` sur l'ancienne liste déroulante continue de
+   fonctionner sur le groupe de boutons radio, sans être touché. */
+(function(){
+  if (Object.getOwnPropertyDescriptor(HTMLFieldSetElement.prototype, "value")) return;
+  Object.defineProperty(HTMLFieldSetElement.prototype, "value", {
+    configurable: true,
+    get: function(){
+      if (!this.classList.contains("qcm-groupe")) return undefined;
+      var c = this.querySelector("input[type=radio]:checked");
+      return c ? c.value : "";
+    },
+    set: function(v){
+      if (!this.classList.contains("qcm-groupe")) return;
+      this.querySelectorAll("input[type=radio]").forEach(function(r){ r.checked = (r.value === v); });
+    }
+  });
+})();
+</script>
 <script>document.documentElement.classList.add("js-onglets");</script>
 <!-- mode-mission v1 : début — un exercice à la fois ; source unique : _outils/mode_mission/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1277,6 +1324,445 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<!-- chaine-a-completer v1 : début — les étiquettes posées dans le schéma des chaînes ; source unique : _outils/chaine_a_completer/ (poser.py). Ne pas le modifier dans la page. -->
+<style>
+/* Chaîne à compléter — source unique : _outils/chaine_a_completer/chaine.css (poser.py). Ne pas la modifier dans une page.
+   Les couleurs sont celles des schémas du dépôt (n°120) : CONVERTIR violet, ALIMENTER/STOCKER jaune, DISTRIBUER cyan ;
+   énergie orange, information cyan, ordre vert en pointillés. */
+.cac{--cac-energie:#ffb454;--cac-information:#61dafb;--cac-ordre:#81fba1;--cac-stock:#ffd66b;--cac-attente:#5d6f92;
+  --cac-fond:#071633;--cac-bloc:#0d2347;--cac-texte:#e4eaf5;--cac-doux:#9bbefc;--cac-case:#102a55;--cac-ok:#81fba1;--cac-faux:#ffb454;
+  margin:10px 0 14px;display:grid;gap:8px;justify-items:center}
+/* au téléphone, le schéma prend toute la largeur de l'écran : les marges des cartes ne le rétrécissent plus */
+@media (max-width:700px){.cac{width:calc(100vw - 16px);margin-inline:calc(50% - 50vw + 8px);box-sizing:border-box}}
+.cac.cac-pret>.cac-questions{display:none}
+.cac-dessin{position:relative;max-width:100%;container-type:inline-size;background:var(--cac-fond);border:1px solid #274a8a;border-radius:14px;overflow:hidden}
+.cac-traits{position:absolute;inset:0;display:block}
+.cac-calque{position:absolute;inset:0}
+.cac-calque>*{position:absolute;box-sizing:border-box}
+.cac-fleche{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cac-fleche.cac-n-energie{stroke:var(--cac-energie)} .cac-m.cac-n-energie path{fill:var(--cac-energie)}
+.cac-fleche.cac-n-information{stroke:var(--cac-information)} .cac-m.cac-n-information path{fill:var(--cac-information)}
+.cac-fleche.cac-n-ordre{stroke:var(--cac-ordre);stroke-dasharray:7 6} .cac-m.cac-n-ordre path{fill:var(--cac-ordre)}
+.cac-fleche.cac-n-stock{stroke:var(--cac-stock)} .cac-m.cac-n-stock path{fill:var(--cac-stock)}
+.cac-fleche.cac-n-lien{stroke:#9aa5b8;stroke-dasharray:2 6} .cac-m.cac-n-lien path{fill:#9aa5b8}
+.cac-fleche.cac-n-attente{stroke:var(--cac-attente);stroke-dasharray:5 6} .cac-m.cac-n-attente path{fill:var(--cac-attente)}
+/* les flux animés (15/11/2026) : des perles claires tous les 42 unités, qui avancent ; fixes à l'impression et quand le système demande moins de mouvement */
+.cac-flux{fill:none;stroke:#fff;stroke-opacity:.9;stroke-linecap:round;stroke-dasharray:.1 42;animation:cac-flux 1.6s linear infinite;pointer-events:none}
+.cac-flux.retour{animation-direction:reverse;animation-delay:-.8s}
+@keyframes cac-flux{from{stroke-dashoffset:42.1}to{stroke-dashoffset:0}}
+.cac-titre{font-weight:800;letter-spacing:.02em;line-height:1.2}
+.cac-titre.attente{opacity:.75}
+.cac-texte{line-height:1.2;text-align:center;color:var(--cac-texte)}
+.cac-texte.gras{font-weight:700}
+.cac-et{line-height:1.2;text-align:center;font-weight:600}
+.cac-et-bas{transform:translate(-50%,-100%)} .cac-et-haut{transform:translate(-50%,0)}
+.cac-et-gauche{transform:translate(-100%,-50%);text-align:right} .cac-et-droite{transform:translate(0,-50%);text-align:left}
+.cac-et-centre{transform:translate(-50%,-50%)}
+.cac-c-energie{color:var(--cac-energie)} .cac-c-information{color:var(--cac-information)} .cac-c-ordre{color:var(--cac-ordre)} .cac-c-stock{color:var(--cac-stock)} .cac-c-attente{color:var(--cac-attente)}
+.cac-et.cac-case,.cac-et.cac-trou{white-space:normal}
+.cac-bloc{display:flex;align-items:center;justify-content:center;padding:4px;border:3px solid var(--cac-coul,#9bbefc);background:var(--cac-bloc);
+  box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.cac-bloc.neutre{--cac-coul:#9bbefc;border-color:#3d64a8}
+.cac-bloc.attente{border-style:dashed;border-color:var(--cac-attente);border-width:2px;background:transparent}
+.cac-fonction{font-weight:800;letter-spacing:.03em;color:var(--cac-coul,#e4eaf5);text-align:center;line-height:1.1}
+.cac-bloc>.cac-case,.cac-bloc>.cac-trou{width:100%;height:100%}
+.cac-bloc>.cac-case{border-color:transparent;background:transparent}
+.cac-bloc>.cac-case:not(.pleine) .cac-q{font-size:1.15em}
+.cac-bloc>.cac-case.pleine,.cac-bloc>.cac-case.juste,.cac-bloc>.cac-case.faux{background:transparent}
+.cac-bloc:has(.cac-case.faux){border-color:var(--cac-faux)}
+.cac-bloc:has(.cac-case:focus-visible),.cac-bloc:has(.cac-case.vise),.cac-bloc:has(.cac-case:hover){border-color:#61dafb;box-shadow:0 0 0 3px rgba(97,218,251,.35)}
+.cac-sous{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.cac-composant{color:var(--cac-texte);line-height:1.2}
+.cac-stock{color:var(--cac-stock);line-height:1.2}
+.cac-sous>.cac-case,.cac-sous>.cac-trou{width:100%}
+/* les cases : dans le dessin, à la place du mot */
+.cac-case,.cac-trou{display:flex;align-items:center;justify-content:center;gap:4px;min-height:1.9em;padding:2px 6px;border-radius:8px;
+  font:inherit;line-height:1.15;text-align:center;color:var(--cac-texte);box-sizing:border-box}
+.cac-case{border:2px dashed var(--cac-doux);background:rgba(16,42,85,.92);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.cac-case:hover,.cac-case:focus-visible,.cac-case.vise{border-color:#61dafb;border-style:solid;background:#163a72}
+.cac-case:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-case.pleine{border-style:solid;border-color:#9bbefc;background:var(--cac-case);font-weight:700}
+.cac-case.juste{border-color:var(--cac-ok);background:rgba(129,251,161,.13);cursor:default;opacity:1}
+.cac-case.faux{border-color:var(--cac-faux);background:rgba(255,180,84,.16)}
+.cac-case .cac-q{font-weight:800;color:var(--cac-doux);opacity:.9}
+.cac-case .cac-marque{font-weight:800} .cac-case.juste .cac-marque{color:var(--cac-ok)} .cac-case.faux .cac-marque{color:var(--cac-faux)}
+.cac-bloc .cac-case.pleine .cac-v{color:var(--cac-coul,#e4eaf5);letter-spacing:.03em}
+.cac-trou{border:1.5px dashed var(--cac-attente);opacity:.45}
+.cac-bloc>.cac-trou{border:0}
+.cac-acquis{font-style:italic}
+.cac-fonction.cac-acquis{letter-spacing:.01em;overflow-wrap:anywhere}
+.cac-case.part{opacity:.4}
+.cac-msg{margin:0;min-height:1.3em;font-size:.95em;color:var(--cac-doux);text-align:center}
+.cac-msg:empty{display:none}
+/* la réserve : collée en bas de l'écran tant qu'il reste des cases */
+.cac-reserve{position:sticky;bottom:calc(var(--cac-bas,10px) + env(safe-area-inset-bottom,0px));z-index:5;width:100%;box-sizing:border-box;
+  background:#0d2347;border:1px solid #274a8a;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:8px 10px;display:grid;gap:6px}
+body.ms .cac-reserve{--cac-bas:84px}
+.cac-reserve-t{margin:0;font-size:.82em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9bbefc}
+.cac-reserve-l{display:flex;flex-wrap:wrap;gap:7px}
+.cac-lab{font:inherit;font-weight:700;color:#e4eaf5;background:#102a55;border:2px solid #3d64a8;border-radius:11px;padding:8px 12px;min-height:44px;
+  cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+.cac-lab:hover{border-color:#61dafb}
+.cac-lab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.cac-lab.choisie{border-color:#61dafb;background:#1d4e89;transform:translateY(-2px);box-shadow:0 4px 0 #0a1b3d}
+.cac-lab.part{opacity:.35}
+.cac-geste{color:#9bbefc}
+.cac-fantome{position:fixed;left:0;top:0;z-index:80;pointer-events:none;border:2px solid #61dafb;background:#0d2347;color:#e4eaf5;
+  border-radius:11px;padding:8px 12px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.cac-papier{display:none}
+/* au téléphone, la réserve tient sur une ligne qui défile de côté : le schéma reste visible au-dessus.
+   Un doigt qui glisse de côté fait défiler la réserve ; un doigt qui monte emporte l'étiquette vers sa case. */
+@media (max-width:640px){
+  .cac-reserve{padding:7px 0 8px;gap:5px}
+  .cac-reserve-t{padding-inline:10px;font-size:.74em}
+  .cac-reserve-l{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 4px;scrollbar-width:thin;overscroll-behavior-x:contain}
+  .cac-reserve .cac-lab{flex:none;white-space:nowrap;touch-action:pan-x}
+}
+@media (prefers-reduced-motion: reduce){.cac-lab,.cac-case{transition:none}.cac-flux{display:none}}
+/* à l'impression : le dessin, en encre, avec ce que l'élève a posé ; les cases vides restent des cases à remplir au stylo */
+@media print{.cac-flux{display:none}}
+@media print{
+  .cac{--cac-energie:#9a4d00;--cac-information:#0a5a75;--cac-ordre:#1a6b36;--cac-stock:#6f5500;--cac-attente:#777;
+    --cac-fond:#fff;--cac-bloc:#fff;--cac-texte:#111;--cac-doux:#444;--cac-case:#fff;break-inside:avoid}
+  .cac .cac-dessin{border-color:#999}
+  html body .cac button.cac-case{display:flex!important;background:#fff!important;color:#111!important;border:1.5px solid #555!important}
+  html body .cac button.cac-case:not(.pleine){border-style:dashed!important}
+  .cac .cac-case .cac-q,.cac .cac-case .cac-marque{visibility:hidden}
+  .cac .cac-bloc{background:#fff!important}
+  .cac .cac-reserve,.cac .cac-msg{display:none!important}
+  .cac .cac-et.cac-trou,.cac .cac-sous>.cac-trou{visibility:hidden}
+  .cac .cac-titre,.cac .cac-fonction,.cac .cac-case .cac-v,.cac .cac-texte{color:#111!important}
+  .cac .cac-c-attente{color:#555!important}
+  .cac .cac-papier{display:block!important;margin:1mm 0 0;font-size:10pt;color:#111}
+  .cac.cac-pret>.cac-questions{display:none!important}
+}
+</style>
+<script>
+/* Chaîne à compléter — l'élève pose les étiquettes DANS le schéma des chaînes d'énergie et d'information.
+   Source unique : _outils/chaine_a_completer/ (chaine.js, chaine.css), posée dans la page par poser.py, entre deux
+   marqueurs. Ne pas la modifier dans une page.
+
+   Pourquoi (demande de Pascal du 15/11/2026) : l'élève répondait à beaucoup de questions sur les chaînes sans avoir
+   le schéma sous les yeux ; il n'en gardait pas l'image, et peinait ensuite à la construire. Ici, le schéma EST la
+   question : les cases sont dans le dessin, le dessin reste sous les yeux, et il se bâtit d'une activité à l'autre
+   (ce qui est trouvé reste écrit, ce qui viendra plus tard se voit en pointillés).
+
+   LA PAGE DÉCLARE
+     1. Le dessin, une fois par page (le même dessin sert à toutes les étapes) :
+        window.CAC_DESSINS = {lampadaire: {large: {vue: [x, y, l, h], ...}, etroit: {vue: [...], max: 520, ...},
+                                           elements: [ ... ]}};
+        Éléments (chacun : id, type, groupe, puis sa géométrie dans `large` et dans `etroit`) :
+          titre  {texte, couleur}                       géométrie {x, y}            (le coin haut gauche du texte)
+          bloc   {fonction, composant, stock?, couleur} géométrie {x, y, l, tf?}    (le composant SOUS le bloc ; tf : taille de la fonction)
+          fleche {nature, texte, double?}               géométrie {points, ex, ey, ancre, lt?}
+                 nature : energie, information, ordre (pointillés), stock, lien (un branchement, sans flux) ; ancre : la place de l'étiquette par
+                 rapport au point (ex, ey) — bas (au-dessus du point), haut, gauche, droite ; lt : largeur de la case
+          texte  {texte, gras?, couleur?}               géométrie {x, y, ancre?, l?}      (l : sa largeur)
+        Une géométrie peut redonner texte, composant ou stock pour couper les lignes autrement (\n), sans changer
+        les mots.
+     2. Chaque étape, à la place des questions :
+        <div class="cac" data-cac='{"dessin": "lampadaire",
+                                     "cases": {"convertir-panneau.fonction": "e2_f1", ...},
+                                     "vides": ["g:information"], "reutilisables": true}'>
+          <div class="cac-questions"> … les groupes de boutons radio (fieldset.qcm-groupe) … </div>
+        </div>
+        cases : la partie d'un élément (fonction, composant, stock, texte) → l'id du groupe de boutons radio qui garde
+                la réponse. Poser une étiquette coche le bouton de cette valeur : la sauvegarde, la vérification,
+                le mode mission et l'impression de la page lisent toujours ces groupes.
+        vides : ce qui viendra plus tard (en pointillés, sans texte). Motifs : « id.partie », « id » (tout
+                l'élément), « *.partie », « g:groupe » (tout un groupe : ses blocs et ses flèches en pointillés),
+                « g:groupe.partie ».
+        acquis : {"id.partie": "id du groupe"} — ce que l'élève a trouvé à une étape d'avant reste écrit dans le
+                dessin (sa réponse, en clair ; en pointillés tant qu'il n'a rien posé) : le schéma se bâtit.
+        titres : {id: "autre texte"} pour un titre ou un texte à cette étape (« … à construire en séance 3 »).
+        vue    : {etroit: [x, y, l, h]} — recadrer le dessin à cette étape (au téléphone, la seule chaîne travaillée).
+        reutilisables : une étiquette peut servir plusieurs fois (CONVERTIR, énergie électrique).
+     Sans JavaScript, les questions restent visibles : rien ne se perd.
+
+   LE MODE MISSION voit les groupes de la .cac comme un seul écran (une partie) et les vérifie comme d'habitude :
+   les justes restent, les fausses (classe ms-origine) retournent dans la réserve. Le dessin suit leurs marques.
+
+   GESTES : toucher une étiquette, puis toucher sa case ; ou la faire glisser ; au clavier, Entrée sur l'étiquette
+   mène à la première case vide. Toucher une case pleine la vide (sauf une case déjà juste). */
+(function(){
+  "use strict";
+  if (window.ChaineACompleter) return;
+  var D = document, NS = "http://www.w3.org/2000/svg";
+  var PARTIES = {bloc: ["fonction", "composant", "stock"], fleche: ["texte"], titre: ["texte"], texte: ["texte"]};
+  var DEFAUT = {
+    large:  {seuil: 760, h: 70, rx: 12, ecart: 10, lt: 170, lc: 20,
+             tailles: {titre: 22, fonction: 24, composant: 21, stock: 19, fleche: 20, texte: 21}},
+    etroit: {h: 44, rx: 8, ecart: 6, lt: 104, lc: 12, max: 520,
+             tailles: {titre: 14, fonction: 16, composant: 13.5, stock: 12.5, fleche: 13, texte: 14}}
+  };
+  function $$(s, r){ return [].slice.call((r || D).querySelectorAll(s)); }
+  function cree(nom, attrs, parent){ var e = D.createElementNS(NS, nom); for (var k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function el(t, c, h){ var e = D.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
+  function lignes(t){ return esc(t).replace(/\n/g, "<br>"); }
+  function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
+  function fusion(a, b){ var r = {}, k; for (k in a) r[k] = a[k]; for (k in (b || {})) r[k] = b[k]; return r; }
+  function lireV(f){ var c = f.querySelector("input[type=radio]:checked"); return c ? c.value : ""; }
+  function valeurs(f){ return $$("input[type=radio]", f).map(function(r){ return r.value; }); }
+  /* le texte que l'élève lit : celui du libellé de la proposition (il peut nommer une unité en toutes lettres,
+     n°312, quand la valeur garde le texte que la vérification compare) */
+  function libelle(f, v){ var r = $$("input[type=radio]", f).filter(function(x){ return x.value === v; })[0], l = r && f.querySelector('label[for="' + r.id + '"]'); return l ? net(l.textContent) : v; }
+  function legende(f){ var l = f.querySelector("legend"); return net(l ? l.textContent : f.getAttribute("aria-label") || ""); }
+  function ecrire(f, v){
+    var r = null;
+    $$("input[type=radio]", f).forEach(function(x){ x.checked = (v != null && x.value === v); if (x.checked) r = x; });
+    var cible = r || f;
+    cible.dispatchEvent(new Event("input", {bubbles: true}));
+    cible.dispatchEvent(new Event("change", {bubbles: true}));
+  }
+  function etat(f){ return f.classList.contains("ms-juste") ? "juste" : f.classList.contains("ms-faux") ? "faux" : ""; }
+
+  var choix = null, glisse = null, vientDeGlisser = false;          // l'étiquette choisie : {cac, v}
+
+  function Chaine(racine){
+    var conf = {};
+    try { conf = JSON.parse(racine.getAttribute("data-cac") || "{}"); } catch (e) { console.warn("chaîne à compléter : data-cac illisible", e); return; }
+    var dessin = (window.CAC_DESSINS || {})[conf.dessin];
+    if (!dessin) { console.warn("chaîne à compléter : dessin inconnu", conf.dessin); return; }
+    var cases = conf.cases || {}, vides = conf.vides || [], titres = conf.titres || {}, acquis = conf.acquis || {};
+    var champs = {}, ordre = [];                                       // « id.partie » → fieldset ; ordre de lecture
+    Object.keys(cases).forEach(function(k){ var f = D.getElementById(cases[k]); if (f) { champs[k] = f; ordre.push(k); f.classList.add("ms-origine"); } else console.warn("chaîne à compléter : groupe absent", cases[k]); });
+    if (!ordre.length) return;
+    var etiquettes = [], textes = {};
+    ordre.forEach(function(k){ valeurs(champs[k]).forEach(function(v){ if (etiquettes.indexOf(v) < 0) { etiquettes.push(v); textes[v] = libelle(champs[k], v); } }); });
+    function tx(v){ return textes[v] || v; }
+    var reutil = !!conf.reutilisables;
+    var dispo = "", k = 1, zone, svg, calque, reserve, msg, papier;
+
+    racine.classList.add("cac-pret");
+    zone = el("div", "cac-dessin"); zone.setAttribute("role", "group");
+    zone.setAttribute("aria-label", conf.nom || "Le schéma des chaînes, à compléter avec les étiquettes");
+    msg = el("p", "cac-msg"); msg.setAttribute("aria-live", "polite");
+    reserve = el("div", "cac-reserve");
+    papier = el("p", "cac-papier pp-papier");
+    var q = racine.querySelector(".cac-questions");
+    racine.insertBefore(zone, q); racine.insertBefore(msg, q); racine.insertBefore(reserve, q); racine.insertBefore(papier, q);
+    papier.innerHTML = "<b>Les étiquettes à écrire dans les cases" + (reutil ? " (une étiquette peut servir plusieurs fois)" : "") + "&nbsp;:</b> " + etiquettes.map(function(v){ return esc(tx(v)); }).join(" · ");
+
+    function correspond(m, e, partie){
+      if (m === e.id || m === e.id + "." + partie || m === "*." + partie) return true;
+      if (m.indexOf("g:") === 0) { var g = m.slice(2).split("."); return g[0] === e.groupe && (!g[1] || g[1] === partie); }
+      return false;
+    }
+    function attente(e){ return vides.some(function(m){ return m === "g:" + e.groupe || m === e.id; }); }
+    function sort(e, partie){
+      var cle = e.id + "." + partie;
+      if (champs[cle]) return "case";
+      if (acquis[cle]) return "acquis";
+      return vides.some(function(m){ return correspond(m, e, partie); }) ? "vide" : "vu";
+    }
+
+    function rendre(){
+      var w = racine.clientWidth; if (!w) return;
+      var nd = w >= (dessin.seuil || DEFAUT.large.seuil) && dessin.large ? "large" : "etroit";
+      var G = fusion(DEFAUT[nd], dessin[nd]); G.tailles = fusion(DEFAUT[nd].tailles, (dessin[nd] || {}).tailles);
+      var V = (conf.vue && conf.vue[nd]) || G.vue, larg = nd === "etroit" ? Math.min(w, G.max) : w;
+      k = larg / V[2]; dispo = nd;
+      zone.className = "cac-dessin cac-" + nd;
+      /* le dessin se règle sur sa largeur (unités de conteneur) : il garde ses proportions à l'écran comme sur le papier */
+      zone.style.width = nd === "etroit" ? "min(100%, " + G.max + "px)" : "100%"; zone.style.aspectRatio = V[2] + " / " + V[3]; zone.style.height = "";
+      zone.innerHTML = "";
+      svg = cree("svg", {viewBox: V.join(" "), width: "100%", height: "100%", "aria-hidden": "true", focusable: "false", "class": "cac-traits"}, zone);
+      var defs = cree("defs", {}, svg);
+      ["energie", "information", "ordre", "stock", "lien", "attente"].forEach(function(n){
+        var m = cree("marker", {id: "cac-m-" + n + "-" + uid, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse", "class": "cac-m cac-n-" + n}, defs);
+        cree("path", {d: "M0,0 L10,5 L0,10 z"}, m);
+      });
+      calque = el("div", "cac-calque"); zone.appendChild(calque);
+      function px(v){ return Math.round(v / V[2] * 100000) / 1000 + "%"; }          // une largeur, en part du dessin
+      function py(v){ return Math.round(v / V[3] * 100000) / 1000 + "%"; }          // une hauteur
+      function cq(v){ return Math.round(v / V[2] * 100000) / 1000 + "cqw"; }        // une taille qui suit la largeur du dessin
+      function pos(n, x, y){ n.style.left = px(x - V[0]); n.style.top = py(y - V[1]); }
+      function taille(n, t){ n.style.fontSize = "max(11px, " + cq(t) + ")"; }
+      function texte(e, g, cle){ return g[cle] != null ? g[cle] : e[cle]; }
+      function partie(e, g, p, boite, classe, t){
+        var s = sort(e, p);
+        if (attente(e) && s === "vu") s = "vide";
+        if (s === "acquis") {
+          var fa = D.getElementById(acquis[e.id + "." + p]), va = fa ? lireV(fa) : "";
+          if (!va) s = "vide";
+          else { boite.className = classe + " cac-acquis"; boite.textContent = libelle(fa, va); taille(boite, p === "fonction" ? t * .86 : t); return boite; }
+        }
+        if (s === "vu") { boite.className = classe; boite.innerHTML = lignes(titres[e.id] && p === "texte" ? titres[e.id] : texte(e, g, p)); taille(boite, t); return boite; }
+        var c = s === "case" ? el("button", classe + " cac-case") : el("span", classe + " cac-trou");
+        taille(c, t);
+        if (s === "case") {
+          var f = champs[e.id + "." + p], v = lireV(f), st = etat(f);
+          c.type = "button"; c.setAttribute("data-cle", e.id + "." + p);
+          if (v) c.classList.add("pleine"); if (st) c.classList.add(st);
+          if (st === "juste") c.disabled = true;
+          c.innerHTML = v ? '<span class="cac-v">' + esc(tx(v)) + "</span>" + (st === "juste" ? '<span class="cac-marque" aria-hidden="true">✓</span>' : st === "faux" ? '<span class="cac-marque" aria-hidden="true">✗</span>' : "")
+                          : '<span class="cac-q" aria-hidden="true">?</span>';
+          c.setAttribute("aria-label", legende(f) + " : " + (v ? tx(v) + (st === "juste" ? ", juste" : st === "faux" ? ", à revoir" : "") : "case vide"));
+        } else c.setAttribute("aria-hidden", "true");
+        return c;
+      }
+      dessin.elements.forEach(function(e){
+        var g = e[nd]; if (!g) return;
+        var att = attente(e), coul = att ? null : e.couleur;
+        if (e.type === "fleche") {
+          var nat = att ? "attente" : e.nature, d = "M" + g.points.map(function(p){ return p[0] + "," + p[1]; }).join(" L");
+          var tr = cree("path", {d: d, "class": "cac-fleche cac-n-" + nat, "marker-end": "url(#cac-m-" + nat + "-" + uid + ")"}, svg);
+          if (e.double) tr.setAttribute("marker-start", "url(#cac-m-" + nat + "-" + uid + ")");
+          tr.style.strokeWidth = (nd === "large" ? 3.4 : 2.6) / Math.min(1, k * 1.6) + "px";
+          /* les flux animés (demande de Pascal du 15/11/2026) : des perles claires avancent dans le sens de la flèche,
+             dans les deux sens pour une double flèche ; un branchement (« lien ») ne porte aucun flux, il reste fixe */
+          if (nat !== "lien") (e.double ? ["", " retour"] : [""]).forEach(function(sens){
+            var fl = cree("path", {d: d, "class": "cac-flux" + sens, "aria-hidden": "true"}, svg);
+            fl.style.strokeWidth = ((nd === "large" ? 3.4 : 2.6) + 3) / Math.min(1, k * 1.6) + "px";
+          });
+          var b = partie(e, g, "texte", el("div"), "cac-et cac-et-" + (g.ancre || "bas") + " cac-c-" + nat, G.tailles.fleche);
+          if (/cac-(case|trou|acquis)/.test(b.className)) b.style.width = px(g.lt || G.lt);
+          pos(b, g.ex, g.ey); calque.appendChild(b);
+        } else if (e.type === "bloc") {
+          var bl = el("div", "cac-bloc" + (att ? " attente" : ""));
+          pos(bl, g.x, g.y); bl.style.width = px(g.l); bl.style.height = py(G.h); bl.style.borderRadius = cq(G.rx);
+          /* la couleur d'une fonction (n°120) se montre quand la fonction est écrite ou trouvée juste : tant qu'elle
+             est à trouver, le bloc reste neutre, sinon la couleur la soufflerait */
+          var sf = sort(e, "fonction"), ff = champs[e.id + ".fonction"];
+          if (coul && (sf === "vu" || (sf === "case" && etat(ff) === "juste"))) bl.style.setProperty("--cac-coul", coul);
+          else if (!att) bl.classList.add("neutre");
+          var fo = partie(e, g, "fonction", el("div"), "cac-fonction", g.tf || G.tailles.fonction); bl.appendChild(fo);
+          calque.appendChild(bl);
+          var sous = el("div", "cac-sous"); pos(sous, g.x - G.lc / 2, g.y + G.h + G.ecart); sous.style.width = px(g.l + G.lc);
+          if (e.composant != null) sous.appendChild(partie(e, g, "composant", el("div"), "cac-composant", G.tailles.composant));
+          if (e.stock != null) sous.appendChild(partie(e, g, "stock", el("div"), "cac-stock", G.tailles.stock));
+          calque.appendChild(sous);
+        } else {
+          var tx = partie(e, g, "texte", el("div"), (e.type === "titre" ? "cac-titre" : "cac-texte cac-et-" + (g.ancre || "centre")) + (e.gras ? " gras" : "") + (att ? " attente" : ""),
+                          e.type === "titre" ? G.tailles.titre : G.tailles.texte);
+          if (coul) tx.style.color = coul;
+          if (e.type === "titre") tx.style.maxWidth = px(V[0] + V[2] - g.x - 6);
+          else tx.style.width = px(g.l || (nd === "large" ? 220 : 300));          // une largeur à lui : au bord du dessin, il ne se tasse pas
+          pos(tx, g.x, g.y); calque.appendChild(tx);
+        }
+      });
+      peindreReserve();
+    }
+    var uid = Math.random().toString(36).slice(2, 7);
+
+    function peindreReserve(){
+      var pris = ordre.map(function(c){ return lireV(champs[c]); });
+      var finies = ordre.every(function(c){ return etat(champs[c]) === "juste"; });
+      reserve.hidden = finies;
+      if (finies) return;
+      var labs = etiquettes.map(function(v){
+        if (!reutil && pris.indexOf(v) >= 0) return "";
+        var on = !!(choix && choix.cac === api && choix.v === v);
+        return '<button type="button" class="cac-lab' + (on ? " choisie" : "") + '" data-v="' + esc(v) + '" aria-pressed="' + on + '">' + esc(tx(v)) + "</button>";
+      }).join("");
+      var plein = pris.every(Boolean);
+      var trop = reutil ? 0 : etiquettes.length - ordre.length;
+      reserve.innerHTML = '<p class="cac-reserve-t">' + (plein ? "Toutes les cases sont remplies : vérifie." : "Étiquettes" + (reutil ? " — chacune peut servir plusieurs fois" : trop > 0 ? " — attention, " + trop + " en trop" : "")) + "</p>"
+        + '<div class="cac-reserve-l">' + (labs || '<span class="cac-geste">Toutes les étiquettes sont posées.</span>') + "</div>";
+    }
+    function dire(t){ msg.textContent = t || ""; }
+    function premiereVide(){ var c = ordre.filter(function(x){ return !lireV(champs[x]); })[0]; return c ? zone.querySelector('[data-cle="' + c + '"]') : null; }
+    function montrerCase(c){ if (c && c.scrollIntoView) c.scrollIntoView({block: "nearest", inline: "nearest"}); }
+    function poser(cle, v){
+      var f = champs[cle]; if (!f || etat(f) === "juste") return;
+      if (!reutil && v) ordre.forEach(function(o){ if (o !== cle && lireV(champs[o]) === v && etat(champs[o]) !== "juste") { ecrire(champs[o], null); champs[o].classList.remove("ms-faux"); } });
+      f.classList.remove("ms-faux");
+      ecrire(f, v);
+      dire("");
+    }
+    var api = {racine: racine, rendre: rendre, poser: poser, champs: champs, ordre: ordre, etiquettes: etiquettes, peindre: peindreReserve, dispo: function(){ return dispo; }};
+
+    racine.addEventListener("click", function(ev){
+      if (vientDeGlisser) return;
+      var lab = ev.target.closest(".cac-lab");
+      if (lab) {
+        var v = lab.getAttribute("data-v");
+        choix = (choix && choix.cac === api && choix.v === v) ? null : {cac: api, v: v};
+        peindreReserve();
+        if (choix) {
+          dire("« " + tx(v) + " » est prise : touche sa case dans le schéma.");
+          if (ev.detail === 0) { var c0 = premiereVide(); if (c0) { c0.focus({preventScroll: true}); montrerCase(c0); } }
+          else { var b = reserve.querySelector('.cac-lab[data-v="' + CSS.escape(v) + '"]'); if (b) b.focus({preventScroll: true}); }
+        } else dire("");
+        return;
+      }
+      var c = ev.target.closest(".cac-case");
+      if (c && !c.disabled) {
+        var cle = c.getAttribute("data-cle");
+        if (choix && choix.cac === api) { poser(cle, choix.v); choix = null; rendre(); var s = premiereVide(); if (s && ev.detail === 0) s.focus({preventScroll: true}); montrerCase(s); }
+        else if (lireV(champs[cle])) { poser(cle, null); rendre(); }
+        else dire("Choisis d'abord une étiquette, en bas, puis touche cette case.");
+      }
+    });
+    racine.addEventListener("keydown", function(ev){ if (ev.key === "Escape" && choix) { choix = null; peindreReserve(); dire(""); } });
+    // la vérification (mode mission) marque les groupes ; une étiquette fausse est rendue : le dessin suit
+    var obs = new MutationObserver(function(){ rendre(); });
+    ordre.forEach(function(c){ obs.observe(champs[c], {attributes: true, attributeFilter: ["class"]}); });
+    racine.addEventListener("change", function(ev){ if (ev.target.closest(".cac-questions")) rendre(); });
+    if (window.ResizeObserver) new ResizeObserver(function(){ if (racine.clientWidth && racine.clientWidth !== api._w) { api._w = racine.clientWidth; rendre(); } }).observe(racine);
+    rendre();
+    racine._cac = api;
+    return api;
+  }
+
+  /* ── Glisser une étiquette (ou une case pleine) vers une case ── */
+  function caseSous(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".cac-case:not(:disabled)"); }
+  D.addEventListener("pointerdown", function(ev){
+    var src = ev.target.closest(".cac-lab, .cac-case.pleine"); if (!src || src.disabled) return;
+    if (ev.pointerType === "touch" && src.classList.contains("cac-case")) return;      // au doigt, une case pleine se vide en la touchant
+    var r = src.closest(".cac"); if (!r || !r._cac) return;
+    var de = src.getAttribute("data-cle");
+    glisse = {id: ev.pointerId, x: ev.clientX, y: ev.clientY, src: src, api: r._cac, de: de, v: de ? lireV(r._cac.champs[de]) : src.getAttribute("data-v"), f: null};
+  });
+  window.addEventListener("pointermove", function(ev){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return;
+    if (!g.f) { if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "cac-fantome"); g.f.textContent = net((g.src.querySelector(".cac-v") || g.src).textContent); D.body.appendChild(g.f); g.src.classList.add("part"); }
+    g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-70%) rotate(-2deg)";
+    $$(".cac-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+    var c = caseSous(ev); if (c && c.closest(".cac") === g.api.racine) c.classList.add("vise");
+  });
+  function lache(ev, annule){
+    var g = glisse; if (!g || ev.pointerId !== g.id) return; glisse = null; if (!g.f) return;
+    g.f.remove(); vientDeGlisser = true; setTimeout(function(){ vientDeGlisser = false; }, 0);
+    var c = annule ? null : caseSous(ev);
+    if (c && c.closest(".cac") === g.api.racine) { var cle = c.getAttribute("data-cle"); if (g.de && g.de !== cle) g.api.poser(g.de, null); g.api.poser(cle, g.v); }
+    else if (g.de && !annule) g.api.poser(g.de, null);
+    choix = null; g.api.rendre();
+  }
+  window.addEventListener("pointerup", function(ev){ lache(ev, false); });
+  window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
+
+  function init(){ $$(".cac[data-cac]").forEach(function(r){ if (!r._cac) Chaine(r); }); }
+  window.ChaineACompleter = {init: init, Chaine: Chaine};
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
+  // la page remet ses réponses après coup (sauvegarde relue) : le dessin se repeint une fois tout chargé
+  window.addEventListener("load", function(){ $$(".cac").forEach(function(r){ if (r._cac) r._cac.rendre(); }); });
+})();
+</script>
+<!-- chaine-a-completer v1 : fin -->
+<style id="css-qcm-grille">
+/* grilles_radio.py (08/11/2026) : des questions qui partagent leurs réponses se lisent en grille — les réponses une
+   fois, lettrées ; chaque question, une rangée de lettres. La valeur de chaque bouton est le texte de la réponse. */
+.qcm-cles{margin:10px 0 6px;padding:8px 12px;border:1px solid var(--border,#274a8a);border-radius:10px;background:var(--panel2,#0a1b3d)}
+.qcm-cles-titre{margin:0 0 4px;font-weight:600}
+.qcm-cles ol{margin:0;padding-left:0;list-style:none}
+.qcm-cles li{margin:3px 0;padding-left:1.9em;text-indent:-1.9em}
+.qcm-cles li b{display:inline-block;width:1.6em;text-indent:0;color:var(--hl,#61dafb)}
+.qcm-groupe.qcm-grille .qcm-option{display:inline-flex;align-items:center;gap:2px;margin:0;padding:3px 3px;width:auto;min-width:0}
+.qcm-groupe.qcm-grille .qcm-option label{flex:none;font-weight:700}
+.qcm-groupe.qcm-grille{display:flex;flex-wrap:wrap;align-items:center;column-gap:4px;row-gap:2px}
+/* six lettres tiennent sur une rangée à 390 px, même au fond de trois cadres emboîtés (revue d'écran V2 4e, 10/11/2026 :
+   la lettre F partait seule à la ligne sur 4e_C7.5) : bouton 17 px, lettre resserrée */
+.qcm-groupe.qcm-grille .qcm-option input[type=radio]{width:17px;height:17px;margin:0}
+.qcm-groupe.qcm-grille .qcm-option label{padding:0 1px;letter-spacing:0}
+@media print{.qcm-cles{background:#fff!important;border-color:#999!important;color:#111!important}.qcm-cles li b{color:#111!important}}
+</style>
+<style id="css-bonus-replie">
+/* replier_bonus.py (08/11/2026) : le Bonus se déplie quand on a fini */
+details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
+details.bonus-replie[open]>summary{margin-bottom:8px}
+</style>
 </head>
 <body>
 
@@ -1288,6 +1774,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <div class="toolbar">
   <button class="btn" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset" type="button" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button>
+
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false" title="Masquer les corrections et les compléments, pour ne garder que les consignes et les exercices. Un second clic ramène tout.">🎯 Mode essentiel : OFF</button>
 </div>
 
 <p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
@@ -1312,7 +1800,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <tr><td><b>5e_C7.4</b></td><td>Choisir une source d'énergie parmi plusieurs proposées et une forme d'énergie possible.</td><td>Activités 0, 2, 3 et REFAIRE</td></tr>
     <tr><td>5e_C3.1 <span style="color:var(--sub)">(appui)</span></td><td>Repérer pour un OST les matériaux, les sources et les formes d'énergies, le traitement de l'information.</td><td>Activités 1 et 4</td></tr>
   </table>
-  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C3.1</code> · <code>5e_C7.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
+  <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <br><b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C3.1</code> · <code>5e_C7.4</code> servent à ranger les séquences&nbsp;; ils ne viennent pas du programme officiel.</p>
 </div>
 </details>
 
@@ -1360,9 +1848,9 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <div class="exo">
     <h4>💡 Ton idée à toi, avant tout essai</h4>
     <p>Cinq sources te sont proposées : une pile 9 V (volts), quatre piles AA, un accu rechargeable,
-    une prise de courant avec son adaptateur, un petit panneau solaire. <b>Laquelle
+    une prise de courant avec son adaptateur, un petit panneau solaire. <br><b>Laquelle
     choisirais-tu, là, tout de suite&nbsp;?</b> Et qu'est-ce qui te ferait changer d'avis&nbsp;?</p>
-    <textarea id="hyp" rows="3" placeholder="Je prendrais… parce que… et je changerais d'avis si…"></textarea>
+    <textarea aria-label="Je prendrais… parce que… et je changerais d&#x27;avis si…" id="hyp" rows="3" placeholder="Je prendrais… parce que… et je changerais d'avis si…"></textarea>
 
     <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
     Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
@@ -1376,10 +1864,10 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V (volts). C'est la tension d'un
         port USB, et elle est sans danger.</li>
       <li>Le « secteur » de la liste, <b>c'est l'adaptateur USB fermé</b>, jamais la prise
-        elle-même. On ne l'ouvre pas, on ne le modifie pas, on ne coupe pas son câble.
-        <b>Côté élève, il n'y a que du 5 V.</b></li>
+        elle-même. <br>On ne l'ouvre pas, on ne le modifie pas, on ne coupe pas son câble.
+        <br><b>Côté élève, il n'y a que du 5 V.</b></li>
       <li>Une pile ou un accu ne se met jamais en court-circuit, ne se perce pas, ne se chauffe
-        pas. Un accu qui gonfle ou qui chauffe se pose au sol, loin de tout, et on prévient.</li>
+        pas. <br>Un accu qui gonfle ou qui chauffe se pose au sol, loin de tout, et on prévient.</li>
       <li>Piles et accus usagés vont au <b>bac de collecte</b>, jamais à la poubelle.</li>
     </ul>
   </div>
@@ -1389,10 +1877,9 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <ul>
     <li><b>🅰 Avec le matériel</b> — le montage réel sur la paillasse, alimenté tour à tour par
-      chaque source, et un multimètre en série pour lire le courant. Les valeurs mesurées
+      chaque source, et un multimètre en série pour lire le courant. <br>Les valeurs mesurées
       remplacent alors celles du banc : ce sont elles qui font foi.</li>
-    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer.
-      C'est la voie par défaut, et la seule qui permette d'éteindre un consommateur pour voir
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer. <br>C'est la voie par défaut, et la seule qui permette d'éteindre un consommateur pour voir
       ce qu'il pesait.</li>
     <li><b>🅲 Sans écran</b> — les tableaux s'impriment et toutes les valeurs figurent dans les
       corrections. Le travail reste le même : lire, comparer, décider, justifier.</li>
@@ -1403,7 +1890,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
      « Avant de commencer » ; « Voir où j'en suis » renvoie aux rattrapages de ces lignes. -->
 <section class="card" id="billet" aria-labelledby="billet-t">
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
-  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. « Je ne sais pas encore » est une réponse utile.</p>
+  <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1">
       <legend>Une calculatrice munie d'un petit panneau solaire tire son énergie…</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="de la chaleur de la main"><label for="be_1__1">de la chaleur de la main</label></div>
@@ -1480,12 +1967,23 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <button class="seance-tab" id="tab-s2" data-panel="s2" role="tab" aria-controls="s2" aria-selected="false" type="button">Séance 2<br><small>Relever, choisir, refaire</small></button>
 </nav>
 
+<div id="tachesBandeau" aria-live="polite" aria-atomic="true">
+  <span class="tb-titre">📋 Où j'en suis <span class="tb-compte"></span></span>
+  <ul>
+    <li data-tache="0"><span class="tb-etat">○</span> Vérifier l'activité 0</li>
+    <li data-tache="1"><span class="tb-etat">○</span> Vérifier l'activité 1</li>
+    <li data-tache="2"><span class="tb-etat">○</span> Vérifier l'activité 2</li>
+    <li data-tache="3"><span class="tb-etat">○</span> Vérifier l'activité 3</li>
+    <li data-tache="4"><span class="tb-etat">○</span> Vérifier l'activité 4</li>
+    <li data-tache="5"><span class="tb-etat">○</span> Vérifier le réinvestissement</li>
+  </ul>
+</div>
 <!-- ══════════════════ SÉANCE 1 ══════════════════ -->
 <div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
 <section class="card seance-tete">
 <h2>🧭 Séance 1 — Brancher, puis nommer</h2>
 <p class="question-directrice">Question directrice : que donne chacune des cinq sources à l'indicateur, et sous quelle forme l'énergie y entre-t-elle ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : brancher les cinq sources au banc (activité 0, environ 15 min), puis la forme d'énergie de chaque source (activité 1, environ 20 min). Avec l'ouverture, la séance tient dans 55 min.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① brancher les cinq sources au banc (activité 0, environ 15 min)&nbsp;; <br>② la chaîne d'énergie : la forme d'énergie de chaque source (activité 1, environ 20 min). <br>Avec l'ouverture, la séance tient dans 55 min.</p>
 </section>
 
 <!-- Un outil n'est pas du décor (n°311) : le banc d'énergie sert aux deux séances (activités 0 et 2, le verrou des cinq
@@ -1513,7 +2011,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
     <div class="banc-cmd">
       <label for="src">Source d'énergie :</label>
-      <select id="src">
+      <select id="src" data-interface="commande">
         <option value="Pile 9 V alcaline">Pile 9 V (volts) alcaline</option>
         <option>4 piles AA alcalines</option>
         <option>Accu Li-ion 18650 rechargeable</option>
@@ -1528,48 +2026,44 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </table>
     <p class="verdict" id="verdict">—</p>
     <p class="detail-src" id="sDetail"></p>
-    <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+    <details class="detail-src approfondissement"><summary>🔎 D'où viennent les chiffres du banc</summary>
+      <p>Courants moyens sous 5 V, valeurs constructeur usuelles. <br>Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. <br>Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+    </details>
   </div>
 </section>
 
 <section class="card" id="act0">
   <h2>🖐️ Activité 0 — FAIRE d'abord : brancher les cinq sources ⏱ ~15 min</h2>
-  <p>Avant toute explication. Le banc, juste au-dessus, compte ce que ton indicateur consomme,
-  puis regarde ce que la source peut donner. <b>Passe les cinq sources en revue</b> et observe
+  <p>Avant toute explication. <br>Le banc, juste au-dessus, compte ce que ton indicateur consomme,
+  puis regarde ce que la source peut donner. <br><b>Passe les cinq sources en revue</b> et observe
   ce que devient la ligne du bas.</p>
 
   <div class="exo">
 
     <h4>Après avoir essayé les cinq</h4>
-    <p><b>1.</b> Avec la pile 9 V (volts), l'indicateur tient…</p>
-    <select id="a0q1">
-      <option value="">— je choisis —</option>
-      <option>environ une journée</option>
-      <option>environ une semaine</option>
-      <option>environ un mois</option>
-      <option>toute l'année scolaire</option>
-    </select>
-    <p><b>2.</b> Deux sources ne donnent pas une autonomie en jours. Lesquelles&nbsp;?</p>
-    <select id="a0q2" aria-label="Lesquelles ?">
-      <option value="">— je choisis —</option>
-      <option>la pile 9 V et les piles AA</option>
-      <option>le secteur et le panneau solaire</option>
-      <option>l'accu rechargeable et le secteur</option>
-      <option>aucune : elles en donnent toutes une</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a0q1">
+  <legend><b>1.</b> Avec la pile 9 V (volts), l'indicateur tient…</legend>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="environ une journée"><label for="a0q1__1">environ une journée</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="environ une semaine" data-pourquoi="La pile 9 V est la plus petite réserve des cinq : relis la ligne du bas du banc."><label for="a0q1__2">environ une semaine</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="environ un mois" data-pourquoi="Relis la ligne du bas avec la pile 9 V : 2,8 Wh, pour 2,78 Wh consommés par jour."><label for="a0q1__3">environ un mois</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="toute l&#x27;année scolaire" data-pourquoi="Aucune pile ne tient l'année : relis la ligne du bas avec la pile 9 V."><label for="a0q1__4">toute l'année scolaire</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a0q2">
+  <legend><b>2.</b> Deux sources ne donnent pas une autonomie en jours. Lesquelles&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="la pile 9 V et les piles AA" data-pourquoi="Les piles se vident : le banc donne pour elles un nombre de jours."><label for="a0q2__1">la pile 9 V et les piles AA</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="le secteur et le panneau solaire"><label for="a0q2__2">le secteur et le panneau solaire</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="l&#x27;accu rechargeable et le secteur" data-pourquoi="L'accu se vide comme une pile : il donne bien un nombre de jours."><label for="a0q2__3">l'accu rechargeable et le secteur</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="aucune : elles en donnent toutes une" data-pourquoi="Repasse le secteur et le panneau : le banc n'affiche pas de jours pour eux."><label for="a0q2__4">aucune : elles en donnent toutes une</label></div>
+</fieldset>
     <p style="font-size:.9em;color:var(--warn)">🔒 Sélectionne d'abord les cinq sources dans la liste du banc — c'est l'essai qui fait foi.</p>
     <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <p><b>1 — environ une journée.</b> 24 heures, exactement. Une pile 9 V paraît sérieuse
-      parce qu'elle est grosse et qu'elle affiche un gros nombre ; elle ne contient pourtant
-      que <b>4,95 Wh (wattheures)</b>, et le régulateur qui ramène ses 9 V à 5 V en jette près de la moitié
-      en chaleur avant que l'indicateur n'en voie la couleur.</p>
-      <p><b>2 — le secteur et le panneau solaire.</b> Ce ne sont pas des <em>réservoirs</em>,
-      ce sont des <b>robinets</b> : ils ne stockent rien, ils donnent. Le secteur donne tant
-      qu'il y a du réseau ; le panneau donne une certaine quantité <em>chaque jour</em>.
-      C'est une différence de nature, et elle change complètement la façon de décider.</p>
+      <p><b>1 — environ une journée.</b><br>24 heures, exactement. <br>Une pile 9 V paraît sérieuse, parce qu'elle est grosse et qu'elle affiche un gros nombre. <br>Elle ne contient pourtant que <b>4,95 Wh (wattheures)</b>. <br>Et le régulateur qui ramène ses 9 V à 5 V en jette près de la moitié en chaleur, avant que l'indicateur n'en voie la couleur.</p>
+      <p><b>2 — le secteur et le panneau solaire.</b><br>Ce ne sont pas des <em>réservoirs</em>,
+      ce sont des <b>robinets</b> : ils ne stockent rien, ils donnent. <br>Le secteur donne tant
+      qu'il y a du réseau ; le panneau donne une certaine quantité <em>chaque jour</em>. <br>C'est une différence de nature, et elle change complètement la façon de décider.</p>
     </div></details>
   </div>
 </section>
@@ -1578,71 +2072,70 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <h2>🔁 Activité 1 — D'où vient l'énergie, et sous quelle forme ⏱ ~20 min</h2>
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> nommer la forme d'énergie au départ de chaque source.
   <b>Compétence :</b> 5e_C3.1. <b>Production attendue :</b> 5 associations + 1 réponse.</p></details>
-  <p>Une source d'énergie n'est pas de l'électricité : c'est ce qui va <em>devenir</em> de
-  l'électricité. Associe chaque source à la forme d'énergie qu'elle contient <b>au départ</b>.</p>
+  <p>Une source d'énergie n'est pas de l'électricité : c'est ce qui va <em>devenir</em> de l'électricité.</p>
+  <p>Dans la chaîne de l'indicateur : <br>① pose sous chaque pile, et sous l'accu, l'énergie qu'il garde en réserve&nbsp;; <br>② pose sur la flèche du secteur et sur celle du soleil l'énergie qui arrive&nbsp;; <br>③ à droite, pose ce que la DEL en fait.</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
-    <select id="a1f0" aria-label="Pile 9 V (volts) alcaline">
-      <option value="">— je choisis —</option>
-      <option>chimique aussi — quatre fois la même réaction</option>
-      <option>chimique — une réaction dans la pile</option>
-      <option>chimique, mais réversible : on peut la recharger</option>
-      <option>rayonnement du soleil — de la lumière, pas du courant</option>
-      <option>électrique — elle arrive déjà sous cette forme</option>
-    </select>
-    <p style="margin-top:12px"><b>4 piles AA alcalines</b></p>
-    <select id="a1f1" aria-label="4 piles AA alcalines">
-      <option value="">— je choisis —</option>
-      <option>chimique aussi — quatre fois la même réaction</option>
-      <option>chimique — une réaction dans la pile</option>
-      <option>chimique, mais réversible : on peut la recharger</option>
-      <option>rayonnement du soleil — de la lumière, pas du courant</option>
-      <option>électrique — elle arrive déjà sous cette forme</option>
-    </select>
-    <p style="margin-top:12px"><b>Accu Li-ion 18650 rechargeable</b></p>
-    <select id="a1f2" aria-label="Accu Li-ion 18650 rechargeable">
-      <option value="">— je choisis —</option>
-      <option>chimique aussi — quatre fois la même réaction</option>
-      <option>chimique — une réaction dans la pile</option>
-      <option>chimique, mais réversible : on peut la recharger</option>
-      <option>rayonnement du soleil — de la lumière, pas du courant</option>
-      <option>électrique — elle arrive déjà sous cette forme</option>
-    </select>
-    <p style="margin-top:12px"><b>Secteur — adaptateur USB scellé</b></p>
-    <select id="a1f3" aria-label="Secteur — adaptateur USB scellé">
-      <option value="">— je choisis —</option>
-      <option>chimique aussi — quatre fois la même réaction</option>
-      <option>chimique — une réaction dans la pile</option>
-      <option>chimique, mais réversible : on peut la recharger</option>
-      <option>rayonnement du soleil — de la lumière, pas du courant</option>
-      <option>électrique — elle arrive déjà sous cette forme</option>
-    </select>
-    <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
-    <select id="a1f4" aria-label="Panneau solaire 1 W (watts) crête + accu">
-      <option value="">— je choisis —</option>
-      <option>chimique aussi — quatre fois la même réaction</option>
-      <option>chimique — une réaction dans la pile</option>
-      <option>chimique, mais réversible : on peut la recharger</option>
-      <option>rayonnement du soleil — de la lumière, pas du courant</option>
-      <option>électrique — elle arrive déjà sous cette forme</option>
-    </select>
-    <p style="margin-top:14px"><b>Et à l'arrivée&nbsp;?</b> Quelle que soit la source choisie,
-    la DEL de l'indicateur transforme l'énergie électrique en énergie…</p>
-    <select id="a1sortie">
-      <option value="">— je choisis —</option>
-      <option>lumineuse — et un peu de chaleur au passage</option>
-      <option>chimique — la DEL fabrique de la matière</option>
-      <option>mécanique — la DEL se met en mouvement</option>
-      <option>sonore — la DEL émet un léger sifflement</option>
-    </select>
+<div class="cac" data-cac='{"dessin": "hall", "cases": {"pile9.stock": "a1f0", "aa.stock": "a1f1", "accu.stock": "a1f2", "entree-secteur.texte": "a1f3", "entree-soleil.texte": "a1f4", "sortie.texte": "a1sortie"}, "reutilisables": true, "nom": "La chaîne d&#x27;énergie de l&#x27;indicateur : la forme d&#x27;énergie au départ de chaque source, et à l&#x27;arrivée"}'>
+<div class="cac-questions">
+<fieldset class="qcm-groupe" id="a1f0">
+  <legend>Pile 9 V (volts) alcaline : la forme d'énergie au départ</legend>
+  <div class="qcm-option"><input type="radio" name="a1f0" id="a1f0__1" value="énergie chimique"><label for="a1f0__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f0" id="a1f0__2" value="énergie électrique" data-pourquoi="L'énergie électrique, c'est le courant qui circule dans les fils. La pile 9 V garde son énergie dans une réaction chimique."><label for="a1f0__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f0" id="a1f0__3" value="énergie lumineuse" data-pourquoi="L'énergie lumineuse, c'est de la lumière, comme celle du soleil. La pile 9 V garde son énergie dans une réaction chimique."><label for="a1f0__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f0" id="a1f0__4" value="énergie mécanique" data-pourquoi="L'énergie mécanique, c'est un mouvement : rien ne tourne ni ne bouge ici. La pile 9 V garde son énergie dans une réaction chimique."><label for="a1f0__4">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f0" id="a1f0__5" value="énergie thermique" data-pourquoi="L'énergie thermique, c'est de la chaleur. La pile 9 V garde son énergie dans une réaction chimique."><label for="a1f0__5">énergie thermique</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1f1">
+  <legend>4 piles AA alcalines : la forme d'énergie au départ</legend>
+  <div class="qcm-option"><input type="radio" name="a1f1" id="a1f1__1" value="énergie chimique"><label for="a1f1__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f1" id="a1f1__2" value="énergie électrique" data-pourquoi="L'énergie électrique, c'est le courant qui circule dans les fils. Les piles AA gardent leur énergie dans une réaction chimique."><label for="a1f1__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f1" id="a1f1__3" value="énergie lumineuse" data-pourquoi="L'énergie lumineuse, c'est de la lumière, comme celle du soleil. Les piles AA gardent leur énergie dans une réaction chimique."><label for="a1f1__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f1" id="a1f1__4" value="énergie mécanique" data-pourquoi="L'énergie mécanique, c'est un mouvement : rien ne tourne ni ne bouge ici. Les piles AA gardent leur énergie dans une réaction chimique."><label for="a1f1__4">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f1" id="a1f1__5" value="énergie thermique" data-pourquoi="L'énergie thermique, c'est de la chaleur. Les piles AA gardent leur énergie dans une réaction chimique."><label for="a1f1__5">énergie thermique</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1f2">
+  <legend>Accu Li-ion 18650 rechargeable : la forme d'énergie au départ</legend>
+  <div class="qcm-option"><input type="radio" name="a1f2" id="a1f2__1" value="énergie chimique"><label for="a1f2__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f2" id="a1f2__2" value="énergie électrique" data-pourquoi="L'énergie électrique, c'est le courant qui circule dans les fils. L'accu garde son énergie dans une réaction chimique, qu'on peut refaire en le rechargeant."><label for="a1f2__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f2" id="a1f2__3" value="énergie lumineuse" data-pourquoi="L'énergie lumineuse, c'est de la lumière, comme celle du soleil. L'accu garde son énergie dans une réaction chimique, qu'on peut refaire en le rechargeant."><label for="a1f2__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f2" id="a1f2__4" value="énergie mécanique" data-pourquoi="L'énergie mécanique, c'est un mouvement : rien ne tourne ni ne bouge ici. L'accu garde son énergie dans une réaction chimique, qu'on peut refaire en le rechargeant."><label for="a1f2__4">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f2" id="a1f2__5" value="énergie thermique" data-pourquoi="L'énergie thermique, c'est de la chaleur. L'accu garde son énergie dans une réaction chimique, qu'on peut refaire en le rechargeant."><label for="a1f2__5">énergie thermique</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1f3">
+  <legend>Secteur, adaptateur USB scellé : la forme d'énergie qui arrive</legend>
+  <div class="qcm-option"><input type="radio" name="a1f3" id="a1f3__1" value="énergie chimique" data-pourquoi="L'énergie chimique est gardée dans une réaction, comme dans une pile. Le secteur arrive déjà en courant, par la prise et l'adaptateur."><label for="a1f3__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f3" id="a1f3__2" value="énergie électrique"><label for="a1f3__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f3" id="a1f3__3" value="énergie lumineuse" data-pourquoi="L'énergie lumineuse, c'est de la lumière, comme celle du soleil. Le secteur arrive déjà en courant, par la prise et l'adaptateur."><label for="a1f3__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f3" id="a1f3__4" value="énergie mécanique" data-pourquoi="L'énergie mécanique, c'est un mouvement : rien ne tourne ni ne bouge ici. Le secteur arrive déjà en courant, par la prise et l'adaptateur."><label for="a1f3__4">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f3" id="a1f3__5" value="énergie thermique" data-pourquoi="L'énergie thermique, c'est de la chaleur. Le secteur arrive déjà en courant, par la prise et l'adaptateur."><label for="a1f3__5">énergie thermique</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1f4">
+  <legend>Panneau solaire 1 W (watts) crête + accu : la forme d'énergie qui arrive</legend>
+  <div class="qcm-option"><input type="radio" name="a1f4" id="a1f4__1" value="énergie chimique" data-pourquoi="L'énergie chimique est gardée dans une réaction, comme dans une pile. Le panneau reçoit la lumière du soleil, puis la change en courant."><label for="a1f4__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f4" id="a1f4__2" value="énergie électrique" data-pourquoi="L'énergie électrique, c'est le courant qui circule dans les fils. Le panneau reçoit la lumière du soleil, puis la change en courant."><label for="a1f4__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f4" id="a1f4__3" value="énergie lumineuse"><label for="a1f4__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f4" id="a1f4__4" value="énergie mécanique" data-pourquoi="L'énergie mécanique, c'est un mouvement : rien ne tourne ni ne bouge ici. Le panneau reçoit la lumière du soleil, puis la change en courant."><label for="a1f4__4">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1f4" id="a1f4__5" value="énergie thermique" data-pourquoi="L'énergie thermique, c'est de la chaleur. Le panneau reçoit la lumière du soleil, puis la change en courant."><label for="a1f4__5">énergie thermique</label></div>
+</fieldset>
+<fieldset class="qcm-groupe" id="a1sortie">
+  <legend>Et à l'arrivée : la DEL change l'énergie électrique en…</legend>
+  <div class="qcm-option"><input type="radio" name="a1sortie" id="a1sortie__1" value="énergie chimique" data-pourquoi="L'énergie chimique est gardée dans une réaction, comme dans une pile. La DEL est là pour éclairer ; sa petite chaleur est une perte."><label for="a1sortie__1">énergie chimique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1sortie" id="a1sortie__2" value="énergie électrique" data-pourquoi="L'énergie électrique, c'est le courant qui circule dans les fils. La DEL est là pour éclairer ; sa petite chaleur est une perte."><label for="a1sortie__2">énergie électrique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1sortie" id="a1sortie__3" value="énergie lumineuse"><label for="a1sortie__3">énergie lumineuse</label></div>
+  <div class="qcm-option"><input type="radio" name="a1sortie" id="a1sortie__4" value="énergie mécanique" data-pourquoi="L'énergie mécanique, c'est un mouvement : rien ne tourne ni ne bouge ici. La DEL est là pour éclairer ; sa petite chaleur est une perte."><label for="a1sortie__4">énergie mécanique</label></div>
+  <div class="qcm-option"><input type="radio" name="a1sortie" id="a1sortie__5" value="énergie thermique" data-pourquoi="La DEL chauffe un peu, c'est vrai, mais c'est une perte : on l'allume pour la lumière."><label for="a1sortie__5">énergie thermique</label></div>
+</fieldset>
+</div>
+</div>
     <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
     <div class="feedback" id="fb1"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
-      <p><b>Pile 9 V alcaline</b> — chimique — une réaction dans la pile</p>
-      <p><b>4 piles AA alcalines</b> — chimique aussi — quatre fois la même réaction</p>
-      <p><b>Accu Li-ion 18650 rechargeable</b> — chimique, mais réversible : on peut la recharger</p>
-      <p><b>Secteur — adaptateur USB scellé</b> — électrique — elle arrive déjà sous cette forme</p>
-      <p><b>Panneau solaire 1 W crête + accu</b> — rayonnement du soleil — de la lumière, pas du courant</p>
+      <p><b>Pile 9 V alcaline</b> — <b>énergie chimique</b> : une réaction dans la pile.</p>
+      <p><b>4 piles AA alcalines</b> — <b>énergie chimique</b> aussi : quatre fois la même réaction.</p>
+      <p><b>Accu Li-ion 18650 rechargeable</b> — <b>énergie chimique</b>, mais on peut la remettre : on recharge l'accu.</p>
+      <p><b>Secteur — adaptateur USB scellé</b> — <b>énergie électrique</b> : elle arrive déjà sous cette forme.</p>
+      <p><b>Panneau solaire 1 W crête + accu</b> — <b>énergie lumineuse</b> : le rayonnement du soleil, de la lumière, pas du courant.</p>
+      <p>Les étiquettes qui ne vont nulle part : <b>énergie mécanique</b> (rien ne tourne ni ne bouge dans l'indicateur) et <b>énergie thermique</b> (la DEL chauffe un peu, mais c'est une perte, pas ce qu'on attend d'elle).</p>
       <p><b>À l'arrivée : lumineuse</b>, et un peu de chaleur — aucune conversion n'est parfaite.
       La chaîne complète s'écrit donc, par exemple :
       <b>chimique → électrique → lumineuse</b>. Le mot « source » désigne le premier maillon,
@@ -1663,15 +2156,15 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card seance-tete">
 <h2>🧭 Séance 2 — Relever, choisir, refaire</h2>
 <p class="question-directrice">Question directrice : quelle source choisir pour le hall, chiffre à l'appui, et qu'est-ce que le banc ne compte pas ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : relever ce que chaque source donne vraiment (activité 2, environ 20 min), choisir et le dire (activité 3, environ 20 min), ce que le banc ne compte pas (activité 4, environ 10 min), le réinvestissement (environ 10 min), puis la synthèse, le Bonus, le bilan et le renvoi vers le QCM. Avec le matériel (🅰), on ne branche que la très basse tension de l'adaptateur fermé : l'encadré Sécurité est dans le rappel, en haut de page.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① relever ce que chaque source donne vraiment (activité 2, environ 20 min)&nbsp;; <br>② choisir et le dire (activité 3, environ 20 min)&nbsp;; <br>③ ce que le banc ne compte pas (activité 4, environ 10 min)&nbsp;; <br>④ le réinvestissement (environ 10 min). <br>Puis la synthèse, le Bonus, le bilan et le QCM. <br>Avec le matériel (🅰), on ne branche que la très basse tension de l'adaptateur fermé : l'encadré Sécurité est dans le rappel, en haut de page.</p>
 </section>
 
 <section class="card" id="act2">
   <h2>📋 Activité 2 — Relever ce que chaque source donne vraiment ⏱ ~20 min</h2>
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> lire au banc, et écrire ce qu'on a lu. <b>Compétence :</b>
   5e_C7.4. <b>Production attendue :</b> 5 relevés.</p></details>
-  <p><a class="lien-outil" href="#outilBanc">Remonte au banc</a>. Pour chaque source, relève ce que la ligne <b>« Énergie réellement
-  disponible »</b> affiche. Attention : pour le panneau, ce n'est pas la même chose —
+  <p><a class="lien-outil" href="#outilBanc">Remonte au banc</a>. <br>Pour chaque source, relève ce que la ligne <b>« Énergie réellement
+  disponible »</b> affiche. <br>Attention : pour le panneau, ce n'est pas la même chose —
   c'est une énergie <b>par jour</b>.</p>
   <div class="exo">
   <table class="releve">
@@ -1679,7 +2172,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <tr><td>Pile 9 V (volts) alcaline</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… Wh"></td></tr>
     <tr><td>4 piles AA alcalines</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… Wh"></td></tr>
     <tr><td>Accu Li-ion 18650 rechargeable</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… Wh"></td></tr>
-    <tr><td>Secteur — adaptateur USB scellé</td><td class="num"><select id="rel3"><option value="">— je choisis —</option><option>illimitée</option><option value="2,8 Wh">2,8 Wh (wattheures)</option><option value="0 Wh">0 Wh (wattheures)</option></select></td></tr>
+    <tr><td>Secteur — adaptateur USB scellé</td><td class="num"><fieldset class="qcm-groupe" id="rel3" data-melange="1">
+  <legend>Secteur — adaptateur USB scellé : ce que le banc affiche</legend>
+  <div class="qcm-option"><input type="radio" name="rel3" id="rel3__3" value="0 Wh" data-pourquoi="Le secteur ne se vide pas : tant que la prise est là, l'énergie arrive."><label for="rel3__3">0 Wh (wattheures)</label></div>
+  <div class="qcm-option"><input type="radio" name="rel3" id="rel3__1" value="illimitée"><label for="rel3__1">illimitée</label></div>
+  <div class="qcm-option"><input type="radio" name="rel3" id="rel3__2" value="2,8 Wh" data-pourquoi="2,8 Wh, c'est la réserve de la pile 9 V, pas celle du secteur."><label for="rel3__2">2,8 Wh (wattheures)</label></div>
+</fieldset></td></tr>
     <tr><td>Panneau solaire 1 W (watts) crête + accu</td><td class="num"><input type="text" inputmode="decimal" id="rel4" placeholder="… Wh par jour"></td></tr>
   </table>
     <p style="font-size:.9em;color:var(--warn)">🔒 Passe les cinq sources au banc : on ne recopie pas un relevé qu'on n'a pas fait.</p>
@@ -1695,8 +2193,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <tr><td>Panneau solaire 1 W (watts) crête + accu</td><td><b>3,7 Wh par jour</b></td></tr>
       </table>
       <p style="margin-top:10px"><b>Le piège de la pile 9 V.</b> Elle stocke 4,95 Wh (wattheures) et n'en
-      délivre que 2,8. La différence part en chaleur dans le régulateur, qui doit faire tomber
-      9 V à 5 V : il jette 4 V sur 9, soit <b>44 %</b>. Les quatre piles AA font 6 V, le
+      délivre que 2,8. <br>La différence part en chaleur dans le régulateur, qui doit faire tomber
+      9 V à 5 V : il jette 4 V sur 9, soit <b>44 %</b>. <br>Les quatre piles AA font 6 V, le
       régulateur n'a plus qu'un volt à jeter sur six : il n'en perd que 17 %.</p>
       <p class="retenir">📌 <b>Une source ne vaut pas ce qu'elle contient : elle vaut ce qui
       arrive au bout.</b> C'est la première chose que ce banc apprend.</p>
@@ -1719,47 +2217,45 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   </div>
   <div class="exo">
 
-    <p><b>Question 1.</b> Le banc dit que le panneau solaire récolte 3,7 Wh (wattheures) par jour pour
-    2,78 consommés : il suffit. Pourquoi n'est-il pourtant pas le bon choix ici&nbsp;?</p>
-    <select id="a3q1" aria-label="Pourquoi n'est-il pourtant pas le bon choix ici ?">
-      <option value="">— je choisis —</option>
-      <option>parce qu'il n'y a pas de soleil dans un hall</option>
-      <option>parce qu'il coûte trop cher pour un collège</option>
-      <option>parce qu'il ne donne pas assez d'énergie</option>
-      <option>parce qu'un panneau solaire est interdit à l'intérieur</option>
-    </select>
-    <p><b>Question 2.</b> Et les piles&nbsp;? Avec la meilleure des trois, il faudrait
-    intervenir…</p>
-    <select id="a3q2">
-      <option value="">— je choisis —</option>
-      <option>tous les quatre jours environ</option>
-      <option>une fois par mois environ</option>
-      <option>une fois par trimestre</option>
-      <option>jamais : elles durent l'année</option>
-    </select>
-    <p><b>Question 3.</b> Quelle source choisis-tu&nbsp;?</p>
-    <select id="a3q3" aria-label="Quelle source choisis-tu ?">
-      <option value="">— je choisis —</option>
-      <option>le secteur, par son adaptateur USB fermé</option>
-      <option value="la pile 9 V, la plus simple à brancher">la pile 9 volts, la plus simple à brancher</option>
-      <option>le panneau solaire, le plus écologique</option>
-      <option>les quatre piles AA, les moins chères</option>
-    </select>
+    <fieldset class="qcm-groupe" id="a3q1" data-melange="1">
+  <legend><b>Question 1.</b> Le banc dit que le panneau solaire récolte 3,7 Wh (wattheures) par jour pour
+    2,78 consommés : il suffit. Pourquoi n'est-il pourtant pas le bon choix ici&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__3" value="parce qu&#x27;il ne donne pas assez d&#x27;énergie" data-pourquoi="Le banc dit le contraire : 3,7 Wh récoltés pour 2,78 consommés, au soleil."><label for="a3q1__3">parce qu'il ne donne pas assez d'énergie</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__4" value="parce qu&#x27;un panneau solaire est interdit à l&#x27;intérieur" data-pourquoi="Rien ne l'interdit : c'est la lumière qui manque dans un hall."><label for="a3q1__4">parce qu'un panneau solaire est interdit à l'intérieur</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__1" value="parce qu&#x27;il n&#x27;y a pas de soleil dans un hall"><label for="a3q1__1">parce qu'il n'y a pas de soleil dans un hall</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q1" id="a3q1__2" value="parce qu&#x27;il coûte trop cher pour un collège" data-pourquoi="Le prix n'est pas la raison : regarde où se trouve l'indicateur."><label for="a3q1__2">parce qu'il coûte trop cher pour un collège</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q2" data-melange="1">
+  <legend><b>Question 2.</b> Et les piles&nbsp;? Avec la meilleure des trois, il faudrait
+    intervenir…</legend>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__4" value="jamais : elles durent l&#x27;année" data-pourquoi="Divise la réserve des piles AA par ce que consomme l'indicateur chaque jour."><label for="a3q2__4">jamais : elles durent l'année</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="une fois par mois environ" data-pourquoi="12,5 Wh pour 2,78 Wh par jour : fais la division."><label for="a3q2__2">une fois par mois environ</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__3" value="une fois par trimestre" data-pourquoi="12,5 Wh pour 2,78 Wh par jour : fais la division."><label for="a3q2__3">une fois par trimestre</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__1" value="tous les quatre jours environ"><label for="a3q2__1">tous les quatre jours environ</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe" id="a3q3" data-melange="1">
+  <legend><b>Question 3.</b> Quelle source choisis-tu&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__1" value="le secteur, par son adaptateur USB fermé"><label for="a3q3__1">le secteur, par son adaptateur USB fermé</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__3" value="le panneau solaire, le plus écologique des cinq" data-pourquoi="Dans un hall, il n'y a pas de soleil : le panneau ne récolterait rien."><label for="a3q3__3">le panneau solaire, le plus écologique des cinq</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__4" value="les quatre piles AA, les moins chères à l&#x27;achat" data-pourquoi="Il faudrait les changer tous les quatre jours environ, et jeter les piles."><label for="a3q3__4">les quatre piles AA, les moins chères à l'achat</label></div>
+  <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__2" value="la pile 9 V, la plus simple à brancher et à changer" data-pourquoi="Elle tient environ une journée : il faudrait la changer tous les jours."><label for="a3q3__2">la pile 9 volts, la plus simple à brancher et à changer</label></div>
+</fieldset>
     <p><b>Ta justification, en deux phrases.</b> Nomme la source, cite <b>un chiffre relevé</b>,
     et dis ce qui a éliminé les autres.</p>
-    <textarea id="a3just" rows="3" placeholder="Je choisis … parce que … Les piles sont écartées parce que … et le panneau parce que …"></textarea>
+    <textarea aria-label="Je choisis … parce que … Les piles sont écartées parce que … et le panneau parce que …" id="a3just" rows="3" placeholder="Je choisis … parce que … Les piles sont écartées parce que … et le panneau parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Je choisis … (la source), parce que le banc affiche … (un chiffre relevé). »</li><li>« Les piles sont écartées parce qu'il faudrait les changer … (combien de fois). »</li><li>« Le panneau solaire est écarté parce que dans le hall, il n'y a pas de … »</li></ul></details>
     <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
     <div class="feedback" id="fb3"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <p><b>1 — pas de soleil dans un hall.</b> Le calcul est juste et le résultat ne sert à
-      rien : le banc compte l'ensoleillement de la Martinique <em>dehors</em>. Sous un néon, un
-      panneau récolte quelques pour cent de cela. <b>Un nombre exact peut répondre à une
+      <p><b>1 — pas de soleil dans un hall.</b><br>Le calcul est juste et le résultat ne sert à
+      rien : le banc compte l'ensoleillement de la Martinique <em>dehors</em>. <br>Sous un néon, un
+      panneau récolte quelques pour cent de cela. <br><b>Un nombre exact peut répondre à une
       question qu'on ne s'est pas posée</b> — c'est l'erreur la plus fréquente en technologie,
       et tu la retrouveras en 3<sup>e</sup>.</p>
-      <p><b>2 — tous les quatre jours.</b> Les quatre piles AA tiennent 4,5 jours, c'est la
-      meilleure des trois. Quatre piles neuves par semaine, trente-six semaines : cent
-      quarante-quatre piles à l'année pour un voyant. La contrainte « personne ne veut changer
+      <p><b>2 — tous les quatre jours.</b><br>Les quatre piles AA tiennent 4,5 jours, c'est la
+      meilleure des trois. <br>Quatre piles neuves par semaine, trente-six semaines : cent
+      quarante-quatre piles à l'année pour un voyant. <br>La contrainte « personne ne veut changer
       une pile chaque matin » les élimine — et le sac de piles usagées aussi.</p>
       <p><b>3 — le secteur.</b> Le hall a une prise, l'objet ne bouge pas, il doit marcher tous
       les jours : c'est exactement la situation où une source illimitée est la bonne. Et
@@ -1777,38 +2273,39 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p>Le banc ne connaît que des watts-heures. Associe chaque source à ce qu'il <em>ignore</em>
   d'elle.</p>
   <div class="exo">
-    <p style="margin-top:12px"><b>Pile 9 V (volts) alcaline</b></p>
-    <select id="a4a0" aria-label="Pile 9 V (volts) alcaline">
-      <option value="">— je choisis —</option>
-      <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
-      <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
-      <option>Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</option>
-      <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
-    </select>
-    <p style="margin-top:12px"><b>Accu Li-ion 18650 rechargeable</b></p>
-    <select id="a4a1" aria-label="Accu Li-ion 18650 rechargeable">
-      <option value="">— je choisis —</option>
-      <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
-      <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
-      <option>Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</option>
-      <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
-    </select>
-    <p style="margin-top:12px"><b>Secteur — adaptateur USB scellé</b></p>
-    <select id="a4a2" aria-label="Secteur — adaptateur USB scellé">
-      <option value="">— je choisis —</option>
-      <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
-      <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
-      <option>Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</option>
-      <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
-    </select>
-    <p style="margin-top:12px"><b>Panneau solaire 1 W (watts) crête + accu</b></p>
-    <select id="a4a3" aria-label="Panneau solaire 1 W (watts) crête + accu">
-      <option value="">— je choisis —</option>
-      <option>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</option>
-      <option>Il faut une prise à portée — et le hall en a une, la cour non.</option>
-      <option>Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</option>
-      <option>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</option>
-    </select>
+    <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>une réponse ne sert à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</li><li><b>B</b>Il faut une prise à portée — et le hall en a une, la cour non.</li><li><b>C</b>Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</li><li><b>D</b>Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé.</li><li><b>E</b>Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.</li></ol></div>
+<fieldset class="qcm-groupe qcm-grille" id="a4a0" data-indice="Une pile qu'on ne recharge pas, que devient-elle quand elle est vide ?">
+  <legend><b>Pile 9 V (volts) alcaline</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__1" value="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." aria-label="A — Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." data-pourquoi="Ce qui se recharge, c'est l'accu."><label for="a4a0__1" title="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__2" value="Il faut une prise à portée — et le hall en a une, la cour non." aria-label="B — Il faut une prise à portée — et le hall en a une, la cour non." data-pourquoi="Ce qui a besoin d'une prise, c'est le secteur."><label for="a4a0__2" title="Il faut une prise à portée — et le hall en a une, la cour non.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__3" value="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." aria-label="C — Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." data-pourquoi="Ce qui a besoin de soleil, c'est le panneau."><label for="a4a0__3" title="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__4" value="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé." aria-label="D — Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé."><label for="a4a0__4" title="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a0" id="a4a0__5" value="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." aria-label="E — Le déchet : une pile par jour, c'est un bac de collecte plein à Noël."><label for="a4a0__5" title="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a1" data-indice="Un accu se vide aussi : qui le remet en état ?">
+  <legend><b>Accu Li-ion 18650 rechargeable</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__1" value="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." aria-label="A — Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas."><label for="a4a1__1" title="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__2" value="Il faut une prise à portée — et le hall en a une, la cour non." aria-label="B — Il faut une prise à portée — et le hall en a une, la cour non." data-pourquoi="Ce qui a besoin d'une prise, c'est le secteur."><label for="a4a1__2" title="Il faut une prise à portée — et le hall en a une, la cour non.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__3" value="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." aria-label="C — Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." data-pourquoi="Ce qui a besoin de soleil, c'est le panneau."><label for="a4a1__3" title="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__4" value="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé." aria-label="D — Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé."><label for="a4a1__4" title="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a1" id="a4a1__5" value="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." aria-label="E — Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." data-pourquoi="Ce qui se jette, ce sont les piles qu'on ne recharge pas."><label for="a4a1__5" title="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a2" data-indice="D'où vient le courant du secteur ?">
+  <legend><b>Secteur — adaptateur USB scellé</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__1" value="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." aria-label="A — Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." data-pourquoi="Ce qui se recharge, c'est l'accu."><label for="a4a2__1" title="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__2" value="Il faut une prise à portée — et le hall en a une, la cour non." aria-label="B — Il faut une prise à portée — et le hall en a une, la cour non."><label for="a4a2__2" title="Il faut une prise à portée — et le hall en a une, la cour non.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__3" value="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." aria-label="C — Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." data-pourquoi="Ce qui a besoin de soleil, c'est le panneau."><label for="a4a2__3" title="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__4" value="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé." aria-label="D — Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé."><label for="a4a2__4" title="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a2" id="a4a2__5" value="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." aria-label="E — Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." data-pourquoi="Ce qui se jette, ce sont les piles qu'on ne recharge pas."><label for="a4a2__5" title="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.">E</label></div>
+</fieldset>
+    <fieldset class="qcm-groupe qcm-grille" id="a4a3" data-indice="Que faut-il au panneau pour récolter ?">
+  <legend><b>Panneau solaire 1 W (watts) crête + accu</b></legend>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__1" value="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." aria-label="A — Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas." data-pourquoi="Ce qui se recharge, c'est l'accu."><label for="a4a3__1" title="Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.">A</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__2" value="Il faut une prise à portée — et le hall en a une, la cour non." aria-label="B — Il faut une prise à portée — et le hall en a une, la cour non." data-pourquoi="Ce qui a besoin d'une prise, c'est le secteur."><label for="a4a3__2" title="Il faut une prise à portée — et le hall en a une, la cour non.">B</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__3" value="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage." aria-label="C — Il lui faut du soleil, donc un dehors, une orientation et un nettoyage."><label for="a4a3__3" title="Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.">C</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__4" value="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé." aria-label="D — Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé."><label for="a4a3__4" title="Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé.">D</label></div>
+  <div class="qcm-option"><input type="radio" name="a4a3" id="a4a3__5" value="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." aria-label="E — Le déchet : une pile par jour, c'est un bac de collecte plein à Noël." data-pourquoi="Ce qui se jette, ce sont les piles qu'on ne recharge pas."><label for="a4a3__5" title="Le déchet : une pile par jour, c'est un bac de collecte plein à Noël.">E</label></div>
+</fieldset>
     <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
     <div class="feedback" id="fb4"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
@@ -1816,6 +2313,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <p><b>Accu Li-ion 18650 rechargeable</b> — Il faut quelqu'un pour le recharger, et un chargeur qui ne se perde pas.</p>
       <p><b>Secteur — adaptateur USB scellé</b> — Il faut une prise à portée — et le hall en a une, la cour non.</p>
       <p><b>Panneau solaire 1 W crête + accu</b> — Il lui faut du soleil, donc un dehors, une orientation et un nettoyage.</p>
+      <p>La réponse en trop : « Il faut le refroidir : il chauffe trop pour rester dans un boîtier fermé. » <br>Aucune des quatre sources ne chauffe autant : l'indicateur ne consomme que 2,78 Wh (wattheures) par jour.</p>
       <p class="retenir">📌 <b>À retenir :</b> le banc répond à une seule question — combien de
       temps ça tient. Le prix, le déchet, la sécurité et le lieu ne sont pas dedans, et ce sont
       pourtant eux qui ont tranché.</p>
@@ -1826,17 +2324,18 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card" id="reinvestissement">
   <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
 <p>Le collège veut le <b>même indicateur</b> sur le portail de l'abri à vélos, dans
-  la cour. Même boîtier, même DEL, même consommation — <b>mais il n'y a pas de prise
+  la cour. <br>Même boîtier, même DEL, même consommation — <b>mais il n'y a pas de prise
   là-bas</b>, et il y a du soleil toute la journée.</p>
   <p><b>Quelle source choisis-tu maintenant, et pourquoi la réponse a-t-elle changé alors que
   l'objet, lui, n'a pas bougé&nbsp;?</b></p>
-  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <textarea aria-label="Je choisirais … parce que …" id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Pour l'abri à vélos, je choisis … parce qu'il n'y a pas de … et qu'il y a du … »</li><li>« L'objet n'a pas bougé : même boîtier, même DEL, même consommation. »</li><li>« La réponse a changé parce que c'est … (le lieu / ses contraintes) qui décide, pas seulement le chiffre du banc. »</li></ul></details>
   <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
   <div class="feedback" id="fb5"></div>
   <details class="correction"><summary>📖 Correction</summary><div>
     <p><b>Le panneau solaire.</b> Il récolte 3,7 Wh (wattheures) par jour pour 2,78 consommés — les mêmes
     chiffres qu'à l'activité 3, exactement les mêmes — et cette fois il y a du soleil.</p>
-    <p><b>Rien n'a changé dans l'objet. Tout a changé dans la situation.</b> C'est pour cela que
+    <p><b>Rien n'a changé dans l'objet. <br>Tout a changé dans la situation.</b><br>C'est pour cela que
     la compétence dit « choisir une source d'énergie » et pas « connaître la meilleure source » :
     il n'y a pas de meilleure source, il y a une source adaptée à un besoin, dans un lieu, avec
     des contraintes.</p>
@@ -1853,7 +2352,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <li><b>Forme d'énergie</b> — chimique dans une pile, rayonnement pour le soleil, électrique
       dans les fils, lumineuse au bout de la DEL. Une chaîne s'écrit avec des flèches.</li>
     <li><b>Réservoir ou robinet</b> — une pile stocke une quantité et s'épuise ; le secteur et
-      le panneau ne stockent rien et donnent. On ne les compare pas de la même façon.</li>
+      le panneau ne stockent rien et donnent. <br>On ne les compare pas de la même façon.</li>
     <li><b>Énergie utile</b> — ce qui arrive vraiment au bout. Une pile 9 V (volts) stocke 4,95 Wh et
       n'en délivre que 2,8 : le régulateur jette le reste en chaleur.</li>
     <li><b>Watt-heure (Wh)</b> — l'unité de l'énergie stockée. Un courant seul ne dit rien :
@@ -1867,59 +2366,62 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <p><b>🔋 Défi pile :</b> une pile 9 V (volts) coûte 3,50 € et tient 24 h. Combien coûterait une année
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
+  <p><b>🔋 Défi pile :</b> une pile 9 V (volts) coûte 3,50 € et tient 24 h. <br>Combien coûterait une année
   scolaire d'indicateur alimenté ainsi&nbsp;? Compare au prix de l'adaptateur, une fois pour toutes.</p>
   <p><b>☀ Défi Martinique :</b> le banc compte 5,3 heures d'équivalent plein soleil par jour, en
-  moyenne annuelle. Cherche ce que devient ce chiffre en saison des pluies, et dis ce que ça
+  moyenne annuelle. <br>Cherche ce que devient ce chiffre en saison des pluies, et dis ce que ça
   change pour le panneau du portail.</p>
   <p><b>🔦 Défi dynamo :</b> une sixième source existe et n'était pas dans la liste : la dynamo,
-  qui transforme un mouvement en électricité. Où faudrait-il installer l'indicateur pour qu'elle
+  qui transforme un mouvement en électricité. <br>Où faudrait-il installer l'indicateur pour qu'elle
   soit un bon choix&nbsp;?</p>
 
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le défi que j'ai choisi : … (la saison des pluies / la dynamo). »</li><li>« Ce que j'ai trouvé : … »</li><li>« Ce que ça change pour l'indicateur : … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du défi pile</summary><div>
-    <p><b>Environ 630 € pour une année scolaire.</b> La pile tient 24 h, une journée d'indicateur : il en faut une par jour
-    d'ouverture. Une année scolaire compte 36 semaines ; à 5 jours d'ouverture par semaine, du lundi au vendredi, cela fait
+    <p><b>Environ 630 € pour une année scolaire.</b><br>La pile tient 24 h, une journée d'indicateur : il en faut une par jour
+    d'ouverture. <br>Une année scolaire compte 36 semaines ; à 5 jours d'ouverture par semaine, du lundi au vendredi, cela fait
     180 jours, donc 180 piles × 3,50 € = <b>630 €</b>.</p>
     <p><b>L'adaptateur, lui, s'achète une fois</b> : quelques euros à une quinzaine d'euros selon le modèle — regarde le prix
     de celui du collège. L'électricité qu'il fait passer pèse presque rien : 2,78 Wh (wattheures) par jour, soit environ
     500 Wh sur l'année, quelques centimes.</p>
-    <p><b>Attendus :</b> le nombre de jours (180, ou 36 semaines × 5 jours) ; le calcul 180 × 3,50 ; la comparaison avec un
-    achat unique ; et le déchet : 180 piles au bac de collecte.</p>
-    <p><b>Erreurs typiques :</b> compter une seule pile pour l'année ; comparer le prix d'une pile à celui de l'adaptateur sans
-    multiplier par le nombre de jours ; compter 365 jours, alors que l'indicateur ne sert que les jours d'ouverture.</p>
+    <p><b>Attendus :</b> le nombre de jours (180, ou 36 semaines × 5 jours) ; <br>le calcul 180 × 3,50 ; <br>la comparaison avec un
+    achat unique ; <br>et le déchet : 180 piles au bac de collecte.</p>
+    <p><b>Erreurs typiques :</b> compter une seule pile pour l'année ; <br>comparer le prix d'une pile à celui de l'adaptateur sans
+    multiplier par le nombre de jours ; <br>compter 365 jours, alors que l'indicateur ne sert que les jours d'ouverture.</p>
   </div></details>
   <details class="correction"><summary>✅ Corrigé du défi Martinique</summary><div>
     <p><b>Le chiffre se cherche, il ne s'invente pas</b> : dans un relevé d'ensoleillement de la Martinique, mois par mois,
     on lit les heures d'équivalent plein soleil de la saison des pluies, l'hivernage. Note la source et le mois.</p>
-    <p><b>Ce qu'on peut calculer sans lui.</b> La récolte du panneau suit les heures d'équivalent plein soleil : à 5,3 heures,
-    il récolte 3,7 Wh (wattheures) par jour, et l'indicateur en consomme 2,78. Le panneau suffit donc tant qu'il reste au
-    moins 5,3 × 2,78 ÷ 3,7 ≈ <b>4 heures</b> d'équivalent plein soleil par jour. En dessous, il manque de l'énergie chaque
+    <p><b>Ce qu'on peut calculer sans lui.</b><br>La récolte du panneau suit les heures d'équivalent plein soleil : à 5,3 heures,
+    il récolte 3,7 Wh (wattheures) par jour, et l'indicateur en consomme 2,78. <br>Le panneau suffit donc tant qu'il reste au
+    moins 5,3 × 2,78 ÷ 3,7 ≈ <b>4 heures</b> d'équivalent plein soleil par jour. <br>En dessous, il manque de l'énergie chaque
     jour, et l'accu se vide.</p>
     <p><b>Ce que ça change pour le portail :</b> le banc compte une moyenne sur l'année, et une semaine de pluie fait des
-    journées bien plus sombres que la moyenne. Le panneau qui suffit avec un tiers de marge peut ne plus suffire en
+    journées bien plus sombres que la moyenne. <br>Le panneau qui suffit avec un tiers de marge peut ne plus suffire en
     hivernage : il faut alors un panneau plus grand, ou un accu qui tient plusieurs jours sans soleil.</p>
-    <p><b>Attendus :</b> une valeur trouvée, avec sa source ; la comparaison avec le seuil d'environ 4 heures ; une
+    <p><b>Attendus :</b> une valeur trouvée, avec sa source ; <br>la comparaison avec le seuil d'environ 4 heures ; <br>une
     conséquence pour le portail (la marge, l'accu, le panneau).</p>
     <p><b>Erreurs typiques :</b> confondre les heures de jour (environ 12 h aux Antilles, toute l'année) et les heures
-    d'équivalent plein soleil ; croire qu'une moyenne sur l'année vaut pour chaque jour ; oublier la nuit, pendant laquelle
+    d'équivalent plein soleil ; <br>croire qu'une moyenne sur l'année vaut pour chaque jour ; <br>oublier la nuit, pendant laquelle
     l'accu seul alimente l'indicateur.</p>
   </div></details>
   <details class="correction"><summary>✅ Corrigé du défi dynamo</summary><div>
     <p><b>Là où quelque chose bouge, au moment où l'indicateur doit marcher.</b> Une dynamo transforme une énergie mécanique
     (un mouvement) en énergie électrique : la chaîne devient mécanique → électrique → lumineuse.</p>
     <p><b>Exemples qui conviennent :</b> sur un vélo — c'est l'éclairage à dynamo : la roue tourne quand on roule, justement
-    quand il faut de la lumière ; sur un tourniquet ou un portillon qu'on pousse à chaque passage ; sur une lampe à manivelle
+    quand il faut de la lumière ; <br>sur un tourniquet ou un portillon qu'on pousse à chaque passage ; <br>sur une lampe à manivelle
     qu'on tourne avant de s'en servir.</p>
     <p><b>Pourquoi pas dans le hall :</b> l'indicateur doit dire « libre » ou « occupé » toute la journée, même quand rien ne
     bouge. Une dynamo ne donne rien à l'arrêt : il faudrait un accu pour garder l'énergie entre deux mouvements.</p>
-    <p><b>Attendus :</b> la forme d'énergie au départ (mécanique) ; un lieu où le mouvement existe au moment du besoin ; la
+    <p><b>Attendus :</b> la forme d'énergie au départ (mécanique) ; <br>un lieu où le mouvement existe au moment du besoin ; <br>la
     limite : rien quand rien ne bouge.</p>
     <p><b>Erreurs typiques :</b> « dans le hall, parce qu'il y a du passage » — marcher devant un objet ne fait pas tourner sa
-    dynamo ; « la dynamo fabrique de l'énergie » — elle la transforme ; confondre la dynamo et la pile, qui stocke une
+    dynamo ; <br>« la dynamo fabrique de l'énergie » — elle la transforme ; <br>confondre la dynamo et la pile, qui stocke une
     énergie chimique.</p>
   </div></details>
+</details>
 </section>
 
 <section class="card">
@@ -1928,16 +2430,16 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <p>Tu avais choisi une source avant tout essai. Est-ce la même&nbsp;? Et
   surtout : est-ce que ce qui t'a fait changer d'avis était un <em>chiffre</em>, ou une
   <em>contrainte</em> du lieu&nbsp;?</p>
-  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <textarea aria-label="Ce que je sais faire maintenant, et ce qui me résiste encore…" id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+<details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Au départ, j'avais choisi … . »</li><li>« Maintenant je choisis …, et ce qui m'a fait changer d'avis, c'est … (un chiffre / une contrainte du lieu). »</li><li>« Ce qui me résiste encore : … »</li></ul></details>
   <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.4 :</b></p>
-<p style="font-size:.9em;color:var(--sub);margin:6px 0">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
-  <select id="pos" aria-label="Je me positionne sur 5e_C7.4">
-    <option value="">— je me positionne —</option>
-    <option>🔴 Maîtrise insuffisante — je ne sais pas encore lire ce que donne une source</option>
-    <option>🟠 Maîtrise fragile — je lis le banc, mais je choisis au feeling</option>
-    <option>🟢 Maîtrise satisfaisante — je choisis une source et je cite le chiffre qui l'appuie</option>
-    <option>⭐ Très bonne maîtrise — et je nomme la forme d'énergie et la contrainte qui a tranché</option>
-  </select>
+<fieldset class="qcm-groupe" id="pos">
+  <legend>Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</legend>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je ne sais pas encore lire ce que donne une source"><label for="pos__1">🔴 Maîtrise insuffisante — je ne sais pas encore lire ce que donne une source</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je lis le banc, mais je choisis au feeling"><label for="pos__2">🟠 Maîtrise fragile — je lis le banc, mais je choisis au feeling</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — je choisis une source et je cite le chiffre qui l&#x27;appuie"><label for="pos__3">🟢 Maîtrise satisfaisante — je choisis une source et je cite le chiffre qui l'appuie</label></div>
+  <div class="qcm-option"><input type="radio" name="pos" id="pos__4" value="⭐ Très bonne maîtrise — et je nomme la forme d&#x27;énergie et la contrainte qui a tranché"><label for="pos__4">⭐ Très bonne maîtrise — et je nomme la forme d'énergie et la contrainte qui a tranché</label></div>
+</fieldset>
   <fieldset class="positionnement"><legend>5e_C3.1 (appui) — repérer, pour un objet technique, les sources et les formes d'énergie</legend>
 <label><input type="radio" name="pos_c31" value="1"> 🔴 insuffisante</label> <label><input type="radio" name="pos_c31" value="2"> 🟠 fragile</label> <label><input type="radio" name="pos_c31" value="3"> 🟢 satisfaisante</label> <label><input type="radio" name="pos_c31" value="4"> ⭐ très bonne</label></fieldset>
 </section>
@@ -2081,7 +2583,7 @@ const CHECKS = {
        return {score: s, total: 2, exp: !!window.__exp.srcAll,
                expMsg: "Sélectionne d'abord les cinq sources dans la liste du banc — c'est l'essai qui fait foi."}; },
   1(){ let s = 0;
-       s += sv("a1f0", "chimique — une réaction dans la pile"); s += sv("a1f1", "chimique aussi — quatre fois la même réaction"); s += sv("a1f2", "chimique, mais réversible : on peut la recharger"); s += sv("a1f3", "électrique — elle arrive déjà sous cette forme"); s += sv("a1f4", "rayonnement du soleil — de la lumière, pas du courant"); s += sv("a1sortie","lumineuse — et un peu de chaleur au passage");
+       s += sv("a1f0", "énergie chimique"); s += sv("a1f1", "énergie chimique"); s += sv("a1f2", "énergie chimique"); s += sv("a1f3", "énergie électrique"); s += sv("a1f4", "énergie lumineuse"); s += sv("a1sortie", "énergie lumineuse");
        return {score: s, total: 6, exp: true}; },
   2(){ let s = 0;
        s += nb("rel0", 2.8, 0.05); s += nb("rel1", 12.5, 0.05); s += nb("rel2", 9.4, 0.05); s += sv("rel3", "illimitée"); s += nb("rel4", 3.7, 0.05);
@@ -2101,7 +2603,7 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; save(); return; }
+  if(r.libre && ratio === 1){ fb.textContent = "✍️ Réponse enregistrée, et assez développée pour être relue. Elle n'est pas corrigée automatiquement : ouvre la correction et compare, point par point."; fb.className = "feedback show ok"; (window.__exp.valides = window.__exp.valides || {})[n] = 1; majBandeau(); save(); return; }
   if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
@@ -2110,8 +2612,9 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 function save(){
   const o = {inputs: {}, checks: {}, exp: window.__exp};
-  document.querySelectorAll("input, select, textarea").forEach(e => {
+  document.querySelectorAll("input, select, textarea, fieldset.qcm-groupe").forEach(e => {
     if(!e.id) return;
+    if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     if(e.type === "checkbox" || (e.type === "radio" && e.closest("#billet"))) o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
   o.radios = {}; document.querySelectorAll(".positionnement input[type=radio]:checked").forEach(r => { o.radios[r.name] = r.value; });
@@ -2190,6 +2693,25 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
 
 restore(); majBanc(false);
+
+/* ══ Règle d'or n°29 — mode essentiel (gabarit commun, V2 du 07/11/2026) ══ */
+function majEssentiel(){ const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false"); }
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  (window.__exp = window.__exp || {})["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(); });
+/* ══ Règle d'or n°30 — le bandeau des tâches : une ligne par activité, barrée quand elle est validée ══ */
+function majBandeau(){ const b=$("tachesBandeau"); if(!b) return; const ul=b.querySelector("ul"); if(!ul) return;
+  const v=(window.__exp||{}).valides||{}; let faites=0;
+  ul.querySelectorAll("li").forEach(li => { const ok=!!v[li.dataset.tache]; li.classList.toggle("faite", ok); if(ok) faites++;
+    li.querySelector(".tb-etat").textContent = ok ? "✔" : "○"; });
+  const c=b.querySelector(".tb-compte"); if(c) c.textContent = faites + " / " + ul.children.length + " validée(s)"; }
+window.__exp = window.__exp || {};
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majBandeau();
 })();
 </script>
 
@@ -2208,6 +2730,71 @@ restore(); majBanc(false);
     arme = t; b.textContent = "🗑 Clique encore pour confirmer l'effacement";
     setTimeout(function(){ if (arme === t){ arme = 0; b.textContent = texte; } }, 6000);
   });
+})();
+</script>
+<script>
+/* Le dessin de la chaîne d'énergie de l'indicateur du hall, pour la chaîne à compléter (_outils/chaine_a_completer/) :
+   les cinq sources possibles (ALIMENTER), la carte qui distribue, la DEL qui convertit. L'énergie stockée s'écrit sous
+   son composant (règle d'or n°310) ; celle qui arrive du dehors, sur la flèche qui entre. En ligne à partir de 760 px,
+   en colonne au téléphone. */
+window.CAC_DESSINS = window.CAC_DESSINS || {};
+window.CAC_DESSINS.hall = (function(){
+  var JAUNE = "#ffd66b", CYAN = "#61dafb", VIOLET = "#c68ef2";
+  var Y = [60, 210, 360, 510, 660];                     // le haut des cinq blocs de source, en ligne
+  var YE = [52, 182, 312, 442, 572];                    // en colonne
+  function source(id, composant, stock, i, etroitComposant){
+    var b = {id: id, type: "bloc", fonction: "ALIMENTER", composant: composant, couleur: JAUNE,
+             large: {x: 250, y: Y[i], l: 230}, etroit: {x: 200, y: YE[i], l: 170}};
+    if (etroitComposant) b.etroit.composant = etroitComposant;
+    if (stock) b.stock = stock;
+    return b;
+  }
+  function versCarte(i){
+    var f = {id: "elec" + i, type: "fleche", nature: "energie", texte: "",
+             large: {points: [[480, Y[i] + 35], [540, Y[i] + 35], [540, 395], [716, 395]], ex: 628, ey: 385, ancre: "bas", lt: 10},
+             etroit: {points: [[370, YE[i] + 22], [404, YE[i] + 22], [404, 690], [285, 690], [285, 712]], ex: 344, ey: 682, ancre: "bas", lt: 10}};
+    if (i === 2) { f.texte = "énergie\nélectrique"; f.large.lt = 160; f.etroit.lt = 118; f.etroit.texte = "énergie électrique"; }
+    return f;
+  }
+  return {
+    seuil: 760,
+    large: {vue: [0, 0, 1480, 812]},
+    etroit: {vue: [0, 0, 440, 980], max: 520},
+    elements: [
+      {id: "titre", type: "titre", texte: "L'INDICATEUR DU HALL : d'où vient l'énergie, où elle va", couleur: JAUNE,
+       large: {x: 20, y: 12}, etroit: {x: 10, y: 8, texte: "L'INDICATEUR DU HALL :\nd'où vient l'énergie, où elle va"}},
+      source("pile9", "Pile 9 V alcaline", "énergie chimique", 0),
+      source("aa", "4 piles AA alcalines", "énergie chimique", 1),
+      source("accu", "Accu Li-ion 18650", "énergie chimique", 2),
+      source("secteur", "Secteur, adaptateur USB", null, 3, "Secteur,\nadaptateur USB"),
+      source("panneau", "Panneau solaire\n1 W + accu", null, 4),
+      {id: "reseau", type: "texte", texte: "Le réseau\nélectrique", gras: true,
+       large: {x: 60, y: Y[3] + 35, ancre: "centre", l: 120}, etroit: {x: 48, y: YE[3] + 22, ancre: "centre", l: 96}},
+      {id: "entree-secteur", type: "fleche", nature: "energie", texte: "énergie électrique",
+       large: {points: [[122, Y[3] + 35], [246, Y[3] + 35]], ex: 184, ey: Y[3] + 26, ancre: "bas", lt: 124},
+       etroit: {points: [[100, YE[3] + 22], [196, YE[3] + 22]], ex: 148, ey: YE[3] + 12, ancre: "bas", lt: 96}},
+      {id: "soleil", type: "texte", texte: "Le soleil", gras: true,
+       large: {x: 60, y: Y[4] + 35, ancre: "centre", l: 120}, etroit: {x: 48, y: YE[4] + 22, ancre: "centre", l: 96}},
+      {id: "entree-soleil", type: "fleche", nature: "energie", texte: "énergie lumineuse",
+       large: {points: [[122, Y[4] + 35], [246, Y[4] + 35]], ex: 184, ey: Y[4] + 26, ancre: "bas", lt: 124},
+       etroit: {points: [[100, YE[4] + 22], [196, YE[4] + 22]], ex: 148, ey: YE[4] + 12, ancre: "bas", lt: 96}},
+      versCarte(0), versCarte(1), versCarte(2), versCarte(3), versCarte(4),
+      {id: "carte", type: "bloc", fonction: "DISTRIBUER", composant: "Carte Arduino UNO\n(elle allume la DEL)", couleur: CYAN,
+       large: {x: 720, y: 360, l: 220}, etroit: {x: 195, y: 714, l: 180, composant: "Carte Arduino UNO"}},
+      {id: "vers-del", type: "fleche", nature: "energie", texte: "énergie\nélectrique",
+       large: {points: [[940, 395], [1040, 395]], ex: 990, ey: 385, ancre: "bas", lt: 100},
+       etroit: {points: [[285, 780], [285, 814]], ex: 275, ey: 797, ancre: "gauche", lt: 110, texte: "énergie électrique"}},
+      {id: "del", type: "bloc", fonction: "CONVERTIR", composant: "DEL indicatrice", couleur: VIOLET,
+       large: {x: 1044, y: 360, l: 200}, etroit: {x: 195, y: 818, l: 180}},
+      {id: "sortie", type: "fleche", nature: "energie", texte: "énergie lumineuse",
+       large: {points: [[1244, 395], [1364, 395]], ex: 1304, ey: 385, ancre: "bas", lt: 116},
+       etroit: {points: [[285, 884], [285, 920]], ex: 275, ey: 902, ancre: "gauche", lt: 130}},
+      {id: "hall", type: "texte", texte: "Le hall voit\nla lumière", gras: true,
+       large: {x: 1422, y: 395, ancre: "centre", l: 110}, etroit: {x: 285, y: 940, ancre: "centre", l: 240, texte: "Le hall voit la lumière"}},
+      {id: "unites", type: "texte", texte: "Unités : V (volts) · W (watts)",
+       large: {x: 1260, y: 790, ancre: "centre", l: 360}, etroit: {x: 220, y: 966, ancre: "centre", l: 300}}
+    ]
+  };
 })();
 </script>
 </body>

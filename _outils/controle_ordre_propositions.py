@@ -30,7 +30,30 @@ ne changent pas. Après mélange, la page est remesurée : si une position dépa
 la graine est incrémentée et on recommence. Un groupe dont une proposition dit « aucune
 des … », « toutes les … » ou « les deux » garde cette proposition en dernier.
 
-Usage : python3 _outils/controle_ordre_propositions.py [--racine .] [--corriger] [--muet]
+LA PLACE PAR LONGUEUR — UNE MESURE, PAS UN REFUS (veille du 15/11/2026)
+-----------------------------------------------------------------------
+Mélanger les propositions ne cache pas la bonne réponse si elle est toujours la PLUS LONGUE : l'élève
+qui coche la ligne la plus longue s'en tire sans lire (règle d'or n°144, mesurée dans les QCM le
+27/08/2026 ; « 32 fois sur 40 la plus longue » dans une séquence, #690). Le contrôle range donc aussi,
+pour chaque groupe d'au moins trois propositions, la bonne réponse par sa LONGUEUR (caractères du texte,
+sans balises) : strictement la plus longue, strictement la plus courte, ou au milieu.
+
+  · Cible écrite : 15 / 15 / 70 — la plus longue dans 15 % des questions, la plus courte dans 15 %,
+    au milieu sinon. Idée prise d'un skill de QCM pour Moodle (`danielcregg/moodle-mcq`, licence MIT),
+    réécrite ici de zéro.
+  · Signalement ⚠ d'une page dès 6 groupes appariés si la bonne réponse y est la plus longue dans plus
+    de 40 % des groupes. Pourquoi 40 % et non les 30 % proposés par la veille : avec quatre
+    propositions, le hasard seul en donne 25 % ; sur 30 groupes écrits au hasard, 30 % est dépassé
+    une fois sur cinq, 40 % une fois sur vingt. Le signalement désigne une habitude d'écriture, pas
+    un hasard.
+  · Mesuré le 15/11/2026 sur `main` : 569 groupes de 3 propositions ou plus dans 25 pages, la bonne
+    réponse est la plus longue dans 70 % des groupes, la plus courte dans 3 % ; 17 pages sur 23
+    dépassent 40 %. C'est un vrai défaut, à reprendre page par page à la révision (la correction est
+    une réécriture des propositions, pas un réordonnancement : `--corriger` n'y touche pas).
+
+Le signalement ne change pas la sortie. `--longueur` détaille les pages, de la pire à la meilleure.
+
+Usage : python3 _outils/controle_ordre_propositions.py [--racine .] [--corriger] [--longueur] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste une page où la place trahit la réponse, 2 si aucune
 page n'a pu être lue (règle d'or n°299).
 """
@@ -96,6 +119,29 @@ def positions(src):
     return pos
 
 
+SEUIL_LONGUEUR = 0.40      # part de groupes où la bonne réponse est la plus longue, au-delà : ⚠
+
+
+def longueur(valeur):
+    """la longueur que l'élève voit : le texte de la proposition, sans balises ni blancs répétés"""
+    return len(re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", valeur))).strip())
+
+
+def rangs_longueur(src):
+    """Counter {'longue', 'courte', 'milieu'} : la bonne réponse rangée par sa longueur, groupes de 3 propositions
+    ou plus (à deux, la plus longue a une chance sur deux : la mesure ne dirait rien)"""
+    att, grp = attendus(src), groupes(src)
+    rangs = collections.Counter()
+    for k, v in att.items():
+        if k not in grp or v not in grp[k] or len(grp[k]) < 3:
+            continue
+        i = grp[k].index(v)
+        L = [longueur(x) for x in grp[k]]
+        autres = L[:i] + L[i + 1:]
+        rangs["longue" if L[i] > max(autres) else "courte" if L[i] < min(autres) else "milieu"] += 1
+    return rangs
+
+
 def verdict(src, pos):
     n = sum(pos.values())
     if n == 0:
@@ -144,7 +190,7 @@ def melanger_page(src, nom_page):
 
 
 def main(argv):
-    racine, corrige, muet = ".", False, False
+    racine, corrige, muet, detail_longueur = ".", False, False, False
     i = 0
     while i < len(argv):
         if argv[i] == "--racine":
@@ -153,10 +199,13 @@ def main(argv):
             corrige = True; i += 1
         elif argv[i] == "--muet":
             muet = True; i += 1
+        elif argv[i] == "--longueur":
+            detail_longueur = True; i += 1
         else:
             print("argument inconnu :", argv[i]); return 2
 
     lus, apparies, refus, sains = 0, 0, [], 0
+    rangs_site, longues = collections.Counter(), []
     for p in sorted(pages_html(racine)):
         try:
             src = open(p, encoding="utf-8").read()
@@ -183,12 +232,27 @@ def main(argv):
             refus.append((rel, v, dict(sorted(pos.items()))))
         else:
             sains += 1
+        rg = rangs_longueur(src)
+        rangs_site += rg
+        n = sum(rg.values())
+        if n >= SEUIL_GROUPES and rg["longue"] / n > SEUIL_LONGUEUR:
+            longues.append((rg["longue"] / n, rel, rg["longue"], n))
 
     if lus == 0:
         print("⛔ aucune page à groupes radio lue sous %s (sortie 2)" % racine); return 2
     if not muet:
         for rel, v, pos in refus:
             print("✘ %s — %s · positions %s" % (rel, v, pos))
+    n = sum(rangs_site.values())
+    if n:
+        if detail_longueur:
+            for part, rel, k, m in sorted(longues, reverse=True):
+                print("⚠ %s — la bonne réponse est la plus longue dans %d groupe(s) sur %d (%.0f %%)" % (rel, k, m, 100 * part))
+        print("⚠ place par longueur (mesure, hors refus) : sur %d groupe(s) de 3 propositions ou plus, la bonne réponse est "
+              "la plus longue %.0f %%, la plus courte %.0f %%, au milieu %.0f %% (cible 15 / 15 / 70) · %d page(s) au-delà "
+              "de %.0f %% de « la plus longue »%s"
+              % (n, 100 * rangs_site["longue"] / n, 100 * rangs_site["courte"] / n, 100 * rangs_site["milieu"] / n,
+                 len(longues), 100 * SEUIL_LONGUEUR, "" if detail_longueur or not longues else " (--longueur : la liste)"))
     print("%d page(s) à groupes radio lues · %d groupe(s) appariés à une réponse attendue · %d page(s) saines · %d refus"
           % (lus, apparies, sains, len(refus)))
     if refus:

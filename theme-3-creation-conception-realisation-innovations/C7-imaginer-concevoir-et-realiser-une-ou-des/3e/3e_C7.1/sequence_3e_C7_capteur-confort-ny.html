@@ -260,6 +260,13 @@ body.essentiel details.referentiel-replie{display:none}
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+/* révision du 15/11/2026 : l'algorigramme à remettre en ordre — blocs mélangés ; le bloc se lit sur sa ligne, son rang se choisit dessous, sur une rangée ; le nom du rang est dit au lecteur d'écran */
+.visually-hidden{position:absolute;left:0;top:0;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.algostep{flex-wrap:wrap}
+.algostep .algotexte{flex:1 1 10em;font-weight:600}
+.algostep fieldset.algorang{position:relative;flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0}
+.algostep fieldset.algorang .qcm-option{margin:0;padding:6px 12px;align-items:center}
+.algostep fieldset.algorang .qcm-option label{flex:0 0 auto}
 </style>
 <style id="roles-css">
 /* Bloc « rôles » — posé par poser_roles.py. Ne pas éditer à la main. */
@@ -1623,21 +1630,19 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <p style="margin:10px 0 4px">LED d'alerte&nbsp;: <span class="led" id="simLed" role="img" aria-label="LED d'alerte"></span> <span id="simEtat" style="font-weight:600">éteinte</span></p>
 <p style="font-size:.82em;color:var(--sub)">Le seuil est caché quelque part entre 25 et 30&nbsp;°C… à toi de le trouver en manipulant.</p>
 </div>
-<p style="margin-top:10px">Q1 — À partir de quelle température la LED s'allume-t-elle&nbsp;?
 <fieldset class="qcm-groupe" id="a0q1">
-  <legend>Q1 de l'activité 0</legend>
+  <legend>Q1 — À partir de quelle température la LED s'allume-t-elle&nbsp;?</legend>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="26 °C"><label for="a0q1__1">26 °C</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="28 °C"><label for="a0q1__2">28 °C</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="30 °C"><label for="a0q1__3">30 °C</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="32 °C"><label for="a0q1__4">32 °C</label></div>
-</fieldset></p>
-<p>Q2 — Quand tu REDESCENDS sous cette température, la LED…
+</fieldset>
 <fieldset class="qcm-groupe" id="a0q2">
-  <legend>Q2 de l'activité 0</legend>
+  <legend>Q2 — Quand tu REDESCENDS sous cette température, la LED…</legend>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__1" value="reste allumée pour toujours"><label for="a0q2__1">reste allumée pour toujours</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="s&#x27;éteint aussitôt"><label for="a0q2__2">s'éteint aussitôt</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="clignote sans fin"><label for="a0q2__3">clignote sans fin</label></div>
-</fieldset></p>
+</fieldset>
 <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
 <p class="feedback" id="fb0" role="status"></p>
 <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS ton essai)</summary><div>
@@ -1745,12 +1750,12 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
   <div class="qcm-option"><input type="radio" name="a2o4" id="a2o4__2" value="LED éteinte"><label for="a2o4__2">LED éteinte</label></div>
 </fieldset></td></tr>
 </table>
-<p style="margin-top:8px">Décision globale&nbsp;: <fieldset class="qcm-groupe" id="a2dec">
-  <legend>Décision globale</legend>
+<fieldset class="qcm-groupe" id="a2dec">
+  <legend>Décision globale, d'après tes quatre essais</legend>
   <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__1" value="Validée"><label for="a2dec__1">Validée</label></div>
   <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__2" value="À améliorer"><label for="a2dec__2">À améliorer</label></div>
   <div class="qcm-option"><input type="radio" name="a2dec" id="a2dec__3" value="Rejetée"><label for="a2dec__3">Rejetée</label></div>
-</fieldset></p>
+</fieldset>
 <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
 <p class="feedback" id="fb2" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
@@ -1845,47 +1850,47 @@ print("2 + 3 =", 2 + 3)
 </aside>
 <div class="exo">
 <h4>3a — Remets l'algorigramme en ordre (représentation schématique)</h4>
-<p>Le raisonnement que tu as FAIT à la main au simulateur se dessine. Numérote les blocs de 1 à 5 pour reconstruire l'algorigramme de l'alerte&nbsp;:</p>
-<div class="algostep"><span class="algoshape">⬭ début</span><fieldset class="qcm-groupe" id="a3o1">
-  <legend>Rang de l'étape 1 de l'algorigramme</legend>
-  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__1" value="1"><label for="a3o1__1">1</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__2" value="2"><label for="a3o1__2">2</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__3" value="3"><label for="a3o1__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__4" value="4"><label for="a3o1__4">4</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__5" value="5"><label for="a3o1__5">5</label></div>
-</fieldset><span>DÉBUT (au démarrage du capteur)</span></div>
-<div class="algostep"><span class="algoshape">▭ traitement</span><fieldset class="qcm-groupe" id="a3o2">
-  <legend>Rang de l'étape 2 de l'algorigramme</legend>
-  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__1" value="1"><label for="a3o2__1">1</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__2" value="2"><label for="a3o2__2">2</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__3" value="3"><label for="a3o2__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__4" value="4"><label for="a3o2__4">4</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__5" value="5"><label for="a3o2__5">5</label></div>
-</fieldset><span>Mesurer la température T de la salle</span></div>
-<div class="algostep"><span class="algoshape">◇ décision</span><fieldset class="qcm-groupe" id="a3o3">
-  <legend>Rang de l'étape 3 de l'algorigramme</legend>
+<p>Le raisonnement que tu as FAIT à la main au simulateur se dessine. <br>Les blocs sont mélangés. <br>Numérote-les de 1 à 5, dans l'ordre où le capteur les exécute&nbsp;:</p>
+<div class="algostep"><span class="algoshape">◇ décision</span><span class="algotexte">T &gt; 28&nbsp;?</span><fieldset class="qcm-groupe algorang" id="a3o3">
+  <legend class="visually-hidden">Rang du bloc « T &gt; 28&nbsp;? »</legend>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__1" value="1"><label for="a3o3__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__2" value="2"><label for="a3o3__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__3" value="3"><label for="a3o3__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__4" value="4"><label for="a3o3__4">4</label></div>
   <div class="qcm-option"><input type="radio" name="a3o3" id="a3o3__5" value="5"><label for="a3o3__5">5</label></div>
-</fieldset><span>T &gt; 28&nbsp;?</span></div>
-<div class="algostep"><span class="algoshape">▭ action OUI</span><fieldset class="qcm-groupe" id="a3o4">
-  <legend>Rang de l'étape 4 de l'algorigramme</legend>
-  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__1" value="1"><label for="a3o4__1">1</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__2" value="2"><label for="a3o4__2">2</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__3" value="3"><label for="a3o4__3">3</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__4" value="4"><label for="a3o4__4">4</label></div>
-  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__5" value="5"><label for="a3o4__5">5</label></div>
-</fieldset><span>OUI → allumer la LED d'alerte</span></div>
-<div class="algostep"><span class="algoshape">▭ action NON</span><fieldset class="qcm-groupe" id="a3o5">
-  <legend>Rang de l'étape 5 de l'algorigramme</legend>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">⬭ début</span><span class="algotexte">DÉBUT (au démarrage du capteur)</span><fieldset class="qcm-groupe algorang" id="a3o1">
+  <legend class="visually-hidden">Rang du bloc « DÉBUT (au démarrage du capteur) »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__1" value="1"><label for="a3o1__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__2" value="2"><label for="a3o1__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__3" value="3"><label for="a3o1__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__4" value="4"><label for="a3o1__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o1" id="a3o1__5" value="5"><label for="a3o1__5">5</label></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">▭ action NON</span><span class="algotexte">NON → éteindre la LED, puis revenir à la mesure</span><fieldset class="qcm-groupe algorang" id="a3o5">
+  <legend class="visually-hidden">Rang du bloc « NON → éteindre la LED, puis revenir à la mesure »</legend>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__1" value="1"><label for="a3o5__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__2" value="2"><label for="a3o5__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__3" value="3"><label for="a3o5__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__4" value="4"><label for="a3o5__4">4</label></div>
   <div class="qcm-option"><input type="radio" name="a3o5" id="a3o5__5" value="5"><label for="a3o5__5">5</label></div>
-</fieldset><span>NON → éteindre la LED, puis revenir à la mesure</span></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><span class="algotexte">Mesurer la température T de la salle</span><fieldset class="qcm-groupe algorang" id="a3o2">
+  <legend class="visually-hidden">Rang du bloc « Mesurer la température T de la salle »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__1" value="1"><label for="a3o2__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__2" value="2"><label for="a3o2__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__3" value="3"><label for="a3o2__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__4" value="4"><label for="a3o2__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o2" id="a3o2__5" value="5"><label for="a3o2__5">5</label></div>
+</fieldset></div>
+<div class="algostep"><span class="algoshape">▭ action OUI</span><span class="algotexte">OUI → allumer la LED d'alerte</span><fieldset class="qcm-groupe algorang" id="a3o4">
+  <legend class="visually-hidden">Rang du bloc « OUI → allumer la LED d'alerte »</legend>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__1" value="1"><label for="a3o4__1">1</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__2" value="2"><label for="a3o4__2">2</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__3" value="3"><label for="a3o4__3">3</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__4" value="4"><label for="a3o4__4">4</label></div>
+  <div class="qcm-option"><input type="radio" name="a3o4" id="a3o4__5" value="5"><label for="a3o4__5">5</label></div>
+</fieldset></div>
 <button class="btn check" data-check="3" type="button">✅ Vérifier l'algorigramme</button>
 <p class="feedback" id="fb3" role="status"></p>
 <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
@@ -2133,13 +2138,13 @@ else:
   <label for="pos_c72_3"><input type="radio" id="pos_c72_3" name="pos_c72" value="Je sais le faire seul·e"> Je sais le faire seul·e</label>
   <label for="pos_c72_4"><input type="radio" id="pos_c72_4" name="pos_c72" value="Je sais l'expliquer à quelqu'un"> Je sais l'expliquer à quelqu'un</label>
 </fieldset>
-<p>Confiance CRCN 3.4 Programmer (1-4)&nbsp;: <fieldset class="qcm-groupe" id="bilan4">
-  <legend>Ma confiance</legend>
+<fieldset class="qcm-groupe" id="bilan4">
+  <legend>Ma confiance en CRCN 3.4 Programmer, de 1 (pas encore sûr·e) à 4 (tout à fait sûr·e)</legend>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__1" value="1"><label for="bilan4__1">1</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__2" value="2"><label for="bilan4__2">2</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__3" value="3"><label for="bilan4__3">3</label></div>
   <div class="qcm-option"><input type="radio" name="bilan4" id="bilan4__4" value="4"><label for="bilan4__4">4</label></div>
-</fieldset></p>
+</fieldset>
 </section>
 
 
