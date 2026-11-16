@@ -7,6 +7,7 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 |---|---|---|---|---|
 | `Images/programme_blocs_lampadaire.svg` | SVG original (Fable) | image-objet : LE programme à lire et classer (act. 1-2, QCM ; plus dans la synthèse élève, règle d'or n°308 : elle écrit l'algorithme en cases) | CC0 | ~6 Ko |
 | `Images/parametres_et_effets.svg` | SVG original (Fable) | image-objet : effets des paramètres à prédire (act. 3, QCM ; la synthèse élève les dit en cases) | CC0 | ~5 Ko |
+| `Images/algorigramme_lampadaire_corrige.svg` | SVG original (Fable) | image-objet : l'algorigramme du lampadaire, dans la correction de « L'algorithme en langage naturel » (règle d'or n°336, 16/11/2026) | CC0 | ~6 Ko |
 
 Le programme par blocs est une création originale du lot (style visuel inspiré
 des environnements par blocs, dessiné en SVG — aucune capture d'écran de
@@ -21,4 +22,3 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_lampadaire_solaire.png` | Un lampadaire solaire de parking au crépuscule : panneau solaire en haut du mât, tête à LED allumée, boîtier gris. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a solar-powered LED street lamp in a small school car park in Martinique at dusk, seen from a few meters away so the lamp head and its solar panel are large and clearly visible in the frame: a small solar panel mounted on top of the pole, an LED lamp head glowing softly, a small light sensor and a small motion detector on the lamp head, a grey technical box on the pole, tropical vegetation behind, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » ; et la situation déclenchante de la séquence (05/11/2026) |
-| `Images/algorigramme_lampadaire_corrige.svg` | SVG original (Fable) | image-objet : l'algorigramme du lampadaire, dans la correction de « L'algorithme en langage naturel » (règle d'or n°336, 16/11/2026) | CC0 | ~6 Ko |

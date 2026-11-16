@@ -118,3 +118,44 @@ de ce lot.
    reposé par `incrustations.py`.
 2. Le tableau du vendeur montait sur huit lignes d'en-tête à 390 px : en-têtes raccourcis, unités
    insécables, la condition « freins chauds » dite dans la phrase d'avant.
+
+## 16/11/2026 — la figure « Trois freins, la même roue » (skill anatomy)
+
+Ne figure ici que ce qui a **réellement tourné**, sur la branche `fable/skills-motion-anatomy` après fusion de `main`
+(révision, lot 1, compris).
+
+**Bancs du lot**, lancés comme ils se lancent : `python3 tests_5e_C1.2_sainte_luce.py` **50 / 50** (33 séquence + 17 QCM), zéro erreur JS ;
+`node tests_regle_311_5e_C1.2.mjs` **34 / 34**. Bancs des autres pages touchées (le lecteur commun) : voir le journal.
+
+**La figure seule** (`Images/freins_iso.html`, Chromium via Playwright, script de vérification hors banc) : les trois freins
+choisis tour à tour, levier serré puis relâché, à 640, 780 et 390 px ; la ligne du bas dit « ça frotte à 28,5 cm / 7 cm /
+3,5 cm de l'axe » levier serré, l'écart levier relâché ; zéro erreur JavaScript. À l'impression (PDF A4 d'une page
+d'essai qui pose la figure dans un cadre) : thème clair, les trois freins côte à côte, la légende en trois colonnes.
+
+**Contrôles du dépôt** — les 39 contrôles Python `_outils/controle_*.py` lancés sur la branche et sur `main` : mêmes codes de
+sortie, tous 0 sur la branche ; `controle_lecteur_pas_a_pas` refusait sur `main` (`4e_C9.1` en retard sur la source) et
+passe ici. Au navigateur : `controle_squelette.mjs` (page) 0 · `controle_hors_ligne.mjs` 0 (411 pages, aucune requête) ·
+`controle_impression.mjs` 0 (409 pages) · `controle_verrous.mjs` 0 · `controle_contraste_liens.mjs` (dossier) 0 ·
+`controle_schemas.mjs` (dossier) 0 — 0 ✘, 7 ⚠ comme sur `main`, la figure et la planche comptées à part comme
+illustrations déclarées (`data-illustration`) · `controle_axe.mjs` (dossier) 0 après correction (voir les incidents) ·
+`verif_regles_audit.py` (dossier) 0 · `audit_aeration.py --strict` (page) 0 · `controle_mouvement.py` (dossier) : M1 0, M2 0.
+
+**Revue d'écran en trois tours** (captures `_outils/captures_skills_motion_anatomy_2026-11-16/`, tours 1 et 3) :
+1. 1 280 px : la figure prenait toute la largeur, 1 373 px de haut → largeur ramenée à 600 px.
+   390 px : numéros illisibles → agrandis.
+2. 1 280 px : la consigne du coin bas-gauche recouvrait la ligne du bas → consigne retirée (le bouton la dit).
+   390 px : numéros encore petits → agrandis de nouveau.
+3. Reste, écrit ici : à 390 px, les numéros 6, 7 et 8 se serrent en haut de la fourche (frein à patins), et la loupe
+   est petite ; la liste sous la figure dit tout.
+
+**Incidents**
+1. `controle_schemas.mjs` : 288 ✘ « contact » sur la figure — une vue isométrique d'objet réel a des pièces qui se
+   touchent. Déclarée illustration (`data-illustration`, mécanisme du contrôle depuis #721), les schémas du lot restent jugés.
+2. `controle_axe.mjs` : 9 nœuds « contraste » (la page de la figure, fond transparent lu comme blanc) → fond du site
+   (`#050f24`), gris « muet » éclairci ; plus un `<main>` et un titre `h1` caché à l'écran.
+3. `controle_licence.py` : la page de la figure n'avait pas la mention du dépôt → mention de `_outils/licence_cc.py`.
+4. Un `node_modules` posé à la racine du dépôt pour les bancs Node faisait lever `controle_liens` et
+   `controle_atteignabilite` (pages de Playwright) → déplacé hors du dépôt.
+
+**Non exécuté** : la fiche A4 « dessin technique » du kit (`scripts/print.mjs`, titres fixes en anglais) ; la validation
+HTML ; le parcours au clavier seul, à la main (la figure se commande au clavier : Espace, Entrée, 1, 2, 3, Échap).

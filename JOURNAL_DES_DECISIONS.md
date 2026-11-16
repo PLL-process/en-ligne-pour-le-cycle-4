@@ -31983,6 +31983,75 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 
 **Au passage.** Le suivi de la révision (`docs/revision/SUIVI_REVISION.md`) disait « livré #739 » pour le lot 1 de la deuxième passe : il est arrivé sur `main` avec le lot 2 (#740, qui le contenait) ; #739 est fermée. Corrigé.
 
+## 16/11/2026 — Les skills motion design dans le thème 1 : le lecteur pas à pas et « Trois freins, la même roue » (`5e_C1.2`)
+
+**La décision.** Pascal, le 16/11/2026, a installé trois skills repérés dans une liste « motion design »
+(`motion-design` de LottieFiles, `anatomy`, `anatomy-reveal`), audités et épinglés sur leur commit, puis :
+« Audit dans quelles séquences tu pourrais utiliser ces skills et utilise-les », et « les mêmes séquences sont
+prioritaires » — le thème 1 d'abord, dans l'ordre habituel. La veille du même jour (#741) avait déjà versé
+motion-design dans les skills du dépôt et mesuré le mouvement : ce lot ne refait pas ce travail.
+
+**L'audit** : `docs/audits/AUDIT_SKILLS_MOTION_ANATOMY_2026-11-16.md` — les 60 pages de séquence, séquence par
+séquence pour le thème 1, objet par objet pour les thèmes 2 et 3, jugées avec les n°1, 85, 119, 174-177, 179, 182.
+
+**Ce qui est fait.**
+- **motion-design, le lecteur pas à pas commun** (six animations : Herschel `3e_C1.1`, trois principes `5e_C1.1`,
+  vélo-cargo `5e_C3.1`, lampadaire `5e_C4.1`, jardin `4e_C8.1` et `4e_C9.1`) : une partie du dessin apparaissait
+  par un fondu seul de 0,35 s, courbe `ease` dans les deux sens. Elle monte maintenant de 6 unités en 0,6 s
+  (courbe qui décélère) et disparaît en 0,4 s (courbe qui accélère), sans bouger ; sous « moins de mouvement »,
+  rien ne bouge. Reposé par `poser.py` dans les six pages ; `4e_C9.1`, en retard sur la source sur `main`
+  (`controle_lecteur_pas_a_pas` refusait), est remis à jour du même coup. Son correctif n°300 (le groupe de
+  boutons radio porte sa valeur) vivait dans le bloc du lecteur et a été effacé en le reposant (banc 97 / 124) :
+  il est remis juste avant le bloc, et le banc revient à 124 / 124. Les boucles et les replis (M1, M2) sont l'objet
+  de l'entrée précédente (#743) : ce lot n'y touche pas.
+- **anatomy, `5e_C1.2`** : la figure « Trois freins, la même roue » (`Images/freins_iso.html`, posée par un cadre
+  dans l'activité 1, nouvelle version 🅱 « pas de vélo sous la main »). La roue avant d'un vélo du collège, dans
+  un range-vélo, avec un frein à patins, à disque ou à tambour. L'élève serre le levier : le levier tourne, puis
+  ce qui frotte vient toucher ; un trait s'allume de l'axe à l'endroit qui frotte, et la ligne du bas dit la
+  distance (28,5 cm, 7 cm, 3,5 cm) ou l'écart au repos (2 mm, moins d'1 mm, environ 1 mm). Une loupe montre la
+  coupe de l'endroit qui frotte. Elle ne nomme pas les deux pièces qui se touchent ni l'endroit de la chaleur :
+  c'est le relevé de l'élève (n°177). Le tableau des versions dit « 🅱 Figure » au lieu de « 🅱 Photos », qui
+  renvoyait à un « schéma coté » absent.
+- **Les cotes** sont vraies et écrites dans le générateur (`_generation/freins_iso/build.mjs`) : roue ETRTO 559
+  (26 pouces), disque Ø 160 mm, tambour Ø 70 mm, écart patin-jante 2 mm (celui du relevé 🅲 de la séquence).
+- **Déclarée illustration** (`data-illustration`, n°315) : une vue isométrique de l'objet réel, dont les pièces se
+  touchent comme sur le vrai vélo ; les schémas de la séquence restent des schémas. Sans cette déclaration,
+  `controle_schemas.mjs` comptait 288 ✘ « contact » sur la figure.
+- **anatomy-reveal n'est pas utilisé** : dans le thème 1, aucun film de démontage ne fait mieux que la figure
+  sans enfreindre n°174-175 (un film qui se déroule seul est un spectacle) et n°182 (les vidéos d'Alain Le Berre
+  montrent déjà le fonctionnement). L'audit propose de l'essayer sur la station d'alerte de 3e, dont aucune page
+  ne montre l'objet (n°85), quand le thème 2 viendra.
+- **Vérifié sur la branche reposée sur `main` (#743)** : les 39 contrôles Python de `_outils/` sortent à 0 ;
+  bancs `5e_C1.2` 50 / 50 et 34 / 34, `4e_C9.1` 124 / 124 et 34 / 34 ; banc commun du lecteur vert (6 animations,
+  1 280 et 390 px, mouvement réduit, impression) ; `controle_mouvement` M1 0, M2 0 ; `controle_schemas`,
+  `controle_hors_ligne` et `controle_axe` verts sur `5e_C1.2`. Revue d'écran en trois tours sur la figure
+  (captures dans `_outils/captures_skills_motion_anatomy_2026-11-16/`) ; ce qui reste au troisième tour est écrit
+  dans `rapport_tests_5e_C1.2.md`.
+
+## 16/11/2026 — Le lampadaire pièce par pièce : la figure isométrique de 5e_C4.1, selon la skill `anatomy`
+
+**La décision.** Pascal, le 16/11/2026 (00 h 22), sur le pilote de la veille motion (le verser, le refaire ou s'arrêter là) : « tu as carte blanche ». Le même soir, il installe dans ses skills la version auditée d'`anatomy` (commit `1482e84`) avec ses règles : une illustration de l'objet réel pour les synthèses, les situations déclenchantes et les activités, qui ne remplace aucun schéma du programme ; les mots en français, des numéros sur la figure et les noms dessous ; 40 à 80 pièces ; une seule interaction ; une fiche A4 fixe au format « dessin » ; la mention MIT du kit ; jamais de publication dans la galerie.
+
+**Le choix : refaire le pilote selon ces règles, et le verser dans `5e_C4.1`.**
+- **`lampadaire_en_pieces.html`** : le lampadaire de la cour en vue isométrique, **13 pièces numérotées**, nommées sous la carte avec ce qu'elles font, dans les mots de la séquence (son FAST, ses chaînes d'énergie et d'information) : panneau solaire, bloc de LED, capteur de luminosité, bras, détecteur de mouvement (PIR), mât, coffret, batterie, régulateur de charge, carte programmable, interrupteur commandé, câble, socle de béton.
+- **Une seule interaction** : « 🔧 Ouvrir le lampadaire » (ou un toucher, Espace, Entrée). Le coffret s'ouvre et montre la batterie, le régulateur, la carte et l'interrupteur, qu'on ne voit jamais dans la cour ; les pièces du haut s'écartent. Un ressort par ensemble, environ une seconde, décalés de 60 ms ; refermé, l'ordre s'inverse. Sous « moins de mouvement », l'état final d'un coup. Rien ne bouge tout seul.
+- **`lampadaire_fiche_A4.pdf`** : la fiche « dessin » d'une page — la figure ouverte avec ses numéros, fermée en médaillon, la liste des pièces, les caractéristiques (la nuit 10 lux, le jour 80 lux, le passage environ 5 s, en très basse tension), et trois étapes éclairées : le jour (charger), la nuit (en veille), un passage (pleine puissance). Les mots fixés en anglais par le kit (« Parts », « Specification »…) passent en français avant l'impression.
+- **Où elle se trouve** : un lien dans la synthèse élève, partie 4 (« De quoi le lampadaire est-il fait ? »), caché à l'impression pour que la synthèse tienne toujours sur deux pages ; la séquence elle-même n'est pas touchée (la deuxième passe vient de la réviser, #740).
+- **À côté de « Trois freins, la même roue »** (`5e_C1.2`, #744, fusionnée le même matin) : mêmes conventions — la déclaration d'illustration, un titre de niveau 1, le thème clair à l'impression, la mention MIT du kit. Une différence d'intégration : les freins sont posés dans leur séquence par un cadre ; le lampadaire est une page à part, reliée depuis la synthèse élève, parce que sa séquence sortait de la deuxième passe (#740). L'audit de #744 le prévoyait (« à refaire selon le skill puis verser »).
+- **Fabrique** : `_generation/lampadaire_en_pieces/` (`build.mjs`, `fiche.mjs`, `imprimer_fiche.mjs`) ; le kit n'est pas versé, il est lu au commit audité. La page porte la mention CC BY-NC-SA du site (`licence_cc.py`) et le texte de la licence MIT du kit en tête de son script ; `SOURCES_MEDIAS.md` du lot dit tout.
+
+- **Ce que les contrôles du site ont fait corriger** (première passe : 21 verts sur 25) :
+  - **l'impression** : la page gardait son fond sombre sur le papier, et trois textes du cadre y disparaissaient ; à l'impression, elle prend maintenant le thème clair du kit (ses couleurs, prises à leur source) ;
+  - **le contraste à l'écran** : le titre du cadre, l'indication « Touche : il s'ouvre » et la légende étaient en gris discret (3,6:1) ; ils passent au gris du texte (7,4:1 sur le sombre, 7:1 sur le clair) ;
+  - **les schémas** : la figure est déclarée illustration (`data-illustration`), comme la spirale de `fiche_arts_tp_4e_socle.html` : c'est l'objet réel, pas un schéma du programme ; `build.mjs` refuse de construire si la déclaration ne se pose plus ;
+  - au passage, un titre de niveau 1 et un pied de page (`<footer>`) qui porte les liens, la mention MIT et la mention CC BY-NC-SA.
+
+**Vérifications.**
+- Contrôles du site : les 25 sont verts sur l'état final — 21 au premier passage, les 4 autres (impression, contraste des liens, accessibilité de la page, schémas) après les corrections ci-dessus ; l'accessibilité de la page ne relève plus aucun défaut, même mineur ; schémas : la figure comptée à part (illustration), 0 ✘.
+- Bancs du lot : `tests_5e_C4.1-C4.8_sequence.mjs` **65 / 65**, `tests_regle_311_5e_C4.1.mjs` **34 / 34**, `tests_5e_C4.1-C4.8_qcm.mjs` **25 / 25**.
+- La page : aucune erreur JavaScript ; regardée à 390 px, fermée et ouverte (« Ouvert · 13 pièces ») ; « moins de mouvement » donne l'état final d'un coup.
+- La fiche A4 : une page, refaite après les corrections et regardée ; le kit lu au commit `1482e84` vérifié ; rien de publié dans la galerie (`scripts/publish.mjs` jamais lancé).
+
 ## 16/11/2026 — Règle d'or n°336 : la correction se voit ; quand la réponse se dessine, elle montre le dessin
 
 **La demande.** Pascal, le 16/11/2026 : « le mode mission, sauf erreur de ma part, ne contient pas les corrections ; j'aimerais avoir les corrections dans toutes les séquences » — « et les corrections : si un schéma ou une capture d'écran est nécessaire, cela doit être fait » — « on devrait y mettre une règle d'or ». Et, sur l'encadré « À retenir » visible sous une activité : « tu as carte blanche ».

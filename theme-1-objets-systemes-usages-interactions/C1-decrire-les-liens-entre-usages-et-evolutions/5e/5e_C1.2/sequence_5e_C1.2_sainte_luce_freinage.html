@@ -163,6 +163,10 @@ body.essentiel details.referentiel-replie{display:none}
 details.fiche-activite{margin:6px 0 10px}
 details.fiche-activite>summary{cursor:pointer;font-size:.9em;color:var(--sub,#9bbefc);min-height:24px;padding:2px 0}
 details.fiche-activite[open]>summary{margin-bottom:6px}
+
+/* la figure « Trois freins, la même roue » (16/11/2026, skill anatomy) : un cadre qui prend la hauteur de la figure */
+.fig-freins-iso{display:block;width:100%;height:860px;border:0;margin:8px 0}
+@media print{.fig-freins-iso{height:9.6cm!important}}
 </style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -1535,8 +1539,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <tr><th>Version</th><th>Matériel</th><th>Ce que tu fais</th></tr>
     <tr><td><b>🅰 Réel</b></td><td>un vélo, une clé Allen</td><td>tu actionnes le levier, tu observes
       ce qui bouge et ce qui serre, tu mesures l'écart entre le patin et la jante</td></tr>
-    <tr><td><b>🅱 Photos</b></td><td>les schémas de la page</td><td>tu suis le trajet de l'effort sur
-      le schéma coté</td></tr>
+    <tr><td><b>🅱 Figure</b></td><td>la figure « Trois freins, la même roue », dans la page</td><td>tu
+      serres le levier sur la figure, tu observes ce qui bouge et ce qui serre, tu lis l'écart</td></tr>
     <tr><td><b>🅲 Sans matériel</b></td><td>rien</td><td>un relevé d'observation t'est fourni&nbsp;:
       tu l'analyses</td></tr>
   </table>
@@ -1684,8 +1688,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 <!-- /ressource: res-5e-C1-2-tambour -->
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta"><b>Objectif</b> distinguer la fonction, le principe et la solution — et voir de
   ses yeux ce qui serre quoi. · <b>Compétence</b> 5e_C1.2 · <b>Production</b> un relevé
-  d'observation en trois lignes · <b>Ressources</b> un vélo (version 🅰), le schéma des trois
-  principes.</div></details>
+  d'observation en trois lignes · <b>Ressources</b> un vélo (version 🅰), la figure à manipuler
+  (version 🅱), le schéma des trois principes.</div></details>
 
   <h4>a) La manipulation — <b>obligatoire</b></h4>
   <p>Va au vélo. Actionne le levier de frein <b>lentement</b>, et regarde. Ne démonte rien.</p>
@@ -1700,6 +1704,30 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     </ul>
     <p class="piege">⚠️ On ne roule pas pendant cette manipulation, et on ne démonte rien. Le vélo
     reste à l'arrêt, tenu par un camarade.</p>
+  </details>
+  <details class="aide" id="a1-figure-freins"><summary>🅱 Version figure — pas de vélo sous la main (5 min)</summary>
+    <p>Fais la manipulation sur la figure.</p>
+    <ol>
+      <li>Choisis le <b>frein à patins</b>.</li>
+      <li>Serre le levier&nbsp;: regarde <b>ce qui bouge</b>.</li>
+      <li>Regarde la loupe&nbsp;: <b>qu'est-ce qui vient toucher quoi</b>&nbsp;? <br>Les numéros renvoient
+      à la liste sous la figure.</li>
+      <li>Relâche le levier&nbsp;: la ligne du bas dit l'<b>écart</b> qui reste.</li>
+      <li>Fais pareil avec le <b>disque</b>, puis le <b>tambour</b>.</li>
+    </ol>
+    <p>Pour la chaleur&nbsp;: elle apparaît là où deux pièces frottent.</p>
+    <iframe class="fig-freins-iso" src="Images/freins_iso.html" loading="lazy"
+      title="Trois freins, la même roue : figure à manipuler (frein à patins, à disque, à tambour)"></iframe>
+    <script>
+      // la figure dit sa hauteur ; le cadre la prend (pas de barre de défilement dans le cadre)
+      addEventListener("message", function (e) {
+        var h = e.data && e.data.freinsIso;
+        if (!h) return;
+        document.querySelectorAll(".fig-freins-iso").forEach(function (f) {
+          if (f.contentWindow === e.source) f.style.height = Math.ceil(h) + "px";
+        });
+      });
+    </script>
   </details>
   <details class="aide"><summary>🅲 Version sans matériel — le relevé t'est fourni</summary>
     <p>«&nbsp;En serrant le levier, le câble se tend et fait pivoter deux bras. <br>Chaque bras porte un

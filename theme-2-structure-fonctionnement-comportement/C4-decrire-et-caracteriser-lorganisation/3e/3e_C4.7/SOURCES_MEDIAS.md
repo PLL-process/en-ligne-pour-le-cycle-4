@@ -11,6 +11,7 @@ de Google Images ou de site tiers ; aucun hotlinking ; aucune carte protégée r
 | `Images/decoupage_en_paquets.svg` | SVG original | Création Fable | CC0 | Découpage en paquets numérotés et réassemblage | ~7 Ko |
 | `Images/table_routage_jeu.svg` | SVG original | Création Fable | CC0 | Table de routage de R2 et choix de la route | ~6 Ko |
 | Simulateur SVG intégré (activité 5) | SVG inline original | Création Fable | CC0 | Réseau de 5 routeurs aux liaisons cliquables | inline |
+| `Images/trajet_alerte_schema_fleche_corrige.svg` | SVG | création originale (Fable) | CC0 | « Schéma fléché du trajet de l'alerte » — corrigé du « grand voyage » (règle d'or n°336, 16/11/2026) | ~5 Ko |
 
 Notes : adresses IP des exemples prises dans les plages réservées à la documentation
 (192.168.x.x, 198.51.100.x, 203.0.113.x, 172.16.x.x) ; l'affirmation « ~99 % du trafic
@@ -30,4 +31,3 @@ Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C4-de
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_station_alerte.png` | La station d'alerte cyclonique sur le toit d'un collège : mât, anémomètre, girouette, panneau solaire, sirène, gyrophare, boîtier ; la mer au loin. PNG 1 536 × 1 024, 2.0 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small autonomous cyclone warning station on a galvanized steel mast on the flat roof of a school in Martinique: cup anemometer and wind vane at the top, a small solar panel on a side arm, a white weatherproof electronics box, a horn siren and a small orange beacon light mounted on the mast, a short radio antenna, the sea in the distance, cloudy sky, no people, no text, no logos, the whole mast visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
-| `Images/trajet_alerte_schema_fleche_corrige.svg` | SVG original (Fable) | image-objet : le schéma fléché du trajet de l'alerte, dans la correction du « grand voyage » (règle d'or n°336, 16/11/2026) | CC0 | ~5 Ko |
