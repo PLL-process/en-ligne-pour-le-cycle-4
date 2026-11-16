@@ -210,7 +210,7 @@ E1 = dict(
              "objets, le lampadaire et le vélo-cargo&nbsp;: c'est la forme des mots qui décide, pas l'objet. Puis <b>lis le schéma</b> une "
              "fois vers la droite et une fois vers la gauche.</p>",
     critere="six étiquettes bien rangées, et deux lectures justes&nbsp;: tu sais dire dans quel sens tu as lu.",
-    widgets=[dict(type="classer", name="col",
+    widgets=[dict(type="classer", name="col", question="%s&nbsp;: fonction ou solution&nbsp;?",
                   categories=[("ft", "une fonction technique (ce que l'objet doit faire)"),
                               ("st", "une solution technique (l'élément qui le fait)")],
                   items=[("« détecter un passant » (lampadaire)", "ft", "« détecter un passant » commence par un verbe : c'est une action à réaliser."),
@@ -509,7 +509,7 @@ E4 = dict(
                          ("La pompe réalise…", "circuler", "La pompe : relis la phrase 5."),
                          ("Les tuyaux réalisent…", "circuler", "Les tuyaux : relis la phrase 5. Une fonction peut demander deux constituants."),
                          ("La cuve réalise…", "stocker", "La cuve : relis la phrase 6, que garde-t-elle ?")]),
-             dict(type="classer", name="chaine",
+             dict(type="classer", name="chaine", intro="<p>Pour chaque constituant, choisis sa place&nbsp;: dans la chaîne d'information, ou hors d'elle.</p>",
                   categories=[("acquerir", "chaîne d'information — acquérir"), ("traiter", "chaîne d'information — traiter"),
                               ("communiquer", "chaîne d'information — communiquer"),
                               ("hors", "hors de la chaîne d'information (il agit sur l'eau)")],
@@ -682,7 +682,7 @@ E6 = dict(
     consigne="<p><b>Coche les trois endroits du FAST qui contiennent une erreur.</b> Puis, pour chacun, <b>choisis la correction</b>. "
              "Attention&nbsp;: une branche qui a plusieurs solutions reliées par «&nbsp;ou&nbsp;» n'est pas forcément une erreur.</p>",
     critere="exactement les trois erreurs cochées, et quatre corrections justes.",
-    widgets=[dict(type="cases", name="err", legende="Les endroits du FAST qui contiennent une erreur",
+    widgets=[dict(type="cases", name="err", legende="Coche les endroits du FAST qui contiennent une erreur",
                   options=[("b2", "La case de fonction de la branche 2&nbsp;: «&nbsp;le programme d'alerte&nbsp;»"),
                            ("b1", "La branche 1&nbsp;: «&nbsp;mesurer la vitesse du vent&nbsp;» → l'anémomètre"),
                            ("b4", "La case de solution de la branche 4&nbsp;: «&nbsp;le panneau solaire&nbsp;», en face de «&nbsp;stocker l'énergie pour la nuit&nbsp;»"),

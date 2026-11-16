@@ -31748,3 +31748,29 @@ Les formes qui revenaient ont reçu une réponse commune :
 **Vérifications.**
 - Les bancs des 17 lots (35 bancs), lancés comme leur rapport de tests le dit : **tous verts** — Book Train 39 / 39 et 38 / 38, le lampadaire 65 / 65, 25 / 25 et 34 / 34. `tests_regle_311_5e_C4.7.mjs` a donné 33 / 34 sous charge (« la sauvegarde survit au rechargement »), 34 / 34 rejoué seul.
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot du Book Train).
+
+## 15/11/2026 — Règle d'or n°335, les ateliers de représentation : chaque question porte sa consigne, corrigée à la source
+
+**La demande.** Les vagues des thèmes 2 et 3 laissaient des questions sans consigne là où une séquence incruste un exercice d'atelier (FAST, cahier des charges, croquis, carte mentale…). Ces questions ne s'écrivent pas dans les pages : elles sortent du moteur des ateliers (`ateliers-representations/_generation/`). On les corrige donc à leur source.
+
+**Ce qui change dans le moteur (`moteur.py`).**
+- **Les étiquettes à poser** : une case dit ce qu'on y pose — « La case de la ligne **détecter un passant** : quelle étiquette y poses-tu ? », « Branche « Photos » — la feuille vide : quelle étiquette y poses-tu ? ». Un énoncé qui pose déjà sa question est laissé tel quel ; un exercice peut donner sa propre question (`question`).
+- **Les classements hors grille** reçoivent la question de leur exercice : « « détecter un passant » (lampadaire) : fonction ou solution ? », « Trait 1 (…) : fonction principale ou fonction contrainte ? », « Dans 1.2 : « au plus 10 L » : critère ou niveau ? ».
+- **Le positionnement du bilan** : « … (5e_C2.1) : où en suis-je ? ».
+- « Je relis mon croquis : je coche ce qui y est vraiment » devient « Relis ton croquis : coche ce qui y est vraiment. »
+
+**Dans les données des ateliers.** Les énoncés à cocher commencent par « Coche » ; « Le niveau « IPX4 au moins » vient… » devient « D'où vient le niveau « IPX4 au moins » ? » ; les deux matières d'œuvre de la bête à cornes deviennent des questions ; quatre grilles reçoivent leur consigne juste au-dessus (« Pour chaque exigence, choisis sa catégorie. »).
+
+**Comment c'est reporté, sans lancer `build.py` dans le dépôt.**
+- `build.py` rejoué d'abord **dans une copie de travail à part**, sur les sources d'avant : il redonnait exactement les pages du dépôt (aucun écart).
+- Puis rejoué sur les nouvelles sources : **77 énoncés** changent dans 21 pages (18 pages d'atelier et les 3 cahiers), et rien d'autre. Ces 21 pages sont reportées telles quelles.
+- **Les incrustations dans les séquences** : `incrustations.py` rejoué dans la même copie. Six séquences sont reportées telles quelles (`5e_C1.3`, `4e_C2.1`, `5e_C2.1`, `5e_C4.1`, `3e_C7.1`, `4e_C7.1`). Six autres pages avaient déjà, sur `main`, des incrustations en retard (`carte_des_representations`, `4e_C1.1`, `3e_C1.5`, `3e_C3.1`, `4e_C3.1`, `4e_C4.1`) : on n'y a remplacé que les énoncés, entre les marqueurs. Le retard ancien reste à part, à décider.
+
+**Mesure** (`controle_consigne_question.py`) : pages d'atelier, **84 C1 et 5 C2 → 0** (18 pages) ; thèmes 2 et 3, **0 énoncé sans consigne**. Le contrôle reconnaît aussi « relis », « regarde », « clique », « ouvre », « rédige », « cite », « dessine », « réponds » (banc 30 / 30).
+
+**Vérifications.**
+- Les bancs des neuf séquences reportées (16 bancs, lancés comme leur rapport de tests le dit) : verts — `5e_C1.3` 44 / 44, `4e_C4.1` 52 / 52, `5e_C4.1` 65 / 65 et 25 / 25, `3e_C7.1` 82 / 82, `4e_C7.1` 47 / 47, et les bancs n°311 à 34 / 34 (`4e_C1.1` rejoué seul : sous charge, il n'avait rien rendu). Un écart, présent aussi sur `main` : `tests_regle_311_4e_C7.1.mjs`, les onglets de la séance 2 sous le premier écran (1 063 px pour 844).
+- `banc_ateliers.py` : **517 / 517**. `tests_controle_consigne_question.py` : 30 / 30.
+- `banc_rappels_cdc.py` : **302 / 302** (rejoué seul : sous la charge des contrôles, le rappel de `4e_C2.1` dépassait son délai).
+- Mode mission : `banc_generique.mjs` sur les neuf séquences, jouées écran par écran, **aucun refus**.
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le dossier du FAST).
