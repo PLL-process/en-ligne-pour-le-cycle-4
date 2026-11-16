@@ -25,3 +25,12 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 |---|---|---|---|---|
 | `Images/synthese_station_alerte.png` | La station d'alerte cyclonique sur le toit d'un collège : mât, anémomètre, girouette, panneau solaire, sirène, gyrophare, boîtier ; la mer au loin. PNG 1 536 × 1 024, 2.0 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small autonomous cyclone warning station on a galvanized steel mast on the flat roof of a school in Martinique: cup anemometer and wind vane at the top, a small solar panel on a side arm, a white weatherproof electronics box, a horn siren and a small orange beacon light mounted on the mast, a short radio antenna, the sea in the distance, cloudy sky, no people, no text, no logos, the whole mast visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » ; et la situation déclenchante de la séquence (05/11/2026) |
 
+
+## La station pièce par pièce, prise dans `3e_C4.3` (16/11/2026, skill anatomy)
+
+Activité 1 (séance 1), sous le relevé des symptômes, dans un dépliant fermé : un cadre vers la figure de `3e_C4.3`,
+**sans copie** dans ce dossier.
+
+| Fichier | Ce qu'il montre | Provenance | Droits |
+|---|---|---|---|
+| `../../../C4-decrire-et-caracteriser-lorganisation/3e/3e_C4.3/station_en_pieces.html` | La station d'alerte du collège, avant le cyclone, 18 pièces numérotées ; un bouton ouvre le coffret (ses 7 pièces sortent en colonne, dont le fusible). Elle ne dit pas quelle pièce est en panne. | Dessin original, voir `3e_C4.3/SOURCES_MEDIAS.md` (générateur, kit Anatomy, commit `1482e84`) | Dessin : CC BY-NC-SA 4.0. Code du kit dans la page : licence MIT, © 2026 Ryan |

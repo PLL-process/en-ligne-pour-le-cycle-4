@@ -32156,3 +32156,16 @@ Demande de Pascal, 16/11/2026 : « station » (la station d'alerte de 3e, procha
 - **Pas fait ici** : la station dans les autres séquences (`3e_C4.1`, `3e_C5.1`, `3e_C6.1`, `3e_C6.2`, et celles du
   thème 3) ; anatomy-reveal. Décisions de Pascal.
 - Vérifications : `rapport_tests_3e_C4.3-C4.6.md`, section du 16/11/2026.
+
+## 16/11/2026 — La station pièce par pièce, posée aussi dans « SOS station » (`3e_C5.1`)
+
+Demande de Pascal, 16/11/2026 (« Oui, pose-la dans 3e_C5.1 »), à la décision laissée ouverte par #749.
+
+- **Où** : activité 1 (« L'enquête commence : lire les symptômes »), sous le relevé des symptômes, dans un dépliant
+  fermé, comme dans `3e_C4.3`. L'activité fait classer les hypothèses (câble, fusible, sirène) ; la figure montre où est
+  chaque pièce : la LED sur la porte, le câble dehors, le fusible dans le coffret. Elle ne dit pas laquelle est en panne.
+- **Une seule figure** : un cadre vers `3e_C4.3/station_en_pieces.html`, sans copie. Son lien de retour ramène à la
+  séquence qui l'a ouverte (par l'adresse d'origine du navigateur) ; ouverte seule, à `3e_C4.3`.
+- **La station avant le cyclone** : la figure montre la girouette droite ; le texte du dépliant le dit, pour ne pas
+  contredire la situation (la girouette pend).
+- Vérifications : `3e_C5.1/rapport_tests_3e_C5.1-C5.4.md`, section du 16/11/2026.

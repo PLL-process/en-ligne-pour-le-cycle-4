@@ -897,7 +897,14 @@ bouton.addEventListener("click", basculer);
 stage.addEventListener("click", basculer);
 stage.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); basculer(); } });
 dire();
-// Posée dans la séquence par un cadre (activité 1) : la page le sait, cache ce qui ne sert qu'en page seule,
+// Ouverte depuis une autre séquence de la station (le lien du téléphone, dans 3e_C5.1), le retour y ramène.
+try {
+  const r = document.referrer && new URL(document.referrer), lien = document.querySelector(".retour a");
+  if (r && lien && r.origin === location.origin && /^sequence_.+[.]html$/.test(r.pathname.split("/").pop()) && r.pathname !== new URL(lien.href).pathname) {
+    lien.href = r.href; lien.textContent = "← Retour à la séquence";
+  }
+} catch (e) { /* le lien garde la séquence de la station */ }
+// Posée dans une séquence par un cadre (activité 1 de 3e_C4.3 et de 3e_C5.1) : la page le sait, cache ce qui ne sert qu'en page seule,
 // et donne sa hauteur à la séquence, qui la prend (pas de barre de défilement dans le cadre).
 if (parent !== window) {
   document.documentElement.classList.add("dans-cadre");

@@ -115,3 +115,29 @@ suite de tests ne lance une machine.
   revendiquée.
 - Google Fonts inaccessible en sandbox : polices de repli, sans incidence — la suite ne
   compte pas ces requêtes comme des ressources distantes de la page (règle n°40).
+
+## 16/11/2026 — La station pièce par pièce, dans l'activité 1
+
+La figure de `3e_C4.3` (`station_en_pieces.html`), posée sous le relevé des symptômes, dans un dépliant fermé
+(`#a1-figure-station`) : un cadre, et sur un téléphone un lien vers la page de la figure. Aucune copie dans ce dossier.
+L'élève y repère les pièces dont parle l'activité (la LED, la sirène, son câble, le fusible) ; la figure ne dit pas
+laquelle est en panne. La page de la figure ramène désormais, par son lien de retour, à la séquence qui l'a ouverte.
+
+- Bancs du lot, lancés depuis leur dossier : `tests_3e_C5.1-C5.4.mjs` 34 / 34 (sortie 0) ; `tests_regle_311_3e_C5.1.mjs` 34 / 34 (sortie 0).
+- Ceux de `3e_C4.3`, dont la page de la figure a changé : 23 / 23 et 34 / 34 (sortie 0).
+- Mode mission : `poser.py --verifier` ✅ ; `enrichir.py --verifier` ✅ ; `banc_generique.mjs` aucun refus.
+- `controle_axe.mjs` sortie 0 (5 pages) ; `controle_hors_ligne.mjs` sortie 0 ; `controle_mouvement.py` M1 0, M2 0.
+- `mesurer_charge.mjs` : séance 1, 843 mots visibles (le dépliant est fermé) ; `audit_aeration.py --strict` ✅ ;
+  `verif_regles_audit.py` 0 ✘ ; `banc_papier.py --filtre 3e_C5.1` sortie 0 (la figure n'est pas imprimée).
+- Contrôles Python de `_outils/` : tous à 0 sauf `controle_flux_animes.py` ; `controle_impression.mjs` sortie 1. Les deux
+  refusent une page de `5e_C4.1` ou de `4e_C4.1`, que cette PR ne touche pas (refus déjà sur `main`).
+- Au navigateur, servi en local : pas d'erreur de script ; le cadre prend la hauteur de la figure (1 722 px) ; ouverte
+  par le lien du téléphone, la page de la figure ramène à `3e_C5.1`, ouverte seule à `3e_C4.3`.
+- Revue d'écran : un tour (captures dans `_outils/captures_station_c5_2026-11-16/`), à 1 280 et 390 px ; aucun défaut
+  à corriger, la figure ayant fait ses trois tours dans `3e_C4.3`.
+
+**Un incident, corrigé avant livraison** : la première version du lien de retour cassait tout le script de la figure
+(une expression régulière abîmée par le gabarit du générateur : le coffret ne s'ouvrait plus). Repérée au navigateur,
+réécrite sans barre oblique, revérifiée sur les deux pages.
+
+Non exécuté : un vrai téléphone, Firefox, Safari ; la validation HTML ; le parcours au clavier à la main.
