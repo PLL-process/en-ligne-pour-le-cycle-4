@@ -650,6 +650,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
    Tout ce qui cache est sous @media screen : la fiche papier s'imprime comme avant, entière. */
 @media screen{
   body.ms .ms-cache,body.ms .ms-origine,body:not(.ms) .ms-seul{display:none!important}
+  /* le trou ▢ de l'écran, marqué dans le code qu'il complète (un écran par trou) */
+  body.ms .ms-trou-ici{background:#fde68a!important;color:#1c1917!important;outline:2px solid #b45309;outline-offset:1px;border-radius:3px}
   body.ms #tachesBandeau,body.ms .page-suivante:not(.ms-montre){display:none!important}
   /* une page sans onglets : le mode ne montre qu'une séance à la fois */
   body.ms .seance-bloc[id]:not(.ms-ici){display:none!important}
@@ -664,7 +666,11 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   body.ms #seances .seance-tab small{display:none}
   .ms-retour,.ms-message{scroll-margin-bottom:110px}
   .ms-ancre{height:0}
-  .ms-invite{display:flex;justify-content:center;margin-top:10px}
+  .ms-invite{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .ms-invite .ms-figer-page{background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f)}
+  .ms-figer{min-height:44px;min-width:44px;padding:4px 10px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-weight:700;cursor:pointer;margin-left:auto}
+  .ms-figer+.ms-quitter{margin-left:0}
+  .ms-figer:focus-visible,.ms-invite .ms-figer-page:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
   .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
   .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
   .ms-quitter{min-height:44px;padding:6px 12px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-size:.82em;font-weight:700;cursor:pointer;margin-left:auto}
@@ -759,8 +765,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   /* au téléphone : la barre de la mission sur deux lignes, et une seule boîte autour de la question */
   @media (max-width:640px){
     .ms-tete{padding:8px 12px;gap:6px}
-    .ms-ligne1{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center}
-    .ms-ou{grid-column:1/-1} .ms-gains{grid-column:1;grid-row:2} .ms-quitter{grid-column:2;grid-row:2;padding:4px 10px}
+    .ms-ligne1{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px 10px;align-items:center}
+    .ms-ou{grid-column:1/-1} .ms-gains{grid-column:1;grid-row:2} .ms-figer{grid-column:2;grid-row:2} .ms-quitter{grid-column:3;grid-row:2;padding:4px 10px}
+    .ms-gains{gap:6px;min-width:0;white-space:nowrap} .ms-jauge{width:auto;flex:1 1 40px;min-width:28px} .ms-figer{padding:4px 8px}
     body.ms .seance-panel>section.card{padding:14px 12px}
     body.ms .seance-panel .activite{padding:0;border:0;background:none;margin:0}
     body.ms .seance-panel .activite>.exo{padding:12px;margin:8px 0}
@@ -770,6 +777,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:none!important;transition:none!important}}
 }
 @media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}
+/* les animations figées d'un bouton (WCAG 2.2.2) : tout s'arrête là où il en est */
+html.anim-figee *,html.anim-figee *::before,html.anim-figee *::after{animation-play-state:paused!important}
 </style>
 <script>
 /* Mode mission v1 — un exercice à la fois (décision de Pascal du 11/11/2026).
@@ -997,7 +1006,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, trou:x.st.trou || "", dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1008,6 +1017,8 @@ function activite(A, E){
    Ce qui précède une question sans rien demander (un simulateur, un tableau) l'accompagne. */
 function champsDe(c){ return estChamp(c) ? [c] : $$(CHAMP, c); }
 function courte(f){ return f.classList.contains("qcm-rangee") || f.classList.contains("qcm-court"); }
+/* un trou de code : « ▢1 — … » (la marque ▢1 est dans le code) ou « Trou ① — … » (la marque ①, dans un .trou-num) */
+function trou(f){ var x = intitule(f), m = /^▢ ?(\d+)/.exec(x); if (m) return "▢" + m[1]; m = /^Trou ([①-⑳])/.exec(x); return m ? m[1] : ""; }
 function ecrit(nodes){ var q = "textarea,select[data-interface],input:not([type=radio]):not([type=checkbox]):not([type=hidden])"; return nodes.some(function(c){ return c.matches(q) || !!$(q, c); }); }
 function pas(p){
   var steps = [], tampon = [], n = p.n.filter(function(x){ return x !== p.h; }), i = 0;
@@ -1019,6 +1030,14 @@ function pas(p){
       steps.push({ n:contexte().concat(grp), champs:c._sets }); continue;
     }
     var f = champsDe(c);
+    /* les trous ▢1, ▢2… d'un même code : un écran par trou, le code (ce qui précède) redit sur chacun, le trou en
+       cours marqué dans le code (une question à la fois, règle d'or n°335 ; décision de Pascal du 16/11/2026) */
+    if (f.length === 1 && courte(f[0]) && trou(f[0])){
+      var ctx = contexte(), lot = [[c, f[0]]]; i++;
+      while (i < n.length && champsDe(n[i]).length === 1 && courte(champsDe(n[i])[0]) && trou(champsDe(n[i])[0])){ lot.push([n[i], champsDe(n[i])[0]]); i++; }
+      lot.forEach(function(x){ steps.push({ n:ctx.concat([x[0]]), champs:[x[1]], trou:trou(x[1]) }); });
+      continue;
+    }
     if (f.length){
       var g2 = [c], ch = f.slice(), rangee = courte(f[0]); i++;
       if (rangee) while (i < n.length && champsDe(n[i]).length && courte(champsDe(n[i])[0])){ g2.push(n[i]); ch = ch.concat(champsDe(n[i])); i++; }
@@ -1102,6 +1121,40 @@ function poser(comp, i, valeur){
 
 /* ═══ L'habillage de la page : la barre de la mission, la barre basse, le bouton de la barre d'outils ═══ */
 var tete, pied, bMission, ancre;
+/* ═══ Figer les animations (WCAG 2.2.2 ; veille du 16/11/2026) : une boucle sans fin (un flux, un moteur qui tourne,
+       un buzzer) s'arrête d'un bouton, en mission (⏸ dans la barre) comme en page complète (à côté du bouton de la
+       mission). Le choix vaut pour tout le site, sur cet appareil. Le bouton n'apparaît que si la page a une boucle. ═══ */
+var CLE_FIGE = "anim-figee";
+function boucles(){
+  var r = false;
+  function voir(rs){ for (var i = 0; rs && i < rs.length && !r; i++){ var x = rs[i]; if (x.style && /infinite/.test((x.style.animationIterationCount || "") + " " + (x.style.animation || ""))) r = true; else if (x.cssRules && x.cssRules.length) voir(x.cssRules); } }
+  [].slice.call(D.styleSheets).forEach(function(s){ try { voir(s.cssRules); } catch (e) {} });
+  return r;
+}
+function figee(){ try { return localStorage.getItem(CLE_FIGE) === "1"; } catch (e) { return false; } }
+function peindreFige(){
+  var f = D.documentElement.classList.contains("anim-figee");
+  $$("[data-pause-animations]").forEach(function(b){
+    b.setAttribute("aria-pressed", f ? "true" : "false");
+    var dit = f ? "Relancer les animations" : "Figer les animations";
+    if (b.id === "msFiger"){ b.textContent = f ? "▶️" : "⏸️"; b.setAttribute("aria-label", dit); b.title = dit; }
+    else b.textContent = (f ? "▶️ " : "⏸️ ") + dit;
+  });
+}
+function figer(){
+  if (!boucles()) return;
+  D.documentElement.classList.toggle("anim-figee", figee());
+  var b = el("button", "btn ms-figer-page"); b.type = "button"; b.setAttribute("data-pause-animations", "");
+  if (bMission && bMission.parentNode) bMission.parentNode.appendChild(b);
+  var m = $("#msFiger"); if (m) m.hidden = false;
+  $$("[data-pause-animations]").forEach(function(x){ x.addEventListener("click", function(){
+    var f = !D.documentElement.classList.contains("anim-figee");
+    D.documentElement.classList.toggle("anim-figee", f);
+    try { localStorage.setItem(CLE_FIGE, f ? "1" : "0"); } catch (e) {}
+    peindreFige();
+  }); });
+  peindreFige();
+}
 function chrome(){
   /* le bouton d'entrée se range dans le cadre « Ma progression », AVANT les onglets : rien ne s'ajoute entre les
      onglets et les panneaux (controle_squelette, D5), ni dans la barre d'outils (deux lignes à 390 px), ni dans le
@@ -1112,9 +1165,10 @@ function chrome(){
   invite.appendChild(bMission);
   if (cadre) cadre.appendChild(invite); else { var b0 = $("#seances") || $(G.panneau); b0.parentNode.insertBefore(invite, b0); }
   bMission.addEventListener("click", entrer);
-  tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu"></p><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
+  tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu"></p><button type="button" class="ms-figer" id="msFiger" hidden data-pause-animations aria-pressed="false" aria-label="Figer les animations">⏸️</button><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
   /* un repère sans hauteur juste avant la barre : collée en haut de l'écran, la barre ne dit plus où elle commence */
   var premier = $(G.panneau); ancre = el("div", "ms-ancre ms-seul"); premier.parentNode.insertBefore(ancre, premier); premier.parentNode.insertBefore(tete, premier);
+  figer();
   pied = el("div", "ms-pied ms-seul", '<div class="ms-pied-in"><button type="button" class="ms-btn ms-prec" id="msPrec" aria-label="Écran précédent">← <span>Précédent</span></button><button type="button" class="ms-btn ms-verif" id="msVerif">Vérifier</button><span class="ms-vide-f" id="msVide" hidden></span><button type="button" class="ms-btn ms-suiv" id="msSuiv">Suivant →</button></div>');
   D.body.appendChild(pied);
   $("#msQuitter").addEventListener("click", sortir);
@@ -1142,6 +1196,35 @@ function barre(){
 /* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
    (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
 function ressVue(){ return M.ress === undefined ? true : M.ress; }
+/* le trou de l'écran se marque dans le code qu'il complète : chaque « ▢N » du code devient une marque, la sienne
+   s'allume (le texte du code ne change pas ; hors mission, rien ne se voit) */
+function marquerTrou(s){
+  $$(".ms-trou-ici", panneau).forEach(function(x){ x.classList.remove("ms-trou-ici"); });
+  if (!s.trou) return;
+  s.n.concat(s.ress || []).forEach(function(n){
+    (n.matches("pre,.pytrous") ? [n] : $$("pre,.pytrous", n)).forEach(function(z){
+      var marques = $$(".trou-num", z).filter(function(x){ return x.textContent.indexOf(s.trou) >= 0; });
+      if (!marques.length){
+        if (!z._trous){
+          z._trous = true;
+          var w = D.createTreeWalker(z, NodeFilter.SHOW_TEXT), t, l = [];
+          while ((t = w.nextNode())) if (/▢ ?\d/.test(t.nodeValue)) l.push(t);
+          l.forEach(function(t){
+            var fr = D.createDocumentFragment();
+            t.nodeValue.split(/(▢ ?\d+)/).forEach(function(b, j){
+              if (!b) return;
+              if (j % 2){ var sp = el("span", "ms-trou"); sp.textContent = b; sp.setAttribute("data-trou", b.replace(" ", "")); fr.appendChild(sp); }
+              else fr.appendChild(D.createTextNode(b));
+            });
+            t.parentNode.replaceChild(fr, t);
+          });
+        }
+        marques = $$('.ms-trou[data-trou="' + s.trou + '"]', z);
+      }
+      marques.forEach(function(x){ x.classList.add("ms-trou-ici"); });
+    });
+  });
+}
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1151,7 +1234,7 @@ function montrer(haut){
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
   var ouv = $("#ouverture"); if (ouv) ouv.classList.toggle("ms-cache", !s.ouverture);
   if (s.ressBtn) s.ressBtn.textContent = ressVue() ? "📎 Masquer la ressource de l'activité" : "📎 Revoir la ressource de l'activité";
-  $$(".ms-etq", panneau).forEach(peindre); peindreRetour(s); bilan(s);
+  $$(".ms-etq", panneau).forEach(peindre); peindreRetour(s); bilan(s); marquerTrou(s);
   if (ecrans.length > 1 && vide(s)){ ecrans.splice(k, 1); k = Math.min(k, ecrans.length - 1); return montrer(haut); }
   if (!G.onglet){ var bout = k === ecrans.length - 1 && !voisine(1); $$(".page-suivante").forEach(function(x){ x.classList.toggle("ms-montre", bout && !x.closest(G.panneau)); }); }
   barre(); M.k[panneau.id] = k; ecrire();

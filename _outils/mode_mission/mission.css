@@ -2,6 +2,8 @@
    Tout ce qui cache est sous @media screen : la fiche papier s'imprime comme avant, entière. */
 @media screen{
   body.ms .ms-cache,body.ms .ms-origine,body:not(.ms) .ms-seul{display:none!important}
+  /* le trou ▢ de l'écran, marqué dans le code qu'il complète (un écran par trou) */
+  body.ms .ms-trou-ici{background:#fde68a!important;color:#1c1917!important;outline:2px solid #b45309;outline-offset:1px;border-radius:3px}
   body.ms #tachesBandeau,body.ms .page-suivante:not(.ms-montre){display:none!important}
   /* une page sans onglets : le mode ne montre qu'une séance à la fois */
   body.ms .seance-bloc[id]:not(.ms-ici){display:none!important}
@@ -16,7 +18,11 @@
   body.ms #seances .seance-tab small{display:none}
   .ms-retour,.ms-message{scroll-margin-bottom:110px}
   .ms-ancre{height:0}
-  .ms-invite{display:flex;justify-content:center;margin-top:10px}
+  .ms-invite{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .ms-invite .ms-figer-page{background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f)}
+  .ms-figer{min-height:44px;min-width:44px;padding:4px 10px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-weight:700;cursor:pointer;margin-left:auto}
+  .ms-figer+.ms-quitter{margin-left:0}
+  .ms-figer:focus-visible,.ms-invite .ms-figer-page:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
   .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
   .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
   .ms-quitter{min-height:44px;padding:6px 12px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-size:.82em;font-weight:700;cursor:pointer;margin-left:auto}
@@ -111,8 +117,9 @@
   /* au téléphone : la barre de la mission sur deux lignes, et une seule boîte autour de la question */
   @media (max-width:640px){
     .ms-tete{padding:8px 12px;gap:6px}
-    .ms-ligne1{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center}
-    .ms-ou{grid-column:1/-1} .ms-gains{grid-column:1;grid-row:2} .ms-quitter{grid-column:2;grid-row:2;padding:4px 10px}
+    .ms-ligne1{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px 10px;align-items:center}
+    .ms-ou{grid-column:1/-1} .ms-gains{grid-column:1;grid-row:2} .ms-figer{grid-column:2;grid-row:2} .ms-quitter{grid-column:3;grid-row:2;padding:4px 10px}
+    .ms-gains{gap:6px;min-width:0;white-space:nowrap} .ms-jauge{width:auto;flex:1 1 40px;min-width:28px} .ms-figer{padding:4px 8px}
     body.ms .seance-panel>section.card{padding:14px 12px}
     body.ms .seance-panel .activite{padding:0;border:0;background:none;margin:0}
     body.ms .seance-panel .activite>.exo{padding:12px;margin:8px 0}
@@ -122,3 +129,5 @@
   @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:none!important;transition:none!important}}
 }
 @media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}
+/* les animations figées d'un bouton (WCAG 2.2.2) : tout s'arrête là où il en est */
+html.anim-figee *,html.anim-figee *::before,html.anim-figee *::after{animation-play-state:paused!important}

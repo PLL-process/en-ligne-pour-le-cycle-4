@@ -99,17 +99,17 @@ autres ; mauvaises propositions sans « pourquoi ». Avant → après.
 
 | N° | Séquence | Séance la plus lourde | Bonne réponse la plus longue | Sans pourquoi | État |
 |---|---|---|---|---|---|
-| 2.1 | `5e_C4.1` | 2171 → 2171 | 12 → 0 | 8 → 0 | lot 1, livré #739 — 12 questions rééquilibrées ; les trois lectures fléchées du FAST aérées, à la source et dans l'atelier et le cahier de 5e ; séance 6 inchangée (positionnement sur 8 compétences, FAST incrusté) |
-| 2.2 | `3e_C7.1` | 2095 → 2095 | 0 → 0 | 35 → 0 | lot 1, livré #739 — 35 pourquoi ; la question du seuil disait « à partir de 28 °C » quand la LED s'allume au-dessus : « au-dessus de » |
-| 2.3 | `5e_C2.1` | 2090 → 2090 | 19 → 0 | 66 → 0 | lot 1, livré #739 — 19 questions rééquilibrées, 66 pourquoi ; séances 1 et 2 : les exercices d'atelier gardés |
-| 2.4 | `5e_C3.1` | 1874 → 1823 | 21 → 0 | 90 → 0 | lot 1, livré #739 — 22 questions rééquilibrées, 90 pourquoi |
-| 2.5 | `5e_C1.2` | 1844 → 1803 | 20 → 0 | 66 → 0 | lot 1, livré #739 — 20 questions rééquilibrées, 66 pourquoi ; séance 4 : le FAST du freinage |
-| 2.6 | `4e_C1.1` | 1698 → 1698 | 22 → 0 | 69 → 0 | lot 1, livré #739 — 22 questions rééquilibrées, 69 pourquoi ; séance 5 : deux exercices d'atelier |
+| 2.1 | `5e_C4.1` | 2171 → 2171 | 12 → 0 | 8 → 0 | lot 1, livré #740 — 12 questions rééquilibrées ; les trois lectures fléchées du FAST aérées, à la source et dans l'atelier et le cahier de 5e ; séance 6 inchangée (positionnement sur 8 compétences, FAST incrusté) |
+| 2.2 | `3e_C7.1` | 2095 → 2095 | 0 → 0 | 35 → 0 | lot 1, livré #740 — 35 pourquoi ; la question du seuil disait « à partir de 28 °C » quand la LED s'allume au-dessus : « au-dessus de » |
+| 2.3 | `5e_C2.1` | 2090 → 2090 | 19 → 0 | 66 → 0 | lot 1, livré #740 — 19 questions rééquilibrées, 66 pourquoi ; séances 1 et 2 : les exercices d'atelier gardés |
+| 2.4 | `5e_C3.1` | 1874 → 1823 | 21 → 0 | 90 → 0 | lot 1, livré #740 — 22 questions rééquilibrées, 90 pourquoi |
+| 2.5 | `5e_C1.2` | 1844 → 1803 | 20 → 0 | 66 → 0 | lot 1, livré #740 — 20 questions rééquilibrées, 66 pourquoi ; séance 4 : le FAST du freinage |
+| 2.6 | `4e_C1.1` | 1698 → 1698 | 22 → 0 | 69 → 0 | lot 1, livré #740 — 22 questions rééquilibrées, 69 pourquoi ; séance 5 : deux exercices d'atelier |
 | 2.7 | `4e_C7.5` | 1576 → 1576 | 0 → 0 | 30 → 0 | lot 2, livré #740 — les 30 pourquoi de la chaîne à compléter ; la page à jour de son fichier de mission |
 | 2.8 | `4e_C2.1` | 1477 → 1451 | 19 → 0 | 69 → 0 | lot 2, livré #740 — 21 questions rééquilibrées, 69 pourquoi |
 | 2.9 | `3e_C2.1` | 1362 → 1363 | 18 → 0 | 63 → 0 | lot 2, livré #740 — 20 questions rééquilibrées, 63 pourquoi |
 
-Les lignes 2.1 à 2.6 sont mesurées avant la vague n°335 du thème 1 (#737), les lignes 2.7 à 2.9 après : ses énoncés en questions ajoutent quelques mots. La remesure du lot 1 après la fusion est au journal.
+Le lot 1 est arrivé sur `main` avec le lot 2 (#740, qui le contenait ; #739, qui le portait seul, est fermée). Les lignes 2.1 à 2.6 sont mesurées avant la vague n°335 du thème 1 (#737), les lignes 2.7 à 2.9 après : ses énoncés en questions ajoutent quelques mots. La remesure du lot 1 après la fusion est au journal.
 
 ## Notes par séquence
 
