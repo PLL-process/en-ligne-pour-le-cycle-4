@@ -31643,3 +31643,28 @@ Une question à la fois, là aussi : un bloc de la ressource qui porte un champ 
 - Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot).
 
 **Ce qui reste.** La vague n°335 (1 019 C1, 24 C2), avec la n°331 et la n°332. Déjà prêtes, en deux PR qui suivent celle-ci : **le thème 3** (C7, C8 et la station `3e_C9.2`, réécrite à sa source, la page tout-en-un, puis les quatre pages engendrées) et **le thème 2** (C4, C5, C6, Book Train compris). Puis le thème 1. Les questions des ateliers de représentation (pages d'atelier, cahiers et leurs incrustations dans les séquences) se corrigent à la source, dans `ateliers-representations/_generation/`, sans relancer `build.py`.
+
+## 15/11/2026 — Règle d'or n°335, la vague du thème 3 : les C7, les C8 et la station `3e_C9.2`, une consigne par question
+
+**La demande.** Pascal, le 15/11/2026 : « Tout le thème 2 et 3 […] puis thème 1 », et, pour la règle d'or n°335 (une consigne par question, une à la fois), le choix « tout réécrire ». Cette entrée suit celle de la règle (la PR des trois C9.1), dont elle reprend le contrôle `controle_consigne_question.py`.
+
+**Ce qui change, séquence par séquence.** Chaque énoncé devient une vraie question ou une consigne à l'impératif ; la phrase qui précède la question reste quand elle porte une donnée.
+- **3e** : `3e_C7.1` (le capteur de confort), `3e_C7.3` (le boîtier), `3e_C7.4` (l'énergie), `3e_C7.5` (la station à équiper), `3e_C7.7` (produire le boîtier), `3e_C7.8` (deux stations), `3e_C8.1` et `3e_C8.2` (le mât).
+- **4e** : `4e_C7.1` (le jardin, la conception), `4e_C7.3` (le bac), `4e_C7.4` (l'énergie du jardin), `4e_C7.5` (le jardin incomplet), `4e_C7.7` (le support du capteur), `4e_C7.8` (le jardin publié), `4e_C8.1` (la validation).
+- **5e** : `5e_C7.1` (le mini-projet), `5e_C7.3` (le banc de la cour), `5e_C7.4` (l'indicateur du hall), `5e_C7.5` (l'éclairage du préau), `5e_C8.1` et `5e_C8.2` (la patère).
+- **La station `3e_C9.2`** : réécrite à sa **source**, la page tout-en-un (25 énoncés, et les 13 cases du tableau de recette : « Essai 1 : ce que tu observes est-il conforme ? »), puis les quatre pages **engendrées** par `generer_les_quatre_pages.py` — jamais retouchées à la main.
+
+Des formes revenaient ; elles ont reçu la même réponse partout :
+- les rangs d'un algorigramme ou d'une démarche : « Quel rang donnes-tu au bloc « … » ? » ;
+- les fonctions d'une chaîne : « Quelle fonction remplit le relais ? » ;
+- le positionnement : « **Je me positionne sur 3e_C7.3 :** quelle phrase me décrit le mieux ? », ou « … : où en suis-je ? » — le « je » du bilan est gardé (n°302) ;
+- le niveau du livret : « Choisis le niveau qui décrit ce que tu fais aujourd'hui », en tête.
+
+**Les grilles et les tableaux.** Leur consigne était au-dessus de l'activité, sur l'écran de départ du mode mission. Elle se pose désormais **dans l'exercice, juste au-dessus** (`p.consigne-grille`, `p.consigne-tableau`), et quitte le paragraphe d'avant quand elle y était seule : `3e_C7.4`, `3e_C7.5`, `3e_C7.8`, `4e_C7.4`, `4e_C7.8`, `5e_C7.4` (deux), `5e_C8.2`, `3e_C8.2`, et le tableau de recette de la station.
+
+**Mesure** (`controle_consigne_question.py`, 194 pages lues) : thème 3, **210 C1 et 12 C2 → 3 C1 et 1 C2**. Ce qui reste vient des ateliers de représentation incrustés (`3e_C7.1` : le FAST à contrôler et le croquis ; `4e_C7.1` : le FAST) : ces questions se corrigent à leur source, `ateliers-representations/_generation/`, avec les pages d'atelier et les cahiers.
+
+**Vérifications.**
+- Les bancs de tous les lots touchés, lancés comme leur rapport de tests le dit : verts, sauf trois écarts **présents aussi sur `main`** : `tests_regle_311_4e_C7.1.mjs` (séance 2 : les onglets sous le premier écran, à 1 063 px pour 844), `tests_3e_C8.1_qcm.mjs` et `tests_5e_C8.1_qcm.mjs` (« le lien vers la séquence pointe le bon fichier », 30 / 32). `tests_5e_C7.5_sequence.mjs` a donné 37 / 40 sous charge, 40 / 40 rejoué seul.
+- La station : 167 / 167, pont en H 37 / 37, n°311 34 / 34 ; le générateur rejoué sur la source d'avant ne changeait rien (pas de dérive).
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de la station).
