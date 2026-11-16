@@ -314,9 +314,10 @@ const svg = await p.$$eval('img[src$=".svg"], object[data$=".svg"]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('data')));
 const svgAbsents = svg.filter(s => !fs.existsSync(path.join(ICI, s)));
 // 4 depuis la vague n°331 (15/11/2026) : le schéma des entrées/sorties de l'activité 1 est affiché MUET avec ses
-// questions, et complet dans sa correction.
+// questions, et complet dans sa correction. 5 depuis sa 2e passe (même jour) : le plan de tests de l'activité 5,
+// muet sur la cause du bug et sur les valeurs frontières, avec ses questions ; complet dans sa correction.
 ok(`22 · les ${svg.length} SVG référencés existent sur le disque`,
-   svg.length === 4 && svgAbsents.length === 0, svgAbsents.join(' · '));
+   svg.length === 5 && svgAbsents.length === 0, svgAbsents.join(' · '));
 
 const distantes = await p.$$eval('[src], link[href], object[data], iframe[src]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('href') || e.getAttribute('data'))

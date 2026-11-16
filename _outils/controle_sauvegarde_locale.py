@@ -19,14 +19,16 @@ Pour chaque page `.html` publiée qui appelle `localStorage.setItem(` :
      `localStorage.clear(` (ou la fonction `oublier(` du kit des ateliers), ou un bouton
      « Recommencer / Réinitialiser / Effacer… » qui réécrit un état neuf (les QCM).
   2. POSTE PARTAGÉ — une note visible porte `data-note="poste-partage"` (le texte canonique
-     est NOTE_POSTE_PARTAGE ci-dessous). Exigée pour les séquences et les ateliers, qui
-     gardent des réponses rédigées ; seulement comptée pour les QCM, qui ne gardent qu'un
-     score (décision à prendre, pas un défaut).
+     est NOTE_POSTE_PARTAGE ci-dessous). Exigée partout depuis le 15/11/2026, QCM compris :
+     on les croyait ne garder qu'un score, ils gardent le NOM, le PRÉNOM, la classe, chaque
+     réponse et le temps — et « ♻ Recommencer entièrement » efface les réponses mais garde
+     le nom. Le QCM du gabarit maison reçoit donc sa note ET un bouton « 🗑 Effacer ma
+     sauvegarde » qui retire toute la clé, en deux clics (`demande()`), sous `#savedNote`.
   3. SANS BOÎTE MODALE — aucun `confirm(` : la confirmation se fait en deux clics dans la
      page (`demande()` ou l'armement du bouton), jamais par une boîte du navigateur qui
-     bloque la page et échappe au lecteur d'écran. Comptée, pas refusée : 52 pages la
-     tiennent du `kit.js` des ateliers de représentation (incrustations), à corriger à la
-     source par le skill `ateliers-representations-depot`.
+     bloque la page et échappe au lecteur d'écran. Comptée, pas refusée. Seul le CODE est
+     lu (15/11/2026, `sans_modale.code_seul`) : deux QCM étaient comptés pour le mot
+     « confirm() » écrit dans un commentaire qui explique `demande`.
 
 `--corriger` répare ce qui suit un gabarit connu, et seulement cela :
   · une séquence dont la barre `.toolbar` porte « Imprimer » mais pas de bouton d'effacement,
@@ -35,8 +37,12 @@ Pour chaque page `.html` publiée qui appelle `localStorage.setItem(` :
   · une séquence ou un atelier qui porte un bouton `btnReset` et pas de note poste partagé :
     la note est posée après la note « enregistrées dans ce navigateur » si elle existe, sinon
     après la barre d'outils ;
-  · « personne d'autre ne les voit » devient « rien n'est envoyé en ligne ».
-Le reste (QCM, pages sans gabarit connu, `confirm(` du kit) est listé, pas touché.
+  · « personne d'autre ne les voit » devient « rien n'est envoyé en ligne » ;
+  · un QCM du gabarit maison (`#savedNote`, `const KEY`, `demande()`) sans note : la note
+    QCM et le bouton « 🗑 Effacer ma sauvegarde » sont posés sous `#savedNote`, et un script
+    l'arme en deux clics, retire la clé et recharge (15/11/2026).
+Le reste (pages sans gabarit connu, `confirm(` hors forme reconnue) est listé, pas touché ;
+`_outils/sans_modale.py` remplace les `if(confirm("…"))`.
 
 Usage : python3 _outils/controle_sauvegarde_locale.py [--racine .] [--corriger] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste un écart (effacement ou note manquants sur une
@@ -46,6 +52,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sans_modale  # noqa: E402  (le code seul : un mot dans un commentaire n'est pas un appel)
+
 EXCLUS = {"_archive-anciennes-versions", ".git", "node_modules", "__pycache__", "_exports", "_generation"}
 
 NOTE_POSTE_PARTAGE = (
@@ -54,6 +63,32 @@ NOTE_POSTE_PARTAGE = (
     'Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur '
     '«&nbsp;{bouton}&nbsp;».</p>'
 )
+
+#: la note des QCM du gabarit maison (15/11/2026) : ils gardent aussi le nom, et le bouton
+#: qui efface TOUT est posé dans la note même, en haut de page, près du nom.
+NOTE_QCM = (
+    '<p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);'
+    'text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, '
+    'CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>'
+    'Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br>'
+    '<button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, '
+    'tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p>'
+    '<style>@media print{[data-note="poste-partage"]{display:none}}</style>'
+)
+
+SCRIPT_EFFACER_QCM = (
+    '<script>/* Règle d\'or n°322 (15/11/2026) : effacer TOUTE la sauvegarde de ce QCM — le nom, les '
+    'réponses, le temps —\n   en deux clics (`demande`), sans boîte modale. « ♻ Recommencer entièrement » '
+    'garde le nom : il ne suffit pas sur un poste partagé. */\n'
+    'document.getElementById("btnEffacer").addEventListener("click", function () {\n'
+    '  if (demande("effacer-sauvegarde", "Effacer de ce navigateur ton nom, tes réponses et ton temps ?")) {\n'
+    '    try { localStorage.removeItem(KEY); } catch (e) {}\n'
+    '    location.reload();\n'
+    '  }\n'
+    '});\n</script>\n'
+)
+#: le bandeau `#savedNote` du gabarit maison des QCM, sous l'identité de l'élève
+SAVEDNOTE_QCM = '<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>'
 
 BOUTON_RESET = ('  <button class="btn ghost" id="btnReset" type="button" '
                 'title="Effacer définitivement tes réponses enregistrées dans ce navigateur. '
@@ -139,7 +174,7 @@ def mesurer_page(src):
     # n'efface que le croquis incrusté : il ne compte pas pour la page qui l'accueille.
     e["efface"] = bouton_reset(src) is not None
     e["note"] = 'data-note="poste-partage"' in src
-    e["modale"] = len(re.findall(r"\bconfirm\(", src))
+    e["modale"] = len(re.findall(r"\bconfirm\(", sans_modale.code_seul(src)))
     e["faux"] = any(a in src for a, _ in FAUX)
     return e
 
@@ -176,6 +211,15 @@ def corriger_page(src):
             src = src[:tb.end()] + BOUTON_RESET + src[tb.end():]
             src = src.replace("</body>", SCRIPT_RESET % mk.group(1) + "</body>", 1)
             gestes.append("bouton « Effacer ma sauvegarde » et son script en deux clics ajoutés")
+    # 1 bis. Le QCM du gabarit maison : sa note et son bouton qui efface tout (nom compris).
+    if ('data-note="poste-partage"' not in src and src.count(SAVEDNOTE_QCM) == 1
+            and re.search(r"\bconst KEY\s*=", src) and "function demande(" in src
+            and 'id="btnEffacer"' not in src and "</body>" in src):
+        i = src.index(SAVEDNOTE_QCM) + len(SAVEDNOTE_QCM)
+        src = src[:i] + "\n" + NOTE_QCM + src[i:]
+        j = src.rindex("</body>")
+        src = src[:j] + SCRIPT_EFFACER_QCM + src[j:]
+        gestes.append("QCM : note poste partagé et bouton « Effacer ma sauvegarde » (nom compris) posés")
     # 2. La note poste partagé, là où la page a un bouton d'effacement nommé.
     if 'data-note="poste-partage"' not in src and bouton_reset(src):
         note = NOTE_POSTE_PARTAGE.format(bouton=texte_bouton_reset(src))
@@ -226,7 +270,7 @@ def main(argv):
         if not e["efface"]:
             refus.append((e["rel"], "stocke dans le navigateur sans aucun moyen d'effacer"))
         if not e["note"]:
-            if e["genre"] in ("sequence", "atelier", "autre"):
+            if e["genre"] in ("sequence", "atelier", "autre", "qcm"):
                 refus.append((e["rel"], "aucune note « ordinateur partagé » (data-note=\"poste-partage\")"))
             else:
                 comptes["qcm_sans_note"].append(e["rel"])
@@ -252,7 +296,7 @@ def main(argv):
     if refus:
         print("✘ une page qui garde les réponses de l'élève doit savoir les effacer et prévenir du poste partagé")
         return 1
-    print("✅ chaque séquence et atelier qui garde les réponses sait les effacer et prévient du poste partagé")
+    print("✅ chaque page qui garde les réponses (séquence, atelier, QCM) sait les effacer et prévient du poste partagé")
     return 0
 
 

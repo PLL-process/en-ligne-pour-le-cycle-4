@@ -151,6 +151,12 @@ Répartition des bonnes réponses (n°137) :
 - `python3 _outils/controle_entete_qcm.py --muet` — titre, badges, pied, menu (n°292). Sortie 1 si écart.
 - `python3 _outils/controle_banque_qcm.py --muet` — la ligne « Banque : … » dit ce que le tableau contient.
 - `python3 _outils/controle_unites.py --muet` — chaque unité nommée dans sa question (n°312).
+- `python3 _outils/controle_sauvegarde_locale.py` — **ordinateur partagé** (n°322, étendue aux QCM le
+  15/11/2026) : le QCM garde le nom, chaque réponse et le temps, et « ♻ Recommencer entièrement » garde le nom.
+  Sous `#savedNote`, la note `data-note="poste-partage"` et le bouton « 🗑 Effacer ma sauvegarde »
+  (`#btnEffacer`, deux clics par `demande()`, retire toute la clé). Le gabarit des ateliers
+  (`gabarit_qcm.tpl`) les porte ; un QCM du gabarit maison qui ne les a pas les reçoit par `--corriger`.
+  Aucune boîte `confirm()` : `_outils/sans_modale.py`.
 - `python3 _outils/controle_effectifs_qcm.py --muet` — chaque nombre annoncé (page, manifeste,
   lexique) vaut la taille réelle de la banque (n°261, 31/08/2026).
 - `python3 _outils/controle_echantillonnage.py` — codes évaluables (≥ 5 questions) ou seulement
