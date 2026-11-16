@@ -31725,3 +31725,26 @@ Des formes revenaient ; elles ont reçu la même réponse partout :
 **Contrôles exécutés.** Bancs du lot **37 / 37** et **34 / 34** ; mode mission (`poser`, `enrichir --verifier`, `banc_generique --detail`) sans refus ; `banc_ateliers.py besoin` **128 / 128** ; `banc_rappels_cdc.py` **302 / 302** ; `incrustations.py --verifier --seq 3e_C3.1` à jour ; `verif_regles_audit` 0 ✘ ; `audit_aeration --strict` 0 ; `controle_mode_essentiel`, `hierarchie`, `liens`, `tactile`, `licence`, `impression_papier`, `ordre_propositions`, `mode_mission`, `regles_visibles`, `boutons_vivants`, `sauvegarde_locale` à 0 ; `controle_regle4` à 1 (les 3 panneaux `atelier_bete_a_cornes.html`, question à Pascal, comme sur `main`) ; `controle_squelette.mjs`, `verrous.mjs`, `impression.mjs` sur la page à 0.
 
 **Vu en passant, non corrigé ici.** `incrustations.py --verifier` dit **cinq autres pages « à mettre à jour »** — déjà sur `main`, pas du fait de ce lot : la carte des représentations, `4e_C1.1`, `4e_C3.1`, `3e_C1.5`, la séquence du jardin connecté (`4e_C4.1`). Une passe `incrustations.py --seq <code>` sur chacune, dans un lot à part.
+
+## 15/11/2026 — Règle d'or n°335, la vague du thème 2 : les C4, les C5, les C6 et le Book Train, une consigne par question
+
+**La demande.** Pascal, le 15/11/2026 : « Tout le thème 2 et 3 », puis le choix « tout réécrire » pour la règle d'or n°335 (une consigne par question, une à la fois). Le Book Train, prioritaire, ouvre la vague.
+
+**Ce qui change.** Environ 400 énoncés réécrits sur 17 séquences, chacun en vraie question ou en consigne à l'impératif :
+- **C4** : `3e_C4.1` (l'énergie de la station), `3e_C4.3` (la station d'alerte), `3e_C4.7` (Internet à Sainte-Luce), `3e_C4.8` (le pont numérique), `4e_C4.1` (le jardin connecté), **le Book Train**, `4e_C4.7` (SOS serre), `5e_C4.1` (le lampadaire, 62 énoncés), `5e_C4.7` (le réseau local).
+- **C5** : `3e_C5.1` (SOS station), `4e_C5.1` (dépanner le jardin), `5e_C5.1` (dépanner le lampadaire).
+- **C6** : `3e_C6.1` (programmer l'alerte), `3e_C6.2` (l'auto-test), `4e_C6.1` (ajuster le programme du jardin), `4e_C6.2` (l'arrosage automatique), `5e_C6.1` (programmer le lampadaire).
+
+Les formes qui revenaient ont reçu une réponse commune :
+- « Vrai ou faux : « … » » devient « « … » : vrai ou faux ? » ;
+- les lignes de programme à remettre dans l'ordre gardent leur indentation, qui est un indice : « Quel rang d'exécution, de 1 à 8, donnes-tu à cette ligne ? », puis la ligne, telle quelle, en dessous (`3e_C6.2`, `4e_C6.2`) ;
+- les règles à compléter en plusieurs morceaux : « La règle commence par « SI il fait… » : nuit ou jour ? » ;
+- les données d'un programme : « `vent_kmh` : est-ce une donnée utilisée ou produite ? ».
+
+**Les grilles et les tableaux** reçoivent leur consigne dans l'exercice, juste au-dessus : le Book Train (l'ordre du voyage du livre, le tableau des énergies), `3e_C4.3` (les fonctions des éléments, les formats de fichiers), `5e_C4.1` (fonctions → solutions).
+
+**Mesure** (`controle_consigne_question.py`, 194 pages lues) : thème 2, **413 C1 et 5 C2 → 10 C1 et 0 C2**. Les 10 restants sont des questions des ateliers de représentation incrustées (`5e_C4.1` : le FAST, deux fois ; `4e_C4.1` : le cahier des charges) : elles se corrigent à leur source.
+
+**Vérifications.**
+- Les bancs des 17 lots (35 bancs), lancés comme leur rapport de tests le dit : **tous verts** — Book Train 39 / 39 et 38 / 38, le lampadaire 65 / 65, 25 / 25 et 34 / 34. `tests_regle_311_5e_C4.7.mjs` a donné 33 / 34 sous charge (« la sauvegarde survit au rechargement »), 34 / 34 rejoué seul.
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot du Book Train).
