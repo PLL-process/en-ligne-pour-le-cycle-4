@@ -68,8 +68,9 @@ pas testé : que la mesure ait vraiment été faite en classe — cela se relèv
 
 - `python3 tests_3e_C3.1-C3.4_shenzhen.py` : **37 / 37** ; le banc suit les bonnes réponses raccourcies.
 - `node tests_regle_311_3e_C3.1.mjs` : **34 / 34**.
-- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; 78 pourquoi sur 78 mauvaises propositions.
+- `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus ; 78 pourquoi sur 78 mauvaises propositions, chacun avec son étape suivante (`enrichir.py --etapes` : 0 sans étape).
 - `verif_regles_audit.py` : 0 ✘ ; `audit_aeration.py --strict` (séquence et atelier) : 0 ; `controle_ordre_propositions.py`, `controle_unites.py` : verts ; `incrustations.py --verifier --seq 3e_C3.1` : à jour.
-- `mesurer_charge.mjs` : 1 136 · 1 181 · 425 · 909 mots visibles, chaque séance sous le repère.
+- `mesurer_charge.mjs` : 1 136 · 1 181 · 425 · 823 mots visibles (Bonus replié), chaque séance sous le repère.
+- `banc_rappels_cdc.py` (ateliers des représentations) : **302 / 302** — le banc déplie désormais un rappel replié, comme l'élève (`shenzhen-3e` et `hangzhou-4e` échouaient sur ce point) ; `banc_ateliers.py besoin` : **128 / 128**.
 - Non testé : la lecture par un élève en classe ; le rendu sur un autre navigateur que Chromium.
 

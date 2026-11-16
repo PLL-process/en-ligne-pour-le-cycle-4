@@ -31577,6 +31577,8 @@ d'outils (quatre contrôles) et la collision n°322/323.
 
 ## 15/11/2026 — Révision des trois thèmes, 56 : `3e_C3.1` (Shenzhen, le local des serveurs)
 
+**Deux sessions, une révision.** Commencée cet après-midi par une session (branche `fable/revision/3e-c3-1`, deux commits « WIP » de 16 h 31, sans PR), reprise le soir par une autre à la demande de Pascal (#721 : « Modifier ce qu'il recommande », puis « Fais les »), comme la révision 55. Le travail de l'après-midi est gardé, remis sur le `main` du jour ; ce que la reprise ajoute est dit en fin d'entrée.
+
 **Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante à convertir (les menus du cahier des charges sont voulus). Sur `main` :
 - une séance 1 à 1 633 mots et une séance 2 à 1 819 : la piqûre de rappel de la bête à cornes (524 mots) et celle du cahier des charges (638 mots) étaient à découvert ;
 - 18 écarts d'aération ;
@@ -31589,6 +31591,18 @@ d'outils (quatre contrôles) et la collision n°322/323.
 - **Aération : 18 → 0.** La correction du rappel « le local de Shenzhen » se lit en lignes, corrigée à sa source (`donnees_besoin.py`) et, à l'identique, dans `atelier_bete_a_cornes.html` du lot ; la correction de l'activité 5 et un « à retenir » passent en lignes.
 - Le banc de la séquence suit les bonnes réponses raccourcies.
 
-**Mesure.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136** · **1 181** · 425 · 909. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 18 → 0. Bancs **37 / 37** (séquence), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus. CONTROLES_ICI
+**Mesure.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136** · **1 181** · 425 · 909. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 18 → 0. Bancs **37 / 37** (séquence), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus.
 
 **Ce qui reste.** Rien au-dessus du repère. Les notes de fin des incrustations (« 🐂 Ces exercices viennent de l'atelier… », 37 mots) sont communes à plusieurs pages : elles ne sont pas touchées ici.
+
+**Ce que la reprise ajoute (soir du 15/11).**
+- **Remise sur le `main` du jour** : le panneau `atelier_bete_a_cornes.html` du lot, modifié des deux côtés (la correction en lignes l'après-midi, le bouton d'effacement de #726 le soir), est **régénéré** par `build.py besoin` à partir des deux sources fusionnées ; seul ce panneau change.
+- **Le Bonus se replie** (`replier_bonus.py`) : séance 4, 909 → 823 mots visibles.
+- **Chaque pourquoi nomme l'étape suivante** : 67 sur 78 n'en nommaient pas, 0 aujourd'hui (`enrichir.py --etapes`), l'idée de la veille installée par #724.
+- **`banc_rappels_cdc.py` déplie un rappel replié**, comme l'élève, avant de le jouer : il échouait sur le rappel replié de cette séquence, et déjà sur `main` sur celui de `4e_C3.1` (`hangzhou-4e`). **302 / 302.**
+
+**Mesure finale.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136 · 1 181 · 425 · 823** ; aération 18 → 0 ; ✘ 0 → 0 ; pourquoi sans étape suivante 67 → 0.
+
+**Contrôles exécutés.** Bancs du lot **37 / 37** et **34 / 34** ; mode mission (`poser`, `enrichir --verifier`, `banc_generique --detail`) sans refus ; `banc_ateliers.py besoin` **128 / 128** ; `banc_rappels_cdc.py` **302 / 302** ; `incrustations.py --verifier --seq 3e_C3.1` à jour ; `verif_regles_audit` 0 ✘ ; `audit_aeration --strict` 0 ; `controle_mode_essentiel`, `hierarchie`, `liens`, `tactile`, `licence`, `impression_papier`, `ordre_propositions`, `mode_mission`, `regles_visibles`, `boutons_vivants`, `sauvegarde_locale` à 0 ; `controle_regle4` à 1 (les 3 panneaux `atelier_bete_a_cornes.html`, question à Pascal, comme sur `main`) ; `controle_squelette.mjs`, `verrous.mjs`, `impression.mjs` sur la page à 0.
+
+**Vu en passant, non corrigé ici.** `incrustations.py --verifier` dit **cinq autres pages « à mettre à jour »** — déjà sur `main`, pas du fait de ce lot : la carte des représentations, `4e_C1.1`, `4e_C3.1`, `3e_C1.5`, la séquence du jardin connecté (`4e_C4.1`). Une passe `incrustations.py --seq <code>` sur chacune, dans un lot à part.
