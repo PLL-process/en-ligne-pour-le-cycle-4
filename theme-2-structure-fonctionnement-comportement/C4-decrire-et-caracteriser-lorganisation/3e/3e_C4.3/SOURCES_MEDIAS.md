@@ -30,6 +30,23 @@ carte « Ce que je dois retenir », comme image de l'objet ; la séquence l'a d�
 élève de `3e_C4.1` (l'énergie de la même station) le montre aussi dans sa carte. `Images/chaine_information_station.svg`
 n'est plus affiché par la synthèse élève : la chaîne d'information y est montrée en cases HTML.
 
+## La station pièce par pièce (16/11/2026, skill anatomy)
+
+Une figure à manipuler, posée dans l'activité 1 (séance 1) sous le schéma annoté, dans un dépliant fermé. Elle montre
+chaque pièce à sa place sur la vraie station et ce que cache le coffret, qu'aucune autre image du site ne montre.
+Elle dit où est chaque pièce, jamais à quoi elle sert dans la chaîne d'information (c'est l'activité), ni en quoi
+elle est faite ni ses valeurs (`3e_C4.1` les fait choisir et calculer).
+
+| Fichier | Ce qu'il montre | Provenance | Droits |
+|---|---|---|---|
+| `station_en_pieces.html` | La station d'alerte du collège en vue isométrique, 18 pièces numérotées et nommées ; un bouton ouvre le coffret (la porte s'écarte, ses 7 pièces sortent en colonne : module radio, baromètre, microcontrôleur, convertisseur 12 V → 5 V, fusible, régulateur de charge, batterie 12 V). | **Dessin original**, construit par programme (`_generation/station_en_pieces/build.mjs`), avec le kit Anatomy ; les pièces et leurs noms viennent des séquences de la station (`3e_C4.1`, `3e_C4.3`, `3e_C5.1`, `3e_C6.1`) | Dessin : CC BY-NC-SA 4.0, Pascal Gouacide. Le code du kit, inclus dans la page : **licence MIT, © 2026 Ryan** (texte de la licence en tête du script de la page) |
+| `station_fiche_A4.pdf` | La même figure en dessin expliqué A4 : ouverte, fermée en médaillon, la liste des pièces, quatre caractéristiques, trois vues (tout en haut, sur le bras, dans le coffret). | Imprimée depuis la figure claire (`_generation/station_en_pieces/imprimer_fiche.mjs` : `scripts/print.mjs` du kit, mots passés en français, PDF par Chromium) | Comme la figure |
+
+- **Kit** : github.com/wheresryan22/anatomy, **commit audité `1482e84`** (skill `anatomy` de Pascal, 16/11/2026). Il n'est pas
+  versé dans le dépôt : la construction le lit dans `ANATOMY_DIR` (par défaut `~/.cache/anatomy-1482e84`). Aucune
+  publication dans la galerie du kit.
+- **Pas à l'échelle** : le coffret est un peu grossi pour qu'on voie dedans ; aucune cote n'est écrite.
+
 ## Image reprise d'un lot voisin pour la situation déclenchante (05/11/2026)
 
 Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C5-identifier-un-dysfonctionnement-dun-objet/3e/3e_C5.1/Images/synthese_station_alerte.png` (même provenance, mêmes droits) : elle montre le même objet, sans donner la réponse de la séquence. Demande de Pascal du 05/11/2026 : « il manque aussi des images réalistes ».
