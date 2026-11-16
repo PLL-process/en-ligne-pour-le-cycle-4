@@ -92,6 +92,19 @@ def main():
     cas("la correction repliée ne compte pas",
         {SEQ: page(carte("Activité 5", RADIO + "<details class='correction'><summary>Correction</summary><p>Voir le schéma plus haut.</p></details>"))}, 0, absent="S1")
 
+    # — S3 : le schéma replié dans un dépliant fermé (Pascal, 15/11/2026 : « le mettre dehors »)
+    REPLIE = "<details><summary>🖼 Le schéma, à ouvrir</summary>" + FIG + "</details>"
+    cas("S3 · la seule figure du bloc, dans un dépliant fermé, est signalée (⚠, sortie 0)",
+        {SEQ: page(carte("Activité 2", "<p>Complète la chaîne d'énergie.</p>" + REPLIE + RADIO))}, 0, "⚠ S3")
+    cas("S3 · le même dépliant ouvert (open) ne cache rien",
+        {SEQ: page(carte("Activité 2", "<p>Complète la chaîne d'énergie.</p>" + REPLIE.replace("<details>", "<details open>") + RADIO))}, 0, absent="S3 schéma replié :")
+    cas("S3 · une figure à découvert à côté d'une figure repliée : le schéma est sous les yeux",
+        {SEQ: page(carte("Activité 2", "<p>Complète la chaîne d'énergie.</p>" + FIG + REPLIE + RADIO))}, 0, absent="S3 schéma replié :")
+    cas("S3 · une figure dans une aide, un guide pas à pas ou un dévoilement voulu n'est pas un schéma replié",
+        {SEQ: page(carte("Activité 2", "<p>Construis-la.</p><details class='aide2'><summary>Aide</summary>" + FIG + "</details>"
+                         "<details class='guide-replie'><summary>Guide</summary>" + FIG + "</details>"
+                         "<details class='ppa-fixe'><summary>À ouvrir après l'animation</summary>" + FIG + "</details>" + RADIO))}, 0, absent="S3 schéma replié :")
+
     # — le point d'entrée parle et sort proprement (n°299). Sur le dépôt réel, 1 est une sortie
     #    légitime tant qu'il reste des renvois hors bloc à corriger : seuls 2 (rien lu) et une
     #    sortie muette sont des pannes.

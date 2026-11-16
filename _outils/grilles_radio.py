@@ -94,13 +94,9 @@ def traiter(chemin, ecrire):
         # une chaîne à compléter (_outils/chaine_a_completer/) a sa propre réserve d'étiquettes : ses groupes restent tels quels
         k = s.rfind('<div class="cac-questions">', 0, groupes[i].start())
         dans_cac = k >= 0 and '</fieldset>\n</div>\n</div>' not in s[k:groupes[i].start()]
-<<<<<<< HEAD
         # des rangs (1er, 2e…) ou des nombres : une lettre à la place n'aide personne, ils restent en ligne
         rangs = all(v is not None and re.fullmatch(r'\d+(er|re|e|ème)?', v.strip()) for v in j_)
         if j - i + 1 >= 3 and len(j_) >= 3 and None not in j_ and "qcm-grille" not in groupes[i].group(0) and not dans_cac and not rangs:
-=======
-        if j - i + 1 >= 3 and len(j_) >= 3 and None not in j_ and "qcm-grille" not in groupes[i].group(0) and not dans_cac:
->>>>>>> origin/main
             suites.append((i, j))
         i = j + 1
     if not suites:

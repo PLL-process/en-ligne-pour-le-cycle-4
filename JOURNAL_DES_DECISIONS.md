@@ -31574,3 +31574,154 @@ d'outils (quatre contrôles) et la collision n°322/323.
 **Contrôles exécutés.** Banc du lot (`banc_effacement.mjs`, gardé hors du dépôt, Chromium à 390 px) : **55 / 55** — sur les 7 pages à bouton, un seul `#btnReset`, la note, un premier clic qui n'efface rien, un second qui efface ce que l'élève avait enregistré, la clé d'une autre page intacte, aucune boîte modale, aucune erreur JS ; sur le bonus 2FA, l'ancien drapeau retiré et la pastille grise pour l'élève suivant. Bancs des lots : `tests_3e_C1.5_questions.mjs` 23 / 23, `tests_3e_C1.5_seances.py` 45 / 45, `tests_regle_311_3e_C1.5.mjs` 34 / 34, `tests_4e_C1.4_quiz.mjs` 31 / 31, `tests_regle_311_4e_C1.4.mjs` 34 / 34, `tests_4e_C4.1-C4.9.mjs` 52 / 52, `tests_4e_C6.2.mjs` 56 / 56, `banc_ateliers.py besoin` 128 / 128. Contrôles : `controle_sauvegarde_locale.py`, `controle_boutons_vivants.py`, `controle_tactile.py`, `controle_regles_visibles.py`, `controle_mode_mission.py`, `controle_hierarchie.py`, `controle_liens.py`, `controle_licence.py`, `controle_impression_papier.py` (tous à 0) ; `controle_regle4.py` (1 : après #725, restent les 3 panneaux `atelier_bete_a_cornes.html` sans bloc « Prêt·e » ni Bonus — question à Pascal, inchangée) ; `controle_squelette.mjs`, `controle_hors_ligne.mjs`, `controle_verrous.mjs`, `controle_impression.mjs`, `controle_contraste_liens.mjs` sur le dépôt entier (résultats dans la PR). Captures à 390 px : le bouton et la note sur `3e_C1.5`, `4e_C1.4`, l'atelier Pix et un panneau.
 
 **Non exécutés.** Un vrai poste partagé de la salle ; `rapport_audit.py` complet.
+
+## 15/11/2026 — Règle d'or n°335 : une consigne par question, une à la fois ; `3e_C9.1` et `4e_C9.1` à la hauteur du Book Train (n°331, n°332, n°335), `5e_C9.1` réécrit ; en mission, la ressource de l'activité ouverte par défaut
+
+**Demandes de Pascal (15/11, à la suite de #722).**
+- « 3e_C9.1 aussi », « 4e_C9.1 aussi » : le niveau de la n°332 (la correction montre la production complète, telle que l'outil la rend, et donne son fichier).
+- « Tout le thème 2 et 3. Le mettre dehors » (le schéma : sous les yeux, hors des dépliants), « puis thème 1 » : l'ordre de la vague.
+- Sur une capture de `3e_C9.1` en mission (séance 4, « ① La traduction — complète la fonction », trois questions « ▢1 : », « ▢2 : », « ▢3 : ») : « ici il n'y a pas de consignes, il faudrait une règle d'or et une révision de toutes les séquences » ; puis « même si cela paraît logique, il faut une consigne, et une à la fois. Règle d'or ».
+- Choix de Pascal (18 h 35) : **tout réécrire** — chaque énoncé devient une vraie question ou une consigne à l'impératif, les phrases à compléter comprises (« Après la ligne 3, passages vaut : » → « Que vaut `passages` après la ligne 3 ? »).
+
+### La règle (formulation proposée à Pascal, à valider)
+
+> **Règle d'or n°335 — Une consigne par question, une à la fois.**
+> - Chaque question dit ce qu'on attend de l'élève : une vraie question (« … ? ») ou une consigne qui commence par un verbe à l'impératif (« Choisis… », « Indique… »). Jamais une étiquette seule (« ▢1 : », « Le relais »), jamais une phrase à compléter (« … vaut : », « … c'est… »).
+> - Une à la fois : la question porte **sa** consigne. Elle ne s'appuie pas sur la consigne générale de l'activité (« a) …, b) …, c) … »), que l'élève ne relit pas d'un écran à l'autre.
+> - Un tableau ou une grille de questions porte sa consigne juste au-dessus.
+> - Pourquoi : en mode mission, chaque question a son écran ; une étiquette seule n'y dit plus rien.
+> - Contrôle : `_outils/controle_consigne_question.py`.
+
+**Son numéro.** Proposée d'abord sous le n°333 ; pendant ce travail, #725 (le registre des règles d'or) a donné les n°333 et n°334 aux deux règles du 14/11 renumérotées (une réussite affichée prouve la production réelle ; une règle enseignée est juste dans toute sa portée). Celle-ci prend donc le **n°335**, le premier libre.
+
+Un premier essai répétait la consigne de l'activité en tête de chaque écran de question : Pascal l'a écarté (« une à la fois ») ; il est retiré.
+
+### Le contrôle — `_outils/controle_consigne_question.py` (+ banc 24/24, inscrit dans `rapport_audit.py`)
+
+Pages lues : celles de la n°331 (pages élève, hors archive, hors QCM). L'unité jugée est la question (`fieldset.qcm-groupe` et sa `legend`), rangées de réponses courtes comprises.
+- **C1 énoncé sans consigne** (⚠ ; ✘ et sortie 1 avec `--strict`) : numérotation et symboles ôtés, l'énoncé n'est ni une question (« ? ») ni une consigne : un verbe à l'impératif en tête — après de simples connecteurs (« Puis choisis… ») ou après une condition courte, en un ou deux temps (« Pour chaque essai, prédis… », « Pour chaque position, de 1 à 6, choisis… »). Un nom qui a la forme d'un impératif ne compte pas : « Comparer la mesure… », « Quand la place est occupée… », « l'équipement qui relie… » passaient avant ce réglage, et ont été réécrits.
+- **C2 tableau ou grille sans consigne** (⚠) : un tableau de questions, ou une grille lettrée (ses rangées à la suite), sans consigne ni question dans les trois éléments qui le précèdent (ou sa légende) ; un tableau qui défile (`div.defile` et son cadre) prend la consigne posée avant son enveloppe. Le bloc des réponses lettrées d'une grille (« Les réponses possibles — choisis une lettre pour chaque ligne ») ne compte pas : en mission, il devient la réserve d'étiquettes, et ne dit plus ce qu'on associe à quoi.
+- **Non mesuré, à juger à l'œil** : que la consigne soit la bonne ; une consigne qui demande deux choses ; un « ? » qui appartient au contenu cité et non à la question (`4e_C9.1`, « ◇ décision — H < 40 ET heure entre 6 et 10 ? » passait le contrôle sans rien demander : réécrit).
+
+**Mesure** (le contrôle dans son état final). Sur `main` (après #725) : **1 082 C1 et 25 C2 sur 78 pages** (194 pages lues). Après cette PR : **1 019 C1 et 24 C2 sur 75 pages** — thème 1 : 396 C1, 7 C2 ; thème 2 : 413 C1, 5 C2 ; thème 3 : 210 C1, 12 C2.
+
+### `3e_C9.1` (la ventilation de la station, New York)
+
+- **n°332 — les corrections montrées par l'outil.** Activité 2 : la trace complète du programme, ligne par ligne, en tableau de suivi. Activités 3, 4 et 5 : le programme corrigé, **exécuté dans l'éditeur Python de la page**, en capture (console comprise), et son fichier `.py` à télécharger (`corriges_py/`). Le Bonus : ses trois défis (convertisseur, MetroCard, la famille) ont désormais leurs corrigés, repliés sous la réponse, avec leurs fichiers. Les captures sortent de `_ressources-communes/editeur-python/captures_corrections.mjs` (le `.py` chargé dans l'éditeur, ▶, la capture du bloc ; largeur et hauteur de l'image tenues à jour). L'échauffement « les quatre gestes de l'éditeur Python » n'a pas de capture : décision du 05/11/2026 (le contrôle n°332 l'exclut).
+- **n°335 — 32 énoncés réécrits.** Les quatre prédictions de l'activité 3 (« ① Je prédis : » devient « ① Prédis : qu'affichera l'expérience A, `print(3 + 4)` ? ») ; le billet d'entrée (« Qu'est-ce qu'une variable ? »), les suivis de valeurs (« Que vaut `passages` après la ligne 3 ? »), les relevés de la console (« Qu'a affiché la console pour l'expérience A ? »), les bugs (« À quelle ligne se cache le bug n°1 ? », « Quelle correction répare le bug n°1 ? »), et les trois trous de la fonction : « ▢1 — Quel signe met-on en ▢1 pour tester « l'air dépasse 100 » ? », « ▢2 — Quelle vitesse la fonction renvoie-t-elle quand l'air est pollué (ventiler à fond) ? », « ▢3 — Quelle vitesse renvoie-t-elle sinon, quand aucun train n'arrive (ventiler doucement) ? ».
+- Bancs : **89 / 89** (séquence) et **34 / 34** (n°311).
+
+### `4e_C9.1` (le jardin programmé)
+
+- **n°331 :** l'algorigramme de l'arrosage, sous les yeux à l'activité 3, avant le programme de référence qu'il traduit.
+- **n°332 :** activité 3, le programme corrigé exécuté dans l'éditeur, en capture, et `4e-JARDIN-correction.py` ; activité 5 (la pompe qui s'affole), `4e-POMPE-correction.py` ; activité 6 (le réinvestissement), la capture et `4e-LAMPADAIRE-correction.py`.
+- **n°335 — 25 énoncés réécrits et une consigne posée.** Le billet d'entrée ; « Dans quelle fonction places-tu le relais ? » (cinq organes) ; « Quel numéro, de 1 à 5, donnes-tu au bloc ◇ décision … ? » (les cinq blocs de l'algorigramme) ; les douze cases du tableau d'essais (« Essai 1 : quel résultat ATTENDS-tu, avant de lancer ? », « … quel résultat OBSERVES-tu au banc ? ») ; au-dessus du tableau, sa consigne : « ① Choisis le résultat ATTENDU de chaque essai, avant de lancer. ② Lance l'essai au banc, puis choisis le résultat OBSERVÉ. »
+- Bancs : **124 / 124** (séquence) et **34 / 34** (n°311).
+
+### `5e_C9.1` (la boîte étiquetée, le compteur du Cyclone)
+
+- Arrivée sur `main` avec #723 pendant ce travail : **19 énoncés réécrits** (dont les deux prédictions de l'activité 3) (« Dans un programme, que veut dire `score = 10` ? », « Que contient la boîte `places` après la ligne 3 ? », « Qu'a affiché l'expérience A ? », « Quel est ton verdict de technicien ? », « À `places = 0`, que vaut la condition `places > 0` ? »…).
+- Bancs : **66 / 66** (séquence) et **34 / 34** (n°311).
+
+### Le mode mission : la ressource de l'activité ouverte par défaut
+
+Sur un écran de question, la ressource de l'activité (le schéma, le document) est **ouverte par défaut, téléphone compris** (`ressVue()`) ; l'élève peut la replier. C'est la n°331 appliquée au mode mission : la donnée nécessaire sur le même écran. Le bloc est reposé sur les 60 pages (`poser.py`) : rien ne change hors de ses deux marqueurs. Le README du mode le dit.
+
+Une question à la fois, là aussi : un bloc de la ressource qui porte un champ de réponse (une question, un écrit) reste sur l'écran de départ ; il ne revient pas sur les écrans des autres questions. Constat du banc générique sur les pages 2 de `3e_C9.2` : ouverte par défaut, la ressource remettait les deux questions du palier 3 sur l'écran « Mon journal de paliers » (sur `main`, c'était déjà le cas dès 700 px de large).
+
+### n°331 : le schéma replié (S3)
+
+`controle_schema_sous_les_yeux.py` relève aussi **S3 schéma replié** : le seul schéma d'un bloc de question rangé dans un dépliant fermé (« le mettre dehors »). Un dépliant d'aide, de correction, un guide pas à pas ou un dévoilement voulu n'en est pas un (liste `DEPLIANTS_PERMIS`). Banc **21 / 21**. Mesure du site : 5 ✘ S1, 38 ⚠ S2, **3 ⚠ S3** (`3e_C4.1`, `3e_C4.3`, `4e_C4.1`), 28 pages.
+
+### Vérifications
+
+- Bancs des contrôles : n°331 21 / 21, n°332 16 / 16, n°335 **30 / 30**, registre des règles d'or 10 / 10 (`docs/REGISTRE_DES_REGLES_OR.md` réécrit : 323 numéros, le prochain est le n°336).
+- n°332 sur le site : **3 K1, 6 K2, 1 K3 sur 8 pages** (avant : 9 K1, 7 K2, 2 K3 sur 14) ; 0 sur les deux lots.
+- Sur les deux lots : règles d'or 0 ✘, aération 0, n°331 et n°332 ✅, n°335 0 C1 et 0 C2.
+- Mode mission : banc générique sur les 60 pages, aucune refusée ; `banc_mission.mjs` **46 / 50**, les mêmes quatre échecs que sur `main` (tests 14 et 15, à 390 et 1 180 px : la séance 3 du lampadaire compte 7 écrans au lieu de 9, et le retour à la page complète) — antérieurs à cette PR, à reprendre à part.
+- Vu à l'écran, à 390 px, en mission : `3e_C9.1`, séance 4, l'écran des trois trous de la fonction, chaque question avec sa consigne.
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot).
+
+**Ce qui reste.** La vague n°335 (1 019 C1, 24 C2), avec la n°331 et la n°332. Déjà prêtes, en deux PR qui suivent celle-ci : **le thème 3** (C7, C8 et la station `3e_C9.2`, réécrite à sa source, la page tout-en-un, puis les quatre pages engendrées) et **le thème 2** (C4, C5, C6, Book Train compris). Puis le thème 1. Les questions des ateliers de représentation (pages d'atelier, cahiers et leurs incrustations dans les séquences) se corrigent à la source, dans `ateliers-representations/_generation/`, sans relancer `build.py`.
+
+## 15/11/2026 — Règle d'or n°335, la vague du thème 3 : les C7, les C8 et la station `3e_C9.2`, une consigne par question
+
+**La demande.** Pascal, le 15/11/2026 : « Tout le thème 2 et 3 […] puis thème 1 », et, pour la règle d'or n°335 (une consigne par question, une à la fois), le choix « tout réécrire ». Cette entrée suit celle de la règle (la PR des trois C9.1), dont elle reprend le contrôle `controle_consigne_question.py`.
+
+**Ce qui change, séquence par séquence.** Chaque énoncé devient une vraie question ou une consigne à l'impératif ; la phrase qui précède la question reste quand elle porte une donnée.
+- **3e** : `3e_C7.1` (le capteur de confort), `3e_C7.3` (le boîtier), `3e_C7.4` (l'énergie), `3e_C7.5` (la station à équiper), `3e_C7.7` (produire le boîtier), `3e_C7.8` (deux stations), `3e_C8.1` et `3e_C8.2` (le mât).
+- **4e** : `4e_C7.1` (le jardin, la conception), `4e_C7.3` (le bac), `4e_C7.4` (l'énergie du jardin), `4e_C7.5` (le jardin incomplet), `4e_C7.7` (le support du capteur), `4e_C7.8` (le jardin publié), `4e_C8.1` (la validation).
+- **5e** : `5e_C7.1` (le mini-projet), `5e_C7.3` (le banc de la cour), `5e_C7.4` (l'indicateur du hall), `5e_C7.5` (l'éclairage du préau), `5e_C8.1` et `5e_C8.2` (la patère).
+- **La station `3e_C9.2`** : réécrite à sa **source**, la page tout-en-un (25 énoncés, et les 13 cases du tableau de recette : « Essai 1 : ce que tu observes est-il conforme ? »), puis les quatre pages **engendrées** par `generer_les_quatre_pages.py` — jamais retouchées à la main.
+
+Des formes revenaient ; elles ont reçu la même réponse partout :
+- les rangs d'un algorigramme ou d'une démarche : « Quel rang donnes-tu au bloc « … » ? » ;
+- les fonctions d'une chaîne : « Quelle fonction remplit le relais ? » ;
+- le positionnement : « **Je me positionne sur 3e_C7.3 :** quelle phrase me décrit le mieux ? », ou « … : où en suis-je ? » — le « je » du bilan est gardé (n°302) ;
+- le niveau du livret : « Choisis le niveau qui décrit ce que tu fais aujourd'hui », en tête.
+
+**Les grilles et les tableaux.** Leur consigne était au-dessus de l'activité, sur l'écran de départ du mode mission. Elle se pose désormais **dans l'exercice, juste au-dessus** (`p.consigne-grille`, `p.consigne-tableau`), et quitte le paragraphe d'avant quand elle y était seule : `3e_C7.4`, `3e_C7.5`, `3e_C7.8`, `4e_C7.4`, `4e_C7.8`, `5e_C7.4` (deux), `5e_C8.2`, `3e_C8.2`, et le tableau de recette de la station.
+
+**Mesure** (`controle_consigne_question.py`, 194 pages lues) : thème 3, **210 C1 et 12 C2 → 3 C1 et 1 C2**. Ce qui reste vient des ateliers de représentation incrustés (`3e_C7.1` : le FAST à contrôler et le croquis ; `4e_C7.1` : le FAST) : ces questions se corrigent à leur source, `ateliers-representations/_generation/`, avec les pages d'atelier et les cahiers.
+
+**Vérifications.**
+- Les bancs de tous les lots touchés, lancés comme leur rapport de tests le dit : verts, sauf trois écarts **présents aussi sur `main`** : `tests_regle_311_4e_C7.1.mjs` (séance 2 : les onglets sous le premier écran, à 1 063 px pour 844), `tests_3e_C8.1_qcm.mjs` et `tests_5e_C8.1_qcm.mjs` (« le lien vers la séquence pointe le bon fichier », 30 / 32). `tests_5e_C7.5_sequence.mjs` a donné 37 / 40 sous charge, 40 / 40 rejoué seul.
+- La station : 167 / 167, pont en H 37 / 37, n°311 34 / 34 ; le générateur rejoué sur la source d'avant ne changeait rien (pas de dérive).
+- Contrôles du site : les 25 sont verts sur l'état final — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de la station).
+
+## 15/11/2026 — Révision des trois thèmes, 55 : `3e_C1.1` (Tsinghua, la surveillance des feux)
+
+**Deux sessions, une révision (PR #728).** Commencée cet après-midi par une session (branche `fable/revision/3e-c1-1`, commit « WIP » de 16 h, sans PR), reprise le soir par une autre, à la demande de Pascal sur l'audit hebdomadaire (#721 : « Modifier ce qu'il recommande », puis « Fais les »). La seconde a trouvé la branche en voulant pousser la sienne : elle a gardé le travail de la première (plus complet sur deux points), l'a remise sur le `main` du jour, et y a ajouté ce qu'elle avait en plus. Passe complète, skill `revision-sequence`.
+
+**Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante. Sur `main` :
+- **23 écarts d'aération** (légendes et corrections d'un seul tenant) ;
+- une séance 2 à 1 433 mots visibles : les 15 captures du tableur, avec leurs légendes, étaient à découvert ;
+- une séance 1 à 1 306 mots : l'exemple qui donnait les réponses des deux premières questions était posé juste avant elles ;
+- dans 26 questions, la bonne réponse était la plus longue : elle se devinait à sa longueur.
+
+**Ce qui est fait.**
+- **Replier ce qui ne sert qu'au besoin**, sans rien retirer : les 15 captures du tableur (« 🖼 Le voir en images »), sous chaque geste écrit en toutes lettres (`replier_captures.py`) ; le Bonus (`replier_bonus.py`, son titre reste à sa place).
+- **L'exemple « amélioration ou rupture »** passe en aide repliée (« si tu bloques sur a) ») : il donnait les réponses de a1_1 et a1_2. L'application à Herschel (découverte, invention, innovation) passe de même en aide de la partie b) : elle disait la réponse de a1_6 avant la question. Les quatre définitions restent à découvert, avant les questions.
+- **La bonne réponse ne se devine plus à sa longueur** : 65 propositions fausses allongées (22 questions) ; dans 4 questions de la séance 1 (be_1, a1_1, a1_2, a1_4), c'est la bonne réponse qui est raccourcie, et ses leurres reviennent à leur forme courte. Le détail ôté de la bonne réponse est dans la correction. 28 groupes mélangés.
+- **Le mode mission explique chaque erreur** (`mission_3e_C1.1.json`) : 84 pourquoi, sans dire la bonne réponse — **et chacun nomme maintenant l'étape suivante** à l'impératif (« Relis la définition de l'évolution technologique. », « Compare les unités… », « Calcule 78 % de 250 000. ») : 71 sur 84 n'en nommaient pas, 0 aujourd'hui (`enrichir.py --etapes`). C'est l'idée de la veille installée par #724, appliquée pour la première fois à une séquence entière.
+- **Aération : 23 → 0** (`aerer_legendes.py`, `aerer_corrections.py`, 4 légendes réécrites à la main). Les consignes de la production c) et des trois métiers passent en lignes ①, ②, ③, ④.
+- Le banc de la séquence suit les quatre bonnes réponses raccourcies.
+- **Outil réparé en passant** : `_outils/grilles_radio.py` portait sur `main` un conflit de fusion non résolu (marqueurs `<<<<<<<` en ligne 97, venus de la révision 51) et ne se lançait plus (`SyntaxError`). Gardée la version la plus complète, celle qui laisse les rangs et les nombres en ligne.
+
+**Mesure.** Mots visibles par séance : 1 306 · 1 433 · 351 · 469 · 999 → **1 259** · 756 · 461 · 564 · **1 000**. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 23 → 0 ; pourquoi sans étape suivante 71 → 0.
+
+**Contrôles exécutés.** Bancs du lot : `tests_3e_C1.1-C1.4_tsinghua.py` **50 / 50**, `tests_regle_311_3e_C1.1.mjs` **34 / 34** ; mode mission : `poser.py` (à jour), `enrichir.py --verifier` (à jour, 84 pourquoi), `banc_generique.mjs --detail` (cinq séances jouées écran par écran, aucun refus) ; `verif_regles_audit.py` (0 ✘), `audit_aeration.py --strict` (0), `controle_ordre_propositions.py`, `controle_mode_essentiel`, `hierarchie`, `liens`, `tactile`, `licence`, `impression_papier`, `mode_mission`, `regles_visibles`, `boutons_vivants` (tous à 0) ; `controle_squelette.mjs`, `controle_verrous.mjs`, `controle_impression.mjs` sur la page (0). Revue d'écran à 390 px : l'encart des quatre mots, les questions de a) et b).
+
+**Ce qui reste.** **La séance 1 reste juste au-dessus du repère (1 259 mots).** C'est une seule activité de 50 minutes : les quatre définitions enseignées avant d'interroger (n°45), neuf questions dont les leurres sont désormais aussi longs que la bonne réponse, et les trois métiers à lire pour la partie d). La partie d) ne peut pas passer en séance 4 (le transfert la reprend) sans dépasser ses 55 minutes. **Non exécutés** : une lecture complète à 1 280 px ; la lecture par un élève en classe.
+
+## 15/11/2026 — Révision des trois thèmes, 56 : `3e_C3.1` (Shenzhen, le local des serveurs)
+
+**Deux sessions, une révision (PR #729).** Commencée cet après-midi par une session (branche `fable/revision/3e-c3-1`, deux commits « WIP » de 16 h 31, sans PR), reprise le soir par une autre à la demande de Pascal (#721 : « Modifier ce qu'il recommande », puis « Fais les »), comme la révision 55. Le travail de l'après-midi est gardé, remis sur le `main` du jour ; ce que la reprise ajoute est dit en fin d'entrée.
+
+**Le constat.** La page était sur le gabarit commun, sans ✘ de règle d'or ni liste déroulante à convertir (les menus du cahier des charges sont voulus). Sur `main` :
+- une séance 1 à 1 633 mots et une séance 2 à 1 819 : la piqûre de rappel de la bête à cornes (524 mots) et celle du cahier des charges (638 mots) étaient à découvert ;
+- 18 écarts d'aération ;
+- dans 23 questions sur 26, la bonne réponse était la plus longue, souvent de loin (jusqu'à 139 signes) : elle se devinait à sa longueur.
+
+**Ce qui est fait.**
+- **Les deux piqûres de rappel se replient**, à leur source (`incrustations_lots/bete_a_cornes_mots.py`, `donnees_rappel_cdc.py`, option `replie`), puis `incrustations.py --seq 3e_C3.1` : elles ne servent qu'à qui a oublié les mots. Les deux exercices de méthode (l'alerte cyclonique, la flexibilité), que les vérificateurs exigent, restent à découvert.
+- **La bonne réponse ne se devine plus à sa longueur** : dans 18 questions, c'est elle qui est raccourcie — sa justification est dans la correction, et dans le pourquoi des erreurs ; 18 propositions fausses sont allongées (17 questions). Moins à lire, et plus d'indice. **26 groupes mélangés.**
+- **Le mode mission explique chaque erreur** (`mission_3e_C3.1.json`) : 78 pourquoi, sans dire la bonne réponse.
+- **Aération : 18 → 0.** La correction du rappel « le local de Shenzhen » se lit en lignes, corrigée à sa source (`donnees_besoin.py`) et, à l'identique, dans `atelier_bete_a_cornes.html` du lot ; la correction de l'activité 5 et un « à retenir » passent en lignes.
+- Le banc de la séquence suit les bonnes réponses raccourcies.
+
+**Mesure.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136** · **1 181** · 425 · 909. Règles d'or 0 → 0 ✘ ; menus 0 → 0 ; aération 18 → 0. Bancs **37 / 37** (séquence), **34 / 34** (n°311). Mode mission : la page jouée écran par écran, aucun refus.
+
+**Ce qui reste.** Rien au-dessus du repère. Les notes de fin des incrustations (« 🐂 Ces exercices viennent de l'atelier… », 37 mots) sont communes à plusieurs pages : elles ne sont pas touchées ici.
+
+**Ce que la reprise ajoute (soir du 15/11).**
+- **Remise sur le `main` du jour** : le panneau `atelier_bete_a_cornes.html` du lot, modifié des deux côtés (la correction en lignes l'après-midi, le bouton d'effacement de #726 le soir), est **régénéré** par `build.py besoin` à partir des deux sources fusionnées ; seul ce panneau change.
+- **Le Bonus se replie** (`replier_bonus.py`) : séance 4, 909 → 823 mots visibles.
+- **Chaque pourquoi nomme l'étape suivante** : 67 sur 78 n'en nommaient pas, 0 aujourd'hui (`enrichir.py --etapes`), l'idée de la veille installée par #724.
+- **`banc_rappels_cdc.py` déplie un rappel replié**, comme l'élève, avant de le jouer : il échouait sur le rappel replié de cette séquence, et déjà sur `main` sur celui de `4e_C3.1` (`hangzhou-4e`). **302 / 302.**
+
+**Mesure finale.** Mots visibles : 1 633 · 1 819 · 435 · 933 → **1 136 · 1 181 · 425 · 823** ; aération 18 → 0 ; ✘ 0 → 0 ; pourquoi sans étape suivante 67 → 0.
+
+**Contrôles exécutés.** Bancs du lot **37 / 37** et **34 / 34** ; mode mission (`poser`, `enrichir --verifier`, `banc_generique --detail`) sans refus ; `banc_ateliers.py besoin` **128 / 128** ; `banc_rappels_cdc.py` **302 / 302** ; `incrustations.py --verifier --seq 3e_C3.1` à jour ; `verif_regles_audit` 0 ✘ ; `audit_aeration --strict` 0 ; `controle_mode_essentiel`, `hierarchie`, `liens`, `tactile`, `licence`, `impression_papier`, `ordre_propositions`, `mode_mission`, `regles_visibles`, `boutons_vivants`, `sauvegarde_locale` à 0 ; `controle_regle4` à 1 (les 3 panneaux `atelier_bete_a_cornes.html`, question à Pascal, comme sur `main`) ; `controle_squelette.mjs`, `verrous.mjs`, `impression.mjs` sur la page à 0.
+
+**Vu en passant, non corrigé ici.** `incrustations.py --verifier` dit **cinq autres pages « à mettre à jour »** — déjà sur `main`, pas du fait de ce lot : la carte des représentations, `4e_C1.1`, `4e_C3.1`, `3e_C1.5`, la séquence du jardin connecté (`4e_C4.1`). Une passe `incrustations.py --seq <code>` sur chacune, dans un lot à part.

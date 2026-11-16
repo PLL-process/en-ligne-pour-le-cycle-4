@@ -1109,8 +1109,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1124,7 +1127,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1266,9 +1269,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1600,35 +1603,35 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <div class="exo">
       <h4>a) Les valeurs d'essai</h4>
       <div class="assoc"><fieldset class="qcm-groupe" id="a6_v1" data-melange="1">
-  <legend>Pour vérifier le comportement « veille », une bonne valeur nominale est…</legend>
+  <legend>Pour vérifier le comportement « veille », quelle est une bonne valeur nominale ?</legend>
   <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__3" value="150 km/h" data-pourquoi="150 km/h, c'est un ouragan, pas la veille."><label for="a6_v1__3">150 km/h</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__4" value="0 km/h uniquement" data-pourquoi="Une seule valeur au bord de la plage ne montre pas la zone entière."><label for="a6_v1__4">0 km/h uniquement</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__2" value="62 km/h (trop près de la frontière pour un test nominal)" data-pourquoi="62 se teste comme frontière, pas comme valeur nominale."><label for="a6_v1__2">62 km/h (trop près de la frontière pour un test nominal)</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v1" id="a6_v1__1" value="40 km/h (franchement dans la zone)"><label for="a6_v1__1">40 km/h (franchement dans la zone)</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a6_v2" data-melange="1">
-  <legend>Autour du seuil de 118 km/h, le protocole doit tester…</legend>
+  <legend>Autour du seuil de 118 km/h, que doit tester le protocole ?</legend>
   <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__3" value="90 et 150 : une valeur de chaque côté, bien loin de la frontière" data-pourquoi="Loin de la frontière, une erreur de ≥ ou de &gt; ne se voit pas."><label for="a6_v2__3">90 et 150 : une valeur de chaque côté, bien loin de la frontière</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__2" value="seulement 118 : c&#x27;est la seule valeur qui compte pour ce seuil" data-pourquoi="Sans 117, on ne voit pas si la frontière est au bon endroit."><label for="a6_v2__2">seulement 118 : c'est la seule valeur qui compte pour ce seuil</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__4" value="119 seulement : juste au-dessus de la frontière, pour être sûr" data-pourquoi="119 ne dit pas ce qui se passe pile sur 118."><label for="a6_v2__4">119 seulement : juste au-dessus de la frontière, pour être sûr</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v2" id="a6_v2__1" value="117 ET 118 : juste sous la frontière, et pile dessus"><label for="a6_v2__1">117 ET 118 : juste sous la frontière, et pile dessus</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a6_v3" data-melange="1">
-  <legend>À 178 km/h PILE, le cahier des charges impose…</legend>
+  <legend>À 178 km/h PILE, qu'impose le cahier des charges ?</legend>
   <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__3" value="au choix du programmeur, tant qu&#x27;il l&#x27;écrit dans le protocole de recette" data-pourquoi="Le cahier des charges décide : « à partir de 178 »."><label for="a6_v3__3">au choix du programmeur, tant qu'il l'écrit dans le protocole de recette</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__1" value="OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)"><label for="a6_v3__1">OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__2" value="OURAGAN : 178 n&#x27;est pas encore « au-dessus » de 178, il faut le dépasser (&gt;)" data-pourquoi="« À partir de 178 » inclut 178."><label for="a6_v3__2">OURAGAN : 178 n'est pas encore « au-dessus » de 178, il faut le dépasser (>)</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v3" id="a6_v3__4" value="l&#x27;écran s&#x27;éteint : la station hésite entre deux niveaux" data-pourquoi="La station ne s'éteint jamais pendant une alerte."><label for="a6_v3__4">l'écran s'éteint : la station hésite entre deux niveaux</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a6_v4" data-melange="1">
-  <legend>Pour vérifier la PERFORMANCE, l'essai doit…</legend>
+  <legend>Pour vérifier la PERFORMANCE, que doit faire l'essai ?</legend>
   <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__3" value="compter les blocs du programme : moins il y a de blocs, plus la station réagit vite au franchissement du seuil" data-pourquoi="Le nombre de blocs ne dit pas le temps de réaction : il faut le mesurer."><label for="a6_v4__3">compter les blocs du programme : moins il y a de blocs, plus la station réagit vite au franchissement du seuil</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__4" value="mesurer la longueur des câbles, car le signal met plus de temps à parcourir un câble long" data-pourquoi="Le signal parcourt un câble en un temps négligeable : mesure le délai lui-même."><label for="a6_v4__4">mesurer la longueur des câbles, car le signal met plus de temps à parcourir un câble long</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__1" value="chronométrer le délai entre le franchissement du seuil et le changement d&#x27;affichage, exigence : moins de 1 s"><label for="a6_v4__1">chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v4" id="a6_v4__2" value="regarder si « ça a l&#x27;air rapide » en tournant le potentiomètre devant toute la classe" data-pourquoi="« Ça a l'air rapide » n'est pas une mesure : il faut un chrono et un seuil."><label for="a6_v4__2">regarder si « ça a l'air rapide » en tournant le potentiomètre devant toute la classe</label></div>
 </fieldset></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a6_v5" data-melange="1">
-  <legend>Pour l'acquittement, il faut DEUX essais parce que…</legend>
+  <legend>Pour l'acquittement, pourquoi faut-il DEUX essais ?</legend>
   <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__4" value="la mairie paie au nombre d&#x27;essais, et chaque essai doit figurer au procès-verbal de recette" data-pourquoi="Le nombre d'essais vient de ce qu'il faut prouver, pas du prix."><label for="a6_v5__4">la mairie paie au nombre d'essais, et chaque essai doit figurer au procès-verbal de recette</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__3" value="un seul essai suffirait, mais deux font plus sérieux devant l&#x27;agent de la mairie" data-pourquoi="Un seul essai ne montre pas que le son repart à l'événement suivant."><label for="a6_v5__3">un seul essai suffirait, mais deux font plus sérieux devant l'agent de la mairie</label></div>
   <div class="qcm-option"><input type="radio" name="a6_v5" id="a6_v5__2" value="le bouton s&#x27;use vite : on vérifie qu&#x27;il marche encore au deuxième appui" data-pourquoi="On ne teste pas l'usure du bouton : on teste ce que fait le programme."><label for="a6_v5__2">le bouton s'use vite : on vérifie qu'il marche encore au deuxième appui</label></div>
@@ -1682,25 +1685,26 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
     <div class="consigne"><b>Consigne :</b> exécute les essais AU BANC (les six frontières 62, 63, 117, 118, 177, 178 et le chrono sont tracés ✔ automatiquement), consigne chaque observation <b>pendant</b> l'essai, remplis le verdict, puis rédige le PV. En version 🅰, fais la même chose sur la carte réelle avec le professeur.</div>
     <div class="exo">
       <h4>Le tableau de recette</h4>
+      <p class="consigne-tableau">Pour chaque essai, compare ce que tu observes au banc au résultat attendu, puis choisis : conforme ou non conforme.</p>
       <table class="recette" aria-label="Tableau de recette à remplir">
         <tr><th>N°</th><th>Essai</th><th>Résultat attendu</th><th>Observé ?</th></tr>
         <tr><td>1</td><td>vent 40 km/h</td><td>écran vert « VEILLE », voyant vert fixe, buzzer muet</td><td><fieldset class="qcm-groupe" id="a7_r1">
-  <legend>résultat observé essai 1</legend>
+  <legend>Essai 1 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r1" id="a7_r1__1" value="conforme"><label for="a7_r1__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r1" id="a7_r1__2" value="non conforme"><label for="a7_r1__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>2</td><td>vent 90 km/h</td><td>écran jaune, voyant jaune qui pulse, buzzer muet</td><td><fieldset class="qcm-groupe" id="a7_r2">
-  <legend>résultat observé essai 2</legend>
+  <legend>Essai 2 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r2" id="a7_r2__1" value="conforme"><label for="a7_r2__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r2" id="a7_r2__2" value="non conforme"><label for="a7_r2__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>3</td><td>vent 150 km/h</td><td>écran orange, voyant orange qui pulse, buzzer muet</td><td><fieldset class="qcm-groupe" id="a7_r3">
-  <legend>résultat observé essai 3</legend>
+  <legend>Essai 3 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r3" id="a7_r3__1" value="conforme"><label for="a7_r3__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r3" id="a7_r3__2" value="non conforme"><label for="a7_r3__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>4</td><td>vent 200 km/h</td><td>écran rouge, voyant rouge qui pulse, buzzer qui sonne</td><td><fieldset class="qcm-groupe" id="a7_r4">
-  <legend>résultat observé essai 4</legend>
+  <legend>Essai 4 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r4" id="a7_r4__1" value="conforme"><label for="a7_r4__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r4" id="a7_r4__2" value="non conforme"><label for="a7_r4__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -1711,7 +1715,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="qcm-option"><input type="radio" name="a7_a5" id="a7_a5__4" value="ouragan majeur" data-pourquoi="62 est loin de 178."><label for="a7_a5__4">ouragan majeur</label></div>
   <div class="qcm-option"><input type="radio" name="a7_a5" id="a7_a5__1" value="veille"><label for="a7_a5__1">veille</label></div>
 </fieldset></td><td><fieldset class="qcm-groupe" id="a7_r5">
-  <legend>résultat observé essai 5</legend>
+  <legend>Essai 5 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r5" id="a7_r5__1" value="conforme"><label for="a7_r5__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r5" id="a7_r5__2" value="non conforme"><label for="a7_r5__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -1722,7 +1726,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="qcm-option"><input type="radio" name="a7_a6" id="a7_a6__3" value="ouragan" data-pourquoi="63 n'atteint pas 118."><label for="a7_a6__3">ouragan</label></div>
   <div class="qcm-option"><input type="radio" name="a7_a6" id="a7_a6__2" value="tempête tropicale"><label for="a7_a6__2">tempête tropicale</label></div>
 </fieldset></td><td><fieldset class="qcm-groupe" id="a7_r6">
-  <legend>résultat observé essai 6</legend>
+  <legend>Essai 6 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r6" id="a7_r6__1" value="conforme"><label for="a7_r6__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r6" id="a7_r6__2" value="non conforme"><label for="a7_r6__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -1733,7 +1737,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="qcm-option"><input type="radio" name="a7_a7" id="a7_a7__4" value="ouragan majeur" data-pourquoi="117 est loin de 178."><label for="a7_a7__4">ouragan majeur</label></div>
   <div class="qcm-option"><input type="radio" name="a7_a7" id="a7_a7__3" value="ouragan" data-pourquoi="117 n'atteint pas 118."><label for="a7_a7__3">ouragan</label></div>
 </fieldset></td><td><fieldset class="qcm-groupe" id="a7_r7">
-  <legend>résultat observé essai 7</legend>
+  <legend>Essai 7 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r7" id="a7_r7__1" value="conforme"><label for="a7_r7__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r7" id="a7_r7__2" value="non conforme"><label for="a7_r7__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -1744,7 +1748,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="qcm-option"><input type="radio" name="a7_a8" id="a7_a8__1" value="veille" data-pourquoi="118 dépasse 63."><label for="a7_a8__1">veille</label></div>
   <div class="qcm-option"><input type="radio" name="a7_a8" id="a7_a8__3" value="ouragan"><label for="a7_a8__3">ouragan</label></div>
 </fieldset></td><td><fieldset class="qcm-groupe" id="a7_r8">
-  <legend>résultat observé essai 8</legend>
+  <legend>Essai 8 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r8" id="a7_r8__1" value="conforme"><label for="a7_r8__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r8" id="a7_r8__2" value="non conforme"><label for="a7_r8__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -1755,7 +1759,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="qcm-option"><input type="radio" name="a7_a9" id="a7_a9__2" value="tempête tropicale" data-pourquoi="177 dépasse aussi 118."><label for="a7_a9__2">tempête tropicale</label></div>
   <div class="qcm-option"><input type="radio" name="a7_a9" id="a7_a9__4" value="ouragan majeur" data-pourquoi="177 n'atteint pas 178."><label for="a7_a9__4">ouragan majeur</label></div>
 </fieldset></td><td><fieldset class="qcm-groupe" id="a7_r9">
-  <legend>résultat observé essai 9</legend>
+  <legend>Essai 9 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r9" id="a7_r9__1" value="conforme"><label for="a7_r9__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r9" id="a7_r9__2" value="non conforme"><label for="a7_r9__2">non conforme</label></div>
 </fieldset></td></tr>
@@ -1766,22 +1770,22 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <div class="qcm-option"><input type="radio" name="a7_a10" id="a7_a10__2" value="tempête tropicale" data-pourquoi="178 dépasse aussi 118."><label for="a7_a10__2">tempête tropicale</label></div>
   <div class="qcm-option"><input type="radio" name="a7_a10" id="a7_a10__3" value="ouragan" data-pourquoi="« À partir de 178 » inclut 178."><label for="a7_a10__3">ouragan</label></div>
 </fieldset></td><td><fieldset class="qcm-groupe" id="a7_r10">
-  <legend>résultat observé essai 10</legend>
+  <legend>Essai 10 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r10" id="a7_r10__1" value="conforme"><label for="a7_r10__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r10" id="a7_r10__2" value="non conforme"><label for="a7_r10__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>11</td><td>performance : chrono seuil → affichage</td><td>moins de 1 seconde</td><td><fieldset class="qcm-groupe" id="a7_r11">
-  <legend>résultat observé essai 11</legend>
+  <legend>Essai 11 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r11" id="a7_r11__1" value="conforme"><label for="a7_r11__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r11" id="a7_r11__2" value="non conforme"><label for="a7_r11__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>12</td><td>appui pendant l'alarme</td><td>le son se coupe, écran et voyant restent</td><td><fieldset class="qcm-groupe" id="a7_r12">
-  <legend>résultat observé essai 12</legend>
+  <legend>Essai 12 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r12" id="a7_r12__1" value="conforme"><label for="a7_r12__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r12" id="a7_r12__2" value="non conforme"><label for="a7_r12__2">non conforme</label></div>
 </fieldset></td></tr>
         <tr><td>13</td><td>redescente puis nouvelle alerte</td><td>le buzzer repart sans appui</td><td><fieldset class="qcm-groupe" id="a7_r13">
-  <legend>résultat observé essai 13</legend>
+  <legend>Essai 13 : ce que tu observes est-il conforme ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_r13" id="a7_r13__1" value="conforme"><label for="a7_r13__1">conforme</label></div>
   <div class="qcm-option"><input type="radio" name="a7_r13" id="a7_r13__2" value="non conforme"><label for="a7_r13__2">non conforme</label></div>
 </fieldset></td></tr>

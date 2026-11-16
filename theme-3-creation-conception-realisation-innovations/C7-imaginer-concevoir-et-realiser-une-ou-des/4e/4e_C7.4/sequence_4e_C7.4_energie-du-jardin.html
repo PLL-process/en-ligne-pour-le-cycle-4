@@ -993,8 +993,11 @@ function activite(A, E){
   var p0 = zones[0].parts;
   if (p0.length > 1 && !p0[0].h && !p0[0].n.some(porteChamp)) ress = ress.concat(p0.shift().n);
   E.push({ t:"depart", titre:nom, n:tete.concat(ress, consigne) });
+  /* sur un écran de question, la ressource ne repose pas une question déjà posée ailleurs (une question à la fois,
+     règle d'or n°335) : un bloc de la ressource qui porte un champ de réponse reste sur l'écran de départ */
+  var ressQ = ress.filter(function(c){ return !(estChamp(c) || $(CHAMP + ",textarea", c)); });
   var ressBtn = null;
-  if (ress.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
+  if (ressQ.length){ ressBtn = el("button", "ms-ressbtn ms-seul"); ressBtn.type = "button"; ressBtn.setAttribute("data-ms", "ress"); A.insertBefore(ressBtn, ress[0].parentNode === A ? ress[0] : kids[i]); }
   var J = 0;
   zones.forEach(function(z){
     var retour = el("div", "ms-retour ms-seul"); retour.setAttribute("aria-live", "polite");
@@ -1008,7 +1011,7 @@ function activite(A, E){
     if (z.preuve){ if (tous.length) tous.push({ p:{ h:null }, st:{ n:z.preuve, champs:[] }, j:"p" + J, q:0, sur:1, preuve:true }); else fin = z.preuve.concat(fin); }
     tous.forEach(function(x, r){
       var dernier = r === tous.length - 1, base = x.preuve ? "Avant de vérifier" : x.p.h ? net(x.p.h.textContent) : "À toi de jouer";
-      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ress, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
+      E.push({ t:"partie", titre: base + (x.sur > 1 ? " · " + (x.q + 1) + " sur " + x.sur : ""), act:A, ress:ressQ, ressBtn:ressBtn, retour:retour, champs:x.st.champs, dernier:dernier, check:z.check, fb:z.fb[0],
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
@@ -1150,9 +1153,9 @@ function barre(){
   suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
-/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte sur un grand écran, à un
-   geste sur un téléphone — et l'élève garde la main */
-function ressVue(){ return M.ress === undefined ? window.innerWidth >= 700 : M.ress; }
+/* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
+   (règles d'or n°331 et n°335, 15/11/2026 : l'élève répond le schéma sous les yeux) — et l'élève garde la main */
+function ressVue(){ return M.ress === undefined ? true : M.ress; }
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
@@ -1554,21 +1557,21 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h2 id="billet-t">🎫 Billet d'entrée — trois questions, sans note</h2>
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
-      <legend>Avec une pile, la chaîne d'énergie d'une DEL s'écrit…</legend>
+      <legend>Avec une pile, comment s'écrit la chaîne d'énergie d'une DEL ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="électrique → chimique → lumineuse"><label for="be_1__1">électrique → chimique → lumineuse</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="chimique → électrique → lumineuse"><label for="be_1__3">chimique → électrique → lumineuse</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="lumineuse → électrique → chimique"><label for="be_1__2">lumineuse → électrique → chimique</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
-      <legend>Une pile, c'est plutôt…</legend>
+      <legend>À quoi ressemble plutôt une pile ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="un robinet : elle donne sans jamais s&#x27;épuiser"><label for="be_2__2">un robinet : elle donne sans jamais s'épuiser</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="une centrale : elle produit son énergie elle-même"><label for="be_2__3">une centrale : elle produit son énergie elle-même</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="un réservoir : elle stocke, puis elle s&#x27;épuise"><label for="be_2__1">un réservoir : elle stocke, puis elle s'épuise</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-      <legend>Pour décrire un objet technique, on regarde…</legend>
+      <legend>Que regarde-t-on pour décrire un objet technique ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="sa couleur, sa forme, son prix et sa marque"><label for="be_3__1">sa couleur, sa forme, son prix et sa marque</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="seulement sa forme et ses dimensions"><label for="be_3__3">seulement sa forme et ses dimensions</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="ses matériaux, son énergie et ses informations"><label for="be_3__2">ses matériaux, son énergie et ses informations</label></div>
@@ -1704,14 +1707,14 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 
     <h4>Après avoir éteint l'une, puis l'autre</h4>
     <fieldset class="qcm-groupe" id="a0q1" data-melange="1">
-  <legend><b>1.</b> Éteindre la pompe fait passer le total de 5,87 Wh (wattheures) à…</legend>
+  <legend><b>1.</b> Éteindre la pompe : que devient le total de 5,87 Wh (wattheures) ?</legend>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__4" value="0,00 Wh — il ne reste rien" data-pourquoi="La pompe ne fait pas tout : d'autres consommateurs restent allumés."><label for="a0q1__4">0,00 Wh — il ne reste rien</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="0,47 Wh — presque tout disparaît" data-pourquoi="0,47, c'est ce qui reste sans la carte : relis l'effet de la pompe."><label for="a0q1__3">0,47 Wh — presque tout disparaît</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="2,90 Wh — la moitié disparaît" data-pourquoi="Regarde combien de temps la pompe tourne chaque jour."><label for="a0q1__2">2,90 Wh — la moitié disparaît</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="5,85 Wh — presque rien ne change"><label for="a0q1__1">5,85 Wh — presque rien ne change</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0q2" data-melange="1">
-  <legend><b>2.</b> Éteindre la carte fait passer le total de 5,87 Wh à…</legend>
+  <legend><b>2.</b> Éteindre la carte : que devient le total de 5,87 Wh ?</legend>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__4" value="0,00 Wh — il ne reste rien" data-pourquoi="Sans la carte, les capteurs et l'écran consomment encore un peu."><label for="a0q2__4">0,00 Wh — il ne reste rien</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__3" value="0,47 Wh — presque tout disparaît"><label for="a0q2__3">0,47 Wh — presque tout disparaît</label></div>
   <div class="qcm-option"><input type="radio" name="a0q2" id="a0q2__2" value="2,90 Wh — la moitié disparaît" data-pourquoi="Relis le banc : la carte pèse bien plus que la moitié."><label for="a0q2__2">2,90 Wh — la moitié disparaît</label></div>
@@ -1759,42 +1762,42 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   chacune, dis si c'en est un — <b>ici, pour ce jardin-là</b>.</p>
   <div class="exo">
     <fieldset class="qcm-groupe" id="a1c0">
-  <legend><b>L'autonomie : combien de temps le jardin tient sans que personne n'intervienne</b></legend>
+  <legend><b>L'autonomie : combien de temps le jardin tient sans que personne n'intervienne</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c0" id="a1c0__1" value="c&#x27;est un critère utile ici"><label for="a1c0__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c0" id="a1c0__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici" data-pourquoi="Les sources ne tiennent pas le même temps : l'autonomie les distingue."><label for="a1c0__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c1">
-  <legend><b>La couleur du boîtier de la source</b></legend>
+  <legend><b>La couleur du boîtier de la source</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c1" id="a1c1__1" value="c&#x27;est un critère utile ici" data-pourquoi="La couleur ne change ni l'énergie, ni le coût, ni la sécurité."><label for="a1c1__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c1" id="a1c1__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici"><label for="a1c1__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c2">
-  <legend><b>La disponibilité d'une prise à l'endroit exact du jardin</b></legend>
+  <legend><b>La disponibilité d'une prise à l'endroit exact du jardin</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c2" id="a1c2__1" value="c&#x27;est un critère utile ici"><label for="a1c2__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c2" id="a1c2__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici" data-pourquoi="Sans prise au fond de la cour, le secteur demande des travaux : ça compte ici."><label for="a1c2__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c3">
-  <legend><b>Le coût sur une année entière, et pas seulement le prix d'achat</b></legend>
+  <legend><b>Le coût sur une année entière, et pas seulement le prix d'achat</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c3" id="a1c3__1" value="c&#x27;est un critère utile ici"><label for="a1c3__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c3" id="a1c3__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici" data-pourquoi="Une pile bon marché se rachète souvent : le coût sur l'année distingue les sources."><label for="a1c3__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c4">
-  <legend><b>La marque du fabricant de la pile</b></legend>
+  <legend><b>La marque du fabricant de la pile</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c4" id="a1c4__1" value="c&#x27;est un critère utile ici" data-pourquoi="La marque ne dit pas combien de temps le jardin tient."><label for="a1c4__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c4" id="a1c4__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici"><label for="a1c4__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c5">
-  <legend><b>Le déchet produit : ce qu'on jette, et à quelle fréquence</b></legend>
+  <legend><b>Le déchet produit : ce qu'on jette, et à quelle fréquence</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c5" id="a1c5__1" value="c&#x27;est un critère utile ici"><label for="a1c5__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c5" id="a1c5__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici" data-pourquoi="Les piles se jettent par dizaines, un accu presque jamais : ça distingue les sources."><label for="a1c5__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c6">
-  <legend><b>Le poids de la source, alors que le jardin ne bouge jamais</b></legend>
+  <legend><b>Le poids de la source, alors que le jardin ne bouge jamais</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c6" id="a1c6__1" value="c&#x27;est un critère utile ici" data-pourquoi="Le jardin ne bouge pas : le poids de la source ne compte pas ici."><label for="a1c6__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c6" id="a1c6__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici"><label for="a1c6__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a1c7">
-  <legend><b>La sécurité : ce que l'élève manipule reste-t-il en très basse tension</b></legend>
+  <legend><b>La sécurité : ce que l'élève manipule reste-t-il en très basse tension</b> — est-ce un critère utile ici ?</legend>
   <div class="qcm-option"><input type="radio" name="a1c7" id="a1c7__1" value="c&#x27;est un critère utile ici"><label for="a1c7__1">c'est un critère utile ici</label></div>
   <div class="qcm-option"><input type="radio" name="a1c7" id="a1c7__2" value="ce n&#x27;est pas un critère : il ne distingue pas ou il ne compte pas ici" data-pourquoi="Toutes les sources ne sont pas sûres de la même façon : ça compte ici."><label for="a1c7__2">ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</label></div>
 </fieldset>
@@ -1826,9 +1829,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <h2>📊 Activité 2 — Remplir la grille de comparaison ⏱ ~20 min</h2>
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue</summary><p><b>Objectif :</b> appliquer les mêmes critères à toutes les sources.
   <b>Compétence :</b> 4e_C7.4. <b>Production attendue :</b> 5 verdicts + 1 calcul.</p></details>
-  <p>Remonte au banc, <b>toutes les lignes rallumées</b>, et passe les cinq sources. Pour
-  chacune, dis ce que le banc conclut.</p>
+  <p>Remonte au banc, <b>toutes les lignes rallumées</b>, et passe les cinq sources.</p>
   <div class="exo">
+    <p class="consigne-grille">Pour chaque source, choisis ce que le banc conclut.</p>
     <div class="qcm-cles"><p class="qcm-cles-titre">Les réponses possibles — choisis une lettre pour chaque ligne&nbsp;; <b>une réponse ne sert à aucune ligne</b>&nbsp;:</p><ol><li><b>A</b>elle ne suffit pas : il manque de l'énergie chaque jour</li><li><b>B</b>illimitée, tant qu'il y a du réseau</li><li><b>C</b>moins d'un jour</li><li><b>D</b>un jour et demi, puis il faut le recharger</li><li><b>E</b>un peu plus de deux jours</li><li><b>F</b>trois jours entiers, puis il faut la changer</li></ol></div>
 <fieldset class="qcm-groupe qcm-grille" id="a2g0" data-indice="Une pile 9 V perd beaucoup d'énergie dans le régulateur : relis son autonomie au banc.">
   <legend><b>Pile 9 V (volts) alcaline</b></legend>
@@ -1939,8 +1942,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <div class="qcm-option"><input type="radio" name="a3q2" id="a3q2__2" value="il n&#x27;est pas assez puissant pour faire tourner la pompe en même temps que la carte" data-pourquoi="Le secteur fournit largement assez : le problème est ailleurs, au fond de la cour."><label for="a3q2__2">il n'est pas assez puissant pour faire tourner la pompe en même temps que la carte</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a3q3" data-melange="1">
-  <legend><b>Question 3.</b> Le panneau 1 W (watts) récolte 3,2 Wh (wattheures) par jour et le jardin en consomme 5,87.
-    Il manque donc…</legend>
+  <legend><b>Question 3.</b> Le panneau 1 W (watts) récolte 3,2 Wh (wattheures) par jour et le jardin en consomme 5,87. Combien manque-t-il ?</legend>
   <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__3" value="1,59 Wh par jour" data-pourquoi="Fais la soustraction : ce qui est consommé moins ce qui est récolté."><label for="a3q3__3">1,59 Wh par jour</label></div>
   <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__1" value="2,67 Wh par jour"><label for="a3q3__1">2,67 Wh par jour</label></div>
   <div class="qcm-option"><input type="radio" name="a3q3" id="a3q3__2" value="9,07 Wh par jour" data-pourquoi="Il manque la différence, pas la somme."><label for="a3q3__2">9,07 Wh par jour</label></div>
@@ -1989,7 +1991,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
     <p><b>1.</b> Le nouveau total de consommation, par jour&nbsp;:</p>
     <input type="text" inputmode="decimal" id="a4tot" placeholder="… Wh">
     <fieldset class="qcm-groupe" id="a4q2" data-melange="1">
-  <legend><b>2.</b> Avec ce montage, le panneau solaire 1 W (watts), qui donne 3,2 Wh par jour…</legend>
+  <legend><b>2.</b> Avec ce montage, le panneau solaire 1 W (watts) donne 3,2 Wh par jour. Suffit-il ?</legend>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__3" value="suffit tout juste, sans aucune marge" data-pourquoi="Compare la récolte et le nouveau total : la différence n'est pas mince."><label for="a4q2__3">suffit tout juste, sans aucune marge</label></div>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__2" value="ne suffit toujours pas" data-pourquoi="Compare le nouveau total aux 3,2 Wh récoltés."><label for="a4q2__2">ne suffit toujours pas</label></div>
   <div class="qcm-option"><input type="radio" name="a4q2" id="a4q2__1" value="suffit largement : il récolte près du triple"><label for="a4q2__1">suffit largement : il récolte près du triple</label></div>
@@ -2124,7 +2126,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : <br>maîtrise insuffisante · maîtrise fragile · maîtrise satisfaisante · très bonne maîtrise. <br>Aucun n'est une note : choisis celui qui décrit ce que tu fais aujourd'hui.</p>
   <p style="margin-top:12px"></p>
   <fieldset class="qcm-groupe" id="pos">
-  <legend><b>4e_C7.4 — comparer différentes sources d'énergie pour choisir la plus adaptée :</b></legend>
+  <legend><b>4e_C7.4 — comparer différentes sources d'énergie pour choisir la plus adaptée :</b> où en suis-je ?</legend>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__1" value="🔴 Maîtrise insuffisante — je choisis une source sans grille de comparaison"><label for="pos__1">🔴 Maîtrise insuffisante — je choisis une source sans grille de comparaison</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__2" value="🟠 Maîtrise fragile — je remplis la grille si les critères me sont donnés"><label for="pos__2">🟠 Maîtrise fragile — je remplis la grille si les critères me sont donnés</label></div>
   <div class="qcm-option"><input type="radio" name="pos" id="pos__3" value="🟢 Maîtrise satisfaisante — j&#x27;écris mes critères, je les applique à toutes les sources et je tranche"><label for="pos__3">🟢 Maîtrise satisfaisante — j'écris mes critères, je les applique à toutes les sources et je tranche</label></div>

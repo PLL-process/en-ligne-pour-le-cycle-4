@@ -502,8 +502,8 @@ R_LOCAL = exercice_mots(
                   "solution": "Le climatiseur est une solution : écrit dans la fonction, il ferme la liste avant de l'établir.",
                   "tech": "C'est une fonction technique, avec déjà une solution (le ventilateur) : ce que le système fait. La fonction d'usage dit le service rendu.",
                   "college": "C'est l'utilisateur, la case en haut à gauche. La fonction commence par un verbe à l'infinitif."})],
-    ["<b>Le local de Shenzhen</b> → utilisateur&nbsp;: le collège → matière d'œuvre&nbsp;: <b>l'air du local des serveurs</b> → "
-     "produit&nbsp;: encore à choisir → fonction&nbsp;: <b>refroidir le local des serveurs, pour qu'aucune machine ne s'arrête</b>",
+    ["<b>Le local de Shenzhen</b>&nbsp;: <br>utilisateur&nbsp;: le collège <br>matière d'œuvre&nbsp;: <b>l'air du local des serveurs</b> "
+     "<br>produit&nbsp;: encore à choisir <br>fonction&nbsp;: <b>refroidir le local des serveurs, pour qu'aucune machine ne s'arrête</b>",
      "Refusés&nbsp;: «&nbsp;installer un climatiseur&nbsp;» → une solution, qui ferme la liste&nbsp;; «&nbsp;faire tourner un "
      "ventilateur dès 30 degrés Celsius&nbsp;» → une fonction technique&nbsp;; le collège → l'utilisateur.",
      ("conclusion", "Une fonction sans solution laisse la liste ouverte&nbsp;: climatiseur, ventilation, store, isolant, moins "
