@@ -47,6 +47,12 @@ lire).
    `🎁 Bonus <span style="…">(facultatif — …)</span>` : le mot et sa parenthèse
    sont séparés par une balise. Le motif traverse désormais les balises et les
    espaces insécables — et rien d'autre.
+6. **Le paramètre après `.html`** (audit du 15/11/2026, #721). Les 18 ateliers
+   des représentations (engendrés par `build.py`) portent bien leur bouton
+   unique, mais avec le code du niveau en paramètre :
+   `href="qcm_fast.html?codes=3e_C7.2"`. Le motif exigeait que l'adresse se
+   termine par `.html"` : il ne voyait aucun bouton, et accusait 18 pages
+   conformes. Il accepte désormais `?…` ou `#…` après `.html`.
 
 CE QU'IL ÉCARTE, ET POURQUOI
 ----------------------------
@@ -103,7 +109,8 @@ PRET = re.compile(r"Pr[êe]t(?:·|&middot;|&#183;)?e?\s*(?:&nbsp;|\s)*[àa]\s*t[
 #: et rien d'autre : un « Bonus » suivi trois paragraphes plus loin d'un
 #: « (facultatif » ne serait pas ce titre.
 BONUS = re.compile(r"Bonus(?:\s|&nbsp;|<[^>]{0,120}>)*\(facultatif", re.I)
-LIEN_QCM = re.compile(r'<a\b[^>]*href="[^"]*qcm[^"]*\.html"[^>]*>', re.I)
+#: `?codes=…` ou `#ancre` après `.html` : c'est toujours le lien vers le QCM (erreur n°6).
+LIEN_QCM = re.compile(r'<a\b[^>]*href="[^"]*qcm[^"]*\.html(?:[?#][^"]*)?"[^>]*>', re.I)
 NAV = re.compile(r"<nav\b[^>]*>.*?</nav>", re.I | re.S)
 BOUTON = re.compile(r'class="[^"]*\b(btn|button)\b', re.I)
 

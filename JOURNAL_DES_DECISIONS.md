@@ -24,8 +24,11 @@
 | 19 | Consignes a l infinitif (verbe d action en tete de chaque consigne) | ChatGPT/Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
 | 20 | Guides logiciels inclusifs pas-a-pas (A->H, captures, aucune etape implicite) | Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
 | 21 | Convocation systematique des skills - avant toute creation d exercice et toute redaction relevant des trois themes, convoquer les skills pertinents (curriculum-assessment-cycle4, methode-fable, explicit-instruction, questioning-discussion, dnb-technologie, skill-crcn-2026, manuels-2024-mecaniques) et faire arbitrer toute etiquette de competence par _outils/data_competences.py ; aucun code pose de memoire | Pascal (decision du 02/08/2026), redaction Fable | 🔄 PR en cours |
+| 333 | Une réussite affichée prouve la production réelle | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°322 le 14/11, numéro déjà pris le 10/11 |
+| 334 | Une règle enseignée est juste dans toute sa portée | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°323 le 14/11, numéro déjà pris le 10/11 |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
+**Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
 
 *À relire au début de chaque session de travail. Une entrée par décision
 structurante. Les décisions « pédagogiques ou matérielles » restent à Pascal ;
@@ -30382,6 +30385,8 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 
 ## 14/11/2026 — Règles d'or n°322 à n°330, tirées de l'audit de `3e_C9.1` ; `3e_C9.1`, première étape : une réussite affichée prouve la production réelle
 
+*Note du 15/11/2026 (audit #721) : les n°322 et n°323 de cette entrée doublaient celles du 10/11 ; elles sont **renumérotées n°333 et n°334**. Dans cette entrée et celles du 14 et du 15/11 qui citent l'audit de `3e_C9.1`, lire « n°322 » comme n°333 et « n°323 » comme n°334. Les n°324 à n°330 ne changent pas.*
+
 **Demande de Pascal (12/11, 8 h 34).** Un audit approfondi de `3e_C9.1` (rapport et cahier des charges « ultra premium », rangés dans `docs/audits/AUDIT_3e_C9.1_2026-11-12.md` et `docs/audits/CAHIER_DES_CHARGES_ULTRA_PREMIUM_2026-11-12.md` ; les dix captures citées par le rapport ne sont pas dans le dépôt). « Dégage des règles d'or afin de pouvoir les généraliser pour les prochaines séquences. Pour l'instant, on modifie celle-là. » Puis (12/11, 9 h 33) : « L'impression en PDF peut-être devrait être revue, parce qu'il y a beaucoup de blancs. »
 
 **Ce que l'audit a établi, vérifié sur la page avant correction.**
@@ -30395,7 +30400,7 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 
 ### Les règles
 
-> **Règle d'or n°322 — Une réussite affichée prouve la production réelle.**
+> **Règle d'or n°322 — Une réussite affichée prouve la production réelle.** *(renumérotée n°333 le 15/11/2026 : le n°322 était pris depuis le 10/11)*
 > - Trois états distincts, jamais confondus : l'outil ouvert, le programme exécuté, le résultat vérifié. Seul le dernier ouvre un verrou ou valide une activité.
 > - Une fonction se juge à ce qu'elle RENVOIE : la page l'appelle avec des entrées de test et compare. Un programme qui imprime les valeurs attendues ne passe pas.
 > - Un programme se juge à sa sortie ET à son calcul : rejoué avec une autre donnée, il donne encore le bon résultat. Une ligne recopiée dans un `print` ne passe pas.
@@ -30406,7 +30411,7 @@ Le ralentissement du 08/11 a fait ce qu'il visait sur les deux lots refaits. Les
 > - Une validation enregistrée qui ne reposait pas sur la production est retirée à l'ouverture, avec un message qui dit pourquoi.
 > - Contrôle : le banc de la séquence joue chaque cas refusé (`return 0`, `print` seul, fonction fausse, code modifié, outil externe seul) et le cas juste.
 
-> **Règle d'or n°323 — Une règle enseignée est juste dans toute sa portée.**
+> **Règle d'or n°323 — Une règle enseignée est juste dans toute sa portée.** *(renumérotée n°334 le 15/11/2026 : le n°323 était pris depuis le 10/11)*
 > - Elle s'énonce sur les cas étudiés et nomme sa limite : « deux nombres, int ou float : le + additionne ; deux textes : il colle ; un texte et un nombre : erreur ». Jamais « le + exige le même type ».
 > - La page, le QCM, le lexique et la synthèse disent la même chose. Une correction se fait partout à la fois (le lexique recopie le « à retenir » du QCM : on corrige le QCM, puis `generer_lexique.py`).
 > - Une métaphore dit où elle s'arrête.
@@ -31473,3 +31478,26 @@ L'unité jugée est le bloc d'activité de la n°331. Un bloc fait produire avec
 **Contrôles exécutés.** `controle_ordre_propositions.py` (sortie 0, dernière ligne inchangée) ; `controle_longueurs.py` (0, inchangée) ; `audit_aeration.py` sur le site (0, dernière ligne inchangée) et `--strict` sur 5e_C7.5 (0) ; `bilan_revision.py` : **51 séquences propres sur 56**, comme sur `main` ; `controle_schemas.mjs` sur les trois thèmes (sortie 1 comme sur `main` : la spirale) ; `tests_controle_schemas.mjs` **24 / 24** ; `enrichir.py --verifier` sur les 38 pages enrichies qui l'étaient : toutes à jour, comme sur `main` (`4e_C7.5` n'est pas à jour de `mission_4e_C7.5.json` sur `main` non plus : constat, pas touché) ; `py_compile` des quatre scripts Python.
 
 **Ce qui reste, à Pascal.** Les trois idées du 08/11 (quatre niveaux d'une correction, grille de charge cognitive, trois niveaux de vocabulaire), toujours en attente. Passer une de ces mesures en refus, quand la révision l'aura vidée. La réécriture des propositions des 17 pages et des pourquoi sans étape suivante : à la révision, page par page.
+
+## 15/11/2026 — Audit du 15/11, chantiers 1 et 5 : quatre contrôles remis à jour, le registre des règles d'or engendré, n°322/n°323 du 14/11 renumérotées n°333/n°334 (suite de la PR #721)
+
+**La demande.** Pascal, le 15/11/2026 : « Modifier ce qu'il recommande », puis « Après l'installation ». L'installation est la PR #724 ; ce lot applique les **chantiers 1 et 5** du rapport `docs/audits/RAPPORT_AUDIT_2026-11-15.md` (PR #721). Lot transversal (`_outils/`, `.claude/skills/`, `docs/`, une page du thème 3, le journal), branche sans motif de thème.
+
+**Chantier 1 — les contrôles qui mesuraient mal.**
+- **`controle_regle4.py`** lit `qcm_….html?codes=…` (et `#ancre`) : les 18 ateliers des représentations retrouvent leur bouton. **21 écarts → 3**, les 3 copies `atelier_bete_a_cornes.html` (4e_C1.3, 3e_C3.1, 4e_C3.1), qui n'ont ni bloc « Prêt·e » ni Bonus : la question « gabarit voulu ou oubli de `build.py` ? » reste à Pascal. Banc : 3 cas de plus (erreur n°6 de la docstring), 20 / 21 — le cas restant est « le dépôt réel passe », rouge pour ces 3 pages, comme sur `main` (17 / 18).
+- **`verif_regles_audit.py`, n°301** : une page qui se déclare « Page N sur M », N < M, est SANS OBJET — son bilan se juge sur la page M. C'est l'exemption de `controle_regle4.py`, même motif. Les pages 1 à 3 de `3e_C9.2` perdent leur ✘ par construction : **les règles d'or passent à 0 manquement sur 60 séquences** (3 → 0). Banc : 3 cas de plus, 71 / 71.
+- **`controle_schemas.mjs`** : un `<svg>` qui porte `data-illustration="<pourquoi>"` sort du score, compté et nommé à part ; une balise HTML dans le SVG reste un ✘. La spirale de Fibonacci de `atelier-cao/fiche_arts_tp_4e_socle.html` la porte (dans la page et dans `_generation/spirale_fibonacci.py`, sortie identique à la page) : **10 ✘ → 0**, sortie 1 → 0 ; ⚠ 575, inchangés. Corrigé en passant : la ligne « N fichiers SVG, M écrits dans des pages » comptait mal. Banc : 3 cas de plus, 27 / 27.
+- **`rapport_audit.py`** lit désormais `controle_chaine_a_completer.py`, `registre_regles.py` (dans `CONTROLES_PY`), `controle_indices_qcm.mjs` et `controle_axe.mjs` (dans `CONTROLES_MJS`). `controle_axe.mjs` sort « EN PANNE » (sortie 2) tant qu'`axe-core` manque à la session : c'est la vérité (n°299), pas un rouge à cribler.
+- Le défaut de **5e_C7.4** (copie de l'outil « chaîne à compléter » différente de la source) est déjà réglé sur `main` : `controle_chaine_a_completer.py` sort à 0 ce soir. Rien à reposer.
+
+**Chantier 5 — le registre des règles d'or.**
+- **Les n°322 et n°323 du 14/11 (audit de `3e_C9.1`) deviennent n°333 et n°334** — le n°332 a été pris entre-temps par #722. Les n°322 (sauvegarde locale) et n°323 (place des bonnes réponses) du 10/11 gardent leur numéro : ils étaient les premiers. L'entrée du 14/11 n'est pas réécrite : une note sous son titre et une mention « renumérotée » sur les deux définitions ; les skills `revision-sequence` et `sequence-pedagogique-engageante` et le commentaire du banc de `3e_C9.1` portent les nouveaux numéros. Les n°333 et n°334 sont réservés dans le tableau de tête.
+- **`_outils/registre_regles.py`** (nouveau) lit toutes les définitions du journal (tableau de tête, titres, exergues, puces, phrases) et engendre **`docs/REGISTRE_DES_REGLES_OR.md`** (`--ecrire`) : **322 numéros définis, du n°1 au n°334**, 12 sans définition trouvée (n°156 à n°166, déclarés jamais écrits le 13/08 ; n°260, jamais cité). `--prochain` donne le prochain numéro libre (**n°335**). Sans option, il **refuse un numéro introduit deux fois** sous deux titres sans mot commun : rejoué sur le journal d'avant ce lot, il trouve exactement les n°322 et n°323, et rien d'autre (un premier essai qui comptait aussi les puces de compte rendu en trouvait onze, dont neuf faux : la règle est écrite dans sa docstring). Banc : `tests_registre_regles.py`, 10 / 10.
+- Le tableau de tête du journal dit désormais où lire les n°22 à n°332 et comment prendre un numéro.
+- Le marqueur `CONTROLES_ICI` de l'entrée de #718 n'est plus dans le journal : réglé avant ce lot.
+
+**Contrôles exécutés.** `controle_regle4.py` (1, 21 → 3 écarts) ; `verif_regles_audit.py` (0, 3 → 0 manquement) ; `controle_schemas.mjs` sur les trois thèmes (0, 489 schémas, 1 illustration déclarée) ; `controle_chaine_a_completer.py` (0) ; `controle_axe.mjs` (2, EN PANNE, axe-core absent) ; `registre_regles.py` (0) ; les bancs `tests_controle_regle4.py`, `tests_verif_regles_audit.py`, `tests_controle_schemas.mjs`, `tests_registre_regles.py` ; `controle_regles_visibles.py`, `controle_licence.py`, `controle_impression_papier.py`, `controle_rapports_tests.py` ; `py_compile`.
+
+**Non exécutés.** `rapport_audit.py` complet (une heure ; les contrôles touchés ont été lancés un par un) ; aucun banc de lot (une seule page touchée, d'un attribut invisible).
+
+**Ce qui reste, à Pascal.** Les 3 copies `atelier_bete_a_cornes.html` sans bloc « Prêt·e » ni Bonus ; le chantier 2 (sauvegarde locale, n°322, 8 pages) suit dans une autre PR.
