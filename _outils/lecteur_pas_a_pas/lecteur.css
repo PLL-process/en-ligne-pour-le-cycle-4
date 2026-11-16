@@ -1,10 +1,14 @@
 /* Lecteur pas à pas commun — source unique : _outils/lecteur_pas_a_pas/lecteur.css (posée par poser.py). */
-[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{transition:opacity .35s ease calc(var(--i,0) * .12s),visibility 0s linear 0s}
-[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;transition:opacity .2s ease,visibility 0s linear .2s}
+/* Mouvement (skill motion-design, 16/11/2026) : une partie du dessin qui apparaît monte de 6 unités en 0,6 s, courbe
+   qui décélère (entrée) ; elle disparaît en 0,4 s, courbe qui accélère, sans bouger (sortie). Ni l'opacité seule
+   ni le mouvement seul ne portent l'information (n°119) : la phrase de l'étape la dit. `translate` se compose avec
+   l'attribut `transform` des éléments SVG au lieu de le remplacer ; un navigateur qui l'ignore garde le fondu. */
+[data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul]{translate:0 0;transition:opacity .6s cubic-bezier(.2,0,0,1) calc(var(--i,0) * .12s),translate .6s cubic-bezier(.2,0,0,1) calc(var(--i,0) * .12s),visibility 0s linear 0s}
+[data-lpp-racine] .lpp-cache{opacity:0!important;visibility:hidden;translate:0 6px;transition:opacity .4s cubic-bezier(.3,0,1,1),translate 0s linear .4s,visibility 0s linear .4s}
 [data-lpp-racine] [data-aller][aria-current]{outline:2px solid currentColor;outline-offset:2px}
 .lpp-imprime{display:none}
 @media (prefers-reduced-motion: reduce){
-  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important}
+  [data-lpp-racine] [data-de],[data-lpp-racine] [data-a],[data-lpp-racine] [data-des],[data-lpp-racine] [data-seul],[data-lpp-racine] .lpp-cache{transition:none!important;translate:0 0!important}
 }
 @media print{
   [data-lpp-racine].lpp-sans-impression{display:none!important}
