@@ -138,3 +138,17 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_velos_college.png` | Des vélos garés en rang sous un auvent. À côté, une rampe en béton mouillée descend vers la mer, sous un ciel gris de pluie. PNG 1 536 × 1 024, 2.6 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a row of identical plain school bicycles parked under a shelter at a Caribbean secondary school, tropical rain falling, a steep wet car-park ramp sloping down beside them, the sea visible in the distance, rust spots on a metal railing, bicycles seen from a distance and from the side, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## La figure « Trois freins, la même roue » (16/11/2026)
+
+Demande de Pascal du 16/11/2026 : utiliser le skill `anatomy` qu'il a installé, d'abord dans le thème 1. Usage
+**IMAGE-OBJET** (règle d'or n°1) : la version 🅱 de l'activité 1 se fait en lisant cette figure — ce qui bouge
+quand on serre le levier, ce qui vient toucher quoi, à quelle distance de l'axe.
+
+| Fichier | Ce qu'il montre | Auteur et source | Licence | Où |
+|---|---|---|---|---|
+| `Images/freins_iso.html` | La roue avant d'un vélo du collège dans un range-vélo, vue isométrique, avec au choix un frein à patins, à disque ou à tambour. L'élève serre le levier ; une loupe montre en coupe l'endroit qui frotte. Page autonome, sans réseau, posée dans la séquence par un cadre. 396 Ko (102 Ko compressée). | Dessin original, écrit en code pour ce lot (écosystème Pascal/Claude, 16/11/2026) par `_generation/freins_iso/build.mjs`, avec le kit **Anatomy** (github.com/wheresryan22/anatomy, commit audité `1482e84`), inclus dans la page. Cotes : roue ETRTO 559 (26 pouces), disque Ø 160 mm, tambour Ø 70 mm, écart patin-jante 2 mm (relevé de la séquence). | Dessin : **CC BY-NC-SA 4.0** (licence du dépôt, règle n°321). Kit inclus : **MIT, © 2026 Ryan** — mention dans le script et sous la figure. | Activité 1, version 🅱 (séance 1) |
+| `Images/freins_iso_planche.svg` | Les trois freins côte à côte, serrés, en thème clair, avec leurs numéros et leurs loupes : la version fixe de la figure. | Même générateur, même date. | CC BY-NC-SA 4.0 ; feuille de style du kit (MIT, © 2026 Ryan) incluse. | Gardée pour la synthèse ou une fiche ; pas encore affichée par une page. |
+
+Aucune modification d'une image tierce : tout est dessiné. Pour la refaire : `node _generation/freins_iso/build.mjs`
+(le kit Anatomy, épinglé sur son commit audité, n'est pas versé dans le dépôt ; voir l'en-tête du générateur).

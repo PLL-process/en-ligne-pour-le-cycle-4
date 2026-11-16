@@ -60,3 +60,13 @@ Commun aux trois : un dessin SVG dont les éléments `[data-des="n"]` apparaisse
 
 **Corriger le lecteur** : modifier `lecteur.js` ou `lecteur.css` ici, puis relancer `poser.py` sur chaque page qui le
 porte (le contrôle les nomme), puis le banc commun et les bancs des quatre pages.
+
+## Le mouvement (16/11/2026, skill motion-design)
+
+Une partie du dessin qui apparaît **monte de 6 unités en 0,6 s**, sur une courbe qui décélère
+(`cubic-bezier(.2,0,0,1)`) ; elle **disparaît en 0,4 s**, sur une courbe qui accélère, sans bouger. Les décalages
+d'une même étape restent de 0,12 s par rang (`--i`, 6 au plus dans les pages : 0,72 s), dans la fenêtre d'une
+étape de schéma (0,6 à 1,2 s). Le déplacement passe par la propriété `translate`, qui s'ajoute à l'attribut
+`transform` des éléments SVG au lieu de le remplacer ; un navigateur qui ne la connaît pas garde le fondu.
+Sous « moins de mouvement », rien ne bouge (ni fondu ni montée). La phrase de l'étape dit toujours ce qui
+apparaît (n°119).
