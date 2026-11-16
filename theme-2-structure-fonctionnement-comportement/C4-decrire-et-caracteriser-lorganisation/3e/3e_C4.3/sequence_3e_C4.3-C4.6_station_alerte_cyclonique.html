@@ -2677,6 +2677,13 @@ body.ms .cac-reserve{--cac-bas:84px}
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La colonne <b>vigilance</b> change de valeur à des lignes précises : repère la <em>première</em> ligne « rouge ». <br>Pour le minimum et le maximum, parcours les colonnes — ou utilise les fonctions MIN() et MAX() dans LibreOffice.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Dans LibreOffice Calc : <code>=MIN(E3:E50)</code> pour la pression minimale, <code>=MAX(D3:D50)</code> pour la rafale. <br>Le passage en orange se lit le jour 28, celui en violette le jour 29 : compte les lignes entre les deux (1 ligne = 1 heure).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Dans le tableur</b>&nbsp;: les réponses lues par des formules, et les lignes du fichier qui les portent.</p>
+      <figure class="capture-corrige" style="margin:.4rem auto .7rem;max-width:760px;text-align:center">
+        <img class="figure" src="Images/capture_corrige_enquete_donnees.png" alt="Capture de LibreOffice Calc : en haut, chaque question, sa réponse et sa formule — premier rouge le 29 à 08:00 par INDEX et EQUIV, pression minimale 966,8 hPa par MIN, rafale maximale 223 km/h par MAX, premier orange le 28 à 15:00, premier violette le 29 à 15:00, écart 24 heures. En bas, les quatre lignes de la table qui portent ces réponses, colorées selon la vigilance." loading="lazy" style="max-width:100%;height:auto;border:1px solid #9aa5b8;border-radius:6px;background:#fff">
+        <figcaption style="font-size:.9em">La capture de Calc&nbsp;: la réponse, et la formule qui la trouve sans erreur de lecture.</figcaption>
+        <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/capture_corrige_enquete_donnees.png" target="_blank" rel="noopener">🔍 Ouvrir la capture en grand</a></p>
+      </figure>
+      <p>📥 <a href="donnees/mesures_station_48h_corrige.ods" download>Le fichier corrigé (.ods)</a>&nbsp;: les 48 h colorées selon la vigilance, les formules à droite, et le graphique du défi du Bonus.</p>
       <p><b>1.</b> Premier « rouge » : le <b>29 à 08:00</b> (réponse attendue : 8).<br><b>2.</b> Pression minimale : <b>966,8 hPa (hectopascals)</b> (dernière ligne, cœur du phénomène au plus près).<br><b>3.</b> Rafale maximale : <b>223 km/h</b>.<br><b>4.</b> Orange le 28 à 15:00, violette le 29 à 15:00 → <b>24 heures</b>.</p>
       <p><b>Méthode :</b> une table structurée se lit par colonnes (descripteurs) et par lignes (enregistrements). Les fonctions MIN/MAX du tableur évitent les erreurs de lecture — c'est exactement pour cela que les données sont <em>structurées</em>.</p>
       <p><b>5. Conclusion attendue :</b> quand le vent augmente, la pression <b>chute</b> (de 1012 à 967 hPa) : les deux grandeurs varient en sens inverse. <br>En croisant deux capteurs indépendants, la station évite les fausses alertes : une rafale isolée sans chute de pression (par exemple un grain passager) ne déclenchera pas la sirène. <br>C'est le principe de la <b>validation croisée</b> des mesures.</p>
@@ -2808,6 +2815,21 @@ body.ms .cac-reserve{--cac-bas:84px}
   <p>🔧 <b>Défi maker :</b> avec le professeur, ajoute au montage Arduino un seuil qui allume la LED quand la luminosité passe sous une valeur choisie. <br>Tu viens de programmer… une alerte.</p>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
+  <details class="correction"><summary>✅ Corrigé des trois défis</summary>
+      <p><b>🌪 Défi données — le graphique, tel que Calc le trace</b>&nbsp;:</p>
+      <figure class="capture-corrige" style="margin:.4rem auto .7rem;max-width:760px;text-align:center">
+        <img class="figure" src="Images/capture_corrige_graphique_vent_pression.png" alt="Graphique en lignes de LibreOffice Calc sur 48 heures, du 28 août à 00 h au 29 août à 23 h. La courbe du vent, axe de gauche en kilomètres par heure, monte de 37 à 161. La courbe de la pression, axe de droite en hectopascals, descend de 1012 à 967. Les deux courbes se croisent vers le 29 à 11 h : c'est la pince." loading="lazy" style="max-width:100%;height:auto;border:1px solid #9aa5b8;border-radius:6px;background:#fff">
+        <figcaption style="font-size:.9em">La pince&nbsp;: le vent monte (axe de gauche), la pression chute (axe de droite).</figcaption>
+        <p class="agrandir" style="margin:.2rem 0 0;font-size:.9em"><a href="Images/capture_corrige_graphique_vent_pression.png" target="_blank" rel="noopener">🔍 Ouvrir la capture en grand</a></p>
+      </figure>
+      <p>Ce que tu dois voir&nbsp;: les deux courbes vont en sens <b>inverse</b> et se rapprochent jusqu'à se croiser — la «&nbsp;pince&nbsp;» qui se referme. <br>Pour la tracer&nbsp;:
+      <br>① sélectionne l'heure, le vent et la pression&nbsp;;
+      <br>② Insertion → Diagramme → Ligne&nbsp;;
+      <br>③ mets la pression sur un <b>axe secondaire</b> (Format de la série → Aligner la série sur l'axe Y secondaire).
+      <br>Le piège&nbsp;: sans axe secondaire, la pression (autour de 1000) écrase la courbe du vent. <br>📥 <a href="donnees/mesures_station_48h_corrige.ods" download>Le fichier corrigé (.ods)</a>, feuille «&nbsp;Graphique&nbsp;».</p>
+      <p><b>📡 Défi recherche</b>&nbsp;: quand le réseau mobile tombe, les stations envoient leurs mesures par <b>satellite</b> (une balise émet vers un satellite météorologique, qui relaie) ou par <b>radio VHF</b>&nbsp;: deux chemins qui ne dépendent pas des antennes au sol. <br>C'est la même idée que la double mesure de l'enquête&nbsp;: ne jamais dépendre d'un seul maillon.</p>
+      <p><b>🔧 Défi maker</b>&nbsp;: SI la luminosité est inférieure au seuil choisi, ALORS allumer la LED, SINON l'éteindre&nbsp;— dans une boucle «&nbsp;répéter indéfiniment&nbsp;». <br>Le piège&nbsp;: oublier le SINON, et la LED reste allumée pour toujours.</p>
+  </details>
 </details>
 </section>
 
