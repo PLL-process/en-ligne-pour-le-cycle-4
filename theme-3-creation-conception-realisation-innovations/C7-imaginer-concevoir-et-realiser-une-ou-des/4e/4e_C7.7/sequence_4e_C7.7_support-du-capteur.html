@@ -777,6 +777,7 @@ body.essentiel details.referentiel-replie{display:none}
   @keyframes ms-secoue{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
   .ms-case.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
   body.ms details.ms-pousse{outline:2px solid var(--warn,#ffd66b);outline-offset:3px;border-radius:10px}
+  .ms-cor-note{margin:.2rem 0 .5rem;font-weight:700;color:var(--ok,#81fba1)}
   .ms-coche{width:22px;height:22px;flex:none;fill:none;stroke:var(--ok,#81fba1);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
   .ms-reserve{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--panel,#0d2347);border:1px solid var(--border,#274a8a);border-radius:16px;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:9px 12px;display:grid;gap:7px}
   .ms-reserve-t{margin:0;font-size:.78em;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--sub,#9bbefc)}
@@ -1038,7 +1039,7 @@ function activite(A, E){
                id:(A.id || nom) + "#" + x.j + "." + x.q, n:(ressBtn ? [ressBtn] : []).concat(carte ? header : [], x.st.n, [retour], dernier ? z.fb.concat(z.suite) : [], aides) });
     });
   });
-  if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, n:header.concat(fin) });
+  if (fin.length) E.push({ t:"retenir", titre:"Je retiens — " + nom, act:A, n:header.concat(fin) });
 }
 /* Une partie se joue pas à pas : chaque question à choix sur son écran, chaque jeu d'étiquettes sur le sien, une
    série de réponses courtes (rangée) ensemble, un écrit (zone de texte et sa version étayée) sur le sien.
@@ -1253,10 +1254,37 @@ function marquerTrou(s){
     });
   });
 }
+/* ═══ La correction se voit (règle d'or n°336, 16/11/2026) ═══
+   Pascal : « le mode mission ne contient pas les corrections ». Elles y étaient, repliées sous leur titre sur l'écran
+   « je retiens », et passaient inaperçues. Une fois l'activité vérifiée (la dernière question a lancé la vérification
+   de la page), sa correction s'ouvre d'elle-même, sur l'écran « je retiens » comme sous la dernière question. Avant,
+   elle reste repliée et une ligne dit où elle est et quand elle s'ouvrira : on essaie d'abord, on se corrige ensuite. */
+var CORR = "details.correction, details.corrige, details.correction-complete";
+function corrections(s){ var o = []; s.n.forEach(function(n){ if (!n.matches) return; if (n.matches(CORR)) o.push(n); $$(CORR, n).forEach(function(c){ if (o.indexOf(c) < 0) o.push(c); }); }); return o; }
+/* un écran qui se vérifie : des réponses connues, ou la vérification de la page sous sa dernière question */
+function verifiable(e){ return e.t === "partie" && (e.champs.some(function(f){ return cle(f) !== undefined; }) || (e.dernier && !!e.check)); }
+/* l'activité est vérifiée quand chacun de ses écrans qui se vérifie l'a été ; une activité sans rien à vérifier (des
+   réponses écrites) ouvre sa correction dès l'écran « je retiens » : l'élève compare avec ce qu'il a écrit */
+function etatActivite(A){
+  var vs = ecrans.filter(function(e){ return e.t === "partie" && e.act === A && verifiable(e); });
+  return !vs.length ? "ecrit" : vs.every(function(e){ return M.fait[e.id]; }) ? "verifiee" : "a-faire";
+}
+function ouvrirCorrections(s, A){
+  var cs = corrections(s); if (!cs.length) return;
+  var et = etatActivite(A), ok = et !== "a-faire";
+  if (ok) cs.forEach(function(c){ if (!c._msOuverte){ c.open = true; c._msOuverte = true; } });
+  var note = s._msCorNote;
+  if (!note){ note = s._msCorNote = el("p", "ms-cor-note ms-seul"); cs[0].parentNode.insertBefore(note, cs[0]); s.n.push(note); ecrans.tous.push(note); }
+  note.textContent = et === "verifiee" ? "✅ Ta correction est ouverte juste en dessous : compare-la avec tes réponses, une par une."
+                   : et === "ecrit" ? "✅ Ta correction est ouverte juste en dessous : compare-la avec ce que tu as écrit, ligne par ligne."
+                   : "🔎 La correction est juste en dessous. Réponds d'abord aux questions et vérifie : elle s'ouvrira toute seule.";
+}
+
 /* ═══ Montrer un écran : tout ce qui n'en fait pas partie se cache (à l'écran seulement) ═══ */
 function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(function(n){ return !n.offsetParent || (!net(n.innerText) && !$("img,svg,canvas,video,iframe,object,input,textarea,select", n)); }); }
 function montrer(haut){
   var s = ecrans[k], vis = [];
+  if (s.t === "retenir" && s.act) ouvrirCorrections(s, s.act);
   s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
@@ -1349,6 +1377,7 @@ function verifier(){
     s.check.click();
     if (s.fb && net(s.fb.textContent) && s.fb.scrollIntoView){ s.fb.classList.add("ms-message"); s.fb.scrollIntoView({ block:"nearest" }); }
   }
+  if (s.act) ouvrirCorrections(s, s.act);          // une correction posée sous la question s'ouvre aussi (n°336)
   $$(".ms-etq", panneau).forEach(peindre); barre();
   if (gain){ var b = el("span", "ms-gain"); b.textContent = "+" + gain; $("#msGains").appendChild(b); setTimeout(function(){ b.remove(); }, 1600); }
   $("#msSuiv").focus({ preventScroll:true });

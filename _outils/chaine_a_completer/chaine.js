@@ -84,10 +84,14 @@
     try { conf = JSON.parse(racine.getAttribute("data-cac") || "{}"); } catch (e) { console.warn("chaîne à compléter : data-cac illisible", e); return; }
     var dessin = (window.CAC_DESSINS || {})[conf.dessin];
     if (!dessin) { console.warn("chaîne à compléter : dessin inconnu", conf.dessin); return; }
-    var cases = conf.cases || {}, vides = conf.vides || [], titres = conf.titres || {}, acquis = conf.acquis || {};
+    /* LE CORRIGÉ (règle d'or n°336, 16/11/2026) : `"corrige": true` dessine la même étape sans case — chaque partie
+       porte le texte du dessin, c'est-à-dire la bonne réponse ; ce qui viendra plus tard reste en pointillés. Rien à
+       toucher, rien à poser : c'est l'image de la correction. Posé de lui-même dans la correction de l'activité. */
+    var corrige = !!conf.corrige;
+    var cases = corrige ? {} : (conf.cases || {}), vides = conf.vides || [], titres = conf.titres || {}, acquis = corrige ? {} : (conf.acquis || {});
     var champs = {}, ordre = [];                                       // « id.partie » → fieldset ; ordre de lecture
     Object.keys(cases).forEach(function(k){ var f = D.getElementById(cases[k]); if (f) { champs[k] = f; ordre.push(k); f.classList.add("ms-origine"); } else console.warn("chaîne à compléter : groupe absent", cases[k]); });
-    if (!ordre.length) return;
+    if (!ordre.length && !corrige) return;
     var etiquettes = [], textes = {};
     ordre.forEach(function(k){ valeurs(champs[k]).forEach(function(v){ if (etiquettes.indexOf(v) < 0) { etiquettes.push(v); textes[v] = libelle(champs[k], v); } }); });
     function tx(v){ return textes[v] || v; }
@@ -95,13 +99,15 @@
     var dispo = "", k = 1, zone, svg, calque, reserve, msg, papier;
 
     racine.classList.add("cac-pret");
-    zone = el("div", "cac-dessin"); zone.setAttribute("role", "group");
-    zone.setAttribute("aria-label", conf.nom || "Le schéma des chaînes, à compléter avec les étiquettes");
+    zone = el("div", "cac-dessin"); zone.setAttribute("role", corrige ? "img" : "group");
+    zone.setAttribute("aria-label", corrige ? "Le schéma complet, corrigé : chaque bloc porte sa fonction et son constituant, chaque flèche ce qu'elle transporte"
+                                            : conf.nom || "Le schéma des chaînes, à compléter avec les étiquettes");
     msg = el("p", "cac-msg"); msg.setAttribute("aria-live", "polite");
     reserve = el("div", "cac-reserve");
     papier = el("p", "cac-papier pp-papier");
     var q = racine.querySelector(".cac-questions");
-    racine.insertBefore(zone, q); racine.insertBefore(msg, q); racine.insertBefore(reserve, q); racine.insertBefore(papier, q);
+    if (corrige) { racine.appendChild(zone); msg.hidden = reserve.hidden = papier.hidden = true; }
+    else { racine.insertBefore(zone, q); racine.insertBefore(msg, q); racine.insertBefore(reserve, q); racine.insertBefore(papier, q); }
     papier.innerHTML = "<b>Les étiquettes à écrire dans les cases" + (reutil ? " (une étiquette peut servir plusieurs fois)" : "") + "&nbsp;:</b> " + etiquettes.map(function(v){ return esc(tx(v)); }).join(" · ");
 
     function correspond(m, e, partie){
@@ -207,6 +213,7 @@
     var uid = Math.random().toString(36).slice(2, 7);
 
     function peindreReserve(){
+      if (corrige) return;
       var pris = ordre.map(function(c){ return lireV(champs[c]); });
       var finies = ordre.every(function(c){ return etat(champs[c]) === "juste"; });
       reserve.hidden = finies;
@@ -293,7 +300,30 @@
   window.addEventListener("pointerup", function(ev){ lache(ev, false); });
   window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
 
-  function init(){ $$(".cac[data-cac]").forEach(function(r){ if (!r._cac) Chaine(r); }); }
+  /* La correction de l'activité montre la chaîne complète (n°336) : le corrigé de sa DERNIÈRE étape (qui reprend, en
+     clair, ce que les étapes d'avant ont fait trouver) est posé en tête de la correction (`details.correction`), sauf
+     si la correction porte déjà sa figure. Il se dessine à l'ouverture. */
+  function poserCorriges(){
+    var parCor = [];
+    $$(".cac[data-cac]:not(.cac-corrige)").forEach(function(r){
+      var a = r.closest(".activite, .act, .carte, section.card, .exercice, section"); if (!a) return;
+      var cor = a.querySelector("details.correction, details.corrige"); if (!cor || cor._cacCorrige) return;
+      var deja = parCor.filter(function(x){ return x.cor === cor; })[0];
+      if (deja) deja.r = r; else parCor.push({cor: cor, r: r});
+    });
+    parCor.forEach(function(x){
+      var cor = x.cor; cor._cacCorrige = true;
+      if (cor.querySelector("figure, img, object, svg[viewBox]")) return;          // la correction a déjà son schéma complet
+      var conf = {}; try { conf = JSON.parse(x.r.getAttribute("data-cac") || "{}"); } catch (e) { return; }
+      var boite = el("div", "cac-corriges");
+      boite.innerHTML = '<p class="cac-corrige-t"><b>Le schéma complet</b>&nbsp;: compare-le avec tes réponses, case par case.</p>';
+      var c = el("div", "cac cac-corrige");
+      c.setAttribute("data-cac", JSON.stringify({dessin: conf.dessin, vides: conf.vides, titres: conf.titres, vue: conf.vue, corrige: true}));
+      boite.appendChild(c);
+      var sm = cor.querySelector(":scope > summary"); cor.insertBefore(boite, sm ? sm.nextSibling : cor.firstChild);
+    });
+  }
+  function init(){ poserCorriges(); $$(".cac[data-cac]").forEach(function(r){ if (!r._cac) Chaine(r); }); }
   window.ChaineACompleter = {init: init, Chaine: Chaine};
   if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
   // la page remet ses réponses après coup (sauvegarde relue) : le dessin se repeint une fois tout chargé

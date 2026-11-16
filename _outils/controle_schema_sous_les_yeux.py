@@ -143,8 +143,6 @@ JUGES = {
         "Exercice 21 — L'indentation": "question de connaissance ; l'algorigramme n'est cité que dans l'aide"},
     T2 + "C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.2/sequence_3e_C6.2_auto_test_station.html": {
         "✏️ Activité 2 — CONCEVOIR l'algorigramme": "conception sans modèle, voulue (« avant toute référence »)"},
-    T2 + "C6-comprendre-et-modifier-un-programme-associe/5e/5e_C6.1/sequence_5e_C6.1-C6.3_programmer_lampadaire.html": {
-        "L'algorithme en langage naturel": "les formes de l'algorigramme sont dessinées dans les propositions (◇ ▭ ⬭)"},
     T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html": {
         "📐 Activité 3 — L'algorigramme, puis le code": "l'algorigramme est la production de l'élève ; ses formes sont rappelées dans le bloc"},
     T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/sequence_4e_C7_jardin-conception.html": {
@@ -259,7 +257,7 @@ def a_une_figure(bloc: Tag) -> bool:
 #: un dépliant qui PEUT garder sa figure fermée : la correction, les aides, les pièges (ils s'ouvrent après coup)
 #: les dévoilements voulus (« à ouvrir après l'expérience », « après avoir rangé les étapes », « après l'animation ») et les
 #: guides de gestes (captures d'un logiciel, fenêtres de Windows, guide pas à pas) : ce ne sont pas des schémas à lire pour répondre
-DEPLIANTS_PERMIS = ("correction", "corrige", "corrigé", "aide", "aide1", "aide2", "pieges-replies", "pieges", "bonus-replie",
+DEPLIANTS_PERMIS = ("correction", "corrige", "corrigé", "corrige-bonus", "aide", "aide1", "aide2", "pieges-replies", "pieges", "bonus-replie",
                     "geste-images", "gestes-fenetres", "guide-replie", "hpp-observe", "document-replie", "ppa-fixe")
 
 
