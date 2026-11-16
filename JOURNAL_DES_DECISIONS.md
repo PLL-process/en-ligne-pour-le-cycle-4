@@ -31813,3 +31813,13 @@ Les deux autres (`5e_C4.1` le réseau local, `3e_C5.1` les points de test) serve
 La vérification de la page ne change pas (011 attendu).
 
 **Vérifications.** Bancs de `3e_C4.3` : 23 / 23 et 34 / 34. Mode mission sans refus. `verif_regles_audit.py` 0 ✘, `audit_aeration.py --strict` 0, `controle_schemas.mjs` 0 ✘, `controle_schema_sous_les_yeux.py` 0 ✘, `controle_consigne_question.py` : `3e_C4.3` absent.
+
+## 15/11/2026 — Règle n°4 : les trois panneaux de la bête à cornes ne sont pas des séquences
+
+**La demande.** Pascal, le 15/11/2026, sur la question laissée par l'audit hebdomadaire (#721) — « 3 copies `atelier_bete_a_cornes` sans bloc « Prêt·e » ni Bonus, à juger » : « Tu as carte blanche ».
+
+**Ce qui a été jugé.** Les quatre `atelier_bete_a_cornes.html` (`5e_C3.3`, `4e_C1.3`, `3e_C3.1`, `4e_C3.1`) sont des **panneaux** engendrés par `build.py` : rangés dans le dossier d'un code, ils mènent par leur bouton à l'atelier des représentations (`atelier_<niveau>_besoin-bete-a-cornes.html`). Celui de 5e fait 4 Ko et passait déjà pour page-pointeur ; les trois autres pèsent 80 Ko parce qu'ils portent un rappel incrusté (« 🧠 Avant l'atelier »). Ce ne sont pas des séquences : la clôture — « Prêt·e à t'entraîner », le Bonus, le bouton QCM — est dans l'atelier, que le contrôle juge et trouve conforme. Leur ajouter les deux blocs mettrait le QCM **avant** l'atelier, ce que Pascal reprochait le 30/08 (« le QCM est proposé presque sur toutes les pages »).
+
+**Ce qui change** (`_outils/controle_regle4.py`) : une famille écartée de plus, « panneau vers un atelier » — une page `atelier_*.html` hors des ateliers, dont le bouton mène à `ateliers-representations/…/atelier_….html`. Deux garde-fous : la cible doit exister ; une page qui porte une activité (`class="activite"`) reste jugée. Aucune page modifiée.
+
+**Mesure.** `controle_regle4.py` : **3 écarts → 0** (84 pages jugées, conformes ; 37 écartées, chacune pour sa raison, dont les 3 panneaux). Banc `tests_controle_regle4.py` : **25 / 25**, dont quatre cas nouveaux — le panneau écarté, le panneau sans atelier refusé, la page « atelier_ » à activité jugée, le lien sans bouton qui ne fait pas un panneau.

@@ -66,6 +66,17 @@ l'entraînement avant la fin — exactement ce que Pascal reprochait le 30/08 :
 « le QCM est proposé presque sur toutes les pages, alors que toutes les
 compétences ne sont pas atteintes ».
 
+**Les panneaux vers un atelier** (15/11/2026, carte blanche de Pascal) : une
+page `atelier_*.html` rangée dans le dossier d'un code, hors des ateliers, qui
+mène par son bouton à l'atelier des représentations (`atelier_4e_besoin-…html`).
+Ce n'est pas une séquence : c'est le panneau qui y conduit. Celui de `5e_C3.3`
+fait 4 Ko et passe pour page-pointeur ; ceux de `4e_C1.3`, `3e_C3.1` et
+`4e_C3.1` pèsent 80 Ko parce qu'ils portent un rappel incrusté (« 🧠 Avant
+l'atelier »), et étaient accusés de ne pas clore. La clôture (« Prêt·e », Bonus,
+le bouton QCM) est dans l'atelier, que ce contrôle juge, lui. Garde-fous : la
+cible doit exister, et une page qui porte une activité (`class="activite"`)
+reste jugée.
+
 **Les exceptions nommées**, listées dans TOLEREES avec leur raison.
 
 Usage :
@@ -112,6 +123,10 @@ BONUS = re.compile(r"Bonus(?:\s|&nbsp;|<[^>]{0,120}>)*\(facultatif", re.I)
 #: `?codes=…` ou `#ancre` après `.html` : c'est toujours le lien vers le QCM (erreur n°6).
 LIEN_QCM = re.compile(r'<a\b[^>]*href="[^"]*qcm[^"]*\.html(?:[?#][^"]*)?"[^>]*>', re.I)
 NAV = re.compile(r"<nav\b[^>]*>.*?</nav>", re.I | re.S)
+#: le bouton d'un panneau vers l'atelier des représentations qu'il annonce
+VERS_ATELIER = re.compile(r'<a\b(?=[^>]*\bclass="[^"]*\bbtn\b)[^>]*\bhref="([^"#?]*ateliers-representations/'
+                          r'[^"#?]*/atelier_[^"#?/]*\.html)', re.I)
+ACTIVITE = re.compile(r'class="[^"]*\bactivite\b', re.I)
 BOUTON = re.compile(r'class="[^"]*\b(btn|button)\b', re.I)
 
 
@@ -146,6 +161,12 @@ def juger(chemin):
     if os.path.getsize(chemin) < POINTEUR:
         return None, "page-pointeur", ("%d octets : elle renvoie vers la ressource réelle"
                                        % os.path.getsize(chemin))
+    if (os.path.basename(rel).startswith("atelier_") and "ateliers-representations/" not in rel
+            and not ACTIVITE.search(texte)):
+        m = VERS_ATELIER.search(texte)
+        if m and os.path.isfile(os.path.normpath(os.path.join(os.path.dirname(chemin), m.group(1)))):
+            return None, "panneau vers un atelier", ("il mène à %s, qui close sur les deux blocs"
+                                                     % os.path.basename(m.group(1)))
     e = ETAPE.search(re.sub(r"<[^>]+>", " ", texte))
     if e and e.group(1) != e.group(2):
         return None, "étape d'une séquence en plusieurs pages", ("elle se déclare « page %s sur "
