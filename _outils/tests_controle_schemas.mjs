@@ -88,6 +88,23 @@ t('un cadre dans un autre : deux entités', R.inclus.entites === 2, String(R.inc
   t('--charge : la liste nomme le schéma et le marque ▲', /▲\s+10 ·/.test(texte) && texte.includes('charge.svg'), texte);
   fs.rmSync(seul, { recursive: true, force: true });
 }
+{
+  // data-illustration (audit du 15/11/2026, #721) : une illustration déclarée sort du score — dans un .svg comme dans
+  // une page — et la sortie la nomme ; la même figure sans la déclaration reste refusée.
+  const seul = fs.mkdtempSync(path.join(os.tmpdir(), 'schemas-illustration-'));
+  const jouer = () => { try { return [0, execFileSync('node', [path.join(ICI, 'controle_schemas.mjs'), seul], { encoding: 'utf8' })]; } catch (e) { return [e.status, String(e.stdout)]; } };
+  const declare = CAS.contact.replace('<svg ', '<svg data-illustration="essai : une frise, pas un schéma" ');
+  fs.writeFileSync(path.join(seul, 'frise.svg'), declare);
+  fs.writeFileSync(path.join(seul, 'page.html'), `<!doctype html><meta charset="utf-8"><body><figure>${declare}</figure></body>`);
+  fs.writeFileSync(path.join(seul, 'propre.svg'), CAS.propre);   // un vrai schéma, mesuré : sans lui, rien n'est lu (sortie 2, n°299)
+  let [code, texte] = jouer();
+  t('data-illustration : un .svg et une page déclarés sortent du score (sortie 0)', code === 0, String(code) + ' ' + texte);
+  t('data-illustration : la sortie nomme les 2 illustrations et leur raison', /2 illustration\(s\) déclarée\(s\)/.test(texte) && texte.includes('une frise, pas un schéma'), texte);
+  fs.writeFileSync(path.join(seul, 'frise.svg'), CAS.contact);
+  [code, texte] = jouer();
+  t('sans data-illustration, la même figure reste un ✘ contact (sortie 1)', code === 1 && texte.includes('contact'), String(code));
+  fs.rmSync(seul, { recursive: true, force: true });
+}
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`${ok} / ${ok + ko} tests réussis`);
 process.exit(ko ? 1 : 0);

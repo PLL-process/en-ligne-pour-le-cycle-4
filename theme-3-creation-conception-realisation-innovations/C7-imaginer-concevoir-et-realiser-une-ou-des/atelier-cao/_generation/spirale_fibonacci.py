@@ -63,7 +63,8 @@ couleurs = {55: "#61dafb", 34: "#81fba1", 21: "#ffd66b", 13: "#c68ef2", 8: "#ff9
 out = []
 vw, vh = MX * 2 + W * S, MY * 2 + H * S
 out.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {vw} {vh}" role="img" '
-           f'aria-labelledby="spirale-titre spirale-desc" class="spirale">')
+           f'aria-labelledby="spirale-titre spirale-desc" class="spirale"'
+           ' data-illustration="spirale d\'arts plastiques, pas un schéma technique">')
 out.append('<title id="spirale-titre">La spirale de Fibonacci construite sur les cotes du presse-papier</title>')
 out.append('<desc id="spirale-desc">Un rectangle de 89 sur 55 millimètres découpé en carrés de côtés 55, 34, 21, 13, 8, 5, 3, 2, 1 et 1 ; '
            'un quart de cercle dans chaque carré forme une spirale qui s’enroule vers le petit coin.</desc>')

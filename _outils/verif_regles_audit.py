@@ -714,6 +714,10 @@ def marque_du_bilan(src: str) -> tuple[int | None, str]:
     return None, ""
 
 
+#: « Page 2 sur 4 » — le même motif que `controle_regle4.py` (ETAPE), lu sur la page entière.
+ETAPE_PAGE = re.compile(r"Page\s+(\d+)\s+sur\s+(\d+)", re.I)
+
+
 def regle_301(src: str) -> tuple[str, str]:
     """n°301 — le bilan clôt la séquence ; un Bonus est un travail, il le précède.
 
@@ -734,7 +738,17 @@ def regle_301(src: str) -> tuple[str, str]:
         est mesuré par `audit_cloture_sequence.mjs`, qui lit le DOM.
       · la QUALITÉ d'un corrigé — qu'il traite la question posée, qu'il soit
         juste, qu'il soit utile. Cela se lit.
+
+    Une ÉTAPE d'une séquence en plusieurs pages (elle se déclare « Page N sur
+    M », N < M) est SANS OBJET : son bilan vit sur la page M, qui est jugée à
+    son tour. C'est l'exemption que `controle_regle4.py` applique déjà, avec le
+    même motif. Avant elle (audit du 15/11/2026, #721), les pages 1 à 3 de
+    `3e_C9.2` portaient un ✘ « aucun bilan » qui était leur définition même.
     """
+    etape = ETAPE_PAGE.search(re.sub(r"<[^>]+>", " ", _corps_lisible(src)))
+    if etape and int(etape.group(1)) < int(etape.group(2)):
+        return "SANS OBJET", ("étape d'une séquence en plusieurs pages (« page %s sur %s ») : "
+                              "le bilan se juge sur la dernière page" % etape.groups())
     ou_bilan, comment = marque_du_bilan(src)
     m_bonus = TITRE_BONUS.search(_corps_lisible(src))
 
