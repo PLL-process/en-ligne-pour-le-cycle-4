@@ -40,13 +40,13 @@ from playwright.async_api import async_playwright
 F = (pathlib.Path(__file__).resolve().parent / "sequence_3e_C1.1-C1.4_tsinghua_feux.html").as_uri()
 Q = (pathlib.Path(__file__).resolve().parent / "qcm_3e_C1.1-C1.4_tsinghua.html").as_uri()
 BON = {
- "be_1":"rend possible ce qui ne l'était pas du tout, et rend caduc un savoir-faire",
+ "be_1":"rend possible ce qui ne l'était pas du tout",
  "be_2":"elles ont la même unité, la même période et le même périmètre",
  "be_3":"appuie chaque affirmation sur un fait vérifiable, et nomme ce qu'il laisse de côté",
- "a1_1":"une amélioration : on fait mieux la même chose, avec le même savoir-faire",
- "a1_2":"rend possible ce qui ne l'était pas : voir la nuit, et sur un continent entier",
+ "a1_1":"une amélioration",
+ "a1_2":"rend possible ce qui ne l'était pas",
  "a1_3":"le métier change : le savoir-faire d'avant ne suffit plus",
- "a1_4":"pas toujours : des tours de guet fonctionnent encore, l'œil humain lève un doute qu'aucun capteur ne lève",
+ "a1_4":"pas toujours : les deux coexistent",
  "a1_5":"quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge",
  "a1_6":"une découverte devient une technique quand une capacité de fabrication ET un besoin la rencontrent",
  "a2_1":"ne sont pas comparables directement : ni la même unité, ni la même grandeur",
