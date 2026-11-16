@@ -72,7 +72,7 @@ Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C5-id
 
 | Fichier | Ce qu'il montre | Provenance | Droits |
 |---|---|---|---|
-| `lampadaire_en_pieces.html` | Le lampadaire de la cour en vue isométrique, 13 pièces numérotées et nommées ; un bouton l'ouvre (le coffret montre la batterie, le régulateur, la carte et l'interrupteur ; les pièces du haut s'écartent). | **Dessin original**, construit par programme (`_generation/lampadaire_en_pieces/build.mjs`), avec le kit Anatomy | Dessin : CC BY-NC-SA 4.0, Pascal Gouacide. Le code du kit, inclus dans la page : **licence MIT, © 2026 Ryan** (texte de la licence en tête du script de la page) |
+| `lampadaire_en_pieces.html` | Le lampadaire du parking en vue isométrique, 13 pièces numérotées et nommées ; un bouton l'ouvre (le coffret montre la batterie, le régulateur, la carte et l'interrupteur ; les pièces du haut s'écartent). Posée aussi dans la séquence (activité 1, sous le schéma annoté), dans un cadre replié. | **Dessin original**, construit par programme (`_generation/lampadaire_en_pieces/build.mjs`), avec le kit Anatomy | Dessin : CC BY-NC-SA 4.0, Pascal Gouacide. Le code du kit, inclus dans la page : **licence MIT, © 2026 Ryan** (texte de la licence en tête du script de la page) |
 | `lampadaire_fiche_A4.pdf` | La même figure en dessin expliqué A4 : ouverte, fermée en médaillon, la liste des pièces, les caractéristiques, trois étapes (le jour, la nuit, un passage). | Imprimée depuis la figure claire (`imprimer_fiche.mjs` : `scripts/print.mjs` du kit, mots passés en français, PDF par Chromium) | Comme la figure |
 
 - **Kit** : github.com/wheresryan22/anatomy, **commit audité `1482e84`** (skill `anatomy` de Pascal, 16/11/2026). Il n'est pas versé dans

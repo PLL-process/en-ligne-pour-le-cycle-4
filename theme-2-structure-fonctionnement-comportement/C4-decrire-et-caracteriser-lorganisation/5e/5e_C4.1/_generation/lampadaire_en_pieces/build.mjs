@@ -1,4 +1,4 @@
-// Le lampadaire de la cour, pièce par pièce : figure isométrique de 5e_C4.1 (skill « anatomy » de Pascal).
+// Le lampadaire du parking, pièce par pièce : figure isométrique de 5e_C4.1 (skill « anatomy » de Pascal).
 // Kit Anatomy © 2026 Ryan, licence MIT — github.com/wheresryan22/anatomy, commit audité 1482e84 (16/11/2026).
 // Le kit n'est pas versé dans le dépôt : il est lu dans ANATOMY_DIR (par défaut ~/.cache/anatomy-1482e84).
 //
@@ -70,7 +70,7 @@ const vis = (x, y, z, r = 0.45) => D([at([x, y, z])], { size: r });
 function pin(n, p, dx = 0, dy = 0, interne = false) {
   const [x, y] = at(p);
   return `<g class="num${interne ? " num-interne" : ""}" data-num="${n}" aria-hidden="true"><circle cx="${(x + dx).toFixed(1)}" cy="${(y + dy).toFixed(1)}" r="8.6"/>`
-    + `<text x="${(x + dx).toFixed(1)}" y="${(y + dy + 3.2).toFixed(1)}">${n}</text></g>`;
+    + `<text x="${(x + dx).toFixed(1)}" y="${(y + dy).toFixed(1)}">${n}</text></g>`;
 }
 const groupe = (id, corps, mouv) => `<g data-piece="${id}"${mouv ? ` data-m="${mouv.join(",")}"` : ""}>${corps}</g>`;
 
@@ -212,7 +212,10 @@ function panneau() {
 
 const STYLE_NUM = `<style>
 .iso-stage .num circle{fill:var(--iso-paper,#141414);stroke:currentColor;stroke-width:1}
-.iso-stage .num text{font:600 9.6px/1 ui-sans-serif,system-ui,sans-serif;text-anchor:middle;fill:currentColor}
+.iso-stage .num text{font:600 9.6px/1 ui-sans-serif,system-ui,sans-serif;text-anchor:middle;dominant-baseline:central;fill:currentColor}
+/* sur un téléphone, la figure tient en 280 à 340 px : pastilles et numéros grandis (l'écart minimal entre deux centres,
+   mesuré ouvert, est de 30,5 unités : deux pastilles de rayon 11,5 ne se touchent pas) */
+@media (max-width:480px){.iso-stage .num circle{r:11.5px}.iso-stage .num text{font-size:12.5px}}
 .iso-stage .num{color:var(--num,#e8e8e8)} .iso[data-theme="light"] .iso-stage .num,[data-theme="light"] .iso-stage .num{color:#151517}
 .iso-stage .num-interne{opacity:0;transition:opacity .4s ease-out} .iso-stage[data-ouvert] .num-interne{opacity:1}
 @media (prefers-reduced-motion:reduce){.iso-stage .num-interne{transition:none}}
@@ -220,7 +223,7 @@ const STYLE_NUM = `<style>
 
 const svg = k.figureSvg({
   width: W, height: H,
-  label: "Le lampadaire de la cour en vue isométrique, ses pièces numérotées de 1 à 13 : panneau solaire, bloc de LED, capteur de "
+  label: "Le lampadaire du parking en vue isométrique, ses pièces numérotées de 1 à 13 : panneau solaire, bloc de LED, capteur de "
     + "luminosité, bras, détecteur de mouvement, mât, coffret (batterie, régulateur de charge, carte programmable, interrupteur commandé), "
     + "câble et socle. Ouvert, le coffret montre ce qu'il contient et les pièces du haut s'écartent.",
   // l'intérieur du coffret est peint avant lui (caché, fermé) ; ouvert, il passe devant (voir le script)
@@ -246,7 +249,7 @@ const porteP = parts.find((p) => p.g === porteG);
 function ordre() { const d = porteP.v > 0.35; if (d === devant) return; devant = d; if (d) porteG.after(interieur); else coffretG.before(interieur); }
 function placer(p) { if (p.v < 0.001) p.g.removeAttribute("transform"); else p.g.setAttribute("transform", translateAlong(P, p.m.map((x) => x * p.v))); }
 function dire() {
-  const t = ouvert ? "Ouvert · 13 pièces" : "Fermé · tel que dans la cour";
+  const t = ouvert ? "Ouvert · 13 pièces" : "Fermé · tel que sur le parking";
   if (readout.textContent !== t) readout.textContent = t;
   bouton.textContent = ouvert ? "🔧 Refermer le lampadaire" : "🔧 Ouvrir le lampadaire";
   bouton.setAttribute("aria-pressed", ouvert ? "true" : "false");
@@ -276,14 +279,21 @@ bouton.addEventListener("click", basculer);
 stage.addEventListener("click", basculer);
 stage.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); basculer(); } });
 dire();
+// Posée dans la séquence par un cadre (activité 1) : la page le sait, cache ce qui ne sert qu'en page seule,
+// et donne sa hauteur à la séquence, qui la prend (pas de barre de défilement dans le cadre).
+if (parent !== window) {
+  document.documentElement.classList.add("dans-cadre");
+  const hauteur = () => parent.postMessage({ lampadaireIso: document.documentElement.scrollHeight }, "*");
+  new ResizeObserver(hauteur).observe(document.body);
+}
 `;
 
 const nomenclature = `<ol class="nomenclature">${PIECES.map((p) => `<li><b>${p.n}</b> <span><strong>${p.nom}</strong> : ${p.dit}</span></li>`).join("")}</ol>`;
 const corps = k.plateHtml({
   fig: "Fig 1",
-  title: "Le lampadaire de la cour",
+  title: "Le lampadaire du parking",
   hint: "Touche : il s'ouvre",
-  readout: "Fermé · tel que dans la cour",
+  readout: "Fermé · tel que sur le parking",
   keys: [],
   caption: "Le jour, le panneau solaire charge la batterie, par le régulateur de charge. La nuit, la carte met la LED en veille, faible ; "
     + "quand le détecteur de mouvement voit quelqu'un passer, elle la passe à pleine puissance. Le capteur de luminosité est sur la tête, "
@@ -311,13 +321,20 @@ const STYLE_PAGE = `<style>
 .iso-plate-corner,.iso-legend{color:var(--anatomy-text)}
 @media print{.ouvrir-l{display:none}}
 ${IMPRESSION_CLAIRE}
+/* dans le cadre de la séquence : son fond bleu nuit, le titre gardé pour les lecteurs d'écran, sans le lien de retour */
+html.dans-cadre,html.dans-cadre body{background:#050f24}
+.dans-cadre .iso-page{width:min(650px,100% - 8px);margin:4px auto 8px}
+.dans-cadre .titre{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dans-cadre .retour{display:none}
+/* sur un très petit écran, le titre du cadre chevaucherait « Fig 1 » : le titre de la page le dit déjà */
+@media (max-width:360px){.iso-plate-corner[data-corner="title"]{display:none}}
 </style>`;
 
 const pied = `<footer class="pied"><p class="retour"><a href="sequence_5e_C4.1-C4.8_lampadaire_intelligent.html">← Retour à la séquence du lampadaire</a> · `
   + `<a href="lampadaire_fiche_A4.pdf">📄 La fiche A4 à imprimer</a></p>`
   + `<p class="mentions">Figure faite avec le kit Anatomy © 2026 Ryan, licence MIT (github.com/wheresryan22/anatomy).</p></footer>`;
 
-const html = k.pageHtml({ title: "Le lampadaire de la cour, pièce par pièce", theme, body: `<h1 class="titre">Le lampadaire de la cour, pièce par pièce</h1>` + corps + nomenclature + pied, script: "/*! Kit Anatomy (github.com/wheresryan22/anatomy, commit 1482e84), inclus dans cette page sous sa licence :\n" + readFileSync(join(KIT, "LICENSE"), "utf8").replace(/\*\//g, "* /") + "*/\n" + kitScript() + live })
+const html = k.pageHtml({ title: "Le lampadaire du parking, pièce par pièce", theme, body: `<h1 class="titre">Le lampadaire du parking, pièce par pièce</h1>` + corps + nomenclature + pied, script: "/*! Kit Anatomy (github.com/wheresryan22/anatomy, commit 1482e84), inclus dans cette page sous sa licence :\n" + readFileSync(join(KIT, "LICENSE"), "utf8").replace(/\*\//g, "* /") + "*/\n" + kitScript() + live })
   .replace("<html lang=\"en\"", "<html lang=\"fr\"")
   .replace("</head>", STYLE_PAGE + "</head>");
 const TRAVAIL = process.env.ANATOMY_TRAVAIL || join(homedir(), ".cache", "anatomy-travail");
