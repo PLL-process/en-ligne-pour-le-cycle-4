@@ -6,6 +6,7 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
 | `Images/programme_entrees_sorties.svg` | SVG original (Fable) | image-objet : entrées/sorties à identifier (act. 1, QCM) | CC0 | ~5 Ko |
+| `Images/programme_entrees_sorties_muet.svg` | SVG original (Fable) | image-objet : entrées/sorties à identifier (act. 1, QCM) | CC0 | version **muette** de `programme_entrees_sorties.svg` (les six données en « ? »), affichée avec les questions de l'activité 1 — règle d'or n°331, 15/11/2026 ; la version complète est dans la correction |
 | `Images/algorigramme_alerte_graduee.svg` | SVG original (Fable) | image-objet : LA spécification à implémenter (act. 4, QCM) | CC0 | ~6 Ko |
 | `Images/plan_de_tests_jeux_essai.svg` | SVG original (Fable) | image-objet : plan de tests à lire, bug à diagnostiquer (act. 5, QCM) | CC0 | ~6 Ko |
 

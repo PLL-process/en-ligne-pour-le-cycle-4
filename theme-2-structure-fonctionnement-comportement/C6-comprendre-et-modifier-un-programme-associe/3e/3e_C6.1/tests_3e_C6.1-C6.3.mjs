@@ -313,8 +313,10 @@ ok(`21 · les ${liens.length} liens internes existent`, casses.length === 0,
 const svg = await p.$$eval('img[src$=".svg"], object[data$=".svg"]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('data')));
 const svgAbsents = svg.filter(s => !fs.existsSync(path.join(ICI, s)));
+// 4 depuis la vague n°331 (15/11/2026) : le schéma des entrées/sorties de l'activité 1 est affiché MUET avec ses
+// questions, et complet dans sa correction.
 ok(`22 · les ${svg.length} SVG référencés existent sur le disque`,
-   svg.length === 3 && svgAbsents.length === 0, svgAbsents.join(' · '));
+   svg.length === 4 && svgAbsents.length === 0, svgAbsents.join(' · '));
 
 const distantes = await p.$$eval('[src], link[href], object[data], iframe[src]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('href') || e.getAttribute('data'))
