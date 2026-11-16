@@ -79,6 +79,38 @@ d'autant.
 | 55 | `3e_C1.1` | 1451 → 1259 | 0 → 0 | 0 → 0 | 23 → 0 | livrée #728 — 15 captures du tableur et le Bonus repliés ; deux encadrés qui donnaient les réponses passés en aide ; la bonne réponse ne se devine plus à sa longueur ; 84 pourquoi avec leur étape suivante ; séance 1 (1 259) juste au-dessus : une activité de 50 min, définitions et neuf questions |
 | 56 | `3e_C3.1` | 1939 → 1181 | 0 → 0 | 0 → 0 | 19 → 0 | livrée #729 — les deux piqûres de rappel et le Bonus repliés ; la bonne réponse ne se devine plus à sa longueur (18 raccourcies, 18 leurres allongés) ; 78 pourquoi avec leur étape suivante ; chaque séance sous le repère |
 
+## Deuxième passe (15/11/2026)
+
+Décision de Pascal du 15/11/2026 : « une deuxième passe en commençant par les plus lourdes, sur tout avec tes nouveaux
+outils, ainsi tu pourras améliorer toutes les séquences ». Mesure de départ, sur `main` (56 séquences) : **1 094 questions
+vérifiées, dont 560 où la bonne réponse est la plus longue** (353 de plus de 10 signes : elle se devine à sa longueur) ;
+**1 296 mauvaises propositions sans « pourquoi »** ; 56 séances au-delà de 1 200 mots visibles.
+
+Ce que fait la passe, séquence par séquence, de la plus lourde à la plus légère :
+- **la bonne réponse ne se devine plus à sa longueur** : de préférence, c'est elle qui raccourcit (moins à lire) ; sa
+  justification reste dans la correction et dans le « pourquoi » des erreurs ; sinon, une proposition fausse s'allonge ;
+- **chaque mauvaise proposition a son « pourquoi »** (mode mission), sans dire la bonne réponse ;
+- ce qui ne sert qu'au besoin se replie, à la source quand c'est une incrustation d'atelier ; les exercices d'atelier
+  restent à découvert (décision de Pascal du 15/11/2026 sur `5e_C2.1`) ;
+- l'aération à zéro, y compris dans les incrustations, corrigées à leur source.
+
+Colonnes : séance la plus lourde (mots visibles) ; bonnes réponses plus longues de 10 signes ou plus que toutes les
+autres ; mauvaises propositions sans « pourquoi ». Avant → après.
+
+| N° | Séquence | Séance la plus lourde | Bonne réponse la plus longue | Sans pourquoi | État |
+|---|---|---|---|---|---|
+| 2.1 | `5e_C4.1` | 2171 → 2171 | 12 → 0 | 8 → 0 | lot 1, livré #739 — 12 questions rééquilibrées ; les trois lectures fléchées du FAST aérées, à la source et dans l'atelier et le cahier de 5e ; séance 6 inchangée (positionnement sur 8 compétences, FAST incrusté) |
+| 2.2 | `3e_C7.1` | 2095 → 2095 | 0 → 0 | 35 → 0 | lot 1, livré #739 — 35 pourquoi ; la question du seuil disait « à partir de 28 °C » quand la LED s'allume au-dessus : « au-dessus de » |
+| 2.3 | `5e_C2.1` | 2090 → 2090 | 19 → 0 | 66 → 0 | lot 1, livré #739 — 19 questions rééquilibrées, 66 pourquoi ; séances 1 et 2 : les exercices d'atelier gardés |
+| 2.4 | `5e_C3.1` | 1874 → 1823 | 21 → 0 | 90 → 0 | lot 1, livré #739 — 22 questions rééquilibrées, 90 pourquoi |
+| 2.5 | `5e_C1.2` | 1844 → 1803 | 20 → 0 | 66 → 0 | lot 1, livré #739 — 20 questions rééquilibrées, 66 pourquoi ; séance 4 : le FAST du freinage |
+| 2.6 | `4e_C1.1` | 1698 → 1698 | 22 → 0 | 69 → 0 | lot 1, livré #739 — 22 questions rééquilibrées, 69 pourquoi ; séance 5 : deux exercices d'atelier |
+| 2.7 | `4e_C7.5` | 1576 → 1576 | 0 → 0 | 30 → 0 | lot 2, livré #740 — les 30 pourquoi de la chaîne à compléter ; la page à jour de son fichier de mission |
+| 2.8 | `4e_C2.1` | 1477 → 1451 | 19 → 0 | 69 → 0 | lot 2, livré #740 — 21 questions rééquilibrées, 69 pourquoi |
+| 2.9 | `3e_C2.1` | 1362 → 1363 | 18 → 0 | 63 → 0 | lot 2, livré #740 — 20 questions rééquilibrées, 63 pourquoi |
+
+Les lignes 2.1 à 2.6 sont mesurées avant la vague n°335 du thème 1 (#737), les lignes 2.7 à 2.9 après : ses énoncés en questions ajoutent quelques mots. La remesure du lot 1 après la fusion est au journal.
+
 ## Notes par séquence
 
 - **5e_C1.5** (le compte du club), 08/11/2026 : ancien gabarit → gabarit commun (`migrer_gabarit_306.py`, 25 listes →

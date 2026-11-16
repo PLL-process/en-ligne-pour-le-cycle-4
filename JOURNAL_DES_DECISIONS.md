@@ -31914,3 +31914,36 @@ Le gras, les termes du lexique et les espaces insécables sont gardés ; les pro
 **Vérifications.** `3e_C6.1` : bancs 35 / 35 (le compte des SVG passe à 5 : le muet et le complet) et 34 / 34. `3e_C9.2` : 167 / 167 (dont l'union des champs des quatre pages, identique à la page tout-en-un) et 34 / 34. Mode mission sans refus (`3e_C6.1`, la page tout-en-un et la page 4 de `3e_C9.2`). `verif_regles_audit.py` 0 ✘ ; `audit_aeration.py --strict` 0 ; `controle_schemas.mjs` 0 ✘ sur `3e_C6.1`. Capture de l'activité 5 à 1 280 px : le plan de tests à gauche, les questions à droite.
 
 **Ce qui reste, hors de cette vague.** Sous l'activité 5 de `3e_C6.1`, l'encadré « À retenir », visible, dit « jeux d'essai visant les valeurs frontières » : il répond à la question « pourquoi 49/50/51 ? ». C'est la forme de tout le gabarit (l'encadré suit l'activité, ouvert) ; le décider vaut pour toutes les séquences — question pour Pascal.
+
+## 15/11/2026 — Révision des trois thèmes, deuxième passe, lot 1 : `5e_C4.1`, `3e_C7.1`, `5e_C2.1`, `5e_C3.1`, `5e_C1.2`, `4e_C1.1`
+
+**La décision.** Pascal, le 15/11/2026 : « une deuxième passe en commençant par les plus lourdes, sur tout avec tes nouveaux outils, ainsi tu pourras améliorer toutes les séquences ». Le suivi (`docs/revision/SUIVI_REVISION.md`, « Deuxième passe ») dit la méthode et la mesure de départ : sur les 56 séquences de `main`, 560 questions sur 1 094 où la bonne réponse est la plus longue (353 de plus de 10 signes) et 1 296 mauvaises propositions sans « pourquoi ».
+
+**Ce qui est fait, sur les six plus lourdes qui avaient de quoi gagner** (`4e_C9.1`, la plus lourde, n'a que des écarts de 1 à 5 signes et tous ses pourquoi : elle n'est pas touchée) :
+- **la bonne réponse ne se devine plus à sa longueur** : 115 questions rééquilibrées. Le plus souvent, c'est la bonne réponse qui raccourcit — « une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen » devient « une fonction technique » — et sa justification reste dans la correction et dans le pourquoi des erreurs ; sinon, une proposition fausse s'allonge. Les vérificateurs des pages et les bancs suivent les nouveaux textes (outil de la passe, qui fait aussi suivre le fichier du mode mission) ;
+- **chaque mauvaise proposition a son pourquoi** : 334 écrits, sans dire la bonne réponse (`mission_<lot>.json`, `enrichir.py`), dont les 8 lignes des essais du lampadaire (`5e_C4.1`) ;
+- **une erreur de contenu** : `3e_C7.1`, « À partir de quelle température la LED s'allume-t-elle ? » attendait 28 °C, alors que le simulateur (pas de 1 °C) allume la LED au-dessus de 28, donc à 29. La question dit maintenant « Au-dessus de quelle température ».
+- **Aération** : les trois lectures fléchées du FAST du lampadaire (« Pourquoi deux piles ? → je lis vers la gauche → … ») passent en lignes, une flèche par ligne, à leur source (`donnees_fast.py`) et à l'identique dans l'atelier et le cahier de 5e ; le générateur, rejoué dans une copie à part, rend les mêmes pages. `incrustations.py --verifier --seq 5e_C4.1` : à jour.
+
+**Mesure.** Séance la plus lourde : 2 171 · 2 095 · 2 090 · 1 874 · 1 844 · 1 698 → 2 171 · 2 095 · 2 090 · **1 823** · **1 803** · 1 698. Remesuré après la fusion de la vague n°335 du thème 1 (#737), dont les énoncés en questions ajoutent quelques mots : 2 232 · 2 118 · 2 091 · 1 880 · 1 860 · 1 732 → 2 232 · 2 118 · 2 091 · **1 829** · **1 819** · 1 732. Bonnes réponses plus longues de 10 signes ou plus : 94 → 0 ; sans pourquoi : 334 → 0. Bancs : `5e_C4.1` 65 / 65 et 34 / 34 ; `3e_C7.1` 82 / 82 et 34 / 34 ; `5e_C2.1` 152 / 152 et 34 / 34 ; `5e_C3.1` 35 / 35 et 27 / 27 ; `5e_C1.2` 50 / 50 et 34 / 34 ; `4e_C1.1` 71 / 71 et 34 / 34. Mode mission : les six pages jouées écran par écran, aucun refus. Contrôles du site, sur les deux lots réunis (lot 2, #740, qui contient celui-ci) : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘).
+
+**Après la fusion de la vague n°335 du thème 1 (#737, 16/11).** Les conflits venaient de questions dont le lot changeait les propositions et la vague l'énoncé : chaque question garde les propositions et les pourquoi du lot, et prend l'énoncé de la vague — les légendes des six pages sont toutes celles de `main`, sauf la question du seuil de `3e_C7.1` (voulue). Le cahier de 5e est reconstruit hors du dépôt sur les sources fusionnées ; `incrustations.py --verifier` : tout à jour. Bancs rejoués : mêmes résultats ; mode mission : les six pages jouées écran par écran, aucun refus.
+
+**Ce qui reste.** Les séances les plus lourdes de ces six séquences portent un exercice d'atelier (la bête à cornes, la pieuvre, le FAST, les croquis), gardé à découvert par décision de Pascal ; la passe n'y retire rien. Les gains de lecture viennent des bonnes réponses raccourcies (−51 et −41 mots sur les séances les plus lourdes de `5e_C3.1` et `5e_C1.2`).
+
+## 16/11/2026 — Révision des trois thèmes, deuxième passe, lot 2 : `4e_C7.5`, `4e_C2.1`, `3e_C2.1`
+
+**La décision.** La même que le lot 1 : Pascal, le 15/11/2026, « une deuxième passe en commençant par les plus lourdes, sur tout avec tes nouveaux outils ». Le lot 2 prend les trois suivantes dans l'ordre du suivi, sur l'état de `main` après la vague n°335 du thème 1 (#737) et le lot 1 (#739), qu'il contient.
+
+**Ce qui est fait.**
+- **`4e_C7.5`** (le jardin incomplet) : les 30 mauvaises propositions de la chaîne à compléter reçoivent leur pourquoi, sans dire la bonne réponse. La page était en retard sur son fichier de mission (`enrichir.py --verifier` : ✘ sur `main`, relevé le 15/11) : elle est à jour.
+- **`4e_C2.1`** (la borne de Hangzhou) : 21 questions rééquilibrées — « tout ce qui, à l'extérieur de l'objet, entre en relation avec lui » devient « ce qui, hors de l'objet, entre en relation avec lui », et « chacune des pièces qui composent l'objet » s'allonge d'« une à une » ; 69 pourquoi.
+- **`3e_C2.1`** (la borne de Pékin) : 20 questions rééquilibrées, 63 pourquoi.
+- Les vérificateurs des pages suivent les nouveaux textes ; les énoncés de la n°335 sont gardés tels quels (vérifié, question par question, contre la vague du thème 1).
+
+**Mesure** (avec les énoncés de la n°335). Séance la plus lourde : 1 576 · 1 477 · 1 362 → 1 576 · **1 451** · 1 363. Bonnes réponses plus longues de 10 signes ou plus que toutes les autres : 37 → 0. Mauvaises propositions sans pourquoi : 162 → 0.
+
+**Vérifications.**
+- Les bancs des trois lots : `4e_C7.5` 41 / 41, 32 / 32 et 34 / 34 ; `4e_C2.1` et `3e_C2.1` 34 / 34. Les bancs Python de `4e_C2.1` (62 / 65) et `3e_C2.1` (55 / 58) ont **les mêmes trois échecs que `main`**, dans des fichiers que le lot ne touche pas (la légende des badges, n°298 ; les liens des deux synthèses).
+- Mode mission : les trois pages jouées écran par écran, aucun refus ; chacune à jour de son fichier de mission (`enrichir.py --verifier`).
+- Contrôles du site, sur les deux lots réunis : les 25 sont verts — les 17 rapides et les 8 longs (squelette, impression, verrous, hors ligne, contraste des liens, indices des QCM, accessibilité de la page, schémas : 0 ✘ sur le lot de `4e_C2.1`).
