@@ -50,7 +50,8 @@ IMPERATIFS = (
     "repère repere écris ecris nomme dis relève releve calcule compare identifie prédis predis reporte vérifie verifie "
     "explique justifie numérote numerote ordonne mets remets pose lis observe estime mesure note souligne entoure "
     "décide decide tranche corrige retrouve traduis cherche propose barre déduis deduis devine attribue rattache "
-    "sépare separe trie raye recopie suis teste exécute execute imagine situe localise"
+    "sépare separe trie raye recopie suis teste exécute execute imagine situe localise relis regarde clique ouvre "
+    "rédige redige cite dessine réponds reponds"
 ).split()
 CLES = ("qcm-cles", "cles-grille")  # le bloc des réponses lettrées d'une grille
 NUMEROTATION = re.compile(r"^[\s\W\d_]*?(?:[a-z]\)|\d+[.)°]|[①-⑳]|▢\s*\d+|q\d+|question\s+\d+)?[\s\W_]*", re.I)

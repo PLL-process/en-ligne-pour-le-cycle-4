@@ -278,7 +278,7 @@ E_MOTS = exercice_mots(
     "bc-m5", "mots", "5e_C3.3", "Les mots de référence de la bête à cornes", "Pour commencer",
     "le vélo-cargo", "le vélo-cargo de Léa",
     "dis quelle est la matière d'œuvre du vélo-cargo de Léa, qui emmène ses deux enfants et ses courses en ville",
-    [choix_objet("mo", "Le vélo-cargo de Léa emmène ses deux enfants et ses courses en ville. Sa <b>matière d'œuvre</b>, c'est…",
+    [choix_objet("mo", "Le vélo-cargo de Léa emmène ses deux enfants et ses courses en ville. Quelle est sa <b>matière d'œuvre</b>&nbsp;?",
                  [("enfants", "ses deux enfants et ses courses, que le vélo-cargo déplace"),
                   ("lea", "Léa, qui pédale et décide du trajet"),
                   ("acier", "l'acier et l'aluminium dont le vélo-cargo est fait"),
@@ -355,7 +355,7 @@ R_ALERTE = exercice_mots(
     "bc-m3", "rappel", "3e_C3.1", "Les mots de référence, sur l'alerte cyclonique", "🧠 Rappel",
     "l'alerte", "le projet d'alerte cyclonique",
     CONSIGNE_RAPPEL % "le projet d'alerte cyclonique de Sainte-Luce",
-    [choix_objet("mo", "Pour l'alerte cyclonique, les habitants du quartier sont dans les deux cases du haut. Ils sont donc…",
+    [choix_objet("mo", "Pour l'alerte cyclonique, les habitants du quartier sont dans les deux cases du haut. Que sont-ils donc&nbsp;?",
                  [("deux", "à la fois l'utilisateur et la matière d'œuvre&nbsp;: l'alerte les sert en agissant sur eux"),
                   ("util", "seulement l'utilisateur&nbsp;: une personne ne peut pas être une matière d'œuvre"),
                   ("mo", "seulement la matière d'œuvre&nbsp;: l'utilisateur, c'est la commune qui paie"),
@@ -845,7 +845,7 @@ E4 = dict(
              "changé d'objet.</p>",
     critere="quatre comparaisons justes, un but qui dit « même sans la gardienne » et « sans gaspiller l'eau » sans nommer de "
             "solution, et la bonne raison de l'évolution.",
-    widgets=[dict(type="classer", name="compare",
+    widgets=[dict(type="classer", name="compare", question="%s&nbsp;: la même dans les deux schémas, ou pas&nbsp;?",
                   intro='<figure class="figure schema-vivant">' + BAC_ARROSAGE +
                         '<figcaption>Après&nbsp;: la bête à cornes du système d\'arrosage connecté. Ton but s\'écrit sur la ligne '
                         'pointillée.</figcaption></figure>',
@@ -943,7 +943,7 @@ E5 = dict(
              "qui réponde à ce besoin</b>, et laisse celles qui ne le servent pas. Puis <b>relie</b> trois d'entre elles à la "
              "partie du besoin qu'elles servent.</p>",
     critere="les huit cases justes, et chaque caractéristique reliée à la bonne partie du besoin.",
-    widgets=[dict(type="cases", name="carac", legende="Les caractéristiques à prendre en compte pour choisir le système",
+    widgets=[dict(type="cases", name="carac", legende="Coche les caractéristiques à prendre en compte pour choisir le système",
                   options=[("autonomie", "l'autonomie&nbsp;: combien de jours il arrose seul, sans que personne n'intervienne"),
                            ("eau", "la consommation d'eau par jour, en litres"),
                            ("couleur", "la couleur du boîtier"),

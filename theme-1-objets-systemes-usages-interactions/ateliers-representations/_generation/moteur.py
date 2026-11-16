@@ -191,8 +191,10 @@ class Rendu:
             name = self.nom("%s_%d" % (w["name"], i))
             items.append({"name": name, "bonne": bonne, "indice": indice})
             opts = self.options_grille(name, w["categories"]) if grille else self.options(name, w["categories"])
+            # règle d'or n°335 : hors grille, chaque item porte sa question (le gabarit `question` du widget)
+            leg = w["question"] % lib if (w.get("question") and not grille and "?" not in lib) else lib
             h.append('<fieldset class="qcm-groupe%s"><legend>%s <span class="encoche" data-pour="%s"></span></legend>%s</fieldset>'
-                     % (" qcm-grille" if grille else "", lib, name, opts))
+                     % (" qcm-grille" if grille else "", leg, name, opts))
         self.defs.append({"type": "classer", "items": items})
         return "".join(h)
 
@@ -246,8 +248,10 @@ class Rendu:
         for s in w["slots"]:
             name = self.nom(s["name"])
             defs.append({"name": name, "bonnes": s["bonnes"], "groupe": s.get("groupe"), "indice": s.get("indice")})
+            # règle d'or n°335 (15/11/2026) : une consigne par question — chaque case dit ce qu'on y pose
+            leg = s["legende"] if "?" in s["legende"] else (s.get("question") or w.get("question") or "%s&nbsp;: quelle étiquette y poses-tu&nbsp;?") % s["legende"]
             h.append('<fieldset class="qcm-groupe"><legend>%s <span class="encoche" data-pour="%s"></span></legend>%s</fieldset>'
-                     % (s["legende"], name, self.options(name, [(o, o) for o in s["options"]], miroir=s.get("cible"))))
+                     % (leg, name, self.options(name, [(o, o) for o in s["options"]], miroir=s.get("cible"))))
         self.defs.append({"type": "slots", "slots": defs})
         return "".join(h)
 
@@ -386,7 +390,7 @@ class Rendu:
              '(ce que l\'on voit, où, avec quelles légendes)</label>' % name,
              '<textarea id="%s_desc" name="%s_desc" rows="3"></textarea>' % (name, name),
              self.etayage(["Au centre de mon croquis, on voit …", "Les légendes nomment …", "La flèche montre …"]),
-             '<fieldset class="qcm-groupe"><legend>Je relis mon croquis&nbsp;: je coche ce qui y est vraiment</legend><div class="options">']
+             '<fieldset class="qcm-groupe"><legend>Relis ton croquis&nbsp;: coche ce qui y est vraiment.</legend><div class="options">']
         for i, c in enumerate(w["checklist"]):
             ident = "%s_check-%d" % (name, i)
             h.append('<label class="option" for="%s"><input type="checkbox" id="%s" name="%s_check" value="%d"><span>%s</span></label>'
@@ -818,7 +822,7 @@ def cloture(at, niv, chemins):
              'Ce n\'est pas une note&nbsp;: c\'est ce qui t\'aide, toi et ton professeur, à savoir quoi reprendre.</p>')
     for c in N["codes"]:
         name = "pos_%s" % c.replace(".", "_")
-        h.append('<fieldset class="qcm-groupe"><legend>%s <span class="note">(%s)</span></legend><div class="options">'
+        h.append('<fieldset class="qcm-groupe"><legend>%s <span class="note">(%s)</span>&nbsp;: où en suis-je&nbsp;?</legend><div class="options">'
                  % (avec_sigles(formulation(c)), e(c)))
         for j, niveau in enumerate(LSU):
             ident = "%s__%s-%d" % (pid, name, j)
