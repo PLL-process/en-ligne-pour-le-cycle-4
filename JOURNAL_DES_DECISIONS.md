@@ -32380,3 +32380,39 @@ nombre par code ne changent pas.
 - Vérifications : `verif_qcm_coherence` (3 QCM), `controle_banque_qcm`, `controle_effectifs_qcm`,
   `controle_entete_qcm`, `controle_longueurs`, `controle_indices_qcm`, `controle_unites`, `controle_medias`,
   `controle_liens` : verts ; bancs : QCM du lampadaire 25 / 25, Book Train 39 / 39, station 23 / 23.
+
+## 17/11/2026 — 5e_C2.1, la bête à cornes : la forme sous les yeux, une feuille de brouillon, l'ellipse dite « ovale »
+
+Trois remarques de Pascal, le 17/11/2026, en relisant `5e_C2.1` (Shenzhen) en mode mission, activité 1 :
+- « Lors de la capture d'image, il y aurait certainement dû avoir la représentation de la bête à cornes. » L'écran de
+  départ de l'activité annonçait « un schéma qui fait penser à une tête de taureau » sans le montrer.
+- « L'élève n'a pas de cahier. J'aimerais plutôt dire : sur une feuille de brouillon. »
+- « Écris son nom dans l'ellipse du centre » : « il faudrait peut-être préciser, puisque l'élève ne connaît pas le mot
+  ellipse, la forme ovale, mais toujours garder en avant-plan le mot ellipse ».
+
+Ce qui change, sur la page :
+- **La forme vide de la bête à cornes sur l'écran de départ** : le gabarit de Pascal (deux ellipses, la corne qui
+  passe sur le haut de l'ellipse du centre, la flèche, le rectangle), **sans** question ni mot de référence — ce sont
+  eux que les écrans de a) font placer (règle n°331). La légende dit la forme, une partie par ligne, et nomme
+  l'ellipse : « deux ellipses (des formes ovales) ». Elle ne se montre qu'en mode mission (`ms-seul`) : en page
+  complète, le même gabarit suit de quelques lignes. La classe `consigne` la garde sur l'écran de départ : le mode
+  mission ne la repose pas sur les écrans de question, qui ont déjà leur bête à cornes.
+- **« Sur ton cahier » → « sur une feuille de brouillon »**, aux huit endroits de la page : la fiche de l'activité,
+  les quatre temps, l'encadré (📓 → 📝), la consigne et la case de d) (« Je l'ai dessinée sur ma feuille de
+  brouillon » ; l'identifiant `bac_d_cahier` reste, pour garder les sauvegardes), la fiche papier, le critère de
+  réussite, le Bonus, et les messages du vérificateur. La synthèse professeur et la fiche pédagogique suivent.
+  « Tout effacer… dans ton cahier » reste : il s'agit du cahier des représentations, une page du site.
+- **« ellipse » garde la première place, « la forme ovale » l'accompagne** la première fois que le mot paraît dans
+  chaque partie : a) (« Au-dessus de l'ellipse (la forme ovale) en haut à gauche »), le second temps de a), d)
+  (« Écris son nom dans l'ellipse du centre (la forme ovale, sous la corne) »), la fiche papier, et la séance 2 (le
+  diagramme pieuvre). Le mot entre au lexique de la séquence (séance 1, source TLFi).
+
+Vérifications : banc de la séquence 152 / 152 ; n°311 34 / 34 ; mode mission joué écran par écran, aucun refus,
+66 / 66 pourquoi ; la figure se voit sur l'écran de départ seulement (écrans 7 à 12 : non), ni en page complète ni à
+l'impression ; aucune erreur JavaScript ; regardée à 1 280 et 390 px. Schémas : la nouvelle figure sans défaut (les
+12 ⚠ « serré » sont ceux des diagrammes pieuvre, d'avant). Aération, schéma sous les yeux, règles visibles, liens,
+sigles, unités : verts ; `verif_regles_audit.py` 0 ✘ ; fiche papier : 4 fiches, rien à refuser. Charge de la séance 1
+en page complète : 2 091 → 2 113 mots visibles (les gloses ; la figure, réservée au mode mission, n'y compte pas).
+
+Reste, proposé à Pascal : la même chose sur le reste du site (« cahier » dans une quarantaine de pages, « ellipse »
+dans les ateliers et les séquences de 3e et 4e).

@@ -447,12 +447,12 @@ with sync_playwright() as p:
       and float(pg.get_attribute('#bac_d .bac-miroir[data-pour="bac_d_quoi"]', "font-size")) < 30
       and [tuple(x) for x in pg.evaluate(JS_GABARIT, "bac_d")["e"]] == GABARIT["ellipse"])
     pg.fill("#bac_d_quoi", "ses livres et ses cahiers")
-    t("d) la consigne dit où dessiner : « Dessine-la à main levée sur ton cahier »",
-      "Dessine-la à main levée sur ton cahier" in pg.inner_text("#activite-bac"))
+    t("d) la consigne dit où dessiner : « Dessine-la à main levée sur une feuille de brouillon » (l'élève n'a pas de cahier, 17/11/2026)",
+      "Dessine-la à main levée sur une feuille de brouillon" in pg.inner_text("#activite-bac"))
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(100)
     t("activité 1 : non validée tant que le vélo-cargo (b) n'est pas réussi et le dessin pas déclaré",
-      "vélo-cargo" in pg.inner_text("#fb1") and "cahier" in pg.inner_text("#fb1") and not pg.evaluate("!!window.__valid[1]"))
+      "vélo-cargo" in pg.inner_text("#fb1") and "feuille de brouillon" in pg.inner_text("#fb1") and not pg.evaluate("!!window.__valid[1]"))
     for nom, v in (("qui", "sert"), ("quoi", "deplace"), ("but", "but")):
         pg.check('#bc_5e_e1 input[name="bc_5e_e1__%s"][value="%s"]' % (nom, v))
     pg.click("#bc_5e_e1 button.verifier")

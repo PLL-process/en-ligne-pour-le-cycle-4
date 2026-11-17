@@ -44,9 +44,9 @@ l'objet, il est dans ce qui l'entoure.**
      le fabricant, le vélo) ; sur quoi ? le vélo (pièges : l'usager, le trottoir, la pluie) ; le but
      (pièges : « verrouiller le vélo », fonction technique — le piège central ; la solution ; une phrase
      avec un sujet ; une contrainte) ;
-   - d) **sa bête à cornes, à l'écran puis sur le cahier** (~15 min) : un objet du collège ; le but est
+   - d) **sa bête à cornes, à l'écran puis sur une feuille de brouillon** (~15 min) : un objet du collège ; le but est
      vérifié sur trois critères (cases du haut remplies, verbe à l'infinitif, aucune solution), puis
-     l'élève la dessine à main levée sur son cahier et le déclare. La fiche imprimée donne un cadre vide.
+     l'élève la dessine à main levée sur une feuille de brouillon et le déclare. La fiche imprimée donne un cadre vide.
 
 **Séance 2 — Recenser** (≈ 47 min)
 
@@ -132,7 +132,7 @@ dans un environnement numérique, et le conserve d'une séance à l'autre.
 
 Mode essentiel (n°29) · versions étayées pour les **8 productions écrites** (n°31), qui donnent la
 structure de la phrase sans baisser l'exigence · bête à cornes à menus posés dans le schéma, et à dessiner
-sur le cahier (séance 1) · « Entoure » faisable à l'écran, au clavier et au doigt · bandeau de tâches par séance (n°30) · billet
+sur une feuille de brouillon (séance 1) · « Entoure » faisable à l'écran, au clavier et au doigt · bandeau de tâches par séance (n°30) · billet
 d'entrée sans note (n°26) · hors ligne intégral (n°40) · exercices en listes déroulantes (DYS).
 
 ## Honnêteté sur les données
