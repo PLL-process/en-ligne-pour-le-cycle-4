@@ -1411,7 +1411,15 @@ function montrer(haut){
   if (!G.onglet){ var bout = k === ecrans.length - 1 && !voisine(1); $$(".page-suivante").forEach(function(x){ x.classList.toggle("ms-montre", bout && !x.closest(G.panneau)); }); }
   M.loin[panneau.id] = Math.max(M.loin[panneau.id] || 0, k);
   barre(); M.k[panneau.id] = k; ecrire();
-  if (haut){ var y = Math.max(0, ancre.getBoundingClientRect().top + window.scrollY - 52); try { window.scrollTo({ top:y, behavior:"instant" }); } catch (e) { window.scrollTo(0, y); } }
+  /* l'écran qui ouvre la séquence commence par son ouverture dépliée — « 🎯 Avant de commencer : trois choses à lire »
+     (n°337), la situation, la problématique — et non par la tête de la mission, plus bas : l'élève lit avant de faire
+     (17/11/2026 ; avant, ce premier écran défilait de 3 000 à 5 500 px au-delà de l'ouverture). Repliée (« 📖 Rappel »,
+     dès la séance 2), l'ouverture ne tient qu'une ligne : l'écran commence à la tête de la mission, comme avant.
+     Une page sans volet d'ouverture (les pages engendrées de 3e_C9.2) : la carte seule, à la première séance de la page. */
+  var ouvr = $("#ouverture"), carte = $("#trois-lignes"), premier = panneau === $(G.panneau);
+  var debut = (ouvr && ouvr.open && ouvr.offsetParent) ? ouvr : (!ouvr && premier && carte && carte.offsetParent) ? carte : null;
+  var cible = (s.ouverture && debut) ? debut : ancre;
+  if (haut){ var y = Math.max(0, cible.getBoundingClientRect().top + window.scrollY - 52); try { window.scrollTo({ top:y, behavior:"instant" }); } catch (e) { window.scrollTo(0, y); } }
 }
 function aller(j){
   if (j < 0){ var av = voisine(-1); if (av){ M.k[av] = 1e9; ouvrir(av); } return; }

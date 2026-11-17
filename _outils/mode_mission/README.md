@@ -7,6 +7,11 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 
 ## Ce que le bloc fait
 
+- **Commence par lire** : le premier écran de la séquence s'ouvre en haut de l'ouverture dépliée — « 🎯 Avant de
+  commencer : trois choses à lire » (règle d'or n°337), la situation, la problématique —, et non à la tête de la
+  mission, plus bas (17/11/2026 : avant, ce premier écran défilait de 3 000 à 5 500 px au-delà de l'ouverture, et
+  l'élève ne lisait pas la carte). Repliée (« 📖 Rappel », dès la séance 2), l'ouverture ne tient qu'une ligne :
+  l'écran commence à la tête de la mission. Un élève qui reprend plus loin retrouve son écran.
 - **Découpe** chaque séance en écrans : la séance (et la situation de départ) ; pour chaque activité l'atelier
   incrusté, le départ (objectif, ressources, consigne), puis **une question par écran** — chacune porte sa propre
   consigne, une à la fois (règle d'or n°335), et montre la ressource de l'activité (schéma, document), ouverte par

@@ -76,6 +76,19 @@ try:
 except trois_lignes.Refus:
     cas("une page sans volet #ouverture est refusée", True)
 cas("une page sans carte est jugée", trois_lignes.juger(SEQ) == ["pas de carte « Avant de commencer »"])
+tmp = tempfile.mkdtemp()
+try:
+    suite = '<html><head><meta name="sequence-sans-onglets" content="engendrée"></head><body><!-- mode-mission v1 : début --></body></html>'
+    open(os.path.join(tmp, "sequence_x_1.html"), "w").write(SEQ)
+    open(os.path.join(tmp, "sequence_x_2.html"), "w").write(suite)
+    import io, contextlib
+    f = io.StringIO()
+    with contextlib.redirect_stdout(f):
+        trois_lignes.etat(tmp, False)
+    cas("--etat : la suite d'une séquence découpée n'est pas comptée à poser",
+        "1 séquence(s) lues" in f.getvalue() and "1 page(s) de suite" in f.getvalue(), f.getvalue())
+finally:
+    shutil.rmtree(tmp)
 
 print("qcm_aides/poser.py")
 QCM = os.path.join(DEPOT, "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/5e/5e_C2.1/qcm_5e_C2_shenzhen_station_velos.html")

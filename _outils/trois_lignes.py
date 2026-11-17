@@ -21,7 +21,9 @@ CE QUE FAIT L'OUTIL
   --verifier <page> <données.json> dit si la carte de la page est celle des données (0 / 1).
   --etat [--strict] [racine]      mesure les séquences du dépôt (pages `sequence…` qui portent le mode mission) : la
                                   carte est là, en tête de l'ouverture (avant la barre d'onglets), avec ses trois
-                                  rubriques, chacune de 1 à 3 lignes et de 40 mots au plus. ⚠ par défaut (sortie 0 :
+                                  rubriques, chacune de 1 à 3 lignes et de 40 mots au plus. Une page engendrée qui
+                                  continue une séquence découpée (`sequence-sans-onglets`, sans situation : les pages
+                                  2 à 4 de 3e_C9.2) n'en porte pas : la carte est sur la première. ⚠ par défaut (sortie 0 :
                                   la généralisation est en cours) ; --strict sort à 1 sur le premier manque.
 Le QCM a sa propre carte, posée par `_outils/qcm_aides/poser.py` (« ce que tu vas revoir »).
 
@@ -118,7 +120,7 @@ def juger(s: str):
 
 
 def etat(racine: str, strict: bool) -> int:
-    lues, manques = 0, []
+    lues, manques, suites = 0, [], 0
     for d, _, fs in os.walk(racine):
         if "_archive" in d or "/." in d.replace(os.sep, "/") or "node_modules" in d:
             continue
@@ -129,6 +131,9 @@ def etat(racine: str, strict: bool) -> int:
             s = open(p, encoding="utf-8").read()
             if "mode-mission v1" not in s:
                 continue
+            if 'name="sequence-sans-onglets"' in s and "Situation déclenchante" not in s:
+                suites += 1       # la suite d'une séquence découpée (n°116) : la carte est sur sa première page
+                continue
             lues += 1
             j = juger(s)
             if j:
@@ -138,8 +143,9 @@ def etat(racine: str, strict: bool) -> int:
         return 2
     for rel, j in sorted(manques):
         print("  %s %s — %s" % ("✘" if strict else "⚠", rel, " ; ".join(j)))
-    print("%d séquence(s) lues · %d avec « Avant de commencer » en trois lignes · %d à poser"
-          % (lues, lues - len(manques), len(manques)))
+    print("%d séquence(s) lues · %d avec « Avant de commencer » en trois lignes · %d à poser%s"
+          % (lues, lues - len(manques), len(manques),
+             (" · %d page(s) de suite d'une séquence découpée, sans carte (elle est sur la première)" % suites) if suites else ""))
     return 1 if (strict and manques) else 0
 
 

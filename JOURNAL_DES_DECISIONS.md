@@ -32640,3 +32640,27 @@ dans le volet : la carte est placée sous ce titre. Banc `tests_audit_double_reg
 — la carte, la situation, la problématique — est au-dessus, hors de l'écran (3 000 à 5 500 px plus haut, mesuré sur
 les onze pages, Shenzhen compris). L'élève qui ne remonte pas ne lit pas la carte. Correction à part : le mode
 mission, sur toutes les pages.
+
+## 17/11/2026 — Mode mission : le premier écran commence par lire
+
+Constat du lot 2 de la généralisation (#766) : en mode mission — allumé d'emblée pour l'élève depuis le 14/11 —, le
+premier écran défilait jusqu'à la tête de la mission. L'ouverture dépliée (« 🎯 Avant de commencer : trois choses à
+lire », la situation, la problématique, l'hypothèse) restait au-dessus, hors de l'écran : de 3 000 à 5 500 px plus
+haut, mesuré sur onze pages, Shenzhen compris. L'élève qui ne remontait pas ne lisait ni la carte (n°337) ni la
+situation.
+
+**Ce qui change** (`_outils/mode_mission/mission.js`, posé sur les 60 pages par `poser.py`) : l'écran qui ouvre la
+séquence s'affiche **en haut de l'ouverture dépliée** ; la carte est la première chose lue. Rien d'autre ne bouge :
+- l'écran suivant, et chaque écran d'après, commencent à la tête de la mission, comme avant ;
+- dès la séance 2, l'ouverture est repliée (« 📖 Rappel », n°311) : l'écran commence à la tête de la mission ;
+- un élève qui reprend plus loin retrouve son écran ;
+- une page sans volet d'ouverture (les quatre pages engendrées de `3e_C9.2`) commence par la carte seule, à la
+  première séance de la page, quand elle la porte.
+Le README du mode mission et le skill `avant-de-commencer-trois-lignes` le disent.
+
+**`trois_lignes.py --etat`** ne compte plus à poser la suite d'une séquence découpée (règle n°116 : une page
+engendrée, sans situation — les pages 2 à 4 de `3e_C9.2`) : la carte est sur sa première page. Mesure : 57 séquences,
+11 avec la carte, 46 à poser, 3 pages de suite. Banc `tests_audit_double_regard.py` : 25 / 25.
+
+**Vérifications.** Au navigateur, à 390 px : premier écran, l'ouverture à 52 px du haut (sous la barre) et la carte
+juste dessous ; écran 2 et séance 2, la tête de la mission à 52 px. Bancs du mode mission : voir la PR.
