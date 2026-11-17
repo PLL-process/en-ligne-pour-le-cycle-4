@@ -32835,3 +32835,27 @@ gabarits entiers, pas pour une page : deux skills, chacun avec son outil de mesu
 
 **Pourquoi pas de règle d'or nouvelle.** Les deux skills appliquent des règles en vigueur (n°333, n°338, n°144,
 n°300) ; ce qui manquait était la méthode et la mesure. À Pascal de dire s'il veut en faire des règles (🔶).
+
+## 17/11/2026 — Généralisation, lot 3 (vague 1) : les QCM du thème 1 aident avant de corriger
+
+Suite de la n°339 (pilote `5e_C2.1`, #762). Les **treize autres QCM du thème 1** portent maintenant la carte « Avant de
+commencer », les aides progressives (💡 le pourquoi de la proposition choisie, 💡💡 la règle, 📖 la correction
+complète) et la révision par pièges : `3e_C1.1`, `3e_C1.5`, `4e_C1.1`, `4e_C1.4`, `5e_C1.1`, `5e_C1.2`, `5e_C1.3`,
+`5e_C1.5`, `3e_C2.1`, `4e_C2.1`, `3e_C3.1`, `4e_C3.1`, `5e_C3.1`. Chaque lot a son `qcm_aides_<lot>.json` : cinq à
+huit pièges, chacun d'au moins trois questions, dont le libellé est la question que l'élève doit se poser
+(« Amélioration ou rupture ? La nature du changement, pas son ampleur » ; « Gratuit n'est pas libre : que permet la
+licence ? »).
+
+- **Les indices creux réécrits d'abord** : sept `d` qui ne disaient pas pourquoi la proposition ne répond pas
+  (« Il mesure une tension. » pour le temps d'une réparation ; « Dire n'est pas montrer. ») disent maintenant ce qui
+  manque à CETTE proposition pour CETTE question (`4e_C3.1` ×4, `3e_C3.1` ×2, `5e_C1.3`).
+- **Les générateurs reposent les aides** : `poser.poser_si_donnees` (neuf), appelé juste avant l'écriture dans les six
+  `build_qcm.py` du thème 1 (`3e_C1.1`, `4e_C1.1`, `5e_C1.1`, `5e_C1.2`, `3e_C2.1`, `4e_C2.1`) : régénérer un QCM ne
+  les efface plus. Vérifié sans régénérer (les générateurs ne sont pas tous à jour de leurs pages) : appliqué aux pages
+  telles qu'elles sont, le crochet les laisse identiques.
+- **Le banc** `_outils/qcm_aides/banc_aides.mjs` (neuf) joue chaque question fausse à 390 px (A1 à A7) : 14 / 14 QCM
+  verts ; un QCM sans les aides est refusé (A7), un indice retiré l'est aussi (A1, A2 : essai par mutation).
+- Contrôles : `verif_qcm_coherence` 14 / 14, `controle_indices_qcm`, `controle_entete_qcm`, `controle_effectifs_qcm`,
+  `controle_banque_qcm`, `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ;
+  export Éléa régénéré (l'inventaire portait encore deux anciens titres « SOS serre »), banc de l'export vert.
+- État : 72 QCM, 14 avec les trois, **58 à poser** (thèmes 2 et 3, ateliers).
