@@ -12,6 +12,9 @@ puis  node _outils/fix_r.js <sortie.html> 502
 pour répartir les bonnes réponses sur A/B/C/D (elles sont toutes en r:0 ici).
 """
 
+import sys as _sys_ic
+_sys_ic.path.insert(0, next(str(d / "_outils") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "intituler_codes.py").is_file()))
+import intituler_codes  # noqa: E402
 import json
 import re
 import sys
@@ -42,6 +45,7 @@ def bloc_question(o: dict) -> str:
 
 def construire(gabarit: str, sortie: str) -> None:
     s = open(gabarit, encoding="utf-8").read()
+    s = intituler_codes.sans_bulles(s)   # les étiquettes du gabarit, sans leurs bulles (17/11/2026)
 
     lignes = ["const QUESTIONS = [",
               "/* ═══ 5e_C2.1 — recenser les interacteurs extérieurs ═══ */"]
@@ -139,6 +143,7 @@ def construire(gabarit: str, sortie: str) -> None:
 
     # Écriture seulement une fois tout le travail fait : ouvrir en 'w' tronque
     # immédiatement, et une erreur survenue après ce point détruirait le fichier.
+    s = intituler_codes.poser_texte(s)   # chaque étiquette de code dit sa compétence au survol
     open(sortie, "w", encoding="utf-8").write(s)
     print("QCM écrit : %s (%d questions, %d illustrées)"
           % (sortie, len(banque.Q), sum(1 for x in banque.Q if "img" in x)))
