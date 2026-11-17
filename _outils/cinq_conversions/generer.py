@@ -16,6 +16,8 @@ Deux dessins :
 Usage :
     python3 _outils/cinq_conversions/generer.py <dossier Images>…            écrit les deux dessins dans chaque dossier
     python3 _outils/cinq_conversions/generer.py --verifier <dossier Images>…  vérifie qu'ils sont à jour (sortie 1 sinon)
+    --complet : seulement le dessin complet (un lot qui ne pose pas la question muette, comme le rappel de 4e du Book
+    Train ; sans lui, le dessin muet resterait une image que rien n'affiche)
 
 Les mots suivent la règle des chaînes d'énergie (skill `chaine-energie-fonctionnelle`, 16-17/11/2026) : moteur →
 cinétique ; génératrice : mécanique → électrique ; vérin → mécanique (fiche SFC1b de l'académie de Bordeaux).
@@ -145,6 +147,7 @@ FICHIERS = {"cinq_constituants_muet.svg": False, "cinq_conversions.svg": True}
 
 def main(args):
     verifier = "--verifier" in args
+    fichiers = {"cinq_conversions.svg": True} if "--complet" in args else FICHIERS
     dossiers = [a for a in args if not a.startswith("--")]
     if not dossiers:
         print(__doc__)
@@ -154,7 +157,7 @@ def main(args):
         if not os.path.isdir(d):
             print(f"✘ {d} : pas un dossier")
             return 2
-        for nom, complet in FICHIERS.items():
+        for nom, complet in fichiers.items():
             chemin = os.path.join(d, nom)
             attendu = dessin(complet)
             actuel = open(chemin, encoding="utf-8").read() if os.path.exists(chemin) else None
@@ -166,7 +169,7 @@ def main(args):
                 open(chemin, "w", encoding="utf-8").write(attendu)
                 print(f"✎ {chemin}")
     if verifier:
-        n = len(dossiers) * len(FICHIERS)
+        n = len(dossiers) * len(fichiers)
         print(f"{'✅' if not ecarts else '✘'} {n - ecarts} / {n} dessins à jour dans {len(dossiers)} dossier(s)")
         return 1 if ecarts else 0
     return 0

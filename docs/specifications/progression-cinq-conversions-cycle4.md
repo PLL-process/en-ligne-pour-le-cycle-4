@@ -66,13 +66,16 @@ Ailleurs, le radiateur et le vérin ne sont jamais rencontrés en situation, et 
 3. **Le tableau** reste dans la synthèse de `5e_C7.4`. Celle du lampadaire le recevra quand elle tiendra sur deux pages.
 
 ### 4e : relier (SFC 11, 4e)
-4. **Un exercice « Quel constituant dans CONVERTIR ? »**, une piqûre de rappel dans le Book Train (`4e_C4.2`).
+4. ✅ *(17/11/2026)* **Un exercice « Quel constituant dans CONVERTIR ? »**, une piqûre de rappel dans le Book Train (`4e_C4.2`).
+   Fait : juste après l'activité 2.1, repliée sous son titre (la séance 2 dépassait déjà 1 200 mots visibles) ; six
+   questions notées, un pourquoi par mauvaise proposition, le tableau de 5e en aide repliée, la correction illustrée.
    - Cinq situations : faire avancer le wagonnet (moteur), éclairer le quai (lampe), chauffer la salle d'attente
      (radiateur), produire le courant d'une éolienne (génératrice), ouvrir la porte du bus (vérin).
    - Pour chacune, l'élève choisit le constituant et les deux formes d'énergie.
    - L'exercice rappelle d'abord le tableau de 5e, pour l'élève qui ne l'a jamais vu.
-5. **Le radiateur en situation** dans `4e_C6.1` (appareil à seuil) : le radiateur à thermostat, électrique → thermique,
-   commandé par un seuil de température.
+5. ✅ *(17/11/2026)* **Le radiateur en situation** dans `4e_C6.1` (appareil à seuil) : le radiateur à thermostat, électrique → thermique,
+   commandé par un seuil de température. Fait : un défi du Bonus (les deux séances font déjà 55 min) — la conversion,
+   puis l'hystérésis du thermostat (19 / 21 °C), relié à la pompe qui « battait » ; corrigé complet.
 
 ### 3e : choisir (3e_C4.1, 3e_C7.4)
 6. **Le rappel du tableau** en tête de l'activité « chaîne d'énergie » de la station (`3e_C4.1`) : la boîte à outils

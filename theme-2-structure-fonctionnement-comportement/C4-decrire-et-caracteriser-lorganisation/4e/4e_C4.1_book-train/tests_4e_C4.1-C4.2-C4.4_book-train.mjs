@@ -292,14 +292,16 @@ const formes = await p.evaluate(() => {
   return { listes: document.querySelectorAll('select').length, groupes: groupes.length,
            notes: groupes.filter(f => f.dataset.bonne !== undefined).length, defauts };
 });
-ok('33 · n°300 : aucune liste déroulante ; 46 groupes radio (44 convertis + 2 de la vidéo), chacun avec sa légende, un seul nom, une étiquette = la valeur, la bonne réponse parmi les propositions',
-   formes.listes === 0 && formes.groupes === 46 && formes.notes === 42 && formes.defauts.length === 0, JSON.stringify(formes).slice(0, 300));
+/* 17/11/2026 : la piqûre de rappel « Quel constituant dans CONVERTIR ? » ajoute 6 groupes notés : 46 → 52, 42 → 48 */
+ok('33 · n°300 : aucune liste déroulante ; 52 groupes radio (44 convertis + 2 de la vidéo + 6 du rappel des cinq conversions), chacun avec sa légende, un seul nom, une étiquette = la valeur, la bonne réponse parmi les propositions',
+   formes.listes === 0 && formes.groupes === 52 && formes.notes === 48 && formes.defauts.length === 0, JSON.stringify(formes).slice(0, 300));
 
 // Chaque exercice noté se valide quand on coche les bonnes réponses (lues dans data-bonne).
-const exercices = [['exo11', 6], ['exo12', 5], ['exo12df', 6], ['exo12b', 9], ['exo21', 5], ['exo32', 6]];
+const exercices = [['exo11', 6], ['exo12', 5], ['exo12df', 6], ['exo12b', 9], ['exo21r', 6], ['exo21', 5], ['exo32', 6]];
 const bilans = [];
 for (const [exo, n] of exercices) {
   await ongletDe(p, '#' + exo);
+  await p.evaluate(id => { const d = document.getElementById(id).closest('details'); if (d) d.open = true; }, exo);  // le rappel replié s'ouvre, comme l'élève
   const bonnes = await p.$$eval(`#${exo} fieldset[data-bonne]`, fs => fs.map(f => [f.id, f.dataset.bonne]));
   for (const [id, v] of bonnes) await p.check(`#${id} input[type=radio][value="${v.replace(/"/g, '\\"')}"]`);
   if (exo === 'exo32') {                      // le verrou : l'expérience du zoom, puis la justification
@@ -310,7 +312,7 @@ for (const [exo, n] of exercices) {
   const r = await p.textContent('#res-' + exo);
   if (bonnes.length !== n || !new RegExp(`${n}/${n}`).test(r)) bilans.push(`${exo} : ${bonnes.length} groupes, « ${r.trim().slice(0, 40)} »`);
 }
-ok('34 · les six exercices notés se valident en cochant les bonnes réponses (1.1, 1.2, 1.3, 2.1, 3.1, 4.2)', bilans.length === 0, bilans.join(' | '));
+ok('34 · les sept exercices notés se valident en cochant les bonnes réponses (1.1, 1.2, 1.3, 2.1, rappel des cinq conversions, 3.1, 4.2)', bilans.length === 0, bilans.join(' | '));
 const signale = await p.evaluate(() => { const g = [...document.querySelectorAll('#exo11 fieldset.qcm-groupe')]; return g.length === 6 && g.every(f => f.classList.contains('bon')); });
 ok('35 · le vérificateur marque chaque groupe juste (classe « bon » sur le groupe)', signale);
 
