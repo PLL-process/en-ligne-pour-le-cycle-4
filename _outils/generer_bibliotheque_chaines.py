@@ -208,7 +208,7 @@ ENTREES = [
     fleche('Flèche de compte rendu (pointillés)', 'Compte rendu', CYAN, dashed=True),
     fleche('Flèche d’ordre — descend vers DISTRIBUER', 'Ordre :\nl’ordre descend', GREEN, dashed=True, vertical=True),
     fleche('Énergie électrique (flèche)', 'Énergie\nélectrique', ORANGE),
-    fleche('Énergie mécanique (flèche)', 'Énergie\nmécanique', ORANGE),
+    fleche('Énergie cinétique (flèche)', 'Énergie\ncinétique', ORANGE),
     fleche('Énergie lumineuse (flèche)', 'Énergie\nlumineuse', ORANGE),
     fleche('Énergie sonore (flèche)', 'Énergie\nsonore', ORANGE),
     fleche('Énergie thermique (flèche)', 'Énergie\nthermique', ORANGE),

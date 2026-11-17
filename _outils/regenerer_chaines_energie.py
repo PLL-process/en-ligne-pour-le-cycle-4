@@ -179,7 +179,7 @@ def lampadaire():
 
 def jardin():
     d=Diagram('Jardin connecté : l’information (en haut) commande l’énergie (en bas)',
-        CONVENTION + ' Les capteurs d’humidité transmettent les mesures à la carte qui décide et communique les données au réseau et à l’application. Les ordres pilotent les interfaces de puissance de la pompe et des électrovannes. Le panneau fournit de l’énergie électrique au régulateur de charge. La batterie, reliée au régulateur, stocke de l’énergie chimique. La pompe convertit l’énergie électrique en énergie mécanique : l’eau est mise en mouvement. Les électrovannes distribuent l’eau : leur actionneur reçoit de l’énergie électrique et ouvre ou ferme l’arrivée d’eau. Le circuit d’eau, séparé, va du réservoir à la pompe puis aux électrovannes et aux bacs. Une vanne commune arrose simultanément ; une vanne par bac permet une commande indépendante.',1165)
+        CONVENTION + ' Les capteurs d’humidité transmettent les mesures à la carte qui décide et communique les données au réseau et à l’application. Les ordres pilotent les interfaces de puissance de la pompe et des électrovannes. Le panneau fournit de l’énergie électrique au régulateur de charge. La batterie, reliée au régulateur, stocke de l’énergie chimique. La pompe convertit l’énergie électrique en énergie cinétique : l’eau est mise en mouvement. Les électrovannes distribuent l’eau : leur actionneur reçoit de l’énergie électrique et ouvre ou ferme l’arrivée d’eau. Le circuit d’eau, séparé, va du réservoir à la pompe puis aux électrovannes et aux bacs. Une vanne commune arrose simultanément ; une vanne par bac permet une commande indépendante.',1165)
     d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
     d.block(100,120,'ACQUÉRIR','Capteurs d’humidité\nun par bac',CYAN)
     d.block(580,120,'TRAITER','Carte programmable\nCompare aux seuils',VIOLET,w=250)
@@ -194,13 +194,13 @@ def jardin():
     d.block(1190,400,'CONVERTIR','Électropompe',VIOLET)
     d.arrow([(12,438),(140,438)],ORANGE,'Énergie\nlumineuse',75,375)
     for a,b in [(360,485),(705,825),(1045,1180)]: d.arrow([(a,438),(b,438)],ORANGE,'Énergie\nélectrique',(a+b)/2,375)
-    d.arrow([(1400,438),(1565,438)],ORANGE,'Énergie\nmécanique',1480,375)
+    d.arrow([(1400,438),(1565,438)],ORANGE,'Énergie\ncinétique',1480,375)
     d.text(1480,497,'L’eau est mise\nen mouvement',WHITE,20,True)
     d.block(495,650,'STOCKER','Batterie 12 V',YELLOW,stock=True)
     d.arrow([(705,465),(760,465),(760,688),(705,688)],YELLOW,'Énergie électrique\nCharge / décharge',590,582,both=True)
     d.block(1190,650,'DISTRIBUER','Électrovanne(s)\n(ouvre ou ferme)',CYAN)
     d.arrow([(940,550),(940,688),(1180,688)],ORANGE,'Énergie électrique',1040,620)
-    d.arrow([(1400,688),(1565,688)],ORANGE,'Énergie\nmécanique',1480,625)
+    d.arrow([(1400,688),(1565,688)],ORANGE,'Énergie\ncinétique',1480,625)
     d.text(1480,746,'Ouvrir / fermer\nl’arrivée d’eau',WHITE,20,True)
     d.section(875,'CIRCUIT D’EAU — trajet de la matière, distinct des flèches d’énergie',CYAN)
     for x,txt in [(150,'Réservoir'),(550,'Pompe'),(975,'Électrovanne(s)'),(1430,'Bacs A, B, C')]: d.text(x,945,txt,WHITE,24,True)
@@ -292,7 +292,7 @@ def trois_cas():
                                                         ('CONVERTIR', 'Moteur', VIOLET),
                                                         ('TRANSMETTRE', 'Réducteur et crémaillère\nvite et faible → lent et fort', GREEN)],
              notes=['Le préactionneur choisit aussi', 'le sens de rotation'],
-             energies=['Énergie\nélectrique', 'Énergie\nélectrique', 'Énergie mécanique\nde rotation'], sortie='Énergie\nmécanique', action='Le vantail\nse ferme',
+             energies=['Énergie\nélectrique', 'Énergie\nélectrique', 'Énergie cinétique\nde rotation'], sortie='Énergie\ncinétique', action='Le vantail\nse ferme',
              pied='C’est parce que quelque chose se DÉPLACE qu’il faut TRANSMETTRE : allumer et sonner ne déplacent rien.',
              conclusion='➜ L’ordre arrive sur DISTRIBUER : ici un pont en H séparé, et la chaîne est complète.'),
     ]
@@ -333,7 +333,7 @@ def trois_cas():
 
 def book():
     d=Diagram('Book Train : chaîne d’énergie du déplacement',
-        CONVENTION + ' Modèle fonctionnel simplifié du Book Train. Le réseau électrique alimente une alimentation adaptée. La commande de puissance distribue l’énergie électrique au moteur sur ordre de l’automate. Le moteur convertit l’énergie électrique en énergie mécanique de rotation. Le réducteur et les organes d’entraînement transmettent le mouvement pour déplacer le wagonnet et sa nacelle. Les capteurs fournissent des comptes rendus à la chaîne d’information. Les détails de tensions, de stockage et d’entraînement doivent être établis à partir de la documentation technique.',765)
+        CONVENTION + ' Modèle fonctionnel simplifié du Book Train. Le réseau électrique alimente une alimentation adaptée. La commande de puissance distribue l’énergie électrique au moteur sur ordre de l’automate. Le moteur convertit l’énergie électrique en énergie cinétique de rotation. Le réducteur et les organes d’entraînement transmettent le mouvement pour déplacer le wagonnet et sa nacelle. Les capteurs fournissent des comptes rendus à la chaîne d’information. Les détails de tensions, de stockage et d’entraînement doivent être établis à partir de la documentation technique.',765)
     d.section(100,"CHAÎNE D’INFORMATION — en haut (rappel)",CYAN)
     d.block(600,130,'TRAITER','Automate et programme\nDonnées issues des capteurs',VIOLET,w=300)
     d.arrow([(650,270),(650,325),(585,325),(585,430)],GREEN,'Ordres : démarrer, ralentir, arrêter — l’ordre descend',700,309,dashed=True,lanchor='start')
@@ -347,8 +347,8 @@ def book():
     d.arrow([(15,488),(125,488)],ORANGE,'Énergie\nélectrique',72,425)
     d.arrow([(335,488),(475,488)],ORANGE,'Énergie\nélectrique',405,425)
     d.arrow([(685,488),(825,488)],ORANGE,'Énergie\nélectrique',755,425)
-    d.arrow([(1035,488),(1175,488)],ORANGE,'Énergie mécanique\nde rotation',1105,425)
-    d.arrow([(1405,488),(1570,488)],ORANGE,'Énergie\nmécanique',1488,425)
+    d.arrow([(1035,488),(1175,488)],ORANGE,'Énergie cinétique\nde rotation',1105,425)
+    d.arrow([(1405,488),(1570,488)],ORANGE,'Énergie\ncinétique',1488,425)
     d.text(1490,555,'Déplacer\nle wagonnet\net sa nacelle',WHITE,20,True)
     d.text(800,675,'Modèle fonctionnel : tensions, éventuel secours et détails d’entraînement à préciser d’après la documentation technique.',BLUE,18)
     d.text(800,722,'Schéma original CC0 — séquence « Book Train » · convention : information en haut, énergie en bas, la flèche d’ordre descend.',BLUE,17)
@@ -393,7 +393,7 @@ def book():
     page.write_text(html,encoding='utf-8')
     quiz=lot/'qcm_book-train.html'
     q=quiz.read_text(encoding='utf-8')
-    alternative='Chaîne d’énergie : ALIMENTER (alimentation électrique adaptée), DISTRIBUER (commande de puissance), CONVERTIR (moteur), TRANSMETTRE (réducteur et organes d’entraînement). Les flèches portent l’énergie électrique puis mécanique. L’ordre de l’automate pilote DISTRIBUER. Action : déplacer le wagonnet et sa nacelle.'
+    alternative='Chaîne d’énergie : ALIMENTER (alimentation électrique adaptée), DISTRIBUER (commande de puissance), CONVERTIR (moteur), TRANSMETTRE (réducteur et organes d’entraînement). Les flèches portent l’énergie électrique puis cinétique. L’ordre de l’automate pilote DISTRIBUER. Action : déplacer le wagonnet et sa nacelle.'
     q=re.sub(r'img:\{"src":"Images/chaine_energie_book-train\.svg","alt":"[^"\n]*"\}',lambda _:'img:'+json.dumps({'src':'Images/chaine_energie_book-train.svg','alt':alternative},ensure_ascii=False,separators=(',',':')),q)
     q=q.replace('"réseau continu 24 V → converti en alternatif 480 V → moteur → rail","réseau alternatif 480 V → continu 24 V → rail → moteur → wagonnet","batterie du wagonnet → moteur → rail → capteurs","moteur → convertisseur → rail → réducteur"','"moteur → alimentation → commande → wagonnet","réseau → alimentation adaptée → commande de puissance → moteur → transmission → déplacement","capteurs → moteur → réseau → rail","transmission → réseau → moteur → commande"')
     q=q.replace('Le bâtiment est alimenté en alternatif : on part du 480 V ~, on ne le fabrique pas.','Le moteur reçoit de l’énergie électrique : il ne précède pas son alimentation.')
@@ -412,10 +412,10 @@ def _book_deux_chaines(complete):
     if complete:
         entree = 'Réseau du bâtiment : énergie\nélectrique alternative (480 V ~)'
         energies = ['Énergie électrique\ncontinue (24 V ⎓)', 'Énergie électrique\ncontinue, modulée (24 V ⎓)',
-                    'Énergie mécanique\nde rotation', 'Énergie mécanique\nde translation']
+                    'Énergie cinétique\nde rotation', 'Énergie cinétique\nde translation']
         resume = ('Les énergies sur les flèches : le réseau du bâtiment apporte de l’énergie électrique alternative (480 V ~) ; '
                   'ALIMENTER en fait de l’énergie électrique continue (24 V ⎓) ; DISTRIBUER la module sur ordre ; CONVERTIR la change '
-                  'en énergie mécanique de rotation ; TRANSMETTRE la change en énergie mécanique de translation.')
+                  'en énergie cinétique de rotation ; TRANSMETTRE la change en énergie cinétique de translation.')
     else:
         entree = 'Réseau du bâtiment\nénergie : ?'
         energies = ['énergie : ?'] * 4
@@ -492,7 +492,7 @@ def jardin_programme():
         'Une flèche « Décision » mène à COMMUNIQUER : l’écran ou la console affiche POMPE ON ou POMPE OFF, avec un voyant, vers le jardinier. '
         'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
         'En bas, la chaîne d’énergie. L’énergie électrique entre dans ALIMENTER : une alimentation 12 V séparée, pas l’USB de la carte. L’énergie électrique passe à DISTRIBUER : le relais, le préactionneur. '
-        'Puis à CONVERTIR : la pompe 12 V, dont le moteur entraîne la turbine. Elle fournit de l’énergie mécanique : l’eau est mise en mouvement. '
+        'Puis à CONVERTIR : la pompe 12 V, dont le moteur entraîne la turbine. Elle fournit de l’énergie cinétique : l’eau est mise en mouvement. '
         'TRANSMETTRE est dessiné en pointillés, grisé : cette fonction est absente, car la pompe met elle-même l’eau en mouvement, sans mécanisme entre le moteur et la turbine. '
         'Le circuit d’eau, à part, va du réservoir à la pompe puis au sol du jardin : l’eau est de la matière, pas de l’énergie. '
         'Pourquoi un relais : la pompe 12 V demande bien plus de courant qu’une broche de la carte n’en fournit ; le relais reçoit l’ordre et laisse passer l’énergie de l’alimentation, il n’en fabrique pas. '
@@ -512,7 +512,7 @@ def jardin_programme():
     d.block(850,460,'CONVERTIR','Pompe 12 V\nmoteur et turbine',VIOLET)
     d.arrow([(15,498),(140,498)],ORANGE,'Énergie\nélectrique',77,435)
     for a,b in [(360,490),(710,840)]: d.arrow([(a,498),(b,498)],ORANGE,'Énergie\nélectrique',(a+b)/2,435)
-    d.arrow([(1060,498),(1565,498)],ORANGE,'Énergie\nmécanique',1300,435)
+    d.arrow([(1060,498),(1565,498)],ORANGE,'Énergie\ncinétique',1300,435)
     d.text(1495,560,'Mettre l’eau\nen mouvement',WHITE,22,True)
     d.absent(1135,535,'TRANSMETTRE','Absente : la pompe met\nelle-même l’eau en mouvement')
     circuit_eau(d,745,[(200,'Réservoir'),(620,'Pompe'),(1080,'Sol du jardin')])
@@ -532,7 +532,7 @@ def arrosage():
         'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
         'En bas, la chaîne d’énergie. STOCKER : la pile, en très basse tension ; sous elle, l’énergie chimique stockée. '
         'L’énergie électrique passe à DISTRIBUER : le relais. Puis à CONVERTIR : la petite pompe, dont le moteur entraîne la turbine. '
-        'Elle fournit de l’énergie mécanique : l’eau est mise en mouvement. '
+        'Elle fournit de l’énergie cinétique : l’eau est mise en mouvement. '
         'TRANSMETTRE est dessiné en pointillés, grisé : cette fonction est absente, car la pompe met elle-même l’eau en mouvement. '
         'Le circuit d’eau, à part, va du réservoir à la pompe puis au pot de la plante : l’eau est de la matière, pas de l’énergie. '
         'Le programme relie les deux chaînes : il lit le capteur, compare au seuil et donne l’ordre au relais.',985)
@@ -549,7 +549,7 @@ def arrosage():
     d.block(500,460,'DISTRIBUER','Relais',CYAN)
     d.block(850,460,'CONVERTIR','Petite pompe\nmoteur et turbine',VIOLET)
     for a,b in [(360,490),(710,840)]: d.arrow([(a,498),(b,498)],ORANGE,'Énergie\nélectrique',(a+b)/2,435)
-    d.arrow([(1060,498),(1565,498)],ORANGE,'Énergie\nmécanique',1300,435)
+    d.arrow([(1060,498),(1565,498)],ORANGE,'Énergie\ncinétique',1300,435)
     d.text(1495,560,'Mettre l’eau\nen mouvement',WHITE,22,True)
     d.absent(1135,535,'TRANSMETTRE','Absente : la pompe met\nelle-même l’eau en mouvement')
     circuit_eau(d,745,[(200,'Réservoir'),(620,'Pompe'),(1080,'Pot de la plante')])
@@ -567,8 +567,8 @@ def barriere():
         'Une flèche « Décision » mène à COMMUNIQUER : le panneau COMPLET, allumé quand la barrière est fermée. '
         'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
         'En bas, la chaîne d’énergie. L’énergie électrique entre dans ALIMENTER : une alimentation en très basse tension. L’énergie électrique passe à DISTRIBUER : la commande du moteur, dans les deux sens. '
-        'Puis à CONVERTIR : le moteur électrique, qui fournit de l’énergie mécanique à TRANSMETTRE : le réducteur, lent et fort. '
-        'L’énergie mécanique sort de la chaîne : ouvrir ou fermer la barrière. '
+        'Puis à CONVERTIR : le moteur électrique, qui fournit de l’énergie cinétique à TRANSMETTRE : le réducteur, lent et fort. '
+        'L’énergie cinétique sort de la chaîne : ouvrir ou fermer la barrière. '
         'À droite, le banc de tests et le résultat attendu : places égale 10, barrière ouverte ; places égale 32, ouverte ; places égale 0, fermée, c’est le cas limite. '
         'Le programme est réglé quand les trois tests passent, cas limite compris.',835)
     d.text(800,88,'Ta variable places commande un objet réel.',WHITE,22)
@@ -594,8 +594,8 @@ def barriere():
     d.arrow([(15,528),(125,528)],ORANGE,'Énergie\nélectrique',70,465)
     d.arrow([(345,528),(475,528)],ORANGE,'Énergie\nélectrique',410,465)
     d.arrow([(695,528),(825,528)],ORANGE,'Énergie\nélectrique',760,465)
-    d.arrow([(1045,528),(1175,528)],ORANGE,'Énergie\nmécanique',1110,465)
-    d.arrow([(1395,528),(1570,528)],ORANGE,'Énergie\nmécanique',1483,465)
+    d.arrow([(1045,528),(1175,528)],ORANGE,'Énergie\ncinétique',1110,465)
+    d.arrow([(1395,528),(1570,528)],ORANGE,'Énergie\ncinétique',1483,465)
     d.text(1490,595,'Ouvrir ou\nfermer la\nbarrière',WHITE,22,True)
     d.text(800,705,'Ta variable places est dans TRAITER : c’est elle qui décide, la barrière obéit.',WHITE,20)
     d.text(800,750,'À toi de lire : que fait la barrière si places vaut exactement 0 ? Pourquoi ce test est-il le plus important ?',BLUE,19)
