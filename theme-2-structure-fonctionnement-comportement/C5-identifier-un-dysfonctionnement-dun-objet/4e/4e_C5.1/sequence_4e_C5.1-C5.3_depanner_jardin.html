@@ -2381,7 +2381,7 @@ const CHECKS = {
                q1_2:"chaque test rapide peut éliminer une cause en quelques secondes, avant d'engager les tests longs ou un démontage"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const expOk = !!(window.__exp && window.__exp.diag);
-    return {score:ok,total:8,extra:expOk?"":" Exécute VRAIMENT ton protocole au poste de diagnostic (6/6) : un protocole s'éprouve, il ne se récite pas.",valide:ok>=7&&expOk};
+    return {score:ok,total:8,extra:expOk?"":" Exécute VRAIMENT ton protocole au poste de diagnostic (6/6) : un protocole s'éprouve, il ne se récite pas.",valide:ok===8&&expOk};
   },
   2: function(){
     let ok=0;
@@ -2390,7 +2390,7 @@ const CHECKS = {
                q2_2:"vérifier la compatibilité (broches, dimensions) évite un démontage de plus si la pièce ne convient pas"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const expOk = !!(window.__exp && window.__exp.remplace);
-    return {score:ok,total:8,extra:expOk?"":" Mène le remplacement simulé jusqu'au 6/6 — sans protocole affiché, c'est TA méthode qui compte.",valide:ok>=7&&expOk};
+    return {score:ok,total:8,extra:expOk?"":" Mène le remplacement simulé jusqu'au 6/6 — sans protocole affiché, c'est TA méthode qui compte.",valide:ok===8&&expOk};
   },
   3: function(){
     let ok=0;
@@ -2402,7 +2402,7 @@ const CHECKS = {
                q3_2:"environ 10,2 mm : le jeu fonctionnel permet au capteur de s'enclencher sans forcer",
                q3_3:"lunettes, cheveux attachés, autorisation ET présence d'un adulte — jamais seul·e sur une machine"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    return {score:ok,total:7,valide:ok>=6};
+    return {score:ok,total:7,valide:ok===7};
   },
   4: function(){
     let ok=0;

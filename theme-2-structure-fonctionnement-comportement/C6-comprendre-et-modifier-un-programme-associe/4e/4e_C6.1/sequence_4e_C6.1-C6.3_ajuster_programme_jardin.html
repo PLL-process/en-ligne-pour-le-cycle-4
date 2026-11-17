@@ -2391,7 +2391,7 @@ const CHECKS = {
                c1_4:"utilise UN SEUL seuil : dès que la mesure oscille autour de 40 %, la commande bascule ON/OFF sans arrêt",
                c1_5:"ne tient compte QUE de l'humidité : aucune condition d'horaire ne retient l'arrosage aux heures chaudes"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    return {score:ok,total:5,valide:ok>=4};
+    return {score:ok,total:5,valide:ok===5};
   },
   2: function(){
     let ok=0;
@@ -2401,7 +2401,7 @@ const CHECKS = {
                a2_4:"retenir l'arrosage aux heures chaudes : l'eau versée tôt ou tard atteint les racines au lieu de s'évaporer",
                a2_5:"il ATTEND 17 h pour arroser : sécheresse repérée, mais l'eau serait perdue en plein soleil"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
-    return {score:ok,total:5,valide:ok>=4};
+    return {score:ok,total:5,valide:ok===5};
   },
   3: function(){
     let ok=0;
@@ -2413,7 +2413,7 @@ const CHECKS = {
                q3_2:"que tout ce qui marchait AVANT marche ENCORE : l'arrosage normal (scénarios 1 et 3) n'a pas été cassé par les nouveautés"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const expOk = !!(window.__exp && window.__exp.scen);
-    return {score:ok,total:6,extra:expOk?"":" Joue VRAIMENT les 4 scénarios au banc de test (4/4) : une modification se valide, elle ne se devine pas.",valide:ok>=5&&expOk};
+    return {score:ok,total:6,extra:expOk?"":" Joue VRAIMENT les 4 scénarios au banc de test (4/4) : une modification se valide, elle ne se devine pas.",valide:ok===6&&expOk};
   },
   4: function(){
     let ok=0;

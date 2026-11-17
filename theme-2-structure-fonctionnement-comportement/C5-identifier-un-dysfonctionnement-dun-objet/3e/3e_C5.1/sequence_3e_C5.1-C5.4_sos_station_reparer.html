@@ -2630,7 +2630,7 @@ const CHECKS = {
     if($("c6_5").value==="vrai") ok++;
     const d=txt("c6_dec");
     const dOk = d.length>=40 && ((d.match(/coût|€|prix|déchet|écolog|environ|temps|appren/g)||[]).length>=2);
-    return {score:ok,total:5,extra:dOk?"":" Ta décision doit peser au moins DEUX critères (coût, déchets, temps, apprentissage…).",valide:ok>=4&&dOk};
+    return {score:ok,total:5,extra:dOk?"":" Ta décision doit peser au moins DEUX critères (coût, déchets, temps, apprentissage…).",valide:ok===5&&dOk};
   }
 };
 const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];

@@ -32764,7 +32764,7 @@ cliqué : chaque constat a été rejoué au navigateur.
 
 **Confirmé et corrigé dans `3e_C4.1`.**
 - **Les seuils** : l'activité 1 validait à 10 / 11, l'activité 4 à 7 / 8, quand la consigne annonce 11 / 11 et 8 / 8 :
-  le code suit maintenant la consigne (n°322).
+  le code suit maintenant la consigne (n°333, n°338).
 - **L'ordre des deux essais du simulateur** (activité 2) : la page demandait « une configuration insuffisante, PUIS ta
   solution » et acceptait l'inverse ; l'essai réussi ne compte que s'il vient après l'échec.
 - **La justification du mât** (activité 4) : « vent sel vent sel… » passait (longueur et familles de mots) ; il faut
@@ -32775,6 +32775,8 @@ cliqué : chaque constat a été rejoué au navigateur.
 - **Le simulateur** donne 80 h pour 40 Ah, sans pertes : une note « Modèle simplifié » le dit sous le simulateur, et
   c'est une raison de plus pour la marge.
 - **Le calcul donné** : la question d2_2 affichait le résultat de d2_1 (432 Wh) ; elle dit « ton énergie, en Wh ».
+  Même défaut trouvé par l'outil neuf (plus bas) : le Bonus loi d'Ohm donnait le courant du a) dans le b) et le c),
+  et « 36 Ah — exactement le calcul » confirmait d2_2 ; corrigés.
 - **Le coffret injecté sans quantité** : la consigne dit que le mât, le coffret et le support sont fabriqués en série,
   pour toutes les stations de l'île ; le carénage, pièce unique.
 - **Le champ j4** s'annonçait « Carénage — procédé » : il dit « Justification du matériau et du procédé du mât ».
@@ -32808,3 +32810,28 @@ membranes. La batterie, le stockage et les deux synthèses : présents.
 
 **Idées à juger, non retenues pour l'instant.** Prolonger la chaîne jusqu'à la sirène (`3e_C4.3` et le défi du volet
 le font) ; des binômes à rôles distincts ; un rappel d'effacer la sauvegarde après l'export, sur un poste partagé.
+
+## 17/11/2026 — Deux skills tirés de l'audit de `3e_C4.1` : des validations qui disent vrai, des questions qui ne soufflent pas
+
+Pascal, sur l'audit de `3e_C4.1` : « De cet audit, tire-en des skills. » Les constats de l'audit valent pour des
+gabarits entiers, pas pour une page : deux skills, chacun avec son outil de mesure et son banc.
+
+- **`validations-qui-disent-vrai`** (n°333, n°338) et `_outils/controle_validations.py` : V1 le seuil codé est celui
+  que la page annonce (✘ s'il le contredit), V3 une réponse changée retire la validation, V4 une réponse écrite n'est
+  pas validée aux mots-clés sans être relue par le professeur, V5 un simulateur dit qu'il est simplifié ; V2 (l'ordre
+  exigé de deux essais) se lit à la main. **Mesure du jour, puis correction : 14 seuils codés sous le seuil annoncé**
+  (« 6 / 6 » et `ok>=5`) dans `3e_C4.3`, `3e_C4.7`, `4e_C4.1` (×2), `5e_C4.1`, `3e_C5.1`, `4e_C5.1` (×3), `3e_C6.1`,
+  `4e_C6.1` (×3), `5e_C6.1` : le code suit l'annonce, comme pour `3e_C4.1` ; les bancs de ces lots passent. Restent,
+  mesurés : V1 ⚠ 59 tolérances non annoncées, V3 ⚠ 34 pages sans retrait de la validation, V4 ⚠ 99 réponses écrites
+  validées sans relecture annoncée, V5 ⚠ 9 simulateurs.
+- **`propositions-sans-indice`** et `_outils/controle_propositions_indices.py` : I1 la bonne réponse seule à porter
+  sa justification, I3 le résultat attendu d'un calcul lisible dans une étiquette, I4 une échelle
+  d'auto-positionnement dans le désordre (✘) ou sans description ; I2 (des intrus qu'on élimine sans réfléchir) se lit
+  à voix haute. Mesure du jour : I1 ⚠ 53, I3 ⚠ 25, I4 ⚠ 15, dans 21 pages ; aucun ✘ après `3e_C4.1`.
+- **`relire-un-audit-externe`** complété : un constat lu dans le code se rejoue au navigateur puis en cas de banc ; un
+  audit d'une page se mesure sur son gabarit ; `controle_axe.mjs` repasse après une correction d'accessibilité.
+- Banc commun `_outils/tests_controle_validations.py` (12 / 12) ; les deux outils ajoutés au skill
+  `controle-qualite-lot`.
+
+**Pourquoi pas de règle d'or nouvelle.** Les deux skills appliquent des règles en vigueur (n°333, n°338, n°144,
+n°300) ; ce qui manquait était la méthode et la mesure. À Pascal de dire s'il veut en faire des règles (🔶).

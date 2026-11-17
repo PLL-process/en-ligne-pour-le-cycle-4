@@ -3232,7 +3232,7 @@ const CHECKS = {
                d3_6:"de trier, filtrer et tracer des courbes — une info par colonne, toujours au même endroit"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const expOk = !!(window.__exp && window.__exp.table);
-    return {score:ok,total:6,extra:expOk?"":" Explore VRAIMENT les 3 bacs avec le filtre (compteur 3/3) : c'est le geste qui fait comprendre la table.",valide:ok>=5&&expOk};
+    return {score:ok,total:6,extra:expOk?"":" Explore VRAIMENT les 3 bacs avec le filtre (compteur 3/3) : c'est le geste qui fait comprendre la table.",valide:ok===6&&expOk};
   },
   4: function(){
     let ok=0;
@@ -3256,7 +3256,7 @@ const CHECKS = {
     /* l'exercice du cahier des charges, en tête de l'activité, doit être réussi */
     let cdc = false;
     try { cdc = !!JSON.parse(localStorage.getItem("rep_interacteurs-pieuvre_4e_e6") || "{}").reussi; } catch(e) {}
-    return {score:ok,total:6,valide:ok>=5&&cdc,
+    return {score:ok,total:6,valide:ok===6&&cdc,
       extra:cdc?"":" Vérifie aussi l'exercice du cahier des charges, en tête de l'activité : il doit être réussi."};
   }
 };
