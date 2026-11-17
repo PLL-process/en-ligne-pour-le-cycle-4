@@ -32925,3 +32925,25 @@ Contrôles : `banc_aides` 4 / 4 ; `verif_qcm_coherence` 4 / 4 ; `controle_indice
 `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`, `controle_sauvegarde_locale`,
 `controle_boutons_vivants`, `controle_memes_nombres` verts ; export Éléa régénéré, banc vert ; bancs des deux lots
 5 / 5 (dont le banc du QCM de `5e_C4.1`, 25 / 25).
+
+## 17/11/2026 — Généralisation, lot 3 (vague 4) : les QCM de conception de 5e et 4e (C7) ; plus aucun indice creux sur le site
+
+**Treize QCM** de plus portent la carte, les aides progressives et les pièges : les six de 5e (`5e_C7.1` à `5e_C7.6`) et
+les sept de 4e (`4e_C7.1`, `4e_C7.3` à `4e_C7.8`). Six à huit pièges chacun, écrits par numéros
+(`fabriquer.py`). État : **48 QCM sur 72**, 24 à poser (3e C7, C8, C9, ateliers).
+
+- **Les derniers indices creux et intrus du site**, avec `corriger_question.py` : « un meuble qui supporte le routeur »
+  → « la liste des appareils branchés sur le routeur » ; « la température interne du processeur » → « le nom donné à
+  l'appareil, comme PC-TECHNO-01 » ; « choisir la couleur de la station » → « recharger la batterie avec le réseau EDF
+  seulement » ; « cela rend la lampe plus lumineuse » → « la lumière n'arrive plus jusqu'au capteur », et sept indices
+  (« C'est l'inverse. », « Rien n'a vidé b. », « L'ordre EST le test. »). Dans six QCM déjà posés (`4e_C3.1`,
+  `3e_C4.1`, `3e_C4.7`, `4e_C4.1`, `5e_C5.1`) et deux à venir (`4e_C9.1`, `5e_C9.1`). **Site : 0 « ! », 0 indice vide,
+  0 indice creux.**
+- `indices_creux.mjs` affiné : une formule générique (« Aucun rapport : … ») n'est creuse que si elle ne s'explique
+  pas dans la suite (moins de 45 caractères) ; « Aucun rapport : l'alerte est une décision du programme, pas du
+  convertisseur » n'est plus signalée.
+- Contrôles : `banc_aides` 13 / 13 ; `verif_qcm_coherence` 20 / 20 (les QCM touchés) ; `controle_indices_qcm`,
+  `controle_longueurs`, `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`,
+  `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ; export Éléa régénéré,
+  banc vert. Bancs des treize lots : verts, sauf `tests_regle_311_4e_C7.1` (« séance 2, les onglets dans le premier
+  écran, bas à 1 063 px pour 844 »), **le même échec sur `main`** : la page de séquence, que cette vague ne touche pas.

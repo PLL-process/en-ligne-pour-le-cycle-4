@@ -86,7 +86,7 @@ node _outils/qcm_aides/indices_creux.mjs <qcm> --liste             # les questio
 |---|---|
 | `d` = « ! » | l'intrus est une plaisanterie : **réécrire la proposition** (étape 2, I2), puis son pourquoi |
 | `d` vide pour une mauvaise proposition | écrire son pourquoi : l'élève qui la choisit n'aurait aucun indice |
-| `d` creux : moins de 25 caractères, ou « Rien à voir. », « Faux. », « Python va très bien. » | le réécrire : **pourquoi CETTE proposition ne répond pas à CETTE question** |
+| `d` creux : moins de 25 caractères, ou « Rien à voir. », « Faux. », « Python va très bien. » sans explication à la suite | le réécrire : **pourquoi CETTE proposition ne répond pas à CETTE question** |
 
 Un bon pourquoi nomme ce qui manque à la proposition, sans donner la bonne réponse : « Un multimètre mesure une tension
 ou une intensité : il ne dit pas combien de temps dure la réparation » (et non « Il mesure une tension. ») ; « Python
@@ -108,8 +108,8 @@ python3 _outils/controle_longueurs.py             # la bonne réponse ne devient
 Si le lot a un générateur (`_generation/q.py`, `build_qcm.py`), la même correction s'y écrit, sinon la prochaine
 régénération la défait ; un générateur qui n'est plus à jour de sa page se signale à Pascal, il ne se relance pas.
 
-État du 17/11/2026 au soir : 72 QCM, 0 « ! », 0 indice vide, 14 indices creux (thème 3 et ateliers) ; le thème 2
-est à zéro après la vague 3b (`5e_C4.1` et les trois QCM de réseau de `4e_C4.7` : 62 indices et intrus réécrits).
+État du 17/11/2026 au soir, après la vague 4 du lot 3 : 72 QCM, **0 « ! », 0 indice vide, 0 indice creux**. Un QCM neuf
+ou modifié se mesure avant sa PR (`indices_creux.mjs --strict <qcm>`).
 
 ## 5. Généraliser et dire
 

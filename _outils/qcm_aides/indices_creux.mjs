@@ -6,7 +6,7 @@
 //     est plus joli », « pour user le clavier de l'ordinateur ») — 7 sur le site le 17/11/2026 ;
 //   · un `d` vide pour une mauvaise proposition : l'élève qui la choisit n'a aucun indice ;
 //   · un `d` creux : moins de 25 caractères, ou une formule qui ne dit pas pourquoi (« Rien à voir. », « Python va très
-//     bien. », « Faux. », « Ce n'est pas la bonne réponse »).
+//     bien. », « Faux. », « Ce n'est pas la bonne réponse ») et qui ne l'explique pas dans la suite (moins de 45 caractères).
 //
 //   node _outils/qcm_aides/indices_creux.mjs [qcm.html | dossier …] [--detail] [--liste] [--strict]
 //     --detail  nomme chaque indice à revoir (question, proposition, indice)
@@ -57,7 +57,7 @@ export function analyser(Q) {
   Q.forEach((q, k) => (q.o || []).forEach((o, m) => {
     if (m === q.r) return;
     const d = texte((q.d || [])[m]);
-    const g = d === '!' ? '!' : d === '' ? 'vide' : (d.length < 25 || GENERIQUE.test(d)) ? 'creux' : null;
+    const g = d === '!' ? '!' : d === '' ? 'vide' : (d.length < 25 || (GENERIQUE.test(d) && d.length < 45)) ? 'creux' : null;
     if (g) out.push({ g, n: k + 1, notion: q.n, o: texte(o), d });
   }));
   return out;
