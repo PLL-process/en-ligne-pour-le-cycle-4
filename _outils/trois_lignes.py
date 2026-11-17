@@ -80,7 +80,7 @@ def poser(s: str, d: dict) -> str:
         m = re.search(r'<details class="rappel-ouverture" id="ouverture"[^>]*>\s*<summary>.*?</summary>\n', s, re.S)
         if m:
             pos = m.end()
-            b = re.match(r'<div class="badges">.*?</div>\n', s[pos:], re.S)
+            b = re.match(r'\s*<div class="badges">.*?</div>\n', s[pos:], re.S)   # une ligne vide peut précéder
             if b:
                 pos += b.end()
         else:
