@@ -848,9 +848,9 @@ details.geste-detail>p{margin:4px 0 0}
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1392,7 +1392,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1411,7 +1414,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -2099,7 +2102,7 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
   <h2>🔀 Deux façons de vivre l'atelier</h2>
   <div class="donnees">
     <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python est <b>dans la page</b>, à chaque activité qui fait programmer. <br>Tu écris ton programme au clavier, tu cliques ▶&nbsp;Exécuter&nbsp;: la console est en dessous. <br>C'est le parcours principal. <br>Cherche les <b>éditeurs 🐍</b> dans les séances 2, 3 et 4. <br>Vittascience reste possible, par un lien, si tu préfères.</p>
-    <p data-parcours="c">🅲 <b>Sans matériel</b> : tu t'appuies sur deux activités de la séance 1. <br>① Activité 1 : le simulateur de mémoire, avec le bouton « ▶ Étape suivante ». <br>② Activité 2 : les tables de suivi, à refaire au cahier.</p>
+    <p data-parcours="c">🅲 <b>Sans matériel</b> : tu t'appuies sur deux activités de la séance 1. <br>① Activité 1 : le simulateur de mémoire, avec le bouton « ▶ Étape suivante ». <br>② Activité 2 : les tables de suivi, à refaire sur une feuille de brouillon.</p>
   </div>
   <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter.</b> À chaque exercice&nbsp;: <br>
   ① tu PRÉDIS d'abord le résultat, sans ordinateur&nbsp;; <br>
@@ -2500,7 +2503,7 @@ print("2 + 3 =", 2 + 3)
   <div class="qcm-option"><input type="radio" name="a3p4" id="a3p4__4" value="une erreur"><label for="a3p4__4">une erreur</label></div>
 </fieldset>
 </div>
-    <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : l'éditeur ci-dessous est dans la page et marche sans Internet — exécute quand même les quatre expériences (▶) : c'est ce qui enregistre ton passage. <br>Sur papier, écris-les au cahier et reporte les résultats donnés par la correction de l'activité.</p>
+    <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : l'éditeur ci-dessous est dans la page et marche sans Internet — exécute quand même les quatre expériences (▶) : c'est ce qui enregistre ton passage. <br>Sur papier, écris-les sur une feuille de brouillon et reporte les résultats donnés par la correction de l'activité.</p>
 <div class="editeur-py" id="vs1" data-fichier="3e-VARIABLES-act3-TON NOM">
   <label for="py_a3">🐍 ② L'éditeur Python de la page — tes quatre expériences, prêtes à exécuter</label>
   <p class="editeur-py-note">Clique ▶&nbsp;Exécuter : la console affiche une ligne par expérience, dans l'ordre A, B, C, D. Tu peux aussi les essayer une par une, ou en inventer d'autres.</p>
@@ -2510,7 +2513,7 @@ print("Train " + "Q", 2 + 1, "min")
 print(type(3 + 4.5), 3 + 4.5 > 7)
 </textarea>
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
     <div class="exo">
       <p><b>③ Je reporte ce que la console a affiché :</b></p>
@@ -2661,7 +2664,7 @@ print(type(3 + 4.5), 3 + 4.5 > 7)
   <div class="qcm-option"><input type="radio" name="a4b4" id="a4b4__4" value="une erreur" data-pourquoi="Les trois bugs sont corrigés : plus rien n'arrête le programme. Refais la table de suivi."><label for="a4b4__4">une erreur</label></div>
 </fieldset>
 </div>
-    <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : l'éditeur est dans la page — corrige et exécute le programme (▶). <br>Sur papier, recopie le programme corrigé au cahier ligne à ligne, et vérifie ta ligne 8 avec la correction complète.</p>
+    <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : l'éditeur est dans la page — corrige et exécute le programme (▶). <br>Sur papier, recopie le programme corrigé sur une feuille de brouillon ligne à ligne, et vérifie ta ligne 8 avec la correction complète.</p>
 <div class="editeur-py" id="vs2" data-fichier="3e-VARIABLES-act4-TON NOM">
   <label for="py_a4">🐍 L'éditeur Python de la page — le programme du stagiaire : corrige-le, puis exécute-le, la preuve par la console 🔓</label>
   <p class="editeur-py-note">Exécute-le d'abord tel quel : la console t'explique la première erreur, en français, et sa ligne. <br>Corrige UN bug à la fois et réexécute à chaque fois — le bug n°2 ne fait aucune erreur : seule la sortie le trahit. <br>C'est ton badge d'exécution : la vérification de l'activité demande une exécution menée jusqu'au bout.</p>
@@ -2675,7 +2678,7 @@ minutes = minutes - 1
 print(message, minutes, "min |", temperature_c, "C")
 </textarea>
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Bug 1 : séance 2, expérience B. Bug 2 : document 2, carte <b>float</b> — Python ne t'avertira pas, cherche un nombre décimal mal écrit. <br>Bug 3 : quel est le TYPE de <code>minutes</code> après la ligne 3 d'origine ?</p></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Chasse aux bugs méthodique :<br>① je tiens la table de suivi avec les TYPES (<code>minutes : str "21"</code> ← alerte !) ;<br>② je repère les opérations impossibles (str − int) ;<br>③ je corrige UNE chose à la fois et je réexécute à chaque fois. Un bug corrigé peut en révéler un autre — c'est normal, c'est la mise au point.</p></details>
@@ -2912,7 +2915,7 @@ print(vitesse_ventilation(40, False))   # T3 : attendu 1
 print(vitesse_ventilation(100, False))  # T4 : le cas limite, attendu 3
 </textarea>
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
 <div class="banc-eleve" id="bancEleve">
   <p class="banc-eleve-titre"><b>🧪 Le banc de TA fonction</b> : ce qu'elle RENVOIE, comparé au besoin. <br>Prévois T5, T6 et T7 avant d'exécuter.</p>
@@ -2992,7 +2995,7 @@ print("Marathon :", miles_vers_km(26.2), "km")
 print("Canicule :", fahrenheit_vers_celsius(98), "°C")
 </textarea>
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=code&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
@@ -3663,7 +3666,10 @@ if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse 
   }
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
   });
 
   // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
@@ -3764,6 +3770,12 @@ if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse 
       if (boite.width < 120 || boite.height < 90) continue;
       svg.classList.add("loupe-cliquable");
       svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      // un schéma qui porte du texte visible reste une image : un bouton doit contenir dans son nom le texte qu'il
+      // montre (WCAG 2.5.3, axe « label-content-name-mismatch ») ; « Agrandir le schéma : … » dit déjà la commande
+      svg.setAttribute("role", svg.querySelector("text") ? "img" : "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
@@ -3780,6 +3792,8 @@ if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse 
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
       if (!img.getAttribute("title")) {
         img.setAttribute("title", "Cliquer pour agrandir");
       }

@@ -659,9 +659,9 @@ details.erreurs-repliees>summary:focus-visible{outline:3px solid #ffd166;outline
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1203,7 +1203,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1222,7 +1225,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -1749,7 +1752,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     uniquement — jamais le secteur</b>) et son programme à modifier sous Vittascience/mBlock — après
     sauvegarde du programme d'origine.</p>
     <p>🅱 <b>En simulation</b> : le banc de test à scénarios intégré à cette page (aucun matériel).</p>
-    <p>🅲 <b>Sans matériel</b> : les relevés imprimés, l'algorithme à compléter au cahier et le tableau
+    <p>🅲 <b>Sans matériel</b> : les relevés imprimés, l'algorithme à compléter sur une feuille de brouillon et le tableau
     des scénarios de test.</p>
   </div>
 </section>
@@ -1931,7 +1934,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> analyser des données = comparer le comportement OBSERVÉ au comportement ATTENDU, puis remonter de chaque écart à la règle du programme qui l'autorise. Les relevés sont la loupe du programmeur.</div>
     <details class="erreurs-repliees"><summary>⚠ Pièges classiques — à ouvrir avant de vérifier</summary><div class="erreurs"><b>⚠ Pièges classiques :</b> accuser le matériel alors que les données désignent une règle ; « corriger » ce qui est normal (le jeudi 22 h) ; lire une valeur isolée au lieu d'une TENDANCE.</div></details>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5, et les 2 anomalies + leurs causes recopiées au cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5, et les 2 anomalies + leurs causes recopiées sur une feuille de brouillon.</div>
   </div>
 
   <div class="activite" id="act2">
@@ -2064,7 +2067,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> une modification de programme se SPÉCIFIE : hystérésis = deux seuils écartés de plus que la vibration de la mesure (démarrer &lt; 35 %, arrêter &gt; 45 %) ; plage horaire = une condition ET sur le démarrage. Une anomalie → une modification précise.</div>
     <details class="erreurs-repliees"><summary>⚠ Pièges classiques — à ouvrir avant de vérifier</summary><div class="erreurs"><b>⚠ Pièges classiques :</b> resserrer les deux seuils (39/41 : le battement revient) ; mettre la condition horaire sur l'ARRÊT (un arrosage en cours doit pouvoir finir) ; modifier « au feeling » sans relier à une anomalie.</div></details>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5, et l'algorithme corrigé recopié au cahier en 3 lignes SI/ALORS.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5, et l'algorithme corrigé recopié sur une feuille de brouillon en 3 lignes SI/ALORS.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Tester et valider ›</button></p>
@@ -2164,7 +2167,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> on ne modifie JAMAIS un programme qui marche sans filet : 1) sauvegarder l'origine, 2) modifier, 3) tester en SIMULATION avec des scénarios qui couvrent chaque règle, 4) valider en RÉEL sur un périmètre limité (plant témoin), 5) vérifier la non-régression.</div>
     <details class="erreurs-repliees"><summary>⚠ Pièges classiques — à ouvrir avant de vérifier</summary><div class="erreurs"><b>⚠ Pièges classiques :</b> modifier directement le vrai jardin « pour gagner du temps » ; tester un seul scénario (« ça a l'air bon ») ; oublier la non-régression — la nouveauté qui casse l'ancien est le bug le plus fréquent du monde réel.</div></details>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 4 scénarios joués au banc (4/4), 6/6 réponses, et le tableau scénario→verdict recopié au cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 scénarios joués au banc (4/4), 6/6 réponses, et le tableau scénario→verdict recopié sur une feuille de brouillon.</div>
   </div>
 
   <div class="activite" id="act4">

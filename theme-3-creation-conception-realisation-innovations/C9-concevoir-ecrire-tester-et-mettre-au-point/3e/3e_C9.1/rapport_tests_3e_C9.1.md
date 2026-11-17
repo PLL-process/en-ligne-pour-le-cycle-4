@@ -1,5 +1,13 @@
 # Rapport de tests — Atelier « Variables, types et systèmes » (3e_C9.1)
 
+> **État au 17/11/2026 — ce qui fait foi aujourd'hui.** Les sections plus bas sont l'historique du lot, de la plus
+> récente à la plus ancienne : leurs nombres (35/35, 42/42, 53/53) sont ceux de leur date. Rejoué ce jour :
+> - suite du lot : `node tests_3e_C9.1.mjs .` → **89 / 89** ;
+> - banc n°311 : `node tests_regle_311_3e_C9.1.mjs` → **34 / 34** ;
+> - éditeur Python intégré : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **76 / 76** ;
+> - mode mission, page jouée écran par écran (`_outils/mode_mission/banc_generique.mjs`) : aucun refus.
+> Restent manuels (section 4) : une impression papier réelle — élève et corrigé —, le clavier seul de bout en bout.
+
 Date : 2026-08-26 (**harmonisation du lot** ; campagne initiale : 2026-07-30) ·
 Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_3e_C9.1.mjs`
@@ -25,7 +33,7 @@ viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_3e_C9.1.m
 > le lot n'avait pas dérivé depuis. Un rapport qu'on ne peut pas rejouer est une
 > affirmation, pas une preuve. La suite ci-dessous ferme ce trou.
 
-## 1. Tests automatisés exécutés — 35/35 réussis
+## 1. Tests automatisés exécutés à la remise du 26/08/2026 — 35/35 réussis (état actuel : en tête)
 
 ### Les six dispositifs installés à l'harmonisation
 
