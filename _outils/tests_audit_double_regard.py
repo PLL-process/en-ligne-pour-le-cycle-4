@@ -57,6 +57,9 @@ s1 = trois_lignes.poser(SEQ, D)
 cas("la carte se pose dans le volet, après les badges, avant les onglets",
     s1.find('id="trois-lignes"') > s1.find('<div class="badges">') and s1.find('id="trois-lignes"') < s1.find("seance-tabs"))
 cas("le style se pose une fois", s1.count(".trois-lignes-liste{") == 1)
+s1v = trois_lignes.poser(SEQ.replace("<summary>📖 Rappel</summary>\n", "<summary>📖 Rappel</summary>\n\n"), D)
+cas("une ligne vide avant les badges : la carte se pose quand même après eux",
+    s1v.find('id="trois-lignes"') > s1v.find('<div class="badges">'))
 cas("la carte porte son propre cadre (gabarits sans style de carte)", "section.trois-lignes{max-width:960px" in s1)
 ancien = s1.replace(trois_lignes.CSS, "/* avant de commencer, trois lignes : apprendre, savoir faire, réussir (règle d'or n°337) */\n"
                     ".trois-lignes-liste{list-style:none}\n.trois-lignes-liste li{padding:0}\n")
