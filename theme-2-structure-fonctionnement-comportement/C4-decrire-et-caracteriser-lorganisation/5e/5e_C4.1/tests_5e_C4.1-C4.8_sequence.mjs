@@ -518,8 +518,8 @@ await q.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' }); await q.waitForTi
 await q.click('.seance-tab[data-panel="s6"]'); await q.waitForTimeout(200);
 const VENT = { bmObjet: 'mon ventilateur', bmNb: '4', bmE0: 'Énergie électrique', bmSource: 'la prise',
   bmF1: 'ALIMENTER', bmC1: 'La prise et le câble', bmE1: 'Énergie électrique', bmF2: 'DISTRIBUER', bmC2: 'Interrupteur et sélecteur',
-  bmE2: 'Énergie électrique', bmF3: 'CONVERTIR', bmC3: 'Moteur électrique', bmE3: 'Énergie mécanique',
-  bmF4: 'TRANSMETTRE', bmC4: "L'axe et l'hélice", bmE4: 'Énergie mécanique', bmAction: "Brasser l'air" };
+  bmE2: 'Énergie électrique', bmF3: 'CONVERTIR', bmC3: 'Moteur électrique', bmE3: 'Énergie cinétique',
+  bmF4: 'TRANSMETTRE', bmC4: "L'axe et l'hélice", bmE4: 'Énergie cinétique', bmAction: "Brasser l'air" };
 const remplir2 = async R => { for (const [id, v] of Object.entries(R)) {
   if ((await q.$eval('#' + id, e => e.tagName)) === 'SELECT') await q.selectOption('#' + id, v); else await q.fill('#' + id, v); } await q.waitForTimeout(150); };
 /* ce que le dessin montre : les blocs (fonction, composant, sous le bloc ?), les flèches et leur étiquette, l'action */

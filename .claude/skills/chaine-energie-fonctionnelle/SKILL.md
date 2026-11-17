@@ -8,6 +8,9 @@ description: Dessiner ou corriger tout schéma de chaîne d'énergie du dépôt 
 Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311. Mis à jour le 29/10/2026 :
 les trois schémas faits main (4e_C9.1, 4e_C6.2, 5e_C9.1) sont entrés dans le générateur ; le générateur dessine la fonction absente.
 Mis à jour le 15/11/2026 : **tous les flux sont animés** (demande de Pascal), voir « Les flux animés » plus bas.
+Mis à jour le 16/11/2026 : **les formes d'énergie sont celles du programme 2024** (SFC 11, connaissances : « électrique,
+cinétique, potentielle, thermique, lumineuse ») — **cinétique**, plus mécanique, à la sortie d'un moteur, d'une pompe, d'une
+électrovanne (décision de Pascal) ; voir « Les formes d'énergie » plus bas.
 
 > **Règle d'or n°310 (21/10/2026).** Dans une chaîne d'énergie, les blocs disent ce qui est fait, les flèches disent ce qui circule.
 > Les blocs portent les fonctions techniques, avec un verbe ; sous chaque bloc, le composant qui la réalise ; les formes
@@ -26,7 +29,7 @@ au-dessus : la convention ne s'applique alors qu'à l'ordre de lecture (gauche �
 |---|---|---|
 | **ALIMENTER** | fournir l'énergie au reste de la chaîne | batterie (le bloc s'appelle alors **STOCKER**, avec « Énergie chimique stockée » dessous), alimentation secteur, USB, **régulateur de charge**, **convertisseur 12 V → 5 V** |
 | **DISTRIBUER** | acheminer et commander l'énergie vers les récepteurs | interrupteur électronique, relais, pont en H, sortie de la carte, **électrovanne** (ouvre ou ferme le passage) |
-| **CONVERTIR** | changer la forme de l'énergie | panneau solaire, moteur, pompe (électrique → mécanique : l'eau est mise en mouvement), LED, buzzer |
+| **CONVERTIR** | changer la forme de l'énergie | panneau solaire, moteur, pompe (électrique → cinétique : l'eau est mise en mouvement), LED, buzzer |
 | **TRANSMETTRE** | acheminer et adapter un mouvement | réducteur, courroie, crémaillère |
 
 **Interdits dans un bloc** : RÉGULER, ADAPTER, OUVRIR / FERMER, STOCKER / ALIMENTER, et tout verbe d'une autre liste. « Réguler la charge »,
@@ -40,7 +43,7 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
 |---|---|---|
 | **Bloc** | une fonction du vocabulaire fixe, en majuscules, à l'infinitif : ALIMENTER, DISTRIBUER, CONVERTIR, TRANSMETTRE ; STOCKER pour une batterie | un nom de composant, une précision de fonction, une forme d'énergie |
 | **Sous le bloc** | le composant qui réalise la fonction (« Moteur dans le moyeu arrière »), et la précision utile (« Régulateur de charge », « Pont en H, carte séparée ») | un verbe de fonction |
-| **Sur la flèche** | la forme d'énergie qui circule : électrique, mécanique, lumineuse, hydraulique, sonore, chimique… | un composant |
+| **Sur la flèche** | la forme d'énergie qui circule, avec les mots du programme : électrique, cinétique, potentielle, thermique, lumineuse ; chimique (une pile, une batterie) et sonore quand il le faut | un composant ; « mécanique » (voir plus bas) |
 | **Entrée** | une flèche étiquetée qui arrive au premier bloc (« Énergie lumineuse » vers le panneau) ; la source est nommée si utile | — |
 | **Sortie** | une flèche étiquetée qui quitte le dernier bloc, **puis l'action finale écrite en gras** (« Éclairer la zone », « Déplacer le vélo et sa charge ») | — |
 | **Énergie stockée** | l'annotation « Énergie chimique stockée », **sous le composant** (la batterie), en jaune ; ce n'est pas une flèche | — |
@@ -61,7 +64,7 @@ ALIMENTER : convertisseur 12 V → 5 V ; DISTRIBUER : électrovanne). Pour la ch
    La n°310 a déjà remplacé la n°131 sur un autre point : la flèche d'ordre n'arrive plus « sur le convertisseur quand la puissance est
    faible », elle arrive **toujours sur DISTRIBUER** (piège 5 ; reprise du 21/10/2026 au journal).
 4. **L'eau n'est pas de l'énergie.** Un circuit de matière (eau) se dessine à part, d'une couleur distincte, avec ses propres
-   flèches. La pompe convertit l'énergie électrique en énergie **mécanique** (« l'eau est mise en mouvement »), pas hydraulique
+   flèches. La pompe convertit l'énergie électrique en énergie **cinétique** (« l'eau est mise en mouvement ») — ni hydraulique, ni mécanique depuis le 16/11/2026
    (décision de Pascal du 21/10/2026, n°4 de la reprise au journal).
 5. **L'ordre arrive toujours sur DISTRIBUER.** Le préactionneur — sortie de la carte, transistor intégré au module (buzzer Grove) ou carte
    séparée (relais, pont en H) — se dit **sous le bloc DISTRIBUER**, jamais en déplaçant la flèche (planche des trois cas de 3e_C9.2).
@@ -154,3 +157,30 @@ Reste, dans une figure générée : la fonction absente de la station de `3e_C9.
 
 La justesse technique d'un composant précis (à vérifier dans la documentation du matériel) ; le choix du niveau de détail
 selon la classe ; les schémas de chaîne d'**information** seule (règle n°6 et gabarit des chaînes).
+
+## Les formes d'énergie (16/11/2026)
+
+Le programme 2024 (SFC 11, connaissances) nomme cinq formes : **électrique, cinétique, potentielle, thermique, lumineuse**.
+Décision de Pascal (16/11/2026) : la sortie d'un moteur, d'une pompe, d'une électrovanne est de l'énergie
+**cinétique** (« de rotation », « de translation » quand il faut préciser le mouvement) ; un objet en hauteur, un sac
+suspendu, un ressort tendu gardent de l'énergie **potentielle**. « Mécanique » n'est pas faux (c'est la somme des deux) : le
+lexique et la synthèse le disent une fois, pour qu'un élève qui le croise ailleurs (physique-chimie, brevet) fasse le lien.
+« Mécanique » reste là où il ne désigne pas une forme d'énergie : tenue mécanique d'un matériau, frein mécanique,
+résistance mécanique du mât.
+
+Deux précisions (16/11/2026, après la fiche SFC1b de l'académie de Bordeaux, qui écrit « moteur → cinétique » mais
+« vérin → mécanique » et « mécanique → génératrice ») :
+- **« Mécanique » n'est jamais une mauvaise réponse.** Jamais proposé comme piège à côté de « cinétique » dans un QCM ou un
+  menu ; une réponse écrite « mécanique » est acceptée, la correction ajoute « on dit aussi cinétique : l'énergie du
+  mouvement ».
+- **Un vérin, une génératrice** (décision de Pascal, 16/11/2026 : « en cycle 4, le détour est quasiment une
+  obligation ») : moteur → **cinétique**, parce qu'il en sort un mouvement ; vérin → **mécanique**, parce qu'il pousse ou
+  soulève une charge, donc donne du mouvement et de la hauteur ; génératrice, dynamo : **mécanique → électrique**, comme
+  la fiche de Bordeaux (« cinétique → électrique » est juste aussi).
+- **Où le détour est écrit** : une note « 📝 Cinétique ou mécanique ? » dans les synthèses de `5e_C3.1` (moteur, vérin,
+  la règle) et du Book Train (moteur, vérin, génératrice, en cases) ; une ligne « On dit aussi « mécanique » : c'est le
+  mot qui couvre le mouvement (cinétique) et la hauteur (potentielle) » dans la correction qui nomme la sortie d'un
+  moteur ou d'une pompe (`4e_C4.1`, Book Train, `5e_C4.1`, `4e_C9.1`), et pour la dynamo de `5e_C7.4`. Une nouvelle
+  séquence qui fait nommer la sortie d'un moteur, d'une pompe, d'un vérin ou d'une génératrice porte la même ligne
+  dans sa correction.
+

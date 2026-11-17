@@ -32192,3 +32192,57 @@ afin d'y remédier. »
 - **Le retour** : en page complète, dès que le bouton du haut sort de l'écran, un petit « 🎮 Mode mission » reste en
   bas à droite, jamais imprimé.
 - Le compteur propre à chaque page (« x / 6 activités validées ») n'est pas joué par ce banc.
+
+## 16/11/2026 — Les formes d'énergie du programme 2024 : « cinétique » au lieu de « mécanique », sur tout le site
+
+Demande de Pascal, 16/11/2026, sur `4e_C4.1` (« L'eau est mise en mouvement : la forme de l'énergie proposée pourrait
+être l'énergie cinétique au lieu de mécanique »), étendue par lui à tout le site (« Tout le site »).
+
+- **La règle** : le programme 2024 (SFC 11) nomme cinq formes, **électrique, cinétique, potentielle, thermique,
+  lumineuse**. Ce qui est mis en mouvement (sortie d'un moteur, d'une pompe, d'un ventilateur) reçoit de l'énergie
+  **cinétique** (« de rotation », « de translation » quand il faut préciser) ; un sac suspendu, un ressort comprimé
+  gardent de l'énergie **potentielle** (la patère de `5e_C8.1`, le ressort de la banque B).
+- **Où** : les schémas (SVG et sources draw.io, regénérés par `_outils/regenerer_chaines_energie.py` : les figures
+  sortent identiques), les QCM (propositions, explications), les corrections, les données du mode mission, les banques
+  (`_outils/banks_a.py`, `banks_b.py`), la bibliothèque draw.io du Book Train (par son générateur) et les exports Éléa
+  (`_exports/moodle/`, regénérés). Séquences : `5e_C3.1`, `3e_C4.1`, `4e_C4.1`, Book Train, `5e_C4.1`, `4e_C6.2`,
+  `5e_C7.4`, `4e_C7.4`, `4e_C9.1`, `5e_C8.1`, `3e_C9.2`, `5e_C9.1`.
+- **« Mécanique » reste** là où il ne nomme pas une forme d'énergie : tenue mécanique, frein mécanique, résistance
+  mécanique du mât, transmission mécanique, liaison.
+- **« Mécanique » n'est jamais une mauvaise réponse** (question de Pascal : « on est bien obligé de parler d'énergie
+  mécanique à la sortie d'un moteur »). Énergie mécanique = cinétique + potentielle : les synthèses de `5e_C3.1`,
+  `4e_C4.1` et du Book Train le disent une fois, en une ligne. Aucun QCM ne propose « mécanique » comme piège à côté de
+  « cinétique ». La fiche SFC1b de l'académie de Bordeaux, montrée par Pascal, écrit « moteur → cinétique » mais
+  « vérin → mécanique » et « mécanique → génératrice » : un vérin qui pousse ou soulève une charge s'écrira « mécanique
+  (cinétique + potentielle) ». Au 16/11/2026, aucune page ne donne de forme d'énergie à un vérin ou à une génératrice.
+  Les deux règles sont écrites dans le skill `chaine-energie-fonctionnelle`.
+- **La voix du vélo-cargo** (`5e_C3.1`, scènes 5 et 6) disait « énergie mécanique » : les deux phrases sont corrigées
+  et les deux prises refaites avec Piper, même voix de synthèse (`fr_FR-siwis-medium`), modèle pris à la publication
+  GitHub `rhasspy/piper` v0.0.2 (HuggingFace refuse l'accès depuis la session). La voix de Pascal n'est pas utilisée ;
+  ni Piper ni le modèle n'entrent dans le dépôt. `voix.json` marque les deux prises « À ÉCOUTER par Pascal » : **une
+  régénération demande une nouvelle écoute de Pascal avant la fusion.**
+- **Pas fait ici** : la synthèse de `4e_C4.1` s'imprime sur trois pages — c'était déjà le cas sur `main` (règle n°316,
+  à reprendre dans sa propre PR).
+- Vérifications (16/11/2026) : les bancs des 12 séquences touchées, lancés depuis leur dossier avec leurs arguments, sont
+  verts (le QCM de la patère refusait d'abord une bonne réponse devenue trop longue : raccourcie, 32 / 32) ;
+  `verif_qcm_coherence` (8 QCM), `controle_longueurs`, `controle_indices_qcm`, `controle_liens`, `controle_medias`,
+  `controle_sigles`, `controle_regles_visibles` verts ; `enrichir.py --verifier` à jour pour les 4 pages en mission,
+  `banc_generique.mjs` sans refus ; `controle_schemas` : 85 schémas, 0 ✘ ; `verifier_chaines_energie.py` 87 / 87 ;
+  `banc_lecteur.py` et `tests_voix_velo_cargo.py` verts ; la bibliothèque draw.io est identique à la sortie de son
+  générateur. `controle_flux_animes.py` refuse `5e_C4.1/Images/chaine_ventilateur_corrige.svg`, comme sur `main`.
+- **Le détour par « mécanique », écrit pour l'élève** (décision de Pascal, 16/11/2026 : « en cycle 4, le détour est
+  quasiment une obligation » ; carte blanche sur le où et le comment). Moteur → **cinétique**, parce qu'il en sort un
+  mouvement ; vérin → **mécanique**, parce qu'il pousse ou soulève une charge (mouvement et hauteur) ; génératrice :
+  **mécanique → électrique**, comme la fiche de Bordeaux. Écrit à trois endroits :
+  - une note « 📝 Cinétique ou mécanique ? » dans deux synthèses : `5e_C3.1` (premier contact : moteur, vérin, la règle,
+    en trois lignes) et le Book Train (moteur, vérin, génératrice, en cases). Les deux tiennent sur deux pages A4. Pas
+    dans `4e_C4.1` (trois pages déjà sur `main` ; sa ligne-pont reste) ni dans `4e_C7.4` (deux pages pleines à 96 %) ;
+  - une ligne « On dit aussi « mécanique » : c'est le mot qui couvre le mouvement (cinétique) et la hauteur
+    (potentielle) » dans la correction qui nomme la sortie d'un moteur ou d'une pompe (`4e_C4.1`, Book Train,
+    `5e_C4.1`, `4e_C9.1`), et pour la dynamo de `5e_C7.4` ; la capsule de révision de `5e_C3.1` dit « cinétique (celle
+    du mouvement ; on dit aussi mécanique) » ;
+  - les règles dans le skill `chaine-energie-fonctionnelle`, pour toute nouvelle séquence.
+  Pas les lexiques : `generer_lexique.py` les tire des QCM, et les régénérer retirerait les unités écrites en toutes
+  lettres (règle n°312) ajoutées depuis ; c'est à reprendre dans un lot à part.
+- Une erreur du remplacement corrigée au passage : « un relais est un contact mécanique » (`4e_C9.1`) n'est pas une
+  forme d'énergie, il reste « mécanique ».

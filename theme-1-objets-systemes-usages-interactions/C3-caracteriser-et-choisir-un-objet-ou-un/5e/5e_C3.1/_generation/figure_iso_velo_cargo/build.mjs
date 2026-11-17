@@ -404,7 +404,7 @@ for (const sg of [1, -1]) {
 A.settle(R, P);
 R.items.sort((a, b) => a.key - b.key);
 
-// ── Flèche d'énergie mécanique (symbole de la scène 5), dans le plan de la roue arrière ──
+// ── Flèche d'énergie cinétique (symbole de la scène 5), dans le plan de la roue arrière ──
 const arrowArc = (() => {
   const r = 38;
   const y = 14;
@@ -492,7 +492,7 @@ for (const [cls, st] of Object.entries(STATES)) {
   css += `${sel(st.on)}{${decl(ramp(st.c, 1))}}\n`;
   css += `${sel(st.was)}{${decl(ramp(st.c, 0.42))}}\n`;
 }
-// seule la roue arrière est entraînée par le moteur : seule elle prend le vert de l'énergie mécanique
+// seule la roue arrière est entraînée par le moteur : seule elle prend le vert de l'énergie cinétique
 const rouesVertes = [5, 6].map((n) => `.vpp[data-scene="${n}"] .pv-rotor[data-wheel="rw"]`).join(",");
 css += `${rouesVertes}{--anatomy-lo:${mix(BG, COULEUR.meca, 0.7)};--anatomy-hi:${COULEUR.meca}}\n`;
 css += `.pv-fl{stroke:${COULEUR.meca};stroke-width:3;fill:none;stroke-linecap:round}\n.pv-fl-tete{fill:${COULEUR.meca};stroke:${COULEUR.meca};stroke-width:1.5;stroke-linejoin:round}\n`;
@@ -599,7 +599,7 @@ if (process.argv.includes("--poids")) {
   const sixOnly = css.split("\n").filter((l) => l.includes('data-scene="6"') && !l.includes("@media")).map((l) => l.replace(/\.vpp\[data-scene="[\d"\],.\[a-z=\-\s]*?\](\s+[^,{]+)/g, "$1")).join("\n");
   const fixe = `<svg xmlns="http://www.w3.org/2000/svg" class="iso-svg vpp" data-scene="6" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="t d" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">
 <title id="t">La chaîne d'énergie du vélo-cargo</title>
-<desc id="d">L’assistance électrique du vélo-cargo : la batterie stocke de l’énergie chimique et fournit de l’énergie électrique au contrôleur de puissance, dessiné entre la batterie et le moteur du moyeu arrière. Le moteur convertit l’énergie électrique en énergie mécanique et entraîne la roue. Le bandeau distingue les fonctions ALIMENTER, DISTRIBUER, CONVERTIR et TRANSMETTRE, les composants en dessous et les formes d’énergie sur les flèches. L’effort du cycliste n’est pas représenté.</desc>
+<desc id="d">L’assistance électrique du vélo-cargo : la batterie stocke de l’énergie chimique et fournit de l’énergie électrique au contrôleur de puissance, dessiné entre la batterie et le moteur du moyeu arrière. Le moteur convertit l’énergie électrique en énergie cinétique et entraîne la roue. Le bandeau distingue les fonctions ALIMENTER, DISTRIBUER, CONVERTIR et TRANSMETTRE, les composants en dessous et les formes d’énergie sur les flèches. L’effort du cycliste n’est pas représenté.</desc>
 <style>${TOKENS}${kept}\n${css.split("\n").filter((l) => !l.includes("@media") && !l.includes("vppLueur") && !l.includes("transition")).join("\n")}\n${bandCss}</style>
 <defs><clipPath id="fixeClip"><rect width="${W}" height="${CAM_H}"/></clipPath></defs><rect width="${W}" height="${H}" fill="${BG}"/><g clip-path="url(#fixeClip)"><g transform="translate(${410 - CAM[6][0] * CAM[6][2]} ${CAM[6][3] - CAM[6][1] * CAM[6][2]}) scale(${CAM[6][2]})">${dessin}</g></g>${band}</svg>`;
   writeFileSync(FIXE, fixe);

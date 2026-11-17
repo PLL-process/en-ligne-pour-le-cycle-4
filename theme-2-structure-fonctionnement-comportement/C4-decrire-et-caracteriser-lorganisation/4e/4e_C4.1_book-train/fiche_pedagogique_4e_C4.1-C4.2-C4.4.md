@@ -114,6 +114,6 @@ présente comme la tension habituelle des grands bâtiments américains. Le 13,2
 « 4 niveaux » de la situation ont été corrigés.
 
 **Vocabulaire de l'énergie (24/10/2026).** Un seul usage dans la séquence, le QCM, les synthèses et le lexique : la
-*forme* d'énergie (électrique, mécanique) ne change que dans CONVERTIR ; ALIMENTER change le *type de courant*,
+*forme* d'énergie (électrique, cinétique) ne change que dans CONVERTIR ; ALIMENTER change le *type de courant*,
 TRANSMETTRE le *type de mouvement*. Le programme de 5e dit « nature » de l'énergie : la page signale que c'est le même
 sens. Le rail porte et amène l'énergie ; c'est la commande de puissance (variateur) qui DISTRIBUE, sur ordre.

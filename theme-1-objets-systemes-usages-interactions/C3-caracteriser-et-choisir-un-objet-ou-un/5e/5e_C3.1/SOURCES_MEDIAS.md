@@ -92,7 +92,7 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 électrique imaginé, à très basse tension.
 
 **Les couleurs.** Chaque notion garde sa couleur dans toute la séquence : batterie (source) `#ffd66b`, énergie électrique `#61dafb`, moteur `#c68ef2`,
-énergie mécanique `#81fba1`.
+énergie cinétique `#81fba1`.
 
 **Les six phrases** (celles de Pascal, validées le 25/09/2026, inchangées) :
 
@@ -100,8 +100,8 @@ de la capture — c'est ce que l'écran affichait, pas un ajout.
 2. *La source* — « La batterie. C'est la **source** : c'est là que l'énergie est stockée. »
 3. *La forme* — « De la batterie sort de l'**énergie électrique**. C'est la **forme** de l'énergie : ce qu'elle est, pendant qu'elle voyage. »
 4. *À ton avis ?* — « Le moteur reçoit de l'énergie électrique. À ton avis, quelle forme d'énergie en sort ? »
-5. *Le moteur* — « Le moteur transforme l'énergie électrique en **énergie mécanique** : le mouvement de la roue. Même énergie, autre forme. »
-6. *La chaîne entière* — « La batterie stocke de l’énergie chimique et fournit de l’énergie électrique. Le contrôleur distribue cette énergie au moteur, qui la convertit en énergie mécanique. Dans le moyeu arrière, le moteur entraîne la roue et aide à déplacer le vélo et sa charge. »
+5. *Le moteur* — « Le moteur transforme l'énergie électrique en **énergie cinétique** : le mouvement de la roue. Même énergie, autre forme. »
+6. *La chaîne entière* — « La batterie stocke de l’énergie chimique et fournit de l’énergie électrique. Le contrôleur distribue cette énergie au moteur, qui la convertit en énergie cinétique. Dans le moyeu arrière, le moteur entraîne la roue et aide à déplacer le vélo et sa charge. »
 
 **Les captures de comparaison** (avant : dessin plat du 25/09 ; après : dessin isométrique), à 1280 px, dans `_generation/figure_iso_velo_cargo/captures/` : captures du
 navigateur de ce lot, CC0.
