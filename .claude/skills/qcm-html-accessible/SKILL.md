@@ -16,6 +16,13 @@ Complété le 15/11/2026 (veille) : deux portes de vérification, place par long
   (`_outils/METHODE.md`, barre qualité). Une page statique ne protège rien : les réponses se lisent
   dans la source, et un code JavaScript n'est qu'un loquet de confort (journal, 30/07/2026).
 
+**Depuis le 17/11/2026 (n°337, n°339)** — l'entraînement aide avant de corriger : une réponse fausse montre d'abord
+l'indice (le pourquoi de la proposition choisie, `d`), puis la règle (`ret`), puis la correction complète, à un clic ; la
+bonne réponse n'est ni dite ni marquée avant. Juste ou non répondue, la correction complète s'ouvre (n°96). Chaque
+question appartient à un piège (une confusion fréquente) que l'élève peut réviser ; le QCM s'ouvre sur « 🎯 Avant de
+commencer » en trois lignes. Skill `qcm-aides-et-pieges`, outil `_outils/qcm_aides/poser.py`. Le message du bilan
+(« Remarquable ! … ») parle des notions de CE QCM (n°338).
+
 ## Spécification par défaut
 
 - **30 questions fixes, sans tirage aléatoire (décision de Pascal du 23/10/2026).** Le mode
