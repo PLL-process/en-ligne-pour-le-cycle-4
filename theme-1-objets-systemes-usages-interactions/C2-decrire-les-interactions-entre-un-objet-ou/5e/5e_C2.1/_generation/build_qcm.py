@@ -16,6 +16,7 @@ import json
 import re
 import sys
 
+import apports_audit
 import q as banque
 
 GRAINE = 502  # rappel : la graine passée à fix_r.js pour ce lot
@@ -132,6 +133,9 @@ def construire(gabarit: str, sortie: str) -> None:
     for _reste in ("SOS serre", "Packet Tracer", "Adresse IP fixe"):
         if _reste in s:
             raise SystemExit("Reste du gabarit d'origine non remplacé : %r" % _reste)
+
+    # L'audit « double regard » du 17/11/2026 : « Avant de commencer » en trois lignes, l'indice d'abord.
+    s = apports_audit.appliquer(s)
 
     # Écriture seulement une fois tout le travail fait : ouvrir en 'w' tronque
     # immédiatement, et une erreur survenue après ce point détruirait le fichier.

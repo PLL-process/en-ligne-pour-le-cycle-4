@@ -68,3 +68,9 @@ Copie, octet pour octet, de `theme-1-objets-systemes-usages-interactions/C2-decr
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_borne_velos_hangzhou.png` | Une borne de vélos en libre-service sur un trottoir après la pluie, une rangée de vélos accrochés à côté. PNG 1 536 × 1 024, 2.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a bike-sharing docking station on a wet city sidewalk after rain: a slim kiosk post with a small tilted screen and a card reader in the foreground, a row of identical shared bicycles locked into docks beside it, no people, no readable text, no logos, no brand colours » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Le QCM plus illustré, après l'audit « double regard » (17/11/2026)
+
+| Fichier | Nature | Auteur | Licence | Rôle pédagogique |
+|---|---|---|---|---|
+| `Images/bete_a_cornes_de_la_station.svg` | SVG original, tiré du gabarit de la bête à cornes de la page (le modèle de Pascal, cadre `50 150 960 570`) : les trois questions au-dessus de cases vides, « La station de vélos » dans l'ellipse du centre | Claude (Opus 5.5), pour ce dépôt | CC0 1.0 | QCM, question 2 (« dans quelle case va le vélo ? ») : le schéma sous les yeux, muet sur la réponse (n°331). Les questions 24 et 29 reprennent `cinq_choix_sur_la_station.svg` et `station_A_station_B.svg`, déjà décrits plus haut : le QCM passe de 5 à 8 questions illustrées. |

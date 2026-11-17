@@ -641,7 +641,7 @@ with sync_playwright() as p:
       f"{info['c21']} / {info['c22']}")
     t("QCM : bonnes réponses réparties sur A/B/C/D", max(info["rep"]) - min(info["rep"]) <= 1,
       str(info["rep"]))
-    t("QCM : 5 questions illustrées", info["imgs"] == 5, str(info["imgs"]))
+    t("QCM : 8 questions illustrées (5 → 8 le 17/11/2026, audit « double regard »)", info["imgs"] == 8, str(info["imgs"]))
     t("QCM : les trois domaines du code sont ceux du programme",
       pg.evaluate("QUESTIONS.find(q=>q.n==='Trois domaines').o[QUESTIONS.find("
                   "q=>q.n==='Trois domaines').r]")

@@ -49,6 +49,15 @@ IMG_CHX = {
 Q = []
 
 
+# Trois questions de plus se lisent sur une figure (17/11/2026, audit « double regard » : « des illustrations plus
+# nombreuses et réellement utiles ») ; la bête à cornes est muette : la question fait trouver la case (n°331).
+IMG_BAC = {"src": "Images/bete_a_cornes_de_la_station.svg",
+           "alt": "La bête à cornes de la station de vélos, ses cases encore vides : « À qui le produit rend-il service ? » et « Sur quoi agit-il ? » au-dessus des deux ellipses du haut, la station dans l'ellipse du centre, sous la corne, et « Dans quel but ? » au-dessus du rectangle du bas."}
+IMG_CINQ = {"src": "Images/cinq_choix_sur_la_station.svg",
+            "alt": "Schéma de la station de vélos simulée, vue de côté, sans vélo, avec cinq détails repérés par un numéro. 1, sur la tête de la borne, inclinée vers le bas. 2, sur le point d'ancrage au bout d'un bras, avec une cote de 90 cm depuis le trottoir. 3, sur un coin arrondi de la tête de la borne. 4, sur le boîtier du poteau, fermé par une seule vis. 5, sur la tête de la borne, dont les pièces sont séparées par des pointillés. Une légende reprend les cinq détails : la borne est inclinée vers le bas plutôt que plate ; le point d'ancrage du vélo est à 90 cm du sol ; les arêtes de la station sont arrondies ; le boîtier se démonte avec une vis unique ; les pièces de la borne se remplacent une par une, au lieu de former un bloc unique. Le schéma ne dit ni l'interacteur ni le domaine de chaque détail."}
+IMG_AB = {"src": "Images/station_A_station_B.svg",
+          "alt": "Deux stations de vélos simulées côte à côte, vues de côté, à la même échelle et dans les mêmes couleurs. À gauche, la première station : une borne à tête inclinée, un point d'ancrage au bout d'un bras à 90 cm du trottoir, un boîtier fermé par une seule vis ; en dessous, borne inclinée, ancrage à 90 cm, boîtier à vis unique. À droite, la deuxième station : une borne sous un auvent, un toit plat porté par un montant ; un anneau d'ancrage au ras du trottoir ; un boîtier sans vis, entouré d'un cordon de soudure ; en dessous, bornes abritées sous un auvent, ancrage au sol, boîtier soudé. Rien n'indique laquelle est la meilleure, ni à quoi sert chaque choix."}
+
 def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
     """options[0] est toujours la bonne réponse ; refs[0] est vide."""
     assert len(options) == 4 and len(refs) == 4, n
@@ -95,7 +104,8 @@ q("C2.1", "À qui ou sur quoi", "Dans la bête à cornes de la station de vélos
    "La station accueille le vélo, mais elle ne lui rend pas service : elle rend service à l'usager, qui prend et rend ce vélo. Le vélo est ce sur quoi elle agit.",
    "« Ranger les vélos » est une phrase sur ce que fait la station, et le vélo n'est pas un but : la case du bas dit le service rendu à l'usager.",
    "Le vélo n'est pas une pièce de la station : il part avec l'usager. C'est un autre objet, en relation avec elle, et il a bien sa case."],
-  "« À qui ? » nomme la personne aidée ; « sur quoi ? », ce que l'objet change.")
+  "« À qui ? » nomme la personne aidée ; « sur quoi ? », ce que l'objet change.",
+  img=IMG_BAC)
 
 q("C2.1", "Fonction d'usage ou fonction technique", "« Permettre à l'usager de prendre un vélo et de le rendre en ville, à toute heure. » Pour la station, cette phrase est…",
   ["sa fonction d'usage : le service qu'elle rend à l'usager",
@@ -445,7 +455,8 @@ q("C2.2", "La sécurité", "Les arêtes arrondies de la station relèvent surtou
    "L'arrondi est plus agréable en main, mais ce n'est pas ce qui a motivé la décision : on arrondit d'abord parce qu'un angle vif coupe.",
    "Arrondir un angle ne fait pas gagner de matière de façon significative, et cela demande souvent une opération de fabrication supplémentaire.",
    "L'effet aérodynamique d'un arrondi de quelques millimètres est négligeable sur un mobilier fixe de cette taille."],
-  "Le domaine se lit à ce que le choix évite.")
+  "Le domaine se lit à ce que le choix évite.",
+  img=IMG_CINQ)
 
 q("C2.2", "Retrouver l'interacteur", "La borne est inclinée vers le bas plutôt que plate. Ce choix répond à…",
   ["la pluie : l'eau s'écoule au lieu de stagner",
@@ -520,7 +531,8 @@ q("C2.2", "Deux réponses au même problème", "Une autre station abrite ses bor
    "Les deux réponses traitent le même interacteur ; ce qui les sépare, ce sont leurs conséquences — encombrement d'un côté, protection partielle de l'autre.",
    "La concertation n'est pas en cause : deux équipes parfaitement informées peuvent trancher différemment selon la place disponible et le budget d'entretien.",
    "C'est l'inverse : si deux équipes ont dépensé pour s'en protéger, chacune à sa manière, c'est bien que le problème comptait."],
-  "Un même problème admet plusieurs réponses techniques.")
+  "Un même problème admet plusieurs réponses techniques.",
+  img=IMG_AB)
 
 q("C2.2", "Un gain payé ailleurs", "Ancrer les vélos au sol plutôt qu'à 90 cm…",
   ["gagne de la place, et se paie en ergonomie",
@@ -598,4 +610,4 @@ q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, en 5e, on repère les ch
 
 assert len(Q) == 34, len(Q)
 assert sum(1 for x in Q if x["c"] == "C2.1") == 19
-assert sum(1 for x in Q if "img" in x) == 5
+assert sum(1 for x in Q if "img" in x) == 8   # 5 → 8 le 17/11/2026 (audit « double regard »)

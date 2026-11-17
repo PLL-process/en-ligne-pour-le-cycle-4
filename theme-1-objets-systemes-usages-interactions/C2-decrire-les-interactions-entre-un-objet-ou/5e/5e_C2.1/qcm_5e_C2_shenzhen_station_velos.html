@@ -76,6 +76,13 @@
   .option:disabled{cursor:default;opacity:.92}
   .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
   .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
   .correction-bloc.show{display:block}
   .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
@@ -150,7 +157,7 @@
 <div class="badges">
   <span class="badge niveau">5e</span>
   <span class="badge code">5e_C2.1</span><span class="badge code">5e_C2.2</span>
-  <span class="badge theme">34 questions · 5 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">34 questions · 8 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center"><a href="sequence_5e_C2_shenzhen_station_velos.html">⬅ Revenir à la séquence</a></p>
 
@@ -162,6 +169,22 @@
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Les interacteurs d'un objet&nbsp;: tout ce qui l'entoure et agit sur lui.
+    <br>Et les choix de sa forme&nbsp;: ergonomie, sécurité, développement durable.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Reconnaître un interacteur, et le ranger dans sa famille.
+    <br>Dire à quoi sert un détail de la station, et pour qui.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Lis la question jusqu'au bout, puis écarte d'abord les réponses fausses.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;» ; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -270,7 +293,7 @@
 
 <script>
 "use strict";
-/* Banque de questions — Shenzhen 5e : 34 questions (5e_C2.1 : 19 · 5e_C2.2 : 15), dont 5 illustrées */
+/* Banque de questions — Shenzhen 5e : 34 questions (5e_C2.1 : 19 · 5e_C2.2 : 15), dont 8 illustrées */
 const QUESTIONS = [
 /* ═══ C2.1 ═══ */
 {c:"C2.1",n:"Les trois questions de la bête à cornes",q:"La bête à cornes exprime le besoin auquel répond un objet. Quelles sont ses trois questions ?",
@@ -281,6 +304,7 @@ const QUESTIONS = [
  d:["Le fabricant, le magasin et l'aspect ne disent pas à quoi sert l'objet : une fois fini, le fabricant ne s'en sert pas.","Ces trois questions ouvrent l'objet ou le mettent en vente : son fonctionnement, sa matière et son prix ne disent ni qui il aide, ni ce qu'il change.","","La première question est juste, mais « comment marche-t-il ? » cherche les solutions et le prix sert à acheter : ni l'une ni l'autre n'exprime le besoin."],
  ret:"À qui ? Sur quoi ? Dans quel but ? : les trois questions du besoin."},
 {c:"C2.1",n:"À qui ou sur quoi",q:"Dans la bête à cornes de la station de vélos, dans quelle case va le vélo ?",
+ img:{src:"Images/bete_a_cornes_de_la_station.svg",alt:"La bête à cornes de la station de vélos, ses cases encore vides : « À qui le produit rend-il service ? » et « Sur quoi agit-il ? » au-dessus des deux ellipses du haut, la station dans l'ellipse du centre, sous la corne, et « Dans quel but ? » au-dessus du rectangle du bas."},
  o:["« À qui rend-il service ? » : c'est lui que la station accueille chaque jour","« Sur quoi agit-il ? » : elle le garde, le verrouille, le libère","« Dans quel but ? » : la station existe pour ranger les vélos","aucune : le vélo est une des pièces de la station"],r:1,
  expl:"La case « à qui ? » nomme la personne que l'objet aide : l'usager. La case « sur quoi ? » nomme ce que l'objet déplace, touche ou transforme : pour la station, c'est le vélo.",
  ex:"Pour le vélo-cargo de Léa : à qui ? Léa ; sur quoi ? ses enfants et ses courses, qu'il transporte.",
@@ -440,6 +464,7 @@ const QUESTIONS = [
  d:["C'est la définition de la sécurité. Les deux se rejoignent parfois — un geste plus naturel est aussi moins risqué — mais protéger d'un accident n'est pas s'adapter au corps.","","C'est la définition de l'esthétique. Une poignée peut être très élégante et rester épuisante à manœuvrer.","La durée de vie relève de la solidité des matériaux et de l'entretien ; un objet peut durer trente ans et rester pénible à utiliser."],
  ret:"L'ergonomie part du corps et des gestes."},
 {c:"C2.2",n:"La sécurité",q:"Les arêtes arrondies de la station relèvent surtout de…",
+ img:{src:"Images/cinq_choix_sur_la_station.svg",alt:"Schéma de la station de vélos simulée, vue de côté, sans vélo, avec cinq détails repérés par un numéro. 1, sur la tête de la borne, inclinée vers le bas. 2, sur le point d'ancrage au bout d'un bras, avec une cote de 90 cm depuis le trottoir. 3, sur un coin arrondi de la tête de la borne. 4, sur le boîtier du poteau, fermé par une seule vis. 5, sur la tête de la borne, dont les pièces sont séparées par des pointillés. Une légende reprend les cinq détails : la borne est inclinée vers le bas plutôt que plate ; le point d'ancrage du vélo est à 90 cm du sol ; les arêtes de la station sont arrondies ; le boîtier se démonte avec une vis unique ; les pièces de la borne se remplacent une par une, au lieu de former un bloc unique. Le schéma ne dit ni l'interacteur ni le domaine de chaque détail."},
  o:["la résistance au vent et aux intempéries","l'ergonomie du poste de retrait","l'économie de matière à la fabrication","la sécurité : on se blesse moins"],r:3,
  expl:"Le domaine se lit à ce que le choix ÉVITE. Ici, il évite une blessure : c'est la sécurité.",
  ex:"Un enfant qui court et heurte l'angle d'une borne.",
@@ -476,6 +501,7 @@ const QUESTIONS = [
  d:["L'agent de maintenance, lui, le sent immédiatement — et l'usager aussi, le jour où la borne reste hors service en attendant une intervention lourde.","Aucun choix n'est meilleur sur tous les plans : celui-ci gagne en résistance et perd en réparabilité, ce qui peut condamner l'objet entier à la première panne.","","Une soudure est souvent MOINS chère à produire qu'un assemblage vissé : ce qu'elle coûte, elle le coûte plus tard, à l'entretien."],
  ret:"Un choix technique déplace le problème ailleurs."},
 {c:"C2.2",n:"Deux réponses au même problème",q:"Une autre station abrite ses bornes sous un auvent au lieu de les incliner. Cela montre que…",
+ img:{src:"Images/station_A_station_B.svg",alt:"Deux stations de vélos simulées côte à côte, vues de côté, à la même échelle et dans les mêmes couleurs. À gauche, la première station : une borne à tête inclinée, un point d'ancrage au bout d'un bras à 90 cm du trottoir, un boîtier fermé par une seule vis ; en dessous, borne inclinée, ancrage à 90 cm, boîtier à vis unique. À droite, la deuxième station : une borne sous un auvent, un toit plat porté par un montant ; un anneau d'ancrage au ras du trottoir ; un boîtier sans vis, entouré d'un cordon de soudure ; en dessous, bornes abritées sous un auvent, ancrage au sol, boîtier soudé. Rien n'indique laquelle est la meilleure, ni à quoi sert chaque choix."},
  o:["un même problème admet plusieurs réponses","l'une des deux stations est forcément une erreur","les deux équipes ne se sont pas concertées","le problème de la pluie n'était pas important"],r:0,
  expl:"Auvent et inclinaison répondent au même interacteur : la pluie. Ce sont deux solutions légitimes, qui ne coûtent pas la même chose aux mêmes endroits.",
  ex:"L'auvent protège mieux mais occupe de la place et prend le vent.",
@@ -569,6 +595,33 @@ const COMP_LABELS={
 const N=QUESTIONS.length;
 
 /* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (audit du 17/11/2026,
+   « une révision fondée sur les difficultés »). Une question appartient à un piège par sa notion. */
+const PIEGES={
+  besoin:"La bête à cornes : à qui, sur quoi, dans quel but ?",
+  dedans:"Interacteur ou pas ? Une règle (une exigence), une pièce de l'objet, sa couleur",
+  familles:"Les quatre familles d'interacteurs, sans oublier l'invisible",
+  lieu:"Changer de lieu, c'est changer d'interacteurs",
+  domaines:"Quel domaine : ergonomie, sécurité ou développement durable ?",
+  expliquer:"Expliquer un choix (pas le décrire), et ce qu'il coûte"
+};
+const PIEGE_DE_NOTION={
+  "Les trois questions de la bête à cornes":"besoin","À qui ou sur quoi":"besoin",
+  "Fonction d'usage ou fonction technique":"besoin","Les mots de référence":"besoin",
+  "Définition":"dedans","Ce qui n'en est pas un":"dedans","Un interacteur non vivant":"dedans",
+  "Un interacteur invisible":"dedans","Ce qui contraint":"dedans","Extérieur ou intérieur":"dedans",
+  "Les quatre familles":"familles","La famille invisible":"familles","Le réflexe coûteux":"familles",
+  "Ce qui alimente":"familles","Le geste de recensement":"familles","À quoi ça sert":"familles",
+  "Changer de lieu":"lieu","Un interacteur martiniquais":"lieu","Le sel marin":"lieu","Transposer":"lieu",
+  "Trois domaines":"domaines","L'ergonomie":"domaines","La sécurité":"domaines",
+  "Un choix pour la maintenance":"domaines","Deux domaines à la fois":"domaines",
+  "Le développement durable comme domaine":"domaines",
+  "Lire un objet":"expliquer","La question qui ouvre":"expliquer","Retrouver l'interacteur":"expliquer",
+  "Le coût d'un choix":"expliquer","Deux réponses au même problème":"expliquer","Un gain payé ailleurs":"expliquer",
+  "Justifier, pas décrire":"expliquer"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
 let etat={
   reponses:Array(N).fill(null),   // index choisi ou null
   validees:Array(N).fill(false),
@@ -580,6 +633,7 @@ let etat={
   identite:{}
 };
 let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -589,7 +643,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -638,6 +692,11 @@ function setMode(mode){
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
     if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
     if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
@@ -646,6 +705,10 @@ function setMode(mode){
 }
 document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
 /* ───── grille + filtres ───── */
 let filtre="toutes";
@@ -718,7 +781,7 @@ function rendreQuestion(){
     b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
     if(etat.validees[i]){
       b.disabled=true;
-      if(k===Q.r) b.classList.add("bonne");
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
       if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
     } else {
       if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
@@ -740,6 +803,27 @@ function rendreCorrection(){
   const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
   let dist="";
   Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
   bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
   bloc.innerHTML=`
     <h3>${verdict}</h3>
@@ -762,6 +846,8 @@ $("btnValider").addEventListener("click",()=>{
     if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -828,8 +914,13 @@ function rendreResultat(){
   let html="";
   if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
   if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
-  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+  const msg= note>=16?"Remarquable ! Les interacteurs et les choix de conception n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
     note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
     note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
     "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
