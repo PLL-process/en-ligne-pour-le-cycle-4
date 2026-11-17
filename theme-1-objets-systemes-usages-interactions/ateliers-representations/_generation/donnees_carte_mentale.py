@@ -1061,7 +1061,7 @@ NIVEAUX = {
                   "Mesures › releves_mardi.csv.</li>"
                   "<li>La carte mentale <b>range</b> des idées&nbsp;: elle ne montre ni ce qui circule ni l'ordre des opérations.</li></ul>",
         bonus=[dict(titre="La carte de ton cartable",
-                    consigne="<p>Dessine sur ton cahier la carte mentale de ton cartable&nbsp;: au centre, « Mon cartable »&nbsp;; "
+                    consigne="<p>Dessine sur une feuille de brouillon la carte mentale de ton cartable&nbsp;: au centre, « Mon cartable »&nbsp;; "
                              "<b>quatre branches</b> au moins, avec un mot chacune. Puis dis quel objet tu as eu du mal à ranger, "
                              "et pourquoi.</p>",
                     correction=['<figure class="figure">' + CM_CARTABLE_CORRIGE + '<figcaption>Une carte possible&nbsp;: '

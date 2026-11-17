@@ -650,9 +650,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1194,7 +1194,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1213,7 +1216,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -2116,7 +2119,7 @@ body.ms .cac-reserve{--cac-bas:84px}
   <div class="donnees">
     <p>🅰 <b>Avec matériel</b> : le vrai jardin du collège (ou une maquette capteur + pompe, <b>très basse tension uniquement</b>) et l'observation directe des constituants.</p>
     <p>🅱 <b>En simulation</b> : les schémas interactifs, l'explorateur de table et le simulateur réseau intégrés à cette page.</p>
-    <p>🅲 <b>Sans matériel</b> : les trois documents imprimés et les tableaux à compléter au cahier.</p>
+    <p>🅲 <b>Sans matériel</b> : les trois documents imprimés et les tableaux à compléter sur une feuille de brouillon.</p>
   </div>
 </section>
 </details>
@@ -2215,7 +2218,7 @@ body.ms .cac-reserve{--cac-bas:84px}
       <div><b>Production attendue :</b> les 6 fonctions et les 8 formes d'énergie posées dans le schéma + 2 réponses.</div>
       <div><b>Ressources :</b> le schéma des deux chaînes, à compléter ; le schéma complet, replié après la vérification.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> a) pose chaque fonction dans son bloc, dans le schéma ; b) pose la forme de l'énergie sur chaque flèche ; c) réponds aux deux questions, puis recopie la chaîne d'énergie au cahier avec les formes d'énergie.</div>
+    <div class="consigne"><b>Consigne :</b> a) pose chaque fonction dans son bloc, dans le schéma ; b) pose la forme de l'énergie sur chaque flèche ; c) réponds aux deux questions, puis recopie la chaîne d'énergie sur une feuille de brouillon avec les formes d'énergie.</div>
     <div class="retenir"><b>📐 Règle d'or du schéma :</b> l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
     <div class="exo">
       <h4>a) Chaque constituant a sa fonction (C4.1)</h4>
@@ -2397,7 +2400,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> chaîne d'énergie = alimenter, distribuer, stocker, convertir. Une TRANSFORMATION = un changement de nature de l'énergie. Dans un système connecté, la chaîne d'information COMMANDE la chaîne d'énergie.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> croire que la batterie « fabrique » de l'électricité (elle la restitue) ; confondre distribuer (sans changement de nature) et convertir ; oublier le flux d'EAU, qui n'est pas un flux d'énergie électrique.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 15 réponses justes sur 16, et la chaîne recopiée au cahier avec les formes d'énergie.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 15 réponses justes sur 16, et la chaîne recopiée sur une feuille de brouillon avec les formes d'énergie.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Les données ›</button></p>
@@ -2417,8 +2420,8 @@ body.ms .cac-reserve{--cac-bas:84px}
       <div><b>Production attendue :</b> 4 associations.</div>
       <div><b>Ressources :</b> le schéma des deux chaînes, la chaîne d'énergie déjà bâtie à l'activité 1.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> pose dans chaque bloc du haut sa fonction, dans le schéma, puis recopie la chaîne au cahier.</div>
-    <div class="retenir"><b>📐 Rappel de la règle d'or du schéma :</b> au cahier, place cette chaîne d'information AU-DESSUS de la chaîne d'énergie, avec la flèche d'ordre qui descend.</div>
+    <div class="consigne"><b>Consigne :</b> pose dans chaque bloc du haut sa fonction, dans le schéma, puis recopie la chaîne sur une feuille de brouillon.</div>
+    <div class="retenir"><b>📐 Rappel de la règle d'or du schéma :</b> sur une feuille de brouillon, place cette chaîne d'information AU-DESSUS de la chaîne d'énergie, avec la flèche d'ordre qui descend.</div>
     <div class="exo">
       <p>En bas, la chaîne d'énergie de l'activité 1, avec tes réponses. <br>Pose dans chaque bloc du haut la fonction que son constituant assure. <br>Deux étiquettes ne vont dans aucun bloc.</p>
 <div class="cac" data-cac='{"dessin": "jardin", "cases": {"acquerir.fonction": "i2_1", "traiter.fonction": "i2_2", "communiquer.fonction": "i2_3", "application.fonction": "i2_4"}, "acquis": {"panneau.fonction": "e1_1", "alimenter.fonction": "e1_3", "stocker.fonction": "e1_2", "relais.fonction": "e1_10", "pompe.fonction": "e1_4", "vanne.fonction": "e1_5", "entree.texte": "e1_n1", "conv-alim.texte": "e1_n2", "stocker.stock": "e1_n3", "alim-dist.texte": "e1_n4", "dist-pompe.texte": "e1_n5", "sortie-pompe.texte": "e1_n6", "dist-vanne.texte": "e1_n7", "sortie-vanne.texte": "e1_n8"}, "reutilisables": true, "nom": "Les deux chaînes du jardin : les quatre fonctions du haut à poser dans les blocs"}'>
@@ -2467,7 +2470,7 @@ body.ms .cac-reserve{--cac-bas:84px}
       c'est ce voyage qu'on suit dans l'activité 3.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> chaîne d'information = acquérir → traiter → communiquer (envoyer, afficher). Dans un objet CONNECTÉ, l'information sort de l'objet pour rejoindre un serveur.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4 et la chaîne au cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4 et la chaîne sur une feuille de brouillon.</div>
   </div>
 
   <div class="activite" id="act3">
@@ -2895,7 +2898,7 @@ gardienne</span></td></tr></tbody></table></div></div><fieldset class="qcm-group
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> la forme d'une pièce porte les INDICES de son procédé : couches = 3D, ligne de joint = injection, bords brunis plats = laser, trous nets = perçage. Forme + quantité → procédé.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> croire que tout ce qui est en plastique est injecté ; oublier le critère de la quantité ; confondre les stries d'impression et des rayures d'usure.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> l'exercice du cahier des charges réussi, puis 6 / 6 et le tableau indices → procédés recopié au cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> l'exercice du cahier des charges réussi, puis 6 / 6 et le tableau indices → procédés recopié sur une feuille de brouillon.</div>
   </div>
 </section>
 
@@ -2954,7 +2957,7 @@ gardienne</span></td></tr></tbody></table></div></div><fieldset class="qcm-group
     <div class="rl-boite" id="ddBoite"><svg id="ddCourbe" viewBox="0 0 840 300" role="img" aria-label="Le cadre de la courbe, encore vide" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"><rect class="rl-fond" x="0" y="0" width="840" height="300" fill="#050f24"/><path class="rl-axe" d="M64 250 V40 M64 250 H812" stroke="#9bbefc" stroke-width="2" fill="none"/><text class="rl-t" x="76" y="30" font-size="16" font-weight="700" fill="#e4eaf5">Valeur (avec son unité)</text><text class="rl-t" x="438" y="284" font-size="16" text-anchor="middle" fill="#e4eaf5">Date et heure du relevé</text><text class="rl-t" x="438" y="150" font-size="16" text-anchor="middle" fill="#e4eaf5">Trace ici ta courbe : un point par mesure, reliés dans l’ordre du temps.</text></svg></div>
     <figcaption id="ddLegende">La courbe se trace dès que tu as deux mesures complètes&nbsp;: date, heure et valeur.</figcaption>
   </figure>
-  <noscript><p>Sans JavaScript, la courbe ne se trace pas toute seule&nbsp;: trace-la sur ton cahier, ou imprime la page et trace-la dans le cadre.</p></noscript>
+  <noscript><p>Sans JavaScript, la courbe ne se trace pas toute seule&nbsp;: trace-la sur une feuille de brouillon, ou imprime la page et trace-la dans le cadre.</p></noscript>
   <button class="btn small rl-verifier" id="ddVerifier" type="button">✅ Vérifier ma table et ma courbe</button>
   <div class="feedback" id="ddRetour" role="status" aria-live="polite"></div>
   <details class="correction corrige-bonus"><summary>✅ Corrigé du défi données</summary>

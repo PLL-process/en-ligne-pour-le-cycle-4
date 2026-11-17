@@ -1349,9 +1349,9 @@ details.bonus-replie{padding:0;border:0;background:transparent}
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1893,7 +1893,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1912,7 +1915,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -3069,10 +3072,10 @@ body.ms .cac-reserve{--cac-bas:84px}
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> identifier les constituants de la chaîne d'énergie et la nature des énergies à chaque étape.</div>
       <div><b>Compétences :</b> 5e_C4.2 + 5e_C4.3.</div>
-      <div><b>Production attendue :</b> les 5 fonctions et les 6 formes d'énergie posées dans le schéma, la chaîne recopiée au cahier, puis les cinq conversions du programme.</div>
+      <div><b>Production attendue :</b> les 5 fonctions et les 6 formes d'énergie posées dans le schéma, la chaîne recopiée sur une feuille de brouillon, puis les cinq conversions du programme.</div>
       <div><b>Ressources :</b> le schéma des deux chaînes, à compléter : la chaîne d'ÉNERGIE, en bas.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> a) pose chaque fonction dans son bloc ; b) pose la forme de l'énergie sur chaque flèche ; c) recopie la chaîne au cahier avec ses flèches ; d) trouve ce qui entre et ce qui sort de cinq autres constituants.</div>
+    <div class="consigne"><b>Consigne :</b> a) pose chaque fonction dans son bloc ; b) pose la forme de l'énergie sur chaque flèche ; c) recopie la chaîne sur une feuille de brouillon avec ses flèches ; d) trouve ce qui entre et ce qui sort de cinq autres constituants.</div>
     <div class="retenir"><b>📐 Règle d'or du schéma :</b> l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
     <div class="exo">
       <h4>a) Qui fait quoi ? Pose chaque fonction dans son bloc</h4>
@@ -3175,8 +3178,8 @@ body.ms .cac-reserve{--cac-bas:84px}
 </fieldset>
 </div>
 </div>
-      <h4>c) La chaîne, au cahier puis en une ligne</h4>
-      <label for="e2_cahier" style="display:block;margin-top:8px">Recopie la chaîne au cahier, puis résume-la ici en une ligne, avec des flèches → :</label>
+      <h4>c) La chaîne, sur une feuille de brouillon puis en une ligne</h4>
+      <label for="e2_cahier" style="display:block;margin-top:8px">Recopie la chaîne sur une feuille de brouillon, puis résume-la ici en une ligne, avec des flèches → :</label>
       <textarea id="e2_cahier" placeholder="soleil → panneau → …"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
@@ -3278,7 +3281,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> mettre la batterie en premier (l'énergie vient du SOLEIL) ; croire que la batterie stocke « de l'électricité » telle quelle (elle stocke sous forme chimique) ; oublier que la LED convertit ; inverser le moteur et la génératrice (le moteur fait du mouvement avec du courant, la génératrice du courant avec du mouvement).</div>
     <div class="retenir"><b>📌 À retenir :</b> la <b>chaîne d'énergie</b> du lampadaire : <b>convertir</b> (panneau) → <b>alimenter</b> (régulateur, la batterie <b>stocke</b> en branche) → <b>distribuer</b> (interrupteur commandé) → <b>convertir</b> (LED). À chaque étape on sait dire la <b>nature</b> de l'énergie : lumineuse, électrique, chimique.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> les fonctions 5/5, les formes d'énergie 6/6, la chaîne recopiée au cahier, et les cinq conversions 5/5.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les fonctions 5/5, les formes d'énergie 6/6, la chaîne recopiée sur une feuille de brouillon, et les cinq conversions 5/5.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Le lampadaire décide ›</button></p>
@@ -3968,7 +3971,7 @@ body.ms .cac-reserve{--cac-bas:84px}
   <div class="cb-boite chx-boite" id="bmBoite" tabindex="0" role="region" aria-label="Ta chaîne d’énergie, dessinée">
     <svg class="cb-dessin" id="bmDessin" viewBox="0 0 840 240" role="img" aria-label="Le cadre de ta chaîne d’énergie, encore vide" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"><rect class="chx-papier" x="3" y="3" width="834" height="234" rx="14" fill="#050f24" stroke="#9aa5b8" stroke-width="2" stroke-dasharray="10 8"/><text x="420" y="110" text-anchor="middle" font-size="18" font-weight="700" fill="#e4eaf5">Le cadre de ta chaîne d’énergie</text><text x="420" y="142" text-anchor="middle" font-size="16" fill="#9aa5b8">une entrée → des blocs (la fonction dedans, le composant dessous) → la sortie et l’action finale</text></svg>
   </div>
-  <noscript><p>Sans JavaScript, la chaîne ne se dessine pas toute seule&nbsp;: dessine-la sur ton cahier, ou imprime la page et dessine-la dans le cadre.</p></noscript>
+  <noscript><p>Sans JavaScript, la chaîne ne se dessine pas toute seule&nbsp;: dessine-la sur une feuille de brouillon, ou imprime la page et dessine-la dans le cadre.</p></noscript>
   <div class="cb-reglages pp-ecran" role="group" aria-label="Les pièces de ta chaîne d’énergie">
     <div class="cb-tetes">
     <div class="cb-champ cb-tete"><label for="bmObjet">Mon objet</label><input type="text" id="bmObjet" maxlength="50" autocomplete="off" placeholder="un ventilateur, un réveil…"></div>
@@ -4339,7 +4342,7 @@ const CHECKS = {
                e2_c1:"électrique → cinétique",e2_c2:"électrique → lumineuse",e2_c3:"électrique → thermique",e2_c4:"mécanique → électrique",e2_c5:"pneumatique ou hydraulique → mécanique"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const cOk = txt("e2_cahier").length>=15 && txt("e2_cahier").includes("→");
-    return {score:ok,total:16,extra:cOk?"":" Résume aussi ta chaîne avec des flèches → (et recopie-la au cahier).",valide:ok===16&&cOk};
+    return {score:ok,total:16,extra:cOk?"":" Résume aussi ta chaîne avec des flèches → (et recopie-la sur une feuille de brouillon).",valide:ok===16&&cOk};
   },
   3: function(){
     let ok=0;

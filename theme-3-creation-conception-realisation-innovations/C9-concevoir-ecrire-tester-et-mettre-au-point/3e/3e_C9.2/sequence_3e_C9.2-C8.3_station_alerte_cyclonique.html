@@ -840,9 +840,9 @@ section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizi
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1384,7 +1384,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1403,7 +1406,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -2169,7 +2172,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> extraire les exigences du courrier de la mairie et situer chaque organe dans les chaînes d'information et d'énergie.</div>
       <div><b>Compétence :</b> 3e_C9.2 — comprendre le système que le programme devra commander.</div>
-      <div><b>Production attendue :</b> tableau des exigences + chaînes complétées (à recopier dans le cahier).</div>
+      <div><b>Production attendue :</b> tableau des exigences + chaînes complétées (à recopier sur une feuille de brouillon).</div>
       <div><b>Ressources :</b> le courrier de la mairie (en haut de page) + le schéma des deux chaînes ci-dessous.</div>
     </div></details>
     <img class="figure" src="Images/chaine_info_energie_station.svg" alt="Chaînes de la station. En haut, la chaîne d’information : acquérir sur A1 et D2, traiter par le programme, communiquer par LCD, voyants et buzzer. En bas, la chaîne d’énergie : l’énergie électrique vient de l’USB ; les sorties de la carte et les interfaces des modules commandent sa distribution ; les voyants et le buzzer la convertissent en lumière et en son. L’ordre descend de Traiter vers Distribuer : l’information commande l’énergie." aria-describedby="desc-chaines">
@@ -2481,7 +2484,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <p><b>c) Justification attendue :</b> le bouton fait entrer l'information « l'agent a pris connaissance de l'alarme », produite par un <b>humain</b>. <br>L'anémomètre capte une grandeur <b>physique</b> (le vent) sans intervention humaine ; le bouton capte une <b>décision humaine</b>. <br>Ce dialogue — la machine alerte, l'humain répond, la machine en tient compte — est l'<b>interaction humain-machine</b> exigée par le programme (3e_C9.2).</p>
       <div class="regle-or-schema" role="note">📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
       <p><b>Où arrive cette flèche, exactement ?</b> Sur <b>DISTRIBUER</b> : l'ordre <b>descend</b> de TRAITER vers les sorties commandées de la carte et les interfaces des modules, qui distribuent l'énergie ; le voyant et le buzzer (CONVERTIR) la reçoivent ensuite. <br><b>TRANSMETTRE</b> est absent parce que rien ne se déplace. Les trois cas sont dépliés dans l'encadré 🔎 au-dessus de la consigne.</p>
-      <p><b>Recopie les deux chaînes dans ton cahier</b> en respectant cette disposition : c'est elle qu'on te demandera au DNB.</p>
+      <p><b>Recopie les deux chaînes sur ta feuille de brouillon</b> en respectant cette disposition : c'est elle qu'on te demandera au DNB.</p>
       <p><b>Limite :</b> le bouton pourrait aussi être vu comme une « commande » plutôt qu'un capteur — en 3e, on retient qu'il fait ENTRER une information, donc Acquérir.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> classer le bouton dans « Communiquer » parce qu'« on communique avec la machine » — regarde le SENS : l'information ENTRE dans la station, c'est Acquérir ; confondre exigence de comportement (quoi) et de performance (à quelle vitesse).</div>
@@ -2503,7 +2506,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> élaborer l'algorithme des quatre niveaux d'alerte, puis le lire sous forme d'algorigramme normalisé.</div>
       <div><b>Compétence :</b> 3e_C9.2 — élaborer l'algorithme avant d'écrire le programme.</div>
-      <div><b>Production attendue :</b> algorithme complété + algorigramme recopié dans le cahier.</div>
+      <div><b>Production attendue :</b> algorithme complété + algorigramme recopié sur une feuille de brouillon.</div>
       <div><b>Ressources :</b> l'algorigramme ci-dessous (à lire APRÈS avoir complété l'algorithme).</div>
     </div></details>
     <div class="consigne"><b>Consigne :</b> a) complète l'algorithme en langage naturel ; b) lis l'algorigramme et réponds aux questions — l'ordre des tests va se révéler décisif.</div>
@@ -2635,7 +2638,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <p><b>c) Lecture fine — les six réponses.</b></p>
       <p><b>178 km/h pile → ouragan majeur :</b> « ≥ » se lit « supérieur OU ÉGAL », la valeur du seuil appartient au niveau du dessus. <br>Avec trois seuils, cela fait <b>six frontières</b> à tester — 62/63, 117/118, 177/178 — et tu les retrouveras toutes aux séances 7 et 8.</p>
       <p><b>5 rectangles :</b> la lecture du vent, puis OURAGAN MAJEUR, OURAGAN, TEMPÊTE TROPICALE et VEILLE ; les losanges ne sont pas des traitements, ils ne <i>font</i> rien, ils <i>demandent</i>.</p>
-      <p><b>La bulle violette en pointillés est un commentaire :</b> elle explique le dessin, elle n'en fait pas partie. <br>Repère infaillible : elle est <b>en pointillés</b> et <b>hors du flux</b> des flèches. <br>Si tu recopies l'algorigramme au propre dans ton cahier, tu peux garder la note… mais pas sous forme de rectangle, sinon tu inventes une action qui n'existe pas.</p>
+      <p><b>La bulle violette en pointillés est un commentaire :</b> elle explique le dessin, elle n'en fait pas partie. <br>Repère infaillible : elle est <b>en pointillés</b> et <b>hors du flux</b> des flèches. <br>Si tu recopies l'algorigramme au propre sur ta feuille de brouillon, tu peux garder la note… mais pas sous forme de rectangle, sinon tu inventes une action qui n'existe pas.</p>
       <p><b>Sans la flèche de retour</b>, la station mesurerait le vent une seule fois, afficherait un niveau et resterait figée : une station de surveillance sans boucle ne surveille rien.</p>
       <p><b>4 chemins :</b> OUI du losange 178, OUI du losange 118, OUI du losange 63, NON du losange 63 ; ils se rejoignent avant la boucle. <br>Retiens la règle : <b>autant de chemins que de niveaux</b> — un losange de plus, c'est un niveau de plus.</p>
       <p><b>Ce que l'algorigramme ne dit pas :</b> le langage. Blocs Vittascience, C++ ou Python, le raisonnement dessiné reste identique — c'est justement pour cela qu'on le dessine AVANT de choisir l'outil.</p>
@@ -2643,7 +2646,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <p><b>Exemple pour s'en souvenir :</b> un videur vérifie d'abord la carte VIP, puis l'entrée normale : s'il vérifiait l'entrée normale d'abord, les VIP feraient la queue avec tout le monde.</p>
       <p><b>Limite :</b> notre algorithme relit le vent 5 fois par seconde — un vrai anémomètre lisse la mesure sur plusieurs secondes pour éviter qu'une rafale isolée fasse clignoter l'alerte.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser l'ordre des seuils (tester 63 d'abord) — les niveaux « ouragan » et « ouragan majeur » deviennent inatteignables ; oublier les SINON et écrire trois SI indépendants — à 200 km/h les trois seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin ; lire « ≥ 178 » comme « au-dessus de 178 » et exclure 178 lui-même ; prendre la bulle de commentaire pour un symbole de l'algorigramme (et la recopier en rectangle dans son cahier) ; compter les losanges parmi les traitements.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser l'ordre des seuils (tester 63 d'abord) — les niveaux « ouragan » et « ouragan majeur » deviennent inatteignables ; oublier les SINON et écrire trois SI indépendants — à 200 km/h les trois seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin ; lire « ≥ 178 » comme « au-dessus de 178 » et exclure 178 lui-même ; prendre la bulle de commentaire pour un symbole de l'algorigramme (et la recopier en rectangle sur sa feuille de brouillon) ; compter les losanges parmi les traitements.</div>
     <div class="retenir"><b>📌 À retenir :</b> un <b>algorithme</b> s'élabore en français avant d'être traduit en blocs. Dans des SI/SINON en cascade, <b>on teste le seuil le plus haut d'abord</b>. L'<b>algorigramme</b> (🎓 attendu au DNB) le dessine : ovale = début/fin, rectangle = traitement, losange = décision OUI/NON, flèche qui remonte = boucle. <b>Seules ces formes-là sont des symboles</b> : tout ce qui est en pointillés, hors du flux des flèches, n'est qu'un commentaire de lecture. Et « <b>≥</b> » veut dire <b>supérieur OU ÉGAL</b> : le seuil appartient au niveau du dessus.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> algorithme 3/3 et lecture d'algorigramme au moins 9/10 (sur les questions b et c) — et tu sais expliquer à l'oral pourquoi 178 se teste avant 118 (et 118 avant 63), et pourquoi 178 km/h pile déclenche l'ouragan majeur.</div>
     <details class="prof approfondissement"><summary>🎓 Encart DNB — l'algorigramme est un grand classique de l'épreuve</summary>
@@ -2899,7 +2902,7 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier2-TON NOM</code>. Si un doute : compare bloc à bloc avec la planche, PUIS appelle le professeur.</p>
     </div>
 
-    <div class="retenir fin-partie">⏸ <b>Fin de la première partie.</b> À ce stade, le programme attendu lit le vent et décide du niveau (paliers 1 et 2). Avant de partir : enregistre-le sous <code>3e-STATION-palier2-TON NOM</code> et range son fichier <code>.ino</code> dans le dossier de ta classe (geste 5 de l'échauffement). Ton <b>journal de paliers</b> se trouve au bas de l'activité, à la séance 4 : note dès maintenant, dans ton cahier, la valeur essayée et ce qui s'est affiché aux paliers 1 et 2.</div>
+    <div class="retenir fin-partie">⏸ <b>Fin de la première partie.</b> À ce stade, le programme attendu lit le vent et décide du niveau (paliers 1 et 2). Avant de partir : enregistre-le sous <code>3e-STATION-palier2-TON NOM</code> et range son fichier <code>.ino</code> dans le dossier de ta classe (geste 5 de l'échauffement). Ton <b>journal de paliers</b> se trouve au bas de l'activité, à la séance 4 : note dès maintenant, sur ta feuille de brouillon, la valeur essayée et ce qui s'est affiché aux paliers 1 et 2.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4">Séance 4 — Programmer en blocs : alerter ›</button></p>
@@ -4269,7 +4272,10 @@ majTaches();
   }
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
   });
 
   // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
@@ -4370,6 +4376,10 @@ majTaches();
       if (boite.width < 120 || boite.height < 90) continue;
       svg.classList.add("loupe-cliquable");
       svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      svg.setAttribute("role", "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
@@ -4386,6 +4396,8 @@ majTaches();
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
       if (!img.getAttribute("title")) {
         img.setAttribute("title", "Cliquer pour agrandir");
       }

@@ -644,9 +644,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1188,7 +1188,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1207,7 +1210,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -1649,7 +1652,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     professeur (capteur enrobé d'une croûte de terre séchée).</p>
     <p>🅱 <b>En simulation</b> : le poste de diagnostic et le simulateur de remplacement intégrés à cette
     page (aucun matériel nécessaire).</p>
-    <p>🅲 <b>Sans matériel</b> : les documents imprimés, le protocole à construire au cahier et les
+    <p>🅲 <b>Sans matériel</b> : les documents imprimés, le protocole à construire sur une feuille de brouillon et les
     images d'inspection de cette page.</p>
   </div>
 </section>
@@ -1890,7 +1893,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> en 4e, on ne reçoit plus le protocole : on le PROPOSE. Un bon protocole liste les causes possibles, puis les teste une par une — tests rapides d'abord, sécurité avant tout démontage, et chaque test doit pouvoir INNOCENTER ou ACCUSER un composant (test discriminant).</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> croire l'écran sur parole (une mesure peut mentir) ; démonter en premier ; changer une pièce au hasard « pour voir » ; oublier de couper l'alimentation avant d'approcher les composants.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> diagnostic mené au poste jusqu'à 6/6, 8/8 réponses, et TON protocole recopié au cahier en 6 lignes numérotées.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> diagnostic mené au poste jusqu'à 6/6, 8/8 réponses, et TON protocole recopié sur une feuille de brouillon en 6 lignes numérotées.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Remplacer sans filet ›</button></p>
@@ -2023,7 +2026,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> remplacer sans protocole = remplacer AVEC une méthode : sécurité d'abord (couper l'alimentation), photo avant tout débranchement, comparaison neuf/ancien avant montage, remontage en ordre inverse, et TEST FINAL qui prouve. La méthode remplace le document.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> débrancher sans photo (« je m'en souviendrai »… non) ; monter la pièce neuve sans l'avoir comparée ; déclarer la réparation finie sans test ; travailler sous tension « parce que c'est rapide ».</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> remplacement simulé mené jusqu'à 6/6 sans protocole affiché, 8/8 réponses, et ta méthode en 6 gestes recopiée au cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> remplacement simulé mené jusqu'à 6/6 sans protocole affiché, 8/8 réponses, et ta méthode en 6 gestes recopiée sur une feuille de brouillon.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Refabriquer à l'atelier ›</button></p>
@@ -2121,7 +2124,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> choisir un procédé = croiser la FORME de la pièce, le MATÉRIAU adapté à son environnement, le TEMPS et le matériel disponibles. La fabrication suit une gamme ordonnée qui commence par MESURER — et le jeu fonctionnel se prévoit dès la modélisation.</div>
     <div class="erreurs"><b>⚠ Pièges classiques :</b> choisir le procédé « préféré » au lieu du procédé adapté ; imprimer en PLA une pièce d'extérieur ; modéliser sans jeu (« ça rentrera bien ») ; commencer par imprimer au lieu de mesurer.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 7/7 réponses, et le tableau « critère → procédé retenu » recopié au cahier avec ta justification en une phrase.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7/7 réponses, et le tableau « critère → procédé retenu » recopié sur une feuille de brouillon avec ta justification en une phrase.</div>
   </div>
 
   <div class="activite" id="act4">

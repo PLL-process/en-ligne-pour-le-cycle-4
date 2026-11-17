@@ -10,6 +10,10 @@ dans le fond, ou le bouton de fermeture la referment.
     python3 audit/loupe.py <dossier>              # équipe les pages qui n'ont pas d'agrandisseur
     python3 audit/loupe.py --remplacer <dossier>  # remplace l'agrandisseur v1 par le v2, page par page
     python3 audit/loupe.py --verifier <dossier>   # dit, sans rien écrire, ce que --remplacer ferait
+    python3 audit/loupe.py --rafraichir <dossier> # remet le script du v2 à jour dans les pages qui le portent
+
+LE v2 DU 17/11/2026 (audit de 3e_C9.1) : une image ou un schéma qu'on agrandit s'annonce comme une commande
+(`role="button"`, « Agrandir l'image : … ») ; la fenêtre ouverte garde le focus (Tab reste sur « Fermer »).
 
 LE BLOC v2 (25/10/2026), et ce qu'il corrige du v1 :
   · un schéma SVG écrit DANS la page s'agrandit avec ses couleurs, sa police et
@@ -167,7 +171,10 @@ SCRIPT = r"""(function(){
   }
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
   });
 
   // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
@@ -268,6 +275,10 @@ SCRIPT = r"""(function(){
       if (boite.width < 120 || boite.height < 90) continue;
       svg.classList.add("loupe-cliquable");
       svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      svg.setAttribute("role", "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
@@ -284,6 +295,8 @@ SCRIPT = r"""(function(){
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
       if (!img.getAttribute("title")) {
         img.setAttribute("title", "Cliquer pour agrandir");
       }
@@ -364,7 +377,39 @@ def pages_a_remplacer(racine):
             yield p, html
 
 
+def rafraichir(html: str):
+    """Le script du v2, remis à jour à sa place (le CSS ne change pas). Rend (page, None) ou (None, raison)."""
+    if LOUPE_MARQUEUR not in html:
+        return None, "pas de v2"
+    if html.count('var fond, grande, legende, dernier = null;') != 1:
+        return None, "plusieurs fonctions de loupe"
+    j = _DEBUT_JS.search(html)
+    k = _FIN_JS.search(html, j.end()) if j else None
+    if not j or not k:
+        return None, "script du v2 introuvable"
+    return html[:j.start()] + SCRIPT + html[k.end():], None
+
+
 def main(args):
+    if args and args[0] == "--rafraichir":
+        racine = args[1] if len(args) > 1 else "."
+        faits, refus = 0, []
+        for p in sorted(pathlib.Path(racine).rglob("*.html")):
+            if "_archive-anciennes-versions" in p.parts:
+                continue
+            html = p.read_text(encoding="utf-8")
+            if LOUPE_MARQUEUR not in html:
+                continue
+            neuf, raison = rafraichir(html)
+            if raison:
+                refus.append((p, raison))
+            elif neuf != html:
+                p.write_text(neuf, encoding="utf-8")
+                faits += 1
+        print("%d page(s) mises à jour ; %d refus." % (faits, len(refus)))
+        for p, r in refus:
+            print("  ✘ %s — %s" % (p, r))
+        return 1 if refus else 0
     if args and args[0] in ("--remplacer", "--verifier"):
         ecrire = args[0] == "--remplacer"
         racine = args[1] if len(args) > 1 else "."

@@ -32718,3 +32718,38 @@ ressort ses quatre TP à l'octet près). Banc `tests_intituler_codes.py` : 17 / 
 **Aussi, vu sur la même capture.** La bande « 📐 Règle d'or du schéma » de quatre pages (`3e_C4.1`, `3e_C4.3`,
 `3e_C4.7` et sa synthèse professeur) avait un fond clair et un texte clair hérité de la page : elle ne se lisait
 pas. Texte foncé (#111, comme la règle de style des autres pages), et la bande tient dans la colonne (940 px au plus).
+
+## 17/11/2026 — `3e_C9.1`, second audit externe relu : la barre de la mission ne dit plus « fait », l'agrandisseur s'annonce et garde le focus, l'élève écrit sur une feuille de brouillon
+
+Pascal joint un audit externe de `3e_C9.1` (vision élève de 3e, vision inspecteur). Relu remarque par remarque (skill
+`relire-un-audit-externe`), sur la page rendue et dans l'historique.
+
+**Confirmé et corrigé, sur tout le site.**
+- **La barre de la mission** (audit : « "fait" pour un écran visité, "validé" pour une activité réussie : un élève peut
+  croire avoir réussi ») : un écran allumé se dit « vu », « vérifié » ou « écrit », et s'allume dans la couleur neutre
+  de la page (`--sub`) ; le vert reste aux étoiles, seules à dire la réussite. Posé sur les 60 pages (`poser.py`).
+- **L'agrandisseur d'images** (n°92) : une image ou un schéma qu'on agrandit s'annonce comme une commande
+  (`role="button"`, « Agrandir l'image : … », « Agrandir le schéma : … ») ; la fenêtre ouverte garde le focus (Tab
+  reste sur « Fermer », Échap rend le focus à l'image). `loupe.py --rafraichir` (neuf) remet le script à jour : 189 pages.
+- **« au cahier », « sur ton cahier »** (vu dans le parcours 🅲 de `3e_C9.1` : « recopie le programme corrigé au
+  cahier ») : les élèves n'ont pas de cahier (préférence de Pascal) — **79 consignes dans 21 pages** disent « sur une
+  feuille de brouillon » (`3e_C9.1`, `3e_C9.2` et ses quatre pages, `5e_C9.1`, `4e_C9.1`, `4e_C6.1`, `4e_C6.2`,
+  `5e_C6.1`, `4e_C5.1`, `5e_C5.1`, `3e_C4.1`, `3e_C4.3`, `3e_C4.7`, `4e_C4.1`, `5e_C4.1`, `5e_C4.7`, `3e_C7.1`,
+  `5e_C7.1`, un TP de l'atelier CAO, l'atelier carte mentale et sa source). Restent « cahier » : le cahier des charges,
+  le cahier de textes, le cahier de représentations en ligne (« ton cahier de 5e »), et les propositions des QCM.
+- **Le rapport de tests de `3e_C9.1`** (audit : « il annonce 53/53 puis garde des sections 35/35 ») : un « État au
+  17/11/2026 » en tête — suite 89 / 89, n°311 34 / 34, éditeur 76 / 76 — ; les sections plus bas sont datées.
+
+**Confirmé, à trancher par Pascal (voir sa réponse).**
+- L'activité 5 annonce « élaborer » mais l'algorithme, la structure et les tests sont donnés : le constat de l'audit du
+  12/11 (A1). Le transfert individuel sans squelette (`eclairage(lumiere, train_arrive)`, n°330) est prêt depuis le
+  14/11 sur `fable/revision/3e-c9-1-transfert`, mis de côté faute de temps en séance 4.
+- La durée : 185 minutes d'activités pour 4 × 55 min, introduction, billets et bilan compris.
+- Les étoiles de la mission récompensent la réussite du premier coup (3, 2, 1 selon les erreurs).
+- « Sans matériel » (🅲) se lit « sans ordinateur » alors que l'éditeur de la page sert ; renommer le parcours vaut pour
+  tout le site.
+- Aucun repère `<main>` : 48 séquences sur 60.
+
+**Non retenu.** La ressource ouverte au-dessus de la question (règle n°331, voulue) ; la correction lisible en page
+complète avant de produire (choix de Pascal : une correction à chaque exercice, ouverte d'elle-même en mission une fois
+vérifié, n°336).

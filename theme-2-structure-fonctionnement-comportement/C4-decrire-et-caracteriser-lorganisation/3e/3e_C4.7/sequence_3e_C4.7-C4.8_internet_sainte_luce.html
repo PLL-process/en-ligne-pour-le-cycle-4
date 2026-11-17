@@ -690,9 +690,9 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1234,7 +1234,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1253,7 +1256,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -1917,7 +1920,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> représenter le trajet réel d'une information à travers Internet, du réseau local au destinataire.</div>
       <div><b>Compétence :</b> 3e_C4.7.</div>
-      <div><b>Production attendue :</b> les 6 étapes ordonnées + schéma du trajet recopié dans le cahier + 1 idée reçue corrigée.</div>
+      <div><b>Production attendue :</b> les 6 étapes ordonnées + schéma du trajet recopié sur une feuille de brouillon + 1 idée reçue corrigée.</div>
       <div><b>Ressources :</b> carte du trajet ci-dessous.</div>
     </div></details>
     <object class="figure" data="Images/trajet_message_martinique_monde.svg" type="image/svg+xml" aria-label="Carte stylisée : trajet du message depuis Sainte-Luce en Martinique, via le réseau de l'opérateur, un câble sous-marin transatlantique, un centre d'échange en Europe, jusqu'au téléphone du destinataire à Paris">Trajet d'un message de la Martinique vers Paris (SVG)</object>
@@ -1984,7 +1987,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <div class="qcm-option"><input type="radio" name="b2_q1" id="b2_q1__2" value="par les câbles sous-marins"><label for="b2_q1__2">par les câbles sous-marins</label></div>
   <div class="qcm-option"><input type="radio" name="b2_q1" id="b2_q1__1" value="par les satellites" data-pourquoi="Le satellite existe, mais il est plus lent et plus cher : il sert surtout de secours."><label for="b2_q1__1">par les satellites</label></div>
 </fieldset></div>
-      <label for="b2_cahier" style="display:block;margin-top:10px"><b>Dans le cahier :</b> représente le trajet par un schéma fléché (station → routeur → opérateur → câble → centre d'échange → box → téléphone), puis recopie ta légende ici :</label>
+      <label for="b2_cahier" style="display:block;margin-top:10px"><b>Sur une feuille de brouillon :</b> représente le trajet par un schéma fléché (station → routeur → opérateur → câble → centre d'échange → box → téléphone), puis recopie ta légende ici :</label>
       <textarea id="b2_cahier" placeholder="Mon schéma montre…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
@@ -2001,7 +2004,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Le message part TOUJOURS du réseau local (routeur du collège = étape 1), et finit TOUJOURS chez le destinataire. Entre les deux : d'abord l'île, puis l'océan, puis l'Europe.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : collège (1) → opérateur antillais (2) → câble sous-marin (3) → point d'atterrissage/centre d'échange (4) → routeurs français (5) → téléphone (6). <br>Les numéros du SVG t'aident à vérifier.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Le schéma fléché attendu au cahier</b>&nbsp;:</p>
+      <p><b>Le schéma fléché attendu sur une feuille de brouillon</b>&nbsp;:</p>
       <figure class="schema-corrige" style="margin:.4rem auto .8rem;max-width:460px;text-align:center">
           <img class="figure" src="Images/trajet_alerte_schema_fleche_corrige.svg" alt="Schéma fléché du trajet de l'alerte, de haut en bas : la station d'alerte de Sainte-Luce, le routeur du réseau local, le réseau de l'opérateur antillais, le câble sous-marin au fond de l'Atlantique, le centre d'échange Internet en Europe, la box de la tante à Paris, son téléphone." loading="lazy" style="max-width:100%;height:auto">
           <figcaption style="font-size:.9em">Sept étapes, une flèche entre chacune&nbsp;: c'est ce schéma que ta légende décrit.</figcaption>
@@ -2021,7 +2024,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> penser que tout passe par satellite ; oublier que le message change PLUSIEURS fois de réseau ; inverser point d'atterrissage (4) et routeurs nationaux (5).</div>
     <div class="retenir"><b>📌 À retenir :</b> une information traverse une <b>succession de réseaux</b> reliés par des <b>routeurs</b> : local → opérateur → câbles sous-marins/dorsales → opérateur du destinataire → terminal. On sait <b>représenter ce trajet</b> par un schéma fléché légendé.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> les 6 étapes bien ordonnées, la bonne réponse « câbles sous-marins », et un schéma légendé dans le cahier.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 6 étapes bien ordonnées, la bonne réponse « câbles sous-marins », et un schéma légendé sur une feuille de brouillon.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Paquets et routage ›</button></p>
@@ -2700,7 +2703,7 @@ majEssentiel(); majReseau(); majProgress(); majHyp();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
-  "s1": {titre:"Séance 1 — Du réseau local au grand voyage", taches:[{n:1, libelle:"Identifier les appareils du réseau local du collège"}, {n:2, libelle:"Retracer le trajet Sainte-Luce → Paris et le noter au cahier"}]},
+  "s1": {titre:"Séance 1 — Du réseau local au grand voyage", taches:[{n:1, libelle:"Identifier les appareils du réseau local du collège"}, {n:2, libelle:"Retracer le trajet Sainte-Luce → Paris et le noter sur une feuille de brouillon"}]},
   "s2": {titre:"Séance 2 — Paquets et routage", taches:[{n:3, libelle:"Découper, expédier et réassembler un message en paquets"}, {n:4, libelle:"Jouer le routeur : appliquer une table de routage"}]},
   "s3": {titre:"Séance 3 — Éprouver la résistance du réseau", taches:[{n:5, libelle:"Couper un câble au simulateur et observer le re-routage"}, {n:6, libelle:"Suivre un mail pour Tokyo et justifier le rôle des protocoles"}]}
 };
@@ -2859,7 +2862,10 @@ majTaches();
   }
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
   });
 
   // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
@@ -2960,6 +2966,10 @@ majTaches();
       if (boite.width < 120 || boite.height < 90) continue;
       svg.classList.add("loupe-cliquable");
       svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      svg.setAttribute("role", "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
@@ -2976,6 +2986,8 @@ majTaches();
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
       if (!img.getAttribute("title")) {
         img.setAttribute("title", "Cliquer pour agrandir");
       }

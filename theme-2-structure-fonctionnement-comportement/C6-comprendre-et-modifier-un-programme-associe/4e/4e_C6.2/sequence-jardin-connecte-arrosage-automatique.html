@@ -763,9 +763,9 @@ details.geste-detail>p{margin:4px 0 0}
   .ms-rail li{flex:1 1 0;min-width:0}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
-  .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  .ms-pas.fait::before{background:var(--sub,#9bbefc)}   /* vu, vérifié ou écrit — jamais « réussi » : le vert est aux étoiles (audit du 17/11/2026) */
   /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
-  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--sub,#9bbefc)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -1307,7 +1307,10 @@ function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id)
    tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
    Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
    séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
-   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien.
+   Audit du 17/11/2026 : « la barre emploie "fait" pour un écran visité, le tableau de bord "validé" pour une activité
+   réussie ; un élève peut croire avoir réussi ». Un écran allumé se dit donc « vu », « vérifié » ou « écrit », et il
+   s'allume dans la couleur neutre de la page : le vert reste aux étoiles, qui seules disent la réussite. */
 function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
 function etatPas(e, j){
   var passe = j < (M.loin[panneau.id] || 0);
@@ -1326,7 +1329,7 @@ function barre(){
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -2127,7 +2130,7 @@ def attendre(secondes): time.sleep(secondes)
         <span class="copie-etat" role="status" aria-live="polite"></span>
       </div>
   </details>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>On ne peut pas convertir une valeur qu'on n'a pas encore lue. Et « répéter sans fin » englobe tout ce qui doit se refaire chaque seconde.</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Ordre logique du technicien :<br>① ouvrir la répétition (<code>while True:</code>) →<br>② LIRE le capteur →<br>③ CONVERTIR la valeur →<br>④ AFFICHER le résultat →<br>⑤ ATTENDRE avant la mesure suivante. Vérifie ta prédiction dans l'éditeur avant de valider.</p></div></details>
@@ -2271,7 +2274,7 @@ def attendre(secondes): time.sleep(secondes)
         <span class="copie-etat" role="status" aria-live="polite"></span>
       </div>
   </details>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Reprends ta règle de l'activité 4 : elle se traduit mot à mot. « inférieure » → quel symbole ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Trou par trou :<br>① la condition du SI est la traduction directe de « humidité inférieure au seuil » ;<br>② DANS le SI (sol sec), on démarre ;<br>③ dans le SINON (sol assez humide), on arrête. Puis exécute : pour une mesure de 12 %, quelle branche s'affiche ?</p></div></details>
@@ -2548,7 +2551,7 @@ def attendre(secondes): time.sleep(secondes)
       <span class="copie-etat" role="status" aria-live="polite"></span>
     </div>
   </details>
-  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur ton cahier, puis exécute-le dans Vittascience, par le lien.</p>
+  <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
 </div>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
@@ -3032,7 +3035,10 @@ majEssentiel(); majBandeau();
   }
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
   });
 
   // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
@@ -3133,6 +3139,10 @@ majEssentiel(); majBandeau();
       if (boite.width < 120 || boite.height < 90) continue;
       svg.classList.add("loupe-cliquable");
       svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      svg.setAttribute("role", "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
@@ -3149,6 +3159,8 @@ majEssentiel(); majBandeau();
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
       if (!img.getAttribute("title")) {
         img.setAttribute("title", "Cliquer pour agrandir");
       }
