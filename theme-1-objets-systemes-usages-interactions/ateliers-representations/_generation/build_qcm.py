@@ -10,6 +10,9 @@ gabarit d'origine.
     python3 build_qcm.py interacteurs      puis      node ../../../_outils/fix_r.js <qcm> <graine>
     python3 build_qcm.py --tous            (assemble et répartit tous les QCM)
 """
+import sys as _sys_ic
+_sys_ic.path.insert(0, next(str(d / "_outils") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "intituler_codes.py").is_file()))
+import intituler_codes  # noqa: E402
 import importlib
 import json
 import pathlib
@@ -65,6 +68,7 @@ def construire(module):
     banque = importlib.import_module("q_" + module)
     Q = banque.Q
     s = GABARIT.read_text(encoding="utf-8")
+    s = intituler_codes.sans_bulles(s)   # les étiquettes du gabarit, sans leurs bulles (17/11/2026)
     sortie = build.qcm(at)
     d = sortie.parent
     codes = []
@@ -135,6 +139,7 @@ def construire(module):
     for reste in ("planification", "GanttProject", "C7.1", "Brooklyn", "Shenzhen", "chemin critique"):
         if reste in s:
             raise SystemExit("Reste du gabarit d'origine non remplacé : %r" % reste)
+    s = intituler_codes.poser_texte(s)   # chaque étiquette de code dit sa compétence au survol
     sortie.write_text(s, encoding="utf-8")
     graine = sum(ord(c) for c in at.SLUG) % 997
     r = subprocess.run(["node", str(moteur.DEPOT / "_outils" / "fix_r.js"), str(sortie), str(graine)],

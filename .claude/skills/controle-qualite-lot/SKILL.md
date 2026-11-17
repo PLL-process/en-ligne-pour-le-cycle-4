@@ -22,7 +22,8 @@ on le corrige d'abord. Une fois le lot vert, on le livre avec le skill `livraiso
 - exercices originaux, corrections de qualité, niveau de langue collège ;
 - sigles en capitales, FAST et non « fast » (n°313, 25/10/2026) : `python3 _outils/controle_sigles.py` ;
 - chaque compétence du CRCN en toutes lettres, à l'écran et au survol (n°314, 26/10/2026) :
-  `python3 _outils/controle_competences.py` ; l'outil `python3 _outils/nommer_competences.py <page>` écrit les intitulés et
+  `python3 _outils/controle_competences.py` ; chaque étiquette de code du programme dit son intitulé au survol
+  (17/11/2026) : `python3 _outils/intituler_codes.py --etat --strict` ; l'outil `python3 _outils/nommer_competences.py <page>` écrit les intitulés et
   les deux premiers étages de la bulle (intitulé et niveau, le cadre) ; le « Ici : » s'écrit à la main ;
 - en mode essentiel, aucune carte réduite à son titre (n°29, contrôle du 26/10/2026) : `python3 _outils/controle_mode_essentiel.py` ;
 - tout schéma est premium (n°315, 28/10/2026) : aucune entité n'en touche une autre, aucun texte ne sort de son cadre,
@@ -122,6 +123,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_lecteur_pas_a_pas.py` | décision 4b (25/10/2026) : chaque animation pas à pas utilise le lecteur commun (`_outils/lecteur_pas_a_pas/`), posé une fois, à jour |
 | `lecteur_pas_a_pas/banc_lecteur.py [racine]` | chaque animation pas à pas, au navigateur : étapes, 390 px, mouvement réduit, voix sur le disque, impression, lien direct |
 | `controle_competences.py` | n°314 (26/10/2026) : chaque code CRCN montré à l'élève porte son intitulé officiel ; la bulle d'une étiquette CRCN donne, pour chaque compétence, l'intitulé, la description du cadre et « Ici : » ; celle du socle, chaque domaine en toutes lettres |
+| `intituler_codes.py [--ecrire] [--etat [--strict]]` | 17/11/2026 (demande de Pascal) : chaque étiquette de code du programme (« 3e_C4.1 », « 4e_C7.1 · C7.2 », « 5e_C9.1 → C9.3 ») dit sa compétence au survol — « Programme 2024 — code : intitulé », une ligne par code, intitulés de `data_competences.py`, OST en toutes lettres. `--ecrire` pose les bulles ; les générateurs de pages qui écrivent des étiquettes l'appellent avant d'écrire. Banc `tests_intituler_codes.py` |
 | `controle_mode_essentiel.py [racine]` | n°29, au navigateur (26/10/2026) : le mode essentiel ne laisse aucune carte réduite à son titre |
 | `controle_schemas.mjs [dossier…] [--planche <dossier>] [--json <fichier>] [--charge [n]]` | n°315 (28/10/2026), au navigateur : chaque schéma (fichier SVG ou SVG d'une page) — cadres qui se touchent, texte qui déborde, textes superposés, flèche qui traverse un cadre ou un texte, taille de police écrasée, étiquette de flèche collée à son trait (⚠ à moins de 6 unités, 15/11/2026) ; classe du pire au meilleur, fabrique la planche de captures pour la revue à l'œil ; `--charge` (11/11/2026) liste les schémas les plus chargés — entités (cadres hors cellules de tableau et pastilles), flèches, mots — au-dessus du repère de 9 entités ou 12 flèches : une mesure, hors score et hors sortie ; banc `tests_controle_schemas.mjs` |
 | `mesurer_voix.py [racine] [--muet] [--json <f>]` | 11/11/2026 : le débit de chaque voix d'animation pas à pas, étape par étape (mots prononcés ÷ durée du fichier `.ogg`, par ffprobe) ; nomme les étapes au-dessus de 170 mots/min. Mesure, sortie 0 ; sortie 2 si ffprobe manque ou si une étape n'a pas son fichier ; banc `tests_mesurer_voix.py` |

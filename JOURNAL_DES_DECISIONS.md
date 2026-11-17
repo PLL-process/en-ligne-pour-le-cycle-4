@@ -32694,3 +32694,27 @@ Mesure : `trois_lignes.py --etat --strict` — **57 séquences, 57 avec la carte
   `tests_regle_311_4e_C7.1.mjs` (« les onglets dans le premier écran » à la séance 2), est **le même sur main**.
 - Règles visibles (n°309), sigles (n°313), unités (n°312), mêmes nombres (n°338), `verif_regles_audit.py` (0 ✘),
   fiche papier (pose à jour ; banc PDF sur 5e_C7.3 et 3e_C1.5) : verts.
+
+## 17/11/2026 — Chaque étiquette de code dit sa compétence au survol
+
+Pascal, le 17/11/2026, sur `3e_C4.1` (capture jointe) : « En passant ma souris au-dessus de la puce, je ne vois pas à
+quoi correspond la compétence. Comme c'est le cas dans les autres séquences. Vérifie que ce ne soit pas le cas
+partout. »
+
+**Le relevé.** 364 étiquettes de code du programme dans les pages des trois thèmes (séquences, QCM, synthèses, TP,
+ateliers) : **276 sans bulle**, dans 92 pages — presque toutes les séquences et tous les QCM des thèmes 2 et 3, les
+QCM du thème 1, les ateliers. Deux séquences (`4e_C2.1`) avaient une bulle « Code de rangement… » qui paraphrasait
+sans donner l'intitulé ; une (`4e_C1.1`), l'intitulé seul, avec le sigle OST.
+
+**Ce qui change.** `_outils/intituler_codes.py` (neuf) donne à chaque étiquette la bulle « Programme 2024 —
+3e_C4.1 : Élaborer, à l'aide d'un schéma bloc, la chaîne d'énergie d'un objet ou système technique. », une ligne par
+code quand l'étiquette en porte plusieurs (« 4e_C7.1 · C7.2 · C7.3 », « 5e_C9.1 → C9.3 » : la plage entière).
+Intitulés : `_outils/data_competences.py`, seule autorité du dépôt ; le sigle OST écrit en toutes lettres (n°313).
+Mesure après : **368 étiquettes, 368 avec leur bulle** (`--etat --strict` sort à 0). Les générateurs qui écrivent
+des étiquettes (cinq `build_qcm.py` de lots, l'atelier des représentations, l'atelier planification, l'atelier CAO)
+retirent les bulles de leur gabarit puis les reposent avant d'écrire : une régénération les garde (l'atelier CAO
+ressort ses quatre TP à l'octet près). Banc `tests_intituler_codes.py` : 17 / 17.
+
+**Aussi, vu sur la même capture.** La bande « 📐 Règle d'or du schéma » de quatre pages (`3e_C4.1`, `3e_C4.3`,
+`3e_C4.7` et sa synthèse professeur) avait un fond clair et un texte clair hérité de la page : elle ne se lisait
+pas. Texte foncé (#111, comme la règle de style des autres pages), et la bande tient dans la colonne (940 px au plus).
