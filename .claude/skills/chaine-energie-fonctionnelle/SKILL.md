@@ -177,10 +177,27 @@ Deux précisions (16/11/2026, après la fiche SFC1b de l'académie de Bordeaux, 
   obligation ») : moteur → **cinétique**, parce qu'il en sort un mouvement ; vérin → **mécanique**, parce qu'il pousse ou
   soulève une charge, donc donne du mouvement et de la hauteur ; génératrice, dynamo : **mécanique → électrique**, comme
   la fiche de Bordeaux (« cinétique → électrique » est juste aussi).
-- **Où le détour est écrit** : une note « 📝 Cinétique ou mécanique ? » dans les synthèses de `5e_C3.1` (moteur, vérin,
-  la règle) et du Book Train (moteur, vérin, génératrice, en cases) ; une ligne « On dit aussi « mécanique » : c'est le
+- **Où le détour est écrit** : une note « 📝 Cinétique ou mécanique ? » dans la synthèse de `5e_C3.1` (moteur, vérin,
+  la règle) ; le bloc « 📝 Les cinq conversions à connaître » (ci-dessous) dans celle du Book Train, avec la règle ; une ligne « On dit aussi « mécanique » : c'est le
   mot qui couvre le mouvement (cinétique) et la hauteur (potentielle) » dans la correction qui nomme la sortie d'un
   moteur ou d'une pompe (`4e_C4.1`, Book Train, `5e_C4.1`, `4e_C9.1`), et pour la dynamo de `5e_C7.4`. Une nouvelle
   séquence qui fait nommer la sortie d'un moteur, d'une pompe, d'un vérin ou d'une génératrice porte la même ligne
   dans sa correction.
 
+## Les cinq conversions du programme (17/11/2026)
+
+Le programme 2024 (SFC 11, connaissance reprise en CCRI 14) demande « les conversions d'énergie des constituants
+suivants : moteur électrique, lampe, radiateur, génératrice, vérin ». Le site les donne en cinq cases, même texte partout :
+
+| Constituant | Conversion |
+|---|---|
+| Moteur électrique | électrique → cinétique (il en sort un mouvement) |
+| Lampe | électrique → lumineuse |
+| Radiateur | électrique → thermique |
+| Génératrice | mécanique → électrique (elle reçoit le mouvement d'une roue, d'une éolienne) |
+| Vérin | pneumatique ou hydraulique → mécanique (il pousse ou soulève une charge) |
+
+Chacune perd un peu d'énergie en chaleur, sauf le radiateur, dont la chaleur est le but. Où : la synthèse du Book Train
+(4e, SFC 11 en 4e_C4.2), cases avec leur raison ; la synthèse de `5e_C7.4` (5e, CCRI 14), cases courtes, à la fin de la
+partie 4 (les pertes) pour tenir sur deux pages. Pas dans la synthèse du lampadaire (`5e_C4.1`, SFC 11 en 5e) : elle
+s'imprime déjà sur trois pages.

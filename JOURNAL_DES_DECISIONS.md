@@ -32246,3 +32246,23 @@ Demande de Pascal, 16/11/2026, sur `4e_C4.1` (« L'eau est mise en mouvement : l
   lettres (règle n°312) ajoutées depuis ; c'est à reprendre dans un lot à part.
 - Une erreur du remplacement corrigée au passage : « un relais est un contact mécanique » (`4e_C9.1`) n'est pas une
   forme d'énergie, il reste « mécanique ».
+
+## 17/11/2026 — Les cinq conversions du programme : moteur, lampe, radiateur, génératrice, vérin
+
+Le programme 2024 (SFC 11, connaissance reprise en CCRI 14) demande « les conversions d'énergie des constituants
+suivants : moteur électrique, lampe, radiateur, génératrice, vérin » (vérifié le 17/11/2026 sur le programme publié
+par l'académie de Versailles). Le 16/11/2026, aucune synthèse ne parlait du radiateur ; la génératrice et le vérin
+n'apparaissaient que dans la note « Cinétique ou mécanique ? » de la veille. Pascal a validé le lot à part (17/11/2026).
+
+- **Le bloc** « 📝 Les cinq conversions à connaître » : cinq cases, même texte partout — moteur électrique
+  (électrique → cinétique), lampe (électrique → lumineuse), radiateur (électrique → thermique), génératrice
+  (mécanique → électrique), vérin (pneumatique ou hydraulique → mécanique) ; chacune perd un peu en chaleur, sauf le
+  radiateur. Les mots « mécanique » du vérin et de la génératrice suivent la fiche SFC1b de Bordeaux et la règle du
+  16/11/2026.
+- **Où** : la synthèse du Book Train (4e, `4e_C4.2`), où le bloc remplace la note de la veille et garde la règle
+  « cinétique ou mécanique » et les raisons de Pascal (il en sort un mouvement ; il pousse ou soulève une charge) ; la
+  synthèse de `5e_C7.4` (5e, CCRI 14), en cases courtes, à la fin de la partie 4 qui parle des pertes. Placé dans la
+  partie 2, il poussait la synthèse sur trois pages. Les deux tiennent sur deux pages A4 (règle n°316).
+- **Pas fait** : la synthèse du lampadaire (`5e_C4.1`, SFC 11 en 5e) s'imprime déjà sur trois pages sur `main`, comme
+  celle de `4e_C4.1` : les ramener à deux pages est un lot à part. La règle est écrite dans le skill
+  `chaine-energie-fonctionnelle`.
