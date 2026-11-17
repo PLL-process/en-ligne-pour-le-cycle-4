@@ -32859,3 +32859,24 @@ licence ? »).
   `controle_banque_qcm`, `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ;
   export Éléa régénéré (l'inventaire portait encore deux anciens titres « SOS serre »), banc de l'export vert.
 - État : 72 QCM, 14 avec les trois, **58 à poser** (thèmes 2 et 3, ateliers).
+
+## 17/11/2026 — Généralisation, lot 3 (vague 2) : les QCM « dépanner » et « programmer » du thème 2
+
+Neuf QCM de plus portent la carte « Avant de commencer », les aides progressives et la révision par pièges (n°337,
+n°339) : `3e_C5.1`, `4e_C5.1`, `5e_C5.1`, `3e_C6.1`, `3e_C6.2`, `4e_C6.1`, `5e_C6.1`, et les deux QCM de `4e_C6.2`
+(arrosage, éclairage : un fichier `qcm_aides_4e_C6.2_<sujet>.json` par page). État : **23 QCM sur 72**, 49 à poser.
+
+- **Les intrus-plaisanteries remplacés** (skill `propositions-sans-indice`, I2). Un `d` réduit à « ! » signalait une
+  proposition que personne ne choisit : « parce que le nombre 118 est plus joli », « pour user le clavier de
+  l'ordinateur », « pour économiser l'encre de l'imprimante », « un jeu vidéo éducatif sur les cyclones », « parce que
+  6 est un chiffre porte-bonheur », « l'arbre sert surtout aux plantes vertes », « elle joue un son ». Chacun devient
+  une erreur qu'un élève commet vraiment (« parce que Python lit les tests de bas en haut », « parce que les anciens
+  tests ont pu changer », « pour que l'axe soit serré et ne tourne pas », « elle mesure la luminosité »), avec son
+  pourquoi. Quatorze propositions : `3e_C5.1` (4), `3e_C6.1` (8), `4e_C6.2` éclairage (2).
+- **Quatorze indices creux réécrits** (« Rien à voir. », « Python va très bien. », « Elle en consomme. », « 55 < 90. ») :
+  chacun dit pourquoi CETTE proposition ne répond pas à CETTE question.
+- Restent deux « ! » sur le site, dans `3e_C4.1` : la vague 3 (C4) les reprend.
+- Contrôles : `banc_aides` 9 / 9 ; `verif_qcm_coherence` 9 / 9 (positions et réfutations) ; `controle_indices_qcm`,
+  `controle_longueurs`, `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`,
+  `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ; export Éléa régénéré,
+  banc vert ; bancs des huit lots.

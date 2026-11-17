@@ -76,6 +76,13 @@
   .option:disabled{cursor:default;opacity:.92}
   .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
   .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
   .correction-bloc.show{display:block}
   .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
@@ -162,6 +169,22 @@
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Le programme d'alerte de la station&nbsp;: ses données, ses tests, ses seuils.
+    <br>Le modifier sans casser ce qui marche, et le prouver par des tests.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Dérouler le programme à la main pour une valeur donnée.
+    <br>Choisir des essais qui prouvent une modification.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>«&nbsp;&gt;&nbsp;» (plus grand que) n'est pas «&nbsp;&gt;=&nbsp;» (plus grand ou égal)&nbsp;: teste la valeur frontière.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -306,7 +329,7 @@ const QUESTIONS = [
  expl:"On descend les tests dans l'ordre : 95 > 118 ? non. 95 > 90 ? OUI → rouge, et les elif suivants sont ignorés.",
  ex:"C'est la trace de l'activité 2, situation A.",
  err:"Tester « dans le désordre » ou continuer après un test vrai.",
- d:["95 dépasse aussi 50, mais le test rouge passe AVANT le test orange.","","95 ne dépasse pas 118.","95 dépasse largement 50 : une branche s'active forcément."],
+ d:["95 dépasse aussi 50, mais le test rouge passe AVANT le test orange.","","95 ne dépasse pas 118 : le test du violet est faux, le niveau maximal n'est pas atteint.","95 dépasse largement 50 : une branche s'active forcément."],
  ret:"Les elif se testent dans l'ordre et s'arrêtent au premier vrai."},
 {c:"C6.1",n:"Valeur frontière",q:"Même programme : pour vent_kmh = 118 EXACTEMENT, que vaut vigilance ?",
  o:["« rouge » : 118 > 118 est faux","« violette » : 118 atteint le seuil","« orange », comme en dessous de 90","le programme plante à cette valeur"],r:0,
@@ -320,15 +343,15 @@ const QUESTIONS = [
  expl:"if/elif forme UNE structure : un seul chemin est emprunté — le premier dont le test est vrai. C'est pourquoi l'ordre des tests (du plus fort au plus faible) est crucial.",
  ex:"vent = 130 : la branche violette s'exécute ; les tests rouge et orange ne sont même pas évalués.",
  err:"Croire que plusieurs branches peuvent s'activer en même temps.",
- d:["Ce serait le comportement de ifs INDÉPENDANTS, pas de elif.","Le programme continue après la structure (message, commandes).","Aucune boucle ici.",""],
+ d:["Ce serait le comportement de ifs INDÉPENDANTS, pas de elif.","Le programme continue après la structure (message, commandes).","Une structure if / elif s'exécute une seule fois, de haut en bas : elle ne revient pas au début.",""],
  ret:"if/elif = un seul chemin : le premier test vrai gagne, les autres sont ignorés."},
 {c:"C6.1",n:"Ordre des tests",q:"Pourquoi le programme teste-t-il vent > 118 AVANT vent > 90 et vent > 50 ?",
  img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme testant les seuils du plus fort au plus faible : 118, puis 90, puis 50"},
- o:["par ordre alphabétique des niveaux","parce que le nombre 118 est plus joli","sinon un ouragan serait classé orange","l'ordre des tests n'a aucune importance"],r:2,
+ o:["pour que le programme aille plus vite","parce que Python lit les tests de bas en haut","sinon un ouragan serait classé orange","l'ordre des tests n'a aucune importance"],r:2,
  expl:"130 dépasse TOUS les seuils. Si on testait > 50 en premier, la branche orange capterait l'ouragan et les autres tests seraient ignorés. On teste donc du plus fort au plus faible.",
  ex:"L'algorigramme montre cet ordre : ouragan → rouge → orange.",
  err:"Ranger les tests « dans l'ordre croissant » qui paraît naturel — et classer tous les cyclones en orange.",
- d:["Aucun rapport avec l'alphabet.","!","","Avec elif, l'ordre change complètement le résultat."],
+ d:["Le nombre de tests ne change pas : c'est le résultat qui change. Avec elif, le premier test vrai l'emporte.","Python lit les tests de haut en bas : le premier test vrai l'emporte, les suivants sont ignorés.","","Avec elif, l'ordre change complètement le résultat."],
  ret:"Avec des elif sur des seuils, tester du plus FORT au plus FAIBLE."},
 {c:"C6.1",n:"Donnée lue non utilisée",q:"Le programme lit pression_hpa mais ne s'en sert dans aucun test. Que peut-on dire ?",
  o:["c'est une erreur qui empêche l'exécution","la pression est donc inutile en météo","c'est une entrée disponible, inexploitée","il faut supprimer le baromètre du montage"],r:2,
@@ -393,7 +416,7 @@ const QUESTIONS = [
  expl:"Toute modification s'accompagne d'une PRÉDICTION : 55 > 60 est faux, donc plus d'orange. Prédire avant, vérifier après — c'est la boucle de C6.3.",
  ex:"Trace : 55>118 non, 55>90 non, 55>60 non → valeurs par défaut.",
  err:"Modifier sans re-tracer : « ça devrait aller »… jusqu'au jour d'alerte.",
- d:["L'ancien seuil n'existe plus.","55 < 90.","55 < 118.",""],
+ d:["L'ancien seuil n'existe plus : 55 ne dépasse pas le nouveau seuil orange, 60.","55 ne dépasse pas 90 : le test du rouge est faux.","55 ne dépasse pas 118 : le test du violet est faux.",""],
  ret:"Après chaque modification : re-tracer les cas concernés."},
 {c:"C6.3",n:"Imiter le modèle",q:"Pour ajouter gyrophare_actif, la séquence conseille d'imiter la gestion de sirene_active. Pourquoi ?",
  o:["le programme a déjà un modèle qui marche","parce que copier est toujours une bonne chose","pour obtenir davantage de lignes de code","il ne fallait surtout pas l'imiter"],r:0,
@@ -419,19 +442,19 @@ const QUESTIONS = [
  ret:"On implémente une SPÉCIFICATION (algorigramme), pas une intuition."},
 {c:"C6.3",n:"Jeu d'essai",q:"Qu'est-ce qu'un « jeu d'essai » ?",
  img:{src:"Images/plan_de_tests_jeux_essai.svg",alt:"Tableau de jeux d'essai : entrée, sortie attendue, sortie obtenue, verdict"},
- o:["un essai « pour voir », sans rien noter","un jeu vidéo éducatif sur les cyclones","une entrée, la sortie attendue, la comparaison","une répétition, comme au théâtre"],r:2,
+ o:["un essai « pour voir », sans rien noter","une valeur d'entrée choisie au hasard","une entrée, la sortie attendue, la comparaison","la liste des erreurs affichées par Python"],r:2,
  expl:"Le jeu d'essai a trois colonnes obligatoires : entrée, sortie ATTENDUE (calculée à la main AVANT), sortie obtenue. Sans l'attendu, on ne teste pas : on regarde.",
  ex:"vent = 61 → attendu : orange + gyrophare → obtenu : idem → ✔.",
  err:"Exécuter puis déclarer « ça a l'air bon » : sans attendu, aucun verdict possible.",
- d:["Sans sortie attendue notée, ce n'est pas un test.","Non — quoique tester puisse être ludique !","","Rien à voir."],
+ d:["Sans sortie attendue notée, ce n'est pas un test.","Une entrée seule ne prouve rien : il faut aussi la sortie attendue, écrite avant, pour comparer.","","Les erreurs de Python disent qu'une ligne est mal écrite ; un jeu d'essai vérifie que le programme calcule juste."],
  ret:"Jeu d'essai = entrée + sortie attendue (à la main) + sortie obtenue + verdict."},
 {c:"C6.3",n:"Valeurs frontières",q:"Pourquoi le plan de tests choisit-il 49/50/51 et 117/118/119 plutôt que 30, 75, 200 ?",
  img:{src:"Images/plan_de_tests_jeux_essai.svg",alt:"Plan de tests visant les valeurs frontières autour des seuils"},
- o:["ce sont des nombres porte-bonheur","les frontières sont où > et >= diffèrent","pour économiser l'encre de l'imprimante","au hasard, comme n'importe quelle valeur"],r:1,
+ o:["ce sont les vents les plus fréquents en Martinique","les frontières sont où > et >= diffèrent","parce que 30, 75 et 200 ne sont pas des vents possibles","au hasard, comme n'importe quelle valeur"],r:1,
  expl:"Loin des seuils, un programme correct et un programme bogué répondent pareil. À la frontière exacte (50, 118), la moindre confusion >/>= apparaît immédiatement.",
  ex:"Le test n°4 du schéma (118) démasque le bug >= alors que 200 ne l'aurait jamais vu.",
  err:"Choisir des valeurs « variées » mais toutes loin des seuils : couverture illusoire.",
- d:["Aucune magie, que de la logique.","","!","Le choix est au contraire ultra-ciblé."],
+ d:["La fréquence ne compte pas ici : on teste là où le programme hésite, juste autour de chaque seuil.","","Ces vents sont possibles, mais loin des seuils : ils ne montrent pas si le test utilise > ou >=.","Le choix est au contraire ultra-ciblé."],
  ret:"Tester AUX frontières : seuil-1, seuil, seuil+1."},
 {c:"C6.3",n:"Diagnostiquer par le test",q:"Attendu à vent=118 : rouge. Obtenu : violette. Quelle est la cause la plus probable ?",
  o:["le capteur de vent ment sur la valeur","Python compte mal au-delà de 100","le gyrophare est cassé depuis l'installation","un >= à la place d'un > dans le test"],r:3,
@@ -441,11 +464,11 @@ const QUESTIONS = [
  d:["Le jeu d'essai fournit l'entrée directement : le capteur n'intervient pas.","Les comparaisons de Python sont fiables.","Le gyrophare est un ACTIONNEUR : il n'influence pas la décision.",""],
  ret:"Un échec de test aux frontières oriente vers l'opérateur de comparaison."},
 {c:"C6.3",n:"Non-régression",q:"Ta v2 (gyrophare) passe ses nouveaux tests. Pourquoi rejouer AUSSI les anciens tests de la sirène ?",
- o:["pour vérifier la non-régression","par simple nostalgie des anciens tests","pour user le clavier de l'ordinateur","c'est totalement inutile de les rejouer"],r:0,
+ o:["pour vérifier la non-régression","pour vérifier que le gyrophare clignote","parce que les anciens tests ont pu changer","c'est totalement inutile de les rejouer"],r:0,
  expl:"Tester la non-régression = re-vérifier l'existant après chaque modification. En ajoutant le gyrophare, une erreur d'indentation aurait pu déplacer une ligne de la sirène.",
  ex:"Les pros rejouent TOUTE leur batterie de tests à chaque version — souvent automatiquement.",
  err:"Ne tester que la nouveauté : les régressions sont les bugs les plus fréquents en entreprise.",
- d:["","La sécurité du quartier, pas la nostalgie.","!","C'est au contraire la moitié de la validation."],
+ d:["","Les nouveaux tests vérifient déjà le gyrophare : les anciens vérifient que la sirène marche encore.","Les anciens tests n'ont pas changé : c'est le programme qui a changé, et il a pu casser la sirène.","C'est au contraire la moitié de la validation."],
  ret:"Après toute modification : tester le NOUVEAU et re-tester l'ANCIEN (non-régression)."},
 {c:"C6.3",n:"Un seul échec",q:"Sur tes 5 jeux d'essai, 4 passent et 1 échoue. Verdict sur la version ?",
  o:["acceptée : quatre sur cinq, c'est bien","refusée : un seul échec suffit","acceptée, si l'on cache le test raté","on supprime du plan le test qui échoue"],r:1,
@@ -459,14 +482,14 @@ const QUESTIONS = [
  expl:"La trace manuelle EST une exécution — par un humain. Plan de tests, attendus, verdicts : toute la méthode fonctionne sur papier ; la machine ne fait que l'accélérer.",
  ex:"L'activité 5 valide ta v2 entièrement à la main ; la version 🅰 ne fait que confirmer sur la maquette.",
  err:"Croire que « tester » = « appuyer sur Exécuter » : c'est calculer l'attendu qui teste.",
- d:["Dijkstra traçait ses programmes à la main bien avant les écrans.","La méthode est autonome.","","La validation à la main compte pleinement : c'est la même logique."],
+ d:["Dijkstra traçait ses programmes à la main bien avant les écrans.","Pas besoin d'attendre : tu calcules toi-même la sortie de chaque essai, le programme sous les yeux.","","La validation à la main compte pleinement : c'est la même logique."],
  ret:"Tester = comparer attendu et obtenu ; la trace manuelle est un vrai test."},
 {c:"C6.3",n:"L'erreur d'indentation",q:"Python affiche IndentationError: expected an indented block après if gyrophare_actif:. Que faire ?",
  o:["indenter la ligne suivante de quatre espaces","supprimer purement et simplement le if","réinstaller Python sur l'ordinateur","ignorer le message d'erreur affiché"],r:0,
  expl:"Le message d'erreur DIT le problème : après un if, Python attend un bloc indenté. Lire le message (nom + ligne) est la première compétence du débogueur.",
  ex:"if gyrophare_actif: ⏎ [4 espaces] activer_gyrophare().",
  err:"Paniquer devant le message au lieu de le lire — il donne littéralement la solution.",
- d:["","Le if est nécessaire : c'est la commande conditionnelle.","Python va très bien.","Le programme ne tournera pas tant que l'erreur persiste."],
+ d:["","Le if est nécessaire : c'est la commande conditionnelle.","Python fonctionne : il signale une ligne mal décalée sous le if, c'est elle qu'il faut corriger.","Le programme ne tournera pas tant que l'erreur persiste."],
  ret:"Lire le message d'erreur : type + ligne = la moitié de la correction."},
 {c:"C6.3",n:"Modifier vs valider",q:"Quelle phrase résume la compétence C6.3 complète ?",
  o:["écrire le plus de lignes possible","modifier vite, et publier aussitôt après","tester seulement quand ça a l'air cassé","modifier, prédire, puis PROUVER par des tests"],r:3,
@@ -539,6 +562,49 @@ const COMP_LABELS={ "C6.1":"3e_C6.1 — Données utilisées et produites", "C6.3
 const N=QUESTIONS.length;
 
 /* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  donnees:"Donnée utilisée ou produite ? D'où elle vient, ce que le programme en fait",
+  lire:"Lire avant de modifier : les constantes, l'état sûr par défaut, la fonctionnalité",
+  trace:"Dérouler le programme à la main : >, elif, l'ordre des tests, l'algorigramme",
+  modifier:"Modifier sans casser : une constante, un modèle à imiter, la bonne indentation",
+  tester:"Un test prouve : une entrée, la sortie attendue, les frontières, la non-régression"
+};
+const PIEGE_DE_NOTION={
+  "Donnée utilisée":"donnees",
+  "Donnée produite":"donnees",
+  "Pourquoi identifier les données":"donnees",
+  "Donnée lue non utilisée":"donnees",
+  "Sorties vers le système":"donnees",
+  "Variable réutilisée":"donnees",
+  "Transfert":"donnees",
+  "Constante":"lire",
+  "Lire avant modifier":"lire",
+  "Initialisation":"lire",
+  "Fonctionnalité":"lire",
+  "Trace simple":"trace",
+  "Valeur frontière":"trace",
+  "Rôle du elif":"trace",
+  "Ordre des tests":"trace",
+  "Prédire l'effet":"trace",
+  "Lire l'algorigramme":"trace",
+  "Modifier un paramètre":"modifier",
+  "Imiter le modèle":"modifier",
+  "Indentation":"modifier",
+  "L'erreur d'indentation":"modifier",
+  "Étendre la structure":"modifier",
+  "Sauvegarder et versionner":"modifier",
+  "Jeu d'essai":"tester",
+  "Valeurs frontières":"tester",
+  "Diagnostiquer par le test":"tester",
+  "Non-régression":"tester",
+  "Un seul échec":"tester",
+  "Tester sans machine":"tester",
+  "Modifier vs valider":"tester"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
 let etat={
   reponses:Array(N).fill(null),   // index choisi ou null
   validees:Array(N).fill(false),
@@ -550,6 +616,7 @@ let etat={
   identite:{}
 };
 let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -559,7 +626,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -608,6 +675,11 @@ function setMode(mode){
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
     if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
     if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
@@ -616,6 +688,10 @@ function setMode(mode){
 }
 document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
 /* ───── grille + filtres ───── */
 let filtre="toutes";
@@ -688,7 +764,7 @@ function rendreQuestion(){
     b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
     if(etat.validees[i]){
       b.disabled=true;
-      if(k===Q.r) b.classList.add("bonne");
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
       if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
     } else {
       if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
@@ -710,6 +786,27 @@ function rendreCorrection(){
   const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
   let dist="";
   Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
   bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
   bloc.innerHTML=`
     <h3>${verdict}</h3>
@@ -732,6 +829,8 @@ $("btnValider").addEventListener("click",()=>{
     if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -798,6 +897,11 @@ function rendreResultat(){
   let html="";
   if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
   if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
   const msg= note>=16?"Remarquable ! Lire, modifier et tester un programme n'a plus de secret pour toi — tu es prêt·e pour l'évaluation.":
     note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
