@@ -56,8 +56,14 @@ Le QCM : rubrique `avant_de_commencer` de `qcm_aides_<lot>.json`, posée par `_o
 carte se pose dans son générateur.
 
 Puis : le banc du lot, `controle_squelette.mjs`, le mode mission (la carte est sur le premier écran,
-`banc_generique.mjs`), `mesurer_charge.mjs` (la carte ajoute environ 70 mots à la séance 1 : le dire si elle passe le
-repère de 1 200), la fiche papier, une capture à 390 px.
+`banc_generique.mjs`), la fiche papier, une capture à 390 px et à 1 280 px. La carte ajoute environ 100 mots à
+l'ouverture ; `mesurer_charge.mjs` mesure les panneaux de séance, pas l'ouverture : ses chiffres ne bougent pas
+(mesuré le 17/11/2026 sur onze séquences).
+
+**Gabarits anciens.** La carte porte son propre cadre (960 px au plus, centrée, fond et bordure) : dans `3e_C1.5` et
+`4e_C1.4`, la classe `card` n'a pas de style à l'écran, et la carte s'étalait sans fond sur toute la largeur. Quand
+le titre de la séquence est **dans** le volet (`4e_C1.4` : « Bienvenue dans la cybersécurité »), la carte se déplace à
+la main juste sous ce titre : reposer la réécrit à sa place, sans la remonter.
 
 ## L'exemple (5e_C2.1)
 

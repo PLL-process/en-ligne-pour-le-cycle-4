@@ -32604,3 +32604,39 @@ les leurres du billet n'ont pas encore de pourquoi (`corriger_billet.py` les lis
 - Squelette, aération, schéma sous les yeux, règles visibles, liens, mode essentiel : verts. Fiche papier : verte sur
   13 séquences ; le jardin connecté (4e_C4.1) imprime 18 boutons, **comme sur main**.
 - Les 60 QCM : syntaxe de chaque script vérifiée ; sauvegarde locale, règles visibles : verts.
+
+## 17/11/2026 — Généralisation, lot 2 (vague 1) : les trois lignes « Avant de commencer » sur dix séquences
+
+Deuxième lot de la généralisation de l'audit « double regard » (règle n°337), dans l'ordre du suivi de la révision
+(`docs/revision/SUIVI_REVISION.md`, ce qui passe en classe le plus tôt d'abord). Skill `avant-de-commencer-trois-lignes`.
+
+**Les cartes.** Dix séquences reçoivent la carte « 🎯 Avant de commencer : trois choses à lire », écrite dans la
+langue d'un élève de 6e à partir du référentiel, de la problématique, des pièges de la synthèse et des critères :
+`5e_C1.5` (le compte du club), `5e_C1.3` (le système d'information des vélos partagés), `4e_C1.1` (Tsinghua, les feux),
+`4e_C1.4` (la cybersécurité), `3e_C1.5` (numérique et société), `3e_C2.1` (Pékin, trois destinataires), `5e_C1.1`
+(Chengdu, l'air), `5e_C1.2` (Sainte-Luce, le freinage), `5e_C3.1` (Shanghai, le dernier kilomètre), `4e_C2.1`
+(Hangzhou, l'usager devant la borne). Les données sont dans le dossier de chaque lot, `trois_lignes_<lot>.json`.
+Mesure : 60 séquences, **11 avec la carte**, 49 à poser.
+
+**L'outil.** `_outils/trois_lignes.py` donne à la carte son propre cadre (960 px au plus, centrée, fond, bordure) :
+dans les gabarits anciens (`3e_C1.5`, `4e_C1.4`), la classe `card` n'a pas de style à l'écran et la carte s'étalait sans
+fond sur toute la largeur. Le style d'une pose plus ancienne est remplacé, jamais doublé : Shenzhen (`5e_C2.1`) le
+reçoit aussi, sans changement visible (ses valeurs sont celles de `.card`). Dans `4e_C1.4`, le titre de la séquence est
+dans le volet : la carte est placée sous ce titre. Banc `tests_audit_double_regard.py` : 24 / 24 (deux cas de plus).
+
+**Vérifications.**
+- Squelette (`controle_squelette.mjs`), page par page : vert sur les 11 pages.
+- Captures à 390 et 1 280 px : la carte est dans sa colonne, sans défilement de côté ; en mode mission, elle est
+  dans l'ouverture du premier écran.
+- Bancs des lots : 3e_C1.5 23 / 23, 45 / 45, 34 / 34 ; 4e_C1.1 71 / 71 ; 4e_C1.4 31 / 31 ; 5e_C1.1 43 / 43, 50 / 50 ;
+  5e_C1.2 50 / 50 ; 5e_C1.3 44 / 44 ; 5e_C2.1 152 / 152 ; 5e_C3.1 35 / 35, 24 / 24 ; chaque lot 34 / 34 à la n°311.
+  `3e_C2.1` 55 / 58, `4e_C2.1` 62 / 65 et `5e_C1.5` 37 / 38 et 31 / 34 : **les mêmes refus sur main**.
+- Règles visibles (n°309), sigles (n°313), mêmes nombres (n°338), `verif_regles_audit.py` : verts ; impression : le
+  seul refus est `atelier_pix_crcn_jardin.html`, comme sur main.
+- `mesurer_charge.mjs` : aucun chiffre ne bouge — il mesure les panneaux de séance, pas l'ouverture où vit la carte
+  (environ 100 mots).
+
+**Constat pour la suite.** En mode mission, le premier écran défile jusqu'à la tête de la mission : l'ouverture
+— la carte, la situation, la problématique — est au-dessus, hors de l'écran (3 000 à 5 500 px plus haut, mesuré sur
+les onze pages, Shenzhen compris). L'élève qui ne remonte pas ne lit pas la carte. Correction à part : le mode
+mission, sur toutes les pages.

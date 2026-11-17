@@ -57,6 +57,11 @@ s1 = trois_lignes.poser(SEQ, D)
 cas("la carte se pose dans le volet, après les badges, avant les onglets",
     s1.find('id="trois-lignes"') > s1.find('<div class="badges">') and s1.find('id="trois-lignes"') < s1.find("seance-tabs"))
 cas("le style se pose une fois", s1.count(".trois-lignes-liste{") == 1)
+cas("la carte porte son propre cadre (gabarits sans style de carte)", "section.trois-lignes{max-width:960px" in s1)
+ancien = s1.replace(trois_lignes.CSS, "/* avant de commencer, trois lignes : apprendre, savoir faire, réussir (règle d'or n°337) */\n"
+                    ".trois-lignes-liste{list-style:none}\n.trois-lignes-liste li{padding:0}\n")
+s1b = trois_lignes.poser(ancien, D)
+cas("un style plus ancien est remplacé, pas doublé", s1b.count(".trois-lignes-liste{") == 1 and "section.trois-lignes{" in s1b)
 s2 = trois_lignes.poser(s1, dict(D, apprendre=["Autre chose."]))
 cas("reposer réécrit la carte sans la doubler", s2.count('id="trois-lignes"') == 1 and "Autre chose." in s2 and "Ceci." not in s2)
 cas("jugée conforme", trois_lignes.juger(s2) == [], str(trois_lignes.juger(s2)))
