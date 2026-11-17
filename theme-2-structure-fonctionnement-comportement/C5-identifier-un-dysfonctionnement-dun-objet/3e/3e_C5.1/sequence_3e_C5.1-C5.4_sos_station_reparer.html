@@ -250,6 +250,10 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
 body.ms .schema-sous-les-yeux{position:static}   /* le mode mission a sa propre tête épinglée */
 @media print{.schema-sous-les-yeux{position:static;break-inside:avoid}.schema-sous-les-yeux .agrandir{display:none}
   .activite.cote-a-cote{display:block}}
+/* avant de commencer, trois lignes : apprendre, savoir faire, réussir (règle d'or n°337) */
+section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizing:border-box;padding:14px 18px;border-radius:12px;border:1px solid var(--border,rgba(127,127,127,.35));background:var(--panel,rgba(127,127,127,.08))}
+.trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+.trois-lignes-liste li{border-left:3px solid var(--head,#61dafb);padding:2px 0 2px 12px;line-height:1.55}
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -1590,6 +1594,22 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas apprendre</b>
+    <br>Trouver l'origine d'une panne, réparer, refabriquer une pièce cassée.
+    <br>Et décider s'il vaut mieux réparer ou remplacer.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Proposer des hypothèses sur l'origine d'une panne.
+    <br>Suivre un protocole de dépannage, un test après l'autre.
+    <br>Réaliser une pièce sur mesure pour réparer.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Change une seule pièce à la fois&nbsp;: tu sauras laquelle était en panne.
+    <br>Ne touche jamais au secteur 230 volts&nbsp;: au collège, très basse tension seulement.
+    <br>Après chaque exercice, compare avec la correction.</li>
+  </ul>
+</section>
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Avant de commencer : ce que je vérifie</h2>
   <p class="verif-consigne">Pour toi, sans note : coche ce qui est déjà en place. Sous chaque ligne, un lien pour le reprendre si tu n'en es pas sûr·e.</p>
