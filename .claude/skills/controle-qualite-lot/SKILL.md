@@ -103,6 +103,8 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_liens.py [--tout]` | liens et images locaux cités dans le source, ancres |
 | `controle_atteignabilite.py` ⚠ 0 | chaque page est atteignable depuis `index.html` |
 | `controle_fichiers_telechargeables.py` | chaque fichier nommé dans une page se télécharge d'un clic |
+| `trois_lignes.py --etat [--strict]` | n°337 (17/11/2026) : chaque séquence s'ouvre sur « 🎯 Avant de commencer : trois choses à lire » (apprendre, savoir faire, réussir ; 1 à 3 lignes et 40 mots au plus par rubrique), avant la barre d'onglets. Mesure (⚠) pendant la généralisation ; `--poser` la pose |
+| `corriger_billet.py [--ecrire]` | n°336 (17/11/2026) : le billet d'entrée a sa correction complète (la bonne réponse, le pourquoi de chaque leurre, tirés des `data-pourquoi` et confrontés au vérificateur). Sortie 1 tant qu'un billet en manque ; « refus » = le pourquoi des leurres reste à écrire |
 | `controle_correction_illustree.py [--strict] [--juges] [chemin]` ⚠ 0 | n°336 (16/11/2026) : la correction se voit ; quand la réponse se dessine (schéma, chaîne, algorigramme, carte mentale…), elle montre le dessin. D1 ✘ (un schéma muet jamais montré complet) ; D2/D3 ⚠ (le dessin attendu absent de la correction, ou pas de correction) ; `JUGES` pour les blocs justes ; banc `tests_controle_correction_illustree.py`. En mode mission, la correction s'ouvre une fois l'activité vérifiée : `banc_generique.mjs` le refuse autrement |
 | `controle_correction_complete.py [--strict] [chemin]` ⚠ 0 | n°332 (15/11/2026) : une activité qui fait produire avec un outil a une correction (K1), qui montre la production entière (K2), et donne son fichier (K3). ⚠ par défaut (sortie 0) ; `--strict` fait sortir à 1 sur K1 et K2, pour la vague ; banc `tests_controle_correction_complete.py` |
 | `controle_boutons_vivants.py` ⚠ 0 | chaque bouton appelle une fonction qui existe dans sa page |
@@ -130,6 +132,8 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 
 | Outil | Vérifie |
 |---|---|
+| `qcm_aides/poser.py --etat [--strict]` | n°337 et n°339 (17/11/2026) : chaque QCM a sa carte « Avant de commencer », les aides progressives (indice, règle, correction) et ses pièges. Mesure (⚠, sortie 0) pendant la généralisation ; banc `tests_audit_double_regard.py` |
+| `controle_memes_nombres.py [--strict]` | n°338 (17/11/2026) : N1 le QCM annoncé par la séquence ou le README a ce nombre de questions et d'illustrées ; N2 « au moins N » garde son N dans un bloc ; N3 le message du bilan n'est pas recopié d'un autre lot. Mesure (sortie 0) ; `--strict` sort à 1 |
 | `controle_banque_qcm.py` ⚠ 0 | la ligne « Banque : … » dit ce que le QCM contient |
 | `controle_effectifs_qcm.py` ⚠ 0 | le QCM dit vrai sur sa taille (manifeste, lexique) |
 | `controle_entete_qcm.py` ⚠ 0 | titre, menu « Compétence à réviser » et pied de page sont ceux du lot |

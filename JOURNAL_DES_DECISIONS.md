@@ -26,6 +26,9 @@
 | 21 | Convocation systematique des skills - avant toute creation d exercice et toute redaction relevant des trois themes, convoquer les skills pertinents (curriculum-assessment-cycle4, methode-fable, explicit-instruction, questioning-discussion, dnb-technologie, skill-crcn-2026, manuels-2024-mecaniques) et faire arbitrer toute etiquette de competence par _outils/data_competences.py ; aucun code pose de memoire | Pascal (decision du 02/08/2026), redaction Fable | 🔄 PR en cours |
 | 333 | Une réussite affichée prouve la production réelle | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°322 le 14/11, numéro déjà pris le 10/11 |
 | 334 | Une règle enseignée est juste dans toute sa portée | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°323 le 14/11, numéro déjà pris le 10/11 |
+| 337 | Avant de commencer, trois lignes : ce que tu vas apprendre, ce que tu dois savoir faire, comment réussir | Pascal (17/11/2026), écrite par Fable | ✅ En vigueur — pilote 5e_C2.1 (#762) ; outil `_outils/trois_lignes.py`, skill `avant-de-commencer-trois-lignes` |
+| 338 | Un même attendu se dit avec les mêmes nombres et les mêmes mots partout | Fable (audit « double regard » de 5e_C2.1, 17/11/2026) | ✅ En vigueur — `_outils/controle_memes_nombres.py` (mesure) |
+| 339 | Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges | Fable, sur l'audit transmis par Pascal (17/11/2026) | ✅ En vigueur — pilote 5e_C2.1 (#762) ; `_outils/qcm_aides/poser.py`, skill `qcm-aides-et-pieges` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -32501,6 +32504,7 @@ coloré, compétences : verts ; `verif_regles_audit.py` 0 ✘. Export Éléa ré
 reçoivent leur correction d'un coup ; 32 pages attendent d'abord le pourquoi de chaque mauvaise proposition. Les trois
 lignes « Avant de commencer », les aides progressives et les pièges, sur les autres séquences et QCM.
 
+<<<<<<< HEAD
 ## 17/11/2026 — Le P0 de l'audit était vrai ailleurs : deux QCM s'affichaient « 4e · SOS serre »
 
 **Le constat.** L'audit joint par Pascal le 17/11/2026 relevait, sur le QCM de Shenzhen, un titre affiché « Thème 2 ·
@@ -32526,3 +32530,50 @@ Leur `<title>` d'onglet était juste ; le `<h1>` et le sous-titre, ceux que l'é
   correction, les refuse ; banc `tests_controle_entete_qcm.py` 14 / 14 (deux cas ajoutés).
 
 Vérifications : `controle_entete_qcm.py` vert sur les 72 QCM ; bancs du Book Train 39 / 39, de `3e_C6.2` 22 / 22.
+=======
+## 17/11/2026 — Règles d'or n°337, n°338 et n°339 : l'audit « double regard » devient une méthode (skills et outils)
+
+**La demande.** Pascal, le 17/11/2026, à partir de l'audit « double regard » (un élève de 5e, un inspecteur) du QCM de
+Shenzhen : « est-ce que tu pourrais dégager des règles d'or, des skills ou des clés de voûte ? » ; puis, une fois la
+séquence de Shenzhen reprise (#760, #761, #762) : « on va généraliser aux autres séquences avec les skills. Fabrique
+les skills. » Et, sur le premier point de l'audit : « Avant de commencer, et dans toutes les séquences, l'élève devrait
+lire trois informations très simples : ce qu'il va apprendre, ce qu'il doit savoir faire et comment réussir. »
+
+> **Règle d'or n°337 — Avant de commencer, trois lignes : ce que tu vas apprendre, ce que tu dois savoir faire, comment réussir.** Chaque séquence s'ouvre sur la carte « 🎯 Avant de commencer : trois choses à lire », en tête de son ouverture (dans le volet « 📖 Rappel » dès la séance 2) : 📚 ce que tu vas apprendre, 🛠 ce que tu dois savoir faire, ✅ comment réussir — dans la langue de l'élève, de une à trois lignes par rubrique, 40 mots au plus. Chaque QCM s'ouvre sur la même carte, à sa mesure (« ce que tu vas revoir »). Le référentiel, replié dessous, garde les mots du programme ; la carte ne le recopie pas.
+
+> **Règle d'or n°338 — Un même attendu se dit avec les mêmes nombres et les mêmes mots partout.** Fiche de l'activité, consigne, critère de réussite, correction, positionnement, carte « Prêt·e à t'entraîner », README et QCM disent le même nombre (questions, questions illustrées, éléments à trouver, familles) et les mêmes notions. Un positionnement ne valorise jamais ce que la leçon écarte (« je pense aussi aux règles » quand une règle n'est pas un interacteur) ; le message du bilan d'un QCM parle des notions de ce QCM, pas de celles du gabarit.
+
+> **Règle d'or n°339 — Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges.** Une réponse fausse montre d'abord pourquoi CETTE réponse ne va pas, puis, sur demande, la règle à appliquer, puis la correction complète ; la bonne réponse n'est ni dite ni marquée avant. Juste ou non répondue, la correction complète s'ouvre (n°96). Chaque question appartient à un piège — une confusion fréquente, d'au moins trois questions — ; une erreur propose de réviser son piège, et le bilan liste les pièges ratés, du plus fréquent au moins fréquent.
+
+**Pourquoi trois règles, et pas une clé de voûte de plus.** La n°306 (le squelette) reste la clé de voûte de la
+séquence : la n°337 en ajoute la première pierre. La n°338 généralise ce que la relecture de l'audit a trouvé (les
+« règles » dans le positionnement, le message du bilan recopié dans 26 QCM). La n°339 est la seule qui touche le moteur
+des QCM : elle s'appuie sur ce que chaque QCM porte déjà (le pourquoi de chaque leurre, `d` ; le « À retenir »,
+`ret`), sans rien demander de neuf aux questions.
+
+**Les outils.**
+- `_outils/trois_lignes.py` : `--poser <page> <données.json>` pose la carte dans le volet `#ouverture` (refuse une
+  page sans volet : une page engendrée la reçoit de son générateur) ; `--etat [--strict]` mesure. Mesure du jour :
+  60 séquences lues, 1 avec la carte (Shenzhen), 59 à poser.
+- `_outils/qcm_aides/poser.py` : le moteur commun (aides progressives, pièges) et les données du lot
+  (`qcm_aides_<lot>.json` : trois lignes, pièges, message du bilan). Les 72 QCM du gabarit maison acceptent le moteur
+  tel quel (ancres vérifiées) ; `--etat` : 1 sur 72 posé. Le QCM de Shenzhen y passe : `_generation/apports_audit.py`
+  n'est plus qu'un appel à l'outil commun, avec ses données.
+- `_outils/controle_memes_nombres.py` : N1 annonce du QCM, N2 « au moins N » dans un même bloc, N3 message du bilan
+  recopié d'un lot à l'autre. Mesure du jour : 0 N1, 0 N2, **5 N3** (le message « Fonctions, chaînes d'énergie… » dans
+  26 QCM, « Variables, types, mise au point… » dans 32, et trois autres partagés par 2 ou 3 lots).
+- `_outils/corriger_billet.py` (#762) : 15 billets corrigeables d'un coup, 32 pages où il faut d'abord écrire le
+  pourquoi des leurres.
+- `controle_squelette.mjs` connaît la carte (ordre de l'ouverture : 🎯 trois lignes → 🔄 Avant de commencer → …).
+- Banc `_outils/tests_audit_double_regard.py` : 22 / 22. Banc du squelette : 33 / 33.
+
+**Les skills** (`.claude/skills/`) :
+- `audit-double-regard` — passer une séquence et son QCM sous les deux regards, élève puis inspecteur, avec les
+  outils ; classer P0 / P1 / P2 ; corriger ; c'est le skill de la généralisation.
+- `relire-un-audit-externe` — un audit venu d'ailleurs se vérifie remarque par remarque, sur la page rendue et dans
+  l'historique, avant toute correction (n°167, n°191, n°293) ; le cas du jour : le P0 « SOS serre » était l'incident
+  de la n°51, corrigé en août.
+- `avant-de-commencer-trois-lignes` — écrire les trois lignes d'une séquence et de son QCM (n°337).
+- `qcm-aides-et-pieges` — définir les pièges d'un QCM et poser le moteur (n°339).
+- Mis à jour : `qcm-html-accessible`, `sequence-pedagogique-engageante`, `controle-qualite-lot`, `revision-sequence`.
+>>>>>>> origin/main

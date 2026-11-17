@@ -12,7 +12,8 @@
  *
  * LA RÈGLE — un squelette unique, qui réunit les n°301, 302 et 304
  *   OUVERTURE, visible dès le premier écran (séance 1 ; repliée dans le volet « 📖 Rappel » dès la
- *     séance 2, jamais supprimée — n°311, voir D6) : 🔄 Avant de commencer → situation →
+ *     séance 2, jamais supprimée — n°311, voir D6) : 🎯 trois lignes (n°337 : apprendre, savoir faire,
+ *     réussir) → 🔄 Avant de commencer → situation →
  *     problématique → hypothèse de départ → référentiel « Je serai capable de… » →
  *     billet d'entrée.
  *   SÉANCES : chacune porte ses activités.
@@ -153,6 +154,8 @@ function releverBlocs() {
   lienQcm.filter((a) => !a.closest('nav, #navharm, .toolbar, header')).forEach((a) => ajouter('cloture', 'QCM', a));
 
   // ── ouverture ──
+  // n°337 (17/11/2026) : la carte « 🎯 Avant de commencer : trois choses à lire » ouvre la séquence
+  ajouter('ouverture', '🎯 trois lignes', document.querySelector('#trois-lignes'));
   ajouter('ouverture', '🔄 Avant de commencer', document.querySelector('.rappel-spiralaire')
     || titres.find((h) => /[\u{1F504}\u{1F501}]/u.test(texte(h)) && /avant de commencer|déjà|d.où tu viens/i.test(texte(h))));
   ajouter('ouverture', 'situation', titres.find((h) => /situation/i.test(texte(h)) && !/transfert/i.test(texte(h))));
@@ -226,7 +229,7 @@ function releverBlocs() {
 }
 
 const RANG = { Bonus: 0, Bilan: 1, 'Comment j\'ai travaillé': 1, 'Je me positionne': 1, QCM: 2 };
-const ORDRE_OUV = ['🔄 Avant de commencer', 'situation', 'problématique', 'hypothèse', 'référentiel', 'billet d\'entrée'];
+const ORDRE_OUV = ['🎯 trois lignes', '🔄 Avant de commencer', 'situation', 'problématique', 'hypothèse', 'référentiel', 'billet d\'entrée'];
 
 /** Juge une séquence ouverte dans `ctx`. Exporté pour le banc. */
 export async function juger(ctx, fichier) {
