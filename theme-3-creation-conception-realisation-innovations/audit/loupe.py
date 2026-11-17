@@ -13,7 +13,7 @@ dans le fond, ou le bouton de fermeture la referment.
     python3 audit/loupe.py --rafraichir <dossier> # remet le script du v2 à jour dans les pages qui le portent
 
 LE v2 DU 17/11/2026 (audit de 3e_C9.1) : une image ou un schéma qu'on agrandit s'annonce comme une commande
-(`role="button"`, « Agrandir l'image : … ») ; la fenêtre ouverte garde le focus (Tab reste sur « Fermer »).
+(`role="button"`, « Agrandir l'image : … » ; un schéma qui porte du texte reste `role="img"`, « Agrandir le schéma : … ») ; la fenêtre ouverte garde le focus (Tab reste sur « Fermer »).
 
 LE BLOC v2 (25/10/2026), et ce qu'il corrige du v1 :
   · un schéma SVG écrit DANS la page s'agrandit avec ses couleurs, sa police et
@@ -277,7 +277,9 @@ SCRIPT = r"""(function(){
       svg.setAttribute("tabindex", "0");
       // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
       var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
-      svg.setAttribute("role", "button");
+      // un schéma qui porte du texte visible reste une image : un bouton doit contenir dans son nom le texte qu'il
+      // montre (WCAG 2.5.3, axe « label-content-name-mismatch ») ; « Agrandir le schéma : … » dit déjà la commande
+      svg.setAttribute("role", svg.querySelector("text") ? "img" : "button");
       svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){

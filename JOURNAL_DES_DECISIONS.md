@@ -32731,6 +32731,8 @@ Pascal joint un audit externe de `3e_C9.1` (vision élève de 3e, vision inspect
 - **L'agrandisseur d'images** (n°92) : une image ou un schéma qu'on agrandit s'annonce comme une commande
   (`role="button"`, « Agrandir l'image : … », « Agrandir le schéma : … ») ; la fenêtre ouverte garde le focus (Tab
   reste sur « Fermer », Échap rend le focus à l'image). `loupe.py --rafraichir` (neuf) remet le script à jour : 189 pages.
+  Un schéma qui porte du texte visible reste une image (« Agrandir le schéma : … », `role="img"`) : en bouton, son
+  nom ne contenait pas le texte qu'il montre, et `controle_axe.mjs` relevait 24 reculs graves (WCAG 2.5.3).
 - **« au cahier », « sur ton cahier »** (vu dans le parcours 🅲 de `3e_C9.1` : « recopie le programme corrigé au
   cahier ») : les élèves n'ont pas de cahier (préférence de Pascal) — **79 consignes dans 21 pages** disent « sur une
   feuille de brouillon » (`3e_C9.1`, `3e_C9.2` et ses quatre pages, `5e_C9.1`, `4e_C9.1`, `4e_C6.1`, `4e_C6.2`,
