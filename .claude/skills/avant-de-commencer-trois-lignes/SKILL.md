@@ -55,8 +55,8 @@ Le QCM : rubrique `avant_de_commencer` de `qcm_aides_<lot>.json`, posée par `_o
 `qcm-aides-et-pieges`). Une page sans volet `#ouverture` (les quatre pages engendrées de `3e_C9.2`) est refusée : sa
 carte se pose dans son générateur.
 
-Puis : le banc du lot, `controle_squelette.mjs`, le mode mission (la carte est sur le premier écran,
-`banc_generique.mjs`), la fiche papier, une capture à 390 px et à 1 280 px. La carte ajoute environ 100 mots à
+Puis : le banc du lot, `controle_squelette.mjs`, le mode mission (la carte est en haut du premier écran : le mode
+s'y ouvre depuis le 17/11/2026 — avant, il défilait jusqu'à la tête de la mission, plus bas ; `banc_generique.mjs`), la fiche papier, une capture à 390 px et à 1 280 px. La carte ajoute environ 100 mots à
 l'ouverture ; `mesurer_charge.mjs` mesure les panneaux de séance, pas l'ouverture : ses chiffres ne bougent pas
 (mesuré le 17/11/2026 sur onze séquences).
 

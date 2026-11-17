@@ -97,6 +97,9 @@ NB_SEANCES = 8
 _style1   = ligne("</style>")
 _navcss   = ligne('<style id="navharm-css">')
 _rappel   = ligne('<section class="card rappel-spiralaire"')
+# n°337 (17/11/2026) : la carte « 🎯 Avant de commencer : trois choses à lire » ouvre la séquence. Elle est posée dans
+# la page tout-en-un par `_outils/trois_lignes.py` ; ce script la recopie en tête de la page 1, et seulement là.
+_trois    = next((i + 1 for i, l in enumerate(L) if l.startswith('<section class="card trois-lignes"')), None)
 _billet   = ligne('aria-labelledby="billet-titre"')
 _badges   = ligne('<div class="badges">')
 _identite = ligne('<div class="identite"')
@@ -126,6 +129,7 @@ NAV         = seg(ligne('<nav id="navharm"'), ligne('<nav id="navharm"'))   # la
 SAUT        = seg(ligne('class="skip-link"'), ligne('class="skip-link"'))
 H1          = seg(ligne("<h1>"), ligne("<h1>"))
 RAPPEL      = seg(_rappel, ferme(_rappel, "</section>"))
+TROIS       = [seg(_trois, ferme(_trois, "</section>"))] if _trois else []
 BILLET      = seg(_billet - 1, ferme(_billet, "</section>"))
 BADGES      = seg(_badges, ferme(_badges, "</div>"))
 IDENTITE    = seg(_identite, ferme(_identite, "</div>"))
@@ -157,7 +161,7 @@ PAGES = [
     dict(n=1, fichier="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html",
          titre="Besoin et algorithme", seances=(1, 2),
          but="Comprendre ce que la mairie demande, et écrire l'algorithme AVANT de programmer.",
-         avant=[RAPPEL, BILLET, SITUATION, "TABS", TACHES],
+         avant=TROIS + [RAPPEL, BILLET, SITUATION, "TABS", TACHES],
          ici=('tu élabores l’algorithme des quatre niveaux d’alerte à partir du courrier de la mairie, puis tu le lis sous forme d’algorigramme normalisé.',
               'tu choisis ta façon de vivre la séquence — Vittascience en ligne avec son simulateur, ou le montage Arduino du labo — selon le matériel dont tu disposes.')),
     dict(n=2, fichier="sequence_3e_C9.2-C8.3_station_2_programmer.html",
