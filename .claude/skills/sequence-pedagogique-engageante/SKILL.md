@@ -49,6 +49,10 @@ Dans l'ordre :
    étages, puis `python3 _outils/controle_competences.py`).
    Même règle pour un code CRCN dans un titre d'activité ou une consigne. Les cartouches complets (n°7) vont dans la
    synthèse professeur.
+3 bis. « 🎯 Avant de commencer : trois choses à lire » (n°337, 17/11/2026, demande de Pascal) : la première carte du volet
+   `#ouverture`, juste après les étiquettes — 📚 ce que tu vas apprendre, 🛠 ce que tu dois savoir faire, ✅ comment
+   réussir, dans la langue de l'élève, de une à trois lignes chacune. Skill `avant-de-commencer-trois-lignes` ; outil
+   `python3 _outils/trois_lignes.py --poser <page> trois_lignes_<lot>.json`.
 4. « 🔄 Avant de commencer : ce que je vérifie » (n°304, 21/09/2026, titre choisi par Pascal) : les compétences qui
    devraient être en place, avec leurs codes. Chacune a un moyen de la rattraper : lexique, capsule « Je révise » ou fiche.
    Jamais « tu as fait », que ce soit l'année précédente ou plus tôt dans l'année. Une séquence de la même année se cite au conditionnel.

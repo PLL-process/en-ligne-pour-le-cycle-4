@@ -2,9 +2,9 @@
 
 > Fichier **engendré** par `python3 _outils/registre_regles.py` à partir de `JOURNAL_DES_DECISIONS.md` — ne pas l'éditer à la main : le journal fait foi (règle n°10). Le titre est la première définition trouvée dans le journal, coupée à 140 caractères ; le texte complet est à la ligne indiquée.
 
-**Prochain numéro libre : n°337.** Le réserver en tête du lot qui l'introduit (tableau du journal), puis relancer ce script.
+**Prochain numéro libre : n°340.** Le réserver en tête du lot qui l'introduit (tableau du journal), puis relancer ce script.
 
-324 numéros définis, du n°1 au n°336.
+327 numéros définis, du n°1 au n°339.
 
 ## Sans définition trouvée
 
@@ -37,306 +37,309 @@ n°156, n°157, n°158, n°159, n°160, n°161, n°162, n°163, n°164, n°165, 
 | 19 | Consignes a l infinitif (verbe d action en tete de chaque consigne) | registre de tête | 24 |
 | 20 | Guides logiciels inclusifs pas-a-pas (A->H, captures, aucune etape implicite) | registre de tête | 25 |
 | 21 | Convocation systematique des skills - avant toute creation d exercice et toute redaction relevant des trois themes, convoquer les skills per… | registre de tête | 26 |
-| 22 | dans toute séquence outillée, l'élève ne se contente ni de lire un | 2026-08-05 | 1233 |
-| 23 | La durée annoncée est un engagement, pas une décoration | 2026-08-08 | 1462 |
-| 24 | La preuve porte sur l'objet de la mission | 2026-08-08 | 1469 |
-| 25 | On ne certifie pas un dépannage sans panne inconnue | 2026-08-08 | 1474 |
-| 26 | Un diagnostic d'entrée avant toute séquence qui s'appuie sur l'année précédente | 2026-08-08 | 1480 |
-| 27 | Ce qui n'est vrai que chez nous se dit comme tel | 2026-08-08 | 1486 |
-| 28 | La compétence se prouve en situation ; le QCM, lui, entraîne | 2026-08-08 | 1494 |
-| 29 | La charge de lecture est un obstacle qu'on doit pouvoir retirer | 2026-08-08 | 1504 |
-| 30 | Le tableau de bord des tâches | 2026-08-08 | 1510 |
-| 31 | Toute production écrite exigée propose sa version étayée | 2026-08-08 | 1516 |
-| 32 | Le triptyque de capture : où cliquer → quoi faire → ce que j'observe | 2026-08-08 | 1522 |
-| 33 | Aérer : une idée, un bloc ; une liste, des lignes *(règle proposée par Pascal)* | 2026-08-08 | 1529 |
-| 34 | L'audit d'accessibilité passe avant la livraison | 2026-08-08 | 1537 |
-| 35 | Un code n'apparaît jamais seul | 08/08/2026 | 2197 |
-| 36 | On ne fait jamais passer une codification interne pour une nomenclature officielle | 08/08/2026 | 2203 |
-| 37 | L'interface montre des ressources pédagogiques, pas des fichiers | 08/08/2026 | 2214 |
-| 38 | Une seule source de vérité, un seul générateur | 08/08/2026 | 2223 |
-| 39 | Un compteur compte ce que son étiquette annonce | 08/08/2026 | 2229 |
-| 40 | Hors ligne d'abord | 08/08/2026 | 2240 |
-| 41 | L'index est tenu au même niveau que ce qu'il indexe | 08/08/2026 | 2247 |
-| 42 | la formulation d'une compétence se recopie, elle ne se reformule pas | 8 août 2026 | 2690 |
-| 43 | toute production demandée à l'élève a son corrigé, et ce corrigé arrive après | 8 août 2026 | 2734 |
-| 44 | aucun sigle, aucun bouton ne reste nu | 8 août 2026 | 2804 |
-| 45 | un entraînement s'ouvre sur ce qui a été fait | 8 août 2026 | 2819 |
-| 46 | Une estimation qui n'a pas ouvert le fichier n'est pas une estimation | 8 août 2026 | 3180 |
-| 47 | Le silence d'un outil n'est pas une preuve : tout contrôle déclare son périmètre | 8 août 2026 | 3194 |
-| 48 | Une donnée simulée est déterministe là où un corrigé s'appuie sur elle | 8 août 2026 | 3211 |
-| 49 | On teste ce qui est rendu, pas ce qui est écrit | 8 août 2026 | 3227 |
-| 50 | Devant un contrôle rouge, chercher lequel des deux a tort avant de corriger | 8 août 2026 | 3246 |
-| 51 | Le premier texte que l'élève lit n'est jamais vérifié par personne | 8 août 2026 | 3272 |
-| 52 | Une notion du programme se range dans les catégories du programme | 8 août 2026 | 3314 |
-| 53 | Une notion qui a une voisine se définit contre elle | 8 août 2026 | 3333 |
-| 54 | Un nombre établi ailleurs se calcule, il ne se recopie pas | 8 août 2026 | 3349 |
-| 55 | Un profil d'usager nomme une situation, pas une catégorie de personnes | 8 août 2026 | 3361 |
-| 56 | Un outil professionnel s'enseigne rattaché au mot du programme | 8 août 2026 | 3377 |
-| 57 | Une formule frappante doit rester vraie quand on la prend au mot | 8 août 2026 | 3393 |
-| 58 | Le réel n'est pas un bonus | 8 août 2026 | 3410 |
-| 59 | L'outil ne doit jamais devenir la compétence évaluée | 8 août 2026 | 3428 |
-| 60 | On ne coche un domaine que devant une production observable | 8 août 2026 | 3445 |
-| 61 | Une évaluation ne mesure qu'un construit à la fois | 8 août 2026 | 3456 |
-| 62 | Le concept prend le mot du programme, l'outil garde le nom du métier | 8 août 2026 | 3519 |
-| 63 | Ce que le programme impose nommément se produit, pas se mentionne | 8 août 2026 | 3538 |
-| 64 | Tout lot se situe sur la chaîne d'analyse | 8 août 2026 | 3554 |
-| 65 | Une notion traverse les niveaux en changeant de verbe, pas de sujet | 8 août 2026 | 3578 |
-| 66 | On n'écrit pas dans le dossier d'un autre, même pour l'améliorer | 8 août 2026 | 3611 |
-| 67 | Une consigne qui annonce une production sans offrir de champ n'est pas une consigne | 8 août 2026 | 3662 |
-| 68 | Quand un lot s'appuie sur une catastrophe humaine, il dit ce qu'il compare et ce qu'il ne compare pas | Audit global des trois thèmes — 8 août 2026 | 3894 |
-| 69 | On ne remet pas un colis sans avoir lu son étiquette | Lot 3e_C1.1 à C1.4 — refonte du 9 août 2026 | 4017 |
-| 70 | Une capture d'écran doit parler la langue du poste | 9 août 2026 | 4062 |
-| 71 | Un corrigé qui n'est pas écrit par le calcul qui le vérifie n'est pas un corrigé | 9 août 2026 | 4092 |
-| 72 | Un guidage sépare typographiquement ce qu'on FAIT de ce qu'on doit VOIR | 9 août 2026 | 4140 |
-| 73 | Le nom d'un bouton se cite tel qu'il est écrit, avec son icône à côté | 9 août 2026 | 4153 |
-| 74 | Avant de guider un geste imprécis, on autorise l'imprécision | 9 août 2026 | 4162 |
-| 75 | Toute valeur visible dans une capture est déclarée comme exemple | 9 août 2026 | 4173 |
-| 76 | L'aide décroît à mesure que le geste se répète | 9 août 2026 | 4181 |
-| 77 | À chaque palier, l'image du résultat attendu | 9 août 2026 | 4194 |
-| 78 | On enseigne à lire l'état du logiciel, pas seulement à cliquer | 9 août 2026 | 4204 |
-| 79 | Le premier geste d'un TP est un geste de rangement | 9 août 2026 | 4214 |
-| 80 | Le rituel d'enregistrement se répète à chaque palier, avec son icône | 9 août 2026 | 4222 |
-| 81 | Un TP de prise en main ne pose aucune question de cours | 9 août 2026 | 4227 |
-| 82 | Un TP long se termine par une récompense visuelle gratuite | 9 août 2026 | 4237 |
-| 83 | Une ressource partagée doit être atteignable depuis chaque code qu'elle sert | 9 août 2026 | 4257 |
-| 84 | On vérifie avant de demander | 9 août 2026 | 4284 |
-| 85 | Un élève doit pouvoir dessiner l'objet avant qu'on lui en donne le nom | 9 août 2026 | 4305 |
-| 86 | Un bonus sans corrigé n'est pas un bonus, c'est un devoir non rendu | 9 août 2026 | 4345 |
-| 87 | LA CLÉ DE VOÛTE : toute séance qui s'appuie sur un prérequis s'ouvre par un rappel de ce que l'élève a déjà fait | 9 août 2026 | 4366 |
-| 88 | une page se juge aussi sur ce qu'on peut en faire quand on y est arrivé | 10 août 2026 | 4471 |
-| 89 | un nombre sans son unité n'est pas une mesure | 11 août 2026 | 4727 |
-| 90 | un rituel qui demande un geste impossible fabrique du doute | 11 août 2026 | 4768 |
-| 91 | quand une affirmation surprend, donner le moyen de la vérifier | 11 août 2026 | 4809 |
-| 92 | une image qu'on ne peut pas agrandir est une image qu'on ne peut pas lire | 11 août 2026 | 4848 |
-| 93 | un TP ne suppose acquis aucun GESTE d'outil | 11 août 2026 | 4890 |
-| 94 | une capture d'écran vient du vrai logiciel, exécuté sur le poste | 19 août 2026 | 4995 |
-| 95 | une règle d'or non harmonisée n'est pas une règle, c'est un vœu | 21 août 2026 | 5261 |
-| 96 | une correction est exhaustive, même quand l'élève a tout juste | 21 août 2026 | 5296 |
-| 97 | une correction se met en page comme une démonstration de mathématiques | 21 août 2026 | 5312 |
-| 98 | les options d'un choix se lisent en colonne, jamais en ligne | 21 août 2026 | 5326 |
-| 99 | une aide qui donne le raisonnement ouvre sur un exercice jumeau | 21 août 2026 | 5337 |
-| 100 | un dispositif intégré s'annonce par un titre qui le nomme | 21 août 2026 | 5353 |
-| 101 | chaque séance se termine par un bouton qui mène à la suivante | 21 août 2026 | 5366 |
-| 102 | toute page élève s'imprime en document propre, sans fond sombre | 21 août 2026 | 5374 |
-| 103 | les blocs de fin ferment la page, et rien ne les suit | 21 août 2026 | 5388 |
-| 104 | un code de compétence s'écrit toujours avec son niveau | 21 août 2026 | 5399 |
-| 105 | la formulation d'une compétence est celle du BO, au mot près, partout | 21 août 2026 | 5414 |
-| 106 | le code annoncé doit correspondre au VERBE réellement travaillé | 21 août 2026 | 5426 |
-| 107 | un nom propre du récit s'explique une fois, puis ne change plus | 21 août 2026 | 5441 |
-| 108 | l'outil est nommé avec sa modalité exacte, et ce qui s'ouvre est ce qui est annoncé | 21 août 2026 | 5453 |
-| 109 | tout nombre calculable est recalculé, et le calcul est testé | 21 août 2026 | 5469 |
-| 110 | un exemple filé raconte une seule histoire, du début à la fin | 21 août 2026 | 5487 |
-| 111 | fiction déclarée, chiffre sourcé | 21 août 2026 | 5500 |
-| 112 | le statut de chaque ressource est écrit | 21 août 2026 | 5514 |
-| 113 | réaliser un programme exige une trace du programme réalisé | 21 août 2026 | 5527 |
-| 114 | en 3e, l'élève conçoit au moins une fois sans squelette | 21 août 2026 | 5540 |
-| 115 | on fait observer le problème avant d'en expliquer la solution | 21 août 2026 | 5553 |
-| 116 | une séquence trop dense se découpe en pages reliées, sans rien perdre | 21 août 2026 | 5565 |
-| 117 | un alt court, une description longue à côté | 21 août 2026 | 5592 |
-| 118 | socle accessible minimal, sur toute page élève | 21 août 2026 | 5610 |
-| 119 | jamais la couleur seule, jamais l'animation seule | 21 août 2026 | 5622 |
-| 120 | la couleur d'une notion est constante dans toute la séquence | 21 août 2026 | 5635 |
-| 121 | une capture montre un geste nécessaire | 21 août 2026 | 5648 |
-| 122 | les trois façons de vivre la séquence sont trois parcours, pas trois paragraphes | 21 août 2026 | 5660 |
-| 123 | les fonctions techniques des deux chaînes sont nommées, complètes, en majuscules | 21 août 2026 | 5678 |
-| 124 | la matrice de couverture a des colonnes normalisées | 21 août 2026 | 5693 |
-| 125 | un distracteur est plausible, et il est réfuté | 21 août 2026 | 5704 |
-| 126 | distinguer le domaine contextualisé du domaine évalué | 21 août 2026 | 5718 |
-| 127 | une capture ne se retouche pas ; l'écart s'explique | 21 août 2026 | 5886 |
-| 128 | entre un texte et une capture, c'est le texte qui plie | 21 août 2026 | 5903 |
-| 129 | changer un seuil, c'est casser tout ce qui le franchissait | 21 août 2026 | 5920 |
-| 130 | un découpage se prouve sans perte, avant d'être livré | 21 août 2026 | 5935 |
-| 131 | la flèche d'ORDRE atterrit quelque part, et on dit où | 21 août 2026 | 5955 |
-| 132 | les données d'exercice vieillissent comme le code, sans compilateur | 21 août 2026 | 5973 |
-| 133 | le contrôle qui compare mot à mot est le seul qui voie les erreurs de niveau | 21 août 2026 | 6068 |
-| 134 | un verrou expérientiel se mesure sur le geste, pas sur le compteur | 21 août 2026 | 6087 |
-| 135 | on habille l'élément, pas seulement la classe | 21 août 2026 | 6106 |
-| 136 | un dispositif est installé quand son effet est mesuré, pas quand ses commandes sont posées | 21 août 2026 | 6182 |
-| 137 | un QCM se mesure aussi par la POSITION de ses bonnes réponses | 21 août 2026 | 6368 |
-| 138 | une ressource qui se nomme elle-même l'emporte sur son nom de fichier | 21 août 2026 | 6620 |
-| 139 | une réfutation écarte une proposition DANS LE CAS ÉTUDIÉ ; elle n'énonce pas une loi | 21 août 2026 | 6718 |
-| 140 | ce qu'on refuse de changer doit être expliqué à l'élève, pas défendu au relecteur | 21 août 2026 | 6750 |
-| 141 | une validation ne vaut que pour le protocole exécuté, et le dire fait partie de la leçon | 21 août 2026 | 6782 |
-| 142 | un test discriminant ne fait varier qu'une seule chose | 21 août 2026 | 6808 |
-| 143 | un outil qui ne sait pas juger doit au moins empêcher de dériver | 21 août 2026 | 6831 |
-| 144 | la bonne réponse ne doit pas être la plus longue | 21 août 2026 | 6899 |
-| 145 | un contre-exemple doit être vrai ET rencontrable | 21 août 2026 | 7019 |
-| 146 | un outil de mesure déclare ce qu'il n'a pas su lire | 21 août 2026 | 7051 |
-| 147 | une règle d'or naît sur un lot, elle s'adopte après mesure sur l'ensemble | 21 août 2026 | 7073 |
-| 148 | le meilleur distracteur est vrai, mais hors sujet | 21 août 2026 | 7093 |
-| 149 | un outil qui réécrit prouve d'abord qu'il sait ne rien changer | 21 août 2026 | 7127 |
-| 150 | tout chiffre d'un attendu dit d'où il vient | 21 août 2026 | 7161 |
-| 151 | la correction est lue par ceux qui ont juste | 21 août 2026 | 7191 |
-| 152 | deux questions voisines qui se contredisent : défaut, ou leçon, jamais hasard | 21 août 2026 | 7216 |
-| 153 | une branche préparée hier se rebase sur le main d'aujourd'hui, ou elle efface le travail d'hier | 21 août 2026 | 7248 |
-| 154 | un indicateur qui crie pour un caractère apprend à ne plus l'écouter | 21 août 2026 | 7272 |
-| 155 | compléter une banque par une boucle, c'est mentir sur le dénominateur | 21 août 2026 | 7293 |
-| 167 | vérifier avant de corriger, y compris quand l'auditeur a raison neuf fois sur dix | 21 août 2026 | 7404 |
-| 168 | une corrélation présentée comme une explication est l'erreur la plus coûteuse qu'un cours puisse contenir | 21 août 2026 | 7416 |
-| 169 | une activité qui repose sur un fichier absent n'est pas une activité | 21 août 2026 | 7441 |
-| 170 | un dénominateur figé finit toujours par mentir | 21 août 2026 | 7462 |
-| 171 | on n'enseigne pas à un élève qu'il est le maillon faible | 21 août 2026 | 7480 |
-| 172 | deux audits qui divergent désignent la frontière entre le vérifiable et le discutable | 21 août 2026 | 7503 |
-| 173 | un défaut trouvé une fois se cherche partout, tout de suite | 21 août 2026 | 7543 |
-| 174 | une animation ne se justifie que si son sujet change dans le temps. Un schéma | 2026-08-28 | 7762 |
-| 175 | une animation qui tourne toute seule est un spectacle. Celle que l'élève déclenche | 2026-08-28 | 7764 |
-| 176 | l'état final d'une animation doit être l'image complète. Un élève qui arrive en | 2026-08-28 | 7766 |
-| 177 | une animation qui montre la réponse remplace le travail au lieu de le préparer | 2026-08-28 | 7768 |
-| 178 | rien d'essentiel ne repose sur le mouvement seul : ni la consigne, ni la donnée, ni | 2026-08-28 | 7769 |
-| 179 | une ressource qui vit hors du dépôt porte toujours son repli imprimé. Sans lui, | 2026-08-28 | 7645 |
-| 180 | un lien externe porte la date de sa dernière vérification, et cette date s'affiche | 2026-08-28 | 7647 |
-| 181 | ce que je ne peux pas vérifier moi-même, je ne le livre pas rempli : je livre | 2026-08-28 | 7649 |
-| 182 | on ne code pas ce qui se filme, et on ne filme pas ce qui se compare. La vidéo | 2026-08-28 | 7651 |
-| 183 | un aperçu ne fabrique pas de faux contrôle. Un bouton qui ne mène nulle part apprend | 2026-08-28 | 7771 |
-| 184 | un indicateur bâti sur une convention de nommage mesure la conformité à la | 2026-08-28 | 7690 |
-| 185 | chercher un mot, ce n'est pas trouver une situation. À deux dans un référentiel | 2026-08-28 | 7694 |
-| 186 | on ne pose pas un dispositif là où il ne sert pas. Dix séquences du Thème 1 se font | 2026-08-28 | 7698 |
-| 187 | une note qui compte quelque chose se calcule. Les trois zones de réponse sont | 2026-08-28 | 7701 |
-| 188 | une page d'élève ne s'arrête pas pour parler. Pas de boîte modale : un message | 2026-08-28 | 7779 |
-| 189 | une règle qui n'est pas écrite dans le dépôt n'existe pas. Le journal est la seule | 2026-08-28 | 7782 |
-| 190 | un statut qu'aucun contrôle ne peut retirer n'est pas un statut, c'est une | 2026-08-28 | 7860 |
-| 191 | un audit est une production, pas un verdict. Chaque affirmation vérifiable se | 2026-08-28 | 7863 |
-| 192 | un correctif posé contre un défaut que la page a déjà traité coûte plus cher que | 2026-08-28 | 7866 |
-| 193 | chercher un défaut empêche de voir une absence. Trois lecteurs ont calculé les | 2026-08-28 | 7869 |
-| 194 | un outil de mesure se teste d'abord sur un cas dont on connaît déjà la réponse | 2026-08-28 | 7919 |
-| 195 | quand une consigne courte peut se lire dans les deux sens et que l'action, elle, | 2026-08-28 | 7965 |
-| 196 | on ne juge pas un lot sur ce que son dossier ne contient pas : le dossier dit ce | 2026-08-28 | 8013 |
-| 197 | l'auteur d'un contrôle est le premier à devoir le respecter. Créer la pièce qui | 2026-08-28 | 8017 |
-| 198 | dans un QCM, la bonne réponse ne doit pas se reconnaître sans lire la question | 2026-08-28 | 8078 |
-| 199 | corriger un biais en l'inversant, ce n'est pas le corriger. Après la plus | 2026-08-28 | 8081 |
-| 200 | un contrôle qui n'existe pas laisse passer un défaut dans tout ce qu'on a produit | 2026-08-28 | 8084 |
-| 201 | le même défaut n'appelle pas le même geste. Étoffer un distracteur bâclé, raccourcir | 2026-08-28 | 8135 |
-| 202 | un QCM peut mobiliser une compétence sans l'évaluer. En dessous de cinq questions, | 2026-08-28 | 8137 |
-| 203 | avant d'écrire qu'un indicateur est faux, lire ce que le fichier dit de lui-même | 2026-08-29 | 8197 |
-| 204 | un outil validé sur un thème n'est pas validé. Le vocabulaire change d'un thème à | 2026-08-29 | 8266 |
-| 205 | une ressource que rien ne désigne n'existe pas pour l'élève. Produire le fichier | 2026-08-29 | 8269 |
-| 206 | un outil qui sert trois thèmes n'appartient à aucun. Il vit dans _outils/, en un | 2026-08-29 | 8321 |
-| 207 | une source sérieuse et un titre qui colle ne remplacent pas un visionnage. On peut | 2026-08-29 | 8375 |
-| 208 | avant de créer ce qu'un audit déclare manquant, chercher qui le fait déjà. Un | 2026-08-29 | 8424 |
-| 209 | quand une ressource extérieure manque, construire l'instrument plutôt que d'attendre | 2026-08-29 | 8486 |
-| 210 | pour évaluer un verbe comme proposer , il faut rendre l'erreur mesurable | 2026-08-29 | 8618 |
-| 211 | appliquer une règle d'or à une seule page, c'est l'avoir écrite, pas l'avoir | 2026-08-29 | 8621 |
-| 212 | un dépôt local qu'on ne met jamais à jour finit par ne plus pouvoir recevoir ce | 2026-08-29 | 8624 |
-| 213 | un instrument qui se contente d'afficher n'apprend rien. Ce qui fait la découverte, | 2026-08-29 | 8725 |
-| 214 | devant un manque de ressource, la première question n'est pas comment en avoir | 2026-08-29 | 8728 |
-| 215 | quand une consigne interne impose des éléments sans objet pour le travail en cours, | 2026-08-29 | 8731 |
-| 216 | un test qui affirme qu'il ne se passe rien doit passer par les chemins où quelque | 2026-08-29 | 8832 |
-| 217 | un outil qui pose une fonction dans une page doit vérifier qu'elle existe partout où | 2026-08-29 | 8834 |
-| 218 | un instrument de mesure qui se trompe en moins est plus dangereux qu'un qui se | 2026-08-30 | 8919 |
-| 219 | un contrôle doit distinguer ce qu'il a réparé de ce qu'il n'a jamais touché | 2026-08-30 | 8922 |
-| 220 | un instrument ne s'écrit qu'une fois dans une page. Le répéter à chaque | 2026-08-30 | 9020 |
-| 221 | ce qui enregistre ne tourne jamais avant ce qui restaure. Une mise à jour | 2026-08-30 | 9023 |
-| 222 | quand un même code se décline en trois intitulés ( fournis , manquants , | 2026-08-30 | 9026 |
-| 223 | une mutualisation qui renvoie un niveau vers le niveau au-dessus inverse la | 2026-08-30 | 9115 |
-| 224 | deux compteurs qui bougent séparément séparent deux questions qu'on confond | 2026-08-30 | 9118 |
-| 225 | un test qui ne vérifie que le départ et l'arrivée ne prouve rien du chemin | 2026-08-30 | 9122 |
-| 226 | un verrou qu'ouvre l'état initial n'est pas un verrou. Un drapeau expérientiel | 2026-08-31 | 9252 |
-| 227 | le nombre de décimales n'est pas une préférence d'écriture. C'est ce qui décide | 2026-08-31 | 9256 |
-| 228 | une même mesure sous deux en-têtes différents est pire qu'une mesure absente | 2026-08-31 | 9259 |
-| 229 | une matrice s'associe par nom, jamais par position. Une liste positionnelle | 2026-08-31 | 9262 |
-| 230 | le chiffre juste et la comparaison juste sont deux choses. Tous les nombres | 2026-08-31 | 9265 |
-| 231 | ne jamais lancer une commande git qui écrit à travers le pont Linux. La règle | 2026-08-31 | 9269 |
-| 232 | quand deux niveaux portent la même formulation officielle, le geste ne se lit | 2026-08-31 | 9380 |
-| 233 | un instrument doit dire ce que le texte annonce, ligne par ligne. Trois cotes | 2026-08-31 | 9384 |
-| 234 | un lot voisin est une source de vérité, pas un décor. Reprendre une pièce déjà | 2026-08-31 | 9388 |
-| 235 | une mesure fausse VERS LE HAUT est aussi une mesure fausse. Les 105 min lues | 2026-08-31 | 9392 |
-| 236 | un chemin qu'on ne peut pas cliquer n'est jamais vérifié. Écrire une référence | 2026-08-31 | 9445 |
-| 237 | compter les pièces n'est pas vérifier la couverture. Un lot peut porter ses six | 2026-08-31 | 9507 |
-| 238 | la preuve de couverture est une ligne, pas un dossier. Elle s'écrit soit dans | 2026-08-31 | 9511 |
-| 239 | un diagnostic qui compte ses propres traces ne diagnostique rien. L'outil de | 2026-08-31 | 9611 |
-| 240 | un seuil fixe d'évaluabilité punit la mutualisation. Cinq questions par code | 2026-08-31 | 9615 |
-| 241 | pas couvert et couvert sous le seuil ne sont pas la même phrase. Se | 2026-08-31 | 9620 |
-| 242 | un instrument ne prouve une absence que là où il a regardé. Avant de conclure | 2026-08-31 | 9697 |
-| 243 | une charge d'essai identique pour tous peut être injuste sans être fausse. Un | 2026-08-31 | 9812 |
-| 244 | un coefficient de sécurité sans sa limite n'est pas un nombre. Le même bois, la | 2026-08-31 | 9816 |
-| 245 | une formulation recopiée se recopie depuis le référentiel, pas de mémoire | 2026-08-31 | 9819 |
-| 246 | une phrase vérifiable dans un fichier engendré doit être vérifiée par le | 2026-08-31 | 9873 |
-| 247 | une formulation identique à tous les niveaux doit éveiller le soupçon. Le | 2026-08-31 | 9941 |
-| 248 | un contrôle neuf qui trouve beaucoup de fautes a d'abord tort. Six versions, | 2026-08-31 | 10007 |
-| 249 | un seuil de longueur doit être plus bas que le plus court des cas vrais | 2026-08-31 | 10010 |
-| 250 | la notion s'évalue ailleurs doit dire où. Sans le nom de la ressource, la | 2026-08-30 | 10143 |
-| 251 | une barre de navigation ne se recopie pas d'un dossier à l'autre. Un lien | 2026-08-30 | 10124 |
-| 252 | un dossier qui grandit met sa table en retard, pas en faute. Le jour où les | 2026-08-30 | 10146 |
-| 253 | un contrôle qui lit une page doit taire ce qu'un navigateur ne suit pas | 2026-08-30 | 10128 |
-| 254 | rattacher un code au mauvais support ne le couvre pas, cela cache un trou. Un | 2026-08-30 | 10087 |
-| 255 | un lien d'ancre morte ne mène pas ailleurs, il mène en haut de la bonne page | 2026-08-30 | 10188 |
-| 256 | ce qui est codé en dur dans un générateur devient faux dans tous les fichiers | 2026-08-30 | 10261 |
-| 257 | un fichier engendré qu'on modifie à la main cesse d'être engendré, et personne | 2026-08-30 | 10265 |
-| 258 | un trou de couverture qui résiste deux fois n'attend pas des questions, il | 2026-08-30 | 10225 |
-| 259 | un tableau de résultats qu'on ne peut pas relancer ne dit pas ça marche , il | 2026-08-30 | 10293 |
-| 261 | corriger l'occurrence qu'on a sous les yeux, c'est croire qu'il n'y en a | 2026-08-31 | 10341 |
-| 262 | une phrase ne s'arrête pas en fin de ligne, et un contrôle qui lit par lignes ne | 2026-08-31 | 10423 |
-| 263 | ce qui parle d'une ressource vit rarement dans son dossier ; un contrôle dont le | 2026-08-31 | 10431 |
-| 264 | un nombre qu'un document affirme sur lui-même est un champ, pas une phrase : il | 2026-08-31 | 10520 |
-| 265 | une fonction d'affichage appelée à l'initialisation ne doit rien enregistrer | 2026-08-31 | 10597 |
-| 266 | une dette se compte, une promesse fausse se refuse. Un contrôle qui traite les | 2026-08-31 | 10685 |
-| 267 | une file d'attente doit nommer ce qu'on peut réellement payer. Un relevé juste | 2026-08-31 | 10729 |
-| 268 | un pilote de test déclare ce qu'il ne pilote pas, et le verrouille. La | 2026-08-31 | 10784 |
-| 269 | un outil qui reconnaît les fichiers par leur extension doit connaître toutes | 2026-08-31 | 10816 |
-| 270 | Un test qui échoue accuse d'abord la page ; commence par vérifier qu'il sait la lire | 2026-08-31 | 10973 |
-| 271 | Un document qui décrit une ressource ne l'emploie pas | 2026-08-31 | 11041 |
-| 272 | Un fichier livré qu'aucun chemin n'atteint n'est pas livré | 2026-08-31 | 11152 |
-| 273 | Une liste d'exceptions doit être nommée, datée, et ne pouvoir que rétrécir | 2026-08-31 | 11209 |
-| 274 | Un pilote de test lit ce que la page publie : son source et son affichage | 2026-08-31 | 11364 |
-| 275 | Uniformiser ce qui n'a jamais été uniforme, c'est inventer une règle et la faire passer | 2026-08-31 | 11432 |
-| 276 | une suppression annoncée au passé dans un document n'est pas une | 2026-08-31 | 11509 |
-| 277 | un contrôle se trompe dans les deux sens, et le second ne fait aucun | 2026-08-31 | 11662 |
-| 278 | mesurer un texte, c'est mesurer une apparence ; il faut aussi mesurer ce | 2026-08-31 | 11667 |
-| 279 | une refonte perd ce qu'elle ne recopie pas, et le silence qui suit | 2026-09-02 | 11845 |
-| 280 | une garde qui interdit un genre entier pour empêcher un cas | 2026-09-02 | 11808 |
-| 281 | un matériel nommé n'est pas seulement un doute levé : c'est un domaine | 2026-09-02 | 11956 |
-| 282 | un élément n'est pas visible parce qu'il n'est pas caché : il l'est | 2026-09-02 | 12039 |
-| 283 | corriger un fichier engendré, c'est écrire dans le sable. La correction | 2026-09-02 | 12071 |
-| 284 | quand on explique pourquoi un chiffre restant n'est pas grave, il faut | 2026-09-02 | 12201 |
-| 285 | un correctif de couleur ne se valide pas au chiffre, il se regarde | 2026-09-02 | 12146 |
-| 286 | un correctif qui parcourt tous les descendants de X oublie X. La | 2026-09-02 | 12235 |
-| 287 | un SVG n'est pas du HTML : son <style> est du XML, ses sélecteurs | 2026-09-02 | 12304 |
-| 288 | une consigne ne réemploie pas un mot qu'elle n'a pas expliqué. Un mot | 2026-09-08 | 12375 |
-| 289 | un fichier nommé dans une page est un fichier qu'on peut prendre | 2026-09-08 | 12423 |
-| 290 | avant de corriger une page, demande-lui qui l'écrit. Un lexique, un | 2026-09-08 | 12516 |
-| 291 | un commentaire de bilan est une mesure, pas une phrase. 30 questions, | 2026-09-09 | 12604 |
-| 292 | un QCM se présente avec ses propres papiers. Titre, sous-titre, badges, | 2026-09-09 | 12733 |
-| 293 | un audit se vérifie à la ligne, puis se mesure sur tout le dépôt. Un | 2026-09-09 | 12713 |
-| 294 | une planche pour des 5e commence par ce qu'on mesure, et chaque principe | 2026-09-09 | 12785 |
-| 295 | un bouton mort ne fait pas de bruit : on l'écoute par la console. Un | 2026-09-09 | 12838 |
-| 296 | une maxime se relit là où elle atterrit. Un à retenir écrit pour | 2026-09-09 | 12894 |
-| 297 | un geste d'outil s'enseigne pour être refait seul, plus | 2026-09-10 | 13038 |
-| 298 | la page élève ne se lit pas comme un référentiel (3e, thème 2) | 15/09/2026 | 15257 |
-| 299 | un contrôle qui n'a rien vérifié est en panne, pas vert (_outils, thème 2) | 19/09/2026 | 15735 |
-| 300 | une question se lit pendant qu'on y répond (_outils, thème 2) | 20/09/2026 | 16408 |
-| 301 | le bilan clôt la séquence (_outils, thème 2) | 20/09/2026 | 16805 |
-| 302 | on parle À l'élève, jamais DE lui (thèmes 1-3, _outils) | 20/09/2026 | 16959 |
-| 303 | un lien se lit (thèmes 1-3, _outils) | 21/09/2026 | 18053 |
-| 304 | le bloc d'ouverture dit ce qui devrait être en place (thèmes 1-3, _outils) | 21/09/2026 | 18334 |
-| 305 | une page se lit sans Internet (_outils, journal, pages des trois thèmes) | 21/09/2026 | 18709 |
-| 306 | Une séquence suit un squelette unique, qui réunit les n°301, 302 et 304 | 22/09/2026 | 18898 |
-| 307 | la hiérarchie se voit avant de se lire (thèmes 1-3, _outils) | 27/09/2026 | 20510 |
-| 308 | un bloc ne se dessine pas, il se capture (thèmes 2-3, archive, _outils) | 18/10/2026 | 21931 |
-| 309 | l'élève lit le savoir, pas la fabrique (tous thèmes, index, _outils) | 21/10/2026 | 22326 |
-| 310 | les blocs disent ce qui est fait, les flèches disent ce qui circule (chaînes d'énergie) — reprise de la PR #485 | 21/10/2026 | 22544 |
-| 311 | à partir de la séance 2, l'élève voit sa séance, pas le décor (transversale, _outils) | 22/10/2026 | 22664 |
-| 312 | une unité se lit en toutes lettres (transversale : thèmes 1, 2 et 3, _outils, .claude/skills) | 25/10/2026 | 23968 |
-| 313 | un sigle garde ses capitales — FAST, jamais fast (transversale : index, _outils, .claude/skills) | 25/10/2026 | 23921 |
-| 314 | une compétence numérique se lit en toutes lettres, à l'écran et au survol (transversale : thèmes 1, 2 et 3, _outils, .claude/skills) | 26/10/2026 | 24408 |
-| 315 | tout schéma est premium (transversale : thèmes 1, 2 et 3, _outils, .claude/skills) | 28/10/2026 | 25459 |
-| 316 | une synthèse élève se lit par un élève de 6e — le skill synthese-vulgarisee (transversale : thèmes 1, 2 et 3, .claude/skills) | 29/10/2026 | 25523 |
-| 317 | un cahier des charges à compléter se complète dans le tableau, par des menus déroulants (thème 1, ateliers) | 31/10/2026 | 26955 |
-| 318 | la bête à cornes a une seule forme, celle du modèle de Pascal (thème 1) | 04/11/2026 | 27396 |
-| 319 | une notion enseignée une année et utilisée plus tard est rappelée là où elle revient, par un exercice | 05/11/2026 | 27904 |
-| 320 | un exercice qui fait écrire et exécuter du Python le fait dans la page. L'éditeur intégré (code, | 05/11/2026 | 27954 |
-| 321 | le dépôt est sous CC BY-NC-SA 4.0 et chaque page le dit en pied (transversal : thèmes 1, 2 et 3, _outils, LICENSE.md) | 08/11/2026 | 28972 |
-| 322 | une page qui garde les réponses de l'élève dans le navigateur (1) sait les effacer | 10/11/2026 | 29578 |
-| 323 | la bonne réponse ne se devine pas à sa place ; contrôle | 10/11/2026 | 29583 |
-| 324 | Un banc de tests couvre les frontières et les conditions qui se croisent | 14/11/2026 | 30419 |
-| 325 | Une figure essentielle se lit sur un téléphone | 14/11/2026 | 30424 |
-| 326 | Une commande se comprend sans son pictogramme | 14/11/2026 | 30430 |
-| 327 | Le contraste se mesure contre le fond affiché | 14/11/2026 | 30435 |
-| 328 | La page dit vrai sur elle-même | 14/11/2026 | 30439 |
-| 329 | Une zone de travail : deux surfaces au plus, une action principale | 14/11/2026 | 30445 |
-| 330 | Une compétence de conception se prouve seul | 14/11/2026 | 30449 |
-| 331 | l'élève répond le schéma sous les yeux ; pilote Book Train ; controle_schema_sous_les_yeux.py | 15/11/2026 | 31231 |
-| 332 | la correction montre la production complète, telle que l'outil la rend ; Book Train : les deux chaînes sous les yeux, l'algorigramme et le d… | 15/11/2026 | 31385 |
+| 22 | dans toute séquence outillée, l'élève ne se contente ni de lire un | 2026-08-05 | 1236 |
+| 23 | La durée annoncée est un engagement, pas une décoration | 2026-08-08 | 1465 |
+| 24 | La preuve porte sur l'objet de la mission | 2026-08-08 | 1472 |
+| 25 | On ne certifie pas un dépannage sans panne inconnue | 2026-08-08 | 1477 |
+| 26 | Un diagnostic d'entrée avant toute séquence qui s'appuie sur l'année précédente | 2026-08-08 | 1483 |
+| 27 | Ce qui n'est vrai que chez nous se dit comme tel | 2026-08-08 | 1489 |
+| 28 | La compétence se prouve en situation ; le QCM, lui, entraîne | 2026-08-08 | 1497 |
+| 29 | La charge de lecture est un obstacle qu'on doit pouvoir retirer | 2026-08-08 | 1507 |
+| 30 | Le tableau de bord des tâches | 2026-08-08 | 1513 |
+| 31 | Toute production écrite exigée propose sa version étayée | 2026-08-08 | 1519 |
+| 32 | Le triptyque de capture : où cliquer → quoi faire → ce que j'observe | 2026-08-08 | 1525 |
+| 33 | Aérer : une idée, un bloc ; une liste, des lignes *(règle proposée par Pascal)* | 2026-08-08 | 1532 |
+| 34 | L'audit d'accessibilité passe avant la livraison | 2026-08-08 | 1540 |
+| 35 | Un code n'apparaît jamais seul | 08/08/2026 | 2200 |
+| 36 | On ne fait jamais passer une codification interne pour une nomenclature officielle | 08/08/2026 | 2206 |
+| 37 | L'interface montre des ressources pédagogiques, pas des fichiers | 08/08/2026 | 2217 |
+| 38 | Une seule source de vérité, un seul générateur | 08/08/2026 | 2226 |
+| 39 | Un compteur compte ce que son étiquette annonce | 08/08/2026 | 2232 |
+| 40 | Hors ligne d'abord | 08/08/2026 | 2243 |
+| 41 | L'index est tenu au même niveau que ce qu'il indexe | 08/08/2026 | 2250 |
+| 42 | la formulation d'une compétence se recopie, elle ne se reformule pas | 8 août 2026 | 2693 |
+| 43 | toute production demandée à l'élève a son corrigé, et ce corrigé arrive après | 8 août 2026 | 2737 |
+| 44 | aucun sigle, aucun bouton ne reste nu | 8 août 2026 | 2807 |
+| 45 | un entraînement s'ouvre sur ce qui a été fait | 8 août 2026 | 2822 |
+| 46 | Une estimation qui n'a pas ouvert le fichier n'est pas une estimation | 8 août 2026 | 3183 |
+| 47 | Le silence d'un outil n'est pas une preuve : tout contrôle déclare son périmètre | 8 août 2026 | 3197 |
+| 48 | Une donnée simulée est déterministe là où un corrigé s'appuie sur elle | 8 août 2026 | 3214 |
+| 49 | On teste ce qui est rendu, pas ce qui est écrit | 8 août 2026 | 3230 |
+| 50 | Devant un contrôle rouge, chercher lequel des deux a tort avant de corriger | 8 août 2026 | 3249 |
+| 51 | Le premier texte que l'élève lit n'est jamais vérifié par personne | 8 août 2026 | 3275 |
+| 52 | Une notion du programme se range dans les catégories du programme | 8 août 2026 | 3317 |
+| 53 | Une notion qui a une voisine se définit contre elle | 8 août 2026 | 3336 |
+| 54 | Un nombre établi ailleurs se calcule, il ne se recopie pas | 8 août 2026 | 3352 |
+| 55 | Un profil d'usager nomme une situation, pas une catégorie de personnes | 8 août 2026 | 3364 |
+| 56 | Un outil professionnel s'enseigne rattaché au mot du programme | 8 août 2026 | 3380 |
+| 57 | Une formule frappante doit rester vraie quand on la prend au mot | 8 août 2026 | 3396 |
+| 58 | Le réel n'est pas un bonus | 8 août 2026 | 3413 |
+| 59 | L'outil ne doit jamais devenir la compétence évaluée | 8 août 2026 | 3431 |
+| 60 | On ne coche un domaine que devant une production observable | 8 août 2026 | 3448 |
+| 61 | Une évaluation ne mesure qu'un construit à la fois | 8 août 2026 | 3459 |
+| 62 | Le concept prend le mot du programme, l'outil garde le nom du métier | 8 août 2026 | 3522 |
+| 63 | Ce que le programme impose nommément se produit, pas se mentionne | 8 août 2026 | 3541 |
+| 64 | Tout lot se situe sur la chaîne d'analyse | 8 août 2026 | 3557 |
+| 65 | Une notion traverse les niveaux en changeant de verbe, pas de sujet | 8 août 2026 | 3581 |
+| 66 | On n'écrit pas dans le dossier d'un autre, même pour l'améliorer | 8 août 2026 | 3614 |
+| 67 | Une consigne qui annonce une production sans offrir de champ n'est pas une consigne | 8 août 2026 | 3665 |
+| 68 | Quand un lot s'appuie sur une catastrophe humaine, il dit ce qu'il compare et ce qu'il ne compare pas | Audit global des trois thèmes — 8 août 2026 | 3897 |
+| 69 | On ne remet pas un colis sans avoir lu son étiquette | Lot 3e_C1.1 à C1.4 — refonte du 9 août 2026 | 4020 |
+| 70 | Une capture d'écran doit parler la langue du poste | 9 août 2026 | 4065 |
+| 71 | Un corrigé qui n'est pas écrit par le calcul qui le vérifie n'est pas un corrigé | 9 août 2026 | 4095 |
+| 72 | Un guidage sépare typographiquement ce qu'on FAIT de ce qu'on doit VOIR | 9 août 2026 | 4143 |
+| 73 | Le nom d'un bouton se cite tel qu'il est écrit, avec son icône à côté | 9 août 2026 | 4156 |
+| 74 | Avant de guider un geste imprécis, on autorise l'imprécision | 9 août 2026 | 4165 |
+| 75 | Toute valeur visible dans une capture est déclarée comme exemple | 9 août 2026 | 4176 |
+| 76 | L'aide décroît à mesure que le geste se répète | 9 août 2026 | 4184 |
+| 77 | À chaque palier, l'image du résultat attendu | 9 août 2026 | 4197 |
+| 78 | On enseigne à lire l'état du logiciel, pas seulement à cliquer | 9 août 2026 | 4207 |
+| 79 | Le premier geste d'un TP est un geste de rangement | 9 août 2026 | 4217 |
+| 80 | Le rituel d'enregistrement se répète à chaque palier, avec son icône | 9 août 2026 | 4225 |
+| 81 | Un TP de prise en main ne pose aucune question de cours | 9 août 2026 | 4230 |
+| 82 | Un TP long se termine par une récompense visuelle gratuite | 9 août 2026 | 4240 |
+| 83 | Une ressource partagée doit être atteignable depuis chaque code qu'elle sert | 9 août 2026 | 4260 |
+| 84 | On vérifie avant de demander | 9 août 2026 | 4287 |
+| 85 | Un élève doit pouvoir dessiner l'objet avant qu'on lui en donne le nom | 9 août 2026 | 4308 |
+| 86 | Un bonus sans corrigé n'est pas un bonus, c'est un devoir non rendu | 9 août 2026 | 4348 |
+| 87 | LA CLÉ DE VOÛTE : toute séance qui s'appuie sur un prérequis s'ouvre par un rappel de ce que l'élève a déjà fait | 9 août 2026 | 4369 |
+| 88 | une page se juge aussi sur ce qu'on peut en faire quand on y est arrivé | 10 août 2026 | 4474 |
+| 89 | un nombre sans son unité n'est pas une mesure | 11 août 2026 | 4730 |
+| 90 | un rituel qui demande un geste impossible fabrique du doute | 11 août 2026 | 4771 |
+| 91 | quand une affirmation surprend, donner le moyen de la vérifier | 11 août 2026 | 4812 |
+| 92 | une image qu'on ne peut pas agrandir est une image qu'on ne peut pas lire | 11 août 2026 | 4851 |
+| 93 | un TP ne suppose acquis aucun GESTE d'outil | 11 août 2026 | 4893 |
+| 94 | une capture d'écran vient du vrai logiciel, exécuté sur le poste | 19 août 2026 | 4998 |
+| 95 | une règle d'or non harmonisée n'est pas une règle, c'est un vœu | 21 août 2026 | 5264 |
+| 96 | une correction est exhaustive, même quand l'élève a tout juste | 21 août 2026 | 5299 |
+| 97 | une correction se met en page comme une démonstration de mathématiques | 21 août 2026 | 5315 |
+| 98 | les options d'un choix se lisent en colonne, jamais en ligne | 21 août 2026 | 5329 |
+| 99 | une aide qui donne le raisonnement ouvre sur un exercice jumeau | 21 août 2026 | 5340 |
+| 100 | un dispositif intégré s'annonce par un titre qui le nomme | 21 août 2026 | 5356 |
+| 101 | chaque séance se termine par un bouton qui mène à la suivante | 21 août 2026 | 5369 |
+| 102 | toute page élève s'imprime en document propre, sans fond sombre | 21 août 2026 | 5377 |
+| 103 | les blocs de fin ferment la page, et rien ne les suit | 21 août 2026 | 5391 |
+| 104 | un code de compétence s'écrit toujours avec son niveau | 21 août 2026 | 5402 |
+| 105 | la formulation d'une compétence est celle du BO, au mot près, partout | 21 août 2026 | 5417 |
+| 106 | le code annoncé doit correspondre au VERBE réellement travaillé | 21 août 2026 | 5429 |
+| 107 | un nom propre du récit s'explique une fois, puis ne change plus | 21 août 2026 | 5444 |
+| 108 | l'outil est nommé avec sa modalité exacte, et ce qui s'ouvre est ce qui est annoncé | 21 août 2026 | 5456 |
+| 109 | tout nombre calculable est recalculé, et le calcul est testé | 21 août 2026 | 5472 |
+| 110 | un exemple filé raconte une seule histoire, du début à la fin | 21 août 2026 | 5490 |
+| 111 | fiction déclarée, chiffre sourcé | 21 août 2026 | 5503 |
+| 112 | le statut de chaque ressource est écrit | 21 août 2026 | 5517 |
+| 113 | réaliser un programme exige une trace du programme réalisé | 21 août 2026 | 5530 |
+| 114 | en 3e, l'élève conçoit au moins une fois sans squelette | 21 août 2026 | 5543 |
+| 115 | on fait observer le problème avant d'en expliquer la solution | 21 août 2026 | 5556 |
+| 116 | une séquence trop dense se découpe en pages reliées, sans rien perdre | 21 août 2026 | 5568 |
+| 117 | un alt court, une description longue à côté | 21 août 2026 | 5595 |
+| 118 | socle accessible minimal, sur toute page élève | 21 août 2026 | 5613 |
+| 119 | jamais la couleur seule, jamais l'animation seule | 21 août 2026 | 5625 |
+| 120 | la couleur d'une notion est constante dans toute la séquence | 21 août 2026 | 5638 |
+| 121 | une capture montre un geste nécessaire | 21 août 2026 | 5651 |
+| 122 | les trois façons de vivre la séquence sont trois parcours, pas trois paragraphes | 21 août 2026 | 5663 |
+| 123 | les fonctions techniques des deux chaînes sont nommées, complètes, en majuscules | 21 août 2026 | 5681 |
+| 124 | la matrice de couverture a des colonnes normalisées | 21 août 2026 | 5696 |
+| 125 | un distracteur est plausible, et il est réfuté | 21 août 2026 | 5707 |
+| 126 | distinguer le domaine contextualisé du domaine évalué | 21 août 2026 | 5721 |
+| 127 | une capture ne se retouche pas ; l'écart s'explique | 21 août 2026 | 5889 |
+| 128 | entre un texte et une capture, c'est le texte qui plie | 21 août 2026 | 5906 |
+| 129 | changer un seuil, c'est casser tout ce qui le franchissait | 21 août 2026 | 5923 |
+| 130 | un découpage se prouve sans perte, avant d'être livré | 21 août 2026 | 5938 |
+| 131 | la flèche d'ORDRE atterrit quelque part, et on dit où | 21 août 2026 | 5958 |
+| 132 | les données d'exercice vieillissent comme le code, sans compilateur | 21 août 2026 | 5976 |
+| 133 | le contrôle qui compare mot à mot est le seul qui voie les erreurs de niveau | 21 août 2026 | 6071 |
+| 134 | un verrou expérientiel se mesure sur le geste, pas sur le compteur | 21 août 2026 | 6090 |
+| 135 | on habille l'élément, pas seulement la classe | 21 août 2026 | 6109 |
+| 136 | un dispositif est installé quand son effet est mesuré, pas quand ses commandes sont posées | 21 août 2026 | 6185 |
+| 137 | un QCM se mesure aussi par la POSITION de ses bonnes réponses | 21 août 2026 | 6371 |
+| 138 | une ressource qui se nomme elle-même l'emporte sur son nom de fichier | 21 août 2026 | 6623 |
+| 139 | une réfutation écarte une proposition DANS LE CAS ÉTUDIÉ ; elle n'énonce pas une loi | 21 août 2026 | 6721 |
+| 140 | ce qu'on refuse de changer doit être expliqué à l'élève, pas défendu au relecteur | 21 août 2026 | 6753 |
+| 141 | une validation ne vaut que pour le protocole exécuté, et le dire fait partie de la leçon | 21 août 2026 | 6785 |
+| 142 | un test discriminant ne fait varier qu'une seule chose | 21 août 2026 | 6811 |
+| 143 | un outil qui ne sait pas juger doit au moins empêcher de dériver | 21 août 2026 | 6834 |
+| 144 | la bonne réponse ne doit pas être la plus longue | 21 août 2026 | 6902 |
+| 145 | un contre-exemple doit être vrai ET rencontrable | 21 août 2026 | 7022 |
+| 146 | un outil de mesure déclare ce qu'il n'a pas su lire | 21 août 2026 | 7054 |
+| 147 | une règle d'or naît sur un lot, elle s'adopte après mesure sur l'ensemble | 21 août 2026 | 7076 |
+| 148 | le meilleur distracteur est vrai, mais hors sujet | 21 août 2026 | 7096 |
+| 149 | un outil qui réécrit prouve d'abord qu'il sait ne rien changer | 21 août 2026 | 7130 |
+| 150 | tout chiffre d'un attendu dit d'où il vient | 21 août 2026 | 7164 |
+| 151 | la correction est lue par ceux qui ont juste | 21 août 2026 | 7194 |
+| 152 | deux questions voisines qui se contredisent : défaut, ou leçon, jamais hasard | 21 août 2026 | 7219 |
+| 153 | une branche préparée hier se rebase sur le main d'aujourd'hui, ou elle efface le travail d'hier | 21 août 2026 | 7251 |
+| 154 | un indicateur qui crie pour un caractère apprend à ne plus l'écouter | 21 août 2026 | 7275 |
+| 155 | compléter une banque par une boucle, c'est mentir sur le dénominateur | 21 août 2026 | 7296 |
+| 167 | vérifier avant de corriger, y compris quand l'auditeur a raison neuf fois sur dix | 21 août 2026 | 7407 |
+| 168 | une corrélation présentée comme une explication est l'erreur la plus coûteuse qu'un cours puisse contenir | 21 août 2026 | 7419 |
+| 169 | une activité qui repose sur un fichier absent n'est pas une activité | 21 août 2026 | 7444 |
+| 170 | un dénominateur figé finit toujours par mentir | 21 août 2026 | 7465 |
+| 171 | on n'enseigne pas à un élève qu'il est le maillon faible | 21 août 2026 | 7483 |
+| 172 | deux audits qui divergent désignent la frontière entre le vérifiable et le discutable | 21 août 2026 | 7506 |
+| 173 | un défaut trouvé une fois se cherche partout, tout de suite | 21 août 2026 | 7546 |
+| 174 | une animation ne se justifie que si son sujet change dans le temps. Un schéma | 2026-08-28 | 7765 |
+| 175 | une animation qui tourne toute seule est un spectacle. Celle que l'élève déclenche | 2026-08-28 | 7767 |
+| 176 | l'état final d'une animation doit être l'image complète. Un élève qui arrive en | 2026-08-28 | 7769 |
+| 177 | une animation qui montre la réponse remplace le travail au lieu de le préparer | 2026-08-28 | 7771 |
+| 178 | rien d'essentiel ne repose sur le mouvement seul : ni la consigne, ni la donnée, ni | 2026-08-28 | 7772 |
+| 179 | une ressource qui vit hors du dépôt porte toujours son repli imprimé. Sans lui, | 2026-08-28 | 7648 |
+| 180 | un lien externe porte la date de sa dernière vérification, et cette date s'affiche | 2026-08-28 | 7650 |
+| 181 | ce que je ne peux pas vérifier moi-même, je ne le livre pas rempli : je livre | 2026-08-28 | 7652 |
+| 182 | on ne code pas ce qui se filme, et on ne filme pas ce qui se compare. La vidéo | 2026-08-28 | 7654 |
+| 183 | un aperçu ne fabrique pas de faux contrôle. Un bouton qui ne mène nulle part apprend | 2026-08-28 | 7774 |
+| 184 | un indicateur bâti sur une convention de nommage mesure la conformité à la | 2026-08-28 | 7693 |
+| 185 | chercher un mot, ce n'est pas trouver une situation. À deux dans un référentiel | 2026-08-28 | 7697 |
+| 186 | on ne pose pas un dispositif là où il ne sert pas. Dix séquences du Thème 1 se font | 2026-08-28 | 7701 |
+| 187 | une note qui compte quelque chose se calcule. Les trois zones de réponse sont | 2026-08-28 | 7704 |
+| 188 | une page d'élève ne s'arrête pas pour parler. Pas de boîte modale : un message | 2026-08-28 | 7782 |
+| 189 | une règle qui n'est pas écrite dans le dépôt n'existe pas. Le journal est la seule | 2026-08-28 | 7785 |
+| 190 | un statut qu'aucun contrôle ne peut retirer n'est pas un statut, c'est une | 2026-08-28 | 7863 |
+| 191 | un audit est une production, pas un verdict. Chaque affirmation vérifiable se | 2026-08-28 | 7866 |
+| 192 | un correctif posé contre un défaut que la page a déjà traité coûte plus cher que | 2026-08-28 | 7869 |
+| 193 | chercher un défaut empêche de voir une absence. Trois lecteurs ont calculé les | 2026-08-28 | 7872 |
+| 194 | un outil de mesure se teste d'abord sur un cas dont on connaît déjà la réponse | 2026-08-28 | 7922 |
+| 195 | quand une consigne courte peut se lire dans les deux sens et que l'action, elle, | 2026-08-28 | 7968 |
+| 196 | on ne juge pas un lot sur ce que son dossier ne contient pas : le dossier dit ce | 2026-08-28 | 8016 |
+| 197 | l'auteur d'un contrôle est le premier à devoir le respecter. Créer la pièce qui | 2026-08-28 | 8020 |
+| 198 | dans un QCM, la bonne réponse ne doit pas se reconnaître sans lire la question | 2026-08-28 | 8081 |
+| 199 | corriger un biais en l'inversant, ce n'est pas le corriger. Après la plus | 2026-08-28 | 8084 |
+| 200 | un contrôle qui n'existe pas laisse passer un défaut dans tout ce qu'on a produit | 2026-08-28 | 8087 |
+| 201 | le même défaut n'appelle pas le même geste. Étoffer un distracteur bâclé, raccourcir | 2026-08-28 | 8138 |
+| 202 | un QCM peut mobiliser une compétence sans l'évaluer. En dessous de cinq questions, | 2026-08-28 | 8140 |
+| 203 | avant d'écrire qu'un indicateur est faux, lire ce que le fichier dit de lui-même | 2026-08-29 | 8200 |
+| 204 | un outil validé sur un thème n'est pas validé. Le vocabulaire change d'un thème à | 2026-08-29 | 8269 |
+| 205 | une ressource que rien ne désigne n'existe pas pour l'élève. Produire le fichier | 2026-08-29 | 8272 |
+| 206 | un outil qui sert trois thèmes n'appartient à aucun. Il vit dans _outils/, en un | 2026-08-29 | 8324 |
+| 207 | une source sérieuse et un titre qui colle ne remplacent pas un visionnage. On peut | 2026-08-29 | 8378 |
+| 208 | avant de créer ce qu'un audit déclare manquant, chercher qui le fait déjà. Un | 2026-08-29 | 8427 |
+| 209 | quand une ressource extérieure manque, construire l'instrument plutôt que d'attendre | 2026-08-29 | 8489 |
+| 210 | pour évaluer un verbe comme proposer , il faut rendre l'erreur mesurable | 2026-08-29 | 8621 |
+| 211 | appliquer une règle d'or à une seule page, c'est l'avoir écrite, pas l'avoir | 2026-08-29 | 8624 |
+| 212 | un dépôt local qu'on ne met jamais à jour finit par ne plus pouvoir recevoir ce | 2026-08-29 | 8627 |
+| 213 | un instrument qui se contente d'afficher n'apprend rien. Ce qui fait la découverte, | 2026-08-29 | 8728 |
+| 214 | devant un manque de ressource, la première question n'est pas comment en avoir | 2026-08-29 | 8731 |
+| 215 | quand une consigne interne impose des éléments sans objet pour le travail en cours, | 2026-08-29 | 8734 |
+| 216 | un test qui affirme qu'il ne se passe rien doit passer par les chemins où quelque | 2026-08-29 | 8835 |
+| 217 | un outil qui pose une fonction dans une page doit vérifier qu'elle existe partout où | 2026-08-29 | 8837 |
+| 218 | un instrument de mesure qui se trompe en moins est plus dangereux qu'un qui se | 2026-08-30 | 8922 |
+| 219 | un contrôle doit distinguer ce qu'il a réparé de ce qu'il n'a jamais touché | 2026-08-30 | 8925 |
+| 220 | un instrument ne s'écrit qu'une fois dans une page. Le répéter à chaque | 2026-08-30 | 9023 |
+| 221 | ce qui enregistre ne tourne jamais avant ce qui restaure. Une mise à jour | 2026-08-30 | 9026 |
+| 222 | quand un même code se décline en trois intitulés ( fournis , manquants , | 2026-08-30 | 9029 |
+| 223 | une mutualisation qui renvoie un niveau vers le niveau au-dessus inverse la | 2026-08-30 | 9118 |
+| 224 | deux compteurs qui bougent séparément séparent deux questions qu'on confond | 2026-08-30 | 9121 |
+| 225 | un test qui ne vérifie que le départ et l'arrivée ne prouve rien du chemin | 2026-08-30 | 9125 |
+| 226 | un verrou qu'ouvre l'état initial n'est pas un verrou. Un drapeau expérientiel | 2026-08-31 | 9255 |
+| 227 | le nombre de décimales n'est pas une préférence d'écriture. C'est ce qui décide | 2026-08-31 | 9259 |
+| 228 | une même mesure sous deux en-têtes différents est pire qu'une mesure absente | 2026-08-31 | 9262 |
+| 229 | une matrice s'associe par nom, jamais par position. Une liste positionnelle | 2026-08-31 | 9265 |
+| 230 | le chiffre juste et la comparaison juste sont deux choses. Tous les nombres | 2026-08-31 | 9268 |
+| 231 | ne jamais lancer une commande git qui écrit à travers le pont Linux. La règle | 2026-08-31 | 9272 |
+| 232 | quand deux niveaux portent la même formulation officielle, le geste ne se lit | 2026-08-31 | 9383 |
+| 233 | un instrument doit dire ce que le texte annonce, ligne par ligne. Trois cotes | 2026-08-31 | 9387 |
+| 234 | un lot voisin est une source de vérité, pas un décor. Reprendre une pièce déjà | 2026-08-31 | 9391 |
+| 235 | une mesure fausse VERS LE HAUT est aussi une mesure fausse. Les 105 min lues | 2026-08-31 | 9395 |
+| 236 | un chemin qu'on ne peut pas cliquer n'est jamais vérifié. Écrire une référence | 2026-08-31 | 9448 |
+| 237 | compter les pièces n'est pas vérifier la couverture. Un lot peut porter ses six | 2026-08-31 | 9510 |
+| 238 | la preuve de couverture est une ligne, pas un dossier. Elle s'écrit soit dans | 2026-08-31 | 9514 |
+| 239 | un diagnostic qui compte ses propres traces ne diagnostique rien. L'outil de | 2026-08-31 | 9614 |
+| 240 | un seuil fixe d'évaluabilité punit la mutualisation. Cinq questions par code | 2026-08-31 | 9618 |
+| 241 | pas couvert et couvert sous le seuil ne sont pas la même phrase. Se | 2026-08-31 | 9623 |
+| 242 | un instrument ne prouve une absence que là où il a regardé. Avant de conclure | 2026-08-31 | 9700 |
+| 243 | une charge d'essai identique pour tous peut être injuste sans être fausse. Un | 2026-08-31 | 9815 |
+| 244 | un coefficient de sécurité sans sa limite n'est pas un nombre. Le même bois, la | 2026-08-31 | 9819 |
+| 245 | une formulation recopiée se recopie depuis le référentiel, pas de mémoire | 2026-08-31 | 9822 |
+| 246 | une phrase vérifiable dans un fichier engendré doit être vérifiée par le | 2026-08-31 | 9876 |
+| 247 | une formulation identique à tous les niveaux doit éveiller le soupçon. Le | 2026-08-31 | 9944 |
+| 248 | un contrôle neuf qui trouve beaucoup de fautes a d'abord tort. Six versions, | 2026-08-31 | 10010 |
+| 249 | un seuil de longueur doit être plus bas que le plus court des cas vrais | 2026-08-31 | 10013 |
+| 250 | la notion s'évalue ailleurs doit dire où. Sans le nom de la ressource, la | 2026-08-30 | 10146 |
+| 251 | une barre de navigation ne se recopie pas d'un dossier à l'autre. Un lien | 2026-08-30 | 10127 |
+| 252 | un dossier qui grandit met sa table en retard, pas en faute. Le jour où les | 2026-08-30 | 10149 |
+| 253 | un contrôle qui lit une page doit taire ce qu'un navigateur ne suit pas | 2026-08-30 | 10131 |
+| 254 | rattacher un code au mauvais support ne le couvre pas, cela cache un trou. Un | 2026-08-30 | 10090 |
+| 255 | un lien d'ancre morte ne mène pas ailleurs, il mène en haut de la bonne page | 2026-08-30 | 10191 |
+| 256 | ce qui est codé en dur dans un générateur devient faux dans tous les fichiers | 2026-08-30 | 10264 |
+| 257 | un fichier engendré qu'on modifie à la main cesse d'être engendré, et personne | 2026-08-30 | 10268 |
+| 258 | un trou de couverture qui résiste deux fois n'attend pas des questions, il | 2026-08-30 | 10228 |
+| 259 | un tableau de résultats qu'on ne peut pas relancer ne dit pas ça marche , il | 2026-08-30 | 10296 |
+| 261 | corriger l'occurrence qu'on a sous les yeux, c'est croire qu'il n'y en a | 2026-08-31 | 10344 |
+| 262 | une phrase ne s'arrête pas en fin de ligne, et un contrôle qui lit par lignes ne | 2026-08-31 | 10426 |
+| 263 | ce qui parle d'une ressource vit rarement dans son dossier ; un contrôle dont le | 2026-08-31 | 10434 |
+| 264 | un nombre qu'un document affirme sur lui-même est un champ, pas une phrase : il | 2026-08-31 | 10523 |
+| 265 | une fonction d'affichage appelée à l'initialisation ne doit rien enregistrer | 2026-08-31 | 10600 |
+| 266 | une dette se compte, une promesse fausse se refuse. Un contrôle qui traite les | 2026-08-31 | 10688 |
+| 267 | une file d'attente doit nommer ce qu'on peut réellement payer. Un relevé juste | 2026-08-31 | 10732 |
+| 268 | un pilote de test déclare ce qu'il ne pilote pas, et le verrouille. La | 2026-08-31 | 10787 |
+| 269 | un outil qui reconnaît les fichiers par leur extension doit connaître toutes | 2026-08-31 | 10819 |
+| 270 | Un test qui échoue accuse d'abord la page ; commence par vérifier qu'il sait la lire | 2026-08-31 | 10976 |
+| 271 | Un document qui décrit une ressource ne l'emploie pas | 2026-08-31 | 11044 |
+| 272 | Un fichier livré qu'aucun chemin n'atteint n'est pas livré | 2026-08-31 | 11155 |
+| 273 | Une liste d'exceptions doit être nommée, datée, et ne pouvoir que rétrécir | 2026-08-31 | 11212 |
+| 274 | Un pilote de test lit ce que la page publie : son source et son affichage | 2026-08-31 | 11367 |
+| 275 | Uniformiser ce qui n'a jamais été uniforme, c'est inventer une règle et la faire passer | 2026-08-31 | 11435 |
+| 276 | une suppression annoncée au passé dans un document n'est pas une | 2026-08-31 | 11512 |
+| 277 | un contrôle se trompe dans les deux sens, et le second ne fait aucun | 2026-08-31 | 11665 |
+| 278 | mesurer un texte, c'est mesurer une apparence ; il faut aussi mesurer ce | 2026-08-31 | 11670 |
+| 279 | une refonte perd ce qu'elle ne recopie pas, et le silence qui suit | 2026-09-02 | 11848 |
+| 280 | une garde qui interdit un genre entier pour empêcher un cas | 2026-09-02 | 11811 |
+| 281 | un matériel nommé n'est pas seulement un doute levé : c'est un domaine | 2026-09-02 | 11959 |
+| 282 | un élément n'est pas visible parce qu'il n'est pas caché : il l'est | 2026-09-02 | 12042 |
+| 283 | corriger un fichier engendré, c'est écrire dans le sable. La correction | 2026-09-02 | 12074 |
+| 284 | quand on explique pourquoi un chiffre restant n'est pas grave, il faut | 2026-09-02 | 12204 |
+| 285 | un correctif de couleur ne se valide pas au chiffre, il se regarde | 2026-09-02 | 12149 |
+| 286 | un correctif qui parcourt tous les descendants de X oublie X. La | 2026-09-02 | 12238 |
+| 287 | un SVG n'est pas du HTML : son <style> est du XML, ses sélecteurs | 2026-09-02 | 12307 |
+| 288 | une consigne ne réemploie pas un mot qu'elle n'a pas expliqué. Un mot | 2026-09-08 | 12378 |
+| 289 | un fichier nommé dans une page est un fichier qu'on peut prendre | 2026-09-08 | 12426 |
+| 290 | avant de corriger une page, demande-lui qui l'écrit. Un lexique, un | 2026-09-08 | 12519 |
+| 291 | un commentaire de bilan est une mesure, pas une phrase. 30 questions, | 2026-09-09 | 12607 |
+| 292 | un QCM se présente avec ses propres papiers. Titre, sous-titre, badges, | 2026-09-09 | 12736 |
+| 293 | un audit se vérifie à la ligne, puis se mesure sur tout le dépôt. Un | 2026-09-09 | 12716 |
+| 294 | une planche pour des 5e commence par ce qu'on mesure, et chaque principe | 2026-09-09 | 12788 |
+| 295 | un bouton mort ne fait pas de bruit : on l'écoute par la console. Un | 2026-09-09 | 12841 |
+| 296 | une maxime se relit là où elle atterrit. Un à retenir écrit pour | 2026-09-09 | 12897 |
+| 297 | un geste d'outil s'enseigne pour être refait seul, plus | 2026-09-10 | 13041 |
+| 298 | la page élève ne se lit pas comme un référentiel (3e, thème 2) | 15/09/2026 | 15260 |
+| 299 | un contrôle qui n'a rien vérifié est en panne, pas vert (_outils, thème 2) | 19/09/2026 | 15738 |
+| 300 | une question se lit pendant qu'on y répond (_outils, thème 2) | 20/09/2026 | 16411 |
+| 301 | le bilan clôt la séquence (_outils, thème 2) | 20/09/2026 | 16808 |
+| 302 | on parle À l'élève, jamais DE lui (thèmes 1-3, _outils) | 20/09/2026 | 16962 |
+| 303 | un lien se lit (thèmes 1-3, _outils) | 21/09/2026 | 18056 |
+| 304 | le bloc d'ouverture dit ce qui devrait être en place (thèmes 1-3, _outils) | 21/09/2026 | 18337 |
+| 305 | une page se lit sans Internet (_outils, journal, pages des trois thèmes) | 21/09/2026 | 18712 |
+| 306 | Une séquence suit un squelette unique, qui réunit les n°301, 302 et 304 | 22/09/2026 | 18901 |
+| 307 | la hiérarchie se voit avant de se lire (thèmes 1-3, _outils) | 27/09/2026 | 20513 |
+| 308 | un bloc ne se dessine pas, il se capture (thèmes 2-3, archive, _outils) | 18/10/2026 | 21934 |
+| 309 | l'élève lit le savoir, pas la fabrique (tous thèmes, index, _outils) | 21/10/2026 | 22329 |
+| 310 | les blocs disent ce qui est fait, les flèches disent ce qui circule (chaînes d'énergie) — reprise de la PR #485 | 21/10/2026 | 22547 |
+| 311 | à partir de la séance 2, l'élève voit sa séance, pas le décor (transversale, _outils) | 22/10/2026 | 22667 |
+| 312 | une unité se lit en toutes lettres (transversale : thèmes 1, 2 et 3, _outils, .claude/skills) | 25/10/2026 | 23971 |
+| 313 | un sigle garde ses capitales — FAST, jamais fast (transversale : index, _outils, .claude/skills) | 25/10/2026 | 23924 |
+| 314 | une compétence numérique se lit en toutes lettres, à l'écran et au survol (transversale : thèmes 1, 2 et 3, _outils, .claude/skills) | 26/10/2026 | 24411 |
+| 315 | tout schéma est premium (transversale : thèmes 1, 2 et 3, _outils, .claude/skills) | 28/10/2026 | 25462 |
+| 316 | une synthèse élève se lit par un élève de 6e — le skill synthese-vulgarisee (transversale : thèmes 1, 2 et 3, .claude/skills) | 29/10/2026 | 25526 |
+| 317 | un cahier des charges à compléter se complète dans le tableau, par des menus déroulants (thème 1, ateliers) | 31/10/2026 | 26958 |
+| 318 | la bête à cornes a une seule forme, celle du modèle de Pascal (thème 1) | 04/11/2026 | 27399 |
+| 319 | une notion enseignée une année et utilisée plus tard est rappelée là où elle revient, par un exercice | 05/11/2026 | 27907 |
+| 320 | un exercice qui fait écrire et exécuter du Python le fait dans la page. L'éditeur intégré (code, | 05/11/2026 | 27957 |
+| 321 | le dépôt est sous CC BY-NC-SA 4.0 et chaque page le dit en pied (transversal : thèmes 1, 2 et 3, _outils, LICENSE.md) | 08/11/2026 | 28975 |
+| 322 | une page qui garde les réponses de l'élève dans le navigateur (1) sait les effacer | 10/11/2026 | 29581 |
+| 323 | la bonne réponse ne se devine pas à sa place ; contrôle | 10/11/2026 | 29586 |
+| 324 | Un banc de tests couvre les frontières et les conditions qui se croisent | 14/11/2026 | 30422 |
+| 325 | Une figure essentielle se lit sur un téléphone | 14/11/2026 | 30427 |
+| 326 | Une commande se comprend sans son pictogramme | 14/11/2026 | 30433 |
+| 327 | Le contraste se mesure contre le fond affiché | 14/11/2026 | 30438 |
+| 328 | La page dit vrai sur elle-même | 14/11/2026 | 30442 |
+| 329 | Une zone de travail : deux surfaces au plus, une action principale | 14/11/2026 | 30448 |
+| 330 | Une compétence de conception se prouve seul | 14/11/2026 | 30452 |
+| 331 | l'élève répond le schéma sous les yeux ; pilote Book Train ; controle_schema_sous_les_yeux.py | 15/11/2026 | 31234 |
+| 332 | la correction montre la production complète, telle que l'outil la rend ; Book Train : les deux chaînes sous les yeux, l'algorigramme et le d… | 15/11/2026 | 31388 |
 | 333 | Une réussite affichée prouve la production réelle | registre de tête | 27 |
 | 334 | Une règle enseignée est juste dans toute sa portée | registre de tête | 28 |
-| 335 | une consigne par question, une à la fois ; 3e_C9.1 et 4e_C9.1 à la hauteur du Book Train (n°331, n°332, n°335), 5e_C9.1 réécrit ; en mission… | 15/11/2026 | 31578 |
-| 336 | la correction se voit ; quand la réponse se dessine, elle montre le dessin | 16/11/2026 | 31986 |
+| 335 | une consigne par question, une à la fois ; 3e_C9.1 et 4e_C9.1 à la hauteur du Book Train (n°331, n°332, n°335), 5e_C9.1 réécrit ; en mission… | 15/11/2026 | 31581 |
+| 336 | la correction se voit ; quand la réponse se dessine, elle montre le dessin | 16/11/2026 | 32058 |
+| 337 | Avant de commencer, trois lignes : ce que tu vas apprendre, ce que tu dois savoir faire, comment réussir | registre de tête | 29 |
+| 338 | Un même attendu se dit avec les mêmes nombres et les mêmes mots partout | registre de tête | 30 |
+| 339 | Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges | registre de tête | 31 |

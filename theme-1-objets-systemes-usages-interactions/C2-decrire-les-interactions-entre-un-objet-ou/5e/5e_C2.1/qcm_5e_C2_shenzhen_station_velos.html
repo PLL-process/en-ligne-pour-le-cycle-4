@@ -595,8 +595,8 @@ const COMP_LABELS={
 const N=QUESTIONS.length;
 
 /* état */
-/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (audit du 17/11/2026,
-   « une révision fondée sur les difficultés »). Une question appartient à un piège par sa notion. */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
 const PIEGES={
   besoin:"La bête à cornes : à qui, sur quoi, dans quel but ?",
   dedans:"Interacteur ou pas ? Une règle (une exigence), une pièce de l'objet, sa couleur",
@@ -606,18 +606,38 @@ const PIEGES={
   expliquer:"Expliquer un choix (pas le décrire), et ce qu'il coûte"
 };
 const PIEGE_DE_NOTION={
-  "Les trois questions de la bête à cornes":"besoin","À qui ou sur quoi":"besoin",
-  "Fonction d'usage ou fonction technique":"besoin","Les mots de référence":"besoin",
-  "Définition":"dedans","Ce qui n'en est pas un":"dedans","Un interacteur non vivant":"dedans",
-  "Un interacteur invisible":"dedans","Ce qui contraint":"dedans","Extérieur ou intérieur":"dedans",
-  "Les quatre familles":"familles","La famille invisible":"familles","Le réflexe coûteux":"familles",
-  "Ce qui alimente":"familles","Le geste de recensement":"familles","À quoi ça sert":"familles",
-  "Changer de lieu":"lieu","Un interacteur martiniquais":"lieu","Le sel marin":"lieu","Transposer":"lieu",
-  "Trois domaines":"domaines","L'ergonomie":"domaines","La sécurité":"domaines",
-  "Un choix pour la maintenance":"domaines","Deux domaines à la fois":"domaines",
+  "Les trois questions de la bête à cornes":"besoin",
+  "À qui ou sur quoi":"besoin",
+  "Fonction d'usage ou fonction technique":"besoin",
+  "Les mots de référence":"besoin",
+  "Définition":"dedans",
+  "Ce qui n'en est pas un":"dedans",
+  "Un interacteur non vivant":"dedans",
+  "Un interacteur invisible":"dedans",
+  "Ce qui contraint":"dedans",
+  "Extérieur ou intérieur":"dedans",
+  "Les quatre familles":"familles",
+  "La famille invisible":"familles",
+  "Le réflexe coûteux":"familles",
+  "Ce qui alimente":"familles",
+  "Le geste de recensement":"familles",
+  "À quoi ça sert":"familles",
+  "Changer de lieu":"lieu",
+  "Un interacteur martiniquais":"lieu",
+  "Le sel marin":"lieu",
+  "Transposer":"lieu",
+  "Trois domaines":"domaines",
+  "L'ergonomie":"domaines",
+  "La sécurité":"domaines",
+  "Un choix pour la maintenance":"domaines",
+  "Deux domaines à la fois":"domaines",
   "Le développement durable comme domaine":"domaines",
-  "Lire un objet":"expliquer","La question qui ouvre":"expliquer","Retrouver l'interacteur":"expliquer",
-  "Le coût d'un choix":"expliquer","Deux réponses au même problème":"expliquer","Un gain payé ailleurs":"expliquer",
+  "Lire un objet":"expliquer",
+  "La question qui ouvre":"expliquer",
+  "Retrouver l'interacteur":"expliquer",
+  "Le coût d'un choix":"expliquer",
+  "Deux réponses au même problème":"expliquer",
+  "Un gain payé ailleurs":"expliquer",
   "Justifier, pas décrire":"expliquer"
 };
 function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }

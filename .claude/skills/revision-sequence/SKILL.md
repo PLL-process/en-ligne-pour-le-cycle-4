@@ -126,6 +126,14 @@ algorigramme, croquis, carte mentale), la correction montre le dessin complet, e
 Le texte complet, et ce que l'audit a mesuré : `JOURNAL_DES_DECISIONS.md`, entrée du 14/11/2026 ; l'audit et le cahier
 des charges : `docs/audits/AUDIT_3e_C9.1_2026-11-12.md`, `docs/audits/CAHIER_DES_CHARGES_ULTRA_PREMIUM_2026-11-12.md`.
 
+### 5 ter. L'audit « double regard » (n°337, n°338, n°339, 17/11/2026)
+Passer la séquence et son QCM au skill `audit-double-regard` : la carte « 🎯 Avant de commencer » en trois lignes
+(`trois_lignes.py`), le billet d'entrée corrigé (`corriger_billet.py`), un bouton de correction sur chaque exercice
+(Bonus compris), un billet de sortie seul et sans aide (n°330), les mêmes nombres et les mêmes mots partout
+(`controle_memes_nombres.py`), le QCM à aides progressives et à pièges (`qcm_aides/poser.py`). En mode mission, écran
+par écran : le schéma annoncé se voit, chaque écran garde sa consigne, « sur une feuille de brouillon » (l'élève n'a pas
+de cahier), un mot savant glosé à son premier emploi (« l'ellipse (la forme ovale) »).
+
 ### 6. Lire comme un élève
 Ce que la lecture attentive a trouvé sur les premières séquences, à chercher partout : le « vous » (n°302) ; le style
 télégraphique (« désactive géo inutile ») ; un anglicisme non expliqué (« hover ») ; un encadré qui donne d'avance la
