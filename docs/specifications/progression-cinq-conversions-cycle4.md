@@ -78,12 +78,14 @@ Ailleurs, le radiateur et le vérin ne sont jamais rencontrés en situation, et 
    puis l'hystérésis du thermostat (19 / 21 °C), relié à la pompe qui « battait » ; corrigé complet.
 
 ### 3e : choisir (3e_C4.1, 3e_C7.4)
-6. **Le rappel du tableau** en tête de l'activité « chaîne d'énergie » de la station (`3e_C4.1`) : la boîte à outils
-   pour construire la chaîne.
-7. **La génératrice comme source** dans `3e_C7.4` (« 72 heures sans secteur ») : une petite éolienne ou un groupe
-   électrogène à comparer à la batterie et au panneau. C'est une génératrice : mécanique → électrique.
-8. **Le vérin en 3e** : une chaîne d'énergie à construire avec un vérin électrique (électrique → mécanique), par
-   exemple le volet de protection de la station contre le cyclone.
+6. ✅ *(17/11/2026)* **Le rappel du tableau** en tête de l'activité « chaîne d'énergie » de la station (`3e_C4.1`) : la boîte à outils
+   pour construire la chaîne. Fait : replié, à côté du gabarit de l'activité 1.
+7. ✅ *(17/11/2026)* **La génératrice comme source** dans `3e_C7.4` (« 72 heures sans secteur ») : une petite éolienne ou un groupe
+   électrogène à comparer à la batterie et au panneau. C'est une génératrice : mécanique → électrique. Fait : dans le
+   réinvestissement de l'îlet (les alizés), une question notée et la correction qui pèse l'éolienne et écarte le groupe.
+8. ✅ *(17/11/2026)* **Le vérin en 3e** : une chaîne d'énergie à construire avec un vérin électrique (électrique → mécanique), par
+   exemple le volet de protection de la station contre le cyclone. Fait : défi du Bonus de `3e_C4.1` (les séances font
+   déjà 55 min), corrigé par les deux chaînes dessinées (`regenerer_chaines_energie.py volet`).
 
 ### Sur les trois niveaux
 9. **Le QCM de chaque niveau** remplace une question existante par une question sur les conversions : le nombre de

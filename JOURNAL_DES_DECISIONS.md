@@ -32337,3 +32337,25 @@ Deuxième étage de la progression (`docs/specifications/progression-cinq-conver
 - Vérifications : Book Train 39 / 39 (le banc compte les 6 nouveaux groupes et valide la zone `exo21r`) et 38 / 38 ;
   `4e_C6.1` 29 / 29 et 34 / 34 ; mode mission joué sur les deux pages, aucun refus ; squelette, aération, liens, médias,
   règles visibles, mode essentiel : verts.
+
+## 17/11/2026 — Les cinq conversions, lot 3e : choisir
+
+Troisième étage de la progression (`docs/specifications/progression-cinq-conversions-cycle4.md`) : en 3e, l'élève
+**construit** la chaîne d'un objet et **choisit** une source (`3e_C4.1`, `3e_C7.4`).
+- **`3e_C4.1`, activité 1** : le tableau des cinq conversions, replié à côté du gabarit — « ta boîte à outils pour
+  nommer les énergies » ; la légende rappelle que le panneau de la station n'y est pas (c'est à l'élève de le nommer).
+- **`3e_C4.1`, Bonus** : le défi « volet anti-cyclone » — un vérin électrique ferme le volet quand le vent dépasse
+  100 km/h ; l'élève dessine les deux chaînes. Le corrigé les montre dessinées (règle d'or n°336), par une nouvelle
+  figure du générateur des chaînes (`_outils/regenerer_chaines_energie.py volet`, source draw.io dans
+  `_generation/chaines_energie/`), et le piège : l'ordre part de la carte, pas de l'anémomètre. Au Bonus, parce que les
+  séances font déjà 55 min.
+- **`3e_C7.4`, réinvestissement de l'îlet** : les alizés soufflent de jour comme de nuit — « dans l'éolienne, quel
+  constituant change le mouvement des pales en électricité ? » (la génératrice) ; un pourquoi par mauvaise proposition
+  (`mission_3e_C7.4.json`). La correction pèse l'éolienne (elle recharge la nuit et par temps gris, mais elle s'use, sur
+  un îlet où personne ne vient qu'une fois par mois) et écarte le groupe électrogène (bruit, carburant, réserve
+  naturelle). Le réinvestissement se note sur 2 : la question et l'écrit, qui reste relu à la main.
+- Vérifications : `3e_C4.1` 23 / 23 et 34 / 34 ; `3e_C7.4` 54 / 54, 34 / 34, QCM 32 / 32 ; mode mission joué sur les
+  deux pages, aucun refus ; `controle_schemas` 0 ✘ sur la nouvelle figure (le ⚠ « minuscule » est celui des autres
+  chaînes du générateur) ; correction illustrée, aération, unités, liens, médias, sigles, règles visibles, squelette :
+  verts ; `verifier_chaines_energie.py` 87 / 87.
+- Reste du plan : le lot des QCM (une question sur les conversions par niveau, à la place d'une autre).

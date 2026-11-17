@@ -8,6 +8,8 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 | `Images/chaine_energie_a_elaborer.svg` | SVG original (Fable) | image-objet : gabarit + palette à élaborer (act. 1, QCM) | CC0 | ~6 Ko |
 | `Images/contraintes_site_cyclonique.svg` | SVG original (Fable) | image-objet : les 5 contraintes du site à lire (act. 3, QCM) | CC0 | ~5 Ko |
 | `Images/materiaux_procedes_abaque.svg` | SVG original (Fable) | image-objet : l'abaque à exploiter (act. 4, QCM) | CC0 | ~6 Ko |
+| `Images/cinq_conversions.svg` | SVG original (Fable), dessiné par `_outils/cinq_conversions/generer.py --complet` | image-explication : les cinq conversions du programme, en rappel replié dans l'activité 1 (17/11/2026) ; le même dessin qu'en 5e et en 4e | CC0 | ~6 Ko |
+| `Images/chaine_volet_anticyclone.svg` | SVG original (Fable), dessiné par `_outils/regenerer_chaines_energie.py volet` (source draw.io dans `_generation/chaines_energie/`) | image-explication : corrigé du défi « volet anti-cyclone » du Bonus — le vérin en situation (17/11/2026) | CC0 | ~12 Ko |
 
 Les valeurs de dimensionnement (6 W, 72 h, 40 Ah) sont des données pédagogiques
 réalistes créées pour le lot. Alt/desc complets (title + desc, role="img") dans
