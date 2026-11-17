@@ -173,8 +173,14 @@ Deux précisions (16/11/2026, après la fiche SFC1b de l'académie de Bordeaux, 
 - **« Mécanique » n'est jamais une mauvaise réponse.** Jamais proposé comme piège à côté de « cinétique » dans un QCM ou un
   menu ; une réponse écrite « mécanique » est acceptée, la correction ajoute « on dit aussi cinétique : l'énergie du
   mouvement ».
-- **Un vérin, une génératrice** : un vérin qui pousse ou soulève une charge donne du mouvement et de la hauteur — on écrit
-  « mécanique (cinétique + potentielle) », comme la fiche de Bordeaux ; un vérin qui ne fait que déplacer, et l'entrée
-  d'une génératrice (un arbre qui tourne), restent « cinétique ». Au 16/11/2026, aucune page du site ne donne de forme
-  d'énergie à un vérin ou à une génératrice.
+- **Un vérin, une génératrice** (décision de Pascal, 16/11/2026 : « en cycle 4, le détour est quasiment une
+  obligation ») : moteur → **cinétique**, parce qu'il en sort un mouvement ; vérin → **mécanique**, parce qu'il pousse ou
+  soulève une charge, donc donne du mouvement et de la hauteur ; génératrice, dynamo : **mécanique → électrique**, comme
+  la fiche de Bordeaux (« cinétique → électrique » est juste aussi).
+- **Où le détour est écrit** : une note « 📝 Cinétique ou mécanique ? » dans les synthèses de `5e_C3.1` (moteur, vérin,
+  la règle) et du Book Train (moteur, vérin, génératrice, en cases) ; une ligne « On dit aussi « mécanique » : c'est le
+  mot qui couvre le mouvement (cinétique) et la hauteur (potentielle) » dans la correction qui nomme la sortie d'un
+  moteur ou d'une pompe (`4e_C4.1`, Book Train, `5e_C4.1`, `4e_C9.1`), et pour la dynamo de `5e_C7.4`. Une nouvelle
+  séquence qui fait nommer la sortie d'un moteur, d'une pompe, d'un vérin ou d'une génératrice porte la même ligne
+  dans sa correction.
 

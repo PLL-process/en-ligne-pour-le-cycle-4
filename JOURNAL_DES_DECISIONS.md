@@ -32230,3 +32230,19 @@ Demande de Pascal, 16/11/2026, sur `4e_C4.1` (« L'eau est mise en mouvement : l
   `banc_generique.mjs` sans refus ; `controle_schemas` : 85 schémas, 0 ✘ ; `verifier_chaines_energie.py` 87 / 87 ;
   `banc_lecteur.py` et `tests_voix_velo_cargo.py` verts ; la bibliothèque draw.io est identique à la sortie de son
   générateur. `controle_flux_animes.py` refuse `5e_C4.1/Images/chaine_ventilateur_corrige.svg`, comme sur `main`.
+- **Le détour par « mécanique », écrit pour l'élève** (décision de Pascal, 16/11/2026 : « en cycle 4, le détour est
+  quasiment une obligation » ; carte blanche sur le où et le comment). Moteur → **cinétique**, parce qu'il en sort un
+  mouvement ; vérin → **mécanique**, parce qu'il pousse ou soulève une charge (mouvement et hauteur) ; génératrice :
+  **mécanique → électrique**, comme la fiche de Bordeaux. Écrit à trois endroits :
+  - une note « 📝 Cinétique ou mécanique ? » dans deux synthèses : `5e_C3.1` (premier contact : moteur, vérin, la règle,
+    en trois lignes) et le Book Train (moteur, vérin, génératrice, en cases). Les deux tiennent sur deux pages A4. Pas
+    dans `4e_C4.1` (trois pages déjà sur `main` ; sa ligne-pont reste) ni dans `4e_C7.4` (deux pages pleines à 96 %) ;
+  - une ligne « On dit aussi « mécanique » : c'est le mot qui couvre le mouvement (cinétique) et la hauteur
+    (potentielle) » dans la correction qui nomme la sortie d'un moteur ou d'une pompe (`4e_C4.1`, Book Train,
+    `5e_C4.1`, `4e_C9.1`), et pour la dynamo de `5e_C7.4` ; la capsule de révision de `5e_C3.1` dit « cinétique (celle
+    du mouvement ; on dit aussi mécanique) » ;
+  - les règles dans le skill `chaine-energie-fonctionnelle`, pour toute nouvelle séquence.
+  Pas les lexiques : `generer_lexique.py` les tire des QCM, et les régénérer retirerait les unités écrites en toutes
+  lettres (règle n°312) ajoutées depuis ; c'est à reprendre dans un lot à part.
+- Une erreur du remplacement corrigée au passage : « un relais est un contact mécanique » (`4e_C9.1`) n'est pas une
+  forme d'énergie, il reste « mécanique ».
