@@ -32293,3 +32293,27 @@ qui entre et celle qui sort de chaque constituant (SFC 11, 5e).
   déjà le cas sur `main`, à reprendre à part.
 - Suite : le lot 4e (« Quel constituant dans CONVERTIR ? » dans le Book Train, le radiateur à thermostat dans
   `4e_C6.1`), puis le lot 3e, puis les QCM.
+
+## 17/11/2026 — Mode mission : l'éditeur Python intégré se voit là où on l'annonce et là où on le lit
+
+**Le constat.** Pascal, le 17/11/2026, capture à l'appui (`3e_C9.1`, séance 2, activité 3 « Prédire → tester →
+reporter : le piège des guillemets », en mode mission) : « on dit que l'éditeur Python est intégré à l'activité mais
+je ne le vois pas. Vérifie, et vérifie sur les autres séquences où on a besoin de l'éditeur intégré. »
+
+**Ce que la mesure a montré** (un banc qui joue chaque page en mode mission, écran par écran) : sur les 5 pages qui
+portent l'éditeur (`3e_C9.1`, `5e_C9.1`, `4e_C9.1`, `3e_C7.1`, le mini-projet de 5e), **68 écrans** en défaut.
+- L'annonce « l'éditeur Python est intégré à l'activité » restait affichée sur les écrans de prédiction, qui viennent
+  avant l'éditeur (on prédit avant d'essayer) : l'élève cherchait un éditeur qui n'était pas là.
+- L'éditeur arrivait avec la première question qui le lit… et disparaissait aux questions suivantes, qui lisent
+  pourtant la console (`3e_C9.1` : 4 questions sur 5 sans éditeur ; `5e_C9.1` : 3 sur 4). Dans `4e_C9.1`, posé sur
+  l'écran de départ, il manquait aux cinq questions « Retrouver l'algorigramme dans le code » et au journal.
+- Les autres séquences qui parlent de Vittascience programment une carte Arduino (en blocs ou en C++ : la station de
+  `3e_C9.2`, `3e_C4.3`) ou ont leur propre outil dans la page (CodeLab de `3e_C6.1`, simulateur) : l'éditeur Python
+  n'y a pas sa place.
+
+**Ce qui change** (`_outils/mode_mission/mission.js`, reposé sur les 60 pages qui portent le mode mission) :
+- une fois montré dans une activité (sur son écran de départ ou avec une question), l'éditeur — le bloc
+  `.editeur-py` seul, jamais une question avec lui (règle d'or n°335) — accompagne chacun de ses écrans de question,
+  jusqu'à « Je retiens » ;
+- l'annonce de l'éditeur intégré se tait sur les écrans qui ne le montrent pas.
+- Un banc, `_outils/mode_mission/banc_editeur.mjs` : 68 refus sur `main`, 0 après.

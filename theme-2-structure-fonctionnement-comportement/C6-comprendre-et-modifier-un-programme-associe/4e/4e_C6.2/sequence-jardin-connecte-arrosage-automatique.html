@@ -717,6 +717,7 @@ details.geste-detail>p{margin:4px 0 0}
    Tout ce qui cache est sous @media screen : la fiche papier s'imprime comme avant, entière. */
 @media screen{
   body.ms .ms-cache,body.ms .ms-origine,body:not(.ms) .ms-seul{display:none!important}
+  body.ms .ms-sans-outil{display:none!important} /* l'annonce de l'éditeur intégré, sur un écran qui ne le montre pas */
   /* le trou ▢ de l'écran, marqué dans le code qu'il complète (un écran par trou) */
   body.ms .ms-trou-ici{background:#fde68a!important;color:#1c1917!important;outline:2px solid #b45309;outline-offset:1px;border-radius:3px}
   body.ms #tachesBandeau,body.ms .page-suivante:not(.ms-montre){display:none!important}
@@ -1147,6 +1148,24 @@ function construire(P){
   });
   if (portes.length){ if (E.length) E[0].n = portes.concat(E[0].n); else E.push({ t:"carte", titre:"La séance", n:portes }); }
   if (E.length && !E.some(function(e){ return e.ouverture; })) E[0].ouverture = true;       // la situation de départ s'ouvre au premier écran
+  /* L'éditeur Python reste sous les yeux (Pascal, 17/11/2026 : « on dit que l'éditeur Python est intégré à
+     l'activité, mais je ne le vois pas »). Une activité « prédire → tester → reporter » pose ses prédictions sans
+     l'éditeur (on prédit avant d'essayer), puis l'éditeur arrive avec la première question qui le lit… et
+     disparaissait aux suivantes, qui lisent pourtant la console. Une fois montré dans une activité, il accompagne
+     désormais chaque écran de question qui suit, jusqu'à « je retiens ». Seul l'éditeur lui-même est repris : un bloc
+     qui porterait aussi une question n'est pas répété (une question à la fois, règle d'or n°335). */
+  function editeurDe(n){ return n.matches && (n.matches(".editeur-py") || !!$(".editeur-py", n)) && !$$(CHAMP, n).some(function(f){ return !f.closest(".editeur-py"); }) ? n : null; }
+  var outils = [], enAttente = null;          // un éditeur posé sur l'écran de départ de l'activité vaut pour ses questions
+  E.forEach(function(e){
+    if (e.t === "depart"){ enAttente = null; e.n.forEach(function(n){ enAttente = enAttente || editeurDe(n); }); return; }
+    if (e.t !== "partie" || !e.act) return;
+    var deja = outils.filter(function(o){ return o.act === e.act; })[0];
+    if (!deja && enAttente){ deja = { act:e.act, n:enAttente }; outils.push(deja); }
+    enAttente = null;
+    var ed = null; e.n.forEach(function(n){ ed = ed || editeurDe(n); });
+    if (ed){ if (!deja) outils.push({ act:e.act, n:ed }); return; }
+    if (deja && e.n.indexOf(deja.n) < 0){ e.n = e.n.concat([deja.n]); e.outil = deja.n; }
+  });
   /* tous les blocs qui se montrent ou se cachent : ceux des écrans, et leurs conteneurs jusqu'au panneau */
   E.tous = [];
   E.forEach(function(e){ e.n.concat(e.ress || []).forEach(function(n){ for (var p = n; p && p !== P; p = p.parentNode) if (E.tous.indexOf(p) < 0) E.tous.push(p); }); });
@@ -1379,6 +1398,13 @@ function montrer(haut){
   if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
   var ouv = $("#ouverture"); if (ouv) ouv.classList.toggle("ms-cache", !s.ouverture);
+  /* « l'éditeur Python est intégré à l'activité » ne se dit que là où on le voit : sur les écrans de prédiction,
+     qui viennent avant lui, l'annonce se tait (17/11/2026) */
+  var edIci = s.n.some(function(n){ return n.matches && (n.matches(".editeur-py") || !!$(".editeur-py", n)); });
+  $$(".activite-en-ligne", panneau).forEach(function(b){
+    var A = b.closest(".activite, .act, .card, .carte, section"); if (!A || !$(".editeur-py", A)) return;
+    b.classList.toggle("ms-sans-outil", !edIci);
+  });
   if (s.ressBtn) s.ressBtn.textContent = ressVue() ? "📎 Masquer la ressource de l'activité" : "📎 Revoir la ressource de l'activité";
   $$(".ms-etq", panneau).forEach(peindre); peindreRetour(s); bilan(s); marquerTrou(s);
   if (ecrans.length > 1 && vide(s)){ ecrans.splice(k, 1); k = Math.min(k, ecrans.length - 1); return montrer(haut); }
