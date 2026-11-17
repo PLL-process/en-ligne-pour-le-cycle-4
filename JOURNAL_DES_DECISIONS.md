@@ -32169,3 +32169,26 @@ Demande de Pascal, 16/11/2026 (« Oui, pose-la dans 3e_C5.1 »), à la décision
 - **La station avant le cyclone** : la figure montre la girouette droite ; le texte du dépliant le dit, pour ne pas
   contredire la situation (la girouette pend).
 - Vérifications : `3e_C5.1/rapport_tests_3e_C5.1-C5.4.md`, section du 16/11/2026.
+
+## 16/11/2026 — Mode mission : la barre d'étapes ne s'éteint plus, et un bouton visible ramène en mission (60 pages)
+
+Pascal, 16/11/2026, sur `4e_C9.1` : le « chenillard » de la progression avait des cases éteintes alors que l'élève avait
+fait le parcours, puis il « reprenait en compte » ; sorti du mode mission, l'élève ne voyait aucun bouton pour y
+revenir. Puis : « L'existence de ces défauts potentiels doit être vérifiée, de façon générale, dans les 3 thèmes,
+afin d'y remédier. »
+
+- **La cause est dans l'outil commun** (`_outils/mode_mission/mission.js`), posé dans les 60 pages de séquence :
+  un écran sans question ne s'allumait que s'il précédait l'écran en cours (revenir en arrière éteignait la suite) ;
+  un écrit sans vérification ne s'allumait jamais ; ce qui était réussi en page complète restait éteint ; le seul
+  bouton pour revenir en mission est en haut de la page.
+- **Mesuré dans les trois thèmes** par un nouveau banc, `_outils/mode_mission/banc_barre.mjs` (B1 retour en arrière
+  éteint, B2 écrit jamais allumé, B3 pas de bouton pour revenir), lancé sur `main` puis sur le correctif : sur `main`,
+  B1 sur 50 pages, B2 sur 12, B3 sur 58 — aucune page sans défaut ; après, 60 / 60 sans défaut. Détail :
+  `docs/audits/AUDIT_BARRE_MISSION_2026-11-16.md`.
+- **Décisions** : un écran dépassé reste allumé (le mode garde l'écran le plus loin atteint, par séance) ; une
+  question s'allume une fois vérifiée, et son trait se **cercle** si elle est répondue mais pas vérifiée ; un écrit
+  s'allume une fois écrit ; ce qui a été réussi en page complète s'allume à l'entrée dans le mode. **La barre ne dit
+  jamais si une réponse en cours est juste** (lu à l'entrée seulement : pas de tâtonnement par la barre).
+- **Le retour** : en page complète, dès que le bouton du haut sort de l'écran, un petit « 🎮 Mode mission » reste en
+  bas à droite, jamais imprimé.
+- Le compteur propre à chaque page (« x / 6 activités validées ») n'est pas joué par ce banc.

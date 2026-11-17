@@ -111,7 +111,7 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   ok(T('13 · rechargement : le mode, l\'écran et les étoiles reviennent'), await p.evaluate(() => document.body.classList.contains('ms')) && /5 sur 5/.test(e.ou) && e.compte === '15 / 18', e.ou.slice(0, 40));
   await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s3"]').click()); await p.waitForTimeout(250);
   const r3 = await rail();
-  ok(T('14 · changer de séance par son onglet : les écrans de la séance 3, le simulateur avec ses questions'), r3.length === 9 && r3.some(x => /simulateur/.test(x)), r3.length + ' écrans');
+  ok(T('14 · changer de séance par son onglet : les écrans de la séance 3, le simulateur avec ses questions'), r3.length === 7 && r3.some(x => /simulateur/.test(x)), r3.length + ' écrans');          // 7 depuis la révision de la séance 3 (9 avant)
   await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s6"]').click()); await p.waitForTimeout(250);
   const r6 = await rail(), ib = r6.findIndex(x => /bilan personnel/i.test(x));
   await p.click(`#msRail [data-k="${ib}"]`); await p.waitForTimeout(200);
@@ -120,7 +120,13 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s3"]').click()); await p.waitForTimeout(250);
   await p.click('#msQuitter'); await p.waitForTimeout(200);
   const sortie = await p.evaluate(() => ({ ms: document.body.classList.contains('ms'), seuls: [...document.querySelectorAll('.ms-seul')].filter(x => x.offsetParent).length,
-    tout: [...document.querySelectorAll('.seance-panel.active fieldset.qcm-groupe, .seance-panel.active .consigne, .seance-panel.active details.correction')].every(x => x.offsetParent), check: !!document.querySelector('.seance-panel.active [data-check]').offsetParent }));
+    /* ce que la mission cachait se montre de nouveau ; une question que la page remplace elle-même par son propre jeu
+       (les cartes à classer de la séance 3, `.cac-questions`) reste cachée par la page, pas par la mission */
+    tout: [...document.querySelectorAll('.seance-panel.active .ms-cache, .seance-panel.active .ms-origine')].filter(x => !x.classList.contains('ms-seul')).every(x => {
+        // caché par la mission ? on ôte ses marques le temps d'une mesure : l'affichage ne doit pas changer
+        const avant = getComputedStyle(x).display, cl = ['ms-cache', 'ms-origine'].filter(c => x.classList.contains(c));
+        x.classList.remove(...cl); const sans = getComputedStyle(x).display; x.classList.add(...cl); return avant === sans; })
+      && [...document.querySelectorAll('.seance-panel.active .consigne, .seance-panel.active details.correction')].every(x => x.offsetParent), check: !!document.querySelector('.seance-panel.active [data-check]').offsetParent }));
   ok(T('15 · retour à la page complète : tout réapparaît, plus rien de la mission à l\'écran'), !sortie.ms && sortie.seuls === 0 && sortie.tout && sortie.check, JSON.stringify(sortie));
   const avantEff = await p.evaluate(() => Object.keys(JSON.parse(localStorage.getItem(Object.keys(localStorage).find(k => k.startsWith('mission:')))).etoiles).length);
   await p.evaluate(() => { localStorage.removeItem(KEY); }); await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);

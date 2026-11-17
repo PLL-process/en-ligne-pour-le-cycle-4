@@ -740,6 +740,8 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
   .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -825,7 +827,14 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
   .ms-bilan p{margin:0}
   @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:none!important;transition:none!important}}
 }
-@media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}
+/* revenir en mission depuis la page complète (16/11/2026) : en bas à droite, quand le bouton du haut n'est plus à l'écran */
+.ms-revenir{display:none;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:1050;align-items:center;gap:6px;
+  min-height:44px;padding:8px 16px;border-radius:22px;border:0;background:var(--energie,#ffb454);color:#2a1800;font:inherit;font-weight:700;
+  box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
+body:not(.ms) .ms-revenir.voir{display:inline-flex}
+.ms-revenir:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
+@media (max-width:420px){.ms-revenir{padding:8px 13px}}
+@media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan,.ms-revenir{display:none!important}}
 /* les animations figées d'un bouton (WCAG 2.2.2) : tout s'arrête là où il en est */
 html.anim-figee *,html.anim-figee *::before,html.anim-figee *::after{animation-play-state:paused!important}
 </style>
@@ -861,7 +870,7 @@ try {
   Storage.prototype.removeItem = function(k){ if (this === window.localStorage && typeof KEY === "string" && k === KEY) marque(); return _rm.apply(this, arguments); };
   Storage.prototype.clear = function(){ if (this === window.localStorage) marque(); return _vide.apply(this, arguments); };
 } catch (e) {}
-function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; }
+function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; if (!M.loin) M.loin = {}; }
 /* `vu` : la page a déjà enregistré quelque chose depuis que la mission tient ses comptes. Sa sauvegarde disparue ensuite,
    c'est « Effacer ma sauvegarde » : on le distingue ainsi d'une page où l'élève n'a encore rien enregistré. */
 function ecrire(){ try { if (typeof KEY === "string" && localStorage.getItem(KEY) !== null) M.vu = true; localStorage.setItem(CLE, JSON.stringify(M)); } catch (e) {} }
@@ -1169,7 +1178,21 @@ function poser(comp, i, valeur){
 }
 
 /* ═══ L'habillage de la page : la barre de la mission, la barre basse, le bouton de la barre d'outils ═══ */
-var tete, pied, bMission, ancre;
+var tete, pied, bMission, ancre, revenir, horsVue = false;
+/* un bouton de la page déjà fixé en bas à droite (« ⬆ haut de page » de Book Train) : le nôtre se pose au-dessus, sans
+   le toucher (cible tactile, WCAG 2.5.8). Mesuré une fois, à la première apparition. */
+var place = false;
+function placer(){
+  place = true; var h = 0;
+  $$("body *").forEach(function(x){
+    if (x === revenir || x.closest(".ms-pied, .ms-tete")) return;
+    var s = getComputedStyle(x); if (s.position !== "fixed") return;
+    var r = parseFloat(s.right), bo = parseFloat(s.bottom); if (isNaN(r) || isNaN(bo) || r > 120 || bo > 120) return;
+    h = Math.max(h, bo + (x.offsetHeight || parseFloat(s.height) || 48));
+  });
+  if (h) revenir.style.bottom = "calc(" + Math.ceil(h + 10) + "px + env(safe-area-inset-bottom,0px))";
+}
+function voirRevenir(){ if (!revenir) return; var v = !actif && horsVue; if (v && !place) placer(); revenir.classList.toggle("voir", v); }
 /* ═══ Figer les animations (WCAG 2.2.2 ; veille du 16/11/2026) : une boucle sans fin (un flux, un moteur qui tourne,
        un buzzer) s'arrête d'un bouton, en mission (⏸ dans la barre) comme en page complète (à côté du bouton de la
        mission). Le choix vaut pour tout le site, sur cet appareil. Le bouton n'apparaît que si la page a une boucle. ═══ */
@@ -1214,6 +1237,15 @@ function chrome(){
   invite.appendChild(bMission);
   if (cadre) cadre.appendChild(invite); else { var b0 = $("#seances") || $(G.panneau); b0.parentNode.insertBefore(invite, b0); }
   bMission.addEventListener("click", entrer);
+  /* Revenir en mission (Pascal, 16/11/2026 : « quand l'élève quitte ce mode, il a du mal à revenir : aucun bouton
+     apparent ») : en page complète, dès que le bouton du haut sort de l'écran, un petit bouton reste en bas à droite. */
+  revenir = el("button", "ms-revenir"); revenir.type = "button"; revenir.id = "msRevenir";
+  revenir.innerHTML = '🎮 <span>Mode mission</span>'; revenir.setAttribute("aria-label", "Revenir au mode mission : un exercice à la fois");
+  /* posé à côté du bouton du haut, AVANT les onglets (il flotte : sa place dans la page ne se voit pas) — jamais après
+     la barre d'onglets, où controle_squelette (D5) le compterait comme un contenu hors de toute séance */
+  invite.appendChild(revenir); revenir.addEventListener("click", entrer);
+  if (window.IntersectionObserver) new IntersectionObserver(function(es){ horsVue = !es[es.length - 1].isIntersecting; voirRevenir(); }).observe(bMission);
+  else horsVue = true;
   tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu"></p><button type="button" class="ms-figer" id="msFiger" hidden data-pause-animations aria-pressed="false" aria-label="Figer les animations">⏸️</button><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
   /* un repère sans hauteur juste avant la barre : collée en haut de l'écran, la barre ne dit plus où elle commence */
   var premier = $(G.panneau); ancre = el("div", "ms-ancre ms-seul"); premier.parentNode.insertBefore(ancre, premier); premier.parentNode.insertBefore(tete, premier);
@@ -1227,13 +1259,32 @@ function chrome(){
   $("#msRail").addEventListener("click", function(ev){ var b = ev.target.closest("[data-k]"); if (b) aller(+b.dataset.k); });
 }
 function parties(seul){ var t = []; Object.keys(parPanneau).forEach(function(id){ if (seul && id !== seul) return; parPanneau[id].forEach(function(e){ if (e.t === "partie" && e.champs.some(function(f){ return cle(f) !== undefined; })) t.push(e); }); }); return t; }
+/* ═══ La barre d'étapes (Pascal, 16/11/2026 : « certaines leds n'étaient pas allumées alors que l'élève avait fait le
+       parcours ») ═══
+   Avant, un écran sans question ne s'allumait que s'il était AVANT l'écran en cours : revenir en arrière éteignait
+   tout ce qui suivait, avancer le rallumait. Et un écran où l'on écrit, sans rien à vérifier ici, ne s'allumait jamais.
+   Désormais : un écran sans question s'allume une fois dépassé, et le reste (M.loin, l'écran le plus loin atteint, par
+   séance) ; une question s'allume une fois vérifiée ; répondue mais pas vérifiée, elle se cercle (« à vérifier ») ;
+   un écrit s'allume une fois écrit. Jamais selon que la réponse est juste : la barre ne trahit rien. */
+function textes(e){ var q = "textarea,input[type=text],input[type=number],input:not([type])", o = []; e.n.forEach(function(n){ if (!n.matches) return; if (n.matches(q)) o.push(n); $$(q, n).forEach(function(x){ if (o.indexOf(x) < 0) o.push(x); }); }); return o; }
+function etatPas(e, j){
+  var passe = j < (M.loin[panneau.id] || 0);
+  if (e.t !== "partie") return passe ? "fait" : "";
+  if (M.fait[e.id]) return "fait";
+  var avec = e.champs.filter(function(f){ return cle(f) !== undefined; });
+  if (avec.length) return avec.every(function(f){ return lireV(f); }) ? "repondu" : "";
+  if (e.dernier && e.check) return passe ? "repondu" : "";          // la vérification de la page attend son appui
+  var ts = textes(e);
+  if (e.champs.length || ts.length) return e.champs.every(function(f){ return lireV(f); }) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
+  return passe ? "fait" : "";
+}
 function barre(){
   var s = ecrans[k];
   $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance()) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
-  $("#msRail").innerHTML = ecrans.map(function(e, j){ var fait = e.t === "partie" ? !!M.fait[e.id] : j < k; return '<li><button type="button" class="ms-pas' + (fait ? " fait" : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (fait ? ", fait" : "") + '"></button></li>'; }).join("");
+  $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? ", fait" : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
@@ -1313,6 +1364,7 @@ function montrer(haut){
   $$(".ms-etq", panneau).forEach(peindre); peindreRetour(s); bilan(s); marquerTrou(s);
   if (ecrans.length > 1 && vide(s)){ ecrans.splice(k, 1); k = Math.min(k, ecrans.length - 1); return montrer(haut); }
   if (!G.onglet){ var bout = k === ecrans.length - 1 && !voisine(1); $$(".page-suivante").forEach(function(x){ x.classList.toggle("ms-montre", bout && !x.closest(G.panneau)); }); }
+  M.loin[panneau.id] = Math.max(M.loin[panneau.id] || 0, k);
   barre(); M.k[panneau.id] = k; ecrire();
   if (haut){ var y = Math.max(0, ancre.getBoundingClientRect().top + window.scrollY - 52); try { window.scrollTo({ top:y, behavior:"instant" }); } catch (e) { window.scrollTo(0, y); } }
 }
@@ -1323,7 +1375,7 @@ function aller(j){
 }
 function suivant(){
   if (k < ecrans.length - 1) return aller(k + 1);
-  var apres = voisine(1); if (apres){ M.k[apres] = 0; ouvrir(apres); }
+  var apres = voisine(1); if (apres){ M.loin[panneau.id] = ecrans.length; M.k[apres] = 0; ouvrir(apres); }
 }
 function synchroniser(){
   panneau = panneauActif(); if (!panneau) return;
@@ -1420,12 +1472,20 @@ function entrer(){
       if (e.t === "partie" && M.fait[e.id]) e.champs.forEach(function(f){ if (cle(f) !== undefined && lireV(f) === cle(f)) marquer(f, true); }); }); });
     construit = true;
   }
-  actif = true; M.on = true; D.body.classList.add("ms");
+  /* ce qui a été réussi en page complète (toutes les réponses justes, ou la vérification de la page passée) compte comme
+     fait : l'élève qui sort du mode, travaille dans la page puis revient retrouve sa barre allumée. Lu à l'entrée
+     seulement, jamais pendant la mission : la barre ne dit pas si une réponse en cours est juste. */
+  Object.keys(parPanneau).forEach(function(id){ parPanneau[id].forEach(function(e){
+    if (e.t !== "partie" || M.fait[e.id]) return;
+    var avec = e.champs.filter(function(f){ return cle(f) !== undefined; });
+    if (avec.length ? avec.every(function(f){ return lireV(f) === cle(f); }) : (e.dernier && e.fb && /(^|\s)ok(\s|$)/.test(e.fb.className))) M.fait[e.id] = true;
+  }); });
+  actif = true; M.on = true; D.body.classList.add("ms"); voirRevenir();
   if (!G.onglet && !panneauActif()) ((M.ici && $(G.panneau + '[id="' + M.ici + '"]')) || $(G.panneau)).classList.add(G.actif);
   synchroniser();
 }
 function sortir(){
-  actif = false; M.on = false; ecrire(); D.body.classList.remove("ms");
+  actif = false; M.on = false; ecrire(); D.body.classList.remove("ms"); voirRevenir();
   var ouv = $("#ouverture"); if (ouv) ouv.classList.remove("ms-cache");
   bMission.focus({ preventScroll:true }); bMission.scrollIntoView({ block:"center" });
 }
@@ -1444,6 +1504,7 @@ D.addEventListener("click", function(ev){
     else { var s = ecrans[k]; if (s.retour) dire(s, "", "Choisis d'abord une étiquette dans la réserve, puis touche cette case."); }
     peindre(co); }
 });
+D.addEventListener("input", function(){ if (actif && ecrans[k] && ecrans[k].t === "partie") barre(); });
 D.addEventListener("change", function(ev){      // une réponse changée à la main n'est plus ni juste ni fausse : elle se revérifie
   if (!actif || !ev.isTrusted) return; var f = ev.target.closest && ev.target.closest(CHAMP);
   if (f && !f.classList.contains("ms-origine")) marquer(f, null); });
@@ -1481,7 +1542,7 @@ function init(){
   /* « Effacer ma sauvegarde » : la page retire sa clé (ou vide tout) puis se recharge. Certaines pages réécrivent leur clé
      dès le chargement, avant ce script : le geste d'effacer est donc repéré au moment où il a lieu (marque de session). */
   var efface = false; try { efface = sessionStorage.getItem("mission:efface") === "1"; sessionStorage.removeItem("mission:efface"); } catch (e) {}
-  try { if (efface || (typeof KEY === "string" && localStorage.getItem(KEY) === null && (M.vu || Object.keys(M.etoiles).length || Object.keys(M.fait).length || Object.keys(M.k).length || Object.keys(M.erreurs).length))){ M = { v:1, on:((efface || M.vu) ? DEFAUT : M.on), k:{}, essais:{}, erreurs:{}, etoiles:{}, fait:{} }; ecrire(); } } catch (e) {}
+  try { if (efface || (typeof KEY === "string" && localStorage.getItem(KEY) === null && (M.vu || Object.keys(M.etoiles).length || Object.keys(M.fait).length || Object.keys(M.k).length || Object.keys(M.erreurs).length))){ M = { v:1, on:((efface || M.vu) ? DEFAUT : M.on), k:{}, essais:{}, erreurs:{}, etoiles:{}, fait:{}, loin:{} }; ecrire(); } } catch (e) {}
   chrome();
   /* la séance change (onglet, bouton « séance suivante », lien vers une ancre) : le mode suit le panneau ouvert */
   function suivre(){ if (actif && panneauActif() !== panneau) synchroniser(); }

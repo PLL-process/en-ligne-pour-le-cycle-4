@@ -44,6 +44,8 @@
   .ms-pas{width:100%;height:26px;border:0;background:none;padding:10px 0;cursor:pointer;display:block}
   .ms-pas::before{content:"";display:block;height:6px;border-radius:3px;background:var(--border,#274a8a)}
   .ms-pas.fait::before{background:var(--ok,#81fba1)}
+  /* répondu, pas encore vérifié : le trait se cercle (16/11/2026) */
+  .ms-pas.repondu::before{background:transparent;box-shadow:inset 0 0 0 2px var(--ok,#81fba1)}
   .ms-pas.ici::before{background:var(--hl,#61dafb);height:8px;margin-top:-1px}
   .ms-pas:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:1px;border-radius:6px}
 
@@ -129,6 +131,13 @@
   .ms-bilan p{margin:0}
   @media (prefers-reduced-motion:reduce){.ms-tete *,.ms-etq *,.ms-gain,body.ms .seance-panel.active>section.card,body.ms section.panneau.actif>div.carte{animation:none!important;transition:none!important}}
 }
-@media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan{display:none!important}}
+/* revenir en mission depuis la page complète (16/11/2026) : en bas à droite, quand le bouton du haut n'est plus à l'écran */
+.ms-revenir{display:none;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:1050;align-items:center;gap:6px;
+  min-height:44px;padding:8px 16px;border-radius:22px;border:0;background:var(--energie,#ffb454);color:#2a1800;font:inherit;font-weight:700;
+  box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
+body:not(.ms) .ms-revenir.voir{display:inline-flex}
+.ms-revenir:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
+@media (max-width:420px){.ms-revenir{padding:8px 13px}}
+@media print{.ms-seul,.ms-tete,.ms-pied,.ms-invite,.ms-ressbtn,.ms-retour,.ms-bilan,.ms-revenir{display:none!important}}
 /* les animations figées d'un bouton (WCAG 2.2.2) : tout s'arrête là où il en est */
 html.anim-figee *,html.anim-figee *::before,html.anim-figee *::after{animation-play-state:paused!important}
