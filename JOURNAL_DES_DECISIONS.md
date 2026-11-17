@@ -32317,3 +32317,23 @@ portent l'éditeur (`3e_C9.1`, `5e_C9.1`, `4e_C9.1`, `3e_C7.1`, le mini-projet d
   jusqu'à « Je retiens » ;
 - l'annonce de l'éditeur intégré se tait sur les écrans qui ne le montrent pas.
 - Un banc, `_outils/mode_mission/banc_editeur.mjs` : 68 refus sur `main`, 0 après.
+
+## 17/11/2026 — Les cinq conversions, lot 4e : relier
+
+Deuxième étage de la progression (`docs/specifications/progression-cinq-conversions-cycle4.md`) : en 4e, l'élève
+**relie** un besoin au constituant qui va dans le bloc CONVERTIR (SFC 11, 4e).
+- **Book Train (`4e_C4.2`)** : une piqûre de rappel « Quel constituant dans CONVERTIR ? », juste après l'activité 2.1.
+  Cinq besoins tirés du lieu (faire avancer le wagonnet, éclairer le quai, chauffer un peu l'armoire des livres
+  anciens, produire du courant avec une éolienne sur le toit, ouvrir la porte du bus à l'air comprimé), puis « lequel
+  fait le chemin inverse du moteur ? ». Six questions notées (zone `exo21r`), un pourquoi par mauvaise proposition ; le
+  tableau de 5e en aide repliée, pour l'élève qui ne l'a jamais vu ; la correction complète et le tableau. **Replié
+  sous son titre** : la séance 2 dépassait déjà les 1 200 mots visibles sur `main` (1 777) ; ouvert, il en ajoutait 246.
+  Replié, la séance passe de 1 777 à 1 800 mots.
+- **`4e_C6.1`** : le radiateur à thermostat, en défi du Bonus (les deux séances font déjà 55 min) — la conversion
+  (électrique → thermique, la seule dont la chaleur est le but), puis l'hystérésis du thermostat (19 / 21 °C), reliée
+  à la pompe qui « battait » autour de 40 % ; corrigé complet.
+- `_outils/cinq_conversions/generer.py --complet` : un lot qui ne pose pas la question muette ne reçoit que le dessin
+  complet (sinon le dessin muet resterait une image que rien n'affiche).
+- Vérifications : Book Train 39 / 39 (le banc compte les 6 nouveaux groupes et valide la zone `exo21r`) et 38 / 38 ;
+  `4e_C6.1` 29 / 29 et 34 / 34 ; mode mission joué sur les deux pages, aucun refus ; squelette, aération, liens, médias,
+  règles visibles, mode essentiel : verts.
