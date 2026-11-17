@@ -1,6 +1,6 @@
 # Les cinq conversions d'énergie : la progression sur le cycle 4
 
-Proposition du 17/11/2026, à valider par Pascal. Demande de Pascal, le 17/11/2026 : « Les cinq conversions comme
+Proposition du 17/11/2026, validée par Pascal le 17/11/2026 (PR #754 fusionnée, « carte blanche »). Demande de Pascal, le 17/11/2026 : « Les cinq conversions comme
 connaissance, la mise en relation de ces apprentissages devrait être planifiée dans le cycle 4. »
 
 ## Ce que dit le programme 2024
@@ -56,11 +56,13 @@ Ailleurs, le radiateur et le vérin ne sont jamais rencontrés en situation, et 
 ## Ce que je propose, étage par étage
 
 ### 5e : nommer (SFC 11, 5e)
-1. **Un exercice « Ce qui entre, ce qui sort »** dans le lampadaire (`5e_C4.1`), la séquence qui porte SFC 11 en 5e.
+1. ✅ *(17/11/2026)* **Un exercice « Ce qui entre, ce qui sort »** dans le lampadaire (`5e_C4.1`), la séquence qui porte SFC 11 en 5e.
+   Fait : partie d) de l'activité 2, cinq questions à choix, le dessin muet au-dessus, le dessin complet dans la correction.
    - Cinq photos : moteur, lampe, radiateur, génératrice (dynamo de vélo), vérin (porte de bus).
    - Pour chacune, deux menus déroulants : l'énergie qui entre, l'énergie qui sort. Une case à cocher : « une partie se perd en chaleur ».
    - Correction complète, avec un bouton, en mode page et en mode mission.
-2. **La dynamo de `5e_C7.4` sort du Bonus** : une question dans l'activité principale (mécanique → électrique).
+2. ✅ *(17/11/2026)* **La dynamo de `5e_C7.4` sort du Bonus** : une question dans l'activité principale (mécanique → électrique).
+   Fait : la lampe à manivelle, dans l'activité 1.
 3. **Le tableau** reste dans la synthèse de `5e_C7.4`. Celle du lampadaire le recevra quand elle tiendra sur deux pages.
 
 ### 4e : relier (SFC 11, 4e)
@@ -83,8 +85,10 @@ Ailleurs, le radiateur et le vérin ne sont jamais rencontrés en situation, et 
 ### Sur les trois niveaux
 9. **Le QCM de chaque niveau** remplace une question existante par une question sur les conversions : le nombre de
    questions ne change pas (30 questions fixes).
-10. **Le même tableau à cinq cases**, dessiné une seule fois en SVG dans `_ressources-communes/`, sert dans les
-    synthèses et dans les exercices. L'élève reconnaît l'image d'une année sur l'autre.
+10. ✅ *(17/11/2026)* **Le même tableau à cinq cases**, dessiné une seule fois, sert dans les synthèses et dans les
+    exercices. L'élève reconnaît l'image d'une année sur l'autre. Fait : `_outils/cinq_conversions/generer.py` dessine
+    les deux images (muette et complète) et les pose, à l'identique, dans le dossier `Images/` de chaque lot qui s'en
+    sert (`--verifier` refuse une copie qui a divergé).
 
 ## Ordre de réalisation proposé
 

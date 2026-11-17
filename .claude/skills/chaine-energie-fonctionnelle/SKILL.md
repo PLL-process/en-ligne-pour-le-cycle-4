@@ -201,3 +201,9 @@ Chacune perd un peu d'énergie en chaleur, sauf le radiateur, dont la chaleur es
 (4e, SFC 11 en 4e_C4.2), cases avec leur raison ; la synthèse de `5e_C7.4` (5e, CCRI 14), cases courtes, à la fin de la
 partie 4 (les pertes) pour tenir sur deux pages. Pas dans la synthèse du lampadaire (`5e_C4.1`, SFC 11 en 5e) : elle
 s'imprime déjà sur trois pages.
+
+**Le dessin commun (17/11/2026)** : `_outils/cinq_conversions/generer.py <dossier Images>…` dessine
+`cinq_constituants_muet.svg` (la question : cinq colonnes, ce qui entre et ce qui sort en « ? ») et
+`cinq_conversions.svg` (la correction, complète, avec la chaleur perdue). Jamais redessiné à la main : une séquence qui
+s'en sert le reçoit par le générateur, et `--verifier` refuse une copie qui a divergé. La progression sur les trois
+niveaux : `docs/specifications/progression-cinq-conversions-cycle4.md`.

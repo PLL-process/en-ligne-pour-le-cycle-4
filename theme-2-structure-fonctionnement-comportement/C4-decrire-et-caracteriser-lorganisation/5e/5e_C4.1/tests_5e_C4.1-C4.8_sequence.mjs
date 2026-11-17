@@ -185,12 +185,22 @@ ok('7 · act. 1 validée avec les 9 réponses, la justification et l\'exercice F
 await remplir(2);
 await valider(2);
 ok('8 · act. 2 refusée sans la chaîne fléchée au cahier',
-   !/11 \/ 11 réponses correctes. (Excellent|Bravo|Très bien)/.test(await retour(2)),
+   !/16 \/ 16 réponses correctes. (Excellent|Bravo|Très bien)/.test(await retour(2)),
    (await retour(2)).slice(0, 80));
 await p.fill('#e2_cahier', 'lumineuse → électrique → chimique → électrique → lumineuse');
 await valider(2);
-ok('9 · act. 2 validée (11/11) une fois la chaîne écrite', /11 \/ 11/.test(await retour(2)),
+/* 17/11/2026 : la partie d) « Les cinq conversions à connaître » (SFC 11) ajoute 5 questions : 11 → 16 */
+ok('9 · act. 2 validée (16/16) une fois la chaîne écrite', /16 \/ 16/.test(await retour(2)),
    (await retour(2)).slice(0, 70));
+
+ok('9 bis · d) les cinq conversions : le schéma muet sous les questions, le schéma complet dans la correction',
+   await p.evaluate(() => {
+     const muet = document.querySelector('figure.schema-sous-les-yeux object[data="Images/cinq_constituants_muet.svg"]');
+     const q = document.getElementById('e2_c5');
+     const corr = [...document.querySelectorAll('details.correction')].find(d => d.querySelector('object[data="Images/cinq_conversions.svg"]'));
+     return !!muet && !!q && !!corr && muet.closest('section') === q.closest('section') && corr.closest('section') === q.closest('section')
+       && document.querySelectorAll('#e2_c4 input[data-pourquoi]').length === 3;
+   }), 'figure muette, 5 questions, 3 pourquoi par question, correction illustrée');
 
 /* ── activité 3 : LE VERROU EXPÉRIENTIEL ─────────────────────────────────── */
 await remplir(3);
