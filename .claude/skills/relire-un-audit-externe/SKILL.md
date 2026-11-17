@@ -32,6 +32,11 @@ Une ligne par remarque : où (page, bloc, question), ce qu'elle affirme, ce qu'e
 - **L'historique** : `git log -S "<texte cité>" -- <fichier>` et le journal (`grep` du mot clé) — le constat a-t-il été
   vrai, et quand a-t-il été corrigé ?
 - **Les outils du dépôt** qui mesurent déjà ce constat (skill `audit-double-regard`, § 0) — leur résultat fait foi.
+- **Un constat lu dans le code se rejoue** (audit de `3e_C4.1`, 17/11/2026 : l'auditeur avait lu `CHECKS` sans rien
+  cliquer). « Une justification de mots-clés passe », « l'ordre des essais n'est pas vérifié », « une réponse changée
+  reste validée » : on le fait au navigateur, on voit le défaut, puis on l'écrit en cas de banc qui échoue avant la
+  correction et passe après (`tests_3e_C4.1-C4.2.mjs`, tests 10 bis et 10 ter). Les validations : skill
+  `validations-qui-disent-vrai` ; les questions qui soufflent : skill `propositions-sans-indice`.
 
 ## 3. Classer
 
@@ -51,7 +56,13 @@ voisin avant de clore.
 - Corriger les ✅ (et les voisins trouvés), lot par lot, avec leurs bancs.
 - Retenir les 💡 que Pascal valide ; une idée qui vaut pour tout le site devient une règle d'or (journal, tableau de
   tête, `registre_regles.py --ecrire`), un outil de mesure, et un skill — exemple du 17/11 : n°337, n°338, n°339.
-- Mesurer le même défaut sur tout le dépôt (n°293) et le dire, même si on ne le corrige pas tout de suite.
+- Mesurer le même défaut sur tout le dépôt (n°293) et le dire, même si on ne le corrige pas tout de suite. Un audit
+  d'une page parle souvent d'un gabarit : celui de `3e_C4.1` a fait trouver 34 pages aux onglets sans clavier
+  (`onglets_clavier.py`), 6 pages qui promettaient le hors-ligne, 14 seuils codés sous le seuil annoncé dans 9
+  séquences (`controle_validations.py`).
+- Relire aussi ce que la correction elle-même a pu casser : `controle_axe.mjs` sur tout le site après une passe qui
+  touche l'accessibilité (le 17/11, l'agrandisseur annoncé « bouton » sur des schémas porteurs de texte a fait 24
+  reculs graves, repris avant la fusion).
 
 ## 5. Répondre à Pascal
 

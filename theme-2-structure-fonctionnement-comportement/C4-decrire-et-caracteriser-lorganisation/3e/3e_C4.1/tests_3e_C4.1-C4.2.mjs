@@ -128,10 +128,11 @@ const champs = Object.values(PLAN).reduce(
 ok(`2 bis · ${champs} champs extraits de la page (aucune réponse recopiée ici)`,
    Object.keys(PLAN).length === 6 && champs >= 30, String(champs));
 
-/* la seule prose de ce fichier : elle croise deux contraintes, comme la page l'exige */
+/* la seule prose de ce fichier : elle nomme le matériau et le procédé du mât et croise deux contraintes, comme la
+   page l'exige depuis l'audit du 17/11/2026 */
 const PROSE = {
-  j4: "Le mât doit résister au vent cyclonique, et le sel des embruns impose des métaux "
-      + "galvanisés ; on choisit aussi des matériaux recyclables.",
+  j4: "Le mât est en acier galvanisé à chaud, mis en forme par laminage et soudure, parce qu'il doit résister "
+      + "au vent cyclonique et que le sel des embruns ronge l'acier nu ; l'acier se recycle.",
 };
 
 const ONGLETS = await p.$$eval('.seance-tab', l => l.map(e => e.dataset.panel));
@@ -212,6 +213,20 @@ ok('9 · activité 3 (contraintes du site) validée 5/5',
 ok('10 · activité 4 (matériaux et procédés) validée 8/8 avec justification croisée',
    /8 \/ 8/.test(await retour(4)) && !/croiser AU MOINS deux/.test(await retour(4)),
    (await retour(4)).slice(0, 70));
+/* audit du 17/11/2026 : une suite de mots-clés ne passe plus ; changer une réponse validée la remet « à vérifier » */
+const juste = await p.$eval('#j4', e => e.value);
+await p.$eval('#j4', e => { e.value = 'vent sel vent sel vent sel vent sel vent sel'; e.dispatchEvent(new Event('input', { bubbles: true })); });
+await valider(4);
+ok('10 bis · une suite de mots-clés (« vent sel vent sel… ») ne valide pas la justification',
+   !(await p.evaluate(() => window.__valid[4])), (await retour(4)).slice(0, 90));
+await p.$eval('#j4', (e, v) => { e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }, juste);
+await valider(4);
+const avantModif = await p.evaluate(() => window.__valid[4]);
+await p.$eval('#j4', e => { e.value += ' '; e.dispatchEvent(new Event('input', { bubbles: true })); });
+ok('10 ter · une réponse changée après la vérification remet l\'activité « à vérifier »',
+   avantModif === true && !(await p.evaluate(() => window.__valid[4])) && /vérifie de nouveau/.test(await retour(4)),
+   (await retour(4)).slice(0, 80));
+await valider(4);
 ok('11 · activité 5 (borne du stade) et le calcul du fusible validés',
    /5 \/ 5/.test(await retour(5)) && /3 \/ 3/.test(await retour(6)),
    (await retour(5)).slice(0, 26) + ' | ' + (await retour(6)).slice(0, 26));
