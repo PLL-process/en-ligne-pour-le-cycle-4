@@ -15,7 +15,9 @@ CE QUE FAIT L'OUTIL
                                   juste après ses badges ; une page sans ce volet est refusée (souvent une page
                                   engendrée : la carte se pose dans son générateur). Données :
                                   {"apprendre": [lignes], "savoir_faire": [lignes], "reussir": [lignes]} — une idée par
-                                  ligne, HTML court permis (b, &nbsp;, « »). Pose aussi le style, une fois.
+                                  ligne, HTML court permis (b, &nbsp;, « »). Pose aussi le style, une fois : la
+                                  carte porte son propre cadre (largeur, fond, bordure), pour les gabarits anciens
+                                  dont la classe `card` n'a pas de style à l'écran ; un style plus ancien est remplacé.
   --verifier <page> <données.json> dit si la carte de la page est celle des données (0 / 1).
   --etat [--strict] [racine]      mesure les séquences du dépôt (pages `sequence…` qui portent le mode mission) : la
                                   carte est là, en tête de l'ouverture (avant la barre d'onglets), avec ses trois
@@ -38,9 +40,12 @@ RUBRIQUES = (("apprendre", "📚 Ce que tu vas apprendre"), ("savoir_faire", "�
              ("reussir", "✅ Comment réussir"))
 MAX_MOTS = 40
 CSS = '''/* avant de commencer, trois lignes : apprendre, savoir faire, réussir (règle d'or n°337) */
+section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizing:border-box;padding:14px 18px;border-radius:12px;border:1px solid var(--border,rgba(127,127,127,.35));background:var(--panel,rgba(127,127,127,.08))}
 .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
 .trois-lignes-liste li{border-left:3px solid var(--head,#61dafb);padding:2px 0 2px 12px;line-height:1.55}
 '''
+# le style d'une pose plus ancienne : il est remplacé, jamais doublé
+CSS_RE = re.compile(r"/\* avant de commencer, trois lignes[^\n]*\*/\n(?:[^\n]*trois-lignes[^\n]*\n)+")
 
 
 class Refus(Exception):
@@ -81,7 +86,9 @@ def poser(s: str, d: dict) -> str:
             # la carte se pose dans son générateur, pas ici.
             raise Refus("pas de volet #ouverture (n°311) : page engendrée ou ancienne — poser la carte dans son générateur")
         s = s[:pos] + c + s[pos:]
-    if ".trois-lignes-liste{" not in s:
+    if CSS_RE.search(s):
+        s = CSS_RE.sub(lambda _: CSS, s, count=1)
+    elif ".trois-lignes-liste{" not in s:
         i = s.find("</style>")
         if i < 0:
             raise Refus("aucune feuille de style dans la page")
