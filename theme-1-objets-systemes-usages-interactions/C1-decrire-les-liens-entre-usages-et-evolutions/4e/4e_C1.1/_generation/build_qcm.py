@@ -29,6 +29,9 @@ import re
 import sys
 
 import q as banque
+_sys_qa = __import__("sys")
+_sys_qa.path.insert(0, next(str(d / "_outils" / "qcm_aides") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "qcm_aides" / "poser.py").is_file()))
+from poser import poser_si_donnees as _poser_aides  # noqa: E402  aides et pièges du lot (n°339)
 
 GRAINE = 404
 
@@ -222,6 +225,7 @@ def construire(gabarit: str, sortie: str) -> None:
 
     # Écriture seulement une fois tout le travail fait : ouvrir en 'w' tronque
     # immédiatement, et une erreur survenue après ce point détruirait le fichier.
+    s = _poser_aides(s, sortie)   # les aides et les pièges du lot (n°339) : sans cela, régénérer les effacerait
     open(sortie, "w", encoding="utf-8").write(s)
     print("QCM écrit : %s (%d questions, %d illustrées)"
           % (sortie, len(banque.Q), sum(1 for x in banque.Q if "img" in x)))

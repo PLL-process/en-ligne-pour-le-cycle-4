@@ -208,6 +208,19 @@ def appliquer(s: str, d: dict) -> str:
     return s
 
 
+def poser_si_donnees(s: str, sortie: str) -> str:
+    """Pour un générateur de QCM (`_generation/build_qcm.py`), juste avant d'écrire sa page : si le dossier du lot porte
+    un `qcm_aides_*.json` dont « qcm » est le nom de cette page, pose les aides et les pièges ; sinon rend `s` tel quel.
+    Sans cet appel, une régénération effacerait les aides (n°339)."""
+    dossier, nom = os.path.dirname(os.path.abspath(sortie)), os.path.basename(sortie)
+    for f in sorted(os.listdir(dossier)):
+        if f.startswith("qcm_aides_") and f.endswith(".json"):
+            d = json.load(open(os.path.join(dossier, f), encoding="utf-8"))
+            if d.get("qcm") == nom:
+                return appliquer(s, d)
+    return s
+
+
 def etat(racine: str, strict: bool) -> int:
     lus = 0
     manques = []

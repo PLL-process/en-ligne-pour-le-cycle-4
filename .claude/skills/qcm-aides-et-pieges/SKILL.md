@@ -24,7 +24,8 @@ distinction ». Règle d'or n°339. Pilote : `5e_C2.1` (#762). Les 72 QCM du gab
 - **Avant de commencer** : la carte en trois lignes (n°337, skill `avant-de-commencer-trois-lignes`).
 
 Aucun champ neuf dans les questions : le moteur se sert de `d` et de `ret`, que chaque QCM porte déjà. Un `d` vide ou
-creux (« Ce n'est pas la bonne réponse ») fait un mauvais indice : le réécrire d'abord (skill `qcm-html-accessible`).
+creux (« Ce n'est pas la bonne réponse », « Il mesure une tension. ») fait un mauvais indice : le réécrire d'abord, en
+disant pourquoi CETTE proposition ne répond pas à CETTE question (skill `qcm-html-accessible`).
 
 ## Définir les pièges
 
@@ -64,11 +65,17 @@ python3 _outils/qcm_aides/poser.py <qcm> <lot>/qcm_aides_<lot>.json --verifier  
 python3 _outils/qcm_aides/poser.py --etat [--strict]                            # le dépôt
 ```
 
-Un lot qui a un générateur (`_generation/build_qcm.py`) l'appelle après ses remplacements (exemple :
-`5e_C2.1/_generation/apports_audit.py`), sinon une régénération effacerait les aides.
+Un lot qui a un générateur (`_generation/build_qcm.py`) repose les aides juste avant d'écrire sa page, sinon une
+régénération les effacerait : `s = _poser_aides(s, sortie)` (`poser.poser_si_donnees`, qui trouve le
+`qcm_aides_*.json` du dossier dont « qcm » est la page), importé en tête du générateur — modèle :
+`3e_C1.1/_generation/build_qcm.py` (17/11/2026). Le pilote `5e_C2.1` passe par `apports_audit.py`.
 
 ## Vérifier
 
+- `node _outils/qcm_aides/banc_aides.mjs [qcm…]` (sans argument : chaque QCM qui porte les aides) joue chaque
+  question fausse à 390 px — A1 indice sans la réponse, A2 la règle, A3 la correction complète, A4 « Réviser ce
+  piège », A5 le bilan et le mode piège, A6 le compte sauvegardé, A7 la carte et zéro erreur JavaScript. Ce qu'il
+  vérifie, à la main, sur un QCM au moins par vague :
 - Dans Chromium, toutes les questions : réponse fausse → indice sans la bonne réponse (ni dite, ni en vert) → indice 2
   → correction complète ; un piège sous chaque indice (sauf la question d'ouverture) ; le bilan liste les pièges ; le
   bouton ouvre le mode piège ; la sauvegarde garde le compte des erreurs par piège ; aucune erreur JavaScript.

@@ -39,7 +39,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 ima
 | 3e | 3e_C4.7 | Internet jusqu'à Sainte-Luce | 30 | 0 |
 | 3e | 3e_C4.8 | Le pont numérique Martinique → New York | 30 | 6 |
 | 4e | 4e_C4.1 | Le jardin connecté | 30 | 4 |
-| 4e | 4e_C4.1_book-train | SOS serre | 30 | 4 |
+| 4e | 4e_C4.1_book-train | Un Book Train pour la Schœlcher | 30 | 4 |
 | 4e | 4e_C4.7 | SOS serre | 30 | 7 |
 | 4e | 4e_C4.7 | Thème 2 — 4e · QCM 2/3 : adresser et identifier sur un réseau | 30 | 0 |
 | 4e | 4e_C4.7 | Thème 2 — 4e · QCM 3/3 : Zigbee et les liaisons sans fil | 30 | 3 |
@@ -50,7 +50,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 ima
 | 4e | 4e_C5.1 | SOS jardin connecté | 30 | 4 |
 | 5e | 5e_C5.1 | SOS panne — dépanner le lampadaire | 30 | 3 |
 | 3e | 3e_C6.1 | Programmer l'alerte | 30 | 6 |
-| 3e | 3e_C6.2 | SOS serre | 30 | 3 |
+| 3e | 3e_C6.2 | L’auto-test de la station | 30 | 3 |
 | 4e | 4e_C6.1 | Ajuster le programme du jardin | 30 | 3 |
 | 4e | 4e_C6.2 | Le jardin connecté : arrosage automatique | 30 | 0 |
 | 4e | 4e_C6.2 | l'éclairage automatique | 30 | 0 |
