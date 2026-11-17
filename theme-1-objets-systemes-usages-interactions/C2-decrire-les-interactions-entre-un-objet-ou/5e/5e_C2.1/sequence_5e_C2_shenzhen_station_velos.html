@@ -554,6 +554,9 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
 .question-seance{margin:4px 0 10px;color:var(--warn);font-weight:600}
 .duree-temps{color:var(--sub);font-weight:400;font-size:.9em}
 .cahier{border-left:3px solid var(--head);padding-left:11px}
+/* avant de commencer, trois lignes : apprendre, savoir faire, réussir (17/11/2026) */
+.trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+.trois-lignes-liste li{border-left:3px solid var(--head);padding:2px 0 2px 12px;line-height:1.55}
 /* la forme vide de la bête à cornes, sur l'écran d'ouverture de l'activité 1 en mode mission (17/11/2026) */
 .bac-ouverture{max-width:520px;margin:12px auto 10px}
 .bac-ouverture svg{display:block;width:100%;height:auto;border-radius:10px}
@@ -1630,6 +1633,24 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">D1.3 · D2 · D4 · D5</span>
   <span class="badge theme">4 séances de 55 min</span>
 </div>
+<!-- Avant de commencer, trois lignes (Pascal, 17/11/2026 : « avant de commencer, et dans toutes les séquences, l'élève
+     devrait lire trois informations très simples : ce qu'il va apprendre, ce qu'il doit savoir faire et comment
+     réussir »). Dans la langue de l'élève ; le référentiel, replié juste dessous, garde les mots du programme. -->
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas apprendre</b>
+    <br>Tout ce qui entoure un objet et agit sur lui&nbsp;: ses <b>interacteurs</b>.
+    <br>Et pourquoi ils expliquent la forme de l'objet.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Faire la liste des interacteurs d'un objet, pas seulement les personnes.
+    <br>Expliquer un détail de sa forme&nbsp;: «&nbsp;il est ainsi parce que…&nbsp;».</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Pense aux quatre familles&nbsp;: les usagers, les données, les autres objets, l'environnement.
+    <br>Devant chaque détail, demande-toi&nbsp;: «&nbsp;pourquoi pas autrement&nbsp;?&nbsp;».
+    <br>Après chaque exercice, compare avec la correction.</li>
+  </ul>
+</section>
 <!-- n°298 amendée (07/11/2026) : le référentiel revient, replié, copie du bloc referentiel-eleve de la synthèse professeur -->
 <details class="referentiel-replie">
   <summary>📚 Le référentiel de la séquence — en toutes lettres</summary>
@@ -1753,6 +1774,26 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 </fieldset>
   <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
   <p class="feedback" id="fb0" role="status"></p>
+  <details class="correction correction-billet">
+  <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
+  <ol class="corr-billet">
+    <li><b>Qu'est-ce qu'un <b>objet technique</b> ?</b>
+    <br>✅ <b>un objet fabriqué pour répondre à un besoin</b>
+    <br>✘ «&nbsp;un objet qui contient de l'électronique, ou un moteur&nbsp;»&nbsp;: Une chaise ou un stylo sont des objets techniques, sans électronique ni moteur.
+    <br>✘ «&nbsp;un objet vendu dans un magasin&nbsp;»&nbsp;: Être vendu ne dit pas pourquoi l'objet a été fabriqué.
+    <br>✘ «&nbsp;tout objet que l'on peut toucher&nbsp;»&nbsp;: Une pierre se touche, mais personne ne l'a fabriquée.</li>
+    <li><b>À quoi reconnaît-on une <b>fonction technique</b> ?</b>
+    <br>✅ <b>un verbe à l'infinitif : ce que l'objet doit FAIRE, pas par quel moyen</b>
+    <br>✘ «&nbsp;le nom de la marque de l'objet&nbsp;»&nbsp;: Une marque dit qui vend l'objet, pas ce qu'il doit faire.
+    <br>✘ «&nbsp;un verbe à l'infinitif : elle dit à quoi l'objet SERT pour son usager&nbsp;»&nbsp;: Dire à quoi l'objet sert pour l'usager, c'est la fonction d'usage.
+    <br>✘ «&nbsp;le nom du composant qui la réalise&nbsp;»&nbsp;: Un composant est une solution technique : il dit par quel moyen.</li>
+    <li><b>Qu'est-ce que l'<b>environnement</b> d'un objet technique ?</b>
+    <br>✅ <b>tout ce qui l'entoure et agit sur lui ou subit son action</b>
+    <br>✘ «&nbsp;son emballage d'origine&nbsp;»&nbsp;: L'emballage disparaît après l'achat : il n'agit pas sur l'objet pendant son usage.
+    <br>✘ «&nbsp;la nature seulement : les arbres, les animaux, l'eau, l'air&nbsp;»&nbsp;: Les personnes et les autres objets autour de lui comptent aussi.
+    <br>✘ «&nbsp;la pièce dans laquelle il est rangé&nbsp;»&nbsp;: Le lieu compte, mais ce qui agit sur l'objet va bien au-delà.</li>
+  </ol>
+</details>
   <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
     <p>Un <b>objet technique</b> est fabriqué pour répondre à un <b>besoin</b>. <br>Une <b>fonction
     technique</b> dit <b>ce que l'objet doit faire</b> pour rendre ce service&nbsp;: elle commence
@@ -2538,6 +2579,43 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   déplace le problème ailleurs. Et changer de lieu, c'est changer d'interacteurs.</p>
 </section>
 
+<!-- Le billet de sortie, seul et sans aide (règle n°330 ; audit du 17/11/2026 : « une compétence ne se limite pas à
+     reconnaître une réponse » — la preuve, c'est un objet nouveau, traité seul, sans document ni aide). -->
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="color:var(--sub);font-size:.8em">(~5 min)</span></h2>
+  <p>Un objet que tu n'as pas encore étudié&nbsp;: <b>l'abribus devant le collège</b>.
+  <br>Chacun pour soi, sans aide à ouvrir&nbsp;: ce billet dit au professeur, et à toi, ce qui est acquis.</p>
+  <div class="assoc">
+    <label for="bs_inter">1. Cite <b>quatre interacteurs</b> de l'abribus, dans <b>trois familles</b> différentes. Deux au moins ne sont pas des personnes.</label>
+    <textarea id="bs_inter" data-save rows="3"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;L'abribus est en relation avec ____ (famille&nbsp;: ____).&nbsp;»</li>
+    <li>«&nbsp;Il est aussi en relation avec ____, qui n'est pas une personne (famille&nbsp;: ____).&nbsp;»</li></ul></details>
+  <div class="assoc">
+    <label for="bs_choix">2. Son toit dépasse largement devant le banc. Pourquoi pas un toit juste au-dessus du banc&nbsp;? Dis quel interacteur ce choix sert.</label>
+    <textarea id="bs_choix" data-save rows="3"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Le toit dépasse parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce choix sert ____, qui est un interacteur de la famille ____.&nbsp;»</li></ul></details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <p><b>1. Des interacteurs possibles, rangés par famille.</b>
+    <br>Les usagers&nbsp;: les élèves qui attendent, le chauffeur du bus.
+    <br>Les données&nbsp;: les horaires affichés, le numéro de la ligne.
+    <br>Les autres objets&nbsp;: le bus, les cartables posés sur le banc.
+    <br>L'environnement&nbsp;: la pluie, le soleil, le vent, l'air salin.
+    <br><b>Critère</b>&nbsp;: quatre interacteurs, trois familles, au moins deux qui ne sont pas des personnes.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>Le toit dépasse pour abriter aussi ceux qui attendent debout, et parce que la pluie tombe en biais quand il y a du vent.
+    <br>Interacteurs servis&nbsp;: la pluie et le vent (l'environnement), et les élèves qui attendent (les usagers).
+    <br><b>Critère</b>&nbsp;: ta phrase dit à quoi sert le détail, «&nbsp;il est ainsi parce que…&nbsp;», et nomme l'interacteur.</p>
+    <p>✘ «&nbsp;Le toit est grand&nbsp;» décrit l'objet sans l'expliquer.
+    <br>✘ «&nbsp;Pour que ce soit joli&nbsp;» ne nomme aucun interacteur.</p>
+  </details>
+</section>
+
 <section class="card approfondissement">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
   <p><b>1.</b> Recense les interacteurs d'un objet du collège que tu utilises tous les jours — un
@@ -2554,6 +2632,32 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <li>«&nbsp;Ses interacteurs qui ne sont pas des personnes&nbsp;: ____, ____, ____.&nbsp;»</li>
       <li>«&nbsp;Le détail ____ est ainsi pour ____ (l'interacteur qu'il sert).&nbsp;»</li>
     </ul></details>
+  <!-- Le corrigé du Bonus (17/11/2026 : « chaque exercice devrait avoir son bouton de correction ») : des défis ouverts,
+       donc des réponses possibles et le critère qui permet de juger la sienne. -->
+  <details class="correction corrige-bonus">
+    <summary>🔎 Corrigé du Bonus — des réponses possibles, défi par défi</summary>
+    <p>Il n'y a pas une seule bonne réponse.
+    <br>Compare la tienne à ces exemples, et vérifie qu'elle respecte le <b>critère</b> de chaque défi.</p>
+    <p><b>1. Un exemple : le casier du couloir.</b>
+    <br>Les usagers&nbsp;: l'élève qui l'ouvre, le surveillant qui a la clé.
+    <br>Les données&nbsp;: le numéro du casier, la liste qui dit à qui il est.
+    <br>Les autres objets&nbsp;: le cadenas, le cartable, les livres.
+    <br>L'environnement&nbsp;: l'humidité, la poussière, les coups des élèves qui passent.
+    <br>Sept interacteurs sur neuf ne sont pas des personnes.
+    <br><b>Critère</b>&nbsp;: au moins quatre interacteurs qui ne sont pas des personnes, dans au moins trois familles.</p>
+    <p><b>2. Un détail, et «&nbsp;pourquoi pas autrement&nbsp;?&nbsp;».</b>
+    <br>La porte du casier est percée de fentes. Pourquoi pas une porte pleine&nbsp;?
+    <br>Pour laisser passer l'air&nbsp;: l'humidité ne reste pas enfermée, les affaires mouillées sèchent.
+    <br>L'interacteur servi&nbsp;: l'humidité, qui vient de l'environnement.
+    <br><b>Critère</b>&nbsp;: ta phrase dit à quoi sert le détail et nomme l'interacteur&nbsp;; elle ne se contente pas de le décrire.</p>
+    <p><b>3. La station à Sainte-Luce.</b> Des modifications possibles, chacune avec l'interacteur qui la justifie&nbsp;:
+    <br>• un métal qui ne rouille pas (acier inoxydable, aluminium traité) → l'air salin&nbsp;;
+    <br>• un auvent au-dessus des bornes → les pluies tropicales, plus fortes&nbsp;;
+    <br>• une fixation renforcée, qui se démonte avant l'alerte → le cyclone&nbsp;;
+    <br>• un écran qui se lit en plein soleil → le soleil.
+    <br>Le tableau «&nbsp;La même station, deux lieux&nbsp;» de la séance 4 donne les trois premières.
+    <br><b>Critère</b>&nbsp;: sur ton dessin, chaque annotation nomme l'interacteur qui la justifie.</p>
+  </details>
 </section>
 
 <section class="card">
@@ -2597,7 +2701,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
-  <p>Le QCM de la séquence t'attend&nbsp;: <b>34 questions</b>, dont <b>5 illustrées</b>, et chaque réponse fausse expliquée.</p>
+  <p>Le QCM de la séquence t'attend&nbsp;: <b>34 questions</b>, dont <b>8 illustrées</b>, et chaque réponse fausse expliquée.</p>
   <p style="text-align:center"><a class="btn qcm" href="qcm_5e_C2_shenzhen_station_velos.html">🚲 Lancer le QCM de la séquence</a></p>
 </section>
 </div>

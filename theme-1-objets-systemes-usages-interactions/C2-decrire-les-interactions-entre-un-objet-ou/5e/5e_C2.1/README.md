@@ -12,7 +12,7 @@ d'usage ; ajoutée le 04/11/2026, à la demande de Pascal, pour exercer la bête
 interacteurs) · **2. Recenser** les interacteurs, jusqu'au diagramme pieuvre du vélo-cargo · **3. Lire les
 formes** · **4. Comparer et transférer**, avec le bilan.
 
-➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 34 questions, dont 5 illustrées,
+➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 34 questions, dont 8 illustrées,
 chaque distracteur réfuté par une explication (les trois premières : la bête à cornes et la fonction d'usage).
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_5e_C2.1-C2.2.html) ·

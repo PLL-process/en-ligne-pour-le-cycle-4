@@ -32440,3 +32440,63 @@ cette page seulement ; le découpage commun (`mission.js`), qui produit le même
 Vérifications : banc 152 / 152 ; n°311 34 / 34 ; mode mission joué, aucun refus, 66 / 66 pourquoi ; écrans 6 à 12
 relus (la consigne de a) sur le départ et sur l'écran de a), plus en c) ni en d)) ; aération, règles visibles, règles
 d'or 0 ✘, fiche papier : verts.
+
+## 17/11/2026 — 5e_C2.1 (Shenzhen), l'audit « double regard » appliqué : trois lignes avant de commencer, un QCM qui aide avant de corriger
+
+**La demande.** Pascal, le 17/11/2026, après #761 : « Continue d'améliorer cette séance, cette séquence en fonction de
+l'audit. Ensuite, on va généraliser aux autres séquences avec les skills. » Puis : « Avant de commencer, et dans toutes
+les séquences, l'élève devrait lire trois informations très simples : ce qu'il va apprendre, ce qu'il doit savoir faire
+et comment réussir. » Et les points 2 à 4 de l'audit : des illustrations plus nombreuses et utiles ; des aides
+progressives, « un premier indice, puis une explication plus détaillée, sans voir immédiatement la bonne réponse » ;
+une révision fondée sur les difficultés — « si l'élève confond régulièrement un interacteur et une exigence, le
+système devrait lui proposer plusieurs questions supplémentaires sur cette distinction ».
+
+**L'audit relu à la source.** Son P0 (« SOS serre », 4e, Packet Tracer dans le titre du QCM) a été vrai : c'est
+l'incident de la règle n°51 (août 2026), corrigé depuis, et `build_qcm.py` refuse toute trace du gabarit d'origine.
+L'outil d'audit a lu une ancienne copie de la page. Ses comptes (4 / 5 illustrées ; 8 interacteurs / 6) ne
+correspondent pas non plus à la page publiée. Le reste — les deux regards, élève et inspecteur — est pris en entier.
+
+**Ce qui change dans la séquence.**
+- **🎯 Avant de commencer : trois choses à lire**, en tête de l'ouverture (dans le volet « 📖 Rappel » dès la séance 2) :
+  📚 ce que tu vas apprendre, 🛠 ce que tu dois savoir faire, ✅ comment réussir — dans la langue de l'élève, une idée
+  par ligne ; le référentiel, replié dessous, garde les mots du programme.
+- **Le billet d'entrée a sa correction complète** (« ✅ Correction complète du billet ») : la bonne réponse, puis
+  chaque autre proposition avec son pourquoi — posée par le nouvel outil `_outils/corriger_billet.py`, qui la tire des
+  `data-pourquoi` du mode mission et la confronte au vérificateur de la page. En mode mission, le billet gagne un écran
+  « je retiens » où elle s'ouvre après la vérification (n°336).
+- **Le Bonus a son corrigé** : des réponses possibles, défi par défi, et le critère qui permet de juger la sienne.
+- **Un billet de sortie, seul et sans aide** (règle n°330 ; l'inspecteur : « une compétence ne se limite pas à
+  reconnaître une réponse ») : un objet nouveau, l'abribus devant le collège — quatre interacteurs dans trois familles,
+  puis un détail de sa forme à expliquer ; version étayée (n°31, l'obstacle de la rédaction, pas l'exigence) et
+  correction complète avec ses critères. ~5 min : la séance 4 tient dans ses 55 min.
+
+**Ce qui change dans le QCM** (34 questions, inchangées ; apports rejouables par `_generation/apports_audit.py`,
+appelé par `build_qcm.py`) :
+- **🎯 Avant de commencer**, en trois lignes, avant « Ma progression » : ce que tu vas revoir, ce que tu dois savoir
+  faire, comment réussir (« 10 questions » pour commencer, « Uniquement mes erreurs » pour finir).
+- **5 → 8 questions illustrées** : la bête à cornes de la station, muette (question 2 ; nouvelle figure
+  `bete_a_cornes_de_la_station.svg`, tirée du gabarit du modèle de Pascal) ; les cinq détails numérotés de la station
+  (question 24) ; les deux stations côte à côte (question 29).
+- **Les aides progressives** : une réponse fausse montre d'abord 💡 pourquoi CETTE réponse ne va pas ; puis, sur
+  demande, 💡💡 la règle à appliquer (le « À retenir ») ; puis 📖 la correction complète. La bonne réponse n'est ni dite
+  ni marquée en vert avant. « 🔁 Réessayer » à chaque étape.
+- **La révision par pièges** : six confusions fréquentes (la bête à cornes ; interacteur ou pas — une règle, une pièce,
+  une couleur ; les quatre familles ; changer de lieu ; les domaines ; expliquer un choix et son coût), de 4 à 7
+  questions chacune. Une erreur propose « Réviser ce piège : N questions » (celles qu'on n'a pas encore réussies
+  d'abord) ; le bilan liste les pièges où l'élève s'est trompé, du plus fréquent au moins fréquent, avec le même bouton.
+  Le compte des erreurs par piège est gardé dans la sauvegarde.
+- Le message du bilan parlait de « chaînes d'énergie et d'information, matériaux et réseau » (un reste du gabarit) : il
+  parle des interacteurs et des choix de conception.
+
+**Vérifications.** Banc de la séquence 152 / 152 (le compte des questions illustrées passe à 8) ; n°311 34 / 34 ; mode
+mission joué écran par écran, aucun refus, 5 corrections ouvertes après vérification, 66 / 66 pourquoi ; squelette ;
+QCM joué en entier dans Chromium : sur chaque question, une réponse fausse montre l'indice sans la bonne réponse (ni dite
+ni en vert), l'indice n°2, le piège ; « Voir la correction complète » montre tout ; le bilan liste les 6 pièges, et son
+bouton ouvre le mode piège ; la sauvegarde garde les pièges ; aucune erreur JavaScript. Contrôles : cohérence du QCM,
+indices, en-tête, effectifs, banque, sauvegarde locale, boutons vivants, schémas (0 ✘), médias, liens, sigles, unités,
+aération, correction illustrée et complète, schéma sous les yeux, règles visibles, mode essentiel, fiche papier, code
+coloré, compétences : verts ; `verif_regles_audit.py` 0 ✘. Export Éléa régénéré (215 images embarquées).
+
+**Reste, pour la généralisation (skills de la PR suivante).** `corriger_billet.py` mesure le site : 15 billets
+reçoivent leur correction d'un coup ; 32 pages attendent d'abord le pourquoi de chaque mauvaise proposition. Les trois
+lignes « Avant de commencer », les aides progressives et les pièges, sur les autres séquences et QCM.

@@ -1,6 +1,6 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 212 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
@@ -23,7 +23,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 212 ima
 | 5e | 5e_C1.5 | Le compte du club : ce qu'une publication révèle et ce qu'elle engage | 30 | 1 |
 | 3e | 3e_C2.1 | Pékin, trois destinataires, trois représentations | 30 | 5 |
 | 4e | 4e_C2.1 | Hangzhou, ce que vit l'usager devant la borne | 30 | 5 |
-| 5e | 5e_C2.1 | Shenzhen, la station de vélos et tout ce qui l'entoure | 34 | 5 |
+| 5e | 5e_C2.1 | Shenzhen, la station de vélos et tout ce qui l'entoure | 34 | 8 |
 | 3e | 3e_C3.1 | Shenzhen, comment refroidir un local qui surchauffe ? | 30 | 1 |
 | 4e | 4e_C3.1 | Hangzhou, quelle flotte de vélos pour la ville ? | 30 | 2 |
 | 5e | 5e_C3.1 | Shanghai, quel véhicule pour le dernier kilomètre ? | 30 | 3 |
