@@ -88,8 +88,10 @@ Ailleurs, le radiateur et le vérin ne sont jamais rencontrés en situation, et 
    déjà 55 min), corrigé par les deux chaînes dessinées (`regenerer_chaines_energie.py volet`).
 
 ### Sur les trois niveaux
-9. **Le QCM de chaque niveau** remplace une question existante par une question sur les conversions : le nombre de
-   questions ne change pas (30 questions fixes).
+9. ✅ *(17/11/2026)* **Le QCM de chaque niveau** remplace une question existante par une question sur les conversions : le nombre de
+   questions ne change pas. Fait : lampadaire (5e, la dynamo-génératrice, illustrée par le dessin muet), Book Train
+   (4e, la porte du bus : le vérin dans CONVERTIR), station (3e, le vérin du volet anti-cyclone). La bonne réponse garde
+   la place de la question remplacée ; le lexique suit.
 10. ✅ *(17/11/2026)* **Le même tableau à cinq cases**, dessiné une seule fois, sert dans les synthèses et dans les
     exercices. L'élève reconnaît l'image d'une année sur l'autre. Fait : `_outils/cinq_conversions/generer.py` dessine
     les deux images (muette et complète) et les pose, à l'identique, dans le dossier `Images/` de chaque lot qui s'en

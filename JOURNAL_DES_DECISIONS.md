@@ -32359,3 +32359,24 @@ Troisième étage de la progression (`docs/specifications/progression-cinq-conve
   chaînes du générateur) ; correction illustrée, aération, unités, liens, médias, sigles, règles visibles, squelette :
   verts ; `verifier_chaines_energie.py` 87 / 87.
 - Reste du plan : le lot des QCM (une question sur les conversions par niveau, à la place d'une autre).
+
+## 17/11/2026 — Les cinq conversions, lot QCM : une question par niveau
+
+Dernier lot de la progression (`docs/specifications/progression-cinq-conversions-cycle4.md`) : chaque niveau évalue
+les conversions dans son QCM, **à la place** d'une question qui doublait les autres — le nombre de questions et le
+nombre par code ne changent pas.
+- **Lampadaire (5e, `C4.3`)** : « La génératrice » — la dynamo d'un vélo, ce qui entre (mécanique) et ce qui sort
+  (électrique), illustrée par le dessin muet des cinq constituants. Elle remplace « Natures dans l'ordre », que les
+  questions sur l'entrée du panneau, le stockage et la sortie des LED couvrent déjà ; le QCM garde 6 questions
+  illustrées.
+- **Book Train (4e, `C4.2`)** : « Quel constituant dans CONVERTIR » — la porte du bus à l'air comprimé, le vérin. Elle
+  remplace « L'étiquette va sur la flèche », déjà portée par « Ce que le bloc contient ».
+- **Station (3e, `C4.1`)** : « Le vérin du volet » — quel constituant change l'électrique en mécanique pour pousser le
+  volet (le relais distribue, la batterie alimente, la génératrice fait l'inverse). Elle remplace « Schéma-bloc ».
+  L'option de la batterie ne porte plus « 12 V (volts) » : seule à nommer l'unité, elle se serait désignée.
+- La bonne réponse garde la place de la question remplacée (les bancs veillent à l'équilibre A/B/C/D et à la stabilité
+  des indices). Les lexiques suivent (régénérés pour la 5e et la 4e ; pour la 3e, la seule notion remplacée, la
+  régénération retirant les unités écrites en toutes lettres). Exports Éléa régénérés.
+- Vérifications : `verif_qcm_coherence` (3 QCM), `controle_banque_qcm`, `controle_effectifs_qcm`,
+  `controle_entete_qcm`, `controle_longueurs`, `controle_indices_qcm`, `controle_unites`, `controle_medias`,
+  `controle_liens` : verts ; bancs : QCM du lampadaire 25 / 25, Book Train 39 / 39, station 23 / 23.
