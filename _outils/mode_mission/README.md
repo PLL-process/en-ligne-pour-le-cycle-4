@@ -41,6 +41,13 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 - **Garde** sur l'appareil le mode, l'écran en cours, les erreurs et les étoiles (`localStorage`, clé
   `mission:<page>`) ; « Effacer ma sauvegarde » les efface aussi. La barre affiche les étoiles de la séance, le
   bilan celles de la séquence et les erreurs corrigées en route.
+- **Allume la barre d'étapes selon ce que l'élève a fait** (Pascal, 16/11/2026, sur `4e_C9.1` : « certaines leds
+  n'étaient pas allumées alors que l'élève avait fait le parcours ») : un écran sans question s'allume une fois
+  dépassé et le reste, même quand l'élève revient en arrière (l'écran le plus loin atteint se garde, par séance) ;
+  une question s'allume une fois vérifiée ; répondue mais pas vérifiée, son trait se cercle (« à vérifier ») ; un
+  écrit s'allume une fois écrit. Ce qui a été réussi en page complète s'allume à l'entrée dans le mode. La barre ne
+  dit jamais si une réponse en cours est juste. Avant, un écran sans question ne s'allumait que s'il était avant
+  l'écran en cours, et un écrit sans vérification ne s'allumait jamais.
 - **Montre chaque écran depuis son début**, même quand l'élève avait défilé dans le précédent. Dans une séquence
   découpée en pages, qui passe à la page suivante en mission y arrive en mission.
 
@@ -49,8 +56,9 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 - **Allumé d'emblée** (décision de Pascal du 14/11/2026) : à sa première visite, l'élève arrive en mission. « 📄 Page
   complète », dans la barre de la mission, ramène à la page qui défile, et la page s'en souvient dans ce navigateur ;
   « 🎮 Mode mission » (dans le cadre « Ma progression », ou juste au-dessus des onglets quand la page n'a pas ce cadre —
-  jamais dans la barre d'outils, jamais entre les onglets et leur séance) y retourne ; « Effacer ma sauvegarde » remet
-  la mission. Le contenu de la page n'est pas touché.
+  jamais dans la barre d'outils, jamais entre les onglets et leur séance) y retourne ; dès que ce bouton sort de
+  l'écran, un petit « 🎮 Mode mission » reste en bas à droite (Pascal, 16/11/2026 : « aucun bouton apparent pour
+  revenir »), jamais imprimé ; « Effacer ma sauvegarde » remet la mission. Le contenu de la page n'est pas touché.
 - **Un robot de test ouvre la page complète** (`navigator.webdriver`) : les contrôles et les bancs du dépôt mesurent et
   jouent la page qui défile, comme avant ; ceux du mode (`banc_generique.mjs`, `banc_mission.mjs`) l'allument eux-mêmes,
   et `banc_defaut.mjs` vérifie qu'un navigateur d'élève arrive bien en mission.
@@ -66,6 +74,7 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 | `poser.py` | pose ou met à jour le bloc dans une page (`--verifier` : ne rien écrire) |
 | `banc_mission.mjs` | joue le pilote comme un élève, à 390 px et à 1 180 px (25 tests par largeur) |
 | `banc_generique.mjs` | joue **toute** page qui porte le bloc, écran par écran (`--detail` : la liste des écrans) |
+| `banc_barre.mjs` | sur **toute** page qui porte le bloc : la barre d'étapes ne s'éteint pas en revenant en arrière (B1), un écrit dépassé s'allume (B2), un bouton visible ramène en mission une fois la page défilée (B3) ; `--racine` pour une autre copie du site |
 | `enrichir.py` | écrit dans une page le pourquoi des erreurs et les réponses leurres, depuis `mission_<lot>.json` |
 | `../controle_mode_mission.py` | le bloc d'une page est celui de la source, une fois |
 
