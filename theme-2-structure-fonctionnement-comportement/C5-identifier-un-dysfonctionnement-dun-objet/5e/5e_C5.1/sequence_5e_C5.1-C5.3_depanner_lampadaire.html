@@ -2129,7 +2129,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 </div>
 <footer>
   <p>Séquence 5e_C5.1 → C5.3 · Thème 2 · Technologie cycle 4 (programme 2024) · objet-fil « Le lampadaire intelligent »</p>
-  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰 — jamais le secteur</p>
+  <p>Fonctionne sans connexion avec le dossier complet du site · tes réponses sont enregistrées dans ce navigateur : cette page ne les envoie nulle part · très basse tension uniquement pour la version 🅰 — jamais le secteur</p>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
@@ -2433,5 +2433,48 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
   if(onglet){ onglet.click(); }
 }));
 </script>
+<!-- onglets-clavier v1 : début — règle d'or n°326 ; source unique : _outils/onglets_clavier.py -->
+<script>
+(function(){
+  "use strict";
+  function panneauDe(t){
+    var id = t.getAttribute("data-panel") || (t.getAttribute("href") || "").replace(/^#/, "");
+    return id ? document.getElementById(id) : null;
+  }
+  function ouvert(t){ return t.getAttribute("aria-selected") === "true" || t.classList.contains("active") || t.classList.contains("actif"); }
+  function ranger(liste){
+    var tabs = [].slice.call(liste.querySelectorAll('[role="tab"]')), un = tabs.filter(ouvert)[0] || tabs[0];
+    tabs.forEach(function(t){ t.setAttribute("tabindex", t === un ? "0" : "-1"); });
+  }
+  [].forEach.call(document.querySelectorAll('[role="tablist"]'), function(liste){
+    var tabs = [].slice.call(liste.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+    tabs.forEach(function(t, i){
+      if (!t.id) t.id = "onglet-" + (i + 1);
+      var p = panneauDe(t);
+      if (p){
+        t.setAttribute("aria-controls", p.id);
+        if (!p.getAttribute("role")) p.setAttribute("role", "tabpanel");
+        if (!p.getAttribute("aria-labelledby")) p.setAttribute("aria-labelledby", t.id);
+      }
+    });
+    ranger(liste);
+    liste.addEventListener("click", function(){ setTimeout(function(){ ranger(liste); }, 0); });
+    liste.addEventListener("keydown", function(e){
+      var i = tabs.indexOf(document.activeElement), j = -1;
+      if (i < 0) return;
+      if (e.key === "ArrowRight") j = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = tabs.length - 1;
+      if (j < 0) return;
+      e.preventDefault();
+      tabs[j].focus(); tabs[j].click();
+      setTimeout(function(){ ranger(liste); tabs[j].focus(); }, 0);
+    });
+  });
+})();
+</script>
+<!-- onglets-clavier v1 : fin -->
 </body>
 </html>

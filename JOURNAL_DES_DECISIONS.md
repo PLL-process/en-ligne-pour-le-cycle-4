@@ -32755,3 +32755,56 @@ Pascal joint un audit externe de `3e_C9.1` (vision élève de 3e, vision inspect
 **Non retenu.** La ressource ouverte au-dessus de la question (règle n°331, voulue) ; la correction lisible en page
 complète avant de produire (choix de Pascal : une correction à chaque exercice, ouverte d'elle-même en mission une fois
 vérifié, n°336).
+
+## 17/11/2026 — `3e_C4.1`, audit externe relu : les validations disent la vérité, les onglets se manient au clavier sur tout le site
+
+Pascal joint un « Audit pédagogique approfondi » de `3e_C4.1-C4.2` (l'énergie de la station). Relu remarque par
+remarque (skill `relire-un-audit-externe`), sur la page rendue et dans son code ; l'auditeur dit lui-même n'avoir rien
+cliqué : chaque constat a été rejoué au navigateur.
+
+**Confirmé et corrigé dans `3e_C4.1`.**
+- **Les seuils** : l'activité 1 validait à 10 / 11, l'activité 4 à 7 / 8, quand la consigne annonce 11 / 11 et 8 / 8 :
+  le code suit maintenant la consigne (n°322).
+- **L'ordre des deux essais du simulateur** (activité 2) : la page demandait « une configuration insuffisante, PUIS ta
+  solution » et acceptait l'inverse ; l'essai réussi ne compte que s'il vient après l'échec.
+- **La justification du mât** (activité 4) : « vent sel vent sel… » passait (longueur et familles de mots) ; il faut
+  désormais une phrase qui nomme le matériau (acier galvanisé) et le procédé (laminage, soudure), en huit mots
+  différents au moins ; le message de réussite ajoute « Ta justification sera relue par ton professeur ».
+- **Une réussite qui ne dit plus vrai** : changer une réponse après la vérification retire la validation de l'activité
+  (« ✏️ Tu as changé une réponse après la vérification : vérifie de nouveau »), et la barre de progression suit.
+- **Le simulateur** donne 80 h pour 40 Ah, sans pertes : une note « Modèle simplifié » le dit sous le simulateur, et
+  c'est une raison de plus pour la marge.
+- **Le calcul donné** : la question d2_2 affichait le résultat de d2_1 (432 Wh) ; elle dit « ton énergie, en Wh ».
+- **Le coffret injecté sans quantité** : la consigne dit que le mât, le coffret et le support sont fabriqués en série,
+  pour toutes les stations de l'île ; le carénage, pièce unique.
+- **Le champ j4** s'annonçait « Carénage — procédé » : il dit « Justification du matériau et du procédé du mât ».
+- **Les intrus trop faciles** (activité 5) : « carton compressé » et « sculpture à la main » deviennent « bois non
+  traité » et « usinage dans un bloc, pièce par pièce » ; la bonne réponse « moulage par injection (la série
+  rentabilise le moule) » ne porte plus sa justification, qui reste dans la correction.
+- **Le défi powerbank** comparait des mAh : il compare des Wh, compte les pertes, et a son corrigé (≈ 2 recharges et
+  non 3, et pourquoi).
+- **L'auto-positionnement** : les niveaux s'affichaient dans le désordre (fragile, en cours, expert, solide) ; ils sont
+  rangés, et chacun dit ce qu'il veut dire pour la compétence (« je construis la chaîne seul·e et je nomme l'énergie
+  sur chaque flèche »…), la grille de maîtrise que l'audit demandait.
+
+**Confirmé et corrigé sur tout le site.**
+- **« Fonctionne hors ligne après un premier chargement »** : faux sans service worker (n°328) ; six pages
+  (`3e_C4.1`, `4e_C4.1`, `4e_C5.1`, `5e_C5.1`, `4e_C6.1`, `5e_C6.1`) disent « Fonctionne sans connexion avec le dossier
+  complet du site ».
+- **Les onglets au clavier** (n°326, jusqu'ici posée sur `3e_C9.1` seule) : 34 pages avaient des onglets sans flèches
+  ni lien vers leur panneau. `_outils/onglets_clavier.py` (neuf, rejouable, `--etat --strict` pour la mesure) pose un
+  petit script qui relie chaque onglet à son panneau (`aria-controls`, `tabpanel`, `aria-labelledby`), ne laisse que
+  l'onglet ouvert dans l'ordre de tabulation, et ouvre l'onglet voisin par ← →, le premier et le dernier par Début et
+  Fin — le clic de la page reste seul à ouvrir une séance. Banc `_outils/tests_onglets_clavier.py` (9 / 9) ; les 34
+  pages jouées au navigateur ; état du site : 0 page à poser.
+
+**Confirmé, à trancher par Pascal.**
+- L'activité 1 fait compléter un schéma dont les fonctions sont déjà placées : la preuve de « élaborer » (3e_C4.1)
+  manque, comme en `3e_C9.1` (n°330).
+- La durée : 115 minutes d'activités pour 2 × 55 min ; l'audit propose trois séances.
+
+**Non reproduit ou déjà là.** Le coffret « étanche MAIS ventilé » : l'aide nomme déjà les aérations en chicane et les
+membranes. La batterie, le stockage et les deux synthèses : présents.
+
+**Idées à juger, non retenues pour l'instant.** Prolonger la chaîne jusqu'à la sirène (`3e_C4.3` et le défi du volet
+le font) ; des binômes à rôles distincts ; un rappel d'effacer la sauvegarde après l'export, sur un poste partagé.

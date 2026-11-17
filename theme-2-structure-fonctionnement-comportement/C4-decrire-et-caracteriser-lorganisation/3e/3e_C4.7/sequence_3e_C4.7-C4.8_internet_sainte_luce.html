@@ -3084,5 +3084,48 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
   if(onglet){ onglet.click(); }
 }));
 </script>
+<!-- onglets-clavier v1 : début — règle d'or n°326 ; source unique : _outils/onglets_clavier.py -->
+<script>
+(function(){
+  "use strict";
+  function panneauDe(t){
+    var id = t.getAttribute("data-panel") || (t.getAttribute("href") || "").replace(/^#/, "");
+    return id ? document.getElementById(id) : null;
+  }
+  function ouvert(t){ return t.getAttribute("aria-selected") === "true" || t.classList.contains("active") || t.classList.contains("actif"); }
+  function ranger(liste){
+    var tabs = [].slice.call(liste.querySelectorAll('[role="tab"]')), un = tabs.filter(ouvert)[0] || tabs[0];
+    tabs.forEach(function(t){ t.setAttribute("tabindex", t === un ? "0" : "-1"); });
+  }
+  [].forEach.call(document.querySelectorAll('[role="tablist"]'), function(liste){
+    var tabs = [].slice.call(liste.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+    tabs.forEach(function(t, i){
+      if (!t.id) t.id = "onglet-" + (i + 1);
+      var p = panneauDe(t);
+      if (p){
+        t.setAttribute("aria-controls", p.id);
+        if (!p.getAttribute("role")) p.setAttribute("role", "tabpanel");
+        if (!p.getAttribute("aria-labelledby")) p.setAttribute("aria-labelledby", t.id);
+      }
+    });
+    ranger(liste);
+    liste.addEventListener("click", function(){ setTimeout(function(){ ranger(liste); }, 0); });
+    liste.addEventListener("keydown", function(e){
+      var i = tabs.indexOf(document.activeElement), j = -1;
+      if (i < 0) return;
+      if (e.key === "ArrowRight") j = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = tabs.length - 1;
+      if (j < 0) return;
+      e.preventDefault();
+      tabs[j].focus(); tabs[j].click();
+      setTimeout(function(){ ranger(liste); tabs[j].focus(); }, 0);
+    });
+  });
+})();
+</script>
+<!-- onglets-clavier v1 : fin -->
 </body>
 </html>

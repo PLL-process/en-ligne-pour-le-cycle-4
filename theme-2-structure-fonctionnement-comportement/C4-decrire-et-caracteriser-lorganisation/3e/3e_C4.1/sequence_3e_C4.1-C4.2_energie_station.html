@@ -2389,7 +2389,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <div class="exo">
       <h4>a) Mes calculs de concepteur</h4>
       <div class="assoc"><label for="d2_1">Énergie nécessaire pour 72 h : 6 W × 72 h = … Wh</label><input type="number" id="d2_1" min="0" max="2000" step="1" inputmode="numeric"></div>
-      <div class="assoc"><label for="d2_2">Capacité minimale de la batterie 12 V : 432 Wh (wattheures) ÷ 12 V = … Ah</label><input type="number" id="d2_2" min="0" max="200" step="1" inputmode="numeric"></div>
+      <div class="assoc"><label for="d2_2">Capacité minimale de la batterie 12 V : ton énergie, en Wh (wattheures), ÷ 12 V (volts) = … Ah (ampères-heures)</label><input type="number" id="d2_2" min="0" max="200" step="1" inputmode="numeric"></div>
       <h4>b) Mon choix dans le catalogue</h4>
       <fieldset class="qcm-groupe" id="d2_3" data-melange="1">
   <legend>Quelle batterie retiens-tu ?</legend>
@@ -2406,6 +2406,8 @@ body.ms .cac-reserve{--cac-bas:84px}
           <label for="simConso"><b>⚡ Consommation de la station :</b> <b id="simConsoVal">6</b> W</label>
           <input type="range" id="simConso" min="3" max="10" step="1" value="6">
           <p style="font-size:.85em;color:var(--sub)">Scénario : cyclone → réseau EDF coupé, ciel couvert → le panneau ne recharge presque plus.</p>
+          <p style="font-size:.85em;color:var(--sub)">⚠️ <b>Modèle simplifié</b> : toute l'énergie de la batterie est utilisable, sans aucune perte.
+          <br>En vrai, une partie reste dans la batterie et le convertisseur en perd un peu : c'est une raison de plus pour prendre une marge.</p>
         </div>
         <div class="simu-ecran" aria-live="polite">
           <div class="etiquette">AUTONOMIE SIMULÉE</div>
@@ -2550,7 +2552,8 @@ body.ms .cac-reserve{--cac-bas:84px}
       <object data="Images/materiaux_procedes_abaque.svg" type="image/svg+xml" aria-label="Abaque des matériaux et procédés pour les pièces de la station" style="width:100%"></object>
       <figcaption>L'abaque du bureau d'études : matériau, procédé, et le POURQUOI.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> a) choisis matériau et procédé pour chaque pièce (l'abaque t'aide, mais des pièges rôdent) ; b) rédige la justification COMPLÈTE pour le mât : au moins deux contraintes croisées.</div>
+    <div class="consigne"><b>Consigne :</b> a) choisis matériau et procédé pour chaque pièce (l'abaque t'aide, mais des pièges rôdent) ; b) rédige la justification COMPLÈTE pour le mât : au moins deux contraintes croisées.
+    <br>Le mât, le coffret et le support sont fabriqués <b>en série</b>, pour équiper les stations de toute l'île ; le carénage est une pièce unique.</div>
     <div class="exo">
       <h4>a) Mes choix de bureau d'études</h4>
       <fieldset class="qcm-groupe" id="m4_1" data-melange="1">
@@ -2610,7 +2613,7 @@ body.ms .cac-reserve{--cac-bas:84px}
   <div class="qcm-option"><input type="radio" name="p4_4" id="p4_4__3" value="laminage + soudure" data-pourquoi="Ce procédé donne des tubes et des tôles de métal : le carénage est une petite pièce en plastique."><label for="p4_4__3">laminage + soudure</label></div>
 </fieldset>
       <h4>b) Ma justification du mât (2 contraintes croisées minimum)</h4>
-      <textarea id="j4" rows="3" placeholder="Le mât est en … mis en forme par … parce que…" aria-label="🌀 Carénage — procédé"></textarea>
+      <textarea id="j4" rows="3" placeholder="Le mât est en … mis en forme par … parce que…" aria-label="Justification du matériau et du procédé du mât"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
   <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
@@ -2665,15 +2668,15 @@ body.ms .cac-reserve{--cac-bas:84px}
   <legend>Le poteau de la borne, en bord de mer : en quel matériau le fais-tu ?</legend>
   <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__4" value="PVC ordinaire" data-pourquoi="Trop souple pour un poteau, et il se fragilise au soleil."><label for="r5_3__4">PVC ordinaire</label></div>
   <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__2" value="acier brut" data-pourquoi="En bord de mer, le sel le fait rouiller en quelques mois."><label for="r5_3__2">acier brut</label></div>
-  <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__3" value="carton compressé" data-pourquoi="Le carton se défait à la première pluie."><label for="r5_3__3">carton compressé</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__3" value="bois non traité" data-pourquoi="Sans traitement, le bois gonfle à l&#39;humidité et les termites l&#39;attaquent : en bord de mer, il ne tiendra pas des années."><label for="r5_3__3">bois non traité</label></div>
   <div class="qcm-option"><input type="radio" name="r5_3" id="r5_3__1" value="acier galvanisé à chaud"><label for="r5_3__1">acier galvanisé à chaud</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="r5_4" data-melange="1">
   <legend>Le capot plastique, à produire en 200 exemplaires : par quel procédé ?</legend>
-  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__3" value="sculpture à la main" data-pourquoi="Deux cents capots sculptés à la main : des semaines de travail, et aucun ne serait pareil."><label for="r5_4__3">sculpture à la main</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__3" value="usinage dans un bloc, pièce par pièce" data-pourquoi="Usiner deux cents capots dans la masse : des heures de machine pour chacun, et la plus grande partie du bloc part en copeaux."><label for="r5_4__3">usinage dans un bloc, pièce par pièce</label></div>
   <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__4" value="découpe de récupération" data-pourquoi="Avec des chutes récupérées, impossible d'obtenir 200 capots identiques et étanches."><label for="r5_4__4">découpe de récupération</label></div>
   <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__2" value="impression 3D une par une" data-pourquoi="Bien pour une pièce unique ; pour 200, les heures d'impression s'additionnent."><label for="r5_4__2">impression 3D une par une</label></div>
-  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__1" value="moulage par injection (la série rentabilise le moule)"><label for="r5_4__1">moulage par injection (la série rentabilise le moule)</label></div>
+  <div class="qcm-option"><input type="radio" name="r5_4" id="r5_4__1" value="moulage par injection"><label for="r5_4__1">moulage par injection</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="r5_5" data-melange="1">
   <legend>Quel est l'argument environnemental du dossier ?</legend>
@@ -2702,7 +2705,12 @@ body.ms .cac-reserve{--cac-bas:84px}
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
   <p>♻ <b>Défi citoyen :</b> relève la puissance (W) de 3 appareils de la maison. <br>Estime l'énergie qu'ils consomment en une journée (Wh). <br>Lequel pèse le plus lourd sur la facture ?</p>
-  <p>🔋 <b>Défi powerbank :</b> retrouve la capacité (mAh) d'une batterie externe et calcule combien de fois elle peut recharger un téléphone (≈ 3 000 mAh, en milliampères-heures). <br>Retrouve-t-on la marge de sécurité du dimensionnement ?</p>
+  <p>🔋 <b>Défi powerbank :</b> sur une batterie externe, retrouve son énergie en Wh (wattheures) : elle est souvent écrite à côté des mAh (milliampères-heures). <br>Un téléphone en garde environ 11 Wh (3 000 mAh à 3,7 V, volts). <br>Combien de recharges complètes peut-elle faire ? Compte qu'environ un tiers de l'énergie se perd dans les conversions. <br>Retrouve-t-on la marge de sécurité du dimensionnement ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi powerbank</summary>
+    <p><b>Un exemple :</b> une batterie externe de 10 000 mAh porte souvent « 37 Wh ». <br>Un tiers se perd : il reste environ 37 × 2 ÷ 3 ≈ 25 Wh pour le téléphone. <br>25 Wh ÷ 11 Wh ≈ 2 recharges complètes.</p>
+    <p><b>Le piège</b> : diviser les mAh, 10 000 ÷ 3 000 ≈ 3 recharges, en oubliant les pertes. <br>Et des mAh ne se comparent que si les deux batteries ont la même tension ; des Wh se comparent toujours.</p>
+    <p><b>Le lien avec la station</b> : comme pour la batterie de 40 Ah (ampères-heures), toute l'énergie écrite sur l'étiquette ne sert pas. <br>C'est pour cela qu'on garde une marge.</p>
+  </details>
   <p>🌞 <b>Défi Martinique :</b> repère autour de chez toi 3 installations photovoltaïques ; pour chacune, cherche où se cache la batterie… ou explique pourquoi il n'y en a pas.</p>
   <p>🛡 <b>Défi volet anti-cyclone&nbsp;:</b> la station pourrait fermer toute seule un volet de protection quand le vent dépasse 100&nbsp;km/h (kilomètres par heure). <br>Un <b>vérin électrique</b> pousse le volet. <br>Dessine sa chaîne d'énergie&nbsp;: les fonctions dans les blocs, les constituants dessous, les formes d'énergie sur les flèches. <br>Ajoute en haut la chaîne d'information qui donne l'ordre.</p>
   <details class="correction"><summary>✅ Corrigé du défi volet anti-cyclone</summary>
@@ -2738,19 +2746,19 @@ body.ms .cac-reserve{--cac-bas:84px}
     </div>
     <div class="confiance">
       <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
-      <fieldset class="qcm-groupe" id="auto1">
+      <fieldset class="qcm-groupe positionnement" id="auto1">
   <legend>3e_C4.1 — élaborer la chaîne d'énergie : où en suis-je ?</legend>
-  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 fragile"><label for="auto1__1">🔴 fragile</label></div>
-  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟡 en cours"><label for="auto1__2">🟡 en cours</label></div>
-  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__4" value="⭐ expert"><label for="auto1__4">⭐ expert</label></div>
-  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 solide"><label for="auto1__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__1" value="🔴 fragile"><label for="auto1__1">🔴 fragile — je n'arrive pas encore à placer les fonctions, même avec l'aide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__2" value="🟡 en cours"><label for="auto1__2">🟡 en cours — je complète la chaîne avec l'aide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__3" value="🟢 solide"><label for="auto1__3">🟢 solide — je construis la chaîne seul·e et je nomme l'énergie sur chaque flèche</label></div>
+  <div class="qcm-option"><input type="radio" name="auto1" id="auto1__4" value="⭐ expert"><label for="auto1__4">⭐ expert — je construis la chaîne d'un autre objet et j'explique mes choix</label></div>
 </fieldset>
-      <fieldset class="qcm-groupe" id="auto2">
+      <fieldset class="qcm-groupe positionnement" id="auto2">
   <legend>3e_C4.2 — justifier matériau et procédé : où en suis-je ?</legend>
-  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__1" value="🔴 fragile"><label for="auto2__1">🔴 fragile</label></div>
-  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__2" value="🟡 en cours"><label for="auto2__2">🟡 en cours</label></div>
-  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__4" value="⭐ expert"><label for="auto2__4">⭐ expert</label></div>
-  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__3" value="🟢 solide"><label for="auto2__3">🟢 solide</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__1" value="🔴 fragile"><label for="auto2__1">🔴 fragile — je choisis sans donner de raison technique</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__2" value="🟡 en cours"><label for="auto2__2">🟡 en cours — je cite une contrainte, mais ma justification reste incomplète</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__3" value="🟢 solide"><label for="auto2__3">🟢 solide — je justifie le matériau et le procédé par au moins deux contraintes</label></div>
+  <div class="qcm-option"><input type="radio" name="auto2" id="auto2__4" value="⭐ expert"><label for="auto2__4">⭐ expert — je compare plusieurs solutions et j'explique le compromis</label></div>
 </fieldset>
       <p class="refs"><a href="Synthèses/synthese_eleve_3e_C4.1-C4.2.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_3e_C4.1-C4.2.html">👩‍🏫 Synthèse professeur</a></p>
     </div>
@@ -2767,7 +2775,7 @@ body.ms .cac-reserve{--cac-bas:84px}
 </div>
 <footer>
   <p>Séquence 3e_C4.1 + C4.2 · Thème 2 · Technologie cycle 4 (programme 2024) · projet-fil « Station d'alerte cyclonique »</p>
-  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰</p>
+  <p>Fonctionne sans connexion avec le dossier complet du site · tes réponses sont enregistrées dans ce navigateur : cette page ne les envoie nulle part · très basse tension uniquement pour la version 🅰</p>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 <script>
@@ -2837,6 +2845,8 @@ function majSim(tracer){
   $("simAuto").style.color = ok ? "#81fba1" : "#ff7b88";
   if(tracer){
     window.__exp[ok ? "suffisant" : "insuffisant"] = heures;
+    /* l'ordre de la consigne : une configuration qui échoue, PUIS une qui tient (audit du 17/11/2026) */
+    if(ok && window.__exp["insuffisant"]!==undefined) window.__exp["apres_echec"] = heures;
     save(false);
   }
 }
@@ -2857,7 +2867,7 @@ const CHECKS = {
     const intrus = new Set([$("i1_a").value, $("i1_b").value]);
     const iOk = intrus.has("l'ampoule") && intrus.has("le haut-parleur");
     if(iOk) ok+=2;
-    return {score:ok,total:11,extra:iOk?"":" Les intrus sont les deux blocs qui CONSOMMENT sans rien fournir à la station.",valide:ok>=10&&iOk};
+    return {score:ok,total:11,extra:iOk?"":" Les intrus sont les deux blocs qui CONSOMMENT sans rien fournir à la station.",valide:ok===11};
   },
   2: function(){
     let ok=0;
@@ -2865,8 +2875,8 @@ const CHECKS = {
     if(num("d2_2")===36) ok++;
     if($("d2_3").value==="40 Ah — la capacité minimale + une marge de sécurité") ok++;
     const e=window.__exp||{};
-    const expOk = e["insuffisant"]!==undefined && e["suffisant"]!==undefined;
-    return {score:ok,total:3,extra:expOk?"":" Fais VRAIMENT les deux essais au simulateur : une configuration qui échoue, puis une qui tient 72 h.",valide:ok===3&&expOk};
+    const expOk = e["insuffisant"]!==undefined && e["apres_echec"]!==undefined;
+    return {score:ok,total:3,extra:expOk?"":" Fais VRAIMENT les deux essais au simulateur, dans l'ordre : d'abord une configuration qui échoue, puis une qui tient 72 h.",valide:ok===3&&expOk};
   },
   3: function(){
     let ok=0;
@@ -2882,14 +2892,20 @@ const CHECKS = {
                m4_3:"aluminium",p4_3:"extrusion",m4_4:"ABS + vernis anti-UV",p4_4:"impression 3D"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const j=txt("j4");
-    const nb=[/vent|cyclon|solid|résist/,/sel|embrun|corros|rouille|galvani/,/recycl|environnement|durable/,/uv/].filter(rx=>rx.test(j)).length;
-    const jOk = j.length>=30 && nb>=2;
-    return {score:ok,total:8,extra:jOk?"":" Ta justification doit croiser AU MOINS deux contraintes (ex. : vent + sel, ou sel + recyclable).",valide:ok>=7&&jOk};
+    /* audit du 17/11/2026 : une suite de mots-clés passait (« vent sel vent sel… »). La justification doit nommer le
+       matériau ET le procédé du mât, croiser deux contraintes, et dire quelque chose : au moins huit mots différents.
+       Elle reste une phrase que le professeur relit : la page vérifie ce qu'elle peut, pas le raisonnement entier. */
+    const nb=[/vent|cyclon|solid|résist/,/sel|embrun|corros|rouille/,/recycl|environnement|durable/,/\buv\b|ultraviolet|soleil/].filter(rx=>rx.test(j)).length;
+    const mots=new Set((j.match(/[a-zàâäçéèêëîïôöùûüœ]{3,}/g)||[]));
+    const mat=/acier|galvanis/.test(j), proc=/lamin|soud/.test(j);
+    const jOk = nb>=2 && mat && proc && mots.size>=8;
+    const manque = !mat||!proc ? " Ta justification doit nommer le matériau ET le procédé du mât." : nb<2 ? " Ta justification doit croiser AU MOINS deux contraintes (ex. : vent + sel, ou sel + recyclable)." : mots.size<8 ? " Écris une vraie phrase : le matériau, le procédé, et PARCE QUE les contraintes." : "";
+    return {score:ok,total:8,extra:jOk?" Ta justification sera relue par ton professeur.":manque,valide:ok===8&&jOk};
   },
   5: function(){
     let ok=0;
     const att={r5_1:"une batterie (avec son régulateur)",r5_2:"chimique",r5_3:"acier galvanisé à chaud",
-               r5_4:"moulage par injection (la série rentabilise le moule)",
+               r5_4:"moulage par injection",
                r5_5:"énergie solaire renouvelable + matériaux recyclables + pièces remplaçables"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     return {score:ok,total:5,valide:ok>=4};
@@ -2918,6 +2934,22 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
     window.__valid[n] = !!r.valide;
     save(false); majProgress();
   });
+});
+/* Une réussite vaut pour les réponses vérifiées (audit du 17/11/2026, n°333) : changer une réponse d'une activité
+   validée la remet « à vérifier ». Les curseurs du simulateur sont des essais, pas des réponses : ils n'y touchent pas. */
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  /* la zone de l'activité : le plus grand bloc qui ne porte que CE bouton de vérification */
+  const n=btn.dataset.check; let zone=btn;
+  while(zone.parentElement && zone.parentElement.querySelectorAll("[data-check]").length===1) zone=zone.parentElement;
+  const revoir = e=>{
+    if(!e.target.matches || !e.target.matches("input, select, textarea") || e.target.type==="range") return;
+    if(!(window.__valid||{})[n]) return;
+    window.__valid[n] = false;
+    const fb=$("fb"+n);
+    if(fb){ fb.className="feedback show mixte"; fb.textContent="✏️ Tu as changé une réponse après la vérification : vérifie de nouveau."; }
+    save(false); majProgress();
+  };
+  zone.addEventListener("input", revoir); zone.addEventListener("change", revoir);
 });
 
 /* ══════ Progression ══════ */
@@ -3117,5 +3149,48 @@ window.CAC_DESSINS.alimentation = (function(){
   };
 })();
 </script>
+<!-- onglets-clavier v1 : début — règle d'or n°326 ; source unique : _outils/onglets_clavier.py -->
+<script>
+(function(){
+  "use strict";
+  function panneauDe(t){
+    var id = t.getAttribute("data-panel") || (t.getAttribute("href") || "").replace(/^#/, "");
+    return id ? document.getElementById(id) : null;
+  }
+  function ouvert(t){ return t.getAttribute("aria-selected") === "true" || t.classList.contains("active") || t.classList.contains("actif"); }
+  function ranger(liste){
+    var tabs = [].slice.call(liste.querySelectorAll('[role="tab"]')), un = tabs.filter(ouvert)[0] || tabs[0];
+    tabs.forEach(function(t){ t.setAttribute("tabindex", t === un ? "0" : "-1"); });
+  }
+  [].forEach.call(document.querySelectorAll('[role="tablist"]'), function(liste){
+    var tabs = [].slice.call(liste.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+    tabs.forEach(function(t, i){
+      if (!t.id) t.id = "onglet-" + (i + 1);
+      var p = panneauDe(t);
+      if (p){
+        t.setAttribute("aria-controls", p.id);
+        if (!p.getAttribute("role")) p.setAttribute("role", "tabpanel");
+        if (!p.getAttribute("aria-labelledby")) p.setAttribute("aria-labelledby", t.id);
+      }
+    });
+    ranger(liste);
+    liste.addEventListener("click", function(){ setTimeout(function(){ ranger(liste); }, 0); });
+    liste.addEventListener("keydown", function(e){
+      var i = tabs.indexOf(document.activeElement), j = -1;
+      if (i < 0) return;
+      if (e.key === "ArrowRight") j = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = tabs.length - 1;
+      if (j < 0) return;
+      e.preventDefault();
+      tabs[j].focus(); tabs[j].click();
+      setTimeout(function(){ ranger(liste); tabs[j].focus(); }, 0);
+    });
+  });
+})();
+</script>
+<!-- onglets-clavier v1 : fin -->
 </body>
 </html>
