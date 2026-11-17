@@ -32500,3 +32500,32 @@ coloré, compétences : verts ; `verif_regles_audit.py` 0 ✘. Export Éléa ré
 **Reste, pour la généralisation (skills de la PR suivante).** `corriger_billet.py` mesure le site : 15 billets
 reçoivent leur correction d'un coup ; 32 pages attendent d'abord le pourquoi de chaque mauvaise proposition. Les trois
 lignes « Avant de commencer », les aides progressives et les pièges, sur les autres séquences et QCM.
+
+## 17/11/2026 — Généralisation, lot 1 : chaque QCM a son message de bilan, quatorze billets d'entrée ont leur correction
+
+Premier lot de la généralisation de l'audit « double regard » (règles n°336 et n°338), annoncé à Pascal le 17/11/2026.
+
+**Les messages de bilan (n°338).** Le premier message du bilan d'un QCM (« Remarquable ! … ») était recopié du
+gabarit : « Fonctions, chaînes d'énergie et d'information, matériaux et réseau… » dans 26 QCM, « Variables, types, mise
+au point : les programmes… » dans 32, et trois autres partagés par deux ou trois lots. **60 QCM** reçoivent un message
+qui nomme leurs notions (« Remarquable ! La bête à cornes et le besoin n'ont plus de secret pour toi — tu es prêt·e pour
+l'évaluation. ») ; les QCM d'où venaient les messages gardent le leur (le lampadaire de 5e, `3e_C9.1`, `5e_C6.1`, et
+`4e_C6.1`, `3e_C9.2` pour les deux paires de même sujet). Mesure : 72 QCM, **72 messages distincts**, aucun partagé
+entre deux lots. Reste : un lot qui a un générateur (`build_qcm.py`) reprend le message du gabarit à la régénération —
+`controle_memes_nombres.py` (N3) le verra.
+
+**Les billets d'entrée (n°336).** `_outils/corriger_billet.py --ecrire` pose la correction complète des **14 billets**
+dont chaque mauvaise proposition avait son pourquoi : 3e_C1.1, 4e_C1.1, 5e_C1.2, 3e_C2.1, 4e_C2.1, 3e_C3.1, 5e_C3.1,
+4e_C4.1 (jardin connecté), 3e_C7.3, 3e_C7.4, 3e_C7.5, 3e_C7.8, 3e_C8.1, 3e_C8.2 (Shenzhen l'avait depuis #762). Les
+questions ouvertes du billet de 3e_C1.1 n'ont pas de réponse à extraire : à écrire à la main. Reste : **32 pages** dont
+les leurres du billet n'ont pas encore de pourquoi (`corriger_billet.py` les liste : « refus »).
+
+**Vérifications.**
+- Mode mission joué écran par écran sur les 14 pages (`banc_generique.mjs`) : aucun refus ; 42 / 42 pourquoi.
+- Bancs des lots : 3e_C1.1 50 / 50 ; 4e_C1.1 71 / 71 ; 5e_C1.2 50 / 50 ; 3e_C3.1 37 / 37 ; 5e_C3.1 35 / 35 et 24 / 24 ;
+  4e_C4.1 52 / 52 ; 3e_C7.3 68 / 68 ; 3e_C7.4 54 / 54 ; 3e_C7.5 54 / 54 ; 3e_C7.8 58 / 58 ; 3e_C8.1 62 / 62 ;
+  3e_C8.2 44 / 44 ; 3e_C2.1 55 / 58 et 4e_C2.1 62 / 65 — **les trois mêmes refus sur main** (la légende des badges, les
+  liens de navigation des synthèses), sans rapport avec ce lot.
+- Squelette, aération, schéma sous les yeux, règles visibles, liens, mode essentiel : verts. Fiche papier : verte sur
+  13 séquences ; le jardin connecté (4e_C4.1) imprime 18 boutons, **comme sur main**.
+- Les 60 QCM : syntaxe de chaque script vérifiée ; sauvegarde locale, règles visibles : verts.
