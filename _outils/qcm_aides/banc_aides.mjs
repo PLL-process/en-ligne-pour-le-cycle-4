@@ -37,6 +37,11 @@ for (const PAGE of pages) {
   await p.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
   if (!(await p.$('#trois-lignes'))) refus.push('A7 pas de carte « Avant de commencer »');
+  const pose = await p.evaluate(() => typeof piege === 'function' && typeof questionsDuPiege === 'function');
+  if (!pose) {
+    console.log(`❌ ${path.relative(RACINE, PAGE)}\n   · A7 les aides et les pièges ne sont pas posés (poser.py)`);
+    refusTotal++; await ctx.close(); continue;
+  }
   const N = await p.evaluate(() => QUESTIONS.length);
   let dansPiege = 0;
   for (let i = 0; i < N; i++) {
