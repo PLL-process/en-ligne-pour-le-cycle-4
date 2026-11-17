@@ -207,7 +207,8 @@ for (const [n, champs] of Object.entries(REP.activites)) {
      qu'elle n'est pas corrigée automatiquement (révision du 15/11/2026 : le banc suit la page) */
   const libre = /Réponse enregistrée/.test(fb);
   ok('activité ' + n + (libre ? ' : réponse libre enregistrée, renvoyée à la correction' : ' validée (' + REP.totaux[n] + ')'),
-     libre ? REP.totaux[n] === '1/1' && /pas corrigée automatiquement/.test(fb) : fb.includes(REP.totaux[n]), fb.slice(0, 75));
+     /* 17/11/2026 : le réinvestissement porte aussi une question notée (la génératrice de l'éolienne) : 2/2 */
+     libre ? /^(\d+)\/\1$/.test(REP.totaux[n]) && /pas corrigée automatiquement/.test(fb) : fb.includes(REP.totaux[n]), fb.slice(0, 75));
 }
 
 // ── un relevé approximatif est refusé ─────────────────────────────────────

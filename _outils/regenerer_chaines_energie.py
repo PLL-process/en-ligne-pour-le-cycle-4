@@ -603,7 +603,36 @@ def barriere():
     d.save(C9_5E/'Images/barriere_cyclone_condition.svg')
 
 
-FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines)}
+
+def volet():
+    # Les cinq conversions, lot 3e (17/11/2026) : le vérin en situation. Corrigé du défi « volet anti-cyclone » de
+    # 3e_C4.1 — un vérin électrique ferme le volet de la station quand le vent dépasse le seuil.
+    d=Diagram('Volet anti-cyclone : l’information (en haut) commande l’énergie (en bas)',
+        CONVENTION + ' En haut, l’anémomètre acquiert la vitesse du vent ; la carte la compare au seuil de 100 km/h et communique un ordre de fermeture. En bas, la batterie de la station alimente ; un relais, commandé par la carte, distribue l’énergie électrique au vérin électrique, qui la convertit en énergie mécanique : sa tige sort ; le bras et les charnières transmettent ce mouvement au volet, qui se ferme.',
+        h=800)
+    d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
+    d.block(160,125,'ACQUÉRIR','Anémomètre',CYAN,w=230)
+    d.block(570,125,'TRAITER','Carte : vent > 100 km/h ?\nAlors fermer',VIOLET,w=290)
+    d.block(1040,125,'COMMUNIQUER','Sortie de commande\nde la carte',GREEN,w=250)
+    d.arrow([(390,163),(560,163)],CYAN,'Vitesse du vent',475,143)
+    d.arrow([(860,163),(1030,163)],CYAN,'Décision',945,143)
+    d.arrow([(1165,282),(1165,322),(595,322),(595,400)],GREEN,'Ordre de fermeture : l’ordre descend',1180,307,dashed=True,lanchor='start')
+    d.section(352,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
+    d.block(150,410,'ALIMENTER','Batterie 12 V\nde la station',YELLOW,w=220,stock=True)
+    d.block(480,410,'DISTRIBUER','Relais commandé\npar la carte',CYAN,w=230)
+    d.block(830,410,'CONVERTIR','Vérin électrique\n(un moteur et une vis)',VIOLET,w=240)
+    d.block(1190,410,'TRANSMETTRE','Bras et charnières\ndu volet',GREEN,w=240)
+    d.arrow([(370,448),(470,448)],ORANGE,'Énergie\nélectrique',420,385)
+    d.arrow([(710,448),(820,448)],ORANGE,'Énergie\nélectrique',765,385)
+    d.arrow([(1070,448),(1180,448)],ORANGE,'Énergie\nmécanique',1125,385)
+    d.arrow([(1430,448),(1555,448)],ORANGE,'Énergie\nmécanique',1492,385)
+    d.text(1492,510,'Fermer\nle volet',WHITE,22,True)
+    d.text(800,650,'Le vérin électrique : un moteur fait tourner une vis, la vis fait sortir la tige.',BLUE,19)
+    d.text(800,690,'Électrique → mécanique : la tige pousse le volet. On dit aussi cinétique, pour le mouvement.',BLUE,19)
+    d.text(800,750,PIED_CONVENTION,BLUE,19)
+    d.save(C4/'3e/3e_C4.1/Images/chaine_volet_anticyclone.svg')
+
+FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
 
 if __name__=='__main__':
     import sys
