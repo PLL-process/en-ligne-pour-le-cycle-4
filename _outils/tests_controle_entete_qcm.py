@@ -48,6 +48,15 @@ def main():
         elif attendu and attendu not in texte: echecs.append(titre + " : message sans « %s »\n     %s" % (attendu, texte.strip()))
 
     cas("un QCM qui dit vrai", qcm(), False, "dit vrai")
+    # 17/11/2026 (n°51, n°338) : le titre et le sous-titre du gabarit SOS serre, dans un lot du même niveau
+    cas("le h1 et le sous-titre du gabarit « SOS serre », même niveau (le Book Train, 4e)",
+        qcm(niveau="4e", h1="Thème 2 · Martinique — 4e · Atelier : QCM — SOS serre",
+            sub="Adresse IP fixe (10 q) · résoudre les pannes de communication (10 q)",
+            labels={"C4.1": "4e_C4.1 — a"}, questions=[q("C4.1")] * 4,
+            pied="QCM d’entraînement 4e_C4.1 · Thème 2"), True, "reste du gabarit", lot="4e_C4.1_book-train")
+    cas("« SOS serre » dans son propre lot (4e_C4.7) n'est pas un reste",
+        qcm(niveau="4e", h1="QCM — SOS serre", sub="Adresse IP fixe (10 q)", labels={"C4.7": "4e_C4.7 — a"},
+            questions=[q("C4.7")] * 4, pied="QCM d’entraînement 4e_C4.7 · Thème 2"), False, lot="4e_C4.7")
     cas("le menu d'un autre lot : le mode « cible » ne rend rien",
         qcm(options=["BOI", "LIR", "MOD"], labels={"C1.3": "5e_C1.3 — a", "C1.4": "5e_C1.4 — b", "BOI": "La boîte", "LIR": "Lire", "MOD": "Modifier"}),
         True, "ne rend rien")
