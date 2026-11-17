@@ -65,6 +65,9 @@ def norm(c):
     return re.sub(r"^[345]e_", "", c)
 
 
+GABARIT_ORIGINE = ("SOS serre", "Adresse IP fixe")   # « Packet Tracer » est légitime dans les lots réseau (3e_C4.8, 5e_C4.7)
+
+
 def juger(chemin):
     """None si le QCM n'est pas dans un dossier de lot ; sinon la liste des écarts."""
     lot = os.path.basename(os.path.dirname(chemin))
@@ -94,6 +97,16 @@ def juger(chemin):
                             if n != niveau and "%s_%s" % (n, c) not in complets})
         if etrangers:
             ecarts.append("%s nomme un autre niveau : %s" % (nom, ", ".join(etrangers)))
+    # n°51 et n°338 (17/11/2026) : le titre AFFICHÉ (h1) et le sous-titre sont ceux du lot. L'audit externe du QCM de
+    # Shenzhen relevait « SOS serre » en titre ; faux pour Shenzhen, il restait vrai pour le Book Train (4e) et pour
+    # l'auto-test de 3e_C6.2 : leur h1 et leur sous-titre venaient du gabarit, et aucun code d'un autre niveau ne le
+    # trahissait. Mesure : aucune trace du lot d'origine du gabarit ne paraît hors de ce lot. (Comparer le h1 au titre
+    # de l'onglet a été essayé et écarté : 30 QCM les écrivent différemment, à juste titre — n°248.)
+    if not lot.startswith("4e_C4.7"):
+        for reste in GABARIT_ORIGINE:
+            for nom in ("h1", "sous-titre", "badges"):
+                if reste in zones[nom]:
+                    ecarts.append("%s porte « %s », un reste du gabarit (lot 4e_C4.7, SOS serre)" % (nom, reste))
     if zones["pied"] and questions:
         pied_codes = {c for _n, c in CODE.findall(zones["pied"])} | set(re.findall(r"\bC\d\.\d\b", zones["pied"]))
         if code_lot not in pied_codes and not (codes_q & pied_codes):
