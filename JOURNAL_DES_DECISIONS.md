@@ -32266,3 +32266,30 @@ n'apparaissaient que dans la note « Cinétique ou mécanique ? » de la veille.
 - **Pas fait** : la synthèse du lampadaire (`5e_C4.1`, SFC 11 en 5e) s'imprime déjà sur trois pages sur `main`, comme
   celle de `4e_C4.1` : les ramener à deux pages est un lot à part. La règle est écrite dans le skill
   `chaine-energie-fonctionnelle`.
+
+## 17/11/2026 — Les cinq conversions, lot 5e : nommer
+
+La progression des cinq conversions sur le cycle 4 (`docs/specifications/progression-cinq-conversions-cycle4.md`,
+PR #754) est validée par Pascal le 17/11/2026 (« tu as carte blanche »). Premier étage, la 5e : **nommer** l'énergie
+qui entre et celle qui sort de chaque constituant (SFC 11, 5e).
+
+- **Le dessin commun** : `_outils/cinq_conversions/generer.py` dessine une seule fois les cinq constituants, en cinq
+  colonnes à lire de haut en bas — muet pour la question (règle n°331), complet pour la correction (n°336). Il le pose
+  à l'identique dans chaque lot ; `--verifier` refuse une copie qui a divergé. Cinq colonnes et non cinq lignes : épinglé
+  au-dessus des questions, le schéma n'a que 30 % de la hauteur de l'écran ; en colonnes il reste lisible à 1 280 px.
+  À 390 px il se lit petit, comme les autres schémas larges : le lien « Ouvrir le schéma en grand » est là.
+- **Le lampadaire (`5e_C4.1`), activité 2, partie d) « Et ailleurs ? Les cinq conversions à connaître »** : cinq
+  questions à choix (moteur électrique, lampe, radiateur, génératrice, vérin), chacune avec un pourquoi par mauvaise
+  proposition (`mission_5e_C4.1.json`, posé par `enrichir.py`) ; la correction donne les cinq conversions, la chaleur
+  perdue, « on dit aussi mécanique », et le schéma complet ; une erreur fréquente de plus (inverser le moteur et la
+  génératrice). L'activité passe de 40 à 45 min, de 11 à 16 réponses. Séance 2 : 870 mots visibles.
+- **L'indicateur du hall (`5e_C7.4`), activité 1** : la dynamo sort du Bonus. Une sixième source, la lampe à manivelle :
+  « quelle énergie entre dans la génératrice ? » (cinétique) ; la correction dit « génératrice : mécanique →
+  électrique ». Activité 1 : 7 réponses au lieu de 6.
+- Vérifications : bancs `5e_C4.1` 66 / 66 (un test de plus pour la partie d) et 34 / 34 ; `5e_C7.4` 35 / 35, 34 / 34,
+  QCM 32 / 32 ; `banc_generique.mjs` sur les deux pages, aucun refus ; `enrichir.py --verifier` à jour ;
+  `controle_schemas` 0 ✘ 0 ⚠ sur les deux dessins ; schéma sous les yeux, aération, liens, médias, sigles, règles
+  visibles, mode essentiel, hors ligne : verts. `banc_papier.py` refuse `5e_C7.4` séance 1 (6 boutons imprimés) : c'était
+  déjà le cas sur `main`, à reprendre à part.
+- Suite : le lot 4e (« Quel constituant dans CONVERTIR ? » dans le Book Train, le radiateur à thermostat dans
+  `4e_C6.1`), puis le lot 3e, puis les QCM.
