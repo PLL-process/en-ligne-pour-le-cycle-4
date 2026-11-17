@@ -76,6 +76,13 @@
   .option:disabled{cursor:default;opacity:.92}
   .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
   .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
   .correction-bloc.show{display:block}
   .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
@@ -162,6 +169,22 @@
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Comment le lampadaire capte, stocke et utilise son énergie&nbsp;: sa <b>chaîne d'énergie</b>.
+    <br>Comment il «&nbsp;décide&nbsp;» de s'allumer&nbsp;: sa <b>chaîne d'information</b>, ses données et son réseau.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Distinguer une fonction (un verbe) d'une solution (un objet).
+    <br>Dire quelle énergie entre, est stockée, puis sort.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Une fonction est un verbe&nbsp;; un objet, comme le capteur, est une solution.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -286,7 +309,7 @@ const QUESTIONS = [
  expl:"La fonction dit CE QUE l'objet doit faire ; la solution est L'ÉLÉMENT choisi pour le faire. On énonce d'abord les fonctions, puis on choisit les solutions.",
  ex:"Fonction « tenir debout » → solution « mât en acier galvanisé ».",
  err:"Inverser les deux : la LED n'est pas une fonction, c'est un choix technique.",
- d:["C'est l'inverse !","","Rien de décoratif : tout élément a un rôle.","Énergie et information sont d'autres notions de la séquence."],
+ d:["C'est l'inverse : « éclairer » dit ce que le lampadaire doit faire (la fonction) ; le bloc de LED est l'objet qui le fait (la solution).","","Rien de décoratif : tout élément a un rôle.","Énergie et information sont d'autres notions de la séquence."],
  ret:"Fonction = ce qu'il faut faire · Solution = l'élément choisi pour le faire."},
 {c:"C4.1",n:"Associer sur le schéma",q:"Sur le lampadaire, quelle solution assure la fonction « décider d'allumer ou non » ?",
  img:{src:"Images/lampadaire_fonctions_solutions.svg",alt:"Lampadaire annoté : panneau solaire, LED, capteurs, carte électronique, batterie, mât"},
@@ -294,7 +317,7 @@ const QUESTIONS = [
  expl:"C'est la carte électronique qui applique la règle SI…ALORS : elle seule « décide ». Les autres éléments captent, stockent, tiennent ou éclairent.",
  ex:"Sur le schéma, la fonction « décider » est reliée au boîtier de la carte.",
  err:"Attribuer la décision à un capteur ou à la batterie.",
- d:["Le panneau capte l'énergie, il ne décide rien.","La batterie stocke.","","Le mât porte l'ensemble."],
+ d:["Le panneau capte l'énergie, il ne décide rien.","La batterie stocke l'énergie pour la nuit : elle la garde, elle ne choisit pas quand allumer.","","Le mât porte l'ensemble en hauteur : il ne reçoit aucune information, il ne peut rien décider."],
  ret:"Dans un objet « intelligent », l'élément qui décide est la carte électronique (avec son programme)."},
 {c:"C4.1",n:"Plusieurs solutions possibles",q:"Pour la fonction « éclairer », on aurait aussi pu choisir une ampoule classique au lieu des LED. Pourquoi les LED ?",
  o:["Elles sont plus lourdes à installer","Elles chauffent davantage que les anciennes","Il n'y avait pas d'autre choix possible","Elles consomment beaucoup moins d'énergie"],r:3,
@@ -334,11 +357,11 @@ const QUESTIONS = [
  d:["Le panneau capte et convertit, il ne garde rien.","La LED consomme, elle ne stocke pas.","","Le capteur appartient à la chaîne d'INFORMATION."],
  ret:"STOCKER = garder l'énergie pour plus tard : c'est le rôle de la batterie."},
 {c:"C4.2",n:"Pourquoi un interrupteur commandé",q:"À quoi sert l’interrupteur commandé qui alimente les LED ?",
- o:["À rendre le mât plus élégant","À produire un supplément d'énergie la nuit","À refroidir le mât par temps chaud","À distribuer l'énergie selon l'ordre reçu"],r:3,
+ o:["À mesurer la luminosité de la rue","À produire un supplément d'énergie la nuit","À stocker l'énergie pour la nuit","À distribuer l'énergie selon l'ordre reçu"],r:3,
  expl:"C'est le « robinet » de la chaîne : il laisse passer l'énergie quand la carte l'ordonne (veille 30 %, plein 100 %, éteint). Distribuer = contrôler le passage.",
  ex:"C'est ici que la chaîne d'INFORMATION (l'ordre) rejoint la chaîne d'ÉNERGIE (le courant).",
  err:"Oublier ce maillon : sans lui, les LED seraient toujours allumées à fond.",
- d:["Chaque bloc a un rôle précis.","Aucun élément ne PRODUIT d'énergie : on ne fait que la transformer.","Rien à voir !",""],
+ d:["Mesurer, c'est le rôle du capteur : l'interrupteur commandé laisse passer ou coupe l'énergie vers les LED.","Aucun élément ne PRODUIT d'énergie : on ne fait que la transformer.","Stocker, c'est le rôle de la batterie : l'interrupteur commandé ne garde aucune énergie, il la laisse passer ou non.",""],
  ret:"DISTRIBUER = laisser passer l'énergie au bon moment et au bon niveau, sur ordre de la carte."},
 {c:"C4.2",n:"Chaîne d'un autre objet",q:"Chaîne d'énergie d'une lampe de poche : quelle suite est correcte ?",
  o:["pile → interrupteur → ampoule","ampoule → pile → interrupteur","interrupteur → ampoule → pile","pile → ampoule → pile"],r:0,
@@ -363,18 +386,18 @@ const QUESTIONS = [
  d:["L'électricité, c'est ce qui en SORT.","La chimie, c'est dans la batterie.","","Le soleil ne fait pas de bruit exploitable !"],
  ret:"Panneau solaire : énergie lumineuse EN ENTRÉE → énergie électrique EN SORTIE."},
 {c:"C4.3",n:"Stockage chimique",q:"Sous quelle forme la batterie STOCKE-t-elle l'énergie ?",
- o:["Sous forme lumineuse","Sous forme sonore","Elle ne stocke rien","Sous forme chimique"],r:3,
+ o:["Sous forme lumineuse","Sous forme électrique, comme dans un fil","Elle ne stocke rien","Sous forme chimique"],r:3,
  expl:"Dans une batterie, l'électricité provoque des réactions chimiques réversibles : l'énergie est gardée sous forme CHIMIQUE, puis reconvertie en électricité à la demande.",
  ex:"Comme la nourriture stocke de l'énergie chimique que ton corps convertit en mouvement.",
  err:"Dire qu'une batterie « contient de l'électricité » telle quelle.",
- d:["Aucune lumière dans la batterie.","Aucun son non plus.","Stocker est exactement son rôle !",""],
+ d:["Aucune lumière dans la batterie.","Dans le fil, l'énergie est électrique ; dans la batterie, elle est gardée sous forme chimique, et redevient électrique quand on s'en sert.","Stocker est exactement son rôle !",""],
  ret:"Une batterie stocke l'énergie sous forme CHIMIQUE."},
 {c:"C4.3",n:"Sortie de la LED",q:"Quelles énergies SORTENT du bloc de LED ?",
- o:["De la lumière, et un peu de chaleur","Uniquement du son, sans lumière","De l'énergie chimique stockée","Du vent, comme une éolienne"],r:0,
+ o:["De la lumière, et un peu de chaleur","Uniquement de la lumière, sans aucune chaleur","De l'énergie chimique stockée","De l'énergie électrique, renvoyée vers la batterie"],r:0,
  expl:"La LED convertit l'électricité en lumière — très efficacement, mais aucune conversion n'est parfaite : une petite part se perd en chaleur.",
  ex:"Une ampoule classique perd ÉNORMÉMENT en chaleur : c'est pour ça qu'elle brûle les doigts et vide les batteries.",
  err:"Oublier les pertes : toute conversion en produit.",
- d:["","La LED est silencieuse.","La chimie reste dans la batterie.","Aucun souffle ne sort d'une LED !"],
+ d:["","Une LED chauffe un peu : une petite partie de l'énergie y devient de la chaleur.","La chimie reste dans la batterie.","L'énergie électrique entre dans les LED, elle n'en ressort pas : elle y devient de la lumière et un peu de chaleur."],
  ret:"Toute conversion produit l'énergie voulue + des pertes (souvent en chaleur)."},
 {c:"C4.3",n:"La génératrice",q:"La dynamo d'un vélo est une petite génératrice : la roue la fait tourner. Quelle énergie y entre, et quelle énergie en sort ?",
  img:{src:"Images/cinq_constituants_muet.svg",alt:"Les cinq constituants du programme, de gauche à droite : moteur électrique, lampe, radiateur, génératrice, vérin ; pour chacun, l'énergie qui entre et celle qui sort sont à trouver"},
@@ -411,7 +434,7 @@ const QUESTIONS = [
  expl:"On classe les matériaux en familles : métalliques (acier, alu, cuivre), organiques/plastiques (polycarbonate), céramiques et verres, et matériaux naturels (bois). Chaque famille a ses propriétés générales.",
  ex:"Métaux : solides et conducteurs · plastiques : légers et isolants · verres : transparents et durs.",
  err:"Confondre famille (métal) et matériau précis (aluminium).",
- d:["","Le polycarbonate n'est pas un métal !","Aucun bois dans ce trio.","Trois familles bien différentes."],
+ d:["","Le polycarbonate n'est pas un métal !","Il n'y a aucun bois dans ce trio ; et l'acier, cité en premier, est un métal, pas une céramique.","Trois familles bien différentes."],
  ret:"Familles : métaux · plastiques · céramiques/verres · matériaux naturels — chacune avec ses propriétés."},
 {c:"C4.4",n:"Conducteur",q:"Les fils électriques sont en cuivre gainé de plastique. Pourquoi CE duo ?",
  o:["Le cuivre est joli et le plastique aussi","Les deux sont transparents à la lumière","C'est un hasard de fabrication","Le cuivre conduit, le plastique isole"],r:3,
@@ -430,11 +453,11 @@ const QUESTIONS = [
  d:["Ça, c'est de l'énergie, pas de l'information.","","Le piège : la LED ne communique rien, elle convertit l'énergie électrique en lumière. Elle est dans la chaîne d'énergie.","La batterie ne fait pas partie de la chaîne d'information."],
  ret:"Chaîne d'information : ACQUÉRIR → TRAITER → COMMUNIQUER."},
 {c:"C4.5",n:"Rôle du capteur",q:"Le capteur de luminosité DÉCIDE-t-il d'allumer le lampadaire ?",
- o:["Oui, c'est lui le chef du lampadaire","Oui, la nuit il appuie sur un bouton","Non, c'est la batterie qui décide","Non : il mesure, c'est la carte qui décide"],r:3,
+ o:["Oui, c'est lui le chef du lampadaire","Oui, il allume dès qu'il mesure moins de lumière","Non, c'est la batterie qui décide","Non : il mesure, c'est la carte qui décide"],r:3,
  expl:"Un capteur transforme une grandeur (lumière) en information exploitable — rien de plus. La décision appartient au TRAITEMENT (la carte et sa règle SI…ALORS).",
  ex:"Ton thermomètre mesure la fièvre ; c'est le médecin (ou toi) qui décide quoi faire.",
  err:"Prêter au capteur un pouvoir de décision.",
- d:["Il n'a aucune règle en lui : il mesure.","Aucun bouton là-dedans !","La batterie fournit l'énergie, elle ne décide rien.",""],
+ d:["Il n'a aucune règle en lui : il mesure.","Le capteur envoie seulement sa mesure : c'est la carte qui la compare au seuil, et qui décide d'allumer.","La batterie fournit l'énergie, elle ne décide rien.",""],
  ret:"Capteur = mesurer · Carte = décider. Ne jamais confondre."},
 {c:"C4.5",n:"La règle de décision",q:"D'après la règle du lampadaire, que se passe-t-il la NUIT quand PERSONNE ne passe ?",
  o:["Veille : lumière faible, à 30 %","Pleine puissance toute la nuit","Extinction totale jusqu'au matin","Il clignote toute la nuit"],r:0,
@@ -445,11 +468,11 @@ const QUESTIONS = [
  ret:"La règle du lampadaire a TROIS états : éteint (jour) · veille (nuit calme) · plein (nuit + passage)."},
 {c:"C4.5",n:"Info commande énergie",q:"Que représente la flèche verte qui va de la chaîne d'information vers la chaîne d'énergie ?",
  img:{src:"Images/chaines_energie_information_lampadaire.svg",alt:"Flèche montrant que la chaîne d'information commande la chaîne d'énergie"},
- o:["Un câble d'alimentation électrique","De la lumière envoyée vers la LED","L'ordre : l'information commande","Une erreur du schéma à corriger"],r:2,
+ o:["Un câble d'alimentation électrique","De la lumière envoyée vers la LED","L'ordre : l'information commande","Une information qui remonte du capteur"],r:2,
  expl:"Les deux chaînes coopèrent : l'énergie fait fonctionner, l'information décide. L'ordre calculé par la carte ouvre ou ferme le « robinet » d'énergie (l'interrupteur commandé).",
  ex:"Nuit + passage → ordre « 100 % » → l'interrupteur commandé laisse passer l'énergie vers les LED.",
  err:"Croire que les deux chaînes s'ignorent.",
- d:["Ce n'est pas de l'énergie qui circule là : c'est un ORDRE.","La lumière sort des LED, pas de la carte.","","Le schéma est correct !"],
+ d:["Ce n'est pas de l'énergie qui circule là : c'est un ORDRE.","La lumière sort des LED, pas de la carte.","","Ce qui vient du capteur entre dans la chaîne d'information ; cette flèche en sort, vers la chaîne d'énergie : c'est un ordre."],
  ret:"La chaîne d'information COMMANDE la chaîne d'énergie : c'est leur coopération qui rend l'objet intelligent."},
 /* ═══ C4.6 — descripteurs (5 q) ═══ */
 {c:"C4.6",n:"Bon descripteur",q:"Pour la colonne « niveau de batterie en % », le meilleur descripteur est…",
@@ -457,7 +480,7 @@ const QUESTIONS = [
  expl:"Un bon descripteur est court, explicite, sans espace ni accent, et précise l'unité si utile. Il doit rester compréhensible dans six mois par n'importe qui.",
  ex:"La table du parc : id · emplacement · batterie_pct · etat · annee_pose.",
  err:"Les espaces et les noms vagues (b, donnée3) rendent les tables inutilisables.",
- d:["Trop long et avec des espaces.","","Illisible : b comme quoi ?","Ne décrit rien."],
+ d:["Trop long et avec des espaces.","","Illisible : b comme quoi ?","« donnée3 » ne dit ni ce qui est mesuré ni l'unité : un descripteur se comprend sans explication."],
  ret:"Descripteur = nom de colonne court, clair, sans espace, avec l'unité si besoin."},
 {c:"C4.6",n:"Ligne = objet",q:"Dans la table du parc, que représente UNE LIGNE ?",
  o:["Tous les lampadaires à la fois","Une seule donnée du parc","La mairie qui gère le parc","UN lampadaire et toutes ses données"],r:3,
@@ -504,11 +527,11 @@ const QUESTIONS = [
  d:["Internet est l'interconnexion de réseaux du monde entier : autre chose !","","C'est le rôle de l'imprimante.","Il transporte des données, pas de l'énergie de charge."],
  ret:"Commutateur = relie les équipements DU réseau local entre eux."},
 {c:"C4.7",n:"Filaire vs sans fil",q:"Quelle est la différence entre PC-TECHNO-01 et TABLETTE-07 dans leur accès au réseau ?",
- o:["Le PC est plus intelligent que la tablette","La tablette n'est pas sur le réseau","Le PC est relié par câble, la tablette en Wi-Fi","Aucune différence entre les deux"],r:2,
+ o:["Le PC a une adresse, la tablette n'en a pas","La tablette n'est pas sur le réseau","Le PC est relié par câble, la tablette en Wi-Fi","Aucune différence entre les deux"],r:2,
  expl:"Deux moyens d'accès au MÊME réseau : le câble (fiable, rapide) et le Wi-Fi via la borne (pratique, mobile). Une fois connectés, tous communiquent pareil.",
  ex:"Trait plein = câble ; petits traits = ondes, sur le schéma.",
  err:"Croire que le Wi-Fi est un AUTRE réseau : c'est un accès sans fil au même réseau local.",
- d:["L'intelligence n'a rien à voir avec le câble !","Si : par la borne Wi-Fi.","","La différence, c'est le moyen d'accès."],
+ d:["Chaque appareil du réseau a son adresse, la tablette aussi : la différence est le moyen d'accès, câble ou Wi-Fi.","Si : la tablette est sur le réseau, elle y accède sans fil, par la borne Wi-Fi.","","La différence, c'est le moyen d'accès."],
  ret:"Filaire (câble) et sans fil (Wi-Fi via la borne) = deux accès au MÊME réseau local."},
 {c:"C4.7",n:"Le serveur",q:"À quoi sert le SERVEUR-COLLEGE ?",
  o:["À stocker les dossiers des classes","À distribuer le courant électrique","À bloquer le réseau du collège","À remplacer le professeur en classe"],r:0,
@@ -526,11 +549,11 @@ const QUESTIONS = [
  d:["L'enjeu est la livraison, pas l'esthétique.","Les machines n'aiment rien — elles ont besoin d'ADRESSES.","","Sans identification, aucun message n'arrive."],
  ret:"Identifier chaque terminal de façon unique = condition pour livrer les messages au bon appareil."},
 {c:"C4.8",n:"Le conflit de noms",q:"Deux tablettes s'appellent toutes les deux « TABLETTE-07 ». Conséquence ?",
- o:["Conflit : le réseau ne sait plus à qui livrer","Tout fonctionne deux fois mieux","Les tablettes doublent de vitesse","Le professeur reçoit tous les messages"],r:0,
+ o:["Conflit : le réseau ne sait plus à qui livrer","Chaque tablette reçoit la moitié des messages","La seconde tablette se renomme toute seule","Le professeur reçoit tous les messages"],r:0,
  expl:"Un doublon d'identification rend la livraison ambiguë : c'est comme deux maisons avec la même adresse. Les réseaux détectent et refusent ces conflits.",
  ex:"Le jeu du courrier de l'activité 6 : le facteur renonce ou se trompe.",
  err:"Croire qu'un doublon « passe inaperçu » : il casse la communication.",
- d:["","Deux fois plus mal, plutôt !","Aucun rapport avec la vitesse.","Le professeur n'a rien demandé 😉"],
+ d:["","Le réseau ne partage pas : avec deux appareils du même nom, il ne sait plus à qui livrer un message.","Rien ne renomme un appareil tout seul : c'est à la personne qui l'installe de lui donner un nom unique.","Aucun message ne part vers le professeur : le réseau livre au nom demandé, et ici ce nom désigne deux appareils."],
  ret:"Deux identifications identiques = conflit : la livraison devient impossible ou erronée."},
 {c:"C4.8",n:"Message sans destinataire",q:"Que devient un message envoyé SANS destinataire indiqué ?",
  o:["Il arrive partout à la fois, c'est pratique","Il ne peut pas être livré — comme une lettre sans adresse","Il attend au commutateur pour toujours et le bloque","Il s'imprime tout seul"],r:1,
@@ -604,6 +627,58 @@ const COMP_LABELS={
 const N=QUESTIONS.length;
 
 /* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  fonction:"Fonction ou solution ? Ce que l'objet doit faire, et ce qui le fait",
+  chaine:"La chaîne d'énergie : stocker, distribuer, et remonter la chaîne",
+  formes:"Quelle forme d'énergie entre, est stockée, puis sort ?",
+  materiaux:"Le matériau choisi pour son usage, et sa famille",
+  information:"Le capteur mesure, la carte décide, l'ordre commande",
+  donnees:"Une table de données : un descripteur clair, une ligne par objet, un nombre sans unité",
+  reseau:"Le réseau : terminaux, commutateur, serveur, câble ou Wi-Fi",
+  nom:"Un nom unique pour chaque terminal : sinon, à qui livrer ?"
+};
+const PIEGE_DE_NOTION={
+  "Fonction vs solution":"fonction",
+  "Associer sur le schéma":"fonction",
+  "Plusieurs solutions possibles":"fonction",
+  "Transfert":"fonction",
+  "Un constituant, deux fonctions":"fonction",
+  "Lire les branchements":"chaine",
+  "Fonction stocker":"chaine",
+  "Pourquoi un interrupteur commandé":"chaine",
+  "Chaîne d'un autre objet":"chaine",
+  "Remonter la chaîne":"chaine",
+  "Entrée du panneau":"formes",
+  "Stockage chimique":"formes",
+  "Sortie de la LED":"formes",
+  "La génératrice":"formes",
+  "Où passe le reste":"formes",
+  "Matériau du mât":"materiaux",
+  "Choisir selon l'usage":"materiaux",
+  "Familles de matériaux":"materiaux",
+  "Conducteur":"materiaux",
+  "Constituants":"information",
+  "Rôle du capteur":"information",
+  "La règle de décision":"information",
+  "Info commande énergie":"information",
+  "Bon descripteur":"donnees",
+  "Ligne = objet":"donnees",
+  "Lire pour agir":"donnees",
+  "Pourquoi des données":"donnees",
+  "Nombre ou texte":"donnees",
+  "Les terminaux":"reseau",
+  "Le commutateur":"reseau",
+  "Filaire vs sans fil":"reseau",
+  "Le serveur":"reseau",
+  "Pourquoi identifier":"nom",
+  "Le conflit de noms":"nom",
+  "Message sans destinataire":"nom",
+  "Débranché mais vrai":"nom"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
 let etat={
   reponses:Array(N).fill(null),   // index choisi ou null
   validees:Array(N).fill(false),
@@ -615,6 +690,7 @@ let etat={
   identite:{}
 };
 let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -624,7 +700,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -673,6 +749,11 @@ function setMode(mode){
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
     if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
     if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
@@ -681,6 +762,10 @@ function setMode(mode){
 }
 document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
 /* ───── grille + filtres ───── */
 let filtre="toutes";
@@ -753,7 +838,7 @@ function rendreQuestion(){
     b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
     if(etat.validees[i]){
       b.disabled=true;
-      if(k===Q.r) b.classList.add("bonne");
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
       if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
     } else {
       if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
@@ -775,6 +860,27 @@ function rendreCorrection(){
   const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
   let dist="";
   Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
   bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
   bloc.innerHTML=`
     <h3>${verdict}</h3>
@@ -797,6 +903,8 @@ $("btnValider").addEventListener("click",()=>{
     if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -863,6 +971,11 @@ function rendreResultat(){
   let html="";
   if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
   if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
   const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
     note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":

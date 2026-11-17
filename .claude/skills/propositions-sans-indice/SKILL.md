@@ -108,8 +108,8 @@ python3 _outils/controle_longueurs.py             # la bonne réponse ne devient
 Si le lot a un générateur (`_generation/q.py`, `build_qcm.py`), la même correction s'y écrit, sinon la prochaine
 régénération la défait ; un générateur qui n'est plus à jour de sa page se signale à Pascal, il ne se relance pas.
 
-État du 17/11/2026 au soir : 72 QCM, 0 « ! », 0 indice vide, 76 indices creux (dont 53 dans `5e_C4.1` et les trois QCM
-de réseau de `4e_C4.7`, que la vague 3b reprend).
+État du 17/11/2026 au soir : 72 QCM, 0 « ! », 0 indice vide, 14 indices creux (thème 3 et ateliers) ; le thème 2
+est à zéro après la vague 3b (`5e_C4.1` et les trois QCM de réseau de `4e_C4.7` : 62 indices et intrus réécrits).
 
 ## 5. Généraliser et dire
 

@@ -32906,3 +32906,22 @@ son pourquoi »), plutôt que doublé par un second skill. Trois outils entrent 
 - `fabriquer.py` : le plan des pièges par numéros → `qcm_aides_<lot>.json`, notions recopiées mot pour mot, couverture
   vérifiée, typographie française ; il reproduit à l'octet près les JSON des vagues 2 et 3a.
 `qcm-aides-et-pieges` renvoie à ces outils ; `controle-qualite-lot` porte la ligne de la mesure.
+
+## 17/11/2026 — Généralisation, lot 3 (vague 3b) : le thème 2 est complet
+
+Les quatre derniers QCM du thème 2 portent la carte, les aides et les pièges : `5e_C4.1` (36 questions, 8 pièges) et
+les trois QCM de réseau de `4e_C4.7` (adressage IP, Zigbee, réseau local « XXL »), chacun avec son
+`qcm_aides_4e_C4.7_<sujet>.json`. **Les 21 QCM du thème 2 sont faits ; 35 QCM sur 72**, 37 à poser (thème 3, ateliers).
+
+Avant la pose, la méthode du skill `propositions-sans-indice` (§ 4), avec ses outils (`indices_creux.mjs`,
+`corriger_question.py`) : **105 remplacements** dans les quatre QCM — 52 indices creux réécrits (« Rien à voir. »,
+« C'est le DHCP. », « Rien n'est illimité. », « Bien au-dessus. ») et une vingtaine d'intrus-plaisanteries changés en
+erreurs réelles (« à refroidir le mât par temps chaud » → « à stocker l'énergie pour la nuit » ; « stocker des films »
+→ « mesurer la température de la pièce » ; « parce qu'ils sont interdits par la loi » → « parce qu'ils n'ont que deux
+ports » ; « des chapitres, des paragraphes, des volumes » → « des fichiers entiers, des bits isolés, des octets un par
+un »). Site : 0 « ! », 0 indice vide, 14 indices creux (thème 3 et ateliers), contre 76 le matin.
+
+Contrôles : `banc_aides` 4 / 4 ; `verif_qcm_coherence` 4 / 4 ; `controle_indices_qcm`, `controle_longueurs`,
+`controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`, `controle_sauvegarde_locale`,
+`controle_boutons_vivants`, `controle_memes_nombres` verts ; export Éléa régénéré, banc vert ; bancs des deux lots
+5 / 5 (dont le banc du QCM de `5e_C4.1`, 25 / 25).
