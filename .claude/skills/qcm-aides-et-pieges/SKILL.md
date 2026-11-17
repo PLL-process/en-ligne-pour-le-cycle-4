@@ -24,8 +24,9 @@ distinction ». Règle d'or n°339. Pilote : `5e_C2.1` (#762). Les 72 QCM du gab
 - **Avant de commencer** : la carte en trois lignes (n°337, skill `avant-de-commencer-trois-lignes`).
 
 Aucun champ neuf dans les questions : le moteur se sert de `d` et de `ret`, que chaque QCM porte déjà. Un `d` vide ou
-creux (« Ce n'est pas la bonne réponse », « Il mesure une tension. ») fait un mauvais indice : le réécrire d'abord, en
-disant pourquoi CETTE proposition ne répond pas à CETTE question (skill `qcm-html-accessible`).
+creux (« Ce n'est pas la bonne réponse », « Il mesure une tension. ») fait un mauvais indice, et un `d` réduit à « ! »
+trahit un intrus-plaisanterie : les réécrire d'abord — `node _outils/qcm_aides/indices_creux.mjs <qcm> --liste`, puis
+`corriger_question.py` (skill `propositions-sans-indice`, § 4).
 
 ## Définir les pièges
 
@@ -43,6 +44,16 @@ Règles :
 - le **libellé** est la question que l'élève doit se poser, dans ses mots : « Interacteur ou pas ? Une règle (une
   exigence), une pièce de l'objet, sa couleur » ; « Quel domaine : ergonomie, sécurité ou développement durable ? » ;
 - 4 à 8 pièges pour 30 questions.
+
+Le plan s'écrit par **numéros de questions**, lus sur `indices_creux.mjs <qcm> --liste` ; `fabriquer.py` recopie les
+notions mot pour mot, refuse une question hors piège ou en double, un piège de moins de trois questions, et met les
+espaces insécables avant « ? » et « : » (sinon « ? » passe seul à la ligne sur téléphone) :
+
+```bash
+python3 _outils/qcm_aides/fabriquer.py <qcm> plan.json     # écrit qcm_aides_<lot>.json à côté du QCM
+#   {"lot": "…" (si le dossier a plusieurs QCM), "avant_de_commencer": {"revoir": […], "savoir_faire": […],
+#    "reussir": ["…", "@std"]}, "pieges": {"cle": ["Libellé ?", [1, 4, 7]], …}}
+```
 
 ## Les données, l'outil
 

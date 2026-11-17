@@ -1,6 +1,6 @@
 ---
 name: propositions-sans-indice
-description: Relire et réécrire les questions à choix d'une séquence pour qu'aucune ne souffle sa réponse — intrus crédibles pour un élève qui n'a pas encore appris, bonne réponse qui ne porte pas sa justification, aucune question qui affiche le résultat de la précédente, échelle d'auto-positionnement rangée et décrite. À utiliser à chaque révision ou audit de séquence, et en écrivant toute question neuve.
+description: Relire et réécrire les questions à choix d'une séquence ET d'un QCM pour qu'aucune ne souffle sa réponse — intrus crédibles pour un élève qui n'a pas encore appris, bonne réponse qui ne porte pas sa justification, aucune question qui affiche le résultat de la précédente, échelle d'auto-positionnement rangée et décrite. Dans un QCM, chaque mauvaise proposition garde un pourquoi qui sert d'indice (jamais « ! », vide ou creux). À utiliser à chaque révision ou audit de séquence ou de QCM, avant de poser les aides d'un QCM (lot 3), et en écrivant toute question neuve.
 ---
 
 # Une question ne souffle pas sa réponse
@@ -67,7 +67,51 @@ La valeur d'un bouton radio est le texte de sa proposition (n°300). Changer un 
 Vérifier : banc du lot, `tests_regle_311_<lot>.mjs`, `banc_generique.mjs` (mode mission : « pourquoi des erreurs »
 complet), `controle_ordre_propositions.py`, `controle_unites.py` (une unité nommée en toutes lettres, n°312).
 
-## 4. Généraliser et dire
+## 4. Dans un QCM (`const QUESTIONS`) : l'intrus et son pourquoi
+
+Né des vagues 1 à 3 du lot 3 (17/11/2026, #772, #773). Dans un QCM du gabarit maison, chaque proposition a son
+pourquoi (`d`, au même rang que dans `o`), et l'indice 💡 de la n°339 l'affiche à l'élève qui l'a choisie. Un `d`
+réduit à « ! » trahissait un **intrus-plaisanterie**, que personne ne choisit et que l'auteur savait tel : « parce que
+le nombre 118 est plus joli », « pour user le clavier de l'ordinateur », « pour économiser l'encre de l'imprimante »,
+« un jeu vidéo éducatif sur les cyclones », « parce que 6 est un chiffre porte-bonheur », « elle joue un son ». Quatorze
+dans `3e_C5.1`, `3e_C6.1`, `4e_C6.2` ; d'autres dans `3e_C4.1`. Une question à quatre propositions dont deux font rire
+est une question à deux propositions.
+
+```bash
+node _outils/qcm_aides/indices_creux.mjs [--detail] [dossier]     # « ! », indices vides, indices creux, par QCM
+node _outils/qcm_aides/indices_creux.mjs <qcm> --liste             # les questions numérotées, et ce qui est à revoir
+```
+
+| Ce que l'outil voit | Ce qu'on fait |
+|---|---|
+| `d` = « ! » | l'intrus est une plaisanterie : **réécrire la proposition** (étape 2, I2), puis son pourquoi |
+| `d` vide pour une mauvaise proposition | écrire son pourquoi : l'élève qui la choisit n'aurait aucun indice |
+| `d` creux : moins de 25 caractères, ou « Rien à voir. », « Faux. », « Python va très bien. » | le réécrire : **pourquoi CETTE proposition ne répond pas à CETTE question** |
+
+Un bon pourquoi nomme ce qui manque à la proposition, sans donner la bonne réponse : « Un multimètre mesure une tension
+ou une intensité : il ne dit pas combien de temps dure la réparation » (et non « Il mesure une tension. ») ; « Python
+lit les tests de haut en bas : le premier test vrai l'emporte, les suivants sont ignorés ». Un intrus réécrit se prend
+dans les erreurs réelles de la notion (le `err` de la question, les pièges de la séquence) : « parce que Python lit
+les tests de bas en haut », « parce que les anciens tests ont pu changer », « pour que l'axe soit serré et ne tourne
+pas », « il est léger, donc peu polluant à fabriquer ».
+
+Le remplacement se fait question par question, jamais par un remplacement global (« ! » ou « Rien à voir. » reviennent
+d'une question à l'autre) :
+
+```bash
+python3 _outils/qcm_aides/corriger_question.py <qcm> remplacements.json
+#   [["morceau unique de l'énoncé", "ancienne chaîne", "nouvelle chaîne"], …] — o et d au même rang ; r ne bouge pas
+node _outils/verif_qcm_coherence.mjs <qcm>        # positions et réfutations alignées
+python3 _outils/controle_longueurs.py             # la bonne réponse ne devient pas la plus longue
+```
+
+Si le lot a un générateur (`_generation/q.py`, `build_qcm.py`), la même correction s'y écrit, sinon la prochaine
+régénération la défait ; un générateur qui n'est plus à jour de sa page se signale à Pascal, il ne se relance pas.
+
+État du 17/11/2026 au soir : 72 QCM, 0 « ! », 0 indice vide, 76 indices creux (dont 53 dans `5e_C4.1` et les trois QCM
+de réseau de `4e_C4.7`, que la vague 3b reprend).
+
+## 5. Généraliser et dire
 
 Mesurer tout le site (`controle_propositions_indices.py` sans chemin) et écrire le compte dans le journal (n°293).
 Un ✘ I4 se corrige dans la PR ; les ⚠ se reprennent à la révision de chaque séquence. Les intrus se réécrivent avec
