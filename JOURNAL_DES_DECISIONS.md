@@ -32504,33 +32504,6 @@ coloré, compétences : verts ; `verif_regles_audit.py` 0 ✘. Export Éléa ré
 reçoivent leur correction d'un coup ; 32 pages attendent d'abord le pourquoi de chaque mauvaise proposition. Les trois
 lignes « Avant de commencer », les aides progressives et les pièges, sur les autres séquences et QCM.
 
-<<<<<<< HEAD
-## 17/11/2026 — Le P0 de l'audit était vrai ailleurs : deux QCM s'affichaient « 4e · SOS serre »
-
-**Le constat.** L'audit joint par Pascal le 17/11/2026 relevait, sur le QCM de Shenzhen, un titre affiché « Thème 2 ·
-Martinique — 4e · Atelier : QCM — SOS serre » et un sous-titre sur l'adresse IP fixe et Packet Tracer. Faux pour
-Shenzhen (corrigé en août, règle n°51). Mais en mesurant les QCM pour la règle n°338, deux autres le portaient
-encore, titre ET sous-titre :
-- le **Book Train** (`4e_C4.1`, QCM des codes 4e_C4.1, C4.2 et C4.4) ;
-- **l'auto-test de la station** (`3e_C6.2`, un QCM de 3e qui annonçait « 4e »).
-Leur `<title>` d'onglet était juste ; le `<h1>` et le sous-titre, ceux que l'élève lit, venaient du gabarit.
-`controle_entete_qcm.py` ne les voyait pas : il cherche un code d'un AUTRE NIVEAU, et « SOS serre » n'en est pas un.
-
-**Ce qui change.**
-- Book Train : « Thème 2 · Martinique — 4e · Atelier : QCM — Un Book Train pour la Schœlcher » ; sous-titre « Décrire
-  l'organisation du Book Train (10 q) · suivre les flux d'énergie (10 q) · repérer la chaîne d'information (10 q) —
-  d'après les schémas de la séquence » (les 30 questions : 10 par code).
-- Auto-test : « Thème 2 · Martinique — 3e · Atelier : QCM — L'auto-test de la station » ; sous-titre « Programmer un
-  algorithme lié à une nouvelle fonctionnalité (30 q) — l'auto-test de la station d'alerte cyclonique, d'après la
-  séquence ».
-- `controle_entete_qcm.py` refuse désormais, dans le titre affiché, le sous-titre et les badges d'un QCM hors du lot
-  `4e_C4.7`, les traces du gabarit d'origine (« SOS serre », « Adresse IP fixe ») ; « Packet Tracer » reste permis (les
-  lots réseau 3e_C4.8 et 5e_C4.7 s'en servent vraiment). Comparer le h1 au titre de l'onglet a été essayé et écarté :
-  30 QCM les écrivent différemment, à juste titre (n°248). Le contrôle, rejoué sur les deux pages d'avant la
-  correction, les refuse ; banc `tests_controle_entete_qcm.py` 14 / 14 (deux cas ajoutés).
-
-Vérifications : `controle_entete_qcm.py` vert sur les 72 QCM ; bancs du Book Train 39 / 39, de `3e_C6.2` 22 / 22.
-=======
 ## 17/11/2026 — Règles d'or n°337, n°338 et n°339 : l'audit « double regard » devient une méthode (skills et outils)
 
 **La demande.** Pascal, le 17/11/2026, à partir de l'audit « double regard » (un élève de 5e, un inspecteur) du QCM de
@@ -32576,4 +32549,29 @@ des QCM : elle s'appuie sur ce que chaque QCM porte déjà (le pourquoi de chaqu
 - `avant-de-commencer-trois-lignes` — écrire les trois lignes d'une séquence et de son QCM (n°337).
 - `qcm-aides-et-pieges` — définir les pièges d'un QCM et poser le moteur (n°339).
 - Mis à jour : `qcm-html-accessible`, `sequence-pedagogique-engageante`, `controle-qualite-lot`, `revision-sequence`.
->>>>>>> origin/main
+
+## 17/11/2026 — Le P0 de l'audit était vrai ailleurs : deux QCM s'affichaient « 4e · SOS serre »
+
+**Le constat.** L'audit joint par Pascal le 17/11/2026 relevait, sur le QCM de Shenzhen, un titre affiché « Thème 2 ·
+Martinique — 4e · Atelier : QCM — SOS serre » et un sous-titre sur l'adresse IP fixe et Packet Tracer. Faux pour
+Shenzhen (corrigé en août, règle n°51). Mais en mesurant les QCM pour la règle n°338, deux autres le portaient
+encore, titre ET sous-titre :
+- le **Book Train** (`4e_C4.1`, QCM des codes 4e_C4.1, C4.2 et C4.4) ;
+- **l'auto-test de la station** (`3e_C6.2`, un QCM de 3e qui annonçait « 4e »).
+Leur `<title>` d'onglet était juste ; le `<h1>` et le sous-titre, ceux que l'élève lit, venaient du gabarit.
+`controle_entete_qcm.py` ne les voyait pas : il cherche un code d'un AUTRE NIVEAU, et « SOS serre » n'en est pas un.
+
+**Ce qui change.**
+- Book Train : « Thème 2 · Martinique — 4e · Atelier : QCM — Un Book Train pour la Schœlcher » ; sous-titre « Décrire
+  l'organisation du Book Train (10 q) · suivre les flux d'énergie (10 q) · repérer la chaîne d'information (10 q) —
+  d'après les schémas de la séquence » (les 30 questions : 10 par code).
+- Auto-test : « Thème 2 · Martinique — 3e · Atelier : QCM — L'auto-test de la station » ; sous-titre « Programmer un
+  algorithme lié à une nouvelle fonctionnalité (30 q) — l'auto-test de la station d'alerte cyclonique, d'après la
+  séquence ».
+- `controle_entete_qcm.py` refuse désormais, dans le titre affiché, le sous-titre et les badges d'un QCM hors du lot
+  `4e_C4.7`, les traces du gabarit d'origine (« SOS serre », « Adresse IP fixe ») ; « Packet Tracer » reste permis (les
+  lots réseau 3e_C4.8 et 5e_C4.7 s'en servent vraiment). Comparer le h1 au titre de l'onglet a été essayé et écarté :
+  30 QCM les écrivent différemment, à juste titre (n°248). Le contrôle, rejoué sur les deux pages d'avant la
+  correction, les refuse ; banc `tests_controle_entete_qcm.py` 14 / 14 (deux cas ajoutés).
+
+Vérifications : `controle_entete_qcm.py` vert sur les 72 QCM ; bancs du Book Train 39 / 39, de `3e_C6.2` 22 / 22.
