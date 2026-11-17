@@ -51,6 +51,15 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 - **Montre chaque écran depuis son début**, même quand l'élève avait défilé dans le précédent. Dans une séquence
   découpée en pages, qui passe à la page suivante en mission y arrive en mission.
 
+**L'éditeur Python reste sous les yeux (17/11/2026).** Pascal, sur `3e_C9.1` : « on dit que l'éditeur Python est
+intégré à l'activité, mais je ne le vois pas ». Une activité « prédire → tester → reporter » pose ses prédictions
+sans l'éditeur — c'est voulu, on prédit avant d'essayer —, puis l'éditeur arrivait avec la première question qui le
+lit et disparaissait aux suivantes, qui lisent pourtant la console. Désormais, l'éditeur (le bloc `.editeur-py`, seul,
+jamais une question avec lui) accompagne chaque écran de question de son activité dès qu'il s'est montré, sur l'écran
+de départ ou sur une question ; et l'annonce de l'éditeur intégré (`.activite-en-ligne` d'une activité qui porte un
+éditeur) se tait sur les écrans qui ne le montrent pas. `banc_editeur.mjs` le vérifie (68 refus sur `main` avant, 0
+après, sur les 5 pages qui portent un éditeur).
+
 ## Ce qu'il ne fait pas
 
 - **Allumé d'emblée** (décision de Pascal du 14/11/2026) : à sa première visite, l'élève arrive en mission. « 📄 Page
@@ -75,6 +84,7 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 | `banc_mission.mjs` | joue le pilote comme un élève, à 390 px et à 1 180 px (25 tests par largeur) |
 | `banc_generique.mjs` | joue **toute** page qui porte le bloc, écran par écran (`--detail` : la liste des écrans) |
 | `banc_barre.mjs` | sur **toute** page qui porte le bloc : la barre d'étapes ne s'éteint pas en revenant en arrière (B1), un écrit dépassé s'allume (B2), un bouton visible ramène en mission une fois la page défilée (B3) ; `--racine` pour une autre copie du site |
+| `banc_editeur.mjs` | sur chaque page qui porte un éditeur Python (`.editeur-py`) : l'annonce « l'éditeur Python est intégré à l'activité » ne s'affiche que sur un écran qui le montre (E1) ; une fois montré dans une activité, l'éditeur reste sur chacun de ses écrans de question jusqu'à « Je retiens » (E2) |
 | `enrichir.py` | écrit dans une page le pourquoi des erreurs et les réponses leurres, depuis `mission_<lot>.json` |
 | `../controle_mode_mission.py` | le bloc d'une page est celui de la source, une fois |
 
