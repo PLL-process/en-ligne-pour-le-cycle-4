@@ -47,7 +47,8 @@ Règles :
 ## Les données, l'outil
 
 ```json
-// qcm_aides_<lot>.json, dans le dossier du lot
+// qcm_aides_<lot>.json, dans le dossier du lot ; un lot à plusieurs QCM : qcm_aides_<lot>_<sujet>.json
+// (4e_C6.2 : _arrosage, _eclairage), « qcm » dit à quelle page il va
 {"qcm": "qcm_….html",
  "avant_de_commencer": {"revoir": ["…"], "savoir_faire": ["…"], "reussir": ["…"]},
  "pieges": {"dedans": {"libelle": "Interacteur ou pas ? …", "notions": ["Définition", "Ce qui contraint", "…"]}},

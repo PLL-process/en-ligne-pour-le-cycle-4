@@ -76,6 +76,13 @@
   .option:disabled{cursor:default;opacity:.92}
   .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
   .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
   .correction-bloc.show{display:block}
   .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
@@ -162,6 +169,22 @@
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Trouver l'origine d'une panne de la station, la réparer, refabriquer une pièce cassée.
+    <br>Et décider s'il vaut mieux réparer ou remplacer.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Proposer des hypothèses, puis les tester dans le bon ordre.
+    <br>Localiser une panne avec des mesures, et lire un plan coté.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>La panne est entre le dernier test correct et le premier test faux.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -386,11 +409,11 @@ const QUESTIONS = [
  d:["","Le papier ne répare rien, il organise.","La forme compte moins que la reproductibilité.","Si : c'est ce qui distingue le dépannage professionnel du bricolage."],
  ret:"Un protocole écrit est reproductible, complet et traçable."},
 {c:"C5.2",n:"Protocole vs arbre",q:"Quelle est la différence entre l'ARBRE de diagnostic et le PROTOCOLE de dépannage ?",
- o:["ce sont deux mots pour la même chose","l'arbre sert surtout aux plantes vertes","l'arbre choisit les tests, le protocole les écrit","le protocole ne contient que la réparation"],r:2,
+ o:["ce sont deux mots pour la même chose","le protocole choisit les tests, l'arbre les écrit","l'arbre choisit les tests, le protocole les écrit","le protocole ne contient que la réparation"],r:2,
  expl:"L'arbre est un OUTIL de décision (quelle question poser ensuite ?) ; le protocole est le DOCUMENT complet de la démarche, qui inclut l'usage de l'arbre, les mesures, la réparation et le retest.",
  ex:"Dans la séquence : activité 2 = lire l'arbre ; activité 3 = rédiger le protocole qui l'utilise.",
  err:"Réduire le protocole à la seule réparation, sans les vérifications amont et aval.",
- d:["Ils sont liés mais distincts : outil de choix vs démarche complète.","!","","Sans observations ni retest, ce n'est plus un protocole."],
+ d:["Ils sont liés mais distincts : outil de choix vs démarche complète.","C'est l'inverse : l'arbre aide à choisir le test suivant, le protocole écrit toute la démarche.","","Sans observations ni retest, ce n'est plus un protocole."],
  ret:"Arbre = outil de décision · Protocole = démarche complète écrite qui l'englobe."},
 /* ═══ C5.3 — réparer (8 q) ═══ */
 {c:"C5.3",n:"Diagnostic panne n°1",q:"Au simulateur : T1 = 12 V (volts) ✔ · T2 = 12 V ✔ · T3 = signal ✔ · T4 = 0 V ✘. Quel élément remplacer ?",
@@ -461,11 +484,11 @@ const QUESTIONS = [
  ret:"Entraxe = distance entre les centres des trous : LA cote critique d'une pièce de fixation."},
 {c:"C5.4",n:"Diamètres",q:"Toujours sur le plan : pourquoi l'alésage du fût fait-il Ø6 alors que l'axe de la girouette fait Ø6 aussi ?",
  img:{src:"Images/plan_cote_support_girouette.svg",alt:"Plan coté montrant l'alésage de 6 millimètres dans le fût de 12 millimètres"},
- o:["par hasard, sans raison particulière","pour que l'axe entre et tourne juste","pour que le plan soit plus joli à lire","parce que 6 est un chiffre porte-bonheur"],r:1,
+ o:["pour que l'axe soit serré et ne tourne pas","pour que l'axe entre et tourne juste","parce que les cotes du support sont des multiples de 6","pour laisser 1 mm de jeu tout autour de l'axe"],r:1,
  expl:"Une pièce « sur mesure » s'ajuste aux pièces existantes : l'alésage reçoit l'axe. En pratique on prévoit un jeu fonctionnel de quelques dixièmes pour la rotation — c'est le rôle des tolérances.",
  ex:"Un alésage à 5,5 mm bloquerait l'axe ; à 8 mm, la girouette aurait du jeu et fausserait la mesure du vent.",
  err:"Choisir les cotes « au pif » au lieu de les relever sur les pièces à assembler.",
- d:["Aucune cote d'un plan n'est due au hasard.","","Les cotes servent à fabriquer, pas à décorer.","!"],
+ d:["Serré, l'axe ne tournerait plus : la girouette doit pivoter librement pour suivre le vent.","","Une cote ne se choisit pas pour faire joli : elle se relève sur la pièce qui vient s'y loger, ici l'axe.","Un millimètre de jeu tout autour ferait trembler la girouette et fausserait la mesure : le jeu réel se compte en dixièmes de millimètre."],
  ret:"Les cotes d'une pièce sur mesure découlent des pièces avec lesquelles elle s'assemble."},
 {c:"C5.4",n:"Choix du procédé (pièce unique)",q:"Pour refabriquer NOTRE support (pièce unique, fût cylindrique + alésage), quel procédé est le plus adapté ?",
  img:{src:"Images/procedes_fabrication_piece.svg",alt:"Comparatif impression 3D, découpe-assemblage, moulage avec avantages et limites"},
@@ -561,6 +584,54 @@ const COMP_LABELS={ "C5.1":"3e_C5.1 — Formuler des hypothèses", "C5.2":"3e_C5
 const N=QUESTIONS.length;
 
 /* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  symptome:"Un symptôme se constate, une hypothèse se teste : ne les confonds pas",
+  ordre:"Dans quel ordre tester ? Le plus rapide d'abord, une seule chose à la fois",
+  protocole:"Le protocole : écrit, ordonné, des constats jusqu'au retest",
+  localiser:"La panne est entre le dernier test correct et le premier faux",
+  fini:"Réparé ? Seul le retest complet le prouve, et la cause se note",
+  securite:"Très basse tension, multimètre, et une pièce de mêmes caractéristiques",
+  plan:"Lire un plan coté : les cotes viennent des pièces qui s'assemblent",
+  procede:"Pièce unique ou série, dehors ou dedans : le procédé et le matériau"
+};
+const PIEGE_DE_NOTION={
+  "Symptôme vs hypothèse":"symptome",
+  "Lire les constats":"symptome",
+  "Formuler des hypothèses":"symptome",
+  "Hypothèses transférées":"symptome",
+  "Ordre de test":"ordre",
+  "Lire l'arbre (parcours)":"ordre",
+  "Pourquoi cet ordre dans l'arbre":"ordre",
+  "Une modification à la fois":"ordre",
+  "Économie de mesures":"ordre",
+  "Définition du protocole":"protocole",
+  "Première étape":"protocole",
+  "Dernière étape":"protocole",
+  "Pourquoi écrire le protocole":"protocole",
+  "Protocole vs arbre":"protocole",
+  "Réparer = démarche complète":"protocole",
+  "Règle de localisation":"localiser",
+  "Appliquer la règle":"localiser",
+  "Diagnostic panne n°1":"localiser",
+  "Après remplacement":"fini",
+  "La panne cachée":"fini",
+  "Fusible grillé : et après ?":"fini",
+  "Sécurité TBT":"securite",
+  "Choisir la pièce de rechange":"securite",
+  "Version matériel réel":"securite",
+  "Lire un plan coté":"plan",
+  "Diamètres":"plan",
+  "Prototype et vérification":"plan",
+  "Choix du procédé (pièce unique)":"procede",
+  "Choix du procédé (série)":"procede",
+  "Choix du matériau":"procede",
+  "Résistance et impression 3D":"procede",
+  "Réparer plutôt que jeter":"procede"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
 let etat={
   reponses:Array(N).fill(null),   // index choisi ou null
   validees:Array(N).fill(false),
@@ -572,6 +643,7 @@ let etat={
   identite:{}
 };
 let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -581,7 +653,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -630,6 +702,11 @@ function setMode(mode){
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
     if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
     if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
@@ -638,6 +715,10 @@ function setMode(mode){
 }
 document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
 /* ───── grille + filtres ───── */
 let filtre="toutes";
@@ -710,7 +791,7 @@ function rendreQuestion(){
     b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
     if(etat.validees[i]){
       b.disabled=true;
-      if(k===Q.r) b.classList.add("bonne");
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
       if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
     } else {
       if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
@@ -732,6 +813,27 @@ function rendreCorrection(){
   const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
   let dist="";
   Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
   bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
   bloc.innerHTML=`
     <h3>${verdict}</h3>
@@ -754,6 +856,8 @@ $("btnValider").addEventListener("click",()=>{
     if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -820,6 +924,11 @@ function rendreResultat(){
   let html="";
   if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
   if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
   const msg= note>=16?"Remarquable ! Le diagnostic et la réparation n'ont plus de secret pour toi — tu es prêt·e pour l'évaluation.":
     note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":

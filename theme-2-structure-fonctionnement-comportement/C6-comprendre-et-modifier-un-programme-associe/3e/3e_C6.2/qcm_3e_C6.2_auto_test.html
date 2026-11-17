@@ -76,6 +76,13 @@
   .option:disabled{cursor:default;opacity:.92}
   .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
   .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
   .correction-bloc.show{display:block}
   .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
@@ -162,6 +169,22 @@
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>L'algorithme d'un <b>auto-test</b>&nbsp;: un programme qui vérifie que la station marche.
+    <br>Et qui dit clairement au gardien ce qui ne va pas.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Lister ce que l'algorithme reçoit et ce qu'il produit.
+    <br>Lire un algorigramme avec une boucle, et le dérouler à la main.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Mets le compteur à 0 avant la boucle, jamais dedans.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -377,7 +400,7 @@ const QUESTIONS = [
  expl:"« 2 défauts » oblige le gardien à monter au mât pour découvrir lesquels. « anémomètre et sirène » lui permet d'emporter les bonnes pièces.",
  ex:"Un voyant de voiture qui dirait seulement « problème » sans dire lequel.",
  err:"Se contenter d'un compteur parce que le programme « marche ».",
- d:["","La longueur n'est pas un objectif.","Le compteur fonctionne très bien seul : il compte.","Aucun tri n'est demandé."],
+ d:["","La longueur n'est pas un objectif.","Le compteur fonctionne très bien seul : il compte.","L'ordre des noms ne change rien au dépannage : le gardien a besoin de savoir QUOI réparer."],
  ret:"Un bon message dit quoi faire, pas seulement qu'il y a un problème."},
 {c:"C6.2",n:"defauts > 0",q:"Pourquoi tester defauts > 0 plutôt que defauts = 0 ?",
  o:["les deux marchent, mais il faut inverser les messages","parce que defauts = 0 est interdit en Python","parce que l'opérateur > est plus rapide que =","parce que defauts ne vaut jamais zéro"],r:0,
@@ -427,7 +450,7 @@ const QUESTIONS = [
  expl:"Le compteur n'augmente que dans la branche « en panne ». Un organe en état ne déclenche aucune instruction : la valeur reste inchangée.",
  ex:"Scénario de l'activité 5 : 1 après l'anémomètre, toujours 1 après le gyrophare en état.",
  err:"Croire qu'un organe en bon état « compense » un défaut.",
- d:["","Aucune instruction ne le décrémente — et ce serait absurde : un défaut trouvé reste un défaut.","Ce serait le bogue de l'initialisation dans la boucle.","Rien ne le multiplie."],
+ d:["","Aucune instruction ne le décrémente — et ce serait absurde : un défaut trouvé reste un défaut.","Ce serait le bogue de l'initialisation dans la boucle.","Le compteur n'augmente que de 1 par organe en panne : rien dans la boucle ne le multiplie."],
  ret:"Un compteur de défauts ne redescend jamais."},
 {c:"C6.2",n:"La défaillance silencieuse",q:"Que se passe-t-il si c'est la LIAISON RADIO qui est en panne ?",
  o:["la sirène se met à sonner à la place","rien : le message part quand même","le programme plante et s'arrête","il détecte la panne sans pouvoir la dire"],r:3,
@@ -536,6 +559,50 @@ const COMP_LABELS={
 const N=QUESTIONS.length;
 
 /* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  es:"Analyser avant d'écrire : ce que l'algorithme reçoit, et ce qu'il produit",
+  compteur:"Le compteur : créé avant la boucle, il ne redescend pas",
+  boucle:"Une boucle parcourt la liste : tout tester, ajouter un organe sans réécrire",
+  algorigramme:"Lire l'algorigramme et le dérouler à la main : losange, flèche de retour, décision finale",
+  message:"Le message dit quoi réparer : un seul message, qui nomme les organes",
+  fiabilite:"Ce qu'un auto-test prouve, et ce qu'il ne peut pas dire"
+};
+const PIEGE_DE_NOTION={
+  "Entrée ou sortie":"es",
+  "Le compteur":"es",
+  "La sortie utile":"es",
+  "Analyser avant d'écrire":"es",
+  "Programmer vs modifier":"es",
+  "Où placer le compteur":"compteur",
+  "Le bogue silencieux":"compteur",
+  "Ce qui vient en premier":"compteur",
+  "Le compteur ne redescend pas":"compteur",
+  "Pourquoi quatre organes":"boucle",
+  "Pourquoi une boucle":"boucle",
+  "La panne n'arrête pas":"boucle",
+  "Ajouter un organe":"boucle",
+  "Le losange":"algorigramme",
+  "La décision finale":"algorigramme",
+  "La flèche de retour":"algorigramme",
+  "Concevoir avant":"algorigramme",
+  "L'indentation":"algorigramme",
+  "Le tableau de suivi":"algorigramme",
+  "L'instruction oubliée":"message",
+  "defauts > 0":"message",
+  "Un seul message":"message",
+  "Le bon message":"message",
+  "Deux essais minimum":"fiabilite",
+  "La défaillance silencieuse":"fiabilite",
+  "Le remède":"fiabilite",
+  "L'auto-surveillance":"fiabilite",
+  "La fréquence":"fiabilite",
+  "Ce que prouve un test réussi":"fiabilite",
+  "La trace":"fiabilite"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
 let etat={
   reponses:Array(N).fill(null),   // index choisi ou null
   validees:Array(N).fill(false),
@@ -547,6 +614,7 @@ let etat={
   identite:{}
 };
 let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -556,7 +624,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -605,6 +673,11 @@ function setMode(mode){
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
     if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
     if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
@@ -613,6 +686,10 @@ function setMode(mode){
 }
 document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
 /* ───── grille + filtres ───── */
 let filtre="toutes";
@@ -685,7 +762,7 @@ function rendreQuestion(){
     b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
     if(etat.validees[i]){
       b.disabled=true;
-      if(k===Q.r) b.classList.add("bonne");
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
       if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
     } else {
       if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
@@ -707,6 +784,27 @@ function rendreCorrection(){
   const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
   let dist="";
   Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
   bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
   bloc.innerHTML=`
     <h3>${verdict}</h3>
@@ -729,6 +827,8 @@ $("btnValider").addEventListener("click",()=>{
     if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -795,6 +895,11 @@ function rendreResultat(){
   let html="";
   if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
   if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
   const msg= note>=16?"Remarquable ! L’auto-test de la station n’a plus de secret pour toi — tu es prêt·e pour l’évaluation.":
     note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
