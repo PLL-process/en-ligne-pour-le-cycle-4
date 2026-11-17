@@ -32416,3 +32416,27 @@ en page complète : 2 091 → 2 113 mots visibles (les gloses ; la figure, rése
 
 Reste, proposé à Pascal : la même chose sur le reste du site (« cahier » dans une quarantaine de pages, « ellipse »
 dans les ateliers et les séquences de 3e et 4e).
+
+## 17/11/2026 — 5e_C2.1 avant la classe de 10 h : l'audit relu, deux retouches
+
+Pascal fait la séquence de Shenzhen avec ses 5e à 10 h ; il joint un audit (« Audit pédagogique du QCM de 5e »). Relu
+contre le dépôt :
+- **P0 « SOS serre, 4e, Packet Tracer » dans le titre du QCM** : introuvable. Le `<title>` et le `h1` disent
+  « Thème 1 · 5e — QCM : Shenzhen… » ; ni « serre » ni « Packet » dans la page rendue ; aucun commit ne l'a jamais
+  écrit. L'audit a vraisemblablement mêlé deux pages (le QCM « SOS serre » de 4e).
+- **P1 « 4 illustrées / 5 »** : le QCM et la séquence disent tous deux « 34 questions, dont 5 illustrées ».
+- **P1 « 8 interacteurs de 4 familles / 6 et 3 natures »** : la fiche, la consigne et le critère disent « au moins six
+  interacteurs, quatre familles ».
+- **P1 « les règles de la ville réintroduites »** : la leçon et la correction les écartent ; une trace restait dans le
+  positionnement (« ⭐ … je pense aussi aux conditions et aux règles ») → « ⭐ Très bonne maîtrise — je pense aussi aux
+  données, et j'écarte les règles ».
+
+**Mode mission, activité 1** : le titre et la consigne de a) étaient pris pour la ressource de l'activité, montrée sur
+chaque écran de question — en c) et en d), l'élève lisait « choisis la question qui va à cette place ». Ils passent en
+`consigne` (écran de départ seulement) ; l'écran de a) reçoit sa consigne dans son cadre (`ms-seul`). Retouche sur
+cette page seulement ; le découpage commun (`mission.js`), qui produit le même effet ailleurs, se reprendra dans une PR
+à part, les 60 pages rejouées.
+
+Vérifications : banc 152 / 152 ; n°311 34 / 34 ; mode mission joué, aucun refus, 66 / 66 pourquoi ; écrans 6 à 12
+relus (la consigne de a) sur le départ et sur l'écran de a), plus en c) ni en d)) ; aération, règles visibles, règles
+d'or 0 ✘, fiche papier : verts.
