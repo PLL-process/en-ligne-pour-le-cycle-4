@@ -32880,3 +32880,29 @@ n°339) : `3e_C5.1`, `4e_C5.1`, `5e_C5.1`, `3e_C6.1`, `3e_C6.2`, `4e_C6.1`, `5e_
   `controle_longueurs`, `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`,
   `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ; export Éléa régénéré,
   banc vert ; bancs des huit lots.
+
+## 17/11/2026 — Généralisation, lot 3 (vague 3a) : huit QCM du C4 ; un skill pour l'intrus et son pourquoi
+
+**Huit QCM** de plus portent la carte, les aides progressives et les pièges : `3e_C4.1`, `3e_C4.3`, `3e_C4.7`,
+`3e_C4.8`, `5e_C4.7`, `4e_C4.1` (jardin), `4e_C4.1_book-train`, `4e_C4.7` (SOS serre). État : **31 QCM sur 72**. La
+vague 3b reprend les quatre QCM du C4 dont les indices sont les plus creux (`5e_C4.1`, et les trois QCM de réseau de
+`4e_C4.7` : 53 indices à réécrire).
+
+- Avant la pose, dans `3e_C4.1` : les deux derniers « ! » du site (« il est comestible en cas d'urgence »), et trois
+  intrus sans rapport avec la question (« ils sont formellement interdits en Martinique », « il brille joliment au
+  soleil des tropiques ») deviennent des erreurs réelles (« ce sont des capteurs : ils mesurent », « il résiste à la
+  corrosion marine » — un argument technique, pas environnemental). Quatorze remplacements dans `3e_C4.1`, trois
+  indices dans `3e_C4.3`.
+
+**Pascal, le 17/11/2026 au soir : « #773 ne mérite-t-il pas un skill ? »** Oui : la même passe s'est répétée trois
+vagues de suite (trouver les « ! » et les indices creux, réécrire l'intrus et son pourquoi, écrire les pièges par
+numéros), avec des scripts de travail restés hors du dépôt. L'idée « une question ne souffle pas sa réponse » avait
+déjà son skill (`propositions-sans-indice`, #771), pour les séquences : il est **étendu aux QCM** (§ 4, « l'intrus et
+son pourquoi »), plutôt que doublé par un second skill. Trois outils entrent dans `_outils/qcm_aides/` :
+- `indices_creux.mjs` : la mesure (« ! », indice vide, indice creux), `--liste` pour lire un QCM par numéros,
+  `--strict` sortie 1 sur un « ! » ou un vide ; essai par mutation : un « ! » remis est refusé. Site : 0 « ! »,
+  0 vide, 76 creux.
+- `corriger_question.py` : un remplacement dans le bloc d'UNE question, tout vérifié avant d'écrire.
+- `fabriquer.py` : le plan des pièges par numéros → `qcm_aides_<lot>.json`, notions recopiées mot pour mot, couverture
+  vérifiée, typographie française ; il reproduit à l'octet près les JSON des vagues 2 et 3a.
+`qcm-aides-et-pieges` renvoie à ces outils ; `controle-qualite-lot` porte la ligne de la mesure.
