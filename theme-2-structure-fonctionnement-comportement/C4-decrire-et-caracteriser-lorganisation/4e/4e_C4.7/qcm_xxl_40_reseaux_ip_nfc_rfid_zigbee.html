@@ -76,6 +76,13 @@
   .option:disabled{cursor:default;opacity:.92}
   .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
   .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
   .correction-bloc.show{display:block}
   .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
@@ -163,6 +170,22 @@
 </div>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Le <b>réseau local</b>&nbsp;: ses mots (LAN, WLAN, trame), son matériel, ses liaisons.
+    <br>Et comment choisir le bon matériel pour une salle.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Dire ce que fait un routeur, un commutateur, un point d'accès.
+    <br>Choisir entre câble et Wi-Fi, selon le besoin.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Le commutateur relie les postes entre eux&nbsp;; le routeur fait sortir du réseau.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
 <section class="card">
   <h2>📊 Ma progression</h2>
@@ -283,7 +306,7 @@ const QUESTIONS = [
  expl:"Un LAN est un réseau LOCAL : les appareils d'une même salle, d'un même bâtiment, reliés entre eux sans passer par Internet.",
  ex:"Les vingt PC de la salle de technologie, plus l'imprimante, forment un LAN.",
  err:"Traduire « local » par « petit » : un LAN peut couvrir tout un collège.",
- d:["« Large » veut dire vaste : c'est justement le contraire d'un réseau local.","Ce sigle n'existe pas.","","Un réseau étendu s'appelle un WAN, et le sigle n'est pas celui-là."],
+ d:["« Large » veut dire vaste : c'est justement le contraire d'un réseau local.","« Linked Access Node » n'est pas un sigle des réseaux : LAN veut dire réseau local, Local Area Network.","","Un réseau étendu s'appelle un WAN, et le sigle n'est pas celui-là."],
  ret:"LAN = Local Area Network = réseau local."},
 {c:"LAN",n:"Le même mot, sans fil",q:"Que signifie WLAN ?",
  o:["Wired Local Area Network","Wireless Local Area Network","World Local Area Network","Wide Local Access Network"],r:1,
@@ -327,21 +350,21 @@ const QUESTIONS = [
  expl:"En half-duplex, la ligne se partage : quand l'un parle, l'autre écoute, puis on échange. C'est le fonctionnement d'un talkie-walkie.",
  ex:"« À toi ! » — la phrase existe parce que la liaison est half-duplex.",
  err:"Croire que c'est une panne : c'est un mode de fonctionnement normal.",
- d:["C'est le full-duplex.","La liaison fonctionne très bien, chacun son tour.","Il n'y a qu'un seul réseau.",""],
+ d:["Émettre et recevoir en même temps, c'est le full-duplex : en half-duplex, chacun parle à son tour.","La liaison fonctionne très bien, chacun son tour.","Le duplex parle des deux sens d'une même liaison, pas de deux réseaux : en half-duplex, ces sens alternent.",""],
  ret:"Half-duplex : chacun son tour."},
 {c:"LAN",n:"Les deux sens à la fois",q:"Full-duplex signifie…",
  o:["un seul sens à la fois","les deux sens en même temps","diffusion à tous","une vitesse doublée du réseau"],r:1,
  expl:"Émettre et recevoir simultanément, comme au téléphone où l'on peut se couper la parole. Les liaisons Ethernet modernes fonctionnent ainsi.",
  ex:"Téléverser un fichier tout en téléchargeant un autre.",
  err:"Confondre « les deux sens à la fois » avec « deux fois plus vite ».",
- d:["C'est le half-duplex.","","La diffusion à tous est le comportement d'un concentrateur, pas un mode duplex.","La vitesse de chaque sens ne change pas ; c'est la simultanéité qui change."],
+ d:["Un seul sens à la fois, c'est le half-duplex : en full-duplex, les deux sens passent ensemble.","","La diffusion à tous est le comportement d'un concentrateur, pas un mode duplex.","La vitesse de chaque sens ne change pas ; c'est la simultanéité qui change."],
  ret:"Full-duplex : les deux sens ensemble."},
 {c:"LAN",n:"Le mot juste pour une trame",q:"Sur un réseau local, les données circulent découpées en…",
- o:["trames","chapitres","paragraphes","volumes"],r:0,
+ o:["trames","fichiers entiers, d'un seul bloc","bits isolés, sans adresse","octets, envoyés un par un"],r:0,
  expl:"Le réseau ne transporte pas un fichier d'un bloc : il le découpe en petits morceaux, qui voyagent séparément et sont réassemblés à l'arrivée.",
  ex:"Une photo de 3 Mo (mégaoctets) part en milliers de trames.",
  err:"Imaginer le fichier voyageant d'un seul tenant.",
- d:["","Un chapitre appartient à un livre, pas à un réseau.","Un paragraphe non plus.","Pas davantage."],
+ d:["","Un fichier n'est jamais envoyé d'un bloc : il est découpé en petits morceaux, les trames, qui voyagent un à un.","Les bits voyagent bien, mais regroupés en trames qui portent l'adresse du destinataire : sans adresse, personne ne saurait à qui ils vont.","Les octets ne partent pas un par un : ils sont regroupés en trames, chacune avec ses adresses."],
  ret:"Le réseau découpe tout en trames."},
 {c:"LAN",n:"Local ne veut pas dire coupé",q:"Un LAN peut-il fonctionner sans Internet ?",
  o:["non, jamais","oui, sans aucun problème","seulement si tous les postes sont câblés","seulement pour l'impression"],r:1,
@@ -373,7 +396,7 @@ const QUESTIONS = [
  expl:"Le concentrateur ne lit rien : il recopie sur tous ses ports ce qu'il reçoit. Tout le monde reçoit tout, et chacun ignore ce qui ne lui est pas destiné.",
  ex:"Un hub, c'est parler fort dans une salle : tout le monde entend.",
  err:"Confondre hub et switch — la différence est exactement là.",
- d:["","Cela, c'est le commutateur.","Il ne bloque rien.","Il ne mémorise rien : il recopie aussitôt."],
+ d:["","Envoyer seulement à B, c'est ce que fait un commutateur : le concentrateur, lui, recopie tout à tous.","Un concentrateur ne trie ni ne bloque : il recopie le message sur tous ses ports.","Il ne mémorise rien : il recopie aussitôt."],
  ret:"Hub : tout le monde entend. Switch : seul le destinataire."},
 {c:"MAT",n:"Ce que le switch retient",q:"Un commutateur tient à jour…",
  o:["une table des mots de passe","une table des VLAN","la liste des sites visités","une table MAC"],r:3,
@@ -387,42 +410,42 @@ const QUESTIONS = [
  expl:"La table de routage dit, pour chaque destination possible, par quelle sortie envoyer le paquet. C'est la carte routière du routeur.",
  ex:"« Tout ce qui n'est pas pour le réseau local part vers Internet. »",
  err:"Confondre table MAC (le switch, dans le local) et table de routage (le routeur, entre réseaux).",
- d:["","Non, et heureusement.","Il sait quels ports sont actifs, mais ce n'est pas une table de routage.","Les VLAN n'ont pas de couleurs."],
+ d:["","Un routeur ne garde pas de mots de passe pour acheminer : sa table dit vers où envoyer chaque réseau.","Il sait quels ports sont actifs, mais ce n'est pas une table de routage.","Les VLAN se repèrent par un numéro, et ils se règlent sur le commutateur : ce n'est pas la table de routage."],
  ret:"Table MAC : dans le LAN. Table de routage : entre réseaux."},
 {c:"MAT",n:"La couche du hub",q:"À quelle couche du modèle OSI travaille un concentrateur ?",
  o:["2 — liaison","3 — réseau","1 — physique","7 — application"],r:2,
  expl:"Il ne comprend ni les adresses MAC ni les adresses IP : il recopie des signaux électriques. C'est le niveau le plus bas.",
  ex:"Un hub est une multiprise pour signaux.",
  err:"Le classer avec le commutateur parce qu'ils se ressemblent physiquement.",
- d:["C'est le commutateur.","C'est le routeur.","","Cette couche est celle des logiciels, très loin du hub."],
+ d:["La couche 2 est celle du commutateur, qui lit les adresses MAC : le concentrateur ne lit rien, il recopie des signaux.","La couche 3 est celle du routeur, qui lit les adresses IP : le concentrateur reste à la couche physique.","","Cette couche est celle des logiciels, très loin du hub."],
  ret:"Hub : couche 1, il ne lit rien."},
 {c:"MAT",n:"La couche du switch",q:"À quelle couche travaille un commutateur ?",
  o:["1 — physique","2 — liaison","3 — réseau","4 — transport"],r:1,
  expl:"Il lit les adresses MAC, qui appartiennent à la couche liaison. Il ne connaît pas les adresses IP.",
  ex:"Il sait que la machine de MAC 00:1A:… est sur le port 7. Son adresse IP ne l'intéresse pas.",
  err:"Croire qu'un commutateur route : il commute, dans un seul réseau.",
- d:["Il lit les adresses MAC : c'est déjà plus que la couche 1.","","C'est le routeur.","Il ne va pas jusque-là."],
+ d:["Il lit les adresses MAC : c'est déjà plus que la couche 1.","","La couche 3 est celle du routeur, qui lit les adresses IP : le commutateur s'arrête aux adresses MAC.","La couche 4 gère les échanges entre logiciels : le commutateur, lui, ne lit que les adresses MAC."],
  ret:"Switch : couche 2, il lit les adresses MAC."},
 {c:"MAT",n:"La couche du routeur",q:"À quelle couche travaille un routeur ?",
  o:["3 — réseau","1 — physique","2 — liaison","6 — présentation"],r:0,
  expl:"Il lit les adresses IP pour décider par où faire passer un paquet, d'un réseau vers un autre. C'est la couche réseau.",
  ex:"« 192.168.1.x, c'est chez moi ; le reste, vers Internet. »",
  err:"Mélanger MAC et IP — chacune a sa couche et son matériel.",
- d:["","Bien au-dessus.","C'est le commutateur.","Ces couches hautes sont celles des logiciels."],
+ d:["","La couche physique transporte des signaux sans les lire : le routeur, lui, lit les adresses IP.","La couche 2 est celle du commutateur, qui lit les adresses MAC : le routeur lit les adresses IP.","Ces couches hautes sont celles des logiciels."],
  ret:"1 hub · 2 switch · 3 routeur."},
 {c:"MAT",n:"Le point d'accès",q:"Que fait un point d'accès Wi-Fi ?",
  o:["il attribue les adresses IP publiques","il remplace complètement le routeur","il relie le sans-fil au réseau câblé","il stocke les fichiers partagés"],r:2,
  expl:"D'un côté, des ondes ; de l'autre, un câble. Le point d'accès traduit l'un dans l'autre pour que tout le monde soit sur le même réseau.",
  ex:"La borne au plafond de la salle, reliée au commutateur par un câble.",
  err:"Croire qu'un appareil en Wi-Fi n'est pas sur le même réseau que les postes câblés.",
- d:["Les adresses publiques viennent du fournisseur d'accès.","Il ne sort pas du réseau local, contrairement au routeur.","","Il ne stocke rien."],
+ d:["Les adresses publiques viennent du fournisseur d'accès.","Il ne sort pas du réseau local, contrairement au routeur.","","Stocker des fichiers, c'est le rôle d'un serveur : le point d'accès relie les appareils sans fil au réseau câblé."],
  ret:"Le point d'accès relie le sans-fil au câblé."},
 {c:"MAT",n:"À quoi sert un VLAN",q:"Sur un commutateur, un VLAN sert à…",
- o:["augmenter la puissance électrique","chiffrer le Wi-Fi","séparer le réseau en groupes logiques","rallonger les câbles"],r:2,
+ o:["accélérer le réseau","chiffrer le Wi-Fi","séparer le réseau en groupes logiques","rallonger les câbles"],r:2,
  expl:"Le VLAN permet de faire, dans un même commutateur, plusieurs réseaux qui ne se voient pas — les postes des élèves d'un côté, ceux de l'administration de l'autre.",
  ex:"Même armoire, mêmes câbles, deux réseaux qui ne communiquent pas.",
  err:"Chercher une séparation physique là où elle est logique.",
- d:["Rien à voir avec l'électricité.","Le chiffrement se règle sur le point d'accès.","","La longueur des câbles est une question physique."],
+ d:["Un VLAN ne change pas la vitesse : il sépare les postes en groupes qui ne se voient pas.","Le chiffrement se règle sur le point d'accès.","","La longueur des câbles est une question physique."],
  ret:"VLAN : séparer sans recâbler."},
 /* ═══ CHO ═══ */
 {c:"CHO",n:"Relier vingt postes",q:"Pour relier entre eux les vingt PC de la salle, il faut plutôt…",
@@ -452,7 +475,7 @@ const QUESTIONS = [
  expl:"Le Bluetooth est fait pour relier deux appareils proches, sans infrastructure. Ce n'est pas un réseau : c'est une liaison entre voisins.",
  ex:"Une enceinte, un clavier, un casque : du Bluetooth. Vingt PC : non.",
  err:"Choisir une liaison parce qu'elle est disponible, pas parce qu'elle convient.",
- d:["C'est très courant.","Le Bluetooth ne monte pas à vingt appareils qui échangent des fichiers.","Rien n'oblige à cela ; le câble HDMI existe.",""],
+ d:["Relier un vidéoprojecteur en Bluetooth se fait couramment : c'est une liaison entre deux appareils.","Le Bluetooth ne monte pas à vingt appareils qui échangent des fichiers.","Rien n'oblige à cela ; le câble HDMI existe.",""],
  ret:"Bluetooth : deux appareils proches, pas un réseau."},
 {c:"CHO",n:"Ce que le câble apporte",q:"Comparé au Wi-Fi, le câble Ethernet est généralement…",
  img:{src:"Images/reseau_filaire_vs_sansfil.svg",alt:"Deux colonnes comparées. À gauche, « Liaison filaire » : un ordinateur relié à la box par un trait plein — « un fil : rapide, stable, mais il faut le tirer ». À droite, « Liaison sans fil » : une tablette et la box reliées par des ondes — « des ondes : libre de bouger, mais partagé et affaibli par les murs »."},
@@ -460,7 +483,7 @@ const QUESTIONS = [
  expl:"Le câble ne partage rien avec les voisins et ne traverse aucun mur : les temps de réponse sont plus courts et surtout plus réguliers.",
  ex:"Un test de ping : quelques millisecondes très stables en filaire, plus variables en Wi-Fi.",
  err:"Juger une liaison sur son débit maximal en oubliant sa régularité.",
- d:["C'est l'inverse.","","Ils diffèrent sur presque tout, sauf le service rendu.","N'importe quel poste peut être câblé."],
+ d:["C'est l'inverse : le câble est en général plus rapide, et plus régulier que le Wi-Fi.","","Ils diffèrent sur presque tout, sauf le service rendu.","N'importe quel poste peut être câblé."],
  ret:"Le câble gagne surtout en RÉGULARITÉ."},
 {c:"CHO",n:"Quand le Wi-Fi s'impose",q:"Dans quel cas le Wi-Fi est-il le bon choix, malgré ses défauts ?",
  o:["pour un poste fixe jamais déplacé","pour relier deux bâtiments distants","pour des tablettes qui changent de salle","pour brancher une imprimante fixe"],r:2,
@@ -470,11 +493,11 @@ const QUESTIONS = [
  d:["Un poste qui ne bouge pas gagne à être câblé.","Entre bâtiments, on préfère la fibre ou une liaison dédiée.","","Une imprimante fixe se câble très bien."],
  ret:"On choisit une liaison sur l'USAGE, pas sur la performance."},
 {c:"CHO",n:"Un hub aujourd'hui",q:"Pourquoi n'installe-t-on plus de concentrateurs dans les réseaux actuels ?",
- o:["parce qu'ils coûtent plus cher","parce que tout le monde reçoit tout","parce qu'ils ne fonctionnent qu'en Wi-Fi","parce qu'ils sont interdits par la loi"],r:1,
+ o:["parce qu'ils coûtent plus cher","parce que tout le monde reçoit tout","parce qu'ils ne fonctionnent qu'en Wi-Fi","parce qu'ils n'ont que deux ports"],r:1,
  expl:"Diffuser à tous gaspille la bande passante et laisse chaque poste voir passer ce qui ne le regarde pas. Le commutateur règle les deux d'un coup.",
  ex:"Sur un hub, un poste curieux peut écouter les échanges des autres.",
  err:"Croire que le progrès est seulement une affaire de vitesse.",
- d:["Ils étaient au contraire plus simples et moins chers.","","Ils sont filaires.","Rien ne les interdit : ils sont simplement dépassés."],
+ d:["Ils étaient au contraire plus simples et moins chers.","","Les concentrateurs sont filaires : leur défaut est de recopier chaque message à tout le monde.","Un concentrateur peut avoir de nombreux ports : son défaut est de recopier chaque message à tous."],
  ret:"Le switch a remplacé le hub pour deux raisons : la vitesse ET la discrétion."},
 {c:"CHO",n:"Lire un schéma",q:"Sur un schéma de réseau, un trait plein relie deux appareils. Cela signifie…",
  img:{src:"Images/reseau_local_schema.svg",alt:"Le schéma d'un réseau local : « Internet » en haut, relié par un trait plein à « Box / routeur », qui relie par un trait plein le « Commutateur », lequel dessert par des traits pleins l'ordinateur, l'imprimante et le serveur ; une tablette est reliée à la box par des ondes, sans trait."},
@@ -548,6 +571,50 @@ const COMP_LABELS={ "LAN":"4e_C4.7 — 🌐 Le réseau local et ses liaisons", "
 const N=QUESTIONS.length;
 
 /* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  lan:"LAN, WLAN, Wi-Fi : ce que veulent dire les mots du réseau local",
+  duplex:"Half-duplex ou full-duplex, et les trames",
+  materiel:"Routeur, commutateur, concentrateur, point d'accès : qui fait quoi ?",
+  couches:"Ce que chaque appareil retient, et à quelle couche il travaille",
+  choisir:"Choisir le matériel selon le besoin : relier, sortir, câble ou Wi-Fi",
+  lire:"Lire le réseau : une adresse unique, un trait plein, ce qu'on ne voit pas"
+};
+const PIEGE_DE_NOTION={
+  "Ce que veut dire LAN":"lan",
+  "Le même mot, sans fil":"lan",
+  "La liaison la plus courante":"lan",
+  "Sur quoi voyage le Wi-Fi":"lan",
+  "Les fréquences du Wi-Fi":"lan",
+  "Filaire ou pas":"lan",
+  "Local ne veut pas dire coupé":"lan",
+  "Un seul sens à la fois":"duplex",
+  "Les deux sens à la fois":"duplex",
+  "Le mot juste pour une trame":"duplex",
+  "Le rôle du routeur":"materiel",
+  "Le rôle du commutateur":"materiel",
+  "Le concentrateur":"materiel",
+  "Le point d'accès":"materiel",
+  "À quoi sert un VLAN":"materiel",
+  "Ce que le switch retient":"couches",
+  "Ce que le routeur retient":"couches",
+  "La couche du hub":"couches",
+  "La couche du switch":"couches",
+  "La couche du routeur":"couches",
+  "Relier vingt postes":"choisir",
+  "Sortir du réseau":"choisir",
+  "Le vidéoprojecteur":"choisir",
+  "Ce que le câble apporte":"choisir",
+  "Quand le Wi-Fi s'impose":"choisir",
+  "Un hub aujourd'hui":"choisir",
+  "Le mot de la fin":"choisir",
+  "Deux appareils, une seule adresse":"lire",
+  "Lire un schéma":"lire",
+  "Ce qu'on ne voit pas":"lire"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
 let etat={
   reponses:Array(N).fill(null),   // index choisi ou null
   validees:Array(N).fill(false),
@@ -559,6 +626,7 @@ let etat={
   identite:{}
 };
 let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -568,7 +636,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -617,6 +685,11 @@ function setMode(mode){
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
     if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
     if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
@@ -625,6 +698,10 @@ function setMode(mode){
 }
 document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
 /* ───── grille + filtres ───── */
 let filtre="toutes";
@@ -697,7 +774,7 @@ function rendreQuestion(){
     b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
     if(etat.validees[i]){
       b.disabled=true;
-      if(k===Q.r) b.classList.add("bonne");
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
       if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
     } else {
       if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
@@ -719,6 +796,27 @@ function rendreCorrection(){
   const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
   let dist="";
   Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
   bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
   bloc.innerHTML=`
     <h3>${verdict}</h3>
@@ -742,6 +840,8 @@ $("btnValider").addEventListener("click",()=>{
     if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -808,6 +908,11 @@ function rendreResultat(){
   let html="";
   if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
   if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
   const msg= note>=16?"Remarquable ! Le réseau local et ses matériels n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
     note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
