@@ -32664,3 +32664,33 @@ engendrée, sans situation — les pages 2 à 4 de `3e_C9.2`) : la carte est sur
 
 **Vérifications.** Au navigateur, à 390 px : premier écran, l'ouverture à 52 px du haut (sous la barre) et la carte
 juste dessous ; écran 2 et séance 2, la tête de la mission à 52 px. Bancs du mode mission : voir la PR.
+
+## 17/11/2026 — Généralisation, lot 2 (vagues 2 à 5) : chaque séquence a ses trois lignes « Avant de commencer »
+
+Suite du lot 2 (#766, dix séquences), dans l'ordre du suivi de la révision. **46 séquences** reçoivent la carte
+« 🎯 Avant de commencer : trois choses à lire » (règle n°337), chacune écrite à partir de son référentiel, de sa
+problématique, des pièges de sa synthèse et de ses critères, dans la langue d'un élève de 6e ; les mots et les nombres
+sont ceux de la page (n°338 : « 72 heures », « 1023 », « 1 023 », « LED » ou « DEL » selon la séquence ; les unités en
+toutes lettres, n°312).
+- **Vague 2** : 4e_C3.1, 3e_C4.1, 3e_C4.3, 4e_C4.1, Book Train, 3e_C4.7, 3e_C4.8, 3e_C5.1, 3e_C6.1, 3e_C6.2.
+- **Vague 3** : 5e_C4.1, 5e_C6.1, 4e_C5.1, 4e_C6.1, 4e_C6.2, 3e_C9.1, 3e_C7.1, 5e_C5.1, 4e_C4.7, 5e_C4.7.
+- **Vague 4** : 3e_C7.3, 3e_C7.4, 3e_C7.5, 3e_C7.7, 3e_C7.8, 3e_C8.1, 3e_C8.2, 4e_C7.1, 4e_C7.3, et 3e_C9.2 — posée dans
+  la page tout-en-un ; `generer_les_quatre_pages.py` la recopie en tête de la page 1 (les pages 2 à 4 ne changent que
+  par le style).
+- **Vague 5** : 4e_C7.4, 4e_C7.5, 4e_C7.7, 4e_C7.8, 4e_C8.1, 4e_C9.1, 5e_C7.1, 5e_C7.3, 5e_C7.4, 5e_C7.5, 5e_C8.1,
+  5e_C8.2, 5e_C9.1, 3e_C1.1, 3e_C3.1.
+Mesure : `trois_lignes.py --etat --strict` — **57 séquences, 57 avec la carte**, 0 à poser (3 pages de suite de
+`3e_C9.2`, sans carte : elle est sur la première).
+
+**L'outil.** Une ligne vide entre le résumé du volet et les badges faisait poser la carte avant eux (`3e_C7.1`) :
+`trois_lignes.py` l'accepte ; banc `tests_audit_double_regard.py` 26 / 26.
+
+**Vérifications.**
+- Squelette (`controle_squelette.mjs`), page par page : vert sur les 47 pages.
+- Captures à 390 et 1 280 px : la carte tient dans sa colonne, sans défilement de côté. En mode mission (#767), le
+  premier écran qui montre l'ouverture commence par la carte ; dans les séquences où le billet d'entrée ouvre la
+  mission (plusieurs 3e et 4e), la carte s'ouvre à l'écran suivant, avec la situation.
+- Bancs des lots : verts sur les 46 séquences (les bancs à arguments lancés avec leurs arguments). Le seul refus,
+  `tests_regle_311_4e_C7.1.mjs` (« les onglets dans le premier écran » à la séance 2), est **le même sur main**.
+- Règles visibles (n°309), sigles (n°313), unités (n°312), mêmes nombres (n°338), `verif_regles_audit.py` (0 ✘),
+  fiche papier (pose à jour ; banc PDF sur 5e_C7.3 et 3e_C1.5) : verts.

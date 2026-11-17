@@ -52,8 +52,12 @@ python3 _outils/trois_lignes.py --etat [--strict]                               
 ```
 
 Le QCM : rubrique `avant_de_commencer` de `qcm_aides_<lot>.json`, posée par `_outils/qcm_aides/poser.py` (skill
-`qcm-aides-et-pieges`). Une page sans volet `#ouverture` (les quatre pages engendrées de `3e_C9.2`) est refusée : sa
-carte se pose dans son générateur.
+`qcm-aides-et-pieges`). Une page sans volet `#ouverture` est refusée. Les quatre pages engendrées de `3e_C9.2` : la
+carte se pose dans la page tout-en-un, et `generer_les_quatre_pages.py` la recopie en tête de la page 1 (les pages 2 à 4
+continuent la séquence : `--etat` ne les compte pas).
+
+**État au 17/11/2026** : les 57 séquences du dépôt ont leur carte (`--etat --strict` sort à 0). Toute séquence neuve
+la reçoit avant d'être livrée.
 
 Puis : le banc du lot, `controle_squelette.mjs`, le mode mission (la carte est en haut du premier écran : le mode
 s'y ouvre depuis le 17/11/2026 — avant, il défilait jusqu'à la tête de la mission, plus bas ; `banc_generique.mjs`), la fiche papier, une capture à 390 px et à 1 280 px. La carte ajoute environ 100 mots à
