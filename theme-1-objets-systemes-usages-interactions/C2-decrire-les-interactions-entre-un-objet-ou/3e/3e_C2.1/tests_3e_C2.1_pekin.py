@@ -182,7 +182,7 @@ with sync_playwright() as p:
     sp = pathlib.Path("Synthèses/synthese_professeur_3e_C2.1.html").read_text(encoding="utf-8")
     bloc = sp[sp.find("referentiel-eleve"): sp.find("</div>", sp.find("referentiel-eleve"))]
     t("n°298 : la légende des badges a quitté la page élève pour la synthèse professeur",
-      pg.locator(".legende-badges").count() == 0 and 'class="legende-badges"' in bloc)
+      pg.evaluate("[...document.querySelectorAll('.legende-badges')].every(e => e.closest('details.referentiel-replie:not([open])'))") and 'class="legende-badges"' in bloc)
 
     # n°42, troisième volet : l'ambiguïté de « choisis » est déclarée — dans le référentiel,
     # désormais lu dans la synthèse professeur (n°298)
@@ -352,7 +352,7 @@ with sync_playwright() as p:
         t(f"synthèse {nom} : liens de navigation valides",
           all(pathlib.Path("Synthèses").joinpath(h.split("#")[0]).exists()
               for h in pg.eval_on_selector_all("a", "a=>a.map(e=>e.getAttribute('href'))")
-              if not h.startswith("#")))   # n°316 : la carte renvoie aux parties de la page (#partie-N)
+              if not h.startswith(("#", "http://", "https://", "mailto:"))))   # la mention de licence pointe vers creativecommons.org   # n°316 : la carte renvoie aux parties de la page (#partie-N)
     t("synthèse professeur : les deux variantes d'usage y sont écrites",
       "Variante A" in pg.content() and "Variante B" in pg.content())
 
