@@ -135,7 +135,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 
 | Outil | Vérifie |
 |---|---|
-| `qcm_aides/poser.py --etat [--strict]` | n°337 et n°339 (17/11/2026) : chaque QCM a sa carte « Avant de commencer », les aides progressives (indice, règle, correction) et ses pièges. Mesure (⚠, sortie 0) pendant la généralisation ; banc `tests_audit_double_regard.py` |
+| `qcm_aides/poser.py --etat [--strict]` | n°337 et n°339 (17/11/2026) : chaque QCM a sa carte « Avant de commencer », les aides progressives (indice, règle, correction) et ses pièges. Généralisation achevée le 17/11/2026 (72 QCM sur 72) : en fin de lot, `--strict` (sortie 1 si un QCM n'a pas les trois) ; banc `tests_audit_double_regard.py` |
 | `controle_memes_nombres.py [--strict]` | n°338 (17/11/2026) : N1 le QCM annoncé par la séquence ou le README a ce nombre de questions et d'illustrées ; N2 « au moins N » garde son N dans un bloc ; N3 le message du bilan n'est pas recopié d'un autre lot. Mesure (sortie 0) ; `--strict` sort à 1 |
 | `controle_banque_qcm.py` ⚠ 0 | la ligne « Banque : … » dit ce que le QCM contient |
 | `controle_effectifs_qcm.py` ⚠ 0 | le QCM dit vrai sur sa taille (manifeste, lexique) |

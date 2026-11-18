@@ -32977,3 +32977,42 @@ du C7) : vague 6.
   et `5e_C8.1` tombaient à 30 / 32 quand on recopiait la commande de leur rapport : elle portait « … sequence… » à la
   place des arguments. Les deux rapports donnent maintenant la commande entière (le code évalué en complément,
   `3e_C3.4` et `5e_C3.1`, et la page de séquence) ; lancée telle quelle, elle passe à 32 / 32.
+
+## 17/11/2026 — Généralisation, lot 3 (vague 6) : les QCM des ateliers ; 72 QCM sur 72, la généralisation est achevée
+
+**Huit QCM** de plus portent la carte « Avant de commencer », les aides progressives et les pièges (règles d'or n°337
+et n°339) : les sept ateliers de représentation du thème 1 (bête à cornes, carte mentale, cas d'utilisation, croquis,
+exigences, FAST, interacteurs et pieuvre) et l'atelier de planification du C7. Six à huit pièges chacun, écrits par
+numéros avec `fabriquer.py`.
+
+**État : 72 QCM sur 72** (`poser.py --etat --strict` : sortie 0). La ligne de `controle-qualite-lot` passe de « mesure
+pendant la généralisation » à un contrôle de fin de lot : un QCM neuf reçoit ses aides avant d'être livré.
+
+- **Les deux générateurs sont branchés** (`_poser_aides`, avant leurs contrôles de restes), et vérifiés en les
+  rejouant :
+  - `ateliers-representations/_generation/build_qcm.py --tous` repose la carte, les pièges et le bilan à l'identique,
+    et `banc_aides` passe 7 / 7 sur ses pages. Mais ce générateur est **en retard sur ses pages** : rejoué, il perd ce
+    que les outils du site y ont posé depuis (couleur du minuteur pour le contraste, nom de la barre de progression,
+    licence, correctifs de la loupe du 17/11, bilan propre au QCM). Branché, il n'est pas relancé ; ses pages restent
+    celles du dépôt. Le bilan propre à chaque atelier (n°338) est écrit dans son JSON (`bilan_remarquable`) : une
+    régénération le garderait.
+  - `atelier-planification/_generation/build_qcm.py`, rejoué sur le QCM de Shenzhen d'aujourd'hui (qui porte ses
+    propres aides), puis `fix_r.js … 617` : **la page sort identique à l'octet**. Les aides de Shenzhen sont remplacées
+    par celles de l'atelier avant le contrôle des restes, qui ne trouve plus « Shenzhen ».
+- Le skill `qcm-aides-et-pieges` dit comment brancher un générateur sans le croire à jour : le rejouer sur l'arbre
+  propre et lire `git diff` d'abord.
+- Contrôles : `verif_qcm_coherence` 8 / 8 ; `controle_indices_qcm` (72 banques, 2 181 questions), `controle_longueurs`,
+  `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`, `controle_sauvegarde_locale`,
+  `controle_boutons_vivants`, `controle_memes_nombres` verts ; `indices_creux.mjs --strict` : 0 « ! », 0 indice vide,
+  0 indice creux ; export Éléa inchangé (les aides ne touchent pas aux questions), banc vert.
+- Bancs : `banc_aides` 8 / 8 ; `banc_ateliers.py` 517 / 517 ; `banc_rappels_cdc.py` 302 / 302 ; `verif_chemins.py`
+  vert sur l'atelier de planification et son QCM. Deux bancs de l'atelier de planification, **rouges sur `main`**,
+  sont réparés :
+  - `tests_atelier_C7.1.py` (48 / 48) prenait le lien vers la licence CC BY-NC-SA du pied de page pour un appel
+    réseau ; il le tolère, comme l'espace de noms des SVG : un lien ne charge rien.
+  - `verif_chaine_qcm.py` régénère le QCM dans un dossier temporaire : sans les données des aides à côté, le témoin
+    gardait celles du QCM de Shenzhen. Il y copie le `qcm_aides_*.json` de l'atelier et nomme le témoin comme la
+    page ; il redit « exactement ce que q.py, build_qcm.py et fix_r.js produisent ».
+  - Reste rouge, comme sur `main` : `verif_chaine.py` (« 3 parcours ne correspondaient PAS à ce que le générateur
+    produit ») — les pages d'atelier, que cette vague ne touche pas. Attention : ce contrôle **réécrit** les trois
+    pages en place ; elles sont remises telles que le dépôt les porte.
