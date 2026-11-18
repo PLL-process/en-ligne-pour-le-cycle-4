@@ -33312,3 +33312,9 @@ refusait donc de poser leur correction (95 refus). Carte blanche de Pascal : « 
 Résultat : `corriger_billet.py` 64 pages lues, 0 billet sans correction, 0 refus. Mode mission joué écran par écran
 sur les 32 pages : aucun refus. `incrustations.py --verifier` : 0.
 
+Bancs des 32 lots : verts, sauf des rouges identiques sur `main` (relancés des deux côtés) :
+`tests_5e_C1.5-C1.6_sequence.mjs` 37 / 38 (une réponse écrite « à relire ») et `tests_regle_311_4e_C7.1.mjs` (en-tête
+au téléphone, constat du jour). Plusieurs bancs demandent leurs arguments (page, réponses, niveau) : relancés avec la
+commande que donne leur rapport de tests ; `5e_C8.1` n'en donne pas (arguments déduits de 5e_C8.2 : séquence 39 / 39,
+QCM 30 / 32, comme sur `main`).
+
