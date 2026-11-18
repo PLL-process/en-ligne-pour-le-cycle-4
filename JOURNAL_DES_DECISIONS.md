@@ -33244,6 +33244,36 @@ toutes les séquences et QCM ») :
 Contrôles : les deux contrôles à 0 sur le site ; `controle_schemas.mjs` 0 ✘ ; `controle_medias.py` vert ; bancs du lot
 25 / 25 et 34 / 34 ; banc du mode mission sans refus.
 
+## 18/11/2026 — Règle d'or n°342, vague 2 : les ateliers des représentations, à leur source ; carte blanche de Pascal
+
+« #784 Merged », puis : « Tu as carte blanche afin d'uniformiser toutes les séquences et qcm. »
+
+**Les ateliers se corrigent dans leurs données.** Les pages des ateliers, les trois cahiers, les panneaux posés dans les
+dossiers des codes et les exercices incrustés dans les séquences sont engendrés par `build.py` et `incrustations.py`
+depuis `_generation/donnees_*.py`. Avant la vague, `build.py` reproduisait ses pages ; `incrustations.py --verifier`
+signalait un écart sur `5e_C2.1`.
+
+- La passe a tourné sur les **littéraux** des sources (`consigne`, `ecran`, `papier`, hors exercices jumeaux) : 35
+  littéraux mis à la ligne par `consignes_a_la_ligne.py`, réécrits en Python (un morceau par ligne, coupé après
+  chaque `<br>`). Sept consignes réécrites à la main : une coupure dans un gras, quatre actions et plus, une consigne
+  composée (`% consigne_objet`, dont la capitale se met maintenant au moment de l'assemblage).
+- `consignes_a_la_ligne.py` sait maintenant couper avant un gras : « , puis <b>écris</b> » devient
+  « .<br>② <b>Écris</b> ».
+- L'écart de `5e_C2.1` venait d'une retouche faite dans la page et jamais portée à la source : « dans une
+  <b>ellipse</b> (une forme ovale) ». Elle est maintenant dans `donnees_interacteurs.py` (cours de 5e) ; la page de
+  l'atelier de 5e et son cahier la reçoivent aussi.
+- `CONSIGNES_REDACTION.md` porte la règle pour qui écrit un atelier.
+
+Résultat : `build.py` et `incrustations.py` relancés ; `incrustations.py --verifier` sort à 0. Sur tout le site :
+**N1 0, N2 0** (272 pages, 387 consignes) ; restent 47 N3 (« et »), gardés d'un tenant.
+
+**Les QCM.** Les énoncés des 78 QCM (2 192 questions) ont été mesurés avec le même contrôle : aucune action enchaînée.
+Ce sont des questions, pas des consignes.
+
+Bancs : `banc_ateliers.py` 524 / 524, `banc_rappels_cdc.py` 302 / 302 ; les bancs des 13 séquences qui portent un
+exercice incrusté modifié sont verts, sauf `tests_3e_C2.1_pekin.py` et `tests_4e_C2.1-C2.2_hangzhou.py`, rouges sur
+`main` à l'identique (ils datent d'avant le référentiel replié et la mention de licence : ils se corrigent à part).
+
 ## 18/11/2026 — Deux bancs remis à jour (Pékin, Hangzhou) ; un constat sur l'en-tête des pages au téléphone
 
 Inventaire de la carte blanche (« uniformiser toutes les séquences et QCM ») : trois bancs de lot étaient rouges sur

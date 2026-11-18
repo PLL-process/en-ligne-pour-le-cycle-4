@@ -111,6 +111,10 @@ seul. Phrases de 25 mots au plus ; unités en toutes lettres dans chaque partie 
 
 - **Deux noms** : le mot du programme d'abord, le nom courant ensuite (« diagramme des interacteurs
   extérieurs, souvent appelé diagramme pieuvre »).
+- **Une action par ligne** (règle d'or n°342, 18/11/2026) : la définition qui ouvre la consigne a sa ligne,
+  puis chaque action la sienne, numérotée ① ② ③ (`<br>` entre elles), sans « ; », « , puis » ni « Enfin, »
+  pour les coudre. Une précision (« Tes choix s'écrivent dans le schéma ») reste avec son action. Vérifier :
+  `python3 _outils/controle_consignes_a_la_ligne.py --strict` sur les pages construites.
 - **Une consigne explique les mots qu'elle emploie** (on redit dans la consigne ce qu'est un critère,
   une fonction technique…). Chaque mot difficile a aussi sa ligne dans `mots`.
 - **On parle à l'élève** : « tu » pour guider, « je » dans le positionnement. Jamais « tu as fait »

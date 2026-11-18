@@ -211,12 +211,14 @@ E2 = dict(
           ("autre objet", "une chose que l'on peut toucher et qui n'est pas une pièce de notre objet."),
           ("élément de l'environnement", "ce qui vient du lieu ou de la nature&nbsp;: le sol, l'air, la pluie, le soleil, la pente…"),
           ("caractéristique", "ce qui décrit l'objet lui-même&nbsp;: sa masse, sa taille, sa couleur. Elle est DANS l'objet, pas autour.")],
-    consigne="<p>Le programme de technologie range les interacteurs extérieurs en <b>quatre familles</b>&nbsp;: les <b>usagers</b> "
-             "(des personnes), les <b>données</b> (des informations, qu'on ne touche pas), les <b>autres objets</b> (des choses "
-             "qu'on peut toucher) et les <b>éléments de l'environnement</b> (le lieu, la nature, la météo).</p>"
-             "<p><b>Range chacun de ces quatre interacteurs du vélo-cargo dans sa famille.</b> Puis regarde le brouillon d'un "
-             "camarade&nbsp;: il a mis six bulles autour du vélo-cargo. <b>Coche celles qui n'ont pas leur place</b> dans le "
-             "diagramme, parce que ce ne sont pas des interacteurs extérieurs.</p>",
+    consigne=("<p>Le programme de technologie range les interacteurs extérieurs en <b>quatre familles</b>&nbsp;: "
+              "les <b>usagers</b> (des personnes), les <b>données</b> (des informations, qu'on ne touche pas), les "
+              "<b>autres objets</b> (des choses qu'on peut toucher) et les <b>éléments de l'environnement</b> (le "
+              "lieu, la nature, la météo).</p><p>① <b>Range chacun de ces quatre interacteurs du vélo-cargo dans "
+              "sa famille.</b><br>"
+              "② Regarde le brouillon d'un camarade&nbsp;: il a mis six bulles autour du vélo-cargo.<br>"
+              "③ <b>Coche celles qui n'ont pas leur place</b> dans le diagramme, parce que ce ne sont pas des "
+              "interacteurs extérieurs.</p>"),
     critere="les quatre lignes sont justes, les trois fausses bulles sont cochées, et tu sais dire pourquoi le téléphone et "
             "l'itinéraire ne sont pas de la même famille.",
     widgets=[dict(type="classer", name="cl", categories=FAMILLES,
@@ -294,11 +296,13 @@ E3 = dict(
           "<li><b>FC3</b>&nbsp;: … (à retrouver)</li>"
           "<li><b>FC4</b>&nbsp;: tenir le téléphone de Léa sans qu'il tombe.</li>"
           "<li><b>FC5</b>&nbsp;: … (à retrouver)</li></ul>",
-    consigne="<p><b>Complète les trois bulles vides</b> avec les mots de la banque&nbsp;: <i>les enfants · les courses · "
-             "la route en pente · la pédale · la chaîne</i>. Tes choix s'écrivent dans le schéma. Deux mots de la banque "
-             "sont des <b>intrus</b>&nbsp;: <b>dis pourquoi</b> ils n'ont pas de bulle. Puis <b>explique</b> pourquoi FP1 passe "
-             "par le vélo-cargo, <b>retrouve</b> les phrases de FC3 et de FC5, et <b>relie</b> la bête à cornes du vélo-cargo "
-             "à son diagramme pieuvre.</p>",
+    consigne=("<p>① <b>Complète les trois bulles vides</b> avec les mots de la banque&nbsp;: <i>les enfants · les "
+              "courses · la route en pente · la pédale · la chaîne</i>. Tes choix s'écrivent dans le schéma. Deux "
+              "mots de la banque sont des <b>intrus</b>&nbsp;:<br>"
+              "② <b>Dis pourquoi</b> ils n'ont pas de bulle.<br>"
+              "③ <b>Explique</b> pourquoi FP1 passe par le vélo-cargo.<br>"
+              "④ <b>Retrouve</b> les phrases de FC3 et de FC5.<br>"
+              "⑤ <b>Relie</b> la bête à cornes du vélo-cargo à son diagramme pieuvre.</p>"),
     critere="chaque bulle porte un interacteur de la famille annoncée, tu donnes la bonne raison pour les intrus, et tu "
             "retrouves FC3 et FC5.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + PIEUVRE_A_COMPLETER +
@@ -473,15 +477,16 @@ E5 = dict(
     intro="<p>Le jardin partagé du collège s'équipe d'un <b>système d'arrosage connecté</b>&nbsp;: il arrose les plantes à "
           "l'heure choisie, avec l'eau d'une cuve qui recueille la pluie, et envoie des nouvelles sur le smartphone de la "
           "gardienne, Mme Joseph. Voici son diagramme des interacteurs extérieurs — son <b>diagramme pieuvre</b>.</p>",
-    consigne="<p>Dans un diagramme pieuvre, on trace deux sortes de traits. Une <b>fonction principale</b> (FP) relie "
-             "<b>deux</b> interacteurs en passant par l'objet&nbsp;: c'est le <b>service rendu</b>. Une <b>fonction contrainte</b> "
-             "(FC) relie l'objet à <b>un seul</b> interacteur&nbsp;: c'est une <b>condition</b> que l'objet doit respecter. "
-             "Chaque fonction, FP ou FC, s'écrit avec une phrase qui commence par un <b>verbe à l'infinitif</b>&nbsp;: "
-             "«&nbsp;permettre…&nbsp;», «&nbsp;résister…&nbsp;».</p>"
-             "<p><b>Un même interacteur peut porter la FP et une FC.</b> C'est souvent le cas de l'usager&nbsp;: la FP dit le "
-             "service qu'il reçoit, la FC dit ce que l'objet doit respecter pour lui (être facile à régler, par exemple). "
-             "Ici, deux traits touchent la gardienne.</p>"
-             "<p><b>Dis pour chaque trait s'il est une FP ou une FC, puis choisis la phrase des traits 2, 3 et 4.</b></p>",
+    consigne=("<p>Dans un diagramme pieuvre, on trace deux sortes de traits. Une <b>fonction principale</b> (FP) "
+              "relie <b>deux</b> interacteurs en passant par l'objet&nbsp;: c'est le <b>service rendu</b>. Une "
+              "<b>fonction contrainte</b> (FC) relie l'objet à <b>un seul</b> interacteur&nbsp;: c'est une "
+              "<b>condition</b> que l'objet doit respecter. Chaque fonction, FP ou FC, s'écrit avec une phrase qui "
+              "commence par un <b>verbe à l'infinitif</b>&nbsp;: «&nbsp;permettre…&nbsp;», "
+              "«&nbsp;résister…&nbsp;».</p><p><b>Un même interacteur peut porter la FP et une FC.</b> C'est "
+              "souvent le cas de l'usager&nbsp;: la FP dit le service qu'il reçoit, la FC dit ce que l'objet doit "
+              "respecter pour lui (être facile à régler, par exemple). Ici, deux traits touchent la "
+              "gardienne.</p><p>① <b>Dis pour chaque trait s'il est une FP ou une FC.<br>"
+              "② Choisis la phrase des traits 2, 3 et 4.</b></p>"),
     critere="neuf réponses justes ; tu sais dire pourquoi le trait 1 passe par deux interacteurs.",
     widgets=[dict(type="classer", name="type", question="%s&nbsp;: fonction principale ou fonction contrainte&nbsp;?", categories=[("fp", "une fonction principale (FP) : le service rendu"),
                                                              ("fc", "une fonction contrainte (FC) : une condition à respecter")],
@@ -705,16 +710,15 @@ E6 = dict(
           "<li><b>F1</b>&nbsp;: flexibilité faible — le niveau est peu négociable&nbsp;;</li>"
           "<li><b>F2</b>&nbsp;: flexibilité moyenne — le niveau est négociable&nbsp;;</li>"
           "<li><b>F3</b>&nbsp;: flexibilité forte — le niveau est très négociable.</li></ul>",
-    consigne="<p><b>Complète le cahier des charges du système d'arrosage, directement dans le tableau</b>&nbsp;: chaque case à "
-             "menu attend une réponse.</p>"
-             "<ul><li><b>Fonction</b>&nbsp;: FP ou FC&nbsp;? Compte les interacteurs écrits dans la case.</li>"
-             "<li><b>Désignation</b>&nbsp;: la phrase de la fonction. Attention aux pièges&nbsp;: elle commence par un <b>verbe à "
-             "l'infinitif</b>. Ce n'est ni un nom, ni une phrase avec un sujet, ni une solution.</li>"
-             "<li><b>Critère</b>&nbsp;: ce qu'on mesure pour vérifier la fonction.</li>"
-             "<li><b>Niveau</b>&nbsp;: la valeur à atteindre, avec l'unité de son critère.</li>"
-             "<li><b>Flexibilité</b>&nbsp;: la classe, de F0 à F3, d'après ce que dit la gardienne, juste au-dessus du tableau.</li></ul>"
-             "<p>Dis ensuite d'où vient le niveau «&nbsp;IPX4&nbsp;», puis <b>écris l'exigence complète</b> de la ligne du "
-             "smartphone.</p>",
+    consigne=("<p><b>Complète le cahier des charges du système d'arrosage, directement dans le tableau</b>&nbsp;: "
+              "chaque case à menu attend une réponse.</p><ul><li><b>Fonction</b>&nbsp;: FP ou FC&nbsp;? Compte les "
+              "interacteurs écrits dans la case.</li><li><b>Désignation</b>&nbsp;: la phrase de la fonction. "
+              "Attention aux pièges&nbsp;: elle commence par un <b>verbe à l'infinitif</b>. Ce n'est ni un nom, ni "
+              "une phrase avec un sujet, ni une solution.</li><li><b>Critère</b>&nbsp;: ce qu'on mesure pour "
+              "vérifier la fonction.</li><li><b>Niveau</b>&nbsp;: la valeur à atteindre, avec l'unité de son "
+              "critère.</li><li><b>Flexibilité</b>&nbsp;: la classe, de F0 à F3, d'après ce que dit la gardienne, "
+              "juste au-dessus du tableau.</li></ul><p>① Dis ensuite d'où vient le niveau «&nbsp;IPX4&nbsp;».<br>"
+              "② <b>Écris l'exigence complète</b> de la ligne du smartphone.</p>"),
     critere="les vingt-deux cases du tableau justes, la bonne origine pour IPX4, et une exigence qui contient un nombre et son "
             "unité.",
     widgets=[dict(type="tableau", name="cdcf",
@@ -846,9 +850,11 @@ E7 = dict(
           "<li>« Pendant les vacances, la cuve s'est vidée en deux jours et le potager a été noyé. »</li>"
           "<li>« Pour changer l'heure d'arrosage, il faut dévisser le capot avec un tournevis. »</li>"
           "<li>« Le boîtier est branché directement sur le 230 volts, au fond du jardin, sous la pluie. »</li></ol>",
-    consigne="<p>Le programme range les contraintes en catégories&nbsp;: <b>sécurité</b>, <b>incidences environnementales</b>, "
-             "<b>formes et fonctions</b>, <b>ergonomie</b>, <b>qualité</b>, <b>fiabilité</b>. <b>Range chaque plainte dans la "
-             "catégorie de la contrainte oubliée</b>, puis <b>explique</b> la plainte 1 avec le diagramme pieuvre.</p>",
+    consigne=("<p>Le programme range les contraintes en catégories&nbsp;: <b>sécurité</b>, <b>incidences "
+              "environnementales</b>, <b>formes et fonctions</b>, <b>ergonomie</b>, <b>qualité</b>, "
+              "<b>fiabilité</b>.<br>"
+              "① <b>Range chaque plainte dans la catégorie de la contrainte oubliée</b>.<br>"
+              "② <b>Explique</b> la plainte 1 avec le diagramme pieuvre.</p>"),
     critere="quatre catégories justes, et une explication qui nomme l'interacteur oublié et la contrainte qui manquait.",
     widgets=[dict(type="classer", name="cat",
                   categories=[("securite", "sécurité"), ("environnement", "incidences environnementales"), ("formes", "formes et fonctions"),
@@ -1018,7 +1024,7 @@ COURS = {
     "5e": (
         "<h3>À quoi sert ce diagramme</h3>"
         "<ul><li>Le <b>diagramme des interacteurs extérieurs</b> — le <b>diagramme pieuvre</b> — décrit un objet <b>de "
-        "l'extérieur</b>, pendant qu'il sert&nbsp;: l'objet au centre, dans une <b>ellipse</b>, et autour, une ellipse (une "
+        "l'extérieur</b>, pendant qu'il sert&nbsp;: l'objet au centre, dans une <b>ellipse</b> (une forme ovale), et autour, une ellipse (une "
         "«&nbsp;bulle&nbsp;») pour chaque interacteur.</li>"
         "<li>Un <b>interacteur extérieur</b> remplit deux conditions à la fois&nbsp;: il est <b>en dehors</b> de l'objet, et il "
         "est <b>en relation</b> avec lui (il le touche, agit sur lui, ou subit son action).</li></ul>"

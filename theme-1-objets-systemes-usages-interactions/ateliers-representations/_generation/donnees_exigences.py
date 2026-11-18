@@ -261,17 +261,18 @@ E1 = dict(
           "qu'on appelle souvent <b>diagramme des exigences SysML</b>. SysML veut dire <i>Systems Modeling Language</i>, "
           "« langage de modélisation des systèmes »&nbsp;: des schémas que les ingénieurs du monde entier lisent de la "
           "même façon.</p>",
-    consigne="<p><b>Un bloc d'exigence</b>, c'est chaque rectangle. En haut, le mot «&nbsp;requirement&nbsp;» (exigence, en "
-             "anglais) et le <b>nom</b> de l'exigence. Dessous, l'<b>Id</b> — son identifiant, un numéro — puis sa phrase, "
-             "le <b>texte</b>. Le trait qui part d'un petit cercle à croix ⊕ est un lien de <b>contenance</b>&nbsp;: "
-             "l'exigence-mère, du côté du ⊕, contient les exigences-filles.</p>"
-             "<p><b>Le texte</b> d'une exigence porte un <b>critère</b> (ce qu'on mesure) et un <b>niveau</b> (la valeur à "
-             "atteindre). Le programme range les exigences en catégories&nbsp;: <b>sécurité</b> (ne blesser personne), "
-             "<b>incidences environnementales</b> (les effets sur la planète&nbsp;: eau, énergie, déchets), <b>formes et "
-             "fonctions</b>, <b>ergonomie</b> (facile et confortable à utiliser), <b>qualité</b>, <b>fiabilité</b> "
-             "(fonctionner sans panne, par tous les temps).</p>"
-             "<p><b>Réponds aux deux questions de lecture, trie les quatre morceaux de texte (critère ou niveau), puis "
-             "range chaque exigence-fille dans sa catégorie.</b></p>",
+    consigne=("<p><b>Un bloc d'exigence</b>, c'est chaque rectangle. En haut, le mot «&nbsp;requirement&nbsp;» "
+              "(exigence, en anglais) et le <b>nom</b> de l'exigence. Dessous, l'<b>Id</b> — son identifiant, un "
+              "numéro — puis sa phrase, le <b>texte</b>. Le trait qui part d'un petit cercle à croix ⊕ est un lien "
+              "de <b>contenance</b>&nbsp;: l'exigence-mère, du côté du ⊕, contient les "
+              "exigences-filles.</p><p><b>Le texte</b> d'une exigence porte un <b>critère</b> (ce qu'on mesure) et "
+              "un <b>niveau</b> (la valeur à atteindre). Le programme range les exigences en catégories&nbsp;: "
+              "<b>sécurité</b> (ne blesser personne), <b>incidences environnementales</b> (les effets sur la "
+              "planète&nbsp;: eau, énergie, déchets), <b>formes et fonctions</b>, <b>ergonomie</b> (facile et "
+              "confortable à utiliser), <b>qualité</b>, <b>fiabilité</b> (fonctionner sans panne, par tous les "
+              "temps).</p><p>① <b>Réponds aux deux questions de lecture, trie les quatre morceaux de texte "
+              "(critère ou niveau).<br>"
+              "② Range chaque exigence-fille dans sa catégorie.</b></p>"),
     critere="dix réponses justes&nbsp;; tu sais dire pourquoi l'exigence 1 n'est satisfaite que si ses quatre filles le sont.",
     widgets=[dict(type="choix", name="id", legende="Que t'apprend «&nbsp;Id = 1.3&nbsp;», dans le bloc Réglage&nbsp;?",
                   options=[("fille", "C'est la troisième exigence contenue dans l'exigence 1."),
@@ -377,12 +378,13 @@ E2 = dict(
           "</table></div>"
           "<p>FC veut dire <b>fonction contrainte</b>&nbsp;: une condition que le système doit respecter face à un seul "
           "élément extérieur. Le diagramme ci-dessous a déjà deux exigences-mères, et deux blocs vides, A et B.</p>",
-    consigne="<p>Un bloc d'exigence a un <b>nom</b> court et un <b>texte</b>&nbsp;: une phrase qui dit ce que le système doit "
-             "faire, avec le <b>critère</b> (ce qu'on mesure) et le <b>niveau</b> (la valeur à atteindre) de la ligne du "
-             "cahier des charges.</p>"
-             "<p><b>Remplis le bloc A avec la première ligne du tableau et le bloc B avec la seconde</b>&nbsp;: choisis le "
-             "nom, puis le texte. Tes choix s'écrivent dans le schéma. <b>Dis ensuite</b> sous quelle exigence-mère ils se "
-             "rangent, avec quel Id, et <b>pourquoi</b> un des textes proposés n'a sa place dans aucun bloc.</p>",
+    consigne=("<p>Un bloc d'exigence a un <b>nom</b> court et un <b>texte</b>&nbsp;: une phrase qui dit ce que le "
+              "système doit faire, avec le <b>critère</b> (ce qu'on mesure) et le <b>niveau</b> (la valeur à "
+              "atteindre) de la ligne du cahier des charges.</p><p>① <b>Remplis le bloc A avec la première ligne "
+              "du tableau et le bloc B avec la seconde</b>&nbsp;: choisis le nom, puis le texte. Tes choix "
+              "s'écrivent dans le schéma.<br>"
+              "② <b>Dis ensuite</b> sous quelle exigence-mère ils se rangent, avec quel Id, et <b>pourquoi</b> un "
+              "des textes proposés n'a sa place dans aucun bloc.</p>"),
     critere="six réponses justes&nbsp;; chaque texte choisi contient un nombre et son unité, et tu sais dire pourquoi la "
             "carte Wi-Fi n'est pas une exigence.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + EX_SUIVI +
@@ -572,12 +574,13 @@ E3 = dict(
           "par un test. Dans le diagramme des exigences, chaque test a son bloc «&nbsp;testCase&nbsp;», relié à l'exigence "
           "par une flèche en tirets «&nbsp;verify&nbsp;»&nbsp;: «&nbsp;ce test vérifie cette exigence&nbsp;».</p>"
           + TABLE_TESTS_E3,
-    consigne="<p>Un <b>protocole de test</b> dit ce qu'on mesure, avec quel instrument, comment, et le seuil à atteindre. "
-             "La <b>flexibilité</b> dit l'écart que le client accepte autour du niveau&nbsp;: un écart dans la marge se "
-             "valide, un écart hors de la marge ne se valide pas, et en <b>F0</b> aucun écart n'est accepté.</p>"
-             "<p><b>Dans le tableau du cahier des charges, choisis pour chaque exigence le test qui la vérifie</b> (un des "
-             "cinq tests ne vérifie rien). <b>Juge</b> ensuite, dans la colonne Verdict, le résultat obtenu sur le prototype. "
-             "<b>Écris</b> enfin le protocole de test d'une nouvelle exigence.</p>",
+    consigne=("<p>Un <b>protocole de test</b> dit ce qu'on mesure, avec quel instrument, comment, et le seuil à "
+              "atteindre. La <b>flexibilité</b> dit l'écart que le client accepte autour du niveau&nbsp;: un écart "
+              "dans la marge se valide, un écart hors de la marge ne se valide pas, et en <b>F0</b> aucun écart "
+              "n'est accepté.</p><p>① <b>Dans le tableau du cahier des charges, choisis pour chaque exigence le "
+              "test qui la vérifie</b> (un des cinq tests ne vérifie rien). <b>Juge</b> ensuite, dans la colonne "
+              "Verdict, le résultat obtenu sur le prototype.<br>"
+              "② <b>Écris</b> enfin le protocole de test d'une nouvelle exigence.</p>"),
     critere="huit réponses justes, et un protocole qui dit ce que tu mesures, avec quel instrument, et le seuil à atteindre.",
     widgets=[TABLEAU_E3,
              dict(type="texte", name="proto", lignes=4,
@@ -803,12 +806,12 @@ E5 = dict(
           ("comité de quartier", "l'association des habitants qui commande la station&nbsp;: c'est le client.")],
     intro="<p>Le cahier des charges de la station porte, pour chaque exigence, une <b>flexibilité</b>&nbsp;: l'écart que le "
           "client accepte autour du niveau. Le client, ici, c'est le comité de quartier.</p>",
-    consigne="<p>La flexibilité se note par une <b>classe</b>&nbsp;: <b>F0</b>, flexibilité nulle — aucun écart, le niveau "
-             "est impératif&nbsp;; <b>F1</b>, faible — un écart accepté seulement à une condition précise&nbsp;; <b>F2</b>, "
-             "moyenne — un petit écart accepté sans condition&nbsp;; <b>F3</b>, forte — un écart large accepté. On peut "
-             "aussi l'écrire en chiffres, comme une <b>tolérance</b>.</p>"
-             "<p><b>Complète la colonne Flexibilité du cahier des charges</b>, d'après chaque réponse de Mme Augustin, puis "
-             "<b>choisis</b> la bonne écriture chiffrée de la marge de l'exigence 1.4.</p>",
+    consigne=("<p>La flexibilité se note par une <b>classe</b>&nbsp;: <b>F0</b>, flexibilité nulle — aucun écart, "
+              "le niveau est impératif&nbsp;; <b>F1</b>, faible — un écart accepté seulement à une condition "
+              "précise&nbsp;; <b>F2</b>, moyenne — un petit écart accepté sans condition&nbsp;; <b>F3</b>, forte — "
+              "un écart large accepté. On peut aussi l'écrire en chiffres, comme une <b>tolérance</b>.</p><p>① "
+              "<b>Complète la colonne Flexibilité du cahier des charges</b>, d'après chaque réponse de Mme Augustin.<br>"
+              "② <b>Choisis</b> la bonne écriture chiffrée de la marge de l'exigence 1.4.</p>"),
     critere="six réponses justes&nbsp;; tu sais dire que la classe dépend de l'écart que le client accepte, pas de "
             "l'importance de l'exigence.",
     widgets=[dict(type="tableau", name="cdcf",
@@ -921,9 +924,11 @@ E6 = dict(
     consigne="<p><b>Arbitrer</b>, c'est choisir entre des solutions imparfaites en disant ce qu'on accepte de perdre. Regarde "
              "d'abord la <b>flexibilité</b> de chaque exigence non satisfaite&nbsp;: un écart sur une exigence <b>F0</b> "
              "n'est jamais accepté&nbsp;; un écart qui reste dans la marge peut l'être, à condition de le dire.</p>"
-             "<p><b>Choisis un boîtier, choisis l'amélioration à demander à son fabricant, puis justifie ton choix</b> en "
-             "trois idées&nbsp;: l'exigence qui décide et pourquoi elle compte pour la sécurité des habitants&nbsp;; "
-             "l'exigence que ton boîtier ne satisfait pas&nbsp;; une amélioration ou une condition.</p>",
+             "<p>① <b>Choisis un boîtier</b>.<br>"
+             "② <b>Choisis l'amélioration à demander à son fabricant</b>.<br>"
+             "③ <b>Justifie ton choix</b> en trois idées&nbsp;: l'exigence qui décide et pourquoi elle compte pour la "
+             "sécurité des habitants&nbsp;; l'exigence que ton boîtier ne satisfait pas&nbsp;; une amélioration ou une "
+             "condition.</p>",
     critere="les deux choix justes, et une justification qui nomme l'exigence décisive, l'exigence non satisfaite et une "
             "amélioration ou une condition.",
     widgets=[dict(type="choix", name="choix", legende="Quel boîtier le comité doit-il retenir&nbsp;?",
