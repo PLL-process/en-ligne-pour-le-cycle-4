@@ -1879,27 +1879,45 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Les relevés montrent un comportement différent de celui qu'on attendait. Que cherche-t-on alors ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un capteur défaillant, qu&#x27;il faudra remplacer"><label for="be_1__2">un capteur défaillant, qu'il faudra remplacer</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="un capteur défaillant, qu&#x27;il faudra remplacer" data-pourquoi="Si le capteur mesure juste, le remplacer ne changera rien. Le programme fait exactement ce qu'on lui a écrit : cherche quelle règle le permet."><label for="be_1__2">un capteur défaillant, qu'il faudra remplacer</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="la règle du programme qui autorise ce comportement"><label for="be_1__1">la règle du programme qui autorise ce comportement</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="à réécrire le programme entier, depuis le début"><label for="be_1__3">à réécrire le programme entier, depuis le début</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="à réécrire le programme entier, depuis le début" data-pourquoi="Tout réécrire, c'est risquer de nouvelles erreurs sans comprendre la première. On cherche d'abord la règle en cause."><label for="be_1__3">à réécrire le programme entier, depuis le début</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
       <legend>« SI vent > 90 ALORS sirène SINON pas de sirène », le vent en kilomètres par heure. Avec un vent de 60 kilomètres par heure, que fait le programme ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="ne déclenche pas la sirène : le SINON s&#x27;applique"><label for="be_2__3">ne déclenche pas la sirène : le SINON s'applique</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="s&#x27;arrête : aucune des deux branches ne convient"><label for="be_2__2">s'arrête : aucune des deux branches ne convient</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="déclenche la sirène : le vent souffle déjà fort"><label for="be_2__1">déclenche la sirène : le vent souffle déjà fort</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="s&#x27;arrête : aucune des deux branches ne convient" data-pourquoi="Un SI … SINON couvre tous les cas : quand la condition est fausse, c'est le SINON qui s'applique."><label for="be_2__2">s'arrête : aucune des deux branches ne convient</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="déclenche la sirène : le vent souffle déjà fort" data-pourquoi="Le programme ne juge pas « fort » : il compare 60 à 90. Est-ce que 60 &gt; 90 ?"><label for="be_2__1">déclenche la sirène : le vent souffle déjà fort</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>Avant de modifier un programme qui marche, que fait-on ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="le teste directement sur l&#x27;objet réel"><label for="be_3__3">le teste directement sur l'objet réel</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="le teste directement sur l&#x27;objet réel" data-pourquoi="Tester sur l'objet réel sans copie de l'original, c'est risquer de ne plus pouvoir revenir en arrière."><label for="be_3__3">le teste directement sur l'objet réel</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="sauvegarde l&#x27;original pour pouvoir y revenir"><label for="be_3__2">sauvegarde l'original pour pouvoir y revenir</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="efface l&#x27;ancien pour ne pas se tromper"><label for="be_3__1">efface l'ancien pour ne pas se tromper</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="efface l&#x27;ancien pour ne pas se tromper" data-pourquoi="Si la modification échoue, tu n'aurais plus le programme qui marchait. On le garde de côté."><label for="be_3__1">efface l'ancien pour ne pas se tromper</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+
+  <details class="correction correction-billet">
+  <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
+  <ol class="corr-billet">
+    <li><b>Les relevés montrent un comportement différent de celui qu'on attendait. Que cherche-t-on alors ?</b>
+    <br>✅ <b>la règle du programme qui autorise ce comportement</b>
+    <br>✘ «&nbsp;un capteur défaillant, qu'il faudra remplacer&nbsp;»&nbsp;: Si le capteur mesure juste, le remplacer ne changera rien. Le programme fait exactement ce qu'on lui a écrit : cherche quelle règle le permet.
+    <br>✘ «&nbsp;à réécrire le programme entier, depuis le début&nbsp;»&nbsp;: Tout réécrire, c'est risquer de nouvelles erreurs sans comprendre la première. On cherche d'abord la règle en cause.</li>
+    <li><b>« SI vent > 90 ALORS sirène SINON pas de sirène », le vent en kilomètres par heure. Avec un vent de 60 kilomètres par heure, que fait le programme ?</b>
+    <br>✅ <b>ne déclenche pas la sirène : le SINON s'applique</b>
+    <br>✘ «&nbsp;s'arrête : aucune des deux branches ne convient&nbsp;»&nbsp;: Un SI … SINON couvre tous les cas : quand la condition est fausse, c'est le SINON qui s'applique.
+    <br>✘ «&nbsp;déclenche la sirène : le vent souffle déjà fort&nbsp;»&nbsp;: Le programme ne juge pas « fort » : il compare 60 à 90. Est-ce que 60 &gt; 90 ?</li>
+    <li><b>Avant de modifier un programme qui marche, que fait-on ?</b>
+    <br>✅ <b>sauvegarde l'original pour pouvoir y revenir</b>
+    <br>✘ «&nbsp;le teste directement sur l'objet réel&nbsp;»&nbsp;: Tester sur l'objet réel sans copie de l'original, c'est risquer de ne plus pouvoir revenir en arrière.
+    <br>✘ «&nbsp;efface l'ancien pour ne pas se tromper&nbsp;»&nbsp;: Si la modification échoue, tu n'aurais plus le programme qui marchait. On le garde de côté.</li>
+  </ol>
+</details>
 </section>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc

@@ -1807,26 +1807,44 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Dans le programme du lampadaire, qu'est-ce que l'<b>état de la lampe</b> (éteinte, veille, pleine puissance) ?</legend>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une sortie : le programme la produit"><label for="be_1__1">une sortie : le programme la produit</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une entrée : elle renseigne le programme"><label for="be_1__2">une entrée : elle renseigne le programme</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un paramètre qu&#x27;on règle à la main"><label for="be_1__3">un paramètre qu'on règle à la main</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une entrée : elle renseigne le programme" data-pourquoi="L'état de la lampe ne vient pas d'un capteur : c'est le programme qui le décide."><label for="be_1__2">une entrée : elle renseigne le programme</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="un paramètre qu&#x27;on règle à la main" data-pourquoi="Un paramètre se règle avant (un seuil, une durée). L'état de la lampe change tout seul, selon ce que décide le programme."><label for="be_1__3">un paramètre qu'on règle à la main</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
       <legend>« SI luminosité &lt; 30 ALORS nuit SINON jour ». Avec une luminosité de 60, que conclut le programme ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="jour : c&#x27;est le SINON qui s&#x27;applique"><label for="be_2__3">jour : c'est le SINON qui s'applique</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="rien : le programme s&#x27;arrête là"><label for="be_2__2">rien : le programme s'arrête là</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="nuit : la luminosité dépasse le seuil"><label for="be_2__1">nuit : la luminosité dépasse le seuil</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="rien : le programme s&#x27;arrête là" data-pourquoi="Un SI … SINON couvre tous les cas : quand la condition est fausse, le SINON s'applique."><label for="be_2__2">rien : le programme s'arrête là</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="nuit : la luminosité dépasse le seuil" data-pourquoi="La condition « nuit » est luminosité &lt; 30. Est-ce que 60 &lt; 30 ?"><label for="be_2__1">nuit : la luminosité dépasse le seuil</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>Que veut dire « passer le seuil “nuit” de 30 à 45 » ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="régler un paramètre : la logique ne change pas"><label for="be_3__2">régler un paramètre : la logique ne change pas</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="ajouter un capteur plus sensible à la nuit"><label for="be_3__3">ajouter un capteur plus sensible à la nuit</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="réécrire la condition : la logique change"><label for="be_3__1">réécrire la condition : la logique change</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="ajouter un capteur plus sensible à la nuit" data-pourquoi="On ne touche pas au matériel : on change un nombre dans le programme."><label for="be_3__3">ajouter un capteur plus sensible à la nuit</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="réécrire la condition : la logique change" data-pourquoi="La condition reste « luminosité &lt; seuil » : seule la valeur du seuil change."><label for="be_3__1">réécrire la condition : la logique change</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+
+  <details class="correction correction-billet">
+  <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
+  <ol class="corr-billet">
+    <li><b>Dans le programme du lampadaire, qu'est-ce que l'<b>état de la lampe</b> (éteinte, veille, pleine puissance) ?</b>
+    <br>✅ <b>une sortie : le programme la produit</b>
+    <br>✘ «&nbsp;une entrée : elle renseigne le programme&nbsp;»&nbsp;: L'état de la lampe ne vient pas d'un capteur : c'est le programme qui le décide.
+    <br>✘ «&nbsp;un paramètre qu'on règle à la main&nbsp;»&nbsp;: Un paramètre se règle avant (un seuil, une durée). L'état de la lampe change tout seul, selon ce que décide le programme.</li>
+    <li><b>« SI luminosité < 30 ALORS nuit SINON jour ». Avec une luminosité de 60, que conclut le programme ?</b>
+    <br>✅ <b>jour : c'est le SINON qui s'applique</b>
+    <br>✘ «&nbsp;rien : le programme s'arrête là&nbsp;»&nbsp;: Un SI … SINON couvre tous les cas : quand la condition est fausse, le SINON s'applique.
+    <br>✘ «&nbsp;nuit : la luminosité dépasse le seuil&nbsp;»&nbsp;: La condition « nuit » est luminosité &lt; 30. Est-ce que 60 &lt; 30 ?</li>
+    <li><b>Que veut dire « passer le seuil “nuit” de 30 à 45 » ?</b>
+    <br>✅ <b>régler un paramètre : la logique ne change pas</b>
+    <br>✘ «&nbsp;ajouter un capteur plus sensible à la nuit&nbsp;»&nbsp;: On ne touche pas au matériel : on change un nombre dans le programme.
+    <br>✘ «&nbsp;réécrire la condition : la logique change&nbsp;»&nbsp;: La condition reste « luminosité &lt; seuil » : seule la valeur du seuil change.</li>
+  </ol>
+</details>
 </section>
 <script>
 /* Billet d'entrée — sans note, hors progression (règle d'or n°26). Chaque question vérifie une ligne du bloc

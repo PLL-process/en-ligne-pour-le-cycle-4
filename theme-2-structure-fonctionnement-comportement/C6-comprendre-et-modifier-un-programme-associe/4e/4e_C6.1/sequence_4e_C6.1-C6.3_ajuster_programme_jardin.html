@@ -1778,27 +1778,45 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Dans le programme du lampadaire, qu'est-ce que la <b>luminosité mesurée</b> ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une sortie : le programme la produit"><label for="be_1__1">une sortie : le programme la produit</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une boucle : le programme la répète"><label for="be_1__3">une boucle : le programme la répète</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="une sortie : le programme la produit" data-pourquoi="La luminosité vient du capteur : le programme la reçoit, il ne la fabrique pas."><label for="be_1__1">une sortie : le programme la produit</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="une boucle : le programme la répète" data-pourquoi="Une boucle est une structure du programme, pas une donnée. La luminosité est une valeur que le programme reçoit."><label for="be_1__3">une boucle : le programme la répète</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="une entrée : le programme l&#x27;utilise"><label for="be_1__2">une entrée : le programme l'utilise</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
       <legend>« SI nuit ET passage ALORS pleine puissance » : quand la lampe passe-t-elle en pleine puissance ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="il fait nuit, même si personne ne passe"><label for="be_2__2">il fait nuit, même si personne ne passe</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="il fait nuit, même si personne ne passe" data-pourquoi="Avec ET, les deux conditions doivent être vraies en même temps. La nuit seule ne suffit pas."><label for="be_2__2">il fait nuit, même si personne ne passe</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="il fait nuit et quelqu&#x27;un passe en même temps"><label for="be_2__1">il fait nuit et quelqu'un passe en même temps</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="quelqu&#x27;un passe, même s&#x27;il fait jour"><label for="be_2__3">quelqu'un passe, même s'il fait jour</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="quelqu&#x27;un passe, même s&#x27;il fait jour" data-pourquoi="Avec ET, les deux conditions doivent être vraies en même temps. Un passage en plein jour ne suffit pas."><label for="be_2__3">quelqu'un passe, même s'il fait jour</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>On monte le seuil « nuit » de 30 à 45. Quand la lampe s'allumera-t-elle ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="à la même heure"><label for="be_3__2">à la même heure</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="à la même heure" data-pourquoi="Changer le seuil change le moment où la condition « nuit » devient vraie. Compare 30 et 45 quand la lumière baisse le soir."><label for="be_3__2">à la même heure</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="plus tôt le soir"><label for="be_3__3">plus tôt le soir</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="plus tard le soir"><label for="be_3__1">plus tard le soir</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="plus tard le soir" data-pourquoi="Le soir, la luminosité baisse : elle passe sous 45 avant de passer sous 30. Lequel arrive en premier ?"><label for="be_3__1">plus tard le soir</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+
+  <details class="correction correction-billet">
+  <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
+  <ol class="corr-billet">
+    <li><b>Dans le programme du lampadaire, qu'est-ce que la <b>luminosité mesurée</b> ?</b>
+    <br>✅ <b>une entrée : le programme l'utilise</b>
+    <br>✘ «&nbsp;une sortie : le programme la produit&nbsp;»&nbsp;: La luminosité vient du capteur : le programme la reçoit, il ne la fabrique pas.
+    <br>✘ «&nbsp;une boucle : le programme la répète&nbsp;»&nbsp;: Une boucle est une structure du programme, pas une donnée. La luminosité est une valeur que le programme reçoit.</li>
+    <li><b>« SI nuit ET passage ALORS pleine puissance » : quand la lampe passe-t-elle en pleine puissance ?</b>
+    <br>✅ <b>il fait nuit et quelqu'un passe en même temps</b>
+    <br>✘ «&nbsp;il fait nuit, même si personne ne passe&nbsp;»&nbsp;: Avec ET, les deux conditions doivent être vraies en même temps. La nuit seule ne suffit pas.
+    <br>✘ «&nbsp;quelqu'un passe, même s'il fait jour&nbsp;»&nbsp;: Avec ET, les deux conditions doivent être vraies en même temps. Un passage en plein jour ne suffit pas.</li>
+    <li><b>On monte le seuil « nuit » de 30 à 45. Quand la lampe s'allumera-t-elle ?</b>
+    <br>✅ <b>plus tôt le soir</b>
+    <br>✘ «&nbsp;à la même heure&nbsp;»&nbsp;: Changer le seuil change le moment où la condition « nuit » devient vraie. Compare 30 et 45 quand la lumière baisse le soir.
+    <br>✘ «&nbsp;plus tard le soir&nbsp;»&nbsp;: Le soir, la luminosité baisse : elle passe sous 45 avant de passer sous 30. Lequel arrive en premier ?</li>
+  </ol>
+</details>
 </section>
 <script>
 /* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui

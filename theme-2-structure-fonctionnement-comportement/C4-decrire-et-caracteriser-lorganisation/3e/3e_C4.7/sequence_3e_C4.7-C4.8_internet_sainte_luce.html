@@ -1753,27 +1753,45 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <br><b>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Dans un réseau qui utilise le masque 255.255.255.0, que peut-on dire des machines 192.168.20.12 et 192.168.20.40 ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="sont sur deux réseaux, car leur fin diffère"><label for="be_1__1">sont sur deux réseaux, car leur fin diffère</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="ont la même adresse, car le début est le même"><label for="be_1__3">ont la même adresse, car le début est le même</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="sont sur deux réseaux, car leur fin diffère" data-pourquoi="Avec ce masque, seule la dernière partie de l'adresse désigne la machine. Les trois premières parties sont la « rue » : compare-les."><label for="be_1__1">sont sur deux réseaux, car leur fin diffère</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="ont la même adresse, car le début est le même" data-pourquoi="Deux machines n'ont jamais la même adresse dans un réseau : la fin les distingue."><label for="be_1__3">ont la même adresse, car le début est le même</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="sont dans la même « rue » : seule la fin change"><label for="be_1__2">sont dans la même « rue » : seule la fin change</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
       <legend>Pourquoi donne-t-on une adresse IP <b>fixe</b> à la station d'alerte ?</legend>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="on doit la trouver toujours à la même adresse"><label for="be_2__3">on doit la trouver toujours à la même adresse</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="une adresse fixe rend la connexion plus rapide"><label for="be_2__1">une adresse fixe rend la connexion plus rapide</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="une adresse fixe la protège contre les pirates"><label for="be_2__2">une adresse fixe la protège contre les pirates</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="une adresse fixe rend la connexion plus rapide" data-pourquoi="L'adresse ne change pas la vitesse de la connexion. Pense à ceux qui doivent retrouver la station chaque fois."><label for="be_2__1">une adresse fixe rend la connexion plus rapide</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="une adresse fixe la protège contre les pirates" data-pourquoi="Une adresse fixe ne protège de rien : elle permet surtout de la retrouver. Pense au serveur qui lui envoie ses demandes."><label for="be_2__2">une adresse fixe la protège contre les pirates</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>Devant un réseau en panne, quelle est la première étape de la méthode ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="changer le câble, souvent le coupable"><label for="be_3__2">changer le câble, souvent le coupable</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="redémarrer toutes les machines pour voir"><label for="be_3__3">redémarrer toutes les machines pour voir</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="changer le câble, souvent le coupable" data-pourquoi="Changer une pièce avant de savoir ce qui ne marche pas, c'est deviner. La méthode commence par observer."><label for="be_3__2">changer le câble, souvent le coupable</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="redémarrer toutes les machines pour voir" data-pourquoi="Redémarrer efface ce qu'on aurait pu observer. On commence par décrire ce qui marche et ce qui ne marche pas."><label for="be_3__3">redémarrer toutes les machines pour voir</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="décrire le symptôme : ce qui marche ou pas"><label for="be_3__1">décrire le symptôme : ce qui marche ou pas</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+
+  <details class="correction correction-billet">
+  <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
+  <ol class="corr-billet">
+    <li><b>Dans un réseau qui utilise le masque 255.255.255.0, que peut-on dire des machines 192.168.20.12 et 192.168.20.40 ?</b>
+    <br>✅ <b>sont dans la même « rue » : seule la fin change</b>
+    <br>✘ «&nbsp;sont sur deux réseaux, car leur fin diffère&nbsp;»&nbsp;: Avec ce masque, seule la dernière partie de l'adresse désigne la machine. Les trois premières parties sont la « rue » : compare-les.
+    <br>✘ «&nbsp;ont la même adresse, car le début est le même&nbsp;»&nbsp;: Deux machines n'ont jamais la même adresse dans un réseau : la fin les distingue.</li>
+    <li><b>Pourquoi donne-t-on une adresse IP <b>fixe</b> à la station d'alerte ?</b>
+    <br>✅ <b>on doit la trouver toujours à la même adresse</b>
+    <br>✘ «&nbsp;une adresse fixe rend la connexion plus rapide&nbsp;»&nbsp;: L'adresse ne change pas la vitesse de la connexion. Pense à ceux qui doivent retrouver la station chaque fois.
+    <br>✘ «&nbsp;une adresse fixe la protège contre les pirates&nbsp;»&nbsp;: Une adresse fixe ne protège de rien : elle permet surtout de la retrouver. Pense au serveur qui lui envoie ses demandes.</li>
+    <li><b>Devant un réseau en panne, quelle est la première étape de la méthode ?</b>
+    <br>✅ <b>décrire le symptôme : ce qui marche ou pas</b>
+    <br>✘ «&nbsp;changer le câble, souvent le coupable&nbsp;»&nbsp;: Changer une pièce avant de savoir ce qui ne marche pas, c'est deviner. La méthode commence par observer.
+    <br>✘ «&nbsp;redémarrer toutes les machines pour voir&nbsp;»&nbsp;: Redémarrer efface ce qu'on aurait pu observer. On commence par décrire ce qui marche et ce qui ne marche pas.</li>
+  </ol>
+</details>
 </section>
 <script>
 /* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
