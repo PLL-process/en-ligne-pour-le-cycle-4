@@ -1926,6 +1926,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="consigne"><b>Consigne :</b> a) au simulateur, observe D'ABORD le comportement avec les réglages d'origine (seuil 30 lux) ; b) MISSION MAIRIE : le soir nuageux, la luminosité vaut 45 lux et le parking doit déjà être éclairé — règle SEUIL_NUIT pour y parvenir et vérifie avec la luminosité à 45 lux ; c) réponds aux prédictions.</div>
     <div class="exo">
       <h4>a) et b) Le simulateur paramétrable</h4>
+      <p style="font-size:.85em;color:var(--sub)">⚠️ <b>Modèle simplifié</b>&nbsp;: la lumière change d'un coup quand tu bouges le curseur. <br>Dehors, elle varie lentement, et un vrai capteur hésite quand elle est tout près du seuil.</p>
       <div class="simu" style="margin:10px 0">
         <div>
           <label for="pSeuil"><b>🎛 SEUIL_NUIT :</b> <b id="pSeuilVal">30</b> lux</label>
@@ -2465,5 +2466,42 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    var n = btn.getAttribute("data-check"), zone = btn;
+    while (zone.parentElement && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

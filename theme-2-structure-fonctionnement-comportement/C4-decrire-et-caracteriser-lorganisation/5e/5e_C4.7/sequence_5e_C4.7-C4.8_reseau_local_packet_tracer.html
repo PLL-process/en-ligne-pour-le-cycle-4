@@ -1868,6 +1868,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <li>Le boîtier central, lui, ____ ; il ne décide pas de ____.</li>
   </ul>
 </details></div>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button class="btn small" data-check="1">✔ Vérifier mes réponses</button>
     <div class="feedback" id="fb1" role="status"></div>
   </div>
@@ -2010,6 +2011,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
       <div class="qcm-option"><input type="radio" name="e2_7" id="e2_7__3" value="une topologie en étoile"><label for="e2_7__3">une topologie en étoile</label></div>
       <div class="qcm-option"><input type="radio" name="e2_7" id="e2_7__4" value="un labyrinthe" data-pourquoi="Un labyrinthe a plusieurs chemins ; ici, il n'y en a qu'un, par le centre."><label for="e2_7__4">un labyrinthe</label></div>
     </fieldset>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button class="btn small" data-check="2">✔ Vérifier mes réponses</button>
     <div class="feedback" id="fb2" role="status"></div>
   </div>
@@ -2263,6 +2265,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
     <li>Le facteur, lui, ne saurait pas ____ ; sur le réseau, le message ____.</li>
   </ul>
 </details></div>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button class="btn small" data-check="4">✔ Vérifier mes réponses</button>
     <div class="feedback" id="fb4" role="status"></div>
   </div>
@@ -3197,5 +3200,42 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    var n = btn.getAttribute("data-check"), zone = btn;
+    while (zone.parentElement && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

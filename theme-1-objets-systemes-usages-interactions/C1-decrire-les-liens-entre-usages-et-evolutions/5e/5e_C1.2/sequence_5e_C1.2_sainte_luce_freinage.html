@@ -1930,6 +1930,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__2" value="pour rester plus courte" data-pourquoi="La longueur n'est pas la raison."><label for="a1_5__2">pour rester plus courte</label></div>
   <div class="qcm-option"><input type="radio" name="a1_5" id="a1_5__1" value="pour laisser ouverts tous les principes"><label for="a1_5__1">pour laisser ouverts tous les principes</label></div>
 </fieldset>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn small" data-check="1" type="button">✅ Vérifier l'activité 1</button>
   <p class="feedback" id="fb1" role="status"></p>
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
@@ -2171,6 +2173,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li>«&nbsp;Réparabilité&nbsp;: ____ / ____.&nbsp;» — «&nbsp;Corrosion&nbsp;: ____ / ____.&nbsp;»</li>
       <li>«&nbsp;Ce tableau ne dit pas ____. Il ne peut donc pas décider seul, parce que ____.&nbsp;»</li>
     </ul></details>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
   <button class="btn small" data-check="2" type="button">✅ Vérifier l'activité 2</button>
   <p class="feedback" id="fb2" role="status"></p>
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
@@ -2254,6 +2257,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li>«&nbsp;Deuxième raison&nbsp;: sa résistance à la corrosion est de ____ sur 5.&nbsp;»</li>
       <li>«&nbsp;J'accepte de perdre&nbsp;: ____ (par exemple ____ g de plus, ou ____ €/an).&nbsp;»</li>
     </ul></details>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 3 réponses justes sur 4, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn small" data-check="3" type="button">✅ Vérifier l'activité 3</button>
   <p class="feedback" id="fb3" role="status"></p>
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
@@ -2387,6 +2392,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <li>«&nbsp;Tu acceptes de perdre&nbsp;: ____ (par exemple ____ €/an d'entretien).&nbsp;»</li>
       <li>«&nbsp;Ce n'est pas le choix du collège, parce que tu transportes ____ dans ____.&nbsp;»</li>
     </ul></details>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn small" data-check="5" type="button">✅ Vérifier l'activité 5</button>
   <p class="feedback" id="fb5" role="status"></p>
   <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
@@ -4013,5 +4020,42 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 </script>
 <!-- /ateliers-representations:moteur -->
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    var n = btn.getAttribute("data-check"), zone = btn;
+    while (zone.parentElement && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

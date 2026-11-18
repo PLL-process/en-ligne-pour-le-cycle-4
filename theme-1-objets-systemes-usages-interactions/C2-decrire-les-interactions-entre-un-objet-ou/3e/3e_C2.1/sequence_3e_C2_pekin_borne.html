@@ -1778,6 +1778,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p>La phrase attendue ne dit pas seulement «&nbsp;ça dépend des profils&nbsp;». Elle nomme
     <b>qui</b> abandonne, et <b>qui n'abandonne jamais</b>.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 3 réponses justes sur 4, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
   <p class="feedback" id="fb1" role="status"></p>
 
@@ -1983,6 +1985,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     comparatif, parce qu'il contient tout&nbsp;». <br>C'est vrai — et c'est précisément son défaut ici&nbsp;:
     elle a quelques minutes.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 10 réponses justes sur 12, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
   <p class="feedback" id="fb2" role="status"></p>
 
@@ -2084,6 +2088,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     <p>Et n'oublie pas la <b>fin en échec</b>&nbsp;: une borne qui se sait incapable de servir doit
     le dire et prévenir, pas attendre le prochain client.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 3 réponses justes sur 4, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
   <p class="feedback" id="fb3" role="status"></p>
 
@@ -2190,6 +2196,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     représentation est un <b>choix de ce qu'on montre</b>, donc aussi de ce qu'on cache. <br>Un auteur
     qui ne sait pas dire ce qu'il a écarté n'a pas choisi&nbsp;: il a mis tout ce qu'il pouvait.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 3 réponses justes sur 4, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
   <p class="feedback" id="fb4" role="status"></p>
 
@@ -3731,5 +3739,42 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    var n = btn.getAttribute("data-check"), zone = btn;
+    while (zone.parentElement && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>
