@@ -29,6 +29,7 @@
 | 337 | Avant de commencer, trois lignes : ce que tu vas apprendre, ce que tu dois savoir faire, comment réussir | Pascal (17/11/2026), écrite par Fable | ✅ En vigueur — pilote 5e_C2.1 (#762) ; outil `_outils/trois_lignes.py`, skill `avant-de-commencer-trois-lignes` |
 | 338 | Un même attendu se dit avec les mêmes nombres et les mêmes mots partout | Fable (audit « double regard » de 5e_C2.1, 17/11/2026) | ✅ En vigueur — `_outils/controle_memes_nombres.py` (mesure) |
 | 339 | Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges | Fable, sur l'audit transmis par Pascal (17/11/2026) | ✅ En vigueur — pilote 5e_C2.1 (#762) ; `_outils/qcm_aides/poser.py`, skill `qcm-aides-et-pieges` |
+| 342 | Chaque consigne à la ligne : une action par ligne, numérotée | Pascal (18/11/2026), écrite par Fable | ✅ En vigueur — pilote `3e_C6.1` ; les n°340 et n°341 sont réservées par #781 |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -33061,3 +33062,42 @@ fichiers d'appoint. `onglets_clavier.py --etat --strict` : 88 pages à onglets, 
 Contrôles : `tests_atelier_C7.1.py` 48 / 48, `verif_chaine_qcm.py` et `verif_chemins.py` verts ; CAO
 `verif_effectifs.py` vert, `tests_verif_effectifs.py` 21 / 21. `verif_guidage.py` (CAO) reste rouge, comme sur
 `main` : il demande les captures du résultat attendu des paliers, qui se prennent en salle.
+
+## 18/11/2026 — Règle d'or n°342 : chaque consigne à la ligne ; 3e_C6.1, le programme sous les yeux
+
+Demande de Pascal, à 5 h 22, pour la séance de 9 h : « "Chaque consigne doit être à la ligne." Une règle d'or doit être
+établie. Modifie en priorité cette séquence. » Et, capture à l'appui (mission, « La nouvelle fonctionnalité : le
+gyrophare gradué », séance 2, écran 6 sur 7) : « il y a des fenêtres où il y a des questions, mais il faut revenir tout
+le temps en arrière pour avoir le programme de référence. Ce qui n'est pas ergonomique. »
+
+> **Règle d'or n°342 — Chaque consigne à la ligne.** Une consigne donne une action par ligne. Quand elle en demande
+> plusieurs, chacune va sur sa ligne et se numérote (①, ②, ③… ou a), b), c)…), dans l'ordre où l'élève les fait. On ne
+> les enchaîne jamais dans une même phrase par « ; », « , puis » ou « et ensuite ». Une phrase de contexte (la situation,
+> le but) peut ouvrir la consigne, sur sa propre ligne. Un bout de code à recopier va sur ses propres lignes, tel qu'il
+> s'écrit (indentation comprise).
+
+Pourquoi : un élève de 3e qui lit « lis le programme ; classe chaque donnée, puis relève les lignes » fait la première
+action et oublie les autres. Une action par ligne se coche de l'œil ; c'est le prolongement de la n°335 (une consigne par
+question) et de l'aération des textes (skill `texte-clair-et-aere`).
+
+**Pilote : `3e_C6.1` (S6 : Programmer l'alerte).**
+- Les six consignes d'activité sont à la ligne : ① ② ③ ou a) b) ; l'activité 4 (« implémente l'algorigramme, en 4
+  ajouts ») donne ses quatre ajouts sur quatre lignes, et le bloc `if gyrophare_actif:` / `activer_gyrophare()` sur deux
+  lignes, indentées comme dans l'éditeur.
+- **Le programme sous les yeux** (extension de la n°331 aux programmes). Chaque activité qui fait lire ou modifier le
+  programme de la station (activités 1 à 5) le montre sous sa consigne (`.codelab-ici`). Il n'y a qu'un éditeur :
+  - en mission, il vient tout seul dans l'écran affiché ; chaque écran de question de l'activité le montre, à gauche des
+    questions sur grand écran (au moins 1 000 px), au-dessus sur téléphone (hauteur bornée, il défile) ;
+  - dans la page complète, chaque activité montre le programme tel que l'élève l'a écrit, numéroté et en couleurs, en
+    lecture ; « ✏️ Modifier ici » y amène l'éditeur, « Le ramener ici » le renvoie à sa place.
+  - Ce que l'élève écrit le suit : c'est le même éditeur, déplacé, jamais une copie.
+- L'activité 6 (la bouée houlographe) montre son programme hors de l'exercice (`.programme-ici`), lignes numérotées :
+  la mission le répète sur chacun de ses cinq écrans de question.
+
+Contrôles : `tests_3e_C6.1-C6.3.mjs` 35 / 35, `tests_regle_311_3e_C6.1.mjs` 34 / 34, `banc_generique` du mode mission sans
+refus ; `audit_aeration.py --strict`, `controle_squelette.mjs`, `controle_hors_ligne.mjs`, `controle_regles_visibles.py`,
+`controle_code_colore.mjs`, `controle_schema_sous_les_yeux.py`, `onglets_clavier.py --etat --strict` et `banc_papier.py`
+(la séquence imprimée) verts.
+
+Reste : un outil qui mesure la n°342 sur tout le site (consignes qui enchaînent plusieurs actions), puis la
+généralisation par vagues, comme pour la n°337.
