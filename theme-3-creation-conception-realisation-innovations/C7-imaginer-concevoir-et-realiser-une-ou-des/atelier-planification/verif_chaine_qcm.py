@@ -52,6 +52,7 @@ Sortie : 0 si la page publiée est exactement ce que q.py, build_qcm.py et
          peut pas se faire en place sans passer par un fichier temporaire).
 """
 import pathlib
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -77,7 +78,12 @@ def main():
         return 1
 
     with tempfile.TemporaryDirectory() as tmp:
-        temoin = pathlib.Path(tmp) / "qcm_temoin.html"
+        # Le témoin porte le nom de la page, à côté d'une copie des données de ses aides : `build_qcm.py` repose la
+        # carte, les aides et les pièges (n°339) en cherchant le `qcm_aides_*.json` du dossier de sa sortie
+        # (17/11/2026, lot 3, vague 6). Sans elles, le témoin garderait celles du gabarit Shenzhen.
+        temoin = pathlib.Path(tmp) / PAGE.name
+        for donnees in A.glob("qcm_aides_*.json"):
+            shutil.copy(donnees, tmp)
 
         r = subprocess.run([sys.executable, str(GENERATEUR), str(GABARIT), str(temoin)],
                            capture_output=True, text=True, cwd=str(GENERATEUR.parent))

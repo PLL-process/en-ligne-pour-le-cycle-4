@@ -28,6 +28,9 @@ import re
 import sys
 
 import q as banque
+_sys_qa = __import__("sys")
+_sys_qa.path.insert(0, next(str(d / "_outils" / "qcm_aides") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "qcm_aides" / "poser.py").is_file()))
+from poser import poser_si_donnees as _poser_aides  # noqa: E402  aides et pièges du lot (n°339)
 
 GRAINE = 617
 ORDRE = ("expl", "ex", "err")
@@ -159,6 +162,10 @@ def construire(gabarit: str, sortie: str) -> None:
         if s.count(avant) != 1:
             raise SystemExit("Motif absent ou ambigu dans le gabarit :\n%r" % avant[:90])
         s = s.replace(avant, apres)
+
+    # Les aides et les pièges de l'atelier (n°339), avant les contrôles : ils remplacent la carte et les pièges que le
+    # gabarit porterait ; sans cela, régénérer les effacerait.
+    s = _poser_aides(s, sortie)
 
     # ── Contrôles avant écriture ────────────────────────────────────────────
     for reste in ("Shenzhen", "SOS serre", "Packet Tracer", "surchauffe ?", "Martinique — 4e"):

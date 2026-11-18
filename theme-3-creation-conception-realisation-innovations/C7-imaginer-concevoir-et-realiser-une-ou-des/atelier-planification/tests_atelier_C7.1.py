@@ -65,8 +65,10 @@ def verifier(niveau, PAGE):
     assert "230" not in src and "secteur" not in src.lower()
     ok("aucune mention du secteur : l'activité est en papier et en logiciel")
 
-    # le seul « http:// » toléré est l'espace de noms des SVG construits en JavaScript (pas un appel réseau)
-    reseau = src.replace("http://www.w3.org/2000/svg", "")
+    # tolérés, parce qu'ils ne chargent rien : l'espace de noms des SVG construits en JavaScript, et le LIEN vers la
+    # licence CC BY-NC-SA du pied de page (posé sur tout le site ; un lien n'est pas un appel réseau)
+    reseau = src.replace("http://www.w3.org/2000/svg", "").replace(
+        'href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr"', "")
     assert "http://" not in reseau and "https://" not in reseau
     ok("aucun appel réseau : la page fonctionne hors ligne (règle n°40)")
 

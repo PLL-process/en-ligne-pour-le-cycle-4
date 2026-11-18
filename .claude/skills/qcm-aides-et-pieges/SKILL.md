@@ -77,10 +77,20 @@ python3 _outils/qcm_aides/poser.py <qcm> <lot>/qcm_aides_<lot>.json --verifier  
 python3 _outils/qcm_aides/poser.py --etat [--strict]                            # le dépôt
 ```
 
+État au 17/11/2026 : **72 QCM sur 72** portent la carte, les aides et les pièges (lot 3, vagues 1 à 6). Un QCM neuf
+les reçoit avant sa livraison : `poser.py --etat --strict` sort à 1 sinon.
+
 Un lot qui a un générateur (`_generation/build_qcm.py`) repose les aides juste avant d'écrire sa page, sinon une
 régénération les effacerait : `s = _poser_aides(s, sortie)` (`poser.poser_si_donnees`, qui trouve le
 `qcm_aides_*.json` du dossier dont « qcm » est la page), importé en tête du générateur — modèle :
 `3e_C1.1/_generation/build_qcm.py` (17/11/2026). Le pilote `5e_C2.1` passe par `apports_audit.py`.
+
+Avant de brancher un générateur, le rejouer sur l'arbre propre et lire `git diff` : vide, il est à jour ; sinon, la
+régénération perdrait ce que les outils du site ont posé depuis sur la page (vague 6 : les sept ateliers du thème 1
+perdent le contraste du minuteur, la licence, les correctifs de la loupe). On le branche quand même, on ne le relance
+pas, et on le signale. Un générateur qui recopie un autre QCM comme gabarit (l'atelier de planification part du QCM de
+Shenzhen) pose les aides AVANT ses contrôles de restes : elles remplacent la carte et les pièges du gabarit. Mettre
+`bilan_remarquable` dans le JSON fait aussi survivre le bilan propre au QCM (n°338).
 
 ## Vérifier
 

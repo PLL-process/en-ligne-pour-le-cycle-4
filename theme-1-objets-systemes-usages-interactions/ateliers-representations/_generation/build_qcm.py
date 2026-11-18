@@ -24,6 +24,9 @@ ICI = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(ICI))
 import build  # noqa: E402
 import moteur  # noqa: E402
+_sys_qa = __import__("sys")
+_sys_qa.path.insert(0, next(str(d / "_outils" / "qcm_aides") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "qcm_aides" / "poser.py").is_file()))
+from poser import poser_si_donnees as _poser_aides  # noqa: E402  aides et pièges du lot (n°339)
 
 ORDRE = ("expl", "ex", "err")
 GABARIT = ICI / "gabarit_qcm.tpl"
@@ -135,6 +138,8 @@ def construire(module):
     # Ouvrir sur le niveau de l'élève (#codes=…)
     pos = s.rfind("</script>")
     s = s[:pos] + OUVERTURE_NIVEAU + s[pos:]
+    # les aides et les pièges du QCM (n°339), avant le contrôle des restes : sans cela, régénérer les effacerait
+    s = _poser_aides(s, str(sortie))
     # Rien du gabarit d'origine ne doit survivre
     for reste in ("planification", "GanttProject", "C7.1", "Brooklyn", "Shenzhen", "chemin critique"):
         if reste in s:
