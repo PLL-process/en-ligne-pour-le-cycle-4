@@ -101,3 +101,25 @@ humaine.
   revendiquée.
 - Google Fonts inaccessible en sandbox : polices de repli, sans incidence — la suite ne compte
   pas ces requêtes comme des ressources distantes de la page (règle n°40).
+
+## 18/11/2026 — Consignes à la ligne (n°342) et programme sous les yeux
+
+Demande de Pascal pour la séance du matin. Chaque consigne d'activité donne une action par ligne (①, ②… ou a), b)). Le
+programme de la station est sous la consigne des activités 1 à 5 ; en mission, il est sur chaque écran de question (à
+gauche sur grand écran, au-dessus sur téléphone). Le programme de la bouée (activité 6) est sur ses cinq écrans.
+
+| Contrôle | Sortie | Résultat |
+|---|---|---|
+| `tests_3e_C6.1-C6.3.mjs` | 0 | 35 / 35 |
+| `tests_regle_311_3e_C6.1.mjs` | 0 | 34 / 34 |
+| `mode_mission/banc_generique` (la page) | 0 | aucun refus ; l'éditeur présent sur chaque écran de question des activités 1 à 5 |
+| `audit_aeration.py --strict` | 0 | aérée |
+| `controle_squelette.mjs` | 0 | ouverture et clôture en place |
+| `controle_hors_ligne.mjs` | 0 | aucune ressource réseau |
+| `controle_regles_visibles.py` | 0 | aucune trace de la fabrique |
+| `controle_code_colore.mjs` | 0 | 8 listings en couleurs |
+| `controle_schema_sous_les_yeux.py` | 0 | rien à signaler |
+| `onglets_clavier.py --etat --strict` | 0 | 0 à poser |
+| `impression_papier/banc_papier.py --filtre 3e_C6.1` | 0 | la fiche papier s'imprime ; le programme déplacé n'y apparaît pas en double |
+
+Revue d'écran : captures à 1 280 px (mission, côte à côte) et en page complète, regardées ; rien à reprendre.
