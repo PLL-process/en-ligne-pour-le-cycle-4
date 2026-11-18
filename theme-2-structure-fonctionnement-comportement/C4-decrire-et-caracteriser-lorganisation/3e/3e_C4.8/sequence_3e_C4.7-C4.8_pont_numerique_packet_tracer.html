@@ -1940,6 +1940,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <details class="aide"><summary>💡 Aide niveau 1</summary><p>Relis les vignettes dans l'ordre&nbsp;: deux rues (étape 1), un routeur-porte par quartier (étape 2), la rue-pont 10.0.0.x (étape 3), le commutateur qui reste dans chaque quartier (étape 4). <br>Sur le schéma de référence, suis le trajet de gauche à droite en lisant chaque adresse.</p></details>
   <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Pense à deux îles : chaque île a ses routes internes (le commutateur) et son port (le routeur). <br>Le pont entre les ports est une route à part entière, avec ses deux extrémités numérotées (10.0.0.1 et 10.0.0.2). <br>Un habitant qui veut envoyer un colis sur l'autre île le dépose à SON port (sa passerelle .1) — jamais directement sur le pont.</p></details>
 
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn" data-check="1">✅ Vérifier mes réponses</button>
   <div class="feedback" id="fb1" role="status"></div>
 
@@ -2039,6 +2040,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <details class="aide"><summary>💡 Aide niveau 1</summary><p>La procédure du routeur tient en trois cas&nbsp;: rue dans MA table → j'applique la ligne&nbsp;; <br>rue directement connectée → je distribue&nbsp;; <br>rue inconnue → je détruis. <br>Pour la question 5, imagine devoir écrire À LA MAIN une ligne pour chaque réseau du monde… et la corriger à chaque panne.</p></details>
   <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Deux réseaux = 1 ligne par table&nbsp;: gérable à la main (c'est notre « route statique »). <br>Des centaines de milliers de réseaux qui apparaissent, disparaissent, tombent en panne à chaque seconde = impossible à suivre humainement. <br>Le protocole de routage est la solution des routeurs&nbsp;: ils BAVARDENT entre eux («&nbsp;moi je sais joindre telle rue&nbsp;») et mettent à jour leurs tables automatiquement. <br>C'est exactement ce que le libellé te demande de justifier.</p></details>
 
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn" data-check="2">✅ Vérifier mes décisions</button>
   <div class="feedback" id="fb2" role="status"></div>
 
@@ -3184,5 +3186,52 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

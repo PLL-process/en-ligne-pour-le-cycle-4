@@ -1782,6 +1782,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
     étape du trajet ouvre une famille de solutions&nbsp;: produire moins, protéger du soleil,
     ouvrir un passage, ou extraire de force.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 5 réponses justes sur 6, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
   <p class="feedback" id="fb1" role="status"></p>
 
@@ -1971,6 +1973,8 @@ négociable.</span></td></tr></tbody></table></div></div><fieldset class="qcm-gr
     annuel par dix et ajoute l'installation. <br>S3 passe alors de 2400 à 5800&nbsp;€, tandis que S1
     reste à 600. <br>L'ordre change complètement.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 5 réponses justes sur 6, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
   <p class="feedback" id="fb2" role="status"></p>
 
@@ -2077,6 +2081,8 @@ négociable.</span></td></tr></tbody></table></div></div><fieldset class="qcm-gr
     <b>toujours</b> la température extérieure — sans elle, on ne saura pas si l'écart vient du local
     ou du temps qu'il faisait.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 5 réponses justes sur 6, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
   <p class="feedback" id="fb3" role="status"></p>
 
@@ -2187,6 +2193,7 @@ négociable.</span></td></tr></tbody></table></div></div><fieldset class="qcm-gr
     et non 900 kWh produits. <br>Le pilier économique et le pilier
     environnemental pointent dans la même direction.</p></details>
 
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5.</p>
   <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
   <p class="feedback" id="fb4" role="status"></p>
 
@@ -2223,6 +2230,7 @@ négociable.</span></td></tr></tbody></table></div></div><fieldset class="qcm-gr
     <li>«&nbsp;Socialement&nbsp;: ____.&nbsp;»</li>
     <li>«&nbsp;Sa limite est ____.&nbsp;»</li>
     <li>«&nbsp;À Fort-de-France, ____ ne fonctionnerait plus aussi bien, parce que ____.&nbsp;»</li></ul></details>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
   <p class="feedback" id="fb5" role="status"></p>
   <details class="correction"><summary>📖 Correction complète</summary>
@@ -3680,5 +3688,52 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

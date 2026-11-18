@@ -73,6 +73,18 @@ def _onglets(html):
     return mod.poser(html), mod.DEBUT
 
 
+# Règle d'or n°340 (18/11/2026) — une réponse changée après la vérification retire la validation. Même geste : le bloc
+# est posé par l'outil du dépôt, une seule source.
+def _retrait(html):
+    chemin = pathlib.Path(__file__).resolve().parents[4] / "_outils" / "retrait_validation.py"
+    if not chemin.exists():
+        raise SystemExit("n°340 : _outils/retrait_validation.py est introuvable (%s)." % chemin)
+    spec = _iu.spec_from_file_location("retrait_validation", chemin)
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.poser(html), mod.DEBUT
+
+
 # Règle d'or n°303 — un lien se lit, à l'écran comme sur le papier. Texte repris
 # tel quel des pages publiées (retouche du 21/09/2026). Le bloc se glisse dans le
 # <style> de la loupe, là où la retouche l'avait posé à la main : l'écrire ici
@@ -418,6 +430,7 @@ PM = """
   <p class="saved-note">Un exemple de forme, pour que ce soit lisible&nbsp;:<br>
   <code>Câbler le capteur — 2 séances — après : choisir les grandeurs</code></p>
   <textarea id="a1_taches" style="min-height:130px" aria-label="Trois tâches de ton projet avec leur durée et ce qu'elles doivent attendre, puis ton jalon"></textarea>
+  <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
   <button class="btn small" data-check="1">Vérifier mes tâches</button>
   <p class="feedback" id="fb1" role="status"></p>
   <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
@@ -1597,6 +1610,10 @@ def page(niv):
         raise SystemExit("n°298 amendée : le dépliant du référentiel n'a pas été posé "
                          "dans le parcours %s — arrêt avant écriture." % niv)
     resultat, debut_onglets = _onglets(resultat)
+    resultat, debut_retrait = _retrait(resultat)
+    if 'data-check' in resultat and debut_retrait not in resultat:
+        raise SystemExit("n°340 : une réponse changée ne retirerait pas la validation dans le parcours %s "
+                         "— arrêt avant écriture." % niv)
     if 'role="tab"' in resultat and debut_onglets not in resultat:
         raise SystemExit("n°326 : les onglets du parcours %s ne se parcourent pas au clavier "
                          "— arrêt avant écriture." % niv)

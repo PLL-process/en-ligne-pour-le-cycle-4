@@ -1996,6 +1996,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <li>On ne change qu&#x27;une chose à la fois parce que sinon ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
@@ -2115,6 +2116,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <li>Étape 4 : je note ____, pour que le suivant puisse ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
@@ -2134,7 +2136,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> commencer par démonter avant d'observer ; mesurer dans le désordre (on ne peut plus localiser) ; oublier le retest final ; toucher au secteur (danger mortel — jamais au collège).</div>
     <div class="retenir"><b>📌 À retenir :</b> un <b>protocole de dépannage</b> = constats → inspection → mesures ordonnées de proche en proche → réparation du seul élément localisé → retest complet. La panne est <b>entre le dernier point correct et le premier point anormal</b>. Sécurité : <b>très basse tension uniquement</b>.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 9 réponses justes + un protocole rédigé comportant observation, test ordonné et vérification finale.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 9 réponses justes + un protocole rédigé comportant observation, test ordonné et vérification finale. Au moins 8 réponses justes sur 9 suffisent à valider.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Réparer ! ›</button></p>
@@ -2188,6 +2190,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <div class="qcm-option"><input type="radio" name="c4_q2" id="c4_q2__4" value="ce n&#x27;est pas nécessaire" data-pourquoi="Un remplacement peut déranger un connecteur voisin : comment le saurais-tu sans tester ?"><label for="c4_q2__4">ce n'est pas nécessaire</label></div>
   <div class="qcm-option"><input type="radio" name="c4_q2" id="c4_q2__2" value="pour user la batterie" data-pourquoi="Un test dure quelques secondes : il ne vide pas la batterie, il sert à prouver quelque chose."><label for="c4_q2__2">pour user la batterie</label></div>
 </fieldset>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb4" role="status"></div>
     </div>
@@ -2328,6 +2331,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <li>Le temps passé, lui, représente ____ — mais il m&#x27;apporte ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
@@ -2840,5 +2844,52 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>
