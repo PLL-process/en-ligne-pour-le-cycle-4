@@ -1,11 +1,11 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 73 QCM, **2211 questions**, 221 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
 - `_exports/moodle/5e.xml` — 580 questions
-- `_exports/moodle/4e.xml` — 693 questions
+- `_exports/moodle/4e.xml` — 723 questions
 - `_exports/moodle/3e.xml` — 668 questions
 - `_exports/moodle/ateliers.xml` — 240 questions
 
@@ -23,6 +23,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 ima
 | 5e | 5e_C1.5 | Le compte du club : ce qu'une publication révèle et ce qu'elle engage | 30 | 1 |
 | 3e | 3e_C2.1 | Pékin, trois destinataires, trois représentations | 30 | 5 |
 | 4e | 4e_C2.1 | Hangzhou, ce que vit l'usager devant la borne | 30 | 5 |
+| 4e | 4e_C2.1 | Comment expliquer le fonctionnement d’un objet ? | 30 | 6 |
 | 5e | 5e_C2.1 | Shenzhen, la station de vélos et tout ce qui l'entoure | 34 | 8 |
 | 3e | 3e_C3.1 | Shenzhen, comment refroidir un local qui surchauffe ? | 30 | 1 |
 | 4e | 4e_C3.1 | Hangzhou, quelle flotte de vélos pour la ville ? | 30 | 2 |
@@ -86,9 +87,8 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 ima
 | 4e | 4e_C9.1 | Le jardin connecté se programme | 30 | 4 |
 | 5e | 5e_C9.1 | La boîte étiquetée | 30 | 3 |
 
-## Pages QCM non exportées (6)
+## Pages QCM non exportées (5)
 
-- `theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/qcm_fonctionnement_objet.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
 - `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/qcm_automatisation_premium.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
 - `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.4/qcm_ecall_chaine_information.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)
 - `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_algorigrammes_domotique.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)

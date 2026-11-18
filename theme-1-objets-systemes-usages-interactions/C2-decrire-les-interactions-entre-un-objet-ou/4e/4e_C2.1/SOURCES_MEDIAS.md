@@ -7,6 +7,8 @@ libre, avec `<title>` et `<desc>` accessibles.
 |---|---|---|---|---|
 | `Images/du_verbatim_a_l_algorigramme.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | Le trajet imposé par le référentiel — langage naturel, schéma, graphique, algorithme — chacun avec ce qu'il apporte **et ce qu'il ne sait pas dire** |
 | `Images/six_familles_d_exigences.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | Les six familles d'exigences **dans les mots du programme**, la question que chacune pose, et ce qu'elle donne sur la borne |
+| `Images/notice_climatiseur_extrait.svg` | SVG original, écrit par `_generation/figures_qcm_fonctionnement_objet.py` (18/11/2026) | Fable, pour ce dépôt | CC0 1.0 | Image-objet du QCM complémentaire : un extrait de notice inventé (touches et pictogrammes, procédure en trois étapes, deux avertissements) que l'élève **lit** pour répondre (questions 3, 4, 5 et 27). Aucune marque, aucun modèle réel. |
+| `Images/algorigramme_minuterie_climatiseur.svg` | SVG original, écrit par `_generation/figures_qcm_fonctionnement_objet.py` (18/11/2026) | Fable, pour ce dépôt | CC0 1.0 | Image-objet du QCM complémentaire : la minuterie du climatiseur en algorigramme (test, boucle, sortie OUI), lue aux questions 13 et 14. |
 | `Images/corrige_temps_par_etape.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | **Corrigé** du graphique de l'activité 2 : moyenne et pire cas par étape, les 9 reprises sur 30 rendues visibles, et les deux lectures nommées |
 
 ## Pourquoi trois figures, et pas deux
@@ -49,15 +51,12 @@ contre-intuitif** apparaisse tout seul :
 Un élève qui n'aurait que le chronomètre corrigerait la mauvaise étape ; un élève qui n'aurait que
 les témoignages ignorerait 40 secondes. C'est le croisement qui décide.
 
-## Ressource héritée, non modifiée
+## Le QCM complémentaire
 
-`qcm_fonctionnement_objet.html` (50 Ko, 25 questions, « Comment expliquer le fonctionnement d'un
-objet ? ») était présent dans ce dossier **avant** cette séquence. Il est d'un **autre auteur** et
-n'a pas été modifié — pas une balise.
-
-Il est référencé depuis le bloc Bonus comme **ressource complémentaire**, avec sa portée dite
-honnêtement : il annonce lui-même couvrir `C2.1`, `C2.2` **et `C9.1` à `C9.3`**, c'est-à-dire qu'il
-déborde sur la programmation. Il ne remplace pas le QCM du lot.
+`qcm_fonctionnement_objet.html` a été réécrit le 18/11/2026 au gabarit commun (30 questions, C2.1
+et C2.2 seulement). Ses deux figures sont dans le tableau ci-dessus. L'ancienne version (25
+questions, sans image, qui débordait sur les codes C9 de l'ancien programme) est archivée dans
+`_archive-anciennes-versions/C2-decrire-les-interactions-entre-un-objet-ou/4e_C2.1/`.
 
 ## Polices
 

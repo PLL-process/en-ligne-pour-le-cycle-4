@@ -1,965 +1,920 @@
-<!-- Indique que le document est un fichier HTML5 -->
 <!DOCTYPE html>
-<!-- Ouvre la balise principale HTML et précise la langue -->
 <html lang="fr">
 <head>
-    <!-- Encodage des caractères en UTF-8 pour gérer les accents -->
-    <meta charset="UTF-8">
-    <!-- Titre affiché dans l’onglet du navigateur -->
-    <title>QCM - Comment expliquer le fonctionnement d’un objet ?</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 1 · 4e — QCM : comment expliquer le fonctionnement d’un objet ? (4e_C2.1 · C2.2)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#7d9bd4;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
 
-    <!-- Début du style CSS intégré -->
-    <style>
-        /* Style global pour le corps de la page */
-        body {
-            font-family: Arial, sans-serif;    /* Police principale */
-            background: #0f172a;              /* Fond sombre bleu nuit */
-            color: #e5e7eb;                   /* Texte gris très clair */
-            margin: 0;                        /* Supprime les marges par défaut du navigateur */
-            padding: 0;                       /* Supprime les espacements internes par défaut */
-        }
-
-        /* Conteneur principal pour centrer le contenu et limiter la largeur */
-        .container {
-            max-width: 1000px;                /* Largeur maximale du contenu */
-            margin: 0 auto;                   /* Centre le bloc horizontalement */
-            padding: 20px;                    /* Ajoute un peu d’espace interne */
-        }
-
-        /* Bandeau d’en-tête en haut de la page */
-        header {
-            background: linear-gradient(135deg, #1d4ed8, #22c55e); /* Dégradé bleu / vert */
-            padding: 20px;                   /* Espacement interne du bandeau */
-            border-radius: 10px;             /* Bords arrondis du bandeau */
-            display: flex;                   /* Mise en page en ligne (flex) */
-            align-items: center;             /* Centre verticalement les éléments */
-            gap: 20px;                       /* Espace entre les éléments du bandeau */
-            margin-bottom: 20px;             /* Espace sous le bandeau */
-        }
-
-        /* Zone contenant le texte dans l’en-tête */
-        .header-text {
-            flex: 1;                         /* Prend toute la place disponible */
-        }
-
-        /* Titre principal dans l’en-tête */
-        header h1 {
-            margin: 0;                       /* Supprime la marge par défaut */
-            font-size: 1.8em;                /* Taille de police du titre */
-            color: #f9fafb;                  /* Couleur du texte (presque blanc) */
-        }
-
-        /* Paragraphe de sous-titre dans l’en-tête */
-        header p {
-            margin: 5px 0 0 0;               /* Légère marge au-dessus */
-            font-size: 0.95em;               /* Taille du texte du sous-titre */
-            color: #e5e7eb;                  /* Couleur claire */
-        }
-
-        /* Bloc qui contient les images SVG d’objets (imprimante, spa, radiateur) */
-        .header-illustrations {
-            display: flex;                   /* Affiche les SVG en ligne */
-            gap: 10px;                       /* Espace entre les SVG */
-        }
-
-        /* Style commun aux petites cartes d’info sous le bandeau (compétences, score, etc.) */
-        .info-card {
-            background: #111827;             /* Fond sombre mais différent du fond global */
-            border-radius: 10px;             /* Bords arrondis */
-            padding: 15px;                   /* Espacement interne */
-            margin-bottom: 15px;             /* Espace sous la carte */
-            border: 1px solid #1f2933;       /* Légère bordure pour délimiter */
-        }
-
-        /* Titre des petites cartes d’info (zones compétences, consignes, etc.) */
-        .info-card h2 {
-            margin-top: 0;                   /* Supprime la marge supérieure */
-            color: #60a5fa;                  /* Titre bleu clair */
-            font-size: 1.1em;                /* Taille légèrement augmentée */
-        }
-
-        /* Style pour la liste de compétences */
-        .skills-list {
-            display: flex;                   /* Affiche les items sur une même ligne */
-            flex-wrap: wrap;                 /* Permet le retour à la ligne si trop long */
-            gap: 8px;                        /* Espace entre les “pastilles” de compétences */
-            margin-top: 5px;                 /* Petite marge avec le titre */
-        }
-
-        /* Pastille de compétence individuelle (C2.1, C2.2, etc.) */
-        .skill-tag {
-            background: #1e293b;            /* Fond sombre bleuté */
-            border-radius: 999px;           /* Forme de “pilule” très arrondie */
-            padding: 4px 10px;              /* Espacement interne */
-            font-size: 0.85em;              /* Taille de texte réduite */
-            border: 1px solid #334155;      /* Légère bordure pour se détacher */
-        }
-
-        /* Style général pour chaque question de QCM */
-        .question {
-            background: #020617;            /* Fond très sombre pour chaque bloc question */
-            border-radius: 10px;            /* Bords arrondis du bloc question */
-            padding: 15px;                  /* Espacement interne */
-            margin-bottom: 15px;            /* Espace entre deux questions */
-            border: 1px solid #1f2937;      /* Fine bordure autour de chaque question */
-        }
-
-        /* Titre de question (Ex : Question 1…) */
-        .question h3 {
-            margin-top: 0;                  /* Supprime la marge en haut */
-            color: #38bdf8;                 /* Couleur bleu ciel pour le titre de la question */
-            font-size: 1.05em;              /* Taille légèrement augmentée */
-        }
-
-        /* Classe pour afficher la compétence juste sous la question */
-        .competence-label {
-            font-size: 0.85em;              /* Texte plus petit */
-            color: #a5b4fc;                 /* Mauve clair pour la compétence */
-            margin-bottom: 8px;             /* Petite séparation avec le reste */
-        }
-
-        /* Liste des propositions (A, B, C, D) */
-        .options {
-            margin-top: 8px;                /* Espace au-dessus de la liste de réponses */
-        }
-
-        /* Chaque ligne de réponse (label) */
-        .options label {
-            display: block;                 /* Chaque proposition sur une ligne */
-            margin-bottom: 5px;             /* Espace entre deux lignes */
-            cursor: pointer;                /* Curseur = main au survol */
-        }
-
-        /* Couleur des inputs radio pour qu’ils s’intègrent bien sur fond sombre */
-        .options input[type="radio"] {
-            margin-right: 5px;              /* Espace entre la puce radio et le texte */
-        }
-
-        /* Zone d’affichage des feedbacks après correction */
-        .feedback {
-            margin-top: 8px;                /* Espace entre les réponses et le feedback */
-            font-size: 0.9em;               /* Taille de texte légèrement réduite */
-        }
-
-        /* Couleur verte pour les réponses correctes */
-        .correct {
-            color: #4ade80;                 /* Vert clair */
-        }
-
-        /* Couleur rouge pour les réponses incorrectes */
-        .incorrect {
-            color: #f97373;                 /* Rouge/rose */
-        }
-
-        /* Style de la barre de score globale */
-        .score-panel {
-            display: flex;                  /* Affiche les éléments sur une ligne */
-            flex-wrap: wrap;                /* Permet de revenir à la ligne si pas assez de place */
-            gap: 10px;                      /* Espace horizontal/vertical entre les éléments */
-            align-items: center;            /* Centre verticalement les éléments */
-        }
-
-        /* Zone textuelle du score (résumé) */
-        .score-text {
-            font-weight: bold;              /* Met en gras le score */
-        }
-
-        /* Barre de progression visuelle en bas de la zone score */
-        .score-bar-container {
-            flex: 1;                        /* Prend l’espace horizontal restant */
-            background: #111827;            /* Fond sombre pour la barre */
-            border-radius: 999px;           /* Forme de pilule */
-            overflow: hidden;               /* Cache ce qui dépasse */
-            height: 12px;                   /* Hauteur de la barre */
-            border: 1px solid #1f2937;      /* Bordure légère */
-        }
-
-        /* Vraie barre de progression (largeur modifiée par JavaScript) */
-        .score-bar {
-            height: 100%;                   /* Prend toute la hauteur du conteneur */
-            width: 0%;                      /* Largeur initiale = 0% avant correction */
-            background: linear-gradient(90deg, #22c55e, #22d3ee); /* Dégradé vert-bleu */
-            transition: width 0.5s ease;    /* Animation fluide quand la barre change de taille */
-        }
-
-        /* Style des boutons principaux (corriger, réinitialiser) */
-        .actions {
-            margin-top: 10px;               /* Espace au-dessus du groupe de boutons */
-        }
-
-        /* Style commun à tous les boutons */
-        button {
-            background: #2563eb;            /* Fond bleu moyen */
-            color: #f9fafb;                 /* Texte très clair */
-            border: none;                   /* Pas de bordure par défaut */
-            padding: 10px 16px;             /* Taille du bouton (hauteur et largeur) */
-            border-radius: 999px;           /* Bouton arrondi */
-            cursor: pointer;                /* Curseur main */
-            font-size: 0.95em;              /* Taille de texte du bouton */
-            margin-right: 8px;              /* Espace entre les boutons */
-        }
-
-        /* Effet au survol d’un bouton (éclaircit un peu) */
-        button:hover {
-            background: #1d4ed8;            /* Bleu un peu plus foncé au survol */
-        }
-
-        /* Bouton secondaire (réinitialisation) avec une autre couleur */
-        .btn-secondary {
-            background: #6b7280;            /* Gris pour le bouton secondaire */
-        }
-
-        /* Effet au survol du bouton secondaire */
-        .btn-secondary:hover {
-            background: #4b5563;            /* Gris légèrement plus foncé */
-        }
-
-        /* Petit texte d’aide en bas */
-        footer {
-            margin-top: 25px;               /* Espace au-dessus du pied de page */
-            font-size: 0.8em;               /* Texte plus petit */
-            color: #9ca3af;                 /* Gris clair */
-            text-align: center;             /* Centrer le texte */
-        }
-    #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#9bbefc}@media print{#navharm{display:none}}
 
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  .header-illustrations ellipse{opacity:1!important}
-  #btnCorriger,.btn-secondary,.info-card,.question,.score-bar-container,.skill-tag,body{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
-  .competence-label,.options label{color:#020617!important}
-  .question h3{color:#067baf!important}
-  .info-card h2{color:#0870f2!important}
-  .header-text h1{color:#0f172a!important}
-  .info-card strong,.score-text{color:#111827!important}
-  .skill-tag{color:#1e293b!important}
-  #btnCorriger{color:#2563eb!important}
-  .btn-secondary{color:#6b7280!important}
+  #id_classe,#id_date,#id_nom,#id_prenom,.badge,.bilan th,.dash div,.option,.progress-bar,.res-grid div{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .v-hl{color:#047fa0!important}
+  .option span{color:#0a1b3d!important}
+  .badge{color:#0d2347!important}
+  .card span,.identite label,.subtitle{color:#1a6af8!important}
+  .note20,.v-warn{color:#946b00!important}
+  .q-comp{color:#a145ea!important}
 }
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
-    <!-- Fin du style CSS -->
 </head>
-
-<!-- Début du corps du document HTML -->
 <body>
-<nav id="navharm" aria-label="Navigation du site">
-  <a href="../../../../index.html">&#8962; Accueil</a>
-  <a href="sequence_4e_C2_hangzhou_borne.html">&#8592; La séquence</a>
-  <a href="qcm_4e_C2_hangzhou_borne.html">&#129504; Le QCM</a>
-</nav>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C2_hangzhou_borne.html">← Séquence</a></nav>
+<h1>📘 QCM — Comment expliquer le fonctionnement d’un objet ?</h1>
+<p class="subtitle">Lire une notice et ses pictogrammes, passer du langage naturel à l’algorigramme, reconnaître les exigences d’un objet : climatiseur, spa, lisseur, imprimante</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span title="Programme 2024 — 4e_C2.1 : Décrire l’expérience de l’utilisateur (ressenti et facilité d’usage) d’un objet ou système technique en partant du langage naturel (texte, croquis) pour aboutir aux schémas, graphiques, algorithmes." class="badge code">4e_C2.1</span><span title="Programme 2024 — 4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." class="badge code">4e_C2.2</span>
+  <span class="badge theme">30 questions · chaque distracteur réfuté</span>
+</div>
+<p style="text-align:center"><a href="sequence_4e_C2_hangzhou_borne.html">⬅ Revenir à la séquence</a></p>
 
-    <!-- Conteneur principal pour centrer le contenu -->
-    <div class="container">
-        <!-- Bandeau d’en-tête avec titre, sous-titre et images SVG -->
-        <header>
-            <!-- Texte à gauche dans le bandeau -->
-            <div class="header-text">
-                <!-- Titre principal du QCM -->
-                <h1>QCM – Comment expliquer le fonctionnement d’un objet ?</h1>
-                <!-- Sous-titre motivant avec emojis -->
-                <p>💡 Imprimante, spa, radiateur… Teste tes connaissances sur les notices, les contraintes et la programmation !</p>
-            </div>
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
 
-            <!-- Illustrations SVG à droite dans le bandeau -->
-            <div class="header-illustrations">
-                <!-- SVG simplifié d’une imprimante (image vectorielle intégrée) -->
-                <svg width="70" height="50" viewBox="0 0 80 60">
-                    <!-- Corps de l’imprimante -->
-                    <rect x="5" y="15" width="70" height="35" rx="6" fill="#111827" stroke="#e5e7eb" />
-                    <!-- Feuille de papier -->
-                    <rect x="20" y="2" width="40" height="20" rx="2" fill="#f9fafb" stroke="#e5e7eb" />
-                    <!-- Fente de sortie -->
-                    <rect x="20" y="38" width="40" height="5" fill="#e5e7eb" />
-                    <!-- Bouton rond -->
-                    <circle cx="65" cy="25" r="3" fill="#22c55e" />
-                </svg>
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Comment un objet s'explique à celui qui s'en sert : la notice, ses pictogrammes, ses étapes.
+    <br>Les exigences d'un objet : <b>sécurité</b>, <b>environnement</b>, <b>formes et fonctions</b>, <b>ergonomie</b>, <b>qualité</b>, <b>fiabilité</b>.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Lire une notice et passer d'une phrase à un algorigramme.
+    <br>Ranger une exigence dans sa famille, et dire si un essai peut la vérifier.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Quand une question montre la notice ou l'algorigramme, cherche la réponse dessus avant de choisir.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
+</section>
 
-                <!-- SVG simplifié d’un spa gonflable -->
-                <svg width="70" height="50" viewBox="0 0 80 60">
-                    <!-- Bassin du spa -->
-                    <ellipse cx="40" cy="35" rx="30" ry="15" fill="#0f172a" stroke="#e5e7eb" />
-                    <!-- Eau dans le spa -->
-                    <ellipse cx="40" cy="32" rx="28" ry="10" fill="#1d4ed8" opacity="0.6" />
-                    <!-- Thermomètre -->
-                    <rect x="60" y="10" width="6" height="20" rx="3" fill="#e5e7eb" />
-                    <circle cx="63" cy="32" r="5" fill="#ef4444" />
-                </svg>
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar" aria-label="Progression"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
 
-                <!-- SVG simplifié d’un radiateur programmable -->
-                <svg width="70" height="50" viewBox="0 0 80 60">
-                    <!-- Corps du radiateur -->
-                    <rect x="10" y="15" width="50" height="30" rx="4" fill="#111827" stroke="#e5e7eb" />
-                    <!-- Traits verticaux pour les “lames” -->
-                    <line x1="18" y1="18" x2="18" y2="42" stroke="#e5e7eb" />
-                    <line x1="26" y1="18" x2="26" y2="42" stroke="#e5e7eb" />
-                    <line x1="34" y1="18" x2="34" y2="42" stroke="#e5e7eb" />
-                    <line x1="42" y1="18" x2="42" y2="42" stroke="#e5e7eb" />
-                    <line x1="50" y1="18" x2="50" y2="42" stroke="#e5e7eb" />
-                    <!-- Petit écran du thermostat -->
-                    <rect x="62" y="18" width="10" height="12" rx="2" fill="#0f172a" stroke="#e5e7eb" />
-                    <!-- Chiffres stylisés (petits rectangles) -->
-                    <rect x="64" y="20" width="6" height="2" fill="#e5e7eb" />
-                    <rect x="64" y="24" width="6" height="2" fill="#e5e7eb" />
-                </svg>
-            </div>
-        </header>
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C2.1">4e_C2.1 — Décrire l'expérience de l'utilisateur, du langage naturel aux schémas, graphiques et algorithmes</option>
+      <option value="C2.2">4e_C2.2 — Repérer et expliquer les contraintes et exigences prises en compte</option>
+    </select>
+  </div>
+</section>
 
-        <!-- Carte d’info présentant les compétences travaillées -->
-        <section class="info-card">
-            <!-- Titre de la carte -->
-            <h2>Compétences évaluées 📚</h2>
-            <!-- Description courte -->
-            <p>Chaque question du QCM est reliée à au moins une compétence du programme de technologie :</p>
-            <!-- Liste sous forme de “pastilles” -->
-            <div class="skills-list">
-                <span class="skill-tag">C2.1 – Décrire l’expérience de l’utilisateur</span>
-                <span class="skill-tag">C2.2 – Repérer et expliquer les contraintes</span>
-                <span class="skill-tag">C9.1 – Modifier un algorithme</span>
-                <span class="skill-tag">C9.2 – Traduire un algorithme en programme</span>
-                <span class="skill-tag">C9.3 – Programmer un système réel</span>
-            </div>
-        </section>
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
 
-        <!-- Carte d’info avec le principe de fonctionnement du QCM -->
-        <section class="info-card">
-            <!-- Titre de la carte -->
-            <h2>Consignes du QCM ✏️</h2>
-            <!-- Texte d’explication -->
-            <p>
-                Réponds à chaque question en cochant la bonne réponse.  
-                Clique ensuite sur <strong>« Corriger mes réponses »</strong> pour afficher ta note,
-                les corrections détaillées et les compétences associées.
-            </p>
-            <!-- Phrase motivante -->
-            <p>🎯 Objectif : comprendre comment une notice, des pictogrammes et un programme peuvent rendre un objet plus facile à utiliser.</p>
-        </section>
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
 
-        <!-- Carte contenant la zone de score globale -->
-        <section class="info-card">
-            <!-- Titre de la carte -->
-            <h2>Score global 🧮</h2>
-            <!-- Conteneur du score et de la barre de progression -->
-            <div class="score-panel">
-                <!-- Zone de texte où la note sera affichée par JavaScript -->
-                <div class="score-text" id="scoreText">
-                    Ta note s’affichera ici après la correction.
-                </div>
-                <!-- Conteneur de la barre de progression -->
-                <div class="score-bar-container">
-                    <!-- Vraie barre de progression dont la largeur sera modifiée en JavaScript -->
-                    <div class="score-bar" id="scoreBar"></div>
-                </div>
-            </div>
-            <!-- Groupe de boutons d’action -->
-            <div class="actions">
-                <!-- Bouton pour lancer la correction via JavaScript -->
-                <button id="btnCorriger">Corriger mes réponses ✅</button>
-                <!-- Bouton pour remettre le QCM à zéro -->
-                <button class="btn-secondary" id="btnReset">Réinitialiser le QCM 🔁</button>
-            </div>
-        </section>
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
 
-        <!-- ============================== -->
-        <!--  DÉBUT DES 25 QUESTIONS QCM   -->
-        <!-- ============================== -->
-
-        <!-- Question 1 -->
-        <section class="question" data-question="1">
-            <h3>Question 1 – Quel est l’objectif principal d’un manuel utilisateur ?</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Décrire l’expérience de l’utilisateur</div>
-            <div class="options">
-                <label><input type="radio" name="q1" value="A">A. Décrire le code source interne de l’objet</label>
-                <label><input type="radio" name="q1" value="B">B. Rendre l’objet plus cher</label>
-                <label><input type="radio" name="q1" value="C">C. Remplacer complètement les dessins techniques</label>
-                <label><input type="radio" name="q1" value="D">D. Aider l’utilisateur à comprendre et utiliser l’objet</label>
-            </div>
-            <div class="feedback" id="fb-q1"></div>
-        </section>
-
-        <!-- Question 2 -->
-        <section class="question" data-question="2">
-            <h3>Question 2 – Quel document permet d’identifier toutes les contraintes autour d’un objet ?</h3>
-            <div class="competence-label">Compétence visée : C2.2 – Repérer les contraintes</div>
-            <div class="options">
-                <label><input type="radio" name="q2" value="A">A. Un diagramme des interacteurs</label>
-                <label><input type="radio" name="q2" value="B">B. Un tableau de mesures</label>
-                <label><input type="radio" name="q2" value="C">C. Un planning de fabrication</label>
-                <label><input type="radio" name="q2" value="D">D. Un code informatique</label>
-            </div>
-            <div class="feedback" id="fb-q2"></div>
-        </section>
-
-        <!-- Question 3 -->
-        <section class="question" data-question="3">
-            <h3>Question 3 – Dans un manuel utilisateur, un pictogramme sert surtout à…</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Décrire l’expérience de l’utilisateur</div>
-            <div class="options">
-                <label><input type="radio" name="q3" value="A">A. Complexifier les informations</label>
-                <label><input type="radio" name="q3" value="B">B. Illustrer et faciliter la compréhension</label>
-                <label><input type="radio" name="q3" value="C">C. Remplacer les textes obligatoirement</label>
-                <label><input type="radio" name="q3" value="D">D. Interdire l’usage de couleurs</label>
-            </div>
-            <div class="feedback" id="fb-q3"></div>
-        </section>
-
-        <!-- Question 4 -->
-        <section class="question" data-question="4">
-            <h3>Question 4 – Une contrainte “esthétique” correspond à : </h3>
-            <div class="competence-label">Compétence visée : C2.2 – Contraintes prises en compte</div>
-            <div class="options">
-                <label><input type="radio" name="q4" value="A"> A. La sécurité de l’objet</label>
-                <label><input type="radio" name="q4" value="B"> B. La résistance électrique</label>
-                <label><input type="radio" name="q4" value="C"> C. La consommation énergétique</label>
-                <label><input type="radio" name="q4" value="D"> D. La forme et l’attrait visuel</label>
-            </div>
-            <div class="feedback" id="fb-q4"></div>
-        </section>
-
-        <!-- Question 5 -->
-        <section class="question" data-question="5">
-            <h3>Question 5 – Le risque associé à la mention « DANGER » sur un lisseur est :</h3>
-            <div class="competence-label">Compétence visée : C2.2 – Contraintes de sécurité</div>
-            <div class="options">
-                <label><input type="radio" name="q5" value="A">A. Un risque de panne électronique</label>
-                <label><input type="radio" name="q5" value="B">B. Un risque d’explosion de batterie</label>
-                <label><input type="radio" name="q5" value="C">C. Un risque de brûlure</label>
-                <label><input type="radio" name="q5" value="D">D. Aucun risque réel</label>
-            </div>
-            <div class="feedback" id="fb-q5"></div>
-        </section>
-
-        <!-- Question 6 -->
-        <section class="question" data-question="6">
-            <h3>Question 6 – Lequel de ces éléments est un interacteur de l’imprimante ?</h3>
-            <div class="competence-label">Compétence visée : C2.2 – Interacteurs</div>
-            <div class="options">
-                <label><input type="radio" name="q6" value="A">A. Le papier</label>
-                <label><input type="radio" name="q6" value="B">B. Le soleil</label>
-                <label><input type="radio" name="q6" value="C">C. Le vent</label>
-                <label><input type="radio" name="q6" value="D">D. Les lunettes de l’utilisateur</label>
-            </div>
-            <div class="feedback" id="fb-q6"></div>
-        </section>
-
-        <!-- Question 7 -->
-        <section class="question" data-question="7">
-            <h3>Question 7 – Dans l’activité spa, l’énergie utilisée par le spa est :</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Usage d’un objet</div>
-            <div class="options">
-                <label><input type="radio" name="q7" value="A">A. Mécanique</label>
-                <label><input type="radio" name="q7" value="B">B. Thermique</label>
-                <label><input type="radio" name="q7" value="C">C. Solaire</label>
-                <label><input type="radio" name="q7" value="D">D. Électrique</label>
-            </div>
-            <div class="feedback" id="fb-q7"></div>
-        </section>
-
-        <!-- Question 8 -->
-        <section class="question" data-question="8">
-            <h3>Question 8 – Le symbole « &lt; 10°C » sur la notice du spa signifie que :</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Pictogrammes et conditions d’usage</div>
-            <div class="options">
-                <label><input type="radio" name="q8" value="A">A. Le spa se gonfle plus vite lorsqu’il fait froid</label>
-                <label><input type="radio" name="q8" value="B">B. Le spa se dégonfle automatiquement</label>
-                <label><input type="radio" name="q8" value="C">C. Le spa tombe en panne sous 20°C</label>
-                <label><input type="radio" name="q8" value="D">D. Le spa ne doit pas être utilisé en dessous de 10°C</label>
-            </div>
-            <div class="feedback" id="fb-q8"></div>
-        </section>
-
-        <!-- Question 9 -->
-        <section class="question" data-question="9">
-            <h3>Question 9 – Un algorithme sert principalement à :</h3>
-            <div class="competence-label">Compétence visée : C9.1 – Modifier un algorithme</div>
-            <div class="options">
-                <label><input type="radio" name="q9" value="A"> A. Décrire des étapes d’usage</label>
-                <label><input type="radio" name="q9" value="B"> B. Réaliser un dessin artistique</label>
-                <label><input type="radio" name="q9" value="C"> C. Décorer le manuel</label>
-                <label><input type="radio" name="q9" value="D"> D. Remplacer toutes les consignes écrites</label>
-            </div>
-            <div class="feedback" id="fb-q9"></div>
-        </section>
-
-        <!-- Question 10 -->
-        <section class="question" data-question="10">
-            <h3>Question 10 – Quel mode du radiateur assure une température minimale de 7,5°C ?</h3>
-            <div class="competence-label">Compétence visée : C9.3 – Programmer un système réel</div>
-            <div class="options">
-                <label><input type="radio" name="q10" value="A">A. Mode Nor</label>
-                <label><input type="radio" name="q10" value="B">B. Mode FrF</label>
-                <label><input type="radio" name="q10" value="C">C. Mode Pro</label>
-                <label><input type="radio" name="q10" value="D">D. Mode OFF</label>
-            </div>
-            <div class="feedback" id="fb-q10"></div>
-        </section>
-
-        <!-- Question 11 -->
-        <section class="question" data-question="11">
-            <h3>Question 11 – Quel bouton permet de changer de mode sur le radiateur ?</h3>
-            <div class="competence-label">Compétence visée : C9.1 – Modifier un algorithme (navigation entre modes)</div>
-            <div class="options">
-                <label><input type="radio" name="q11" value="A">A. ON/OFF</label>
-                <label><input type="radio" name="q11" value="B">B. Timer</label>
-                <label><input type="radio" name="q11" value="C">C. Menu</label>
-                <label><input type="radio" name="q11" value="D">D. Reset</label>
-            </div>
-            <div class="feedback" id="fb-q11"></div>
-        </section>
-
-        <!-- Question 12 -->
-        <section class="question" data-question="12">
-            <h3>Question 12 – Une contrainte de sécurité signifie que :</h3>
-            <div class="competence-label">Compétence visée : C2.2 – Contraintes de sécurité</div>
-            <div class="options">
-                <label><input type="radio" name="q12" value="A"> A. L’objet ne doit pas être dangereux</label>
-                <label><input type="radio" name="q12" value="B"> B. L’objet doit être décoré</label>
-                <label><input type="radio" name="q12" value="C"> C. L’objet doit être silencieux</label>
-                <label><input type="radio" name="q12" value="D"> D. L’objet doit être connecté à Internet</label>
-            </div>
-            <div class="feedback" id="fb-q12"></div>
-        </section>
-
-        <!-- Question 13 -->
-        <section class="question" data-question="13">
-            <h3>Question 13 – Traduire un algorithme en programme consiste à :</h3>
-            <div class="competence-label">Compétence visée : C9.2 – Traduire un algorithme en programme</div>
-            <div class="options">
-                <label><input type="radio" name="q13" value="A"> A. Le transformer en code exécutable</label>
-                <label><input type="radio" name="q13" value="B"> B. Lui ajouter des images explicatives</label>
-                <label><input type="radio" name="q13" value="C"> C. Le supprimer</label>
-                <label><input type="radio" name="q13" value="D"> D. Le rendre invisible</label>
-            </div>
-            <div class="feedback" id="fb-q13"></div>
-        </section>
-
-        <!-- Question 14 -->
-        <section class="question" data-question="14">
-            <h3>Question 14 – Une notice doit être :</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Notice compréhensible par tous</div>
-            <div class="options">
-                <label><input type="radio" name="q14" value="A">A. Accessible à tous</label>
-                <label><input type="radio" name="q14" value="B">B. Complexe</label>
-                <label><input type="radio" name="q14" value="C">C. Réservée aux experts</label>
-                <label><input type="radio" name="q14" value="D">D. 100 % textuelle</label>
-            </div>
-            <div class="feedback" id="fb-q14"></div>
-        </section>
-
-        <!-- Question 15 -->
-        <section class="question" data-question="15">
-            <h3>Question 15 – Un dessin peut-il parfois remplacer un texte dans une notice ?</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Modes de représentation</div>
-            <div class="options">
-                <label><input type="radio" name="q15" value="A">A. Non, jamais</label>
-                <label><input type="radio" name="q15" value="B">B. Oui, parfois</label>
-                <label><input type="radio" name="q15" value="C">C. Toujours</label>
-                <label><input type="radio" name="q15" value="D">D. Jamais, car cela est interdit</label>
-            </div>
-            <div class="feedback" id="fb-q15"></div>
-        </section>
-
-        <!-- Question 16 -->
-        <section class="question" data-question="16">
-            <h3>Question 16 – Une contrainte environnementale concerne :</h3>
-            <div class="competence-label">Compétence visée : C2.2 – Contraintes environnementales</div>
-            <div class="options">
-                <label><input type="radio" name="q16" value="A">A. Le style de l’objet</label>
-                <label><input type="radio" name="q16" value="B">B. L’impact écologique de l’objet</label>
-                <label><input type="radio" name="q16" value="C">C. La couleur de l’emballage</label>
-                <label><input type="radio" name="q16" value="D">D. Le prix de vente</label>
-            </div>
-            <div class="feedback" id="fb-q16"></div>
-        </section>
-
-        <!-- Question 17 -->
-        <section class="question" data-question="17">
-            <h3>Question 17 – Quel est le rôle principal du bouton Marche/Arrêt du spa ?</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Comprendre les commandes</div>
-            <div class="options">
-                <label><input type="radio" name="q17" value="A">A. Gonfler automatiquement le spa</label>
-                <label><input type="radio" name="q17" value="B">B. Régler la température</label>
-                <label><input type="radio" name="q17" value="C">C. Mettre en route ou arrêter le spa</label>
-                <label><input type="radio" name="q17" value="D">D. Décorer l’interface</label>
-            </div>
-            <div class="feedback" id="fb-q17"></div>
-        </section>
-
-        <!-- Question 18 -->
-        <section class="question" data-question="18">
-            <h3>Question 18 – Quel pictogramme indique le mode froid sur le thermostat ?</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Lire des pictogrammes</div>
-            <div class="options">
-                <label><input type="radio" name="q18" value="A">A. Un soleil</label>
-                <label><input type="radio" name="q18" value="B">B. Un flocon</label>
-                <label><input type="radio" name="q18" value="C">C. Une ampoule</label>
-                <label><input type="radio" name="q18" value="D">D. Une alarme</label>
-            </div>
-            <div class="feedback" id="fb-q18"></div>
-        </section>
-
-        <!-- Question 19 -->
-        <section class="question" data-question="19">
-            <h3>Question 19 – Modifier un algorithme signifie :</h3>
-            <div class="competence-label">Compétence visée : C9.1 – Modifier un algorithme</div>
-            <div class="options">
-                <label><input type="radio" name="q19" value="A">A. Supprimer les dessins du manuel</label>
-                <label><input type="radio" name="q19" value="B">B. Ajouter des couleurs au texte</label>
-                <label><input type="radio" name="q19" value="C">C. Ouvrir un fichier PDF</label>
-                <label><input type="radio" name="q19" value="D">D. Changer les étapes de l’algorithme</label>
-            </div>
-            <div class="feedback" id="fb-q19"></div>
-        </section>
-
-        <!-- Question 20 -->
-        <section class="question" data-question="20">
-            <h3>Question 20 – Un programme permet :</h3>
-            <div class="competence-label">Compétence visée : C9.3 – Contrôler un système réel</div>
-            <div class="options">
-                <label><input type="radio" name="q20" value="A"> A. De limiter l’usage de la notice</label>
-                <label><input type="radio" name="q20" value="B"> B. D’enlever toutes les sécurités</label>
-                <label><input type="radio" name="q20" value="C"> C. D’effacer la notice</label>
-                <label><input type="radio" name="q20" value="D"> D. De faire fonctionner l’objet tout seul</label>
-            </div>
-            <div class="feedback" id="fb-q20"></div>
-        </section>
-
-        <!-- Question 21 -->
-        <section class="question" data-question="21">
-            <h3>Question 21 – Un interacteur est :</h3>
-            <div class="competence-label">Compétence visée : C2.2 – Interacteurs d’un objet</div>
-            <div class="options">
-                <label><input type="radio" name="q21" value="A"> A. Le superviseur du chantier</label>
-                <label><input type="radio" name="q21" value="B"> B. Un code informatique</label>
-                <label><input type="radio" name="q21" value="C"> C. Un élément en contact</label>
-                <label><input type="radio" name="q21" value="D"> D. Une décoration</label>
-            </div>
-            <div class="feedback" id="fb-q21"></div>
-        </section>
-
-        <!-- Question 22 -->
-        <section class="question" data-question="22">
-            <h3>Question 22 – Le bouton « Menu » du radiateur permet de :</h3>
-            <div class="competence-label">Compétence visée : C9.1 – Navigation dans un algorithme</div>
-            <div class="options">
-                <label><input type="radio" name="q22" value="A">A. Régler l’heure précisément</label>
-                <label><input type="radio" name="q22" value="B">B. Ouvrir un tiroir</label>
-                <label><input type="radio" name="q22" value="C">C. Changer de mode (Nor, Pro, FrF)</label>
-                <label><input type="radio" name="q22" value="D">D. Jouer un son d’alarme</label>
-            </div>
-            <div class="feedback" id="fb-q22"></div>
-        </section>
-
-        <!-- Question 23 -->
-        <section class="question" data-question="23">
-            <h3>Question 23 – Pour vider le spa, il faut :</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Lecture d’une procédure</div>
-            <div class="options">
-                <label><input type="radio" name="q23" value="A"> A. Retirer un bouchon au fond</label>
-                <label><input type="radio" name="q23" value="B"> B. Percer un trou dans la bâche</label>
-                <label><input type="radio" name="q23" value="C"> C. Brancher un aspirateur d’eau</label>
-                <label><input type="radio" name="q23" value="D"> D. Retourner complètement le spa</label>
-            </div>
-            <div class="feedback" id="fb-q23"></div>
-        </section>
-
-        <!-- Question 24 -->
-        <section class="question" data-question="24">
-            <h3>Question 24 – Une notice peut contenir :</h3>
-            <div class="competence-label">Compétence visée : C2.1 – Combiner plusieurs représentations</div>
-            <div class="options">
-                <label><input type="radio" name="q24" value="A"> A. Uniquement du texte écrit</label>
-                <label><input type="radio" name="q24" value="B"> B. Uniquement des dessins techniques</label>
-                <label><input type="radio" name="q24" value="C"> C. Du texte, des dessins et des algorithmes</label>
-                <label><input type="radio" name="q24" value="D"> D. Uniquement des algorithmes</label>
-            </div>
-            <div class="feedback" id="fb-q24"></div>
-        </section>
-
-        <!-- Question 25 -->
-        <section class="question" data-question="25">
-            <h3>Question 25 – Le mode « Pro » du radiateur sert à :</h3>
-            <div class="competence-label">Compétence visée : C9.3 – Programmation de modes de fonctionnement</div>
-            <div class="options">
-                <label><input type="radio" name="q25" value="A"> A. Éteindre complètement l’appareil</label>
-                <label><input type="radio" name="q25" value="B"> B. Régler des horaires de chauffage</label>
-                <label><input type="radio" name="q25" value="C"> C. Régler la luminosité de l’écran</label>
-                <label><input type="radio" name="q25" value="D"> D. Augmenter le prix de l’électricité</label>
-            </div>
-            <div class="feedback" id="fb-q25"></div>
-        </section>
-
-        <!-- Pied de page avec un message de fin -->
-        <footer>
-            <!-- Message simple pour conclure le QCM -->
-            <p>📘 N’hésite pas à refaire le QCM jusqu’à obtenir la maîtrise complète des notions de notice, contraintes et programmation.</p>
-        <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+<footer>
+  <p>QCM d’entraînement 4e_C2.1 · C2.2 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_4e_C2_hangzhou_borne.html">séquence associée</a> (Hangzhou, la borne de vélos)</p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
-    </div>
 
-    <!-- Début du script JavaScript qui gère la correction et le score -->
-    <script>
-        // Objet JavaScript contenant les bonnes réponses, les explications et les compétences
-        const qcmData = {
-            // Chaque propriété correspond à une question : clé = q1, q2, etc.
-            q1: {
-                correct: "D",                                                    // Bonne réponse
-                competence: "C2.1",                                              // Compétence évaluée
-                explanation: "Un manuel utilisateur sert à guider l’utilisateur pour qu’il puisse utiliser l’objet sans être expert."
-            },
-            q2: {
-                correct: "A",
-                competence: "C2.2",
-                explanation: "Le diagramme des interacteurs liste les éléments en contact avec l’objet et les contraintes associées."
-            },
-            q3: {
-                correct: "B",
-                competence: "C2.1",
-                explanation: "Les pictogrammes sont des dessins qui rendent les consignes plus rapides à comprendre."
-            },
-            q4: {
-                correct: "D",
-                competence: "C2.2",
-                explanation: "La contrainte esthétique concerne la forme et l’apparence, pour plaire à l’utilisateur."
-            },
-            q5: {
-                correct: "C",
-                competence: "C2.2",
-                explanation: "La mention « DANGER » indique ici un risque de brûlure si le lisseur est mal utilisé."
-            },
-            q6: {
-                correct: "A",
-                competence: "C2.2",
-                explanation: "Le papier est un interacteur essentiel pour une imprimante, car elle imprime des informations dessus."
-            },
-            q7: {
-                correct: "D",
-                competence: "C2.1",
-                explanation: "Le spa est alimenté par une prise de courant : il utilise donc de l’énergie électrique."
-            },
-            q8: {
-                correct: "D",
-                competence: "C2.1",
-                explanation: "Le symbole « &lt; 10°C » indique qu’il ne faut pas utiliser le spa si la température est inférieure à 10°C."
-            },
-            q9: {
-                correct: "A",
-                competence: "C9.1",
-                explanation: "Un algorithme décrit une suite d’actions à réaliser, étape par étape."
-            },
-            q10: {
-                correct: "B",
-                competence: "C9.3",
-                explanation: "Le mode FrF garantit une température minimale de 7,5°C pour protéger le logement du froid."
-            },
-            q11: {
-                correct: "C",
-                competence: "C9.1",
-                explanation: "Le bouton « Menu » permet de naviguer entre les différents modes de fonctionnement."
-            },
-            q12: {
-                correct: "A",
-                competence: "C2.2",
-                explanation: "Une contrainte de sécurité vise à éviter que l’objet ne soit dangereux pour l’utilisateur."
-            },
-            q13: {
-                correct: "A",
-                competence: "C9.2",
-                explanation: "Traduire un algorithme consiste à le convertir en code informatique prêt à être exécuté par la machine."
-            },
-            q14: {
-                correct: "A",
-                competence: "C2.1",
-                explanation: "Une notice doit rester claire et compréhensible par tous, pas seulement par des spécialistes."
-            },
-            q15: {
-                correct: "B",
-                competence: "C2.1",
-                explanation: "Un dessin peut parfois remplacer un texte, car certaines actions sont plus simples à comprendre visuellement."
-            },
-            q16: {
-                correct: "B",
-                competence: "C2.2",
-                explanation: "Les contraintes environnementales concernent l’impact de l’objet sur la planète (déchets, énergie, etc.)."
-            },
-            q17: {
-                correct: "C",
-                competence: "C2.1",
-                explanation: "Le bouton Marche/Arrêt permet de mettre en route ou d’arrêter le système, ici le spa."
-            },
-            q18: {
-                correct: "B",
-                competence: "C2.1",
-                explanation: "Le flocon est un pictogramme universel pour représenter le froid."
-            },
-            q19: {
-                correct: "D",
-                competence: "C9.1",
-                explanation: "Modifier un algorithme consiste à changer les étapes pour mieux répondre au besoin."
-            },
-            q20: {
-                correct: "D",
-                competence: "C9.3",
-                explanation: "Un programme commande un objet de façon automatique, selon ce que le code indique."
-            },
-            q21: {
-                correct: "C",
-                competence: "C2.2",
-                explanation: "Un interacteur est un élément qui interagit avec l’objet (utilisateur, meuble, papier, etc.)."
-            },
-            q22: {
-                correct: "C",
-                competence: "C9.1",
-                explanation: "Le bouton « Menu » fait défiler les différents écrans et modes disponibles."
-            },
-            q23: {
-                correct: "A",
-                competence: "C2.1",
-                explanation: "La notice indique de retirer un bouchon pour laisser l’eau s’écouler par un tuyau, sans abîmer le spa."
-            },
-            q24: {
-                correct: "C",
-                competence: "C2.1",
-                explanation: "Une notice efficace combine texte, dessins et parfois algorithmes pour être plus claire."
-            },
-            q25: {
-                correct: "B",
-                competence: "C9.3",
-                explanation: "Le mode Pro permet de programmer des horaires de chauffage adaptés au rythme de vie."
-            }
-        };
+<script>
+"use strict";
+/* Banque : 30 questions (15 C2.1 + 15 C2.2), 6 illustrées.
+   Réécrite le 18/11/2026 au gabarit maison : l'ancienne banque de 25 questions (cartes HTML, codes C9 de l'ancien
+   programme, distracteurs fantaisistes) est archivée dans _archive-anciennes-versions/ (règle d'or n°12). */
+const QUESTIONS = [
+/* ═══ C2.1 ═══ */
+{c:"C2.1",n:"Le rôle d'une notice",q:"À quoi sert d'abord la notice d'un objet ?",
+ o:["À expliquer au réparateur le programme interne de l'objet", "À prouver que l'objet a passé les essais de solidité", "À donner la liste des pièces de rechange et leur prix", "À permettre à l'utilisateur de s'en servir sans danger"],r:3,
+ expl:"La notice s'adresse à l'utilisateur : elle lui permet de mettre l'objet en marche, de le régler, de l'entretenir et de l'utiliser sans se mettre en danger.",
+ ex:"La notice du climatiseur dit comment choisir le mode Froid et programmer l'arrêt.",
+ err:"Croire qu'une notice s'adresse aux techniciens.",
+ d:["Le programme interne intéresse le fabricant ; l'utilisateur, lui, veut savoir quoi faire.", "Les essais se prouvent par des mesures et des certificats, pas par la notice.", "Une liste de pièces peut s'y trouver, mais ce n'est pas son rôle premier : aider à utiliser.", ""],
+ ret:"Une notice parle à l'utilisateur : utiliser, régler, entretenir, sans danger."},
+{c:"C2.1",n:"Un pictogramme",q:"Dans une notice, un pictogramme, c'est…",
+ o:["un mot important écrit en lettres capitales", "un petit dessin qui se comprend sans lire", "un code secret réservé aux techniciens", "une photo de l'objet, prise en couleurs"],r:1,
+ expl:"Un pictogramme est un dessin simplifié : il se comprend vite, et même dans une autre langue.",
+ ex:"Le flocon de la télécommande veut dire « froid » dans toutes les langues.",
+ err:"Confondre un pictogramme et une photo.",
+ d:["Un mot en capitales reste un texte : il faut savoir lire la langue.", "", "Un pictogramme est fait pour tout le monde, au contraire.", "Une photo montre l'objet ; un pictogramme est un dessin simplifié qui transmet une consigne."],
+ ret:"Pictogramme = petit dessin simplifié, compris sans lire."},
+{c:"C2.1",n:"Lire un pictogramme",q:"D'après la notice, que fait la touche marquée d'un flocon ?",img:{src:"Images/notice_climatiseur_extrait.svg",alt:"Extrait de la notice d'un climatiseur mobile : les touches de la télécommande avec leur pictogramme (marche-arrêt, flocon pour le froid, goutte pour déshumidifier, hélice pour la ventilation seule, horloge pour la minuterie, flèches pour régler), la procédure en trois étapes pour programmer l'arrêt, et deux avertissements de sécurité."},
+ o:["Elle lance le mode Froid", "Elle retire l'humidité de l'air", "Elle fait tourner le ventilateur seul", "Elle programme l'arrêt de l'appareil"],r:0,
+ expl:"Sur la notice, le flocon est associé au mode Froid : le climatiseur refroidit l'air de la pièce.",
+ ex:"Goutte : déshumidifier ; hélice : ventiler ; horloge : minuterie.",
+ err:"Deviner le sens d'un pictogramme sans regarder la notice.",
+ d:["", "Retirer l'humidité, c'est la touche de la goutte d'eau.", "La ventilation seule, c'est la touche de l'hélice.", "Programmer l'arrêt, c'est la touche de l'horloge."],
+ ret:"Un pictogramme se lit avec sa légende, sur la notice."},
+{c:"C2.1",n:"Suivre une procédure",q:"D'après la notice, sur quelle touche appuie-t-on en premier pour programmer l'arrêt ?",img:{src:"Images/notice_climatiseur_extrait.svg",alt:"Extrait de la notice d'un climatiseur mobile : les touches de la télécommande avec leur pictogramme (marche-arrêt, flocon pour le froid, goutte pour déshumidifier, hélice pour la ventilation seule, horloge pour la minuterie, flèches pour régler), la procédure en trois étapes pour programmer l'arrêt, et deux avertissements de sécurité."},
+ o:["La touche Marche / Arrêt", "La flèche ▲ (monter)", "La touche du flocon (Froid)", "La touche de l'horloge"],r:3,
+ expl:"L'étape 1 de la procédure dit d'appuyer sur la touche de l'horloge ; la durée se règle ensuite avec les flèches.",
+ ex:"1. Horloge ; 2. ▲ ▼ pour la durée ; 3. attendre 5 secondes.",
+ err:"Commencer par l'étape 2 sans avoir fait l'étape 1.",
+ d:["Marche / Arrêt éteint l'appareil tout de suite : ce n'est pas programmer.", "Les flèches servent à l'étape 2, une fois la minuterie choisie.", "Le flocon choisit le mode Froid, il ne règle pas de durée.", ""],
+ ret:"Une procédure se suit dans l'ordre de ses étapes."},
+{c:"C2.1",n:"Une durée sur la notice",q:"D'après la notice, quelle durée peut-on régler sur la minuterie ?",img:{src:"Images/notice_climatiseur_extrait.svg",alt:"Extrait de la notice d'un climatiseur mobile : les touches de la télécommande avec leur pictogramme (marche-arrêt, flocon pour le froid, goutte pour déshumidifier, hélice pour la ventilation seule, horloge pour la minuterie, flèches pour régler), la procédure en trois étapes pour programmer l'arrêt, et deux avertissements de sécurité."},
+ o:["De 0 à 24 heures", "De 1 à 12 heures", "De 1 à 5 minutes", "De 1 à 2 heures"],r:1,
+ expl:"L'étape 2 de la notice indique que la durée se règle de 1 à 12 heures avec les flèches.",
+ ex:"Pour un arrêt dans 3 heures : horloge, puis ▲ jusqu'à 3.",
+ err:"Répondre de mémoire au lieu de relire la notice.",
+ d:["La notice dit de 1 à 12 heures : 24 heures n'est pas possible.", "", "Les 5 secondes de l'étape 3, ce n'est pas la durée de la minuterie.", "2 heures est une durée possible, mais la notice va jusqu'à 12."],
+ ret:"Une valeur se lit sur le document : on y retourne avant de répondre."},
+{c:"C2.1",n:"L'expérience de l'utilisateur",q:"« L'expérience de l'utilisateur », c'est…",
+ o:["le nombre d'années pendant lesquelles l'objet fonctionne", "ce qu'il ressent et réussit à faire avec l'objet", "le nombre de pièces qui composent l'objet", "le prix que l'utilisateur a payé pour l'objet"],r:1,
+ expl:"L'expérience de l'utilisateur réunit son ressenti (agréable, stressant, compliqué) et la facilité d'usage (réussit-il, combien de temps, combien d'erreurs).",
+ ex:"« Je trouve la télécommande claire » (ressenti) ; « il lance le mode Froid du premier coup » (facilité d'usage).",
+ err:"La réduire à ce que l'objet contient.",
+ d:["La durée de vie, c'est une question de fiabilité, pas d'expérience vécue.", "", "Le nombre de pièces décrit l'objet, pas ce que vit l'utilisateur.", "Le prix compte, mais il ne dit pas si l'objet est facile ou agréable à utiliser."],
+ ret:"Expérience de l'utilisateur = ressenti + facilité d'usage."},
+{c:"C2.1",n:"Ressenti ou mesure",q:"Une utilisatrice dit : « Cette télécommande est compliquée. » C'est…",
+ o:["une mesure précise de la facilité d'usage", "une exigence du cahier des charges", "un ressenti, à vérifier par des mesures", "la preuve que l'appareil est en panne"],r:2,
+ expl:"Ce qu'on dit en langage naturel est un ressenti. Il est précieux, mais il faut le compléter par des mesures : temps mis, erreurs commises.",
+ ex:"On la chronomètre : 40 secondes et 3 erreurs pour lancer le mode Froid.",
+ err:"Prendre un ressenti pour une mesure, ou l'ignorer.",
+ d:["Une mesure se compte : un temps, un nombre d'erreurs. Ici, c'est une impression.", "Une exigence dit ce que l'objet doit obtenir ; cette phrase dit ce qu'elle a vécu.", "", "Une télécommande compliquée peut très bien fonctionner : rien ne dit qu'elle est en panne."],
+ ret:"Un ressenti n'est pas une mesure, et une mesure n'est pas un ressenti : il faut les deux."},
+{c:"C2.1",n:"Mesurer la facilité d'usage",q:"Comment mesurer si la télécommande est facile à utiliser ?",
+ o:["Demander au fabricant si sa télécommande est facile", "Chronométrer des utilisateurs et compter leurs erreurs", "Compter les touches de la télécommande, sans personne", "Peser la télécommande et mesurer sa longueur en centimètres"],r:1,
+ expl:"La facilité d'usage se mesure sur de vrais utilisateurs : même tâche, temps mis, nombre d'erreurs, réussite ou échec.",
+ ex:"10 élèves lancent le mode Froid : temps moyen 12 secondes, 2 erreurs en tout.",
+ err:"Juger la facilité d'usage sans observer personne.",
+ d:["Le fabricant n'est pas un utilisateur neutre : on observe les vrais utilisateurs.", "", "Le nombre de touches ne dit pas si les gens s'y retrouvent : il faut des utilisateurs.", "Le poids et la taille comptent pour l'ergonomie, mais ne mesurent pas si on réussit la tâche."],
+ ret:"Facilité d'usage : des utilisateurs, une tâche, un temps et des erreurs."},
+{c:"C2.1",n:"Un graphique pour comparer",q:"On a chronométré 20 personnes avec l'ancienne puis avec la nouvelle notice. Quelle représentation compare le mieux les temps ?",
+ o:["Un algorigramme de la procédure à suivre", "Un croquis du climatiseur, vu de face", "Un graphique en barres, une par notice", "Un long paragraphe qui raconte les essais"],r:2,
+ expl:"Un graphique rend les mesures comparables d'un coup d'œil : la barre la plus courte montre la notice la plus rapide.",
+ ex:"Ancienne notice : 45 s ; nouvelle : 20 s. Deux barres suffisent.",
+ err:"Choisir une représentation qui ne montre pas les nombres.",
+ d:["Un algorigramme décrit des étapes et des tests, pas des durées mesurées.", "Un croquis montre l'objet, pas les temps mis par les utilisateurs.", "", "Un paragraphe oblige à tout relire pour comparer : un graphique se lit d'un coup d'œil."],
+ ret:"Comparer des mesures : un graphique."},
+{c:"C2.1",n:"Une suite d'étapes",q:"Pour expliquer comment vider un spa gonflable, quelle représentation est la plus claire ?",
+ o:["Un graphique des températures de l'eau", "Un seul grand dessin du spa, sans texte", "Des étapes numérotées, chacune illustrée", "Un long paragraphe, écrit d'un seul bloc"],r:2,
+ expl:"Une procédure se montre en étapes numérotées : l'ordre se voit, et le dessin de chaque étape montre le geste.",
+ ex:"1. Débranche la pompe. 2. Visse le tuyau sur la vanne. 3. Ouvre la vanne.",
+ err:"Tout écrire d'un bloc, sans ordre visible.",
+ d:["Un graphique montre des mesures ; vider le spa demande des actions dans l'ordre.", "Un seul dessin ne dit pas dans quel ordre faire les gestes.", "", "Un bloc de texte cache l'ordre des actions : on se perd au milieu."],
+ ret:"Des actions dans l'ordre : des étapes numérotées."},
+{c:"C2.1",n:"Le test de l'algorithme",q:"« S'il fait plus de 26 °C (degrés Celsius), le climatiseur souffle du froid ; sinon, il ventile seulement. » Dans un algorigramme, « Fait-il plus de 26 °C ? » se dessine dans…",
+ o:["un losange", "un rectangle", "un ovale", "une flèche"],r:0,
+ expl:"Une question à laquelle on répond par OUI ou par NON est un test : elle se dessine dans un losange, avec deux sorties.",
+ ex:"Du losange partent OUI (souffler du froid) et NON (ventiler seulement).",
+ err:"Mettre la question dans un rectangle, comme une action.",
+ d:["", "Le rectangle contient une action (« Souffler du froid »), pas une question.", "L'ovale marque le début ou la fin de l'algorigramme.", "La flèche relie les blocs et donne le sens de lecture : elle ne pose pas de question."],
+ ret:"Losange = test, avec une sortie OUI et une sortie NON."},
+{c:"C2.1",n:"Le mot « sinon »",q:"Dans la phrase « S'il fait plus de 26 °C, il souffle du froid ; sinon, il ventile seulement », le mot « sinon » correspond…",
+ o:["à la sortie OUI du test", "à la sortie NON du test", "au début de l'algorigramme", "à la fin de l'algorigramme"],r:1,
+ expl:"« Si… alors… sinon… » se traduit par un test : « alors » est la sortie OUI, « sinon » la sortie NON.",
+ ex:"NON (pas plus de 26 °C) → ventiler seulement.",
+ err:"Confondre les deux sorties du test.",
+ d:["La sortie OUI, c'est « il souffle du froid » : quand il fait plus de 26 °C.", "", "Le début est avant le test : « sinon » vient après.", "« Sinon » mène à une action (ventiler), pas à la fin."],
+ ret:"Si → test ; alors → OUI ; sinon → NON."},
+{c:"C2.1",n:"Lire la boucle",q:"D'après l'algorigramme, que fait le climatiseur quand la réponse au test est NON ?",img:{src:"Images/algorigramme_minuterie_climatiseur.svg",alt:"Algorigramme de la minuterie du climatiseur : début, régler la durée, test « La durée est-elle écoulée ? » ; NON : continuer à rafraîchir la pièce, puis revenir au test ; OUI : arrêter le climatiseur, fin."},
+ o:["Il continue à rafraîchir, puis refait le test", "Il s'arrête tout de suite, sans attendre", "Il demande une nouvelle durée à l'utilisateur", "Il revient au début, puis il s'éteint"],r:0,
+ expl:"La sortie NON mène à « Continuer à rafraîchir la pièce », puis la flèche revient au test : c'est une boucle, qui dure tant que la durée n'est pas écoulée.",
+ ex:"Durée 2 h : pendant 2 h, la réponse est NON et l'appareil continue.",
+ err:"Lire la sortie OUI à la place de la sortie NON.",
+ d:["", "S'arrêter, c'est la sortie OUI : quand la durée est écoulée.", "La durée se règle une seule fois, au début : la flèche NON ne remonte pas jusque-là.", "La flèche NON revient au test, pas au début, et rien ne l'éteint à ce moment."],
+ ret:"Une flèche qui remonte vers un test, c'est une boucle."},
+{c:"C2.1",n:"De la phrase à l'algorigramme",q:"D'après l'algorigramme, quelle phrase décrit le mieux la minuterie ?",img:{src:"Images/algorigramme_minuterie_climatiseur.svg",alt:"Algorigramme de la minuterie du climatiseur : début, régler la durée, test « La durée est-elle écoulée ? » ; NON : continuer à rafraîchir la pièce, puis revenir au test ; OUI : arrêter le climatiseur, fin."},
+ o:["Il rafraîchit pendant 5 secondes, puis il s'arrête", "Il s'arrête, puis il rafraîchit pendant la durée réglée", "Il rafraîchit sans fin, quelle que soit la durée", "Il rafraîchit jusqu'à la fin de la durée, puis s'arrête"],r:3,
+ expl:"L'algorigramme et la phrase disent la même chose : la boucle tourne tant que la durée n'est pas écoulée, puis la sortie OUI arrête l'appareil.",
+ ex:"Langage naturel et algorigramme : deux représentations de la même règle.",
+ err:"Oublier la sortie de la boucle.",
+ d:["Les 5 secondes de la notice servent à valider le réglage, pas à fixer la durée.", "L'ordre est inversé : l'arrêt vient à la fin, quand la durée est écoulée.", "La sortie OUI mène à l'arrêt : la boucle a une fin.", ""],
+ ret:"Un algorithme se relit en phrase : « tant que… ; ensuite… »."},
+{c:"C2.1",n:"Améliorer après une erreur",q:"Sur 10 personnes, 7 appuient d'abord sur la goutte pour lancer le froid. Que conclure en premier ?",
+ o:["Le pictogramme prête à confusion : il faut l'améliorer", "Ces personnes sont maladroites : il n'y a rien à changer", "Le climatiseur est en panne : il faut le réparer", "Il faut supprimer le mode Déshumidifier"],r:0,
+ expl:"Quand beaucoup d'utilisateurs font la même erreur, c'est la conception (pictogramme, place de la touche, notice) qu'il faut revoir.",
+ ex:"Un flocon plus grand, ou une couleur bleue pour la touche Froid.",
+ err:"Accuser l'utilisateur au lieu de regarder l'objet.",
+ d:["", "7 personnes sur 10, ce n'est pas un hasard : c'est l'objet qui pose problème.", "Rien ne dit que l'appareil est en panne : les gens se trompent de touche.", "Supprimer une fonction utile ne règle pas la confusion entre deux pictogrammes."],
+ ret:"Une erreur fréquente montre où améliorer l'objet."},
+/* ═══ C2.2 ═══ */
+{c:"C2.2",n:"Une contrainte",q:"Une contrainte, pour un objet, c'est…",
+ o:["une condition imposée qu'il doit respecter", "une fonction que l'utilisateur aime particulièrement", "un défaut que l'on corrige après la vente", "une pièce cachée à l'intérieur de l'objet"],r:0,
+ expl:"Une contrainte est une condition imposée à l'objet : par la loi (sécurité), par son milieu (chaleur, eau, humidité), par l'utilisateur (gestes, budget).",
+ ex:"Le spa doit résister au soleil et à l'eau chlorée.",
+ err:"Confondre contrainte et défaut.",
+ d:["", "Une fonction aimée est un avantage ; une contrainte, l'objet doit la respecter, qu'on l'aime ou non.", "Une contrainte se prend en compte avant de fabriquer, pas après la vente.", "Une contrainte n'est pas une pièce : c'est une condition."],
+ ret:"Contrainte = condition à respecter, imposée de l'extérieur."},
+{c:"C2.2",n:"Une exigence",q:"Dans un cahier des charges, une exigence dit…",
+ o:["comment fabriquer l'objet", "combien de temps dure la fabrication", "qui a dessiné l'objet", "ce que l'objet doit obtenir"],r:3,
+ expl:"Une exigence dit ce qu'il faut obtenir, pas comment l'obtenir : on peut ainsi comparer plusieurs solutions.",
+ ex:"« La télécommande se tient d'une seule main » : ce qu'il faut obtenir.",
+ err:"Écrire une solution à la place d'une exigence.",
+ d:["Le comment, c'est le choix d'une solution ; l'exigence dit seulement le résultat attendu.", "La durée de fabrication concerne l'usine, pas ce que l'objet doit obtenir.", "Le nom du dessinateur n'est pas une exigence.", ""],
+ ret:"Exigence = ce qu'il faut obtenir, pas comment."},
+{c:"C2.2",n:"Une exigence vérifiable",q:"Laquelle de ces exigences peut se vérifier par un essai ?",
+ o:["« Le spa chauffe l'eau de 20 °C à 37 °C en 24 heures au plus »", "« Le spa est agréable et relaxant pour toute la famille »", "« Le spa est très beau, et il plaît à tous les invités »", "« Le spa donne envie de se baigner tous les jours de l'année »"],r:0,
+ expl:"Une exigence se vérifie quand elle porte une valeur mesurable, avec son unité : on fait l'essai et on compare.",
+ ex:"Thermomètre et chronomètre : 37 °C atteints en 20 heures, l'exigence est respectée.",
+ err:"Écrire une exigence qu'aucun essai ne peut vérifier.",
+ d:["", "« Agréable » est un ressenti : chacun le juge à sa façon, aucun essai ne tranche.", "« Très beau » ne se mesure pas : il faut une valeur et une unité.", "« Donner envie » ne se mesure pas : il faut une valeur et une unité."],
+ ret:"Exigence vérifiable = une valeur, une unité, un essai."},
+{c:"C2.2",n:"La sécurité",q:"Sur un lisseur à cheveux, l'étiquette « DANGER : plaques très chaudes » signale…",
+ o:["un risque de brûlure", "un risque de panne de l'appareil", "un risque d'explosion de la pile", "une économie d'énergie"],r:0,
+ expl:"Les plaques montent à environ 200 °C : l'étiquette prévient du risque de brûlure. C'est une exigence de sécurité.",
+ ex:"La notice ajoute : « Laisser refroidir avant de ranger ».",
+ err:"Lire « DANGER » comme un avertissement pour l'appareil.",
+ d:["", "Une panne ne blesse personne ; l'étiquette protège l'utilisateur.", "Un lisseur se branche sur le secteur : il n'a pas de pile.", "« DANGER » n'annonce jamais une économie : il annonce un risque pour l'utilisateur."],
+ ret:"Sécurité : quelqu'un peut-il se blesser ?"},
+{c:"C2.2",n:"Le triangle d'avertissement",q:"Sur une notice, un triangle jaune bordé de noir avec un point d'exclamation signale…",
+ o:["une fonction réservée aux utilisateurs experts", "un danger : il faut lire la consigne avant d'agir", "une panne qui est déjà arrivée à l'appareil", "le mode de l'appareil qui économise le plus d'énergie"],r:1,
+ expl:"Le triangle jaune bordé de noir est le pictogramme normalisé du danger : la consigne qui l'accompagne protège l'utilisateur.",
+ ex:"⚠ « Débranche l'appareil avant de le nettoyer. »",
+ err:"Passer les avertissements pour aller plus vite.",
+ d:["Ce pictogramme s'adresse à tous les utilisateurs, justement.", "", "Il prévient avant l'usage ; il ne signale pas une panne passée.", "Les économies d'énergie ont d'autres pictogrammes (une feuille, « Éco »)."],
+ ret:"Triangle jaune = danger : on lit avant d'agir."},
+{c:"C2.2",n:"Débrancher avant l'eau",q:"La notice du spa dit : « 1. Débranche la pompe. 2. Ouvre la vanne de vidange. » Pourquoi débrancher d'abord ?",
+ o:["Pour que l'eau s'écoule plus vite par la vanne", "Pour faire refroidir l'eau avant de la vider", "Pour remettre à zéro le programme de la pompe", "Pour éviter un risque électrique près de l'eau"],r:3,
+ expl:"L'eau conduit le courant : on supprime le risque électrique avant de toucher à l'eau. C'est une exigence de sécurité, placée en premier.",
+ ex:"Même règle pour la machine à laver ou l'aquarium.",
+ err:"Croire que l'ordre des étapes est sans importance.",
+ d:["Débrancher ne change pas la vitesse d'écoulement : c'est la vanne qui la règle.", "L'eau ne refroidit pas d'un coup en débranchant : ce n'est pas la raison.", "La consigne protège l'utilisateur, pas le programme de la pompe.", ""],
+ ret:"La sécurité d'abord : on coupe le courant avant de toucher à l'eau."},
+{c:"C2.2",n:"L'ergonomie",q:"« La télécommande tient dans une main, et le pouce atteint toutes les touches. » Quelle famille d'exigences ?",
+ o:["La fiabilité", "Les incidences environnementales", "L'ergonomie", "La qualité"],r:2,
+ expl:"L'ergonomie vérifie que l'objet respecte le corps et les gestes de l'utilisateur : prise en main, effort, position.",
+ ex:"Des touches assez grandes pour un doigt, un écran lisible sans se pencher.",
+ err:"Confondre ergonomie et qualité.",
+ d:["La fiabilité, c'est combien de fois l'objet échoue, pas la façon dont il tient dans la main.", "L'environnement, c'est ce que l'objet coûte en matière et en énergie.", "", "La qualité, c'est faire toujours ce qui est annoncé ; ici, on parle du corps et des gestes."],
+ ret:"Ergonomie : le corps et les gestes sont-ils respectés ?"},
+{c:"C2.2",n:"L'environnement",q:"« Le climatiseur consomme peu d'électricité, et son gaz est récupéré en fin de vie. » Quelle famille d'exigences ?",
+ o:["L'ergonomie", "Les formes et fonctions", "La sécurité", "Les incidences environnementales"],r:3,
+ expl:"Les incidences environnementales mesurent ce que l'objet coûte en matière et en énergie, de sa fabrication à sa fin de vie.",
+ ex:"Étiquette énergie, pièces recyclables, gaz récupéré.",
+ err:"Ne penser à l'environnement qu'au moment de jeter l'objet.",
+ d:["L'ergonomie concerne les gestes de l'utilisateur, pas l'énergie consommée.", "Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ici, on parle d'énergie et de matière.", "Personne n'est en danger ici : on parle de ce que l'objet coûte à la planète.", ""],
+ ret:"Environnement : matière et énergie, sur toute la durée de vie."},
+{c:"C2.2",n:"La fiabilité",q:"« L'imprimante ne doit pas coincer plus d'une feuille sur 1 000. » Quelle famille d'exigences ?",
+ o:["La qualité", "L'ergonomie", "La fiabilité", "Les formes et fonctions"],r:2,
+ expl:"La fiabilité se mesure par le nombre d'échecs : combien de fois sur cent (ou sur mille) l'objet échoue-t-il ?",
+ ex:"1 feuille coincée sur 1 000 : l'exigence est respectée ; 9 sur 1 000 : elle ne l'est pas.",
+ err:"Confondre fiabilité et qualité.",
+ d:["La qualité, c'est faire ce qui est annoncé ; ici, on compte combien de fois l'objet échoue.", "L'ergonomie concerne le corps et les gestes, pas le nombre de pannes.", "", "Formes et fonctions : la forme sert-elle la fonction ? Ici, on compte des échecs."],
+ ret:"Fiabilité : combien de fois sur cent l'objet échoue-t-il ?"},
+{c:"C2.2",n:"La qualité",q:"« Chaque page imprimée ressemble exactement à ce qui s'affiche à l'écran. » Quelle famille d'exigences ?",
+ o:["La fiabilité", "La sécurité", "Les incidences environnementales", "La qualité"],r:3,
+ expl:"La qualité vérifie que l'objet fait toujours ce qu'il annonce : ici, une impression fidèle à l'écran.",
+ ex:"Couleurs justes, texte net, pas de traînée d'encre.",
+ err:"Confondre qualité et fiabilité.",
+ d:["La fiabilité compte les échecs (feuilles coincées) ; ici, on juge si le résultat est celui qui est annoncé.", "Personne ne risque de se blesser : ce n'est pas la sécurité.", "On ne parle ni de matière ni d'énergie : ce n'est pas l'environnement.", ""],
+ ret:"Qualité : l'objet fait-il toujours ce qu'il annonce ?"},
+{c:"C2.2",n:"Formes et fonctions",q:"« Le spa est rond, pour que six personnes s'y assoient face à face. » Quelle famille d'exigences ?",
+ o:["La fiabilité", "Les formes et fonctions", "La sécurité", "Les incidences environnementales"],r:1,
+ expl:"Formes et fonctions : la forme de l'objet sert-elle ce qu'il doit faire ? Ici, le cercle permet de s'asseoir à six, face à face.",
+ ex:"Une poignée en creux pour porter le climatiseur mobile.",
+ err:"Croire que la forme n'est qu'une question de goût.",
+ d:["On ne compte pas d'échecs ici : on explique à quoi sert la forme.", "", "La forme ronde ne protège pas d'un danger : elle sert l'usage.", "On ne parle ni d'énergie ni de matière : on parle de la forme."],
+ ret:"Formes et fonctions : la forme sert-elle ce que l'objet doit faire ?"},
+{c:"C2.2",n:"La sortie d'air",q:"La notice dit : « Ne bouche pas la sortie d'air. » Pourquoi ?",img:{src:"Images/notice_climatiseur_extrait.svg",alt:"Extrait de la notice d'un climatiseur mobile : les touches de la télécommande avec leur pictogramme (marche-arrêt, flocon pour le froid, goutte pour déshumidifier, hélice pour la ventilation seule, horloge pour la minuterie, flèches pour régler), la procédure en trois étapes pour programmer l'arrêt, et deux avertissements de sécurité."},
+ o:["L'air ne circule plus : l'appareil chauffe et peut s'abîmer", "Pour que le climatiseur fasse moins de bruit pendant la nuit", "Pour que la télécommande capte mieux le signal infrarouge", "Pour garder plus d'humidité dans l'air de la pièce"],r:0,
+ expl:"Un appareil qui ne peut plus évacuer son air chauffe : il risque de s'abîmer, voire de prendre feu. L'avertissement protège l'appareil et l'utilisateur.",
+ ex:"Laisser 50 cm (centimètres) libres autour de la sortie d'air.",
+ err:"Lire un avertissement sans chercher le risque qu'il évite.",
+ d:["", "Le bruit ne dépend pas de la sortie d'air bouchée ; le vrai risque est la surchauffe.", "La télécommande vise le capteur de l'appareil, pas la sortie d'air.", "Le climatiseur retire l'humidité ; boucher la sortie ne sert pas à humidifier."],
+ ret:"Derrière chaque avertissement, un risque à nommer."},
+{c:"C2.2",n:"Une condition d'usage",q:"La notice du spa porte le pictogramme « < 10 °C » barré. Cela signifie :",
+ o:["Le spa se gonfle plus vite quand il fait très froid", "Le spa chauffe l'eau jusqu'à 10 °C au plus", "Ne pas utiliser le spa quand il fait moins de 10 °C", "Le spa s'arrête tout seul au-dessus de 10 °C"],r:2,
+ expl:"Le pictogramme barré interdit une condition d'usage : sous 10 °C, la pompe et la bâche peuvent être abîmées par le froid. C'est une contrainte du milieu.",
+ ex:"« < » se lit « moins de » ; « > » se lit « plus de ».",
+ err:"Lire le pictogramme sans tenir compte de la barre.",
+ d:["Le froid ne fait pas gonfler plus vite ; le pictogramme interdit un usage.", "Un spa chauffe l'eau bien au-delà de 10 °C : ce n'est pas sa température maximale.", "", "Le signe « < » veut dire « moins de », pas « au-dessus de »."],
+ ret:"Un pictogramme barré interdit ; « < » veut dire « moins de »."},
+{c:"C2.2",n:"Repérer les contraintes",q:"Quel outil aide à repérer toutes les contraintes d'un objet ?",
+ o:["L'algorigramme", "Le graphique des temps", "Le diagramme pieuvre", "La liste des prix"],r:2,
+ expl:"Le diagramme pieuvre place l'objet au centre et ses interacteurs autour (utilisateur, énergie, eau, soleil…) : chaque relation fait apparaître une contrainte.",
+ ex:"Spa ↔ soleil : la bâche doit résister aux UV.",
+ err:"Chercher les contraintes au hasard, sans regarder le milieu de l'objet.",
+ d:["L'algorigramme décrit des actions et des tests, pas le milieu de l'objet.", "Le graphique compare des mesures ; il ne liste pas ce qui entoure l'objet.", "", "Le prix est une contrainte parmi d'autres ; il n'aide pas à repérer les autres."],
+ ret:"Pieuvre : les interacteurs font apparaître les contraintes."},
+{c:"C2.2",n:"Une exigence qui en touche une autre",q:"Un nouveau lisseur chauffe à 230 °C au lieu de 180 °C. Quelle exigence faut-il surveiller de plus près ?",
+ o:["La longueur du cordon électrique", "La sécurité contre les brûlures", "La forme des plaques chauffantes", "Le poids du lisseur dans la main"],r:1,
+ expl:"Changer une valeur peut toucher une autre exigence : des plaques plus chaudes augmentent le risque de brûlure.",
+ ex:"Il faudra peut-être un arrêt automatique et un étui qui résiste à la chaleur.",
+ err:"Améliorer une exigence sans regarder les autres.",
+ d:["Le cordon ne devient pas plus dangereux parce que les plaques chauffent plus.", "", "La forme des plaques ne change pas avec la température.", "Le poids reste le même : seule la température a changé."],
+ ret:"Une exigence qui change peut en mettre une autre en danger."}
+];
+</script>
 
-        // Récupération des boutons dans le DOM (structure HTML)
-        const btnCorriger = document.getElementById("btnCorriger"); // Bouton de correction
-        const btnReset = document.getElementById("btnReset");       // Bouton de réinitialisation
-        const scoreText = document.getElementById("scoreText");     // Zone de texte de la note
-        const scoreBar = document.getElementById("scoreBar");       // Barre de progression de la note
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C2.1_fonctionnement_objet";
+const $=id=>document.getElementById(id);
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
+const COMP_LABELS={
+  "C2.1":"4e_C2.1 — Décrire l'expérience de l'utilisateur, du langage naturel aux schémas, graphiques et algorithmes",
+  "C2.2":"4e_C2.2 — Repérer et expliquer les contraintes et exigences prises en compte" };
+const N=QUESTIONS.length;
 
-        // Fonction qui corrige l’ensemble du QCM
-        function corrigerQCM() {
-            // Variable pour compter le nombre de bonnes réponses
-            let bonnesReponses = 0;
-            // Nombre total de questions dans le QCM
-            const totalQuestions = 25;
+/* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  notice:"Lire la notice : un pictogramme, une étape, une valeur",
+  ressenti:"Un ressenti n'est pas une mesure : comment mesurer la facilité d'usage",
+  representer:"Quelle représentation : étapes, graphique ou algorigramme ?",
+  exigence:"Contrainte ou exigence : ce que l'objet doit obtenir, et comment le vérifier",
+  familles:"Quelle famille d'exigences : ergonomie, environnement, fiabilité, qualité, forme ?",
+  securite:"La sécurité d'abord : le danger, l'avertissement, la condition d'usage"
+};
+const PIEGE_DE_NOTION={
+  "Le rôle d'une notice":"notice",
+  "Un pictogramme":"notice",
+  "Lire un pictogramme":"notice",
+  "Suivre une procédure":"notice",
+  "Une durée sur la notice":"notice",
+  "L'expérience de l'utilisateur":"ressenti",
+  "Ressenti ou mesure":"ressenti",
+  "Mesurer la facilité d'usage":"ressenti",
+  "Améliorer après une erreur":"ressenti",
+  "Un graphique pour comparer":"representer",
+  "Une suite d'étapes":"representer",
+  "Le test de l'algorithme":"representer",
+  "Le mot « sinon »":"representer",
+  "Lire la boucle":"representer",
+  "De la phrase à l'algorigramme":"representer",
+  "Une contrainte":"exigence",
+  "Une exigence":"exigence",
+  "Une exigence vérifiable":"exigence",
+  "Repérer les contraintes":"exigence",
+  "L'ergonomie":"familles",
+  "L'environnement":"familles",
+  "La fiabilité":"familles",
+  "La qualité":"familles",
+  "Formes et fonctions":"familles",
+  "La sécurité":"securite",
+  "Le triangle d'avertissement":"securite",
+  "Débrancher avant l'eau":"securite",
+  "La sortie d'air":"securite",
+  "Une condition d'usage":"securite",
+  "Une exigence qui en touche une autre":"securite"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
 
-            // Boucle sur toutes les questions (de q1 à q25)
-            for (let i = 1; i <= totalQuestions; i++) {
-                // Construction de la clé de l’objet qcmData (q1, q2, etc.)
-                const key = "q" + i;
-                // Récupération de la bonne réponse pour la question i
-                const bonne = qcmData[key].correct;
-                // Récupération de l’explication associée
-                const explication = qcmData[key].explanation;
-                // Récupération de la compétence associée
-                const competence = qcmData[key].competence;
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
 
-                // Récupération de toutes les réponses possibles (inputs radio) pour la question i
-                const radios = document.querySelectorAll("input[name='q" + i + "']");
-                // Variable pour stocker la réponse choisie par l’élève (si elle existe)
-                let reponseChoisie = null;
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
 
-                // Parcours des propositions pour trouver celle qui est cochée
-                radios.forEach(function (r) {
-                    // Si l’input radio est sélectionné (checked)
-                    if (r.checked) {
-                        // On enregistre sa valeur (A, B, C ou D)
-                        reponseChoisie = r.value;
-                    }
-                });
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
 
-                // Récupération de la zone de feedback pour la question i
-                const feedbackDiv = document.getElementById("fb-q" + i);
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
 
-                // Si aucune réponse n’a été choisie
-                if (reponseChoisie === null) {
-                    // On affiche un message invitant à répondre
-                    feedbackDiv.innerHTML = "<span class='incorrect'>❓ Aucune réponse sélectionnée. Pense à cocher une proposition.</span><br>" +
-                        "<span>Compétence : <strong>" + competence + "</strong></span><br>" +
-                        "<span>" + explication + "</span>";
-                    // On passe à la question suivante sans ajouter de point
-                    continue;
-                }
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
 
-                // Si la réponse choisie est correcte
-                if (reponseChoisie === bonne) {
-                    // On incrémente le nombre de bonnes réponses
-                    bonnesReponses++;
-                    // On affiche un message positif avec l’explication
-                    feedbackDiv.innerHTML = "<span class='correct'>✅ Bonne réponse !</span><br>" +
-                        "<span>Compétence : <strong>" + competence + "</strong></span><br>" +
-                        "<span>" + explication + "</span>";
-                } else {
-                    // Si la réponse est incorrecte, on affiche la bonne réponse et l’explication
-                    feedbackDiv.innerHTML = "<span class='incorrect'>❌ Réponse incorrecte. La bonne réponse était : <strong>" +
-                        bonne +
-                        "</strong>.</span><br>" +
-                        "<span>Compétence : <strong>" + competence + "</strong></span><br>" +
-                        "<span>" + explication + "</span>";
-                }
-            }
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
 
-            // Calcul de la note sur 25
-            const note25 = bonnesReponses;
-            // Conversion de la note sur 20 (règle de trois)
-            const note20 = Math.round((note25 * 20 / totalQuestions) * 10) / 10; // Arrondi au dixième
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Notices, pictogrammes, algorigrammes et exigences n'ont plus de secret pour toi — tu es prêt·e pour l'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
 
-            // Construction d’un message motivant en fonction de la note
-            let messageMotivant = "";
-            if (note20 === 20) {
-                messageMotivant = " 🎉 Parfait, tu maîtrises totalement ce chapitre !";
-            } else if (note20 >= 15) {
-                messageMotivant = " 💪 Très bon travail, encore quelques détails à revoir.";
-            } else if (note20 >= 10) {
-                messageMotivant = " 🙂 C’est en bonne voie, reprends les corrections pour progresser.";
-            } else {
-                messageMotivant = " 🚀 Courage, ce QCM est fait pour t’aider à comprendre. Tu peux le refaire plusieurs fois.";
-            }
-
-            // Mise à jour du texte affichant la note
-            scoreText.innerHTML =
-                "Tu obtiens <strong>" + note25 + " / " + totalQuestions + "</strong> (soit <strong>" +
-                note20 + " / 20</strong>)." + messageMotivant;
-
-            // Calcul du pourcentage de bonnes réponses pour la barre de progression
-            const pourcentage = (note25 / totalQuestions) * 100;
-            // Mise à jour de la largeur de la barre de score
-            scoreBar.style.width = pourcentage + "%";
-        }
-
-        // Fonction qui réinitialise le QCM (réponses et feedbacks)
-        function resetQCM() {
-            // Nombre total de questions
-            const totalQuestions = 25;
-
-            // Boucle sur chaque question
-            for (let i = 1; i <= totalQuestions; i++) {
-                // Récupération de tous les inputs radio de la question i
-                const radios = document.querySelectorAll("input[name='q" + i + "']");
-                // On désélectionne toutes les cases
-                radios.forEach(function (r) {
-                    r.checked = false;
-                });
-                // On vide le feedback associé à la question i
-                const feedbackDiv = document.getElementById("fb-q" + i);
-                feedbackDiv.innerHTML = "";
-            }
-
-            // Réinitialisation du texte de la zone de score
-            scoreText.textContent = "Ta note s’affichera ici après la correction.";
-            // Réinitialisation de la barre de progression à 0 %
-            scoreBar.style.width = "0%";
-        }
-
-        // Ajout d’un écouteur d’événement au bouton de correction
-        btnCorriger.addEventListener("click", corrigerQCM);
-        // Ajout d’un écouteur d’événement au bouton de réinitialisation
-        btnReset.addEventListener("click", resetQCM);
-    </script>
-    <!-- Fin du script JavaScript -->
-
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
 
 <!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
      réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
@@ -991,6 +946,18 @@
   @media (prefers-reduced-motion:no-preference){
     .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
     @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
 </style>
 <script>
@@ -1228,6 +1195,14 @@
   }
 })();
 </script>
+<script>/* Règle d'or n°322 (15/11/2026) : effacer TOUTE la sauvegarde de ce QCM — le nom, les réponses, le temps —
+   en deux clics (`demande`), sans boîte modale. « ♻ Recommencer entièrement » garde le nom : il ne suffit pas sur un poste partagé. */
+document.getElementById("btnEffacer").addEventListener("click", function () {
+  if (demande("effacer-sauvegarde", "Effacer de ce navigateur ton nom, tes réponses et ton temps ?")) {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  }
+});
+</script>
 </body>
-<!-- Fin de la balise HTML principale -->
 </html>
