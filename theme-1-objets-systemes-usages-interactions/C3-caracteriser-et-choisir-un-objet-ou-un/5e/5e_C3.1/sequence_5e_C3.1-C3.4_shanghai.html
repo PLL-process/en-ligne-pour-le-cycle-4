@@ -4346,13 +4346,20 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   "use strict";
   /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
      « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
-     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien. */
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
   var arme = false;
   function armer(){ setTimeout(function(){ arme = true; }, 0); }
   if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
   [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
-    var n = btn.getAttribute("data-check"), zone = btn;
-    while (zone.parentElement && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
     function cle(){
       var v = window.__valid || {};
       return v[n] ? n : v["act" + n] ? "act" + n : null;
@@ -4360,6 +4367,9 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
     function revoir(e){
       var t = e.target;
       if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
       var k = cle(); if (k === null) return;
       window.__valid[k] = false;
       var fb = document.getElementById("fb" + n);

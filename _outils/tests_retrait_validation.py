@@ -20,8 +20,11 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8"></head><body>
 <input type="range" id="r1" min="0" max="10" value="5">
 <button data-check="1">Vérifier</button><p id="fb1" class="feedback ok"></p></div>
 <div class="activite"><input id="a2" value="x"><button data-check="2">Vérifier</button><p id="fb2"></p></div>
+<div class="seance-panel"><div class="card"><select id="m3"><option value=""></option><option>oui</option></select>
+<button data-check="3">Vérifier</button><p id="fb3"></p></div>
+<div class="card"><textarea id="bilan"></textarea></div></div>
 <script>
-window.__valid = {1: true, act2: true};
+window.__valid = {1: true, act2: true, 3: true};
 let sauves = 0, recomptes = 0;
 function save(){ sauves++; }
 function majProgress(){ recomptes++; }
@@ -65,6 +68,13 @@ with tempfile.TemporaryDirectory() as d, sync_playwright() as p:
     verifie("la page enregistre et recompte", pg.evaluate("() => sauves > 0 && recomptes > 0"))
     pg.fill("#a2", "y")
     verifie("la clé « act2 » est retirée aussi", pg.evaluate("() => window.__valid.act2") is False)
+    pg.fill("#bilan", "ce que j'ai appris")
+    verifie("le bilan de la séance n'est pas l'activité : il ne retire rien", pg.evaluate("() => window.__valid[3]") is True)
+    pg.evaluate("() => { const m = document.getElementById('m3'); m.value = ''; m.dispatchEvent(new Event('change', {bubbles: true})); }")
+    verifie("une réponse vidée (le mode mission efface une proposition fausse) ne retire rien",
+            pg.evaluate("() => window.__valid[3]") is True)
+    pg.select_option("#m3", "oui")
+    verifie("une réponse choisie retire la validation", pg.evaluate("() => window.__valid[3]") is False)
     b.close()
 
 with tempfile.TemporaryDirectory() as d:
