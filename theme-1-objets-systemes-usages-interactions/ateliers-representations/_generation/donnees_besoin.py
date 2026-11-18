@@ -249,9 +249,10 @@ def exercice_mots(ident, id, code, titre, etiquette, objet, objectif_objet, cons
         mots=MOTS_REFERENCE + list(mots_objet),
         intro=intro,
         consigne="<p>Les cases de la bête à cornes ont des noms, les mêmes pour tous les objets&nbsp;: ce sont ses <b>mots de "
-                 "référence</b>, qui viennent de la méthode APTE. <b>Dans chaque case du dessin vide, choisis le mot qui la "
-                 "nomme</b>&nbsp;: Utilisateur, Matière d'œuvre, Produit ou Fonction. Trois autres mots du menu sont des "
-                 "pièges. Puis <b>%s</b>.</p>" % consigne_objet,
+                 "référence</b>, qui viennent de la méthode APTE.<br>"
+                 "① <b>Dans chaque case du dessin vide, choisis le mot qui la nomme</b>&nbsp;: Utilisateur, Matière d'œuvre, "
+                 "Produit ou Fonction. Trois autres mots du menu sont des pièges.<br>"
+                 "② <b>%s</b>.</p>" % (consigne_objet[:1].upper() + consigne_objet[1:]),
         critere="les quatre cases nommées sans erreur, et tu sais dire pourquoi l'acheteur n'est pas l'utilisateur, ni le "
                 "matériau la matière d'œuvre.",
         widgets=[menus_mots(ident, acheteur)] + choix,
@@ -580,10 +581,13 @@ E1 = dict(
     intro="<p>Léa vit en ville et n'a pas de voiture. Chaque jour, elle emmène ses deux enfants et rapporte ses courses avec "
           "son <b>vélo-cargo</b> — un vélo avec un grand bac devant. Pour dire le <b>besoin</b> auquel répond cet objet, on "
           "pose trois questions. Le schéma qui rassemble les réponses s'appelle souvent la <b>bête à cornes</b>.</p>",
-    consigne="<p>La bête à cornes répond à trois questions&nbsp;: <b>à qui</b> l'objet rend-il service (son <b>utilisateur</b>)&nbsp;? "
-             "<b>sur quoi</b> agit-il (sa <b>matière d'œuvre</b>&nbsp;: ce qu'il déplace, touche ou transforme)&nbsp;? <b>dans "
-             "quel but</b> existe-t-il (sa <b>fonction</b>)&nbsp;? "
-             "<b>Lis le schéma, puis choisis, pour chaque question, la phrase qui l'explique.</b></p>",
+    consigne=("<p>La bête à cornes répond à trois questions&nbsp;:<br>"
+              "<b>À qui</b> l'objet rend-il service (son <b>utilisateur</b>)&nbsp;?<br>"
+              "<b>Sur quoi</b> agit-il (sa <b>matière d'œuvre</b>&nbsp;: ce qu'il déplace, touche ou "
+              "transforme)&nbsp;?<br>"
+              "<b>Dans quel but</b> existe-t-il (sa <b>fonction</b>)&nbsp;?<br>"
+              "<b>① Lis le schéma.</b><br>"
+              "<b>② Choisis, pour chaque question, la phrase qui l'explique.</b></p>"),
     critere="trois réponses justes, et tu sais dire pourquoi les enfants sont la matière d'œuvre (case « sur quoi&nbsp;? ») "
             "et pas l'utilisateur (case « à qui&nbsp;? »).",
     widgets=[dict(type="choix", name="qui",
@@ -668,11 +672,13 @@ E2 = dict(
           ("intrus", "un mot qui n'a pas sa place dans la liste.")],
     intro="<p>Sur un parking de Sainte-Luce, la mairie a fait installer un <b>lampadaire intelligent</b>&nbsp;: la nuit, il "
           "s'allume quand un piéton passe, et il reste éteint le reste du temps.</p>",
-    consigne="<p><b>Complète les deux cases du haut</b> — l'utilisateur et la matière d'œuvre — avec les mots de la banque&nbsp;: <i>les piétons · la rue du parking · "
-             "la mairie · l'ampoule · la nuit</i>. Tes choix s'écrivent dans le schéma. Trois mots de la banque sont des "
-             "<b>intrus</b>. Puis <b>écris le but</b> du lampadaire, sa fonction d'usage&nbsp;: une phrase qui commence par un <b>verbe à "
-             "l'infinitif</b> (éclairer, permettre…) et qui ne nomme <b>aucune solution technique</b> — ni ampoule, ni "
-             "capteur, ni panneau solaire. Une solution dit <i>comment</i>&nbsp;; le but dit <i>pourquoi</i>.</p>",
+    consigne=("<p>① <b>Complète les deux cases du haut</b> — l'utilisateur et la matière d'œuvre — avec les mots "
+              "de la banque&nbsp;: <i>les piétons · la rue du parking · la mairie · l'ampoule · la nuit</i>. Tes "
+              "choix s'écrivent dans le schéma. Trois mots de la banque sont des <b>intrus</b>.<br>"
+              "② <b>Écris le but</b> du lampadaire, sa fonction d'usage&nbsp;: une phrase qui commence par un "
+              "<b>verbe à l'infinitif</b> (éclairer, permettre…) et qui ne nomme <b>aucune solution technique</b> "
+              "— ni ampoule, ni capteur, ni panneau solaire. Une solution dit <i>comment</i>&nbsp;; le but dit "
+              "<i>pourquoi</i>.</p>"),
     critere="les deux cases portent les bons mots, et ton but commence par un verbe, dit où, quand et pour qui, sans nommer "
             "de solution.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + BAC_LAMPE +
@@ -838,11 +844,12 @@ E4 = dict(
           "personne ne vient au jardin&nbsp;; et en juillet, quand la chaleur dure plusieurs jours (une <b>canicule</b>), l'eau "
           "de la cuve devient rare. Le jardin s'équipe donc d'un <b>système d'arrosage connecté</b>. "
           "Ci-dessus, la bête à cornes de l'arrosoir&nbsp;; plus bas, celle du nouveau système, qui n'a pas encore de but.</p>",
-    consigne="<p>Pour <b>justifier</b> l'évolution d'un objet, on compare ce qu'on lui demande avant et après. <b>Compare les "
-             "deux bêtes à cornes partie par partie</b> — utilisateur, matière d'œuvre, produit, fonction —, puis <b>écris le "
-             "nouveau but</b>, la nouvelle fonction d'usage&nbsp;: un verbe à l'infinitif, "
-             "<b>sans nommer de solution</b> (ni capteur, ni pompe, ni smartphone). Enfin, <b>dis pourquoi</b> le jardin a "
-             "changé d'objet.</p>",
+    consigne=("<p>Pour <b>justifier</b> l'évolution d'un objet, on compare ce qu'on lui demande avant et après.<br>"
+              "① <b>Compare les deux bêtes à cornes partie par partie</b> — utilisateur, matière d'œuvre, produit, "
+              "fonction.<br>"
+              "② <b>Écris le nouveau but</b>, la nouvelle fonction d'usage&nbsp;: un verbe à l'infinitif, <b>sans "
+              "nommer de solution</b> (ni capteur, ni pompe, ni smartphone).<br>"
+              "③ <b>Dis pourquoi</b> le jardin a changé d'objet.</p>"),
     critere="quatre comparaisons justes, un but qui dit « même sans la gardienne » et « sans gaspiller l'eau » sans nommer de "
             "solution, et la bonne raison de l'évolution.",
     widgets=[dict(type="classer", name="compare", question="%s&nbsp;: la même dans les deux schémas, ou pas&nbsp;?",
@@ -938,10 +945,11 @@ E5 = dict(
     intro="<p>Le collège doit choisir <b>un</b> système d'arrosage parmi plusieurs modèles vendus dans le commerce. Pour comparer "
           "les modèles, il faut d'abord savoir <b>quoi regarder</b>. La bête à cornes le dit&nbsp;: chaque partie du besoin "
           "demande une caractéristique.</p>",
-    consigne="<p>Une <b>caractéristique</b>, c'est ce qui décrit un modèle et qu'on peut comparer d'un modèle à l'autre (une "
-             "capacité, une consommation, une durée…). <b>Coche les caractéristiques à prendre en compte pour choisir un système "
-             "qui réponde à ce besoin</b>, et laisse celles qui ne le servent pas. Puis <b>relie</b> trois d'entre elles à la "
-             "partie du besoin qu'elles servent.</p>",
+    consigne=("<p>Une <b>caractéristique</b>, c'est ce qui décrit un modèle et qu'on peut comparer d'un modèle à "
+              "l'autre (une capacité, une consommation, une durée…).<br>"
+              "① <b>Coche les caractéristiques à prendre en compte pour choisir un système qui réponde à ce "
+              "besoin</b>, et laisse celles qui ne le servent pas.<br>"
+              "② <b>Relie</b> trois d'entre elles à la partie du besoin qu'elles servent.</p>"),
     critere="les huit cases justes, et chaque caractéristique reliée à la bonne partie du besoin.",
     widgets=[dict(type="cases", name="carac", legende="Coche les caractéristiques à prendre en compte pour choisir le système",
                   options=[("autonomie", "l'autonomie&nbsp;: combien de jours il arrose seul, sans que personne n'intervienne"),

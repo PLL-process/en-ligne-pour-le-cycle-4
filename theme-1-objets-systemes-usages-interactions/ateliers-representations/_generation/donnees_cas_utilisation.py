@@ -250,11 +250,11 @@ E1 = dict(
           "des vélos&nbsp;: on pose sa carte sur la borne, on paie, le cadenas s'ouvre, on part. Le soir, un technicien vient "
           "vérifier les bornes. Pour le paiement, la borne interroge le <b>serveur de paiement</b> de la banque&nbsp;: un "
           "ordinateur, loin de là, qui accepte ou refuse la carte.</p>",
-    consigne="<p>Dans un diagramme de cas d'utilisation, un <b>acteur</b> est une personne, ou un autre système, qui se sert "
-             "de la station <b>avec un but</b> et qui reste <b>en dehors</b> d'elle. <b>Range chacun des sept éléments</b>&nbsp;: "
-             "est-ce un acteur, et sinon, pourquoi&nbsp;? Puis <b>place les trois acteurs</b> dans le schéma (tes choix "
-             "s'écrivent sous les bonshommes), et <b>explique</b> en une phrase pourquoi l'écran tactile n'est pas un "
-             "acteur.</p>",
+    consigne=("<p>Dans un diagramme de cas d'utilisation, un <b>acteur</b> est une personne, ou un autre système, "
+              "qui se sert de la station <b>avec un but</b> et qui reste <b>en dehors</b> d'elle.<br>"
+              "① <b>Range chacun des sept éléments</b>&nbsp;: est-ce un acteur, et sinon, pourquoi&nbsp;?<br>"
+              "② <b>Place les trois acteurs</b> dans le schéma (tes choix s'écrivent sous les bonshommes), et "
+              "<b>explique</b> en une phrase pourquoi l'écran tactile n'est pas un acteur.</p>"),
     critere="sept classements justes, les trois bonshommes à leur place, et une phrase qui dit que l'écran est une pièce de "
             "la borne, dedans.",
     widgets=[dict(type="classer", name="cl",
@@ -363,11 +363,13 @@ E2 = dict(
           "leur batterie grâce à un panneau solaire&nbsp;; la nuit, la lampe éclaire le parking. Un agent de la mairie règle les "
           "heures d'allumage depuis son bureau et suit la charge des batteries&nbsp;; un technicien vient vérifier les "
           "batteries et remplacer les lampes usées.</p>",
-    consigne="<p>Un diagramme de cas d'utilisation se dessine avec quatre éléments&nbsp;: la <b>frontière du système</b> (le "
-             "cadre), les <b>acteurs</b> (les bonshommes), les <b>cas d'utilisation</b> (les ellipses&nbsp;: ce que l'acteur "
-             "fait avec le système) et les <b>associations</b> (les traits). <b>Relie chaque élément dessiné à son nom</b>, "
-             "puis <b>lis</b> le diagramme&nbsp;: qui est relié à « Suivre la charge de la batterie »&nbsp;? Dis pourquoi le "
-             "soleil n'a pas de bonhomme. Enfin, <b>fais la liste des acteurs</b> du lampadaire.</p>",
+    consigne=("<p>Un diagramme de cas d'utilisation se dessine avec quatre éléments&nbsp;: la <b>frontière du "
+              "système</b> (le cadre), les <b>acteurs</b> (les bonshommes), les <b>cas d'utilisation</b> (les "
+              "ellipses&nbsp;: ce que l'acteur fait avec le système) et les <b>associations</b> (les traits).<br>"
+              "① <b>Relie chaque élément dessiné à son nom</b>.<br>"
+              "② <b>Lis</b> le diagramme&nbsp;: qui est relié à « Suivre la charge de la batterie »&nbsp;?<br>"
+              "③ Dis pourquoi le soleil n'a pas de bonhomme.<br>"
+              "④ <b>Fais la liste des acteurs</b> du lampadaire.</p>"),
     critere="les quatre noms justes, les deux acteurs de la batterie (et eux seuls), la bonne raison pour le soleil, et une "
             "liste de trois acteurs sans intrus.",
     widgets=[dict(type="classer", name="noms",
@@ -472,10 +474,11 @@ E3 = dict(
           "<b>langage naturel</b>, la langue de tous les jours. Le diagramme de cas d'utilisation — souvent appelé use case "
           "SysML (<i>Systems Modeling Language</i>, le langage de modélisation des systèmes) — va en garder l'essentiel&nbsp;: "
           "<b>qui fait quoi</b> avec la borne.</p>",
-    consigne="<p>Un <b>cas d'utilisation</b> est une action qu'un acteur fait avec le système, écrite avec un verbe à "
-             "l'infinitif et un complément (« Louer un vélo »). <b>Pour chaque verbatim, choisis le cas d'utilisation qu'il "
-             "décrit</b> — ou « aucun », si la phrase ne décrit aucune action faite avec la borne. Puis <b>dis</b> où va le "
-             "ressenti des usagers.</p>",
+    consigne=("<p>Un <b>cas d'utilisation</b> est une action qu'un acteur fait avec le système, écrite avec un "
+              "verbe à l'infinitif et un complément (« Louer un vélo »).<br>"
+              "① <b>Pour chaque verbatim, choisis le cas d'utilisation qu'il décrit</b> — ou « aucun », si la "
+              "phrase ne décrit aucune action faite avec la borne.<br>"
+              "② <b>Dis</b> où va le ressenti des usagers.</p>"),
     critere="sept réponses justes, et tu sais dire pourquoi l'agacement de Kenza ne se dessine pas dans le diagramme.",
     widgets=[dict(type="classer", name="verb",
                   categories=[("louer", "Louer un vélo"), ("rendre", "Rendre un vélo"), ("payer", "Payer la location"),
@@ -558,11 +561,13 @@ E4 = dict(
           ("intrus", "un mot de la banque qui n'a sa place dans aucune case.")],
     intro="<p>Les verbatims des usagers ont donné les cas d'utilisation de la borne. Il reste à les placer dans le schéma. "
           "Deux ellipses et un bonhomme sont encore vides&nbsp;: ils s'affichent avec des points de suspension (…).</p>",
-    consigne="<p>Dans ce diagramme, chaque <b>ellipse</b> est un cas d'utilisation (une action, avec un verbe à l'infinitif) "
-             "et chaque <b>bonhomme</b> un acteur (une personne ou un autre système, dehors, qui se sert de la borne avec un "
-             "but). <b>Complète les deux ellipses vides et le bonhomme vide</b> avec la banque&nbsp;: <i>Rendre un vélo · "
-             "Signaler une panne · le serveur de paiement · l'écran tactile · le vélo</i>. Tes choix s'écrivent dans le "
-             "schéma. Deux mots de la banque sont des <b>intrus</b>&nbsp;: <b>dis pourquoi</b>.</p>",
+    consigne=("<p>Dans ce diagramme, chaque <b>ellipse</b> est un cas d'utilisation (une action, avec un verbe à "
+              "l'infinitif) et chaque <b>bonhomme</b> un acteur (une personne ou un autre système, dehors, qui se "
+              "sert de la borne avec un but).<br>"
+              "① <b>Complète les deux ellipses vides et le bonhomme vide</b> avec la banque&nbsp;: <i>Rendre un "
+              "vélo · Signaler une panne · le serveur de paiement · l'écran tactile · le vélo</i>. Tes choix "
+              "s'écrivent dans le schéma. Deux mots de la banque sont des <b>intrus</b>&nbsp;:<br>"
+              "② <b>Dis pourquoi</b>.</p>"),
     critere="les trois cases justes, et la bonne raison pour l'écran tactile et le vélo.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + FIG_BORNE +
                   "<figcaption>Le diagramme de cas d'utilisation de la borne. Tes choix s'écrivent dans les deux ellipses en "
@@ -643,10 +648,12 @@ E5 = dict(
     intro="<p>Le jardin partagé du collège a un <b>système d'arrosage connecté</b>&nbsp;: la gardienne, Mme Joseph, programme "
           "l'heure d'arrosage et consulte le niveau de la cuve d'eau de pluie sur son téléphone&nbsp;; un technicien vient "
           "l'entretenir. Noah, un élève de 4e, a dessiné son diagramme de cas d'utilisation. Il a fait plusieurs erreurs.</p>",
-    consigne="<p>Un diagramme de cas d'utilisation bien construit respecte cinq règles&nbsp;: chaque acteur est <b>hors du "
-             "cadre</b>&nbsp;; chaque acteur a <b>au moins un trait</b>&nbsp;; chaque ellipse dit une <b>action</b>, avec un "
-             "<b>verbe à l'infinitif</b>&nbsp;; aucune ellipse ne nomme une <b>pièce</b> du système&nbsp;; aucun bonhomme n'est "
-             "la <b>nature</b> ou une <b>donnée</b>. <b>Coche les erreurs</b> du diagramme de Noah, puis <b>corrige-en deux</b>.</p>",
+    consigne=("<p>Un diagramme de cas d'utilisation bien construit respecte cinq règles&nbsp;: chaque acteur est "
+              "<b>hors du cadre</b>&nbsp;; chaque acteur a <b>au moins un trait</b>&nbsp;; chaque ellipse dit une "
+              "<b>action</b>, avec un <b>verbe à l'infinitif</b>&nbsp;; aucune ellipse ne nomme une <b>pièce</b> "
+              "du système&nbsp;; aucun bonhomme n'est la <b>nature</b> ou une <b>donnée</b>.<br>"
+              "① <b>Coche les erreurs</b> du diagramme de Noah.<br>"
+              "② <b>Corrige-en deux</b>.</p>"),
     critere="huit lignes justes (cinq erreurs cochées, trois lignes justes laissées), « L'arrosage » réécrit avec un verbe à "
             "l'infinitif et un complément, et le bon sort pour « La pompe ».",
     widgets=[dict(type="cases", name="err", legende="Coche les erreurs du diagramme de Noah",
@@ -750,11 +757,12 @@ E6 = dict(
     intro="<p>La mairie veut améliorer la borne de la station de vélos du front de mer. Avant de dessiner quoi que ce soit, "
           "l'équipe écrit six questions sur l'expérience des usagers. Pour chacune, un <b>mode de représentation</b> répond "
           "mieux que les autres.</p>",
-    consigne="<p>Un <b>mode de représentation</b> est une façon de montrer une information&nbsp;: un diagramme, un "
-             "algorigramme, une suite d'images, un graphique… <b>Pour chaque question, choisis le mode qui y répond le "
-             "mieux</b>&nbsp;: la raison est écrite à côté de chaque mode. Puis <b>coche</b> les deux modes qui montrent dans "
-             "quel ordre l'usager agit, et <b>explique</b> pourquoi le diagramme de cas d'utilisation ne suffit pas pour la "
-             "question 3.</p>",
+    consigne=("<p>Un <b>mode de représentation</b> est une façon de montrer une information&nbsp;: un diagramme, "
+              "un algorigramme, une suite d'images, un graphique…<br>"
+              "① <b>Pour chaque question, choisis le mode qui y répond le mieux</b>&nbsp;: la raison est écrite à "
+              "côté de chaque mode.<br>"
+              "② <b>Coche</b> les deux modes qui montrent dans quel ordre l'usager agit, et <b>explique</b> "
+              "pourquoi le diagramme de cas d'utilisation ne suffit pas pour la question 3.</p>"),
     critere="six choix justes, les deux bons modes cochés (et seulement eux), et une explication qui parle de l'ordre et du test.",
     widgets=[dict(type="classer", name="mode",
                   categories=[("cu", "le diagramme de cas d'utilisation — il montre qui fait quoi avec le système"),
@@ -852,11 +860,13 @@ E7 = dict(
           "municipal</b> de permanence déclenche l'alerte depuis la mairie. Les <b>habitants</b> reçoivent alors l'alerte&nbsp;: "
           "la sirène sonne, le gyrophare tourne, un message arrive sur leur téléphone. Chaque matin, le <b>technicien</b> teste "
           "la sirène. Pendant la tempête, le vent fait tourner l'anémomètre. »</p></blockquote>",
-    consigne="<p>Un <b>acteur</b> est une personne, ou un autre système, hors du cadre, qui se sert de la station avec un "
-             "but&nbsp;; un <b>cas d'utilisation</b> est une action faite avec elle, écrite avec un verbe à l'infinitif. "
-             "<b>Construis le diagramme de cas d'utilisation de la station</b>&nbsp;: place les trois acteurs et les deux cas "
-             "qui manquent (les mots en gras du texte t'aident). Puis <b>explique</b> pourquoi le service météo est un acteur "
-             "alors que ce n'est pas une personne, et <b>dis</b> où va le vent.</p>",
+    consigne=("<p>Un <b>acteur</b> est une personne, ou un autre système, hors du cadre, qui se sert de la station "
+              "avec un but&nbsp;; un <b>cas d'utilisation</b> est une action faite avec elle, écrite avec un verbe "
+              "à l'infinitif.<br>"
+              "① <b>Construis le diagramme de cas d'utilisation de la station</b>&nbsp;: place les trois acteurs "
+              "et les deux cas qui manquent (les mots en gras du texte t'aident).<br>"
+              "② <b>Explique</b> pourquoi le service météo est un acteur alors que ce n'est pas une personne, et "
+              "<b>dis</b> où va le vent.</p>"),
     critere="les cinq cases justes, une justification qui dit « autre système », « en dehors » et ce qu'il envoie, et la bonne "
             "place pour le vent.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + FIG_CYCLONE +
