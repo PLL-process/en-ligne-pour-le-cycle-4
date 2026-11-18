@@ -87,7 +87,17 @@ chacune sur sa ligne, numérotée dans l'ordre où l'élève les fait ; jamais e
   par ligne de code, indentation comprise).
 - « Observe et décris » peut rester d'un tenant ; « recopie le tableau et complète-le avec tes mesures » se coupe
   (`controle_consignes_a_la_ligne.py`, N3 : à juger).
-- Pilote : `3e_C6.1` (18/11/2026).
+- Une liste d'actions séparées par des virgules (« exécute les tests, compare, rends ton verdict ») se coupe aussi ;
+  un circonstant (« Pour chaque essai, compare… ») n'est pas une action.
+- Des sous-étapes dans une partie a) se numérotent ①, ② sous elle ; on ne renomme pas les lettres d'une consigne
+  quand des titres d'exercice les reprennent (« a) et b) Le tableau d'essais »).
+- `consignes_a_la_ligne.py` fait la passe mécanique : un retour avant chaque action, son numéro, le « ; », le
+  « puis » ou l'« ensuite » qui la cousait retiré, la capitale ; aucun autre mot ne change. Il nomme (✋) la ligne à
+  reprendre à la main : coupure dans un gras, ligne déjà numérotée, plus de trois actions. Une page engendrée
+  (`3e_C9.2`) se corrige dans sa source, puis se régénère. Un exercice d'atelier incrusté dans une séquence
+  (`section.atelier-incruste`, entre les marqueurs `ateliers-representations:debut/fin`) se corrige dans
+  `ateliers-representations/_generation/donnees_*.py`, puis `incrustations.py` ; `incrustations.py --verifier` le dit.
+- Pilote : `3e_C6.1` (18/11/2026) ; vague 1 : les séquences des trois thèmes (18/11/2026).
 
 ## Aérer une légende (le texte sous une image)
 
@@ -129,6 +139,7 @@ python3 _outils/audit_aeration.py --strict <page>…   # sortie 1 s'il reste un 
 python3 _outils/aerer_legendes.py <page>… [--ecrire] # un <br> devant « Puis : », la note finale, ①… ; ne change aucun mot
 python3 _outils/aerer_corrections.py <page>… [--ecrire]  # un <br> entre les phrases d'une correction, après chaque « ; »
 python3 _outils/controle_consignes_a_la_ligne.py [--strict] [page…]  # n°342 : N1 étapes numérotées sur une ligne, N2 actions enchaînées, N3 « et » (à juger)
+python3 _outils/consignes_a_la_ligne.py <page>… [--ecrire]         # n°342 : la passe mécanique — un retour et un numéro par action ; nomme ce qui se fait à la main
 ```
 
 `aerer_legendes.py` ne touche que les légendes et n'ajoute que des retours à la ligne : il règle tout L2.

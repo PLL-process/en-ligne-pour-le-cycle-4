@@ -49,7 +49,8 @@ double-clique transfère transfere exporte importe remplace corrige formule attr
 lie fixe règle regle ajuste branche installe télécharge telecharge démarre demarre arrête arrete oriente pointe vise
 dépose fabrique conçois concois modélise modelise simule estime évalue evalue argumente rédige redige surveille
 relance réessaie reessaie active désactive desactive tourne pousse tire lève leve baisse soulève souleve pèse pese
-filme photographie capture dicte prononce lis-le lis-la""".split())
+filme photographie capture dicte prononce lis-le lis-la franchis déroule deroule reporte prédis predis
+réexécute reexecute résous resous""".split())
 VERBES = IMPERATIFS | IMPERATIFS_EN_PLUS
 
 MOT = r"([a-zàâäçéèêëîïôöùûüÿœ]+(?:-[a-zàâäçéèêëîïôöùûüÿœ]+)?)"
@@ -85,6 +86,12 @@ def est_action(segment):
     return bool(m and verbe(m.group(1)))
 
 
+def verbe_en_tete(segment):
+    """le segment commence-t-il directement par un impératif (sans circonstant) ?"""
+    m = re.match(r"\s*(?:(?:puis|ensuite|enfin)\s+)?" + MOT, segment, re.I)
+    return bool(m and verbe(m.group(1)))
+
+
 def ecarts_ligne(ligne):
     """[(code, message)] pour une ligne de consigne (texte brut)"""
     out = []
@@ -94,6 +101,14 @@ def ecarts_ligne(ligne):
         out.append(("N1", "deux étapes a), b)… sur une ligne"))
     segments = [x for x in SEPARATEUR.split(ligne) if x and x.strip()]
     actions = [x for x in segments if est_action(x)]
+    # une virgule suivie d'un impératif enchaîne aussi (« ouvre le fichier, regarde la ligne 3 ») ; un circonstant
+    # (« Pour chaque essai, compare ») n'en est pas un : seul ce qui SUIT une action compte
+    suite = []
+    for x in actions:
+        parts = re.split(r",\s+", REPERE.sub("", ETIQUETTE.sub("", x.strip(), count=1)).strip())
+        i = 0 if verbe_en_tete(parts[0]) else 1
+        suite += [y for y in parts[i + 1:] if verbe_en_tete(y)]
+    actions = actions + suite
     if len(actions) >= 2 and not out:
         out.append(("N2", "%d actions enchaînées sur une ligne" % len(actions)))
     if not out:
