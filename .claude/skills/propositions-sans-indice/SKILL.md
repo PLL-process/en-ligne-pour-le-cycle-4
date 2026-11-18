@@ -1,9 +1,11 @@
 ---
 name: propositions-sans-indice
-description: Relire et réécrire les questions à choix d'une séquence ET d'un QCM pour qu'aucune ne souffle sa réponse — intrus crédibles pour un élève qui n'a pas encore appris, bonne réponse qui ne porte pas sa justification, aucune question qui affiche le résultat de la précédente, échelle d'auto-positionnement rangée et décrite. Dans un QCM, chaque mauvaise proposition garde un pourquoi qui sert d'indice (jamais « ! », vide ou creux). À utiliser à chaque révision ou audit de séquence ou de QCM, avant de poser les aides d'un QCM (lot 3), et en écrivant toute question neuve.
+description: Relire et réécrire les questions à choix d'une séquence ET d'un QCM pour qu'aucune ne souffle sa réponse — intrus crédibles pour un élève qui n'a pas encore appris, bonne réponse qui ne porte pas sa justification, aucune question qui affiche le résultat de la précédente, échelle d'auto-positionnement rangée et décrite. Dans un QCM, chaque mauvaise proposition garde un pourquoi qui sert d'indice (jamais « ! », vide ou creux). À utiliser à chaque révision ou audit de séquence ou de QCM, avant de poser les aides d'un QCM (lot 3), et en écrivant toute question neuve. Règle d'or n°341.
 ---
 
 # Une question ne souffle pas sa réponse
+
+**Règle d'or n°341 — Une question ne souffle pas sa réponse** (Pascal, 18/11/2026, sur l'audit de `3e_C4.1` : « oui, deux règles d'or »). Ce skill en est la méthode ; ses outils en sont le contrôle de fin de lot.
 
 Né le 17/11/2026 de l'audit externe de `3e_C4.1`. Activité 5 : « le poteau en bord de mer : en quel matériau ? »
 proposait « carton compressé » ; « le capot à produire en 200 exemplaires : par quel procédé ? » proposait

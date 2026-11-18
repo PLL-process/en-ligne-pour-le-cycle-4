@@ -104,3 +104,21 @@ Remarque de Pascal sur le schéma de l'alimentation : le secteur arrivait par la
 droite. `node tests_3e_C4.1-C4.2.mjs` : **23 / 23** ; `node tests_regle_311_3e_C4.1.mjs` : **34 / 34** ; banc générique
 du mode mission : aucun refus.
 
+
+## 18/11/2026 — L'activité 1 élaborée par l'élève, la séquence en trois séances
+
+Décisions de Pascal sur l'audit externe du 17/11 :
+- **L'activité 1 fait élaborer la chaîne, fonctions comprises.** Les blocs sont vides : a) l'élève place les composants
+  d'après les branchements (les légendes nomment la place du bloc, et non plus sa fonction) ; b) il nomme la fonction de chaque
+  bloc (CONVERTIR, ALIMENTER, STOCKER, DISTRIBUER, et TRANSMETTRE de trop) ; c) les natures ; d) les intrus. Le gabarit à
+  imprimer est muet lui aussi (`Images/chaine_energie_a_elaborer_muet.svg`, engendré par
+  `_outils/regenerer_chaines_energie.py gabarit_muet`). Le critère passe à 16 / 16 ; la correction donne, bloc par bloc,
+  le composant et la fonction, et dessine la chaîne complète.
+- **Trois séances** : S1 l'activité 1 (35 min) ; S2 les activités 2 et 3, le Bonus loi d'Ohm ; S3 les activités 4 et 5,
+  puis Bonus, bilan et QCM.
+
+Rejoué : `node tests_3e_C4.1-C4.2.mjs` **25 / 25** ; `node tests_regle_311_3e_C4.1.mjs` **34 / 34** ; banc générique du
+mode mission : aucun refus (3 séances) ; `banc_mission.mjs` 50 / 50 ; `controle_squelette.mjs`,
+`controle_chaine_a_completer.py`, `controle_schema_sous_les_yeux.py`, `controle_navigation_seances.py`,
+`controle_correction_complete.py`, `controle_mode_essentiel.py`, `controle_hors_ligne.mjs`, `controle_axe.mjs` : verts ;
+`mesurer_charge.mjs` : aucune séance au-delà de 1 200 mots ; `banc_papier.py` : chaque séance imprimée, sans champ d'écran.
