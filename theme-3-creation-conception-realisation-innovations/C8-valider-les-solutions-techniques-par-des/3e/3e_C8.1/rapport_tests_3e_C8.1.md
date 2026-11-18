@@ -30,7 +30,7 @@ l'attendu ; si la page ne suit pas, le test tombe.
 
 ## QCM — `tests_3e_C8.1_qcm.mjs`
 
-    node tests_3e_C8.1_qcm.mjs qcm_3e_C8.1_mat-de-la-station.html 3e_C8.1 … sequence…
+    node tests_3e_C8.1_qcm.mjs qcm_3e_C8.1_mat-de-la-station.html 3e_C8.1 3e_C3.4 sequence_3e_C8.1_mat-de-la-station.html
 
 **32 / 32**. Ce que la suite vérifie : 30 questions, 4 options et 3 réfutations chacune,
 la bonne réponse sans réfutation, tous les champs du gabarit remplis, la répartition des bonnes

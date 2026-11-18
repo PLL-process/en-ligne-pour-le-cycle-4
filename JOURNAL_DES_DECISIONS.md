@@ -32973,3 +32973,7 @@ du C7) : vague 6.
   questions), `controle_longueurs`, `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`,
   `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ; `indices_creux.mjs
   --strict` : 0 « ! », 0 indice vide, 0 indice creux sur les 72 ; banc de l'export vert.
+- Bancs des seize lots et banc commun du C7 (`tests_qcm_c7_c8.mjs`) : **42 / 42 verts**. Les bancs QCM de `3e_C8.1`
+  et `5e_C8.1` tombaient à 30 / 32 quand on recopiait la commande de leur rapport : elle portait « … sequence… » à la
+  place des arguments. Les deux rapports donnent maintenant la commande entière (le code évalué en complément,
+  `3e_C3.4` et `5e_C3.1`, et la page de séquence) ; lancée telle quelle, elle passe à 32 / 32.
