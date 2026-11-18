@@ -2983,6 +2983,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <li>La galvanisation ajoute ____, ce qui ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb1" role="status"></div>
     </div>
@@ -3011,7 +3012,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre fonction (« éclairer ») et solution (« LED ») ; croire que le panneau solaire éclaire (il capte !) ; choisir un matériau sans penser au climat.</div>
     <div class="retenir"><b>📌 À retenir :</b> une <b>fonction technique</b> = ce que l'objet doit faire ; une <b>solution technique</b> = l'élément choisi pour le faire. Les <b>matériaux</b> (acier galvanisé, aluminium, polycarbonate, cuivre…) sont choisis selon leur rôle ET leur environnement.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> l'exercice du diagramme FAST réussi, puis 9 réponses justes + une justification qui parle du sel/des embruns.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> l'exercice du diagramme FAST réussi, puis 9 réponses justes + une justification qui parle du sel/des embruns. Au moins 8 réponses justes sur 9 suffisent à valider.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Le chemin de l'énergie ›</button></p>
@@ -3234,6 +3235,7 @@ body.ms .cac-reserve{--cac-bas:84px}
   <div class="qcm-option"><input type="radio" name="e2_c5" id="e2_c5__4" value="électrique → lumineuse" data-pourquoi="Un vérin n'éclaire rien. Regarde ce que fait sa tige."><label for="e2_c5__4">électrique → lumineuse</label></div>
 </fieldset>
 </div>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
@@ -3350,6 +3352,7 @@ body.ms .cac-reserve{--cac-bas:84px}
 </div>
 </div>
       <h4>b) Aux commandes du simulateur !</h4>
+      <p style="font-size:.85em;color:var(--sub)">⚠️ <b>Modèle simplifié</b>&nbsp;: la lumière change d'un coup quand tu bouges le curseur. <br>Dehors, elle baisse lentement au crépuscule, et un nuage peut la faire varier.</p>
       <div class="simu" style="margin:10px 0">
         <div>
           <label for="simJour"><b>☀ Lumière du jour :</b></label>
@@ -3662,6 +3665,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <li>C&#x27;est comme ____ : deux ____ identiques rendraient la livraison ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
@@ -6027,5 +6031,52 @@ window.CAC_DESSINS.lampadaire = (function(){
   };
 })();
 </script>
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

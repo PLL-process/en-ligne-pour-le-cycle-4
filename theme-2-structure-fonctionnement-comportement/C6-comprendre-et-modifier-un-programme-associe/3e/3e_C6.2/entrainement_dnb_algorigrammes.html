@@ -329,6 +329,7 @@ et les compléments si la page te paraît chargée.</p>
         <p class="retenir">🧠 À retenir : On suit les flèches, de haut en bas.</p>
       </details>
     </article>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 6 réponses justes sur 8.</p>
   <button class="btn check" data-check="1" type="button">✅ Vérifier la manche 1</button>
   <p class="feedback" id="fb1" role="status"></p>
 </section>
@@ -493,6 +494,7 @@ FIN TANT QUE</pre>
         <p class="retenir">🧠 À retenir : L&#x27;ordre fait partie de l&#x27;algorithme, il n&#x27;est pas décoratif.</p>
       </details>
     </article>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 6 réponses justes sur 8.</p>
   <button class="btn check" data-check="2" type="button">✅ Vérifier la manche 2</button>
   <p class="feedback" id="fb2" role="status"></p>
 </section>
@@ -602,6 +604,7 @@ FIN TANT QUE</pre>
         <p class="retenir">🧠 À retenir : Un système d&#x27;alerte doit prouver qu&#x27;il est vivant, pas seulement dire qu&#x27;il va mal.</p>
       </details>
     </article>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 6.</p>
   <button class="btn check" data-check="3" type="button">✅ Vérifier la manche 3</button>
   <p class="feedback" id="fb3" role="status"></p>
 </section>
@@ -743,6 +746,7 @@ FIN TANT QUE</pre>
         <p class="retenir">🧠 À retenir : Le seuil se teste avec la valeur exacte du seuil.</p>
       </details>
     </article>
+  <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 6 réponses justes sur 8.</p>
   <button class="btn check" data-check="4" type="button">✅ Vérifier la manche 4</button>
   <p class="feedback" id="fb4" role="status"></p>
 </section>
@@ -1293,5 +1297,52 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>

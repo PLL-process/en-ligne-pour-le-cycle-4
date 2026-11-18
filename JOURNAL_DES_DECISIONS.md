@@ -33290,3 +33290,43 @@ Inventaire de la carte blanche (« uniformiser toutes les séquences et QCM ») 
   fait pas. À traiter pour tout le site, pas page par page : un en-tête qui se replie au téléphone à partir de la
   séance 2, comme « Où j'en suis ».
 
+## 18/11/2026 — Règle d'or n°340 sur tout le site : une validation dit vrai
+
+Suite des décisions de Pascal sur l'audit de 3e_C4.1 (« Tout corriger ») et de sa carte blanche. Mesure de `main` par
+`controle_validations.py` : 58 pages avec des vérifications ; **V1** 59, **V3** 34, **V4** 99, **V5** 9.
+
+- **V1, une réponse changée retire la validation.** `_outils/retrait_validation.py` (nouveau, source unique, bloc
+  `retrait-validation v1`) pose sur chaque page qui se vérifie un petit script : changer une réponse d'une activité
+  validée la remet « à vérifier » (message dans la zone de retour, sauvegarde, barre de progression). Un curseur est
+  un essai, pas une réponse : il n'y touche pas. Le script ne s'arme qu'une fois la page chargée : la reprise d'une
+  sauvegarde ne retire rien. Posé sur 36 pages (35 séquences et l'entraînement DNB de 3e_C6.2) ; le générateur des
+  ateliers de planification le pose lui-même (`build_atelier.py`), `verif_chaine.py` le confirme (0 écart).
+  Banc `tests_retrait_validation.py` : 10 / 10.
+- **V3 et V4, le seuil codé est le seuil annoncé.** `_outils/annoncer_validations.py` (nouveau) écrit, sous chaque
+  activité qui se vérifie, « 🎯 Critère de réussite : au moins K réponses justes sur N », lu dans `CHECKS`, ou complète
+  le critère existant ; une réponse écrite relue par le professeur l'annonce avant le bouton (« ✍ Ta réponse écrite
+  sera relue par ton professeur : « Vérifier » regarde si l'essentiel y est, pas si tout est juste. »).
+- **V5, le simulateur dit ses hypothèses** : une note « ⚠️ Modèle simplifié » sur les 9 pages concernées.
+- `controle_validations.py` lit mieux : il ne prend plus le critère d'un exercice incrusté pour celui de l'activité,
+  ne cherche plus un « relu » dans toute la page, et passe les vérifications dont le bouton n'est pas dans la page
+  (pages engendrées de 3e_C9.2).
+- `controle_memes_nombres.py` lit « au moins N » activité par activité, et plus séance par séance : deux activités
+  d'une même séance peuvent avoir deux seuils. Le critère de l'activité 2 de 4e_C9.1 dit maintenant le seuil codé
+  (4 réponses justes sur 5, l'ordre des étapes compte pour une, et le pseudo-code).
+
+Deux corrections du script de retrait, trouvées par les bancs des lots (`tests_3e_C9.2-C8.3.mjs`, 166 / 167 : la
+progression 7 / 7 n'était plus restaurée) :
+- **sa zone** : c'est l'activité (`.activite`) ; sans activité marquée, ce qui entoure le bouton sans autre
+  vérification, **sans déborder de la séance**. Avant, la zone de la dernière activité montait jusqu'au panneau de la
+  séance, et remplir le bilan de fin de séance retirait sa validation ;
+- **une réponse vidée n'est pas une réponse changée** : au rechargement, le mode mission efface une proposition fausse ;
+  la validation obtenue reste. C'est la nouvelle réponse, écrite ou choisie, qui la retire.
+Banc `tests_retrait_validation.py` : 13 / 13 (trois cas de plus : le bilan, la réponse vidée, la réponse choisie).
+
+Bancs des lots (28 dossiers, 59 bancs) : tous verts, `tests_3e_C9.2-C8.3.mjs` 167 / 167 après la correction ;
+quatre lots relancés après elle (5e_C1.1, 3e_C4.7, 4e_C8.1, 3e_C6.1) : verts.
+
+Résultat : `controle_validations.py` « rien à signaler » ; `retrait_validation.py --etat` 0 à poser ;
+`annoncer_validations.py` 0 annonce à écrire ; `controle_memes_nombres.py` vert ; `audit_aeration.py` identique à
+`main` sur les 35 pages ; `generer_les_quatre_pages.py` (3e_C9.2) reproduit ses pages.
+

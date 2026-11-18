@@ -94,7 +94,8 @@ def main(argv) -> int:
                                        % (n, i, nq, vn, vi)))
             # N2 : « au moins N mot », bloc par bloc
             if f.endswith(".html"):
-                for bloc in re.split(r"<section\b", s):
+                # un bloc : une section, ou une activité (plusieurs activités vivent dans la section de leur séance)
+                for bloc in re.split(r"<section\b|<div class=\"activite[\" ]", s):
                     vus = defaultdict(set)
                     for m in AU_MOINS.finditer(texte(bloc)):
                         k = m.group(1).lower()

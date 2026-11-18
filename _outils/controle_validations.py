@@ -14,8 +14,8 @@ CE QU'IL MESURE (pages élèves qui portent `const CHECKS = {`)
   V1 ✘  le seuil codé n'est pas celui que l'activité annonce : « 🎯 Critère de réussite : 6 / 6 » et `valide: ok>=5` ;
   V1 ⚠  une tolérance que la page n'annonce pas : `valide: ok>=5` sur `total:6`, sans « 5 / 6 » ni « 5 sur 6 » écrit ;
   V3 ⚠  une réponse changée après la vérification ne retire pas la validation (aucun `__valid[…] = false`) ;
-  V4 ⚠  une réponse écrite validée par la machine (longueur, `.length`, `mots.size`, mots-clés) sans que le message dise
-        qu'elle sera relue par le professeur ;
+  V4 ⚠  une réponse écrite validée par la machine (longueur, `.length`, `mots.size`, mots-clés) sans que le message de
+        la vérification, ou l'activité, dise qu'elle sera relue par le professeur ;
   V5 ⚠  un simulateur (curseur `type="range"`) dont la page ne dit pas que son modèle est simplifié.
 
 Ce qui ne se lit pas dans le source se juge à la main (skill `validations-qui-disent-vrai`) : l'ordre exigé de deux essais
@@ -42,6 +42,7 @@ OK_EQ = re.compile(r"\bok\s*===?\s*(\d+)")
 ANNONCE = re.compile(r"(\d+)\s*(?:/|sur|réponses? justes? sur|bonnes? réponses? sur|justes? sur)\s*(\d+)")
 ECRIT = re.compile(r"\.length\s*>=?\s*\d|mots\.size|\btxt\(\s*[\"'][^\"']+[\"']\s*\)|\.test\(\s*j\s*\)")
 RELU = re.compile(r"relue?s? par (ton|le|ta|votre) professeur|ton professeur (la|le) relira|à (faire )?relire", re.I)
+RELU_PROF = re.compile(r"relue?s? par (ton|le|ta|votre) professeur|ton professeur (la|le) relira", re.I)
 REVOQUE = re.compile(r"__valid\s*\[[^\]]+\]\s*=\s*false")
 SIMPLIFIE = re.compile(r"mod[èe]le simplifi|simulation (théorique )?simplifi|sans aucune perte|hypoth[èe]ses? du simulateur", re.I)
 
@@ -74,17 +75,62 @@ def entrees(src: str):
     return {m.group(1): bloc[m.end(): (ms[k + 1].start() if k + 1 < len(ms) else len(bloc))] for k, m in enumerate(ms)}
 
 
-def critere(src: str, n: str) -> str:
-    """Le critère de réussite affiché dans l'activité du bouton data-check=n (texte), ou ''."""
+#: le début d'un exercice incrusté d'un atelier (il porte son propre critère et sa vérification)
+INCRUSTE = re.compile(r'<section class="card atelier-incruste\b[^"]*"')
+SECTION = re.compile(r"<section\b|</section>")
+
+
+def sans_incrustes(corps: str) -> str:
+    """Le texte sans les exercices incrustés : chaque section `atelier-incruste`, jusqu'à sa balise fermante."""
+    out, i = [], 0
+    for m in INCRUSTE.finditer(corps):
+        if m.start() < i:
+            continue
+        prof, fin = 0, len(corps)
+        for t in SECTION.finditer(corps, m.start()):
+            prof += 1 if t.group(0) == "<section" else -1
+            if prof == 0:
+                fin = t.end()
+                break
+        out.append(corps[i:m.start()])
+        i = fin
+    return "".join(out) + corps[i:]
+#: le début d'une activité : `div.activite` (gabarit des thèmes 2 et 3) ou `section#activite-N` (thème 1), `#actN`
+DEBUT_ACTIVITE = re.compile(r'class="activite"|\bid="(?:activite-|act)\d+"')
+
+
+def zone(src: str, n: str):
+    """(texte de l'activité du bouton data-check=n, position du bouton dans ce texte), sans scripts ni exercices
+    incrustés ; l'activité va du début d'activité qui précède le bouton au suivant. (None, None) sans bouton."""
     corps = re.sub(r"<script\b.*?</script>", "", src, flags=re.S)
+    corps = sans_incrustes(corps)          # un exercice incrusté (atelier) porte son propre critère et sa vérification
+    debuts = [m.start() for m in DEBUT_ACTIVITE.finditer(corps)]
     for m in re.finditer(r'data-check="%s"' % re.escape(n), corps):
-        debut = corps.rfind('class="activite"', 0, m.start())
-        suite = corps.find('class="activite"', m.end())
-        zone = corps[max(debut, 0): suite if suite > 0 else len(corps)]
-        cs = list(re.finditer(r'class="critere"[^>]*>(.*?)</(?:div|p)>', zone, re.S))
-        if cs:
-            return texte(cs[-1].group(1))
-    return ""
+        avant = [d for d in debuts if d < m.start()]
+        apres = [d for d in debuts if d > m.end()]
+        # sans début d'activité repérable (un atelier), l'activité est le voisinage du bouton
+        debut = avant[-1] if avant else max(0, m.start() - 4000)
+        suite = apres[0] if apres else len(corps) if avant else min(len(corps), m.end() + 2000)
+        return corps[debut:suite], m.start() - debut
+    return None, None
+
+
+def critere(src: str, n: str) -> str:
+    """Le critère de réussite affiché dans l'activité du bouton data-check=n (texte), ou ''. S'il y en a plusieurs, c'est
+    le plus proche du bouton qui compte (18/11/2026 : au thème 1, le critère lu était celui d'un exercice incrusté)."""
+    z, b = zone(src, n)
+    if z is None:
+        return ""
+    cs = [(abs(c.start() - b), c) for c in re.finditer(r'class="critere[^"]*"[^>]*>(.*?)</(?:div|p)>', z, re.S)]
+    return texte(min(cs, key=lambda x: x[0])[1].group(1)) if cs else ""
+
+
+def relue_annoncee(src: str, n: str, corps: str) -> bool:
+    """La relecture du professeur est dite à l'élève : dans le message de la vérification, ou dans l'activité."""
+    if RELU.search(corps):
+        return True
+    z, _ = zone(src, n)
+    return bool(z and RELU_PROF.search(texte(z)))
 
 
 def analyser(src: str):
@@ -92,6 +138,8 @@ def analyser(src: str):
     out = []
     E = entrees(src)
     for n, corps in E.items():
+        if 'data-check="%s"' % n not in src:
+            continue                          # une page d'une séquence découpée porte les vérifications de toutes ses parties
         v = SEUIL.search(corps)
         t = TOTAL.search(corps)
         if not v or not t:
@@ -109,7 +157,7 @@ def analyser(src: str):
             elif seuil < total and not sur_total:
                 out.append(("⚠", "V1", "activité %s : le code valide à %d / %d, la page ne l'annonce pas (critère : « %s »)"
                             % (n, seuil, total, crit[:70] or "aucun")))
-        if ECRIT.search(corps) and not RELU.search(corps):
+        if ECRIT.search(corps) and not relue_annoncee(src, n, corps):
             out.append(("⚠", "V4", "activité %s : une réponse écrite validée par la machine, sans « relue par ton professeur »" % n))
     if E and "data-check" in src and not REVOQUE.search(src):
         out.append(("⚠", "V3", "une réponse changée après la vérification ne retire pas la validation"))

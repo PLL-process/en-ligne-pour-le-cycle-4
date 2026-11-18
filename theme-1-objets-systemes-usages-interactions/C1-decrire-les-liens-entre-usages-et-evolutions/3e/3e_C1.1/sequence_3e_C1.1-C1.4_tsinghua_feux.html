@@ -2245,6 +2245,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       décide&nbsp;», cherche des acteurs&nbsp;: des entreprises, une autorité de sécurité, des
       planteurs.</p></details>
 
+    <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 5 réponses justes sur 6, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button type="button" data-check="1" class="btn check">✅ Vérifier l'activité 1</button>
     <p id="fb1" class="feedback" role="status"></p>
 
@@ -2488,6 +2490,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <p>Regarde d'abord la colonne <code>unite</code>. Si deux lignes n'ont pas la même, la
       réponse est déjà «&nbsp;non&nbsp;» — sauf si une conversion existe.</p></details>
 
+    <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button type="button" data-check="2" class="btn check">✅ Vérifier l'activité 2</button>
     <p id="fb2" class="feedback" role="status"></p>
 
@@ -2578,6 +2582,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       <p>Pour l'équivalence, divise l'estimation en <b>kg</b>CO₂e par le facteur choisi. Attention
       aux unités&nbsp;: 1,98 Mt = 1 984 000 000 kg.</p></details>
 
+    <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button type="button" data-check="3" class="btn check">✅ Vérifier l'activité 3</button>
     <p id="fb3" class="feedback" role="status"></p>
 
@@ -2674,6 +2680,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
         même ____&nbsp;: aucune formule ne les ramène l'une à l'autre.&nbsp;»</li>
       </ul></details>
 
+    <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 4 réponses justes sur 5, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button type="button" data-check="4" class="btn check">✅ Vérifier l'activité 4</button>
     <p id="fb4" class="feedback" role="status"></p>
 
@@ -2843,6 +2851,8 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       des données), un <b>moyen</b> (budget d'une commune, personnel disponible pour l'entretien),
       une <b>attente</b> (les habitants veulent être prévenus, pas surveillés).</p></details>
 
+    <p class="critere" style="font-size:.9em;color:var(--sub)">🎯 <b>Critère de réussite&nbsp;:</b> au moins 3 réponses justes sur 4, et ce que le message de «&nbsp;Vérifier&nbsp;» te demande encore.</p>
+    <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
     <button type="button" data-check="5" class="btn check">✅ Vérifier l'activité 5</button>
     <p id="fb5" class="feedback" role="status"></p>
 
@@ -3804,5 +3814,52 @@ majEssentiel(); majProgress(); majHyp();
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>
