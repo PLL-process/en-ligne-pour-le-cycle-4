@@ -2587,6 +2587,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <div class="consigne"><b>Consigne :</b><br>① Déplace le curseur du simulateur pour reproduire les situations demandées.<br>② Lis les valeurs.<br>③ Effectue les calculs.<br>Le baromètre simulé mesure de <b>868 hPa (hectopascals)</b> à <b>1018 hPa</b> et son CAN travaille sur <b>10 bits</b> (0 à 1023).</div>
 
     <div class="exo">
+      <p style="font-size:.85em;color:var(--sub)">⚠️ <b>Modèle simplifié</b>&nbsp;: le capteur est parfaitement régulier et sa mesure ne tremble pas. <br>Un vrai capteur a une petite erreur : c'est pour cela qu'on répète une mesure.</p>
       <div class="simu">
         <div>
           <label for="simPression"><b>🌀 Pression atmosphérique réelle (à toi de la faire varier) :</b></label>
@@ -2627,6 +2628,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <li>La donnée numérique est donc une approximation, parce que ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
@@ -2763,7 +2765,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> typer « 987.4 » comme entier ; choisir un descripteur avec espaces/accents ; compter les niveaux à partir de 1 au lieu de 0 (le code se décale d'un cran) ; répondre « 12 bits pour 12 niveaux » (il faut compter les combinaisons, pas les niveaux !).</div>
     <div class="retenir"><b>📌 À retenir :</b> une information se représente par une <b>donnée typée</b> (entier, décimal, texte/<i>string</i>, booléen/<i>boolean</i>, date) désignée par un <b>descripteur</b> explicite. Avec n bits on code <b>2ⁿ</b> valeurs. Un <b>enregistrement</b> = une ligne regroupant toutes les données d'un même événement.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 6 typages justes, le bon descripteur, le code du rouge trouvé en comptant en binaire, et le nombre de bits pour 12 niveaux justifié par une puissance de 2.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 typages justes, le bon descripteur, le code du rouge trouvé en comptant en binaire, et le nombre de bits pour 12 niveaux justifié par une puissance de 2. Au moins 8 réponses justes sur 9 suffisent à valider.</div>
   </div>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Fichiers &amp; enquête ›</button></p>
@@ -2895,6 +2897,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <li>Si les deux capteurs disent la même chose, alors ____ ; s&#x27;ils se contredisent, ____.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
@@ -2915,7 +2918,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> lire la <em>dernière</em> ligne orange au lieu de la <em>première</em> rouge ; confondre vent moyen et rafale ; compter les heures en oubliant le passage de minuit (15:00 → 15:00 le lendemain = 24 h, pas 0 h !).</div>
     <div class="retenir"><b>📌 À retenir :</b> un fichier de données structuré (descripteurs + enregistrements horodatés) permet de <b>reconstituer un événement</b>, de calculer (MIN, MAX, durées) et de <b>croiser les capteurs</b> pour fiabiliser une décision automatique.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 4 réponses chiffrées exactes et une conclusion qui mentionne la variation en sens inverse ET l'intérêt du croisement des mesures.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 réponses chiffrées exactes et une conclusion qui mentionne la variation en sens inverse ET l'intérêt du croisement des mesures. Au moins 3 réponses justes sur 4 suffisent à valider.</div>
   </div>
 
 </section>
@@ -2995,6 +2998,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <li>Ce double enregistrement sert aussi à ____ après la tempête.</li>
   </ul>
 </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
       <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb7" role="status"></div>
     </div>
@@ -3578,5 +3582,52 @@ window.CAC_DESSINS = window.CAC_DESSINS || {};
 })();
 </script>
 <!-- onglets-clavier v1 : fin -->
+<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<script>
+(function(){
+  "use strict";
+  /* Une réussite vaut pour les réponses vérifiées (n°340) : changer une réponse d'une activité validée la remet
+     « à vérifier ». Un curseur est un essai, pas une réponse : il n'y touche pas. Armé une fois la page chargée : la
+     reprise d'une sauvegarde, qui remet les réponses en place, ne retire rien ; une réponse vidée non plus. */
+  var arme = false;
+  function armer(){ setTimeout(function(){ arme = true; }, 0); }
+  if (document.readyState === "complete") armer(); else window.addEventListener("load", armer);
+  [].forEach.call(document.querySelectorAll("[data-check]"), function(btn){
+    /* la zone d'une vérification : son activité ; sans activité marquée, ce qui l'entoure sans autre vérification,
+       sans jamais déborder de la séance (le bilan et le positionnement de fin de séance ne sont pas l'activité) */
+    var n = btn.getAttribute("data-check"), zone = btn.closest(".activite");
+    if (!zone) {
+      zone = btn;
+      while (zone.parentElement && zone.parentElement !== document.body && zone.parentElement.tagName !== "MAIN"
+             && !zone.parentElement.classList.contains("seance-panel")
+             && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
+    }
+    function cle(){
+      var v = window.__valid || {};
+      return v[n] ? n : v["act" + n] ? "act" + n : null;
+    }
+    function revoir(e){
+      var t = e.target;
+      if (!arme || !t || !t.matches || !t.matches("input, select, textarea") || t.type === "range") return;
+      /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
+         proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
+      if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      var k = cle(); if (k === null) return;
+      window.__valid[k] = false;
+      var fb = document.getElementById("fb" + n);
+      if (fb){
+        fb.classList.remove("ok", "good", "succes", "success", "reussi", "valide");
+        fb.textContent = "✏️ Tu as changé une réponse après la vérification : vérifie de nouveau.";
+      }
+      try { if (typeof save === "function") save(false); } catch (x) {}
+      try { if (typeof majProgress === "function") majProgress(); } catch (x) {}
+      try { if (typeof majProgres === "function") majProgres(); } catch (x) {}
+    }
+    zone.addEventListener("input", revoir);
+    zone.addEventListener("change", revoir);
+  });
+})();
+</script>
+<!-- retrait-validation v1 : fin -->
 </body>
 </html>
