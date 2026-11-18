@@ -44,6 +44,10 @@ verifier("deux phrases à l'impératif sur une ligne → N2",
          codes('<p><b>Consigne :</b> la bouée embarque ce programme. Lis-le. Réponds aux questions.</p>'), ["N2"])
 verifier("« lis-le, puis réponds » (pronom accroché au verbe) → N2",
          codes('<p><b>Consigne :</b> lis-le, puis réponds.</p>'), ["N2"])
+verifier("trois actions en liste, séparées par des virgules → N2",
+         codes('<div class="consigne">① Exécute les 3 tests du banc, compare « attendu » et « obtenu ».</div>'), ["N2"])
+verifier("un circonstant suivi d'une virgule n'est pas une deuxième action → rien",
+         codes('<div class="consigne"><b>Consigne :</b> pour chaque fonction, choisis le bon élément.</div>'), [])
 verifier("deux actions jointes par « et » → N3 (à juger)",
          codes('<div class="consigne">Lis le programme et réponds aux questions.</div>'), ["N3"])
 verifier("« le programme », « la classe », « la note » ne sont pas des actions → rien",

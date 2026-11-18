@@ -33182,3 +33182,51 @@ lancé en sous-processus : sorties 0, 1 et 2, `--json`).
 Limite : une consigne qui n'est ni marquée comme telle ni annoncée par « Consigne » (un énoncé d'exercice ordinaire)
 n'est pas lue. Reste : la généralisation par vagues, comme pour la n°337.
 
+## 18/11/2026 — Règle d'or n°342, vague 1 : les consignes des séquences des trois thèmes, à la ligne
+
+Suite de #783 (décision par défaut acceptée par Pascal : « #782 #783 Merged »). Les séquences des trois thèmes ;
+les ateliers des représentations du thème 1 (pages engendrées) feront la vague 2, avec les exercices d'atelier
+**incrustés** dans les séquences (`<section class="atelier-incruste">`, entre les marqueurs
+`ateliers-representations:debut/fin`) : ils sont engendrés par `incrustations.py` depuis les mêmes sources
+(`donnees_*.py`), et une retouche faite dans la séquence serait écrasée. Corrigés d'abord dans la page, ils ont été
+remis tels qu'ils sont sur `main` ; `incrustations.py --verifier` dit la même chose qu'avant la vague (seul
+`5e_C2.1` est « à mettre à jour », déjà sur `main`).
+
+**Le contrôle voit mieux.** `controle_consignes_a_la_ligne.py` compte aussi une liste d'actions séparées par des
+virgules (« exécute les 3 tests du banc, compare « attendu » et « obtenu » ») ; un circonstant (« Pour chaque essai,
+compare… ») n'en est pas une. Quelques impératifs manquaient (franchis, déroule, reporte, prédis, réexécute, résous). Le banc
+passe à 25 / 25. Mesure de `main` avant la vague, avec ce contrôle : N1 38, N2 120, N3 12 ; 49 pages à reprendre.
+
+**La passe : `_outils/consignes_a_la_ligne.py`** (nouveau). Ligne par ligne :
+- un retour avant chaque étape numérotée (②, ③… ou b), c)…) ;
+- chaque action enchaînée sur sa ligne, numérotée ①, ② ;
+- le « ; », le « , puis » ou l'« ensuite » qui la cousait retiré : le numéro dit l'ordre ;
+- la capitale en tête, et aucun autre mot changé.
+
+Il nomme ce qu'il ne coupe pas sans risque : une coupure dans un gras, une ligne déjà numérotée, plus de trois
+actions. Ces lignes ont été réécrites à la main (une vingtaine, dont les listes à virgules). Exemples :
+- `4e_C9.1`, l'éditeur Python : six actions sur une ligne → sept étapes, de « ① Écris la décision » à « ⑦ Remplis le
+  journal », puis les trois conseils sur Vittascience, une phrase par ligne ;
+- `3e_C4.7` : la partie a) a ses quatre gestes ①…④ (écrire, découper et expédier, remettre dans l'ordre,
+  réassembler) ; les lettres a) et b) ne changent pas, les titres d'exercice les reprennent ;
+- `3e_C9.2` : « ① Exécute les essais AU BANC (…), consigne chaque observation, remplis le verdict » → cinq étapes.
+
+**Périmètre** : 23 pages de séquence modifiées, dont la page tout-en-un de `3e_C9.2` ; trois de ses quatre pages
+engendrées suivent (`generer_les_quatre_pages.py`, qui reproduisait ses pages avant la vague).
+Hors sections incrustées, chaque consigne de séquence donne une action par ligne. Sur le site : N1 0, N2 80, N3 31 ;
+27 pages restent, toutes pour la vague 2 : les 19 ateliers et cahiers des représentations, et 8 séquences dont seule
+une section incrustée reste à reprendre (9 lignes). Restent aussi 31 N3 (« lis la trace et dis ce
+qui cloche ») : des actions jointes par « et », gardées d'un tenant, à juger.
+
+Contrôles : `audit_aeration.py` inchangé sur les pages modifiées (L1, L2, C1, C2 à 0 avant et après) ; phrases trop
+longues 1 364 → 1 329 ; `controle_regles_visibles.py` et `controle_hierarchie.py` verts ; captures à 390 px
+regardées (3e_C4.1, Book Train, 4e_C9.1, 5e_C3.1).
+
+Bancs des lots (65 bancs, chacun lancé comme on le lance, dans son dossier) : tous verts, sauf trois rouges déjà
+rouges sur `main`, à l'identique : `tests_3e_C2.1_pekin.py` 55 / 58 et `tests_4e_C2.1-C2.2_hangzhou.py` 62 / 65 (liens
+de navigation des synthèses, légende des badges, n°298), `tests_regle_311_4e_C7.1.mjs` (« Où j'en suis », relais non
+lancé). Un banc lisait la consigne mot pour mot : `tests_4e_C9.mjs` attendait « Nomme ton fichier…, puis
+télécharge-le » ; il lit maintenant le texte affiché (`innerText`) et vérifie les deux étapes, chacune sur sa ligne
+(124 / 124). `mode_mission/banc_generique.mjs` sur les pages modifiées : aucun refus. `verif_regles_audit.py` : 0 ✘,
+comme sur `main`.
+
