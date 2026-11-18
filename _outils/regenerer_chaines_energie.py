@@ -84,7 +84,8 @@ class Diagram:
         else:
             self.text(x+w/2, y+111-(21-csize), component, WHITE, csize, role='component')
         if stock:
-            self.text(x+w/2, y+111+len(component.split('\n'))*28, 'Énergie chimique\nstockée', YELLOW, 19, role='stock')
+            # stock : True écrit la forme stockée ; un texte la remplace (un gabarit muet la laisse à trouver)
+            self.text(x+w/2, y+111+len(component.split('\n'))*28, stock if isinstance(stock, str) else 'Énergie chimique\nstockée', YELLOW, 19, role='stock')
 
     def arrow(self, points, color=ORANGE, label=None, lx=None, ly=None, dashed=False, both=False, lanchor='middle'):
         d='M '+' L '.join(f'{x} {y}' for x,y in points)
@@ -212,15 +213,21 @@ def jardin():
     d.save(C4/'4e/4e_C4.1/Images/chaines_jardin_connecte.svg')
 
 
-def gabarit():
+def _gabarit(muet=False):
+    # muet (18/11/2026, décision de Pascal sur l'audit de 3e_C4.1) : l'élève de 3e ÉLABORE la chaîne — il trouve aussi
+    # la fonction de chaque bloc ; la version à imprimer de la séquence ne la lui donne pas. La version avec les
+    # fonctions reste celle du QCM.
     d=Diagram('Station autonome : élaborer son alimentation électrique',
-        'En haut, le gabarit à compléter ; en bas, la palette des composants. Gabarit : conversion solaire, régulation de charge, sélection de la source puis adaptation de tension vers les équipements de la station. La batterie est une branche de stockage reliée au régulateur, avec énergie chimique stockée et échanges électriques de charge et décharge. Une alimentation secteur isolée de 12 volts constitue une autre branche vers le sélecteur de source, utilisable quand le secteur est disponible. Cinq composants à placer : panneau (1), batterie (2), régulateur (3), convertisseur de tension (4) et basculement (5). L’ampoule et le haut-parleur sont hors du périmètre de cette alimentation ; ils seraient des récepteurs alimentés par elle.',1080)
-    d.text(800,88,'À compléter : associe les composants aux fonctions, puis nomme les énergies sur les flèches.',WHITE,22)
-    d.section(145,'GABARIT — fonctions fournies, composants à choisir',ORANGE)
-    for x,f,c in [(155,'CONVERTIR','1. ………………………'),(500,'ALIMENTER','3. ………………………'),(850,'DISTRIBUER','5. ………………………'),(1200,'ALIMENTER','4. ………………………')]: d.block(x,235,f,c,YELLOW)
+        ('En haut, le gabarit à compléter : cinq blocs vides reliés par des flèches, chacun avec sa fonction à écrire et son composant à placer. L’énergie entre par le premier bloc ; une flèche double (charge et décharge) relie deux blocs ; une alimentation secteur isolée de 12 volts arrive sur un autre bloc ; le dernier bloc fournit la station en 5 volts. En bas, la palette des composants : cinq à placer, deux hors du périmètre (l’ampoule et le haut-parleur).') if muet else (
+        'En haut, le gabarit à compléter ; en bas, la palette des composants. Gabarit : conversion solaire, régulation de charge, sélection de la source puis adaptation de tension vers les équipements de la station. La batterie est une branche de stockage reliée au régulateur, avec énergie chimique stockée et échanges électriques de charge et décharge. Une alimentation secteur isolée de 12 volts constitue une autre branche vers le sélecteur de source, utilisable quand le secteur est disponible. Cinq composants à placer : panneau (1), batterie (2), régulateur (3), convertisseur de tension (4) et basculement (5). L’ampoule et le haut-parleur sont hors du périmètre de cette alimentation ; ils seraient des récepteurs alimentés par elle.'),1080)
+    d.text(800,88,'À compléter : place les composants, écris la fonction de chaque bloc, puis nomme les énergies sur les flèches.' if muet
+           else 'À compléter : associe les composants aux fonctions, puis nomme les énergies sur les flèches.',WHITE,22)
+    d.section(145,'GABARIT — fonctions et composants à trouver' if muet else 'GABARIT — fonctions fournies, composants à choisir',ORANGE)
+    VIDE='…………………'
+    for x,f,c in [(155,'CONVERTIR','1. ………………………'),(500,'ALIMENTER','3. ………………………'),(850,'DISTRIBUER','5. ………………………'),(1200,'ALIMENTER','4. ………………………')]: d.block(x,235,VIDE if muet else f,c,YELLOW)
     for a,b in [(15,145),(365,490),(710,840),(1060,1190),(1410,1560)]: d.arrow([(a,273),(b,273)],ORANGE,'Énergie\n…………',(a+b)/2,202)
     d.text(1490,340,'Alimenter\nla station',WHITE,21,True)
-    d.block(500,490,'STOCKER','2. ………………………',YELLOW,stock=True)
+    d.block(500,490,VIDE if muet else 'STOCKER','2. ………………………',YELLOW,stock='Énergie …………\nstockée' if muet else True)
     d.arrow([(710,290),(760,290),(760,528),(710,528)],YELLOW,'Énergie\nélectrique\nCharge / décharge',772,420,both=True,lanchor='start')
     d.text(955,390,'Sélectionner la source',BLUE,18)
     d.text(1305,390,'12 V continu → 5 V continu',BLUE,18)
@@ -234,7 +241,15 @@ def gabarit():
     d.text(800,935,'Hors du périmètre de l’alimentation : ampoule et haut-parleur, qui en seraient des récepteurs.',BLUE,20)
     d.text(800,987,'Justifie les branchements : le régulateur contrôle la charge ; le sélecteur choisit la source disponible.',WHITE,20)
     d.text(800,1035,'Pendant une coupure du secteur, la batterie peut alimenter la station ; l’autonomie de 72 h reste à vérifier.',BLUE,19)
-    d.save(C4/'3e/3e_C4.1/Images/chaine_energie_a_elaborer.svg')
+    d.save(C4/('3e/3e_C4.1/Images/chaine_energie_a_elaborer%s.svg' % ('_muet' if muet else '')))
+
+
+def gabarit():
+    _gabarit()
+
+
+def gabarit_muet():
+    _gabarit(muet=True)
 
 
 def station():
@@ -632,7 +647,7 @@ def volet():
     d.text(800,750,PIED_CONVENTION,BLUE,19)
     d.save(C4/'3e/3e_C4.1/Images/chaine_volet_anticyclone.svg')
 
-FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
+FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, gabarit_muet, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
 
 if __name__=='__main__':
     import sys

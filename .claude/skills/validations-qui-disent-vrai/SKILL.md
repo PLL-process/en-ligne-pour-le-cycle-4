@@ -1,9 +1,11 @@
 ---
 name: validations-qui-disent-vrai
-description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie.
+description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règle d'or n°340.
 ---
 
 # Une validation dit la vérité
+
+**Règle d'or n°340 — Une validation dit vrai** (Pascal, 18/11/2026, sur l'audit de `3e_C4.1` : « oui, deux règles d'or »). Ce skill en est la méthode ; ses outils en sont le contrôle de fin de lot.
 
 Né le 17/11/2026 de l'audit externe de `3e_C4.1` (l'énergie de la station). L'auditeur n'a rien cliqué : il a lu les
 fonctions `CHECKS` et `majSim`, et chaque constat s'est vérifié au navigateur. L'activité 1 annonçait 11 / 11 et

@@ -61,7 +61,10 @@ MESURE = """() => {
       const ecrit = e.tagName === 'TEXTAREA' || !/^(radio|checkbox)$/.test(e.type);
       const habille = /^(TEXTAREA|INPUT)$/.test(e.tagName) && cs.appearance === 'none'
         && (!ecrit || (e.tagName === 'TEXTAREA' ? /gradient/.test(cs.backgroundImage) : parseFloat(cs.borderBottomWidth) > 0));
-      if (e.type !== 'hidden' && vu(e) && !habille) champs.push(e.tagName.toLowerCase() + (e.id ? '#' + e.id : ''));
+      // une case du dessin d'une chaîne à compléter (_outils/chaine_a_completer/) s'imprime comme une case à remplir au
+      // stylo, dans le schéma : c'est le papier qu'elle vise, pas un bouton d'écran (18/11/2026)
+      const caseDuDessin = e.tagName === 'BUTTON' && e.closest('.cac-dessin') && /\\bcac-(case|et)\\b/.test(e.className);
+      if (e.type !== 'hidden' && vu(e) && !habille && !caseDuDessin) champs.push(e.tagName.toLowerCase() + (e.id ? '#' + e.id : ''));
       continue; }
     if (!/^(IMG|SVG|CANVAS|VIDEO|OBJECT|PICTURE)$/i.test(e.tagName) && !e.closest('svg')) {
       const r = e.getBoundingClientRect(), v = fond(getComputedStyle(e));

@@ -171,8 +171,8 @@ const valider = async n => {
 const retour = n => p.textContent('#fb' + n);
 
 await remplir(1); await valider(1);
-ok('3 · activité 1 validée 11/11 (5 blocs, 4 natures, 2 intrus)',
-   /11 \/ 11/.test(await retour(1)), (await retour(1)).slice(0, 70));
+ok('3 · activité 1 validée 16/16 (5 composants, 5 fonctions, 4 natures, 2 intrus)',
+   /16 \/ 16/.test(await retour(1)), (await retour(1)).slice(0, 70));
 
 /* ── LE VERROU AUX DEUX ESSAIS ───────────────────────────────────────────── */
 await remplir(2); await valider(2);

@@ -5,7 +5,8 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
-| `Images/chaine_energie_a_elaborer.svg` | SVG original (Fable) | image-objet : gabarit + palette à élaborer (act. 1, QCM) | CC0 | ~6 Ko |
+| `Images/chaine_energie_a_elaborer.svg` | SVG original (Fable) | image-objet : gabarit + palette, fonctions fournies (QCM) | CC0 | ~6 Ko |
+| `Images/chaine_energie_a_elaborer_muet.svg` | SVG original (écosystème Pascal/Claude, 18/11/2026) | image-objet : gabarit muet + palette, fonctions et composants à trouver (act. 1, à imprimer) ; engendré par `_outils/regenerer_chaines_energie.py gabarit_muet` | CC0 | ~34 Ko |
 | `Images/contraintes_site_cyclonique.svg` | SVG original (Fable) | image-objet : les 5 contraintes du site à lire (act. 3, QCM) | CC0 | ~5 Ko |
 | `Images/materiaux_procedes_abaque.svg` | SVG original (Fable) | image-objet : l'abaque à exploiter (act. 4, QCM) | CC0 | ~6 Ko |
 | `Images/cinq_conversions.svg` | SVG original (Fable), dessiné par `_outils/cinq_conversions/generer.py --complet` | image-explication : les cinq conversions du programme, en rappel replié dans l'activité 1 (17/11/2026) ; le même dessin qu'en 5e et en 4e | CC0 | ~6 Ko |

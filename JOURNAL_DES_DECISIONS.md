@@ -29,6 +29,8 @@
 | 337 | Avant de commencer, trois lignes : ce que tu vas apprendre, ce que tu dois savoir faire, comment réussir | Pascal (17/11/2026), écrite par Fable | ✅ En vigueur — pilote 5e_C2.1 (#762) ; outil `_outils/trois_lignes.py`, skill `avant-de-commencer-trois-lignes` |
 | 338 | Un même attendu se dit avec les mêmes nombres et les mêmes mots partout | Fable (audit « double regard » de 5e_C2.1, 17/11/2026) | ✅ En vigueur — `_outils/controle_memes_nombres.py` (mesure) |
 | 339 | Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges | Fable, sur l'audit transmis par Pascal (17/11/2026) | ✅ En vigueur — pilote 5e_C2.1 (#762) ; `_outils/qcm_aides/poser.py`, skill `qcm-aides-et-pieges` |
+| 340 | Une validation dit vrai : le seuil annoncé, une réponse changée la retire, la relecture et la simplification dites | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_validations.py`, skill `validations-qui-disent-vrai` |
+| 341 | Une question ne souffle pas sa réponse | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_propositions_indices.py`, `_outils/qcm_aides/indices_creux.mjs`, skill `propositions-sans-indice` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -33061,3 +33063,55 @@ fichiers d'appoint. `onglets_clavier.py --etat --strict` : 88 pages à onglets, 
 Contrôles : `tests_atelier_C7.1.py` 48 / 48, `verif_chaine_qcm.py` et `verif_chemins.py` verts ; CAO
 `verif_effectifs.py` vert, `tests_verif_effectifs.py` 21 / 21. `verif_guidage.py` (CAO) reste rouge, comme sur
 `main` : il demande les captures du résultat attendu des paliers, qui se prennent en salle.
+
+## 18/11/2026 — Règles d'or n°340 et n°341 ; `3e_C4.1` élaborée par l'élève, en trois séances ; les six QCM de l'ancien format restent tels quels
+
+Pascal tranche les points laissés ouverts par l'audit externe de `3e_C4.1` (17/11/2026) et la fin du lot 3.
+
+> **Règle d'or n°340 — Une validation dit vrai.** Une activité affichée « réussie » l'est vraiment : le seuil codé est
+> celui que la page annonce (« 6 / 6 », ou la tolérance écrite : « au moins 5 réponses justes sur 6 ») ; une réponse
+> changée après la vérification retire la validation ; une réponse écrite validée par des mots-clés dit qu'elle sera
+> relue par le professeur ; un simulateur dit qu'il est un modèle simplifié, et ce qu'il laisse de côté. Elle prolonge
+> la n°333 (une réussite affichée prouve la production réelle) et la n°338 (les mêmes nombres partout). Outil :
+> `_outils/controle_validations.py` (V1 ✘ un seuil qui contredit l'annonce ; V1 ⚠ une tolérance non annoncée, V3 ⚠ pas
+> de retrait, V4 ⚠ pas de relecture annoncée, V5 ⚠ un simulateur sans « modèle simplifié ») ; skill
+> `validations-qui-disent-vrai`.
+
+> **Règle d'or n°341 — Une question ne souffle pas sa réponse.** Les intrus sont des erreurs que font vraiment les
+> élèves, jamais une plaisanterie qu'on écarte sans réfléchir ; la bonne réponse n'est pas la seule à porter sa
+> justification ; ni sa longueur, ni ses mots, ni sa place ne la désignent ; le résultat attendu d'un calcul ne se lit
+> pas ailleurs dans la page ; une échelle d'auto-positionnement va dans l'ordre et dit ce que veut dire chaque niveau ;
+> dans un QCM, chaque mauvaise proposition a son pourquoi, propre à CETTE proposition et à CETTE question (n°339). Elle
+> réunit la n°300 et ce que mesuraient déjà `controle_longueurs.py`, `controle_indices_qcm.mjs` et
+> `controle_ordre_propositions.py`. Outils : `_outils/controle_propositions_indices.py` (I1, I3, I4),
+> `_outils/qcm_aides/indices_creux.mjs` ; skill `propositions-sans-indice`.
+
+**Pourquoi deux règles, alors que le 17/11 les skills devaient suffire.** Le choix est celui de Pascal : une règle
+d'or se cite, se compte au registre et se vérifie en fin de lot ; un skill seul s'oublie quand personne ne le convoque.
+
+**`3e_C4.1` (décisions de Pascal).**
+- **L'activité 1 fait élaborer la chaîne, fonctions comprises** (le verbe de 3e). Les blocs sont vides : l'élève place
+  les composants d'après les branchements, puis nomme la fonction de chaque bloc (CONVERTIR, ALIMENTER, STOCKER,
+  DISTRIBUER ; TRANSMETTRE de trop), puis les natures, puis les intrus. Les questions ne disent plus la fonction
+  (« Sous ALIMENTER (réguler la charge) » soufflait la réponse : n°341). Le gabarit à imprimer est muet
+  (`chaine_energie_a_elaborer_muet.svg`, figure `gabarit_muet` de `_outils/regenerer_chaines_energie.py`) ; celui du
+  QCM garde ses fonctions. Le critère passe à 16 / 16 ; le pourquoi de chaque mauvaise fonction nomme l'étape suivante
+  (`mission_3e_C4.1.json`).
+- **Trois séances au lieu de deux** : 115 min d'activités obligatoires ne tenaient pas en 2 × 55 min. S1 : l'activité 1
+  (35 min, après le billet d'entrée et l'ouverture) ; S2 : les activités 2 et 3, et le Bonus loi d'Ohm ; S3 : les
+  activités 4 et 5, puis Bonus, bilan et QCM. Le découpage proposé le 17/11 (S1 : activités 1 et 2) aurait chargé la
+  première séance de 75 min une fois l'activité 1 allongée ; celui-ci donne environ 50, 45 et 55 min.
+- Le QCM : une proposition-plaisanterie remplacée par une vraie erreur (« parce que 5 V est plus joli que 12 V » →
+  « pour que la batterie se vide moins vite ») ; « en 12 V » écrit « en 12 volts » dans la seule proposition qui le
+  portait (n°312 : `controle_unites.py` refusait depuis la vague 3a du lot 3).
+- `banc_papier.py` comptait les cases du dessin des chaînes à compléter pour des champs d'écran : ce sont des cases à
+  remplir au stylo, que l'outil commun imprime ainsi. Elles ne sont plus comptées ; `3e_C4.1` s'imprime sans refus
+  (neuf « champs » comptés à tort sur `main`).
+
+**Les six QCM de l'ancien format** (`qcm_python_variables.html` en `3e_C9.1`, et cinq en `4e_C2.1`, `4e_C4.1`,
+`4e_C4.4`, `4e_C6.2`) **restent tels quels**, hors de la n°339 : gardés en complément, leurs adresses ne changent pas.
+
+Contrôles : `tests_3e_C4.1-C4.2.mjs` 25 / 25, `tests_regle_311_3e_C4.1.mjs` 34 / 34, banc générique du mode mission sans
+refus, `banc_mission.mjs` 50 / 50 ; `controle_squelette`, `controle_chaine_a_completer`, `controle_schema_sous_les_yeux`,
+`controle_navigation_seances`, `controle_correction_complete`, `controle_mode_essentiel`, `controle_hors_ligne`,
+`controle_axe`, `controle_unites`, `controle_medias` verts ; `mesurer_charge` : aucune séance au-delà de 1 200 mots.
