@@ -11,7 +11,7 @@
 | Référentiel | BO n°9 du 29/02/2024 · cahier Nathan 3e (éd. 2024) |
 | Domaines du socle | D1.3, D2, D3, D4, D5 |
 | CRCN | 1.3 Traiter des données (Niv. 3) · 5.1 Résoudre des problèmes techniques (Niv. 3) |
-| Durée | 2 séances de 55 min (jouable en 1 séance + travail maison dans la progression Martinique) |
+| Durée | 3 séances de 55 min (depuis le 18/11/2026, décision de Pascal sur l’audit externe : 115 min d’activités obligatoires ne tenaient pas en deux) — S1 : l’activité 1, élaborée fonctions comprises ; S2 : les activités 2 et 3, le Bonus loi d’Ohm ; S3 : les activités 4 et 5, puis Bonus, bilan et QCM |
 
 ## Sous-compétences
 
