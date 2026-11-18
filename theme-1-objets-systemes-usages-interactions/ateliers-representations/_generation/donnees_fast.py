@@ -203,12 +203,12 @@ E1 = dict(
           "<p>Pour comprendre comment il est fait, on dessine son <b>diagramme FAST</b> (de l'anglais <i lang=\"en\">Function "
           "Analysis System Technique</i>, «&nbsp;technique d'analyse fonctionnelle&nbsp;»). On le lit dans deux sens&nbsp;: vers "
           "la <b>droite</b>, on répond à «&nbsp;<b>Comment&nbsp;?</b>&nbsp;»&nbsp;; vers la <b>gauche</b>, à «&nbsp;<b>Pourquoi&nbsp;?</b>&nbsp;».</p>",
-    consigne="<p>Une <b>fonction technique</b> dit ce que l'objet doit <b>faire</b>&nbsp;: elle commence par un verbe à l'infinitif "
-             "(détecter, stocker…). Une <b>solution technique</b> est l'<b>élément</b> de l'objet qui le fait&nbsp;: c'est un nom "
-             "(la batterie…).</p>"
-             "<p><b>Range chaque étiquette&nbsp;: fonction technique ou solution technique&nbsp;?</b> Les étiquettes viennent de deux "
-             "objets, le lampadaire et le vélo-cargo&nbsp;: c'est la forme des mots qui décide, pas l'objet. Puis <b>lis le schéma</b> une "
-             "fois vers la droite et une fois vers la gauche.</p>",
+    consigne=("<p>Une <b>fonction technique</b> dit ce que l'objet doit <b>faire</b>&nbsp;: elle commence par un "
+              "verbe à l'infinitif (détecter, stocker…). Une <b>solution technique</b> est l'<b>élément</b> de "
+              "l'objet qui le fait&nbsp;: c'est un nom (la batterie…).</p><p>① <b>Range chaque étiquette&nbsp;: "
+              "fonction technique ou solution technique&nbsp;?</b> Les étiquettes viennent de deux objets, le "
+              "lampadaire et le vélo-cargo&nbsp;: c'est la forme des mots qui décide, pas l'objet.<br>"
+              "② <b>Lis le schéma</b> une fois vers la droite et une fois vers la gauche.</p>"),
     critere="six étiquettes bien rangées, et deux lectures justes&nbsp;: tu sais dire dans quel sens tu as lu.",
     widgets=[dict(type="classer", name="col", question="%s&nbsp;: fonction ou solution&nbsp;?",
                   categories=[("ft", "une fonction technique (ce que l'objet doit faire)"),
@@ -292,10 +292,12 @@ E2 = dict(
     intro="<p>Voici le même diagramme FAST du lampadaire. Les trois solutions cachées sont maintenant des cases en pointillés, "
           "sur les lignes «&nbsp;détecter un passant&nbsp;», «&nbsp;stocker l'énergie pour la nuit&nbsp;» et «&nbsp;capter l'énergie du "
           "soleil&nbsp;». Ce que tu choisis s'écrit dans le schéma.</p>",
-    consigne="<p><b>Complète les trois cases</b> avec la banque&nbsp;: <i>le détecteur de mouvement · la batterie · le panneau "
-             "solaire · un interrupteur à bouton</i>. La solution d'une case est l'élément qui réalise la fonction technique écrite "
-             "sur sa ligne, à gauche. Un mot de la banque est un <b>intrus</b>&nbsp;: <b>dis pourquoi</b> il n'a pas de case. Puis "
-             "<b>lis vers la gauche</b> pour la batterie.</p>",
+    consigne=("<p>① <b>Complète les trois cases</b> avec la banque&nbsp;: <i>le détecteur de mouvement · la "
+              "batterie · le panneau solaire · un interrupteur à bouton</i>. La solution d'une case est l'élément "
+              "qui réalise la fonction technique écrite sur sa ligne, à gauche. Un mot de la banque est un "
+              "<b>intrus</b>&nbsp;:<br>"
+              "② <b>Dis pourquoi</b> il n'a pas de case.<br>"
+              "③ <b>Lis vers la gauche</b> pour la batterie.</p>"),
     critere="les trois cases sont justes, tu donnes la bonne raison pour l'intrus, et tu remontes de la batterie jusqu'à la fonction "
             "d'usage.",
     widgets=[dict(type="slots", intro=figure_vivante(LAMPADAIRE_COMPLETER, "Le FAST du lampadaire, à compléter. Tes choix s'écrivent "
@@ -385,9 +387,11 @@ E3 = dict(
           "<b>principes techniques</b> pour la <b>même</b> fonction. Les deux freinent par <b>frottement</b>, mais pas au même "
           "endroit&nbsp;: les patins serrent la <b>jante</b>, au bord de la roue, là où le pneu projette l'eau et la boue&nbsp;; les "
           "plaquettes serrent un <b>disque</b> fixé au <b>moyeu</b>, au centre de la roue, plus à l'abri.</p>",
-    consigne="<p>Un <b>principe technique</b>, c'est la façon physique de réaliser une fonction&nbsp;: quel phénomène, à quel endroit. "
-             "<b>Range chaque propriété</b>&nbsp;: est-elle vraie pour le frein à patins, pour le frein à disque, ou pour les deux&nbsp;? "
-             "Puis <b>choisis</b> le frein du vélo-cargo de Léa et <b>justifie</b> ton choix en une phrase.</p>",
+    consigne=("<p>Un <b>principe technique</b>, c'est la façon physique de réaliser une fonction&nbsp;: quel "
+              "phénomène, à quel endroit.<br>"
+              "① <b>Range chaque propriété</b>&nbsp;: est-elle vraie pour le frein à patins, pour le frein à "
+              "disque, ou pour les deux&nbsp;?<br>"
+              "② <b>Choisis</b> le frein du vélo-cargo de Léa et <b>justifie</b> ton choix en une phrase.</p>"),
     critere="cinq propriétés bien rangées, le choix qui convient à Léa, et une phrase qui cite la pluie et les côtes (ou la charge).",
     widgets=[dict(type="classer", name="prop",
                   categories=[("patins", "le frein à patins"), ("disque", "le frein à disque"), ("deux", "les deux")],
@@ -766,9 +770,12 @@ E7 = dict(
     intro="<p>L'équipe doit maintenant <b>choisir</b> comment diffuser l'alerte. Les trois solutions du FAST, branchées sur la station, "
           "sont toutes alimentées en <b>très basse tension</b> (12 volts) par la batterie et le panneau solaire&nbsp;: une sirène 12 V, un "
           "petit module qui envoie un message sur les téléphones du quartier, un panneau lumineux à LED.</p>",
-    consigne="<p>Un <b>critère</b> est ce que l'on regarde pour comparer. <b>Complète le tableau</b>&nbsp;: pour chaque solution et chaque "
-             "critère, choisis dans la case oui, en partie ou non. Puis dis à quoi sert le critère D, que toutes les solutions remplissent. Enfin, "
-             "<b>argumente</b>&nbsp;: quelle solution — ou quelle <b>combinaison</b> de deux solutions — l'équipe doit-elle fabriquer&nbsp;?</p>",
+    consigne=("<p>Un <b>critère</b> est ce que l'on regarde pour comparer.<br>"
+              "① <b>Complète le tableau</b>.<br>"
+              "Pour chaque solution et chaque critère, choisis dans la case oui, en partie ou non.<br>"
+              "② Dis à quoi sert le critère D, que toutes les solutions remplissent.<br>"
+              "③ <b>Argumente</b>&nbsp;: quelle solution — ou quelle <b>combinaison</b> de deux solutions — "
+              "l'équipe doit-elle fabriquer&nbsp;?</p>"),
     critere="neuf cases justes, le bon rôle du critère D, et un argumentaire qui nomme ton choix, s'appuie sur au moins deux critères et "
             "dit une limite.",
     widgets=[dict(type="tableau", name="tab",
@@ -1010,8 +1017,9 @@ NIVEAUX = {
                                 "<b>et</b> détecter la nuit",
                                 ("conclusion", "Une même solution peut servir deux fonctions&nbsp;: une pièce de moins à fabriquer.")]),
                    dict(titre="Trois fonctions d'usage",
-                        consigne="<p>Écris la <b>fonction d'usage</b> d'un ventilateur, d'une gourde et d'un cartable, avec un verbe à "
-                                 "l'infinitif. Puis donne <b>une</b> fonction technique du ventilateur et sa solution.</p>",
+                        consigne=("<p>① Écris la <b>fonction d'usage</b> d'un ventilateur, d'une gourde et d'un cartable, avec un "
+                                  "verbe à l'infinitif.<br>"
+                                  "② Donne <b>une</b> fonction technique du ventilateur et sa solution.</p>"),
                         correction=["<b>Ventilateur</b> → rafraîchir une personne en déplaçant l'air",
                                     "<b>Gourde</b> → transporter de l'eau pour boire",
                                     "<b>Cartable</b> → transporter ses affaires de classe",
@@ -1047,16 +1055,19 @@ NIVEAUX = {
                   "<b>réutilisant</b> ce qui existe déjà.</li>"
                   "<li>Une nouvelle fonction change souvent le <b>programme</b> de la carte&nbsp;: c'est elle qui décide.</li></ul>",
         bonus=[dict(titre="Goutte-à-goutte ou arroseur",
-                    consigne="<p>Pour la fonction «&nbsp;répartir l'eau sur les plantes&nbsp;», le club hésite entre un tuyau "
-                             "<b>goutte-à-goutte</b> (l'eau sort au pied de chaque plante) et un <b>arroseur</b> qui projette l'eau en pluie. "
-                             "Compare les deux principes, puis choisis pour un jardin qui récupère l'eau de pluie dans une cuve.</p>",
+                    consigne=("<p>Pour la fonction «&nbsp;répartir l'eau sur les plantes&nbsp;», le club hésite entre un tuyau "
+                              "<b>goutte-à-goutte</b> (l'eau sort au pied de chaque plante) et un <b>arroseur</b> qui projette "
+                              "l'eau en pluie.<br>"
+                              "① Compare les deux principes.<br>"
+                              "② Choisis pour un jardin qui récupère l'eau de pluie dans une cuve.</p>"),
                     correction=["<b>Goutte-à-goutte</b> → l'eau va au pied de la plante → peu d'eau perdue par évaporation au soleil",
                                 "<b>Arroseur</b> → l'eau tombe partout, même entre les plantes → plus d'eau perdue, mais un seul appareil",
                                 "<b>Pour une cuve d'eau de pluie</b> → l'eau est comptée → <b>le goutte-à-goutte</b>",
                                 ("conclusion", "Deux principes pour une fonction&nbsp;: on choisit selon la situation, ici une eau rare.")]),
                dict(titre="Remonter depuis le panneau solaire",
-                    consigne="<p>La pompe du jardin est alimentée par un <b>panneau solaire</b>. Ajoute sa branche au FAST&nbsp;: quelle "
-                             "fonction technique&nbsp;? Puis remonte («&nbsp;pourquoi&nbsp;?&nbsp;») jusqu'à la fonction d'usage.</p>",
+                    consigne=("<p>La pompe du jardin est alimentée par un <b>panneau solaire</b>.<br>"
+                              "① Ajoute sa branche au FAST&nbsp;: quelle fonction technique&nbsp;?<br>"
+                              "② Remonte («&nbsp;pourquoi&nbsp;?&nbsp;») jusqu'à la fonction d'usage.</p>"),
                     correction=["<b>Fonction</b> → capter l'énergie du soleil (pour alimenter la pompe)",
                                 "<b>Pourquoi&nbsp;?</b> → pour que la pompe fasse circuler l'eau → pour arroser les plantes quand la terre "
                                 "est sèche",
