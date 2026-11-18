@@ -31,7 +31,7 @@
 | 339 | Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges | Fable, sur l'audit transmis par Pascal (17/11/2026) | ✅ En vigueur — pilote 5e_C2.1 (#762) ; `_outils/qcm_aides/poser.py`, skill `qcm-aides-et-pieges` |
 | 340 | Une validation dit vrai : le seuil annoncé, une réponse changée la retire, la relecture et la simplification dites | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_validations.py`, skill `validations-qui-disent-vrai` |
 | 341 | Une question ne souffle pas sa réponse | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_propositions_indices.py`, `_outils/qcm_aides/indices_creux.mjs`, skill `propositions-sans-indice` |
-| 342 | Chaque consigne à la ligne : une action par ligne, numérotée | Pascal (18/11/2026), écrite par Fable | ✅ En vigueur — pilote `3e_C6.1` |
+| 342 | Chaque consigne à la ligne : une action par ligne, numérotée | Pascal (18/11/2026), écrite par Fable | ✅ En vigueur — pilote `3e_C6.1` (#782) ; `_outils/controle_consignes_a_la_ligne.py` (mesure), skill `texte-clair-et-aere` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -33155,3 +33155,30 @@ refus ; `audit_aeration.py --strict`, `controle_squelette.mjs`, `controle_hors_l
 
 Reste : un outil qui mesure la n°342 sur tout le site (consignes qui enchaînent plusieurs actions), puis la
 généralisation par vagues, comme pour la n°337.
+
+## 18/11/2026 — La n°342 se mesure : `controle_consignes_a_la_ligne.py`
+
+Suite de la n°342 (pilote `3e_C6.1`, #782). L'outil lit, dans chaque page d'élève des thèmes (hors archives, QCM et
+lexiques), chaque élément dont une classe nomme la consigne (`consigne`, `consigne-grille`, `verif-consigne`…) et
+chaque paragraphe qui commence par « Consigne ». Il relève, ligne par ligne :
+- **N1** ✘ deux étapes numérotées sur la même ligne (« ① … ② … », « a) … ; b) … ») ;
+- **N2** ✘ deux actions enchaînées (« ; », « puis », « ensuite », deux phrases à l'impératif) ;
+- **N3** ⚠ deux actions jointes par « et » — à juger : « observe et décris » se lit d'un coup.
+
+Une action est un impératif en tête de segment, après « puis », ou juste après la virgule d'un circonstant (« Pour
+chaque essai, compare… ») : « le programme », « la classe » ne comptent pas. Le code (`<code>`, `<pre>`) n'est pas lu.
+
+Validation : sur la version de `3e_C6.1` d'avant #782, l'outil relève les six consignes que Pascal a vues (N1 2, N2 2,
+N3 2) ; sur la version publiée, 0. Banc `tests_controle_consignes_a_la_ligne.py` : 23 / 23 (lignes connues, puis l'outil
+lancé en sous-processus : sorties 0, 1 et 2, `--json`).
+
+**Mesure du site (18/11/2026)** : 272 pages lues, 387 consignes ; N1 38, N2 112, N3 14 ; **47 pages à reprendre** :
+- thème 1, ateliers des représentations : 19 pages, 71 lignes (les trois cahiers `cahier_*_representations` en tête) ;
+  ces pages sont engendrées : elles se corrigent dans leur source, puis se régénèrent ;
+- thème 1, séquences : 7 pages, 11 lignes ;
+- thème 2 : 11 pages, 39 lignes ;
+- thème 3 : 10 pages, 29 lignes.
+
+Limite : une consigne qui n'est ni marquée comme telle ni annoncée par « Consigne » (un énoncé d'exercice ordinaire)
+n'est pas lue. Reste : la généralisation par vagues, comme pour la n°337.
+

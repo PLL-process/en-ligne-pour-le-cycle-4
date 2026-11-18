@@ -70,6 +70,25 @@ hors `--strict` : le découpage en phrases est mécanique, chaque ⚠ se relit.
 8. **Ce qui ne bouge jamais** : les mots techniques expliqués (n°312, lexique), les valeurs, les noms de menus et de
    boutons, le code, les citations. Aérer, ce n'est pas réécrire le fond.
 
+## Une consigne : une action par ligne (règle d'or n°342, 18/11/2026)
+
+Demande de Pascal : « Chaque consigne doit être à la ligne. » Une consigne qui demande plusieurs actions les donne
+chacune sur sa ligne, numérotée dans l'ordre où l'élève les fait ; jamais enchaînées par « ; », « , puis »,
+« ensuite » ou deux phrases à l'impératif sur la même ligne. La phrase de contexte ouvre la consigne, sur sa ligne.
+
+```
+<div class="consigne"><b>Consigne :</b> Météo-France recalibre ses niveaux : le seuil orange passe à 60 km/h.<br>
+① Dans le programme de la station, modifie la ligne 2.<br>
+② Réponds aux questions.</div>
+```
+
+- Des étapes qui se suivent : ①, ②, ③ ; des parties d'un même travail : a), b), c).
+- Un bout de code à recopier va sur ses propres lignes, tel qu'il s'écrit (`<code style="white-space:pre">`, une ligne
+  par ligne de code, indentation comprise).
+- « Observe et décris » peut rester d'un tenant ; « recopie le tableau et complète-le avec tes mesures » se coupe
+  (`controle_consignes_a_la_ligne.py`, N3 : à juger).
+- Pilote : `3e_C6.1` (18/11/2026).
+
 ## Aérer une légende (le texte sous une image)
 
 L'anatomie, une partie par ligne :
@@ -109,6 +128,7 @@ python3 _outils/audit_aeration.py <page>…            # chaque écart cité
 python3 _outils/audit_aeration.py --strict <page>…   # sortie 1 s'il reste un écart (page livrée, page pilote)
 python3 _outils/aerer_legendes.py <page>… [--ecrire] # un <br> devant « Puis : », la note finale, ①… ; ne change aucun mot
 python3 _outils/aerer_corrections.py <page>… [--ecrire]  # un <br> entre les phrases d'une correction, après chaque « ; »
+python3 _outils/controle_consignes_a_la_ligne.py [--strict] [page…]  # n°342 : N1 étapes numérotées sur une ligne, N2 actions enchaînées, N3 « et » (à juger)
 ```
 
 `aerer_legendes.py` ne touche que les légendes et n'ajoute que des retours à la ligne : il règle tout L2.
@@ -130,7 +150,7 @@ corrections (réponse, refus un par ligne, pourquoi en lignes).
 
 - [ ] `audit_aeration.py --strict` à zéro sur les pages touchées.
 - [ ] Aucun mot du fond retiré : relire la correction avant et après, chaque idée est toujours là.
-- [ ] Chaque consigne : impératif, 20 mots au plus, une action par ligne, la condition d'abord (`audit_aeration.py --phrases` : aucun P2 de consigne sur les pages touchées, ou chaque P2 relu).
+- [ ] Chaque consigne : impératif, 20 mots au plus, une action par ligne, la condition d'abord (`audit_aeration.py --phrases` : aucun P2 de consigne sur les pages touchées, ou chaque P2 relu ; `controle_consignes_a_la_ligne.py --strict` à zéro, n°342).
 - [ ] Chaque légende : une partie par ligne, la note et la mention IA en fin, rien de ce que l'image dit déjà.
 - [ ] `controle_hierarchie.py`, `controle_mode_essentiel.py` et les bancs du lot inchangés ou meilleurs.
 - [ ] Rendu regardé à 390 px : aucune ligne réduite à un mot orphelin sous une image.
