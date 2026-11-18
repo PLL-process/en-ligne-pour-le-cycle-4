@@ -213,21 +213,28 @@ def jardin():
     d.save(C4/'4e/4e_C4.1/Images/chaines_jardin_connecte.svg')
 
 
-def _gabarit(muet=False):
+def _gabarit(muet=False, corrige=False):
+    # corrige (18/11/2026, règle n°332 et contrôle D1) : la correction de l'activité 1 montre la chaîne complète —
+    # composants, fonctions et énergies — à côté de la question muette.
     # muet (18/11/2026, décision de Pascal sur l'audit de 3e_C4.1) : l'élève de 3e ÉLABORE la chaîne — il trouve aussi
     # la fonction de chaque bloc ; la version à imprimer de la séquence ne la lui donne pas. La version avec les
     # fonctions reste celle du QCM.
-    d=Diagram('Station autonome : élaborer son alimentation électrique',
-        ('En haut, le gabarit à compléter : cinq blocs vides reliés par des flèches, chacun avec sa fonction à écrire et son composant à placer. L’énergie entre par le premier bloc ; une flèche double (charge et décharge) relie deux blocs ; une alimentation secteur isolée de 12 volts arrive sur un autre bloc ; le dernier bloc fournit la station en 5 volts. En bas, la palette des composants : cinq à placer, deux hors du périmètre (l’ampoule et le haut-parleur).') if muet else (
+    d=Diagram('Station autonome : élaborer son alimentation électrique' + (' — corrigé' if corrige else ''),
+        ('La chaîne d’énergie complète de l’alimentation de la station. Le panneau solaire (CONVERTIR) reçoit l’énergie lumineuse et fournit de l’énergie électrique au régulateur de charge (ALIMENTER). Le régulateur charge et décharge la batterie 12 V (STOCKER), qui garde l’énergie sous forme chimique, et alimente le basculement secteur / batterie (DISTRIBUER), qui choisit la source ; l’alimentation secteur isolée en 12 V y arrive aussi. Le convertisseur 12 V → 5 V (ALIMENTER) fournit enfin la station en énergie électrique. L’ampoule et le haut-parleur, hors du périmètre, n’y figurent pas.') if corrige else ('En haut, le gabarit à compléter : cinq blocs vides reliés par des flèches, chacun avec sa fonction à écrire et son composant à placer. L’énergie entre par le premier bloc ; une flèche double (charge et décharge) relie deux blocs ; une alimentation secteur isolée de 12 volts arrive sur un autre bloc ; le dernier bloc fournit la station en 5 volts. En bas, la palette des composants : cinq à placer, deux hors du périmètre (l’ampoule et le haut-parleur).') if muet else (
         'En haut, le gabarit à compléter ; en bas, la palette des composants. Gabarit : conversion solaire, régulation de charge, sélection de la source puis adaptation de tension vers les équipements de la station. La batterie est une branche de stockage reliée au régulateur, avec énergie chimique stockée et échanges électriques de charge et décharge. Une alimentation secteur isolée de 12 volts constitue une autre branche vers le sélecteur de source, utilisable quand le secteur est disponible. Cinq composants à placer : panneau (1), batterie (2), régulateur (3), convertisseur de tension (4) et basculement (5). L’ampoule et le haut-parleur sont hors du périmètre de cette alimentation ; ils seraient des récepteurs alimentés par elle.'),1080)
-    d.text(800,88,'À compléter : place les composants, écris la fonction de chaque bloc, puis nomme les énergies sur les flèches.' if muet
+    d.text(800,88,'Corrigé : chaque composant à sa place, la fonction de chaque bloc, les énergies sur les flèches.' if corrige
+           else 'À compléter : place les composants, écris la fonction de chaque bloc, puis nomme les énergies sur les flèches.' if muet
            else 'À compléter : associe les composants aux fonctions, puis nomme les énergies sur les flèches.',WHITE,22)
-    d.section(145,'GABARIT — fonctions et composants à trouver' if muet else 'GABARIT — fonctions fournies, composants à choisir',ORANGE)
+    d.section(145,'CORRIGÉ — fonctions, composants et énergies' if corrige else 'GABARIT — fonctions et composants à trouver' if muet
+              else 'GABARIT — fonctions fournies, composants à choisir',ORANGE)
     VIDE='…………………'
-    for x,f,c in [(155,'CONVERTIR','1. ………………………'),(500,'ALIMENTER','3. ………………………'),(850,'DISTRIBUER','5. ………………………'),(1200,'ALIMENTER','4. ………………………')]: d.block(x,235,VIDE if muet else f,c,YELLOW)
-    for a,b in [(15,145),(365,490),(710,840),(1060,1190),(1410,1560)]: d.arrow([(a,273),(b,273)],ORANGE,'Énergie\n…………',(a+b)/2,202)
-    d.text(1490,340,'Alimenter\nla station',WHITE,21,True)
-    d.block(500,490,VIDE if muet else 'STOCKER','2. ………………………',YELLOW,stock='Énergie …………\nstockée' if muet else True)
+    COMPOSANTS={1:'Panneau solaire',2:'Batterie 12 V — 40 Ah',3:'Régulateur de charge',4:'Convertisseur 12 V → 5 V',5:'Basculement des sources'}
+    def comp(n): return COMPOSANTS[n] if corrige else '%d. ………………………' % n
+    for x,f,n in [(155,'CONVERTIR',1),(500,'ALIMENTER',3),(850,'DISTRIBUER',5),(1200,'ALIMENTER',4)]: d.block(x,235,VIDE if muet else f,comp(n),YELLOW)
+    ENERGIES=['Énergie\nlumineuse','Énergie\nélectrique','Énergie\nélectrique','Énergie\nélectrique','Énergie\nélectrique']
+    for i,(a,b) in enumerate([(15,145),(365,490),(710,840),(1060,1190),(1410,1560)]): d.arrow([(a,273),(b,273)],ORANGE,ENERGIES[i] if corrige else 'Énergie\n…………',(a+b)/2,202)
+    d.text(1490,440 if corrige else 340,'Alimenter\nla station',WHITE,21,True)
+    d.block(500,490,VIDE if muet else 'STOCKER',comp(2),YELLOW,stock='Énergie …………\nstockée' if muet else True)
     d.arrow([(710,290),(760,290),(760,528),(710,528)],YELLOW,'Énergie\nélectrique\nCharge / décharge',772,420,both=True,lanchor='start')
     d.text(955,390,'Sélectionner la source',BLUE,18)
     d.text(1305,390,'12 V continu → 5 V continu',BLUE,18)
@@ -235,13 +242,15 @@ def _gabarit(muet=False):
     d.arrow([(955,640),(955,390)],CYAN,'Énergie électrique\nSecteur disponible',1200,525)
     d.text(315,712,'Entrée secteur',BLUE,21)
     d.arrow([(440,704),(840,704)],CYAN,'Énergie électrique',635,744)
-    d.section(820,'PALETTE DES COMPOSANTS — cinq à placer, deux hors du périmètre',VIOLET)
+    d.section(820,'LES CINQ COMPOSANTS SONT PLACÉS — deux restent hors du périmètre' if corrige
+              else 'PALETTE DES COMPOSANTS — cinq à placer, deux hors du périmètre',VIOLET)
     labels=['Panneau solaire','Régulateur de charge','Batterie 12 V — 40 Ah','Basculement des sources','Convertisseur 12 V → 5 V']
-    for i,txt in enumerate(labels): d.text(175+i*310,875,txt,WHITE,19,True)
+    if not corrige:
+        for i,txt in enumerate(labels): d.text(175+i*310,875,txt,WHITE,19,True)
     d.text(800,935,'Hors du périmètre de l’alimentation : ampoule et haut-parleur, qui en seraient des récepteurs.',BLUE,20)
-    d.text(800,987,'Justifie les branchements : le régulateur contrôle la charge ; le sélecteur choisit la source disponible.',WHITE,20)
+    d.text(800,987,('Les branchements : le régulateur' if corrige else 'Justifie les branchements : le régulateur')+' contrôle la charge ; le sélecteur choisit la source disponible.',WHITE,20)
     d.text(800,1035,'Pendant une coupure du secteur, la batterie peut alimenter la station ; l’autonomie de 72 h reste à vérifier.',BLUE,19)
-    d.save(C4/('3e/3e_C4.1/Images/chaine_energie_a_elaborer%s.svg' % ('_muet' if muet else '')))
+    d.save(C4/('3e/3e_C4.1/Images/chaine_energie_a_elaborer%s.svg' % ('_corrige' if corrige else '_muet' if muet else '')))
 
 
 def gabarit():
@@ -250,6 +259,10 @@ def gabarit():
 
 def gabarit_muet():
     _gabarit(muet=True)
+
+
+def gabarit_corrige():
+    _gabarit(corrige=True)
 
 
 def station():
@@ -647,7 +660,7 @@ def volet():
     d.text(800,750,PIED_CONVENTION,BLUE,19)
     d.save(C4/'3e/3e_C4.1/Images/chaine_volet_anticyclone.svg')
 
-FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, gabarit_muet, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
+FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, gabarit_muet, gabarit_corrige, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
 
 if __name__=='__main__':
     import sys
