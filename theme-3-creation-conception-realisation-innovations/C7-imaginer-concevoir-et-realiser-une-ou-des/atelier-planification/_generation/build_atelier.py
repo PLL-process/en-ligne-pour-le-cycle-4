@@ -60,6 +60,19 @@ def _replier(html):
     return mod.replier_depuis_synthese(html, D / "Synthèses" / "synthese_professeur_C7.1_planification.html")
 
 
+# Règle d'or n°326 (17/11/2026) — les onglets se parcourent au clavier (← → Début Fin). Même geste que la loupe :
+# le bloc est posé par l'outil du dépôt, une seule source, jamais recopié. Avant le 18/11/2026, `onglets_clavier.py
+# --ecrire` l'avait posé sur les pages publiées, pas ici : une régénération l'effaçait.
+def _onglets(html):
+    chemin = pathlib.Path(__file__).resolve().parents[4] / "_outils" / "onglets_clavier.py"
+    if not chemin.exists():
+        raise SystemExit("n°326 : _outils/onglets_clavier.py est introuvable (%s)." % chemin)
+    spec = _iu.spec_from_file_location("onglets_clavier", chemin)
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.poser(html), mod.DEBUT
+
+
 # Règle d'or n°303 — un lien se lit, à l'écran comme sur le papier. Texte repris
 # tel quel des pages publiées (retouche du 21/09/2026). Le bloc se glisse dans le
 # <style> de la loupe, là où la retouche l'avait posé à la main : l'écrire ici
@@ -1583,6 +1596,10 @@ def page(niv):
     if 'class="referentiel-replie"' not in resultat:
         raise SystemExit("n°298 amendée : le dépliant du référentiel n'a pas été posé "
                          "dans le parcours %s — arrêt avant écriture." % niv)
+    resultat, debut_onglets = _onglets(resultat)
+    if 'role="tab"' in resultat and debut_onglets not in resultat:
+        raise SystemExit("n°326 : les onglets du parcours %s ne se parcourent pas au clavier "
+                         "— arrêt avant écriture." % niv)
     return resultat
 
 
