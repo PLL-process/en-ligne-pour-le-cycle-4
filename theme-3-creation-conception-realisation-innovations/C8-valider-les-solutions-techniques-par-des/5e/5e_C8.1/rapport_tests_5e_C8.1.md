@@ -28,7 +28,7 @@ l'attendu ; si la page ne suit pas, le test tombe.
 
 ## QCM — `tests_5e_C8.1_qcm.mjs`
 
-    node tests_5e_C8.1_qcm.mjs qcm_5e_C8.1_patere-du-hall.html 5e_C8.1 … sequence…
+    node tests_5e_C8.1_qcm.mjs qcm_5e_C8.1_patere-du-hall.html 5e_C8.1 5e_C3.1 sequence_5e_C8.1_patere-du-hall.html
 
 **32 / 32**. Ce que la suite vérifie : 30 questions, 4 options et 3 réfutations chacune,
 la bonne réponse sans réfutation, tous les champs du gabarit remplis, la répartition des bonnes

@@ -32947,3 +32947,33 @@ les sept de 4e (`4e_C7.1`, `4e_C7.3` à `4e_C7.8`). Six à huit pièges chacun, 
   `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ; export Éléa régénéré,
   banc vert. Bancs des treize lots : verts, sauf `tests_regle_311_4e_C7.1` (« séance 2, les onglets dans le premier
   écran, bas à 1 063 px pour 844 »), **le même échec sur `main`** : la page de séquence, que cette vague ne touche pas.
+
+## 17/11/2026 — Généralisation, lot 3 (vague 5) : les QCM de C7, C8 et C9 des séquences ; 64 QCM sur 72
+
+**Seize QCM** de plus portent la carte « Avant de commencer », les aides progressives et les pièges (règles d'or
+n°337 et n°339) :
+- les sept de conception de 3e (`3e_C7.1`, `3e_C7.3` à `3e_C7.8`) ;
+- les cinq de validation (`3e_C8.1`, `3e_C8.2`, `5e_C8.1`, `5e_C8.2`, `4e_C8.1`) ;
+- les quatre de programmation (`3e_C9.1`, `3e_C9.2`, `5e_C9.1`, `4e_C9.1`).
+
+Sept ou huit pièges chacun, écrits par numéros avec `fabriquer.py`. La ligne « Comment réussir » de chaque carte reprend
+le conseil propre du lot (« Écris la règle avant de mesurer, jamais après », « Sous un `if`, décale chaque ligne qui en
+dépend »). Aucun de ces QCM n'a de générateur : rien à brancher sur `poser_si_donnees`.
+
+État : **64 QCM sur 72**. Restent les huit des ateliers (sept ateliers de représentation du thème 1, la planification
+du C7) : vague 6.
+
+- Le dossier de `3e_C9.1` porte un second QCM, `qcm_python_variables.html`, conservé en complément (voir plus haut). Il
+  n'est pas au gabarit maison (pas de `const QUESTIONS`) : les outils de la n°339 ne le lisent pas. Cinq autres QCM sont
+  dans ce cas (`4e_C2.1`, `4e_C4.1`, `4e_C4.4`, deux en `4e_C6.2`) ; ils restent hors du compte des 72.
+- L'export Éléa est régénéré : il rattrape aussi les propositions et les indices réécrits à la fin de la vague 4
+  (« la liste des appareils branchés sur le routeur », « la lumière n'arrive plus jusqu'au capteur »…), que l'export de
+  la vague 4 avait précédés.
+- Contrôles : `banc_aides` 16 / 16 ; `verif_qcm_coherence` 16 / 16 ; `controle_indices_qcm` (72 banques, 2 181
+  questions), `controle_longueurs`, `controle_entete_qcm`, `controle_effectifs_qcm`, `controle_banque_qcm`,
+  `controle_sauvegarde_locale`, `controle_boutons_vivants`, `controle_memes_nombres` verts ; `indices_creux.mjs
+  --strict` : 0 « ! », 0 indice vide, 0 indice creux sur les 72 ; banc de l'export vert.
+- Bancs des seize lots et banc commun du C7 (`tests_qcm_c7_c8.mjs`) : **42 / 42 verts**. Les bancs QCM de `3e_C8.1`
+  et `5e_C8.1` tombaient à 30 / 32 quand on recopiait la commande de leur rapport : elle portait « … sequence… » à la
+  place des arguments. Les deux rapports donnent maintenant la commande entière (le code évalué en complément,
+  `3e_C3.4` et `5e_C3.1`, et la page de séquence) ; lancée telle quelle, elle passe à 32 / 32.
