@@ -46,7 +46,7 @@
   /* minuteur */
   .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
   .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
-  .timer-off{color:#5b7bb8;font-size:.8em}
+  .timer-off{color:#7d9bd4;font-size:.8em}
   /* modes */
   .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
   .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
@@ -170,7 +170,7 @@
 
 <section class="card">
   <h2>📊 Ma progression</h2>
-  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar" aria-label="Progression"><div id="pfill"></div></div>
   <div class="dash">
     <div>Répondu<b id="dRep" class="v-hl">0</b></div>
     <div>Correctes<b id="dOk" class="v-ok">0</b></div>
@@ -271,6 +271,7 @@
 <footer>
   <p>QCM d’entraînement C7.1 · Thème 3 · Technologie cycle 4 (2024) · ateliers associés : <a href="atelier_5e_C7.1_planification_taches.html">Atelier 5e</a> · <a href="atelier_4e_C7.1_planification_taches.html">4e</a> · <a href="atelier_3e_C7.1_planification_taches.html">3e</a></p>
   <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
 <script>
@@ -958,7 +959,10 @@ setMode(etat.mode||"complet");
   }
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
   });
 
   // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
@@ -1059,6 +1063,12 @@ setMode(etat.mode||"complet");
       if (boite.width < 120 || boite.height < 90) continue;
       svg.classList.add("loupe-cliquable");
       svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      // un schéma qui porte du texte visible reste une image : un bouton doit contenir dans son nom le texte qu'il
+      // montre (WCAG 2.5.3, axe « label-content-name-mismatch ») ; « Agrandir le schéma : … » dit déjà la commande
+      svg.setAttribute("role", svg.querySelector("text") ? "img" : "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
       svg.addEventListener("click", function(){ ouvrirSvg(this); });
       svg.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
@@ -1075,6 +1085,8 @@ setMode(etat.mode||"complet");
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
       if (!img.getAttribute("title")) {
         img.setAttribute("title", "Cliquer pour agrandir");
       }

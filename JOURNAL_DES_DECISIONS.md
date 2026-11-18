@@ -33016,3 +33016,25 @@ pendant la généralisation » à un contrôle de fin de lot : un QCM neuf reço
   - Reste rouge, comme sur `main` : `verif_chaine.py` (« 3 parcours ne correspondaient PAS à ce que le générateur
     produit ») — les pages d'atelier, que cette vague ne touche pas. Attention : ce contrôle **réécrit** les trois
     pages en place ; elles sont remises telles que le dépôt les porte.
+
+## 18/11/2026 — Le générateur des QCM des ateliers du thème 1 reproduit de nouveau ses pages
+
+La vague 6 du lot 3 l'avait relevé : rejoué, `ateliers-representations/_generation/build_qcm.py --tous` effaçait cinq
+correctifs que les outils du site avaient posés sur les sept QCM depuis leur dernière génération. Ils sont reportés
+dans `gabarit_qcm.tpl` :
+- la couleur de « travailler sans minuteur » (`#7d9bd4`, contraste) ;
+- le nom de la barre de progression (`aria-label="Progression"`) ;
+- la licence CC BY-NC-SA du pied de page ;
+- la loupe du 17/11 : Tab reste dans la fenêtre ouverte ; un schéma qui porte du texte s'annonce comme une image, les
+  autres et les photos comme un bouton « Agrandir… ».
+
+Le générateur place l'ouverture « sur le niveau de l'élève » à la fin du script de la loupe, avant celui qui efface la
+sauvegarde (n°322), comme sur les pages publiées ; il refuse un gabarit sans ce script.
+
+**Les sept QCM sortent identiques à l'octet.** `build_qcm.py --verifier [module …]` rejoue la chaîne (gabarit, banque,
+aides, `fix_r.js` et sa graine) dans un dossier temporaire et compare, sans rien écrire (sortie 0, 1, ou 2 si rien n'est
+vérifié) ; `banc_ateliers.py` le lance pour chaque atelier : 524 / 524. Le générateur des pages d'atelier (`build.py`),
+rejoué lui aussi, ne change rien.
+
+Reste en retard, comme sur `main` : les pages de l'atelier de planification du C7 (`verif_chaine.py`, rouge ; il
+réécrit les trois pages en place quand on le lance).
