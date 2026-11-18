@@ -33230,3 +33230,17 @@ télécharge-le » ; il lit maintenant le texte affiché (`innerText`) et vérif
 (124 / 124). `mode_mission/banc_generique.mjs` sur les pages modifiées : aucun refus. `verif_regles_audit.py` : 0 ✘,
 comme sur `main`.
 
+## 18/11/2026 — 3e_C4.1 : la correction de l'activité 1 montre la chaîne complète ; ses questions portent leur consigne
+
+Deux écarts que j'avais introduits avec #781, relevés par l'inventaire du site (carte blanche de Pascal, « uniformiser
+toutes les séquences et QCM ») :
+- **D1** (`controle_correction_illustree.py`, n°332) : l'activité 1 montre le schéma muet, et sa correction ne montrait
+  aucune figure. `regenerer_chaines_energie.py` sait maintenant faire le **corrigé** (`gabarit_corrige`) : chaque
+  composant à sa place, la fonction de chaque bloc, l'énergie sur chaque flèche. Il ouvre la correction de l'activité 1
+  (`Images/chaine_energie_a_elaborer_corrige.svg`, déclaré dans `SOURCES_MEDIAS.md`).
+- **C1** (`controle_consigne_question.py`, n°335) : les cinq questions b) disaient « La fonction du bloc… » ; elles
+  disent maintenant « Choisis la fonction du bloc… ».
+
+Contrôles : les deux contrôles à 0 sur le site ; `controle_schemas.mjs` 0 ✘ ; `controle_medias.py` vert ; bancs du lot
+25 / 25 et 34 / 34 ; banc du mode mission sans refus.
+
