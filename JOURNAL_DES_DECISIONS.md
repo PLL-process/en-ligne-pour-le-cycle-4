@@ -33274,3 +33274,19 @@ Bancs : `banc_ateliers.py` 524 / 524, `banc_rappels_cdc.py` 302 / 302 ; les banc
 exercice incrusté modifié sont verts, sauf `tests_3e_C2.1_pekin.py` et `tests_4e_C2.1-C2.2_hangzhou.py`, rouges sur
 `main` à l'identique (ils datent d'avant le référentiel replié et la mention de licence : ils se corrigent à part).
 
+## 18/11/2026 — Deux bancs remis à jour (Pékin, Hangzhou) ; un constat sur l'en-tête des pages au téléphone
+
+Inventaire de la carte blanche (« uniformiser toutes les séquences et QCM ») : trois bancs de lot étaient rouges sur
+`main`.
+- `tests_3e_C2.1_pekin.py` (55 / 58) et `tests_4e_C2.1-C2.2_hangzhou.py` (62 / 65) dataient d'avant deux décisions.
+  ① Le **référentiel replié** : la carte du référentiel revient dans la page élève, dans un
+  `<details class="referentiel-replie">` fermé par défaut (journal, n°298 révisée) ; le banc exigeait encore zéro
+  légende des badges dans la page. ② La **mention de licence** : chaque synthèse pointe vers creativecommons.org ; le
+  banc lisait ce lien comme un fichier local. Les deux bancs lisent maintenant ce que les décisions disent : la
+  légende ne vit que dans le référentiel replié, fermé ; un lien `http(s)` n'est pas un fichier. 58 / 58 et 65 / 65.
+- `tests_regle_311_4e_C7.1.mjs` reste rouge, et c'est un vrai constat : à 390 px, en séance 2, les onglets des
+  séances tombent sous le premier écran (bas à 1 063 px pour 844). L'en-tête a grandi depuis la n°311 (choix du
+  parcours, 122 px ; notes de sauvegarde, 99 px). La même mesure donne 1 222 px sur `5e_C7.1`, dont le banc ne la
+  fait pas. À traiter pour tout le site, pas page par page : un en-tête qui se replie au téléphone à partir de la
+  séance 2, comme « Où j'en suis ».
+
