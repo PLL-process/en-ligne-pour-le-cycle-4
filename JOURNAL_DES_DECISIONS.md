@@ -33038,3 +33038,26 @@ rejoué lui aussi, ne change rien.
 
 Reste en retard, comme sur `main` : les pages de l'atelier de planification du C7 (`verif_chaine.py`, rouge ; il
 réécrit les trois pages en place quand on le lance).
+
+## 18/11/2026 — Les deux autres chaînes de production du C7 disent de nouveau vrai
+
+À la suite des ateliers du thème 1 (#779), les chaînes du C7 ont été rejouées.
+
+**Atelier de planification** (`verif_chaine.py`, rouge sur `main`). Régénérées, les trois pages perdaient un seul bloc :
+les onglets au clavier (n°326), posés le 17/11 sur les pages publiées par `onglets_clavier.py --ecrire`, jamais par
+`_generation/build_atelier.py`. Le générateur importe maintenant l'outil, comme il le fait pour la loupe (n°92) et le
+référentiel replié (n°298) : une seule source, jamais recopiée. Il refuse d'écrire une page à onglets sans ce bloc.
+`verif_chaine.py` : « 0 écart » ; les pages ne changent pas.
+
+**Atelier CAO** (`verif_chaine.py`, rouge sur `main`). Le TP `tp_5e_de_calottes.html` dit « Note sur une feuille de
+brouillon ce que tu décides » ; son scénario disait encore « sur ton cahier » (les élèves n'ont pas de cahier) : la
+correction du 17/11 n'avait été faite que sur la page. Le scénario est corrigé, son empreinte recalculée
+(`--empreintes`) ; chaque page est de nouveau ce que son scénario produit.
+
+Les autres générateurs qui écrivent des pages à onglets (ateliers du thème 1, `dnb_build.py`) les produisent déjà avec
+le clavier ; les dossiers `_generation` des séquences (3e_C1.1, 5e_C1.1, 3e_C4.3, 3e_C5.1) n'écrivent que des QCM ou des
+fichiers d'appoint. `onglets_clavier.py --etat --strict` : 88 pages à onglets, 0 à poser.
+
+Contrôles : `tests_atelier_C7.1.py` 48 / 48, `verif_chaine_qcm.py` et `verif_chemins.py` verts ; CAO
+`verif_effectifs.py` vert, `tests_verif_effectifs.py` 21 / 21. `verif_guidage.py` (CAO) reste rouge, comme sur
+`main` : il demande les captures du résultat attendu des paliers, qui se prennent en salle.
