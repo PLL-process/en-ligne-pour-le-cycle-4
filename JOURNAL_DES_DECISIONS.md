@@ -31,6 +31,7 @@
 | 339 | Un QCM aide avant de corriger : indice, règle, correction ; et il fait réviser les pièges | Fable, sur l'audit transmis par Pascal (17/11/2026) | ✅ En vigueur — pilote 5e_C2.1 (#762) ; `_outils/qcm_aides/poser.py`, skill `qcm-aides-et-pieges` |
 | 340 | Une validation dit vrai : le seuil annoncé, une réponse changée la retire, la relecture et la simplification dites | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_validations.py`, skill `validations-qui-disent-vrai` |
 | 341 | Une question ne souffle pas sa réponse | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_propositions_indices.py`, `_outils/qcm_aides/indices_creux.mjs`, skill `propositions-sans-indice` |
+| 342 | Chaque consigne à la ligne : une action par ligne, numérotée | Pascal (18/11/2026), écrite par Fable | ✅ En vigueur — pilote `3e_C6.1` (#782) ; `_outils/controle_consignes_a_la_ligne.py` (mesure), skill `texte-clair-et-aere` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -33115,3 +33116,131 @@ Contrôles : `tests_3e_C4.1-C4.2.mjs` 25 / 25, `tests_regle_311_3e_C4.1.mjs` 34 
 refus, `banc_mission.mjs` 50 / 50 ; `controle_squelette`, `controle_chaine_a_completer`, `controle_schema_sous_les_yeux`,
 `controle_navigation_seances`, `controle_correction_complete`, `controle_mode_essentiel`, `controle_hors_ligne`,
 `controle_axe`, `controle_unites`, `controle_medias` verts ; `mesurer_charge` : aucune séance au-delà de 1 200 mots.
+
+## 18/11/2026 — Règle d'or n°342 : chaque consigne à la ligne ; 3e_C6.1, le programme sous les yeux
+
+Demande de Pascal, à 5 h 22, pour la séance de 9 h : « "Chaque consigne doit être à la ligne." Une règle d'or doit être
+établie. Modifie en priorité cette séquence. » Et, capture à l'appui (mission, « La nouvelle fonctionnalité : le
+gyrophare gradué », séance 2, écran 6 sur 7) : « il y a des fenêtres où il y a des questions, mais il faut revenir tout
+le temps en arrière pour avoir le programme de référence. Ce qui n'est pas ergonomique. »
+
+> **Règle d'or n°342 — Chaque consigne à la ligne.** Une consigne donne une action par ligne. Quand elle en demande
+> plusieurs, chacune va sur sa ligne et se numérote (①, ②, ③… ou a), b), c)…), dans l'ordre où l'élève les fait. On ne
+> les enchaîne jamais dans une même phrase par « ; », « , puis » ou « et ensuite ». Une phrase de contexte (la situation,
+> le but) peut ouvrir la consigne, sur sa propre ligne. Un bout de code à recopier va sur ses propres lignes, tel qu'il
+> s'écrit (indentation comprise).
+
+Pourquoi : un élève de 3e qui lit « lis le programme ; classe chaque donnée, puis relève les lignes » fait la première
+action et oublie les autres. Une action par ligne se coche de l'œil ; c'est le prolongement de la n°335 (une consigne par
+question) et de l'aération des textes (skill `texte-clair-et-aere`).
+
+**Pilote : `3e_C6.1` (S6 : Programmer l'alerte).**
+- Les six consignes d'activité sont à la ligne : ① ② ③ ou a) b) ; l'activité 4 (« implémente l'algorigramme, en 4
+  ajouts ») donne ses quatre ajouts sur quatre lignes, et le bloc `if gyrophare_actif:` / `activer_gyrophare()` sur deux
+  lignes, indentées comme dans l'éditeur.
+- **Le programme sous les yeux** (extension de la n°331 aux programmes). Chaque activité qui fait lire ou modifier le
+  programme de la station (activités 1 à 5) le montre sous sa consigne (`.codelab-ici`). Il n'y a qu'un éditeur :
+  - en mission, il vient tout seul dans l'écran affiché ; chaque écran de question de l'activité le montre, à gauche des
+    questions sur grand écran (au moins 1 000 px), au-dessus sur téléphone (hauteur bornée, il défile) ;
+  - dans la page complète, chaque activité montre le programme tel que l'élève l'a écrit, numéroté et en couleurs, en
+    lecture ; « ✏️ Modifier ici » y amène l'éditeur, « Le ramener ici » le renvoie à sa place.
+  - Ce que l'élève écrit le suit : c'est le même éditeur, déplacé, jamais une copie.
+- L'activité 6 (la bouée houlographe) montre son programme hors de l'exercice (`.programme-ici`), lignes numérotées :
+  la mission le répète sur chacun de ses cinq écrans de question.
+
+Contrôles : `tests_3e_C6.1-C6.3.mjs` 35 / 35, `tests_regle_311_3e_C6.1.mjs` 34 / 34, `banc_generique` du mode mission sans
+refus ; `audit_aeration.py --strict`, `controle_squelette.mjs`, `controle_hors_ligne.mjs`, `controle_regles_visibles.py`,
+`controle_code_colore.mjs`, `controle_schema_sous_les_yeux.py`, `onglets_clavier.py --etat --strict` et `banc_papier.py`
+(la séquence imprimée) verts.
+
+Reste : un outil qui mesure la n°342 sur tout le site (consignes qui enchaînent plusieurs actions), puis la
+généralisation par vagues, comme pour la n°337.
+
+## 18/11/2026 — La n°342 se mesure : `controle_consignes_a_la_ligne.py`
+
+Suite de la n°342 (pilote `3e_C6.1`, #782). L'outil lit, dans chaque page d'élève des thèmes (hors archives, QCM et
+lexiques), chaque élément dont une classe nomme la consigne (`consigne`, `consigne-grille`, `verif-consigne`…) et
+chaque paragraphe qui commence par « Consigne ». Il relève, ligne par ligne :
+- **N1** ✘ deux étapes numérotées sur la même ligne (« ① … ② … », « a) … ; b) … ») ;
+- **N2** ✘ deux actions enchaînées (« ; », « puis », « ensuite », deux phrases à l'impératif) ;
+- **N3** ⚠ deux actions jointes par « et » — à juger : « observe et décris » se lit d'un coup.
+
+Une action est un impératif en tête de segment, après « puis », ou juste après la virgule d'un circonstant (« Pour
+chaque essai, compare… ») : « le programme », « la classe » ne comptent pas. Le code (`<code>`, `<pre>`) n'est pas lu.
+
+Validation : sur la version de `3e_C6.1` d'avant #782, l'outil relève les six consignes que Pascal a vues (N1 2, N2 2,
+N3 2) ; sur la version publiée, 0. Banc `tests_controle_consignes_a_la_ligne.py` : 23 / 23 (lignes connues, puis l'outil
+lancé en sous-processus : sorties 0, 1 et 2, `--json`).
+
+**Mesure du site (18/11/2026)** : 272 pages lues, 387 consignes ; N1 38, N2 112, N3 14 ; **47 pages à reprendre** :
+- thème 1, ateliers des représentations : 19 pages, 71 lignes (les trois cahiers `cahier_*_representations` en tête) ;
+  ces pages sont engendrées : elles se corrigent dans leur source, puis se régénèrent ;
+- thème 1, séquences : 7 pages, 11 lignes ;
+- thème 2 : 11 pages, 39 lignes ;
+- thème 3 : 10 pages, 29 lignes.
+
+Limite : une consigne qui n'est ni marquée comme telle ni annoncée par « Consigne » (un énoncé d'exercice ordinaire)
+n'est pas lue. Reste : la généralisation par vagues, comme pour la n°337.
+
+## 18/11/2026 — Règle d'or n°342, vague 1 : les consignes des séquences des trois thèmes, à la ligne
+
+Suite de #783 (décision par défaut acceptée par Pascal : « #782 #783 Merged »). Les séquences des trois thèmes ;
+les ateliers des représentations du thème 1 (pages engendrées) feront la vague 2, avec les exercices d'atelier
+**incrustés** dans les séquences (`<section class="atelier-incruste">`, entre les marqueurs
+`ateliers-representations:debut/fin`) : ils sont engendrés par `incrustations.py` depuis les mêmes sources
+(`donnees_*.py`), et une retouche faite dans la séquence serait écrasée. Corrigés d'abord dans la page, ils ont été
+remis tels qu'ils sont sur `main` ; `incrustations.py --verifier` dit la même chose qu'avant la vague (seul
+`5e_C2.1` est « à mettre à jour », déjà sur `main`).
+
+**Le contrôle voit mieux.** `controle_consignes_a_la_ligne.py` compte aussi une liste d'actions séparées par des
+virgules (« exécute les 3 tests du banc, compare « attendu » et « obtenu » ») ; un circonstant (« Pour chaque essai,
+compare… ») n'en est pas une. Quelques impératifs manquaient (franchis, déroule, reporte, prédis, réexécute, résous). Le banc
+passe à 25 / 25. Mesure de `main` avant la vague, avec ce contrôle : N1 38, N2 120, N3 12 ; 49 pages à reprendre.
+
+**La passe : `_outils/consignes_a_la_ligne.py`** (nouveau). Ligne par ligne :
+- un retour avant chaque étape numérotée (②, ③… ou b), c)…) ;
+- chaque action enchaînée sur sa ligne, numérotée ①, ② ;
+- le « ; », le « , puis » ou l'« ensuite » qui la cousait retiré : le numéro dit l'ordre ;
+- la capitale en tête, et aucun autre mot changé.
+
+Il nomme ce qu'il ne coupe pas sans risque : une coupure dans un gras, une ligne déjà numérotée, plus de trois
+actions. Ces lignes ont été réécrites à la main (une vingtaine, dont les listes à virgules). Exemples :
+- `4e_C9.1`, l'éditeur Python : six actions sur une ligne → sept étapes, de « ① Écris la décision » à « ⑦ Remplis le
+  journal », puis les trois conseils sur Vittascience, une phrase par ligne ;
+- `3e_C4.7` : la partie a) a ses quatre gestes ①…④ (écrire, découper et expédier, remettre dans l'ordre,
+  réassembler) ; les lettres a) et b) ne changent pas, les titres d'exercice les reprennent ;
+- `3e_C9.2` : « ① Exécute les essais AU BANC (…), consigne chaque observation, remplis le verdict » → cinq étapes.
+
+**Périmètre** : 23 pages de séquence modifiées, dont la page tout-en-un de `3e_C9.2` ; trois de ses quatre pages
+engendrées suivent (`generer_les_quatre_pages.py`, qui reproduisait ses pages avant la vague).
+Hors sections incrustées, chaque consigne de séquence donne une action par ligne. Sur le site : N1 0, N2 80, N3 31 ;
+27 pages restent, toutes pour la vague 2 : les 19 ateliers et cahiers des représentations, et 8 séquences dont seule
+une section incrustée reste à reprendre (9 lignes). Restent aussi 31 N3 (« lis la trace et dis ce
+qui cloche ») : des actions jointes par « et », gardées d'un tenant, à juger.
+
+Contrôles : `audit_aeration.py` inchangé sur les pages modifiées (L1, L2, C1, C2 à 0 avant et après) ; phrases trop
+longues 1 364 → 1 329 ; `controle_regles_visibles.py` et `controle_hierarchie.py` verts ; captures à 390 px
+regardées (3e_C4.1, Book Train, 4e_C9.1, 5e_C3.1).
+
+Bancs des lots (65 bancs, chacun lancé comme on le lance, dans son dossier) : tous verts, sauf trois rouges déjà
+rouges sur `main`, à l'identique : `tests_3e_C2.1_pekin.py` 55 / 58 et `tests_4e_C2.1-C2.2_hangzhou.py` 62 / 65 (liens
+de navigation des synthèses, légende des badges, n°298), `tests_regle_311_4e_C7.1.mjs` (« Où j'en suis », relais non
+lancé). Un banc lisait la consigne mot pour mot : `tests_4e_C9.mjs` attendait « Nomme ton fichier…, puis
+télécharge-le » ; il lit maintenant le texte affiché (`innerText`) et vérifie les deux étapes, chacune sur sa ligne
+(124 / 124). `mode_mission/banc_generique.mjs` sur les pages modifiées : aucun refus. `verif_regles_audit.py` : 0 ✘,
+comme sur `main`.
+
+## 18/11/2026 — 3e_C4.1 : la correction de l'activité 1 montre la chaîne complète ; ses questions portent leur consigne
+
+Deux écarts que j'avais introduits avec #781, relevés par l'inventaire du site (carte blanche de Pascal, « uniformiser
+toutes les séquences et QCM ») :
+- **D1** (`controle_correction_illustree.py`, n°332) : l'activité 1 montre le schéma muet, et sa correction ne montrait
+  aucune figure. `regenerer_chaines_energie.py` sait maintenant faire le **corrigé** (`gabarit_corrige`) : chaque
+  composant à sa place, la fonction de chaque bloc, l'énergie sur chaque flèche. Il ouvre la correction de l'activité 1
+  (`Images/chaine_energie_a_elaborer_corrige.svg`, déclaré dans `SOURCES_MEDIAS.md`).
+- **C1** (`controle_consigne_question.py`, n°335) : les cinq questions b) disaient « La fonction du bloc… » ; elles
+  disent maintenant « Choisis la fonction du bloc… ».
+
+Contrôles : les deux contrôles à 0 sur le site ; `controle_schemas.mjs` 0 ✘ ; `controle_medias.py` vert ; bancs du lot
+25 / 25 et 34 / 34 ; banc du mode mission sans refus.
+

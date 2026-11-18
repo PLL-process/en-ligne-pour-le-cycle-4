@@ -452,11 +452,14 @@ const run = async () => {
        "boutons : " + choix);
 
     const consigne = await page.locator("#s2 .consigne").first().textContent();
-    ok("gestes · la consigne de l'activité 3 dit « Nomme ton fichier 4e-JARDIN-TON NOM, puis télécharge-le (geste 3) » (éditeur intégré, 04/11/2026 ; plus « Enregistre sous »)",
-       /Nomme ton fichier 4e-JARDIN-TON NOM, puis télécharge-le \(geste 3\)/.test(consigne) && !/Enregistre sous/.test(consigne),
-       consigne.trim().slice(0, 140));
-    ok("gestes · la consigne de l'activité 3 limite le volet Python à ce que la consigne demande (« Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs. »)",
-       consigne.includes("Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs."));
+    // règle d'or n°342 (18/11/2026) : une action par ligne — « Nomme ton fichier… » et « Télécharge-le » sont deux
+    // étapes numérotées ; on lit le texte tel qu'il s'affiche (innerText : un <br> y est un retour à la ligne)
+    const consigneLue = await page.locator("#s2 .consigne").first().evaluate(e => e.innerText);
+    ok("gestes · la consigne de l'activité 3 dit « Nomme ton fichier 4e-JARDIN-TON NOM », puis « Télécharge-le (geste 3) », une étape par ligne (éditeur intégré, 04/11/2026 ; plus « Enregistre sous » ; n°342)",
+       /Nomme ton fichier 4e-JARDIN-TON NOM\.\n⑥ Télécharge-le \(geste 3\)/.test(consigneLue) && !/Enregistre sous/.test(consigne),
+       consigneLue.trim().slice(0, 140));
+    ok("gestes · la consigne de l'activité 3 limite le volet Python à ce que la consigne demande (« Dans le volet Python, change seulement ce que la consigne demande. » puis « Le reste, fais-le avec les blocs. », chacun sur sa ligne)",
+       /Dans le volet Python, change seulement ce que la consigne demande\.\nLe reste, fais-le avec les blocs\./.test(consigneLue));
 
     await page.evaluate(() => document.querySelectorAll(".gestes-outil img").forEach(i => { i.loading = "eager"; }));
     await page.waitForTimeout(800);

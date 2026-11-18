@@ -140,6 +140,35 @@
     a{color:#111}
   }
 
+
+  /* ══ Le programme sous les yeux (demande de Pascal du 18/11/2026) ══ */
+  .codelab-ici{margin:10px 0 14px}
+  .codelab-ici .codelab{margin:0}
+  .codelab-ici .cl-body{max-height:min(42vh,380px)}
+  .cl-miroir{border:1px solid var(--border);border-radius:12px;background:#08132c;overflow:hidden}
+  .cl-miroir-tete{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 12px;background:#0d2347;border-bottom:1px solid var(--border);font-size:.82em}
+  .cl-miroir-tete b{color:var(--hl)}
+  .cl-miroir-tete button{margin-left:auto;background:#173666;border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:5px 11px;font-size:.95em;cursor:pointer;font-family:inherit;min-height:36px}
+  .cl-miroir pre{margin:0;padding:10px 12px;max-height:min(42vh,380px);overflow:auto;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.86em;line-height:1.5;color:#d7e6ff;white-space:pre}
+  .cl-miroir .cl-n{display:inline-block;min-width:2.2em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none}
+  .codelab-ici:has(.codelab) .cl-miroir{display:none}
+  #codelab-ailleurs{display:none;margin:8px 0;padding:10px 12px;border:1px dashed var(--border);border-radius:10px;font-size:.9em;color:var(--sub)}
+  #codelab-ailleurs button{margin-left:6px}
+  @media print{.codelab-ici{display:none}}
+  /* en mission : la question à côté du programme sur grand écran, sous un programme plus court au téléphone ; les
+     outils d'atelier (copier, exporter, importer…) restent dans la page complète */
+  body.ms .codelab-ici #clCopy,body.ms .codelab-ici #clWrap,body.ms .codelab-ici #clExport,body.ms .codelab-ici label[for=clImport],
+  body.ms .codelab-ici #clForget{display:none}
+  @media (min-width:1000px){
+    body.ms .activite:has(> .programme-ici){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:18px;row-gap:0;align-items:start}
+    body.ms .activite:has(> .programme-ici) > *{grid-column:2;min-width:0}
+    body.ms .activite:has(> .programme-ici) > .programme-ici{grid-column:1;grid-row:1 / span 40;position:sticky;top:150px}
+    body.ms .activite:has(> .codelab-ici > .codelab){display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:18px;row-gap:0;align-items:start}
+    body.ms .activite:has(> .codelab-ici > .codelab) > *{grid-column:2;min-width:0}
+    body.ms .activite:has(> .codelab-ici > .codelab) > .codelab-ici{grid-column:1;grid-row:1 / span 40;position:sticky;top:150px;margin-top:0}
+    body.ms .codelab-ici .cl-body{max-height:calc(100vh - 340px)}
+  }
+  @media (max-width:999px){ body.ms .codelab-ici .cl-body{max-height:34vh} }
   /* ══ CodeLab Techno ══ */
   .codelab{background:#08132c;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:14px 0}
   .cl-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 14px;background:#0d2347;border-bottom:1px solid var(--border);font-size:.82em}
@@ -1795,6 +1824,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <section class="card">
   <h2>⌨ Le programme de la station — CodeLab Techno</h2>
   <p style="font-size:.9em;color:var(--sub)">C'est LE document de travail des trois séances. Tu peux le modifier, il se sauvegarde tout seul sur cet appareil ; « Réinitialiser » restaure la version d'origine.</p>
+  <p id="codelab-ailleurs" role="status">⌨ Le programme est affiché dans l'activité en cours, sous sa consigne. <button type="button" class="btn small ghost" id="clIci">Le ramener ici</button></p>
   <div class="codelab" id="codelab">
     <div class="cl-head">
       <span class="cl-name">CodeLab Techno</span>
@@ -1928,7 +1958,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> 6 classements + 2 numéros de lignes relevés dans CodeLab.</div>
       <div><b>Ressources :</b> le programme dans CodeLab (en haut de la page) + le schéma entrées/sorties, à compléter, juste ici (le schéma complet est dans la correction).</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> <button class="btn small ghost" type="button" data-hl="6-7">✨ Surligner les lignes 6-7</button> <button class="btn small ghost" type="button" data-hl="20-23">✨ Surligner les lignes 20-23</button> — lis le programme dans CodeLab, puis classe chaque donnée et relève les lignes demandées.</div>
+    <div class="consigne"><b>Consigne :</b><br>① Lis le programme de la station.<br>② Classe chaque donnée.<br>③ Relève les lignes demandées.<br><button class="btn small ghost" type="button" data-hl="6-7">✨ Surligner les lignes 6-7</button> <button class="btn small ghost" type="button" data-hl="20-23">✨ Surligner les lignes 20-23</button></div>
+<div class="codelab-ici" aria-label="Le programme de la station, sous tes yeux"></div>
         <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux">
       <object class="figure" data="Images/programme_entrees_sorties_muet.svg" type="image/svg+xml" aria-label="Schéma à compléter : au centre, le programme d&#x27;alerte qui lit les entrées, compare aux seuils et produit les sorties. À gauche trois cases pour les données utilisées, à droite trois cases pour les données produites : elles sont à trouver dans le programme.">Données utilisées et produites par le programme — à compléter (SVG)</object>
       <figcaption>La carte d'identité du programme, à compléter : les six données se trouvent dans CodeLab.</figcaption>
@@ -2000,7 +2031,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> 2 traces d'exécution + 1 justification.</div>
       <div><b>Ressources :</b> le programme dans CodeLab — <button class="btn small ghost" type="button" data-hl="12-18">✨ Surligner les lignes 12-18</button></div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> suis le programme ligne à ligne « dans ta tête » (ou au brouillon) pour chaque situation, et donne les valeurs produites.</div>
+    <div class="consigne"><b>Consigne :</b><br>① Pour chaque situation, suis le programme ligne à ligne, dans ta tête ou sur une feuille de brouillon.<br>② Donne les valeurs produites.</div>
+<div class="codelab-ici" aria-label="Le programme de la station, sous tes yeux"></div>
     <div class="exo">
       <p><b>Situation A :</b> <code>vent_kmh = 95</code></p>
       <fieldset class="qcm-groupe" id="d2_a1" data-melange="1">
@@ -2068,7 +2100,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> le seuil modifié dans CodeLab + l'effet prédit.</div>
       <div><b>Ressources :</b> CodeLab — <button class="btn small ghost" type="button" data-hl="2-4">✨ Surligner les lignes 2-4</button></div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> Météo-France recalibre ses niveaux : le seuil orange passe de 50 à <b>60 km/h</b>. Dans CodeLab, <b>modifie la ligne 2</b> en conséquence, puis réponds.</div>
+    <div class="consigne"><b>Consigne :</b> Météo-France recalibre ses niveaux : le seuil orange passe de 50 à <b>60 km/h</b>.<br>① Dans le programme de la station, <b>modifie la ligne 2</b> en conséquence.<br>② Réponds aux questions.</div>
+<div class="codelab-ici" aria-label="Le programme de la station, sous tes yeux"></div>
     <div class="exo">
       <fieldset class="qcm-groupe" id="d3_1" data-melange="1">
   <legend>Après ta modification, que déclenche un vent de 55 km/h ?</legend>
@@ -2104,12 +2137,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> le programme v2 complet dans CodeLab (4 ajouts).</div>
       <div><b>Ressources :</b> l'algorigramme ci-dessus — c'est TA spécification.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> implémente l'algorigramme dans CodeLab, en 4 ajouts :
-      ① après la ligne 10, crée la variable <code>gyrophare_actif = False</code> ;
-      ② dans la branche <b>violette</b>, ajoute <code>gyrophare_actif = True</code> ;
-      ③ dans la branche <b>orange</b>, ajoute <code>gyrophare_actif = True</code> ;
-      ④ à la fin du programme, ajoute le bloc <code>if gyrophare_actif:</code> / <code>    activer_gyrophare()</code>.
-      ⚠ Respecte l'indentation (4 espaces) — en Python, elle fait partie du langage !</div>
+    <div class="consigne"><b>Consigne :</b> implémente l'algorigramme dans le programme de la station, en 4 ajouts.<br>① Après la ligne 10, crée la variable <code>gyrophare_actif = False</code>.<br>② Dans la branche <b>violette</b>, ajoute <code>gyrophare_actif = True</code>.<br>③ Dans la branche <b>orange</b>, ajoute <code>gyrophare_actif = True</code>.<br>④ À la fin du programme, ajoute ce bloc de deux lignes&nbsp;:<br><code style="white-space:pre">if gyrophare_actif:</code><br><code style="white-space:pre">    activer_gyrophare()</code><br>⚠ Respecte l'indentation (4 espaces) : en Python, elle fait partie du langage&nbsp;!</div>
+<div class="codelab-ici" aria-label="Le programme de la station, sous tes yeux"></div>
     <div class="exo">
       <button class="btn small" data-check="4" style="margin-top:2px">✔ Vérifier mon programme (analyse du contenu de CodeLab)</button>
       <div class="feedback" id="fb4" role="status"></div>
@@ -2170,7 +2199,8 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
       <div><b>Production attendue :</b> 5 sorties attendues + le diagnostic d'un bug.</div>
       <div><b>Ressources :</b> TON programme v2 dans CodeLab (seuil orange = 60) + le schéma du plan de tests, juste ici (le schéma complet est dans la correction).</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> a) calcule À LA MAIN la sortie attendue de ta v2 pour chaque jeu d'essai ; b) analyse ensuite le bug du schéma.</div>
+    <div class="consigne"><b>Consigne :</b><br>a) Calcule À LA MAIN la sortie attendue de ta v2 pour chaque jeu d'essai.<br>b) Analyse ensuite le bug du schéma.</div>
+<div class="codelab-ici" aria-label="Le programme de la station, sous tes yeux"></div>
     <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux">
       <object class="figure" data="Images/plan_de_tests_jeux_essai_muet.svg" type="image/svg+xml" aria-label="Plan de tests de la version 1 avec cinq jeux d'essai : 45, 50, 51, 118, 119, la sortie attendue, la sortie obtenue et le verdict. Le test n°4, à 118, obtient violette au lieu de rouge. Deux questions restent à résoudre : pourquoi ces valeurs, et d'où vient le bug.">Le plan de tests de la v1 et ses jeux d'essai — à analyser (SVG)</object>
       <figcaption>Le plan de tests de la v1 (seuil orange = 50) : un exemple. <br>Ses valeurs 118 et 119 servent aussi à vérifier que ta v2 n'a rien cassé.</figcaption>
@@ -2257,14 +2287,17 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
       <div><b>Production attendue :</b> 6 réponses, sans rouvrir les corrections.</div>
       <div><b>Ressources :</b> uniquement le programme ci-dessous — c'est volontaire !</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme. Lis-le, puis réponds.</div>
+    <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme.<br>① Lis-le.<br>② Réponds aux questions.</div>
+    <div class="programme-ici" aria-label="Le programme de la bouée, sous tes yeux">
+      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff" data-code-colore="python"><span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">1</span>SEUIL_HOULE = 4
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">2</span>hauteur_m = lire_capteur("houlographe")
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">3</span>drapeau = "vert"
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">4</span>if hauteur_m &gt; SEUIL_HOULE:
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">5</span>    drapeau = "rouge"
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">6</span>envoyer("Baignade : " + drapeau)</pre>
+    </div>
     <div class="exo">
-      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff" data-code-colore="python">SEUIL_HOULE = 4
-hauteur_m = lire_capteur("houlographe")
-drapeau = "vert"
-if hauteur_m &gt; SEUIL_HOULE:
-    drapeau = "rouge"
-envoyer("Baignade : " + drapeau)</pre>
+      
       <fieldset class="qcm-groupe qcm-rangee" id="d6_1">
   <legend><code>hauteur_m</code> : est-ce une donnée utilisée ou produite ?</legend>
   <div class="qcm-option"><input type="radio" name="d6_1" id="d6_1__1" value="utilisée (entrée)"><label for="d6_1__1">utilisée (entrée)</label></div>
@@ -2584,6 +2617,68 @@ document.querySelectorAll("[data-hl]").forEach(b=>{
     document.getElementById("codelab").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth", block:"center"});
   });
 });
+
+
+/* ══════ Le programme sous les yeux (demande de Pascal du 18/11/2026) ══════
+   L'élève répond le programme sous les yeux, comme le schéma (n°331) : chaque activité qui le fait lire ou modifier
+   le montre sous sa consigne (`.codelab-ici`). Il n'y a qu'un éditeur : en mission, il vient tout seul dans l'écran
+   affiché ; dans la page, chaque activité montre le programme tel qu'il est (en lecture), et « Modifier ici » y amène
+   l'éditeur. Ce que l'élève écrit le suit partout : c'est le même éditeur, déplacé. */
+(function(){
+  const cl = document.getElementById("codelab"), ta = document.getElementById("clTa");
+  if(!cl || !ta) return;
+  const maison = cl.parentNode, repere = document.createComment(" la place de l'éditeur ");
+  maison.insertBefore(repere, cl);
+  const ailleurs = document.getElementById("codelab-ailleurs");
+  const ICI = [...document.querySelectorAll(".codelab-ici")];
+  function esc(t){ return String(t).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+  function ligne(l){ return window.CodeColore ? window.CodeColore.html(l, "python") : esc(l); }
+  function miroirs(){
+    const lignes = ta.value.split("\n");
+    const html = lignes.map((l, i) => '<span class="cl-n">' + (i + 1) + '</span>' + (ligne(l) || "")).join("\n");
+    ICI.forEach(z => { const pre = z.querySelector(".cl-miroir pre"); if(pre) pre.innerHTML = html; });
+  }
+  ICI.forEach(z => {
+    const m = document.createElement("div"); m.className = "cl-miroir";
+    m.innerHTML = '<div class="cl-miroir-tete"><b>⌨ Le programme de la station</b><span>— ta version, telle qu\'elle est</span>'
+      + '<button type="button" class="cl-amener">✏️ Modifier ici</button></div><pre></pre>';
+    z.appendChild(m);
+    m.querySelector(".cl-amener").addEventListener("click", () => { placer(z); ta.focus({preventScroll:true}); });
+  });
+  function placer(z){
+    if(z && cl.parentNode !== z){ z.insertBefore(cl, z.firstChild); cl.classList.remove("ms-cache"); }
+    if(!z && cl.parentNode !== maison){ maison.insertBefore(cl, repere.nextSibling); }
+    if(ailleurs) ailleurs.style.display = cl.parentNode === maison ? "none" : "block";
+    miroirs();
+  }
+  document.getElementById("clIci").addEventListener("click", () => placer(null));
+  /* surligner des lignes depuis une activité : l'éditeur vient dans cette activité */
+  document.querySelectorAll("[data-hl]").forEach(b => b.addEventListener("click", () => {
+    const A = b.closest(".activite"), z = A && A.querySelector(".codelab-ici");
+    if(z) placer(z);
+  }, true));
+  /* la mission se construit à son entrée : l'éditeur est alors chez lui, et la place sous la consigne reste une
+     ressource que chaque écran de l'activité montre */
+  const bM = () => document.getElementById("btnMission");
+  document.addEventListener("click", e => { if(bM() && e.target.closest("#btnMission")) placer(null); }, true);
+  let attente = 0;
+  function suivreMission(){
+    clearTimeout(attente);
+    attente = setTimeout(() => {
+      if(!document.body.classList.contains("ms")){
+        /* dans la page : un éditeur resté dans une séance qu'on vient de quitter revient chez lui, toujours visible */
+        if(cl.parentNode !== maison && cl.offsetParent === null) placer(null);
+        return;
+      }
+      const vue = ICI.filter(z => z.offsetParent !== null)[0];
+      if(vue && cl.parentNode !== vue && document.activeElement !== ta) placer(vue);
+    }, 40);
+  }
+  new MutationObserver(suivreMission).observe(document.body, {subtree:true, attributes:true, attributeFilter:["class"]});
+  ta.addEventListener("input", miroirs);
+  miroirs();
+  window.addEventListener("load", miroirs);
+})();
 
 /* ══════ Vérifications ══════ */
 window.__valid = window.__valid || {};
