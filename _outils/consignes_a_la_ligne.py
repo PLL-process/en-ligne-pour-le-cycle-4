@@ -149,14 +149,23 @@ def coupures_ligne(s, a, b):
         if g <= derniere[0]:
             raise ValueError("deux coupures se chevauchent")
         derniere[0] = k
-        for x in list(range(g, k)) + list(range(k, k + efface)) + [k]:
-            if x < len(t) and (prof[x] != base or code[x]):
+        ins = pos[k][0]
+        if k < len(t) and prof[k] != base:
+            # l'action commence au premier mot d'un gras (« , puis <b>écris</b> ») : la coupure va avant la balise
+            if not code[k] and k > 0 and prof[k - 1] == base and all(prof[x] == prof[k] for x in range(k, k + efface)):
+                ins = pos[k - 1][1]
+            else:
                 raise ValueError("la coupure tombe dans une balise en ligne")
+        for x in list(range(g, k)):
+            if prof[x] != base or code[x]:
+                raise ValueError("la coupure tombe dans une balise en ligne")
+        if k < len(t) and code[k]:
+            raise ValueError("la coupure tombe dans du code")
         for x in list(range(g, k)) + list(range(k, k + efface)):
             rep.append((pos[x][0], pos[x][1], ""))
         avant_ligne = t[:g].strip() != ""
         point = "." if avant_ligne and g > debut_utile and t[g - 1] not in FIN else ""
-        rep.append((pos[k][0], pos[k][0], point + ("<br>" if avant_ligne else "") + (numero + " " if numero else "")))
+        rep.append((ins, ins, point + ("<br>" if avant_ligne else "") + (numero + " " if numero else "")))
         rep.extend(capitale(t, pos, k + efface if cap is None else cap))
 
     def fin_repere(k):

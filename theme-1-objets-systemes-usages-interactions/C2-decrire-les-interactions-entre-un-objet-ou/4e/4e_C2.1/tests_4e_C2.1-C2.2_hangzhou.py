@@ -127,7 +127,7 @@ with sync_playwright() as p:
     # n°298 (15/09/2026) remplace, sur la page élève, la légende des étiquettes (n°44, 3e élément)
     sp = pathlib.Path("Synthèses/synthese_professeur_4e_C2.1-C2.2.html").read_text(encoding="utf-8")
     t("n°298 : la légende des badges a quitté la page élève pour la synthèse professeur",
-      pg.locator(".legende-badges").count() == 0
+      pg.evaluate("[...document.querySelectorAll('.legende-badges')].every(e => e.closest('details.referentiel-replie:not([open])'))")
       and 'class="legende-badges"' in sp[sp.find("referentiel-eleve"):])
     t("n°44 : le mode essentiel est expliqué en clair", pg.is_visible("#aide-essentiel"))
 
@@ -357,7 +357,7 @@ with sync_playwright() as p:
         t(f"synthèse {nom} : liens de navigation valides",
           all(pathlib.Path("Synthèses").joinpath(h.split("#")[0]).exists()
               for h in pg.eval_on_selector_all("a", "a=>a.map(e=>e.getAttribute('href'))")
-              if not h.startswith("#")))   # n°316 : la carte renvoie aux parties de la page (#partie-N)
+              if not h.startswith(("#", "http://", "https://", "mailto:"))))   # la mention de licence pointe vers creativecommons.org   # n°316 : la carte renvoie aux parties de la page (#partie-N)
 
     b.close()
 

@@ -445,11 +445,13 @@ E2 = dict(
           "centrale</b> devient le <b>dossier du projet</b>, chaque <b>branche</b> devient un <b>dossier</b> rangé dedans, et "
           "chaque <b>feuille</b> devient un <b>fichier</b>. En classe, on enregistre toujours dans <b>Documents</b>, puis dans "
           "le <b>dossier au nom de la classe</b>&nbsp;: <b>5e</b>.</p>",
-    consigne="<p>Une <b>arborescence</b>, c'est la façon dont les dossiers sont rangés les uns dans les autres. <b>Choisis "
-             "l'arborescence qui correspond à la carte mentale</b> et à la règle de la classe. Puis <b>range</b> quatre nouveaux "
-             "fichiers&nbsp;: les lettres après le point, l'<b>extension</b>, disent le format (.jpg une image, .csv un tableau "
-             "de valeurs, .odt un texte), mais c'est le nom qui dit de quoi parle le fichier. Enfin, <b>écris le chemin</b> "
-             "complet du fichier releves_mardi.csv&nbsp;: la suite des dossiers à traverser, du plus grand au plus petit.</p>",
+    consigne=("<p>Une <b>arborescence</b>, c'est la façon dont les dossiers sont rangés les uns dans les autres.<br>"
+              "① <b>Choisis l'arborescence qui correspond à la carte mentale</b> et à la règle de la classe.<br>"
+              "② <b>Range</b> quatre nouveaux fichiers&nbsp;: les lettres après le point, l'<b>extension</b>, "
+              "disent le format (.jpg une image, .csv un tableau de valeurs, .odt un texte), mais c'est le nom qui "
+              "dit de quoi parle le fichier.<br>"
+              "③ <b>Écris le chemin</b> complet du fichier releves_mardi.csv&nbsp;: la suite des dossiers à "
+              "traverser, du plus grand au plus petit.</p>"),
     critere="la bonne arborescence, quatre fichiers bien rangés, et un chemin qui passe, dans l'ordre, par 5e, Lampadaire et "
             "Mesures jusqu'au fichier.",
     widgets=[dict(type="choix", name="arbo",
@@ -538,11 +540,12 @@ E3 = dict(
           "<b>système d'arrosage connecté</b> s'en charge&nbsp;: un capteur d'humidité mesure la terre, une pompe prend l'eau "
           "de la cuve, et la gardienne, Mme Joseph, reçoit des nouvelles sur son téléphone. Le club prépare une carte mentale "
           "pour en débattre.</p>",
-    consigne="<p>Un <b>avantage</b>, c'est ce que l'évolution apporte de mieux&nbsp;; un <b>inconvénient</b>, ce qu'elle coûte "
-             "ou fait perdre. <b>Complète les feuilles vides</b> des branches Avantages et Inconvénients avec les étiquettes de "
-             "la liste&nbsp;: tes choix s'écrivent dans la carte. Deux étiquettes sont <b>hors sujet</b>&nbsp;: elles restent "
-             "dehors, et tu dis <b>pourquoi</b>. Enfin, <b>écris ta propre feuille</b>&nbsp;: un autre inconvénient, en "
-             "quelques mots.</p>",
+    consigne=("<p>Un <b>avantage</b>, c'est ce que l'évolution apporte de mieux&nbsp;; un <b>inconvénient</b>, ce "
+              "qu'elle coûte ou fait perdre.<br>"
+              "① <b>Complète les feuilles vides</b> des branches Avantages et Inconvénients avec les étiquettes de "
+              "la liste&nbsp;: tes choix s'écrivent dans la carte. Deux étiquettes sont <b>hors sujet</b>&nbsp;: "
+              "elles restent dehors, et tu dis <b>pourquoi</b>.<br>"
+              "② <b>Écris ta propre feuille</b>&nbsp;: un autre inconvénient, en quelques mots.</p>"),
     critere="deux avantages et deux inconvénients bien placés, la bonne raison pour le hors-sujet, et une feuille courte qui "
             "dit ce que le système coûte ou fait perdre.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + CM_ARROSAGE_A_COMPLETER +
@@ -852,12 +855,14 @@ E6 = dict(
           "sirène, un message sur les téléphones. Entre deux mesures&nbsp;: 1 minute d'attente. Ni flèche, ni ordre.</p></details>"
           "<p>Pour son exposé, l'équipe se pose ensuite six questions. Pour chacune, une représentation convient mieux que les "
           "autres.</p>",
-    consigne="<p><b>Dis ce qu'est chacune des quatre représentations</b>&nbsp;: un texte, un <b>algorithme</b> (les opérations "
-             "écrites en lignes), un <b>algorigramme</b> (les mêmes opérations dessinées, avec un losange pour le test) ou une "
-             "carte mentale. <b>Dis laquelle ne montre pas l'ordre.</b> Puis <b>relie chaque question</b> à la représentation qui "
-             "y répond le mieux&nbsp;: la carte mentale, la chaîne d'énergie (le chemin de l'énergie), l'algorigramme, le "
-             "diagramme des interacteurs extérieurs (ce qui entoure l'objet) ou le tableau (des valeurs à comparer). Enfin, "
-             "<b>explique</b> pourquoi la carte mentale ne convient pas pour la question 2.</p>",
+    consigne=("<p>① <b>Dis ce qu'est chacune des quatre représentations</b>&nbsp;: un texte, un <b>algorithme</b> "
+              "(les opérations écrites en lignes), un <b>algorigramme</b> (les mêmes opérations dessinées, avec un "
+              "losange pour le test) ou une carte mentale.<br>"
+              "② <b>Dis laquelle ne montre pas l'ordre.</b><br>"
+              "③ <b>Relie chaque question</b> à la représentation qui y répond le mieux&nbsp;: la carte mentale, "
+              "la chaîne d'énergie (le chemin de l'énergie), l'algorigramme, le diagramme des interacteurs "
+              "extérieurs (ce qui entoure l'objet) ou le tableau (des valeurs à comparer).<br>"
+              "④ <b>Explique</b> pourquoi la carte mentale ne convient pas pour la question 2.</p>"),
     critere="les quatre représentations reconnues, la bonne réponse sur l'ordre, six questions bien reliées, et une phrase "
             "qui dit ce que la carte mentale ne montre pas et ce qu'il faut à la place.",
     widgets=[dict(type="classer", name="quatre",
@@ -1061,9 +1066,9 @@ NIVEAUX = {
                   "Mesures › releves_mardi.csv.</li>"
                   "<li>La carte mentale <b>range</b> des idées&nbsp;: elle ne montre ni ce qui circule ni l'ordre des opérations.</li></ul>",
         bonus=[dict(titre="La carte de ton cartable",
-                    consigne="<p>Dessine sur une feuille de brouillon la carte mentale de ton cartable&nbsp;: au centre, « Mon cartable »&nbsp;; "
-                             "<b>quatre branches</b> au moins, avec un mot chacune. Puis dis quel objet tu as eu du mal à ranger, "
-                             "et pourquoi.</p>",
+                    consigne=("<p>① Dessine sur une feuille de brouillon la carte mentale de ton cartable&nbsp;: au centre, « Mon "
+                              "cartable »&nbsp;; <b>quatre branches</b> au moins, avec un mot chacune.<br>"
+                              "② Dis quel objet tu as eu du mal à ranger, et pourquoi.</p>"),
                     correction=['<figure class="figure">' + CM_CARTABLE_CORRIGE + '<figcaption>Une carte possible&nbsp;: '
                                 'la tienne aura d\'autres branches, mais la même forme — un sujet au centre, un mot par '
                                 'branche, des mots-clés dans les feuilles.</figcaption></figure>',
@@ -1120,8 +1125,9 @@ NIVEAUX = {
                     # fait à l'écran : les cinq champs s'écrivent dans la carte, à mesure (sauvegardés avec le Bonus)
                     ecran="<p>Écris dans les cases sous la carte&nbsp;: <b>la carte se dessine à mesure</b>. Trois ou quatre "
                           "mots par case suffisent.</p>",
-                    papier="<p><b>Sur ta feuille</b>&nbsp;: dessine cette carte en plus grand, puis écris l'évolution au "
-                           "centre, deux avantages et deux inconvénients dans les feuilles.</p>",
+                    papier=("<p><b>Sur ta feuille</b>&nbsp;:<br>"
+                            "① Dessine cette carte en plus grand.<br>"
+                            "② Écris l'évolution au centre, deux avantages et deux inconvénients dans les feuilles.</p>"),
                     schema=CM_BADGE_A_FAIRE,
                     legende="Ta carte mentale du badge&nbsp;: ce que tu écris s'inscrit dans les cases en pointillés.",
                     champs=[dict(name="centre", label="Au centre&nbsp;: l'évolution", cible="cm-bx-c",

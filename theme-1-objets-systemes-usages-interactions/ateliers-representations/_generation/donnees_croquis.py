@@ -793,11 +793,12 @@ E1 = dict(
           + _figure(BORNE_C, "Croquis C.", "<p>La borne ouverte, vue de l'intérieur, sans personne : une carte électronique, "
                     "l'antenne du lecteur, des fils, le verrou de la pince qui tient la roue avant, le câble d'alimentation. Une "
                     "petite flèche rouge : le verrou recule.</p>"),
-    consigne="<p>Un <b>croquis</b> — on dit souvent <b>croquis à main levée</b> — est un dessin rapide qui montre l'essentiel. "
-             "Ses <b>légendes</b> sont des mots reliés au dessin par un trait ; une <b>flèche de mouvement</b> montre un geste et "
-             "son sens.</p>"
-             "<p><b>Choisis le croquis qui montre comment on sort un vélo de la borne, comme Inès le raconte.</b> Puis <b>dis ce "
-             "qui ne va pas</b> dans les deux autres, et <b>coche ce qui rend le bon croquis réussi</b>.</p>",
+    consigne=("<p>Un <b>croquis</b> — on dit souvent <b>croquis à main levée</b> — est un dessin rapide qui montre "
+              "l'essentiel. Ses <b>légendes</b> sont des mots reliés au dessin par un trait ; une <b>flèche de "
+              "mouvement</b> montre un geste et son sens.</p><p>① <b>Choisis le croquis qui montre comment on sort "
+              "un vélo de la borne, comme Inès le raconte.</b><br>"
+              "② <b>Dis ce qui ne va pas</b> dans les deux autres, et <b>coche ce qui rend le bon croquis "
+              "réussi</b>.</p>"),
     critere="tu choisis le bon croquis, tu donnes la bonne raison pour chacun des deux autres, et tu coches les quatre règles "
             "d'un croquis réussi — et rien d'autre.",
     widgets=[dict(type="choix", name="bon",
@@ -895,12 +896,14 @@ E2 = dict(
           "arroser à 18:00, quand il fait moins chaud. J'appuie sur le bouton +&nbsp;: chaque appui avance d'une demi-heure, alors "
           "j'appuie, j'appuie… vingt-quatre fois&nbsp;! Puis j'appuie sur OK, et le boîtier bipe deux fois. Le pire, c'est le "
           "soleil&nbsp;: il se reflète sur l'écran, je dois mettre ma main en visière pour lire. »</p>",
-    consigne="<p>Ce témoignage est écrit en <b>langage naturel</b>&nbsp;: les mots de tous les jours. Ton travail&nbsp;: le traduire "
-             "en un <b>croquis</b> — un dessin rapide, à main levée — que l'on comprendrait sans lire le texte.</p>"
-             "<p><b>Coche d'abord ce que ton croquis doit montrer.</b> Puis <b>dessine-le</b> dans la zone de dessin (au doigt, au "
-             "stylet ou à la souris)&nbsp;: des <b>légendes</b> (des mots reliés au dessin par un trait), une <b>flèche de "
-             "mouvement</b> pour le geste, une <b>bulle</b> pour ce que ressent Mme Joseph. Pas besoin de savoir « bien » "
-             "dessiner&nbsp;: un rond pour la tête, un rectangle pour le boîtier suffisent. <b>Relis-le enfin avec la liste.</b></p>",
+    consigne=("<p>Ce témoignage est écrit en <b>langage naturel</b>&nbsp;: les mots de tous les jours. Ton "
+              "travail&nbsp;: le traduire en un <b>croquis</b> — un dessin rapide, à main levée — que l'on "
+              "comprendrait sans lire le texte.</p><p>① <b>Coche d'abord ce que ton croquis doit montrer.</b><br>"
+              "② <b>Dessine-le</b> dans la zone de dessin (au doigt, au stylet ou à la souris)&nbsp;: des "
+              "<b>légendes</b> (des mots reliés au dessin par un trait), une <b>flèche de mouvement</b> pour le "
+              "geste, une <b>bulle</b> pour ce que ressent Mme Joseph. Pas besoin de savoir « bien » "
+              "dessiner&nbsp;: un rond pour la tête, un rectangle pour le boîtier suffisent.<br>"
+              "③ <b>Relis-le enfin avec la liste.</b></p>"),
     critere="tu coches les cinq éléments utiles et seulement eux&nbsp;; ton croquis montre la personne, le boîtier, le geste par "
             "une flèche, au moins deux légendes, et ce que la gardienne voit ou ressent.",
     widgets=[dict(type="cases", name="montrer", legende="Dans le témoignage, qu'est-ce que ton croquis doit montrer&nbsp;?",
@@ -992,12 +995,13 @@ E3 = dict(
     intro="<p>Le système d'arrosage n'arrose que si la terre est sèche&nbsp;: il lit un <b>capteur d'humidité</b> planté dans le "
           "bac. Mais le capteur bouge — un coup d'arrosoir, un coup de pied — et ses mesures deviennent fausses. On veut "
           "<b>ajouter une fonction</b> au jardin&nbsp;: <b>tenir le capteur droit, à la bonne profondeur, sans qu'il bouge</b>.</p>",
-    consigne="<p>Tu vas <b>proposer une solution par un croquis coté</b>&nbsp;: un croquis qui porte des <b>cotes</b> — des dimensions, "
-             "avec leur unité — pour qu'on puisse fabriquer la pièce. Tu inventes la pièce&nbsp;: un crochet, une pince, un piquet… "
-             "à toi de voir.</p>"
-             "<p><b>Coche d'abord les règles justes du croquis coté.</b> Puis <b>dessine ta pièce</b>&nbsp;: comment elle tient au "
-             "bac, au moins une cote, le matériau écrit, et une <b>flèche de montage</b> (le sens dans lequel on la met en place). "
-             "<b>Décris-la enfin en deux phrases.</b></p>",
+    consigne=("<p>Tu vas <b>proposer une solution par un croquis coté</b>&nbsp;: un croquis qui porte des "
+              "<b>cotes</b> — des dimensions, avec leur unité — pour qu'on puisse fabriquer la pièce. Tu inventes "
+              "la pièce&nbsp;: un crochet, une pince, un piquet… à toi de voir.</p><p>① <b>Coche d'abord les "
+              "règles justes du croquis coté.</b><br>"
+              "② <b>Dessine ta pièce</b>&nbsp;: comment elle tient au bac, au moins une cote, le matériau écrit, "
+              "et une <b>flèche de montage</b> (le sens dans lequel on la met en place).<br>"
+              "③ <b>Décris-la enfin en deux phrases.</b></p>"),
     critere="tu coches les trois règles justes&nbsp;; ton croquis montre la pièce, comment elle tient, une cote, le matériau et la "
             "flèche de montage&nbsp;; ta description dit comment la pièce tient, donne une dimension avec son unité et nomme le "
             "matériau.",
@@ -1110,11 +1114,13 @@ E4 = dict(
           "<li><b>Le vent</b>&nbsp;: la fixation doit tenir face aux rafales d'un cyclone, jusqu'à 250 km/h, et se démonter pour "
           "l'entretien.</li>"
           "<li><b>L'air salé</b>&nbsp;: la station est près de la mer, rien ne doit rouiller.</li></ul>",
-    consigne="<p>Avant de choisir, on cherche <b>plusieurs solutions</b>. Une solution est <b>vraiment différente</b> d'une autre quand "
-             "son <b>principe</b> change (serrer autour du poteau, poser dessus, accrocher à un bras…), pas quand on ajoute une vis.</p>"
-             "<p><b>Dessine trois croquis rapides</b>, côte à côte dans la zone de dessin, numérotés 1, 2 et 3 — environ trois minutes "
-             "chacun. Sur chacun, au moins une <b>légende</b>, et une <b>flèche</b> qui montre d'où vient le vent&nbsp;; sur l'un d'eux "
-             "au moins, une <b>cote</b>. Puis <b>dis laquelle tu gardes, et pourquoi</b>.</p>",
+    consigne=("<p>Avant de choisir, on cherche <b>plusieurs solutions</b>. Une solution est <b>vraiment "
+              "différente</b> d'une autre quand son <b>principe</b> change (serrer autour du poteau, poser dessus, "
+              "accrocher à un bras…), pas quand on ajoute une vis.</p><p>① <b>Dessine trois croquis rapides</b>, "
+              "côte à côte dans la zone de dessin, numérotés 1, 2 et 3 — environ trois minutes chacun. Sur chacun, "
+              "au moins une <b>légende</b>, et une <b>flèche</b> qui montre d'où vient le vent&nbsp;; sur l'un "
+              "d'eux au moins, une <b>cote</b>.<br>"
+              "② <b>Dis laquelle tu gardes, et pourquoi</b>.</p>"),
     critere="trois solutions de principes différents, numérotées et légendées, une flèche pour le vent, une cote&nbsp;; un choix "
             "qui nomme la solution gardée et donne deux raisons, dont une liée au vent.",
     widgets=[dict(type="croquis", name="trois", label="Mes trois croquis rapides&nbsp;: fixer la sirène sur le poteau",
@@ -1206,11 +1212,12 @@ E5 = dict(
                                 "en sort vers le bas.</li></ul>")],
     intro="<p>Le dessinateur de l'équipe a fait le <b>croquis coté</b> du boîtier qui protégera la carte électronique de la station. "
           "Avant de lancer la fabrication, tu le vérifies&nbsp;: celui qui fabrique ne doit avoir <b>aucune question à poser</b>.</p>",
-    consigne="<p>Pour fabriquer une pièce, il faut trouver sur son croquis coté <b>toutes ses dimensions</b> (longueur, hauteur, "
-             "profondeur), leur <b>unité</b>, le <b>matériau</b>, et chaque <b>perçage</b> — un trou&nbsp;: son diamètre et sa place —, "
-             "sur une <b>vue</b> qui le montre.</p>"
-             "<p><b>Réponds d'abord&nbsp;: le boîtier entre-t-il dans le coffret&nbsp;?</b> Puis <b>coche tout ce qui manque</b> pour le "
-             "fabriquer, et <b>écris le message</b> que tu envoies au dessinateur.</p>",
+    consigne=("<p>Pour fabriquer une pièce, il faut trouver sur son croquis coté <b>toutes ses dimensions</b> "
+              "(longueur, hauteur, profondeur), leur <b>unité</b>, le <b>matériau</b>, et chaque <b>perçage</b> — "
+              "un trou&nbsp;: son diamètre et sa place —, sur une <b>vue</b> qui le montre.</p><p>① <b>Réponds "
+              "d'abord&nbsp;: le boîtier entre-t-il dans le coffret&nbsp;?</b><br>"
+              "② <b>Coche tout ce qui manque</b> pour le fabriquer, et <b>écris le message</b> que tu envoies au "
+              "dessinateur.</p>"),
     critere="tu vois qu'on ne peut pas savoir si le boîtier entre, tu coches les quatre manques et rien d'autre, et ton message "
             "demande la profondeur et un autre manque, par des questions précises.",
     widgets=[dict(type="choix", name="rentre",
@@ -1322,12 +1329,13 @@ E6 = dict(
                                 "dépasse une ligne pointillée marquée 90.</li></ul>")],
     intro="<p>Le programme de technologie cite cinq façons de représenter une solution&nbsp;: le <b>croquis</b>, le <b>schéma</b>, le "
           "<b>graphique</b>, l'<b>algorithme</b> et la <b>modélisation</b>. Chacune répond à une question différente.</p>",
-    consigne="<p>Un <b>croquis</b> se fait vite, à main levée, pour montrer une idée. Un <b>schéma</b> utilise des symboles "
-             "<b>normés</b> (les mêmes pour tous) pour montrer comment c'est relié. Un <b>graphique</b> montre comment une grandeur "
-             "change. Un <b>algorithme</b> dit l'ordre des actions. Une <b>modélisation 3D</b> donne la forme exacte, en volume, "
-             "dans un logiciel.</p>"
-             "<p><b>Nomme chacune des quatre vues de la station.</b> Puis <b>choisis la représentation qui convient à chaque "
-             "besoin</b>, et <b>explique</b> pourquoi on n'envoie pas le croquis directement à l'imprimante 3D.</p>",
+    consigne=("<p>Un <b>croquis</b> se fait vite, à main levée, pour montrer une idée. Un <b>schéma</b> utilise "
+              "des symboles <b>normés</b> (les mêmes pour tous) pour montrer comment c'est relié. Un "
+              "<b>graphique</b> montre comment une grandeur change. Un <b>algorithme</b> dit l'ordre des actions. "
+              "Une <b>modélisation 3D</b> donne la forme exacte, en volume, dans un logiciel.</p><p>① <b>Nomme "
+              "chacune des quatre vues de la station.</b><br>"
+              "② <b>Choisis la représentation qui convient à chaque besoin</b>, et <b>explique</b> pourquoi on "
+              "n'envoie pas le croquis directement à l'imprimante 3D.</p>"),
     critere="neuf réponses justes, et une explication qui parle des dimensions exactes et du fichier dont la machine a besoin.",
     widgets=[dict(type="classer", name="vues", categories=REPRESENTATIONS,
                   items=[("Vue 1", "croquis", "Vue 1 : le trait tremble, il y a des légendes et une flèche — un dessin fait vite, à main levée."),
