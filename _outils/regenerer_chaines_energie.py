@@ -295,6 +295,27 @@ def station():
     d.save(C9/'Images/chaine_info_energie_station.svg')
 
 
+
+def ecall():
+    # 4e_C4.4 (18/11/2026) : le QCM eCall passe au gabarit commun ; ses questions lisent cette chaîne (n°331)
+    d=Diagram('eCall : la chaîne d’information d’une voiture qui appelle les secours',
+        'En haut, la chaîne d’information. ACQUÉRIR : l’accéléromètre détecte le choc, le récepteur de positionnement par satellites (GNSS : GPS, Galileo) donne la position, le bouton SOS permet un appel à la main. TRAITER : le calculateur embarqué et son programme décident d’appeler. COMMUNIQUER : le module de téléphonie mobile et son antenne envoient l’alerte et le jeu de données minimal au centre 112 ; le micro et le haut-parleur permettent de parler aux secours. En bas, la chaîne d’énergie : la batterie 12 V du véhicule et une batterie de secours alimentent tout le système, même après le choc.',860)
+    d.section(100,"CHAÎNE D’INFORMATION — elle décide d’appeler",CYAN)
+    d.block(130,130,'ACQUÉRIR','Accéléromètre : le choc\nRécepteur GNSS : la position\nBouton SOS : l’appel à la main',CYAN,w=320)
+    d.block(660,130,'TRAITER','Calculateur embarqué\net son programme',VIOLET,w=300)
+    d.block(1200,130,'COMMUNIQUER','Module GSM et antenne\nMicro et haut-parleur',GREEN,w=300)
+    # étiquettes des flèches à 20 (et non 18) : le QCM affiche le schéma à 800 px de large au plus (⚠ minuscule)
+    d.arrow([(450,168),(650,168)],CYAN)
+    d.text(550,148,'Mesures',CYAN,20,role='flow')
+    d.arrow([(960,168),(1190,168)],CYAN)
+    d.text(1075,148,'Alerte et données',CYAN,20,role='flow')
+    d.text(1350,330,'Vers le centre d’urgence 112\npar le réseau mobile',WHITE,20,True)
+    d.section(420,"CHAÎNE D’ÉNERGIE — elle alimente",ORANGE)
+    d.block(610,500,'ALIMENTER','Batterie 12 V du véhicule\nBatterie de secours',YELLOW,w=330)
+    d.text(800,690,'Elle alimente les capteurs, le calculateur et le module GSM.\nLa batterie de secours prend le relais si le choc coupe la batterie principale.',BLUE,20)
+    d.text(800,790,'L’information en haut, l’énergie en bas : la chaîne d’information ne marche que si elle est alimentée.',BLUE,20)
+    d.save(C4/'4e/4e_C4.4/Images/chaine_information_ecall.svg')
+
 def trois_cas():
     """Planche de 3e_C9.2 : trois cas, une seule règle — l'ordre arrive TOUJOURS sur DISTRIBUER ; ce qui change, c'est le préactionneur
     (la sortie de la carte, un transistor intégré au module, une carte séparée), et cela se dit sous le bloc."""
@@ -660,7 +681,7 @@ def volet():
     d.text(800,750,PIED_CONVENTION,BLUE,19)
     d.save(C4/'3e/3e_C4.1/Images/chaine_volet_anticyclone.svg')
 
-FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, gabarit_muet, gabarit_corrige, station, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
+FIGURES = {f.__name__: f for f in (lampadaire, jardin, gabarit, gabarit_muet, gabarit_corrige, station, ecall, trois_cas, book, jardin_programme, arrosage, barriere, book_deux_chaines, volet)}
 
 if __name__=='__main__':
     import sys
