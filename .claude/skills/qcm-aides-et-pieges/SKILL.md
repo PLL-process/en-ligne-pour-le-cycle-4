@@ -87,8 +87,9 @@ régénération les effacerait : `s = _poser_aides(s, sortie)` (`poser.poser_si_
 
 Avant de brancher un générateur, le rejouer sur l'arbre propre et lire `git diff` : vide, il est à jour ; sinon, la
 régénération perdrait ce que les outils du site ont posé depuis sur la page (vague 6 : les sept ateliers du thème 1
-perdent le contraste du minuteur, la licence, les correctifs de la loupe). On le branche quand même, on ne le relance
-pas, et on le signale. Un générateur qui recopie un autre QCM comme gabarit (l'atelier de planification part du QCM de
+perdaient le contraste du minuteur, la licence, les correctifs de la loupe). On le branche quand même, on ne le relance
+pas, et on le signale ; puis on remet son gabarit à jour (18/11/2026 : les ateliers du thème 1 se régénèrent de nouveau
+à l'identique, et `build_qcm.py --verifier`, lancé par `banc_ateliers.py`, le redit à chaque banc). Un générateur qui recopie un autre QCM comme gabarit (l'atelier de planification part du QCM de
 Shenzhen) pose les aides AVANT ses contrôles de restes : elles remplacent la carte et les pièges du gabarit. Mettre
 `bilan_remarquable` dans le JSON fait aussi survivre le bilan propre au QCM (n°338).
 

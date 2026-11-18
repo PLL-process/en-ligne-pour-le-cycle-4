@@ -18,7 +18,9 @@ toutes ses options, puis les retours), un tableau qui tient dans son cadre et ne
 RETOURS_PAR_OPTION, un retour écrit et affiché pour chaque option fausse de chaque menu.
 Pour un défi Bonus fait à l'écran (`champs`) : la carte se dessine à mesure, se sauvegarde, tient à 390 px ; sans
 JavaScript et à l'impression, la consigne « sur ta feuille ».
-Puis le QCM (30 questions), les deux synthèses et les cahiers de niveau : chargement sans erreur, sans débordement.
+Puis le QCM (30 questions), les deux synthèses et les cahiers de niveau : chargement sans erreur, sans débordement ;
+et le QCM tel que `build_qcm.py --verifier` le régénère : identique à l'octet (18/11/2026 : le gabarit avait cinq
+correctifs du site de retard, qu'une régénération aurait effacés).
 
 Code de sortie : 0 tout passe · 1 au moins un échec · 2 rien n'a été vérifié (règle d'or n°299).
 """
@@ -26,6 +28,7 @@ import importlib
 import json
 import pathlib
 import re
+import subprocess
 import sys
 
 from playwright.sync_api import sync_playwright
@@ -652,6 +655,10 @@ def main(modules, cahiers=False, sortie_json=None):
                 tableaux(b, at, niv)
                 bonus_vivants(b, at, niv)
             page_simple(b, build.qcm(at), at.SLUG + " QCM", attendu_q=30)
+            rv = subprocess.run([sys.executable, str(ICI / "build_qcm.py"), "--verifier", at.__name__[len("donnees_"):]],
+                                capture_output=True, text=True)
+            t(at.SLUG + " QCM : la régénération le reproduit à l'octet", rv.returncode == 0,
+              (rv.stdout + rv.stderr).strip().splitlines()[0] if (rv.stdout + rv.stderr).strip() else rv.returncode)
             page_simple(b, build.synthese_eleve(at), at.SLUG + " synthèse élève")
             page_simple(b, build.synthese_prof(at), at.SLUG + " synthèse professeur")
             if at.SLUG == "besoin-bete-a-cornes":

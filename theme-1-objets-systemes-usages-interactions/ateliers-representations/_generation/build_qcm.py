@@ -9,6 +9,12 @@ gabarit d'origine.
 
     python3 build_qcm.py interacteurs      puis      node ../../../_outils/fix_r.js <qcm> <graine>
     python3 build_qcm.py --tous            (assemble et répartit tous les QCM)
+    python3 build_qcm.py --verifier [module …]   (rejoue dans un dossier temporaire, compare à l'octet, n'écrit rien)
+
+Le gabarit doit suivre ce que les outils du site posent sur les pages publiées (contraste, licence, loupe…) : le
+18/11/2026, il en avait cinq de retard, et une régénération les aurait effacés. `--verifier` le dit avant qu'on
+régénère : sortie 0, chaque QCM sort identique ; 1, un QCM diffère (le gabarit ou la banque est en retard sur la
+page) ; 2, aucun QCM vérifié (n°299). `banc_ateliers.py` le lance.
 """
 import sys as _sys_ic
 _sys_ic.path.insert(0, next(str(d / "_outils") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "intituler_codes.py").is_file()))
@@ -19,6 +25,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import tempfile
 
 ICI = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(ICI))
@@ -66,7 +73,7 @@ OUVERTURE_NIVEAU = r"""
 """
 
 
-def construire(module):
+def construire(module, verifier=False):
     at = importlib.import_module("donnees_" + module)
     banque = importlib.import_module("q_" + module)
     Q = banque.Q
@@ -135,8 +142,11 @@ def construire(module):
         if n != 1:
             raise SystemExit("Motif absent du gabarit : %r" % motif[:70])
         s = s2
-    # Ouvrir sur le niveau de l'élève (#codes=…)
-    pos = s.rfind("</script>")
+    # Ouvrir sur le niveau de l'élève (#codes=…) : à la fin du script de la loupe, avant celui qui efface la
+    # sauvegarde (n°322), comme sur les pages publiées
+    pos = s.find("</script>\n<script>/* Règle d'or n°322")
+    if pos < 0:
+        raise SystemExit("Script d'effacement de la sauvegarde (n°322) absent du gabarit")
     s = s[:pos] + OUVERTURE_NIVEAU + s[pos:]
     # les aides et les pièges du QCM (n°339), avant le contrôle des restes : sans cela, régénérer les effacerait
     s = _poser_aides(s, str(sortie))
@@ -145,8 +155,21 @@ def construire(module):
         if reste in s:
             raise SystemExit("Reste du gabarit d'origine non remplacé : %r" % reste)
     s = intituler_codes.poser_texte(s)   # chaque étiquette de code dit sa compétence au survol
-    sortie.write_text(s, encoding="utf-8")
     graine = sum(ord(c) for c in at.SLUG) % 997
+    if verifier:
+        # même chaîne (gabarit, banque, fix_r.js et sa graine), dans un dossier temporaire : la page n'est pas touchée
+        with tempfile.TemporaryDirectory() as tmp:
+            temoin = pathlib.Path(tmp) / sortie.name
+            temoin.write_text(s, encoding="utf-8")
+            r = subprocess.run(["node", str(moteur.DEPOT / "_outils" / "fix_r.js"), str(temoin), str(graine)],
+                               capture_output=True, text=True)
+            if r.returncode != 0:
+                raise SystemExit("fix_r.js a échoué : %s" % r.stderr)
+            pareil = temoin.read_bytes() == sortie.read_bytes()
+        print("%s %s" % ("✅" if pareil else "⛔", sortie.relative_to(moteur.DEPOT))
+              + ("" if pareil else " : la régénération ne la reproduit pas (gabarit ou banque en retard sur la page)"))
+        return pareil
+    sortie.write_text(s, encoding="utf-8")
     r = subprocess.run(["node", str(moteur.DEPOT / "_outils" / "fix_r.js"), str(sortie), str(graine)],
                        capture_output=True, text=True)
     if r.returncode != 0:
@@ -158,11 +181,20 @@ def construire(module):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
-    mods = build.MODULES if sys.argv[1] == "--tous" else sys.argv[1:]
+    verifier = sys.argv[1] == "--verifier"
+    mods = build.MODULES if sys.argv[1] == "--tous" or sys.argv[1:] == ["--verifier"] else \
+        [a for a in sys.argv[1:] if not a.startswith("--")]
+    resultats = []
     for m in mods:
         try:
             importlib.import_module("q_" + m)
         except ModuleNotFoundError:
             print("  (pas encore de banque pour « %s »)" % m)
             continue
-        construire(m)
+        resultats.append(construire(m, verifier=verifier))
+    if verifier:
+        if not resultats:
+            print("✘ aucun QCM vérifié")
+            raise SystemExit(2)
+        print("%d QCM sur %d reproduits à l'octet" % (sum(resultats), len(resultats)))
+        raise SystemExit(0 if all(resultats) else 1)
