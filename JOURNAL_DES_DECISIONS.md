@@ -34020,3 +34020,37 @@ sauf deux écarts **présents aussi sur `main`** — `tests_regle_311_4e_C7.1` (
 et `tests_5e_C1.5-C1.6_sequence` 37 / 38. Mode mission : pilote 50 / 50, générique 60 pages sans refus, barre 60 / 60,
 défaut et éditeur verts. Contrôles : squelette, liens, tactile, boutons vivants, validations, sauvegarde locale,
 règles visibles, hors ligne (source) — rien à signaler ; `verif_regles_audit` : 1 ✘, le même que sur `main`.
+
+## 19/11/2026 — n°311 au téléphone : dès la séance 2, les réglages se replient derrière « ⚙️ » (carte blanche de Pascal)
+
+Le banc n°311 de `4e_C7.1` était rouge depuis le 18/11 : à 390 px, en séance 2, les onglets tombaient sous le premier
+écran (1 063 px pour 844). Mesure du site, page complète : **27 pages sur 63**. L'en-tête avait grandi depuis la n°311
+(nom 96 px, boutons 72 px, note « Ordinateur partagé » 99 px, choix du parcours 122 px), et les bancs de la n°311
+exigeaient que ces outils restent visibles en séance 2 : les deux demandes se contredisaient. Pascal : « Je te donne
+carte blanche. Choisis ce qui est meilleur pour l'élève. »
+
+- **Le choix** : au téléphone, l'élève de séance 2 veut retrouver sa séance. Le nom s'écrit une fois, le parcours se
+  choisit une fois, imprimer et effacer servent en fin de séance, et la note « Ordinateur partagé » ne concerne pas un
+  téléphone. Ces réglages restent **à un appui**, et ce qu'ils disent reste **lisible** : le nom de l'élève sur le
+  bouton, « 💾 Sauvegardé » et « Parcours affiché ».
+- **`_outils/entete_telephone.py`** (nouveau, bloc `entete-telephone v1`), posé sur les **63** pages à onglets : à
+  600 px au plus, dès la séance 2, le nom, la barre d'outils, le choix du parcours, la note du poste partagé et l'aide
+  du mode essentiel se replient derrière « ⚙️ Mon nom, mon parcours, mes réglages » (le bouton porte le nom écrit, ou
+  « ✏️ Ton nom n'est pas encore écrit »). Une zone d'état ne se replie jamais (`#savedNote`, `#parcoursNote`,
+  `role=status`, `aria-live` hors boutons) : les messages de la page restent vus. Séance 1, grand écran, impression :
+  rien ne change ; rien n'est retiré de la page.
+- **La n°311 est précisée** : « un outil n'est pas du décor » — il reste hors du volet « Rappel » et visible, ou, au
+  téléphone dès la séance 2, à un appui derrière « ⚙️ ». Les bancs communs (thèmes 1, 2, 3) le lisent ainsi ; le relais
+  du thème 3 vérifie en plus que l'appui montre les réglages et que les zones d'état restent.
+- **Mesure** à 390 px, séance 2, page complète : onglets sous le premier écran sur **14** pages (27 avant).
+  `4e_C7.1` : 708 px, banc **34 / 34** (rouge depuis le 18/11). Les 14 restantes ont un grand bloc avant les onglets
+  (banc d'essai, ateliers de planification, bandeau des tâches déplié) : à regarder page par page, pas par l'en-tête.
+- Banc de l'outil : `_outils/tests_entete_telephone.py` 18 / 18.
+
+Bancs : les bancs des lots des 63 pages (dont 18 lancés avec leurs arguments) : verts. Quatre bancs lisaient l'ancien
+en-tête et ont été mis à jour, sans rien retirer de ce qu'ils vérifient : `tests_regle_311_5e_C1.3` et
+`tests_regle_311_5e_C1.5` (un outil compte comme visible à un appui derrière « ⚙️ »), `tests_3e_C1.5_seances`
+(l'élève ouvre « ⚙️ » avant d'appuyer sur « Mode essentiel ») et `tests_3e_C6.2` (le focus se vérifie sur le premier
+bouton visible). Reste rouge, comme sur `main` : `tests_5e_C1.5-C1.6_sequence` 37 / 38. Mode mission : pilote 50 / 50,
+générique 60 pages sans refus, barre 60 / 60, défaut vert. Contrôles : squelette, liens, tactile, boutons vivants,
+sauvegarde locale, règles visibles, hors ligne — rien à signaler ; `verif_regles_audit` : 1 ✘, le même que sur `main`.

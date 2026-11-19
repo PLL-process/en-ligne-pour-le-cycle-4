@@ -6,6 +6,9 @@
      · « un outil n'est pas du décor » : chaque outil nommé par la page (`outils` : sélecteur de parcours, zones role=status,
        progression, « Où en suis-je ? », banc d'essai…) existe, reste HORS du volet et se voit à la séance 1 comme à la
        séance 2, à 1280 et 390 px ;
+     · au téléphone, dès la séance 2, les réglages (nom, barre d'outils, choix du parcours, note du poste partagé) se replient
+       derrière « ⚙️ Mon nom, mon parcours, mes réglages » (`_outils/entete_telephone.py`, 19/11/2026) : un outil y compte
+       comme visible, il est à un appui ; le relais vérifie que l'appui les montre et que les zones d'état restent ;
      · le sélecteur de parcours et le volet cohabitent : depuis la séance 2, choisir 🅲 range les blocs des autres voies, le
        volet reste replié ; « Tout afficher » remet tout ;
      · à 390 px, la barre d'outils reste compacte à la séance 2 : deux lignes au plus, aucun libellé coupé (et, pour le
@@ -41,7 +44,10 @@ export async function lancerBanc311Theme3(o) {
       const m = document.querySelector('.subtitle');
       return {
         mission: !!m && vis(m) && !m.closest('#ouverture'),
-        outils: outils.map((s) => { const e = document.querySelector(s); return { s, ok: !!e && vis(e) && !e.closest('#ouverture') }; }),
+        // visible, ou à un appui : au téléphone, dès la séance 2, derrière « ⚙️ Mon nom, mon parcours, mes réglages »
+        outils: outils.map((s) => { const e = document.querySelector(s);
+          const derriere = !!e && !!e.closest('.entete-reglage, .entete-reglage-partiel') && vis(document.querySelector('.entete-bascule'));
+          return { s, ok: !!e && (vis(e) || derriere) && !e.closest('#ouverture') }; }),
       };
     }, o.outils || []);
     const s1 = await lire();
@@ -58,6 +64,16 @@ export async function lancerBanc311Theme3(o) {
       await p.click('.parcours-btn[data-choix="tous"]'); await p.waitForTimeout(150);
       const tous = await p.evaluate(() => !/parcours-[abc]/.test(document.body.className));
       t(c.classe && c.range && !c.volet && tous, '1280 px : depuis la séance 2, le sélecteur de parcours marche (🅲 range les autres voies), le volet reste replié ; « Tout afficher » remet tout');
+    }
+    if (nom === '390' && await p.locator('.entete-bascule').count()) {
+      // l'en-tête replié au téléphone (`_outils/entete_telephone.py`, 19/11/2026) : à la séance 2, les réglages sont derrière
+      // « ⚙️ », un appui les montre, ses zones d'état restent visibles ; on le laisse déplié pour mesurer la barre
+      const pli = () => p.evaluate(() => { const x = document.querySelector('.entete-bascule'), v = (e) => !!e && e.checkVisibility();
+        return { bouton: v(x), ouvert: x.getAttribute('aria-expanded'), barre: v(document.querySelector('.toolbar')),
+          etat: [...document.querySelectorAll('#savedNote, #parcoursNote')].every(v) }; });
+      const avant = await pli(); await p.click('.entete-bascule'); await p.waitForTimeout(80); const apres = await pli();
+      t(avant.bouton && avant.ouvert === 'false' && !avant.barre && avant.etat && apres.ouvert === 'true' && apres.barre,
+        `390 px : séance 2, les réglages repliés derrière « ⚙️ » (zones d'état visibles), un appui les montre (${JSON.stringify(avant)} → ${apres.barre})`);
     }
     if (nom === '390') {
       const tb = await p.evaluate(() => {

@@ -48,7 +48,10 @@ export async function lancerBanc311(o) {
     return {
       open: v.open, volet: v.classList.contains('volet'), summaryVisible: vis(v.querySelector(':scope > summary')),
       h2Visibles: h2.filter(Boolean).length, h2: h2.length,
-      badges: q('.badges') ? vis(q('.badges')) : null, toolbar: vis(q('.toolbar')),
+      // au téléphone, dès la séance 2, la barre d'outils peut se replier derrière « ⚙️ Mon nom, mon parcours, mes réglages »
+      // (`_outils/entete_telephone.py`, 19/11/2026) : elle reste à un appui, comme « Où j'en suis »
+      badges: q('.badges') ? vis(q('.badges')) : null,
+      toolbar: vis(q('.toolbar')) || (!!q('.toolbar.entete-reglage') && vis(q('.entete-bascule'))),
       titre: vis(q('h1')), mission: q('p.sous') ? vis(q('p.sous')) : null,
       actif: q('.seance-panel.active').id, debord: document.documentElement.scrollWidth - innerWidth,
     };

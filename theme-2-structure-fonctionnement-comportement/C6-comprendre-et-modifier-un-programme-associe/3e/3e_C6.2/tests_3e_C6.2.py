@@ -72,7 +72,7 @@ with sync_playwright() as p:
       str(pg.evaluate("document.documentElement.scrollWidth")))
     pg.set_viewport_size({"width":1280,"height":900})
     t("n°34 : le focus clavier reste visible (Tab)",
-      pg.evaluate("""() => { const e=document.querySelector('button'); e.focus();
+      pg.evaluate("""() => { const e=[...document.querySelectorAll('button')].find(b=>b.checkVisibility()); e.focus();   /* le premier bouton VISIBLE (le « ⚙️ » des réglages ne se montre qu'au téléphone) */
         const s=getComputedStyle(e,':focus-visible'); return document.activeElement===e; }"""), "")
 
     # ── QCM ──
