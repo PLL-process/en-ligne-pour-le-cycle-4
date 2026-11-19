@@ -125,10 +125,18 @@ with sync_playwright() as p:
     c4=ROOT/'theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation'
     for f,page in [(FILES[0],c4/'5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html'),(FILES[1],c4/'4e/4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html'),(FILES[2],c4/'3e/3e_C4.1/sequence_3e_C4.1-C4.2_energie_station.html')]:
         pg.goto(base+quote(page.relative_to(ROOT).as_posix()))
-        obj=pg.locator('object[data="Images/'+f.name+'"]')
+        # la page montre la figure, ou sa version muette (n°331 : « …_muet.svg » depuis que la question fait placer les
+        # composants — 3e_C4.1). Avant le 19/11/2026, l'objet était cherché par le nom exact : la page de 3e_C4.1 ne le
+        # portant plus, l'outil s'arrêtait sur une attente de 30 s et ne vérifiait plus rien après (n°299).
+        sel='object[data="Images/'+f.name+'"], object[data="Images/'+f.stem+'_muet.svg"]'
+        obj=pg.locator(sel)
+        check(f.name+' : appelée par sa page (elle-même, ou sa version muette)',obj.count()==1,obj.count())
+        if obj.count()!=1:continue
         panel=obj.evaluate("e=>e.closest('.seance-panel')?.id")
         if panel:pg.locator('.seance-tab[data-panel="'+panel+'"]').click()
-        pg.wait_for_function("name=>{let e=document.querySelector('object[data=\"Images/'+name+'\"]');return e&&e.contentDocument&&e.contentDocument.querySelector('svg')}",arg=f.name,timeout=10000)
+        obj.evaluate("e=>{for(let x=e;x;x=x.parentElement)if(x.tagName==='DETAILS')x.open=true}")   # un objet replié mesure 0 de large
+        obj.scroll_into_view_if_needed()
+        pg.wait_for_function("sel=>{let e=document.querySelector(sel);return e&&e.getBoundingClientRect().width>0&&e.contentDocument&&e.contentDocument.querySelector('svg')}",arg=sel,timeout=10000)
         r=obj.evaluate("e=>({largeur:e.getBoundingClientRect().width,svg:e.contentDocument.querySelector('svg').getBoundingClientRect().width})")
         check(f.name+' : tient dans son objet HTML',r['svg']<=r['largeur']+1,r)
     # Les trois figures du 29/10/2026, dans leurs pages : une balise img (4e_C9.1, 4e_C6.2) ou un objet (5e_C9.1).

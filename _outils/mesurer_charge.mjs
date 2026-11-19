@@ -89,9 +89,13 @@ for (const f of pages) {
     let ess = null;
     const bouton = p.locator("#btnEssentiel");
     if (await bouton.count()) {
-      await bouton.click(); await p.waitForTimeout(100);
+      /* au téléphone, dès la séance 2, les réglages sont repliés derrière « ⚙️ » (_outils/entete_telephone.py,
+         19/11/2026) : le bouton existe sans se voir. Il se déclenche par le DOM — un clic de souris attendait 30 s
+         un bouton invisible, et l'outil s'arrêtait sans rien mesurer (n°299). */
+      const basculer = () => p.evaluate(() => document.getElementById("btnEssentiel").click());
+      await basculer(); await p.waitForTimeout(100);
       ess = (await mesure()).mots;
-      await bouton.click(); await p.waitForTimeout(100);
+      await basculer(); await p.waitForTimeout(100);
     }
     seances.push({ seance: i + 1, mots: m.mots, essentiel: ess, ecrans: +(m.hauteur / 844).toFixed(1), champs: m.champs,
                    minutes: Math.round(m.mots / VITESSE), longs: m.longs });
