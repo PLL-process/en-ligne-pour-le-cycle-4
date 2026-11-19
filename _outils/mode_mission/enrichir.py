@@ -36,6 +36,12 @@ Usage :
     python3 _outils/mode_mission/enrichir.py <sequence.html> <mission_<lot>.json>            # écrit
     python3 _outils/mode_mission/enrichir.py <sequence.html> <mission_<lot>.json> --verifier # dit si la page est à jour
     python3 _outils/mode_mission/enrichir.py --etapes [dossier]   # les pourquoi qui ne nomment pas l'étape suivante
+    python3 _outils/mode_mission/enrichir.py --verifier-tout [racine]   # chaque mission_*.json et sa page sont à jour
+
+`--verifier-tout` (19/11/2026) : après une passe qui change des propositions dans la page (changer_proposition.py),
+une donnée restée sur l'ancien texte rendait la page « pas à jour » sans que rien ne le dise — trois séquences l'ont
+été pendant une journée. La page d'un mission_*.json est la séquence de son dossier qui porte tous ses groupes. Sortie
+1 si une page n'est pas à jour ou si aucune page ne porte les groupes d'un fichier, 2 si aucun fichier n'est lu.
 """
 import hashlib
 import html
@@ -201,8 +207,40 @@ def enrichir(page, donnees):
     return source
 
 
+def verifier_tout(racine):
+    racine = pathlib.Path(racine)
+    fichiers = sorted(f for f in racine.rglob('mission_*.json') if '_archive' not in str(f) and 'node_modules' not in str(f))
+    refus = 0
+    for fichier in fichiers:
+        donnees = json.loads(fichier.read_text(encoding='utf-8'))
+        groupes = list(donnees.get('pourquoi', {})) + list(donnees.get('indices', {})) + list(donnees.get('leurres', {}))
+        pages = [p for p in sorted(fichier.parent.glob('sequence*.html'))
+                 if all(re.search(GROUPE % re.escape(g), t, re.S) for t in [p.read_text(encoding='utf-8')] for g in groupes)]
+        if not pages:
+            print('✘ %s : aucune séquence du dossier ne porte ses %d groupes' % (fichier.relative_to(racine), len(groupes)))
+            refus += 1
+            continue
+        for page in pages:
+            try:
+                a_jour = page.read_text(encoding='utf-8') == enrichir(str(page), donnees)
+            except SystemExit as e:
+                print('✘ %s : %s' % (page.relative_to(racine), e))
+                refus += 1
+                continue
+            if not a_jour:
+                print('✘ %s : pas à jour avec %s (relancer enrichir.py sur la page)' % (page.relative_to(racine), fichier.name))
+                refus += 1
+    if not fichiers:
+        print('✘ aucun mission_*.json lu sous %s' % racine)
+        return 2
+    print('%s %d fichier(s) mission_*.json lus · %d refus' % ('✅' if not refus else '✘', len(fichiers), refus))
+    return 1 if refus else 0
+
+
 def main(argv):
     args = [a for a in argv if not a.startswith('--')]
+    if '--verifier-tout' in argv:
+        return verifier_tout(args[0] if args else pathlib.Path(__file__).resolve().parents[2])
     if '--etapes' in argv:
         return etapes(args[0] if args else pathlib.Path(__file__).resolve().parents[2])
     if len(args) != 2:

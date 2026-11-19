@@ -33631,3 +33631,22 @@ sans description (I4), et la bonne réponse la plus longue dans 12 groupes sur 2
 Contrôles : `controle_propositions_indices` (1 ⚠ I3, faux positif ci-dessus), `controle_ordre_propositions` (0 refus),
 unités. Bancs : `tests_regle_311_5e_C6.1.mjs` 34 / 34, mode mission sans refus, `tests_5e_C6.1-C6.3.mjs` 29 / 32 — **les
 mêmes trois rouges sur `main`** (progression 3 / 4 et reprise après rechargement), sans lien avec cette passe.
+
+## 19/11/2026 — Données du mode mission remises à jour sur trois séquences ; `enrichir.py --verifier-tout`
+
+Trouvé en vérifiant `5e_C6.1` : les passes n°341 de `4e_C4.1`, `4e_C5.1` et `4e_C6.1` (#797 à #799) avaient changé les
+propositions dans la page sans toucher leur `mission_<lot>.json`. Ces fichiers rangent souvent leurs « pourquoi » sous
+le **début** du texte (« a été » pour « a été piraté ») ; `changer_proposition.py` ne cherchait que le texte entier.
+La page restait juste (son `data-pourquoi` était réécrit), mais relancer `enrichir.py` aurait échoué sur `4e_C6.1`
+(« « a été » désigne 0 proposition ») et le bancs du mode mission, qui lit la page, ne le voyait pas.
+- `mission_4e_C6.1.json` reprend les pourquoi de la page : 17 clés réécrites (c1_4, c1_5, a2_1 à a2_5, s3_3, s3_4,
+  q3_1, r4_2 à r4_4). Les deux autres fichiers étaient justes : seule l'écriture de l'apostrophe différait.
+- Les trois pages sont réécrites par `enrichir.py` : **seule l'apostrophe change** (`&#x27;` → `'` dans
+  `data-pourquoi`, l'écriture d'`enrichir.py`), vérifié en comparant les deux versions apostrophes ramenées.
+- `changer_proposition.py` retrouve une clé « début de texte » comme `enrichir.py` (texte exact, sinon le seul début),
+  la réécrit avec le texte entier, et écrit `data-pourquoi` comme `enrichir.py`.
+- `enrichir.py --verifier-tout [racine]` : chaque `mission_*.json` et la séquence de son dossier qui porte ses groupes
+  sont à jour. Sur `main` avant cette PR : 49 fichiers, **3 refus** ; après : 0. Sortie 2 sur une racine vide (n°299).
+  Ajouté aux vérifications du skill `propositions-sans-indice`, § 3.
+
+Bancs : mode mission sans refus sur les trois pages.
