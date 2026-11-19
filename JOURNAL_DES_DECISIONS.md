@@ -33330,3 +33330,31 @@ Résultat : `controle_validations.py` « rien à signaler » ; `retrait_validati
 `annoncer_validations.py` 0 annonce à écrire ; `controle_memes_nombres.py` vert ; `audit_aeration.py` identique à
 `main` sur les 35 pages ; `generer_les_quatre_pages.py` (3e_C9.2) reproduit ses pages.
 
+## 18/11/2026 — Les 32 billets d'entrée : chaque mauvaise réponse a son pourquoi, chaque billet sa correction
+
+Reste du 17/11 (n°336) : 32 billets d'entrée dont les leurres n'avaient pas de pourquoi ; `corriger_billet.py`
+refusait donc de poser leur correction (95 refus). Carte blanche de Pascal : « uniformiser toutes les séquences ».
+
+- **La bonne réponse de chaque question** est lue dans le vérificateur de la page, quelle que soit sa forme
+  (`be_1:"…"`, `v("be_1").indexOf("…") === 0`, tableau `BONNES`) : 95 questions, 95 réponses trouvées, aucune devinée.
+- **202 pourquoi écrits**, un par mauvaise proposition (la proposition « je ne sais pas encore » n'en a pas besoin).
+  Chacun dit pourquoi la proposition ne convient pas, puis donne un indice qui ramène à la notion, sans recopier la
+  bonne réponse (n°341). Exemples :
+  - 3e_C4.1, « la batterie : DISTRIBUER ? » → « Distribuer, c'est choisir où va l'énergie, comme un interrupteur. La
+    batterie, elle, garde l'énergie pour plus tard. »
+  - 4e_C6.1, « seuil nuit de 30 à 45 : plus tard le soir ? » → « Le soir, la luminosité baisse : elle passe sous 45
+    avant de passer sous 30. Lequel arrive en premier ? »
+  - 5e_C9.1, « score = 10 : égal, comme en mathématiques ? » → « En programmation, le signe = range une valeur, il
+    n'affirme pas une égalité : score peut changer plus tard. »
+- `corriger_billet.py --ecrire` a ensuite posé la **correction complète** des 32 billets (la question, la bonne
+  réponse, chaque autre proposition avec son pourquoi), que le mode mission ouvre une fois le billet vérifié.
+
+Résultat : `corriger_billet.py` 64 pages lues, 0 billet sans correction, 0 refus. Mode mission joué écran par écran
+sur les 32 pages : aucun refus. `incrustations.py --verifier` : 0.
+
+Bancs des 32 lots : verts, sauf des rouges identiques sur `main` (relancés des deux côtés) :
+`tests_5e_C1.5-C1.6_sequence.mjs` 37 / 38 (une réponse écrite « à relire ») et `tests_regle_311_4e_C7.1.mjs` (en-tête
+au téléphone, constat du jour). Plusieurs bancs demandent leurs arguments (page, réponses, niveau) : relancés avec la
+commande que donne leur rapport de tests ; `5e_C8.1` n'en donne pas (arguments déduits de 5e_C8.2 : séquence 39 / 39,
+QCM 30 / 32, comme sur `main`).
+
