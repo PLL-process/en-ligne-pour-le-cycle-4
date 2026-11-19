@@ -249,6 +249,13 @@ const run = async () => {
   await page.fill("#a1_just", "L'heure est une entrée parce que le programme s'en sert pour décider, exactement comme il se sert de l'humidité ; ce qui change est son origine, elle vient de l'horloge et non du monde physique. Sans elle, on arroserait en plein soleil.");
   await page.click('[data-check="1"]');
   ok("activité 1 validée (15/15 + justification)", (await page.textContent("#fb1")).includes("15 / 15") && (await page.evaluate(() => window.__valid.act1)), await page.textContent("#fb1"));
+  /* une flèche peut rester à reprendre : 14 / 15, les six fonctions et le relais justes → validée */
+  await page.selectOption("#a1_f7", "Mesures");
+  await page.click('[data-check="1"]');
+  ok("activité 1 : 14 / 15 avec une seule flèche à reprendre (fonctions et relais justes) → validée",
+     (await page.textContent("#fb1")).includes("14 / 15") && (await page.evaluate(() => window.__valid.act1)), await page.textContent("#fb1"));
+  await page.selectOption("#a1_f7", "Eau");
+  await page.click('[data-check="1"]');
   await page.locator("#act1 details.correction > summary").click(); await page.waitForTimeout(350);
   ok("activité 1 : la correction porte le schéma complet, dessiné (n°336) — six fonctions écrites, aucune case à remplir",
      await page.evaluate(() => { const c = document.querySelector("#act1 details.correction .cac.cac-corrige"); const t = c ? c.textContent : "";
@@ -366,6 +373,13 @@ const run = async () => {
   await page.fill("#e7_just", "Je pense que le réservoir est vide. Pour le vérifier, je regarde le niveau de l'eau. Si j'ai raison, le tuyau n'est plus dans l'eau.");
   await page.click('[data-check="7"]');
   ok("enquête validée (6/6 + vérification écrite)", (await page.textContent("#fb7")).includes("6 / 6") && (await page.evaluate(() => window.__valid.act7)), await page.textContent("#fb7"));
+  /* les trois maillons justes et l'écrit, une autre réponse fausse : 5 / 6 → validée (le critère l'annonce) */
+  await page.selectOption("#e7_q1", "non : à 8 h, on est hors de la plage d'arrosage");
+  await page.click('[data-check="7"]');
+  ok("enquête : 5 / 6, les trois maillons justes et l'écrit → validée",
+     (await page.textContent("#fb7")).includes("5 / 6") && (await page.evaluate(() => window.__valid.act7)), await page.textContent("#fb7"));
+  await bonne("e7_q1");
+  await page.click('[data-check="7"]');
   await shot(page, "enquete_validee", "#act7");
 
   /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis, dans l'atelier du programme (31/10/2026) ════════ */
