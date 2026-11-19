@@ -28,7 +28,10 @@ Le MOTEUR, commun, posé une fois (chaque morceau cherche sa marque avant de se 
     avant (n°96) ;
   · la révision par pièges — une erreur propose « Réviser ce piège : N questions » (mode `piege`, les questions pas
     encore réussies d'abord) ; le bilan liste les pièges ratés, du plus fréquent au moins fréquent ; le compte des
-    erreurs par piège est sauvegardé.
+    erreurs par piège est sauvegardé ;
+  · le premier essai (19/11/2026, audit du jardin connecté) — la réponse de la première validation de chaque question
+    reste quand l'élève réessaie après une aide ; le tableau de bord et le résultat donnent deux notes, « Premier
+    essai » (ce que l'élève savait du premier coup) et « Après aides » (la note d'avant, `#dNote`, `#rNote`).
 Le JavaScript posé n'imbrique aucun gabarit (`${…`…`…}`) : `_outils/sans_modale.py` lit les scripts avec un
 analyseur simple, qui s'y perd.
 
@@ -121,6 +124,42 @@ m("Tes pièges", '  $("rNotions").innerHTML=html||"<p>Réponds aux questions pou
   if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
     +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
 ''', "avant")
+# Le premier essai (audit externe du jardin connecté, 19/11/2026 ; décision de Pascal : « avance avec ces choix par
+# défaut ») : « Réessayer » après une aide efface la réponse, et la note ne disait plus ce que l'élève savait du premier
+# coup. La réponse de la première validation de chaque question est gardée (`etat.premiers`, -1 pour une question
+# validée sans réponse) ; le tableau de bord et le résultat donnent deux notes, « premier essai » et « après aides ».
+# Une sauvegarde plus ancienne n'a pas de premier essai : ses réponses validées en tiennent lieu.
+m(".note-essais{", '  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}\n',
+  '  .note-essais{text-align:center;margin:0 0 14px;line-height:1.7}\n', "apres")
+m(".dash{display:grid;grid-template-columns:repeat(8,1fr)", ".dash{display:grid;grid-template-columns:repeat(7,1fr)",
+  ".dash{display:grid;grid-template-columns:repeat(8,1fr)", "remplace")
+m('id="dNote1"', '    <div>Note<b id="dNote" class="v-warn">— /20</b></div>\n',
+  '    <div title="Ta note si l\'on ne compte que ta première réponse à chaque question">Premier essai<b id="dNote1" class="v-warn">— /20</b></div>\n'
+  '    <div title="Ta note avec les questions réussies après un indice ou la correction">Après aides<b id="dNote" class="v-warn">— /20</b></div>\n',
+  "remplace")
+m('id="rEssais"', '<div class="note20" id="rNote">— /20</div>\n',
+  '<div class="note20" id="rNote">— /20</div>\n  <p class="note-essais" id="rEssais"></p>\n', "remplace")
+m("function premiersEssais(", "const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */\n", '''/* Le premier essai : la réponse de la première validation, gardée quand l'élève réessaie après une aide (-1 : validée
+   sans réponse). Une sauvegarde plus ancienne n'en a pas : ses réponses validées en tiennent lieu. */
+function premiersEssais(){
+  if(!Array.isArray(etat.premiers)||etat.premiers.length!==N)
+    etat.premiers=[...Array(N).keys()].map(i=>etat.validees[i]?(etat.reponses[i]===null?-1:etat.reponses[i]):null);
+  return etat.premiers;
+}
+function notePremierEssai(){ return Math.round(premiersEssais().filter((p,i)=>p===QUESTIONS[i].r).length/N*20*10)/10; }
+''', "apres")
+m('"erreursPiege","premiers"', '"identite","piege","erreursPiege"].forEach(', '"identite","piege","erreursPiege","premiers"].forEach(', "remplace")
+m("le premier essai reste", '  etat.validees[i]=true; choixTemp=null;\n  if(!etat.timerOn',
+  '  { const p=premiersEssais(); if(p[i]===null) p[i]=etat.reponses[i]===null?-1:etat.reponses[i]; }   /* le premier essai reste, même après « Réessayer » */\n',
+  "avant")
+m('$("dNote1")', '$("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";',
+  '$("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";\n'
+  '  $("dNote1").textContent=s.rep? notePremierEssai().toFixed(1).replace(".",",")+" /20" : "— /20";',
+  "remplace")
+m('$("rEssais")', '$("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";', '''$("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rEssais").innerHTML="🎯 <b>Premier essai&nbsp;: "+notePremierEssai().toFixed(1).replace(".",",")+" /20</b> — ce que tu savais du premier coup."
+    +"<br>🔁 <b>Après aides&nbsp;: "+note.toFixed(1).replace(".",",")+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant.";''',
+  "remplace")
 
 
 class Refus(Exception):

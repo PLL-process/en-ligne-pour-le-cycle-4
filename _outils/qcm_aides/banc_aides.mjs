@@ -9,7 +9,9 @@
 //   A4  une question rangée dans un piège n'affiche pas « Réviser ce piège » sous l'indice ;
 //   A5  le bilan ne liste pas les pièges ratés, ou son bouton n'ouvre pas le mode piège (ses seules questions) ;
 //   A6  le compte des erreurs par piège ne survit pas au rechargement ;
-//   A7  la carte « Avant de commencer » manque, ou une erreur JavaScript survient.
+//   A7  la carte « Avant de commencer » manque, ou une erreur JavaScript survient ;
+//   A8  la question 1, fausse puis réussie après « Réessayer », ne donne pas deux notes — « Premier essai » (0) et
+//       « Après aides » (1 sur N) — au tableau de bord après rechargement, et dans le résultat (19/11/2026).
 // Sortie 0 tout passe · 1 un refus · 2 rien lu (n°299).
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -78,6 +80,25 @@ for (const PAGE of pages) {
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
   const apres = await p.evaluate(() => JSON.stringify(etat.erreursPiege || {}));
   if (dansPiege && (avant === '{}' || avant !== apres)) refus.push('A6 le compte des erreurs par piège ne survit pas au rechargement');
+  // le premier essai : la question 1, fausse au premier essai, réussie après l'aide — deux notes, et elles restent
+  const note = k => (Math.round(k / N * 20 * 10) / 10).toFixed(1).replace('.', ',') + ' /20';
+  await p.evaluate(() => { montrerEcran('q'); setMode('complet'); etat.courante = 0; choixTemp = null; rendreTout(); });
+  if (await p.$('#btnRetenter')) {
+    await p.click('#btnRetenter');
+    const r = await p.evaluate(() => QUESTIONS[0].r);
+    await p.locator('#qOptions .option').nth(r).click();
+    await p.click('#btnValider');
+    await p.waitForFunction(() => etat.validees[0] === true, null, { timeout: 5000 }).catch(() => {});
+    await p.waitForTimeout(300);   /* le navigateur range la sauvegarde avant le rechargement (sous charge, il lui faut ce temps) */
+    await p.reload({ waitUntil: 'load' });
+    await p.waitForFunction(() => (document.getElementById('dNote')?.textContent || '—').indexOf('—') < 0, null, { timeout: 5000 }).catch(() => {});
+    const d = await p.evaluate(() => ({ un: document.getElementById('dNote1')?.textContent, fin: document.getElementById('dNote')?.textContent }));
+    if (d.un !== note(0) || d.fin !== note(1)) refus.push(`A8 premier essai ${d.un} / après aides ${d.fin} (attendu ${note(0)} / ${note(1)}), après rechargement`);
+    await p.click('#btnTerminer'); await p.waitForTimeout(150);
+    const t = await p.evaluate(() => document.getElementById('rEssais')?.innerText || '');
+    if (!t.includes('Premier essai') || !t.includes(note(0)) || !t.includes('Après aides') || !t.includes(note(1)))
+      refus.push('A8 le résultat ne donne pas les deux notes : ' + JSON.stringify(t.slice(0, 120)));
+  } else refus.push('A8 pas de « Réessayer » sur la question 1');
   if (err.length) refus.push('A7 erreur JavaScript : ' + err[0]);
   const nom = path.relative(RACINE, PAGE);
   if (refus.length) { refusTotal++; console.log(`❌ ${nom}`); refus.slice(0, 8).forEach(r => console.log('   · ' + r)); if (refus.length > 8) console.log(`   · … ${refus.length - 8} de plus`); }
