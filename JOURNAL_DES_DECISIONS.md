@@ -33757,3 +33757,23 @@ compter », « prévoir un second moyen de signalement local : faire clignoter l
 
 Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
 Bancs : `tests_3e_C6.2.py` 22 / 22, `tests_regle_311_3e_C6.2.mjs` 34 / 34, mode mission sans refus.
+
+## 19/11/2026 — n°341, I1 : les cinq dernières bonnes réponses justifiées seules (4 séquences, une seule PR)
+
+Cinq groupes dans quatre séquences : une ligne chacun, d'où une seule PR plutôt que quatre.
+- `3e_C1.1`, a1_5 : « quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge » → « quelle couleur
+  du spectre chauffe le plus ». Les trois intrus, de 66 à 79 signes, sont ramenés à la même hauteur et à la même forme
+  (« la température exacte du Soleil »).
+- `3e_C3.1`, a2_4 : « la durée de service, donc le coût réel » → « la durée de service et le coût réel ».
+- `3e_C4.1`, c3_2 : « des métaux protégés (galvanisé, inox ou aluminium) » → « des métaux protégés contre la
+  corrosion », intrus à même hauteur (« une peinture blanche plus épaisse »).
+- `5e_C4.1`, e1_m1 et e1_m4 : « acier galvanisé (traité contre la rouille) » → « acier galvanisé », « cuivre (gainé de
+  plastique isolant) » → « cuivre gainé de plastique isolant » ; intrus « verre trempé », « coton tressé », « bois sec ».
+- Les `mission_<lot>.json` suivent ; `enrichir.py --verifier-tout` : 0 refus. Le banc `3e_C1.1` suit la nouvelle bonne
+  réponse.
+- **Site : 0 ⚠ I1** (25 ce matin) ; la bonne réponse est la plus longue dans 11 % des groupes, aucune page au-delà de
+  40 %. Restent les 25 ⚠ I3 (un résultat attendu lisible dans un énoncé), à reprendre ensuite.
+
+Bancs : les `tests_regle_311` des quatre lots 34 / 34, `tests_3e_C1.1-C1.4_tsinghua.py` 50 / 50,
+`tests_3e_C3.1-C3.4_shenzhen.py` 37 / 37, `tests_3e_C4.1-C4.2.mjs` 25 / 25, `tests_5e_C4.1-C4.8_sequence.mjs` 66 / 66
+et `_qcm.mjs` 25 / 25 ; mode mission sans refus sur les quatre pages.

@@ -47,7 +47,7 @@ BON = {
  "a1_2":"rend possible ce qui ne l'était pas",
  "a1_3":"le métier change : le savoir-faire d'avant ne suffit plus",
  "a1_4":"pas toujours : les deux coexistent",
- "a1_5":"quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge",
+ "a1_5":"quelle couleur du spectre chauffe le plus",
  "a1_6":"une découverte devient une technique quand une capacité de fabrication ET un besoin la rencontrent",
  "a2_1":"ne sont pas comparables directement : ni la même unité, ni la même grandeur",
  "a2_2":"seulement après avoir converti une quantité totale en kgCO₂e",
