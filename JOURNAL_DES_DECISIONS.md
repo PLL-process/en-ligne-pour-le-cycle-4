@@ -33608,3 +33608,26 @@ Quatrième page du chantier n°341. Seul écart relevé : les trois échelles d'
 avec les mots d'un élève de 5e (« 🟢 solide — je trouve seul·e la pièce en panne en testant dans l'ordre ») ; les
 valeurs ne changent pas. Contrôles : `controle_propositions_indices` (rien à signaler) ; bancs 30 / 30 et 34 / 34 ; mode
 mission sans refus.
+
+## 19/11/2026 — n°341 sur 5e_C6.1 (programmer le lampadaire) : six justifications retirées des bonnes réponses, échelles décrites
+
+Cinquième page du chantier n°341. Relevé : 6 ⚠ I1 (la bonne réponse seule portait sa justification), 1 I3, 3 échelles
+sans description (I4), et la bonne réponse la plus longue dans 12 groupes sur 27 (44 %).
+- **I1** : les bonnes réponses disent ce qu'elles sont, leurs explications restent dans les corrections — « 3 (éteinte,
+  veille, pleine puissance) » → « 3 », « augmenter SEUIL_SEC (le sol sera déclaré « sec » plus tôt) » → « augmenter
+  SEUIL_SEC », « ◇ un losange (décision : une question, deux sorties OUI/NON) » → « ◇ un losange (décision) »…
+- Les intrus fantaisistes deviennent des erreurs d'élève, avec leur pourquoi : « casse le détecteur » → « use le
+  détecteur de présence plus vite », « changer la couleur du tuyau » → « ne rien changer, le programme s'adapte »,
+  « demander aux plantes » → « attendre de voir si les plantes poussent », « réécrit tout le programme » → « change sa
+  structure, pas son comportement » (l'inverse de la bonne réponse).
+- **I3** : « SEUIL_NUIT (= 30 lux) » et « inférieure à 30 lux » donnaient, dans deux questions, la valeur que l'élève
+  doit lire dans le programme (e1_7) ; ils disent maintenant « le seuil de nuit ». Le ⚠ restant (« veille à 30 % ») est
+  une autre grandeur, une puissance : faux positif, laissé.
+- **I4** : les trois échelles disent ce que veut dire chaque niveau, avec les mots d'un élève de 5e.
+- `mission_5e_C6.1.json` suit les nouvelles propositions (ses clés sont des débuts de texte) ;
+  `enrichir.py --verifier` : à jour.
+- Site : la bonne réponse est la plus longue dans 31 % des groupes, 5 pages au-delà de 40 % (6 avant cette page).
+
+Contrôles : `controle_propositions_indices` (1 ⚠ I3, faux positif ci-dessus), `controle_ordre_propositions` (0 refus),
+unités. Bancs : `tests_regle_311_5e_C6.1.mjs` 34 / 34, mode mission sans refus, `tests_5e_C6.1-C6.3.mjs` 29 / 32 — **les
+mêmes trois rouges sur `main`** (progression 3 / 4 et reprise après rechargement), sans lien avec cette passe.
