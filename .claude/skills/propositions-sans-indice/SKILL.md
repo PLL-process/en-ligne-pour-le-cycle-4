@@ -63,11 +63,14 @@ La valeur d'un bouton radio est le texte de sa proposition (n°300). Changer un 
 
 - `value` et `<label>` de l'option, son `data-pourquoi` ;
 - la réponse attendue (`const att = {…}` ou `$("id").value === "…"` dans `CHECKS`) ;
-- `mission_<lot>.json` (clés des « pourquoi ») ;
+- `mission_<lot>.json` (clés des « pourquoi ») : une clé n'y est souvent que le **début** du texte (« casse » pour
+  « casse le détecteur ») ; `_outils/changer_proposition.py` la retrouve et la réécrit en entier depuis le 19/11/2026 ;
 - le banc du lot s'il coche par le texte ; puis `grep -rn "<ancien texte>"` sur le dépôt : zéro.
 
 Vérifier : banc du lot, `tests_regle_311_<lot>.mjs`, `banc_generique.mjs` (mode mission : « pourquoi des erreurs »
-complet), `controle_ordre_propositions.py`, `controle_unites.py` (une unité nommée en toutes lettres, n°312).
+complet), `controle_ordre_propositions.py`, `controle_unites.py` (une unité nommée en toutes lettres, n°312), et
+`python3 _outils/mode_mission/enrichir.py --verifier-tout` : 0 refus. Le banc générique lit la page, pas ses données :
+le 19/11/2026, trois séquences étaient vertes au banc avec un `mission_<lot>.json` resté sur les anciens textes.
 
 ## 4. Dans un QCM (`const QUESTIONS`) : l'intrus et son pourquoi
 
