@@ -189,6 +189,27 @@
   table.recette th,table.recette td{border:1px solid var(--border);padding:6px 8px;text-align:left;vertical-align:middle}
   table.recette th{background:var(--input-bg);color:var(--hl)}
   table.recette select,table.recette input{padding:4px 6px;font-size:.95em}
+  /* le relevé d'un jardin (enquête de la séance 3) : cinq points de contrôle, dans l'ordre de la chaîne */
+  .releve{border:1px solid var(--border);border-radius:12px;padding:8px 12px;margin:10px 0;background:var(--input-bg)}
+  .releve-t{margin:0 0 6px}
+  .releve-points{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .releve-points li{display:flex;flex-direction:column;justify-content:space-between;gap:2px;font-size:.9em}
+  .releve-points li span{color:var(--sub)}
+  @media(max-width:680px){
+    .releve-points{grid-template-columns:1fr;gap:4px}
+    .releve-points li{flex-direction:row;justify-content:space-between;gap:12px}
+    .releve-points li b{text-align:right;white-space:nowrap}
+  }
+  /* au téléphone, une fiche par ligne (19/11/2026) : les cellules s'empilent, les colonnes sont nommées dans la fiche */
+  @media(max-width:680px){
+    table.recette.fiches{display:block;overflow:visible}
+    table.recette.fiches tbody{display:block}
+    table.recette.fiches tr{display:block;border:1px solid var(--border);border-radius:12px;padding:8px 12px;margin:10px 0}
+    table.recette.fiches tr:first-child{display:none}
+    table.recette.fiches td{display:block;border:0;padding:3px 0}
+    table.recette.fiches td[data-label]::before{content:attr(data-label);font-weight:600;color:var(--sub)}
+    table.recette.fiches td:first-child,table.recette.fiches td:first-child::before{font-weight:700;color:var(--hl)}
+  }
   .regle-or-schema{border:3px solid #1F3864;border-radius:12px;padding:14px 18px;margin:18px 0;background:#EAF1FB;color:#111;font-weight:600;line-height:1.5}
   .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
   .rappel-spiralaire h2{margin:.1em 0 .5em}
@@ -228,10 +249,10 @@
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
   .filet{opacity:1!important}
-  #a1_1,#a1_2,#a1_3,#a1_4,#a1_5,#a1_just,#a1_r1,#a1_r2,#a2_q1,#a2_q2,#a2_q3,#a2_q4,#a3_journal,#a3_q1,#a3_q2,#a3_q3,#a3_q4,#a4_a1,#a4_a2,#a4_a3,#a4_a4,#a4_a5,#a4_a6,#a4_m1,#a4_m2,#a4_o1,#a4_o2,#a4_o3,#a4_o4,#a4_o5,#a4_o6,#a5_diag,#a5_n1,#a5_n2,#a5_q1,#a5_q2,#a5_q3,#a5_q4,#a5_q5,#a6_just,#a6_q1,#ag1,#ag2,#ag3,#ag4,#ag5,#bHumNum,#be_1,#be_2,#be_3,#bilan1,#bilan2,#bilan3,#defi1,#defi2,#defi3,#hyp1,#hyp2,#id_classe,#id_date,#id_nom,#id_prenom,#prog1,#prog3,#reinv,.badge,.banc-jardin,.correction,.ecran-sim,.etayage,.figure,.meta-grid div,.num,.pompe-sim,.py,.recette th,.refs th,.repli-vitta,.roles th,.skip-link,.version{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  #a1_1,#a1_2,#a1_3,#a1_4,#a1_5,#a1_6,#a1_f1,#a1_f2,#a1_f3,#a1_f4,#a1_f5,#a1_f6,#a1_f7,#a1_just,#a1_r1,#a1_r2,#a2_q1,#a2_q2,#a2_q3,#a2_q4,#a2_q5,#a3_journal,#a3_q1,#a3_q2,#a3_q3,#a3_q4,#a4_a1,#a4_a2,#a4_a3,#a4_a4,#a4_a5,#a4_a6,#a4_m1,#a4_m2,#a4_o1,#a4_o2,#a4_o3,#a4_o4,#a4_o5,#a4_o6,#a5_diag,#a5_n1,#a5_n2,#a5_q1,#a5_q2,#a5_q3,#a5_q4,#a5_q5,#a6_just,#a6_q1,#e7_just,#e7_q1,#e7_q2,#e7_q3,#e7_q4,#e7_q5,#e7_q6,#ag1,#ag2,#ag3,#ag4,#ag5,#bHumNum,#be_1,#be_2,#be_3,#bilan1,#bilan2,#bilan3,#defi1,#defi2,#defi3,#hyp1,#hyp2,#id_classe,#id_date,#id_nom,#id_prenom,#prog1,#prog3,#reinv,.badge,.banc-jardin,.correction,.ecran-sim,.etayage,.figure,.meta-grid div,.num,.pompe-sim,.py,.recette th,.refs th,.repli-vitta,.roles th,.skip-link,.version{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
   .consigne b,.etayage i,.etayage summary,.faire,.faire b,.faire code,.fn,.meta-grid b,.repli-vitta-details summary{color:#047fa0!important}
   .correction summary,.retenir b,.str{color:#048827!important}
-  #bDiag,#v-clign,#v-front,#v-hyst,#v-plage,#v-varie,.banc-grille legend,.banc-grille span{color:#08132c!important}
+  #bDiag,#v-clign,#v-essais,#v-front,#v-hyst,#v-plage,#v-varie,.banc-grille legend,.banc-grille span{color:#08132c!important}
   .kw,.version b{color:#0a1b3d!important}
   .badge{color:#0d2347!important}
   #bL1,#bL2{color:#0e5a2a!important}
@@ -3023,7 +3044,7 @@ body.ms .cac-reserve{--cac-bas:84px}
     <tr><th>Code</th><th>Je serai capable de…</th><th>Où elle se travaille ici</th></tr>
     <tr><td><b>4e_C9.1</b></td><td>Modifier un algorithme permettant de répondre au besoin ou au problème posé.</td><td>Activité 2 — l'algorithme d'arrosage existe déjà ; tu le <b>modifies</b> pour y ajouter la plage horaire. Puis activité 5, où tu le modifies de nouveau pour calmer la pompe qui s'affole.</td></tr>
     <tr><td><b>4e_C9.2</b></td><td>Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme.</td><td>Activité 3 — l'algorigramme de l'activité 2 devient un vrai programme, en blocs puis en Python, et on retrouve chaque forme dessinée dans une ligne de code.</td></tr>
-    <tr><td><b>4e_C9.3</b></td><td>Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.</td><td>Activités 4, 5 et 6 — le programme commande une vraie pompe ; on le <b>met au point</b> par le jeu d'essais, le diagnostic de la pompe qui s'affole et sa correction, puis on réinvestit la structure sur le lampadaire.</td></tr>
+    <tr><td><b>4e_C9.3</b></td><td>Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.</td><td>Activités 4, 5 et 6 — le programme commande la pompe du banc d'essai (sur une maquette, le même programme commanderait une vraie pompe) ; on le <b>met au point</b> par le jeu d'essais, le diagnostic de la pompe qui s'affole et sa correction, puis on réinvestit la structure sur le lampadaire. <br>L'enquête de la séance 3 suit l'ordre jusqu'à l'eau : un ordre donné n'est pas encore un effet.</td></tr>
   </table>
   <p style="font-size:.9em;color:var(--sub)"><b>Lis les verbes.</b><br>En 4e, on <b>modifie</b> un algorithme — on ne part pas de la page blanche, on complète quelque chose qui existe : c'est exactement ce que demande l'activité 2. <br>En 3e, la même famille de compétences dira « écrire » et « concevoir ». <br>La progression du cycle est dans ces verbes-là, pas dans la difficulté des programmes.</p>
   <p style="font-size:.88em;color:var(--sub);margin-bottom:0"><b>Domaines du socle réellement évalués ici :</b> <b>D1.3</b> (langages mathématiques, scientifiques et informatiques — le programme écrit) · <b>D2</b> (méthodes et outils pour apprendre — la démarche d'essai) · <b>D4</b> (systèmes naturels et systèmes techniques — concevoir, tester, mettre au point). <br><b>D5</b> est <i>contexte</i> — le jardin, l'eau, la ville — et n'est pas évalué.</p>
@@ -3159,13 +3180,13 @@ body.ms .cac-reserve{--cac-bas:84px}
 
 <div class="progress-wrap">
   <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progTxt"><div id="progFill"></div></div>
-  <p class="saved-note" id="progTxt">0 / 6 activités validées</p>
+  <p class="saved-note" id="progTxt">0 / 7 activités validées</p>
 </div>
 
 <!-- ════════ TABLEAU DE BORD — règle d'or n°30 ════════ -->
 <section class="card" id="taches">
   <h2>🗺 Où en suis-je ?</h2>
-  <p style="font-size:.92em;color:var(--sub)">Six activités, réparties sur trois séances. Une case se coche quand l'activité est validée — pas quand elle est commencée.</p>
+  <p style="font-size:.92em;color:var(--sub)">Six activités et une enquête, réparties sur trois séances. Une case se coche quand l'activité est validée — pas quand elle est commencée.</p>
   <div id="tachesBandeau" class="taches-bandeau"></div>
 </section>
 
@@ -3180,8 +3201,8 @@ body.ms .cac-reserve{--cac-bas:84px}
       <div>
         <div class="assoc"><label for="bHum">💧 Humidité du sol : <b id="bHumVal" style="color:var(--hl)">30</b> %</label>
           <input type="range" id="bHum" min="0" max="100" value="30" step="1"></div>
-        <div class="assoc" style="margin-top:6px"><label for="bHumNum">Valeur exacte (%) — pratique pour viser 39 et 40 :</label>
-          <input type="number" id="bHumNum" min="0" max="100" step="1" value="30"></div>
+        <div class="assoc" style="margin-top:6px"><label for="bHumNum">Valeur exacte (%) — pour viser 39 et 40, ou écrire 250 comme un capteur débranché :</label>
+          <input type="number" id="bHumNum" min="-50" max="999" step="1" value="30"></div>
         <div class="assoc" style="margin-top:6px"><label for="bHeure">🕐 Heure de la journée : <b id="bHeureVal" style="color:var(--hl)">8</b> h</label>
           <input type="range" id="bHeure" min="0" max="23" value="8" step="1"></div>
 
@@ -3211,6 +3232,7 @@ body.ms .cac-reserve{--cac-bas:84px}
           <li id="v-varie">☐ J'ai fait varier l'humidité et observé la pompe</li>
           <li id="v-plage">☐ J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte</li>
           <li id="v-front">☐ J'ai testé les deux frontières : 39 % et 40 %</li>
+          <li id="v-essais">☐ J'ai exécuté les six essais du tableau de l'activité 4 : 0 / 6</li>
         </ul>
         <p style="font-size:.85em;color:var(--sub);margin:6px 0 0">À la séance 3, la preuve par la mesure qui tremble se fait dans l'atelier du programme de l'activité 5 : il exécute <b>ton</b> programme.</p>
       </div>
@@ -3463,10 +3485,10 @@ body.ms .cac-reserve{--cac-bas:84px}
       <p><b>Et la boucle :</b> les deux chemins se rejoignent, et une flèche remonte jusqu'au-dessus du bloc 2. <br>Il n'y a <b>aucun bloc FIN</b>, et c'est voulu : un jardin ne se surveille pas une fois.</p>
     </details>
 
-    <div class="consigne"><b>Consigne :</b><br>a) Remets les cinq blocs dans l'ordre.<br>b) Réponds aux questions de lecture.<br>c) Écris le pseudo-code complet, plage horaire comprise.</div>
+    <div class="consigne"><b>Consigne :</b><br>a) Retrouve le numéro de chaque bloc de l'algorigramme.<br>b) Réponds aux questions de lecture.<br>c) Écris le pseudo-code complet, plage horaire comprise.</div>
     <div class="exo">
       <h4>a) L'ordre des blocs</h4>
-      <p style="font-size:.92em;color:var(--sub)">Numérote de 1 à 5 dans l'ordre où le programme les parcourt.</p>
+      <p style="font-size:.92em;color:var(--sub)">Donne à chaque bloc son numéro, de 1 à 5, comme sur la figure : de haut en bas.<br>Attention : les blocs 4 et 5 sont <b>deux chemins</b>. À chaque tour, le programme passe par l'un <b>ou</b> par l'autre, puis il remonte lire les mesures.</p>
       <div class="assoc"><fieldset class="qcm-groupe" id="ag1">
   <legend>Quel numéro, de 1 à 5, donnes-tu au bloc ⬭ terminal « DÉBUT » (au démarrage du système) ?</legend>
   <div class="qcm-option"><input type="radio" name="ag1" id="ag1__1" value="1"><label for="ag1__1">1</label></div>
@@ -3537,6 +3559,13 @@ body.ms .cac-reserve{--cac-bas:84px}
   <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__3" value="aucune des deux : le programme s&#x27;arrête" data-pourquoi="Un losange répond toujours OUI ou NON."><label for="a2_q4__3">aucune des deux : le programme s'arrête</label></div>
   <div class="qcm-option"><input type="radio" name="a2_q4" id="a2_q4__4" value="les deux sorties à la fois, l&#x27;une après l&#x27;autre" data-pourquoi="Une mesure ne suit qu'un seul chemin."><label for="a2_q4__4">les deux sorties à la fois, l'une après l'autre</label></div>
 </fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="a2_q5" data-melange="1">
+  <legend>Pendant <b>un</b> tour de boucle, par lesquels des blocs 4 (allumer) et 5 (éteindre) le programme passe-t-il ?</legend>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__2" value="par les deux, l&#x27;un après l&#x27;autre : 4 puis 5" data-pourquoi="Le losange n'a qu'une sortie à la fois. Suis une seule flèche : OUI, ou NON."><label for="a2_q5__2">par les deux, l'un après l'autre : 4 puis 5</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__1" value="par un seul des deux : le 4 sur OUI, le 5 sur NON"><label for="a2_q5__1">par un seul des deux : le 4 sur OUI, le 5 sur NON</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__4" value="toujours par le 4, puis par le 5 au tour suivant" data-pourquoi="Rien n'alterne tout seul : c'est la réponse du losange qui choisit le chemin. Relis la question qu'il pose."><label for="a2_q5__4">toujours par le 4, puis par le 5 au tour suivant</label></div>
+  <div class="qcm-option"><input type="radio" name="a2_q5" id="a2_q5__3" value="par aucun des deux : il remonte tout de suite" data-pourquoi="Chaque sortie du losange mène à une action. Suis la flèche OUI, puis la flèche NON."><label for="a2_q5__3">par aucun des deux : il remonte tout de suite</label></div>
+</fieldset></div>
 
       <h4>c) Ton pseudo-code</h4>
       <p>Voici le programme <b>sans</b> la plage horaire. Complète-le pour n'arroser qu'entre 6 h et 10 h.</p>
@@ -3566,12 +3595,13 @@ FIN SI</div>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis la figure du doigt, de haut en bas : par où entre-t-on ? que fait-on ensuite ? où pose-t-on la question ? Pour c) : tu n'as <b>rien à réécrire</b> — tu ajoutes deux conditions dans le SI existant, reliées par ET.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Entre 6 h et 10 h » se traduit par <b>deux</b> comparaisons : <code>heure &gt;= 6</code> ET <code>heure &lt;= 10</code>. <br>Un seul « entre » en français, deux conditions en programmation — c'est un des pièges les plus fréquents. <br>Et les trois conditions tiennent dans <b>un seul SI</b> : <code>SI H &lt; SEUIL ET heure &gt;= 6 ET heure &lt;= 10</code>.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Entre 6 h et 10 h » se traduit par <b>deux</b> comparaisons : <code>heure &gt;= 6</code> ET <code>heure &lt;= 10</code>. <br>Un seul « entre » en français, deux comparaisons reliées par ET : cette écriture marche dans tous les langages. <br>Python accepte aussi <code>6 &lt;= heure &lt;= 10</code>, d'un seul trait — avec <code>&lt;=</code>, sinon 6 h et 10 h pile sont exclues. <br>Et les trois conditions tiennent dans <b>un seul SI</b> : <code>SI H &lt; SEUIL ET heure &gt;= 6 ET heure &lt;= 10</code>.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b><br>1 DÉBUT&nbsp;; <br>2 mesurer H et lire l'heure&nbsp;; <br>3 le losange&nbsp;; <br>4 allumer (sur OUI)&nbsp;; <br>5 éteindre (sur NON).</p>
+      <p><b>a)</b><br>1 DÉBUT&nbsp;; <br>2 mesurer H et lire l'heure&nbsp;; <br>3 le losange&nbsp;; <br>4 allumer (sur OUI)&nbsp;; <br>5 éteindre (sur NON).<br>Ces numéros repèrent les blocs sur le dessin. Ils ne veulent pas dire « 4, puis 5 » : après le losange, le programme prend <b>un seul</b> des deux chemins.</p>
       <p><b>b) Q1 :</b> c'est <b>une</b> décision sur deux conditions. <br>Deux losanges à la suite donneraient le même comportement, mais ils raconteraient une autre histoire : « d'abord je regarde l'humidité, ensuite l'heure ». <br>Or ici les deux comptent <b>ensemble</b>, et aucune ne passe avant l'autre. <br><b>Q2 :</b> l'absence de FIN est voulue — la flèche qui remonte est la <b>boucle</b>. <br>Un programme de surveillance qui s'arrête est un programme en panne. </p>
       <p></p>
       <p><b>Q3 :</b> <b>3 rectangles</b> — mesurer, allumer, éteindre. Le losange ne <i>fait</i> rien : il <i>demande</i>. <b>Q4 :</b> la sortie <b>NON</b> : 25 &lt; 40 est vrai, mais 23 h n'est pas entre 6 et 10, et le ET exige que <b>tout</b> soit vrai.</p>
+      <p><b>Q5 :</b> par <b>un seul</b> des deux. <br>Si le losange répond OUI, le programme allume (bloc 4). <br>S'il répond NON, il éteint (bloc 5). <br>Dans les deux cas, il remonte ensuite au bloc 2 : il relit l'humidité et l'heure, et repose la question.</p>
       <p><b>c) Pseudo-code attendu :</b></p>
       <div class="py">SEUIL = <span class="num">40</span>
 lire humidité → H
@@ -3584,9 +3614,9 @@ FIN SI</div>
       <p><b>Méthode :</b> on n'a rien réécrit — on a <b>complété</b> la condition existante. <br>C'est presque toujours ainsi qu'un programme grandit : une exigence de plus, une condition de plus, au même endroit. <br>Si tu as dû tout reprendre, c'est le signe que la structure de départ était mal posée.</p>
       <p><b>Limite :</b> ce programme décide au moment où il regarde. <br>Il ne sait rien de ce qui s'est passé avant — ni qu'il a plu cette nuit, ni qu'il a déjà arrosé il y a dix minutes. <br>Se souvenir demanderait une <b>mémoire</b>, et c'est exactement ce que l'activité 5 va introduire.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> écrire <code>6 &lt; heure &lt; 10</code> d'un seul trait — cela se lit en maths, pas dans un programme ; remplacer le ET par un OU, ce qui fait arroser dès que l'UNE des conditions est vraie (donc à 8 h même sur sol trempé) ; compter le losange parmi les traitements ; ajouter un bloc FIN et casser la boucle.</div>
-    <div class="retenir"><b>📌 À retenir :</b> un <b>algorigramme</b> se lit de haut en bas, avec trois formes seulement : le <b>terminal</b> commence, le <b>rectangle</b> fait, le <b>losange</b> demande — et le losange a toujours <b>deux</b> sorties. Un <b>ET</b> se place à l'intérieur d'une décision quand les conditions comptent ensemble. « Entre 6 et 10 » s'écrit avec <b>deux</b> comparaisons.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> au moins 4 réponses justes sur 5 — l'ordre des étapes compte pour une, chaque question de lecture pour une — <b>et</b> un pseudo-code qui contient le ET, les deux bornes horaires et les deux actions.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> écrire <code>6 &lt; heure &lt; 10</code> avec des <code>&lt;</code> stricts — à 6 h pile et à 10 h pile, le jardin n'est plus arrosé (Python accepte cette écriture d'un seul trait, beaucoup d'autres langages la refusent : deux comparaisons reliées par ET marchent partout) ; remplacer le ET par un OU, ce qui fait arroser dès que l'UNE des conditions est vraie (donc à 8 h même sur sol trempé) ; compter le losange parmi les traitements ; ajouter un bloc FIN et casser la boucle.</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>algorigramme</b> se lit de haut en bas, avec trois formes seulement : le <b>terminal</b> commence, le <b>rectangle</b> fait, le <b>losange</b> demande — et le losange a toujours <b>deux</b> sorties. Un <b>ET</b> se place à l'intérieur d'une décision quand les conditions comptent ensemble. « Entre 6 et 10 » se traduit par <b>deux</b> comparaisons reliées par ET, bornes comprises : <code>heure &gt;= 6 ET heure &lt;= 10</code>.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> au moins 5 réponses justes sur 6 — les numéros des blocs comptent pour une, chaque question de lecture pour une — <b>et</b> un pseudo-code qui contient le ET, les deux bornes horaires et les deux actions.</div>
   </div>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s2">Séance 2 — Écrire et tester ›</button></p>
 </section>
@@ -3801,68 +3831,68 @@ heure = <span class="num">8</span>
       <p><b>Deux avertissements.</b> La colonne ATTENDU se remplit <b>avant</b> de lancer : remplie après, elle ne prouve plus rien. <br>Et la quatrième famille, celle qu'on oublie toujours, est le <b>cas absurde</b> : que fait le programme si le capteur renvoie 250 % ou −5 % ? Un capteur débranché ne renvoie pas « rien », il renvoie n'importe quoi.</p>
     </details>
 
-    <div class="consigne"><b>Consigne :</b><br>a) Remplis la colonne <b>ATTENDU</b> — <u>avant</u> de toucher au banc.<br>b) Exécute chaque essai au banc d'essai de cette page et remplis <b>OBSERVÉ</b>.<br>c) Réponds aux deux questions de méthode.</div>
+    <div class="consigne"><b>Consigne :</b><br>a) Remplis la colonne <b>ATTENDU</b> — <u>avant</u> de toucher au banc.<br>b) Exécute chaque essai au banc d'essai de cette page et note dans <b>OBSERVÉ</b> ce que <b>son écran affiche</b> — même si ce n'est pas ce que tu attendais.<br>c) Réponds aux deux questions de méthode.</div>
     <div class="exo">
       <h4>a) et b) Le tableau d'essais</h4>
-      <p class="consigne-tableau">① Choisis le résultat ATTENDU de chaque essai, avant de lancer.<br>② Lance l'essai au banc.<br>③ Choisis le résultat OBSERVÉ.</p>
-      <table class="recette" aria-label="Tableau d'essais à remplir">
+      <p class="consigne-tableau">① Choisis le résultat ATTENDU de chaque essai, avant de lancer.<br>② Lance l'essai au banc : règle l'humidité <b>et</b> l'heure de la ligne, sur la règle « UN seuil ».<br>③ Note dans OBSERVÉ ce que l'écran du banc affiche.<br>④ Compare tes deux colonnes : un écart est une information, pas une faute.</p>
+      <table class="recette fiches" aria-label="Tableau d'essais à remplir">
         <tr><th>N°</th><th>Scénario</th><th>Entrées</th><th>ATTENDU (avant)</th><th>OBSERVÉ (pendant)</th></tr>
-        <tr><td>1</td><td>sol sec, le matin</td><td>H = 25 · 8 h</td>
+        <tr><td data-label="Essai n° ">1</td><td>sol sec, le matin</td><td data-label="Entrées : ">H = 25 · 8 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a1">
   <legend>Essai 1 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a1" id="a4_a1__1" value="pompe ON"><label for="a4_a1__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a1" id="a4_a1__2" value="pompe OFF" data-pourquoi="Sol sec, et l'heure est dans la plage : relis la règle."><label for="a4_a1__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o1">
-  <legend>Essai 1 : quel résultat OBSERVES-tu au banc ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_o1" id="a4_o1__1" value="conforme"><label for="a4_o1__1">conforme</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_o1" id="a4_o1__2" value="non conforme"><label for="a4_o1__2">non conforme</label></div>
+  <legend>Essai 1 : qu'affiche l'écran du banc ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_o1" id="a4_o1__1" value="pompe ON"><label for="a4_o1__1">pompe ON</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o1" id="a4_o1__2" value="pompe OFF" data-pourquoi="Ce n'est pas ce que le banc affiche avec H = 25 et 8 h. Refais l'essai sur la règle « UN seuil », puis lis la première ligne de son écran."><label for="a4_o1__2">pompe OFF</label></div>
 </fieldset></td></tr>
-        <tr><td>2</td><td>sol humide, le matin</td><td>H = 55 · 8 h</td>
+        <tr><td data-label="Essai n° ">2</td><td>sol humide, le matin</td><td data-label="Entrées : ">H = 55 · 8 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a2">
   <legend>Essai 2 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a2" id="a4_a2__1" value="pompe ON" data-pourquoi="Le sol est humide : rien à arroser."><label for="a4_a2__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a2" id="a4_a2__2" value="pompe OFF"><label for="a4_a2__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o2">
-  <legend>Essai 2 : quel résultat OBSERVES-tu au banc ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_o2" id="a4_o2__1" value="conforme"><label for="a4_o2__1">conforme</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_o2" id="a4_o2__2" value="non conforme"><label for="a4_o2__2">non conforme</label></div>
+  <legend>Essai 2 : qu'affiche l'écran du banc ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_o2" id="a4_o2__1" value="pompe ON" data-pourquoi="Ce n'est pas ce que le banc affiche avec H = 55 et 8 h. Refais l'essai sur la règle « UN seuil », puis lis la première ligne de son écran."><label for="a4_o2__1">pompe ON</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o2" id="a4_o2__2" value="pompe OFF"><label for="a4_o2__2">pompe OFF</label></div>
 </fieldset></td></tr>
-        <tr><td>3</td><td>sol sec, mais la NUIT</td><td>H = 25 · 23 h</td>
+        <tr><td data-label="Essai n° ">3</td><td>sol sec, mais la NUIT</td><td data-label="Entrées : ">H = 25 · 23 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a3">
   <legend>Essai 3 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a3" id="a4_a3__1" value="pompe ON" data-pourquoi="L'heure sort de la plage : même sol sec, on n'arrose pas."><label for="a4_a3__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a3" id="a4_a3__2" value="pompe OFF"><label for="a4_a3__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o3">
-  <legend>Essai 3 : quel résultat OBSERVES-tu au banc ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_o3" id="a4_o3__1" value="conforme"><label for="a4_o3__1">conforme</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_o3" id="a4_o3__2" value="non conforme"><label for="a4_o3__2">non conforme</label></div>
+  <legend>Essai 3 : qu'affiche l'écran du banc ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_o3" id="a4_o3__1" value="pompe ON" data-pourquoi="Ce n'est pas ce que le banc affiche avec H = 25 et 23 h. Refais l'essai sur la règle « UN seuil », puis lis la première ligne de son écran."><label for="a4_o3__1">pompe ON</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o3" id="a4_o3__2" value="pompe OFF"><label for="a4_o3__2">pompe OFF</label></div>
 </fieldset></td></tr>
-        <tr><td>4</td><td><b>frontière</b> — juste sous le seuil</td><td>H = 39 · 7 h</td>
+        <tr><td data-label="Essai n° ">4</td><td><b>frontière</b> — juste sous le seuil</td><td data-label="Entrées : ">H = 39 · 7 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a4">
   <legend>Essai 4 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a4" id="a4_a4__1" value="pompe ON"><label for="a4_a4__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a4" id="a4_a4__2" value="pompe OFF" data-pourquoi="39 est sous 40, et l'heure est dans la plage."><label for="a4_a4__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o4">
-  <legend>Essai 4 : quel résultat OBSERVES-tu au banc ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_o4" id="a4_o4__1" value="conforme"><label for="a4_o4__1">conforme</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_o4" id="a4_o4__2" value="non conforme"><label for="a4_o4__2">non conforme</label></div>
+  <legend>Essai 4 : qu'affiche l'écran du banc ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_o4" id="a4_o4__1" value="pompe ON"><label for="a4_o4__1">pompe ON</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o4" id="a4_o4__2" value="pompe OFF" data-pourquoi="Ce n'est pas ce que le banc affiche avec H = 39 et 7 h. Refais l'essai sur la règle « UN seuil », puis lis la première ligne de son écran."><label for="a4_o4__2">pompe OFF</label></div>
 </fieldset></td></tr>
-        <tr><td>5</td><td><b>frontière</b> — sur le seuil pile</td><td>H = 40 · 7 h</td>
+        <tr><td data-label="Essai n° ">5</td><td><b>frontière</b> — sur le seuil pile</td><td data-label="Entrées : ">H = 40 · 7 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a5">
   <legend>Essai 5 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a5" id="a4_a5__1" value="pompe ON" data-pourquoi="40 &lt; 40 est faux : relis la condition."><label for="a4_a5__1">pompe ON</label></div>
   <div class="qcm-option"><input type="radio" name="a4_a5" id="a4_a5__2" value="pompe OFF"><label for="a4_a5__2">pompe OFF</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o5">
-  <legend>Essai 5 : quel résultat OBSERVES-tu au banc ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_o5" id="a4_o5__1" value="conforme"><label for="a4_o5__1">conforme</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_o5" id="a4_o5__2" value="non conforme"><label for="a4_o5__2">non conforme</label></div>
+  <legend>Essai 5 : qu'affiche l'écran du banc ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_o5" id="a4_o5__1" value="pompe ON" data-pourquoi="Ce n'est pas ce que le banc affiche avec H = 40 et 7 h. Refais l'essai sur la règle « UN seuil », puis lis la première ligne de son écran."><label for="a4_o5__1">pompe ON</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o5" id="a4_o5__2" value="pompe OFF"><label for="a4_o5__2">pompe OFF</label></div>
 </fieldset></td></tr>
-        <tr><td>6</td><td><b>absurde</b> — capteur débranché</td><td>H = 250 · 8 h</td>
+        <tr><td data-label="Essai n° ">6</td><td><b>absurde</b> — capteur débranché</td><td data-label="Entrées : ">H = 250 · 8 h</td>
           <td><fieldset class="qcm-groupe" id="a4_a6" data-melange="1">
   <legend>Essai 6 : quel résultat ATTENDS-tu, avant de lancer ?</legend>
   <div class="qcm-option"><input type="radio" name="a4_a6" id="a4_a6__2" value="le programme s&#x27;arrête avec une erreur" data-pourquoi="250 est un nombre comme un autre : le programme ne plante pas."><label for="a4_a6__2">le programme s'arrête avec une erreur</label></div>
@@ -3870,12 +3900,13 @@ heure = <span class="num">8</span>
   <div class="qcm-option"><input type="radio" name="a4_a6" id="a4_a6__1" value="pompe ON, car 250 est une valeur extrême" data-pourquoi="250 n'est pas sous 40 : la condition est fausse."><label for="a4_a6__1">pompe ON, car 250 est une valeur extrême</label></div>
 </fieldset></td>
           <td><fieldset class="qcm-groupe" id="a4_o6">
-  <legend>Essai 6 : quel résultat OBSERVES-tu au banc ?</legend>
-  <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__1" value="conforme"><label for="a4_o6__1">conforme</label></div>
-  <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__2" value="non conforme"><label for="a4_o6__2">non conforme</label></div>
+  <legend>Essai 6 : qu'affiche l'écran du banc ?</legend>
+  <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__1" value="pompe ON" data-pourquoi="Ce n'est pas ce que le banc affiche avec H = 250 et 8 h. Écris 250 dans « valeur exacte », puis lis la première ligne de son écran."><label for="a4_o6__1">pompe ON</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__2" value="pompe OFF, sans aucune alerte"><label for="a4_o6__2">pompe OFF, sans aucune alerte</label></div>
+  <div class="qcm-option"><input type="radio" name="a4_o6" id="a4_o6__3" value="pompe OFF, avec une alerte à l&#x27;écran" data-pourquoi="Relis les deux lignes de l'écran du banc : y vois-tu un message d'alerte ?"><label for="a4_o6__3">pompe OFF, avec une alerte à l'écran</label></div>
 </fieldset></td></tr>
       </table>
-      <p style="font-size:.9em;color:var(--sub)">Le banc d'essai de cette page accepte la <b>valeur exacte</b> : c'est ce qui permet de viser 39 puis 40 sans trembler. Les deux frontières sont tracées ✔ automatiquement.</p>
+      <p style="font-size:.9em;color:var(--sub)">Le banc d'essai de cette page accepte la <b>valeur exacte</b> : c'est ce qui permet de viser 39 puis 40 sans trembler, et d'écrire <b>250</b> pour l'essai 6 — ce que renvoie un capteur débranché. <br>Le banc coche ✔ chaque essai du tableau que tu as réellement exécuté.</p>
 
       <h4>c) Deux questions de méthode</h4>
       <div class="assoc"><fieldset class="qcm-groupe" id="a4_m1" data-melange="1">
@@ -3898,15 +3929,25 @@ heure = <span class="num">8</span>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour remplir « attendu », ne lance rien : relis la règle et raisonne. <br>Pour l'essai 3, souviens-toi que le ET exige les <b>deux</b> conditions. Pour l'essai 6, demande-toi ce que fait le test <code>250 &lt; 40</code>.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Essais attendus : ON · OFF · OFF · ON · OFF · OFF. Le n° 5 est le plus instructif : <code>40 &lt; 40</code> est <b>faux</b>, donc la pompe reste éteinte à 40 pile. <br>Si le cahier des charges voulait « arroser dès 40 », il faudrait écrire <code>&lt;=</code>. <br>Un seul caractère sépare les deux comportements — et un seul essai les distingue.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Attendus :</b><br>1 → <b>ON</b>&nbsp;; <br>2 → <b>OFF</b> (sol humide)&nbsp;; <br>3 → <b>OFF</b> (l'heure sort de la plage, même sol sec)&nbsp;; <br>4 → <b>ON</b> (39 &lt; 40, et 7 h est dans la plage)&nbsp;; <br>5 → <b>OFF</b> (40 &lt; 40 est <b>faux</b>)&nbsp;; <br>6 → <b>OFF</b>, mais sans aucune alerte.</p>
+      <p><b>a) et b) Le tableau d'essais, rempli.</b></p>
+      <table class="recette fiches" aria-label="Le tableau d'essais corrigé">
+        <tr><th>N°</th><th>Entrées</th><th>ATTENDU</th><th>OBSERVÉ au banc</th><th>Pourquoi</th></tr>
+        <tr><td data-label="Essai n° ">1</td><td data-label="Entrées : ">H = 25 · 8 h</td><td data-label="Attendu : "><b>ON</b></td><td data-label="Observé : "><b>ON</b></td><td data-label="Pourquoi : ">sol sec (25 &lt; 40) et 8 h est dans la plage</td></tr>
+        <tr><td data-label="Essai n° ">2</td><td data-label="Entrées : ">H = 55 · 8 h</td><td data-label="Attendu : "><b>OFF</b></td><td data-label="Observé : "><b>OFF</b></td><td data-label="Pourquoi : ">sol humide : 55 &lt; 40 est faux</td></tr>
+        <tr><td data-label="Essai n° ">3</td><td data-label="Entrées : ">H = 25 · 23 h</td><td data-label="Attendu : "><b>OFF</b></td><td data-label="Observé : "><b>OFF</b></td><td data-label="Pourquoi : ">sol sec, mais 23 h sort de la plage : le ET bloque</td></tr>
+        <tr><td data-label="Essai n° ">4</td><td data-label="Entrées : ">H = 39 · 7 h</td><td data-label="Attendu : "><b>ON</b></td><td data-label="Observé : "><b>ON</b></td><td data-label="Pourquoi : ">39 &lt; 40 est vrai, et 7 h est dans la plage</td></tr>
+        <tr><td data-label="Essai n° ">5</td><td data-label="Entrées : ">H = 40 · 7 h</td><td data-label="Attendu : "><b>OFF</b></td><td data-label="Observé : "><b>OFF</b></td><td data-label="Pourquoi : ">40 &lt; 40 est <b>faux</b></td></tr>
+        <tr><td data-label="Essai n° ">6</td><td data-label="Entrées : ">H = 250 · 8 h</td><td data-label="Attendu : "><b>OFF</b>, sans alerte</td><td data-label="Observé : "><b>OFF</b>, sans alerte</td><td data-label="Pourquoi : ">250 &lt; 40 est faux : le programme croit le sol très humide</td></tr>
+      </table>
+      <p>Ici, tes deux colonnes doivent dire la même chose : le programme du banc respecte la règle. <br>Si une ligne diffère, c'est un <b>écart</b>. <br>Un écart se traite toujours de la même façon : on refait l'essai, on relit la règle, puis on cherche qui a tort — la prévision, la manipulation, ou le programme.</p>
       <p><b>c) Q1 :</b> l'essai à 40 pile est le seul qui sépare <code>&lt;</code> de <code>&lt;=</code>. Partout ailleurs, les deux écritures donnent exactement le même résultat — c'est précisément pour cela qu'un jeu de tests sans frontière peut passer au vert sur un programme faux.</p>
       <p><b>Q2 :</b> le programme <b>n'arrose pas</b>, ce qui est heureux, mais il n'arrose pas <b>pour la mauvaise raison</b> : il croit que la terre est très humide. <br>Il ne signale rien. <br>Or 250 % d'humidité n'existe pas : cette valeur ne dit pas « il pleut », elle dit « le capteur est débranché » — et personne ne le saura. <br>Un bon programme <b>vérifie ses entrées avant de leur faire confiance</b>. <br>C'est le défi technique du bonus.</p>
       <p><b>Méthode :</b> un jeu d'essais complet couvre <b>quatre familles</b> — les cas nominaux (ça marche), les cas frontières (le seuil est-il au bon endroit ?), les cas d'exclusion (l'autre condition bloque-t-elle bien ?), les cas absurdes (que fait-on quand l'entrée est impossible ?). <br>Les trois premières familles vérifient ce que le programme <i>doit</i> faire ; la quatrième vérifie ce qu'il fait quand <b>le monde ne se comporte pas comme prévu</b>.</p>
       <p><b>Limite :</b> six essais réussis prouvent que le programme respecte la règle. <br>Ils ne prouvent pas que la <b>règle</b> est bonne : arroser à 39 % d'humidité, est-ce vraiment nécessaire ? Cette question-là n'est pas informatique, elle est agronomique — et elle se pose au jardin, pas à l'écran.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> remplir « attendu » après avoir vu le résultat (ce n'est plus un test, c'est un compte rendu) ; ne tester que des valeurs franches et conclure que tout va bien ; oublier le cas où la <b>seconde</b> condition bloque à elle seule ; croire qu'une valeur absurde fera planter le programme — elle passe tranquillement dans le test.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> remplir « attendu » après avoir vu le résultat (ce n'est plus un test, c'est un compte rendu) ; noter dans « observé » ce qu'on espérait voir, au lieu de ce que l'écran affiche ; ne tester que des valeurs franches et conclure que tout va bien ; oublier le cas où la <b>seconde</b> condition bloque à elle seule ; croire qu'une valeur absurde fera planter le programme — elle passe tranquillement dans le test.</div>
     <div class="retenir"><b>📌 À retenir :</b> <b>tester</b>, c'est écrire le résultat ATTENDU <b>avant</b> l'exécution, puis comparer. Un jeu d'essais couvre quatre familles : nominaux, <b>frontières</b>, exclusions, <b>absurdes</b>. Les valeurs frontières sont les seules à distinguer <code>&lt;</code> de <code>&lt;=</code> — et une entrée impossible ne fait pas planter un programme : elle le fait se tromper en silence.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> les 6 attendus justes, les 6 observés remplis, les 2 questions de méthode justes, et au banc : les frontières 39 et 40 réellement exécutées ✔.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 6 attendus justes, les 2 questions de méthode justes, les six essais réellement exécutés au banc ✔, et 6 observés qui disent ce que le banc a affiché.</div>
   </div>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3">Séance 3 — Mettre au point ›</button></p>
 </section>
@@ -3918,6 +3959,127 @@ heure = <span class="num">8</span>
 <section class="card">
   <h2>🔧 Séance 3 — Mettre au point : quand le programme a raison mais se comporte mal</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : que faire d'un programme qui respecte la règle… et qui est pourtant inutilisable ?</p>
+
+  <div class="activite" id="act7">
+    <header><span class="num">Enquête</span><h3>L'écran affiche POMPE ON… et l'eau ne coule pas</h3><span class="duree">⏱ ~12 min</span></header>
+    <p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison avant la séance 3 (sans matériel, sur téléphone)</p>
+    <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
+      <div><b>Objectif :</b> se servir des deux chaînes pour trouver une panne — suivre l'ordre, puis l'énergie, puis l'eau.</div>
+      <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> un programme commandant un système réel : savoir si le défaut vient du programme, ou du système qu'il commande.</div>
+      <div><b>Production attendue :</b> le maillon en panne de trois jardins + une vérification écrite.</div>
+      <div><b>Ressources :</b> le schéma « de l'ordre à l'eau » et les relevés des jardins.</div>
+    </div></details>
+    <div class="consigne"><b>La situation :</b> quatre jardins du collège ont la même station d'arrosage et le même programme. <br>Ce matin, à <b>8 h</b>, le sol est sec partout : <b>H = 30 %</b>. Les quatre écrans affichent <b>POMPE ON</b>. <br>Pourtant, l'eau ne coule que dans le jardin A.<br><b>Consigne :</b><br>a) Vérifie d'abord la décision du programme.<br>b) Pour chaque jardin en panne, trouve le <b>maillon</b> (l'élément de la chaîne) qui ne fait plus son travail.<br>c) Écris la vérification que tu ferais au jardin D.<br>d) Dis ce que l'écran prouve vraiment.</div>
+    <div class="exo">
+      <figure class="schema-sous-les-yeux" data-regle="schema-sous-les-yeux" style="margin:.4rem 0 .8rem">
+        <div class="cac cac-corrige" data-cac='{"dessin": "jardin_enquete", "corrige": true}'></div>
+        <figcaption>De l'ordre à l'eau : les deux chaînes du jardin, le circuit d'eau, et les cinq points ① à ⑤ où l'on regarde ou mesure.</figcaption>
+      </figure>
+      <div class="releve" role="group" aria-label="Relevé du jardin A">
+        <p class="releve-t"><b>Relevé du jardin A</b> — il fonctionne : c'est ton repère</p>
+        <ul class="releve-points"><li><span>① Écran</span> <b>POMPE ON</b></li><li><span>② Sortie de l'alimentation</span> <b>12 V</b></li><li><span>③ Bornes de la pompe</span> <b>12 V</b></li><li><span>④ Pompe (moteur et turbine)</span> <b>tourne</b></li><li><span>⑤ Bout du tuyau</span> <b>l'eau coule</b></li></ul>
+      </div>
+      <p class="releve-unites" style="font-size:.9em;color:var(--sub)">Aux points ② et ③, on mesure la <b>tension</b> électrique, en <b>volts (V)</b> : 12 V, l'énergie arrive ; 0 V, rien n'arrive.</p>
+
+      <h4>a) La décision du programme</h4>
+      <div class="assoc"><fieldset class="qcm-groupe" id="e7_q1">
+  <legend>À 8 h, avec H = 30 %, <b>POMPE ON</b> est-il l'ordre que le programme devait donner ?</legend>
+  <div class="qcm-option"><input type="radio" name="e7_q1" id="e7_q1__1" value="non : à 30 %, le sol est encore assez humide" data-pourquoi="Relis la règle : on arrose si H est sous 40. Compare 30 à 40."><label for="e7_q1__1">non : à 30 %, le sol est encore assez humide</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q1" id="e7_q1__2" value="oui : 30 est sous le seuil de 40, et 8 h est dans la plage"><label for="e7_q1__2">oui : 30 est sous le seuil de 40, et 8 h est dans la plage</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q1" id="e7_q1__3" value="non : à 8 h, on est hors de la plage d&#x27;arrosage" data-pourquoi="La plage va de 6 h à 10 h. Place 8 h dans cette plage."><label for="e7_q1__3">non : à 8 h, on est hors de la plage d'arrosage</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q1" id="e7_q1__4" value="on ne peut pas le savoir tant que l&#x27;eau ne coule pas" data-pourquoi="L'ordre se décide avec la règle, pas avec l'eau. Applique la règle à H = 30 et 8 h."><label for="e7_q1__4">on ne peut pas le savoir tant que l'eau ne coule pas</label></div>
+</fieldset></div>
+
+      <h4>b) Jardin B</h4>
+      <div class="releve" role="group" aria-label="Relevé du jardin B">
+        <p class="releve-t"><b>Relevé du jardin B</b></p>
+        <ul class="releve-points"><li><span>① Écran</span> <b>POMPE ON</b></li><li><span>② Sortie de l'alimentation</span> <b>0 V</b></li><li><span>③ Bornes de la pompe</span> <b>0 V</b></li><li><span>④ Pompe (moteur et turbine)</span> <b>à l'arrêt</b></li><li><span>⑤ Bout du tuyau</span> <b>pas d'eau</b></li></ul>
+      </div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="e7_q2">
+  <legend><b>Jardin B</b> : quel maillon ne fait plus son travail ?</legend>
+  <div class="qcm-option"><input type="radio" name="e7_q2" id="e7_q2__1" value="TRAITER — la carte et son programme" data-pourquoi="La carte a donné le bon ordre : l'écran l'affiche. Cherche plus bas, dans la chaîne d'énergie."><label for="e7_q2__1">TRAITER — la carte et son programme</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q2" id="e7_q2__2" value="ALIMENTER — l&#x27;alimentation 12 V"><label for="e7_q2__2">ALIMENTER — l'alimentation 12 V</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q2" id="e7_q2__3" value="DISTRIBUER — le relais" data-pourquoi="Le relais ne peut laisser passer que ce qu'il reçoit. Regarde le point ② : que reçoit-il ?"><label for="e7_q2__3">DISTRIBUER — le relais</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q2" id="e7_q2__4" value="CONVERTIR — la pompe" data-pourquoi="La pompe ne reçoit rien (point ③ : 0 V) : elle ne peut pas tourner. Remonte vers ce qui devrait l'alimenter."><label for="e7_q2__4">CONVERTIR — la pompe</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q2" id="e7_q2__5" value="aucun des quatre : c&#x27;est le circuit d&#x27;eau" data-pourquoi="La pompe ne tourne même pas (point ④) : le défaut est avant l'eau. Remonte la chaîne d'énergie."><label for="e7_q2__5">aucun des quatre : c'est le circuit d'eau</label></div>
+</fieldset></div>
+
+      <h4>b) Jardin C</h4>
+      <div class="releve" role="group" aria-label="Relevé du jardin C">
+        <p class="releve-t"><b>Relevé du jardin C</b></p>
+        <ul class="releve-points"><li><span>① Écran</span> <b>POMPE ON</b></li><li><span>② Sortie de l'alimentation</span> <b>12 V</b></li><li><span>③ Bornes de la pompe</span> <b>0 V</b></li><li><span>④ Pompe (moteur et turbine)</span> <b>à l'arrêt</b></li><li><span>⑤ Bout du tuyau</span> <b>pas d'eau</b></li></ul>
+      </div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="e7_q3">
+  <legend><b>Jardin C</b> : quel maillon ne fait plus son travail ?</legend>
+  <div class="qcm-option"><input type="radio" name="e7_q3" id="e7_q3__1" value="TRAITER — la carte et son programme" data-pourquoi="La carte a donné le bon ordre : l'écran l'affiche. Cherche plus bas, dans la chaîne d'énergie."><label for="e7_q3__1">TRAITER — la carte et son programme</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q3" id="e7_q3__2" value="ALIMENTER — l&#x27;alimentation 12 V" data-pourquoi="L'alimentation fait son travail : 12 V au point ②. Avance d'un maillon."><label for="e7_q3__2">ALIMENTER — l'alimentation 12 V</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q3" id="e7_q3__3" value="DISTRIBUER — le relais"><label for="e7_q3__3">DISTRIBUER — le relais</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q3" id="e7_q3__4" value="CONVERTIR — la pompe" data-pourquoi="La pompe ne reçoit rien (point ③ : 0 V) : ce n'est pas elle qui est en cause. Regarde ce qu'il y a entre ② et ③."><label for="e7_q3__4">CONVERTIR — la pompe</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q3" id="e7_q3__5" value="aucun des quatre : c&#x27;est le circuit d&#x27;eau" data-pourquoi="La pompe ne tourne pas (point ④) : le défaut est avant l'eau. Remonte la chaîne d'énergie."><label for="e7_q3__5">aucun des quatre : c'est le circuit d'eau</label></div>
+</fieldset></div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="e7_q4">
+  <legend><b>Jardin C</b> : 12 V au point ②, 0 V au point ③. Que vérifies-tu en premier ?</legend>
+  <div class="qcm-option"><input type="radio" name="e7_q4" id="e7_q4__1" value="le programme : son seuil de 40 est mal réglé" data-pourquoi="L'écran affiche POMPE ON : le programme a pris la bonne décision. Le défaut est après lui."><label for="e7_q4__1">le programme : son seuil de 40 est mal réglé</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q4" id="e7_q4__2" value="le niveau de l&#x27;eau dans le réservoir" data-pourquoi="La pompe ne tourne pas : même avec un réservoir plein, rien ne coulerait. Cherche pourquoi elle ne reçoit pas ses 12 V."><label for="e7_q4__2">le niveau de l'eau dans le réservoir</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q4" id="e7_q4__3" value="le relais, et le fil qui lui apporte l&#x27;ordre"><label for="e7_q4__3">le relais, et le fil qui lui apporte l'ordre</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q4" id="e7_q4__4" value="le capteur d&#x27;humidité, dans le sol" data-pourquoi="Le capteur a bien mesuré 30 %, et l'ordre est parti. Le défaut est plus loin : suis l'énergie."><label for="e7_q4__4">le capteur d'humidité, dans le sol</label></div>
+</fieldset></div>
+
+      <h4>b) et c) Jardin D</h4>
+      <div class="releve" role="group" aria-label="Relevé du jardin D">
+        <p class="releve-t"><b>Relevé du jardin D</b></p>
+        <ul class="releve-points"><li><span>① Écran</span> <b>POMPE ON</b></li><li><span>② Sortie de l'alimentation</span> <b>12 V</b></li><li><span>③ Bornes de la pompe</span> <b>12 V</b></li><li><span>④ Pompe (moteur et turbine)</span> <b>tourne</b></li><li><span>⑤ Bout du tuyau</span> <b>pas d'eau</b></li></ul>
+      </div>
+      <div class="assoc"><fieldset class="qcm-groupe" id="e7_q5">
+  <legend><b>Jardin D</b> : quel maillon ne fait plus son travail ?</legend>
+  <div class="qcm-option"><input type="radio" name="e7_q5" id="e7_q5__1" value="TRAITER — la carte et son programme" data-pourquoi="La carte a donné le bon ordre : l'écran l'affiche. Cherche plus loin."><label for="e7_q5__1">TRAITER — la carte et son programme</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q5" id="e7_q5__2" value="ALIMENTER — l&#x27;alimentation 12 V" data-pourquoi="L'alimentation fait son travail : 12 V au point ②. Avance."><label for="e7_q5__2">ALIMENTER — l'alimentation 12 V</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q5" id="e7_q5__3" value="DISTRIBUER — le relais" data-pourquoi="Le relais a laissé passer l'énergie : 12 V au point ③. Avance encore."><label for="e7_q5__3">DISTRIBUER — le relais</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q5" id="e7_q5__4" value="CONVERTIR — la pompe" data-pourquoi="La pompe tourne (point ④) : elle convertit bien l'énergie électrique en mouvement. Regarde ce qui vient après."><label for="e7_q5__4">CONVERTIR — la pompe</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q5" id="e7_q5__5" value="aucun des quatre : c&#x27;est le circuit d&#x27;eau"><label for="e7_q5__5">aucun des quatre : c'est le circuit d'eau</label></div>
+</fieldset></div>
+      <label for="e7_just" style="display:block;margin-top:10px"><b>c)</b> Au jardin D : écris ce que tu vas vérifier, et ce que tu dois voir si ton idée est la bonne.</label>
+      <textarea id="e7_just" style="min-height:90px" placeholder="Je pense que… Pour le vérifier, je… Si j'ai raison, je vois…"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — trois débuts de phrase</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrase retirent l'obstacle de la rédaction, pas l'exigence.</p>
+        <p>« Je pense que … (une cause). <br>Pour le vérifier, je … (un geste). <br>Si j'ai raison, je vois … (ce que tu observes). »</p>
+      </details>
+      <p class="note-relue" style="font-size:.9em;color:var(--sub)">✍ Ta réponse écrite sera relue par ton professeur&nbsp;: «&nbsp;Vérifier&nbsp;» regarde si l'essentiel y est, pas si tout est juste.</p>
+
+      <h4>d) Ce que l'écran prouve</h4>
+      <div class="assoc"><fieldset class="qcm-groupe" id="e7_q6">
+  <legend>L'écran affiche <b>POMPE ON</b>. Qu'est-ce que cela prouve ?</legend>
+  <div class="qcm-option"><input type="radio" name="e7_q6" id="e7_q6__1" value="que la pompe tourne, puisqu&#x27;elle est allumée" data-pourquoi="Aucune flèche ne revient de la pompe vers la carte : l'écran ne sait pas ce que fait la pompe. Regarde d'où part le message."><label for="e7_q6__1">que la pompe tourne, puisqu'elle est allumée</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q6" id="e7_q6__2" value="que l&#x27;eau arrive bien au pied des plantes" data-pourquoi="Rien ne mesure l'eau qui coule : l'écran ne peut pas le savoir. Regarde d'où part le message."><label for="e7_q6__2">que l'eau arrive bien au pied des plantes</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q6" id="e7_q6__3" value="que la carte a donné l&#x27;ordre — et rien de plus"><label for="e7_q6__3">que la carte a donné l'ordre — et rien de plus</label></div>
+  <div class="qcm-option"><input type="radio" name="e7_q6" id="e7_q6__4" value="que l&#x27;alimentation 12 V fournit de l&#x27;énergie" data-pourquoi="Jardin B : l'écran affiche POMPE ON, et pourtant 0 V au point ②. L'écran ne dit rien de l'alimentation."><label for="e7_q6__4">que l'alimentation 12 V fournit de l'énergie</label></div>
+</fieldset></div>
+      <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier mon enquête</button>
+      <div class="feedback" id="fb7" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis le schéma du doigt, du point ① au point ⑤. <br>Pour chaque jardin, lis son relevé dans le même ordre. <br>Arrête-toi au <b>premier</b> point qui n'est pas comme au jardin A.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le maillon en panne se trouve entre le <b>dernier point juste</b> et le <b>premier point faux</b>. <br>Jardin B : le point ① est juste, le point ② est faux. Quel bloc y a-t-il juste avant le point ② ? <br>Et si tous les points des deux chaînes sont justes, regarde ce qui n'est dans <b>aucune</b> des deux chaînes.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> <b>Oui</b>, l'ordre est le bon : 30 &lt; 40, et 8 h est entre 6 h et 10 h. <br>Les deux conditions sont vraies, donc le programme doit allumer. <br>Dans les quatre jardins, le programme a pris la <b>bonne décision</b> : ce n'est pas lui qu'il faut corriger.</p>
+      <p><b>b) La méthode :</b> on suit la chaîne, du point ① au point ⑤, et on cherche l'endroit où le relevé passe de « juste » à « faux ». <br>Le maillon en panne est <b>entre les deux</b>.</p>
+      <table class="recette fiches" aria-label="Le diagnostic, jardin par jardin">
+        <tr><th>Jardin</th><th>Dernier point juste</th><th>Premier point faux</th><th>Maillon en panne</th><th>À vérifier d'abord</th></tr>
+        <tr><td data-label="Jardin ">A</td><td data-label="Dernier point juste : ">⑤ l'eau coule</td><td data-label="Premier point faux : ">aucun</td><td data-label="Maillon en panne : ">aucun</td><td data-label="À vérifier d'abord : ">rien : tout fonctionne</td></tr>
+        <tr><td data-label="Jardin ">B</td><td data-label="Dernier point juste : ">① l'ordre est donné</td><td data-label="Premier point faux : ">② 0 V à la sortie de l'alimentation</td><td data-label="Maillon en panne : "><b>ALIMENTER</b> — l'alimentation 12 V</td><td data-label="À vérifier d'abord : ">sa prise et son interrupteur</td></tr>
+        <tr><td data-label="Jardin ">C</td><td data-label="Dernier point juste : ">② 12 V à la sortie de l'alimentation</td><td data-label="Premier point faux : ">③ 0 V aux bornes de la pompe</td><td data-label="Maillon en panne : "><b>DISTRIBUER</b> — le relais</td><td data-label="À vérifier d'abord : ">le relais, et le fil qui lui apporte l'ordre</td></tr>
+        <tr><td data-label="Jardin ">D</td><td data-label="Dernier point juste : ">④ la pompe tourne</td><td data-label="Premier point faux : ">⑤ pas d'eau au bout du tuyau</td><td data-label="Maillon en panne : ">aucun des quatre : le <b>circuit d'eau</b></td><td data-label="À vérifier d'abord : ">le niveau du réservoir, puis le tuyau</td></tr>
+      </table>
+      <p><b>Jardin C, de plus près.</b> Entre les points ② et ③, il n'y a que le relais. <br>S'il ne laisse pas passer l'énergie, il y a deux causes possibles : le relais lui-même est usé, ou l'<b>ordre</b> ne lui arrive pas (un fil débranché entre la carte et lui). <br>L'écran affiche POMPE ON, mais l'écran ne prouve pas que l'ordre est <b>arrivé</b> au relais.</p>
+      <p><b>c) Une réponse possible pour le jardin D :</b> « Je pense que le réservoir est vide. <br>Pour le vérifier, je regarde le niveau de l'eau dans le réservoir. <br>Si j'ai raison, je vois que le tuyau qui aspire n'est plus dans l'eau ; je remplis le réservoir, et l'eau doit couler au jardin. » <br>Autre réponse juste : un tuyau pincé, bouché ou débranché — on le suit de la pompe jusqu'au sol. <br><b>Ce qui est regardé :</b> une cause dans le circuit d'eau, un geste pour la vérifier, et ce qu'on doit observer.</p>
+      <p><b>d)</b> POMPE ON prouve que la carte a <b>donné l'ordre</b> — et rien de plus. <br>Regarde le schéma : le message part de la carte vers l'écran. Aucune flèche ne revient de la pompe ou de l'eau vers la carte. <br>L'écran affiche ce que la carte a <b>décidé</b>, pas ce que la pompe a <b>fait</b>.</p>
+      <p><b>Pour aller plus loin :</b> pour que l'écran puisse afficher « l'eau coule », il faudrait un capteur de plus — un capteur de débit (il mesure l'eau qui passe dans le tuyau), relié à la carte. <br>Ce serait une nouvelle entrée de la chaîne d'information : ACQUÉRIR aurait trois mesures au lieu de deux.</p>
+      <p><b>Le lien avec la suite :</b> à l'activité 5, la pompe s'affole et le relais bascule sans arrêt. <br>Un relais qui bascule trop finit par s'user : c'est le jardin C.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> accuser le programme dès que l'eau ne coule pas — ici, il a pris la bonne décision dans les quatre jardins ; croire que POMPE ON veut dire « la pompe tourne » ; chercher la panne dans la pompe alors qu'elle ne reçoit rien ; oublier le circuit d'eau, qui n'est dans aucune des deux chaînes.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>un ordre n'est pas un effet</b>. L'information <b>décide</b> (la carte donne l'ordre), l'énergie <b>suit</b> (alimentation → relais → pompe), la matière <b>circule</b> (l'eau). Pour trouver une panne, on suit la chaîne maillon par maillon, jusqu'à l'endroit où le relevé devient faux.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les trois maillons en panne trouvés (jardins B, C et D), au moins 5 réponses justes sur 6, <b>et</b> une vérification écrite pour le jardin D : une cause, un geste, ce qu'on doit voir.</div>
+  </div>
 
   <div class="activite" id="act5">
     <header><span class="num">Activité 5</span><h3>La pompe qui s'affole — diagnostiquer, corriger, re-tester</h3>
@@ -4703,6 +4865,64 @@ window.CAC_DESSINS.jardin_programme = (function(){
     ]
   };
 })();
+/* Le dessin de l'enquête de la séance 3 (« POMPE ON… et l'eau ne coule pas ») : la carte, son écran, la chaîne d'énergie
+   et le circuit d'eau, avec les cinq points où l'on regarde ou mesure. Mêmes fonctions, mêmes constituants et mêmes
+   mots que le dessin des deux chaînes (jardin_programme) ; ACQUÉRIR n'y est pas : l'enquête commence à l'ordre donné. */
+window.CAC_DESSINS.jardin_enquete = (function(){
+  var CYAN = "#61dafb", VIOLET = "#c68ef2", JAUNE = "#ffd66b", VERT = "#81fba1", ORANGE = "#ffb454", BLEU = "#81aaff";
+  return {
+    seuil: 760,
+    large: {vue: [0, 0, 1540, 640]},
+    etroit: {vue: [0, 0, 380, 862], max: 520},
+    elements: [
+      {id: "titre-info", type: "titre", texte: "CHAÎNE D’INFORMATION — en haut (elle décide)", couleur: CYAN,
+       large: {x: 20, y: 14}, etroit: {x: 10, y: 8, texte: "CHAÎNE D’INFORMATION —\nen haut (elle décide)"}},
+      {id: "traiter", type: "bloc", groupe: "information", fonction: "TRAITER", composant: "Carte programmable\net son programme", couleur: VIOLET,
+       large: {x: 510, y: 56, l: 230}, etroit: {x: 110, y: 56, l: 160}},
+      {id: "message", type: "fleche", groupe: "information", nature: "information", texte: "Message",
+       large: {points: [[740, 91], [976, 91]], ex: 858, ey: 80, ancre: "bas", lt: 150},
+       etroit: {points: [[190, 144], [190, 182]], ex: 180, ey: 163, ancre: "gauche", lt: 104}},
+      {id: "communiquer", type: "bloc", groupe: "information", fonction: "COMMUNIQUER", composant: "Écran et voyant\n(POMPE ON / OFF)", couleur: VERT,
+       large: {x: 980, y: 56, l: 250}, etroit: {x: 110, y: 186, l: 160}},
+      {id: "p1", type: "texte", groupe: "information", texte: "① L’écran", gras: true,
+       large: {x: 1340, y: 91, ancre: "centre", l: 170}, etroit: {x: 326, y: 208, ancre: "centre", l: 100}},
+      {id: "ordre", type: "fleche", groupe: "information", nature: "ordre", texte: "Ordre",
+       large: {points: [[625, 196], [625, 336]], ex: 639, ey: 266, ancre: "droite", lt: 150},
+       etroit: {points: [[110, 78], [30, 78], [30, 492], [106, 492]], ex: 36, ey: 300, ancre: "droite", lt: 74}},
+      {id: "titre-energie", type: "titre", texte: "CHAÎNE D’ÉNERGIE — en bas (elle obéit)", couleur: ORANGE,
+       large: {x: 20, y: 250}, etroit: {x: 126, y: 284, texte: "CHAÎNE D’ÉNERGIE —\nen bas (elle obéit)"}},
+      {id: "alimenter", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Alimentation 12 V", couleur: JAUNE,
+       large: {x: 40, y: 340, l: 230}, etroit: {x: 110, y: 340, l: 160}},
+      {id: "alim-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[270, 375], [506, 375]], ex: 388, ey: 330, ancre: "bas", lt: 150},
+       etroit: {points: [[190, 428], [190, 466]], ex: 180, ey: 447, ancre: "gauche", lt: 104}},
+      {id: "p2", type: "texte", groupe: "energie", texte: "② Sortie de\nl’alimentation", gras: true,
+       large: {x: 388, y: 432, ancre: "centre", l: 230}, etroit: {x: 292, y: 447, ancre: "centre", l: 166}},
+      {id: "distribuer", type: "bloc", groupe: "energie", fonction: "DISTRIBUER", composant: "Relais", couleur: CYAN,
+       large: {x: 510, y: 340, l: 230}, etroit: {x: 110, y: 470, l: 160}},
+      {id: "dist-conv", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[740, 375], [976, 375]], ex: 858, ey: 330, ancre: "bas", lt: 150},
+       etroit: {points: [[190, 558], [190, 596]], ex: 180, ey: 577, ancre: "gauche", lt: 104}},
+      {id: "p3", type: "texte", groupe: "energie", texte: "③ Bornes\nde la pompe", gras: true,
+       large: {x: 858, y: 432, ancre: "centre", l: 230}, etroit: {x: 292, y: 577, ancre: "centre", l: 166}},
+      {id: "convertir", type: "bloc", groupe: "energie", fonction: "CONVERTIR", composant: "Pompe 12 V\n(moteur et turbine)", couleur: VIOLET,
+       large: {x: 980, y: 340, l: 250}, etroit: {x: 110, y: 600, l: 160}},
+      {id: "p4", type: "texte", groupe: "energie", texte: "④ La pompe", gras: true,
+       large: {x: 1105, y: 314, ancre: "centre", l: 250}, etroit: {x: 326, y: 622, ancre: "centre", l: 100}},
+      {id: "sortie", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\ncinétique",
+       large: {points: [[1230, 375], [1356, 375]], ex: 1293, ey: 330, ancre: "bas", lt: 124},
+       etroit: {points: [[190, 692], [190, 730]], ex: 180, ey: 711, ancre: "gauche", lt: 104}},
+      {id: "action", type: "texte", groupe: "energie", texte: "L’eau est mise\nen mouvement", gras: true,
+       large: {x: 1448, y: 375, ancre: "centre", l: 170}, etroit: {x: 190, y: 748, ancre: "centre", l: 260, texte: "L’eau est mise en mouvement"}},
+      {id: "titre-eau", type: "titre", texte: "CIRCUIT D’EAU — à part (de la matière)", couleur: BLEU,
+       large: {x: 20, y: 522}, etroit: {x: 10, y: 778}},
+      {id: "trajet", type: "texte", groupe: "eau", texte: "Réservoir  →  Pompe  →  Tuyau  →  Sol du jardin", gras: true,
+       large: {x: 620, y: 592, ancre: "centre", l: 780}, etroit: {x: 128, y: 828, ancre: "centre", l: 236, texte: "Réservoir → Pompe\n→ Tuyau → Sol du jardin"}},
+      {id: "p5", type: "texte", groupe: "eau", texte: "⑤ Le bout\ndu tuyau", gras: true,
+       large: {x: 1140, y: 592, ancre: "centre", l: 300, texte: "⑤ Le bout du tuyau"}, etroit: {x: 318, y: 828, ancre: "centre", l: 116}}
+    ]
+  };
+})();
 const KEY = "seq_4e_C9_jardin-connecte";
 const $ = id => document.getElementById(id);
 const txt = id => ($(id) ? $(id).value.trim() : "");
@@ -4783,7 +5003,9 @@ if($("btnBillet")) $("btnBillet").addEventListener("click", ()=>{
 });
 
 /* ══════ LE BANC D'ESSAI DU JARDIN ══════ */
-const BANC = { pompe:false, bascules:0, mode:"un", tremblement:null };
+const BANC = { pompe:false, bascules:0, mode:"un", tremblement:null, brut:null };
+/* les six essais du tableau de l'activité 4 : [humidité, heure]. Le banc trace ceux que l'élève a réellement exécutés. */
+const ESSAIS_BANC = [[25,8],[55,8],[25,23],[39,7],[40,7],[250,8]];
 const SEUIL_UN = 40, H_DEBUT = 6, H_FIN = 10, S_BAS = 35, S_HAUT = 45;
 
 function bancMode(){
@@ -4809,7 +5031,8 @@ function bancDecide(H, heure){
 function bancMaj(tracer){
   if(!$("bHum")) return;
   BANC.mode = bancMode();
-  const H = parseInt($("bHum").value, 10);
+  /* une valeur écrite hors de 0–100 (BANC.brut) est donnée telle quelle à la règle : c'est l'essai du capteur débranché */
+  const H = (BANC.brut !== null) ? BANC.brut : parseInt($("bHum").value, 10);
   const heure = parseInt($("bHeure").value, 10);
   if($("bHumVal"))   $("bHumVal").textContent = H;
   if($("bHeureVal")) $("bHeureVal").textContent = heure;
@@ -4849,11 +5072,16 @@ function bancMaj(tracer){
   if(H < SEUIL_UN && (heure < H_DEBUT || heure > H_FIN) && !BANC.pompe) e.plage = true;
   if(H === 39) e.front39 = true;
   if(H === 40) e.front40 = true;
+  /* les essais du tableau : les DEUX entrées de la ligne, sur la règle à un seuil — celle du tableau */
+  if(BANC.mode === "un") ESSAIS_BANC.forEach(([h, t], i)=>{ if(H === h && heure === t){ e.essais = e.essais || {}; e.essais[i + 1] = true; } });
   majVerrous();
 }
 function majVerrous(){
   const e = window.__exp;
+  const restent = ESSAIS_BANC.map((_, i)=>i + 1).filter(n=>!(e.essais && e.essais[n]));
   const L = {
+    "v-essais": [!restent.length, "J'ai exécuté les six essais du tableau de l'activité 4 : " + (6 - restent.length) + " / 6"
+                                  + (restent.length && restent.length < 6 ? " — il reste le" + (restent.length > 1 ? "s n° " : " n° ") + restent.join(", ") : "")],
     "v-varie":  [!!e.varie,   "J'ai fait varier l'humidité et observé la pompe"],
     "v-plage":  [!!e.plage,   "J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte"],
     "v-front":  [!!(e.front39 && e.front40), "J'ai testé les deux frontières : 39 % et 40 %"],
@@ -4866,12 +5094,16 @@ function majVerrous(){
     li.textContent = (fait ? "✔ " : "☐ ") + lib;
   });
 }
-["bHum","bHeure"].forEach(id=>{ if($(id)) $(id).addEventListener("input", ()=>bancMaj(true)); });
+if($("bHum"))   $("bHum").addEventListener("input", ()=>{ BANC.brut = null; bancMaj(true); });
+if($("bHeure")) $("bHeure").addEventListener("input", ()=>bancMaj(true));
 if($("bHumNum")) $("bHumNum").addEventListener("input", ()=>{
-  let v = parseInt($("bHumNum").value, 10);
+  const v = parseInt($("bHumNum").value, 10);
   if(isNaN(v)) return;
-  v = Math.max(0, Math.min(100, v));
-  $("bHum").value = v; bancMaj(true);
+  /* une humidité hors de 0–100 n'existe pas dans un sol : c'est ce que renvoie un capteur débranché (essai 6 de
+     l'activité 4). Le banc la donne telle quelle à la règle. Avant le 19/11/2026 il la ramenait à 100 en silence :
+     le champ gardait 250, le banc calculait avec 100, et l'essai demandé ne pouvait pas être exécuté (audit). */
+  BANC.brut = (v < 0 || v > 100) ? v : null;
+  $("bHum").value = Math.max(0, Math.min(100, v)); bancMaj(true);
 });
 document.querySelectorAll('input[name="bMode"]').forEach(r=>r.addEventListener("change", ()=>{ BANC.mode = bancMode(); bancMaj(true); }));
 if($("btnRAZ")) $("btnRAZ").addEventListener("click", ()=>{
@@ -4889,6 +5121,7 @@ if($("btnRAZ")) $("btnRAZ").addEventListener("click", ()=>{
 const TREMBLEMENT = [41,39,41,40,39,40,39,41,40,39,41,40];
 if($("btnTrembler")) $("btnTrembler").addEventListener("click", ()=>{
   if(BANC.tremblement) return;
+  BANC.brut = null;
   $("bHeure").value = 8;
   let i = 0;
   BANC.tremblement = setInterval(()=>{
@@ -5426,10 +5659,11 @@ const CHECKS = {
   1: function(){
     /* 19/11/2026 : les deux chaînes se bâtissent dans le schéma — six fonctions, sept flèches, deux questions sur le
        relais. Les fonctions et le relais doivent être justes ; une flèche peut rester à reprendre. */
-    const FONCTIONS = {a1_1:"ACQUÉRIR", a1_2:"TRAITER", a1_3:"COMMUNIQUER", a1_6:"ALIMENTER", a1_5:"DISTRIBUER", a1_4:"CONVERTIR"};
-    const FLECHES = {a1_f1:"Mesures", a1_f2:"Ordre", a1_f3:"Message", a1_f4:"Énergie électrique", a1_f5:"Énergie électrique", a1_f6:"Énergie cinétique", a1_f7:"Eau"};
+    /* « const ATT… = {…}; » : l'écriture que le mode mission lit pour vérifier chaque écran (mission.js, candidats) */
+    const ATT_FONCTIONS = {a1_1:"ACQUÉRIR", a1_2:"TRAITER", a1_3:"COMMUNIQUER", a1_6:"ALIMENTER", a1_5:"DISTRIBUER", a1_4:"CONVERTIR"};
+    const ATT_FLECHES = {a1_f1:"Mesures", a1_f2:"Ordre", a1_f3:"Message", a1_f4:"Énergie électrique", a1_f5:"Énergie électrique", a1_f6:"Énergie cinétique", a1_f7:"Eau"};
     const justes = o => Object.entries(o).filter(([id,v])=>$(id) && $(id).value === v).length;
-    const nf = justes(FONCTIONS), nfl = justes(FLECHES);
+    const nf = justes(ATT_FONCTIONS), nfl = justes(ATT_FLECHES);
     const nr = ($("a1_r1").value.startsWith("parce qu'elle demande trop") ? 1 : 0) + ($("a1_r2").value.startsWith("non : il laisse passer") ? 1 : 0);
     const ok = nf + nfl + nr;
     const j = txt("a1_just");
@@ -5451,13 +5685,14 @@ const CHECKS = {
     if($("a2_q2").value.startsWith("non : le programme boucle")) ok++;
     if($("a2_q3").value.startsWith("3 :")) ok++;
     if($("a2_q4").value.startsWith("la sortie NON")) ok++;
+    if($("a2_q5") && $("a2_q5").value.startsWith("par un seul")) ok++;
     const p = txt("prog1").toLowerCase();
     const progOk = p.length >= 60 && (p.includes(" et ") || p.includes("and")) &&
                    p.includes("6") && p.includes("10") &&
                    (p.includes("allum") && p.includes("teind"));
-    return {score:ok, total:5,
+    return {score:ok, total:6,
       extra: progOk ? "" : " Ton pseudo-code doit contenir le ET, les DEUX bornes horaires (6 et 10) et les DEUX actions (allumer / éteindre).",
-      valide: ok >= 4 && progOk};
+      valide: ok >= 5 && progOk};
   },
   3: function(){
     let ok = 0;
@@ -5482,13 +5717,22 @@ const CHECKS = {
     if($("a4_a6").value.startsWith("pompe OFF, sans")) ok++;
     if($("a4_m1").value.startsWith("parce que lui seul distingue")) ok++;
     if($("a4_m2").value.startsWith("non : il n'arrose pas")) ok++;
-    const obs = ["a4_o1","a4_o2","a4_o3","a4_o4","a4_o5","a4_o6"].filter(id=>$(id).value !== "").length;
+    /* OBSERVÉ : ce que le banc affiche vraiment, essai par essai. Avant le 19/11/2026 la colonne proposait « conforme /
+       non conforme » et la page ne regardait que si elle était remplie : six « non conforme » validaient (audit). */
+    const ATT_OBS = {a4_o1:"pompe ON", a4_o2:"pompe OFF", a4_o3:"pompe OFF", a4_o4:"pompe ON", a4_o5:"pompe OFF", a4_o6:"pompe OFF, sans aucune alerte"};
+    const ids = Object.keys(ATT_OBS);
+    const remplis = ids.filter(id=>$(id).value !== "").length;
+    const lus = ids.filter(id=>$(id).value === ATT_OBS[id]).length;
     const e = window.__exp;
-    const frontOk = !!(e.front39 && e.front40);
+    const faits = ESSAIS_BANC.filter((_, i)=>e.essais && e.essais[i + 1]).length;
+    /* un écart entre ATTENDU et OBSERVÉ : le nommer, c'est la démarche de test */
+    const ecarts = ["1","2","3","4","5"].filter(n=>{ const a = $("a4_a" + n).value, o = $("a4_o" + n).value; return a && o && a !== o; });
     let extra = "";
-    if(obs < 6)    extra += " Remplis les 6 « observé » (" + obs + "/6) — PENDANT les essais, pas de mémoire.";
-    if(!frontOk)   extra += " Exécute réellement les deux frontières au banc : 39 % puis 40 % (champ « valeur exacte »).";
-    return {score:ok, total:8, extra, valide: ok === 8 && obs === 6 && frontOk};
+    if(faits < 6)    extra += " Au banc d'essai, exécute les six essais du tableau (" + faits + " / 6 tracés) : règle l'humidité ET l'heure de chaque ligne, sur la règle « UN seuil » ; pour l'essai 6, écris 250 dans « valeur exacte ».";
+    if(remplis < 6)  extra += " Remplis les 6 « observé » (" + remplis + " / 6) — PENDANT les essais, pas de mémoire.";
+    else if(lus < 6) extra += " " + (6 - lus) + " « observé » ne dit pas ce que le banc affiche : refais l'essai, et lis la première ligne de son écran.";
+    if(ecarts.length) extra += " Essai" + (ecarts.length > 1 ? "s " : " ") + ecarts.join(", ") + " : ton ATTENDU et ton OBSERVÉ ne disent pas la même chose. C'est un écart : relis la règle, refais l'essai, puis cherche lequel des deux revoir.";
+    return {score:ok, total:8, extra, valide: ok === 8 && lus === 6 && faits === 6};
   },
   5: function(){
     let ok = 0;
@@ -5512,6 +5756,19 @@ const CHECKS = {
     if(!mesureOk) extra += " Relève les deux compteurs de l'atelier : le programme de départ sur le tremblement (plusieurs basculements), puis le tien sur le même tremblement (au plus un).";
     if(!bancOk)   extra += " Fais la démonstration dans l'atelier : exécute le programme de départ sur le tremblement, jusqu'au bout, puis ton programme sur le même tremblement.";
     return {score:ok, total:5, extra, valide: ok === 5 && diagOk && j.ok && mesureOk && bancOk};
+  },
+  7: function(){
+    /* l'enquête de la séance 3 : le maillon en panne de chaque jardin, puis ce que l'écran prouve */
+    const ATT_MAILLONS = {e7_q2:"ALIMENTER — l'alimentation 12 V", e7_q3:"DISTRIBUER — le relais", e7_q5:"aucun des quatre : c'est le circuit d'eau"};
+    const ATT_AUTRES = {e7_q1:"oui : 30 est sous le seuil de 40, et 8 h est dans la plage", e7_q4:"le relais, et le fil qui lui apporte l'ordre", e7_q6:"que la carte a donné l'ordre — et rien de plus"};
+    const justes = o => Object.entries(o).filter(([id,v])=>$(id) && $(id).value === v).length;
+    const nm = justes(ATT_MAILLONS), ok = nm + justes(ATT_AUTRES);
+    const j = txt("e7_just").toLowerCase();
+    const justOk = j.length >= 50 && /r[ée]servoir|tuyau|bouch|pinc|vide|niveau|fuite|filtre|robinet|d[ée]branch|eau/.test(j);
+    let extra = "";
+    if(nm < 3)   extra += " b) Les trois maillons en panne doivent être trouvés (" + nm + " / 3) : pour chaque jardin, cherche le premier point du relevé qui n'est pas comme au jardin A.";
+    if(!justOk)  extra += " c) Pour le jardin D, écris une cause dans le circuit d'eau, le geste qui la vérifie, et ce que tu dois voir.";
+    return {score:ok, total:6, extra, valide: nm === 3 && ok >= 5 && justOk};
   },
   6: function(){
     let ok = 0;
@@ -5591,6 +5848,7 @@ const ACTIVITES = [
   {n:2, seance:"s1", libelle:"De la règle à l'algorigramme"},
   {n:3, seance:"s2", libelle:"Écrire et exécuter le programme"},
   {n:4, seance:"s2", libelle:"Tester — le jeu d'essais"},
+  {n:7, seance:"s3", libelle:"POMPE ON, mais l'eau ne coule pas", nom:"Enquête"},
   {n:5, seance:"s3", libelle:"Mettre au point — l'hystérésis"},
   {n:6, seance:"s3", libelle:"Réinvestir — le lampadaire"}
 ];
@@ -5613,7 +5871,7 @@ function majTaches(){
     const f = !!window.__valid["act"+a.n];
     return '<div class="tache' + (f ? " fait" : "") + '">' +
            '<span class="coche">' + (f ? "✔" : "☐") + "</span> " +
-           "<b>Activité " + a.n + "</b> — " + a.libelle + "</div>";
+           "<b>" + (a.nom || ("Activité " + a.n)) + "</b> — " + a.libelle + "</div>";
   }).join("");
 }
 
