@@ -33963,3 +33963,29 @@ Bancs : `4e_C6.1` 29 / 29, `5e_C6.1` 32 / 32 (rouges avant) ; les 58 autres banc
 
 Retiré : `_audit_tmp.mjs`, un script de vérification de l'audit du jardin livré par erreur à la racine avec #819 —
 il ne servait qu'à cette relecture, aucun outil ni aucune page ne l'appelle.
+
+## 19/11/2026 — QCM : deux notes, « premier essai » et « après aides » (audit du jardin connecté, décision 2)
+
+L'audit externe du jardin connecté l'a relevé : « 🔁 Réessayer » efface la réponse fausse, et la note finale comptait
+la réponse réussie après l'indice ou la correction comme une réussite du premier coup. La note ne disait plus ce que
+l'élève savait d'emblée. Pascal : « avance avec ces choix par défaut » — le défaut annoncé était d'afficher deux
+résultats.
+- **Le moteur des aides** (`_outils/qcm_aides/poser.py`, n°339) garde la réponse de la **première** validation de chaque
+  question (`etat.premiers`, sauvegardé ; -1 pour une question validée sans réponse). « Réessayer » ne la change pas.
+- **Tableau de bord** : la case « Note » devient deux cases, « Premier essai » et « Après aides » (huit cases au lieu
+  de sept : deux rangées de quatre sur tablette, quatre de deux sur téléphone). « Après aides » est l'ancienne note
+  (`#dNote`), inchangée : les bancs qui la lisent ne bougent pas.
+- **Résultat final** : sous la grande note, deux lignes — « 🎯 Premier essai : X /20 — ce que tu savais du premier
+  coup » et « 🔁 Après aides : Y /20 — la note ci-dessus, avec les questions réussies en te corrigeant ». Le bilan et
+  son message restent calculés sur la note après aides.
+- Une sauvegarde plus ancienne n'a pas de premier essai : ses réponses validées en tiennent lieu.
+- Posé sur les **76** QCM du gabarit maison, depuis leur `qcm_aides_*.json` (les 76 étaient à jour avec l'outil avant :
+  seul le premier essai s'ajoute). Une régénération par `build_qcm.py` le garde (`poser_si_donnees`).
+- Banc `banc_aides.mjs` : contrôle **A8** — la question 1, fausse puis réussie après « Réessayer », donne 0 au premier
+  essai et 1 sur N après aides, au tableau de bord après rechargement et dans le résultat. Refusé sur la page d'avant.
+
+Bancs : `banc_aides.mjs` sur les 76 QCM, verts (un refus sous charge, `3e_C8.1`, vert rejoué seul : le rechargement
+venait avant que le navigateur range la sauvegarde ; A8 attend maintenant ce temps). Les 24 bancs de lot qui lisent la
+note : verts, sauf `tests_regle_311_4e_C7.1` (l'en-tête au téléphone, rouge aussi sur `main`) ; `tests_qcm_c7_c8` a
+perdu une fois la même sauvegarde sous charge, vert rejoué. Contrôles : sauvegarde locale, boutons vivants, en-têtes
+des QCM, règles visibles — rien à signaler.
