@@ -33837,3 +33837,17 @@ il se reprendra s'il le faut.)
 
 Contrôles : `controle_longueurs`, `verif_qcm_coherence` (réfutations alignées), `controle_indices_qcm`, unités.
 Banc : `tests_3e_C7.8_qcm.mjs` 32 / 32 ; export Moodle régénéré, banc vert.
+
+## 19/11/2026 — n°341, QCM des trois ateliers de 5e (le dé, le préau, la patère) : de 15 sur 30 à 4 chacun
+
+Trois banques de la même famille (ateliers C7 et C8 de 5e), une seule PR. Dans chacune, la bonne réponse était la plus
+longue dans **15 questions sur 30**, de 1 à 9 signes. Pour chaque banque :
+- 11 questions reprises. Le plus souvent, un intrus gagne quelques mots sans changer de sens (« pour assurer le
+  contact » → « pour assurer un bon contact ») ; quand la bonne réponse portait un complément, elle le perd (« … comme
+  une feuille posée sur la table » → « … comme une feuille sur la table »).
+- 4 bonnes réponses restent les plus longues, d'un à trois signes, pour rester sur la cible 15 / 15 / 70.
+- Résultat : la plus longue 13 % dans chaque banque ; réfutations alignées ; export Moodle régénéré.
+- Site (QCM) : la bonne réponse est la plus longue 30 %, la plus courte 15 %, au milieu 55 % · 15 banque(s) au-delà de 40 % de « la plus longue ».
+
+Bancs : `tests_5e_C7.6_qcm.mjs` 31 / 31, `tests_5e_C7.5_qcm.mjs` 32 / 32, `tests_5e_C8.2_qcm.mjs` 32 / 32 ;
+`controle_indices_qcm` (76 banques, rien), unités, banc de l'export Moodle vert.
