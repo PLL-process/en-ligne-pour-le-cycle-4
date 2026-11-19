@@ -33825,3 +33825,15 @@ sur 2 301 questions, la bonne réponse est la plus longue dans **33 %**, la plus
 Contrôles : `controle_longueurs` (0 banque signalée), `verif_qcm_coherence` (réfutations alignées, positions
 8 / 7 / 7 / 8), `controle_indices_qcm` (rien), unités. Banc : `tests_3e_C7.6_qcm.mjs` 32 / 32 ;
 `tests_export_moodle_xml.mjs` vert.
+
+## 19/11/2026 — n°341, QCM `3e_C7.8` (deux stations) : de 19 sur 30 à 4, sur la cible
+
+Deuxième banque. La bonne réponse était la plus longue dans **19 questions sur 30**, de 1 à 14 signes. Quinze intrus
+gagnent quelques mots, sans changer de sens (« le message deviendrait beaucoup trop long » → « … trop long à
+envoyer »). Quatre bonnes réponses restent les plus longues, d'un à quatre signes : la cible n°341 est **15 / 15 / 70**,
+pas 0. Une bonne réponse qui n'est *jamais* la plus longue se devinerait à l'envers.
+Banque : la plus longue 13 %, la plus courte 13 %, au milieu 73 %. (`3e_C7.6`, livré juste avant, est à 0 / 3 / 97 :
+il se reprendra s'il le faut.)
+
+Contrôles : `controle_longueurs`, `verif_qcm_coherence` (réfutations alignées), `controle_indices_qcm`, unités.
+Banc : `tests_3e_C7.8_qcm.mjs` 32 / 32 ; export Moodle régénéré, banc vert.
