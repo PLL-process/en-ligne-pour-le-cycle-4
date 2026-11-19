@@ -125,10 +125,11 @@ Rapport de tests : **27 / 27**, suite Playwright réelle sous Chromium en 390×8
 1. **Le mode essentiel** — absent, seul cas du Thème 2.
 2. **Les séances ne sont pas navigables** : trois séances annoncées dans le texte, aucun onglet.
 3. ~~Aucun bouton de QCM dans la page~~ — **corrigé le 28/08/2026** : le lot a désormais son QCM
-   au gabarit, et un seul bouton (règle n°4). Les trois fichiers `qcm_` historiques restent dans
-   le dossier sans être boutonnés : un QCM au gabarit mais sur l'**éclairage**, codé en
-   vocabulaire privé (CAP/PRG/SYS) ; le QCM hérité de 24 questions, devenu matière première du
-   nouveau ; et un TP dont le nom de fichier ment (`qcm_algorigrammes_domotique.html`).
+   au gabarit, et un seul bouton (règle n°4). Des trois fichiers `qcm_` historiques, un seul reste
+   un QCM : celui de l'**éclairage**, au gabarit mais codé en vocabulaire privé (CAP/PRG/SYS). Le
+   19/11/2026, le QCM hérité de 24 questions, devenu matière première du nouveau, est archivé ; et
+   le TP dont le nom de fichier mentait s'appelle désormais `tp_algorigrammes_domotique.html`. Les
+   deux anciennes adresses portent une page de redirection.
    *(Le lexique du lot suit le bouton, pas le dossier : il tient 30 notions, pas 60.)*
 4. **Les synthèses élève et professeur ne sont pas des fichiers.** La page porte une section
    « Synthèse — à retenir » et une « Fiche professeur » repliée ; le dossier `Synthèses/` ne

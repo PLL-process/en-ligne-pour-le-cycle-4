@@ -188,7 +188,10 @@ function main() {
     try { questions = lireQuestions(html); }
     catch (e) { erreurs.push(`QUESTIONS illisible : ${rel} — ${e.message}`); continue; }
     if (!questions) {
-      inventaire.ignores.push({ rel, raison: html.includes('checkMCQ') ? 'ancien gabarit (cartes HTML, sans bloc QUESTIONS)' : 'page sans bloc QUESTIONS (QCM intégré ou atelier)' });
+      // une ancienne adresse qui redirige (« Ressource déplacée », n°112) n'a rien à exporter : on le dit tel quel
+      const raison = /<title>Ressource déplacée/.test(html) ? 'ancienne adresse : page de redirection, rien à exporter'
+        : html.includes('checkMCQ') ? 'ancien gabarit (cartes HTML, sans bloc QUESTIONS)' : 'page sans bloc QUESTIONS (QCM intégré ou atelier)';
+      inventaire.ignores.push({ rel, raison });
       continue;
     }
     const niveau = niveauDe(rel), theme = themeDe(rel), code = codeDe(rel);

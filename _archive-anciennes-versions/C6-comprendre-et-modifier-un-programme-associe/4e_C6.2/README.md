@@ -15,3 +15,11 @@ trous, éditeurs Vittascience embarqués, banc de tests avec cas frontière,
 vérificateurs à encoches).
 
 L'URL publique n'a pas changé : même dossier, même nom de fichier.
+
+## 19/11/2026 — `qcm_jardin_connecte_v1_24-questions.html`
+
+L'ancien QCM de 24 questions sur le jardin connecté, écrit à l'ancienne (la bonne réponse se lisait dans le code
+de la page). Ses questions sont devenues, le 28/08/2026, la matière première du QCM du lot,
+`qcm_4e_C6.2_arrosage_automatique.html` : 20 reprises, 3 réécrites, 1 abandonnée, et 10 nouvelles. Il restait en
+ligne à côté de son remplaçant, avec le badge 🛠 de l'index : une deuxième porte pour la même chose. Il est archivé
+le 19/11/2026 (règle d'or n°12) ; son ancienne adresse porte une page de redirection vers le QCM du lot.

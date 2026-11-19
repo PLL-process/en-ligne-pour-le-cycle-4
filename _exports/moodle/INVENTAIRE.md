@@ -91,6 +91,6 @@ Produit par `_outils/export_moodle_xml.mjs`. 75 QCM, **2271 questions**, 231 ima
 
 ## Pages QCM non exportées (3)
 
-- `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_algorigrammes_domotique.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
-- `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_jardin_connecte.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)
+- `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_algorigrammes_domotique.html` — ancienne adresse : page de redirection, rien à exporter
+- `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_jardin_connecte.html` — ancienne adresse : page de redirection, rien à exporter
 - `theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.1/qcm_python_variables.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)
