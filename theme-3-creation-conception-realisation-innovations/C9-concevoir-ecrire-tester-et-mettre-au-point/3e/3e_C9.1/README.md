@@ -16,7 +16,9 @@
 * **`tests_3e_C9.1.mjs`** — la suite Playwright du lot, **rejouable** : `node tests_3e_C9.1.mjs .`
   (53 tests ; le détail et ce qui n'est PAS testé sont dans `rapport_tests_3e_C9.1.md`).
 * **`tp_mbot2_python.html`** — TP robot réel (au collège, très basse tension), prolongement de l'atelier — depuis le 20/10/2026, ce n'est plus une « version 🅰 » de l'atelier.
-* `qcm_python_variables.html` — QCM hérité (24 q), conservé en complément.
+* `qcm_python_variables.html` — QCM complémentaire, « Python : variables, types et programmes » : 30 questions au
+  gabarit commun depuis le 19/11/2026 (aides progressives, pièges : `qcm_aides_3e_C9.1_python.json`). Il élargit
+  l'atelier : conditions, boucles, fonctions, message d'erreur, mBot2. L'ancien (24 q) est archivé.
 
 ## Histoire (règle d'or n°12)
 

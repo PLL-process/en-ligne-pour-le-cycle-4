@@ -1,12 +1,12 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 75 QCM, **2271 questions**, 231 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 231 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
 - `_exports/moodle/5e.xml` — 580 questions
 - `_exports/moodle/4e.xml` — 783 questions
-- `_exports/moodle/3e.xml` — 668 questions
+- `_exports/moodle/3e.xml` — 698 questions
 - `_exports/moodle/ateliers.xml` — 240 questions
 
 ## QCM exportés
@@ -85,12 +85,12 @@ Produit par `_outils/export_moodle_xml.mjs`. 75 QCM, **2271 questions**, 231 ima
 | 5e | 5e_C8.1 | La patère du hall : ce que la simulation voyait | 30 | 0 |
 | 5e | 5e_C8.2 | La patère du hall : éprouver un matériau | 30 | 0 |
 | 3e | 3e_C9.1 | Variables, types et systèmes | 30 | 3 |
+| 3e | 3e_C9.1 | Python : variables, types et programmes | 30 | 0 |
 | 3e | 3e_C9.2 | La station d'alerte cyclonique se programme | 30 | 4 |
 | 4e | 4e_C9.1 | Le jardin connecté se programme | 30 | 4 |
 | 5e | 5e_C9.1 | La boîte étiquetée | 30 | 3 |
 
-## Pages QCM non exportées (3)
+## Pages QCM non exportées (2)
 
 - `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_algorigrammes_domotique.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
 - `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_jardin_connecte.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)
-- `theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.1/qcm_python_variables.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)

@@ -1470,8 +1470,8 @@ OVERLAY = {
                 "3 illustrées), synthèses, 3 SVG originaux CC0, TP mBot2 conservé "
                 "en prolongement 🅰.",
         anomalies="Ancienne ressource archivée (règle n°12) avec stub de redirection "
-                  "sur l'URL historique ; qcm_python_variables.html (24 q) hérité "
-                  "encore en place — remplacement possible par le QCM 30 q ; l'iframe "
+                  "sur l'URL historique ; qcm_python_variables.html, QCM complémentaire, "
+                  "réécrit au gabarit maison le 19/11/2026 (30 q, l'ancien de 24 archivé) ; l'iframe "
                   "Vittascience exige une connexion (versions 🅲 hors ligne prévues).",
     ),
     # ── Thème 3 · Station d'alerte cyclonique : programmation + recette (Fable, 2026-08-19) ──
