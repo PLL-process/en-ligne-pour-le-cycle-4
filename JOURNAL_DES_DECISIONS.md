@@ -33724,3 +33724,21 @@ coût est amorti sur trop peu de kilomètres » face à « parce qu'elle est la 
 
 Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
 Bancs : `tests_4e_C3.1-C3.3_hangzhou.py` 32 / 32, `tests_regle_311_4e_C3.1.mjs` 34 / 34, mode mission sans refus.
+
+## 19/11/2026 — n°341 sur 4e_C4.1 (le jardin connecté), seconde passe : la longueur
+
+La passe I1 de #797 avait laissé la longueur : la bonne réponse restait la plus longue dans **24 groupes sur 39**
+(62 %). Les 18 groupes qui la portaient encore sont repris, les autres sont des noms de fonction (« DISTRIBUER » face à
+« CONVERTIR ») ou de forme d'énergie (« énergie électrique »), laissés tels quels.
+- Les bonnes réponses disent ce qu'elles sont (« la carte programmable », « impression 3D », « un CONFLIT d'adresses
+  IP ») ; leurs explications sont dans les corrections (moule en deux parties, plage du DHCP, horodatage et courbe…).
+- Les intrus prennent la même forme : « injection plastique — moule industriel » → « injection plastique ».
+- Cinq plaisanteries deviennent des erreurs d'élève, avec leur pourquoi : « possible si les appareils sont polis » →
+  « un partage prévu par le DHCP », « demander à l'application météo » → « prendre la première adresse de la plage du
+  DHCP », « oui, elle la transforme en eau » → « non, elle garde l'énergie électrique telle quelle »…
+- `mission_4e_C4.1.json` suit, et `enrichir.py --verifier-tout` : 0 refus.
+- Site : la bonne réponse est la plus longue dans **14 %** des groupes (17 % avant), la cible est 15 %. Une seule page
+  reste au-delà de 40 % : `3e_C6.2`.
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
+Bancs : `tests_4e_C4.1-C4.9.mjs` 52 / 52, `tests_regle_311_4e_C4.1.mjs` 34 / 34, mode mission (pourquoi 144 / 144).
