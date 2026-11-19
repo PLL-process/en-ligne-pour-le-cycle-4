@@ -33441,6 +33441,26 @@ navigateur, 390 et 1 280 px : zéro erreur ; une réponse fausse à la question 
 au passage, sans y toucher : le QCM du lot (`qcm_4e_C4.1-C4.9_jardin_connecte.html`) a sa bonne réponse la plus longue
 13 fois sur 30 (⚠ de `controle_longueurs`, au-delà de 40 %).
 
+## 19/11/2026 — 4e_C6.2 : deux pages `qcm_` qui n'en étaient pas (4 et 5 / 6)
+
+Quatrième et cinquième des six pages de l'ancien format. Aucune des deux ne devait devenir un QCM au gabarit :
+- **`qcm_jardin_connecte.html`** (24 questions, la bonne réponse lisible dans le code) avait déjà servi : le
+  28/08/2026, ses questions sont devenues la matière première du QCM du lot, `qcm_4e_C6.2_arrosage_automatique.html`
+  (20 reprises, 3 réécrites, 1 abandonnée, 10 neuves). Il restait en ligne à côté de son remplaçant : deux portes pour
+  la même chose (n°112). Il est **archivé** (n°12) ; son adresse porte une page de redirection vers le QCM du lot.
+- **`qcm_algorigrammes_domotique.html`** est un **TP** interactif (construire des algorigrammes de domotique en cinq
+  phases, simulation, bilan sur 20), pas un QCM : « un TP dont le nom de fichier ment » (fiche du lot, 28/08). En faire
+  un QCM aurait jeté l'activité. Il s'appelle désormais **`tp_algorigrammes_domotique.html`** ; l'index le range en
+  « Travaux pratiques » ; l'ancienne adresse redirige ; la progression des élèves est gardée (même clé de stockage).
+  Il reste dans `heritees.json`, sous son nouveau nom : sa forme n'est pas modernisée.
+- `export_moodle_xml.mjs` dit désormais d'une page de redirection ce qu'elle est (« ancienne adresse : page de
+  redirection, rien à exporter ») au lieu de « page sans bloc QUESTIONS ». Une seule page QCM reste hors de l'export :
+  `3e_C9.1/qcm_python_variables.html`, la sixième et dernière de la série.
+
+Contrôles : liens, atteignabilité, en-tête, banque, effectifs, règles visibles, `poser.py --etat --strict` (75 / 75),
+loupe, médias, tactile, boutons vivants, `tests_export_moodle_xml` : verts. Banc du lot `tests_4e_C6.2.mjs` : 56 / 56.
+Au navigateur : les deux anciennes adresses mènent à leur cible, zéro erreur.
+
 ## 19/11/2026 — 3e_C9.1 : le QCM « Python : variables, types et programmes » passe au gabarit commun (6 / 6)
 
 Sixième et dernière page de la série de l'ancien format. `3e_C9.1/qcm_python_variables.html`, « conservé en
