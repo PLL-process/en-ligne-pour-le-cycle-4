@@ -33330,6 +33330,63 @@ Résultat : `controle_validations.py` « rien à signaler » ; `retrait_validati
 `annoncer_validations.py` 0 annonce à écrire ; `controle_memes_nombres.py` vert ; `audit_aeration.py` identique à
 `main` sur les 35 pages ; `generer_les_quatre_pages.py` (3e_C9.2) reproduit ses pages.
 
+## 18/11/2026 — Les 32 billets d'entrée : chaque mauvaise réponse a son pourquoi, chaque billet sa correction
+
+Reste du 17/11 (n°336) : 32 billets d'entrée dont les leurres n'avaient pas de pourquoi ; `corriger_billet.py`
+refusait donc de poser leur correction (95 refus). Carte blanche de Pascal : « uniformiser toutes les séquences ».
+
+- **La bonne réponse de chaque question** est lue dans le vérificateur de la page, quelle que soit sa forme
+  (`be_1:"…"`, `v("be_1").indexOf("…") === 0`, tableau `BONNES`) : 95 questions, 95 réponses trouvées, aucune devinée.
+- **202 pourquoi écrits**, un par mauvaise proposition (la proposition « je ne sais pas encore » n'en a pas besoin).
+  Chacun dit pourquoi la proposition ne convient pas, puis donne un indice qui ramène à la notion, sans recopier la
+  bonne réponse (n°341). Exemples :
+  - 3e_C4.1, « la batterie : DISTRIBUER ? » → « Distribuer, c'est choisir où va l'énergie, comme un interrupteur. La
+    batterie, elle, garde l'énergie pour plus tard. »
+  - 4e_C6.1, « seuil nuit de 30 à 45 : plus tard le soir ? » → « Le soir, la luminosité baisse : elle passe sous 45
+    avant de passer sous 30. Lequel arrive en premier ? »
+  - 5e_C9.1, « score = 10 : égal, comme en mathématiques ? » → « En programmation, le signe = range une valeur, il
+    n'affirme pas une égalité : score peut changer plus tard. »
+- `corriger_billet.py --ecrire` a ensuite posé la **correction complète** des 32 billets (la question, la bonne
+  réponse, chaque autre proposition avec son pourquoi), que le mode mission ouvre une fois le billet vérifié.
+
+Résultat : `corriger_billet.py` 64 pages lues, 0 billet sans correction, 0 refus. Mode mission joué écran par écran
+sur les 32 pages : aucun refus. `incrustations.py --verifier` : 0.
+
+Bancs des 32 lots : verts, sauf des rouges identiques sur `main` (relancés des deux côtés) :
+`tests_5e_C1.5-C1.6_sequence.mjs` 37 / 38 (une réponse écrite « à relire ») et `tests_regle_311_4e_C7.1.mjs` (en-tête
+au téléphone, constat du jour). Plusieurs bancs demandent leurs arguments (page, réponses, niveau) : relancés avec la
+commande que donne leur rapport de tests ; `5e_C8.1` n'en donne pas (arguments déduits de 5e_C8.2 : séquence 39 / 39,
+QCM 30 / 32, comme sur `main`).
+
+## 18/11/2026 — 4e_C4.4 : le QCM eCall passe au gabarit commun (1 / 6 des QCM de l'ancien format)
+
+Carte blanche de Pascal (« uniformiser toutes les séquences et QCM », puis « Tu as carte blanche » sur les six QCM
+de l'ancien format) : option A, tout migrer, un QCM par PR. Premier : `4e_C4.4/qcm_ecall_chaine_information.html`.
+- **L'ancien** : 40 questions en cartes HTML (modèle « QCM XXL »), sans `const QUESTIONS` — donc sans aides
+  progressives, sans pièges (n°339), sans carte « Avant de commencer » (n°337), hors de l'export Moodle. Plusieurs
+  questions testaient de la culture générale (l'année 2018, le numéro VIN, le domaine D4 du socle) ; des distracteurs
+  étaient des plaisanteries (pizza, fax, pigeon) qui se devinent sans réfléchir. Archivé, même commit (n°12) :
+  `_archive-anciennes-versions/C4-decrire-et-caracteriser-lorganisation/4e_C4.4/` ; retiré de `_outils/heritees.json`
+  (l'index perd son 🛠). L'adresse publique ne change pas.
+- **Le nouveau** : 30 questions réécrites au gabarit maison, en quatre familles (8 ACQ, 6 TRA, 8 COM, 8 SYS) dont les
+  libellés nomment 4e_C4.4 ; chaque distracteur a son pourquoi (`d`). Bonne réponse : places 8 / 8 / 7 / 7 ; la plus
+  longue 13 %, la plus courte 20 %, au milieu 67 % ; aucune question détachée par la longueur. Six pièges (fonctions,
+  capteurs, décider, données, réseau, système), `qcm_aides_4e_C4.4_ecall.json`, posés par `fabriquer.py` et `poser.py`.
+- **Le schéma sous les yeux** (n°331) : trois questions lisent la chaîne d'information de l'eCall, nouvelle figure
+  `ecall` de `_outils/regenerer_chaines_energie.py` (SVG et source draw.io). Ce sont des questions de LECTURE : le
+  schéma est complet. Ses étiquettes passent de 18-19 à 20 (le QCM l'affiche à 800 px au plus) : `controle_schemas`
+  0 ✘, 0 ⚠. `SOURCES_MEDIAS.md` créé pour 4e_C4.4.
+- L'export Moodle compte un QCM de plus (73 QCM, 2 211 questions) ; 5 pages QCM restent non exportées : les cinq
+  autres de l'ancien format, qui suivent une par une.
+
+Contrôles : `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `controle_echantillonnage`,
+`controle_longueurs`, `controle_indices_qcm --strict`, `verif_qcm_coherence`, `banc_aides` (30 / 30 dans un piège),
+`indices_creux`, `poser.py --etat --strict` (73 / 73), `controle_medias`, `controle_liens`, `controle_atteignabilite`,
+`controle_unites` (« 12 V (volts) »), `controle_loupe`, `controle_hors_ligne --source`, `tests_export_moodle_xml` :
+verts. Au navigateur, à 390 et 1 280 px : zéro erreur ; une réponse fausse à la question 24 montre l'indice, le piège
+et « Réviser ce piège : 5 questions ». Rouges aussi sur `main`, non touchés : `controle_competences` (5e_C1.3,
+« CRCN 1.2 » sans intitulé dans `qcm_systemes_information_donnees.html`) et `verifier_chaines_energie.py` (attente
+de `chaine_energie_a_elaborer.svg`, délai dépassé).
 
 ## 18/11/2026 — 4e_C2.1 : le QCM « Comment expliquer le fonctionnement d'un objet ? » passe au gabarit commun (2 / 6)
 
