@@ -127,6 +127,7 @@
   <a href="../3e_C6.1/qcm_3e_C6.1-C6.3_programmer_alerte.html">&#129504; Le QCM</a>
 </nav>
 
+<main id="principal">
 <div class="page">
 <h1>🧠 Entraînement DNB — lire et interpréter un algorigramme</h1>
 <p class="sous">30 exercices en 4 manches · corrections qui expliquent chaque réponse fausse</p>
@@ -769,6 +770,7 @@ FIN TANT QUE</pre>
 </footer>
 </div>
 
+</main>
 <script>
 "use strict";
 const KEY="entrainement_dnb_algorigrammes";
@@ -1355,5 +1357,53 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- retrait-validation v2 : fin -->
+<!-- onglets-seance v1 : début — clavier et séance retenue ; source unique : _outils/onglets_seance.py -->
+<script>
+(function(){
+  "use strict";
+  var onglets = [].slice.call(document.querySelectorAll(".seance-tab"));
+  /* des onglets qui sont des liens mènent à d'autres pages (séquence découpée) : rien à piloter ici */
+  if (!onglets.length || onglets.some(function(o){ return o.matches("a[href]"); })) return;
+  var cle = "seance-active:" + location.pathname;
+  function actif(){
+    for (var i = 0; i < onglets.length; i++)
+      if (onglets[i].classList.contains("active") || onglets[i].getAttribute("aria-selected") === "true") return i;
+    return 0;
+  }
+  function tabindex(){ var a = actif(); onglets.forEach(function(o, i){ o.tabIndex = (i === a) ? 0 : -1; }); }
+  function retenir(o){ var v = o.getAttribute("data-panel") || o.id; try { if (v) localStorage.setItem(cle, v); } catch (e) {} }
+  onglets.forEach(function(o){ o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); }); });
+  /* écouté sur le document, donc en dernier : si la page ou `onglets_clavier.py` (n°326) a déjà traité la touche
+     (`preventDefault`), on ne déplace pas une seconde fois */
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var i = onglets.indexOf(e.target), j = null, n = onglets.length;
+    if (i < 0) return;
+    if (e.key === "ArrowRight") j = (i + 1) % n;
+    else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+    else if (e.key === "Home") j = 0;
+    else if (e.key === "End") j = n - 1;
+    if (j === null) return;
+    e.preventDefault();
+    onglets[j].click();
+    onglets[j].focus();
+  });
+  function rouvrir(){
+    tabindex();
+    if (location.hash && location.hash.length > 1) return;
+    var v = null; try { v = localStorage.getItem(cle); } catch (e) {}
+    if (!v) return;
+    var o = onglets.filter(function(x){ return (x.getAttribute("data-panel") || x.id) === v; })[0];
+    if (!o || onglets.indexOf(o) === actif()) return;
+    var x = window.scrollX, y = window.scrollY;
+    o.click();
+    window.scrollTo(x, y);
+    requestAnimationFrame(function(){ window.scrollTo(x, y); });
+  }
+  if (document.readyState === "complete") setTimeout(rouvrir, 0);
+  else window.addEventListener("load", function(){ setTimeout(rouvrir, 0); });
+})();
+</script>
+<!-- onglets-seance v1 : fin -->
 </body>
 </html>

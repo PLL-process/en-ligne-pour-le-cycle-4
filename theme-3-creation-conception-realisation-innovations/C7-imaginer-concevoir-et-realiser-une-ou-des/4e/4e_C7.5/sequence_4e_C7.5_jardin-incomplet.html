@@ -1244,7 +1244,7 @@ function chrome(){
   invite.appendChild(revenir); revenir.addEventListener("click", entrer);
   if (window.IntersectionObserver) new IntersectionObserver(function(es){ horsVue = !es[es.length - 1].isIntersecting; voirRevenir(); }).observe(bMission);
   else horsVue = true;
-  tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu"></p><button type="button" class="ms-figer" id="msFiger" hidden data-pause-animations aria-pressed="false" aria-label="Figer les animations">⏸️</button><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
+  tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu" role="heading" aria-level="2"></p><button type="button" class="ms-figer" id="msFiger" hidden data-pause-animations aria-pressed="false" aria-label="Figer les animations">⏸️</button><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
   /* un repère sans hauteur juste avant la barre : collée en haut de l'écran, la barre ne dit plus où elle commence */
   var premier = $(G.panneau); ancre = el("div", "ms-ancre ms-seul"); premier.parentNode.insertBefore(ancre, premier); premier.parentNode.insertBefore(tete, premier);
   figer();
@@ -1284,7 +1284,8 @@ function barre(){
   $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance()) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
-  $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
+  $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance. Chaque écran en rapporte jusqu'à 3 : 3 sans erreur, 2 avec une erreur (deux si l'écran a trois réponses ou plus), 1 au-delà");
+  $("#msGains").title = "Chaque écran rapporte jusqu'à 3 étoiles : 3 sans erreur, 2 avec une erreur (deux si l'écran a trois réponses ou plus), 1 au-delà. Ouvrir une aide ne retire rien.";
   $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
@@ -1373,7 +1374,7 @@ function montrer(haut){
   if (ecrans.length > 1 && vide(s)){ ecrans.splice(k, 1); k = Math.min(k, ecrans.length - 1); return montrer(haut); }
   if (!G.onglet){ var bout = k === ecrans.length - 1 && !voisine(1); $$(".page-suivante").forEach(function(x){ x.classList.toggle("ms-montre", bout && !x.closest(G.panneau)); }); }
   M.loin[panneau.id] = Math.max(M.loin[panneau.id] || 0, k);
-  barre(); M.k[panneau.id] = k; ecrire();
+  barre(); M.k[panneau.id] = k; ecrire(); niveaux();
   /* l'écran qui ouvre la séquence commence par son ouverture dépliée — « 🎯 Avant de commencer : trois choses à lire »
      (n°337), la situation, la problématique — et non par la tête de la mission, plus bas : l'élève lit avant de faire
      (17/11/2026 ; avant, ce premier écran défilait de 3 000 à 5 500 px au-delà de l'ouverture). Repliée (« 📖 Rappel »,
@@ -1384,6 +1385,21 @@ function montrer(haut){
   var cible = (s.ouverture && debut) ? debut : ancre;
   if (haut){ var y = Math.max(0, cible.getBoundingClientRect().top + window.scrollY - 52); try { window.scrollTo({ top:y, behavior:"instant" }); } catch (e) { window.scrollTo(0, y); } }
 }
+/* Les titres d'un écran se lisent sans sauter de niveau (audit du jardin connecté, 19/11/2026) : le titre d'écran est
+   de niveau 2 ; un titre de l'écran ne descend que d'un niveau à la fois — « a) » (h4) sous le titre de l'activité (h2)
+   s'annonce au niveau 3. Seul le niveau annoncé change (aria-level), pas la balise ; il revient en quittant la mission. */
+function niveaux(){
+  $$("[data-ms-niveau]").forEach(function(h){ h.removeAttribute("aria-level"); h.removeAttribute("data-ms-niveau"); });
+  if (!actif || !panneau) return;
+  var avant = 2;
+  $$("h2,h3,h4,h5,h6", panneau).forEach(function(h){
+    if (!h.getClientRects().length) return;
+    var n = +h.tagName.charAt(1), v = Math.min(n, avant + 1);
+    if (v !== n && !h.hasAttribute("aria-level")){ h.setAttribute("aria-level", String(v)); h.setAttribute("data-ms-niveau", ""); }
+    avant = v;
+  });
+}
+D.addEventListener("toggle", function(){ if (actif) niveaux(); }, true);
 function aller(j){
   if (j < 0){ var av = voisine(-1); if (av){ M.k[av] = 1e9; ouvrir(av); } return; }
   if (j >= ecrans.length) return;
@@ -1458,7 +1474,8 @@ function verifier(){
        Ouvrir une aide ne retire rien. */
     var err = M.erreurs[s.id] || 0, n = !err ? 3 : err <= (avec.length >= 3 ? 2 : 1) ? 2 : 1, avant = M.etoiles[s.id] || 0;
     M.etoiles[s.id] = Math.max(avant, n); gain = M.etoiles[s.id] - avant;
-    dire(s, "ok", n === 3 ? "Tout est juste, du premier coup." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend.", n);
+    /* la règle des étoiles se dit au moment où elles tombent (audit du jardin connecté, 19/11/2026) */
+    dire(s, "ok", n === 3 ? "Tout est juste, du premier coup : 3 étoiles sur 3." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend. " + (n === 2 ? "2 étoiles sur 3" : "1 étoile sur 3") + " : " + (err === 1 ? "une erreur" : err + " erreurs") + " en route.", n);
   } else dire(s, "", "C'est noté. Lis le message de la vérification ci-dessous.");
   M.fait[s.id] = true; ecrire();
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
@@ -1502,6 +1519,7 @@ function entrer(){
 }
 function sortir(){
   actif = false; M.on = false; ecrire(); D.body.classList.remove("ms"); voirRevenir();
+  niveaux();
   var ouv = $("#ouverture"); if (ouv) ouv.classList.remove("ms-cache");
   bMission.focus({ preventScroll:true }); bMission.scrollIntoView({ block:"center" });
 }
@@ -2032,6 +2050,7 @@ body.ms .cac-reserve{--cac-bas:84px}
 
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.5.html">📖 Lexique</a></nav>
 
+<main id="principal">
 <h1>🌱 Le jardin qui n'arrose pas encore</h1>
 <p class="subtitle">🎯 Ta mission : trouver, sans rien démonter au hasard, ce qui manque à chacun des trois prototypes d'arrosage livrés — et le compléter.</p>
 
@@ -2815,6 +2834,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 
 </div>
 
+</main>
 <footer>Séquence 4e_C7.5 — « Le jardin qui n'arrose pas encore ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 
@@ -3963,5 +3983,53 @@ window.CAC_DESSINS.prototype = (function(){
   };
 })();
 </script>
+<!-- onglets-seance v1 : début — clavier et séance retenue ; source unique : _outils/onglets_seance.py -->
+<script>
+(function(){
+  "use strict";
+  var onglets = [].slice.call(document.querySelectorAll(".seance-tab"));
+  /* des onglets qui sont des liens mènent à d'autres pages (séquence découpée) : rien à piloter ici */
+  if (!onglets.length || onglets.some(function(o){ return o.matches("a[href]"); })) return;
+  var cle = "seance-active:" + location.pathname;
+  function actif(){
+    for (var i = 0; i < onglets.length; i++)
+      if (onglets[i].classList.contains("active") || onglets[i].getAttribute("aria-selected") === "true") return i;
+    return 0;
+  }
+  function tabindex(){ var a = actif(); onglets.forEach(function(o, i){ o.tabIndex = (i === a) ? 0 : -1; }); }
+  function retenir(o){ var v = o.getAttribute("data-panel") || o.id; try { if (v) localStorage.setItem(cle, v); } catch (e) {} }
+  onglets.forEach(function(o){ o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); }); });
+  /* écouté sur le document, donc en dernier : si la page ou `onglets_clavier.py` (n°326) a déjà traité la touche
+     (`preventDefault`), on ne déplace pas une seconde fois */
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var i = onglets.indexOf(e.target), j = null, n = onglets.length;
+    if (i < 0) return;
+    if (e.key === "ArrowRight") j = (i + 1) % n;
+    else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+    else if (e.key === "Home") j = 0;
+    else if (e.key === "End") j = n - 1;
+    if (j === null) return;
+    e.preventDefault();
+    onglets[j].click();
+    onglets[j].focus();
+  });
+  function rouvrir(){
+    tabindex();
+    if (location.hash && location.hash.length > 1) return;
+    var v = null; try { v = localStorage.getItem(cle); } catch (e) {}
+    if (!v) return;
+    var o = onglets.filter(function(x){ return (x.getAttribute("data-panel") || x.id) === v; })[0];
+    if (!o || onglets.indexOf(o) === actif()) return;
+    var x = window.scrollX, y = window.scrollY;
+    o.click();
+    window.scrollTo(x, y);
+    requestAnimationFrame(function(){ window.scrollTo(x, y); });
+  }
+  if (document.readyState === "complete") setTimeout(rouvrir, 0);
+  else window.addEventListener("load", function(){ setTimeout(rouvrir, 0); });
+})();
+</script>
+<!-- onglets-seance v1 : fin -->
 </body>
 </html>

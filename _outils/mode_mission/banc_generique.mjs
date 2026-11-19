@@ -5,7 +5,8 @@
 // vérifie (les réponses sont lues dans la page, comme le fait le mode), puis revenir à la page complète.
 // Refus (sortie 1) : erreur JavaScript, écran vide, défilement de côté, écran qui ne s'accepte pas avec les bonnes
 // réponses, bouton de vérification de la page laissé visible dans un écran de question, écran suivant qui ne se
-// montre pas depuis son début, page complète non rétablie.
+// montre pas depuis son début, page complète non rétablie, titre qui saute un niveau (un h4 sous le h2 de l'activité :
+// le mode l'annonce au niveau 3 — 19/11/2026).
 // Signalé sans refus : les réponses attendues qu'aucun écran ne vérifie (elles restent vérifiées par la page).
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -69,6 +70,12 @@ for (const PAGE of pages) {
           sansCle: champs.filter(f => cles[f.id] === undefined && !f.classList.contains('positionnement')).map(f => f.id),
           mots: texte ? texte.split(' ').length : 0, medias: [...P.querySelectorAll('img,svg,canvas,video,iframe,textarea,input,select')].filter(vu).length,
           large: document.documentElement.scrollWidth > innerWidth + 1,
+          // les titres qu'annonce un lecteur d'écran, dans l'ordre : aucun ne descend de deux niveaux d'un coup (19/11/2026)
+          // (la zone de la mission : le titre d'écran, puis la séance ; l'ouverture et le reste de la page ont leurs propres titres)
+          saut: (() => { const ou = document.getElementById('msOu'); const hs = [ou].concat([...P.querySelectorAll('h1,h2,h3,h4,h5,h6,[role=heading]')]).filter(h => h && h.getClientRects().length);
+            const lv = hs.map(h => +(h.getAttribute('aria-level') || (/^H(\d)$/.exec(h.tagName) || [0, 2])[1]));
+            for (let j = 1; j < lv.length; j++) if (lv[j] > lv[j - 1] + 1) return lv[j - 1] + '→' + lv[j] + ' « ' + hs[j].textContent.trim().slice(0, 40) + ' »';
+            return null; })(),
           checks: [...P.querySelectorAll(CHECK)].filter(vu).length, suiv: !document.getElementById('msSuiv').hidden,
           // un outil où l'on écrit (éditeur Python, zone de texte), placé dans la page AVANT la vérification de son activité
           avantVerif: [...P.querySelectorAll('.editeur-py, textarea')].filter(x => vu(x) && (x.matches('.editeur-py') || !x.closest('.editeur-py')))
@@ -79,6 +86,7 @@ for (const PAGE of pages) {
       if (e.mots < 2 && !e.medias) refus.push(`${ou} : écran vide`);
       if (e.k === 0 && e.n > 1 && e.mots < 12 && !e.medias && !refus.some(m => m.includes('presque vide'))) refus.push(`${ou} : la séance s'ouvre sur un écran presque vide (${e.mots} mots)`);
       if (e.large) refus.push(`${ou} : défilement de côté à 390 px`);
+      if (e.saut) refus.push(`${ou} : un titre saute un niveau (${e.saut})`);
       if (e.exo && e.checks) refus.push(`${ou} : le bouton de vérification de la page est visible dans un écran de question`);
       if (e.ecran && e.ecran.t === 'retenir' && e.avantVerif.length) refus.push(`${ou} : un outil qui sert avant la vérification n'arrive qu'après elle, sur l'écran « je retiens » — ${e.avantVerif.join(', ')}`);
       // n°336 (16/11/2026) : une activité vérifiée montre sa correction OUVERTE, sur l'écran « je retiens »
@@ -150,9 +158,9 @@ for (const PAGE of pages) {
   if (pq.avec) notes.push(`pourquoi des erreurs : ${pq.avec} / ${pq.total} (mauvaises propositions et lignes de grille)`);
   if (croise.sans) notes.push('pas de table CHECKS visible : croisement fait sur les marques « ok / ko » que la page pose à sa vérification');
   else if (croise.faux.length) refus.push(`${croise.faux.length} réponse(s) retenue(s) par le mode ne valent pas un point à la vérification de la page : ${croise.faux.slice(0, 10).join(', ')}`);
-  const sortie = await p.evaluate(() => ({ ms: document.body.classList.contains('ms'), seuls: [...document.querySelectorAll('.ms-seul')].filter(x => x.offsetParent).length }));
+  const sortie = await p.evaluate(() => ({ ms: document.body.classList.contains('ms'), seuls: [...document.querySelectorAll('.ms-seul')].filter(x => x.offsetParent).length, niveaux: document.querySelectorAll('[data-ms-niveau]').length }));
   const apres = await caches(), restes = Object.keys(apres).filter(id => apres[id] > avant[id]);
-  if (sortie.ms || sortie.seuls || restes.length) refus.push(`retour à la page complète : ${JSON.stringify(sortie)} ; blocs restés cachés dans ${restes.join(', ') || 'aucune séance'}`);
+  if (sortie.ms || sortie.seuls || sortie.niveaux || restes.length) refus.push(`retour à la page complète : ${JSON.stringify(sortie)} ; blocs restés cachés dans ${restes.join(', ') || 'aucune séance'}`);
   err.slice(0, 3).forEach(m => refus.push('erreur JavaScript : ' + m.slice(0, 140)));
 
   console.log(`${refus.length ? '❌' : '✅'} ${path.relative(RACINE, PAGE)}\n   ${onglets.length} séance(s) · ${nEcrans} écrans · ${nVerifies} écrans vérifiés par le mode (dont ${nEtq} à étiquettes) · ${nEcrits} écrans écrits ou vérifiés par la page · ${nPage} vérifications de la page déclenchées · ${nCorOuvertes} corrections ouvertes après vérification · ${Object.keys(cles).length} réponses lues${croise.sans ? '' : ', croisées avec la page'}`);
