@@ -33415,3 +33415,28 @@ cohérence, `banc_aides`, `indices_creux`, `poser.py --etat --strict`, unités, 
 règles visibles, sigles, consignes à la ligne (la séquence), `tests_export_moodle_xml` : verts. Bancs du lot :
 `tests_4e_C2.1-C2.2_hangzhou.py` 65 / 65, `tests_regle_311_4e_C2.1.mjs` 34 / 34. Au navigateur, 390 et 1 280 px :
 zéro erreur ; une réponse fausse à la question 13 montre l'indice et le piège.
+
+## 19/11/2026 — 4e_C4.1 : le QCM « Automatisation » passe au gabarit commun (3 / 6)
+
+Troisième des six QCM de l'ancien format (carte blanche de Pascal, option A : un QCM par PR).
+- **L'ancien** `4e_C4.1/qcm_automatisation_premium.html` : 11 questions à trois propositions, après des années de
+  rustines (29 copies d'une même question retirées, n°155 ; images hotlinkées redessinées ; sons tiers remplacés).
+  Restaient des pictogrammes qui écrivaient la réponse dans l'image (« il transforme l'électricité en mouvement »),
+  des distracteurs qui se devinent (« Décorer », « Il casse ») et des codes sans libellé. Archivé (n°12) avec ses six
+  pictogrammes, que plus aucune page n'affichait, dans `_archive-anciennes-versions/C4-decrire-et-caracteriser-
+  lorganisation/4e_C4.1/` ; retiré de `_outils/heritees.json`.
+- **Le nouveau** : « Automatiser le jardin : capteurs, programme, actionneurs », 30 questions ancrées dans le jardin
+  connecté de la séquence — 8 en 4e_C4.4 (qui mesure, qui décide, qui agit), 7 en 4e_C6.1 (lire un chronogramme,
+  trouver le défaut, en déduire la modification), 8 en 4e_C6.2 (ET ou OU, le seuil, la boucle, la variable,
+  l'algorigramme), 7 en 4e_C6.3 (les quatre cas de test, l'attendu, le bug, valider). Sept questions lisent l'une des
+  deux figures neuves de `_generation/figures_qcm_automatisation.py` : le chronogramme de l'éclairage de l'allée, où
+  la LED s'allume à 17 h en plein jour, et l'algorigramme du programme corrigé (« il fait nuit ET quelqu'un passe »).
+  `controle_schemas` : 0 ✘, 0 ⚠. Places 8 / 8 / 7 / 7 ; longueur : aucune question détachée ; six pièges.
+- Le nom du fichier ne change pas (l'adresse publique non plus) ; seul le titre perd « PREMIUM ».
+
+Contrôles : en-tête, banque, effectifs, échantillonnage (8 / 7 / 8 / 7), longueurs, indices `--strict`, cohérence,
+`banc_aides`, `indices_creux`, `poser.py --etat --strict` (75 / 75), unités, médias, liens, atteignabilité, loupe,
+règles visibles, sigles, `tests_export_moodle_xml` : verts. Banc du lot `tests_4e_C4.1-C4.9.mjs` : 52 / 52. Au
+navigateur, 390 et 1 280 px : zéro erreur ; une réponse fausse à la question 11 montre l'indice et le piège. Relevé
+au passage, sans y toucher : le QCM du lot (`qcm_4e_C4.1-C4.9_jardin_connecte.html`) a sa bonne réponse la plus longue
+13 fois sur 30 (⚠ de `controle_longueurs`, au-delà de 40 %).
