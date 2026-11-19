@@ -1,11 +1,11 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 73 QCM, **2211 questions**, 218 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
 - `_exports/moodle/5e.xml` — 580 questions
-- `_exports/moodle/4e.xml` — 693 questions
+- `_exports/moodle/4e.xml` — 723 questions
 - `_exports/moodle/3e.xml` — 668 questions
 - `_exports/moodle/ateliers.xml` — 240 questions
 
@@ -40,6 +40,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 ima
 | 3e | 3e_C4.8 | Le pont numérique Martinique → New York | 30 | 6 |
 | 4e | 4e_C4.1 | Le jardin connecté | 30 | 4 |
 | 4e | 4e_C4.1_book-train | Un Book Train pour la Schœlcher | 30 | 4 |
+| 4e | 4e_C4.4 | eCall : la chaîne d’information d’une voiture | 30 | 3 |
 | 4e | 4e_C4.7 | SOS serre | 30 | 7 |
 | 4e | 4e_C4.7 | Thème 2 — 4e · QCM 2/3 : adresser et identifier sur un réseau | 30 | 0 |
 | 4e | 4e_C4.7 | Thème 2 — 4e · QCM 3/3 : Zigbee et les liaisons sans fil | 30 | 3 |
@@ -86,11 +87,10 @@ Produit par `_outils/export_moodle_xml.mjs`. 72 QCM, **2181 questions**, 215 ima
 | 4e | 4e_C9.1 | Le jardin connecté se programme | 30 | 4 |
 | 5e | 5e_C9.1 | La boîte étiquetée | 30 | 3 |
 
-## Pages QCM non exportées (6)
+## Pages QCM non exportées (5)
 
 - `theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/qcm_fonctionnement_objet.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
 - `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/qcm_automatisation_premium.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
-- `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.4/qcm_ecall_chaine_information.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)
 - `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_algorigrammes_domotique.html` — page sans bloc QUESTIONS (QCM intégré ou atelier)
 - `theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/qcm_jardin_connecte.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)
 - `theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.1/qcm_python_variables.html` — ancien gabarit (cartes HTML, sans bloc QUESTIONS)

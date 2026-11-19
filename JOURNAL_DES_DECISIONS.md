@@ -33358,3 +33358,32 @@ au téléphone, constat du jour). Plusieurs bancs demandent leurs arguments (pag
 commande que donne leur rapport de tests ; `5e_C8.1` n'en donne pas (arguments déduits de 5e_C8.2 : séquence 39 / 39,
 QCM 30 / 32, comme sur `main`).
 
+## 18/11/2026 — 4e_C4.4 : le QCM eCall passe au gabarit commun (1 / 6 des QCM de l'ancien format)
+
+Carte blanche de Pascal (« uniformiser toutes les séquences et QCM », puis « Tu as carte blanche » sur les six QCM
+de l'ancien format) : option A, tout migrer, un QCM par PR. Premier : `4e_C4.4/qcm_ecall_chaine_information.html`.
+- **L'ancien** : 40 questions en cartes HTML (modèle « QCM XXL »), sans `const QUESTIONS` — donc sans aides
+  progressives, sans pièges (n°339), sans carte « Avant de commencer » (n°337), hors de l'export Moodle. Plusieurs
+  questions testaient de la culture générale (l'année 2018, le numéro VIN, le domaine D4 du socle) ; des distracteurs
+  étaient des plaisanteries (pizza, fax, pigeon) qui se devinent sans réfléchir. Archivé, même commit (n°12) :
+  `_archive-anciennes-versions/C4-decrire-et-caracteriser-lorganisation/4e_C4.4/` ; retiré de `_outils/heritees.json`
+  (l'index perd son 🛠). L'adresse publique ne change pas.
+- **Le nouveau** : 30 questions réécrites au gabarit maison, en quatre familles (8 ACQ, 6 TRA, 8 COM, 8 SYS) dont les
+  libellés nomment 4e_C4.4 ; chaque distracteur a son pourquoi (`d`). Bonne réponse : places 8 / 8 / 7 / 7 ; la plus
+  longue 13 %, la plus courte 20 %, au milieu 67 % ; aucune question détachée par la longueur. Six pièges (fonctions,
+  capteurs, décider, données, réseau, système), `qcm_aides_4e_C4.4_ecall.json`, posés par `fabriquer.py` et `poser.py`.
+- **Le schéma sous les yeux** (n°331) : trois questions lisent la chaîne d'information de l'eCall, nouvelle figure
+  `ecall` de `_outils/regenerer_chaines_energie.py` (SVG et source draw.io). Ce sont des questions de LECTURE : le
+  schéma est complet. Ses étiquettes passent de 18-19 à 20 (le QCM l'affiche à 800 px au plus) : `controle_schemas`
+  0 ✘, 0 ⚠. `SOURCES_MEDIAS.md` créé pour 4e_C4.4.
+- L'export Moodle compte un QCM de plus (73 QCM, 2 211 questions) ; 5 pages QCM restent non exportées : les cinq
+  autres de l'ancien format, qui suivent une par une.
+
+Contrôles : `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `controle_echantillonnage`,
+`controle_longueurs`, `controle_indices_qcm --strict`, `verif_qcm_coherence`, `banc_aides` (30 / 30 dans un piège),
+`indices_creux`, `poser.py --etat --strict` (73 / 73), `controle_medias`, `controle_liens`, `controle_atteignabilite`,
+`controle_unites` (« 12 V (volts) »), `controle_loupe`, `controle_hors_ligne --source`, `tests_export_moodle_xml` :
+verts. Au navigateur, à 390 et 1 280 px : zéro erreur ; une réponse fausse à la question 24 montre l'indice, le piège
+et « Réviser ce piège : 5 questions ». Rouges aussi sur `main`, non touchés : `controle_competences` (5e_C1.3,
+« CRCN 1.2 » sans intitulé dans `qcm_systemes_information_donnees.html`) et `verifier_chaines_energie.py` (attente
+de `chaine_energie_a_elaborer.svg`, délai dépassé).
