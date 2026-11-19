@@ -15,10 +15,16 @@ for (const f of process.argv.slice(2)) {
     if (x.d[r] && String(x.d[r]).trim()) mauvais++;
     if (x.d.filter((t, i) => i !== r && t && String(t).trim()).length !== x.d.length - 1) mauvais++;
   }
+  // 19/11/2026 : un énoncé qui porte une balise (<code>, <b>, un listing) ou une entité (&lt;) doit être écrit en HTML ;
+  // écrit avec textContent, il s'affiche en clair (« <code>score = 12</code> »). On compte ces énoncés comme des défauts.
+  const enClair = /\$\("qTexte"\)\.textContent\s*=\s*Q\.q/.test(src)
+    ? q.filter(x => /<[a-z]|&[a-z#0-9]+;/i.test(String(x.q || ""))).length : 0;
+  mauvais += enClair;
   const rep = {}; q.forEach(x => { const r = x.r !== undefined ? x.r : x.answer; rep[r] = (rep[r] || 0) + 1; });
   console.log((mauvais ? "❌ " : "✅ ") + f.split("/").pop() + " · " + q.length + " q · positions " +
               JSON.stringify(rep) + (sansD ? ` · ${sansD} sans réfutations` : "") +
-              (mauvais ? ` · ${mauvais} DÉSALIGNEMENTS` : " · réfutations alignées"));
+              (mauvais - enClair ? ` · ${mauvais - enClair} DÉSALIGNEMENTS` : " · réfutations alignées") +
+              (enClair ? ` · ${enClair} ÉNONCÉ(S) AUX BALISES AFFICHÉES EN CLAIR (textContent)` : ""));
   global += mauvais;
 }
 process.exit(global ? 1 : 0);
