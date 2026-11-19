@@ -33742,3 +33742,18 @@ La passe I1 de #797 avait laissé la longueur : la bonne réponse restait la plu
 
 Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
 Bancs : `tests_4e_C4.1-C4.9.mjs` 52 / 52, `tests_regle_311_4e_C4.1.mjs` 34 / 34, mode mission (pourquoi 144 / 144).
+
+## 19/11/2026 — n°341 sur 3e_C6.2 (l'auto-test de la station) : plus aucune page au-delà de 40 %
+
+Neuvième page du chantier n°341, la dernière au-delà du seuil : la bonne réponse était la plus longue dans **18 groupes
+sur 31** (58 %), parce qu'elle portait son explication (« avant la boucle : il doit exister avant qu'on commence à
+compter », « prévoir un second moyen de signalement local : faire clignoter le gyrophare selon un motif convenu »).
+- Les bonnes réponses disent ce qu'elles sont (« avant la boucle », « une donnée de sortie », « un seul, qui cite les
+  deux organes »). Leurs explications sont dans les corrections, vérifiées.
+- Les intrus prennent la même forme : « ni l'un ni l'autre : c'est un composant » → « un composant », « après la
+  boucle, juste avant le message » → « après la boucle ».
+- Site : la bonne réponse est la plus longue dans **11 %** des groupes, la plus courte dans 8 %, au milieu dans 81 %
+  (cible 15 / 15 / 70). **0 page au-delà de 40 %** (8 ce matin).
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
+Bancs : `tests_3e_C6.2.py` 22 / 22, `tests_regle_311_3e_C6.2.mjs` 34 / 34, mode mission sans refus.
