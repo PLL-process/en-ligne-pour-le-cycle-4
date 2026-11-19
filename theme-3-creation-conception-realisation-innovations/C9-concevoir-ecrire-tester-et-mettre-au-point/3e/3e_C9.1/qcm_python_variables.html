@@ -63,7 +63,8 @@
   /* question */
   .q-comp{font-size:.78em;color:var(--head);font-weight:600}
   .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
-  .q-texte code,.option code,.bloc-detail code,.bloc-aide code{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:.95em;background:rgba(97,218,251,.13);color:#9fe8ff;padding:0 .3em;border-radius:4px;white-space:pre-wrap}
+  .q-texte code,.option code,.bloc-detail code{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:.95em;background:rgba(97,218,251,.13);color:#9fe8ff;padding:0 .3em;border-radius:4px;white-space:pre-wrap}
+  .q-texte .py{display:block;white-space:pre;overflow-x:auto;font:400 .92em/1.5 ui-monospace,Consolas,'Courier New',monospace;background:#050f24;border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:10px}
   .q-figure{margin:0 0 14px}
   .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
@@ -755,22 +756,14 @@ function montrerEcran(quel){
   $("ecranQuestion").classList.toggle("actif",quel==="q");
   $("ecranResultat").classList.toggle("actif",quel==="r");
 }
-/* L'énoncé peut porter du code entre <code>…</code> : rendu en police de code, le reste en texte simple (rien
-   d'autre n'est lu comme du HTML). Les entités &lt; &gt; &quot; &amp; sont décodées. */
-function ecrireEnonce(el,t){
-  el.textContent="";
-  const dec=x=>x.replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&amp;/g,"&");
-  String(t).split(/(<code>[\s\S]*?<\/code>)/).forEach(p=>{
-    const m=/^<code>([\s\S]*)<\/code>$/.exec(p);
-    if(m){ const c=document.createElement("code"); c.textContent=dec(m[1]); el.appendChild(c); }
-    else if(p) el.appendChild(document.createTextNode(dec(p)));
-  });
-}
 function rendreQuestion(){
   const i=etat.courante, Q=QUESTIONS[i];
   $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
   $("qNum").textContent=i+1; $("qTot").textContent=N;
-  ecrireEnonce($("qTexte"),Q.q);
+  // L'énoncé est écrit en HTML, comme les propositions : <code>, <b>, un listing <div class="py">. Un listing est
+  // coloré comme dans un IDE par le colorisateur commun (règle d'or n°13), quand la page le charge.
+  $("qTexte").innerHTML=Q.q;
+  if(window.CodeColore) $("qTexte").querySelectorAll("div.py,pre.py").forEach(e=>{ window.CodeColore.colorer(e,"python"); window.CodeColore.legende(e,"python"); });
   if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
   else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
   $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";

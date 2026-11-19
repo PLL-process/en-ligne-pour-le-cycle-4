@@ -33490,3 +33490,24 @@ Contrôles : en-tête, banque, effectifs, échantillonnage, longueurs, indices `
 liens, atteignabilité, loupe, règles visibles, sigles, médias, tactile, boutons vivants, `tests_export_moodle_xml` :
 verts. Banc du lot `tests_3e_C9.1.mjs` : 89 / 89. Au navigateur, 390 et 1 280 px : le code de l'énoncé s'affiche en
 police de code, zéro erreur.
+
+## 19/11/2026 — Huit QCM affichaient leurs balises en clair dans l'énoncé
+
+Relevé en refaisant le QCM Python de 3e_C9.1 : le moteur du gabarit maison écrit l'énoncé avec `textContent` (les
+propositions et les corrections, elles, sont écrites en HTML). Tout énoncé qui portait une balise s'affichait donc tel
+quel à l'élève : « En Python, que signifie l'instruction <code>score = 12</code> ? ». Vérifié au navigateur. Le pire :
+en 4e_C9.1, un listing Python entier s'affichait en une ligne, balises comprises (« <div class="py">SEUIL = 40 H = 25
+… </div> »).
+- **Mesure** : 8 QCM sur 76 ont des énoncés à balises ou à entités — `3e_C9.1` (atelier variables, 21 énoncés ; et
+  le QCM Python), `4e_C9.1` (11, dont le listing), `5e_C9.1` (14), `4e_C6.2` éclairage (3), `4e_C7.8` (1), et deux
+  `&nbsp;` en `4e_C7.4` et `3e_C8.2`.
+- **Correction** (`_outils/enonce_qcm_en_html.py --ecrire`, rejouable) : dans ces huit pages, l'énoncé est écrit en HTML,
+  comme les propositions ; le `<code>` en ligne prend une police de code ; un listing `<div class="py">` est coloré
+  comme dans un IDE par le colorisateur commun (`_ressources-communes/code-colore/`, règle n°13), avec sa légende 🎨.
+  Le QCM Python perd son rendu à part (`ecrireEnonce`, du matin même) : un seul rendu pour tous.
+- **Garde-fou** : `verif_qcm_coherence.mjs` refuse désormais un énoncé à balises écrit avec `textContent` (« ÉNONCÉ(S)
+  AUX BALISES AFFICHÉES EN CLAIR ») ; rejoué sur l'ancienne version de 4e_C9.1 : 11 refus, sortie 1.
+
+Contrôles : `verif_qcm_coherence` (76 QCM), en-tête, banque, `poser.py --etat --strict`, `banc_aides` (8 / 8). Au
+navigateur, chaque question des huit QCM (240) : aucune balise ni entité en clair, zéro erreur ; le listing de 4e_C9.1
+est coloré (7 mots-clés, légende). Bancs des lots : 4e_C9.1 124 / 124, 5e_C9.1 66 / 66, 3e_C9.1 89 / 89, 4e_C6.2 56 / 56.
