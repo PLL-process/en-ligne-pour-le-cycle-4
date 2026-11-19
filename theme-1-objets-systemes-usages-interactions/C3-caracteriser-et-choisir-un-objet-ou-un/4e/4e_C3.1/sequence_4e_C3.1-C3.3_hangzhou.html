@@ -3521,7 +3521,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- /ateliers-representations:moteur -->
-<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
+<!-- retrait-validation v2 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->
 <script>
 (function(){
   "use strict";
@@ -3541,6 +3541,16 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
              && !zone.parentElement.classList.contains("seance-panel")
              && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
     }
+    /* v2 (19/11/2026) : une activité peut porter plusieurs vérifications — des questions, puis un algorigramme à
+       remettre en ordre. Un champ appartient alors à la vérification qui le suit : remettre l'algorigramme en ordre ne
+       retire plus la validation des questions (bancs de 4e_C6.1 et 5e_C6.1) */
+    var boutons = zone.querySelectorAll("[data-check]");
+    function sienne(t){
+      if (boutons.length < 2) return true;
+      for (var i = 0; i < boutons.length; i++)
+        if (t.compareDocumentPosition(boutons[i]) & Node.DOCUMENT_POSITION_FOLLOWING) return boutons[i] === btn;
+      return boutons[boutons.length - 1] === btn;
+    }
     function cle(){
       var v = window.__valid || {};
       return v[n] ? n : v["act" + n] ? "act" + n : null;
@@ -3551,6 +3561,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
       /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
          proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
       if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      if (!sienne(t)) return;
       var k = cle(); if (k === null) return;
       window.__valid[k] = false;
       var fb = document.getElementById("fb" + n);
@@ -3567,6 +3578,6 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   });
 })();
 </script>
-<!-- retrait-validation v1 : fin -->
+<!-- retrait-validation v2 : fin -->
 </body>
 </html>
