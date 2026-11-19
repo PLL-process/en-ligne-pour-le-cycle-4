@@ -46,7 +46,9 @@ export async function lancerBanc311Theme3(o) {
         mission: !!m && vis(m) && !m.closest('#ouverture'),
         // visible, ou à un appui : au téléphone, dès la séance 2, derrière « ⚙️ Mon nom, mon parcours, mes réglages »
         outils: outils.map((s) => { const e = document.querySelector(s);
-          const derriere = !!e && !!e.closest('.entete-reglage, .entete-reglage-partiel') && vis(document.querySelector('.entete-bascule'));
+          const carte = e && e.closest('.entete-carte');
+          const derriere = !!e && ((!!e.closest('.entete-reglage, .entete-reglage-partiel') && vis(document.querySelector('.entete-bascule')))
+            || (!!carte && [...document.querySelectorAll('.entete-carte-bascule')].some((x) => vis(x))));
           return { s, ok: !!e && (vis(e) || derriere) && !e.closest('#ouverture') }; }),
       };
     }, o.outils || []);
