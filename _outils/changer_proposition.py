@@ -58,6 +58,13 @@ def changer(page_txt, mission, groupe, ancien, nouveau, pourquoi=None):
     if js_old in s:
         assert s.count(js_old) == 1, js_old
         s = s.replace(js_old, '%s:"%s"' % (groupe, nouveau.replace('"', '\\"')))
+    # les autres écritures de la réponse attendue : $("g").value === "…" se réécrit ; un startsWith("début")
+    # que le nouveau texte ne vérifie plus est refusé, à reprendre à la main (19/11/2026, 3e_C9.2 a3_p1b)
+    egal = re.compile(r'(\$\(\s*["\']%s["\']\s*\)\.value\s*===?\s*")%s(")' % (re.escape(groupe), re.escape(ancien.replace('"', '\\"'))))
+    s = egal.sub(lambda k: k.group(1) + nouveau.replace('"', '\\"') + k.group(2), s)
+    for debut in re.findall(r'\$\(\s*["\']%s["\']\s*\)\.value\.startsWith\(\s*"((?:[^"\\]|\\.)*)"' % re.escape(groupe), s):
+        assert not (ancien.startswith(debut) and not nouveau.startswith(debut)), \
+            (groupe, 'startsWith("%s") ne reconnaît plus la nouvelle proposition : à réécrire à la main' % debut)
     # le mission_<lot>.json : les « pourquoi » sont rangés par texte de proposition
     if mission is not None:
         du_groupe = None
