@@ -33851,3 +33851,20 @@ longue dans **15 questions sur 30**, de 1 à 9 signes. Pour chaque banque :
 
 Bancs : `tests_5e_C7.6_qcm.mjs` 31 / 31, `tests_5e_C7.5_qcm.mjs` 32 / 32, `tests_5e_C8.2_qcm.mjs` 32 / 32 ;
 `controle_indices_qcm` (76 banques, rien), unités, banc de l'export Moodle vert.
+
+## 19/11/2026 — n°341, QCM des cinq ateliers de 4e (le jardin) : de 14–17 sur 30 à 4 ou 5
+
+Cinq banques de la même famille (ateliers C7 et C8 de 4e, le jardin connecté), une seule PR :
+`4e_C8` validation (17 → 4), `4e_C7` conception (15 → 4), `4e_C7.4` énergie (15 → 5), `4e_C7.8` le jardin publié
+(15 → 4), `4e_C7.3` le bac (14 → 4).
+- 57 propositions retouchées : surtout des intrus allongés de quelques mots, à sens égal ; deux bonnes réponses
+  perdent leur complément (« … et avec quel résultat » → « … et le résultat »).
+- Quatre bonnes réponses par banque restent les plus longues (la cible est 15 %). Dans `4e_C7.4`, la cinquième est
+  « 131 » face à « 60 », « 11 », « 5 » : un nombre, rien à changer.
+- Relu pour ne pas créer d'absolu dans les intrus. Trois allongements disaient « tous » : « dans tous les jardins »,
+  « tous ses critères », « tous les objets qu'il connaît ». Ils sont réécrits sans (« plusieurs de ses critères »…).
+- Site (QCM) : la bonne réponse est la plus longue 28 %, la plus courte 15 %, au milieu 58 % · 10 banque(s) au-delà de 40 % de « la plus longue ».
+
+Bancs : `tests_qcm_c7_c8.mjs` 71 / 71, `tests_4e_C8.mjs` 54 / 54, `tests_4e_C7.mjs` 47 / 47, `tests_4e_C7.4_qcm`,
+`_C7.8_qcm`, `_C7.3_qcm` 32 / 32 ; `verif_qcm_coherence` (réfutations alignées), `controle_indices_qcm` (rien),
+export Moodle régénéré, banc vert.
