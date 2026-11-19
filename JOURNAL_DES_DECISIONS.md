@@ -33919,3 +33919,31 @@ page se retrouvent mot pour mot dans `q.py`.
 
 Bancs : `tests_5e_C1.1_chengdu.py` 43 / 43 ; QCM ouvert dans Chromium, 0 erreur ; réfutations alignées,
 `controle_indices_qcm` (rien), export Moodle régénéré, banc vert.
+
+## 19/11/2026 — Audit externe du jardin connecté (4e_C4.1) : C4.7 et C4.9 deviennent réelles, la réparation se choisit
+
+Pascal joint un audit écrit ailleurs (15,8 / 20). Relu remarque par remarque, au navigateur et dans le code
+(skill `relire-un-audit-externe`). 9 constats sont confirmés, 1 reste à vérifier, 1 est une idée à juger ; aucun
+n'est faux. Pascal valide les choix par défaut (« avance avec ces choix par défaut »). Cette PR traite la page ; les
+défauts communs à tout le site suivent à part.
+- **C4.7 et C4.9 (P1)** : la séance 3 expliquait l'IP fixe sans la faire régler. Sa correction affirmait « tu l'as
+  fait sur une simulation fournie : C4.9 », alors que l'élève ne faisait que désigner une cause. Nouveau b) :
+  « Le club ajoute la carte du bac 2 ». L'élève règle son IP fixe, son masque et sa passerelle à partir de ce qu'il
+  sait du réseau : adresses prises, plage DHCP .20 à .49. Le simulateur refuse chaque erreur avec sa raison (hors de
+  la rue, adresse déjà prise — « le conflit de la panne 2 », plage DHCP, masque, passerelle). Le ping échoue tant que
+  la carte est mal réglée, puis répond 4 / 4. L'activité exige ce ping. C'est paramétrer (C4.7), puis compléter une
+  simulation fournie et la valider (C4.9). La correction le dit maintenant, et le README de `4e_C4.9` aussi.
+- **La réparation (P1)** : la bonne cause ne répare plus la panne. Elle ouvre « Quelle remise en service ? »
+  (rebrancher la borne, sortir le .50 de la plage DHCP, régler la passerelle) ; une mauvaise réparation est refusée.
+- **Humidité (P1)** : « 60 % » est maintenant présenté comme un **indice** (612 ÷ 1023 ≈ 0,60, ramené sur 100). La
+  correction ajoute l'étalonnage d'un vrai capteur (terre sèche, terre gorgée d'eau) et le capteur qui baisse quand la
+  terre s'humidifie.
+- **Règles IP absolues (P3)** : la correction ajoute la réservation DHCP, et « en général » pour la tablette.
+- **Séance 4 et C2.2 (P3)** : la tête de la page porte « + rappel 4e_C2.2 (séance 4) », avec sa bulle : non évalué ici.
+- Aides de niveau 1 et 2, fiche, consigne, critère de réussite et tableau de bord des tâches suivent le nouveau b).
+
+Bancs : `tests_4e_C4.1-C4.9.mjs` **60 / 60**. Huit essais nouveaux : bonne cause sans réparation, mauvaise réparation,
+IP dans la plage DHCP, IP déjà prise, mauvaise passerelle, ping qui échoue, ping 4 / 4, activité refusée puis
+validée. `tests_regle_311_4e_C4.1.mjs` 34 / 34, mode mission sans refus (pourquoi 144 / 144),
+`controle_validations` et `controle_propositions_indices` : rien à signaler, unités. Revue d'écran à 390 px : le
+nouveau bloc se lit, sans défilement horizontal.
