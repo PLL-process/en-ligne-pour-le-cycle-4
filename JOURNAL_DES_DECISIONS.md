@@ -33963,3 +33963,35 @@ Bancs : `4e_C6.1` 29 / 29, `5e_C6.1` 32 / 32 (rouges avant) ; les 58 autres banc
 
 Retiré : `_audit_tmp.mjs`, un script de vérification de l'audit du jardin livré par erreur à la racine avec #819 —
 il ne servait qu'à cette relecture, aucun outil ni aucune page ne l'appelle.
+
+## 19/11/2026 — Audit du jardin connecté, suite : onglets au clavier, séance retenue, `<main>`, règle des étoiles, titres du mode mission
+
+Suite des remarques vérifiées de l'audit externe (#819 pour le jardin lui-même), étendues à tout le site (n°293).
+- **Onglets de séance au clavier** (remarque 7) : `_outils/onglets_seance.py` (nouveau, bloc `onglets-seance v1`), posé
+  sur les **63** pages à onglets. ← et → passent à l'onglet voisin (en boucle), Début et Fin au premier et au dernier ;
+  seul l'onglet ouvert est dans l'ordre de tabulation. Mesure au navigateur sur les 47 pages à trois onglets ou plus :
+  → depuis la séance 1 ouvrait la séance 2 sur **26** pages (`onglets_clavier.py`, n°326, ou la page elle-même), sur
+  **47** maintenant. Le bloc écoute sur le document, en dernier : là où la page ou la n°326 traite déjà la touche, il ne
+  fait rien (une première version, à l'écoute sur l'onglet, faisait sauter une séance sur 25 pages : vu au banc
+  avant livraison). Banc `_outils/tests_onglets_seance.py` : 19 / 19.
+- **La séance où l'élève était** (remarque 9) : le même bloc la retient dans ce navigateur et la rouvre au chargement
+  suivant, sans faire défiler la page ; une adresse qui vise une ancre l'emporte. Le mode mission suit.
+- **Repère `<main id="principal">`** (remarque 8) : posé sur les **49** séquences à onglets qui n'en avaient pas (du
+  titre au pied de page) ; les 63 en ont un. `body>p.saved-note` devient aussi `main>p.saved-note` dans la feuille de
+  style.
+- **La règle des étoiles se dit** (remarque 6) : le message du mode mission nomme les étoiles gagnées et les erreurs
+  (« 3 étoiles sur 3 », « 2 étoiles sur 3 : une erreur en route »…), et le compteur dit au survol et au lecteur
+  d'écran : « 3 sans erreur, 2 avec une erreur (deux si l'écran a trois réponses ou plus), 1 au-delà ; ouvrir une aide
+  ne retire rien » — la règle telle que le mode la compte.
+- **Titres du mode mission** (remarque 10, confirmée : 57 écrans sur 120 sautaient un niveau sur trois pages mesurées,
+  « h1 → h2 → h4 ») : le titre d'écran est annoncé au niveau 2 ; un titre de l'écran ne descend que d'un niveau à la
+  fois (`aria-level`, la balise ne change pas) ; tout revient en quittant la mission. Le banc générique refuse
+  désormais, dans la zone de la mission, un titre qui saute un niveau, et un niveau laissé après le retour à la page
+  complète : 60 pages, aucun refus. Mesuré en passant, hors mission : l'ouverture de plusieurs séquences saute aussi un
+  niveau (les versions 🅰 🅱 🅲 en `h4` sous un `h2`) — dans la page, non corrigé ici.
+
+Bancs : les bancs des lots touchés (57 dossiers, dont 18 lancés avec leurs arguments comme leur rapport le dit) : verts,
+sauf deux écarts **présents aussi sur `main`** — `tests_regle_311_4e_C7.1` (l'en-tête au téléphone, 1 063 px pour 844)
+et `tests_5e_C1.5-C1.6_sequence` 37 / 38. Mode mission : pilote 50 / 50, générique 60 pages sans refus, barre 60 / 60,
+défaut et éditeur verts. Contrôles : squelette, liens, tactile, boutons vivants, validations, sauvegarde locale,
+règles visibles, hors ligne (source) — rien à signaler ; `verif_regles_audit` : 1 ✘, le même que sur `main`.

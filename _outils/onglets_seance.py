@@ -15,9 +15,13 @@ Un petit script, entre deux marqueurs, avant `</body>`, sur chaque page qui port
   · la séance ouverte est retenue dans ce navigateur (`localStorage`, clé « seance-active: » + chemin de la page) et
     rouverte au chargement suivant, sans faire défiler la page. Une adresse qui vise une ancre (`#partie-2`…)
     l'emporte : la page ne rouvre rien.
-Des onglets qui sont des liens (une séquence découpée en pages) ne sont pas touchés ; une page qui gère déjà ses
-flèches garde les siennes. Le script n'ouvre une séance qu'en cliquant son onglet : c'est la page qui change de panneau, comme sous le doigt de
-l'élève (progression, tableau de bord, mode mission suivent). Il ne touche ni aux réponses ni aux validations.
+Des onglets qui sont des liens (une séquence découpée en pages) ne sont pas touchés. Une page qui gère déjà ses
+flèches — elle-même, ou par `onglets_clavier.py` (n°326) — garde les siennes : le script écoute sur le document, donc
+en dernier, et ne fait rien d'une touche déjà traitée (`preventDefault`). Mesure au navigateur, le 19/11/2026, sur les
+47 pages à trois onglets ou plus : → depuis la séance 1 ouvre la séance 2 sur les 47 (26 avant ; poser l'écoute sur
+l'onglet faisait sauter une séance là où `onglets_clavier.py` agissait aussi). Le script n'ouvre une séance qu'en
+cliquant son onglet : c'est la page qui change de panneau, comme sous le doigt de l'élève (progression, tableau de
+bord, mode mission suivent). Il ne touche ni aux réponses ni aux validations.
 
   python3 _outils/onglets_seance.py [--ecrire] [page.html | dossier …]   (sans chemin : les trois thèmes)
 
@@ -48,20 +52,21 @@ SCRIPT = r"""<script>
   }
   function tabindex(){ var a = actif(); onglets.forEach(function(o, i){ o.tabIndex = (i === a) ? 0 : -1; }); }
   function retenir(o){ var v = o.getAttribute("data-panel") || o.id; try { if (v) localStorage.setItem(cle, v); } catch (e) {} }
-  onglets.forEach(function(o, i){
-    o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); });
-    o.addEventListener("keydown", function(e){
-      if (e.defaultPrevented) return;   /* la page gère déjà ses flèches */
-      var j = null, n = onglets.length;
-      if (e.key === "ArrowRight") j = (i + 1) % n;
-      else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
-      else if (e.key === "Home") j = 0;
-      else if (e.key === "End") j = n - 1;
-      if (j === null) return;
-      e.preventDefault();
-      onglets[j].click();
-      onglets[j].focus();
-    });
+  onglets.forEach(function(o){ o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); }); });
+  /* écouté sur le document, donc en dernier : si la page ou `onglets_clavier.py` (n°326) a déjà traité la touche
+     (`preventDefault`), on ne déplace pas une seconde fois */
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var i = onglets.indexOf(e.target), j = null, n = onglets.length;
+    if (i < 0) return;
+    if (e.key === "ArrowRight") j = (i + 1) % n;
+    else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+    else if (e.key === "Home") j = 0;
+    else if (e.key === "End") j = n - 1;
+    if (j === null) return;
+    e.preventDefault();
+    onglets[j].click();
+    onglets[j].focus();
   });
   function rouvrir(){
     tabindex();

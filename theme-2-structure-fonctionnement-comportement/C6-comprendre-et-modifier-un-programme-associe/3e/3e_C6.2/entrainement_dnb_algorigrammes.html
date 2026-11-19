@@ -127,6 +127,7 @@
   <a href="../3e_C6.1/qcm_3e_C6.1-C6.3_programmer_alerte.html">&#129504; Le QCM</a>
 </nav>
 
+<main id="principal">
 <div class="page">
 <h1>🧠 Entraînement DNB — lire et interpréter un algorigramme</h1>
 <p class="sous">30 exercices en 4 manches · corrections qui expliquent chaque réponse fausse</p>
@@ -769,6 +770,7 @@ FIN TANT QUE</pre>
 </footer>
 </div>
 
+</main>
 <script>
 "use strict";
 const KEY="entrainement_dnb_algorigrammes";
@@ -1370,20 +1372,21 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
   }
   function tabindex(){ var a = actif(); onglets.forEach(function(o, i){ o.tabIndex = (i === a) ? 0 : -1; }); }
   function retenir(o){ var v = o.getAttribute("data-panel") || o.id; try { if (v) localStorage.setItem(cle, v); } catch (e) {} }
-  onglets.forEach(function(o, i){
-    o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); });
-    o.addEventListener("keydown", function(e){
-      if (e.defaultPrevented) return;   /* la page gère déjà ses flèches */
-      var j = null, n = onglets.length;
-      if (e.key === "ArrowRight") j = (i + 1) % n;
-      else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
-      else if (e.key === "Home") j = 0;
-      else if (e.key === "End") j = n - 1;
-      if (j === null) return;
-      e.preventDefault();
-      onglets[j].click();
-      onglets[j].focus();
-    });
+  onglets.forEach(function(o){ o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); }); });
+  /* écouté sur le document, donc en dernier : si la page ou `onglets_clavier.py` (n°326) a déjà traité la touche
+     (`preventDefault`), on ne déplace pas une seconde fois */
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var i = onglets.indexOf(e.target), j = null, n = onglets.length;
+    if (i < 0) return;
+    if (e.key === "ArrowRight") j = (i + 1) % n;
+    else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+    else if (e.key === "Home") j = 0;
+    else if (e.key === "End") j = n - 1;
+    if (j === null) return;
+    e.preventDefault();
+    onglets[j].click();
+    onglets[j].focus();
   });
   function rouvrir(){
     tabindex();
