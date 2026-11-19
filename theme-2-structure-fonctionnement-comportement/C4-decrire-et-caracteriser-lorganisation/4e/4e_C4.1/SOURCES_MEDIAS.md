@@ -20,24 +20,20 @@ vérifiée (étiquettes textuelles systématiques) ; adresses IP en plage locale
 valeurs électriques cohérentes (12 V TBT).
 - `Images/energie_stockage_transformation.svg` — schéma original (LOT 12) : stockage (batterie) vs transformation (pompe). Auteur : Claude/Fable. Licence : CC0. 25/07/2026.
 
-## Les six pictogrammes du QCM « automatisation » (documentés le 31/08/2026)
+## Le QCM « Automatiser le jardin » (réécrit le 19/11/2026)
 
-Ce dossier porte une seconde banque, `qcm_automatisation_premium.html`, qui emploie six SVG
-que ce fichier ne nommait pas — `_outils/controle_medias.py` les a relevés comme dette de
-documentation. Vérifiés un par un : **SVG écrits à la main**, sans raster embarqué ni
-référence distante, chacun porteur d'un `<title>` et d'un `<desc>`.
+`qcm_automatisation_premium.html` est réécrit au gabarit commun (30 questions). Ses deux figures sont neuves,
+écrites par `_generation/figures_qcm_automatisation.py` ; l'élève les **lit** pour répondre (n°331).
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
-| `Images/capteur_temperature.svg` | SVG original (Fable) | image-objet : un capteur de température, à reconnaître dans la chaîne d'information | CC0 | ~1 Ko |
-| `Images/capteur_mouvement.svg` | SVG original (Fable) | image-objet : un capteur de mouvement, même usage | CC0 | ~1 Ko |
-| `Images/carte_programmable.svg` | SVG original (Fable) | image-objet : la carte programmable, bloc « traiter » | CC0 | ~2 Ko |
-| `Images/moteur_cc.svg` | SVG original (Fable) | image-objet : un moteur à courant continu, bloc « convertir » | CC0 | ~1 Ko |
-| `Images/diode_led.svg` | SVG original (Fable) | image-objet : une diode électroluminescente, sortie de la chaîne | CC0 | ~1 Ko |
-| `Images/signal_carre.svg` | SVG original (Fable) | image-objet : un signal en créneaux, à lire pour distinguer TOUT ou RIEN d'une grandeur continue | CC0 | ~1 Ko |
+| `Images/chronogramme_eclairage_jardin.svg` | SVG original (Fable), généré | image-objet : de 16 h à 22 h, la luminosité et son seuil « nuit » de 50 lux, la présence et la LED de l'allée ; la LED s'allume aussi en plein jour, le défaut que l'élève trouve (questions 9 à 13) | CC0 | ~8 Ko |
+| `Images/algorigramme_eclairage_corrige.svg` | SVG original (Fable), généré | image-objet : le programme corrigé, test « nuit ET passage », boucle (questions 21 et 22) | CC0 | ~4 Ko |
 
-Aucune photographie de composant réel, aucune capture de catalogue : ce sont des dessins,
-lisibles en niveaux de gris et imprimables.
+Les six pictogrammes de l'ancienne banque (`capteur_temperature`, `capteur_mouvement`, `carte_programmable`,
+`moteur_cc`, `diode_led`, `signal_carre`, documentés le 31/08/2026) écrivaient la réponse dans l'image (« il
+transforme l'électricité en mouvement »). Plus aucune page ne les affiche : ils sont archivés avec l'ancien QCM, dans
+`_archive-anciennes-versions/C4-decrire-et-caracteriser-lorganisation/4e_C4.1/Images/`.
 
 ## Correction des chaînes — 21/10/2026
 
