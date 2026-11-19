@@ -33555,3 +33555,27 @@ Contrôles : `controle_propositions_indices` (4e_C4.1 : rien à signaler ; site 
 `controle_ordre_propositions` (0 refus), unités, sigles, règles visibles, liens, consignes à la ligne. Bancs :
 `tests_4e_C4.1-C4.9.mjs` 52 / 52, `tests_regle_311_4e_C4.1.mjs` 34 / 34, `mode_mission/banc_generique.mjs` (pourquoi
 des erreurs 144 / 144).
+
+## 19/11/2026 — n°341 sur 4e_C5.1 (dépanner le jardin) : plus aucune question ne souffle sa réponse
+
+Deuxième page du chantier n°341. Pascal donne ce jour son aval pour que les PR soient fusionnées dès qu'elles sont
+vertes et sans conflit.
+- **I1, cinq questions** où seule la bonne réponse s'expliquait (« lunettes, cheveux attachés, autorisation ET présence
+  d'un adulte — jamais seul·e sur une machine », « débrancher la lampe du secteur — et faire appel à un adulte : le
+  230 V n'est JAMAIS pour nous »…) : la bonne réponse dit ce qu'elle est ; le pourquoi reste dans la correction, qui le
+  disait déjà.
+- **Longueur (n°341, « ni sa longueur »)** : dix autres bonnes réponses faisaient deux à quatre fois la longueur des
+  intrus, parce qu'elles portaient leur explication après un deux-points (« environ 10,2 mm : le jeu fonctionnel permet
+  au capteur de s'enclencher sans forcer »). Elles sont raccourcies, les intrus allongés à même hauteur ; la mini-gamme
+  (q3_1) propose quatre suites de cinq étapes. La bonne réponse était la plus longue dans 12 groupes sur 27 après la
+  passe I1 ; plus aucun ⚠ de `controle_ordre_propositions.py --longueur` sur cette page.
+- **Les intrus-plaisanteries** de ces groupes deviennent des erreurs d'élève, avec leur pourquoi : « parce que plier est
+  interdit en 4e » → « la découpe-pliage est trop lente pour une seule pièce », « le PLA est réservé aux professeurs »
+  → « le PLA coûte beaucoup plus cher que le PETG », « souffler les copeaux à la bouche » → « porter des gants sur
+  toutes les machines », « parce que les photos réparent les capteurs » → « pour mesurer la longueur de chaque fil »…
+- **I4** : les trois échelles d'auto-positionnement disent ce que veut dire chaque niveau, pour chaque compétence.
+- La correction du réinvestissement nomme « 230 V (volts) » (n°312).
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions --longueur` (plus d'⚠ ici),
+unités. Bancs : `tests_4e_C5.1-C5.3.mjs` 26 / 26, `tests_regle_311_4e_C5.1.mjs` 34 / 34, mode mission (pourquoi des
+erreurs 105 / 105).
