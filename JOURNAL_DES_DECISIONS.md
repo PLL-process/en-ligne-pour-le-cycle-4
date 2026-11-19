@@ -34054,3 +34054,36 @@ en-tête et ont été mis à jour, sans rien retirer de ce qu'ils vérifient : `
 bouton visible). Reste rouge, comme sur `main` : `tests_5e_C1.5-C1.6_sequence` 37 / 38. Mode mission : pilote 50 / 50,
 générique 60 pages sans refus, barre 60 / 60, défaut vert. Contrôles : squelette, liens, tactile, boutons vivants,
 sauvegarde locale, règles visibles, hors ligne — rien à signaler ; `verif_regles_audit` : 1 ✘, le même que sur `main`.
+
+## 19/11/2026 — Au téléphone, les 14 pages qui restaient : l'invitation au mode mission et les cartes de tête se replient
+
+Suite de #823. Après la v1 de `_outils/entete_telephone.py`, à 390 px en séance 2 (page complète), les onglets tombaient
+encore sous le premier écran sur **14 pages sur 63**. Trois causes, mesurées page par page :
+- l'**invitation au mode mission** (« 🎮 Mode mission : un exercice à la fois », « ⏸️ Figer les animations »), 48 à
+  120 px dans le cadre « Ma progression » : c'est un réglage ;
+- une **carte de toutes les séances** posée avant les onglets : le banc d'essai (`3e_C9.2`, 1 408 px ; `4e_C9`,
+  1 685 px), le CodeLab (`3e_C6.1`, 990 px), « Où en suis-je ? » déplié (`3e_C9.1`, `4e_C9`) ;
+- l'**ouverture des trois ateliers de planification** (vérification, situation, hypothèse, « deux noms » : 2 500 px)
+  restée hors de tout volet ; et des titres de séquence sur trois ou quatre lignes.
+
+`entete_telephone.py` v2 (carte blanche de Pascal, « Choisis ce qui est meilleur pour l'élève ») :
+- l'invitation passe derrière « ⚙️ » ; le **petit bouton flottant « 🎮 Mode mission » reste** (décision du
+  16/11/2026 : revenir en mission doit rester visible) ;
+- chaque **carte de tête** se replie en une ligne, « ▸ son titre court » ; des cartes qui se suivent se replient
+  ensemble (la seconde ligne nomme les autres) ; un appui l'ouvre sous le doigt. Repliée, elle garde sa largeur — un
+  simulateur, un éditeur se dessinent à la bonne taille — et elle est inerte. Une carte courte ne se replie pas ;
+- un cadre d'en-tête (`div.container` de `4e_C1.4`) qui porte les réglages : ses enfants comptent ;
+- le titre de la séquence passe à 1,3 em (ses marges restent, sous une barre de navigation fixe).
+Séance 1, grand écran, impression : rien ne change. Rien n'est retiré de la page.
+
+**Mesure** à 390 px, séance 2 : onglets sous le premier écran sur **1 page sur 63** (14 avant, 27 avant #823) —
+`3e_C9.2`, ses huit onglets descendent à 859 px pour 844, la première rangée se voit.
+Le relais n°311 du thème 3 compte une carte de tête repliée comme un outil « à un appui ». Banc de l'outil :
+`_outils/tests_entete_telephone.py` 22 / 22 (invitation et bouton flottant, carte longue repliée, carte courte laissée,
+largeur gardée, inertie).
+
+Bancs : les bancs des lots des 63 pages (dont 18 avec leurs arguments) : verts. `tests_regle_311_5e_C3.1` lisait la
+barre d'outils dans un cadre d'en-tête : il la compte maintenant « visible, ou à un appui derrière ⚙️ » (27 / 27). Reste
+rouge, comme sur `main` : `tests_5e_C1.5-C1.6_sequence` 37 / 38. Mode mission : pilote 50 / 50, générique 60 pages sans
+refus, barre 60 / 60, défaut et éditeur verts. Contrôles : squelette, liens, tactile, boutons vivants, sauvegarde
+locale, règles visibles, hors ligne — rien à signaler ; `verif_regles_audit` : 1 ✘, le même que sur `main`.

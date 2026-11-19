@@ -29,7 +29,7 @@ const etat = (p) => p.evaluate(() => {
   return {
     open: v.open, volet: v.classList.contains('volet'), summaryVisible: vis(v.querySelector(':scope > summary')),
     h2Visibles: h2.filter(Boolean).length, h2: h2.length,
-    badges: vis(document.querySelector('.badges')), toolbar: vis(document.querySelector('.toolbar')),
+    badges: vis(document.querySelector('.badges')), toolbar: vis(document.querySelector('.toolbar')) || (!!document.querySelector('.toolbar.entete-reglage') && vis(document.querySelector('.entete-bascule')))   /* au téléphone dès la séance 2 : à un appui derrière « ⚙️ » (entete_telephone.py) */,
     titre: vis(document.querySelector('h1')), mission: vis(document.querySelector('p.sous')),
     actif: document.querySelector('.seance-panel.active').id, debord: document.documentElement.scrollWidth - innerWidth,
   };

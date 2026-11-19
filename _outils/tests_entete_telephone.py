@@ -2,7 +2,8 @@
 """Banc de `entete_telephone.py` (19/11/2026) : au navigateur, sur une page témoin du gabarit à onglets.
 
 La page témoin porte le nom (avec « 💾 Sauvegardé » dedans), la barre d'outils (dont un bouton qui parle, aria-live),
-la note « Ordinateur partagé », le choix du parcours et sa ligne d'état, puis le volet « Rappel » et deux onglets.
+la note « Ordinateur partagé », le choix du parcours et sa ligne d'état, puis le volet « Rappel », l'invitation au mode
+mission (avec son petit bouton flottant), une longue carte de tête (un banc d'essai), une carte courte, et deux onglets.
 """
 import os
 import sys
@@ -25,6 +26,11 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport"
 <p class="saved-note" id="parcoursNote" role="status">Parcours affiché : tous.</p>
 <details class="rappel-ouverture" id="ouverture" open><summary>📖 Rappel</summary><p>La situation.</p></details>
 <div class="toolbar" id="apres">Barre placée après le volet : elle reste.</div>
+<div class="progress-wrap"><span>0 / 3</span><div class="ms-invite"><button class="btn" id="btnMission">🎮 Mode mission</button>
+<button class="ms-revenir" id="msRevenir" style="position:fixed;right:8px;bottom:8px">🎮</button></div></div>
+<section class="card" id="banc"><h2>🧪 Le banc d'essai (version 🅱 — toujours là)</h2><div style="height:700px">simulateur</div><input id="curseur" type="range"></section>
+<div class="cadre"><div class="card" id="mini"><h2>Petite carte</h2></div></div>
+<div class="card" id="courte"><h3>Une carte courte</h3><p>deux mots</p></div>
 <div class="seance-tabs"><button class="seance-tab active" data-panel="s1">Séance 1</button><button class="seance-tab" data-panel="s2">Séance 2</button></div>
 <section class="seance-panel active" id="s1">un</section><section class="seance-panel" id="s2">deux</section>
 </main>
@@ -55,6 +61,10 @@ VUS = """() => { const v = (s) => { const e = document.querySelector(s); return 
   return { bouton: v('.entete-bascule'), ouvert: (document.querySelector('.entete-bascule') || {}).getAttribute?.('aria-expanded'),
     nom: v('#nom'), sauve: v('#savedNote'), barre: v('.toolbar'), effacer: v('#btnReset'), poste: v('[data-note=poste-partage]'),
     parcours: v('.choix-parcours-boutons'), etat: v('#parcoursNote'), apres: v('#apres'),
+    mission: v('#btnMission'), revenir: v('#msRevenir'), banc: (document.querySelector('#banc').getBoundingClientRect().height > 50),
+    bancInerte: document.querySelector('#banc').inert, courte: v('#courte'),
+    carte: (() => { const b = [...document.querySelectorAll('.entete-carte-bascule')].find(x => x.checkVisibility()); return b ? b.textContent : null; })(),
+    largeur: document.querySelector('#banc').getBoundingClientRect().width,
     libelle: (document.querySelector('.entete-bascule') || {}).textContent || '' }; }"""
 
 with tempfile.TemporaryDirectory() as d, sync_playwright() as p:
@@ -83,6 +93,16 @@ with tempfile.TemporaryDirectory() as d, sync_playwright() as p:
             verifie("un bouton qui parle (aria-live) n'est pas une zone d'état : il se replie avec sa barre", not s2["effacer"], s2)
             verifie("ce qui suit le volet « Rappel » ne se replie pas", s2["apres"], s2)
             verifie("le bouton dit que le nom n'est pas écrit", "pas encore écrit" in s2["libelle"], s2["libelle"])
+            verifie("l'invitation au mode mission se replie, le petit bouton flottant « 🎮 » reste",
+                    not s2["mission"] and s2["revenir"], s2)
+            verifie("une longue carte de tête se replie en une ligne, au titre court, inerte, sans perdre sa largeur",
+                    not s2["banc"] and s2["bancInerte"] and s2["carte"] == "▸ 🧪 Le banc d'essai" and s2["largeur"] > 300, s2)
+            verifie("une carte courte ne se replie pas (le bouton prendrait autant de place qu'elle)", s2["courte"], s2)
+            pg.click(".entete-carte-bascule >> visible=true")
+            pg.wait_for_timeout(50)
+            o = pg.evaluate(VUS)
+            verifie("un appui rouvre la carte (et elle n'est plus inerte)", o["banc"] and not o["bancInerte"]
+                    and o["carte"].startswith("▾"), o)
             pg.click(".entete-bascule")
             pg.wait_for_timeout(50)
             o = pg.evaluate(VUS)
@@ -98,7 +118,8 @@ with tempfile.TemporaryDirectory() as d, sync_playwright() as p:
             pg.wait_for_timeout(80)
             verifie("retour à la séance 1 : tout se voit de nouveau", pg.evaluate(VUS)["nom"])
         else:
-            verifie("1280 px, séance 2 : rien ne se replie", not s2["bouton"] and s2["nom"] and s2["barre"] and s2["parcours"], s2)
+            verifie("1280 px, séance 2 : rien ne se replie", not s2["bouton"] and s2["nom"] and s2["barre"] and s2["parcours"]
+                    and s2["banc"] and s2["mission"] and s2["carte"] is None, s2)
         verifie("%d px : aucune erreur JavaScript" % w, not err, err[:1])
         ctx.close()
     # des onglets qui sont des liens : la page n'est pas touchée
