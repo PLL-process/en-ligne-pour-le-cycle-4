@@ -2021,10 +2021,10 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <div class="assoc"><label for="a3_p1">Le potentiomètre est à mi-course : la lecture brute de A1 vaut environ 512. Que vaut alors <code>vitesseVent</code> ?</label><input type="number" id="a3_p1" placeholder="km/h"></div>
       <div class="assoc"><fieldset class="qcm-groupe" id="a3_p1b" data-melange="1">
   <legend>À cette vitesse, dans quel niveau la station se trouve-t-elle ?</legend>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__1" value="ouragan : 125 est au-dessus de 118, mais en dessous de 178"><label for="a3_p1b__1">ouragan : 125 est au-dessus de 118, mais en dessous de 178</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__2" value="tempête tropicale : 125 est au-dessus de 63, c&#x27;est le premier seuil franchi" data-pourquoi="125 dépasse aussi 118 : le test de 118 passe avant celui de 63."><label for="a3_p1b__2">tempête tropicale : 125 est au-dessus de 63, c'est le premier seuil franchi</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__3" value="ouragan majeur : 125 est déjà un vent très fort pour la Martinique" data-pourquoi="125 n'atteint pas 178."><label for="a3_p1b__3">ouragan majeur : 125 est déjà un vent très fort pour la Martinique</label></div>
-  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__4" value="veille : 125 n&#x27;atteint pas encore le dernier seuil, celui de 178" data-pourquoi="125 dépasse 63 et 118 : ce n'est pas la veille."><label for="a3_p1b__4">veille : 125 n'atteint pas encore le dernier seuil, celui de 178</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__1" value="ouragan : ta vitesse dépasse 118, sans atteindre 178"><label for="a3_p1b__1">ouragan : ta vitesse dépasse 118, sans atteindre 178</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__2" value="tempête tropicale : ta vitesse dépasse 63, le premier seuil" data-pourquoi="Ta vitesse dépasse aussi 118 : le test de 118 passe avant celui de 63."><label for="a3_p1b__2">tempête tropicale : ta vitesse dépasse 63, le premier seuil</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__3" value="ouragan majeur : ta vitesse est déjà un vent très fort" data-pourquoi="Ta vitesse n'atteint pas 178 : relis le losange du haut."><label for="a3_p1b__3">ouragan majeur : ta vitesse est déjà un vent très fort</label></div>
+  <div class="qcm-option"><input type="radio" name="a3_p1b" id="a3_p1b__4" value="veille : ta vitesse n&#x27;atteint pas le dernier seuil, 178" data-pourquoi="Ta vitesse dépasse 63 et 118 : ce n'est pas la veille."><label for="a3_p1b__4">veille : ta vitesse n'atteint pas le dernier seuil, 178</label></div>
 </fieldset></div>
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier1-TON NOM</code> avant de passer au palier 2.</p>
     </div>
@@ -2436,7 +2436,7 @@ const CHECKS = {
     let ok=0;
     // Refonte v3 : échelle UNIQUE 0-250 km/h, seuils 63 / 118 / 178 (Saffir-Simpson).
     if(Math.abs(num("a3_p1")-125)<=2) ok++;         // 512 x 250 / 1023
-    if($("a3_p1b").value.startsWith("ouragan : 125")) ok++;
+    if($("a3_p1b").value.startsWith("ouragan : ta vitesse")) ok++;
     if($("a3_p2").value.startsWith("tempête tropicale")) ok++;
     if($("a3_p2b").value.startsWith("sur 178 pile")) ok++;
     if($("a3_p3").value.startsWith("orange seul")) ok++;

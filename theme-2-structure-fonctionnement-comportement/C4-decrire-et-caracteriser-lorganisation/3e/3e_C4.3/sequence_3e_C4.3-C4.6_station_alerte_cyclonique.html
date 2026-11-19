@@ -2613,8 +2613,8 @@ body.ms .cac-reserve{--cac-bas:84px}
 
       <h4>b) Calculs (méthode au brouillon, résultat ici)</h4>
       <div class="assoc"><label for="a3_c1">Combien de paliers différents un CAN 10 bits peut-il distinguer ?</label><input type="number" id="a3_c1"></div>
-      <div class="assoc"><label for="a3_c2">Quelle est la précision du baromètre : (1018 − 868) ÷ 1023 ≈ … hPa par palier ? (2 décimales)</label><input type="number" step="0.01" id="a3_c2"></div>
-      <div class="assoc"><label for="a3_c3">Le CAN affiche N = 512. Quelle pression en hPa ? (arrondis à l'entier : 868 + N × 0,1466…)</label><input type="number" id="a3_c3"></div>
+      <div class="assoc"><label for="a3_c2">Quelle est la précision du baromètre, en hPa par palier ? (étendue ÷ N maximal, ta lecture a ; 2 décimales)</label><input type="number" step="0.01" id="a3_c2"></div>
+      <div class="assoc"><label for="a3_c3">Le CAN affiche N = 700. Quelle pression en hPa ? (arrondis à l'entier : minimum + N × précision)</label><input type="number" id="a3_c3"></div>
 
       <h4>c) Explication</h4>
       <label for="a3_exp">Pourquoi dit-on que la donnée numérique est une <b>approximation</b> de la grandeur réelle ? Utilise les mots <i>paliers</i> et <i>continu</i>.</label>
@@ -2633,10 +2633,10 @@ body.ms .cac-reserve{--cac-bas:84px}
       <div class="feedback" id="fb3" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : place le curseur exactement sur la valeur demandée et lis l'écran du simulateur — la réponse s'affiche, il faut juste savoir <em>où</em> regarder. <br>Pour b) : 10 bits → 2 multiplié par lui-même 10 fois.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2¹⁰ = 1024 paliers (numérotés 0 à 1023). <br>Précision = étendue ÷ 1023 = 150 ÷ 1023. <br>Pour N = 512 : pression = 868 + 512 × (150 ÷ 1023) ≈ 868 + 75 = 943 hPa. <br>Remarque que c'est cohérent avec ta lecture a) !</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2¹⁰ = 1024 paliers (numérotés 0 à 1023). <br>Précision = étendue ÷ 1023 = 150 ÷ 1023. <br>Pour N = 700 : pression = 868 + 700 × (150 ÷ 1023) ≈ 868 + 103 = 971 hPa. <br>Contrôle : pour N = 512, la même formule redonne 943 hPa, ta lecture a).</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> à 943 hPa le CAN sort <b>N = 512</b> (à ±1 près, arrondi) ; au maximum (1018 hPa) : <b>N = 1023</b>, jamais 1024 — on compte depuis 0.</p>
-      <p><b>b)</b> 2¹⁰ = <b>1024 paliers</b> · précision = 150 ÷ 1023 ≈ <b>0,15 hPa</b> par palier · N = 512 → 868 + 512 × 0,1466 ≈ <b>943 hPa</b>.</p>
+      <p><b>b)</b> 2¹⁰ = <b>1024 paliers</b> · précision = 150 ÷ 1023 ≈ <b>0,15 hPa</b> par palier · N = 700 → 868 + 700 × 0,1466 ≈ <b>971 hPa</b> (970,6 arrondi). Contrôle : N = 512 redonne bien 943 hPa, la lecture du a).</p>
       <p><b>Méthode générale :</b> valeur = minimum + N × (étendue ÷ 1023). C'est une simple proportionnalité : N va de 0 à 1023 pendant que la pression va de 868 à 1018 hPa.</p>
       <p><b>c) Explication attendue :</b> la grandeur réelle est <b>continue</b> (une infinité de valeurs possibles) alors que le CAN ne dispose que de 1024 <b>paliers</b> : entre deux paliers, il choisit le plus proche. <br>La donnée est donc une approximation — excellente ici (0,15 hPa), largement suffisante pour détecter un cyclone.</p>
       <p><b>Exemple :</b> une pression réelle de 943,07 hPa et une autre de 943,12 hPa donneront le même N : la différence est plus petite qu'un palier.</p>
@@ -2974,7 +2974,7 @@ body.ms .cac-reserve{--cac-bas:84px}
       <div class="assoc"><label for="a7_5">Le CAN sort N = 170. Quelle hauteur de vague en mètres ? (arrondis au dixième : 12 × N ÷ 255)</label><input type="number" step="0.1" id="a7_5"></div>
       <h4>c) Ses données et son fichier</h4>
       <fieldset class="qcm-groupe" id="a7_6" data-melange="1">
-  <legend>De quel type est la donnée « hauteur_m = 8.0 » ?</legend>
+  <legend>De quel type est la donnée hauteur_m, la hauteur que tu viens de calculer ?</legend>
   <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__4" value="booléen" data-pourquoi="Un booléen n'a que deux valeurs, vrai ou faux : une hauteur de vague en a bien plus."><label for="a7_6__4">booléen</label></div>
   <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__2" value="nombre décimal"><label for="a7_6__2">nombre décimal</label></div>
   <div class="qcm-option"><input type="radio" name="a7_6" id="a7_6__1" value="nombre entier" data-pourquoi="Regarde l'écriture de la valeur : le point et le zéro ne sont pas là par hasard."><label for="a7_6__1">nombre entier</label></div>
@@ -3261,7 +3261,7 @@ const CHECKS = {
     if(num("a3_l2")===1023) ok++;
     if(num("a3_c1")===1024) ok++;
     if(Math.abs(num("a3_c2")-0.15)<=0.01) ok++;
-    if(Math.abs(num("a3_c3")-943)<=1) ok++;
+    if(Math.abs(num("a3_c3")-971)<=1) ok++;   // 868 + 700 × 150 ÷ 1023 ≈ 970,6
     const e=txt("a3_exp");
     const expOk = e.includes("palier") && e.includes("continu");
     return {score:ok,total:5,extra: expOk?"":" Ton explication doit utiliser les mots « paliers » et « continu ».",valide: ok===5 && expOk};

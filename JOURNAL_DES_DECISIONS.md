@@ -33777,3 +33777,35 @@ Cinq groupes dans quatre séquences : une ligne chacun, d'où une seule PR plut�
 Bancs : les `tests_regle_311` des quatre lots 34 / 34, `tests_3e_C1.1-C1.4_tsinghua.py` 50 / 50,
 `tests_3e_C3.1-C3.4_shenzhen.py` 37 / 37, `tests_3e_C4.1-C4.2.mjs` 25 / 25, `tests_5e_C4.1-C4.8_sequence.mjs` 66 / 66
 et `_qcm.mjs` 25 / 25 ; mode mission sans refus sur les quatre pages.
+
+## 19/11/2026 — n°341, I3 : plus aucun énoncé ne donne un résultat à calculer (5 séquences, une seule PR)
+
+Les 25 ⚠ I3 du site, lus un à un. Dix sont de vraies fuites, corrigées ; quinze sont des données à recopier, que
+l'outil distingue maintenant.
+- **`3e_C4.1`** : le catalogue de batteries proposait « 36 Ah », la capacité que l'élève doit calculer, et le choix du
+  fusible « 0,5 A », le courant à calculer. Ces pièges (« exactement le minimum, sans marge ») restent, sans leur
+  nombre : « la capacité exacte de mon calcul — pas un Ah de plus », « un calibre égal au courant normal, sans marge ».
+- **`3e_C4.3`** (le CAN) : les lectures a) et les calculs b) se donnaient leurs réponses l'un à l'autre. « Règle 943 hPa,
+  lis N » et « N = 512, quelle pression ? » ; la précision écrite « ÷ 1023 » donnait aussi N maximal ; et « hauteur_m =
+  8.0 » donnait la hauteur à calculer. Le calcul b) porte maintenant sur **N = 700 → 971 hPa** (970,6 arrondi, ±1).
+  L'aide et la correction gardent le contrôle « N = 512 redonne 943 hPa » ; la précision renvoie à « N maximal, ta
+  lecture a ».
+- **`3e_C4.7`** : « Les paquets 1 à 2000 arrivent… » donnait le nombre de paquets à calculer → « Tous les paquets
+  arrivent… ».
+- **`3e_C9.2`** : les quatre niveaux de la question qui suit le palier 1 écrivaient tous « 125 », la vitesse à
+  calculer → « ta vitesse dépasse 118, sans atteindre 178 »… Correction faite dans la page tout-en-un, puis
+  `generer_les_quatre_pages.py`. Le banc (`startsWith("ouragan : 125")`) et son tableau `ORIGINE` suivent.
+- **Données à recopier** : les seuils 63, 118 et 178 km/h viennent du cahier des charges et se recopient dans
+  l'algorithme ; la valeur lue dans le programme du lampadaire (`5e_C6.1`, e1_7) se recopie aussi. Leur champ porte
+  `data-donnee="cahier des charges"` (ou « programme »), et I3 ne le lit plus. Un champ absent d'une page découpée,
+  qui garde pourtant tout le script, n'est plus lu non plus.
+- **`changer_proposition.py`** réécrit aussi `$("g").value === "…"`. Il refuse un `startsWith("…")` que la nouvelle
+  proposition ne vérifierait plus : c'est ce qu'a révélé le banc de `3e_C9.2`. Mesure sur le site : 825 réponses
+  attendues écrites `groupe:"…"`, toutes présentes parmi les propositions de leur groupe ; aucun `startsWith` ni `===`
+  orphelin.
+- **Site : 0 ⚠ I1, 0 ⚠ I3, 0 ✘/⚠ I4** ; la bonne réponse est la plus longue dans 11 % des groupes, aucune page
+  au-delà de 40 %. Le contrôle `controle_propositions_indices.py` est à « rien à signaler » sur les 196 pages.
+
+Bancs : `tests_3e_C4.1-C4.2.mjs` 25 / 25, `tests_3e_C4.3-C4.6.mjs` 23 / 23, `tests_3e_C4.7-C4.8.mjs` 35 / 35,
+`tests_3e_C9.2-C8.3.mjs` 167 / 167, `tests_pont_en_h.mjs` 37 / 37, les cinq `tests_regle_311` 34 / 34, mode mission
+sans refus sur les sept pages ; `tests_5e_C6.1-C6.3.mjs` 29 / 32, les trois mêmes rouges que sur `main`.

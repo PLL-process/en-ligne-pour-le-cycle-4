@@ -23,7 +23,9 @@ CE QU'IL MESURE (pages élèves hors QCM et synthèses)
         (19/11/2026) « parce que » et « puisqu' » sont lus comme justification : seuls « parce qu' » et « puisque » l'étaient,
         si bien qu'une bonne réponse en « parce qu'… » parmi des intrus en « parce que… » passait pour seule justifiée.
   I3 ⚠  le résultat attendu d'un calcul (`num("d2_1")===432`) se lit dans une étiquette ou une légende de la page,
-        hors aides et corrections ;
+        hors aides et corrections. Un champ dont la valeur se recopie d'un document de la page — un seuil du cahier des
+        charges, une valeur lue dans le programme — n'est pas un calcul : il porte `data-donnee="cahier des charges"`
+        (ou « programme »…) et I3 ne le lit pas (19/11/2026, `3e_C9.2` et `5e_C6.1`) ;
   I4 ✘  une échelle d'auto-positionnement (`positionnement`, ou un groupe `auto…` ou `pos1`, `pos2`… — ces derniers
          vus depuis le 19/11/2026 : 24 échelles de 10 pages étaient mélangées sans que l'outil les lise) dont les niveaux ne sont pas dans
         l'ordre ;
@@ -97,6 +99,13 @@ def analyser(src: str):
             if len(n.replace(",", "").replace(".", "")) < 2 or (k, n) in vus:
                 continue
             vus.add((k, n))
+            # une donnée à recopier d'un document de la page (un seuil du cahier des charges, une valeur du
+            # programme) n'est pas un résultat à calculer : son champ le dit par data-donnee="…"
+            if re.search(r'<input\b[^>]*\bid="%s"[^>]*\bdata-donnee="' % re.escape(k), src):
+                continue
+            # une page découpée garde le script entier : un champ absent de la page ne s'y remplit pas
+            if not re.search(r'\bid="%s"' % re.escape(k), src):
+                continue
             motif = re.compile(r"(?<![\d,.])%s(?![\d,])" % re.escape(n.replace(".", ",")) + "|" + r"(?<![\d,.])%s(?![\d.])" % re.escape(n))
             for e in etiquettes:
                 if motif.search(e):

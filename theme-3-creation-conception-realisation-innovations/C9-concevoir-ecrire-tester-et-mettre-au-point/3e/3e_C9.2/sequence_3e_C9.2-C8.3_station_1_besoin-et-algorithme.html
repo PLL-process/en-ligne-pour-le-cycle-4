@@ -2445,9 +2445,9 @@ cyclones :</span></td></tr></tbody></table></div></div><p><button type="button"
       <p style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:12px;border-radius:8px;line-height:2">
         RÉPÉTER sans fin :<br>
         &nbsp;&nbsp;lire la vitesse du vent<br>
-        &nbsp;&nbsp;SI vitesse ≥ <input type="number" id="a2_s1" style="width:80px;display:inline-block"> ALORS niveau ← ouragan majeur<br>
-        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" style="width:80px;display:inline-block"> ALORS niveau ← ouragan<br>
-        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s3" style="width:80px;display:inline-block"> ALORS niveau ← tempête tropicale<br>
+        &nbsp;&nbsp;SI vitesse ≥ <input type="number" id="a2_s1" data-donnee="cahier des charges" style="width:80px;display:inline-block"> ALORS niveau ← ouragan majeur<br>
+        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" data-donnee="cahier des charges" style="width:80px;display:inline-block"> ALORS niveau ← ouragan<br>
+        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s3" data-donnee="cahier des charges" style="width:80px;display:inline-block"> ALORS niveau ← tempête tropicale<br>
         &nbsp;&nbsp;SINON niveau ← <fieldset class="qcm-groupe" id="a2_s4" data-melange="1">
   <legend>Quel niveau annonce la station si aucun seuil n'est atteint ?</legend>
   <div class="qcm-option"><input type="radio" name="a2_s4" id="a2_s4__4" value="panne" data-pourquoi="Aucun seuil atteint, c'est un vent faible : la station fonctionne normalement."><label for="a2_s4__4">panne</label></div>
@@ -2802,7 +2802,7 @@ const CHECKS = {
     let ok=0;
     // Refonte v3 : échelle UNIQUE 0-250 km/h, seuils 63 / 118 / 178 (Saffir-Simpson).
     if(Math.abs(num("a3_p1")-125)<=2) ok++;         // 512 x 250 / 1023
-    if($("a3_p1b").value.startsWith("ouragan : 125")) ok++;
+    if($("a3_p1b").value.startsWith("ouragan : ta vitesse")) ok++;
     if($("a3_p2").value.startsWith("tempête tropicale")) ok++;
     if($("a3_p2b").value.startsWith("sur 178 pile")) ok++;
     if($("a3_p3").value.startsWith("orange seul")) ok++;
