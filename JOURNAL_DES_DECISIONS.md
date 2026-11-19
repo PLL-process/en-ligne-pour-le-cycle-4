@@ -33688,3 +33688,20 @@ l'appareil » face à « rien d'anormal »). 5 ⚠ I1.
 
 Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus). Bancs :
 `tests_5e_C1.1_chengdu.py` 43 / 43, `tests_regle_311_5e_C1.1.mjs` 34 / 34, mode mission sans refus.
+
+## 19/11/2026 — n°341 sur 3e_C4.8 (le pont numérique, Packet Tracer) : de 28 sur 28 à 0
+
+Septième page du chantier n°341. La bonne réponse était la plus longue dans **28 groupes sur 28**, souvent trois à
+six fois la longueur des intrus (« au premier voyage, chaque étape cherchait encore ses voisins… — comportement NORMAL,
+pas une panne », 194 signes, face à « le serveur de New York dormait »). 9 ⚠ I1.
+- Les 28 bonnes réponses disent ce qu'elles sont (« un démarrage normal, pas une panne », « que la réponse a traversé
+  deux routeurs ») ; leurs explications sont dans les corrections (résolutions d'adresses, TTL, table, protocole).
+- Les intrus sont à même hauteur. Trois deviennent des pièges de spécialiste : pour l'ordre du voyage (e5_1), trois
+  ordres faux de même longueur que le bon (routeurs inversés, commutateur avant routeur) ; pour la ligne qui prouve la
+  route (e3_3), de vraies lignes du journal (`ip address 10.0.0.1 255.255.255.0`, `interface GigabitEthernet0/0`,
+  `%LINK-5-CHANGED…`) ; « le routeur était simplement de mauvaise humeur » devient « la table n'est qu'un confort,
+  pour aller plus vite ».
+- Site : la bonne réponse est la plus longue dans **21 %** des groupes (25 % avant), 3 pages au-delà de 40 %.
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
+Bancs : `tests_regle_311_3e_C4.8.mjs` 34 / 34, mode mission sans refus.
