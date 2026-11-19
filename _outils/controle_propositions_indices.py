@@ -20,6 +20,8 @@ CE QU'IL MESURE (pages élèves hors QCM et synthèses)
   I1 ⚠  la bonne réponse est seule à porter une justification : une parenthèse de quatre mots ou plus, un « — » suivi
         d'une explication, un « car », « parce que », « puisque », « donc » ; quand toutes les propositions portent
         la leur (« 20 Ah — moins chère, ça devrait passer »), le choix porte sur l'argument : rien à signaler ;
+        (19/11/2026) « parce que » et « puisqu' » sont lus comme justification : seuls « parce qu' » et « puisque » l'étaient,
+        si bien qu'une bonne réponse en « parce qu'… » parmi des intrus en « parce que… » passait pour seule justifiée.
   I3 ⚠  le résultat attendu d'un calcul (`num("d2_1")===432`) se lit dans une étiquette ou une légende de la page,
         hors aides et corrections ;
   I4 ✘  une échelle d'auto-positionnement (`positionnement`, ou un groupe `auto…` ou `pos1`, `pos2`… — ces derniers
@@ -47,7 +49,7 @@ sys.path.insert(0, OUT)
 import controle_ordre_propositions as COP  # noqa: E402
 
 VALEUR_JS = re.compile(r"""\$\(\s*["'](\w+)["']\s*\)\.value\s*===?\s*"((?:[^"\\]|\\.)*)\"""")
-JUSTIF = re.compile(r"\((?:[^()]*?\s){3,}[^()]*\)|\s[—–]\s+\S+(?:\s+\S+){2,}|\b(?:car|parce qu|puisque|donc)\b", re.I)
+JUSTIF = re.compile(r"\((?:[^()]*?\s){3,}[^()]*\)|\s[—–]\s+\S+(?:\s+\S+){2,}|\b(?:car|parce que?|puisque?|donc)\b", re.I)
 NOMBRE_ATTENDU = [
     re.compile(r"""num\(\s*["'](\w+)["']\s*\)\s*===?\s*(\d+(?:[.,]\d+)?)\b"""),
     re.compile(r"""Math\.abs\(\s*num\(\s*["'](\w+)["']\s*\)\s*-\s*(\d+(?:[.,]\d+)?)\s*\)"""),
