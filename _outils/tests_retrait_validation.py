@@ -20,11 +20,13 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8"></head><body>
 <input type="range" id="r1" min="0" max="10" value="5">
 <button data-check="1">Vérifier</button><p id="fb1" class="feedback ok"></p></div>
 <div class="activite"><input id="a2" value="x"><button data-check="2">Vérifier</button><p id="fb2"></p></div>
+<div class="activite"><select id="ag1"><option value=""></option><option>1</option></select><button data-check="5">Vérifier l'algorigramme</button><p id="fb5"></p>
+<input id="q4" value=""><button data-check="4">Vérifier</button><p id="fb4"></p></div>
 <div class="seance-panel"><div class="card"><select id="m3"><option value=""></option><option>oui</option></select>
 <button data-check="3">Vérifier</button><p id="fb3"></p></div>
 <div class="card"><textarea id="bilan"></textarea></div></div>
 <script>
-window.__valid = {1: true, act2: true, 3: true};
+window.__valid = {1: true, act2: true, 3: true, 4: true, 5: true};
 let sauves = 0, recomptes = 0;
 function save(){ sauves++; }
 function majProgress(){ recomptes++; }
@@ -68,6 +70,11 @@ with tempfile.TemporaryDirectory() as d, sync_playwright() as p:
     verifie("la page enregistre et recompte", pg.evaluate("() => sauves > 0 && recomptes > 0"))
     pg.fill("#a2", "y")
     verifie("la clé « act2 » est retirée aussi", pg.evaluate("() => window.__valid.act2") is False)
+    pg.select_option("#ag1", "1")
+    verifie("deux vérifications dans une activité : l'algorigramme ne retire que la sienne",
+            pg.evaluate("() => window.__valid[5]") is False and pg.evaluate("() => window.__valid[4]") is True)
+    pg.fill("#q4", "réponse")
+    verifie("… et une question ne retire que la sienne", pg.evaluate("() => window.__valid[4]") is False)
     pg.fill("#bilan", "ce que j'ai appris")
     verifie("le bilan de la séance n'est pas l'activité : il ne retire rien", pg.evaluate("() => window.__valid[3]") is True)
     pg.evaluate("() => { const m = document.getElementById('m3'); m.value = ''; m.dispatchEvent(new Event('change', {bubbles: true})); }")
