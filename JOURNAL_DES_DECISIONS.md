@@ -33600,3 +33600,11 @@ Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre
 sans ⚠ ici), unités. Bancs : `tests_regle_311_4e_C6.1.mjs` 34 / 34, mode mission (pourquoi des erreurs 53 / 53),
 `tests_4e_C6.1-C6.3.mjs` 26 / 29 — **les mêmes trois rouges sur `main`** (barre de progression et coches d'onglet après
 rechargement), sans lien avec cette passe, à reprendre à part.
+
+## 19/11/2026 — n°341 sur 5e_C5.1 (dépanner le lampadaire) : les trois échelles disent ce que veut dire chaque niveau
+
+Quatrième page du chantier n°341. Seul écart relevé : les trois échelles d'auto-positionnement (I4) proposaient
+« 🔴 fragile … ⭐ expert » sans dire ce que chaque niveau veut dire. Chaque niveau le dit maintenant pour la compétence,
+avec les mots d'un élève de 5e (« 🟢 solide — je trouve seul·e la pièce en panne en testant dans l'ordre ») ; les
+valeurs ne changent pas. Contrôles : `controle_propositions_indices` (rien à signaler) ; bancs 30 / 30 et 34 / 34 ; mode
+mission sans refus.
