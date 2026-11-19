@@ -33890,3 +33890,17 @@ Bancs : `tests_3e_C6.2.py` 22 / 22 ; `tests_5e_C6.1-C6.3.mjs`, dont le parcours 
 29 / 32 ; `tests_4e_C6.1-C6.3.mjs` 26 / 29. Leurs rouges sont **les mêmes que sur `main`** (progression et coches
 après rechargement, dans la séquence), sans lien avec le QCM. Réfutations alignées, `controle_indices_qcm` (rien),
 export Moodle régénéré.
+
+## 19/11/2026 — n°341, QCM de quatre séquences (3e_C4.7, 4e_C3.1, 4e_C6.2 éclairage, 5e_C4.7) : de 13–14 sur 30 à 4 ou 5
+
+Quatre banques sans générateur, une seule PR : `3e_C4.7` Internet à Sainte-Luce (14 → 4), `4e_C3.1` Hangzhou
+(13 → 4), `qcm_eclairage_automatique` (13 → 5), `5e_C4.7` le réseau local (13 → 4). 37 intrus allongés à sens égal.
+Dans le QCM de l'éclairage, cinq bonnes réponses restent les plus longues, par nature : « une LDR (photorésistance) »,
+« flux d'information », « 0 et 1023 », « digitalWrite(LED, HIGH) », « une broche analogique ».
+Il ne reste qu'une banque au-delà de 40 % : `5e_C1.1` Chengdu, faite par son générateur `_generation/q.py`. Elle se
+reprend à la source, dans une PR à part.
+Site (QCM) : la bonne réponse est la plus longue 24 %, la plus courte 15 %, au milieu 61 % · 1 banque(s) au-delà de 40 % de « la plus longue ».
+
+Bancs : `tests_4e_C3.1-C3.3_hangzhou.py` 32 / 32, `tests_3e_C4.7-C4.8.mjs` 35 / 35. Les deux banques sans banc
+(éclairage, réseau local de 5e) ont été ouvertes dans Chromium : 30 questions chacune, 0 erreur de console.
+Réfutations alignées, `controle_indices_qcm` (rien), export Moodle régénéré, banc vert.
