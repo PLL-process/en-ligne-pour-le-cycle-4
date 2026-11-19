@@ -33638,7 +33638,7 @@ Trouvé en vérifiant `5e_C6.1` : les passes n°341 de `4e_C4.1`, `4e_C5.1` et `
 propositions dans la page sans toucher leur `mission_<lot>.json`. Ces fichiers rangent souvent leurs « pourquoi » sous
 le **début** du texte (« a été » pour « a été piraté ») ; `changer_proposition.py` ne cherchait que le texte entier.
 La page restait juste (son `data-pourquoi` était réécrit), mais relancer `enrichir.py` aurait échoué sur `4e_C6.1`
-(« « a été » désigne 0 proposition ») et le bancs du mode mission, qui lit la page, ne le voyait pas.
+(« « a été » désigne 0 proposition ») et le banc du mode mission, qui lit la page, ne le voyait pas.
 - `mission_4e_C6.1.json` reprend les pourquoi de la page : 17 clés réécrites (c1_4, c1_5, a2_1 à a2_5, s3_3, s3_4,
   q3_1, r4_2 à r4_4). Les deux autres fichiers étaient justes : seule l'écriture de l'apostrophe différait.
 - Les trois pages sont réécrites par `enrichir.py` : **seule l'apostrophe change** (`&#x27;` → `'` dans
@@ -33650,3 +33650,21 @@ La page restait juste (son `data-pourquoi` était réécrit), mais relancer `enr
   Ajouté aux vérifications du skill `propositions-sans-indice`, § 3.
 
 Bancs : mode mission sans refus sur les trois pages.
+
+## 19/11/2026 — n°341, I4 : 24 échelles d'auto-positionnement remises dans l'ordre (10 pages), et l'outil les voit
+
+En ouvrant `5e_C1.1`, l'échelle « où en suis-je ? » proposait « 🔴 Maîtrise insuffisante, ⭐ Très bonne maîtrise,
+🟠 Maîtrise fragile, 🟢 Maîtrise satisfaisante » : mélangée comme une question (n°300), alors qu'une échelle se lit
+dans l'ordre. `controle_propositions_indices.py` ne la voyait pas : il ne lisait que les groupes `auto…` et la classe
+`positionnement`, pas les groupes `pos1`, `pos2`…
+- `controle_propositions_indices.py` lit aussi les groupes `pos1`, `pos2`… Sur `main` : **✘ I4 : 24**, dans
+  10 pages (`3e_C1.1`, `4e_C1.1`, `5e_C1.1`, `5e_C1.2`, les trois C2, `3e_C3.1`, `4e_C3.1`, `5e_C3.1`).
+- Les 24 échelles sont rangées de 🔴 à ⭐, dans l'ordre de leur numéro (`pos1__1` à `pos1__4`). Ce numéro suivait le
+  niveau partout ; il a été vérifié page par page. Les textes et les valeurs ne changent pas : une réponse déjà
+  enregistrée est reprise.
+- `3e_C1.5` : ses trois échelles nomment maintenant leur niveau comme les autres pages (« 🟠 Maîtrise fragile — je
+  cite une contrainte… ») ; le ⚠ I4 qu'elles portaient disparaît.
+- Site : 0 ✘ I4, 0 ⚠ I4.
+
+Bancs : sur les 11 pages, `tests_regle_311_<lot>.mjs` tous verts (34 / 34, et 27 / 27 pour `5e_C3.1`) ; mode mission
+sans refus.

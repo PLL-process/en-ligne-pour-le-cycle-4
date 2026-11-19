@@ -22,7 +22,8 @@ CE QU'IL MESURE (pages élèves hors QCM et synthèses)
         la leur (« 20 Ah — moins chère, ça devrait passer »), le choix porte sur l'argument : rien à signaler ;
   I3 ⚠  le résultat attendu d'un calcul (`num("d2_1")===432`) se lit dans une étiquette ou une légende de la page,
         hors aides et corrections ;
-  I4 ✘  une échelle d'auto-positionnement (`positionnement`, ou un groupe `auto…`) dont les niveaux ne sont pas dans
+  I4 ✘  une échelle d'auto-positionnement (`positionnement`, ou un groupe `auto…` ou `pos1`, `pos2`… — ces derniers
+         vus depuis le 19/11/2026 : 24 échelles de 10 pages étaient mélangées sans que l'outil les lise) dont les niveaux ne sont pas dans
         l'ordre ;
   I4 ⚠  une échelle dont les niveaux ne disent pas ce qu'ils veulent dire (aucun « — » après le niveau).
 
@@ -102,7 +103,7 @@ def analyser(src: str):
     # I4 — l'échelle d'auto-positionnement
     for m in COP.FIELDSET.finditer(src):
         classes, fid, corps = m.group(1), m.group(2), m.group(4)
-        if "positionnement" not in classes and not fid.startswith("auto"):
+        if "positionnement" not in classes and not fid.startswith("auto") and not re.match(r"pos\d", fid):
             continue
         rangs = [int(r) for i, r in OPTION_ID.findall(corps) if i == fid]
         if rangs and rangs != sorted(rangs):
