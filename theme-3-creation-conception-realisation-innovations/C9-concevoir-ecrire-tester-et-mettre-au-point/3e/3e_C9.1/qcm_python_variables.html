@@ -1,93 +1,139 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QCM (24 questions) — Python : variables, types et programmes — 3e (2024)</title>
-  <style>
-    /* Définition des variables CSS pour les couleurs (thème bleu foncé) */
-    :root { --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; }
-    /* Styles généraux pour tous les éléments (box-sizing pour une meilleure gestion des paddings) */
-    * { box-sizing: border-box; }
-    /* Styles pour le body (fond, police, couleur texte) */
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--ink); line-height: 1.5; }
-    /* Styles pour l'en-tête (padding et gradient de fond) */
-    header { padding: 18px 20px; background: linear-gradient(90deg, #0e1630, #1f2a57); }
-    /* Styles pour h1 (marge zéro, taille police) */
-    h1 { margin: 0; font-size: 1.35rem; }
-    /* Styles pour le wrapper principal (largeur max, marges, padding, reset du compteur q) */
-    .wrap { max-width: 980px; margin: 18px auto; padding: 0 14px; counter-reset: q; }
-    /* Styles pour les cartes (fond, bordure, arrondi, padding, marge, ombre) */
-    .card { background: var(--card); border: 1px solid #223060; border-radius: 18px; padding: 14px 16px; margin: 14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-    /* Ajout du numéro de question avant le titre (incrément du compteur) */
-    .card .q-title::before { counter-increment: q; content: "Q" counter(q) " — "; color: #a9b6df; font-weight: 700; }
-    /* Styles pour les lignes flex (display flex, wrap, gap, align) */
-    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    /* Styles pour les badges (display inline, padding, arrondi, taille police, couleurs) */
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; color: #0e1630; background: #c7d2fe; font-weight: 700; }
-    /* Styles pour les points (gras, couleur verte) */
-    .pts { font-weight: 700; color: #d1fae5; }
-    /* Styles pour les boutons (bordure, padding, arrondi, curseur, fond, couleur, gras) */
-    .btn { border: 1px solid #344a8a; padding: 8px 12px; border-radius: 12px; cursor: pointer; background: #1b254a; color: var(--ink); font-weight: 600; }
-    /* Styles pour les petits boutons (padding et taille police réduits) */
-    .btn.small { padding: 5px 8px; font-size: .9rem; }
-    /* Effet hover sur boutons (augmente la luminosité) */
-    .btn:hover { filter: brightness(1.15); }
-    /* Styles pour les aides (cachées par défaut, marge, couleur muted, padding amélioré, bordure latérale pour visibilité) */
-    .help { display: none; margin-top: 8px; color: var(--muted); padding: 10px; border-left: 4px solid var(--accent); background: var(--bg); border-radius: 4px; font-size: 0.95rem; line-height: 1.6; }
-    /* Styles pour les réponses (marge, gras, padding, arrondi, fond, ombre pour un look boxed) */
-    .answer { margin-top: 8px; font-weight: 700; padding: 10px; border-radius: 8px; background: var(--bg); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    /* Couleur et bordure pour réponses correctes (vert) */
-    .ok { color: var(--ok); border: 1px solid var(--ok); }
-    /* Couleur et bordure pour réponses incorrectes (rouge) */
-    .ko { color: var(--ko); border: 1px solid var(--ko); }
-    /* Couleur pour texte muted (gris) */
-    .muted { color: var(--muted); }
-    /* Styles pour les titres de questions (marge, taille police) */
-    .q-title { margin: 0 0 6px 0; font-size: 1.05rem; }
-    /* Styles pour le footer (marge, padding, arrondi, fond, bordure) */
-    .footer { margin: 16px 0; padding: 12px; border-radius: 14px; background: #0f1a3d; border: 1px solid #23316b; }
-    /* Styles pour le score (taille police, gras) */
-    .score { font-size: 1.1rem; font-weight: 800; }
-    /* Styles pour inputs numériques, text et select (fond, bordure, couleur, padding, arrondi) */
-    input[type="number"], input[type="text"], select { background: #0f1836; border: 1px solid #2b3c75; color: var(--ink); padding: 8px 10px; border-radius: 10px; }
-    /* Styles pour labels (display block, marge) */
-    label { display: block; margin: .25rem 0; }
-    /* Styles pour grille à 3 colonnes (grid, columns, gap) */
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    /* Styles pour notes (taille police, couleur claire) */
-    .note { font-size: .9rem; color: #cbd5e1; }
-    /* Styles pour inputs dans idbox (largeur 100%) */
-    .idbox input { width: 100%; }
-    /* Styles pour images schema (largeur max, arrondi, bordure, fond) */
-    img.schema { max-width: 100%; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
-    /* Commentaire : Illustrations */
-    /* Styles pour figures questions (marge, align center) */
-    .q-fig { margin: 10px 0; text-align: center; }
-    /* Styles pour images dans figures (largeur max, hauteur auto, arrondi, bordure, fond) */
-    .q-fig img.q-img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
-    /* Styles pour figcaption (taille police, couleur, marge) */
-    .q-fig figcaption { font-size: .9rem; color: #a9b6df; margin-top: 6px; }
-    /* Styles pour help (caché, marge, couleur) */
-    .help { display: none; margin-top: 8px; color: var(--muted); }
-    /* Classe pour afficher l'aide (display block) */
-    .help.show-help { display: block; }
-    /* Amélioration : Styles pour les tableaux (bordure collapse, largeur, marge) */
-    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
-    /* Styles pour th et td (bordure, padding, align) */
-    th, td { border: 1px solid #2b3c75; padding: 8px; text-align: left; }
-    /* Styles pour th (fond bleu foncé) */
-    th { background: #1b254a; }
-  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · New York — 3e · QCM — Python : variables, types et programmes (3e_C9.1)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#7d9bd4;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-texte code,.option code,.bloc-detail code,.bloc-aide code{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:.95em;background:rgba(97,218,251,.13);color:#9fe8ff;padding:0 .3em;border-radius:4px;white-space:pre-wrap}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+  .trois-lignes-liste li{border-left:3px solid #61dafb;padding:2px 0 2px 12px;line-height:1.55}
+  .indice-zone{margin:8px 0 10px;padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.08);border:1px solid #6b5a2f}
+  .indice-zone p{margin:6px 0}
+  .indice-zone .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .piege-ligne{margin-top:10px;padding-top:8px;border-top:1px dashed #6b5a2f}
+  .pieges-bilan li{margin:6px 0}
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+
 
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  #q12,#q13,#q24,.answer,.badge,.btn,.card,.footer,body{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
-  #sur20,.muted,.score{color:#0f1a3d!important}
-  .note{color:#111111!important}
-  .card label,.id-title,.pts,.q-title{color:#151e3a!important}
-  .btn{color:#1b254a!important}
+  #id_classe,#id_date,#id_nom,#id_prenom,.badge,.bilan th,.dash div,.option,.progress-bar,.res-grid div{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .v-hl{color:#047fa0!important}
+  .option span{color:#0a1b3d!important}
+  .badge{color:#0d2347!important}
+  .card span,.identite label,.subtitle{color:#1a6af8!important}
+  .note20,.v-warn{color:#946b00!important}
+  .q-comp{color:#a145ea!important}
 }
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
@@ -95,528 +141,1087 @@
 </style>
 </head>
 <body>
-<nav id="navharm" aria-label="Navigation du site">
-  <a href="../../../../index.html">&#8962; Accueil</a>
-  <a href="sequence_3e_C9.1_variables_types_systemes.html">&#8592; La séquence</a>
-  <a href="qcm_3e_C9.1_variables_types_systemes.html">&#129504; Le QCM</a>
-</nav>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C9.1_variables_types_systemes.html">← Séquence</a></nav>
+<h1>🐍 QCM — Python : variables, types et programmes</h1>
+<p class="subtitle">Ranger une valeur, choisir le bon type, écrire une condition et une boucle, définir une fonction, lire un message d’erreur</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge code">3e_C9.1</span>
+  <span class="badge theme">30 questions · chaque distracteur réfuté</span>
+</div>
+<p style="text-align:center"><a href="sequence_3e_C9.1_variables_types_systemes.html">⬅ Revenir à la séquence</a></p>
 
-  <header><h1>QCM (24 questions) — Python : variables, types et programmes — 3e (2024)</h1></header>
-  <div class="wrap">
-    <!-- Section d'identification (sans q-title pour ne pas compter comme question) -->
-    <div class="card">
-      <!-- Titre de l'identité, avec nouvelle classe id-title sans compteur -->
-      <p class="id-title">Identité de l’élève</p>
-      <!-- Grille pour inputs nom, prénom, classe -->
-      <div class="grid2">
-        <!-- Input pour nom -->
-        <input id="nom" placeholder="Nom">
-        <!-- Input pour prénom -->
-        <input id="prenom" placeholder="Prénom">
-        <!-- Input pour classe -->
-        <input id="classe" placeholder="Classe (ex. 4eB)">
-      </div>
-      <!-- Note pour l'utilisateur -->
-      <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
-    </div>
-    <!-- Bandeau score et boutons globaux -->
-    <div class="footer row">
-      <!-- Affichage du score -->
-      <div class="score" id="score"> Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">0</strong> </div>
-      <!-- Bouton pour corriger tout -->
-      <button class="btn" onclick="corrigerTout()">Corriger tout</button>
-      <!-- Bouton pour réinitialiser -->
-      <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
-      <!-- Amélioration : Bouton pour afficher toutes les aides -->
-      <button class="btn" onclick="showAllHelps()">Afficher toutes les aides</button>
-      <!-- Note sur les compétences -->
-      <div class="note">Les questions ciblent 3e_C9.1, en accompagnement de la page Vittascience et du TP mBot2 du dossier.</div>
-    </div>
-    <!-- Q1 : Question sur le routeur -->
-    
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Une VARIABLE en programmation est…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q1" value="v1"> un virus qui infecte le programme</label>
-  <label><input type="radio" name="q1" value="v2"> un écran d'ordinateur</label>
-  <label><input type="radio" name="q1" value="v3"> une imprimante en réseau</label>
-  <label><input type="radio" name="q1" value="v0"> une boîte qui garde une valeur</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a1')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q1','v0','fb1',1)">Corriger</button>
-  </div>
-  <div id="a1" class="help">La variable associe un nom à une valeur stockée en mémoire : age = 14 range 14 dans la boîte « age ».</div>
-  <div id="fb1" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">En Python, l'instruction  age = 14  …</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q2" value="v1"> compare age à 14 sans rien changer</label>
-  <label><input type="radio" name="q2" value="v2"> supprime la variable age</label>
-  <label><input type="radio" name="q2" value="v3"> affiche 14 à l'écran</label>
-  <label><input type="radio" name="q2" value="v0"> range 14 dans la variable age</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a2')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q2','v0','fb2',1)">Corriger</button>
-  </div>
-  <div id="a2" class="help">Le signe = est l'AFFECTATION (ranger une valeur), à ne pas confondre avec == (comparer).</div>
-  <div id="fb2" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Quelle instruction AFFICHE du texte à l'écran ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q3" value="v0"> print("Bonjour")</label>
-  <label><input type="radio" name="q3" value="v1"> echo Bonjour</label>
-  <label><input type="radio" name="q3" value="v2"> afficher[Bonjour]</label>
-  <label><input type="radio" name="q3" value="v3"> show-&gt;Bonjour</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a3')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q3','v0','fb3',1)">Corriger</button>
-  </div>
-  <div id="a3" class="help">print() est la fonction d'affichage de Python. Les parenthèses et les guillemets sont obligatoires.</div>
-  <div id="fb3" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Que renvoie TOUJOURS la fonction input() ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q4" value="v1"> un nombre entier (int)</label>
-  <label><input type="radio" name="q4" value="v0"> une chaîne de caractères</label>
-  <label><input type="radio" name="q4" value="v2"> un booléen (bool)</label>
-  <label><input type="radio" name="q4" value="v3"> une image (png)</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a4')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q4','v0','fb4',1)">Corriger</button>
-  </div>
-  <div id="a4" class="help">Même si l'utilisateur tape 14, input() renvoie "14" (du texte) : il faut convertir avec int() pour calculer.</div>
-  <div id="fb4" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Pour convertir la saisie en nombre entier, on écrit…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q5" value="v0"> age = int(input("Ton âge ? "))</label>
-  <label><input type="radio" name="q5" value="v1"> age = input(int("Ton âge ? "))</label>
-  <label><input type="radio" name="q5" value="v2"> age = nombre(input("Ton âge ? "))</label>
-  <label><input type="radio" name="q5" value="v3"> age = "int" + input("Ton âge ? ")</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a5')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q5','v0','fb5',1)">Corriger</button>
-  </div>
-  <div id="a5" class="help">int() transforme le texte "14" en nombre 14, utilisable dans les calculs.</div>
-  <div id="fb5" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Le type de la valeur 3.14 est…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q6" value="v1"> int</label>
-  <label><input type="radio" name="q6" value="v2"> str</label>
-  <label><input type="radio" name="q6" value="v0"> float</label>
-  <label><input type="radio" name="q6" value="v3"> bool</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a6')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q6','v0','fb6',1)">Corriger</button>
-  </div>
-  <div id="a6" class="help">int = entier ; float = décimal ; str = texte ; bool = Vrai/Faux : les quatre types de base.</div>
-  <div id="fb6" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Le type de la valeur "bonjour" est…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q7" value="v1"> int</label>
-  <label><input type="radio" name="q7" value="v2"> float</label>
-  <label><input type="radio" name="q7" value="v0"> str</label>
-  <label><input type="radio" name="q7" value="v3"> bool</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a7')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q7','v0','fb7',1)">Corriger</button>
-  </div>
-  <div id="a7" class="help">Les guillemets font tout : "14" est un texte (str), 14 est un nombre (int).</div>
-  <div id="fb7" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Le type de la valeur True est…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q8" value="v0"> bool</label>
-  <label><input type="radio" name="q8" value="v1"> str</label>
-  <label><input type="radio" name="q8" value="v2"> int</label>
-  <label><input type="radio" name="q8" value="v3"> float</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a8')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q8','v0','fb8',1)">Corriger</button>
-  </div>
-  <div id="a8" class="help">True et False (avec majuscule) sont les deux seules valeurs du type booléen.</div>
-  <div id="fb8" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Quel nom de variable est VALIDE en Python ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q9" value="v1"> 2eme_essai</label>
-  <label><input type="radio" name="q9" value="v0"> humidite_sol</label>
-  <label><input type="radio" name="q9" value="v2"> mon age</label>
-  <label><input type="radio" name="q9" value="v3"> taux-humidité</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a9')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q9','v0','fb9',1)">Corriger</button>
-  </div>
-  <div id="a9" class="help">Pas d'espace, pas de tiret, pas de chiffre en tête : lettres, chiffres (après la 1re lettre) et _ seulement.</div>
-  <div id="fb9" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Quelle est l'erreur dans  print(Bonjour)  ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q10" value="v1"> Il manque un point-virgule</label>
-  <label><input type="radio" name="q10" value="v2"> print devrait s'écrire Print</label>
-  <label><input type="radio" name="q10" value="v3"> Il faut des crochets, pas des parenthèses</label>
-  <label><input type="radio" name="q10" value="v0"> Il manque les guillemets</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a10')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q10','v0','fb10',1)">Corriger</button>
-  </div>
-  <div id="a10" class="help">Sans guillemets, Python cherche une VARIABLE nommée Bonjour — qui n'existe pas : NameError.</div>
-  <div id="fb10" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Que fait l'opérateur == ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q11" value="v0"> Il compare deux valeurs</label>
-  <label><input type="radio" name="q11" value="v1"> Il affecte une valeur</label>
-  <label><input type="radio" name="q11" value="v2"> Il additionne deux nombres</label>
-  <label><input type="radio" name="q11" value="v3"> Il efface une variable</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a11')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q11','v0','fb11',1)">Corriger</button>
-  </div>
-  <div id="a11" class="help">= affecte, == compare : confondre les deux est l'erreur la plus fréquente en 3e.</div>
-  <div id="fb11" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Que vaut  17 // 5  (division entière) ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <input type="number" id="q12" placeholder="Nombre">
-  <div class="row">
-    <button class="btn small" onclick="aide('a12')">Aide</button>
-    <button class="btn small" onclick="checkNumber('q12',3,'fb12',1)">Corriger</button>
-  </div>
-  <div id="a12" class="help">17 ÷ 5 = 3 reste 2 : // garde le quotient entier (3), % donnerait le reste (2).</div>
-  <div id="fb12" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Que vaut  17 % 5  (modulo) ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <input type="number" id="q13" placeholder="Nombre">
-  <div class="row">
-    <button class="btn small" onclick="aide('a13')">Aide</button>
-    <button class="btn small" onclick="checkNumber('q13',2,'fb13',1)">Corriger</button>
-  </div>
-  <div id="a13" class="help">Le modulo % renvoie le RESTE de la division : 17 = 3×5 + 2, donc 17 % 5 = 2.</div>
-  <div id="fb13" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">En Python, le bloc qui suit  if humidite &lt; seuil:  doit être…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q14" value="v0"> décalé vers la droite</label>
-  <label><input type="radio" name="q14" value="v1"> écrit en majuscules</label>
-  <label><input type="radio" name="q14" value="v2"> entouré d'accolades</label>
-  <label><input type="radio" name="q14" value="v3"> souligné dans l'éditeur</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a14')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q14','v0','fb14',1)">Corriger</button>
-  </div>
-  <div id="a14" class="help">L'indentation (4 espaces) délimite les blocs en Python : sans elle, IndentationError.</div>
-  <div id="fb14" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">for i in range(5): affiche i à chaque tour. Quelles valeurs prend i ?</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q15" value="v1"> 1, 2, 3, 4, 5</label>
-  <label><input type="radio" name="q15" value="v2"> 0, 1, 2, 3, 4, 5</label>
-  <label><input type="radio" name="q15" value="v0"> 0, 1, 2, 3, 4</label>
-  <label><input type="radio" name="q15" value="v3"> 5, 4, 3, 2, 1</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a15')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q15','v0','fb15',1)">Corriger</button>
-  </div>
-  <div id="a15" class="help">range(5) génère 5 valeurs en partant de 0 : de 0 à 4 inclus — piège classique du DNB !</div>
-  <div id="fb15" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Une boucle  while humidite &gt; seuil:  s'exécute…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q16" value="v1"> une seule fois</label>
-  <label><input type="radio" name="q16" value="v0"> tant que la condition est vraie</label>
-  <label><input type="radio" name="q16" value="v2"> jamais</label>
-  <label><input type="radio" name="q16" value="v3"> à l'infini quoi qu'il arrive</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a16')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q16','v0','fb16',1)">Corriger</button>
-  </div>
-  <div id="a16" class="help">while re-teste la condition à chaque tour : il faut qu'une instruction du bloc puisse la rendre fausse.</div>
-  <div id="fb16" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Le symbole # en début de ligne Python crée…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q17" value="v1"> une erreur de syntaxe</label>
-  <label><input type="radio" name="q17" value="v2"> un titre de section</label>
-  <label><input type="radio" name="q17" value="v3"> une variable vide</label>
-  <label><input type="radio" name="q17" value="v0"> un commentaire</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a17')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q17','v0','fb17',1)">Corriger</button>
-  </div>
-  <div id="a17" class="help">Les commentaires documentent le code pour les humains : Python ne les exécute pas.</div>
-  <div id="fb17" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Une f-string  f"Il fait {temp} °C"  sert à…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q18" value="v1"> faire un calcul secret</label>
-  <label><input type="radio" name="q18" value="v2"> créer un fichier texte</label>
-  <label><input type="radio" name="q18" value="v3"> imprimer le texte en couleur</label>
-  <label><input type="radio" name="q18" value="v0"> mettre une variable dans un texte</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a18')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q18','v0','fb18',1)">Corriger</button>
-  </div>
-  <div id="a18" class="help">Les accolades {} dans une f-string sont remplacées par la valeur de la variable : affichage propre et lisible.</div>
-  <div id="fb18" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Définir une fonction en Python commence par…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q19" value="v1"> function arroser{}</label>
-  <label><input type="radio" name="q19" value="v2"> fonction arroser:</label>
-  <label><input type="radio" name="q19" value="v0"> def arroser():</label>
-  <label><input type="radio" name="q19" value="v3"> def: arroser</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a19')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q19','v0','fb19',1)">Corriger</button>
-  </div>
-  <div id="a19" class="help">def nom(): puis un bloc indenté — la fonction est le « sous-programme » de la compétence C9.1.</div>
-  <div id="fb19" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">L'intérêt d'une fonction (sous-programme) est de…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q20" value="v1"> ralentir le programme volontairement</label>
-  <label><input type="radio" name="q20" value="v0"> réutiliser un bloc sans le recopier</label>
-  <label><input type="radio" name="q20" value="v2"> décorer le code source</label>
-  <label><input type="radio" name="q20" value="v3"> supprimer les variables</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a20')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q20','v0','fb20',1)">Corriger</button>
-  </div>
-  <div id="a20" class="help">Écrire une fois, appeler partout : les fonctions structurent le programme — c'est l'esprit de 3e_C9.1.</div>
-  <div id="fb20" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Un BUG est…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q21" value="v1"> un insecte dans l'écran</label>
-  <label><input type="radio" name="q21" value="v2"> une mise à jour du logiciel</label>
-  <label><input type="radio" name="q21" value="v0"> un défaut du programme</label>
-  <label><input type="radio" name="q21" value="v3"> un mot de passe oublié</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a21')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q21','v0','fb21',1)">Corriger</button>
-  </div>
-  <div id="a21" class="help">Déboguer = localiser et corriger le défaut : tester pas à pas, afficher les variables, lire les messages d'erreur.</div>
-  <div id="fb21" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Sur le robot mBot2, la détection d'obstacle utilise…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q22" value="v0"> un capteur à ultrasons</label>
-  <label><input type="radio" name="q22" value="v1"> une boussole en bois</label>
-  <label><input type="radio" name="q22" value="v2"> un ventilateur</label>
-  <label><input type="radio" name="q22" value="v3"> un aimant</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a22')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q22','v0','fb22',1)">Corriger</button>
-  </div>
-  <div id="a22" class="help">Le capteur ultrason mesure la distance par écho — le programme décide ensuite (tourner, s'arrêter…).</div>
-  <div id="fb22" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Dans le programme du mBot2, faire avancer le robot revient à commander…</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q23" value="v1"> les capteurs</label>
-  <label><input type="radio" name="q23" value="v0"> les moteurs (actionneurs)</label>
-  <label><input type="radio" name="q23" value="v2"> la batterie du PC</label>
-  <label><input type="radio" name="q23" value="v3"> l'écran du professeur</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a23')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q23','v0','fb23',1)">Corriger</button>
-  </div>
-  <div id="a23" class="help">Le programme lit les capteurs puis commande les actionneurs : la chaîne d'information pilote la chaîne d'énergie.</div>
-  <div id="fb23" class="answer"></div>
-</section>
-<section class="card" data-competence="3e_C9.1" data-points="1">
-  <p class="q-title">Comment s'appelle l'opération  x = x + 1  ? (mot-clé)</p>
-  <span title="Programme 2024 — 3e_C9.1 : Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point." class="badge">Compétence visée : 3e_C9.1</span>
-  <span class="pts">(1 pt)</span>
-  <input type="text" id="q24" placeholder="Nom de l'opération">
-  <div class="row">
-    <button class="btn small" onclick="aide('a24')">Aide</button>
-    <button class="btn small" onclick="checkTextIncludes('q24',['incrémentation', 'incrementer', 'incrémenter'],'fb24',1)">Corriger</button>
-  </div>
-  <div id="a24" class="help">Incrémenter une variable = l'augmenter (souvent de 1) : la base des compteurs de boucles.</div>
-  <div id="fb24" class="answer"></div>
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br><button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p><style>@media print{[data-note="poste-partage"]{display:none}}</style>
+
+<section class="card trois-lignes" id="trois-lignes">
+  <h2>🎯 Avant de commencer&nbsp;: trois choses à lire</h2>
+  <ul class="trois-lignes-liste">
+    <li><b>📚 Ce que tu vas revoir</b>
+    <br>Ce qu'est une variable : un nom, une valeur, dans la mémoire.
+    <br>Les quatre types de Python (<b>int</b>, <b>float</b>, <b>str</b>, <b>bool</b>), les conditions, les boucles et les fonctions.</li>
+    <li><b>🛠 Ce que tu dois savoir faire</b>
+    <br>Suivre un programme ligne à ligne et dire ce que contient chaque variable.
+    <br>Repérer l'erreur d'un programme et lire le message de Python.</li>
+    <li><b>✅ Comment réussir</b>
+    <br>Quand une question montre du code, fais-le tourner dans ta tête, ligne après ligne, sur une feuille de brouillon.
+    <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
+    <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
+  </ul>
 </section>
 
-    <div class="footer">
-      <!-- Texte de résumé -->
-      <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
-    </div>
-  </div> <!-- Fin du wrap -->
-  <script>
-    // Initialisation de la variable total pour le score
-    let total = 0;
-    // Calcul du maximum de points en sommants les data-points des sections
-    const max = (() => {
-      let s = 0;
-      document.querySelectorAll('section.card').forEach(sec => {
-        s += Number(sec.dataset.points || 0);
-      });
-      return s;
-    })();
-    // Affichage du max dans le span
-    document.getElementById('max').textContent = max;
-    // Calcul du nombre de questions (sections card)
-    const nbq = document.querySelectorAll('section.card').length;
-    // Affichage du nombre de questions
-    document.getElementById('nbq').textContent = nbq;
-    // Fonction pour toggle l'aide
-    function aide(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle("show-help");
-    }
-    // Fonction pour afficher le feedback
-    function feedback(id, ok, msg) {
-      const fb = document.getElementById(id);
-      fb.className = 'answer ' + (ok ? 'ok' : 'ko');
-      fb.innerHTML = msg; // Use innerHTML to allow <br> or other HTML if needed
-    }
-    // Set pour les points déjà attribués (éviter doublons)
-    const awarded = new Set();
-    // Fonction pour attribuer des points
-    function givePoints(key, pts) {
-      if (awarded.has(key)) return;
-      total += pts;
-      awarded.add(key);
-      const sur20 = (total / max) * 20;
-      document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">' + sur20.toFixed(2) + '</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
-    }
-    // Fonction pour vérifier MCQ (radio), optimisée avec label correct
-    function checkMCQ(name, correct, fbId, pts) {
-      const sel = document.querySelector('input[name="' + name + '"]:checked');
-      if (!sel) {
-        feedback(fbId, false, '⛳ Veuillez choisir une réponse avant de corriger.');
-        return;
-      }
-      const ok = sel.value === correct;
-      const helpId = 'a' + name.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let correctLabel = document.querySelector('label input[name="' + name + '"][value="' + correct + '"]').parentNode.textContent.trim();
-      let msg = ok ? '✅ Bonne réponse ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise réponse. La bonne réponse est : ' + correctLabel + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId); // Show help if wrong
-      if (ok) givePoints(name, pts);
-    }
-    // Fonction pour vérifier select, optimisée
-    function checkSelect(id, correct, fbId, pts) {
-      const val = document.getElementById(id).value;
-      const ok = (val === correct);
-      const helpId = 'a' + id.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      const correctText = document.querySelector('#' + id + ' option[value="' + correct + '"]').textContent;
-      let msg = ok ? '✅ Exact ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise sélection. La bonne option est : ' + correctText + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(id, pts);
-    }
-    // Fonction pour vérifier nombre, optimisée
-    function checkNumber(id, correctNumber, fbId, pts) {
-      const val = Number(document.getElementById(id).value);
-      const ok = (val === Number(correctNumber));
-      const helpId = 'a' + id.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let msg = ok ? '✅ Juste ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise valeur. La bonne valeur est : ' + correctNumber + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(id, pts);
-    }
-    // Fonction pour vérifier texte avec mots-clés, optimisée
-    function checkTextIncludes(id, keywords, fbId, pts) {
-      const val = (document.getElementById(id).value || '').toLowerCase();
-      const ok = keywords.some(k => val.includes(k.toLowerCase()));
-      const helpId = 'a' + id.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let msg = ok ? '✅ Idée principale correcte ! <br>Explication détaillée : ' + helpText : '❌ Mot-clé manquant. Mots-clés attendus : ' + keywords.join(', ') + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(id, pts);
-    }
-    // Fonction pour vérifier multi checkboxes, optimisée avec labels corrects
-    function checkMulti(name, correctValues, fbId, pts) {
-      const all = Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(i => i.value);
-      const ok = correctValues.length === all.length && correctValues.every(v => all.includes(v));
-      const helpId = 'a' + name.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let correctLabels = correctValues.map(v => document.querySelector('label input[name="' + name + '"][value="' + v + '"]').parentNode.textContent.trim()).join(', ');
-      let msg = ok ? '✅ Parfait ! <br>Explication détaillée : ' + helpText : '❌ Sélection incorrecte (trop, pas assez ou mauvais choix). Choix corrects : ' + correctLabels + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(name, pts);
-    }
-    // Fonction pour corriger tout
-    function corrigerTout() {
-      document.querySelectorAll('.card .btn.small').forEach(btn => {
-        if (btn.textContent.trim().toLowerCase().includes('corriger')) btn.click();
-      });
-      const sur20 = (total / max) * 20;
-      const id = 'Nom: ' + (document.getElementById('nom').value || '-') + ' | Prénom: ' + (document.getElementById('prenom').value || '-') + ' | Classe: ' + (document.getElementById('classe').value || '-');
-      document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ')';
-    }
-    // Fonction pour réinitialiser
-    function reinitialiser() {
-      total = 0;
-      awarded.clear();
-      document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
-      document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
-      document.querySelectorAll('input[type=text],input[type=number]').forEach(i => i.value = '');
-      document.querySelectorAll('select').forEach(s => s.value = '');
-      document.querySelectorAll('.answer').forEach(a => { a.textContent = ''; a.className = 'answer'; });
-      document.querySelectorAll('.help').forEach(h => h.classList.remove('show-help'));
-      document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
-    }
-    // Amélioration : Fonction pour afficher toutes les aides
-    function showAllHelps() {
-      document.querySelectorAll('.help').forEach(h => h.classList.add('show-help'));
-    }
-  </script>
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar" aria-label="Progression"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="VAR">3e_C9.1 — Variables et affectation</option>
+      <option value="TYP">3e_C9.1 — Types, saisie et affichage</option>
+      <option value="CTL">3e_C9.1 — Calculs, conditions et boucles</option>
+      <option value="FON">3e_C9.1 — Fonctions, bugs et robot</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 3e_C9.1 · Thème 3 · Technologie cycle 4 (2024) · <a href="sequence_3e_C9.1_variables_types_systemes.html">séquence associée</a> (« Variables, types et systèmes »)</p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (7 VAR + 8 TYP + 8 CTL + 7 FON), 0 illustrées.
+   Réécrite le 19/11/2026 au gabarit maison : l'ancienne banque de 24 questions (cartes HTML, distracteurs
+   fantaisistes) est archivée dans _archive-anciennes-versions/ (règle d'or n°12). */
+const QUESTIONS = [
+/* ═══ VAR ═══ */
+{c:"VAR",n:"Une variable",q:"En Python, une variable, c'est…",
+ o:["une instruction qui affiche du texte à l'écran", "une valeur fixée une fois pour toutes", "un nom associé à une valeur rangée en mémoire", "une fonction déjà écrite dans Python"],r:2,
+ expl:"Une variable associe un nom (son étiquette) à une valeur rangée dans la mémoire. Le programme peut la lire et la remplacer.",
+ ex:"<code>age = 14</code> range 14 dans la variable age.",
+ err:"Confondre la variable (qui garde) et l'instruction (qui agit).",
+ d:["Afficher, c'est le rôle de print() ; une variable garde une valeur.", "Une variable peut changer : c'est même pour ça qu'on l'appelle ainsi.", "", "Une fonction déjà écrite, comme print(), fait une action ; une variable garde une valeur."],
+ ret:"Variable = un nom + une valeur, dans la mémoire."},
+{c:"VAR",n:"L'affectation",q:"Que fait l'instruction <code>age = 14</code> ?",
+ o:["Elle range 14 dans la variable age", "Elle demande si age vaut 14", "Elle affiche 14 à l'écran", "Elle crée une fonction nommée age"],r:0,
+ expl:"Le signe = de Python est une affectation : il range la valeur de droite dans la variable de gauche.",
+ ex:"Après <code>age = 14</code>, la variable age contient 14.",
+ err:"Lire le = comme une égalité de mathématiques.",
+ d:["", "Demander si age vaut 14, c'est une comparaison : elle s'écrit avec ==.", "Afficher demande print() ; le signe = n'affiche rien.", "Une fonction se crée avec def ; ici, on range une valeur."],
+ ret:"= range une valeur ; == compare deux valeurs."},
+{c:"VAR",n:"Comparer avec ==",q:"Que fait l'opérateur <code>==</code> ?",
+ o:["Il range une valeur dans une variable", "Il additionne deux nombres", "Il compare deux valeurs : True ou False", "Il affiche les deux valeurs côte à côte"],r:2,
+ expl:"== teste l'égalité : <code>age == 14</code> vaut True si age contient 14, False sinon. On l'utilise dans les conditions.",
+ ex:"<code>if age == 14:</code> teste l'âge ; <code>age = 14</code> le change.",
+ err:"Écrire = dans une condition à la place de ==.",
+ d:["Ranger une valeur, c'est le rôle d'un seul =.", "L'addition s'écrit avec + ; == ne calcule rien, il teste une égalité.", "", "Afficher demande print() ; == ne montre rien, il teste."],
+ ret:"= range, == compare."},
+{c:"VAR",n:"Un nom valide",q:"Quel nom de variable Python est valide ?",
+ o:["<code>2eme_essai</code>", "<code>humidite_sol</code>", "<code>mon age</code>", "<code>taux-humidite</code>"],r:1,
+ expl:"Un nom de variable : des lettres, des chiffres (pas en tête) et le tiret bas _ ; ni espace, ni tiret, ni accent conseillé.",
+ ex:"temperature_quai, nb_essais, distance_cm.",
+ err:"Mettre un espace ou un tiret dans un nom.",
+ d:["Un nom ne commence jamais par un chiffre.", "", "Un espace est interdit : Python y verrait deux mots.", "Le tiret est lu comme un signe moins : Python calculerait taux moins humidite."],
+ ret:"Nom de variable : lettres, chiffres (pas en tête), tiret bas _."},
+{c:"VAR",n:"Incrémenter",q:"Après <code>x = 4</code> puis <code>x = x + 1</code>, que vaut x ?",
+ o:["4", "1", "5", "une erreur"],r:2,
+ expl:"Python calcule la partie droite avec l'ancienne valeur (4 + 1 = 5), puis range 5 dans x. Augmenter une variable de 1, c'est l'incrémenter.",
+ ex:"Un compteur de passages : <code>passages = passages + 1</code>.",
+ err:"Lire x = x + 1 comme une équation impossible.",
+ d:["La deuxième ligne remplace l'ancienne valeur : x ne vaut plus 4.", "On ajoute 1 à l'ancienne valeur de x, pas à zéro.", "", "C'est légal : Python calcule d'abord x + 1, puis range le résultat dans x."],
+ ret:"Affectation : calculer à droite, ranger à gauche."},
+{c:"VAR",n:"Une copie de valeur",q:"Après <code>a = 3</code>, puis <code>b = a</code>, puis <code>a = 10</code>, que vaut b ?",
+ o:["10", "13", "une erreur", "3"],r:3,
+ expl:"<code>b = a</code> copie la valeur de a (3) dans b. Quand a change ensuite, b garde 3.",
+ ex:"Table de suivi : a = 3, b = 3, puis a = 10, b toujours 3.",
+ err:"Croire que b « suit » a.",
+ d:["b a reçu la valeur de a au moment de b = a : changer a ensuite ne change pas b.", "Rien n'additionne a et b dans ce programme.", "Les trois lignes sont légales : aucune erreur.", ""],
+ ret:"Une affectation copie une valeur, à l'instant où elle s'exécute."},
+{c:"VAR",n:"Le commentaire",q:"En Python, une ligne qui commence par <code>#</code> est…",
+ o:["un commentaire, que Python ignore", "une erreur de syntaxe, qui bloque tout", "un titre, affiché en gros à l'écran", "une variable spéciale du programme"],r:0,
+ expl:"Le commentaire explique le programme à celui qui le lit ; Python ne l'exécute pas.",
+ ex:"<code># seuil d'humidité en pour cent</code>",
+ err:"Croire que le commentaire s'affiche.",
+ d:["", "Le # est prévu par Python : il ne provoque aucune erreur.", "Un commentaire n'est jamais affiché : il est écrit pour les humains.", "Un commentaire ne range aucune valeur."],
+ ret:"# = commentaire : pour les humains, pas pour la machine."},
+/* ═══ TYP ═══ */
+{c:"TYP",n:"Le type float",q:"Quel est le type de la valeur <code>3.14</code> ?",
+ o:["float (nombre à virgule)", "int (nombre entier)", "str (texte)", "bool (vrai ou faux)"],r:0,
+ expl:"int : entier ; float : nombre à virgule (écrit avec un point en Python) ; str : texte ; bool : True ou False.",
+ ex:"21.5 (une température) est un float.",
+ err:"Écrire la virgule française : 3,14 n'est pas un nombre en Python.",
+ d:["", "Un entier n'a pas de partie après la virgule ; 3.14 en a une.", "Sans guillemets, ce n'est pas un texte.", "Un booléen ne vaut que True ou False."],
+ ret:"Nombre à virgule = float, écrit avec un point."},
+{c:"TYP",n:"Le type str",q:"Quel est le type de la valeur <code>\"bonjour\"</code> ?",
+ o:["int (nombre entier)", "float (nombre à virgule)", "bool (vrai ou faux)", "str (chaîne de caractères)"],r:3,
+ expl:"Tout ce qui est entre guillemets est un texte, de type str (chaîne de caractères).",
+ ex:"\"Quai 3\", \"14\" : deux textes.",
+ err:"Oublier que les guillemets font le type.",
+ d:["Ce n'est pas un nombre : ce sont des lettres entre guillemets.", "Ce n'est pas un nombre : ce sont des lettres entre guillemets.", "Un booléen ne vaut que True ou False, sans guillemets.", ""],
+ ret:"Entre guillemets = str."},
+{c:"TYP",n:"Le type bool",q:"Quel est le type de la valeur <code>True</code> ?",
+ o:["bool (booléen)", "str (chaîne de caractères)", "int (nombre entier)", "float (nombre à virgule)"],r:0,
+ expl:"Le type bool n'a que deux valeurs : True (vrai) et False (faux), avec une majuscule.",
+ ex:"<code>sec = True</code> ; une comparaison comme <code>4 > 3</code> donne True.",
+ err:"Écrire true sans majuscule.",
+ d:["", "Sans guillemets, True n'est pas un texte : c'est une valeur logique.", "True n'est pas un nombre, mais une valeur vraie ou fausse.", "True n'est pas un nombre, mais une valeur vraie ou fausse."],
+ ret:"bool : True ou False."},
+{c:"TYP",n:"14 ou \"14\"",q:"Quelle est la différence entre <code>\"14\"</code> et <code>14</code> ?",
+ o:["Aucune : Python les traite de la même façon", "Le premier est un nombre plus grand que le second", "Le premier est un texte, le second un nombre", "Le premier est un nombre, le second un texte"],r:2,
+ expl:"Les guillemets font le type : \"14\" est un str, 14 est un int. <code>\"14\" + 1</code> provoque une erreur ; <code>14 + 1</code> vaut 15.",
+ ex:"Un code postal reste un texte ; un âge est un nombre.",
+ err:"Croire que \"14\" se calcule comme 14.",
+ d:["Python les distingue : on peut calculer avec 14, pas avec \"14\".", "\"14\" n'est pas un nombre du tout : c'est du texte.", "", "C'est l'inverse : les guillemets font le texte."],
+ ret:"Avec guillemets : texte ; sans : nombre."},
+{c:"TYP",n:"Ce que renvoie input()",q:"Que renvoie toujours la fonction <code>input()</code> ?",
+ o:["un nombre entier (int), toujours", "un booléen (bool), vrai ou faux", "un texte (str), même pour un nombre", "un nombre à virgule (float), toujours"],r:2,
+ expl:"input() renvoie ce que l'utilisateur a tapé, sous forme de texte (str). Pour calculer, il faut convertir avec int() ou float().",
+ ex:"On tape 14 : input() renvoie \"14\".",
+ err:"Calculer directement avec ce que renvoie input().",
+ d:["Même si l'utilisateur tape 14, input() renvoie le texte \"14\".", "input() ne répond pas par vrai ou faux : il renvoie ce qui a été tapé, en texte.", "", "input() ne convertit rien : c'est au programme de le faire."],
+ ret:"input() → toujours du texte."},
+{c:"TYP",n:"Convertir la saisie",q:"Pour obtenir l'âge tapé au clavier sous forme de nombre entier, on écrit…",
+ o:["<code>age = input(int(\"Ton âge ? \"))</code>", "<code>age = str(input(\"Ton âge ? \"))</code>", "<code>age = input(\"Ton âge ? \") + 0</code>", "<code>age = int(input(\"Ton âge ? \"))</code>"],r:3,
+ expl:"input() renvoie du texte ; int() le convertit en nombre entier. On convertit le résultat de input(), donc int() entoure input().",
+ ex:"On tape 14 : input() → \"14\", int(\"14\") → 14.",
+ err:"Placer int() au mauvais endroit.",
+ d:["L'ordre est inversé : il faut convertir ce que renvoie input(), pas la question.", "str() garde du texte : l'âge ne devient pas un nombre.", "On ne peut pas ajouter 0 à un texte : Python s'arrête sur une erreur.", ""],
+ ret:"int(input(...)) : saisir, puis convertir."},
+{c:"TYP",n:"Les guillemets oubliés",q:"Pourquoi <code>print(Bonjour)</code> provoque-t-il une erreur ?",
+ o:["Il manque un point-virgule à la fin de la ligne", "Python cherche une variable nommée Bonjour", "print doit s'écrire avec une majuscule", "Il faut des crochets à la place des parenthèses"],r:1,
+ expl:"Sans guillemets, Bonjour est lu comme un nom de variable, qui n'existe pas : Python affiche NameError. Il faut écrire <code>print(\"Bonjour\")</code>.",
+ ex:"<code>print(\"Bonjour\")</code> affiche Bonjour.",
+ err:"Oublier les guillemets autour d'un texte.",
+ d:["Python n'utilise pas de point-virgule en fin de ligne.", "", "print s'écrit en minuscules.", "print() s'écrit avec des parenthèses."],
+ ret:"Un texte s'écrit entre guillemets."},
+{c:"TYP",n:"Une f-string",q:"Si temp vaut 28, que fait <code>print(f\"Il fait {temp} °C\")</code> (degrés Celsius) ?",
+ o:["Il affiche Il fait {temp} °C", "Il affiche Il fait 28 °C", "Il affiche Il fait temp °C", "Il provoque une erreur"],r:1,
+ expl:"Dans une f-string, ce qui est entre accolades est remplacé par la valeur de la variable.",
+ ex:"<code>f\"Quai {quai}\"</code> affiche Quai 3 si quai vaut 3.",
+ err:"Oublier le f devant les guillemets.",
+ d:["Le f devant les guillemets remplace {temp} par sa valeur.", "", "Les accolades disent à Python d'aller chercher la valeur de temp.", "C'est une écriture correcte de Python : aucune erreur."],
+ ret:"f\"…{variable}…\" : la valeur s'insère dans le texte."},
+/* ═══ CTL ═══ */
+{c:"CTL",n:"La division entière",q:"Que vaut <code>17 // 5</code> ?",
+ o:["3", "2", "3.4", "85"],r:0,
+ expl:"// donne le quotient entier : 17 = 3 × 5 + 2, donc 17 // 5 vaut 3.",
+ ex:"Combien de boîtes de 5 avec 17 objets ? 3 boîtes pleines.",
+ err:"Confondre //, / et %.",
+ d:["", "2, c'est le reste ; // donne le quotient.", "3.4, c'est la division ordinaire, avec /.", "85, ce serait la multiplication 17 × 5 ; // divise."],
+ ret:"// : quotient entier ; % : reste ; / : division décimale."},
+{c:"CTL",n:"Le reste",q:"Que vaut <code>17 % 5</code> ?",
+ o:["3", "3.4", "12", "2"],r:3,
+ expl:"% donne le reste de la division entière : 17 = 3 × 5 + 2, donc 17 % 5 vaut 2.",
+ ex:"Un nombre est pair si n % 2 vaut 0.",
+ err:"Lire % comme un pourcentage.",
+ d:["3, c'est le quotient, donné par //.", "3.4, c'est la division ordinaire, avec /.", "12, ce serait la soustraction 17 − 5 ; % donne un reste.", ""],
+ ret:"% : le reste de la division."},
+{c:"CTL",n:"L'indentation",q:"Le bloc qui suit <code>if humidite &lt; seuil:</code> doit être…",
+ o:["décalé vers la droite (indenté)", "écrit tout en lettres majuscules", "placé entre deux accolades", "terminé par un point-virgule"],r:0,
+ expl:"En Python, c'est le décalage (4 espaces) qui dit quelles lignes dépendent du if. Sans lui : IndentationError.",
+ ex:"<code>if humidite &lt; seuil:</code> puis, décalé : <code>demarrer_pompe()</code>.",
+ err:"Oublier de décaler le bloc.",
+ d:["", "Python ne demande pas de majuscules.", "Les accolades sont celles d'autres langages ; Python utilise le décalage.", "Python ne termine pas ses lignes par un point-virgule."],
+ ret:"Le décalage délimite les blocs."},
+{c:"CTL",n:"range(5)",q:"Avec <code>for i in range(5):</code>, quelles valeurs prend i ?",
+ o:["1, 2, 3, 4, 5", "0, 1, 2, 3, 4", "0, 1, 2, 3, 4, 5", "5, 4, 3, 2, 1"],r:1,
+ expl:"range(5) produit 5 valeurs en partant de 0 : 0, 1, 2, 3 et 4. La boucle fait donc 5 tours.",
+ ex:"range(3) → 0, 1, 2.",
+ err:"Croire que range(5) va jusqu'à 5.",
+ d:["range commence à 0, pas à 1.", "", "range(5) donne 5 valeurs : 5 lui-même n'en fait pas partie.", "range compte en montant, pas en descendant."],
+ ret:"range(n) : de 0 à n − 1, soit n tours."},
+{c:"CTL",n:"La boucle while",q:"Une boucle <code>while niveau &gt; seuil:</code> tourne…",
+ o:["une seule fois, puis elle s'arrête", "tant que la condition reste vraie", "jamais, même si la condition est vraie", "un nombre de tours fixé à l'avance"],r:1,
+ expl:"while re-teste la condition avant chaque tour : la boucle s'arrête dès qu'elle devient fausse.",
+ ex:"Tant que la cuve dépasse le seuil, on vidange.",
+ err:"Confondre while et for.",
+ d:["while recommence tant que la condition est vraie.", "", "Si la condition est vraie au départ, la boucle tourne.", "Un nombre de tours fixé, c'est plutôt for ... in range()."],
+ ret:"while : tant que c'est vrai, on recommence."},
+{c:"CTL",n:"La boucle sans fin",q:"x vaut 0. La boucle <code>while x &lt; 10:</code> contient seulement <code>print(x)</code>. Que se passe-t-il ?",
+ o:["Elle ne s'arrête jamais", "Elle tourne exactement 10 fois", "Elle ne démarre pas du tout", "Python ajoute 1 à x de lui-même"],r:0,
+ expl:"x reste à 0 : la condition x < 10 reste vraie, et la boucle tourne sans fin. Il manque <code>x = x + 1</code> dans le bloc.",
+ ex:"C'est un bug classique : la boucle infinie.",
+ err:"Oublier l'instruction qui fait évoluer la condition.",
+ d:["", "Rien n'augmente x : la condition reste vraie à chaque tour.", "x vaut 0, donc x < 10 est vrai : la boucle démarre.", "Python ne change jamais une variable sans instruction."],
+ ret:"Dans un while, une instruction doit pouvoir rendre la condition fausse."},
+{c:"CTL",n:"Le cas limite",q:"Avec <code>if temp &gt; 30:</code> print(\"chaud\") <code>else:</code> print(\"normal\"), que s'affiche-t-il si temp vaut 30 ?",
+ o:["chaud", "rien du tout", "normal", "chaud, puis normal"],r:2,
+ expl:"30 > 30 est faux : c'est la branche else qui s'exécute. Pour inclure 30, il faudrait >=.",
+ ex:"Tester les valeurs juste au seuil : 29, 30, 31.",
+ err:"Confondre > et >=.",
+ d:["30 n'est pas strictement plus grand que 30 : le test est faux.", "Le else s'exécute quand le test est faux : quelque chose s'affiche.", "", "Avec if et else, une seule des deux branches s'exécute."],
+ ret:"> : strictement plus grand ; >= : plus grand ou égal."},
+{c:"CTL",n:"Deux conditions",q:"Avec <code>if sec and not pluie:</code> puis <code>arroser()</code>, quand le jardin est-il arrosé ?",
+ o:["Dès que le sol est sec, même s'il pleut", "Quand le sol est sec et qu'il ne pleut pas", "Seulement quand il pleut sur le jardin", "Quand le sol est humide et qu'il ne pleut pas"],r:1,
+ expl:"and demande que les deux conditions soient vraies : sec est vrai ET pluie est faux (not pluie est vrai).",
+ ex:"Sol sec, pas de pluie → arrosage ; sol sec, pluie → pas d'arrosage.",
+ err:"Oublier le not devant pluie.",
+ d:["and exige les deux : s'il pleut, not pluie est faux.", "", "not pluie veut dire « il ne pleut pas ».", "sec doit être vrai : un sol humide ne déclenche pas l'arrosage."],
+ ret:"and : les deux ; not : le contraire."},
+/* ═══ FON ═══ */
+{c:"FON",n:"Définir une fonction",q:"Comment commence la définition d'une fonction en Python ?",
+ o:["<code>function arroser():</code>", "<code>def: arroser()</code>", "<code>arroser def():</code>", "<code>def arroser():</code>"],r:3,
+ expl:"On écrit def, le nom, des parenthèses et deux-points ; le bloc de la fonction est ensuite décalé.",
+ ex:"<code>def arroser():</code> puis, décalé : <code>pompe.on()</code>.",
+ err:"Oublier les deux-points ou les parenthèses.",
+ d:["function est un mot d'autres langages ; Python utilise def.", "Les deux-points se placent à la fin, après les parenthèses.", "def se place au début de la ligne, avant le nom.", ""],
+ ret:"def nom(): puis un bloc décalé."},
+{c:"FON",n:"Pourquoi une fonction",q:"Quel est l'intérêt d'une fonction ?",
+ o:["Réutiliser un bloc d'instructions sans le recopier", "Rendre le programme plus lent, mais beaucoup plus sûr", "Remplacer toutes les variables du programme", "Ne plus avoir besoin de tester le programme"],r:0,
+ expl:"On écrit une fois les instructions dans une fonction, puis on l'appelle partout où il faut : le programme est plus court et plus clair.",
+ ex:"arroser() appelée le matin et le soir, écrite une seule fois.",
+ err:"Recopier le même bloc à plusieurs endroits.",
+ d:["", "Une fonction ne ralentit pas le programme : elle l'organise.", "Une fonction utilise des variables ; elle ne les remplace pas.", "Une fonction se teste, comme tout le reste."],
+ ret:"Une fonction : écrire une fois, appeler partout."},
+{c:"FON",n:"Appeler une fonction",q:"La fonction <code>arroser()</code> est définie. Comment la faire s'exécuter ?",
+ o:["La définir une seconde fois avec def", "Écrire <code>arroser()</code> dans le programme", "Écrire arroser, sans les parenthèses", "Mettre un # devant sa définition"],r:1,
+ expl:"Une fonction définie ne fait rien tant qu'on ne l'appelle pas : on écrit son nom suivi de parenthèses.",
+ ex:"<code>if sec: arroser()</code>",
+ err:"Définir une fonction et oublier de l'appeler.",
+ d:["La redéfinir ne l'exécute pas : on l'écrit seulement une deuxième fois.", "", "Sans parenthèses, Python désigne la fonction mais ne l'exécute pas.", "Le # la transformerait en commentaire : elle n'existerait plus."],
+ ret:"Définir avec def, exécuter avec nom()."},
+{c:"FON",n:"Un bug",q:"Un bug, c'est…",
+ o:["un composant électronique en panne", "une erreur dans le programme", "une mise à jour automatique de Python", "un message qui dit que tout s'est bien passé"],r:1,
+ expl:"Un bug est une erreur dans le programme. Déboguer, c'est le trouver (tester, afficher les variables, lire le message d'erreur) puis le corriger.",
+ ex:"Une boucle qui ne s'arrête jamais : un bug.",
+ err:"Confondre bug (programme) et panne (matériel).",
+ d:["Une panne de composant est matérielle ; un bug est une erreur dans le programme.", "", "Une mise à jour n'est pas une erreur.", "Un bug, au contraire, fait que quelque chose ne se passe pas bien."],
+ ret:"Bug : erreur de programme ; déboguer : la trouver et la corriger."},
+{c:"FON",n:"Lire le message d'erreur",q:"Python affiche <code>NameError: name 'temprature' is not defined</code>. Que faire d'abord ?",
+ o:["Réinstaller Python sur l'ordinateur", "Ajouter des guillemets sur chaque ligne", "Supprimer la ligne qui pose problème", "Vérifier l'orthographe du nom de la variable"],r:3,
+ expl:"NameError signale un nom inconnu : ici, « temprature » est mal écrit (il manque un e). On corrige le nom, puis on relance.",
+ ex:"temperature, pas temprature.",
+ err:"Ignorer le message d'erreur au lieu de le lire.",
+ d:["Python fonctionne : il signale un nom qu'il ne connaît pas.", "Des guillemets partout transformeraient les variables en textes.", "Supprimer la ligne retire peut-être une instruction utile, sans régler la faute.", ""],
+ ret:"Lire le message d'erreur : il dit souvent où chercher."},
+{c:"FON",n:"Le capteur du robot",q:"Sur le robot mBot2, quel capteur détecte un obstacle devant lui ?",
+ o:["Le capteur de lumière", "L'écran couleur", "Le capteur à ultrasons", "Le moteur à encodeur"],r:2,
+ expl:"Le capteur à ultrasons envoie un son très aigu et mesure le temps de l'écho : il en déduit la distance de l'obstacle.",
+ ex:"<code>if distance &lt; 10:</code> le robot s'arrête.",
+ err:"Confondre un capteur et un actionneur.",
+ d:["Le capteur de lumière mesure l'éclairage, pas la distance.", "L'écran affiche ; il ne mesure rien.", "", "Le moteur fait avancer le robot ; il ne détecte pas d'obstacle."],
+ ret:"Ultrasons : mesurer une distance par l'écho."},
+{c:"FON",n:"Ce que commande le programme",q:"Pour faire avancer le mBot2, que commande le programme ?",
+ o:["Le capteur à ultrasons, pour qu'il roule", "L'écran de l'ordinateur du professeur", "La batterie, qu'il allume et éteint", "Les moteurs, qui sont des actionneurs"],r:3,
+ expl:"Le programme lit les capteurs puis commande les actionneurs : ici, les moteurs, qui transforment l'énergie électrique en mouvement.",
+ ex:"Avancer, tourner, s'arrêter : trois ordres donnés aux moteurs.",
+ err:"Croire que le capteur fait bouger le robot.",
+ d:["Le capteur mesure ; il ne fait pas avancer le robot.", "Le programme tourne sur le robot : l'ordinateur ne le fait pas avancer.", "La batterie fournit l'énergie ; ce sont les moteurs qui transforment cette énergie en mouvement.", ""],
+ ret:"Lire les capteurs, commander les actionneurs."}
+];
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_3e_C9.1_python_variables";
+const $=id=>document.getElementById(id);
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
+const COMP_LABELS={
+  "VAR":"3e_C9.1 — Variables et affectation",
+  "TYP":"3e_C9.1 — Types, saisie et affichage",
+  "CTL":"3e_C9.1 — Calculs, conditions et boucles",
+  "FON":"3e_C9.1 — Fonctions, bugs et robot" };
+const N=QUESTIONS.length;
+
+/* état */
+/* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
+   Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
+const PIEGES={
+  variable:"Une variable : le = qui range, le == qui compare, la valeur copiée",
+  syntaxe:"Écrire du Python : le nom valide, le #, les guillemets, le décalage, def",
+  types:"Les quatre types : int, float, str, bool",
+  saisie:"Saisir et afficher : input() donne du texte, int() convertit, la f-string insère",
+  calculs:"Diviser et compter : //, % et range()",
+  boucles:"Conditions et boucles : tant que, si… sinon, ET",
+  fonctions:"Fonctions, bugs et robot : appeler, lire l'erreur, capteur ou moteur"
+};
+const PIEGE_DE_NOTION={
+  "Une variable":"variable",
+  "L'affectation":"variable",
+  "Comparer avec ==":"variable",
+  "Incrémenter":"variable",
+  "Une copie de valeur":"variable",
+  "Un nom valide":"syntaxe",
+  "Le commentaire":"syntaxe",
+  "Les guillemets oubliés":"syntaxe",
+  "L'indentation":"syntaxe",
+  "Définir une fonction":"syntaxe",
+  "Le type float":"types",
+  "Le type str":"types",
+  "Le type bool":"types",
+  "14 ou \"14\"":"types",
+  "Ce que renvoie input()":"saisie",
+  "Convertir la saisie":"saisie",
+  "Une f-string":"saisie",
+  "La division entière":"calculs",
+  "Le reste":"calculs",
+  "range(5)":"calculs",
+  "La boucle while":"boucles",
+  "La boucle sans fin":"boucles",
+  "Le cas limite":"boucles",
+  "Deux conditions":"boucles",
+  "Pourquoi une fonction":"fonctions",
+  "Appeler une fonction":"fonctions",
+  "Un bug":"fonctions",
+  "Lire le message d'erreur":"fonctions",
+  "Le capteur du robot":"fonctions",
+  "Ce que commande le programme":"fonctions"
+};
+function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
+function questionsDuPiege(f){ return [...Array(N).keys()].filter(i=>piege(i)===f); }
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="piege"){ const f=etat.piege, idx=questionsDuPiege(f);
+    if(!f||!idx.length) return setMode("complet");
+    const juste=i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r;
+    etat.sousListe=idx.filter(i=>!juste(i)).concat(idx.filter(juste));
+    signale("🎯 Révision du piège « "+PIEGES[f]+" » : "+idx.length+" questions, celles que tu n'as pas encore réussies d'abord."); }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+/* « Réviser ce piège » — sous un indice, ou dans le bilan */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-piege]"); if(!b) return;
+  etat.piege=b.dataset.piege; montrerEcran("q"); setMode("piege");
+  const z=document.getElementById("ecranQuestion"); if(z) z.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); });
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+/* L'énoncé peut porter du code entre <code>…</code> : rendu en police de code, le reste en texte simple (rien
+   d'autre n'est lu comme du HTML). Les entités &lt; &gt; &quot; &amp; sont décodées. */
+function ecrireEnonce(el,t){
+  el.textContent="";
+  const dec=x=>x.replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&amp;/g,"&");
+  String(t).split(/(<code>[\s\S]*?<\/code>)/).forEach(p=>{
+    const m=/^<code>([\s\S]*)<\/code>$/.exec(p);
+    if(m){ const c=document.createElement("code"); c.textContent=dec(m[1]); el.appendChild(c); }
+    else if(p) el.appendChild(document.createTextNode(dec(p)));
+  });
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  ecrireEnonce($("qTexte"),Q.q);
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r && (etat.reponses[i]===Q.r || etat.reponses[i]===null || corrVue[i])) b.classList.add("bonne");   /* pendant l’indice, la bonne réponse reste cachée */
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  /* Aides progressives (audit du 17/11/2026) : une réponse fausse montre pourquoi ELLE ne va pas, sans la bonne ;
+     puis, sur demande, la règle à appliquer ; la correction complète reste à un clic. (Chaînes concaténées, sans
+     gabarit imbriqué : les contrôles du dépôt lisent ce script avec un analyseur simple.) */
+  if(choix!==null && !ok && !corrVue[i]){
+    const f=piege(i), nbF=f?questionsDuPiege(f).length:0, deja=f&&etat.erreursPiege?(etat.erreursPiege[f]||0):0;
+    const l2=indice2[i]?'<p><b>💡💡 La règle à appliquer&nbsp;:</b> '+Q.ret+'</p>':"";
+    const b2=indice2[i]?"":'<button class="btn small ghost" id="btnIndice2">💡💡 Un indice de plus</button>';
+    const lp=f?'<p class="piege-ligne">🎯 C\'est le piège «&nbsp;'+PIEGES[f]+'&nbsp;»'+(deja>1?' — tu t\'y es déjà trompé·e '+deja+' fois':'')+'.'
+      +'<br><button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+nbF+' questions</button></p>':"";
+    bloc.className="correction-bloc show c-err";
+    bloc.innerHTML='<h3>'+verdict+'</h3><div class="indice-zone">'
+      +'<p><b>💡 Indice&nbsp;:</b> tu as choisi '+lettres[choix]+'. '+(Q.d[choix]||"Cette réponse ne convient pas.")+'</p>'+l2
+      +'<div class="btns"><button class="btn small" id="btnRetenter">🔁 Réessayer avec '+(indice2[i]?"ces indices":"cet indice")+'</button>'+b2
+      +'<button class="btn small ghost" id="btnVoirCorr">📖 Voir la correction complète</button></div>'+lp+'</div>';
+    $("btnRetenter").addEventListener("click",()=>{
+      etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+    });
+    if($("btnIndice2")) $("btnIndice2").addEventListener("click",()=>{ indice2[i]=true; rendreCorrection(); });
+    $("btnVoirCorr").addEventListener("click",()=>{ corrVue[i]=true; rendreQuestion(); });
+    return;
+  }
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
+    if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  /* les pièges où l'élève s'est trompé, et la révision qui les travaille (audit du 17/11/2026) */
+  const rates={}; [...Array(N).keys()].forEach(i=>{ const f=piege(i); if(f&&etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r) rates[f]=(rates[f]||0)+1; });
+  const fs=Object.keys(rates).sort((a,b)=>rates[b]-rates[a]);
+  if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
+    +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Variables, types, conditions, boucles et fonctions : tu lis et tu écris du Python avec sûreté — tu es prêt·e pour l'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  /* L'agrandisseur est une COLONNE — bouton, image, légende — : la légende suit l'image dans le
+     flux, l'image reçoit une hauteur maximale calculée (ajuster()), et le fond défile si besoin. */
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:1rem;box-sizing:border-box;overflow:auto;
+    flex-direction:column;align-items:center;gap:.75rem}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  /* centré quand tout tient, sans rien couper quand ça déborde : des marges automatiques,
+     pas justify-content:center (qui rendrait le haut inaccessible au défilement) */
+  .loupe-fond > .loupe-fermer{margin-top:auto}
+  .loupe-fond > .loupe-legende{margin-bottom:auto}
+  .loupe-fond img{display:block;flex:none;max-width:100%;max-height:80vh;width:auto;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:static;flex:none;margin:0;max-width:min(70ch,100%);text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif}
+  .loupe-legende .loupe-aide{display:block;margin-top:.25rem;font-size:.85em;color:#b8bfcc}
+  .loupe-fermer{position:sticky;top:0;align-self:flex-end;flex:none;z-index:1;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+
+  /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
+     À l'écran ET sur le papier, cliqué ou non. La couleur d'écran est vérifiée
+     contre le fond réel de CETTE page, celle du papier contre le blanc.
+     `a:visited` est écrit parce qu'il ne se MESURE pas : les navigateurs
+     refusent de révéler l'état visité. Sans cette ligne, le lien redevient
+     violet après le premier clic — illisible sur fond sombre. */
+  a,a:where(:visited){color:var(--hl)}
+  @media print{
+    a,a:visited{color:#00309e!important}
+    a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+    grande.addEventListener("load", ajuster);
+    window.addEventListener("resize", ajuster);
+  }
+
+  // La légende affichée : la figcaption VISIBLE de la figure si elle existe ; sinon le
+  // texte alternatif, réduit à sa première phrase s'il dépasse deux lignes. L'alt complet
+  // reste sur l'image agrandie, pour les lecteurs d'écran.
+  function poserLegende(el, texteAlt){
+    var fig = el.closest("figure");
+    var cap = fig ? fig.querySelector("figcaption") : null;
+    var visible = cap && cap.getClientRects().length && cap.textContent.trim();
+    legende.textContent = "";
+    var texte = visible ? cap.textContent.replace(/\s+/g, " ").trim() : (texteAlt || "");
+    texte = texte.replace(/\s*\(clique[^()]*agrandir\)/gi, "").trim();   // l'image est déjà agrandie
+    var corps = document.createElement("span");
+    corps.textContent = texte;
+    var aide = document.createElement("span");
+    aide.className = "loupe-aide";
+    aide.textContent = "Échap pour refermer";
+    if (texte) legende.appendChild(corps);
+    legende.appendChild(aide);
+    if (!visible && texte) {
+      var ligne = parseFloat(getComputedStyle(legende).lineHeight) || 20;
+      if (corps.getBoundingClientRect().height > 2 * ligne + 1) {
+        var m = texte.match(/^[\s\S]*?[.!?…](?=\s|$)/);
+        if (m && m[0].length < texte.length) corps.textContent = m[0];
+      }
+    }
+  }
+
+  // L'image reçoit la place qui reste : hauteur du fond, moins le bouton, la légende,
+  // les marges et les espacements — jamais moins de 40 % de l'écran ; au-delà, le fond défile.
+  function ajuster(){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    var st = getComputedStyle(fond);
+    var ecart = parseFloat(st.rowGap) || 0;
+    var reste = fond.clientHeight - parseFloat(st.paddingTop) - parseFloat(st.paddingBottom)
+              - fond.querySelector(".loupe-fermer").offsetHeight - legende.offsetHeight - 2 * ecart;
+    grande.style.maxHeight = Math.max(reste, 0.4 * window.innerHeight) + "px";
+  }
+
+  function montrer(el, texteAlt){
+    fond.setAttribute("data-ouvert", "oui");
+    fond.scrollTop = 0;
+    poserLegende(el, texteAlt);
+    ajuster();
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.style.background = "";
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    montrer(img, img.alt);
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    grande.style.maxHeight = "";
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (!fond || !fond.getAttribute("data-ouvert")) return;
+    if (e.key === "Escape") fermer();
+    // la fenêtre garde le focus : Tab ne repart pas derrière elle (audit du 17/11/2026)
+    else if (e.key === "Tab") { e.preventDefault(); fond.querySelector(".loupe-fermer").focus(); }
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page, et leurs
+  // couleurs et leur police viennent de la feuille de style de la PAGE. Sérialisé seul, le
+  // dessin les perdrait (formes noires, police par défaut, texte qui déborde) : on recopie
+  // donc sur la copie les propriétés CALCULÉES de chaque élément, on y ajoute les dégradés
+  // et marqueurs définis ailleurs dans la page, et l'image reçoit le fond du schéma.
+  var PROPRIETES = ["fill", "fill-opacity", "fill-rule", "stroke", "stroke-width", "stroke-opacity",
+    "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+    "opacity", "visibility", "display", "color", "font-family", "font-size", "font-weight", "font-style",
+    "font-variant-numeric", "letter-spacing", "word-spacing", "text-anchor", "dominant-baseline",
+    "baseline-shift", "text-decoration", "white-space", "paint-order", "stop-color", "stop-opacity",
+    "marker-start", "marker-mid", "marker-end", "clip-path", "mask", "filter"];
+  // Une transformation posée par la feuille de style (pas par l'attribut transform, que la
+  // copie garde déjà) : on la recopie avec son origine.
+  var TRANSFORMATION = ["transform", "transform-origin", "transform-box"];
+
+  function figer(source, copie){
+    var a = [source].concat([].slice.call(source.querySelectorAll("*")));
+    var b = [copie].concat([].slice.call(copie.querySelectorAll("*")));
+    for (var i = 0; i < a.length && i < b.length; i++) {
+      var cs = getComputedStyle(a[i]), decl = [], k, v;
+      for (k = 0; k < PROPRIETES.length; k++) {
+        v = cs.getPropertyValue(PROPRIETES[k]);
+        if (v) decl.push(PROPRIETES[k] + ":" + v);
+      }
+      if (i > 0 && !a[i].hasAttribute("transform") && cs.getPropertyValue("transform") &&
+          cs.getPropertyValue("transform") !== "none") {
+        for (k = 0; k < TRANSFORMATION.length; k++) decl.push(TRANSFORMATION[k] + ":" + cs.getPropertyValue(TRANSFORMATION[k]));
+      }
+      var deja = b[i].getAttribute("style");
+      b[i].setAttribute("style", decl.join(";") + (deja ? ";" + deja : ""));
+    }
+  }
+
+  // Un dégradé ou un marqueur appelé par url(#…) mais défini hors du dessin : on le recopie dedans.
+  function rapatrier(copie){
+    var defs = null, faits = {}, tour = 0, trouve = true;
+    while (trouve && tour++ < 4) {
+      trouve = false;
+      var refs = (new XMLSerializer().serializeToString(copie).match(/url\((?:&quot;|["'])?#([^"')&]+)/g) || [])
+        .concat(new XMLSerializer().serializeToString(copie).match(/href="#[^"]+"/g) || []);
+      refs.forEach(function(r){
+        var id = r.replace(/^url\((?:&quot;|["'])?#/, "").replace(/^href="#/, "").replace(/"$/, "");
+        if (faits[id] || copie.querySelector("[id='" + id.replace(/'/g, "") + "']")) return;
+        faits[id] = true;
+        var el = document.getElementById(id);
+        if (!el || !el.closest("svg")) return;
+        if (!defs) { defs = document.createElementNS("http://www.w3.org/2000/svg", "defs"); copie.insertBefore(defs, copie.firstChild); }
+        var c = el.cloneNode(true); figer(el, c); defs.appendChild(c); trouve = true;
+      });
+    }
+  }
+
+  // Le fond sur lequel le schéma est dessiné : le sien, sinon celui du premier parent opaque.
+  function fondDe(el){
+    for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+      var c = getComputedStyle(e).backgroundColor, m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) { var p = m[1].split(","); if (p.length < 4 || parseFloat(p[3]) > 0) return c; }
+      else if (c && c !== "transparent") return c;
+    }
+    return "#fff";
+  }
+
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    figer(svg, copie);
+    rapatrier(copie);
+    copie.style.background = "transparent";
+    // Une taille propre au dessin (sans elle, une image SVG n'a que 300 × 150 px à offrir) :
+    // celle de la viewBox, agrandie ; le CSS de la loupe la ramène à l'écran.
+    var vb = svg.viewBox && svg.viewBox.baseVal, boite = svg.getBoundingClientRect();
+    var w = vb && vb.width ? vb.width : boite.width, h = vb && vb.height ? vb.height : boite.height;
+    if (!(vb && vb.width) && w && h) copie.setAttribute("viewBox", "0 0 " + w + " " + h);
+    var k = w ? Math.max(1, 1600 / w) : 1;
+    if (w && h) { copie.setAttribute("width", Math.round(w * k)); copie.setAttribute("height", Math.round(h * k)); }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.style.background = fondDe(svg);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    montrer(svg, mot);
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      // une commande s'annonce comme une commande (audit du 17/11/2026) : « Agrandir », puis ce que montre le schéma
+      var nomSvg = svg.getAttribute("aria-label") || (svg.querySelector("title") ? svg.querySelector("title").textContent : "");
+      // un schéma qui porte du texte visible reste une image : un bouton doit contenir dans son nom le texte qu'il
+      // montre (WCAG 2.5.3, axe « label-content-name-mismatch ») ; « Agrandir le schéma : … » dit déjà la commande
+      svg.setAttribute("role", svg.querySelector("text") ? "img" : "button");
+      svg.setAttribute("aria-label", nomSvg ? "Agrandir le schéma : " + nomSvg.trim() : "Agrandir le schéma");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", img.alt ? "Agrandir l'image : " + img.alt : "Agrandir l'image");
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+<script>/* Règle d'or n°322 (15/11/2026) : effacer TOUTE la sauvegarde de ce QCM — le nom, les réponses, le temps —
+   en deux clics (`demande`), sans boîte modale. « ♻ Recommencer entièrement » garde le nom : il ne suffit pas sur un poste partagé. */
+document.getElementById("btnEffacer").addEventListener("click", function () {
+  if (demande("effacer-sauvegarde", "Effacer de ce navigateur ton nom, tes réponses et ton temps ?")) {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  }
+});
+</script>
 </body>
 </html>

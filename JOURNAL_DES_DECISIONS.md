@@ -33460,3 +33460,33 @@ Quatrième et cinquième des six pages de l'ancien format. Aucune des deux ne de
 Contrôles : liens, atteignabilité, en-tête, banque, effectifs, règles visibles, `poser.py --etat --strict` (75 / 75),
 loupe, médias, tactile, boutons vivants, `tests_export_moodle_xml` : verts. Banc du lot `tests_4e_C6.2.mjs` : 56 / 56.
 Au navigateur : les deux anciennes adresses mènent à leur cible, zéro erreur.
+
+## 19/11/2026 — 3e_C9.1 : le QCM « Python : variables, types et programmes » passe au gabarit commun (6 / 6)
+
+Sixième et dernière page de la série de l'ancien format. `3e_C9.1/qcm_python_variables.html`, « conservé en
+complément » de l'atelier depuis juillet, était produit par `_outils/build_qcms.py` au format des cartes HTML :
+sans aides, sans pièges, sans export Moodle, avec des distracteurs qui se devinaient (« un virus », « une
+imprimante », « une boussole en bois »).
+- **Le nouveau**, à la même adresse : 30 questions en quatre familles de 3e_C9.1 (7 VAR, 8 TYP, 8 CTL, 7 FON). Il
+  garde les notions justes de l'ancien (affectation, ==, types, input() et int(), //, %, range, while, #, f-string,
+  def, bug, mBot2) et en ajoute (la valeur copiée, la boucle sans fin, le cas limite de if, l'appel d'une fonction,
+  le message NameError). Sept pièges. Places 8 / 8 / 7 / 7 ; aucune question détachée par la longueur.
+- **Le code dans l'énoncé** : le moteur du gabarit écrit l'énoncé avec `textContent` ; un `<code>` s'y affichait donc
+  en clair. Ce QCM rend l'énoncé avec `ecrireEnonce()` : le code entre `<code>…</code>` en police de code, le reste en
+  texte simple, rien d'autre lu comme du HTML. **Constat au passage** : cinq QCM du site portent du `<code>` dans
+  leurs énoncés et l'affichent en clair aujourd'hui (`3e_C9.1` variables, `4e_C6.2` éclairage, `4e_C7.8`,
+  `4e_C9.1`, `5e_C9.1`) — vérifié au navigateur sur le premier. À corriger dans une PR à part.
+- **`build_qcms.py`** ne réécrit plus une page passée au gabarit maison ni une page de redirection : cinq de ses
+  cibles sont dans ce cas (eCall, cybersécurité, SI 5e, numérique 3e, Python 3e), qu'une régénération aurait écrasées.
+- L'ancien est archivé (n°12) dans `_archive-anciennes-versions/C7_C9_Creation-conception-realisation-innovations/
+  3e_C9.1/` ; README du lot, accès rapide de l'index et texte d'audit de `build_audit.py` à jour.
+
+**La série est finie** : des six pages de l'ancien format, quatre sont devenues des QCM au gabarit (eCall, 4e_C2.1,
+4e_C4.1, Python 3e), une a été archivée derrière une redirection (`4e_C6.2/qcm_jardin_connecte`), une était un TP et
+porte désormais son nom (`4e_C6.2/tp_algorigrammes_domotique`, #793).
+
+Contrôles : en-tête, banque, effectifs, échantillonnage, longueurs, indices `--strict`, cohérence, `banc_aides`,
+`indices_creux` (0 creux après réécriture de trois indices), `poser.py --etat --strict` (76 / 76), unités, code coloré,
+liens, atteignabilité, loupe, règles visibles, sigles, médias, tactile, boutons vivants, `tests_export_moodle_xml` :
+verts. Banc du lot `tests_3e_C9.1.mjs` : 89 / 89. Au navigateur, 390 et 1 280 px : le code de l'énoncé s'affiche en
+police de code, zéro erreur.

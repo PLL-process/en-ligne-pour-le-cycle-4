@@ -20,3 +20,12 @@ L'URL historique porte un stub de redirection. Les captures PNG dédiées sont a
   compétences, même difficulté, construit question par question sur le sujet A avec d'autres situations et d'autres
   valeurs (« Store automatique », « Hexagone bleu », « Spirale en triangle »). Sauvegarde séparée du sujet A
   (`eval-vittascience-blocs-B-v1`) : les deux sujets se passent sur le même poste sans s'effacer. Même code enseignant.
+
+## 19/11/2026 — `qcm_python_variables_v1_24-questions.html`
+
+L'ancien QCM complémentaire de 24 questions, produit par `_outils/build_qcms.py` (banque `PYTHON_3E` de
+`banks_b.py`), au format des cartes HTML : sans aides, sans pièges, sans export Moodle, et des distracteurs qui se
+devinaient (« un virus », « une imprimante », « une boussole en bois »). Il est réécrit au gabarit commun, à la même
+adresse : 30 questions, dont les notions justes de l'ancien (affectation, ==, types, input() et int(), //, %, range,
+while, #, f-string, def, bug, mBot2) et des neuves (la valeur copiée, la boucle sans fin, le cas limite de if,
+l'appel d'une fonction, le message NameError). `build_qcms.py` ne réécrit plus une page passée au gabarit maison.

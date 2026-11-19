@@ -57,6 +57,14 @@ if os.path.isfile(old_ecall):
 # 1) générer les 9 QCM
 total_q = 0
 for bank, path, title, note in JOBS:
+    # Garde du 19/11/2026 : une page passée depuis au gabarit maison (`const QUESTIONS`) ou devenue une page de
+    # redirection (« Ressource déplacée ») n'est jamais réécrite à l'ancien format. Cinq cibles de JOBS sont dans ce
+    # cas (eCall, cybersécurité, SI 5e, numérique 3e, Python 3e) : sans cette garde, une régénération les écraserait.
+    if os.path.exists(path):
+        deja = open(path, encoding="utf-8").read()
+        if "const QUESTIONS" in deja or "<title>Ressource déplacée" in deja:
+            print(f"  — {os.path.basename(path):45} ignoré : gabarit maison ou redirection, rien à régénérer")
+            continue
     n = build_qcm(title, note, bank, path)
     total_q += n
     nsec, missing = sanity_check(path)
