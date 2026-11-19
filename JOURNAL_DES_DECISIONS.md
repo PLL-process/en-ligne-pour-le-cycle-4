@@ -33668,3 +33668,23 @@ dans l'ordre. `controle_propositions_indices.py` ne la voyait pas : il ne lisait
 
 Bancs : sur les 11 pages, `tests_regle_311_<lot>.mjs` tous verts (34 / 34, et 27 / 27 pour `5e_C3.1`) ; mode mission
 sans refus.
+
+## 19/11/2026 — n°341 sur 5e_C1.1 (l'air de Chengdu) : la bonne réponse n'est plus la plus longue que dans 1 groupe sur 34
+
+Sixième page du chantier n°341, une des deux plus touchées du site : la bonne réponse était la plus longue dans
+**34 groupes sur 34**, souvent deux à huit fois la longueur des intrus, parce qu'elle portait son explication (« très
+probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie
+l'appareil » face à « rien d'anormal »). 5 ⚠ I1.
+- Les 34 bonnes réponses disent ce qu'elles sont (« très probablement un capteur figé », « au traitement », « exacte,
+  mais inacceptable ») ; leurs explications sont dans les cinq corrections complètes, relues une à une.
+- Les intrus courts sont allongés à même hauteur, sans devenir justes (« rien d'anormal » → « rien d'anormal pour un
+  vendredi », « mettre 0 » → « mettre 0 à la place du relevé ») ; deux intrus de plus deviennent des erreurs d'élève
+  (« les laisser dans le calcul, avec une note », « fausse, donc à retirer »).
+- Reste « la plus longue » : `=MOYENNE(A2:A8)` face à `=SOMME`, `=MAX`, `=NB` — le nom de la fonction, rien à changer.
+- `tests_5e_C1.1_chengdu.py` suit les nouvelles bonnes réponses.
+- `changer_proposition.py` lit aussi une valeur dont l'apostrophe est écrite telle quelle (cette page), et garde
+  l'écriture de la page.
+- Site : la bonne réponse est la plus longue dans **25 %** des groupes (31 % avant), 4 pages au-delà de 40 %.
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus). Bancs :
+`tests_5e_C1.1_chengdu.py` 43 / 43, `tests_regle_311_5e_C1.1.mjs` 34 / 34, mode mission sans refus.

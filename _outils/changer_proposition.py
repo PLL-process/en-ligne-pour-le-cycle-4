@@ -30,9 +30,16 @@ def changer(page_txt, mission, groupe, ancien, nouveau, pourquoi=None):
     """Retourne le texte de page modifié ; modifie `mission` (dict) sur place."""
     s = page_txt
     va, vn = esc_attr(ancien), esc_attr(nouveau)
-    motif = re.compile(r'(<input type="radio" name="%s" id="%s__\d+" value=")%s("(?: aria-label="[^"]*")?(?: data-pourquoi="[^"]*")?>)(<label for="%s__\d+"(?: title="[^"]*")?>)(.*?)(</label>)'
-                       % (re.escape(groupe), re.escape(groupe), re.escape(va), re.escape(groupe)))
-    m = motif.search(s)
+    m = None
+    # l'apostrophe d'une valeur s'écrit « &#x27; » ou telle quelle selon la page : les deux sont lues, et la page
+    # garde son écriture (19/11/2026, 5e_C1.1 écrit l'apostrophe telle quelle)
+    for va_page, vn_page in ((va, vn), (va.replace("&#x27;", "'"), vn.replace("&#x27;", "'"))):
+        motif = re.compile(r'(<input type="radio" name="%s" id="%s__\d+" value=")%s("(?: aria-label="[^"]*")?(?: data-pourquoi="[^"]*")?>)(<label for="%s__\d+"(?: title="[^"]*")?>)(.*?)(</label>)'
+                           % (re.escape(groupe), re.escape(groupe), re.escape(va_page), re.escape(groupe)))
+        m = motif.search(s)
+        if m:
+            vn = vn_page
+            break
     assert m, (groupe, ancien)
     debut, fin_input, lab_ouv, lab_txt, lab_fer = m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)
     fin_input = fin_input.replace('aria-label="' , 'aria-label="', 1)
