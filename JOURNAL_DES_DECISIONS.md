@@ -33387,3 +33387,31 @@ verts. Au navigateur, à 390 et 1 280 px : zéro erreur ; une réponse fausse à
 et « Réviser ce piège : 5 questions ». Rouges aussi sur `main`, non touchés : `controle_competences` (5e_C1.3,
 « CRCN 1.2 » sans intitulé dans `qcm_systemes_information_donnees.html`) et `verifier_chaines_energie.py` (attente
 de `chaine_energie_a_elaborer.svg`, délai dépassé).
+
+## 18/11/2026 — 4e_C2.1 : le QCM « Comment expliquer le fonctionnement d'un objet ? » passe au gabarit commun (2 / 6)
+
+Deuxième des six QCM de l'ancien format (carte blanche de Pascal, option A : un QCM par PR).
+`4e_C2.1/qcm_fonctionnement_objet.html` était décrit partout comme « d'un autre auteur, non modifié » : cette
+contrainte est levée depuis le 08/08/2026 (« Il n'y a plus d'autres auteurs »), et la n°66 amendée demande de lire,
+reprendre ce qui vaut, archiver et écrire ce qu'on a repris. C'est fait dans le README de l'archive.
+- **L'ancien** : 25 questions en cartes HTML, sans `const QUESTIONS`. Un tiers portaient des codes C9 de l'ancien
+  programme ; plusieurs renvoyaient à des activités disparues (« dans l'activité spa », les modes « Nor / FrF / Pro »
+  d'un radiateur sans document) ; des distracteurs se devinaient (« le superviseur du chantier », « ouvrir un
+  tiroir »). Archivé (n°12) dans `_archive-anciennes-versions/C2-decrire-les-interactions-entre-un-objet-ou/4e_C2.1/`.
+- **Le nouveau** : 30 questions, 15 C2.1 et 15 C2.2, sur des objets du quotidien (climatiseur, plus courant en
+  Martinique qu'un radiateur ; spa ; lisseur ; imprimante). Mots de la séquence de Hangzhou : les quatre
+  représentations (langage naturel, étapes, graphique, algorithme), « un ressenti n'est pas une mesure », les six
+  familles d'exigences et la question que chacune pose. Six questions lisent un document (n°331), deux figures
+  neuves écrites par `_generation/figures_qcm_fonctionnement_objet.py` : un extrait de notice inventé (touches et
+  pictogrammes, procédure, avertissements) et l'algorigramme de la minuterie. `controle_schemas` : 0 ✘, 0 ⚠. Places
+  8 / 8 / 7 / 7 ; longueur : 1 question détachée sur 30 (« Les incidences environnementales », nom de famille plus
+  long que les autres) ; six pièges.
+- La séquence de Hangzhou (bloc Bonus), le README, la synthèse professeur, `SOURCES_MEDIAS.md` et le manifeste du lot
+  ne parlent plus d'une « ressource héritée, non modifiée » : ils présentent un QCM complémentaire, mêmes compétences,
+  autres objets.
+
+Contrôles : en-tête, banque, effectifs, échantillonnage (C2.1 : 15, C2.2 : 15), longueurs, indices `--strict`,
+cohérence, `banc_aides`, `indices_creux`, `poser.py --etat --strict`, unités, médias, liens, atteignabilité, loupe,
+règles visibles, sigles, consignes à la ligne (la séquence), `tests_export_moodle_xml` : verts. Bancs du lot :
+`tests_4e_C2.1-C2.2_hangzhou.py` 65 / 65, `tests_regle_311_4e_C2.1.mjs` 34 / 34. Au navigateur, 390 et 1 280 px :
+zéro erreur ; une réponse fausse à la question 13 montre l'indice et le piège.

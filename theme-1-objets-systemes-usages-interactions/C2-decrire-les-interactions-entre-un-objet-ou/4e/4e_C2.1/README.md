@@ -61,12 +61,18 @@ jour même :
 Conséquence : **un élève absent ou en reprise à la maison peut faire cette séquence seul**, du début
 à la fin. Tout ce qui lui est demandé a son corrigé.
 
-## Ressource complémentaire, héritée
+## QCM complémentaire
 
-[`qcm_fonctionnement_objet.html`](qcm_fonctionnement_objet.html) (25 questions) était présent dans
-ce dossier avant cette séquence. Il est d'un **autre auteur** et n'a pas été modifié. Il aborde les
-notices et les contraintes, et **déborde sur la programmation** (codes C9). Il ne remplace pas le
-QCM du lot.
+[`qcm_fonctionnement_objet.html`](qcm_fonctionnement_objet.html) — « Comment expliquer le
+fonctionnement d'un objet ? », 30 questions (15 C2.1 + 15 C2.2), dont 6 qui lisent un document : un
+extrait de notice et un algorigramme. Mêmes compétences que la séquence, **sur d'autres objets** :
+un climatiseur, un spa gonflable, un lisseur, une imprimante. Il ne remplace pas le QCM du lot ; il
+sert à s'entraîner une seconde fois, ailleurs que devant la borne.
+
+Réécrit le 18/11/2026 au gabarit commun (aides progressives, révision par pièges :
+`qcm_aides_4e_C2.1_fonctionnement.json`). Figures : `_generation/figures_qcm_fonctionnement_objet.py`.
+L'ancienne version (25 questions, ancien format, codes C9 de l'ancien programme) est archivée dans
+`_archive-anciennes-versions/C2-decrire-les-interactions-entre-un-objet-ou/4e_C2.1/`.
 
 ## Ce que l'élève doit savoir dire à la fin
 
