@@ -34087,3 +34087,73 @@ barre d'outils dans un cadre d'en-tête : il la compte maintenant « visible, ou
 rouge, comme sur `main` : `tests_5e_C1.5-C1.6_sequence` 37 / 38. Mode mission : pilote 50 / 50, générique 60 pages sans
 refus, barre 60 / 60, défaut et éditeur verts. Contrôles : squelette, liens, tactile, boutons vivants, sauvegarde
 locale, règles visibles, hors ligne — rien à signaler ; `verif_regles_audit` : 1 ✘, le même que sur `main`.
+
+## 19/11/2026 — 4e_C9.1, le jardin connecté se programme : les deux chaînes se bâtissent, et l'enquête « POMPE ON… et l'eau ne coule pas »
+Pascal, qui fait la séquence avec ses 4e : « elle ne permet pas aux élèves de maîtriser la chaîne d'énergie et la
+chaîne d'information, ce qui est très important » ; il joint un audit de ChatGPT (deux regards, élève 7,4 / 10,
+inspecteur 6,7 / 10) et une fiche d'exercice, « libre à toi de les utiliser ou pas », carte blanche, périmètre : « seulement
+la 4e jardin ». Audit relu remarque par remarque sur la page rendue (skill `relire-un-audit-externe`).
+
+**Les constats de l'audit, vérifiés : tous confirmés.**
+- activité 1 validée à 6 / 7, une erreur sur le relais comprise ;
+- activité 2 : « numérote dans l'ordre où le programme les parcourt » alors que les blocs 4 et 5 sont deux chemins ;
+  « `6 < heure < 10` […] pas dans un programme » — faux en Python, où l'écriture est valide et exclut 6 h et 10 h ;
+- activité 4 : 8 / 8 validé avec six « non conforme » ; au banc, 250 écrit dans « valeur exacte » restait dans le champ
+  pendant que le banc calculait avec 100 — l'essai 6 ne pouvait pas être exécuté ; à 320 px, le tableau montrait
+  150 px de ses 525 ;
+- le référentiel annonçait « une vraie pompe », la page n'a que le banc d'essai ;
+- 24 écrans en séance 1 ; 155 min d'activités pour 165.
+**Ce que l'audit n'a pas vu** : l'activité 1 montrait le schéma complet des deux chaînes au-dessus des questions qui
+demandent ses fonctions (n°331) — l'élève lisait la réponse, il ne construisait rien ; aucune question ne portait sur ce
+qui circule sur les flèches ; le schéma affichait les seuils 35 et 45 avant que l'activité 2 n'introduise 40.
+
+**Ce qui change dans la séquence** (identifiants gardés : les réponses déjà enregistrées reviennent, sauf les « observé »
+de l'activité 4, dont les propositions changent) :
+- **activité 1 (25 min)** : l'élève bâtit les deux chaînes dans le schéma (chaîne à compléter,
+  `_outils/chaine_a_completer/`, dessin `jardin_programme`) — a) les six fonctions dans leurs blocs, ALIMENTER comprise
+  (groupe `a1_6`), TRANSMETTRE en leurre ; b) ce qui circule sur les sept flèches (`a1_f1` à `a1_f7` : mesures, ordre,
+  message, énergie électrique deux fois, énergie cinétique, eau) ; c) le relais ; d) l'heure. Le schéma complet passe
+  dans la correction (posé par l'outil) et dans un volet « 🖼 Le schéma du dossier technique », après elle. Validation :
+  14 / 15 au moins, les six fonctions et les deux réponses sur le relais justes. Le schéma généré ne nomme plus les
+  seuils (`regenerer_chaines_energie.py`, bloc TRAITER) ;
+- **activité 2** : la consigne dit « deux chemins », une question de plus (`a2_q5` : un seul des blocs 4 et 5 par tour),
+  5 / 6 pour valider ; l'aide, les erreurs fréquentes et « à retenir » disent vrai sur `6 <= heure <= 10` (le QCM et
+  la synthèse professeur aussi) ;
+- **activité 4** : la colonne OBSERVÉ dit ce que l'écran du banc affiche (ON, OFF ; « OFF, sans aucune alerte » à
+  l'essai 6) et la page la compare à ce que le banc affiche vraiment ; le banc trace les six essais du tableau, les deux
+  entrées de chaque ligne (`__exp.essais`, verrou « six essais : n / 6 — il reste les n° … ») ; un écart entre ATTENDU et
+  OBSERVÉ est nommé. Le champ « valeur exacte » donne à la règle une valeur hors de 0–100 telle quelle (`BANC.brut`).
+  Au téléphone, le tableau devient une fiche par essai (`table.recette.fiches`), et un bouton « 🧪 Aller au banc d'essai »
+  déplie le banc replié en tête de page (`entete_telephone.py`) ;
+- **l'enquête de la séance 3** (`#act7`, 12 min, « peut se faire à la maison avant la séance 3 ») : quatre jardins, le
+  même ordre affiché, cinq points de contrôle le long de la chaîne (dessin `jardin_enquete`, sous les yeux). L'élève
+  vérifie la décision du programme, nomme le maillon en panne (ALIMENTER, DISTRIBUER, le circuit d'eau), écrit une
+  vérification, dit ce que l'écran prouve. De la fiche de ChatGPT : l'idée, les relevés A, B et son « C » ; ajoutés : le
+  jardin où le relais ne laisse pas passer (le seul qui isole DISTRIBUER), le schéma, les pourquoi de chaque erreur, la
+  correction. Sa place : en tête de la séance 3 et non en séance 1 (18 min de plus n'y tenaient pas) — elle rappelle les
+  chaînes deux séances après et prépare l'activité 5 (un relais qui bascule trop s'use) ;
+- le tableau de bord compte sept validations (« Six activités et une enquête ») ; le référentiel dit « la pompe du banc
+  d'essai ».
+
+**Mesures.** Mode mission : 67 écrans (60 avant) — séance 1 : 22 (24 avant), séance 3 : 30 (21). Mots visibles en
+page complète (`mesurer_charge.mjs`) : séance 1 1 707 (1 222 avant, dont environ 230 mots écrits dans les deux schémas à
+compléter), séance 2 2 289 (2 197), séance 3 3 348 (2 425 ; l'enquête : 923).
+
+**Deux outils réparés en passant** (n°299 : ils s'arrêtaient sans rien vérifier) : `verifier_chaines_energie.py`
+cherchait dans la page de `3e_C4.1` un objet qui s'appelle maintenant `…_muet.svg` (n°331) et mesurait un objet replié
+(90 / 90, deux fois de suite) ; `mesurer_charge.mjs` attendait 30 s le bouton du mode essentiel, replié derrière « ⚙️ »
+au téléphone depuis ce matin.
+
+**Bancs.** `tests_4e_C9.mjs` 146 / 146 (124 avant) : l'étiquette posée coche le groupe, 14 / 15 avec une erreur sur le
+relais refusée (14 / 15 avec une seule flèche à reprendre : validée), six « observé » faux refusés, 250 % donné tel quel, fiches à 390 px, enquête refusée avec un maillon faux
+puis sans l'écrit, 7 / 7 et persistance. `tests_regle_311_4e_C9.1.mjs` 34 / 34. Mode mission : générique sans refus
+(28 écrans vérifiés par le mode, 170 pourquoi sur 170), pilote 50 / 50, éditeur, barre et défaut verts. Contrôles du
+lot : chaîne à compléter, schéma sous les yeux, corrections (complète, illustrée), validations, unités, hiérarchie,
+aération, squelette, verrous, hors ligne, axe, schémas, tactile, liens, QCM (cohérence, longueurs, indices, aides) —
+rien à signaler ; export Moodle régénéré, son banc vert. Restent rouges, comme sur `main`, hors du lot :
+`controle_debordement` (TP de `4e_C6.2`), `controle_impression` (atelier Pix de `4e_C4.1`), `controle_competences`
+(QCM de `5e_C1.3`), `controle_regle4` (atelier de planification).
+
+**Non fait, à décider** : les deux défauts du moteur de QCM relevés par l'audit (« Score 100 % » à côté de
+« Après aides 0,7 / 20 » ; une compétence jamais tentée classée « À retravailler ») touchent les 76 QCM : PR à part.
+La chaîne du lampadaire (activité 6) reste à faire construire — ce serait la preuve sur un objet nouveau (n°330).

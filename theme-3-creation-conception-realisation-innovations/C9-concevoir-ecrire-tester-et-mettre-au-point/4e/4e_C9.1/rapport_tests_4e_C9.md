@@ -5,6 +5,23 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`
 (committée dans ce dossier, rejouable : `node tests_4e_C9.mjs .`).
 
+> **Mise à jour du 19/11/2026 — audit du jardin connecté : les deux chaînes se bâtissent, l'enquête de la séance 3.**
+> Activité 1 refaite (chaîne à compléter : six fonctions, sept flèches), activités 2 et 4 corrigées, banc à 250 %,
+> enquête « POMPE ON… et l'eau ne coule pas » en tête de la séance 3. Détail : `JOURNAL_DES_DECISIONS.md`, même date.
+> Suite du lot : `node tests_4e_C9.mjs .` → **146 / 146** (124 avant) ; banc n°311 : **34 / 34**, comme avant.
+> Ajoutés à la suite : une étiquette posée dans le schéma coche son groupe ; activité 1 refusée à 14 / 15 avec une
+> erreur sur le relais, validée à 15 / 15, correction qui porte le schéma complet ; activité 2 à 6 / 6 ; activité 4
+> refusée avec six « observé » faux, puis avec des essais non exécutés, validée après les six essais (250 % donné tel
+> quel au banc, écran « H: 250 », POMPE OFF) ; à 390 px, une fiche par essai et le bouton qui mène au banc ; enquête
+> refusée avec un maillon faux, puis sans l'écrit, validée ; progression 7 / 7 et persistance.
+> Mode mission (`_outils/mode_mission/`) : générique sans refus — 67 écrans, 28 vérifiés par le mode, 170 pourquoi
+> sur 170 ; pilote 50 / 50 ; éditeur, barre, défaut : verts. Contrôles de `_outils/` joués sur le lot : voir le journal.
+> **Non exécuté** : un vrai téléphone (émulation 390 × 844 seulement) ; un lecteur d'écran sur la chaîne à compléter ;
+> l'impression papier de l'enquête relue à l'œil (le banc papier passe : aucun texte pâle, aucun champ d'écran).
+> **Scénarios de la vérification, joués par la suite** — activité 1 : 15 justes → 15 / 15, validée ; 14 dont une erreur de relais →
+> 14 / 15, refusée ; 14 dont une erreur de flèche → 14 / 15, validée. Enquête : 6 justes + écrit → validée ; 5 dont un
+> maillon faux → refusée ; 5 dont « la décision » fausse, les trois maillons justes + écrit → validée.
+
 > **Mise à jour du 05/11/2026 — l'éditeur Python intégré.** L'onglet Vittascience est remplacé par l'**éditeur Python intégré** (`_ressources-communes/editeur-python/`, moteur Skulpt chargé au premier ▶ Exécuter, hors ligne) ; Vittascience reste un lien facultatif sous chaque éditeur. L'encart des gestes devient « les quatre gestes de l'éditeur Python » (écrire et exécuter, nommer, sortir, retrouver — « Documents › ta classe » écrit aux gestes 3 et 4), avec cinq captures réelles de la page (`captures_gestes.mjs`) et les captures de l'Explorateur reprises. Activité 3 : l'éditeur (réglages et entrées écrits, la décision à écrire) remplace le cadre Vittascience et son repli « Pas de connexion ? », hors des blocs de parcours. L'atelier des blocs de l'activité 5 n'est pas touché. Huit contrôles ajoutés (code de départ, décision de la correction : POMPE ON, puis POMPE OFF avec H = 55, aucun champ dans un bloc de parcours, aucun réseau). La consigne dit désormais « Nomme ton fichier 4e-JARDIN-TON NOM, puis télécharge-le (geste 3) », et le contrôle qui la lit avec elle.
 > Suite du lot : `node tests_4e_C9.mjs .` → **113 / 113** (105 avant ; les 105 passent) ; banc n°311 : **34 / 34**, comme avant. Banc du composant : `node _ressources-communes/editeur-python/banc_editeur_python.mjs` → **54 / 54**. Non testé : un vrai téléphone, Safari, Firefox, une impression réelle, la fenêtre « Ouvrir » de Windows.
 

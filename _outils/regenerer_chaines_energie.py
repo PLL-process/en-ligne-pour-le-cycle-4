@@ -537,7 +537,7 @@ def jardin_programme():
     (l'humidité, l'heure), une pompe 12 V commandée par un relais. Fichier distinct de celui de 4e_C4.1."""
     d=Diagram('Jardin connecté : l’information (en haut) commande l’énergie (en bas)',
         CONVENTION + ' En haut, la chaîne d’information. Deux entrées arrivent à ACQUÉRIR : l’humidité du sol, grandeur physique lue par le capteur d’humidité, et l’heure, donnée par l’horloge de la carte, sans capteur. '
-        'Une flèche « Mesures » mène à TRAITER : la carte et le programme, avec les seuils 35 et 45 et la mémoire de l’état de la pompe. '
+        'Une flèche « Mesures » mène à TRAITER : la carte et son programme, qui compare les mesures aux seuils et décide. '
         'Une flèche « Décision » mène à COMMUNIQUER : l’écran ou la console affiche POMPE ON ou POMPE OFF, avec un voyant, vers le jardinier. '
         'L’ordre descend de TRAITER et arrive sur DISTRIBUER. '
         'En bas, la chaîne d’énergie. L’énergie électrique entre dans ALIMENTER : une alimentation 12 V séparée, pas l’USB de la carte. L’énergie électrique passe à DISTRIBUER : le relais, le préactionneur. '
@@ -548,7 +548,7 @@ def jardin_programme():
         'Avec un simple voyant, la broche de la carte suffirait : l’ordre arrive toujours sur DISTRIBUER.',1075)
     d.section(95,"CHAÎNE D’INFORMATION — en haut (elle décide)",CYAN)
     d.block(200,130,'ACQUÉRIR','Capteur d’humidité\net horloge de la carte',CYAN,w=230)
-    d.block(600,130,'TRAITER','Carte et programme\nSeuils 35 et 45\nMémoire de l’état',VIOLET,w=280)
+    d.block(600,130,'TRAITER','Carte et son programme\ncompare les mesures aux seuils\net décide',VIOLET,w=280)
     d.block(1060,130,'COMMUNIQUER','Écran ou console\nPOMPE ON / OFF et voyant\nvers le jardinier',GREEN,w=300)
     d.arrow([(15,150),(190,150)],CYAN,'Humidité du sol',20,138,lanchor='start')
     d.arrow([(15,192),(190,192)],CYAN,'Heure',20,180,lanchor='start')

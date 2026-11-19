@@ -156,6 +156,7 @@ const run = async () => {
     a2_q2: "non : le programme boucle et ne doit pas s'arrêter",
     a2_q3: "3 : mesurer, allumer et éteindre",
     a2_q4: "la sortie NON : l'heure est hors de la plage",
+    a2_q5: "par un seul des deux : le 4 sur OUI, le 5 sur NON",
     a3_q1: "pour changer le réglage à un seul endroit",
     a3_q2: "au losange de décision",
     a3_q3: "la pompe s'allume dès qu'UNE condition est vraie",
@@ -169,6 +170,12 @@ const run = async () => {
     a5_q4: "RIEN : la pompe garde son état",
     a5_q5: "une mémoire : une variable qui retient l'état",
     a6_q1: "la grandeur mesurée, les seuils et l'action",
+    e7_q1: "oui : 30 est sous le seuil de 40, et 8 h est dans la plage",
+    e7_q2: "ALIMENTER — l'alimentation 12 V",
+    e7_q3: "DISTRIBUER — le relais",
+    e7_q4: "le relais, et le fil qui lui apporte l'ordre",
+    e7_q5: "aucun des quatre : c'est le circuit d'eau",
+    e7_q6: "que la carte a donné l'ordre — et rien de plus",
   };
   const bonne = (id) => page.selectOption("#" + id, BONNE[id]);
   await page.goto(url(SEQ));
@@ -184,7 +191,7 @@ const run = async () => {
   const billet = await page.textContent("#fbBillet");
   ok("billet d'entrée : feedback affiché, et déclaré hors progression",
      billet.includes("3 / 3") && billet.includes("ne compte pas"), billet.slice(0, 60));
-  ok("billet d'entrée : la progression reste à 0", (await page.textContent("#progTxt")).includes("0 / 6"));
+  ok("billet d'entrée : la progression reste à 0", (await page.textContent("#progTxt")).includes("0 / 7"));
   await shot(page, "billet_entree");
 
   /* identité + hypothèses */
@@ -193,7 +200,9 @@ const run = async () => {
   await page.fill("#hyp2", "Je testerais des valeurs autour du seuil, surtout 39 et 40.");
 
   /* ── tableau de bord (règle n°30) ── */
-  ok("tableau de bord : les 6 activités listées", await page.locator("#tachesBandeau .tache").count() === 6);
+  ok("tableau de bord : les 6 activités et l'enquête listées", await page.locator("#tachesBandeau .tache").count() === 7);
+  ok("tableau de bord : l'enquête porte son nom, avant l'activité 5",
+     await page.evaluate(() => { const t = [...document.querySelectorAll("#tachesBandeau .tache")].map(x => x.textContent); const i = t.findIndex(x => x.includes("Enquête")); return i === 4 && t[5].includes("Activité 5"); }));
 
   /* ── règles n°144 et n°198 dans les activités : ni le rang ni la longueur ne désignent la bonne réponse ── */
   const forme = await page.evaluate((B) => Object.entries(B).map(([id, rep]) => {
@@ -212,28 +221,57 @@ const run = async () => {
   ok("activités : aucune bonne réponse détachée par sa longueur (> 8 caractères)", forme.every(x => !x.detachee),
      forme.filter(x => x.detachee).map(x => x.id).join(", "));
 
-  /* ════════ ACTIVITÉ 1 ════════ */
-  for (const [id, v] of [["a1_1","ACQUÉRIR"],["a1_2","TRAITER"],["a1_3","COMMUNIQUER"],["a1_4","CONVERTIR"]])
+  /* ════════ ACTIVITÉ 1 — les deux chaînes se bâtissent dans le schéma (audit du 19/11/2026) ════════ */
+  ok("activité 1 : le schéma complet n'est plus sous les yeux pendant les questions (n°331) — il est replié, après la correction",
+     await page.evaluate(() => { const i = document.querySelector('#act1 img[src*="chaines_jardin_programme"]'); return !!i && !i.checkVisibility() && !!i.closest("details.approfondissement"); }));
+  ok("activité 1 : deux étapes de chaîne à compléter, dessinées (six fonctions, puis sept flèches)",
+     await page.evaluate(() => { const c = [...document.querySelectorAll("#act1 .cac.cac-pret:not(.cac-corrige)")]; return c.length === 2 && c[0].querySelectorAll(".cac-case").length === 6 && c[1].querySelectorAll(".cac-case").length === 7; }));
+  /* le geste de l'élève : toucher l'étiquette, puis sa case — la réponse s'écrit dans le groupe de boutons radio */
+  await page.locator('#act1 .cac >> nth=0').locator('.cac-lab[data-v="ACQUÉRIR"]').click();
+  await page.locator('#act1 .cac >> nth=0').locator('.cac-case[data-cle="acquerir.fonction"]').click();
+  ok("activité 1 : une étiquette posée dans le schéma coche la réponse du groupe", (await page.inputValue("#a1_1")) === "ACQUÉRIR", await page.inputValue("#a1_1"));
+  for (const [id, v] of [["a1_2","TRAITER"],["a1_3","COMMUNIQUER"],["a1_4","CONVERTIR"],["a1_6","ALIMENTER"],
+                         ["a1_f1","Mesures"],["a1_f2","Ordre"],["a1_f3","Message"],["a1_f4","Énergie électrique"],["a1_f5","Énergie électrique"],["a1_f6","Énergie cinétique"],["a1_f7","Eau"]])
     await page.selectOption("#" + id, v);
   await bonne("a1_5");
   await bonne("a1_r1");
+  await page.selectOption("#a1_r2", "oui, il la produit à partir du signal de la carte");   /* l'erreur que l'audit laissait passer */
+  await page.fill("#a1_just", "L'heure est une entrée parce que le programme s'en sert pour décider, exactement comme il se sert de l'humidité ; elle vient de l'horloge.");
+  await page.click('[data-check="1"]');
+  ok("activité 1 : 14 / 15 avec une erreur sur le relais → refusée (avant l'audit, 6 / 7 passait)",
+     (await page.textContent("#fb1")).includes("14 / 15") && (await page.textContent("#fb1")).includes("relais") && !(await page.evaluate(() => window.__valid.act1)),
+     await page.textContent("#fb1"));
+  await page.fill("#a1_just", "");
   await bonne("a1_r2");
   await page.click('[data-check="1"]');
   ok("verrou de rédaction : act. 1 refusée sans la justification écrite",
      (await page.textContent("#fb1")).includes("justification"));
   await page.fill("#a1_just", "L'heure est une entrée parce que le programme s'en sert pour décider, exactement comme il se sert de l'humidité ; ce qui change est son origine, elle vient de l'horloge et non du monde physique. Sans elle, on arroserait en plein soleil.");
   await page.click('[data-check="1"]');
-  ok("activité 1 validée (7/7 + justification)", (await page.textContent("#fb1")).includes("7 / 7"), await page.textContent("#fb1"));
+  ok("activité 1 validée (15/15 + justification)", (await page.textContent("#fb1")).includes("15 / 15") && (await page.evaluate(() => window.__valid.act1)), await page.textContent("#fb1"));
+  /* une flèche peut rester à reprendre : 14 / 15, les six fonctions et le relais justes → validée */
+  await page.selectOption("#a1_f7", "Mesures");
+  await page.click('[data-check="1"]');
+  ok("activité 1 : 14 / 15 avec une seule flèche à reprendre (fonctions et relais justes) → validée",
+     (await page.textContent("#fb1")).includes("14 / 15") && (await page.evaluate(() => window.__valid.act1)), await page.textContent("#fb1"));
+  await page.selectOption("#a1_f7", "Eau");
+  await page.click('[data-check="1"]');
+  await page.locator("#act1 details.correction > summary").click(); await page.waitForTimeout(350);
+  ok("activité 1 : la correction porte le schéma complet, dessiné (n°336) — six fonctions écrites, aucune case à remplir",
+     await page.evaluate(() => { const c = document.querySelector("#act1 details.correction .cac.cac-corrige"); const t = c ? c.textContent : "";
+       return !!c && c.querySelectorAll(".cac-dessin *").length > 40 && !c.querySelector(".cac-case")
+           && ["ACQUÉRIR", "TRAITER", "COMMUNIQUER", "ALIMENTER", "DISTRIBUER", "CONVERTIR", "cinétique", "Ordre"].every(m => t.includes(m)); }));
+  await page.locator("#act1 details.correction > summary").click();
   await shot(page, "act1_validee");
 
   /* ════════ ACTIVITÉ 2 ════════ */
   for (const [id, v] of [["ag1","1"],["ag2","2"],["ag3","3"],["ag4","4"],["ag5","5"]])
     await page.selectOption("#" + id, v);
-  for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4"]) await bonne(id);
+  for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4","a2_q5"]) await bonne(id);
   await page.fill("#prog1", "SEUIL = 40\nlire humidite -> H\nlire heure -> heure\nSI H < SEUIL ET heure >= 6 ET heure <= 10 ALORS\n    allumer pompe\nSINON\n    eteindre pompe\nFIN SI");
   await page.click('[data-check="2"]');
   ok("activité 2 validée (ordre + lecture + pseudo-code avec ET et bornes)",
-     (await page.textContent("#fb2")).includes("5 / 5"), await page.textContent("#fb2"));
+     (await page.textContent("#fb2")).includes("6 / 6"), await page.textContent("#fb2"));
   await shot(page, "act2_validee");
 
   /* ════════ LE BANC D'ESSAI ════════ */
@@ -269,21 +307,82 @@ const run = async () => {
      await page.textContent("#fb3"));
   await shot(page, "act3_validee");
 
-  /* ════════ ACTIVITÉ 4 — le jeu d'essais ════════ */
+  /* ════════ ACTIVITÉ 4 — le jeu d'essais (audit du 19/11/2026) ════════ */
   for (const [id, v] of [["a4_a1","pompe ON"],["a4_a2","pompe OFF"],["a4_a3","pompe OFF"],
                          ["a4_a4","pompe ON"],["a4_a5","pompe OFF"]])
     await page.selectOption("#" + id, v);
   await bonne("a4_a6");
   await bonne("a4_m1");
   await bonne("a4_m2");
-  for (let i = 1; i <= 6; i++) await page.selectOption("#a4_o" + i, "conforme");
+  /* l'audit : six « observé » faux validaient. Ici, six observés remplis à l'envers, et les essais pas tous exécutés */
+  const FAUX = ["pompe OFF", "pompe ON", "pompe ON", "pompe OFF", "pompe ON", "pompe ON"];
+  for (let i = 1; i <= 6; i++) await page.selectOption("#a4_o" + i, FAUX[i - 1]);
   await page.click('[data-check="4"]');
-  ok("activité 4 validée (8/8 attendus + 6 observés + frontières exécutées)",
-     (await page.textContent("#fb4")).includes("8 / 8"), await page.textContent("#fb4"));
+  ok("activité 4 : six « observé » qui ne disent pas ce que le banc affiche → refusée, et la page le dit",
+     !(await page.evaluate(() => window.__valid.act4)) && (await page.textContent("#fb4")).includes("ne dit pas ce que le banc affiche"), await page.textContent("#fb4"));
+  ok("activité 4 : un écart entre ATTENDU et OBSERVÉ est nommé", (await page.textContent("#fb4")).includes("C'est un écart"), await page.textContent("#fb4"));
+  const OBS = ["pompe ON", "pompe OFF", "pompe OFF", "pompe ON", "pompe OFF", "pompe OFF, sans aucune alerte"];
+  for (let i = 1; i <= 6; i++) await page.selectOption("#a4_o" + i, OBS[i - 1]);
+  await page.click('[data-check="4"]');
+  ok("activité 4 : six observés justes mais des essais non exécutés (39 et 40 faits à 8 h, pas à 7 h ; 250 jamais) → refusée",
+     !(await page.evaluate(() => window.__valid.act4)) && (await page.textContent("#fb4")).includes("/ 6 tracés"), await page.textContent("#fb4"));
+  /* les six essais du tableau, réellement exécutés : les deux entrées de chaque ligne */
+  for (const [h, t] of [[25, 8], [55, 8], [25, 23], [39, 7], [40, 7]]) {
+    await page.fill("#bHeure", String(t)); await page.dispatchEvent("#bHeure", "input");
+    await page.fill("#bHumNum", String(h)); await page.waitForTimeout(120);
+  }
+  ok("banc : cinq essais tracés, le sixième reste à faire et le banc le nomme",
+     /5 \/ 6 — il reste le n° 6/.test(await page.textContent("#v-essais")), await page.textContent("#v-essais"));
+  await page.fill("#bHeure", "8"); await page.dispatchEvent("#bHeure", "input");
+  await page.fill("#bHumNum", "250"); await page.waitForTimeout(150);
+  ok("banc : 250 % (capteur débranché) est donné tel quel à la règle — l'écran affiche H: 250 et POMPE OFF, sans alerte (avant : ramené à 100 en silence)",
+     (await page.textContent("#bL2")).includes("250") && (await lcd()) === "POMPE OFF" && (await page.textContent("#bHumVal")).trim() === "250", await page.textContent("#bL2"));
+  ok("banc : les six essais du tableau sont cochés ✔", (await page.textContent("#v-essais")).startsWith("✔"), await page.textContent("#v-essais"));
+  await page.fill("#bHum", "30"); await page.dispatchEvent("#bHum", "input"); await page.waitForTimeout(120);
+  ok("banc : le curseur reprend la main après une valeur hors de 0–100", (await page.textContent("#bL2")).includes("H: 30 "), await page.textContent("#bL2"));
+  await page.click('[data-check="4"]');
+  ok("activité 4 validée (8/8 + six essais exécutés + six observés qui disent ce que le banc affiche)",
+     (await page.textContent("#fb4")).includes("8 / 8") && (await page.evaluate(() => window.__valid.act4)), await page.textContent("#fb4"));
+  await page.setViewportSize({ width: 390, height: 844 }); await page.waitForTimeout(150);
+  ok("activité 4 · 390 px : le tableau d'essais est une fiche par essai, sans défilement de côté (avant : 150 px visibles sur 525)",
+     await page.evaluate(() => { const t = document.querySelector("#act4 table.recette.fiches"); const r = t.rows[1]; return t.scrollWidth <= t.clientWidth + 1 && getComputedStyle(r).display === "block" && getComputedStyle(t.rows[0]).display === "none"; }));
+  await shot(page, "act4_fiches_390", "#act4 table.recette.fiches");
+  /* au téléphone, dès la séance 2, le banc est replié en tête de page : un bouton de l'activité y mène et le déplie */
+  await page.locator("#act4 [data-vers-banc]").click(); await page.waitForTimeout(500);
+  ok("activité 4 · 390 px : « Aller au banc d'essai » déplie le banc et y mène (le champ « valeur exacte » se voit)",
+     await page.evaluate(() => { const c = document.getElementById("bancCard"), r = c.getBoundingClientRect(); return !c.classList.contains("entete-carte-pliee") && r.top < 300 && !!document.getElementById("bHumNum").offsetParent; }));
+  await page.setViewportSize({ width: 1280, height: 900 }); await page.waitForTimeout(150);
   await shot(page, "act4_validee");
 
+  /* ════════ L'ENQUÊTE — « POMPE ON… et l'eau ne coule pas » (audit du 19/11/2026) ════════ */
+  await page.click('.seance-tab[data-panel="s3"]'); await page.waitForTimeout(350);
+  ok("enquête : elle ouvre la séance 3, avant l'activité 5, avec son schéma dessiné (cinq points ① à ⑤) et quatre relevés",
+     await page.evaluate(() => { const a = document.getElementById("act7"), b = document.getElementById("act5"), c = a && a.querySelector("figure.schema-sous-les-yeux .cac-corrige"), t = c ? c.textContent : "";
+       return !!a && !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) && a.querySelectorAll(".releve").length === 4
+           && !!c && c.querySelectorAll(".cac-dessin *").length > 40 && ["①", "②", "③", "④", "⑤", "DISTRIBUER", "Ordre"].every(m => t.includes(m)); }));
+  for (const id of ["e7_q1","e7_q2","e7_q4","e7_q5","e7_q6"]) await bonne(id);
+  await page.selectOption("#e7_q3", "CONVERTIR — la pompe");
+  await page.fill("#e7_just", "Je pense que le réservoir est vide. Pour le vérifier, je regarde le niveau de l'eau. Si j'ai raison, le tuyau n'est plus dans l'eau.");
+  await page.click('[data-check="7"]');
+  ok("enquête : 5 / 6 avec un maillon faux (le relais pris pour la pompe) → refusée",
+     (await page.textContent("#fb7")).includes("5 / 6") && (await page.textContent("#fb7")).includes("trois maillons") && !(await page.evaluate(() => window.__valid.act7)), await page.textContent("#fb7"));
+  await bonne("e7_q3");
+  await page.fill("#e7_just", "");
+  await page.click('[data-check="7"]');
+  ok("verrou de rédaction : enquête refusée sans la vérification écrite du jardin D", (await page.textContent("#fb7")).includes("jardin D"), await page.textContent("#fb7"));
+  await page.fill("#e7_just", "Je pense que le réservoir est vide. Pour le vérifier, je regarde le niveau de l'eau. Si j'ai raison, le tuyau n'est plus dans l'eau.");
+  await page.click('[data-check="7"]');
+  ok("enquête validée (6/6 + vérification écrite)", (await page.textContent("#fb7")).includes("6 / 6") && (await page.evaluate(() => window.__valid.act7)), await page.textContent("#fb7"));
+  /* les trois maillons justes et l'écrit, une autre réponse fausse : 5 / 6 → validée (le critère l'annonce) */
+  await page.selectOption("#e7_q1", "non : à 8 h, on est hors de la plage d'arrosage");
+  await page.click('[data-check="7"]');
+  ok("enquête : 5 / 6, les trois maillons justes et l'écrit → validée",
+     (await page.textContent("#fb7")).includes("5 / 6") && (await page.evaluate(() => window.__valid.act7)), await page.textContent("#fb7"));
+  await bonne("e7_q1");
+  await page.click('[data-check="7"]');
+  await shot(page, "enquete_validee", "#act7");
+
   /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis, dans l'atelier du programme (31/10/2026) ════════ */
-  await page.click('.seance-tab[data-panel="s3"]');
   for (const id of ["a5_q1","a5_q2","a5_q3","a5_q4","a5_q5"]) await bonne(id);
   await page.fill("#a5_diag", "La pompe change d'état 6 fois en 70 secondes alors que l'humidité n'a varié que de 2 points. Le relais s'use à chaque manœuvre, la pompe démarre sans cesse, et l'eau arrive par à-coups qui ne descendent jamais aux racines.");
   ok("atelier · prog3 n'est plus une zone où écrire : cachée, en lecture seule, elle porte le Python écrit par les blocs",
@@ -390,11 +489,11 @@ const run = async () => {
   await shot(page, "act6_validee");
 
   /* ════════ progression, persistance ════════ */
-  ok("progression : 6 / 6 activités validées", (await page.textContent("#progTxt")).includes("6 / 6"));
+  ok("progression : 7 / 7 activités validées (les six activités et l'enquête)", (await page.textContent("#progTxt")).includes("7 / 7"), await page.textContent("#progTxt"));
   const coches = await page.evaluate(() => ["s1","s2","s3"].map(s => document.getElementById("done-" + s).textContent.trim()).join(""));
   ok("onglets : les 3 séances cochées ✔", coches === "✔✔✔", coches);
-  ok("tableau de bord : les 6 tâches cochées",
-     await page.locator("#tachesBandeau .tache.fait").count() === 6);
+  ok("tableau de bord : les 7 tâches cochées",
+     await page.locator("#tachesBandeau .tache.fait").count() === 7);
   await page.fill("#bilan1", "J'ai appris qu'un programme peut être juste et inutilisable.");
   await page.check('input[name="conf_c91"][value="3"]');
   await page.check('input[name="conf_c93"][value="3"]');
@@ -403,7 +502,9 @@ const run = async () => {
 
   await page.waitForTimeout(900);
   await page.reload(); await page.waitForTimeout(700);
-  ok("persistance : progression 6/6 restaurée après rechargement", (await page.textContent("#progTxt")).includes("6 / 6"));
+  ok("persistance : progression 7/7 restaurée après rechargement", (await page.textContent("#progTxt")).includes("7 / 7"));
+  ok("persistance : les essais du banc et les réponses de l'enquête reviennent",
+     (await page.textContent("#v-essais")).startsWith("✔") && (await page.inputValue("#e7_q5")) === BONNE.e7_q5 && (await page.inputValue("#a1_f6")) === "Énergie cinétique");
   ok("persistance : réponses restaurées (prog3 contient les deux seuils)",
      (await page.inputValue("#prog3")).includes("35") && (await page.inputValue("#prog3")).includes("45"));
   ok("persistance : verrous du banc restaurés (frontières cochées)",
@@ -517,7 +618,7 @@ const run = async () => {
      }));
   await page.click('.seance-tab[data-panel="s1"]');   /* la figure doit être dans le panneau visible */
   await page.waitForTimeout(200);
-  await page.locator("#s1 img.figure").first().click();
+  await page.locator("#act2 img.figure").first().click();
   ok("règle n°92 : la loupe ouvre l'image en grand", await page.isVisible(".loupe-fond[data-ouvert]"));
   await page.keyboard.press("Escape");
   ok("loupe : Échap referme", !(await page.isVisible(".loupe-fond[data-ouvert]")));
