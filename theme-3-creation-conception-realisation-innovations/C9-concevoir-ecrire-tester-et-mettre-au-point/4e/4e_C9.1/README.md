@@ -15,10 +15,13 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
 ## Ressources
 
 * **`sequence_4e_C9_jardin-programme.html`** — la séquence complète (3 séances de
-  55 min, 6 activités) : les deux chaînes et le relais, l'algorigramme, l'écriture
+  55 min, 6 activités et une enquête de 12 min) : les deux chaînes et le relais — **bâties dans le schéma** par l'élève
+  (chaîne à compléter, `_outils/chaine_a_completer/`, depuis le 19/11/2026) —, l'algorigramme, l'écriture
   du Python dans l'**éditeur intégré à la page** (Vittascience en lien facultatif, depuis le 04/11/2026), le jeu d'essais avec ses quatre
   familles, la mise au point par **hystérésis**, et le réinvestissement sur un
-  lampadaire **sans squelette fourni**.
+  lampadaire **sans squelette fourni**. En tête de la séance 3, l'enquête **« POMPE ON… et l'eau ne coule pas »** :
+  quatre jardins, le même ordre affiché, des relevés le long de la chaîne ; l'élève nomme le maillon en panne
+  (un ordre n'est pas un effet).
   **Banc d'essai du jardin intégré** (humidité, heure, règle à un ou deux seuils,
   compteur de basculements) avec verrous expérientiels : les activités 3, 4 et 5
   exigent des manipulations réellement faites.
@@ -72,7 +75,8 @@ facultatif vers Vittascience demande une connexion.
 ## Le relais de l'activité 1
 
 Le jardin étudié : carte + capteur d'humidité (entrée analogique) + **module relais** + pompe 12 V
-avec son **alimentation séparée**. Les élèves ne le montent pas : ils le lisent sur le schéma de l'activité 1.
+avec son **alimentation séparée**. Les élèves ne le montent pas : ils le construisent dans le schéma de l'activité 1
+(les fonctions dans les blocs, puis ce qui circule sur les flèches).
 
 > La version 🅰 « Matériel réel » (montage et téléversement) a été **retirée le 05/10/2026** : l'éditeur Python ne pilote aucune carte. Elle pourra revenir avec la future version carte réelle, en interface Arduino (voir `JOURNAL_DES_DECISIONS.md`).
 

@@ -340,6 +340,10 @@ const run = async () => {
   ok("activité 4 · 390 px : le tableau d'essais est une fiche par essai, sans défilement de côté (avant : 150 px visibles sur 525)",
      await page.evaluate(() => { const t = document.querySelector("#act4 table.recette.fiches"); const r = t.rows[1]; return t.scrollWidth <= t.clientWidth + 1 && getComputedStyle(r).display === "block" && getComputedStyle(t.rows[0]).display === "none"; }));
   await shot(page, "act4_fiches_390", "#act4 table.recette.fiches");
+  /* au téléphone, dès la séance 2, le banc est replié en tête de page : un bouton de l'activité y mène et le déplie */
+  await page.locator("#act4 [data-vers-banc]").click(); await page.waitForTimeout(500);
+  ok("activité 4 · 390 px : « Aller au banc d'essai » déplie le banc et y mène (le champ « valeur exacte » se voit)",
+     await page.evaluate(() => { const c = document.getElementById("bancCard"), r = c.getBoundingClientRect(); return !c.classList.contains("entete-carte-pliee") && r.top < 300 && !!document.getElementById("bHumNum").offsetParent; }));
   await page.setViewportSize({ width: 1280, height: 900 }); await page.waitForTimeout(150);
   await shot(page, "act4_validee");
 

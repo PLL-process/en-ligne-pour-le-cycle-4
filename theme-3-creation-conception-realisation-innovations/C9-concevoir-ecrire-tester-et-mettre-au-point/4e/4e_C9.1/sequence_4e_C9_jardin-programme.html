@@ -210,6 +210,7 @@
     table.recette.fiches td[data-label]::before{content:attr(data-label);font-weight:600;color:var(--sub)}
     table.recette.fiches td:first-child,table.recette.fiches td:first-child::before{font-weight:700;color:var(--hl)}
   }
+  table.recette.fiches td[data-label^="Entrées"]{white-space:nowrap}
   .regle-or-schema{border:3px solid #1F3864;border-radius:12px;padding:14px 18px;margin:18px 0;background:#EAF1FB;color:#111;font-weight:600;line-height:1.5}
   .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
   .rappel-spiralaire h2{margin:.1em 0 .5em}
@@ -3836,6 +3837,7 @@ heure = <span class="num">8</span>
     <div class="exo">
       <h4>a) et b) Le tableau d'essais</h4>
       <p class="consigne-tableau">① Choisis le résultat ATTENDU de chaque essai, avant de lancer.<br>② Lance l'essai au banc : règle l'humidité <b>et</b> l'heure de la ligne, sur la règle « UN seuil ».<br>③ Note dans OBSERVÉ ce que l'écran du banc affiche.<br>④ Compare tes deux colonnes : un écart est une information, pas une faute.</p>
+      <p class="vers-banc"><button type="button" class="btn small ghost" data-vers-banc>🧪 Aller au banc d'essai (en haut de la page)</button></p>
       <table class="recette fiches" aria-label="Tableau d'essais à remplir">
         <tr><th>N°</th><th>Scénario</th><th>Entrées</th><th>ATTENDU (avant)</th><th>OBSERVÉ (pendant)</th></tr>
         <tr><td data-label="Essai n° ">1</td><td>sol sec, le matin</td><td data-label="Entrées : ">H = 25 · 8 h</td>
@@ -5107,6 +5109,18 @@ if($("bHumNum")) $("bHumNum").addEventListener("input", ()=>{
   $("bHum").value = Math.max(0, Math.min(100, v)); bancMaj(true);
 });
 document.querySelectorAll('input[name="bMode"]').forEach(r=>r.addEventListener("change", ()=>{ BANC.mode = bancMode(); bancMaj(true); }));
+/* Le banc est en tête de page. Au téléphone, dès la séance 2, il est replié derrière « ▸ … Le banc d'essai du jardin »
+   (_outils/entete_telephone.py) : depuis l'activité qui s'en sert, un bouton y mène et le déplie (19/11/2026). */
+document.querySelectorAll("[data-vers-banc]").forEach(b=>b.addEventListener("click", ()=>{
+  const c = $("bancCard"); if(!c) return;
+  if(c.classList.contains("entete-carte-pliee")){
+    let v = c.previousElementSibling;
+    while(v && !v.classList.contains("entete-carte-bascule")) v = v.previousElementSibling;
+    if(v) v.click();
+  }
+  c.scrollIntoView({block:"start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  const h = c.querySelector("h2"); if(h){ h.setAttribute("tabindex", "-1"); h.focus({preventScroll:true}); }
+}));
 if($("btnRAZ")) $("btnRAZ").addEventListener("click", ()=>{
   BANC.bascules = 0;
   if($("bCompteur")) $("bCompteur").textContent = "0";

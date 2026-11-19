@@ -46,11 +46,12 @@ reste quand tout le reste est oublié.
 
 | Séance | Activité | Durée | Production |
 |---|---|---|---|
-| **1** — Comprendre et dessiner | 1. Les deux chaînes et le relais | 20 min | Organes classés + justification écrite sur « l'heure est une entrée » |
-| | 2. De la règle à l'algorigramme | 25 min | Ordre des 5 blocs + pseudo-code **modifié** |
+| **1** — Comprendre et dessiner | 1. Les deux chaînes et le relais | 25 min | Les deux chaînes **bâties dans le schéma** (six fonctions, puis ce qui circule sur les sept flèches) + deux réponses sur le relais + justification écrite sur « l'heure est une entrée » |
+| | 2. De la règle à l'algorigramme | 25 min | Numéros des 5 blocs, les deux chemins après le losange + pseudo-code **modifié** |
 | **2** — Écrire et tester | 3. Écrire et exécuter | 30 min | Programme enregistré + journal chiffré |
-| | 4. Le jeu d'essais | 25 min | Tableau à 6 essais, ATTENDU rempli **avant** |
-| **3** — Mettre au point | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas, construit et exécuté dans l'atelier du programme + démonstration sur le même tremblement |
+| | 4. Le jeu d'essais | 25 min | Tableau à 6 essais, ATTENDU rempli **avant**, OBSERVÉ lu sur l'écran du banc (les six essais réellement exécutés, 250 % compris) |
+| **3** — Mettre au point | Enquête. « POMPE ON… et l'eau ne coule pas » | 12 min, à la maison avant la séance (ou en ouverture) | Le maillon en panne de trois jardins (ALIMENTER, DISTRIBUER, le circuit d'eau) + une vérification écrite |
+| | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas, construit et exécuté dans l'atelier du programme + démonstration sur le même tremblement |
 | | 6. Le lampadaire | 25 min | Programme écrit **sans squelette** + justification chiffrée |
 
 ---
@@ -70,8 +71,9 @@ changé.
 > hasard : c'est ce qui rend la comparaison honnête et reproductible d'un poste à
 > l'autre.
 
-**Cinq verrous expérientiels** : humidité variée · essai hors plage horaire ·
-frontières 39 et 40 · pompe affolée · pompe calmée. Les activités
+**Six verrous expérientiels** : humidité variée · essai hors plage horaire ·
+frontières 39 et 40 · les six essais du tableau de l'activité 4 · pompe affolée · pompe calmée.
+Le champ « valeur exacte » accepte une valeur hors de 0–100 (250 : le capteur débranché de l'essai 6). Les activités
 3, 4 et 5 **refusent** de se valider sans eux. Depuis le 31/10/2026, les deux derniers
 se cochent dans **l'atelier du programme** de l'activité 5 (sous l'animation) : il exécute
 le programme que l'élève a construit en blocs, sur le même tremblement que le banc, puis sur
