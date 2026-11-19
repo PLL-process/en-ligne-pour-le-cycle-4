@@ -2238,27 +2238,45 @@ body.ms .cac-reserve{--cac-bas:84px}
   <p class="billet-intro">Une question par ligne du bloc « Avant de commencer ». <b><br>Elles ne sont pas notées et ne comptent pas dans ta progression</b> : elles te disent quoi relire avant de te lancer. <br>« Je ne sais pas encore » est une réponse utile.</p>
   <fieldset class="qcm-groupe" id="be_1" data-melange="1">
       <legend>Dans la station, qui <b>décide</b> de déclencher l'alerte ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="la sirène, qui prévient"><label for="be_1__2">la sirène, qui prévient</label></div>
-      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="le capteur de vent, qui mesure"><label for="be_1__1">le capteur de vent, qui mesure</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__2" value="la sirène, qui prévient" data-pourquoi="La sirène exécute un ordre : elle ne décide de rien. Cherche l'élément qui compare la mesure au seuil."><label for="be_1__2">la sirène, qui prévient</label></div>
+      <div class="qcm-option"><input type="radio" name="be_1" id="be_1__1" value="le capteur de vent, qui mesure" data-pourquoi="Le capteur mesure, mais il ne compare rien. Une décision demande de traiter la mesure."><label for="be_1__1">le capteur de vent, qui mesure</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__3" value="la carte, qui traite la mesure"><label for="be_1__3">la carte, qui traite la mesure</label></div>
       <div class="qcm-option"><input type="radio" name="be_1" id="be_1__4" value="je ne sais pas encore"><label for="be_1__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_2" data-melange="1">
       <legend>Avant d'être envoyée au serveur, une mesure est <b>horodatée</b>. Que lui ajoute-t-on ?</legend>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="une valeur de secours en cas de panne"><label for="be_2__3">une valeur de secours en cas de panne</label></div>
-      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="l&#x27;unité de la grandeur mesurée"><label for="be_2__2">l'unité de la grandeur mesurée</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__3" value="une valeur de secours en cas de panne" data-pourquoi="Horodater ne remplace pas une valeur manquante. Le mot contient « horo- », comme horloge."><label for="be_2__3">une valeur de secours en cas de panne</label></div>
+      <div class="qcm-option"><input type="radio" name="be_2" id="be_2__2" value="l&#x27;unité de la grandeur mesurée" data-pourquoi="L'unité dit en quoi on mesure (km/h, hPa). Horodater, c'est dire QUAND la mesure a été prise."><label for="be_2__2">l'unité de la grandeur mesurée</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__1" value="la date et l&#x27;heure de la mesure"><label for="be_2__1">la date et l'heure de la mesure</label></div>
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
       <legend>Dans une table de données bien construite, à quoi correspond <b>une ligne</b> ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="une mesure"><label for="be_3__2">une mesure</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="un capteur"><label for="be_3__3">un capteur</label></div>
-      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="une grandeur mesurée"><label for="be_3__1">une grandeur mesurée</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="un capteur" data-pourquoi="Un capteur produit une mesure à chaque relevé : il remplit beaucoup de lignes. Une ligne, c'est un seul relevé."><label for="be_3__3">un capteur</label></div>
+      <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="une grandeur mesurée" data-pourquoi="La grandeur mesurée (le vent, la pression) donne une colonne. Une ligne, c'est un relevé pris à un moment donné."><label for="be_3__1">une grandeur mesurée</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__4" value="je ne sais pas encore"><label for="be_3__4">je ne sais pas encore</label></div>
   </fieldset>
   <button type="button" class="btn" id="btnBillet">🎫 Voir où j'en suis</button>
   <div class="billet-retour" id="fbBillet" role="status" aria-live="polite"></div>
+
+  <details class="correction correction-billet">
+  <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
+  <ol class="corr-billet">
+    <li><b>Dans la station, qui <b>décide</b> de déclencher l'alerte ?</b>
+    <br>✅ <b>la carte, qui traite la mesure</b>
+    <br>✘ «&nbsp;la sirène, qui prévient&nbsp;»&nbsp;: La sirène exécute un ordre : elle ne décide de rien. Cherche l'élément qui compare la mesure au seuil.
+    <br>✘ «&nbsp;le capteur de vent, qui mesure&nbsp;»&nbsp;: Le capteur mesure, mais il ne compare rien. Une décision demande de traiter la mesure.</li>
+    <li><b>Avant d'être envoyée au serveur, une mesure est <b>horodatée</b>. Que lui ajoute-t-on ?</b>
+    <br>✅ <b>la date et l'heure de la mesure</b>
+    <br>✘ «&nbsp;une valeur de secours en cas de panne&nbsp;»&nbsp;: Horodater ne remplace pas une valeur manquante. Le mot contient « horo- », comme horloge.
+    <br>✘ «&nbsp;l'unité de la grandeur mesurée&nbsp;»&nbsp;: L'unité dit en quoi on mesure (km/h, hPa). Horodater, c'est dire QUAND la mesure a été prise.</li>
+    <li><b>Dans une table de données bien construite, à quoi correspond <b>une ligne</b> ?</b>
+    <br>✅ <b>une mesure</b>
+    <br>✘ «&nbsp;un capteur&nbsp;»&nbsp;: Un capteur produit une mesure à chaque relevé : il remplit beaucoup de lignes. Une ligne, c'est un seul relevé.
+    <br>✘ «&nbsp;une grandeur mesurée&nbsp;»&nbsp;: La grandeur mesurée (le vent, la pression) donne une colonne. Une ligne, c'est un relevé pris à un moment donné.</li>
+  </ol>
+</details>
 </section>
 <script>
 /* Règle d'or n°300 — le groupe porte sa valeur (vague du 20/09/2026) : tout ce qui
