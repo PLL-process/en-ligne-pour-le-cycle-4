@@ -463,7 +463,8 @@ function barre(){
   $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance()) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
-  $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
+  $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance. Chaque écran en rapporte jusqu'à 3 : 3 sans erreur, 2 avec une erreur, 1 au-delà");
+  $("#msGains").title = "Chaque écran rapporte jusqu'à 3 étoiles : 3 sans erreur, 2 avec une erreur, 1 au-delà. Ouvrir une aide ne retire rien.";
   $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
@@ -637,7 +638,8 @@ function verifier(){
        Ouvrir une aide ne retire rien. */
     var err = M.erreurs[s.id] || 0, n = !err ? 3 : err <= (avec.length >= 3 ? 2 : 1) ? 2 : 1, avant = M.etoiles[s.id] || 0;
     M.etoiles[s.id] = Math.max(avant, n); gain = M.etoiles[s.id] - avant;
-    dire(s, "ok", n === 3 ? "Tout est juste, du premier coup." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend.", n);
+    /* la règle des étoiles se dit au moment où elles tombent (audit du jardin connecté, 19/11/2026) */
+    dire(s, "ok", n === 3 ? "Tout est juste, du premier coup : 3 étoiles sur 3." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend. " + (n === 2 ? "2 étoiles sur 3 : une erreur en route." : "1 étoile sur 3 : plusieurs erreurs en route."), n);
   } else dire(s, "", "C'est noté. Lis le message de la vérification ci-dessous.");
   M.fait[s.id] = true; ecrire();
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre

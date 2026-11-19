@@ -1914,7 +1914,8 @@ function barre(){
   $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance()) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
-  $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance");
+  $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance. Chaque écran en rapporte jusqu'à 3 : 3 sans erreur, 2 avec une erreur, 1 au-delà");
+  $("#msGains").title = "Chaque écran rapporte jusqu'à 3 étoiles : 3 sans erreur, 2 avec une erreur, 1 au-delà. Ouvrir une aide ne retire rien.";
   $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
   var exo = s.t === "partie", aVerifier = exo && (s.champs.some(function(f){ return cle(f) !== undefined; }) || (s.dernier && s.check));
   $("#msPrec").disabled = k === 0 && !voisine(-1);
@@ -2088,7 +2089,8 @@ function verifier(){
        Ouvrir une aide ne retire rien. */
     var err = M.erreurs[s.id] || 0, n = !err ? 3 : err <= (avec.length >= 3 ? 2 : 1) ? 2 : 1, avant = M.etoiles[s.id] || 0;
     M.etoiles[s.id] = Math.max(avant, n); gain = M.etoiles[s.id] - avant;
-    dire(s, "ok", n === 3 ? "Tout est juste, du premier coup." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend.", n);
+    /* la règle des étoiles se dit au moment où elles tombent (audit du jardin connecté, 19/11/2026) */
+    dire(s, "ok", n === 3 ? "Tout est juste, du premier coup : 3 étoiles sur 3." : "Tout est juste. Tu as corrigé tes erreurs : c'est comme ça qu'on apprend. " + (n === 2 ? "2 étoiles sur 3 : une erreur en route." : "1 étoile sur 3 : plusieurs erreurs en route."), n);
   } else dire(s, "", "C'est noté. Lis le message de la vérification ci-dessous.");
   M.fait[s.id] = true; ecrire();
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
@@ -2700,6 +2702,7 @@ body.ms .cac-reserve{--cac-bas:84px}
 @media(max-width:680px){table{display:block;overflow-x:auto}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C4.1.html">📖 Lexique</a></nav>
+<main id="principal">
 <h1>Thème 2 · Martinique — 5e · S4-S5 : Le lampadaire intelligent</h1>
 <p class="subtitle">Énergie, information, matériaux, réseau : tous les secrets du lampadaire solaire du parking</p>
 <div class="toolbar">
@@ -4232,6 +4235,7 @@ body.ms .cac-reserve{--cac-bas:84px}
 </section>
 
 </div>
+</main>
 <footer>
   <p>Séquence 5e_C4.1 → 5e_C4.8 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
   <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
@@ -6078,5 +6082,52 @@ window.CAC_DESSINS.lampadaire = (function(){
 })();
 </script>
 <!-- retrait-validation v1 : fin -->
+<!-- onglets-seance v1 : début — clavier et séance retenue ; source unique : _outils/onglets_seance.py -->
+<script>
+(function(){
+  "use strict";
+  var onglets = [].slice.call(document.querySelectorAll(".seance-tab"));
+  /* des onglets qui sont des liens mènent à d'autres pages (séquence découpée) : rien à piloter ici */
+  if (!onglets.length || onglets.some(function(o){ return o.matches("a[href]"); })) return;
+  var cle = "seance-active:" + location.pathname;
+  function actif(){
+    for (var i = 0; i < onglets.length; i++)
+      if (onglets[i].classList.contains("active") || onglets[i].getAttribute("aria-selected") === "true") return i;
+    return 0;
+  }
+  function tabindex(){ var a = actif(); onglets.forEach(function(o, i){ o.tabIndex = (i === a) ? 0 : -1; }); }
+  function retenir(o){ var v = o.getAttribute("data-panel") || o.id; try { if (v) localStorage.setItem(cle, v); } catch (e) {} }
+  onglets.forEach(function(o, i){
+    o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); });
+    o.addEventListener("keydown", function(e){
+      if (e.defaultPrevented) return;   /* la page gère déjà ses flèches */
+      var j = null, n = onglets.length;
+      if (e.key === "ArrowRight") j = (i + 1) % n;
+      else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = n - 1;
+      if (j === null) return;
+      e.preventDefault();
+      onglets[j].click();
+      onglets[j].focus();
+    });
+  });
+  function rouvrir(){
+    tabindex();
+    if (location.hash && location.hash.length > 1) return;
+    var v = null; try { v = localStorage.getItem(cle); } catch (e) {}
+    if (!v) return;
+    var o = onglets.filter(function(x){ return (x.getAttribute("data-panel") || x.id) === v; })[0];
+    if (!o || onglets.indexOf(o) === actif()) return;
+    var x = window.scrollX, y = window.scrollY;
+    o.click();
+    window.scrollTo(x, y);
+    requestAnimationFrame(function(){ window.scrollTo(x, y); });
+  }
+  if (document.readyState === "complete") setTimeout(rouvrir, 0);
+  else window.addEventListener("load", function(){ setTimeout(rouvrir, 0); });
+})();
+</script>
+<!-- onglets-seance v1 : fin -->
 </body>
 </html>

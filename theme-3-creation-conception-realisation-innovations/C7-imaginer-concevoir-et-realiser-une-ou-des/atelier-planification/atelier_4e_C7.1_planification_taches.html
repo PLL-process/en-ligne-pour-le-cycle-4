@@ -1381,5 +1381,52 @@ majProgres(); majBandeau();
 })();
 </script>
 <!-- retrait-validation v1 : fin -->
+<!-- onglets-seance v1 : début — clavier et séance retenue ; source unique : _outils/onglets_seance.py -->
+<script>
+(function(){
+  "use strict";
+  var onglets = [].slice.call(document.querySelectorAll(".seance-tab"));
+  /* des onglets qui sont des liens mènent à d'autres pages (séquence découpée) : rien à piloter ici */
+  if (!onglets.length || onglets.some(function(o){ return o.matches("a[href]"); })) return;
+  var cle = "seance-active:" + location.pathname;
+  function actif(){
+    for (var i = 0; i < onglets.length; i++)
+      if (onglets[i].classList.contains("active") || onglets[i].getAttribute("aria-selected") === "true") return i;
+    return 0;
+  }
+  function tabindex(){ var a = actif(); onglets.forEach(function(o, i){ o.tabIndex = (i === a) ? 0 : -1; }); }
+  function retenir(o){ var v = o.getAttribute("data-panel") || o.id; try { if (v) localStorage.setItem(cle, v); } catch (e) {} }
+  onglets.forEach(function(o, i){
+    o.addEventListener("click", function(){ retenir(o); setTimeout(tabindex, 0); });
+    o.addEventListener("keydown", function(e){
+      if (e.defaultPrevented) return;   /* la page gère déjà ses flèches */
+      var j = null, n = onglets.length;
+      if (e.key === "ArrowRight") j = (i + 1) % n;
+      else if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = n - 1;
+      if (j === null) return;
+      e.preventDefault();
+      onglets[j].click();
+      onglets[j].focus();
+    });
+  });
+  function rouvrir(){
+    tabindex();
+    if (location.hash && location.hash.length > 1) return;
+    var v = null; try { v = localStorage.getItem(cle); } catch (e) {}
+    if (!v) return;
+    var o = onglets.filter(function(x){ return (x.getAttribute("data-panel") || x.id) === v; })[0];
+    if (!o || onglets.indexOf(o) === actif()) return;
+    var x = window.scrollX, y = window.scrollY;
+    o.click();
+    window.scrollTo(x, y);
+    requestAnimationFrame(function(){ window.scrollTo(x, y); });
+  }
+  if (document.readyState === "complete") setTimeout(rouvrir, 0);
+  else window.addEventListener("load", function(){ setTimeout(rouvrir, 0); });
+})();
+</script>
+<!-- onglets-seance v1 : fin -->
 </body>
 </html>
