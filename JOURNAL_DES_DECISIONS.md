@@ -33579,3 +33579,24 @@ vertes et sans conflit.
 Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions --longueur` (plus d'⚠ ici),
 unités. Bancs : `tests_4e_C5.1-C5.3.mjs` 26 / 26, `tests_regle_311_4e_C5.1.mjs` 34 / 34, mode mission (pourquoi des
 erreurs 105 / 105).
+
+## 19/11/2026 — n°341 sur 4e_C6.1 (ajuster le programme du jardin) : la bonne réponse ne se reconnaît plus à sa longueur
+
+Troisième page du chantier n°341, la plus touchée du site par la longueur : la bonne réponse était la plus longue dans
+**19 groupes sur 20** (95 %), souvent trois à six fois la longueur des intrus, parce qu'elle portait son explication
+(« RESTE ALLUMÉE : 38 % est entre les deux seuils, l'hystérésis garde l'état — le battement a disparu » face à
+« redémarre deux fois »).
+- Les 19 bonnes réponses disent ce qu'elles sont (« reste allumée », « garde son état », « deux seuils : allumer sous
+  20 lux, éteindre au-dessus de 40 lux ») ; leurs explications étaient déjà, mot pour mot, dans les corrections.
+- Les intrus sont allongés à même hauteur et les plaisanteries remplacées par des erreurs d'élève, avec leur pourquoi :
+  « a été piraté » → « lit le capteur trop rarement, une fois par heure », « la présidente appuie sur un bouton » →
+  « humidité sous 35 %, à n'importe quelle heure », « peindre le lampadaire » → les deux seuils inversés, « attend
+  l'année prochaine » → « teste en simulation, sans sauvegarder l'original »…
+- Les deux échelles d'auto-positionnement disent ce que veut dire chaque niveau (I4).
+- Plus aucun ⚠ I1 ni « la plus longue » sur cette page ; sur le site, la bonne réponse est la plus longue dans 33 % des
+  groupes (38 % ce matin), 6 pages au-delà de 40 % (8 ce matin).
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus, `--longueur`
+sans ⚠ ici), unités. Bancs : `tests_regle_311_4e_C6.1.mjs` 34 / 34, mode mission (pourquoi des erreurs 53 / 53),
+`tests_4e_C6.1-C6.3.mjs` 26 / 29 — **les mêmes trois rouges sur `main`** (barre de progression et coches d'onglet après
+rechargement), sans lien avec cette passe, à reprendre à part.
