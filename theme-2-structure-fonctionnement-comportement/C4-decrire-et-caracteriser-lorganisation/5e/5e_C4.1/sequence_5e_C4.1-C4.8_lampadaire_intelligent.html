@@ -2947,9 +2947,9 @@ body.ms .cac-reserve{--cac-bas:84px}
       <fieldset class="qcm-groupe" id="e1_m1" data-melange="1">
   <legend>Le mât (dehors, vent, pluie, embruns) : en quel matériau est-il ?</legend>
   <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__3" value="bois brut" data-pourquoi="Sans traitement, le bois pourrit sous la pluie et les embruns : le mât ne tiendrait pas des années."><label for="e1_m1__3">bois brut</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__4" value="verre" data-pourquoi="Le verre casse au premier choc : trop fragile pour porter un luminaire dans le vent."><label for="e1_m1__4">verre</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__1" value="acier galvanisé (traité contre la rouille)"><label for="e1_m1__1">acier galvanisé (traité contre la rouille)</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__2" value="carton renforcé (plusieurs couches collées)" data-pourquoi="Le carton se ramollit dès qu'il est mouillé : impossible dehors."><label for="e1_m1__2">carton renforcé (plusieurs couches collées)</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__4" value="verre trempé" data-pourquoi="Le verre casse au premier choc : trop fragile pour porter un luminaire dans le vent."><label for="e1_m1__4">verre trempé</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__1" value="acier galvanisé"><label for="e1_m1__1">acier galvanisé</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m1" id="e1_m1__2" value="carton renforcé" data-pourquoi="Le carton se ramollit dès qu'il est mouillé : impossible dehors."><label for="e1_m1__2">carton renforcé</label></div>
 </fieldset>
       <fieldset class="qcm-groupe" id="e1_m2" data-melange="1">
   <legend>La vitre qui protège les LED : en quel matériau est-elle ?</legend>
@@ -2967,10 +2967,10 @@ body.ms .cac-reserve{--cac-bas:84px}
 </fieldset>
       <fieldset class="qcm-groupe" id="e1_m4" data-melange="1">
   <legend>Les fils électriques (bon conducteur) : en quel matériau sont-ils ?</legend>
-  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__1" value="cuivre (gainé de plastique isolant)"><label for="e1_m4__1">cuivre (gainé de plastique isolant)</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__4" value="coton" data-pourquoi="Le coton est un isolant : le courant ne le traverse pas."><label for="e1_m4__4">coton</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__1" value="cuivre gainé de plastique isolant"><label for="e1_m4__1">cuivre gainé de plastique isolant</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__4" value="coton tressé" data-pourquoi="Le coton est un isolant : le courant ne le traverse pas."><label for="e1_m4__4">coton tressé</label></div>
   <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__3" value="verre, comme dans une fibre optique" data-pourquoi="Le verre est un isolant, et il casse quand on le plie : on ne peut pas en faire un fil."><label for="e1_m4__3">verre, comme dans une fibre optique</label></div>
-  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__2" value="bois" data-pourquoi="Le bois sec est un isolant : il ne conduit pas le courant."><label for="e1_m4__2">bois</label></div>
+  <div class="qcm-option"><input type="radio" name="e1_m4" id="e1_m4__2" value="bois sec" data-pourquoi="Le bois sec est un isolant : il ne conduit pas le courant."><label for="e1_m4__2">bois sec</label></div>
 </fieldset>
       <label for="e1_just" style="display:block;margin-top:8px"><b>c) Justifie :</b> pourquoi de l'acier « galvanisé » pour le mât, en Martinique ?</label>
       <textarea id="e1_just" placeholder="Près de la mer, l'air contient…"></textarea>
@@ -4326,7 +4326,7 @@ const CHECKS = {
   1: function(){
     let ok=0;
     const att={e1_1:"le panneau solaire",e1_2:"la batterie",e1_3:"le bloc de LED",e1_4:"la carte électronique",e1_5:"le détecteur de mouvement (PIR)",
-               e1_m1:"acier galvanisé (traité contre la rouille)",e1_m2:"polycarbonate (un plastique transparent)",e1_m3:"aluminium",e1_m4:"cuivre (gainé de plastique isolant)"};
+               e1_m1:"acier galvanisé",e1_m2:"polycarbonate (un plastique transparent)",e1_m3:"aluminium",e1_m4:"cuivre gainé de plastique isolant"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     const j=txt("e1_just");
     const jOk = j.length>=15 && (j.includes("sel")||j.includes("embrun")||j.includes("rouille")||j.includes("mer"));
