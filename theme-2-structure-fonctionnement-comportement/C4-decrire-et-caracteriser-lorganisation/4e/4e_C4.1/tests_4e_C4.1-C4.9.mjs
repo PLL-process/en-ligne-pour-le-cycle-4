@@ -230,18 +230,61 @@ ok(`13 · un mauvais diagnostic (« ${mauvaise} ») est refusé, et le compteur 
 ok('13 bis · les symptômes de la panne sont bien affichés avant le diagnostic',
    /SYMPTÔMES/.test(symptomes), symptomes.slice(0, 60));
 
+/* La remise en service (audit du 19/11/2026) : la bonne cause ne suffit plus ;
+   la bonne réparation est lue dans la page (REMISE), la mauvaise prise dans les options réelles. */
+const REMISES = await p.evaluate(() => ({ bonnes: REMISE,
+  offertes: [...document.querySelectorAll('#repSel input[type=radio]')].map(o => o.value) }));
+await p.click(`.pannebtn[data-panne="${pannes[0]}"]`); await p.waitForTimeout(60);
+await p.selectOption('#causeSel', CAUSES.bonnes[pannes[0]]);
+await p.click('#btnCause'); await p.waitForTimeout(60);
+ok('13 ter · la bonne cause ne répare rien : elle ouvre le choix de la remise en service',
+   await p.isVisible('#repChoix') && (await p.textContent('#panneEtat')).includes('0 / 3'),
+   await p.textContent('#panneTxt'));
+await p.selectOption('#repSel', REMISES.offertes.find(r => r !== REMISES.bonnes[pannes[0]]));
+await p.click('#btnRep'); await p.waitForTimeout(60);
+ok('13 quater · une mauvaise remise en service est refusée',
+   /❌/.test(await p.textContent('#panneTxt')) && (await p.textContent('#panneEtat')).includes('0 / 3'),
+   (await p.textContent('#panneTxt')).slice(0, 60));
 for (const panne of pannes) {
   await p.click(`.pannebtn[data-panne="${panne}"]`); await p.waitForTimeout(60);
   await p.selectOption('#causeSel', CAUSES.bonnes[panne]);
   await p.click('#btnCause'); await p.waitForTimeout(60);
+  await p.selectOption('#repSel', REMISES.bonnes[panne]);
+  await p.click('#btnRep'); await p.waitForTimeout(60);
 }
 ok(`14 · les ${pannes.length} pannes réparées → « réseau réparé » et verrou __exp.reseau posé`,
    /3 \/ 3/.test(await p.textContent('#panneEtat'))
    && await p.evaluate(() => !!window.__exp.reseau), await p.textContent('#panneEtat'));
 
 await valider(4);
-ok('15 · activité 4 validée 4 / 4 une fois les trois pannes diagnostiquées',
-   /4 \/ 4/.test(await retour(4)) && !/Résous les 3 pannes/.test(await retour(4))
+ok('14 bis · activité 4 encore refusée : la carte du bac 2 n\'est pas sur le réseau',
+   /Ajoute la carte du bac 2/.test(await retour(4)) && !(await valide(4)), (await retour(4)).slice(0, 90));
+
+/* Le paramétrage de l'IP fixe (C4.7) et la simulation complétée (C4.9) */
+const regle = async (ip, masque, passerelle) => {
+  await p.fill('#param_ip', ip); await p.fill('#param_masque', masque); await p.fill('#param_passerelle', passerelle);
+  await p.click('#btnParam'); await p.waitForTimeout(60);
+};
+await regle('192.168.1.30', '255.255.255.0', '192.168.1.1');
+ok('14 ter · une IP dans la plage DHCP est refusée, avec sa raison',
+   /plage DHCP/.test(await p.textContent('#paramTxt')) && !(await p.evaluate(() => !!window.__exp.paramOk)));
+await regle('192.168.1.50', '255.255.255.0', '192.168.1.1');
+ok('14 quater · une IP déjà prise est refusée : c\'est le conflit de la panne 2',
+   /déjà prise/.test(await p.textContent('#paramTxt')));
+await regle('192.168.1.60', '255.255.255.0', '192.168.9.1');
+ok('14 quinquies · une mauvaise passerelle est refusée', /Passerelle/.test(await p.textContent('#paramTxt')));
+await p.click('#btnPing'); await p.waitForTimeout(60);
+ok('14 sexies · le ping d\'une carte mal réglée échoue', /Délai d'attente/.test(await p.textContent('#paramTxt'))
+   && !(await p.evaluate(() => !!window.__exp.param)));
+await regle('192.168.1.60', '255.255.255.0', '192.168.1.1');
+await p.click('#btnPing'); await p.waitForTimeout(60);
+ok('14 septies · bien réglée, la carte répond au ping 4 / 4 → verrou __exp.param',
+   /reçus = 4/.test(await p.textContent('#paramTxt')) && await p.evaluate(() => !!window.__exp.param),
+   await p.textContent('#paramEtat'));
+
+await valider(4);
+ok('15 · activité 4 validée 4 / 4 une fois les pannes réparées et la carte du bac 2 sur le réseau',
+   /4 \/ 4/.test(await retour(4)) && !/Résous les 3 pannes|Ajoute la carte/.test(await retour(4))
    && await valide(4), (await retour(4)).slice(0, 60));
 
 /* ── activité 5 : l'exercice d'atelier incrusté en tête (cahier des charges, flexibilité) ──
