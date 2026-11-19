@@ -33904,3 +33904,18 @@ Site (QCM) : la bonne réponse est la plus longue 24 %, la plus courte 15 %, au 
 Bancs : `tests_4e_C3.1-C3.3_hangzhou.py` 32 / 32, `tests_3e_C4.7-C4.8.mjs` 35 / 35. Les deux banques sans banc
 (éclairage, réseau local de 5e) ont été ouvertes dans Chromium : 30 questions chacune, 0 erreur de console.
 Réfutations alignées, `controle_indices_qcm` (rien), export Moodle régénéré, banc vert.
+
+## 19/11/2026 — n°341, QCM `5e_C1.1` Chengdu : de 14 sur 30 à 4 ; plus aucune banque au-delà de 40 %
+
+Dernière banque au-delà du seuil. Elle est produite par `_generation/q.py`. Les dix retouches sont faites **à la
+fois** dans `q.py`, qui reste la source, et dans la page publiée. Reconstruire depuis le gabarit aurait perdu les
+couches posées depuis : aides, carte « Avant de commencer », énoncés en HTML. Contrôle : les 120 propositions de la
+page se retrouvent mot pour mot dans `q.py`.
+- Deux bonnes réponses perdent leur explication : « … le matin : on ne saurait jamais que la veille » → « … le matin
+  même » ; « parce qu'ainsi le tri alphabétique donne l'ordre chronologique » → « pour que le tri par nom suive l'ordre
+  des dates », comme dans la séquence (#804). Huit intrus sont allongés à sens égal.
+- **QCM du site** : la bonne réponse est la plus longue dans **24 %** des 2 301 questions (33 % ce matin), la plus
+  courte dans 15 %, au milieu dans 62 %. **0 banque au-delà de 40 %** (20 ce matin).
+
+Bancs : `tests_5e_C1.1_chengdu.py` 43 / 43 ; QCM ouvert dans Chromium, 0 erreur ; réfutations alignées,
+`controle_indices_qcm` (rien), export Moodle régénéré, banc vert.
