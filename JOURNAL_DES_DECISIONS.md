@@ -33511,3 +33511,21 @@ en 4e_C9.1, un listing Python entier s'affichait en une ligne, balises comprises
 Contrôles : `verif_qcm_coherence` (76 QCM), en-tête, banque, `poser.py --etat --strict`, `banc_aides` (8 / 8). Au
 navigateur, chaque question des huit QCM (240) : aucune balise ni entité en clair, zéro erreur ; le listing de 4e_C9.1
 est coloré (7 mots-clés, légende). Bancs des lots : 4e_C9.1 124 / 124, 5e_C9.1 66 / 66, 3e_C9.1 89 / 89, 4e_C6.2 56 / 56.
+
+## 19/11/2026 — 4e_C4.1 : la bonne réponse du QCM du jardin ne se devine plus à sa longueur
+
+Relevé le 19/11 en refaisant le QCM « Automatisation » du même dossier : dans `qcm_4e_C4.1-C4.9_jardin_connecte.html`,
+la bonne réponse était la plus longue **13 fois sur 30** (⚠ de `controle_longueurs`, au-delà de 40 %), dont quatre
+fois de loin (« lumineuse → électrique → chimique stockée → électrique → cinétique » contre trois chaînes de trois
+mots). Un élève qui choisit toujours la plus longue avait presque une chance sur deux.
+- Treize questions retouchées, sans changer une bonne réponse sur le fond : soit la bonne réponse raccourcie, soit les
+  distracteurs allongés ; à la question 4, quatre chaînes de cinq formes d'énergie, toutes de même longueur.
+- Au passage, six distracteurs qui se devinaient sans réfléchir sont remplacés par des erreurs plausibles, avec leur
+  réfutation : « le bac B était jaloux », « au hasard, comme la plupart du temps », « réservées aux forces de police »,
+  « les adresses fixes sont devenues payantes », « elles produisent toutes deux de l'eau », « la batterie détruit
+  l'énergie ».
+- Résultat : la bonne réponse est la plus longue 3 fois sur 30, aucune question détachée (4 avant).
+
+Contrôles : `controle_longueurs` (plus d'⚠ sur ce QCM), `verif_qcm_coherence` (réfutations alignées), indices
+`--strict`, `indices_creux` (0), `banc_aides`, en-tête, banque, `tests_export_moodle_xml` : verts. Banc du lot :
+52 / 52.
