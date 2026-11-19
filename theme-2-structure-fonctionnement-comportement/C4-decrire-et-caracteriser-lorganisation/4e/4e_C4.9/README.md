@@ -3,7 +3,7 @@
 ✅ **Cette compétence est couverte par une séquence mutualisée.**
 
 ➡ Séquence complète : [`../4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html`](../4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html)
-(« Le jardin connecté » — séance 3 : simulation de réseau fournie, complétée par le diagnostic).
+(« Le jardin connecté » — séance 3 : la simulation de réseau fournie est complétée par l'élève — trois pannes réparées, puis la carte du bac 2 ajoutée avec son IP fixe et validée par un ping 4 / 4).
 
 ➡ QCM d'entraînement : [`../4e_C4.1/qcm_4e_C4.1-C4.9_jardin_connecte.html`](../4e_C4.1/qcm_4e_C4.1-C4.9_jardin_connecte.html) (questions RES).
 
