@@ -17,7 +17,8 @@ menu, bouton radio, case), après une validation, la retire :
   · `window.__valid[…] = false` ;
   · le retour de l'activité (`#fb<n>`) dit « Tu as changé une réponse après la vérification : vérifie de nouveau. » ;
   · la page enregistre (`save`) et recompte sa progression (`majProgress`, `majProgres`), si elle les a.
-Un curseur (`type="range"`) est un essai, pas une réponse : il n'y touche pas. Rien ne change pour la vérification
+Une activité qui porte plusieurs « Vérifier » (des questions, puis un algorigramme à remettre en ordre) partage sa
+zone : un champ y appartient au bouton qui le suit (v2, 19/11/2026). Un curseur (`type="range"`) est un essai, pas une réponse : il n'y touche pas. Rien ne change pour la vérification
 elle-même, ni pour la reprise d'une sauvegarde : le script ne s'arme qu'une fois la page chargée. Une étiquette posée
 dans une chaîne à compléter (`_outils/chaine_a_completer/`) coche le bouton radio de sa case : elle compte aussi.
 
@@ -34,9 +35,9 @@ import sys
 
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUT = "<!-- retrait-validation v1 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->"
-FIN = "<!-- retrait-validation v1 : fin -->"
-BLOC_RE = re.compile(r"<!-- retrait-validation v1 : début.*?<!-- retrait-validation v1 : fin -->\n?", re.S)
+DEBUT = "<!-- retrait-validation v2 : début — règle d'or n°340 ; source unique : _outils/retrait_validation.py -->"
+FIN = "<!-- retrait-validation v2 : fin -->"
+BLOC_RE = re.compile(r"<!-- retrait-validation v\d+ : début.*?<!-- retrait-validation v\d+ : fin -->\n?", re.S)
 REVOQUE = re.compile(r"__valid\s*\[[^\]]+\]\s*=\s*false")
 SCRIPT = r"""<script>
 (function(){
@@ -57,6 +58,16 @@ SCRIPT = r"""<script>
              && !zone.parentElement.classList.contains("seance-panel")
              && zone.parentElement.querySelectorAll("[data-check]").length === 1) zone = zone.parentElement;
     }
+    /* v2 (19/11/2026) : une activité peut porter plusieurs vérifications — des questions, puis un algorigramme à
+       remettre en ordre. Un champ appartient alors à la vérification qui le suit : remettre l'algorigramme en ordre ne
+       retire plus la validation des questions (bancs de 4e_C6.1 et 5e_C6.1) */
+    var boutons = zone.querySelectorAll("[data-check]");
+    function sienne(t){
+      if (boutons.length < 2) return true;
+      for (var i = 0; i < boutons.length; i++)
+        if (t.compareDocumentPosition(boutons[i]) & Node.DOCUMENT_POSITION_FOLLOWING) return boutons[i] === btn;
+      return boutons[boutons.length - 1] === btn;
+    }
     function cle(){
       var v = window.__valid || {};
       return v[n] ? n : v["act" + n] ? "act" + n : null;
@@ -67,6 +78,7 @@ SCRIPT = r"""<script>
       /* une réponse vidée n'est pas une réponse changée : le mode mission efface ainsi, au rechargement, une
          proposition fausse — la validation obtenue reste ; c'est la nouvelle réponse, écrite ou choisie, qui la retire */
       if (t.type === "radio" || t.type === "checkbox" ? !t.checked : !String(t.value || "").trim()) return;
+      if (!sienne(t)) return;
       var k = cle(); if (k === null) return;
       window.__valid[k] = false;
       var fb = document.getElementById("fb" + n);

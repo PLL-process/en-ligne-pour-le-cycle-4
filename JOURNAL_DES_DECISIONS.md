@@ -33947,3 +33947,19 @@ IP dans la plage DHCP, IP déjà prise, mauvaise passerelle, ping qui échoue, p
 validée. `tests_regle_311_4e_C4.1.mjs` 34 / 34, mode mission sans refus (pourquoi 144 / 144),
 `controle_validations` et `controle_propositions_indices` : rien à signaler, unités. Revue d'écran à 390 px : le
 nouveau bloc se lit, sans défilement horizontal.
+## 19/11/2026 — n°340, retrait des validations v2 : une activité qui porte plusieurs vérifications
+
+Les bancs de `4e_C6.1` et `5e_C6.1` étaient rouges sur `main` depuis la pose de la n°340 (#795). Cause : dans ces deux
+séquences, une même activité porte **deux** boutons « Vérifier » — les questions, puis l'algorigramme à remettre en
+ordre. Le script v1 prenait toute l'activité pour zone de chaque bouton : remettre l'algorigramme en ordre retirait
+aussi la validation des questions, que le banc attend intacte.
+- **v2** (`_outils/retrait_validation.py`) : quand la zone porte plusieurs vérifications, un champ appartient au bouton
+  qui le **suit** dans la page (le dernier bouton pour un champ placé après tous). Une activité à une seule vérification
+  ne change pas.
+- Reposé sur les **35** pages (marqueurs `retrait-validation v2`) ; `controle_validations.py` : rien à signaler.
+- Banc de l'outil : 15 / 15 (deux cas neufs : l'algorigramme ne retire que sa validation, la question que la sienne).
+
+Bancs : `4e_C6.1` 29 / 29, `5e_C6.1` 32 / 32 (rouges avant) ; les 58 autres bancs des lots touchés, verts.
+
+Retiré : `_audit_tmp.mjs`, un script de vérification de l'audit du jardin livré par erreur à la racine avec #819 —
+il ne servait qu'à cette relecture, aucun outil ni aucune page ne l'appelle.
