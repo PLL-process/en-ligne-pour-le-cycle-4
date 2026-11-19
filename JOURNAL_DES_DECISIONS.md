@@ -33809,3 +33809,19 @@ l'outil distingue maintenant.
 Bancs : `tests_3e_C4.1-C4.2.mjs` 25 / 25, `tests_3e_C4.3-C4.6.mjs` 23 / 23, `tests_3e_C4.7-C4.8.mjs` 35 / 35,
 `tests_3e_C9.2-C8.3.mjs` 167 / 167, `tests_pont_en_h.mjs` 37 / 37, les cinq `tests_regle_311` 34 / 34, mode mission
 sans refus sur les sept pages ; `tests_5e_C6.1-C6.3.mjs` 29 / 32, les trois mêmes rouges que sur `main`.
+
+## 19/11/2026 — n°341 dans les QCM : `qcm_3e_C7.6_le-boitier`, de 20 sur 30 à 0
+
+Les séquences finies, le chantier n°341 passe aux QCM (`const QUESTIONS`). Mesure de départ (`controle_longueurs.py`) :
+sur 2 301 questions, la bonne réponse est la plus longue dans **33 %**, la plus courte dans 15 %, au milieu dans 52 % ;
+**20 banques** au-delà de 40 %. La pire : le boîtier étanche de 3e, **20 questions sur 30**.
+- Ici l'écart est petit (1 à 10 signes) : les propositions sont déjà de même hauteur, mais la bonne finit souvent par
+  un complément de plus (« … : ici un presse-étoupe », « … sec dedans »).
+- 21 propositions retouchées. Huit bonnes réponses perdent leur complément, treize intrus gagnent quelques mots
+  (« exporté en STL » → « exporté au format STL »). Le sens et l'ordre ne changent pas ; les réfutations `d` restent
+  alignées.
+- Banque : la plus longue 0 %, la plus courte 3 %, au milieu 97 %. Export Moodle régénéré.
+
+Contrôles : `controle_longueurs` (0 banque signalée), `verif_qcm_coherence` (réfutations alignées, positions
+8 / 7 / 7 / 8), `controle_indices_qcm` (rien), unités. Banc : `tests_3e_C7.6_qcm.mjs` 32 / 32 ;
+`tests_export_moodle_xml.mjs` vert.
