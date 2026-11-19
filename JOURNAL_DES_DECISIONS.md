@@ -33529,3 +33529,29 @@ mots). Un élève qui choisit toujours la plus longue avait presque une chance s
 Contrôles : `controle_longueurs` (plus d'⚠ sur ce QCM), `verif_qcm_coherence` (réfutations alignées), indices
 `--strict`, `indices_creux` (0), `banc_aides`, en-tête, banque, `tests_export_moodle_xml` : verts. Banc du lot :
 52 / 52.
+
+## 19/11/2026 — n°341 sur 4e_C4.1 (jardin connecté) : plus aucune question ne souffle sa réponse
+
+Première page du chantier n°341 (21 pages relevées le 17/11 : I1 53, I3 25, I4 15).
+- **I1, six questions** où seule la bonne réponse s'expliquait (« un TRAITEMENT de la carte : 612 ÷ 1023 ≈ 60 % — la
+  donnée devient lisible », « découpe laser — bords nets et brunis par le faisceau, pièce plate »…) : la bonne réponse
+  dit maintenant seulement ce qu'elle est (« un calcul fait par la carte programmable », « découpe laser ») ; le
+  pourquoi reste dans la correction.
+- **Les intrus de ces six questions** qui se devinaient sans réfléchir (« parce que les plantes préfèrent », « parce
+  que le DHCP est payant », « d'arroser plus fort », « de rendre les données secrètes », « l'évaporation de l'eau »,
+  « une colonne mal rangée ») deviennent des erreurs que font les élèves (« parce que le DHCP ne fonctionne pas en
+  wifi », « une conversion faite par le tableur du professeur », « toutes les valeurs d'une même grandeur »…), chacune
+  avec son pourquoi, dans la page et dans `mission_4e_C4.1.json`.
+- **I4, les quatre échelles d'auto-positionnement** : la grille A/B/C/D sans explication devient quatre échelles
+  `positionnement` dont chaque niveau dit ce que l'élève sait faire pour la famille (« 🟢 solide — je trace seul·e la
+  chaîne du jardin et je nomme l'énergie sur chaque flèche »). Les valeurs ne changent pas : les sauvegardes se relisent.
+- Outil : `_outils/changer_proposition.py`, un module qui change une proposition partout où elle vit (value, label,
+  data-pourquoi, réponse attendue, `mission_<lot>.json`), d'un seul geste.
+- **Constat, à suivre** : dans cette page, la bonne réponse reste la plus longue dans 24 groupes sur 39 (62 % ; 74 %
+  avant) — ⚠ de `controle_ordre_propositions.py --longueur`, comme 7 autres pages du site. C'est le même défaut que le
+  QCM du jardin corrigé ce matin : il a sa propre passe.
+
+Contrôles : `controle_propositions_indices` (4e_C4.1 : rien à signaler ; site : I1 47, I3 25, I4 11, 20 pages),
+`controle_ordre_propositions` (0 refus), unités, sigles, règles visibles, liens, consignes à la ligne. Bancs :
+`tests_4e_C4.1-C4.9.mjs` 52 / 52, `tests_regle_311_4e_C4.1.mjs` 34 / 34, `mode_mission/banc_generique.mjs` (pourquoi
+des erreurs 144 / 144).
