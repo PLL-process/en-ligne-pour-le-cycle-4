@@ -35,7 +35,7 @@
   .btn.warn{background:#8a4a1d}
   .btn:disabled{opacity:.45;cursor:not-allowed}
   /* tableau de bord */
-  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  .dash{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
   @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
   @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
   .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
@@ -103,6 +103,7 @@
   .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
   .res-grid b{display:block;font-size:1.5em}
   .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  .note-essais{text-align:center;margin:0 0 14px;line-height:1.7}
   table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
   table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
   table.bilan th{background:var(--input-bg);color:var(--hl)}
@@ -196,7 +197,8 @@
     <div>Restantes<b id="dRest" class="v-warn">32</b></div>
     <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
     <div>Score<b id="dScore" class="v-hl">0 %</b></div>
-    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+    <div title="Ta note si l'on ne compte que ta première réponse à chaque question">Premier essai<b id="dNote1" class="v-warn">— /20</b></div>
+    <div title="Ta note avec les questions réussies après un indice ou la correction">Après aides<b id="dNote" class="v-warn">— /20</b></div>
   </div>
   <div class="timer-zone">
     <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
@@ -261,6 +263,7 @@
 <section class="card ecran" id="ecranResultat">
   <h2>🏁 Résultat final</h2>
   <div class="note20" id="rNote">— /20</div>
+  <p class="note-essais" id="rEssais"></p>
   <div class="res-grid">
     <div>Questions<b id="rTot">32</b></div>
     <div>Répondues<b id="rRep" class="v-hl">0</b></div>
@@ -644,6 +647,14 @@ let etat={
 };
 let timerInterval=null, choixTemp=null;
 const corrVue={}, indice2={};   /* la correction complète, l'indice n°2 ouverts (non sauvegardés : l'indice revient) */
+/* Le premier essai : la réponse de la première validation, gardée quand l'élève réessaie après une aide (-1 : validée
+   sans réponse). Une sauvegarde plus ancienne n'en a pas : ses réponses validées en tiennent lieu. */
+function premiersEssais(){
+  if(!Array.isArray(etat.premiers)||etat.premiers.length!==N)
+    etat.premiers=[...Array(N).keys()].map(i=>etat.validees[i]?(etat.reponses[i]===null?-1:etat.reponses[i]):null);
+  return etat.premiers;
+}
+function notePremierEssai(){ return Math.round(premiersEssais().filter((p,i)=>p===QUESTIONS[i].r).length/N*20*10)/10; }
 
 /* ───── sauvegarde ───── */
 function save(){
@@ -653,7 +664,7 @@ function save(){
 function restore(){
   let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
   if(!o) return;
-  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite","piege","erreursPiege","premiers"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
   const idt=etat.identite||{};
   $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
   $("tSans").checked=!!etat.sansMinuteur;
@@ -767,6 +778,7 @@ function rendreDash(){
   const pct=s.rep? Math.round(s.ok/s.rep*100):0;
   $("dScore").textContent=pct+" %";
   $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("dNote1").textContent=s.rep? notePremierEssai().toFixed(1).replace(".",",")+" /20" : "— /20";
   $("pfill").style.width=(s.rep/N*100)+"%";
   $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
 }
@@ -858,6 +870,7 @@ $("btnValider").addEventListener("click",()=>{
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
   if(etat.reponses[i]!==null && etat.reponses[i]!==QUESTIONS[i].r){ const f=piege(i);
     if(f){ etat.erreursPiege=etat.erreursPiege||{}; etat.erreursPiege[f]=(etat.erreursPiege[f]||0)+1; } }
+  { const p=premiersEssais(); if(p[i]===null) p[i]=etat.reponses[i]===null?-1:etat.reponses[i]; }   /* le premier essai reste, même après « Réessayer » */
   etat.validees[i]=true; choixTemp=null;
   if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
   save(); rendreTout();
@@ -900,6 +913,8 @@ function rendreResultat(){
   const s=stats();
   const note=Math.round(s.ok/N*20*10)/10;
   $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rEssais").innerHTML="🎯 <b>Premier essai&nbsp;: "+notePremierEssai().toFixed(1).replace(".",",")+" /20</b> — ce que tu savais du premier coup."
+    +"<br>🔁 <b>Après aides&nbsp;: "+note.toFixed(1).replace(".",",")+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant.";
   $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
   $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
   $("rBrut").textContent=s.ok+" / "+N;
