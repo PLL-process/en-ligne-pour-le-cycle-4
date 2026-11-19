@@ -31,7 +31,7 @@ const lire = (p) => p.evaluate((outils) => {
   const pan = e && e.closest('.seance-panel'), inc = document.getElementById('incruste-cm-5e-hangzhou-donnees');
   return {
     mission: !!m && vis(m) && !m.closest('#ouverture'),
-    outils: outils.filter((x) => { const q = document.querySelector(x); return !(q && vis(q) && !q.closest('#ouverture')); }),
+    outils: outils.filter((x) => { const q = document.querySelector(x); return !(q && (vis(q) || (!!q.closest('.entete-reglage, .entete-reglage-partiel') && vis(document.querySelector('.entete-bascule')))) && !q.closest('#ouverture')); }),   // visible, ou à un appui derrière « ⚙️ » au téléphone (entete_telephone.py)
     n: o.length, panneau: pan ? pan.id : null, enFin: !!pan && pan.lastElementChild === e,
     incruste: !!inc && !!inc.closest('#s1 #act1'),
   };

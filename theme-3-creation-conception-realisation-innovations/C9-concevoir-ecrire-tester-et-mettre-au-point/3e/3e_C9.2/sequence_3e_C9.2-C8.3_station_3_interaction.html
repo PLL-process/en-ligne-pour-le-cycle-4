@@ -3615,5 +3615,71 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- onglets-seance v1 : fin -->
+<!-- entete-telephone v1 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->
+<style>
+.entete-bascule{display:none}
+@media screen and (max-width:600px){
+  body.entete-pliable .entete-bascule{display:block;width:100%;margin:8px 0;padding:9px 14px;font:inherit;font-weight:600;
+    text-align:left;color:inherit;background:transparent;border:1px solid currentColor;border-radius:10px;cursor:pointer;min-height:44px}
+  .entete-bascule small{display:block;font-weight:400;opacity:.85;margin-top:2px}
+  body.entete-replie .entete-reglage{display:none!important}
+  body.entete-replie .entete-reglage-partiel{display:block!important;margin:2px 0!important;padding:0!important;border:0!important;background:none!important}
+  body.entete-replie .entete-reglage-partiel > :not(.entete-garde){display:none!important}
+}
+</style>
+<script>
+(function(){
+  "use strict";
+  var onglets = [].slice.call(document.querySelectorAll(".seance-tab"));
+  /* des onglets qui sont des liens mènent à d'autres pages (séquence découpée) : rien à replier ici */
+  if (onglets.length < 2 || onglets.some(function(o){ return o.matches("a[href]"); })) return;
+  var barre = onglets[0].closest(".seance-tabs") || onglets[0].parentElement;
+  var parent = barre.parentElement; if (!parent) return;
+  var REGLAGES = "#identite, .identite, .toolbar, .choix-parcours-boutons, [data-note=poste-partage], #aide-essentiel";
+  var ETAT = "#savedNote, [role=status]:not(button), [aria-live]:not(button)";   /* un bouton qui parle (« clique encore ») n'est pas une zone d'état */
+  var reglages = [];
+  for (var c = parent.firstElementChild; c && c !== barre; c = c.nextElementSibling){
+    if (c.id === "ouverture" || c.classList.contains("rappel-ouverture")) break;   /* le volet « Rappel » et la suite restent */
+    if (!c.matches(REGLAGES) || c.matches(ETAT)) continue;                         /* une zone d'état reste toujours visible */
+    var etats = c.querySelectorAll(ETAT);
+    if (etats.length){
+      /* un bloc qui porte une zone d'état (« 💾 Sauvegardé » dans le bloc du nom) : seule la zone reste */
+      c.classList.add("entete-reglage-partiel");
+      [].forEach.call(etats, function(e){ while (e.parentElement && e.parentElement !== c) e = e.parentElement; e.classList.add("entete-garde"); });
+    } else c.classList.add("entete-reglage");
+    reglages.push(c);
+  }
+  if (!reglages.length) return;
+  var bouton = document.createElement("button");
+  bouton.type = "button"; bouton.className = "entete-bascule"; bouton.setAttribute("aria-expanded", "false");
+  reglages[0].parentNode.insertBefore(bouton, reglages[0]);
+  var champs = [].slice.call(document.querySelectorAll("#identite input, .identite input")).filter(function(i){ return reglages.some(function(r){ return r.contains(i); }); });
+  function libelle(){
+    var qui = champs.map(function(i){ return String(i.value || "").trim(); }).filter(Boolean).join(" ");
+    bouton.innerHTML = "⚙️ Mon nom, mon parcours, mes réglages"
+      + (champs.length ? "<small>" + (qui ? "👤 " + qui.replace(/[&<>"]/g, "") : "✏️ Ton nom n'est pas encore écrit") + "</small>" : "");
+  }
+  var ouvert = false, mq = window.matchMedia("(max-width: 600px)");
+  function seance(){
+    for (var i = 0; i < onglets.length; i++)
+      if (onglets[i].classList.contains("active") || onglets[i].getAttribute("aria-selected") === "true") return i;
+    return 0;
+  }
+  function maj(){
+    var pliable = mq.matches && seance() > 0;
+    document.body.classList.toggle("entete-pliable", pliable);
+    document.body.classList.toggle("entete-replie", pliable && !ouvert);
+    bouton.setAttribute("aria-expanded", String(!pliable || ouvert));
+  }
+  bouton.addEventListener("click", function(){ ouvert = !ouvert; maj(); });
+  champs.forEach(function(i){ i.addEventListener("input", libelle); });
+  new MutationObserver(maj).observe(barre, { subtree:true, attributes:true, attributeFilter:["class", "aria-selected"] });
+  if (mq.addEventListener) mq.addEventListener("change", maj); else if (mq.addListener) mq.addListener(maj);
+  libelle(); maj();
+  /* la sauvegarde remet le nom au chargement : le libellé le suit */
+  window.addEventListener("load", function(){ setTimeout(libelle, 0); });
+})();
+</script>
+<!-- entete-telephone v1 : fin -->
 </body>
 </html>

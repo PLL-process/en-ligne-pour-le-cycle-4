@@ -28,6 +28,8 @@ export async function lancerBanc311Theme2(o) {
     if (!c) ko++;
     console.log(`${c ? '✅' : '❌'} ${nom} px : mission (.subtitle) visible hors du volet, à la séance 1 et à la séance 2`);
     if (nom === '390') {
+      // l'en-tête replié au téléphone (`_outils/entete_telephone.py`) : on le déplie, comme l'élève, pour mesurer la barre
+      await p.evaluate(() => { const x = document.querySelector('.entete-bascule'); if (x && x.offsetParent && x.getAttribute('aria-expanded') === 'false') x.click(); });
       const tb = await p.evaluate(() => { const bs = [...document.querySelector('.toolbar').querySelectorAll('.btn')];
         return { lignes: new Set(bs.map(x => Math.round(x.getBoundingClientRect().top))).size, coupe: bs.some(x => x.scrollWidth > x.clientWidth + 1) }; });
       const ct = tb.lignes <= 2 && !tb.coupe;

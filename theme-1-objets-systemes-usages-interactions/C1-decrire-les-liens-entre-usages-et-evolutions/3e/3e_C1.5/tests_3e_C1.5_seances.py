@@ -261,6 +261,10 @@ def banc_page(b, url):
 
     # mode essentiel
     pg.click('.seance-tab[data-panel="s4"]')
+    # au téléphone, dès la séance 2, la barre d'outils est derrière « ⚙️ Mon nom, mon parcours, mes réglages »
+    # (`_outils/entete_telephone.py`, 19/11/2026) : l'élève l'ouvre d'un appui, le banc aussi
+    if pg.evaluate("(() => { const x = document.querySelector('.entete-bascule'); return !!x && x.checkVisibility() && x.getAttribute('aria-expanded') === 'false'; })()"):
+        pg.click(".entete-bascule")
     pg.click("#btnEssentiel")
     cache = pg.evaluate("getComputedStyle(document.querySelector('#argumentaire-court > details.correction')).display")
     t(cache == "none", "mode essentiel : la correction de l'activité 5 est masquée")

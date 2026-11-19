@@ -24,7 +24,7 @@ const lire = (p) => p.evaluate((outils) => {
   const av = e && e.previousElementSibling, ap = e && e.nextElementSibling;
   return {
     sous: !!s && vis(s) && !s.closest('#ouverture'),
-    outils: outils.filter((x) => { const o = document.querySelector(x); return !(o && vis(o) && !o.closest('#ouverture')); }),
+    outils: outils.filter((x) => { const o = document.querySelector(x); return !(o && (vis(o) || (!!o.closest('.entete-reglage, .entete-reglage-partiel') && vis(document.querySelector('.entete-bascule')))) && !o.closest('#ouverture')); }),   // visible, ou à un appui derrière « ⚙️ » au téléphone (entete_telephone.py)
     n: banc.length, panneau: e && e.closest('.seance-panel') ? e.closest('.seance-panel').id : null,
     dansAct0: !!e && !!e.closest('#act0'), avantAct2: !!ap && ap.id === 'act2' && !!av && av.matches('.seance-tete'),
     avantBonus: !!ap && ap.id === 'bonus',
