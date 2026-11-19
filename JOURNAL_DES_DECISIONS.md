@@ -33705,3 +33705,22 @@ pas une panne », 194 signes, face à « le serveur de New York dormait »). 9 �
 
 Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
 Bancs : `tests_regle_311_3e_C4.8.mjs` 34 / 34, mode mission sans refus.
+
+## 19/11/2026 — n°341 sur 4e_C3.1 (les vélos de Hangzhou) ; I1 lit enfin « parce que »
+
+Huitième page du chantier n°341. La bonne réponse était la plus longue dans **20 groupes sur 27** (74 %), souvent
+parce qu'elle portait son explication (« parce qu'elle émet beaucoup à la fabrication ET dure le moins longtemps : son
+coût est amorti sur trop peu de kilomètres » face à « parce qu'elle est la plus légère »). 2 ⚠ I1.
+- Les bonnes réponses disent ce qu'elles sont (« qualitative, mais décisive pour le choix », « on ne peut pas les
+  départager », « l'antivol, à 3 sur 5 »). Leurs explications sont dans les corrections.
+- Les intrus courts sont allongés à même hauteur. Exemple : pour « la moins bonne flotte », « F4 », « F1 », « F2 »
+  deviennent « F4, l'acier recyclé »…, face à « F3, le composite ».
+- **Outil** : le motif I1 de `controle_propositions_indices.py` ne reconnaissait ni « parce que » ni « puisqu' »
+  (`\b` après « parce qu »). Une bonne réponse en « parce qu'… » parmi des intrus en « parce que… » passait donc pour
+  seule justifiée. C'étaient 4 faux ⚠ sur `main`, dans `4e_C1.1` et `5e_C3.1`. Corrigé : le site passe de 11 à 5 ⚠ I1,
+  page comprise.
+- Site : la bonne réponse est la plus longue dans **17 %** des groupes (21 % avant), 2 pages au-delà de 40 % :
+  `4e_C4.1` (le jardin) et `3e_C6.2`.
+
+Contrôles : `controle_propositions_indices` (rien à signaler), `controle_ordre_propositions` (0 refus), unités.
+Bancs : `tests_4e_C3.1-C3.3_hangzhou.py` 32 / 32, `tests_regle_311_4e_C3.1.mjs` 34 / 34, mode mission sans refus.
