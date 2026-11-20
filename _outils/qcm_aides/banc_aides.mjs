@@ -11,7 +11,10 @@
 //   A6  le compte des erreurs par piège ne survit pas au rechargement ;
 //   A7  la carte « Avant de commencer » manque, ou une erreur JavaScript survient ;
 //   A8  la question 1, fausse puis réussie après « Réessayer », ne donne pas deux notes — « Premier essai » (0) et
-//       « Après aides » (1 sur N) — au tableau de bord après rechargement, et dans le résultat (19/11/2026).
+//       « Après aides » (1 sur N) — au tableau de bord après rechargement, et dans le résultat (19/11/2026) ;
+//   A9  un QCM pas fini (une seule question faite, juste) : le tableau de bord dit encore « Score », ou ne dit pas
+//       « Réussite sur 1 faite », ou ne prévient pas que les notes comptent toutes les questions ; le bilan classe
+//       « À retravailler » une compétence dont aucune question n'a été faite (19/11/2026, même audit).
 // Sortie 0 tout passe · 1 un refus · 2 rien lu (n°299).
 import { chromium } from 'playwright';
 import fs from 'node:fs';
@@ -99,6 +102,26 @@ for (const PAGE of pages) {
     if (!t.includes('Premier essai') || !t.includes(note(0)) || !t.includes('Après aides') || !t.includes(note(1)))
       refus.push('A8 le résultat ne donne pas les deux notes : ' + JSON.stringify(t.slice(0, 120)));
   } else refus.push('A8 pas de « Réessayer » sur la question 1');
+  // un QCM pas fini : tout effacer, faire la seule question 1, juste — puis lire le tableau de bord et le bilan
+  await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
+  const vide = await p.evaluate(() => ({ lbl: document.getElementById('dScoreLbl')?.textContent, v: document.getElementById('dScore')?.textContent,
+    reste: document.getElementById('dReste') ? !document.getElementById('dReste').hidden : null }));
+  if (vide.lbl !== 'Réussite' || vide.v !== '—' || vide.reste !== false) refus.push('A9 avant la première réponse : ' + JSON.stringify(vide));
+  await p.evaluate(() => { montrerEcran('q'); setMode('complet'); etat.courante = 0; choixTemp = null; rendreTout(); });
+  await p.locator('#qOptions .option').nth(await p.evaluate(() => QUESTIONS[0].r)).click();
+  await p.click('#btnValider');
+  await p.waitForFunction(() => etat.validees[0] === true, null, { timeout: 5000 }).catch(() => {});
+  const un = await p.evaluate(() => ({ dash: document.querySelector('.dash').innerText, lbl: document.getElementById('dScoreLbl')?.textContent, v: document.getElementById('dScore')?.textContent,
+    reste: document.getElementById('dReste') && !document.getElementById('dReste').hidden ? document.getElementById('dReste').textContent : '' }));
+  if (/Score/.test(un.dash) || un.lbl !== 'Réussite sur 1 faite' || un.v !== '100 %') refus.push('A9 une question faite, juste : ' + JSON.stringify({ lbl: un.lbl, v: un.v }));
+  if (N > 1 && (!un.reste.includes('comptent les ' + N + ' questions') || !un.reste.includes('zéro'))) refus.push('A9 rien ne dit que les notes comptent toutes les questions : ' + JSON.stringify(un.reste));
+  await p.click('#btnTerminer'); await p.waitForTimeout(150);
+  const bilan = await p.evaluate(() => { const c0 = QUESTIONS[0].c;
+    return { lignes: [...document.querySelectorAll('#tblBilan tbody tr')].map(tr => ({ c: tr.cells[0].textContent, v: tr.cells[2].textContent, cls: tr.cells[2].className })),
+      vides: Object.keys(COMP_LABELS).filter(c => c !== c0 && QUESTIONS.some(q => q.c === c)).map(c => COMP_LABELS[c]), essais: document.getElementById('rEssais').innerText }; });
+  for (const l of bilan.lignes) if (bilan.vides.includes(l.c) && (!l.v.includes('Pas encore observée') || l.cls !== 'maitrise-non' || /retravailler/.test(l.v)))
+    refus.push('A9 une compétence sans aucune question faite est classée : ' + JSON.stringify(l.v));
+  if (N > 1 && !/pas encore faite/.test(bilan.essais)) refus.push('A9 le résultat ne dit pas que des questions restent : ' + JSON.stringify(bilan.essais.slice(-90)));
   if (err.length) refus.push('A7 erreur JavaScript : ' + err[0]);
   const nom = path.relative(RACINE, PAGE);
   if (refus.length) { refusTotal++; console.log(`❌ ${nom}`); refus.slice(0, 8).forEach(r => console.log('   · ' + r)); if (refus.length > 8) console.log(`   · … ${refus.length - 8} de plus`); }

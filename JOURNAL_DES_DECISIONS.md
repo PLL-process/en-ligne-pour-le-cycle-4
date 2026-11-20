@@ -34157,3 +34157,23 @@ rien à signaler ; export Moodle régénéré, son banc vert. Restent rouges, co
 **Non fait, à décider** : les deux défauts du moteur de QCM relevés par l'audit (« Score 100 % » à côté de
 « Après aides 0,7 / 20 » ; une compétence jamais tentée classée « À retravailler ») touchent les 76 QCM : PR à part.
 La chaîne du lampadaire (activité 6) reste à faire construire — ce serait la preuve sur un objet nouveau (n°330).
+
+## 19/11/2026 — QCM pas fini : « Réussite sur n faites » au tableau de bord, « Pas encore observée » au bilan
+Dernière remarque de l'audit du jardin connecté (ChatGPT, transmis par Pascal), vérifiée sur la page puis acceptée
+(« Ok », 19/11/2026) : après **une seule question, réussie au second essai**, le tableau de bord du QCM affichait
+« Score 100 % » à côté de « Après aides 0,7 /20 », et le bilan classait « ✘ À retravailler » deux compétences dont
+aucune question n'avait été tentée. Le moteur est commun : les **76 QCM** portaient le défaut.
+
+**Ce qui change** (`_outils/qcm_aides/poser.py`, six morceaux de moteur, posés sur les 76 QCM) :
+- la case « Score » devient **« Réussite sur n faites »** — la part de réponses justes parmi les questions faites ;
+  « — » avant la première réponse (« 0 % » se lisait comme un échec) ;
+- sous le tableau de bord, tant qu'il reste des questions : « Les deux notes sur 20 comptent les N questions : les n qui
+  restent valent zéro pour l'instant. » ; le résultat le redit (« ⏳ n questions pas encore faites ») ;
+- au bilan, une compétence dont l'élève a fait **moins de la moitié des questions** est « ○ Pas encore observée »
+  (« aucune question faite », ou « n faites sur m »), en gris : ni maîtrisée, ni à retravailler. Au-delà, les seuils
+  d'avant (75 %, 50 %), sur toutes les questions de la compétence.
+Rien ne change pour un QCM fini : mêmes notes, mêmes niveaux. Les sauvegardes des élèves se relisent telles quelles.
+
+**Banc** : `_outils/qcm_aides/banc_aides.mjs` gagne **A9** (un QCM pas fini : libellé, avertissement, bilan) — refusé
+sur la version d'avant (six refus sur le QCM de `4e_C9.1`), **76 QCM joués, 0 refusé** après. Contrôles : `sans_modale`,
+en-tête, banque, effectifs, boutons vivants, tactile, sauvegarde locale, règles visibles — rien à signaler.
