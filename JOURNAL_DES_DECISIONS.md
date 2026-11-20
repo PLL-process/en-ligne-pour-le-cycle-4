@@ -34496,3 +34496,27 @@ validations, mêmes nombres, liens, atteignabilité, boutons vivants, loupe, mé
 unités : verts. Index et audit régénérés.
 Vu sur la capture à 390 px et par aucun contrôle : l'énoncé d'une sortie de losange, passé sur deux lignes,
 coupait le bord de son `fieldset` (le défaut du pilote `3e_C1.1`). La `legend` flotte désormais dans le cadre.
+
+## 20/11/2026 — 4e_C6.2 : le TP « algorigrammes de domotique » sort des ressources héritées (règle n°12)
+
+Suite de la PR #832, sur la carte blanche de Pascal : la page n'était plus « héritée » que par trois points, relevés
+dans l'entrée précédente. Ils sont corrigés, et la page sort de `heritees.json`.
+- **Phase 0** : les quatre associations forme → rôle sont des groupes de boutons radio dans un `fieldset` (n°300),
+  à la place des listes déroulantes. Les choix sont sauvegardés (n°15), et « Entrée » devient « Entrée ou sortie de
+  données », comme dans le tableau du dessus.
+- **Phase 4** : quatre propositions par question, et des distracteurs qui sont de vraies confusions (n°341).
+  Question 1 : boucle, attente, lecture d'une donnée, à la place de « jouer un son » et « avancer de 10 pas ».
+  Question 2 : OU au lieu de ET, une action, la condition inversée. Une mauvaise réponse dit pourquoi elle est fausse,
+  sans donner la bonne (n°339). Bonnes réponses en B et en C.
+- **Navigation** : « Le QCM » mène au QCM du lot, `qcm_4e_C6.2_arrosage_automatique.html` (un seul QCM par
+  séquence), et non plus au QCM hérité de l'éclairage.
+- **Règle n°12** : la version d'avant l'audit (la « V12 ») est archivée dans
+  `_archive-anciennes-versions/C6-comprendre-et-modifier-un-programme-associe/4e_C6.2/tp_algorigrammes_domotique_v12_2026-11.html`,
+  avec son motif au README du dossier. L'entrée est retirée de `heritees.json` dans le même commit (3 entrées
+  restantes), et le badge 🛠 quitte l'index. L'adresse et la clé de sauvegarde ne changent pas.
+
+Contrôles : le banc Playwright du TP passe à 29 points (ceux de #832, dont un remplacé, plus la phase 0 en boutons radio : erreur comptée,
+2e essai, choix gardés au rechargement, plus aucune liste déroulante) : vert. axe-core, en sombre et en clair : seul
+`region` reste, sur la licence commune. Contrôles de `_outils/` : atteignabilité, boutons vivants,
+loupe, médias, règles visibles, sigles, tactile, unités, liens, validations, mêmes nombres, sauvegarde locale, consignes
+à la ligne, propositions sans indice, statut : verts. Index régénéré.
