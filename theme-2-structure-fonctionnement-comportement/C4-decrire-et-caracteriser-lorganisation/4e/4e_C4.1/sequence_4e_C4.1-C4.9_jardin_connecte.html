@@ -1433,12 +1433,25 @@ function verifier(){
 }
 
 /* Au bilan de la séquence : les étoiles gagnées, au-dessus de l'auto-positionnement — qui reste le choix de l'élève */
+/* la séance qui porte la première question pas encore réussie, nommée comme son onglet ; "" si on ne sait pas la nommer */
+function premiereAFaire(){
+  var ids = Object.keys(parPanneau);
+  for (var i = 0; i < ids.length; i++){
+    if (!parties(ids[i]).some(function(e){ return !M.fait[e.id]; })) continue;
+    var o = G.onglet ? $$(G.onglet).filter(function(x){ return G.de(x) === ids[i]; })[0] : null, m = /^seance-(\d+)$/.exec(ids[i]);
+    return o ? nomOnglet(o) : m ? "Séance " + m[1] : "";
+  }
+  return "";
+}
 function bilan(s){
   if (s.t !== "carte" || !(s.n[0].id === "bilan" || $("#je-me-positionne, fieldset.positionnement", s.n[0]))) return;
   var b = $(".ms-bilan", s.n[0]); if (!b){ b = el("div", "ms-bilan ms-seul"); var h = $("h2", s.n[0]); s.n[0].insertBefore(b, h ? h.nextSibling : s.n[0].firstChild); }
   var ps = parties(), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), faites = ps.filter(function(e){ return M.fait[e.id]; }).length;
   var corrigees = ps.reduce(function(a, e){ return a + (M.fait[e.id] ? (M.erreurs[e.id] || 0) : 0); }, 0);
-  b.innerHTML = "<p><b>Ta mission : " + gagne + " étoile" + (gagne > 1 ? "s" : "") + " sur " + (ps.length * 3) + "</b> — " + faites + " question" + (faites > 1 ? "s" : "") + " réussie" + (faites > 1 ? "s" : "") + " sur " + ps.length + ".</p>" + (corrigees ? "<p>En route, tu as corrigé " + corrigees + " erreur" + (corrigees > 1 ? "s" : "") + " : c'est comme ça qu'on apprend.</p>" : "") + "<p>Trois étoiles : juste du premier coup. Ton positionnement, ci-dessous, c'est toi qui le choisis.</p>";
+  /* Tant qu'il reste des questions, le bilan le dit et nomme la séance où reprendre (audit du jardin de 4e, 20/11/2026 :
+     après une seule question réussie, l'élève lisait au bilan un texte de fin de séquence et pouvait se croire arrivé). */
+  var reste = ps.length - faites, ou = reste ? premiereAFaire() : "";
+  b.innerHTML = "<p><b>Ta mission : " + gagne + " étoile" + (gagne > 1 ? "s" : "") + " sur " + (ps.length * 3) + "</b> — " + faites + " question" + (faites > 1 ? "s" : "") + " réussie" + (faites > 1 ? "s" : "") + " sur " + ps.length + ".</p>" + (reste ? '<p class="ms-reste">⏳ <b>Ta mission n\'est pas finie</b> : il te reste ' + reste + " question" + (reste > 1 ? "s" : "") + (ou ? ". La prochaine t'attend ici : " + esc(ou) : "") + ".</p>" : "") + (corrigees ? "<p>En route, tu as corrigé " + corrigees + " erreur" + (corrigees > 1 ? "s" : "") + " : c'est comme ça qu'on apprend.</p>" : "") + "<p>Trois étoiles : juste du premier coup. Ton positionnement, ci-dessous, c'est toi qui le choisis.</p>";
 }
 
 /* ═══ Entrer, sortir ═══ */
@@ -2422,9 +2435,14 @@ body.ms .cac-reserve{--cac-bas:84px}
       <b>b)</b> Dans le panneau, l'énergie entre sous forme <b>lumineuse</b>. <br>
       Entre les blocs, elle circule sous forme <b>électrique</b> : du panneau au régulateur, du régulateur aux relais, des relais à la pompe et à l'électrovanne. <br>
       Dans la batterie, elle est gardée sous forme <b>chimique</b>. <br>
-      À la sortie de la pompe et de l'électrovanne, elle est <b>cinétique</b>. <br>
+      À la sortie de la pompe et de l'électrovanne, elle est <b>cinétique</b> — mais pas pour la même raison. <br>
+      La pompe donne de l'énergie à l'eau : elle la met en mouvement. <br>
+      L'électrovanne ne donne rien à l'eau : c'est son clapet qui bouge, pour ouvrir ou fermer le passage vers le bac. <br>
+      Trois rôles à ne pas confondre : la carte <b>commande</b>, la pompe <b>met l'eau en mouvement</b>, l'électrovanne <b>ouvre le passage</b>. <br>
       On dit aussi «&nbsp;mécanique&nbsp;»&nbsp;: c'est le mot qui couvre le mouvement (cinétique) et la hauteur (potentielle). <br>
-      Le trajet complet : <b>lumineuse, puis électrique, puis chimique, puis électrique, puis cinétique</b>. <br>
+      Le trajet complet : <b>lumineuse, puis électrique, puis chimique, puis électrique, puis cinétique</b>. <br>      Ce trajet passe par la batterie : c'est celui de la nuit, ou d'un jour gris. <br>
+      En plein soleil, l'énergie peut aller droit du régulateur aux relais, sans attendre dans la batterie : lumineuse, puis électrique, puis cinétique. <br>
+
       Les étiquettes en trop : énergie sonore et énergie thermique. <br>
       <b>c)</b> La batterie assure le stockage :
       elle met l'énergie en réserve. <br>Et le pont entre les deux chaînes, c'est <b>la carte</b> : l'information
@@ -2581,9 +2599,9 @@ body.ms .cac-reserve{--cac-bas:84px}
     <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb3" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>612 brut → 60 % par TRAITEMENT (612 ÷ 1023 ≈ 0,60, ramené sur 100) + horodatage = donnée utile et datée (C4.5). <br>Ce « 60 % » est un <b>indice</b> d'humidité. Avec un vrai capteur, on l'étalonne d'abord&nbsp;: on note sa valeur brute dans une terre sèche, puis dans une terre gorgée d'eau. Certains capteurs donnent même une valeur plus FAIBLE quand la terre est plus humide. <br>Une ligne
+      <p>612 brut → 60 % par TRAITEMENT (612 ÷ 1023 ≈ 0,60, ramené sur 100) + horodatage = donnée utile et datée (C4.5). <br>Ce « 60 % » est un <b>indice</b> d'humidité. <br>Avec un vrai capteur, on l'étalonne d'abord&nbsp;: on note sa valeur brute dans une terre sèche, puis dans une terre gorgée d'eau. <br>Certains capteurs donnent même une valeur plus FAIBLE quand la terre est plus humide. <br>Une ligne
       = une mesure ; <br>une colonne = une information ; <br>la colonne « capteur » identifie le bac ; <br>l'arrosage se lit
-      dans la table (38 &lt; <br>40 → OUI). Trier, filtrer, tracer : tout vient de la STRUCTURE (C4.6). <br>Ton filtre
+      dans la table (38 &lt; <br>40 → OUI). <br>Et à 40 % exactement ? 40 n'est pas plus petit que 40 : la carte n'arrose pas. Le seuil lui-même ne déclenche rien. <br> Trier, filtrer, tracer : tout vient de la STRUCTURE (C4.6). <br>Ton filtre
       « bac_A » a fait exactement ce que fait l'application du jardin.</p>
     </details>
     <div class="retenir"><b>🧠 À retenir :</b> une donnée téléversée = mesure brute TRANSFORMÉE (calcul) + HORODATÉE. Une table structurée : 1 ligne = 1 mesure, 1 colonne = 1 information — c'est ce qui permet de trier, filtrer, tracer.</div>
@@ -2627,7 +2645,7 @@ body.ms .cac-reserve{--cac-bas:84px}
         <div>
           <button class="btn small ghost pannebtn" data-panne="1" type="button">🚨 Panne 1 — « plus aucune mesure n'arrive »</button>
           <button class="btn small ghost pannebtn" data-panne="2" type="button">🚨 Panne 2 — « deux appareils se battent »</button>
-          <button class="btn small ghost pannebtn" data-panne="3" type="button">🚨 Panne 3 — « la carte est isolée »</button>
+          <button class="btn small ghost pannebtn" data-panne="3" type="button">🚨 Panne 3 — « rien ne sort du collège »</button>
           <div id="panneChoix" style="display:none;margin-top:8px">
             <fieldset class="qcm-groupe" id="causeSel" data-melange="1">
   <legend><b>Quelle est ta cause ?</b></legend>
@@ -2640,8 +2658,8 @@ body.ms .cac-reserve{--cac-bas:84px}
           <div id="repChoix" style="display:none;margin-top:8px">
             <fieldset class="qcm-groupe" id="repSel" data-melange="1">
   <legend><b>Cause trouvée. Quelle remise en service ?</b></legend>
-  <div class="qcm-option"><input type="radio" name="repSel" id="repSel__2" value="dhcp"><label for="repSel__2">sortir le .50 de la plage DHCP, puis redémarrer la tablette</label></div>
-  <div class="qcm-option"><input type="radio" name="repSel" id="repSel__3" value="passerelle"><label for="repSel__3">régler la passerelle de la carte sur 192.168.1.1, puis faire un ping du serveur</label></div>
+  <div class="qcm-option"><input type="radio" name="repSel" id="repSel__2" value="dhcp"><label for="repSel__2">ramener la plage DHCP de la box à .20–.49, puis redémarrer la tablette</label></div>
+  <div class="qcm-option"><input type="radio" name="repSel" id="repSel__3" value="passerelle"><label for="repSel__3">régler la passerelle de la carte sur 192.168.1.1, puis vérifier que le message arrive sur le téléphone du club</label></div>
   <div class="qcm-option"><input type="radio" name="repSel" id="repSel__1" value="borne"><label for="repSel__1">rebrancher la borne wifi, puis vérifier que la carte la voit</label></div>
 </fieldset>
             <button class="btn small" id="btnRep" type="button">🔧 Remettre en service</button>
@@ -2701,18 +2719,20 @@ body.ms .cac-reserve{--cac-bas:84px}
 </fieldset>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Relis l'encart rouge du plan : 3 pannes classiques = conflit d'adresses, mauvaise passerelle, hors de portée. <br>Chaque panne du simulateur correspond exactement à l'une des trois — les symptômes te disent laquelle. <br>b) Relis les adresses déjà prises et la plage DHCP : choisis une adresse qui n'est dans aucune des deux. Le masque et la passerelle sont ceux du plan.</p></details>
-    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Plus aucune mesure + borne wifi éteinte » → portée. <br>« Deux appareils se battent + tablette affiche .50 » → conflit. <br>« La carte pingue la borne mais pas le serveur + passerelle 192.168.9.1 » → passerelle. <br>Une IP fixe se choisit LIBRE et HORS plage DHCP : c'est la règle du technicien. <br>b) Une adresse entre .2 et .254, hors .10, hors .20 à .49 et hors .50 — par exemple .60. Masque 255.255.255.0, passerelle 192.168.1.1. Puis le ping.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Plus aucune mesure + borne wifi éteinte » → portée. <br>« Deux appareils se battent + tablette affiche .50 » → conflit. <br>« Le serveur du collège reçoit toujours, mais plus rien ne sort vers internet + passerelle 192.168.9.1 » → passerelle. <br>Une IP fixe se choisit LIBRE et HORS plage DHCP : c'est la règle du technicien. <br>b) Une adresse entre .2 et .254, hors .10, hors .20 à .49 et hors .50 — par exemple .60. Masque 255.255.255.0, passerelle 192.168.1.1. Puis le ping.</p></details>
     <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
     <p class="feedback" id="fb4" role="status"></p>
     <details class="correction"><summary>📖 Correction complète</summary>
-      <p>Panne 1 = hors de portée (borne débranchée) · panne 2 = conflit d'adresses (la tablette a pris .50) ·
-      panne 3 = mauvaise passerelle (192.168.9.1 ≠ 192.168.1.1). <br>IP fixe pour la carte : toujours joignable au
+      <p>Panne 1 = hors de portée (borne débranchée). <br>
+      Panne 2 = conflit d'adresses : la tablette a reçu .50, l'adresse de la carte. La plage DHCP avait été élargie jusqu'à .60 ; on la ramène à .20–.49. <br>
+      Panne 3 = mauvaise passerelle (192.168.9.1 ≠ 192.168.1.1). <br>
+      La passerelle est la <b>porte de sortie</b> du réseau. <br>Entre deux appareils de la même rue (192.168.1.<i>x</i>), elle ne sert pas : le serveur du collège recevait toujours les mesures. <br>Elle sert dès qu'il faut <b>sortir</b> : envoyer un message par internet, au téléphone du club. <br>IP fixe pour la carte : toujours joignable au
       même endroit — comme une boutique qui garde la même adresse. <br>DHCP pour la tablette : en général, elle appelle, on ne
       l'appelle pas. <br>Et une IP fixe se choisit libre, hors plage DHCP (C4.7). Résoudre méthodiquement ces pannes,
-      c'est C4.8. <br>Carte du bac 2&nbsp;: par exemple <b>192.168.1.60</b> — toute adresse libre convient, hors de la plage DHCP (.20 à .49) et hors de .1, .10 et .50 ; masque <b>255.255.255.0</b> ; passerelle <b>192.168.1.1</b>. <br>Régler à la main ces trois valeurs, c'est paramétrer une IP fixe (C4.7). <br>Ajouter la carte au réseau fourni, puis le valider par un ping 4 / 4, c'est compléter une simulation et valider le comportement du réseau (C4.9). <br>Une autre solution existe dans les vrais réseaux&nbsp;: la <b>réservation DHCP</b>, où la box donne toujours la même adresse à la même carte. Le principe reste le même&nbsp;: une adresse qui ne change pas, et que personne d'autre ne reçoit.</p>
+      c'est C4.8. <br>Carte du bac 2&nbsp;: par exemple <b>192.168.1.60</b>. <br>Toute adresse libre convient, hors de la plage DHCP (.20 à .49) et hors de .1, .10 et .50. <br>Masque&nbsp;: <b>255.255.255.0</b>. <br>Passerelle&nbsp;: <b>192.168.1.1</b>. <br>Régler à la main ces trois valeurs, c'est paramétrer une IP fixe (C4.7). <br>Ajouter la carte au réseau fourni, puis le valider par un ping 4 / 4, c'est compléter une simulation et valider le comportement du réseau (C4.9). <br>Une autre solution existe dans les vrais réseaux&nbsp;: la <b>réservation DHCP</b>, où la box donne toujours la même adresse à la même carte. Le principe reste le même&nbsp;: une adresse qui ne change pas, et que personne d'autre ne reçoit.</p>
     </details>
-    <div class="retenir"><b>🧠 À retenir :</b> sur un réseau local, chaque appareil a une adresse IP UNIQUE. Objet à joindre = IP FIXE ; appareil qui appelle = DHCP. Trois pannes classiques : conflit, passerelle, portée.</div>
-    <div class="erreurs"><b>⚠ Pièges classiques :</b> donner la même IP à deux appareils « pour simplifier » ; choisir une IP fixe DANS la plage DHCP (conflit garanti un jour) ; accuser le wifi quand c'est la passerelle.</div>
+    <div class="retenir"><b>🧠 À retenir :</b> sur un réseau local, chaque appareil a une adresse IP UNIQUE. Objet à joindre = IP FIXE ; appareil qui appelle = DHCP. Trois pannes classiques : conflit, passerelle, portée. La passerelle sert à SORTIR du réseau local : deux voisins de la même rue s'en passent.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> donner la même IP à deux appareils « pour simplifier » ; choisir une IP fixe DANS la plage DHCP (conflit garanti un jour) ; accuser le wifi quand c'est la passerelle ; croire qu'il faut la passerelle pour parler à son voisin de réseau (elle ne sert qu'à sortir).</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 3 pannes réparées au simulateur, la carte du bac 2 sur le réseau (ping 4 / 4) ET 4 / 4 réponses.</div>
   </div>
 </section>
@@ -3066,7 +3086,7 @@ gardienne</span></td></tr></tbody></table></div></div><fieldset class="qcm-group
       lire la chaîne d'énergie et ses transformations (C4.1-C4.2), et la chaîne d'information (C4.4) ; <br>
       suivre une donnée téléversée jusqu'à sa table structurée (C4.5-C4.6) ; <br>
       comprendre le réseau local et ses adresses — et le dépanner (C4.7-C4.9) ; <br>
-      faire parler la forme des pièces (C4.3). <br>Le dossier technique du jardin est complet : le club jardin sait maintenant ce qu'il pilote.</p>
+      faire parler la forme des pièces (C4.3). <br>Quand tes cinq activités sont validées, le dossier technique du jardin est complet : le club jardin sait ce qu'il pilote.</p>
     </div>
     <div class="confiance">
       <p><b>🎯 Auto-positionnement :</b> pour chaque famille, où en es-tu ? Chaque niveau dit ce que tu sais faire.</p>
@@ -3212,16 +3232,16 @@ document.querySelectorAll(".bacbtn").forEach(btn=>{
 const PANNES = {
   1:{sym:"SYMPTÔMES : plus AUCUNE mesure n'arrive depuis ce matin. La carte ne répond à rien. Détail relevé : la borne wifi de la cour est ÉTEINTE (prise débranchée par l'orage).",cause:"portee",
      ok:"Exact : hors de portée (borne éteinte) = plus aucun signal. On rebranche la borne, tout revient."},
-  2:{sym:"SYMPTÔMES : les mesures arrivent par à-coups, la connexion saute sans arrêt. Détail relevé : la tablette du club affiche… 192.168.1.50 — la MÊME adresse que la carte du jardin !",cause:"conflit",
-     ok:"Exact : conflit d'adresses — deux appareils au même « numéro de maison ». On sort le .50 de la plage DHCP, et chacun retrouve son adresse."},
-  3:{sym:"SYMPTÔMES : la carte communique avec la borne wifi (le ping local marche)… mais rien n'atteint le serveur. Détail relevé : passerelle configurée = 192.168.9.1 au lieu de 192.168.1.1.",cause:"passerelle",
-     ok:"Exact : mauvaise passerelle — la carte ne sait plus par quelle porte sortir. On corrige en .1.1, le serveur reçoit à nouveau."}
+  2:{sym:"SYMPTÔMES : les mesures arrivent par à-coups, la connexion saute sans arrêt. Détails relevés : la tablette du club affiche… 192.168.1.50 — la MÊME adresse que la carte du jardin ! Et sur la box, la plage DHCP a été élargie : elle va de .20 à .60, au lieu de .20 à .49.",cause:"conflit",
+     ok:"Exact : conflit d'adresses — deux appareils au même « numéro de maison ». La plage DHCP débordait sur le .50 : on la ramène à .20–.49, la tablette reçoit une autre adresse, et chacun retrouve la sienne."},
+  3:{sym:"SYMPTÔMES : les mesures arrivent bien au serveur du collège (le ping local marche)… mais le message « arrosage du jour », que la carte envoie chaque soir par internet au téléphone du club, n'arrive plus. Détail relevé : passerelle configurée sur la carte = 192.168.9.1 au lieu de 192.168.1.1.",cause:"passerelle",
+     ok:"Exact : mauvaise passerelle — la carte ne sait plus par quelle porte SORTIR du réseau du collège. On corrige en .1.1 : le message repart vers internet. Le serveur du collège, lui, n'a jamais cessé de recevoir : il est dans la même rue que la carte."}
 };
 /* la remise en service (audit du 19/11/2026) : trouver la cause ne suffit plus, l'élève choisit aussi la réparation */
 const REMISE = {1:"borne", 2:"dhcp", 3:"passerelle"};
 const CAUSE_OK = {1:"Cause trouvée : la carte est HORS DE PORTÉE — la borne wifi est éteinte.",
-                  2:"Cause trouvée : CONFLIT d'adresses — la tablette a reçu le .50 de la carte.",
-                  3:"Cause trouvée : mauvaise PASSERELLE — la carte ne sait plus par quelle porte sortir."};
+                  2:"Cause trouvée : CONFLIT d'adresses — la tablette a reçu le .50 de la carte, parce que la plage DHCP de la box allait jusqu'à .60.",
+                  3:"Cause trouvée : mauvaise PASSERELLE — la carte ne sait plus par quelle porte sortir du réseau du collège."};
 let panneCourante = null;
 document.querySelectorAll(".pannebtn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
@@ -3284,7 +3304,7 @@ function diagParam(){
   if(PRISES[x]) return "❌ 192.168.1." + x + " est déjà prise par " + PRISES[x] + " : deux appareils à la même adresse, c'est le conflit de la panne 2.";
   if(x >= 20 && x <= 49) return "❌ 192.168.1." + x + " est dans la plage DHCP (.20 à .49) : un jour, la box la donnera à un autre appareil.";
   if(ma !== "255.255.255.0") return "❌ Masque à revoir : sur ce réseau, c'est celui de tous les appareils du plan.";
-  if(pa !== "192.168.1.1") return "❌ Passerelle à revoir : par quelle porte la carte sort-elle vers le serveur ? Relis le plan, et la panne 3.";
+  if(pa !== "192.168.1.1") return "❌ Passerelle à revoir : par quelle porte la carte sort-elle du réseau du collège, pour envoyer un message par internet ? Relis le plan, et la panne 3.";
   return null;
 }
 ["param_ip", "param_masque", "param_passerelle"].forEach(id => $(id).addEventListener("input", ()=>{
@@ -3388,8 +3408,11 @@ const CHECKS = {
     /* l'exercice du cahier des charges, en tête de l'activité, doit être réussi */
     let cdc = false;
     try { cdc = !!JSON.parse(localStorage.getItem("rep_interacteurs-pieuvre_4e_e6") || "{}").reussi; } catch(e) {}
-    return {score:ok,total:6,valide:ok===6&&cdc,
-      extra:cdc?"":" Vérifie aussi l'exercice du cahier des charges, en tête de l'activité : il doit être réussi."};
+    /* deux résultats, dits séparément (audit du 20/11/2026) : six diagnostics justes montrent C4.3, même si le cahier
+       des charges (C2.2) reste à réussir — et inversement */
+    const pieces = ok === 6 ? " ✔ Les pièces : tes six réponses sont justes (C4.3)." : " Les pièces : " + ok + " réponse" + (ok > 1 ? "s justes" : " juste") + " sur 6 (C4.3).";
+    const cahier = cdc ? " ✔ Le cahier des charges est réussi (C2.2)." : " Le cahier des charges, en tête de l'activité, n'est pas encore réussi (C2.2) : l'activité sera validée quand il le sera.";
+    return {score:ok,total:6,valide:ok===6&&cdc, extra: pieces + cahier};
   }
 };
 const ENC_OK=["Excellent : tout est validé !","Bravo, le dossier technique avance !","Très bien : le club jardin peut compter sur toi."];
@@ -3400,7 +3423,9 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
     const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
     let msg = r.score + " / " + r.total + " réponses correctes.";
     if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
-    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    /* toutes les réponses justes mais l'activité pas encore validée (un geste reste à faire : explorer, réparer, le cahier
+       des charges) : pas de « vérifie les points restants avec l'aide » — ce qui reste est dit juste après (20/11/2026) */
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; if(r.score < r.total) msg += " " + ENC_MI[r.score%ENC_MI.length]; }
     else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
     if(r.extra) msg += r.extra;
     fb.textContent = msg;

@@ -34277,3 +34277,88 @@ en deux fonctions, dans deux blocs posés par leurs outils.
 
 **À décider** (Pascal) : le bouton d'une séquence efface-t-il aussi le QCM du lot ? Par défaut non — chaque page
 efface ce qu'elle garde, et le QCM porte son bouton dans sa note.
+
+## 20/11/2026 — 4e_C4.1, audit externe (suite) : les pannes 2 et 3 du réseau, l'électrovanne, le bilan, le retour de l'activité 5
+Même audit que l'entrée précédente (douze axes, transmis par Pascal ; « Ok c'est bon » au plan : l'effacement d'abord,
+le reste « dans une livraison à part »). Relu remarque par remarque sur la page rendue (skill
+`relire-un-audit-externe`). Les cinq constats de ses essais sont **confirmés** ; l'effacement est traité par #828.
+
+**Ce que l'audit a vu juste, et ce qui change.**
+- **Panne 3 (P1).** La page disait « rien n'atteint le serveur » à cause d'une mauvaise passerelle, alors que la carte
+  (192.168.1.50) et le serveur (192.168.1.10) sont sur le même réseau : entre voisins, la passerelle ne sert pas.
+  L'élève retenait le contraire de ce que la synthèse et le QCM enseignent (« la porte de sortie »). Nouveau
+  scénario : les mesures arrivent toujours au serveur du collège ; c'est le message « arrosage du jour », que la carte
+  envoie chaque soir par internet au téléphone du club, qui n'arrive plus. Le bouton dit « rien ne sort du collège »,
+  la réparation se vérifie sur le téléphone, la correction dit à quoi sert la passerelle et à quoi elle ne sert pas,
+  et le refus de la carte du bac 2 demande « par quelle porte la carte sort-elle… pour envoyer un message par
+  internet ? ». Un piège de plus : « croire qu'il faut la passerelle pour parler à son voisin de réseau ».
+- **Panne 2 (P1).** La réparation validée était « sortir le .50 de la plage DHCP » ; la page annonce une plage de .20
+  à .49, qui ne contient pas le .50. Les symptômes disent maintenant ce qui a changé (« la plage DHCP a été élargie :
+  elle va de .20 à .60, au lieu de .20 à .49 ») et la réparation ramène la plage à .20–.49 : l'élève justifie son
+  geste en lisant.
+- **Le plan** (`Images/reseau_jardin_ip.svg`) porte ce qu'il faut pour diagnostiquer (n°331) : internet, dessiné en
+  pointillés hors du collège, où mène la box ; « la PASSERELLE : la porte de sortie » ; « DHCP : elle distribue de .20
+  à .49 » ; « pour SORTIR du réseau : la PASSERELLE » ; « mauvaise passerelle → rien ne SORT du réseau » (au lieu de
+  « l'appareil est ISOLÉ »). Titre, description et source des médias suivent.
+- **Électrovanne (P2).** La correction de l'activité 1 disait d'une seule phrase « à la sortie de la pompe et de
+  l'électrovanne, elle est cinétique ». Elle sépare maintenant les deux : la pompe donne de l'énergie à l'eau ;
+  l'électrovanne n'en donne pas, c'est son clapet qui bouge ; et les trois rôles — la carte commande, la pompe met
+  l'eau en mouvement, l'électrovanne ouvre le passage. **Le schéma n'est pas redessiné** : il montre déjà ces trois
+  rôles sur trois éléments distincts (l'ordre arrive sur DISTRIBUER, la pompe porte « l'eau est mise en mouvement »,
+  l'électrovanne « ouvrir / fermer l'arrivée d'eau »), selon la n°310 et la décision du 16/11 sur « cinétique ».
+- **Bilan prématuré (P1).** Après une seule question réussie, la carte du bilan affirmait « le dossier technique du
+  jardin est complet ». La phrase devient conditionnelle (« Quand tes cinq activités sont validées… »). Et **le mode
+  mission, sur toutes les séquences**, dit au bilan ce qui reste : « ⏳ Ta mission n'est pas finie : il te reste
+  N questions. La prochaine t'attend ici : Séance 1 — L'énergie. »
+- **Activité 5, deux résultats (P2).** Six réponses justes sur les pièces ne validaient pas l'activité tant que le
+  cahier des charges incrusté n'était pas réussi, sans que le retour le dise clairement. Le retour nomme maintenant les
+  deux : « ✔ Les pièces : tes six réponses sont justes (C4.3). Le cahier des charges… n'est pas encore réussi (C2.2) :
+  l'activité sera validée quand il le sera. » Et quand toutes les réponses sont justes mais qu'un geste reste à faire
+  (explorer, réparer, le cahier des charges), la page ne dit plus « vérifie les points restants avec l'aide ».
+- **« À 40 % exactement ? »** : la correction de l'activité 3 le dit (40 n'est pas plus petit que 40 : pas
+  d'arrosage). Le cas se teste au banc de `4e_C9.1` (essais à 39 et à 40).
+- **Mêmes nombres (n°338)**, trouvés en vérifiant : l'exemple du QCM « le DHCP distribue à partir de .100 »
+  contredisait la tablette en .23 — il reprend la plage du jardin ; la synthèse élève dit « Rien ne sort du
+  collège » ; la synthèse professeur dit « cinétique » (elle disait « méca ») et les deux scénarios corrigés.
+- **Avec ou sans la batterie** : la correction de l'activité 1 dit que le trajet « lumineuse, électrique, chimique,
+  électrique, cinétique » est celui de la nuit ou d'un jour gris ; en plein soleil, l'énergie va droit du régulateur aux
+  relais.
+- Trois corrections d'un seul tenant (dont deux d'avant) sont aérées, une idée par ligne.
+
+**Non retenu, et pourquoi.**
+- *Redessiner la branche de l'électrovanne* : voir plus haut.
+- *Sortir le billet d'entrée du total des étoiles* : les étoiles disent une progression, pas une note, et le billet
+  s'annonce « sans note » ; le retirer changerait les comptes des 60 séquences.
+- *Présenter le jardin avant le rappel de 5e* : l'ordre d'ouverture est celui du squelette commun (n°311, n°337).
+
+**À décider (Pascal).**
+1. **Le fichier Packet Tracer** : `SOURCES_MEDIAS.md` le décrit avec un DHCP « de .23 à .72 », qui contient le .50 de
+   la carte — le piège même que la séance enseigne —, alors que la page et le plan disent .20 à .49. Non vérifiable
+   d'ici (il faut Packet Tracer). À régler sur le poste : Box-Collège, DHCP, une plage qui s'arrête à .49.
+2. **Valider l'activité 5 sur les six réponses seules ?** Par défaut non : l'exercice incrusté reste exigé, comme
+   partout ; le retour dit maintenant les deux résultats.
+3. **Un billet de sortie** (n°330) : le lot n'a pas de production seul, sur un cas nouveau. La séance 3 a dix minutes
+   de marge. L'audit le demande trois fois sous trois noms (« tâche de transfert », « trace courte à remettre »,
+   « phrase de preuve »).
+
+**Bancs.** `tests_4e_C4.1-C4.9.mjs` **67 / 67** (60 avant ; sept essais nouveaux : les deux scénarios, la correction de
+la passerelle, le plan, les deux résultats de l'activité 5, le bilan conditionnel et l'électrovanne) ; n°311 34 / 34.
+Mode mission : pilote 52 / 52 (14 c, nouveau : au bilan, ce qui reste et où reprendre) ; **générique sur les
+60 séquences, 0 refus** (837 s) ; `banc_defaut` vert ; `banc_effacement` : 166 pages, 0 qui garde quelque chose. Le plan :
+`controle_schemas` 0 ✘, 0 ⚠. Contrôles du lot : unités, hiérarchie, aération (0 écart), mêmes nombres, correction
+complète, schéma sous les yeux, validations, médias, liens, sigles, QCM (banque, effectifs, en-tête, longueurs,
+échantillonnage), sauvegarde locale, règles visibles, hors ligne, contraste des liens — rien à signaler. `controle_axe` :
+aucune page au-dessus de la référence ; la séquence ne porte aucun défaut grave (le « contraste du bouton QCM » de
+l'audit n'est pas retrouvé par l'outil). Fiche papier : 4 fiches, 15 pages. Charge : 728, 750, 782 et 897 mots visibles
+par séance. Export Moodle régénéré, son banc vert.
+
+**Ce que l'audit n'avait pas testé, et que les bancs du dépôt jouent** : le téléphone (390 px, sans défilement de
+côté), l'impression (fiche papier), le hors-ligne. Restent hors de portée d'ici : un vrai téléphone, un lecteur
+d'écran, le fichier Packet Tracer.
+
+**Mesuré en passant, à reprendre à part** (n°293).
+- Le bilan du mode mission (« Ta mission : … ») : relevé sur les 56 séquences à onglets. Sur 34, il dit maintenant ce
+  qui reste et où reprendre ; sur 22, le relevé n'a pas trouvé de bilan du mode — dont `4e_C9.1` ; vu sur `5e_C2.1` :
+  sa carte « Mon bilan personnel » n'est pas reconnue par le mode.
+- Les écrans titrés « Suite » ou « À lire » (une carte sans titre ; l'audit a relevé celui du jardin) : au moins
+  29 écrans sur 14 séquences, relevé interrompu avant la fin. Celui du jardin est la ligne « 🧪 Atelier Pix ». Défaut commun au mode mission : pas de retouche d'une seule page.

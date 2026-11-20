@@ -158,3 +158,28 @@ les fonctions dans les blocs, les formes d'énergie sur les flèches ; la chaîn
 - `python3 _outils/controle_chaine_a_completer.py` : ✅.
 
 Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.
+
+## 20/11/2026 — Audit externe : les pannes 2 et 3 du réseau, l'électrovanne, le bilan, le retour de l'activité 5
+
+Second audit externe transmis par Pascal. L'effacement incomplet est traité pour tout le site (#828, règle n°322,
+point 4). Ici, le lot : les scénarios des pannes 2 et 3 (le plan, les symptômes, la réparation et la correction disent
+la même chose), la correction de l'activité 1 sur l'électrovanne, le bilan qui ne dit plus « complet » avant l'heure,
+le retour de l'activité 5 en deux résultats (C4.3, C2.2), l'exemple du QCM sur la plage DHCP, les deux synthèses.
+
+- `node tests_4e_C4.1-C4.9.mjs` : **67 / 67** (60 avant). Sept essais nouveaux : 13 a (panne 2 : la plage dans les
+  symptômes et dans la réparation), 13 b (panne 3 : le serveur reçoit toujours, c'est internet qui ne passe plus),
+  13 c (la correction dit à quoi sert la passerelle), 13 d (le plan : internet, la plage, « rien ne SORT »),
+  15 bis a et 16 bis (les deux résultats de l'activité 5), 16 ter (le bilan conditionnel, la correction de
+  l'électrovanne). Refusés sur la version d'avant, par construction : ils lisent les textes corrigés.
+- `node tests_regle_311_4e_C4.1.mjs` : 34 / 34.
+- Mode mission : `banc_mission.mjs` 52 / 52 (51 avant ; 14 c : au bilan, ce qui reste et où reprendre) ;
+  `banc_generique.mjs` sur la page : aucun refus ; `banc_defaut.mjs` : vert.
+- `node _outils/banc_effacement.mjs` : la page efface tout (réponses, cahier des charges incrusté, étoiles).
+- `node _outils/controle_schemas.mjs` sur `Images/reseau_jardin_ip.svg` : voir le journal du 20/11/2026.
+- Contrôles du lot : unités, hiérarchie, aération (0 écart — trois corrections d'un seul tenant aérées), mêmes
+  nombres, correction complète, schéma sous les yeux, validations, médias, liens, sigles, QCM (banque, effectifs,
+  en-tête, longueurs, échantillonnage), sauvegarde locale, règles visibles : rien à signaler. Export Moodle régénéré.
+
+Non exécuté : le fichier `4e_jardin_TECHNO-C4.pkt` (il faut Packet Tracer) — `SOURCES_MEDIAS.md` le décrit avec un
+DHCP « de .23 à .72 », qui contient le .50 de la carte, alors que la page et le plan disent .20 à .49 : à régler sur le
+poste de Pascal. Un vrai téléphone, un lecteur d'écran, Firefox, Safari, une impression réelle.
