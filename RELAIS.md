@@ -1,6 +1,6 @@
 # Relais — en-ligne-pour-le-cycle-4
 
-Mis à jour le 20/11/2026 14:49 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
+Mis à jour le 20/11/2026 14:52 (heure de la Martinique). Le journal des décisions fait foi ; ce relais dit où on en est.
 
 ## Où on en est
 - PR #832 fusionnée (commit de fusion 66e128c4) : le TP 4e_C6.2/tp_algorigrammes_domotique corrige les 5 priorités de l'audit en 12 axes.
@@ -19,7 +19,7 @@ _(écrit par Claude le 20/11/2026 14:49)_
 _Aucune._
 
 ## Prochaine action
-➡️ Décider si la page est modernisée au gabarit ou laissée « héritée ».
+➡️ Choisis a, b ou c pour la suite.
 
 ## Décisions prises récemment (messages de Pascal)
 - 16/11/2026 09:00 — « You are summarizing a Claude Code session for a daily memory log.
