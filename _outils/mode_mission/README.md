@@ -20,6 +20,10 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
   « Trou ① — … » — ont chacun leur écran, le code redit au-dessus et le trou en cours marqué dans le code, décision
   de Pascal du 16/11/2026) —, puis « je retiens »
   (correction, erreurs fréquentes, à retenir, critère) ; enfin chaque autre carte (synthèse, Bonus, bilan, QCM).
+  **Chaque écran porte un nom** (20/11/2026) : le titre de la carte (h2, h3, h4) ; à défaut son nom accessible
+  (`aria-label` : « Fin de la séance 1 », « Le banc des matériaux ») ; à défaut le début de son texte, s'il tient en
+  quelques mots. « Suite » et « À lire » ne restent qu'en dernier recours — pour nommer une carte, lui donner un titre
+  ou un `aria-label`. Le bouton « Séance suivante › » rangé dans la carte d'une séance n'est pas un écran.
 - **Ouvre la correction** une fois l'activité vérifiée (règle d'or n°336, 16/11/2026 — Pascal : « le mode mission ne
   contient pas les corrections » ; elles y étaient, repliées, et passaient inaperçues) : dès que la dernière question a
   lancé la vérification de la page, la correction s'ouvre d'elle-même, sous la dernière question comme sur l'écran
@@ -46,6 +50,10 @@ séquence, un écran à la fois, avec une barre d'étapes et trois boutons — P
 - **Garde** sur l'appareil le mode, l'écran en cours, les erreurs et les étoiles (`localStorage`, clé
   `mission:<page>`) ; « Effacer ma sauvegarde » les efface aussi. La barre affiche les étoiles de la séance, le
   bilan celles de la séquence et les erreurs corrigées en route.
+  **La carte du bilan** est celle qui porte `id="bilan"` ou un positionnement (`#je-me-positionne`,
+  `fieldset.positionnement`) ; à défaut, la dernière carte dont le titre dit « bilan » (20/11/2026 : 22 séquences
+  n'avaient ni l'un ni l'autre, et jamais de « Ta mission : … »). Tant qu'il reste des questions, le bilan le dit
+  et nomme la séance où reprendre.
 - **Allume la barre d'étapes selon ce que l'élève a fait** (Pascal, 16/11/2026, sur `4e_C9.1` : « certaines leds
   n'étaient pas allumées alors que l'élève avait fait le parcours ») : un écran sans question s'allume une fois
   dépassé et le reste, même quand l'élève revient en arrière (l'écran le plus loin atteint se garde, par séance) ;
