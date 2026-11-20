@@ -1442,12 +1442,25 @@ function verifier(){
 }
 
 /* Au bilan de la séquence : les étoiles gagnées, au-dessus de l'auto-positionnement — qui reste le choix de l'élève */
+/* la séance qui porte la première question pas encore réussie, nommée comme son onglet ; "" si on ne sait pas la nommer */
+function premiereAFaire(){
+  var ids = Object.keys(parPanneau);
+  for (var i = 0; i < ids.length; i++){
+    if (!parties(ids[i]).some(function(e){ return !M.fait[e.id]; })) continue;
+    var o = G.onglet ? $$(G.onglet).filter(function(x){ return G.de(x) === ids[i]; })[0] : null, m = /^seance-(\d+)$/.exec(ids[i]);
+    return o ? nomOnglet(o) : m ? "Séance " + m[1] : "";
+  }
+  return "";
+}
 function bilan(s){
   if (s.t !== "carte" || !(s.n[0].id === "bilan" || $("#je-me-positionne, fieldset.positionnement", s.n[0]))) return;
   var b = $(".ms-bilan", s.n[0]); if (!b){ b = el("div", "ms-bilan ms-seul"); var h = $("h2", s.n[0]); s.n[0].insertBefore(b, h ? h.nextSibling : s.n[0].firstChild); }
   var ps = parties(), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), faites = ps.filter(function(e){ return M.fait[e.id]; }).length;
   var corrigees = ps.reduce(function(a, e){ return a + (M.fait[e.id] ? (M.erreurs[e.id] || 0) : 0); }, 0);
-  b.innerHTML = "<p><b>Ta mission : " + gagne + " étoile" + (gagne > 1 ? "s" : "") + " sur " + (ps.length * 3) + "</b> — " + faites + " question" + (faites > 1 ? "s" : "") + " réussie" + (faites > 1 ? "s" : "") + " sur " + ps.length + ".</p>" + (corrigees ? "<p>En route, tu as corrigé " + corrigees + " erreur" + (corrigees > 1 ? "s" : "") + " : c'est comme ça qu'on apprend.</p>" : "") + "<p>Trois étoiles : juste du premier coup. Ton positionnement, ci-dessous, c'est toi qui le choisis.</p>";
+  /* Tant qu'il reste des questions, le bilan le dit et nomme la séance où reprendre (audit du jardin de 4e, 20/11/2026 :
+     après une seule question réussie, l'élève lisait au bilan un texte de fin de séquence et pouvait se croire arrivé). */
+  var reste = ps.length - faites, ou = reste ? premiereAFaire() : "";
+  b.innerHTML = "<p><b>Ta mission : " + gagne + " étoile" + (gagne > 1 ? "s" : "") + " sur " + (ps.length * 3) + "</b> — " + faites + " question" + (faites > 1 ? "s" : "") + " réussie" + (faites > 1 ? "s" : "") + " sur " + ps.length + ".</p>" + (reste ? '<p class="ms-reste">⏳ <b>Ta mission n\'est pas finie</b> : il te reste ' + reste + " question" + (reste > 1 ? "s" : "") + (ou ? ". La prochaine t'attend ici : " + esc(ou) : "") + ".</p>" : "") + (corrigees ? "<p>En route, tu as corrigé " + corrigees + " erreur" + (corrigees > 1 ? "s" : "") + " : c'est comme ça qu'on apprend.</p>" : "") + "<p>Trois étoiles : juste du premier coup. Ton positionnement, ci-dessous, c'est toi qui le choisis.</p>";
 }
 
 /* ═══ Entrer, sortir ═══ */

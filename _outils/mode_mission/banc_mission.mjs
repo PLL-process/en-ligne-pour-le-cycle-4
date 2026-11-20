@@ -117,6 +117,7 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   await p.click(`#msRail [data-k="${ib}"]`); await p.waitForTimeout(200);
   const bil = await p.evaluate(() => { const b = [...document.querySelectorAll('.ms-bilan')].find(x => x.offsetParent); return b ? b.textContent : ''; });
   ok(T('14b · au bilan : les étoiles de toute la séquence, et les erreurs corrigées en route (2 étiquettes + 2 choix)'), /15 étoiles sur \d{2,3}/.test(bil) && /corrigé 4 erreurs/.test(bil), bil.slice(0, 110));
+  ok(T('14c · au bilan, tant qu\'il reste des questions : « Ta mission n\'est pas finie », combien il en reste, et la séance où reprendre'), /Ta mission n'est pas finie : il te reste \d+ questions?\. La prochaine t'attend ici : Séance \d/.test(bil), bil.slice(60, 220));
   await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s3"]').click()); await p.waitForTimeout(250);
   await p.click('#msQuitter'); await p.waitForTimeout(200);
   const sortie = await p.evaluate(() => ({ ms: document.body.classList.contains('ms'), seuls: [...document.querySelectorAll('.ms-seul')].filter(x => x.offsetParent).length,

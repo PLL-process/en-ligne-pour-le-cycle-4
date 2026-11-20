@@ -230,6 +230,27 @@ ok(`13 · un mauvais diagnostic (« ${mauvaise} ») est refusé, et le compteur 
 ok('13 bis · les symptômes de la panne sont bien affichés avant le diagnostic',
    /SYMPTÔMES/.test(symptomes), symptomes.slice(0, 60));
 
+/* Les scénarios des pannes 2 et 3 (audit externe du 20/11/2026) : le plan, les symptômes, la réparation et la
+   correction disent la même chose. Panne 2 : la plage DHCP annoncée (.20 à .49) ne contenait pas le .50 — la réparation
+   « sortir le .50 de la plage » ne se justifiait pas. Panne 3 : la carte (.50) et le serveur (.10) sont sur le même
+   réseau, où la passerelle ne sert pas — « rien n'atteint le serveur » enseignait le contraire. */
+const SCEN = await p.evaluate(() => ({ p2: PANNES[2].sym, p3: PANNES[3].sym, ok3: PANNES[3].ok,
+  rep2: (document.querySelector('label[for="repSel__2"]') || {}).textContent || '',
+  boutons: [...document.querySelectorAll('.pannebtn')].map(b => b.textContent).join(' | '),
+  sais: document.body.textContent.includes('de 192.168.1.20 à 192.168.1.49'),
+  corr: [...document.querySelectorAll('#act4 details.correction, #s3 details.correction')].map(d => d.textContent).join(' ') }));
+ok('13 a · panne 2 : les symptômes donnent la plage DHCP élargie (.20 à .60, au lieu de .20 à .49), la réparation la ramène à .20–.49, et « Ce que tu sais du réseau » annonce la même plage',
+   /\.20 à \.60, au lieu de \.20 à \.49/.test(SCEN.p2) && /ramener la plage DHCP de la box à \.20–\.49/.test(SCEN.rep2) && SCEN.sais, SCEN.rep2);
+ok('13 b · panne 3 : le serveur du collège, sur le même réseau que la carte, reçoit toujours ; c\'est ce qui sort vers internet qui ne passe plus',
+   /arrivent bien au serveur du collège/.test(SCEN.p3) && /internet/.test(SCEN.p3) && !/rien n'atteint le serveur/.test(SCEN.p3)
+   && /n'a jamais cessé de recevoir/.test(SCEN.ok3) && !/isolée/.test(SCEN.boutons), SCEN.boutons);
+ok('13 c · la correction dit à quoi sert la passerelle : sortir du réseau, pas parler à son voisin',
+   /porte de sortie/.test(SCEN.corr) && /Entre deux appareils de la même rue/.test(SCEN.corr), SCEN.corr.slice(0, 80));
+const PLAN = fs.readFileSync(path.join(ICI, 'Images', 'reseau_jardin_ip.svg'), 'utf8');
+ok('13 d · le plan dit la même chose : internet hors du collège, la plage DHCP de la box, « rien ne SORT du réseau »',
+   />internet</.test(PLAN) && />hors du collège</.test(PLAN) && /DHCP : elle distribue de \.20 à \.49/.test(PLAN)
+   && /mauvaise passerelle → rien ne SORT du réseau/.test(PLAN) && !/ISOLÉ/.test(PLAN));
+
 /* La remise en service (audit du 19/11/2026) : la bonne cause ne suffit plus ;
    la bonne réparation est lue dans la page (REMISE), la mauvaise prise dans les options réelles. */
 const REMISES = await p.evaluate(() => ({ bonnes: REMISE,
@@ -317,6 +338,9 @@ await remplir(5); await valider(5);
 ok('15 bis · activité 5 REFUSÉE malgré 6 réponses justes — l\'exercice du cahier des charges n\'est pas réussi',
    /6 \/ 6/.test(await retour(5)) && /cahier des charges/.test(await retour(5)) && !(await valide(5)),
    (await retour(5)).slice(0, 120));
+ok('15 bis a · … et le retour dit les deux résultats séparément : les six réponses sur les pièces sont justes (C4.3), le cahier des charges reste à réussir (C2.2)',
+   /tes six réponses sont justes \(C4\.3\)/.test(await retour(5)) && /cahier des charges[^.]*n'est pas encore réussi \(C2\.2\)/.test(await retour(5)),
+   (await retour(5)).slice(0, 220));
 await p.click('#pv_4e_e6 button.verifier'); await p.waitForTimeout(80);
 ok('15 ter · l\'exercice du cahier des charges inséré se vérifie à vide (retour à reprendre)',
    (await p.textContent('#pv_4e_e6 .retour')).includes('🔴'),
@@ -354,6 +378,11 @@ await valider(5);
 ok('16 · activité 5 validée 6 / 6 (forme et procédé : 3D, injection, laser, perçage)',
    /6 \/ 6/.test(await retour(5)) && await valide(5), (await retour(5)).slice(0, 60));
 
+ok('16 bis · activité 5 validée : le retour nomme les deux résultats acquis (C4.3 et C2.2)',
+   /tes six réponses sont justes \(C4\.3\)/.test(await retour(5)) && /Le cahier des charges est réussi \(C2\.2\)/.test(await retour(5)), (await retour(5)).slice(0, 200));
+ok('16 ter · le bilan ne dit plus « le dossier est complet » avant l\'heure, et la correction de l\'activité 1 sépare la pompe (elle met l\'eau en mouvement) de l\'électrovanne (son clapet bouge)',
+   await p.evaluate(() => { const t = document.body.textContent; return /Quand tes cinq activités sont validées, le dossier technique du jardin est complet/.test(t)
+     && !/<br>Le dossier technique du jardin est complet/.test(document.body.innerHTML) && /c'est son clapet qui bouge/.test(t) && /la carte commande/.test(t); }));
 ok('17 · progression 5 / 5 activités, et les quatre onglets portent leur coche',
    (await p.textContent('#progTxt')).includes('5 / 5')
    && (await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.trim())))

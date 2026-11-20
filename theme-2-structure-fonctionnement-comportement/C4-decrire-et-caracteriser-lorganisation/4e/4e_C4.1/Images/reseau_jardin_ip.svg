@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 790" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
 <title id="t">Le réseau local du jardin connecté, dessiné comme dans Packet Tracer, avec ses adresses IP</title>
-<desc id="d">Le réseau du collège pour le jardin connecté, dessiné d'après le simulateur Packet Tracer. En haut à gauche, la box-routeur du collège, adresse 192.168.1.1, la passerelle du réseau. Un câble la relie, par son port GigabitEthernet 1, au serveur du collège en haut à droite, adresse fixe 192.168.1.10, qui héberge la table de données mesures_jardin. Un second câble part du port GigabitEthernet 2 de la box vers la borne wifi de la cour, au centre, qui étend la couverture jusqu'au jardin. Deux appareils sont reliés à la borne sans fil, en traits pointillés : en bas à gauche, la carte programmable du jardin, en adresse IP fixe 192.168.1.50, réglée à la main pour être toujours joignable au même numéro ; en bas à droite, la tablette de la classe, en adresse automatique DHCP 192.168.1.23, qui peut changer d'un jour à l'autre. Chaque câble porte un petit triangle vert à ses deux bouts : la liaison est prête. En bas, deux encadrés : pour communiquer, un appareil doit être dans la portée du wifi ou câblé, avoir une adresse IP unique sur le réseau, et connaître la bonne passerelle 192.168.1.1 ; les trois pannes classiques sont la même adresse IP sur deux appareils, qui provoque un conflit, une mauvaise passerelle, qui isole l'appareil, et la sortie de la portée du wifi, où plus aucun signal ne passe.</desc>
+<desc id="d">Le réseau du collège pour le jardin connecté, dessiné d'après le simulateur Packet Tracer. En haut à gauche, la box-routeur du collège, adresse 192.168.1.1 : c'est la passerelle, la porte de sortie du réseau. Elle distribue les adresses automatiques (DHCP) de .20 à .49. À sa gauche, en pointillés, internet : l'extérieur du collège, où l'on ne va qu'en passant par elle. Un câble la relie, par son port GigabitEthernet 1, au serveur du collège en haut à droite, adresse fixe 192.168.1.10, qui héberge la table de données mesures_jardin. Un second câble part du port GigabitEthernet 2 de la box vers la borne wifi de la cour, au centre, qui étend la couverture jusqu'au jardin. Deux appareils sont reliés à la borne sans fil, en traits pointillés : en bas à gauche, la carte programmable du jardin, en adresse IP fixe 192.168.1.50, réglée à la main pour être toujours joignable au même numéro ; en bas à droite, la tablette de la classe, en adresse automatique DHCP 192.168.1.23, qui peut changer d'un jour à l'autre. Chaque câble porte un petit triangle vert à ses deux bouts : la liaison est prête. En bas, deux encadrés : pour communiquer, un appareil doit être dans la portée du wifi ou câblé, avoir une adresse IP unique sur le réseau, et, pour sortir du réseau, connaître la passerelle 192.168.1.1 ; les trois pannes classiques sont la même adresse IP sur deux appareils, qui provoque un conflit, une mauvaise passerelle, avec laquelle rien ne sort du réseau, et la sortie de la portée du wifi, où plus aucun signal ne passe.</desc>
 <rect width="1100" height="790" fill="#ffffff"/>
 <rect x="1" y="1" width="1098" height="788" fill="none" stroke="#9aaabc" stroke-width="2"/>
 <text x="550" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Le réseau du jardin — chaque appareil a son adresse, comme une maison dans la rue 192.168.1</text>
@@ -46,7 +46,17 @@
   <text x="240" y="186" text-anchor="middle" font-size="15" font-weight="bold" fill="#1d4e89">Box-Collège</text>
   <rect x="170" y="194" width="140" height="24" rx="12" fill="#8a6d1d"/>
   <text x="240" y="211" text-anchor="middle" font-size="15" fill="#ffffff" font-family="Consolas, monospace" font-weight="bold">192.168.1.1</text>
-  <text x="240" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6d1d">la PASSERELLE du réseau</text>
+  <text x="240" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6d1d">la PASSERELLE : la porte de sortie</text>
+  <text x="240" y="257" text-anchor="middle" font-size="14" fill="#5d6b7a">DHCP : elle distribue de .20 à .49</text>
+</g>
+
+<!-- ───── l'extérieur du collège : internet, où l'on ne va qu'en passant par la passerelle (20/11/2026) ───── -->
+<g>
+  <line x1="158" y1="120" x2="116" y2="120" stroke="#8a6d1d" stroke-width="3" stroke-dasharray="7 5"/>
+  <path d="M106,120 L118,113 L118,127 z" fill="#8a6d1d"/>
+  <path d="M36,138 a17,17 0 0 1 4,-33 a22,22 0 0 1 42,-5 a16,16 0 0 1 14,30 a12,12 0 0 1 -6,8 z" fill="#f4f6f9" stroke="#7b8794" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="64" y="127" text-anchor="middle" font-size="14" font-weight="bold" fill="#5d6b7a">internet</text>
+  <text x="64" y="160" text-anchor="middle" font-size="14" fill="#5d6b7a">hors du collège</text>
 </g>
 
 <!-- ───── le serveur du collège (Server-PT), en haut à droite ───── -->
@@ -116,12 +126,12 @@
   <text x="80" y="694" font-size="14" font-weight="bold" fill="#1f6b43">Pour communiquer, un appareil doit :</text>
   <text x="80" y="714" font-size="14" fill="#22313f">1. être DANS LA PORTÉE du wifi (ou câblé)</text>
   <text x="80" y="733" font-size="14" fill="#22313f">2. avoir une adresse IP UNIQUE sur le réseau</text>
-  <text x="80" y="752" font-size="14" fill="#22313f">3. connaître la bonne PASSERELLE : 192.168.1.1</text>
+  <text x="80" y="752" font-size="14" fill="#22313f">3. pour SORTIR du réseau : la PASSERELLE 192.168.1.1</text>
 
   <rect x="570" y="672" width="470" height="90" rx="10" fill="#fdf0f1" stroke="#b33a3a" stroke-width="2"/>
   <text x="590" y="694" font-size="14" font-weight="bold" fill="#9c2b2b">Les 3 pannes classiques :</text>
   <text x="590" y="714" font-size="14" fill="#22313f">même IP sur 2 appareils → CONFLIT d'adresses</text>
-  <text x="590" y="733" font-size="14" fill="#22313f">mauvaise passerelle → l'appareil est ISOLÉ</text>
+  <text x="590" y="733" font-size="14" fill="#22313f">mauvaise passerelle → rien ne SORT du réseau</text>
   <text x="590" y="752" font-size="14" fill="#22313f">hors de portée du wifi → plus AUCUN signal</text>
 </g>
 <text x="550" y="780" text-anchor="middle" font-size="14" fill="#7b8794">Dessin original d'après le simulateur Cisco Packet Tracer 8 (noms des modèles tels qu'il les affiche). Cisco et Packet Tracer sont des marques de Cisco.</text>
