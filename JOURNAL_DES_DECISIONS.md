@@ -34446,3 +34446,53 @@ sauvegarde locale, `corriger_billet.py` (0 billet à corriger) — rien à signa
 banc générique les joue, et n'y trouve aucun écran sans nom après. Les noms tirés du début d'un texte sont lus par une
 règle simple (première phrase, 56 caractères au plus) : une carte importante gagne à recevoir un vrai titre ou un
 `aria-label`.
+
+## 20/11/2026 — 4e_C6.2 : le TP « algorigrammes de domotique » corrige ses cinq défauts majeurs (audit en 12 axes)
+
+Audit en 12 axes de `4e_C6.2/tp_algorigrammes_domotique.html` (page héritée, n°12) demandé par Pascal ; il a retenu
+« les 5 priorités » et précisé que **les élèves travaillent en autonomie**. Dans ces conditions, une correction
+accessible d'un clic se recopie, et la note ne mesure plus rien. Mesuré sur la version en ligne avant correction :
+- **Le code de validation ne dépendait que du nom.** Il était tronqué à 10 caractères du base64, soit les 7 premières
+  lettres environ : « Sarah Pierre » obtenait `U2FYYWGGUG` à 20/20 comme à 3,5/20, en 4e A comme en 4e B (n°340).
+- **La phase 3 contredisait sa règle** (n°334) : « deux tests successifs » annoncés, un seul losange dans la correction
+  (« Luminosité < 50 ? puis présence ? »), et la sortie Non du premier test absente. Les phases 2 et 3 faisaient ranger
+  « Oui : allumer » puis « Non : éteindre » dans une liste, comme si les deux s'exécutaient l'une après l'autre.
+- **Le schéma corrigé** n'avait pas de trait entre la jonction des branches et « Attendre 1 s ». Le retour de boucle
+  partait du haut de ce bloc et traversait « Allumer lampe ».
+- **Thème clair** : glossaire à 1,05:1, points de vie à 2,72:1 (axe-core). **À 390 px**, le titre en `nowrap`
+  élargissait la page à 480 px.
+- 20/20 s'obtenait en recopiant : « Voir la correction » était ouvert avant tout essai, sans perte de points.
+
+**Corrigé** (même adresse, même clé de sauvegarde : une ancienne progression garde ses exercices réussis) :
+1. **Code** : la note, l'état de chacun des 8 exercices et une somme de contrôle (nom, classe, date). Exemple :
+   `8,5-02120002-CDG9`. Un volet « 🧑‍🏫 Professeur : vérifier un code » le recalcule. La page dit ce qu'il vaut : il
+   repère un bilan retouché, mais un élève qui lit la méthode dans la page peut en fabriquer un.
+2. **Phases 2 et 3** : on range un **tronc** (« Fin » y est un piège), puis on choisit chaque **sortie de losange**
+   avec des boutons radio dans un `fieldset` (n°300). La phase 3 a deux losanges et deux lectures de capteurs ; les deux
+   lectures peuvent s'échanger. Corrections redessinées : jonction reliée à « Attendre », boucle partant du bas, flèches
+   à taille normale, et un `aria-label` qui décrit tout l'algorigramme. Le débogage montre désormais la boucle
+   (RÉPÉTER… FIN RÉPÉTER), si bien que l'attente manquante se voit dans l'énoncé.
+3. **Lisibilité** : glossaire aux couleurs du thème et caché à la tabulation quand il est fermé (`aria-expanded`),
+   code et note lisibles en clair, « Oui » et « Non » en `currentColor`, titre qui passe à la ligne, en-tête non
+   collant sous 760 px, tableau qui tient à 390 px, `aria-live` sur les retours, boutons ↑ ↓ ✕ et « Ajouter » nommés.
+4. **Essais** : 2 par exercice (1 pour les deux questions de la phase 4). La correction s'ouvre après une réussite ou
+   quand les essais sont épuisés ; un exercice réussi après lecture de la correction compte comme réussi, sans points
+   (n°333). Points de vie retirés (sans effet) ; la barre de progression suit les exercices réussis. Mini-projet :
+   la condition doit être une question qu'un capteur tranche, et les deux actions doivent différer. Attente propre à
+   chaque système (30 s, 10 min, 1 s) ; seuil d'arrosage 30 % partout (n°338).
+5. **Titre** à la charte, sans « V12 » ; sous-titre-mission ; carte « 🎯 Avant de commencer » (n°337, posée à la main
+   au format de `trois_lignes.py`, la page n'ayant pas de volet `#ouverture`) ; règle du jeu affichée. Durée : 50 min.
+   Le glossaire relie le lexique de la séquence et gagne algorigramme, condition et seuil.
+
+**Pas fait** : la mini-activité de la phase 0 reste en listes déroulantes (n°300) ; le lien « Le QCM » mène toujours au
+QCM hérité de l'éclairage ; la page reste dans `heritees.json` (sa forme n'est pas au gabarit).
+
+Contrôles : banc Playwright du lot en 28 points (corrections fermées au départ, 1re et 2e erreur, réussite après
+correction sans points, troncs échangés, deux losanges, QCM, mini-projet, code vérifié, note retouchée refusée, autre
+classe refusée, effacement complet n°322, zéro erreur JS, 390 px sur 5 phases) : vert. axe-core (WCAG 2.1 AA et bonnes
+pratiques), en sombre comme en clair glossaire ouvert : seul `region` reste, sur la licence commune à tout le site.
+`trois_lignes --verifier`, `controle_sauvegarde_locale` (son découpeur ne lit pas un gabarit JS imbriqué : réécrit),
+validations, mêmes nombres, liens, atteignabilité, boutons vivants, loupe, médias, règles visibles, sigles, tactile,
+unités : verts. Index et audit régénérés.
+Vu sur la capture à 390 px et par aucun contrôle : l'énoncé d'une sortie de losange, passé sur deux lignes,
+coupait le bord de son `fieldset` (le défaut du pilote `3e_C1.1`). La `legend` flotte désormais dans le cadre.
