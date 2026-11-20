@@ -34177,3 +34177,34 @@ Rien ne change pour un QCM fini : mêmes notes, mêmes niveaux. Les sauvegardes 
 **Banc** : `_outils/qcm_aides/banc_aides.mjs` gagne **A9** (un QCM pas fini : libellé, avertissement, bilan) — refusé
 sur la version d'avant (six refus sur le QCM de `4e_C9.1`), **76 QCM joués, 0 refusé** après. Contrôles : `sans_modale`,
 en-tête, banque, effectifs, boutons vivants, tactile, sauvegarde locale, règles visibles — rien à signaler.
+
+## 19/11/2026 — 4e_C9.1 : l'enquête devient facultative et ferme la séance 2 ; les deux chaînes du lampadaire ouvrent l'activité 6
+Deux précisions de Pascal après #825. « Ok » aux choix proposés, dont « les chaînes du lampadaire, en étape courte » ;
+puis : « sachant que l'enquête à la maison n'est pas une obligation ». Un travail à la maison ne s'impose pas : rien, dans
+la séquence, ne doit dépendre de l'enquête.
+
+- **L'enquête « POMPE ON… et l'eau ne coule pas » est facultative** (`#act7`, inchangée sur le fond). Elle quitte la tête
+  de la séance 3 pour la **fin de la séance 2**, sous « 🏠 Facultatif — pour la prochaine fois, à la maison ; ou en
+  classe, s'il te reste du temps » : les rapides la font en classe, les autres chez eux s'ils le veulent, et la séance 3
+  commence par l'activité 5. Elle **ne compte plus dans la progression** : « n / 6 activités validées », la séance 2 se
+  coche avec ses deux activités ; validée, elle s'ajoute (« · enquête facultative ✔ ») et sa ligne du tableau de bord
+  dit « Enquête (facultative) ». Les mots « tension » et « maillon » passent à la séance 2 du lexique.
+- **La maîtrise des chaînes se joue en classe** : l'activité 1 les fait bâtir (#825) ; l'activité 6 commence par **les
+  deux chaînes du lampadaire**, seul et sans aide — la preuve sur un objet nouveau (n°330). Cinq étiquettes à poser
+  (chaîne à compléter, dessin `lampadaire`, groupes `a6_c1` à `a6_c5`) : DISTRIBUER (le relais), CONVERTIR (la lampe à
+  LED), l'ordre, l'énergie électrique, l'**énergie lumineuse** ; deux leurres (TRANSMETTRE, énergie cinétique) ; deux
+  fonctions absentes dites avec leur raison (COMMUNIQUER, TRANSMETTRE). Deux à trois minutes : l'activité reste
+  annoncée à 25 min, la séance à 55. La vérification de l'activité 6 demande 4 étiquettes justes sur 5 (en plus du
+  programme et de la justification) ; sa correction dessine les deux chaînes complètes.
+  Une activité 6 déjà validée le reste.
+
+**Mesures.** Mode mission : 68 écrans — séance 1 : 22, séance 2 : 24 (dont 10 pour l'enquête, à la fin), séance 3 : 22
+(30 avant). Mots visibles en page complète : séance 2 3 226 (dont l'enquête, facultative), séance 3 2 568 (3 348 avant).
+
+**Bancs.** `tests_4e_C9.mjs` 153 / 153 (146 avant) : l'enquête ferme la séance 2 et la séance 3 commence par
+l'activité 5 ; 4 / 6 sans elle, « enquête facultative ✔ » avec ; le schéma du lampadaire (cinq cases, sept étiquettes),
+activité 6 refusée avec une étiquette juste sur cinq, validée à quatre, sa correction dessinée. `tests_regle_311`
+34 / 34. Mode mission : générique sans refus (29 écrans vérifiés par le mode, 200 pourquoi sur 200), pilote 50 / 50,
+éditeur vert. Contrôles du lot : chaîne à compléter, chaînes d'énergie (90 / 90), schéma sous les yeux, corrections,
+validations, unités, hiérarchie, aération, mêmes nombres, ordre des propositions, squelette, navigation, verrous, hors
+ligne, axe, schémas, mode essentiel, fiche papier — rien à signaler.

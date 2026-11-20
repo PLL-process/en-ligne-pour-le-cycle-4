@@ -50,9 +50,9 @@ reste quand tout le reste est oublié.
 | | 2. De la règle à l'algorigramme | 25 min | Numéros des 5 blocs, les deux chemins après le losange + pseudo-code **modifié** |
 | **2** — Écrire et tester | 3. Écrire et exécuter | 30 min | Programme enregistré + journal chiffré |
 | | 4. Le jeu d'essais | 25 min | Tableau à 6 essais, ATTENDU rempli **avant**, OBSERVÉ lu sur l'écran du banc (les six essais réellement exécutés, 250 % compris) |
-| **3** — Mettre au point | Enquête. « POMPE ON… et l'eau ne coule pas » | 12 min, à la maison avant la séance (ou en ouverture) | Le maillon en panne de trois jardins (ALIMENTER, DISTRIBUER, le circuit d'eau) + une vérification écrite |
-| | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas, construit et exécuté dans l'atelier du programme + démonstration sur le même tremblement |
-| | 6. Le lampadaire | 25 min | Programme écrit **sans squelette** + justification chiffrée |
+| | Enquête **facultative**, en fin de séance. « POMPE ON… et l'eau ne coule pas » | 12 min, pour les rapides ou à la maison ; elle ne compte pas dans la progression | Le maillon en panne de trois jardins (ALIMENTER, DISTRIBUER, le circuit d'eau) + une vérification écrite |
+| **3** — Mettre au point | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas, construit et exécuté dans l'atelier du programme + démonstration sur le même tremblement |
+| | 6. Le lampadaire | 25 min | Les deux chaînes du lampadaire (cinq étiquettes, seul, 2 à 3 min) + programme écrit **sans squelette** + justification chiffrée |
 
 ---
 

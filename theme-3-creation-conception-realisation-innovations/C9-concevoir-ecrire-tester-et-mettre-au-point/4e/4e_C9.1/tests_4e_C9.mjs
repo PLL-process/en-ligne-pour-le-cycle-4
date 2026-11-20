@@ -191,7 +191,7 @@ const run = async () => {
   const billet = await page.textContent("#fbBillet");
   ok("billet d'entrée : feedback affiché, et déclaré hors progression",
      billet.includes("3 / 3") && billet.includes("ne compte pas"), billet.slice(0, 60));
-  ok("billet d'entrée : la progression reste à 0", (await page.textContent("#progTxt")).includes("0 / 7"));
+  ok("billet d'entrée : la progression reste à 0", (await page.textContent("#progTxt")).includes("0 / 6"));
   await shot(page, "billet_entree");
 
   /* identité + hypothèses */
@@ -201,8 +201,8 @@ const run = async () => {
 
   /* ── tableau de bord (règle n°30) ── */
   ok("tableau de bord : les 6 activités et l'enquête listées", await page.locator("#tachesBandeau .tache").count() === 7);
-  ok("tableau de bord : l'enquête porte son nom, avant l'activité 5",
-     await page.evaluate(() => { const t = [...document.querySelectorAll("#tachesBandeau .tache")].map(x => x.textContent); const i = t.findIndex(x => x.includes("Enquête")); return i === 4 && t[5].includes("Activité 5"); }));
+  ok("tableau de bord : l'enquête porte son nom et « facultative », entre l'activité 4 et l'activité 5",
+     await page.evaluate(() => { const t = [...document.querySelectorAll("#tachesBandeau .tache")].map(x => x.textContent); const i = t.findIndex(x => x.includes("Enquête (facultative)")); return i === 4 && t[3].includes("Activité 4") && t[5].includes("Activité 5"); }));
 
   /* ── règles n°144 et n°198 dans les activités : ni le rang ni la longueur ne désignent la bonne réponse ── */
   const forme = await page.evaluate((B) => Object.entries(B).map(([id, rep]) => {
@@ -355,10 +355,15 @@ const run = async () => {
   await shot(page, "act4_validee");
 
   /* ════════ L'ENQUÊTE — « POMPE ON… et l'eau ne coule pas » (audit du 19/11/2026) ════════ */
-  await page.click('.seance-tab[data-panel="s3"]'); await page.waitForTimeout(350);
-  ok("enquête : elle ouvre la séance 3, avant l'activité 5, avec son schéma dessiné (cinq points ① à ⑤) et quatre relevés",
-     await page.evaluate(() => { const a = document.getElementById("act7"), b = document.getElementById("act5"), c = a && a.querySelector("figure.schema-sous-les-yeux .cac-corrige"), t = c ? c.textContent : "";
-       return !!a && !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) && a.querySelectorAll(".releve").length === 4
+  /* Pascal, 19/11/2026 : « l'enquête à la maison n'est pas une obligation ». Facultative, elle ferme la séance 2 et ne
+     compte pas dans la progression : la séance 3 commence par l'activité 5. */
+  ok("sans l'enquête : la séance 2 est cochée par ses deux activités, et la progression dit 4 / 6",
+     (await page.textContent("#done-s2")).trim() === "✔" && (await page.textContent("#progTxt")) === "4 / 6 activités validées", await page.textContent("#progTxt"));
+  ok("enquête : facultative, elle ferme la séance 2 (après l'activité 4), avec son schéma dessiné (cinq points ① à ⑤) et quatre relevés",
+     await page.evaluate(() => { const a = document.getElementById("act7"), b = document.getElementById("act4"), c = a && a.querySelector("figure.schema-sous-les-yeux .cac-corrige"), t = c ? c.textContent : "";
+       return !!a && a.closest(".seance-panel").id === "s2" && !!(b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING) && a.querySelectorAll(".releve").length === 4
+           && /Facultatif/.test(a.querySelector(".pastille-maison").textContent)
+           && document.querySelector("#s3 .activite").id === "act5"
            && !!c && c.querySelectorAll(".cac-dessin *").length > 40 && ["①", "②", "③", "④", "⑤", "DISTRIBUER", "Ordre"].every(m => t.includes(m)); }));
   for (const id of ["e7_q1","e7_q2","e7_q4","e7_q5","e7_q6"]) await bonne(id);
   await page.selectOption("#e7_q3", "CONVERTIR — la pompe");
@@ -381,8 +386,11 @@ const run = async () => {
   await bonne("e7_q1");
   await page.click('[data-check="7"]');
   await shot(page, "enquete_validee", "#act7");
+  ok("enquête validée : elle se voit dans la progression sans compter dans le total (4 / 6, « enquête facultative ✔ »)",
+     /4 \/ 6 activités validées · enquête facultative ✔/.test(await page.textContent("#progTxt")), await page.textContent("#progTxt"));
 
   /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis, dans l'atelier du programme (31/10/2026) ════════ */
+  await page.click('.seance-tab[data-panel="s3"]');
   for (const id of ["a5_q1","a5_q2","a5_q3","a5_q4","a5_q5"]) await bonne(id);
   await page.fill("#a5_diag", "La pompe change d'état 6 fois en 70 secondes alors que l'humidité n'a varié que de 2 points. Le relais s'use à chaque manœuvre, la pompe démarre sans cesse, et l'eau arrive par à-coups qui ne descendent jamais aux racines.");
   ok("atelier · prog3 n'est plus une zone où écrire : cachée, en lecture seule, elle porte le Python écrit par les blocs",
@@ -442,6 +450,12 @@ const run = async () => {
   ok("act. 6 · l'éditeur Python est monté, avec la carte simulée du lampadaire, et sans squelette (le code de départ n'est que des commentaires)",
      await page.evaluate(() => document.querySelector("#edpy-a6").classList.contains("editeur-py--actif") && document.querySelector("#edpy-a6").dataset.simulation === "carte-lampadaire")
      && depart6 !== null && depart6.split("\n").every(l => !l.trim() || l.trim().startsWith("#")), JSON.stringify(depart6).slice(0, 80));
+  /* avant de programmer : les deux chaînes du lampadaire, cinq étiquettes (19/11/2026, la preuve sur un objet nouveau) */
+  ok("act. 6 · les deux chaînes du lampadaire : un schéma à compléter, cinq cases, sept étiquettes dont deux leurres",
+     await page.evaluate(() => { const c = document.querySelector("#act6 .cac.cac-pret:not(.cac-corrige)"); return !!c && c.querySelectorAll(".cac-case").length === 5 && c.querySelectorAll(".cac-lab").length === 7; }));
+  await page.locator('#act6 .cac:not(.cac-corrige) .cac-lab[data-v="CONVERTIR"]').click();
+  await page.locator('#act6 .cac:not(.cac-corrige) .cac-case[data-cle="convertir.fonction"]').click();
+  ok("act. 6 · une étiquette posée sur la lampe coche son groupe", (await page.inputValue("#a6_c2")) === "CONVERTIR", await page.inputValue("#a6_c2"));
   await bonne("a6_q1");
   await page.fill("#a6_just", "J'allume à 20 et j'éteins à 60, soit une bande de 40 points, parce que la luminosité varie beaucoup au crépuscule : nuages, phares, reflets.");
   await page.click('[data-check="6"]');
@@ -475,8 +489,20 @@ const run = async () => {
      /19 h 10 — L = 18 → 💡/.test(rBon.console) && /6 h 09 — L = 61 → 🌙/.test(rBon.console)
      && /le soir[^:]*: 1 basculement[\s\S]*nuit noire, le lampadaire était allumé[\s\S]*le matin[^:]*: 1 basculement[\s\S]*en plein jour, il était éteint/.test(rBon.console),
      rBon.console.split("\n").slice(0, 2).join(" | "));
-  ok("activité 6 validée (programme sans squelette, exécuté sur la nuit simulée + justification chiffrée)",
-     rBon.fb.includes("1 / 1") && !rBon.fb.includes("Justifie") && !rBon.fb.includes("Ton programme"), rBon.fb);
+  ok("act. 6 · le bon programme ne suffit pas : une seule étiquette juste sur 5 dans les chaînes du lampadaire → refusée",
+     rBon.fb.includes("2 / 6") && rBon.fb.includes("chaînes du lampadaire") && !(await page.evaluate(() => window.__valid.act6)), rBon.fb);
+  for (const [id, v] of [["a6_c1", "DISTRIBUER"], ["a6_c3", "Ordre"], ["a6_c4", "Énergie électrique"], ["a6_c5", "Énergie cinétique"]]) await page.selectOption("#" + id, v);
+  await page.click('[data-check="6"]');
+  ok("activité 6 validée (4 étiquettes justes sur 5 — la sortie de la lampe dite « cinétique » —, programme exécuté sur la nuit simulée, justification chiffrée)",
+     (await page.textContent("#fb6")).includes("5 / 6") && (await page.evaluate(() => window.__valid.act6)), await page.textContent("#fb6"));
+  await page.selectOption("#a6_c5", "Énergie lumineuse");
+  await page.click('[data-check="6"]');
+  ok("activité 6 : les cinq étiquettes justes → 6 / 6", (await page.textContent("#fb6")).includes("6 / 6") && !(await page.textContent("#fb6")).includes("Justifie") && !(await page.textContent("#fb6")).includes("Ton programme"), await page.textContent("#fb6"));
+  await page.locator("#act6 details.correction > summary").click(); await page.waitForTimeout(350);
+  ok("act. 6 · la correction porte les deux chaînes du lampadaire, dessinées et complètes",
+     await page.evaluate(() => { const c = document.querySelector("#act6 details.correction .cac.cac-corrige"), t = c ? c.textContent : "";
+       return !!c && !c.querySelector(".cac-case") && ["DISTRIBUER", "CONVERTIR", "Ordre", "lumineuse", "Lampe à LED"].every(m => t.includes(m)); }));
+  await page.locator("#act6 details.correction > summary").click();
   await page.fill("#reinv", BON6 + "# une ligne de plus\n");
   await page.click('[data-check="6"]');
   ok("act. 6 · un programme changé après son exécution doit être exécuté encore avant d'être vérifié",
@@ -489,10 +515,10 @@ const run = async () => {
   await shot(page, "act6_validee");
 
   /* ════════ progression, persistance ════════ */
-  ok("progression : 7 / 7 activités validées (les six activités et l'enquête)", (await page.textContent("#progTxt")).includes("7 / 7"), await page.textContent("#progTxt"));
+  ok("progression : 6 / 6 activités validées, et l'enquête facultative à part", /6 \/ 6 activités validées · enquête facultative ✔/.test(await page.textContent("#progTxt")), await page.textContent("#progTxt"));
   const coches = await page.evaluate(() => ["s1","s2","s3"].map(s => document.getElementById("done-" + s).textContent.trim()).join(""));
   ok("onglets : les 3 séances cochées ✔", coches === "✔✔✔", coches);
-  ok("tableau de bord : les 7 tâches cochées",
+  ok("tableau de bord : les 7 lignes cochées (six activités, et l'enquête)",
      await page.locator("#tachesBandeau .tache.fait").count() === 7);
   await page.fill("#bilan1", "J'ai appris qu'un programme peut être juste et inutilisable.");
   await page.check('input[name="conf_c91"][value="3"]');
@@ -502,9 +528,9 @@ const run = async () => {
 
   await page.waitForTimeout(900);
   await page.reload(); await page.waitForTimeout(700);
-  ok("persistance : progression 7/7 restaurée après rechargement", (await page.textContent("#progTxt")).includes("7 / 7"));
+  ok("persistance : progression 6/6 restaurée après rechargement", (await page.textContent("#progTxt")).includes("6 / 6"));
   ok("persistance : les essais du banc et les réponses de l'enquête reviennent",
-     (await page.textContent("#v-essais")).startsWith("✔") && (await page.inputValue("#e7_q5")) === BONNE.e7_q5 && (await page.inputValue("#a1_f6")) === "Énergie cinétique");
+     (await page.textContent("#v-essais")).startsWith("✔") && (await page.inputValue("#e7_q5")) === BONNE.e7_q5 && (await page.inputValue("#a1_f6")) === "Énergie cinétique" && (await page.inputValue("#a6_c5")) === "Énergie lumineuse");
   ok("persistance : réponses restaurées (prog3 contient les deux seuils)",
      (await page.inputValue("#prog3")).includes("35") && (await page.inputValue("#prog3")).includes("45"));
   ok("persistance : verrous du banc restaurés (frontières cochées)",
