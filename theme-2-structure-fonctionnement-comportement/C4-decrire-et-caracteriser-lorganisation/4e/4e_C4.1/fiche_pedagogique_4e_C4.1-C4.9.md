@@ -18,7 +18,7 @@
 | Domaines du socle | D1.3, D2, D3, D4, D5 (déclarés en tête de séquence) |
 | CRCN | 1.3 (traiter des données : table structurée, filtres) · 3.4 (programmer — amorce, par le comportement de la carte) · 5.1 (résoudre un problème technique : les trois pannes réseau) |
 | Objet-fil | Le jardin pédagogique du collège, à Brooklyn (New York). Suite du lampadaire intelligent de 5ᵉ, préparation de la station d'alerte de 3ᵉ |
-| Durée annoncée | 4 séances de 55 min (220 min) · **189 min d'activités** — mesure `_outils/mesurer_temps_seances.py` |
+| Durée annoncée | 4 séances de 55 min (220 min) · **209 min écrites dans la page** : S1 49 (billet d'entrée 4 + act. 1), S2 55, S3 50 (act. 4 + billet de sortie 5), S4 55. `_outils/mesurer_temps_seances.py` en lit 224 : il compte deux fois le quart d'heure du cahier des charges, compris dans les 55 min de l'activité 5 |
 | Version | 🅰 réel / 🅱 simulation intégrée / 🅲 documents imprimés — déclarées en tête |
 
 ## Sous-compétences
@@ -33,7 +33,7 @@
 | 4e_C4.7 | Adresse IP fixe sur un réseau local | Act. 4 | 45 min | 3 pannes résolues |
 | 4e_C4.8 | Résoudre un problème de communication | Act. 4 | (idem) | 4 réponses |
 | 4e_C4.9 | Compléter une simulation fournie | Act. 4 | (idem) | simulateur intégré |
-| 4e_C4.3 | Forme d'une pièce → procédé de réalisation | Act. 5 | 40 min | 4 diagnostics + 2 justifications |
+| 4e_C4.3 | Forme d'une pièce → procédé de réalisation | Act. 5 | 55 min, dont 15 pour le rappel du cahier des charges | 4 diagnostics + 2 justifications |
 
 Couverture détaillée notion par notion : `matrice_couverture_4e_C4.1-C4.9.csv` (28 lignes).
 
@@ -89,14 +89,31 @@ brute (612) devient donnée utile (60 %) et **horodatée**. Pièges : confondre 
 l'horodatage ; croire qu'une ligne = un bac.
 Critère : 3 bacs explorés (3/3) et 6 / 6.
 
-**S3 — Le réseau du jardin et ses adresses (C4.7 · C4.8 · C4.9) · act. 4, 45 min.**
+**S3 — Le réseau du jardin et ses adresses (C4.7 · C4.8 · C4.9) · act. 4, 45 min, puis le billet de sortie, 5 min.**
 Question directrice : pourquoi la carte a-t-elle une adresse FIXE, et que faire quand ça ne
 communique plus ? Simulateur de dépannage intégré, **trois pannes** : conflit, passerelle, portée.
+Pour chacune, l'élève désigne la cause, puis choisit la remise en service. Il ajoute ensuite la carte
+du bac 2 au réseau (adresse IP fixe, masque, passerelle) et la valide par un ping.
+À faire dire : la passerelle est la porte de **sortie** du réseau ; entre deux appareils du même
+réseau, elle ne sert pas (panne 3 : le serveur du collège reçoit toujours, c'est le message envoyé
+par internet qui ne sort plus).
 Pièges : donner la même IP à deux appareils ; choisir une IP fixe dans la plage DHCP ; accuser le
-wifi quand c'est la passerelle.
-Critère : 3 pannes résolues au simulateur **ET** 4 / 4.
+wifi quand c'est la passerelle ; croire qu'il faut la passerelle pour parler à son voisin de réseau.
+Critère : 3 pannes réparées au simulateur, la carte du bac 2 sur le réseau (ping 4 / 4) **ET** 4 / 4.
 
-**S4 — La forme d'une pièce raconte sa fabrication (C4.3) · act. 5, 40 min.**
+**Billet de sortie (fin de S3, 5 min, seul·e, sans aide)** — la preuve individuelle (règle d'or n°330).
+Un objet que la séquence n'a pas étudié : la ruche connectée du toit du collège (un capteur de
+température, un ventilateur, un panneau et une batterie, le wifi). Deux réponses écrites :
+1. l'énergie, du soleil à l'air brassé, formes dans l'ordre, et où elle attend la nuit (retour sur S1) ;
+2. la phrase de preuve — qui a mesuré, quelle valeur, quel seuil, qui a décidé — et le cas limite,
+   35 °C pour un seuil à 35 °C (retour sur S2).
+Il ne compte pas dans les cinq activités et la page ne le juge pas : la correction donne les critères
+et dessine les deux chaînes de la ruche. Sur la fiche papier de la séance 3, il tient en bas de la
+troisième page, avec ses lignes d'écriture : il se ramasse.
+À regarder : la batterie est-elle nommée pour la nuit ? la phrase donne-t-elle la valeur ET le seuil ?
+dit-elle que c'est la carte qui décide, et non le capteur ?
+
+**S4 — La forme d'une pièce raconte sa fabrication (C4.3) · act. 5, 55 min, dont le rappel du cahier des charges (C2.2), environ un quart d'heure.**
 Question directrice : en regardant une pièce du jardin, peut-on deviner comment elle a été
 fabriquée ? Quatre pièces, indices de surface → procédé, croisés avec la **quantité**. En 🅰, les
 vraies pièces circulent en classe. Pièges : croire que tout plastique est injecté ; oublier le

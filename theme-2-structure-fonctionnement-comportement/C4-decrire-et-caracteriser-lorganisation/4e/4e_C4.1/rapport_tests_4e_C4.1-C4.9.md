@@ -183,3 +183,22 @@ le retour de l'activité 5 en deux résultats (C4.3, C2.2), l'exemple du QCM sur
 Non exécuté : le fichier `4e_jardin_TECHNO-C4.pkt` (il faut Packet Tracer) — `SOURCES_MEDIAS.md` le décrit avec un
 DHCP « de .23 à .72 », qui contient le .50 de la carte, alors que la page et le plan disent .20 à .49 : à régler sur le
 poste de Pascal. Un vrai téléphone, un lecteur d'écran, Firefox, Safari, une impression réelle.
+
+## 20/11/2026 — Le billet de sortie de la séance 3 (la ruche connectée)
+
+Un billet de sortie, seul·e et sans aide (règle d'or n°330), ferme la séance 3 : un objet nouveau, deux réponses
+écrites (l'énergie ; la phrase de preuve et le cas limite du seuil), une correction avec critères et les deux chaînes de
+la ruche dessinées. Il ne valide rien et ne compte pas dans les cinq activités.
+
+- `node tests_4e_C4.1-C4.9.mjs` : **72 / 72** (67 avant). BS 1 (place, objet nouveau, deux réponses, deux versions
+  étayées, ni aide ni vérification), BS 2 (le seuil avec son unité en toutes lettres, trois lignes de table dont le cas
+  limite), BS 3 (tableau de bord : « à faire » puis « fait » ; la progression reste sur cinq activités), BS 4 (la
+  correction : deux critères, deux contre-exemples, le cas limite, le dessin des deux chaînes), BS 5 (rechargement).
+- `node tests_regle_311_4e_C4.1.mjs` : 34 / 34. `banc_generique.mjs` : 49 écrans, aucun refus. `banc_effacement.mjs` :
+  rien ne reste. `banc_papier.py` : 4 fiches, 15 pages (comme avant ; le billet en bas de la page 3 de la séance 3).
+- Contrôles : unités, hiérarchie, aération, mêmes nombres, correction illustrée, schéma sous les yeux, chaîne à
+  compléter, squelette, tactile, règles visibles, médias, `corriger_billet.py` (0 billet sans correction).
+- Regardé dans Chromium à 390 et 1 280 px, page complète et mode mission, correction ouverte.
+
+Non exécuté : un vrai téléphone, un lecteur d'écran, une impression réelle, une passation en classe (la durée de
+5 min est une estimation).

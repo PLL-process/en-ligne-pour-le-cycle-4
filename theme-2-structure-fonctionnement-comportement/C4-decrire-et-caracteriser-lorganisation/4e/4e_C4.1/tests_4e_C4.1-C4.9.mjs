@@ -389,6 +389,39 @@ ok('17 · progression 5 / 5 activités, et les quatre onglets portent leur coche
         .every(c => c === '✔'),
    await p.textContent('#progTxt'));
 
+/* ── le billet de sortie de la séance 3 (règle d'or n°330, 20/11/2026) : un objet nouveau, seul·e, sans aide ──
+   L'audit externe demandait « une production individuelle », « une tâche de transfert », « une phrase de preuve ».
+   Le billet ne valide rien et ne compte pas dans les cinq activités : la page le dit « fait », jamais « réussi ». */
+await p.evaluate(() => document.querySelector('.seance-tab[data-panel="s3"]').click()); await p.waitForTimeout(150);
+const BS = await p.evaluate(() => { const b = document.getElementById('billetSortie'), s3 = document.getElementById('s3'), a4 = document.getElementById('act4');
+  const suite = s3.querySelector('.page-suivante');
+  return { dans: !!b && s3.contains(b), apres: !!(a4.compareDocumentPosition(b) & 4), avant: !!(b.compareDocumentPosition(suite) & 4),
+    titre: b.querySelector('h2').textContent, texte: b.textContent, champs: [...b.querySelectorAll('textarea')].map(t => t.id),
+    etayages: b.querySelectorAll('details.etayage').length, aides: b.querySelectorAll('details.aide').length, check: b.querySelectorAll('[data-check]').length,
+    lignes: [...b.querySelectorAll('.bs-table tbody tr')].map(r => r.textContent.replace(/\s+/g, ' ').trim()) }; });
+ok('BS 1 · le billet de sortie ferme la séance 3 (après l\'activité 4, avant le bouton de la séance 4) : un objet nouveau, la ruche ; deux réponses à écrire, chacune avec sa version étayée ; aucune aide, aucune vérification',
+   BS.dans && BS.apres && BS.avant && /Billet de sortie — seul·e, sans aide/.test(BS.titre) && /ruche connectée/.test(BS.texte) && !/bac_A|arros/.test(BS.texte)
+   && BS.champs.join() === 'bs_energie,bs_preuve' && BS.etayages === 2 && BS.aides === 0 && BS.check === 0, BS.titre);
+ok('BS 2 · le document porte ce qu\'il faut pour répondre : le seuil (35 °C, l\'unité en toutes lettres) et trois lignes de table, dont le cas limite (35 à 18 h 00, décision à trouver)',
+   /dépasse 35\s°C \(degrés Celsius\)/.test(BS.texte) && BS.lignes.length === 3 && /^14:00 ?37 ?OUI$/.test(BS.lignes[1].replace(/ /g, ' ').replace(/(\d) (\D)/g, '$1 $2')) && /^18:00 ?35 ?\?$/.test(BS.lignes[2]), BS.lignes.join(' | '));
+const tachesS3 = () => p.evaluate(() => [...document.querySelectorAll('#tachesBandeau li')].map(l => l.textContent.trim()));
+const avantBS = await tachesS3();
+await p.fill('#bs_energie', 'lumineuse, électrique, chimique dans la batterie la nuit, électrique, cinétique'); await p.waitForTimeout(60);
+const unSeul = await tachesS3();
+await p.fill('#bs_preuve', 'Le capteur a mesuré 37 °C, plus que le seuil de 35 °C : la carte a mis le ventilateur en route. À 18 h 00, non : 35 ne dépasse pas 35.'); await p.waitForTimeout(60);
+const lesDeux = await tachesS3();
+await p.waitForTimeout(700);          // la page enregistre 600 ms après la dernière frappe
+ok('BS 3 · le tableau de bord de la séance 3 porte le billet : « à faire » tant qu\'une réponse manque, « fait » quand les deux sont écrites ; la progression reste sur cinq activités',
+   avantBS.length === 2 && /^☐ Billet de sortie/.test(avantBS[1]) && /^☐ Billet de sortie/.test(unSeul[1]) && /^☑ Billet de sortie/.test(lesDeux[1])
+   && (await p.textContent('#progTxt')).includes('5 / 5 activités'), lesDeux.join(' | '));
+await p.evaluate(() => { document.querySelector('#billetSortie details.correction').open = true; }); await p.waitForTimeout(450);
+const CORBS = await p.evaluate(() => { const c = document.querySelector('#billetSortie details.correction'), d = c.querySelector('.cac-corrige .cac-dessin');
+  return { texte: c.textContent, dessin: d ? d.textContent : '', n: d ? d.querySelectorAll('*').length : 0 }; });
+ok('BS 4 · la correction du billet donne les critères et les deux contre-exemples, dit le cas limite (35 ne dépasse pas 35), et dessine les deux chaînes de la ruche (le ventilateur, l\'ordre qui descend, l\'air mis en mouvement)',
+   (CORBS.texte.match(/Critère/g) || []).length === 2 && /35 ne dépasse pas 35/.test(CORBS.texte) && /le capteur mesure, c'est la carte qui décide/.test(CORBS.texte)
+   && /On dit aussi « mécanique »/.test(CORBS.texte.replace(/\u00a0/g, ' '))
+   && CORBS.n > 40 && /Ventilateur/.test(CORBS.dessin) && /ACQUÉRIR/.test(CORBS.dessin) && /DISTRIBUER/.test(CORBS.dessin) && /Ordre\s*de ventiler/.test(CORBS.dessin) && /L’air est mis/.test(CORBS.dessin), CORBS.n + ' éléments dessinés');
+
 /* ── persistance ─────────────────────────────────────────────────────────── */
 await p.reload({ waitUntil: 'load' }); await p.evaluate(() => document.querySelectorAll('details.bonus-replie, details.incruste-repliee').forEach(d => { d.open = true; })); await p.waitForTimeout(340);
 const premier = Object.keys(ATT[1])[0];
@@ -397,6 +430,8 @@ ok('18 · rechargement : réponses, validations ET les deux verrous sont restaur
    && (await p.textContent('#progTxt')).includes('5 / 5')
    && await p.evaluate(() => !!window.__exp.table && !!window.__exp.reseau),
    await p.textContent('#progTxt'));
+ok('BS 5 · rechargement : les deux réponses du billet de sortie reviennent',
+   /lumineuse, électrique/.test(await p.inputValue('#bs_energie')) && /37 °C/.test(await p.inputValue('#bs_preuve')));
 {
   /* Depuis la règle d'or n°317, le cahier des charges se complète dans le tableau : 22 menus
      `pv_4e_e6__cdcf_<ligne>_<colonne>`, plus le choix « IPX4 vient… » (1 bouton radio). Chaque

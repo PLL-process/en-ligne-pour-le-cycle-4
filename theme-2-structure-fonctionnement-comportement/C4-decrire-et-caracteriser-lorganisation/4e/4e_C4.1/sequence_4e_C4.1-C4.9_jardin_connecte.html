@@ -72,6 +72,19 @@
   .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
   @media(max-width:640px){.assoc{grid-template-columns:1fr}}
   .assoc label{font-size:.9em}
+  /* billet de sortie (20/11/2026) : la question au-dessus de sa réponse ; la petite table du document */
+  #billetSortie .assoc{grid-template-columns:1fr;margin:12px 0 4px}
+  #billetSortie .assoc label{font-size:1em}
+  #billetSortie textarea{width:100%;box-sizing:border-box}
+  .bs-table{width:100%;max-width:520px;border-collapse:collapse;table-layout:fixed;margin:8px 0 2px;font-size:.95em}
+  .bs-table col.bs-c1{width:24%} .bs-table col.bs-c2{width:40%} .bs-table col.bs-c3{width:36%}
+  .bs-table caption{caption-side:top;text-align:left;font-weight:700;padding:0 0 4px}
+  .bs-table th,.bs-table td{border:1px solid var(--border);padding:5px 6px;text-align:left;vertical-align:top}
+  .bs-table th small{display:block;font-weight:400;color:var(--sub)}
+  /* le document du billet : le texte et sa table côte à côte sur grand écran et sur la fiche papier (une page de moins) */
+  @media (min-width:760px){#billetSortie .bs-doc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:6px 20px;align-items:start} #billetSortie .bs-doc p{margin:0} #billetSortie .bs-table{margin:0}}
+  @media print{#billetSortie .bs-doc{display:grid!important;grid-template-columns:minmax(0,1fr) 64mm;gap:0 5mm;align-items:start} #billetSortie .bs-doc p{margin:0!important} #billetSortie .bs-table{margin:0!important}
+    #billetSortie .assoc{break-inside:avoid}}
   details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
   details summary{cursor:pointer;font-weight:600;color:var(--hl)}
   details.aide1 summary{color:var(--warn)}
@@ -2218,21 +2231,21 @@ body.ms .cac-reserve{--cac-bas:84px}
   <summary>✅ Correction complète du billet — ouvre-la après avoir vérifié</summary>
   <ol class="corr-billet">
     <li><b>À quoi sert un <b>capteur</b>, dans un objet technique ?</b>
-    <br>✅ <b>renseigner le système sur son environnement (il informe, il n'agit pas)</b>
-    <br>✘ «&nbsp;relier l'objet à Internet&nbsp;»&nbsp;: Relier à Internet, c'est communiquer : un capteur, lui, ne transmet rien au loin.
-    <br>✘ «&nbsp;agir sur le monde extérieur (il pousse, il chauffe, il éclaire)&nbsp;»&nbsp;: Pousser, chauffer, éclairer : c'est le rôle d'un actionneur. Le capteur fait l'inverse.
+    <br>✅ <b>renseigner le système sur son environnement</b>
+    <br>✘ «&nbsp;relier l'objet à Internet par le wifi&nbsp;»&nbsp;: Relier à Internet, c'est communiquer : un capteur, lui, ne transmet rien au loin.
+    <br>✘ «&nbsp;agir sur le monde extérieur, comme un moteur&nbsp;»&nbsp;: Pousser, chauffer, éclairer : c'est le rôle d'un actionneur. Le capteur fait l'inverse.
     <br>✘ «&nbsp;stocker l'énergie pour la nuit&nbsp;»&nbsp;: Stocker l'énergie, c'est le rôle d'une batterie : un capteur ne garde aucune énergie.</li>
     <li><b>Que fait une <b>batterie</b> dans une chaîne d'énergie ?</b>
-    <br>✅ <b>STOCKE l'énergie sous forme chimique, puis la restitue</b>
+    <br>✅ <b>STOCKE l'énergie, puis la restitue</b>
     <br>✘ «&nbsp;CONVERTIT l'énergie lumineuse en énergie électrique&nbsp;»&nbsp;: La batterie ne reçoit pas de lumière : cherche ce qu'elle fait de l'électricité qui lui arrive.
     <br>✘ «&nbsp;fabrique de l'énergie à partir de rien&nbsp;»&nbsp;: Aucun objet ne fabrique de l'énergie à partir de rien : elle vient toujours de quelque part.
     <br>✘ «&nbsp;ACQUIERT la température de l'air&nbsp;»&nbsp;: Acquérir une température, c'est le travail d'un capteur : la batterie ne mesure rien.</li>
     <li><b>Qu'est-ce que « éclairer la rue » ?</b>
-    <br>✅ <b>une fonction technique : elle dit ce que l'objet doit FAIRE, pas avec quoi on le fait</b>
+    <br>✅ <b>une fonction technique</b>
     <br>✘ «&nbsp;un procédé de fabrication&nbsp;»&nbsp;: Un procédé dit comment on fabrique une pièce : « éclairer » ne fabrique rien.
-    <br>✘ «&nbsp;une solution technique : c'est le nom du composant&nbsp;»&nbsp;: Une solution technique est un composant qu'on peut montrer du doigt : « éclairer » est une action.
-    <br>✘ «&nbsp;une fonction d'usage : elle dit à quoi l'objet sert pour son usager&nbsp;»&nbsp;: Une fonction d'usage nomme celui qui en profite : cherche l'usager dans « Éclairer la rue ».
-    <br>✘ «&nbsp;un matériau&nbsp;»&nbsp;: Un matériau est une matière, comme l'acier ou le verre : « éclairer » est une action.</li>
+    <br>✘ «&nbsp;une solution technique&nbsp;»&nbsp;: Une solution technique est un composant qu'on peut montrer du doigt : « éclairer » est une action.
+    <br>✘ «&nbsp;une fonction d'usage&nbsp;»&nbsp;: Une fonction d'usage nomme celui qui en profite : cherche l'usager dans « Éclairer la rue ».
+    <br>✘ «&nbsp;un matériau de l'objet&nbsp;»&nbsp;: Un matériau est une matière, comme l'acier ou le verre : « éclairer » est une action.</li>
   </ol>
 </details>
   <details class="aide" id="capsule5e"><summary>🎒 Je révise en 3 minutes (capsule de rattrapage 5e)</summary>
@@ -2735,6 +2748,69 @@ body.ms .cac-reserve{--cac-bas:84px}
     <div class="erreurs"><b>⚠ Pièges classiques :</b> donner la même IP à deux appareils « pour simplifier » ; choisir une IP fixe DANS la plage DHCP (conflit garanti un jour) ; accuser le wifi quand c'est la passerelle ; croire qu'il faut la passerelle pour parler à son voisin de réseau (elle ne sert qu'à sortir).</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 3 pannes réparées au simulateur, la carte du bac 2 sur le réseau (ping 4 / 4) ET 4 / 4 réponses.</div>
   </div>
+</section>
+<!-- Le billet de sortie, seul·e et sans aide (règle d'or n°330). Audit externe du 20/11/2026 : « relier les résultats à
+     une production individuelle », « une tâche de transfert », « une phrase de preuve » — trois noms pour la même
+     demande. Un objet que la séquence n'a pas étudié ; deux réponses écrites, qui reprennent la séance 1 (l'énergie) et
+     la séance 2 (la mesure, le seuil, la décision) quelques jours après ; la correction donne les critères et dessine les
+     deux chaînes de l'objet. Il ne compte pas dans les cinq activités : il dit où en est chacun. -->
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul·e, sans aide <span style="color:var(--sub);font-size:.8em">(~5 min)</span></h2>
+  <p>Un objet que tu n'as pas encore étudié&nbsp;: <b>la ruche connectée, sur le toit du collège</b>.
+  <br>Chacun pour soi, sans aide à ouvrir&nbsp;: ce billet dit au professeur, et à toi, ce qui est acquis.</p>
+  <div class="consigne bs-doc">
+    <p><b>📄 Le document.</b>
+    <br>Un capteur mesure la température dans la ruche.
+    <br>Quand elle dépasse 35&nbsp;°C (degrés Celsius), la carte programmable met en route un petit ventilateur.
+    <br>Un panneau solaire charge une batterie&nbsp;: la ruche fonctionne aussi la nuit.
+    <br>La carte envoie chaque mesure au serveur du collège, par le wifi.</p>
+    <table class="bs-table">
+      <caption>Trois lignes de la table «&nbsp;mesures_ruche&nbsp;»</caption>
+      <colgroup><col class="bs-c1"><col class="bs-c2"><col class="bs-c3"></colgroup>
+      <thead><tr><th scope="col">Heure</th><th scope="col">Température <small>en degrés Celsius (°C)</small></th><th scope="col">Ventilateur</th></tr></thead>
+      <tbody>
+        <tr><td>08:00</td><td>31</td><td>NON</td></tr>
+        <tr><td>14:00</td><td>37</td><td>OUI</td></tr>
+        <tr><td>18:00</td><td>35</td><td>?</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="assoc">
+    <label for="bs_energie">1. <b>L'énergie.</b> Du soleil jusqu'à l'air que brasse le ventilateur&nbsp;: écris, dans l'ordre, les formes que prend l'énergie. <br>Dis aussi où elle attend pendant la nuit.</label>
+    <textarea id="bs_energie" rows="3"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Le panneau reçoit de l'énergie ____ et rend de l'énergie ____.&nbsp;»</li>
+    <li>«&nbsp;La nuit, l'énergie attend dans ____, sous forme ____.&nbsp;»</li>
+    <li>«&nbsp;Le ventilateur reçoit de l'énergie ____ et rend de l'énergie ____&nbsp;: l'air est mis en mouvement.&nbsp;»</li></ul></details>
+  <div class="assoc">
+    <label for="bs_preuve">2. <b>La preuve.</b> À 14&nbsp;h&nbsp;00, le ventilateur s'est mis en route. Écris la phrase de preuve&nbsp;: qui a mesuré, quelle valeur, quel seuil, qui a décidé. <br>Puis dis si le ventilateur tourne à 18&nbsp;h&nbsp;00, et pourquoi.</label>
+    <textarea id="bs_preuve" rows="3"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Le ____ a mesuré ____ °C.&nbsp;»</li>
+    <li>«&nbsp;C'est plus que le seuil de ____ °C&nbsp;: la ____ a mis le ventilateur en route.&nbsp;»</li>
+    <li>«&nbsp;À 18&nbsp;h&nbsp;00, la température est de ____ °C&nbsp;: le ventilateur ____, parce que ____.&nbsp;»</li></ul></details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <p><b>1. Une réponse attendue.</b>
+    <br>Énergie <b>lumineuse</b>&nbsp;: le soleil éclaire le panneau.
+    <br>Puis énergie <b>électrique</b>&nbsp;: le panneau la convertit.
+    <br>Puis énergie <b>chimique</b>&nbsp;: la batterie la garde. C'est là qu'elle attend pendant la nuit.
+    <br>Puis de nouveau énergie <b>électrique</b>&nbsp;: la batterie la rend.
+    <br>Puis énergie <b>cinétique</b>&nbsp;: le ventilateur met l'air en mouvement.
+    <br>On dit aussi «&nbsp;mécanique&nbsp;»&nbsp;: c'est le mot qui couvre le mouvement (cinétique) et la hauteur (potentielle).
+    <br><b>Critère</b>&nbsp;: les quatre formes dans l'ordre — lumineuse, électrique, chimique, cinétique — et la batterie nommée pour la nuit.</p>
+    <p><b>Les deux chaînes de la ruche</b>&nbsp;: l'information en haut, l'énergie en bas, l'ordre qui descend.</p>
+    <div class="cac cac-corrige" data-cac='{"dessin": "ruche", "corrige": true}'></div>
+    <p><b>2. Une réponse attendue.</b>
+    <br>«&nbsp;Le capteur a mesuré 37&nbsp;°C. C'est plus que le seuil de 35&nbsp;°C&nbsp;: la carte a mis le ventilateur en route.&nbsp;»
+    <br>À 18&nbsp;h&nbsp;00, la température est de 35&nbsp;°C.
+    <br>35 ne dépasse pas 35&nbsp;: le ventilateur reste à l'arrêt. Le seuil lui-même ne déclenche rien.
+    <br><b>Critère</b>&nbsp;: ta phrase donne la valeur (37&nbsp;°C) et le seuil (35&nbsp;°C), et dit que c'est la carte qui décide.</p>
+    <p>✘ «&nbsp;Il faisait chaud&nbsp;» ne donne ni valeur ni seuil.
+    <br>✘ «&nbsp;Le capteur a mis le ventilateur en route&nbsp;»&nbsp;: le capteur mesure, c'est la carte qui décide.</p>
+  </details>
 </section>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Les pièces ›</button></p>
 </div>
@@ -3481,7 +3557,7 @@ majEssentiel(); majBacs(); majPannes(); majParam(); majProgress(); majHyp();
 const TACHES = {
   "s1": {titre:"Séance 1 — La chaîne d'énergie", taches:[{n:0, libelle:"Billet d'entrée : vérifier ses acquis de 5e (sans note)"}, {n:1, libelle:"Suivre l'énergie du soleil jusqu'à l'eau"}]},
   "s2": {titre:"Séance 2 — La chaîne d'information", taches:[{n:2, libelle:"Construire la chaîne d'information du jardin"}, {n:3, libelle:"Suivre le voyage de la donnée jusqu'à la table"}]},
-  "s3": {titre:"Séance 3 — Dépanner le réseau", taches:[{n:4, libelle:"Réparer les trois pannes, puis régler l'IP fixe de la carte du bac 2"}]},
+  "s3": {titre:"Séance 3 — Dépanner le réseau", taches:[{n:4, libelle:"Réparer les trois pannes, puis régler l'IP fixe de la carte du bac 2"}, {n:"bs", libelle:"Billet de sortie : la ruche connectée, seul·e et sans aide"}]},
   "s4": {titre:"Séance 4 — Matériaux et procédés", taches:[{n:5, libelle:"Lire le cahier des charges (critère, niveau, flexibilité), puis enquêter sur quatre pièces du jardin"}]}
 };
 function majTaches(){
@@ -3503,6 +3579,16 @@ majProgress = (function(precedent){
   return function(){ const r = precedent.apply(this, arguments); majTaches(); return r; };
 })(majProgress);
 majTaches();
+
+/* ══════ Règle d'or n°330 — billet de sortie : il est « fait » dès que ses deux réponses sont écrites. Il ne compte pas
+   dans les cinq activités et la page ne le juge pas : la correction donne les critères, l'élève et le professeur lisent. ══════ */
+function majBilletSortie(){
+  const fait = ["bs_energie", "bs_preuve"].every(id => $(id) && $(id).value.trim().length > 0);
+  window.__valid = window.__valid || {};
+  if(!!window.__valid.bs !== fait){ window.__valid.bs = fait; majTaches(); }
+}
+["bs_energie", "bs_preuve"].forEach(id => { if($(id)) $(id).addEventListener("input", majBilletSortie); });
+majBilletSortie();
 
 /* ══════ Règle d'or n°26 — billet d'entrée (sans note : il oriente, il ne sanctionne pas) ══════ */
 CHECKS[0] = function(){
@@ -4855,6 +4941,69 @@ window.CAC_DESSINS.jardin = (function(){
        large: {x: 1456, y: 610, ancre: "centre", l: 150}, etroit: {x: 54, y: 1124, ancre: "centre", l: 104, texte: "Ouvrir ou fermer\nl’arrivée d’eau"}},
       {id: "unites", type: "texte", texte: "Unités : V (volts)",
        large: {x: 1420, y: 718, ancre: "centre", l: 220}, etroit: {x: 270, y: 1146, ancre: "centre", l: 200}}
+    ]
+  };
+})();
+
+/* Les deux chaînes de la ruche connectée (billet de sortie, séance 3) : même convention que le jardin — l'information en
+   haut, l'énergie en bas, l'ordre qui descend de la carte au relais ; les fonctions dans les blocs, les composants
+   dessous, les formes d'énergie sur les flèches (règle d'or n°310). Dessinée complète, dans la correction seulement. */
+window.CAC_DESSINS.ruche = (function(){
+  var CYAN = "#61dafb", VIOLET = "#c68ef2", JAUNE = "#ffd66b", VERT = "#81fba1", ORANGE = "#ffb454";
+  return {
+    seuil: 760,
+    large: {vue: [0, 0, 1540, 730]},
+    etroit: {vue: [0, 0, 380, 1000], max: 520},
+    elements: [
+      {id: "titre-info", type: "titre", texte: "CHAÎNE D’INFORMATION — en haut (elle décide)", couleur: CYAN,
+       large: {x: 20, y: 14}, etroit: {x: 10, y: 8, texte: "CHAÎNE D’INFORMATION —\nen haut (elle décide)"}},
+      {id: "acquerir", type: "bloc", groupe: "information", fonction: "ACQUÉRIR", composant: "Capteur de température\n(dans la ruche)", couleur: CYAN,
+       large: {x: 100, y: 56, l: 220}, etroit: {x: 120, y: 52, l: 160}},
+      {id: "mesures", type: "fleche", groupe: "information", nature: "information", texte: "Mesures",
+       large: {points: [[320, 91], [496, 91]], ex: 408, ey: 80, ancre: "bas", lt: 150},
+       etroit: {points: [[200, 140], [200, 178]], ex: 190, ey: 159, ancre: "gauche", lt: 96}},
+      {id: "traiter", type: "bloc", groupe: "information", fonction: "TRAITER", composant: "Carte programmable\n(compare au seuil)", couleur: VIOLET,
+       large: {x: 500, y: 56, l: 220}, etroit: {x: 120, y: 182, l: 160}},
+      {id: "donnees", type: "fleche", groupe: "information", nature: "information", texte: "Données",
+       large: {points: [[720, 91], [886, 91]], ex: 803, ey: 80, ancre: "bas", lt: 150},
+       etroit: {points: [[200, 270], [200, 308]], ex: 190, ey: 289, ancre: "gauche", lt: 96}},
+      {id: "communiquer", type: "bloc", groupe: "information", fonction: "COMMUNIQUER", composant: "Module Wi-Fi\n(téléverse les mesures)", couleur: VERT,
+       large: {x: 890, y: 56, l: 250}, etroit: {x: 120, y: 312, l: 160}},
+      {id: "ordre", type: "fleche", groupe: "information", nature: "ordre", texte: "Ordre de ventiler :\nl’ordre descend",
+       large: {points: [[610, 196], [610, 240], [900, 240], [900, 336]], ex: 760, ey: 234, ancre: "bas", lt: 230},
+       etroit: {points: [[120, 204], [30, 204], [30, 742], [116, 742]], ex: 36, ey: 345, ancre: "droite", lt: 78, texte: "Ordre\nde ventiler"}},
+      {id: "titre-energie", type: "titre", texte: "CHAÎNE D’ÉNERGIE — en bas (elle obéit)", couleur: ORANGE,
+       large: {x: 20, y: 250}, etroit: {x: 46, y: 410, texte: "CHAÎNE D’ÉNERGIE —\nen bas (elle obéit)"}},
+      {id: "entree", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nlumineuse",
+       large: {points: [[16, 375], [116, 375]], ex: 66, ey: 330, ancre: "bas", lt: 100},
+       etroit: {points: [[200, 450], [200, 488]], ex: 190, ey: 469, ancre: "gauche", lt: 96}},
+      {id: "panneau", type: "bloc", groupe: "energie", fonction: "CONVERTIR", composant: "Panneau solaire", couleur: VIOLET,
+       large: {x: 120, y: 340, l: 180}, etroit: {x: 120, y: 492, l: 160}},
+      {id: "conv-alim", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[300, 375], [406, 375]], ex: 353, ey: 330, ancre: "bas", lt: 104},
+       etroit: {points: [[200, 564], [200, 602]], ex: 190, ey: 583, ancre: "gauche", lt: 96}},
+      {id: "alimenter", type: "bloc", groupe: "energie", fonction: "ALIMENTER", composant: "Régulateur de charge", couleur: JAUNE,
+       large: {x: 410, y: 340, l: 180}, etroit: {x: 120, y: 606, l: 160}},
+      {id: "charge", type: "fleche", groupe: "energie", nature: "stock", double: true, texte: "Énergie électrique\n(charge / décharge)",
+       large: {points: [[590, 398], [640, 398], [640, 575], [592, 575]], ex: 650, ey: 490, ancre: "droite", lt: 180},
+       etroit: {points: [[282, 628], [334, 628], [334, 700]], ex: 334, ey: 620, ancre: "bas", lt: 92, texte: "Énergie\nélectrique\n(charge /\ndécharge)"}},
+      {id: "stocker", type: "bloc", groupe: "energie", fonction: "STOCKER", composant: "Batterie", stock: "Énergie chimique stockée", couleur: JAUNE,
+       large: {x: 410, y: 540, l: 180, stock: "Énergie chimique\nstockée"}, etroit: {x: 292, y: 704, l: 84, stock: "Énergie\nchimique\nstockée"}},
+      {id: "alim-dist", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[590, 375], [806, 375]], ex: 698, ey: 330, ancre: "bas", lt: 130},
+       etroit: {points: [[200, 678], [200, 716]], ex: 190, ey: 697, ancre: "gauche", lt: 96}},
+      {id: "relais", type: "bloc", groupe: "energie", fonction: "DISTRIBUER", composant: "Relais ou transistor", couleur: CYAN,
+       large: {x: 810, y: 340, l: 180}, etroit: {x: 120, y: 720, l: 160}},
+      {id: "dist-vent", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\nélectrique",
+       large: {points: [[990, 375], [1096, 375]], ex: 1043, ey: 330, ancre: "bas", lt: 104},
+       etroit: {points: [[200, 792], [200, 830]], ex: 190, ey: 811, ancre: "gauche", lt: 96}},
+      {id: "ventilateur", type: "bloc", groupe: "energie", fonction: "CONVERTIR", composant: "Ventilateur\n(un petit moteur)", couleur: VIOLET,
+       large: {x: 1100, y: 340, l: 180}, etroit: {x: 120, y: 834, l: 160, composant: "Ventilateur"}},
+      {id: "sortie-vent", type: "fleche", groupe: "energie", nature: "energie", texte: "Énergie\ncinétique",
+       large: {points: [[1280, 375], [1356, 375]], ex: 1318, ey: 330, ancre: "bas", lt: 96},
+       etroit: {points: [[200, 906], [200, 944]], ex: 190, ey: 925, ancre: "gauche", lt: 96}},
+      {id: "air", type: "texte", groupe: "energie", texte: "L’air est mis\nen mouvement", gras: true,
+       large: {x: 1450, y: 375, ancre: "centre", l: 176}, etroit: {x: 200, y: 962, ancre: "centre", texte: "L’air est mis en mouvement"}}
     ]
   };
 })();
