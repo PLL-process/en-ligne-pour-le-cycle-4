@@ -357,6 +357,8 @@ const run = async () => {
   /* ════════ L'ENQUÊTE — « POMPE ON… et l'eau ne coule pas » (audit du 19/11/2026) ════════ */
   /* Pascal, 19/11/2026 : « l'enquête à la maison n'est pas une obligation ». Facultative, elle ferme la séance 2 et ne
      compte pas dans la progression : la séance 3 commence par l'activité 5. */
+  ok("sans l'enquête : la séance 2 est cochée par ses deux activités, et la progression dit 4 / 6",
+     (await page.textContent("#done-s2")).trim() === "✔" && (await page.textContent("#progTxt")) === "4 / 6 activités validées", await page.textContent("#progTxt"));
   ok("enquête : facultative, elle ferme la séance 2 (après l'activité 4), avec son schéma dessiné (cinq points ① à ⑤) et quatre relevés",
      await page.evaluate(() => { const a = document.getElementById("act7"), b = document.getElementById("act4"), c = a && a.querySelector("figure.schema-sous-les-yeux .cac-corrige"), t = c ? c.textContent : "";
        return !!a && a.closest(".seance-panel").id === "s2" && !!(b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING) && a.querySelectorAll(".releve").length === 4
@@ -386,8 +388,6 @@ const run = async () => {
   await shot(page, "enquete_validee", "#act7");
   ok("enquête validée : elle se voit dans la progression sans compter dans le total (4 / 6, « enquête facultative ✔ »)",
      /4 \/ 6 activités validées · enquête facultative ✔/.test(await page.textContent("#progTxt")), await page.textContent("#progTxt"));
-  ok("onglets : la séance 2 est cochée par ses deux activités, enquête ou non",
-     await page.evaluate(() => { const v = window.__valid.act7; window.__valid.act7 = false; majProgress(); const sans = document.getElementById("done-s2").textContent.trim(), txt = document.getElementById("progTxt").textContent; window.__valid.act7 = v; majProgress(); return sans === "✔" && txt === "4 / 6 activités validées"; }));
 
   /* ════════ ACTIVITÉ 5 — la démonstration de l'hystérésis, dans l'atelier du programme (31/10/2026) ════════ */
   await page.click('.seance-tab[data-panel="s3"]');

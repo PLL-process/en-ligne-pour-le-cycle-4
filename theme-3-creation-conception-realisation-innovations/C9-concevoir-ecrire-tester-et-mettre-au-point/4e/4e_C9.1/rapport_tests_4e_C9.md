@@ -5,7 +5,19 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`
 (committée dans ce dossier, rejouable : `node tests_4e_C9.mjs .`).
 
-> **Mise à jour du 19/11/2026 — audit du jardin connecté : les deux chaînes se bâtissent, l'enquête de la séance 3.**
+> **Mise à jour du 19/11/2026 (soir) — l'enquête facultative, les deux chaînes du lampadaire.**
+> L'enquête ferme la séance 2, facultative et hors progression ; l'activité 6 commence par cinq étiquettes à poser sur
+> les deux chaînes du lampadaire. Détail : `JOURNAL_DES_DECISIONS.md`, même date.
+> Suite du lot : `node tests_4e_C9.mjs .` → **153 / 153** (146 avant) ; banc n°311 : **34 / 34**.
+> Scénarios joués par la suite — progression : quatre activités validées sans l'enquête → « 4 / 6 », séance 2 cochée ;
+> avec l'enquête → « 4 / 6 · enquête facultative ✔ » ; tout validé → « 6 / 6 · enquête facultative ✔ ».
+> Activité 6 : bon programme et une étiquette juste sur cinq → 2 / 6, refusée ; quatre étiquettes justes → 5 / 6,
+> validée ; cinq → 6 / 6.
+> Mode mission : générique sans refus — 68 écrans (séance 2 : 24, dont les 10 de l'enquête à la fin ; séance 3 : 22),
+> 29 vérifiés par le mode, 200 pourquoi sur 200 ; pilote 50 / 50 ; éditeur vert.
+> **Non exécuté** : un vrai téléphone ; un lecteur d'écran sur la chaîne à compléter.
+
+> **Mise à jour du 19/11/2026 — audit du jardin connecté : les deux chaînes se bâtissent, l'enquête.**
 > Activité 1 refaite (chaîne à compléter : six fonctions, sept flèches), activités 2 et 4 corrigées, banc à 250 %,
 > enquête « POMPE ON… et l'eau ne coule pas » en tête de la séance 3. Détail : `JOURNAL_DES_DECISIONS.md`, même date.
 > Suite du lot : `node tests_4e_C9.mjs .` → **146 / 146** (124 avant) ; banc n°311 : **34 / 34**, comme avant.
