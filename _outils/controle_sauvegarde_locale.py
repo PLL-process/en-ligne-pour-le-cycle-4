@@ -44,6 +44,16 @@ Pour chaque page `.html` publiée qui appelle `localStorage.setItem(` :
 Le reste (pages sans gabarit connu, `confirm(` hors forme reconnue) est listé, pas touché ;
 `_outils/sans_modale.py` remplace les `if(confirm("…"))`.
 
+CE QU'IL NE VOIT PAS — et qui le voit
+-------------------------------------
+Il lit le source : un bouton, un `removeItem`. Il ne sait pas si l'effacement est COMPLET. Le 20/11/2026, un audit
+externe du jardin connecté de 4e écrit une phrase dans un exercice incrusté, efface, recharge : la phrase est encore
+là. Mesuré le jour même sur les 166 pages à bouton d'effacement : 40 gardaient quelque chose — 24 le travail d'un
+exercice incrusté (il a sa propre clé), 27 les étoiles du mode mission, 11 les deux ; aucun QCM. La règle n°322 gagne
+donc un quatrième point — « effacer, c'est tout effacer » — et son banc, qui le joue au navigateur, page par page :
+
+    node _outils/banc_effacement.mjs [--muet] [page.html | dossier …]
+
 Usage : python3 _outils/controle_sauvegarde_locale.py [--racine .] [--corriger] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste un écart (effacement ou note manquants sur une
 séquence ou un atelier), 2 si aucune page n'a pu être lue (règle d'or n°299).

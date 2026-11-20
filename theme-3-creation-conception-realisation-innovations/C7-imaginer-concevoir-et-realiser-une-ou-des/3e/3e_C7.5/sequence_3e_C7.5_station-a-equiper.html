@@ -836,7 +836,20 @@ function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
 var DEFAUT = !(navigator && navigator.webdriver);
 try {
   var _rm = Storage.prototype.removeItem, _vide = Storage.prototype.clear, marque = function(){ try { sessionStorage.setItem("mission:efface", "1"); } catch (e) {} };
-  Storage.prototype.removeItem = function(k){ if (this === window.localStorage && typeof KEY === "string" && k === KEY) marque(); return _rm.apply(this, arguments); };
+  /* La clé de sauvegarde de la page : un `const KEY` (« seq_… ») au premier niveau d'un script se voit d'ici ; dans près
+     d'une séquence sur deux elle vit dans une fonction — on la lit alors dans le source (KEY, cle ou CLE, de valeur
+     « seq_… »). Sans cela, « Effacer ma sauvegarde » laissait les étoiles de l'élève précédent sur 27 des 60 séquences
+     (règle d'or n°322, point 4 ; banc_effacement.mjs, 20/11/2026). */
+  var _cles = null, estCleDeLaPage = function(k){
+    try { if (typeof KEY === "string" && k === KEY) return true; } catch (e) {}
+    if (!_cles || document.readyState === "loading"){
+      _cles = [];
+      try { var motif = /(?:const|let|var)\s+(?:KEY|cle|CLE)\s*=\s*"(seq_[^"]+)"/g, sc = document.scripts, m;
+        for (var i = 0; i < sc.length; i++){ if (sc[i].src || /json/.test(sc[i].type || "")) continue; var tx = sc[i].textContent; motif.lastIndex = 0; while ((m = motif.exec(tx))) _cles.push(m[1]); } } catch (e) {}
+    }
+    return _cles.indexOf(String(k)) !== -1;
+  };
+  Storage.prototype.removeItem = function(k){ if (this === window.localStorage && estCleDeLaPage(k)) marque(); return _rm.apply(this, arguments); };
   Storage.prototype.clear = function(){ if (this === window.localStorage) marque(); return _vide.apply(this, arguments); };
 } catch (e) {}
 function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; if (!M.loin) M.loin = {}; }
@@ -3475,6 +3488,48 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
     var donnees = incrustes[k].querySelector('script[type="application/json"]');
     if (!donnees) continue;
     try { lancer(JSON.parse(donnees.textContent), incrustes[k], false); } catch(e){}
+  }
+
+  /* « Effacer ma sauvegarde » de la séquence efface aussi le travail de ses exercices incrustés (règle d'or n°322,
+     précisée le 20/11/2026 : « effacer, c'est tout effacer »). Avant, le bouton ne retirait que la clé de la séquence :
+     sur un poste partagé, l'élève suivant retrouvait dans le cahier des charges la réponse du précédent (audit externe
+     du jardin connecté de 4e). La séquence retire sa clé puis se recharge : le geste est repéré au moment où il a
+     lieu, comme le fait le mode mission. Les exercices gardent la même clé que dans leur atelier et dans le cahier
+     du niveau : le travail y disparaît aussi — c'est le même travail.
+     La clé de la séquence : un `const KEY` (« seq_… ») au premier niveau d'un script se voit d'ici ; dans près d'une
+     séquence sur deux elle vit dans une fonction — on la lit alors dans le source (KEY, cle ou CLE, de valeur « seq_… »). Une autre clé
+     « seq_… » (l'onglet ouvert, le positionnement) n'est pas la sauvegarde : la retirer n'efface rien ici. */
+  if (incrustes.length){
+    var oublierIncrustes = function(){
+      for (var i = 0; i < incrustes.length; i++){
+        incrustes[i].querySelectorAll("[data-cle]").forEach(function(b){ try { localStorage.removeItem(b.getAttribute("data-cle")); } catch(e){} });
+        incrustes[i].querySelectorAll("canvas[data-cle-croquis]").forEach(function(c){ try { localStorage.removeItem(c.getAttribute("data-cle-croquis")); } catch(e){} });
+      }
+    };
+    var clesSeq = null;
+    var estCleDeLaPage = function(cle){
+      try { if (typeof KEY === "string" && cle === KEY) return true; } catch(e){}
+      if (!clesSeq || document.readyState === "loading"){
+        clesSeq = [];
+        try {
+          var motif = /(?:const|let|var)\s+(?:KEY|cle|CLE)\s*=\s*"(seq_[^"]+)"/g, scripts = document.scripts, m;
+          for (var i = 0; i < scripts.length; i++){
+            if (scripts[i].src || /json/.test(scripts[i].type || "")) continue;
+            var texte = scripts[i].textContent; motif.lastIndex = 0;
+            while ((m = motif.exec(texte))) clesSeq.push(m[1]);
+          }
+        } catch(e){}
+      }
+      return clesSeq.indexOf(String(cle)) !== -1;
+    };
+    try {
+      var retirer = Storage.prototype.removeItem;
+      Storage.prototype.removeItem = function(cle){
+        var r = retirer.apply(this, arguments);
+        if (this === window.localStorage && estCleDeLaPage(cle)) oublierIncrustes();
+        return r;
+      };
+    } catch(e){}
   }
 })();
 </script>
