@@ -34362,3 +34362,43 @@ d'écran, le fichier Packet Tracer.
   sa carte « Mon bilan personnel » n'est pas reconnue par le mode.
 - Les écrans titrés « Suite » ou « À lire » (une carte sans titre ; l'audit a relevé celui du jardin) : au moins
   29 écrans sur 14 séquences, relevé interrompu avant la fin. Celui du jardin est la ligne « 🧪 Atelier Pix ». Défaut commun au mode mission : pas de retouche d'une seule page.
+
+## 20/11/2026 — 4e_C4.1 : un billet de sortie ferme la séance 3 — la ruche connectée, seul·e et sans aide (n°330)
+Troisième suite de l'audit externe du jardin. Il demandait la même chose sous trois noms — « relier les résultats à une
+production individuelle », « une tâche de transfert », « une phrase de preuve » — et le lot n'avait aucune production
+faite seul, sur un cas nouveau (n°330 ; le QCM entraîne, il ne prouve pas seul, n°202). Proposé à Pascal avec les
+autres choix par défaut ; « continue ».
+
+- **Le billet** (`#billetSortie`, fin de la séance 3, ~5 min) : un objet que la séquence n'a pas étudié, **la ruche
+  connectée du toit du collège** (un capteur de température, un ventilateur, un panneau et une batterie, le wifi), un
+  document de quatre lignes et une table de trois. Deux réponses écrites, chacune avec sa version étayée :
+  1. *l'énergie* — du soleil à l'air brassé, les formes dans l'ordre, et où elle attend la nuit : le retour, quelques
+     jours après, sur la séance 1 ;
+  2. *la preuve* — qui a mesuré, quelle valeur, quel seuil, qui a décidé ; puis le cas limite, 35 °C pour un seuil à
+     35 °C : le retour sur la séance 2, et la question « à 40 % exactement ? » de l'audit, posée sur un autre objet et
+     dans l'autre sens (« dépasse », là où le jardin arrose « sous »).
+- **Sa correction** donne une réponse attendue, le critère de chaque question, deux contre-exemples (« Il faisait
+  chaud », « Le capteur a mis le ventilateur en route »), la ligne « on dit aussi mécanique », et **dessine les deux
+  chaînes de la ruche** (dessin `ruche` de la chaîne à compléter, complet, dans la correction seulement).
+- **Il ne valide rien** : pas de bouton de vérification, pas d'aide. Il ne compte pas dans les cinq activités ; le
+  tableau de bord de la séance 3 le coche « fait » quand les deux réponses sont écrites — jamais « réussi » (n°333).
+- **Pourquoi la séance 3** : elle annonçait 45 min, les trois autres sont pleines. Séance 3 : 50 min.
+- **Sur la fiche papier**, le billet tient en bas de la troisième page de la séance 3 (le document et sa table côte à
+  côte, quatre lignes d'écriture par réponse) : 15 pages pour les quatre fiches, comme avant. Il se ramasse.
+- **En mode mission**, c'est le dernier écran de la séance 3 (10 sur 10).
+- Trouvé en passant : la correction du **billet d'entrée** citait d'anciennes formulations des propositions,
+  raccourcies depuis ; reposée par `corriger_billet.py`. Même état sur quatre autres séquences (`5e_C1.1`, `4e_C3.1`,
+  `3e_C4.8`, `3e_C6.2`) : à reposer à part. La fiche pédagogique annonçait 40 min pour l'activité 5 (55 dans la page),
+  l'ancien critère de l'activité 4 et « 189 min d'activités » : mise à jour, avec le billet et ce qu'il faut y regarder.
+  La synthèse professeur porte les réponses attendues du billet.
+
+**Bancs.** `tests_4e_C4.1-C4.9.mjs` **72 / 72** (67 avant ; BS 1 à BS 5 : la place du billet, son document, le tableau
+de bord, la correction et son dessin, le rechargement) ; n°311 34 / 34 ; mode mission générique sans refus (49 écrans,
+48 avant) ; `banc_effacement` : le billet s'efface avec le reste ; fiche papier 15 pages. Contrôles : unités,
+hiérarchie, aération, mêmes nombres, correction illustrée, schéma sous les yeux, chaîne à compléter, squelette, tactile,
+règles visibles, médias, `enrichir.py --verifier-tout` (49 fichiers, 0 refus) — rien à signaler. Revue d'écran à 390 et
+1 280 px : trois défauts vus et corrigés avant livraison (la table débordait de 9 px au téléphone ; deux étiquettes du
+dessin se chevauchaient en colonne ; l'étiquette de l'énergie stockée était coupée en ligne).
+
+**Mesure.** `mesurer_temps_seances.py` lit 224 min pour 220 annoncées : il compte deux fois le quart d'heure du cahier
+des charges, compris dans les 55 min de l'activité 5. Écrit dans la page : 209 min (49, 55, 50, 55).
