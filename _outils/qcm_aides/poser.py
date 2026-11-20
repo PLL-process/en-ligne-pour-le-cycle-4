@@ -32,6 +32,9 @@ Le MOTEUR, commun, posé une fois (chaque morceau cherche sa marque avant de se 
   · le premier essai (19/11/2026, audit du jardin connecté) — la réponse de la première validation de chaque question
     reste quand l'élève réessaie après une aide ; le tableau de bord et le résultat donnent deux notes, « Premier
     essai » (ce que l'élève savait du premier coup) et « Après aides » (la note d'avant, `#dNote`, `#rNote`).
+  · un QCM pas fini (19/11/2026, même audit) — la case « Score » du tableau de bord devient « Réussite sur n faites »,
+    une ligne dit que les notes sur 20 comptent toutes les questions, et le bilan écrit « ○ Pas encore observée » pour
+    une compétence dont l'élève a fait moins de la moitié des questions.
 Le JavaScript posé n'imbrique aucun gabarit (`${…`…`…}`) : `_outils/sans_modale.py` lit les scripts avec un
 analyseur simple, qui s'y perd.
 
@@ -160,6 +163,45 @@ m('$("rEssais")', '$("rNote").textContent=note.toFixed(1).replace(".",",")+" /20
   $("rEssais").innerHTML="🎯 <b>Premier essai&nbsp;: "+notePremierEssai().toFixed(1).replace(".",",")+" /20</b> — ce que tu savais du premier coup."
     +"<br>🔁 <b>Après aides&nbsp;: "+note.toFixed(1).replace(".",",")+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant.";''',
   "remplace")
+
+# Ce que le tableau de bord et le bilan disent d'un QCM pas fini (audit externe du jardin connecté, 19/11/2026 ; « Ok »
+# de Pascal le même jour). Une question réussie au second essai, 29 pas encore faites : le tableau de bord affichait
+# « Score 100 % » à côté de « Après aides 0,7 /20 », et le bilan classait « ✘ À retravailler » deux compétences dont
+# aucune question n'avait été tentée.
+#   · « Score » devient « Réussite sur n faites » (les réponses justes parmi les questions FAITES ; « — » avant la
+#     première) ; une ligne dit que les deux notes sur 20 comptent toutes les questions ; le résultat le redit ;
+#   · une compétence dont l'élève a fait moins de la moitié des questions est « ○ Pas encore observée » (aucune
+#     question faite, ou « n faites sur m »), en gris : ni maîtrisée, ni à retravailler.
+m(".maitrise-non{", '  .maitrise-ko{color:var(--err);font-weight:600}\n',
+  '  .maitrise-non{color:var(--sub);font-weight:600}\n'
+  '  .dash-reste{margin:-2px 0 10px;font-size:.85em;color:var(--sub);text-align:center}\n', "apres")
+m('id="dScoreLbl"', '    <div>Score<b id="dScore" class="v-hl">0 %</b></div>\n',
+  '    <div title="La part de réponses justes parmi les questions que tu as déjà faites"><span id="dScoreLbl">Réussite</span><b id="dScore" class="v-hl">—</b></div>\n',
+  "remplace")
+m('id="dReste"', '  </div>\n  <div class="timer-zone">', '  </div>\n  <p class="dash-reste" id="dReste" hidden></p>\n  <div class="timer-zone">', "remplace")
+m('$("dScoreLbl")', '  const pct=s.rep? Math.round(s.ok/s.rep*100):0;\n  $("dScore").textContent=pct+" %";\n',
+  '''  /* « Réussite » : les réponses justes parmi les questions FAITES. Avant le 19/11/2026 la case s'appelait « Score » et se
+     lisait comme une note, à côté des deux notes sur 20 — qui, elles, comptent toutes les questions. */
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=s.rep? pct+" %" : "—";
+  $("dScoreLbl").textContent=s.rep? "Réussite sur "+s.rep+(s.rep>1?" faites":" faite") : "Réussite";
+  $("dReste").hidden=!(s.rep&&s.rest);
+  $("dReste").textContent="Les deux notes sur 20 comptent les "+N+" questions : "+(s.rest>1?"les "+s.rest+" qui restent valent":"celle qui reste vaut")+" zéro pour l'instant.";
+''', "remplace")
+m('pas encore faite"+(s.rest>1', '+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant.";',
+  '''+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant."
+    +(s.rest? "<br>⏳ <b>"+s.rest+" question"+(s.rest>1?"s":"")+" pas encore faite"+(s.rest>1?"s":"")+"</b>&nbsp;: "+(s.rest>1?"elles comptent":"elle compte")+" zéro dans ces deux notes." : "");''',
+  "remplace")
+m('"maitrise-non"', '''    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+''', '''    /* une compétence dont l'élève a fait moins de la moitié des questions n'est pas « à retravailler » : elle n'est pas
+       encore observée (19/11/2026) */
+    const faitesC=idx.filter(i=>etat.validees[i]).length, assez=faitesC*2>=idx.length;
+    const cls=!assez?"maitrise-non":ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=!faitesC?"○ Pas encore observée : aucune question faite"
+      :!assez?"○ Pas encore observée : "+faitesC+" question"+(faitesC>1?"s":"")+" faite"+(faitesC>1?"s":"")+" sur "+idx.length
+      :ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+''', "remplace")
 
 
 class Refus(Exception):
