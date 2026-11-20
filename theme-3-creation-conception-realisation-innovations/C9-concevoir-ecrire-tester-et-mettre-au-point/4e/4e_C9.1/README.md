@@ -15,13 +15,14 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
 ## Ressources
 
 * **`sequence_4e_C9_jardin-programme.html`** — la séquence complète (3 séances de
-  55 min, 6 activités et une enquête de 12 min) : les deux chaînes et le relais — **bâties dans le schéma** par l'élève
+  55 min, 6 activités, et une enquête facultative de 12 min) : les deux chaînes et le relais — **bâties dans le schéma** par l'élève
   (chaîne à compléter, `_outils/chaine_a_completer/`, depuis le 19/11/2026) —, l'algorigramme, l'écriture
   du Python dans l'**éditeur intégré à la page** (Vittascience en lien facultatif, depuis le 04/11/2026), le jeu d'essais avec ses quatre
   familles, la mise au point par **hystérésis**, et le réinvestissement sur un
-  lampadaire **sans squelette fourni**. En tête de la séance 3, l'enquête **« POMPE ON… et l'eau ne coule pas »** :
-  quatre jardins, le même ordre affiché, des relevés le long de la chaîne ; l'élève nomme le maillon en panne
-  (un ordre n'est pas un effet).
+  lampadaire **sans squelette fourni** — dont l'élève pose d'abord, seul, les cinq étiquettes des deux chaînes.
+  À la fin de la séance 2, l'enquête **facultative** **« POMPE ON… et l'eau ne coule pas »** (pour les rapides, ou à la
+  maison ; elle ne compte pas dans la progression) : quatre jardins, le même ordre affiché, des relevés le long de la
+  chaîne ; l'élève nomme le maillon en panne (un ordre n'est pas un effet).
   **Banc d'essai du jardin intégré** (humidité, heure, règle à un ou deux seuils,
   compteur de basculements) avec verrous expérientiels : les activités 3, 4 et 5
   exigent des manipulations réellement faites.
