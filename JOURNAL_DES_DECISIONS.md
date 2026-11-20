@@ -34402,3 +34402,47 @@ dessin se chevauchaient en colonne ; l'étiquette de l'énergie stockée était 
 
 **Mesure.** `mesurer_temps_seances.py` lit 224 min pour 220 annoncées : il compte deux fois le quart d'heure du cahier
 des charges, compris dans les 55 min de l'activité 5. Écrit dans la page : 209 min (49, 55, 50, 55).
+
+## 20/11/2026 — Mode mission : plus d'écran « Suite », et le bilan de la mission sur toutes les séquences
+Deux défauts communs du mode mission, mesurés pendant l'audit du jardin de 4e (entrée précédente) et repris à part,
+dans l'outil commun (`_outils/mode_mission/mission.js`, posé sur les 60 séquences).
+
+**1. Les écrans sans nom.** L'audit relevait un écran « Suite » dans le jardin : la ligne « 🧪 Atelier Pix ». Relevé sur
+les 56 séquences à onglets : **31 écrans titrés « Suite » ou « À lire » sur 15 séquences** — une carte sans titre
+(ni h2, ni h3, ni h4). 19 sont la fin d'une séance (`nav.fin-seance`), 4 un outil commun (banc, établi, simulateur),
+les 8 autres une ligne ou un bloc isolé. Le mode lit maintenant le nom de la carte, dans l'ordre : son nom accessible
+(`aria-label` : « Fin de la séance 1 », « Le banc des matériaux », « L'établi Grove »), sinon le début de son texte s'il
+tient en quelques mots (« 🧪 Atelier Pix — Les données du jardin connecté », « 🔁 Piqûre de rappel (~5 min) »).
+« Suite » et « À lire » ne restent qu'à défaut. **Après : 0 écran sans nom** sur les 60 séquences (compté par le banc
+générique). Deux des 31 étaient des écrans fantômes : dans `4e_C9.1`, le bouton « Séance suivante › » est rangé dans
+la carte de la séance ; le mode en faisait un écran, vide (il cache ce bouton), retiré au moment d'y arriver. Il n'en
+fait plus un écran : `4e_C9.1` passe de 68 à 66 écrans.
+
+**2. Le bilan de la mission.** « Ta mission : n étoiles sur N — … il te reste x questions » ne se dessinait que sur la
+carte marquée `id="bilan"` ou portant un positionnement reconnu (`#je-me-positionne`, `fieldset.positionnement`) :
+**34 séquences sur 56**. Les 22 autres ont une carte « 🪞 Mon bilan personnel » ou « 🏁 Bilan » sans ces marques : en
+mission, l'élève n'y lisait jamais où il en était. À défaut de marque, le mode retient maintenant la **dernière carte
+dont le titre dit « bilan »** — une seule par page. Il la reconnaît aussi quand la carte du bilan porte une activité
+(`4e_C6.2`, « Où en es-tu ? » : l'écran est alors celui de son titre). La phrase « Ton positionnement, ci-dessous… » ne
+se dit que si la carte en porte un. **Après** : le bilan de la mission sur chaque séquence qui a une carte de bilan —
+le banc générique refuse maintenant une carte « bilan » sans lui, et passe sur les 60 ; `4e_C6.2` vérifiée à la main
+(l'écran de son titre porte le bilan, l'écran suivant ne le porte plus).
+
+**3. Billets d'entrée.** Sur quatre séquences (`5e_C1.1`, `4e_C3.1`, `3e_C4.8`, `3e_C6.2`), la correction du billet
+d'entrée citait d'anciennes formulations des propositions, raccourcies depuis (la bonne réponse ne se devine plus à
+sa longueur) : l'élève lisait dans la correction des phrases qu'il n'avait pas eues sous les yeux. Reposées par
+`corriger_billet.py --ecrire` ; le relevé du dépôt ne trouve plus de billet à corriger.
+
+**Pose.** `mode_mission/poser.py` sur les 60 séquences, `generer_les_quatre_pages.py` (`3e_C9.2`) : blocs à jour. README
+du mode mission : comment une carte reçoit son nom, comment la carte du bilan est reconnue.
+
+**Bancs.** `banc_generique.mjs` gagne un refus (une carte « bilan » sans le bilan de la mission) et une mesure (les
+écrans restés sans nom) : **60 séquences, 0 refus, 0 écran sans nom** (829 s). Pilote 52 / 52 ; `banc_defaut` vert ;
+`banc_barre` 60 / 60 ; `banc_editeur` 5 pages, 220 écrans ; `banc_effacement` 166 pages, 0 qui garde quelque chose.
+`tests_4e_C9.mjs` 153 / 153 ; n°311 34 / 34 sur les quatre séquences aux billets reposés. Contrôles : règles visibles,
+sauvegarde locale, `corriger_billet.py` (0 billet à corriger) — rien à signaler.
+
+**Non fait.** Le relevé « avant » des écrans sans nom ne couvrait pas les quatre pages sans onglets de `3e_C9.2` ; le
+banc générique les joue, et n'y trouve aucun écran sans nom après. Les noms tirés du début d'un texte sont lus par une
+règle simple (première phrase, 56 caractères au plus) : une carte importante gagne à recevoir un vrai titre ou un
+`aria-label`.

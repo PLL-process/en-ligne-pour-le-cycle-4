@@ -8,6 +8,8 @@
 // montre pas depuis son début, page complète non rétablie, titre qui saute un niveau (un h4 sous le h2 de l'activité :
 // le mode l'annonce au niveau 3 — 19/11/2026).
 // Signalé sans refus : les réponses attendues qu'aucun écran ne vérifie (elles restent vérifiées par la page).
+// 20/11/2026 — refus : une carte « bilan » existe, mais aucune ne porte le bilan de la mission (« Ta mission : … ») ;
+// signalé : les écrans restés sans nom (« Suite », « À lire »).
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -28,7 +30,7 @@ let refusTotal = 0;
 for (const PAGE of pages) {
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); const p = await ctx.newPage();
   const err = []; p.on('pageerror', e => err.push(e.message));
-  const refus = [], notes = [], ecransVus = [];
+  const refus = [], notes = [], ecransVus = [], sansNom = []; let carteBilan = false, bilanDessine = false;
   await p.goto(pathToFileURL(PAGE).href, { waitUntil: 'load' }); await p.waitForTimeout(350);
   if (!(await p.$('#btnMission'))) { console.log(`❌ ${path.relative(RACINE, PAGE)}\n   · le bouton du mode mission n'apparaît pas (gabarit non reconnu, ou bloc absent)`); refusTotal++; await ctx.close(); continue; }
 
@@ -83,6 +85,11 @@ for (const PAGE of pages) {
           ecran: document.documentElement._mission.ecran() };
       }, [cles, ACTIF, CHECK]);
       nEcrans++; const ou = `${id} · écran ${e.k + 1}/${e.n} « ${e.titre.slice(0, 50)} »`;
+      // un écran qui s'appelle « Suite » ou « À lire » ne dit rien à l'élève (20/11/2026) : le mode nomme la carte par son
+      // nom accessible ou le début de son texte ; ce qui reste sans nom est compté, et dit
+      if (/^(Suite|À lire)$/.test(e.titre.trim())) sansNom.push(`${id}, écran ${e.k + 1}`);
+      // la carte du bilan porte le bilan de la mission (« Ta mission : … ») : reconnue à sa marque ou, à défaut, à son titre
+      if (e.ecran && e.ecran.t === 'carte' && /\bbilan\b/i.test(e.titre)) { carteBilan = true; if (await p.evaluate(() => [...document.querySelectorAll('.ms-bilan')].some(x => x.offsetParent && /Ta mission :/.test(x.textContent)))) bilanDessine = true; }
       if (e.mots < 2 && !e.medias) refus.push(`${ou} : écran vide`);
       if (e.k === 0 && e.n > 1 && e.mots < 12 && !e.medias && !refus.some(m => m.includes('presque vide'))) refus.push(`${ou} : la séance s'ouvre sur un écran presque vide (${e.mots} mots)`);
       if (e.large) refus.push(`${ou} : défilement de côté à 390 px`);
@@ -154,6 +161,8 @@ for (const PAGE of pages) {
         if (f.classList.contains('qcm-grille')) return; total++; if (ind || r.hasAttribute('data-pourquoi')) avec++; });
       if (f.classList.contains('qcm-grille')) { total++; if (ind) avec++; } });
     return { surBonne, total, avec }; }, cles);
+  if (sansNom.length) notes.push(`écran(s) sans nom (« Suite », « À lire ») : ${sansNom.length} — ${sansNom.slice(0, 6).join(' ; ')}`);
+  if (carteBilan && !bilanDessine) refus.push('une carte « bilan » existe, mais aucune ne porte le bilan de la mission (« Ta mission : … »)');
   if (pq.surBonne.length) refus.push(`un « pourquoi » est posé sur la bonne réponse : ${pq.surBonne.join(', ')}`);
   if (pq.avec) notes.push(`pourquoi des erreurs : ${pq.avec} / ${pq.total} (mauvaises propositions et lignes de grille)`);
   if (croise.sans) notes.push('pas de table CHECKS visible : croisement fait sur les marques « ok / ko » que la page pose à sa vérification');

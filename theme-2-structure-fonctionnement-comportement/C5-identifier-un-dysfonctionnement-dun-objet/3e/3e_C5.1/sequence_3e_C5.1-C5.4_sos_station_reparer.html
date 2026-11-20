@@ -1069,6 +1069,26 @@ function pas(p){
   steps.forEach(function(s){ if (p.h) s.n = [p.h].concat(s.n); });
   return steps;
 }
+/* Une carte sans titre (ni h2, ni h3, ni h4) : son écran s'appelait « Suite » ou « À lire », ce qui ne dit rien à
+   l'élève (audit externe du 20/11/2026 ; relevé : 31 écrans sur 15 séquences). Son nom se lit maintenant, dans l'ordre :
+   dans son nom accessible (aria-label : « Fin de la séance 1 », « Le banc des matériaux »), sinon dans le début de son
+   texte, s'il tient en quelques mots (« 🧪 Atelier Pix — Les données du jardin connecté »). L'ancien nom ne reste qu'à
+   défaut. Le premier nœud qui porte un nom ou du texte décide : on ne va pas chercher un titre plus loin dans la carte. */
+function titreSans(noeuds){
+  for (var i = 0; i < noeuds.length; i++){
+    var n = noeuds[i]; if (!n || n.nodeType !== 1) continue;
+    var ref = n.getAttribute("aria-labelledby"), cible = ref ? D.getElementById(ref) : null;
+    var a = net(n.getAttribute("aria-label") || (cible ? cible.textContent : ""));
+    if (a) return a;
+    var c = n.cloneNode(true); $$("script,style,template,noscript", c).forEach(function(x){ x.remove(); });
+    var t = net(c.textContent); if (!t) continue;
+    var m = /^(.*?)(?:[.!?…]\s|\s[:?!]\s|$)/.exec(t), d = m ? m[1] : t;
+    if (d.length > 56 && d.indexOf(" — ") > 0) d = d.slice(0, d.indexOf(" — "));
+    d = d.replace(/[\s:;,.—–-]+$/, "");
+    return d.length >= 4 && d.length <= 56 && d.split(" ").length >= 2 ? d : "";
+  }
+  return "";
+}
 /* un lien seul, sans titre ni question (« 📖 Les mots de cette séance ») */
 function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas,video,iframe,object,button,details,table", C) && !!$("a[href]", C) && net(C.textContent).split(" ").length < 12; }
 function construire(P){
@@ -1079,12 +1099,14 @@ function construire(P){
     if (!E.length && lienSeul(C)){ portes.push(C); return; }
     if (estActivite(C)){ activite(C, E); return; }
     var acts = enfants(C).filter(estActivite);
-    if (!acts.length){ E.push({ t:"carte", titre:titreDe(C) || (E.length ? "Suite" : "La séance"), n:[C] }); return; }          // sans titre : le premier écran ouvre la séance
+    if (!acts.length){ E.push({ t:"carte", titre:titreDe(C) || (E.length ? titreSans([C]) || "Suite" : "La séance"), n:[C] }); return; }          // sans titre : le premier écran ouvre la séance
     var avant = [], vu = false, suite = [];
-    function vider(){ if (suite.length){ var t = ""; suite.forEach(function(x){ t = t || titreDe(x); }); E.push({ t:"carte", titre:t || "À lire", n:suite }); suite = []; } }
+    function vider(){ if (suite.length){ var t = ""; suite.forEach(function(x){ t = t || titreDe(x); }); E.push({ t:"carte", titre:t || titreSans(suite) || "À lire", n:suite }); suite = []; } }
     enfants(C).forEach(function(x){
       if (estActivite(x)){ if (!vu){ vu = true; E.push({ t:"intro", titre:titreDe(C) || "La séance", n:avant, ouverture:true }); } vider(); activite(x, E); }
-      else if (!vu) avant.push(x); else if (rendu(x)) suite.push(x);
+      /* le bouton « Séance suivante › » rangé DANS la carte de la séance (4e_C9.1) n'est pas un écran : le mode le cache et
+         porte le sien. Il laissait dans la barre un écran fantôme, retiré au moment d'y arriver (20/11/2026). */
+      else if (!vu) avant.push(x); else if (rendu(x) && !x.classList.contains("page-suivante")) suite.push(x);
     });
     vider();
   });
@@ -1481,15 +1503,42 @@ function premiereAFaire(){
   }
   return "";
 }
+/* La carte du bilan de la séquence. Le mode la reconnaissait à son identifiant (« bilan ») ou à son positionnement
+   (`#je-me-positionne`, `fieldset.positionnement`) : 22 séquences sur 56 n'ont ni l'un ni l'autre, et n'avaient donc
+   jamais de « Ta mission : … » (relevé du 20/11/2026). À défaut de ces marques, c'est la DERNIÈRE carte dont le titre
+   dit « bilan » (« 🪞 Mon bilan personnel », « 🏁 Bilan de la séquence ») : une seule par page. */
+var _bilanParTitre;
+function bilanParTitre(){
+  if (_bilanParTitre !== undefined) return _bilanParTitre;
+  var marque = false, c = null;
+  Object.keys(parPanneau).forEach(function(id){ parPanneau[id].forEach(function(e){
+    var n = e.t === "carte" ? e.n[0] : null; if (!n || n.nodeType !== 1 || n.matches("h2,h3,h4")) return;
+    if (n.id === "bilan" || $("#je-me-positionne, fieldset.positionnement", n)) marque = true;
+    else if (/\bbilan\b/i.test(e.titre || "") && $("h2,h3", n)) c = n;
+  }); });
+  return (_bilanParTitre = marque ? null : c);
+}
 function bilan(s){
-  if (s.t !== "carte" || !(s.n[0].id === "bilan" || $("#je-me-positionne, fieldset.positionnement", s.n[0]))) return;
-  var b = $(".ms-bilan", s.n[0]); if (!b){ b = el("div", "ms-bilan ms-seul"); var h = $("h2", s.n[0]); s.n[0].insertBefore(b, h ? h.nextSibling : s.n[0].firstChild); }
+  if ((s.t !== "carte" && s.t !== "intro") || !s.n[0] || s.n[0].nodeType !== 1) return;
+  /* la carte que montre l'écran : le nœud lui-même ; ou, quand la carte du bilan porte une activité (« Où en es-tu ? » de
+     4e_C6.2), le parent de son titre — l'écran n'en montre alors que le début, et il est de type « intro » */
+  var titre = s.n[0].matches("h2,h3,h4"), C = titre ? s.n[0].parentNode : s.n[0];
+  if (s.t === "intro" ? !(titre && C.id === "bilan") : !(C.id === "bilan" || $("#je-me-positionne, fieldset.positionnement", C) || C === bilanParTitre())) return;
+  var b = s._msBilan || $(".ms-bilan", C);
+  if (!b){
+    b = el("div", "ms-bilan ms-seul");
+    if (titre){ C.insertBefore(b, s.n[0].nextSibling); s.n.push(b); ecrans.tous.push(b); }          // il suit l'écran de son titre, pas ceux des activités de la carte
+    else { var h = $("h2,h3", C); if (h) h.parentNode.insertBefore(b, h.nextSibling); else C.insertBefore(b, C.firstChild); }
+  }
+  s._msBilan = b;
+  /* « Ton positionnement, ci-dessous » ne se dit que si la carte en porte un (des choix à cocher, ou le mot lui-même) */
+  var positionne = !!$("#je-me-positionne, fieldset.positionnement, input[type=radio], select", C) || /positionn/i.test(C.textContent);
   var ps = parties(), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), faites = ps.filter(function(e){ return M.fait[e.id]; }).length;
   var corrigees = ps.reduce(function(a, e){ return a + (M.fait[e.id] ? (M.erreurs[e.id] || 0) : 0); }, 0);
   /* Tant qu'il reste des questions, le bilan le dit et nomme la séance où reprendre (audit du jardin de 4e, 20/11/2026 :
      après une seule question réussie, l'élève lisait au bilan un texte de fin de séquence et pouvait se croire arrivé). */
   var reste = ps.length - faites, ou = reste ? premiereAFaire() : "";
-  b.innerHTML = "<p><b>Ta mission : " + gagne + " étoile" + (gagne > 1 ? "s" : "") + " sur " + (ps.length * 3) + "</b> — " + faites + " question" + (faites > 1 ? "s" : "") + " réussie" + (faites > 1 ? "s" : "") + " sur " + ps.length + ".</p>" + (reste ? '<p class="ms-reste">⏳ <b>Ta mission n\'est pas finie</b> : il te reste ' + reste + " question" + (reste > 1 ? "s" : "") + (ou ? ". La prochaine t'attend ici : " + esc(ou) : "") + ".</p>" : "") + (corrigees ? "<p>En route, tu as corrigé " + corrigees + " erreur" + (corrigees > 1 ? "s" : "") + " : c'est comme ça qu'on apprend.</p>" : "") + "<p>Trois étoiles : juste du premier coup. Ton positionnement, ci-dessous, c'est toi qui le choisis.</p>";
+  b.innerHTML = "<p><b>Ta mission : " + gagne + " étoile" + (gagne > 1 ? "s" : "") + " sur " + (ps.length * 3) + "</b> — " + faites + " question" + (faites > 1 ? "s" : "") + " réussie" + (faites > 1 ? "s" : "") + " sur " + ps.length + ".</p>" + (reste ? '<p class="ms-reste">⏳ <b>Ta mission n\'est pas finie</b> : il te reste ' + reste + " question" + (reste > 1 ? "s" : "") + (ou ? ". La prochaine t'attend ici : " + esc(ou) : "") + ".</p>" : "") + (corrigees ? "<p>En route, tu as corrigé " + corrigees + " erreur" + (corrigees > 1 ? "s" : "") + " : c'est comme ça qu'on apprend.</p>" : "") + "<p>Trois étoiles : juste du premier coup." + (positionne ? " Ton positionnement, ci-dessous, c'est toi qui le choisis." : "") + "</p>";
 }
 
 /* ═══ Entrer, sortir ═══ */
