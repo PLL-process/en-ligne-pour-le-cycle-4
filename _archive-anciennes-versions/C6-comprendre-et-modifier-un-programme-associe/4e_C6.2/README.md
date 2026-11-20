@@ -23,3 +23,18 @@ de la page). Ses questions sont devenues, le 28/08/2026, la matière première d
 `qcm_4e_C6.2_arrosage_automatique.html` : 20 reprises, 3 réécrites, 1 abandonnée, et 10 nouvelles. Il restait en
 ligne à côté de son remplaçant, avec le badge 🛠 de l'index : une deuxième porte pour la même chose. Il est archivé
 le 19/11/2026 (règle d'or n°12) ; son ancienne adresse porte une page de redirection vers le QCM du lot.
+
+## 20/11/2026 — `tp_algorigrammes_domotique_v12_2026-11.html`
+
+La « V12 » du TP d'algorigrammes de domotique, telle qu'elle était en ligne avant l'audit en 12 axes du 20/11/2026.
+Ce qui a motivé son remplacement :
+- le code de validation ne dépendait que des sept premières lettres du nom ;
+- en phase 3, la correction mettait les deux tests dans un seul losange ;
+- les phases 2 et 3 faisaient ranger les deux sorties d'un losange l'une après l'autre ;
+- la correction était ouverte avant tout essai ;
+- en thème clair, le glossaire était illisible ;
+- la page débordait à 390 px ;
+- la phase 0 et les questions de la phase 4 utilisaient des listes déroulantes et des distracteurs sans rapport.
+
+Le remplaçant est à la même adresse, `4e/4e_C6.2/tp_algorigrammes_domotique.html` (PR #832, puis la PR de modernisation
+du même jour). La clé de sauvegarde est la même : la progression des élèves est gardée.
