@@ -34208,3 +34208,72 @@ activité 6 refusée avec une étiquette juste sur cinq, validée à quatre, sa 
 éditeur vert. Contrôles du lot : chaîne à compléter, chaînes d'énergie (90 / 90), schéma sous les yeux, corrections,
 validations, unités, hiérarchie, aération, mêmes nombres, ordre des propositions, squelette, navigation, verrous, hors
 ligne, axe, schémas, mode essentiel, fiche papier — rien à signaler.
+
+## 20/11/2026 — Règle d'or n°322, point 4 : « effacer, c'est tout effacer » — prouvé au navigateur sur les 166 pages qui gardent une sauvegarde
+Audit externe du jardin connecté de 4e (`4e_C4.1`), transmis par Pascal : une phrase écrite dans le cahier des charges de
+la séance 4, puis « 🗑 Effacer ma sauvegarde », confirmation, rechargement — **la phrase est encore là**. Sur un poste
+partagé, l'élève suivant lit la réponse du précédent, alors que la note de la page lui promet le contraire. Pascal :
+« Effacement incomplet sur poste partagé / Fiabiliser la remise à zéro — ils devraient être généralisés à toutes les
+séances et QCM. Ils doivent aussi avoir des règles d'or. » Proposition acceptée (« Ok c'est bon ») : une règle, un banc
+qui la joue, la correction dans les outils communs. Le reste de l'audit du jardin (réseau, électrovanne, bilan) suit dans
+une livraison à part.
+
+**Vérifié, puis mesuré sur tout le site** (`main`, les 166 pages qui portent un bouton d'effacement : 90 séquences,
+ateliers et cahiers, 76 QCM) : **40 pages gardaient quelque chose** après le bouton et un rechargement.
+- **24 gardaient le travail d'un exercice incrusté** (kit des ateliers de représentation : cahier des charges, pieuvre,
+  carte mentale, piqûres de rappel). Le bouton retirait la clé de la séquence ; l'exercice a la sienne (`rep_…`),
+  partagée avec son atelier et le cahier du niveau. C'est le constat de l'audit, sur 24 pages et non une.
+- **27 gardaient les étoiles et la progression du mode mission** — sur les 60 séquences qui le portent. Le mode repérait
+  le geste par `typeof KEY === "string"` : dans ces 27 pages, la clé de sauvegarde est déclarée dans une fonction, il ne
+  la voyait pas. `banc_defaut.mjs` sautait l'épreuve sur les mêmes pages (`if (cle)`) : vert sans l'avoir jouée (n°299).
+- 11 pages portaient les deux défauts. **Aucun des 76 QCM** : leur bouton du 15/11 efface tout.
+La règle n°322 (10/11) demandait qu'une page « sache effacer » ; `controle_sauvegarde_locale.py` le lit dans le source
+(un bouton, un `removeItem`) et était vert. Lire le source ne dit pas si l'effacement est complet. Deux séquences
+(`3e_C1.5`, `4e_C1.4`) avaient reçu à la main, le 15/11, un script qui efface tout : l'idée existait, pas sa généralité.
+
+> **Règle d'or n°322, complétée — une page qui garde les réponses de l'élève dans le navigateur (1) sait les effacer
+> d'un bouton nommé, (2) prévient du poste partagé, (3) ne confirme jamais par une boîte modale, et (4) efface TOUT :
+> après le bouton et un rechargement, il ne reste rien de l'élève — ni ses réponses, ni celles des exercices incrustés,
+> ni ses étoiles. Le point 4 ne se lit pas dans le source : il se joue au navigateur, page par page.**
+
+**Corrigé à la source**, pas page par page :
+- `kit.js` (ateliers de représentation) : quand la séquence retire sa clé de sauvegarde, les exercices incrustés de la
+  page oublient leur travail (`[data-cle]`, croquis compris). Conséquence voulue : ce travail disparaît aussi de
+  l'atelier et du cahier du niveau — c'est le même travail, sous la même clé.
+- `mission.js` : le geste d'effacer est reconnu sur la même clé, où qu'elle soit déclarée.
+- **La clé de la page** : `KEY` quand elle est globale ; sinon lue dans le source de la page (`KEY`, `cle` ou `CLE`, de
+  valeur « seq_… »). Une autre clé « seq_… » (l'onglet ouvert, le positionnement de `5e_C1.3`) n'est pas la sauvegarde :
+  la retirer n'efface rien.
+- Régénéré par les outils, 84 pages : `incrustations.py` et `build.py` (le kit : 28 séquences, 21 ateliers, 3 cahiers),
+  `mode_mission/poser.py` (60 séquences), `generer_les_quatre_pages.py` (`3e_C9.2`). Ce dernier ignorait le `<main id="principal">` posé à la main sur ses
+  quatre pages le 19/11 : une régénération le retirait. Il le pose maintenant lui-même.
+
+**Le banc** — `node _outils/banc_effacement.mjs [--muet] [page | dossier…]`. Sur chaque page à bouton d'effacement
+(`#btnReset`, `#btnEffacer`, `#btn-effacer`, `#clear`) : il écrit un témoin dans chaque champ, coche, change chaque
+menu — exercices incrustés compris —, laisse la page enregistrer ; pose le témoin dans la mémoire du mode mission, comme
+une étoile gagnée à une visite précédente, et recharge ; efface (deux clics dans la page), attend le rechargement ;
+**refuse** la page si le témoin reste dans une valeur du navigateur ou dans un champ, si une case reste cochée, si un
+menu reste changé. Sortie 0, 1, ou 2 s'il n'a rien joué. Son banc, `tests_banc_effacement.mjs` (12 / 12, sur des pages
+jetables) : refuse une clé gardée, un menu resté changé sans texte pour le trahir, des étoiles gardées ; accepte une
+page qui efface tout. `banc_defaut.mjs` lit la clé comme le mode mission et dit sur combien de séquences il a joué
+l'effacement ; `banc_ateliers.py` vérifie qu'une autre clé « seq_… » ne vide pas l'exercice, et que la clé de la page
+le vide.
+
+**Ce que le banc ne voit pas** : ce que l'élève a écrit depuis une autre page (le QCM du lot a son propre bouton, dans
+sa propre note) ; un état qui ne passe par aucun champ (un tracé au doigt) ; ce qu'un vrai navigateur garde de son côté
+(remplissage automatique des formulaires).
+
+**Mesure après** : `banc_effacement.mjs` — **166 pages jouées, 0 qui garde quelque chose**, mode mission éprouvé sur
+60 pages (218 s, trois pages à la fois). `banc_defaut.mjs` : 60 séquences, l'effacement joué sur 58 ; les 2 autres
+(`3e_C1.5`, `4e_C1.4`, sans clé « seq_… ») effacent par leur propre script, ce que le banc d'effacement prouve.
+
+**Bancs.** `tests_banc_effacement` 12 / 12 ; `banc_ateliers` 530 / 530 (dont les six épreuves d'effacement) ;
+`banc_rappels_cdc` 302 / 302 ; lots les plus touchés : `3e_C9.2` 167 / 167, n°311 34 / 34, pont en H 37 / 37 (les
+quatre pages régénérées) ; `4e_C8.1` 54 / 54 ; `4e_C4.1` 60 / 60 ; `5e_C1.3` 44 / 44 ; mode mission générique sans refus
+sur quatre pages ; `tests_onglets_seance` 19 / 19, `tests_entete_telephone` 22 / 22. Contrôles : sauvegarde locale
+(167 pages lues, 0 refus), règles visibles, registre des règles (prochain n°343), blocs posés à jour (`incrustations.py
+--verifier`, `mode_mission/poser.py --verifier`). Les autres bancs de lot n'ont pas été rejoués : le changement tient
+en deux fonctions, dans deux blocs posés par leurs outils.
+
+**À décider** (Pascal) : le bouton d'une séquence efface-t-il aussi le QCM du lot ? Par défaut non — chaque page
+efface ce qu'elle garde, et le QCM porte son bouton dans sa note.

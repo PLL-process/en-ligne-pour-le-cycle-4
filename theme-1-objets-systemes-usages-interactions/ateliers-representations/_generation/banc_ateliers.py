@@ -538,6 +538,18 @@ def rappel_incruste(b, chemin, uid, nom, avant=None):
     t(nom + " : la réponse est sauvegardée sous la clé de l'atelier (%s)" % d["cle"],
       bool(json.loads(pg.evaluate("k => localStorage.getItem(k)", d["cle"]) or "{}").get("reussi")))
     t(nom + " : à 390 px, aucun défilement de côté", not pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
+    # « Effacer ma sauvegarde » de la séquence emporte le travail de l'exercice (règle d'or n°322, point 4, 20/11/2026) :
+    # le kit le repère à la clé « seq_… » que la séquence retire. Une AUTRE clé « seq_… » (l'onglet ouvert, un
+    # positionnement) n'est pas la sauvegarde : la retirer ne vide rien. Un panneau de code n'a pas de clé : rien à jouer.
+    cle_page = pg.evaluate("""() => { try { if (typeof KEY === 'string' && KEY.indexOf('seq_') === 0) return KEY; } catch (e) {}
+      const src = [...document.scripts].filter(s => !s.src && !/json/.test(s.type || '')).map(s => s.textContent).join('\\n');
+      const m = /(?:const|let|var)\\s+(?:KEY|cle|CLE)\\s*=\\s*"(seq_[^"]+)"/.exec(src); return m ? m[1] : null; }""")
+    if cle_page:
+        pg.evaluate("k => { localStorage.setItem(k + '_onglet', '1'); localStorage.removeItem(k + '_onglet'); }", cle_page)
+        t(nom + " : retirer une autre clé « seq_… » de la page ne vide pas l'exercice", pg.evaluate("k => localStorage.getItem(k) !== null", d["cle"]))
+        pg.evaluate("k => { localStorage.setItem(k, '{}'); localStorage.removeItem(k); }", cle_page)
+        t(nom + " : la séquence retire sa clé (« Effacer ma sauvegarde ») : le travail de l'exercice part avec",
+          pg.evaluate("k => localStorage.getItem(k) === null", d["cle"]))
     t(nom + " : aucune erreur JavaScript", not err, err)
     ctx.close()
 

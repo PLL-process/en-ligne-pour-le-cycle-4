@@ -406,11 +406,14 @@ for p in PAGES:
     if HEAD.count('<meta charset="UTF-8">') != 1:
         raise SystemExit("HEAD : la ligne <meta charset=\"UTF-8\"> est introuvable ou en double")
     page = "\n".join([
-        HEAD.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + sans_onglets, 1), "<body>", SAUT, NAVCSS, CSS_SUP, NAV, h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
+        HEAD.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + sans_onglets, 1), "<body>", SAUT, NAVCSS, CSS_SUP, NAV,
+        # le contenu principal, comme dans la page tout-en-un (audit du jardin, 19/11/2026 : `<main>` posé sur 49 pages).
+        # Les quatre pages l'avaient reçu à la main ; le générateur l'ignorait, et une régénération le retirait (20/11/2026).
+        '<main id="principal">', h1, sous, REPLI if p["n"] == 1 else REPLI_PLIE,
         badges_de(p), IDENTITE, toolbar, PROGRESS,
         corps_assemble,
         suivant(p["n"]),
-        FOOTER, js, LOUPE,
+        "</main>", FOOTER, js, LOUPE,
     ])
     page = FICHE_PAPIER.poser(page)     # la fiche papier, source unique (_outils/impression_papier/)
     page = MODE_MISSION.poser(page)     # le mode mission, source unique (_outils/mode_mission/)

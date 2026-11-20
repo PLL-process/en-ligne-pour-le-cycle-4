@@ -27,7 +27,7 @@ const pages = [];
 pages.sort();
 if (!pages.length) { console.log('⛔ aucune séquence lue'); process.exit(2); }
 
-const refus = []; let reconnues = 0, telles = [];
+const refus = []; let reconnues = 0, telles = [], effacees = 0; const sansCle = [];
 const b = await chromium.launch();
 const eleve = await b.newContext({ viewport: { width: 390, height: 844 } });
 await eleve.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false, configurable: true }); });
@@ -59,8 +59,14 @@ for (const page of pages) {
   if (!(await etat(p)).ms) faute('après « 🎮 Mode mission » et un rechargement, la page ne revient pas en mission');
   // « Effacer ma sauvegarde » : la page retire sa propre clé (KEY) puis se recharge. La page avait enregistré quelque chose
   // (sa clé existe) quand l'élève a choisi la page complète ; sa clé disparue, l'élève suivant arrive en mission.
-  const cle = await p.evaluate(() => (typeof KEY === 'string' ? KEY : null));
+  // La clé : `KEY` quand elle est globale ; sinon celle que le source déclare (KEY, cle ou CLE, de valeur « seq_… ») —
+  // dans près d'une séquence sur deux elle vit dans une fonction, et ce banc sautait alors l'épreuve (20/11/2026).
+  const cle = await p.evaluate(() => { try { if (typeof KEY === 'string') return KEY; } catch (e) {}
+    const src = [...document.scripts].filter((s) => !s.src && !/json/.test(s.type || '')).map((s) => s.textContent).join('\n');
+    const m = /(?:const|let|var)\s+(?:KEY|cle|CLE)\s*=\s*"(seq_[^"]+)"/.exec(src); return m ? m[1] : null; });
+  if (!cle) sansCle.push(rel);
   if (cle) {
+    effacees++;
     await p.evaluate((k) => { localStorage.setItem(k, '{}'); document.getElementById('msQuitter').click(); }, cle); await p.waitForTimeout(100);
     await p.evaluate((k) => localStorage.removeItem(k), cle); await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
     if (!(await etat(p)).ms) faute('« Effacer ma sauvegarde » (la clé de la page retirée) : la page ne revient pas en mission');
@@ -79,5 +85,7 @@ for (const page of pages) {
 await b.close();
 console.log(`${pages.length} séquence(s) · ${reconnues} s'ouvrent en mission pour l'élève · ${telles.length} s'ouvrent telles quelles (séances non reconnues)`);
 for (const t of telles) console.log('   · telle quelle : ' + t);
+console.log(`« Effacer ma sauvegarde » éprouvé sur ${effacees} séquence(s)` + (sansCle.length ? ` · ${sansCle.length} sans clé « seq_… » lue (épreuve sautée)` : ''));
+for (const t of sansCle) console.log('   · sans clé lue : ' + t);
 if (refus.length) { for (const r of refus) console.log('❌ ' + r); process.exit(1); }
 console.log('✅ chaque séquence s\'ouvre en mission pour l\'élève, se quitte et s\'en souvient, revient en mission après une sauvegarde effacée, s\'imprime entière ; un robot de test ouvre la page complète');

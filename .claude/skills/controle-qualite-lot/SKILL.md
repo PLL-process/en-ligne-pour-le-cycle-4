@@ -111,6 +111,7 @@ Lancer depuis la racine du dépôt. Python : `python3 _outils/<outil>.py`. Node 
 | `controle_correction_complete.py [--strict] [chemin]` ⚠ 0 | n°332 (15/11/2026) : une activité qui fait produire avec un outil a une correction (K1), qui montre la production entière (K2), et donne son fichier (K3). ⚠ par défaut (sortie 0) ; `--strict` fait sortir à 1 sur K1 et K2, pour la vague ; banc `tests_controle_correction_complete.py` |
 | `controle_boutons_vivants.py` ⚠ 0 | chaque bouton appelle une fonction qui existe dans sa page |
 | `controle_verrous.mjs` | n°226 (31/08/2026) : aucun verrou expérientiel ouvert au chargement |
+| `banc_effacement.mjs [--muet] [page ou dossier…]` | n°322, point 4 (20/11/2026), au navigateur : « effacer, c'est tout effacer ». Sur chaque page à bouton d'effacement, écrit un témoin dans chaque champ (exercices incrustés compris) et dans la mémoire du mode mission, efface, recharge ; refuse la page si quelque chose reste (clé du navigateur, champ, case, menu). Trois à quatre minutes sur tout le site ; sortie 2 si rien n'a été joué ; banc `tests_banc_effacement.mjs` |
 | `controle_hors_ligne.mjs [--source]` | n°305 (21/09/2026) : aucune ressource chargée depuis Internet |
 | `controle_impression.mjs` | rendu `media: print` : aucun texte sombre sur fond sombre ; sur une page qui porte la fiche papier, aucun texte sous 4,5 : 1 (25/10/2026) |
 | `controle_contraste_liens.mjs [chemin]` | n°303 (21/09/2026) : chaque lien se lit (contraste) |
