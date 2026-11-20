@@ -125,7 +125,9 @@ th,td{overflow-wrap:anywhere;hyphens:auto}
 .essais{font-size:.88rem;margin:.4rem 0 0}
 .code-box.programme{text-align:left;letter-spacing:0}
 fieldset.choix,.branches fieldset{border:1px solid var(--line);border-radius:12px;margin:.6rem 0;padding:.5rem .8rem}
-fieldset.choix legend,.branches legend{font-weight:bold;padding:0 .3rem}
+/* la question reste dans le cadre, même sur deux lignes (bord coupé sinon, cf. pilote 3e_C1.1) */
+fieldset.choix legend,.branches legend{font-weight:bold;float:left;width:100%;padding:0;margin:0 0 .35rem}
+fieldset.choix legend+*,.branches legend+*{clear:left}
 .branches label{display:block;margin:.3rem 0}
 .verif-code summary{cursor:pointer;font-weight:bold}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}button:hover{transform:none}}

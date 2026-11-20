@@ -34494,3 +34494,5 @@ pratiques), en sombre comme en clair glossaire ouvert : seul `region` reste, sur
 `trois_lignes --verifier`, `controle_sauvegarde_locale` (son découpeur ne lit pas un gabarit JS imbriqué : réécrit),
 validations, mêmes nombres, liens, atteignabilité, boutons vivants, loupe, médias, règles visibles, sigles, tactile,
 unités : verts. Index et audit régénérés.
+Vu sur la capture à 390 px et par aucun contrôle : l'énoncé d'une sortie de losange, passé sur deux lignes,
+coupait le bord de son `fieldset` (le défaut du pilote `3e_C1.1`). La `legend` flotte désormais dans le cadre.
