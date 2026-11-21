@@ -114,7 +114,9 @@ def construire(gabarit: str, sortie: str) -> None:
          '<span class="badge code">3e_C3.3</span><span class="badge code">3e_C3.4</span>',
          '<span class="badge code">C7.1</span>'),
 
-        ("30 questions · 1 illustrée · chaque distracteur réfuté",
+        # Le nombre de questions illustrées du gabarit change quand son lot est révisé (1, puis 6 le 21/11/2026,
+        # PR #838) : le motif le lit au lieu de le citer, pour que la chaîne ne casse plus à chaque révision.
+        (re.compile(r"30 questions · \d+ illustrées? · chaque distracteur réfuté"),
          "30 questions · %d illustrées · chaque distracteur réfuté" % nb_img),
 
         ("""      <option value="C3.1">3e_C3.1 — Établir une liste de solutions possibles</option>
@@ -136,6 +138,16 @@ def construire(gabarit: str, sortie: str) -> None:
   <a href="../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html">&#8592; Séquence de 4e</a>
   <a href="../3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html">&#8592; Séquence de 3e</a>
 </nav>"""),
+
+        # 21/11/2026 : sept liens ne tiennent pas sur une ligne au téléphone — la page mesurait 628 px sur un écran
+        # de 390, à ses 30 questions (`_outils/balayer_questions_qcm.mjs`, B1). La barre passe à la ligne ; sous
+        # 720 px elle ne colle plus en haut de l'écran, où trois lignes cacheraient la question.
+        ("""@media print{#navharm{display:none}}
+</style>""",
+         """@media print{#navharm{display:none}}
+#navharm{flex-wrap:wrap}
+@media (max-width:720px){#navharm{position:static}}
+</style>"""),
 
         ("""<p style="text-align:center"><a href="sequence_3e_C3.1-C3.4_shenzhen.html">⬅ Revenir à la séquence</a></p>""",
          """<p style="text-align:center">⬅ Revenir à l'atelier de ton niveau : <a href="atelier_5e_C7.1_planification_taches.html">Atelier 5e</a> · <a href="atelier_4e_C7.1_planification_taches.html">4e</a> · <a href="atelier_3e_C7.1_planification_taches.html">3e</a></p>"""),
@@ -159,6 +171,11 @@ def construire(gabarit: str, sortie: str) -> None:
     ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}"""),
     ]
     for avant, apres in remplacements:
+        if isinstance(avant, re.Pattern):       # un motif qui lit un nombre du gabarit au lieu de le citer
+            if len(avant.findall(s)) != 1:
+                raise SystemExit("Motif absent ou ambigu dans le gabarit :\n%r" % avant.pattern[:90])
+            s = avant.sub(lambda _m: apres, s)
+            continue
         if s.count(avant) != 1:
             raise SystemExit("Motif absent ou ambigu dans le gabarit :\n%r" % avant[:90])
         s = s.replace(avant, apres)
