@@ -54,3 +54,24 @@ contrôle utile survit à son lot d'origine.
 Impression A4, contraste mesuré, lecteur d'écran réel, zoom 200 % : **non vérifiés**, donc **non
 déclarés conformes**. Le travail au tableur de l'activité 2 se fait hors de la page et n'est pas
 testable automatiquement ; la trace attendue est décrite dans la séquence.
+
+## Ajout du 21/11/2026 — audit du thème 1 : le QCM se lit seul, la séquence se ferme par un billet de sortie
+
+Règles d'or n°343 (une question se lit seule), n°344 (ce qui est annoncé est cité en entier), n°345 (un QCM fait
+lire des documents) et n°330 (la preuve faite seul).
+
+- **QCM.** 5 questions retouchées : « Par rapport à la 5e… » (une question sur le programme, n°304) devient une lecture de fiche (« qu'ils durent » → quelle donnée ?) ; « Qu'on puisse les réparer » n'a plus deux réponses défendables ; le CO₂ par kilomètre se calcule et se compare sur document. 2 → 6 questions sur document. Dans la séquence : F3 rate les QUATRE exigences, pas trois (son antivol est à 3 pour 4 exigé) — question, vérificateur, correction et synthèse élève corrigés ; la légende de a1_6 s'accorde de nouveau avec ses propositions ; 72 « pourquoi » écrits (`mission_4e_C3.1.json`) : 9 → 81 sur 81.
+- **Billet de sortie** (fin de la dernière séance, ~5 min, avant le Bonus) : le ventilateur des salles de classe (deux modèles). Deux réponses écrites, chacune
+  avec sa version étayée ; une correction complète avec ses critères. Il ne valide rien.
+
+Exécuté le 21/11/2026 :
+- `python3 tests_4e_C3.1-C3.3_hangzhou.py` : **33 / 33** — dont le test du billet (deux zones sauvegardées, deux versions étayées,
+  deux critères, avant le Bonus, aucun bouton) et le nouveau compte des questions sur document ;
+- `node _outils/mode_mission/banc_generique.mjs` : la séquence jouée écran par écran à 390 px, aucun refus, le billet
+  est un écran de la dernière séance ;
+- `python3 _outils/controle_question_seule.py` : aucun refus sur le QCM (S1 à S4, E1) ;
+- `python3 _outils/document_qcm.py documents_qcm_4e_C3.1.json --verifier` : les documents sont ceux des données ;
+- les questions sur document regardées à 390 px dans le QCM (aucun débordement, l'image se charge).
+
+Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
+revient au professeur.

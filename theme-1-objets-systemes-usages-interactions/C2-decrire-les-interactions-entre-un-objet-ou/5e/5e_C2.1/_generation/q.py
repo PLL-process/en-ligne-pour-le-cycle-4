@@ -593,9 +593,9 @@ q("C2.2", "Transposer", "Pour installer cette station à Sainte-Luce, il faudrai
    "Avoir fait ses preuves à Shenzhen ne prouve rien pour Sainte-Luce, précisément parce que les interacteurs — sel, pluies intenses, cyclone — n'y sont pas les mêmes."],
   "On transpose en repartant des interacteurs qui changent.")
 
-q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, en 5e, on repère les choix de conception. En 4e, on apprendra en plus à…",
+q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, on repère les choix de conception. L'an prochain, on apprendra en plus à…",
   ["décrire l'expérience vécue par l'utilisateur de l'objet",
-   "recenser les interacteurs, qui n'est pas au programme de 5e",
+   "recenser les interacteurs, qui n'est pas au programme cette année",
    "mesurer les dimensions de l'objet avec précision",
    "fabriquer l'objet en atelier"],
   "Repérer un choix visible dans la forme et décrire un vécu ne sont pas la même chose. Cette "

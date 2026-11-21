@@ -97,7 +97,7 @@ def construire(gabarit: str, sortie: str) -> None:
         ("/* Banque de questions — Shenzhen 3e : 30 questions "
          "(C3.1 : 8 · C3.3 : 8 · C3.4 : 7 · C3.2 : 7) */",
          "/* Banque de questions — Hangzhou 4e : 30 questions "
-         "(4e_C2.1 : 15 · 4e_C2.2 : 15), dont 5 illustrées */"),
+         "(4e_C2.1 : 15 · 4e_C2.2 : 15), dont 7 illustrées */"),
         ('const KEY="qcm_3e_C3.1-C3.4_shenzhen";', 'const KEY="qcm_4e_C2_hangzhou";'),
         ("""const COMP_LABELS={
   "C3.1":"3e_C3.1 — Établir une liste d'objets ou systèmes techniques possibles",
@@ -116,7 +116,7 @@ def construire(gabarit: str, sortie: str) -> None:
          '<span class="badge code">3e_C3.3</span><span class="badge code">3e_C3.4</span>',
          '<span class="badge code">4e_C2.1</span><span class="badge code">4e_C2.2</span>'),
         ("30 questions · 1 illustrée · chaque distracteur réfuté",
-         "30 questions · 5 illustrées · chaque distracteur réfuté"),
+         "30 questions · 7 illustrées · chaque distracteur réfuté"),
         ("""      <option value="C3.1">3e_C3.1 — Établir une liste de solutions possibles</option>
       <option value="C3.3">3e_C3.3 — Évaluer selon des exigences identifiées</option>
       <option value="C3.4">3e_C3.4 — Définir et mettre en œuvre un protocole</option>

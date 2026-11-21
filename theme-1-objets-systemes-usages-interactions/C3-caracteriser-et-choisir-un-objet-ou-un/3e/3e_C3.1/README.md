@@ -7,7 +7,7 @@ trois niveaux.
 serveurs est monté à 41 °C, deux machines se sont arrêtées, et le principal n'a reçu **aucune
 proposition**. Il n'y a rien à comparer : il faut d'abord trouver ce qu'il est possible de faire.
 
-➡ **[QCM d'entraînement](qcm_3e_C3.1-C3.4_shenzhen.html)** — 30 questions, chaque distracteur réfuté.
+➡ **[QCM d'entraînement](qcm_3e_C3.1-C3.4_shenzhen.html)** — 30 questions, dont 6 illustrées, chaque distracteur réfuté.
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_3e_C3.1-C3.4.html) ·
 [professeur](Synthèses/synthese_professeur_3e_C3.1-C3.4.html)

@@ -78,3 +78,15 @@ Les quatre flottes sont **simulées** : réalistes, cohérentes, mais aucune n'e
 la séquence dit qu'un **bilan carbone est un ordre de grandeur**, pas une valeur exacte. C'est une
 nuance rare au collège, et elle vaut pour toutes les données environnementales que les élèves
 liront ailleurs.
+
+## Billet de sortie — la preuve faite seul (21/11/2026, règle d'or n°330)
+
+Fin de la dernière séance, environ 5 minutes, chacun pour soi, sans aide ni document de la séquence.
+
+- **L'objet, nouveau pour l'élève** : le ventilateur des salles de classe (deux modèles).
+- **Ce qui est demandé** : « pas trop de bruit » traduit en grandeur, unité et appareil ; le coût de chaque modèle par année de service, et le choix.
+- **Ce qu'on regarde** : une grandeur, une unité, un appareil (rien qui reste un adjectif) ; le prix est rapporté à la durée de service avant de comparer.
+
+Le QCM entraîne ; ce billet montre ce que chaque élève sait faire seul, sur un cas qu'il n'a pas étudié. Il ne
+valide rien dans la page : les deux réponses se relisent, écran ou fiche papier. La version étayée (des phrases à
+compléter) retire l'obstacle de la rédaction, pas l'exigence.

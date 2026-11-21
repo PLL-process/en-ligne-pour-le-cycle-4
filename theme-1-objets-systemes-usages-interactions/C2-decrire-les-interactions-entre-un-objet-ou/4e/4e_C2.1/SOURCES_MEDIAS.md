@@ -72,3 +72,11 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 |---|---|---|---|---|
 | `Images/synthese_borne_velos_hangzhou.png` | Une borne de vélos en libre-service sur un trottoir après la pluie, une rangée de vélos accrochés à côté. PNG 1 536 × 1 024, 2.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a bike-sharing docking station on a wet city sidewalk after rain: a slim kiosk post with a small tilted screen and a card reader in the foreground, a row of identical shared bicycles locked into docks beside it, no people, no readable text, no logos, no brand colours » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » ; et la situation déclenchante de la séquence (05/11/2026) |
 
+## Documents du QCM (21/11/2026, règle d'or n°345)
+
+Des documents à lire pour répondre, dessinés pour le téléphone (350 unités de large, texte de 15 px et plus).
+Pour les redessiner : `python3 _outils/document_qcm.py documents_qcm_4e_C2.1.json`.
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_six_familles_questions.svg` | Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ? | SVG original, dessiné par `_outils/document_qcm.py` à partir de `documents_qcm_4e_C2.1.json` — Claude (Fable 5.2), pour ce dépôt, 21/11/2026. Les nombres sont ceux du fichier de données simulées du lot. | CC0 1.0 | QCM, questions 19, 20, 22 et 23 |

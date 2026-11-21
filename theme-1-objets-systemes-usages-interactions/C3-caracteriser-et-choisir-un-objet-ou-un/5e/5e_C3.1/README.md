@@ -8,7 +8,7 @@ logistique de Shanghai doit remplacer sa camionnette : trois propositions, trois
 affirment chacun avoir la meilleure. L'élève caractérise, situe dans le cycle de vie, mesure au
 protocole, puis choisit — et découvre en dernière activité que changer le besoin change la réponse.
 
-➡ **[QCM d'entraînement](qcm_5e_C3.1-C3.4_shanghai.html)** — 30 questions, 3 illustrées, chaque
+➡ **[QCM d'entraînement](qcm_5e_C3.1-C3.4_shanghai.html)** — 30 questions, 7 illustrées, chaque
 distracteur réfuté.
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_5e_C3.1-C3.4.html) ·

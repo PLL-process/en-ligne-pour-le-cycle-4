@@ -142,6 +142,16 @@ with sync_playwright() as p:
     pg.goto(SEQ)
     pg.wait_for_timeout(500)
     t("séquence : aucune erreur JS", not errs, str(errs))
+    # 21/11/2026 — le billet de sortie (n°330) : deux réponses écrites, chacune sa version étayée, une correction avec
+    # ses deux critères, posé juste avant le Bonus, et aucun bouton : il ne valide rien.
+    bs = pg.evaluate("""() => { const b = document.getElementById('billetSortie'); if (!b) return null;
+      const c = b.querySelector('details.correction');
+      return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length,
+               criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0,
+               avantBonus: !!(b.nextElementSibling && b.nextElementSibling.classList.contains('approfondissement')),
+               boutons: b.querySelectorAll('button').length }; }""")
+    t("billet de sortie : deux réponses écrites, deux versions étayées, deux critères, avant le Bonus, aucun bouton",
+      bool(bs) and bs["zones"] == 2 and bs["etayees"] == 2 and bs["criteres"] == 2 and bs["avantBonus"] and bs["boutons"] == 0, str(bs))
     contenu = pg.content()
     # L'exemption avait été écrite pour « https:// » — et l'espace de noms SVG
     # s'écrit « http:// ». La clause suivante le rattrapait donc, et ce contrôle
@@ -308,7 +318,7 @@ with sync_playwright() as p:
     t("QCM : 30 questions", info["n"] == 30, str(info["n"]))
     t("QCM : bonnes réponses réparties A/B/C/D",
       max(info["rep"]) - min(info["rep"]) <= 1, str(info["rep"]))
-    t("QCM : 5 questions illustrées", info["imgs"] == 5, str(info["imgs"]))
+    t("QCM : 7 questions illustrées", info["imgs"] == 7, str(info["imgs"]))
     t("QCM : chaque distracteur porte une réfutation qui explique",
       info["courtes"] == 0 and info["dvide"], f"{info['courtes']} trop courte(s)")
     t("QCM : explication, exemple, erreur classique et à-retenir partout", info["complets"])

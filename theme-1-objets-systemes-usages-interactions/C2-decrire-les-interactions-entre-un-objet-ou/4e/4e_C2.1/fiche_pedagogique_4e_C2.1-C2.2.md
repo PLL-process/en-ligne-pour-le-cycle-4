@@ -110,3 +110,15 @@ un geste du **DNB**.
 
 Verbatims, chronométrages et réclamation sont **simulés**, construits pour l'exercice. Ils ne
 décrivent aucun service réellement exploité.
+
+## Billet de sortie — la preuve faite seul (21/11/2026, règle d'or n°330)
+
+Fin de la dernière séance, environ 5 minutes, chacun pour soi, sans aide ni document de la séquence.
+
+- **L'objet, nouveau pour l'élève** : la fontaine à eau de la cour.
+- **Ce qui est demandé** : une exigence tirée d'une parole d'usager, avec sa famille ; le test d'un algorigramme et ses deux sorties.
+- **Ce qu'on regarde** : l'exigence dit ce qui est attendu et se vérifie (pas une solution, pas un adjectif), la famille est juste ; le test est une question à deux sorties qui mènent chacune quelque part.
+
+Le QCM entraîne ; ce billet montre ce que chaque élève sait faire seul, sur un cas qu'il n'a pas étudié. Il ne
+valide rien dans la page : les deux réponses se relisent, écran ou fiche papier. La version étayée (des phrases à
+compléter) retire l'obstacle de la rédaction, pas l'exigence.

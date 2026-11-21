@@ -22,6 +22,12 @@ IMG_EXIG = {
            "environnementales, formes et fonctions, ergonomie, qualité, fiabilité — avec la "
            "question que chacune pose et ce qu'elle donne sur la borne de Hangzhou.",
 }
+# 21/11/2026 (n°343, n°345) : les six familles et la question que chacune pose, sans les exemples de la borne —
+# le document à lire pour classer une exigence (`documents_qcm_4e_C2.1.json`, dessiné par `_outils/document_qcm.py`).
+IMG_FAMILLES_Q = {
+    "src": "Images/doc_six_familles_questions.svg",
+    "alt": "Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ?",
+}
 IMG_GRAPH = {
     "src": "Images/corrige_temps_par_etape.svg",
     "alt": "Graphique des durées par étape : pour chaque étape, la durée moyenne et la durée "
@@ -47,7 +53,7 @@ def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
 
 # ═══════════ 4e_C2.1 — décrire l'expérience de l'utilisateur (15) ═══════════
 
-q("C2.1", "Le trajet imposé", "Décrire l'expérience d'un utilisateur, au programme de 4e, c'est aller…",
+q("C2.1", "Le trajet imposé", "Décrire l'expérience d'un utilisateur, c'est aller…",
   ["du langage naturel vers schémas et algorithmes",
    "des schémas techniques vers le langage naturel",
    "des mesures chiffrées vers les opinions",
@@ -277,8 +283,8 @@ q("C2.1", "On n'efface pas les étapes", "Une fois l'algorithme écrit, les verb
 
 # ═══════════ 4e_C2.2 — repérer et expliquer les exigences (15) ═══════════
 
-q("C2.2", "Les six familles", "Les familles d'exigences nommées par le programme sont…",
-  ["sécurité, environnement, formes, ergonomie, qualité",
+q("C2.2", "Les six familles", "Les six familles d'exigences nommées par le programme sont…",
+  ["sécurité, environnement, formes, ergonomie, qualité, fiabilité",
    "prix, solidité, couleur, poids, taille, marque",
    "mécanique, électrique, informatique, chimique",
    "conception, fabrication, vente, recyclage"],
@@ -290,8 +296,7 @@ q("C2.2", "Les six familles", "Les familles d'exigences nommées par le programm
    "Ce sont des caractéristiques d'un produit, pas des familles d'exigences : le prix ou le poids traversent plusieurs familles à la fois, ils n'en constituent aucune.",
    "Ce sont des domaines technologiques, c'est-à-dire des MOYENS ; les familles d'exigences désignent au contraire ce qu'on attend de l'objet.",
    "Ce sont des étapes du cycle de vie : elles disent QUAND les exigences produisent leurs effets, pas sur quoi elles portent."],
-  "Sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité.",
-  img=IMG_EXIG)
+  "Sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité.")
 
 q("C2.2", "Ce qu'est une exigence", "Une exigence bien écrite…",
   ["dit ce qui est attendu, et se vérifie",
@@ -336,7 +341,8 @@ q("C2.2", "La fiabilité se chiffre", "« Le déverrouillage doit réussir au mo
    "L'ergonomie porte sur l'adaptation au corps et aux gestes ; ici ce n'est pas le geste qui est en cause, c'est le fait que la machine réussisse ou non.",
    "Un ancrage bloqué est agaçant plus que dangereux ; la sécurité concerne les situations où quelqu'un peut se blesser.",
    "La qualité porte sur le fait que l'objet fasse ce qu'il annonce et informe correctement ; le taux de réussite a sa propre famille."],
-  "La fiabilité se compte, donc elle se chiffre.")
+  "La fiabilité se compte, donc elle se chiffre.",
+  img=IMG_FAMILLES_Q)
 
 q("C2.2", "La qualité informe", "« Pendant une attente, la borne doit afficher le temps restant » relève de…",
   ["la qualité : l'objet fait ce qu'il annonce",
@@ -351,7 +357,8 @@ q("C2.2", "La qualité informe", "« Pendant une attente, la borne doit afficher
    "Aucune blessure n'est en jeu ici : la sécurité concerne les situations où l'intégrité physique est menacée.",
    "Un affichage supplémentaire consomme même un peu plus d'énergie : cette exigence ne relève pas des incidences environnementales.",
    "C'est au contraire l'exigence qui répond au verbatim le plus précis de l'enquête : Feng dit que l'incertitude le gêne plus que la durée."],
-  "Informer sur ce qu'on fait, c'est une exigence de qualité.")
+  "Informer sur ce qu'on fait, c'est une exigence de qualité.",
+  img=IMG_FAMILLES_Q)
 
 q("C2.2", "L'ergonomie", "« Le retrait doit pouvoir se faire d'une seule main » relève de l'ergonomie et répond à…",
   ["Deng, qui a une main prise par son enfant",
@@ -382,7 +389,7 @@ q("C2.2", "Les incidences environnementales", "« L'écran ne s'allume qu'à l'a
    "Aucun risque physique n'est en jeu ; un écran éteint pourrait même poser une question de lisibilité, mais pas de sécurité.",
    "Le confort de lecture est un effet secondaire agréable, mais ce qui motive ce choix, c'est l'énergie économisée sur des années."],
   "La matière et l'énergie, sur toute la durée de vie.",
-  img=IMG_EXIG)
+  img=IMG_FAMILLES_Q)
 
 q("C2.2", "Formes et fonctions", "« L'écran doit rester lisible sous la pluie et sans se pencher » relève surtout de…",
   ["les formes et fonctions de l'objet",
@@ -397,7 +404,8 @@ q("C2.2", "Formes et fonctions", "« L'écran doit rester lisible sous la pluie 
    "Ni la matière ni l'énergie ne sont en cause : incliner un écran ou l'abriter ne change pas sa consommation.",
    "L'écran fonctionne parfaitement sous la pluie : il est illisible, ce qui est un problème de forme et non de panne.",
    "Un écran illisible est gênant, mais il ne met personne en danger ; la sécurité concerne le risque physique."],
-  "La forme doit servir la fonction, y compris quand il pleut.")
+  "La forme doit servir la fonction, y compris quand il pleut.",
+  img=IMG_FAMILLES_Q)
 
 q("C2.2", "La sécurité", "Sur la borne, une exigence de sécurité serait…",
   ["« l'ancrage doit libérer le vélo sans le faire basculer »",
@@ -429,7 +437,7 @@ q("C2.2", "Deux familles à la fois", "Une exigence peut-elle relever de deux fa
    "Servir deux familles est le signe d'une exigence bien trouvée, pas d'une maladresse d'écriture."],
   "Quand deux familles se recoupent, dis laquelle domine.")
 
-q("C2.2", "Remonter à l'attente", "Ce qui rattache une exigence à un utilisateur, dans notre travail, c'est…",
+q("C2.2", "Remonter à l'attente", "Ce qui rattache une exigence à un utilisateur, c'est…",
   ["le code du verbatim où l'attente est exprimée",
    "l'avis du professeur qui encadre le projet",
    "le nom de la famille d'exigences concernée",
@@ -506,4 +514,4 @@ q("C2.2", "Ce que l'exigence engage", "Écrire « le déverrouillage doit réuss
 
 assert len(Q) == 30, len(Q)
 assert sum(1 for x in Q if x["c"] == "C2.1") == 15, sum(1 for x in Q if x["c"] == "C2.1")
-assert sum(1 for x in Q if "img" in x) == 5
+assert sum(1 for x in Q if "img" in x) == 7

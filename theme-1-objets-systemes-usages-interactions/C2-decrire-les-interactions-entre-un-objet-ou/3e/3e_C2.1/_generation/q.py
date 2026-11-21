@@ -30,6 +30,17 @@ IMG_C3 = {
     "alt": "Le même constat rendu en algorigramme pour le technicien, en graphique du taux "
            "d'abandon par profil pour l'élue, et en storyboard de trois vignettes pour l'usager.",
 }
+IMG_PROFILS = {
+    "src": "Images/doc_abandons_par_profil.svg",
+    "alt": "Tableau de cinq profils d'usagers, avec le nombre d'usagers observés et le nombre d'abandons. "
+           "Habitués : 14 usagers, 0 abandon. Occasionnels : 9 usagers, 1 abandon. Avec poussette : 4 usagers, "
+           "1 abandon. Touristes : 7 usagers, 3 abandons. Personnes âgées : 6 usagers, 3 abandons.",
+}
+IMG_ETAPES = {
+    "src": "Images/doc_abandons_par_etape.svg",
+    "alt": "Cinq barres, une par étape de l'achat, avec le nombre d'abandons. Approcher la borne : 0. "
+           "Choisir la langue : 1. Choisir le titre : 4. Payer : 2. Récupérer le titre : 1.",
+}
 IMG_C3B = {
     "src": "Images/corrige_trois_autres_modes.svg",
     "alt": "Le même constat rendu en parcours utilisateur avec les abandons par étape, en carte "
@@ -71,20 +82,22 @@ q(C, "Un chiffre exact et insuffisant", "« Un usager sur cinq abandonne devant 
    "Quarante observations suffisent largement à faire apparaître un écart de 0 % à 50 % entre profils ; ce n'est pas la taille de l'échantillon qui pose problème."],
   "Un chiffre agrégé peut être exact et inutilisable.")
 
-q(C, "Qui abandonne vraiment", "En détaillant par profil, on trouve chez les habitués un taux d'abandon de…",
-  ["0 % : aucun habitué n'a abandonné",
-   "20 %, comme la moyenne générale relevée",
-   "11 %, comme les usagers occasionnels",
-   "50 %, comme les personnes âgées"],
+# 21/11/2026 (n°343) : la question se lit seule — le relevé par profil est sous la question (`documents_qcm_3e_C2.1.json`).
+q(C, "Qui abandonne vraiment", "Un usager sur cinq abandonne devant la borne. D'après ce relevé par profil, que cache cette moyenne ?",
+  ["aucun habitué n'abandonne, mais une personne âgée sur deux",
+   "chaque profil abandonne environ une fois sur cinq, comme la moyenne",
+   "les habitués abandonnent le plus, car ils sont les plus nombreux",
+   "les touristes n'abandonnent pas, car ils prennent tout leur temps"],
   "C'est le résultat qui renverse la lecture : l'objet est parfaitement utilisable — quand on le "
   "connaît déjà.",
   "Habitués 0 % · occasionnels 11 % · poussette 25 % · touristes 43 % · personnes âgées 50 %.",
   "Croire que les 20 % se répartissent au hasard.",
   ["",
-   "La moyenne générale ne s'applique à aucun profil en particulier : c'est justement ce que le détail révèle.",
-   "Les occasionnels sont à 11 %, soit un abandon sur neuf ; les habitués, eux, n'en comptent aucun.",
-   "Cinquante pour cent est le taux des personnes âgées, à l'autre extrémité de l'échelle."],
-  "Parmi ces 40 usagers, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne.")
+   "Lis profil par profil : 0 sur 14 d'un côté, 3 sur 6 de l'autre. La moyenne ne décrit aucun des deux.",
+   "Ils sont les plus nombreux, oui : 14 usagers. Mais lis leur nombre d'abandons.",
+   "Lis leur ligne : 3 touristes sur 7 ont abandonné."],
+  "Parmi ces 40 usagers, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne.",
+  img=IMG_PROFILS)
 
 q(C, "La moyenne qui ne décrit personne", "La durée moyenne est de 77 s ; l'habitué met 41 s et la personne âgée 123 s. Cela montre que…",
   ["une moyenne peut ne décrire personne",
@@ -116,7 +129,7 @@ q(C, "Ce que répond le service technique", "« Nos bornes fonctionnent, aucune 
    "C'est l'inverse : seule l'observation des usagers a fait apparaître un problème qu'aucun contrôle technique n'aurait détecté."],
   "Fonctionner et rendre service ne sont pas la même chose.")
 
-q(C, "L'étape qui concentre les abandons", "Sur les cinq étapes, celle qui concentre le plus d'abandons est…",
+q(C, "L'étape qui concentre les abandons", "D'après ce relevé, à quelle étape se produit la moitié des abandons ?",
   ["choisir le titre",
    "approcher la borne",
    "récupérer le titre",
@@ -126,12 +139,13 @@ q(C, "L'étape qui concentre les abandons", "Sur les cinq étapes, celle qui con
   "Mme Liu : « trop de boutons, et ils changent de place selon l'écran ».",
   "Chercher la cause à l'étape du paiement, parce qu'elle paraît plus technique.",
   ["",
-   "Aucun abandon n'a lieu à l'approche : à ce moment, l'usager n'a encore rencontré aucune difficulté.",
-   "Un seul abandon s'y produit, et il concerne une personne qui avait les mains prises — c'est un autre problème.",
-   "Un seul abandon a lieu au choix de la langue ; l'étape suivante en concentre quatre fois plus."],
-  "C'est au choix du titre que l'offre devient incompréhensible.")
+   "Aucun abandon n'a lieu à l'approche : lis la première ligne du relevé.",
+   "Un seul abandon s'y produit, sur huit : lis la dernière ligne du relevé.",
+   "Un seul abandon a lieu au choix de la langue ; l'étape suivante en compte quatre fois plus."],
+  "C'est au choix du titre que l'offre devient incompréhensible.",
+  img=IMG_ETAPES)
 
-q(C, "Deux fois le même enseignement", "En 4e à Hangzhou, une moyenne de 29 s cachait un maximum de 83 s. Ici, un taux de 20 % cache des taux de 0 % à 50 %. Ces deux constats…",
+q(C, "Deux fois le même enseignement", "Dans une autre étude, une moyenne de 29 s cachait un maximum de 83 s. Ici, un taux de 20 % cache des taux de 0 % à 50 %. Ces deux constats…",
   ["disent la même chose : un résumé chiffré efface ce qui n'est pas moyen",
    "n'ont aucun rapport : l'un porte sur des durées, l'autre sur des taux",
    "se contredisent",
@@ -500,7 +514,7 @@ q(C, "La fin en échec", "Quand le papier manque, la borne doit…",
   "Une borne qui se sait hors service doit le dire et prévenir.")
 
 q(C, "Une pièce refusée", "Le monnayeur refuse les pièces usées. Ce que vit l'usager, c'est…",
-  ["la croyance que sa pièce a été refusée",
+  ["l'idée d'un refus par erreur : il recommence",
    "un abandon immédiat de l'usager",
    "une panne complète et définitive de la borne",
    "rien de particulier : il change de pièce"],
@@ -515,4 +529,4 @@ q(C, "Une pièce refusée", "Le monnayeur refuse les pièces usées. Ce que vit 
   "Entre la cause et le vécu, il y a l'interprétation de l'usager.")
 
 assert len(Q) == 30, len(Q)
-assert sum(1 for x in Q if "img" in x) == 5
+assert sum(1 for x in Q if "img" in x) == 7

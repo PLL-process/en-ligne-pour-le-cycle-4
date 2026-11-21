@@ -74,3 +74,12 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 |---|---|---|---|---|
 | `Images/synthese_borne_tickets_pekin.png` | Une borne de vente de tickets dans une station de métro : écran tactile, fentes, bac de sortie. PNG 1 536 × 1 024, 2.1 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a self-service metro ticket vending machine in a modern subway station: large touchscreen, coin and banknote slots, ticket tray, clean tiled wall, soft station lighting, no people, no readable text on the screen, no logos, the machine seen from a slight angle and filling the centre of the frame » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » ; et la situation déclenchante de la séquence (05/11/2026) |
 
+## Documents du QCM (21/11/2026, règle d'or n°345)
+
+Des documents à lire pour répondre, dessinés pour le téléphone (350 unités de large, texte de 15 px et plus).
+Pour les redessiner : `python3 _outils/document_qcm.py documents_qcm_3e_C2.1.json`.
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_abandons_par_profil.svg` | Tableau de cinq profils d'usagers, avec le nombre d'usagers observés et le nombre d'abandons. Habitués : 14 usagers, 0 abandon. Occasionnels : 9 usagers, 1 abandon. Avec poussette : 4 usagers, 1 abandon. Touristes : 7 usagers, 3 abandons. Personnes âgées : 6 usagers, 3 abandons. | SVG original, dessiné par `_outils/document_qcm.py` à partir de `documents_qcm_3e_C2.1.json` — Claude (Fable 5.2), pour ce dépôt, 21/11/2026. Les nombres sont ceux du fichier de données simulées du lot. | CC0 1.0 | QCM, question 2 |
+| `Images/doc_abandons_par_etape.svg` | Cinq barres, une par étape de l'achat, avec le nombre d'abandons. Approcher la borne : 0. Choisir la langue : 1. Choisir le titre : 4. Payer : 2. Récupérer le titre : 1. | SVG original, dessiné par `_outils/document_qcm.py` à partir de `documents_qcm_3e_C2.1.json` — Claude (Fable 5.2), pour ce dépôt, 21/11/2026. Les nombres sont ceux du fichier de données simulées du lot. | CC0 1.0 | QCM, question 5 |

@@ -29,6 +29,8 @@ python3 _outils/controle_schema_sous_les_yeux.py <page>      # n°331
 node _outils/mode_mission/banc_generique.mjs <page>          # le mode mission joué écran par écran
 node _outils/mode_mission/banc_editeur.mjs <page>            # l'éditeur Python se voit là où on l'annonce
 node _outils/mesurer_charge.mjs <page>                       # mots visibles par séance (repère : 1 200)
+python3 _outils/controle_question_seule.py --chantiers <lot> # n°343 à n°345 : la question se lit seule ; n°330 : le billet de sortie
+node _outils/balayer_questions_qcm.mjs --apres <lot>         # chaque question du QCM jouée à 390 px, avant et après une réponse fausse
 ```
 
 Un outil qui ne lit rien (« 0 page lue ») est en panne, pas vert (n°299).
@@ -57,6 +59,7 @@ L'élève arrive en mode mission (depuis le 14/11). On joue la séquence comme l
 | Preuve de compétence (n°330) | Une production autonome sur une situation NOUVELLE, seul et sans aide : un billet de sortie (5 min, un objet jamais vu, version étayée pour l'écrit, correction avec critères). Le QCM entraîne ; il ne prouve pas seul (n°202) |
 | Apprentissage / bilan | Les documents et les aides servent pendant l'apprentissage ; le billet de sortie s'en passe |
 | Le premier texte lu (n°51) | Le titre affiché (h1) et le sous-titre de chaque page sont ceux du lot |
+| Le QCM, question par question (n°343, n°344, n°345) | Chaque question se lit seule, chaque liste annoncée est entière, six questions au moins se lisent sur document ; un nombre qui cloche se vérifie dans le fichier de données du lot, puis dans la séquence — skill `question-qui-se-lit-seule` |
 
 ## 3. Classer, puis corriger
 

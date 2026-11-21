@@ -7,6 +7,7 @@ description: Créer ou compléter un QCM HTML autonome pour le dépôt cycle 4 (
 
 Mis à jour le 23/10/2026 (inventaire des skills) : aligné sur le journal jusqu'à la règle d'or n°311.
 Complété le 15/11/2026 (veille) : deux portes de vérification, place par longueur.
+Complété le 21/11/2026 (audit du thème 1) : la porte C, « la question se lit seule » (n°343 à n°345).
 
 ## Deux usages, deux régimes
 
@@ -76,6 +77,11 @@ par question —, jamais de mémoire de ce qu'on croit avoir écrit.
   mesure rien ; un distracteur absurde désigne la bonne réponse. La réfutation `d` nomme cette erreur, puis l'étape
   suivante, à l'impératif (« Relis la ligne du capteur »), comme le pourquoi du mode mission
   (`_outils/mode_mission/enrichir.py --etapes`).
+- **Porte C — la question se lit seule (n°343, clé de voûte, 21/11/2026).** L'élève qui révise trois semaines plus
+  tard, sans la séquence, peut répondre en raisonnant : chaque objet est nommé (pas « S1 » seul), chaque nombre dont
+  dépend la réponse est dans l'énoncé ou dans un document affiché sous la question, aucun renvoi à « la séquence »,
+  « le tableau », une autre année. Une liste annoncée est citée en entier (n°344). Au moins six questions se lisent
+  sur un document dessiné pour le téléphone (n°345). Skill `question-qui-se-lit-seule` : les sept lectures.
 - L'énoncé tient en une phrase courte : 15 mots environ en 5e et en 4e, 20 au plus. `audit_aeration.py --phrases`
   mesure les phrases des pages.
 - Une question sur schéma : le SVG porte `role="img"`, un `<title>` et un `<desc>` qui disent ce qu'il montre.
@@ -176,6 +182,13 @@ Répartition des bonnes réponses (n°137) :
 - `node _outils/mesures_qcm.mjs` — position des bonnes réponses (n°137).
 - `node _outils/controle_indices_qcm.mjs --muet` — mots absolus, écho de l'énoncé, propositions fourre-tout
   (11/11/2026). Sortie 1 si une banque livre sa bonne réponse par ses mots ; 2 si aucune banque n'est lue.
+- `python3 _outils/controle_question_seule.py --chantiers` — codes sans nom, renvois sans document, autre année,
+  notion qui souffle, listes tronquées (refus avec `--strict`) ; questions sur document et billets de sortie qui
+  manquent (chantiers). Ce qu'il ne lit pas se lit question par question (n°343, n°344, n°345 ; 21/11/2026).
+- `node _outils/balayer_questions_qcm.mjs [--apres] <lot>` — au navigateur, à 390 px, chaque question jouée une à une :
+  rien ne dépasse de l'écran (un chemin de fichier sans espace poussait la page de `5e_C1.3`, 21/11/2026), chaque
+  figure est décodée et décrite ; `--apres` joue aussi une réponse fausse et mesure les trois écrans de l'aide.
+  Sortie 1 si une question est en écart ; 2 si aucun QCM n'est lu.
 - `python3 _outils/controle_sigles.py` — sigles en capitales dans les questions et les options, FAST et non « fast »
   (n°313) ; seul le mot cité entre guillemets (« fast », le mot anglais) garde ses minuscules.
 - `node _outils/verif_qcm_coherence.mjs <fichiers…>` — après rotation : réfutation vide pour la

@@ -111,3 +111,24 @@ Le test lit maintenant `textContent`, et un commentaire dans le fichier dit pour
 - Le comportement des **infobulles sur tablette** : c'est précisément parce qu'on ne peut pas s'y
   fier que la règle n°44 impose une mention en clair — mais la mention, elle, a été vérifiée.
 - La séquence sur mobile réel : seule la fenêtre 1280×900 a été utilisée.
+
+## Ajout du 21/11/2026 — audit du thème 1 : le QCM se lit seul, la séquence se ferme par un billet de sortie
+
+Règles d'or n°343 (une question se lit seule), n°344 (ce qui est annoncé est cité en entier), n°345 (un QCM fait
+lire des documents) et n°330 (la preuve faite seul).
+
+- **QCM.** 7 questions retouchées : « au programme de 4e » et « dans notre travail » retirés des énoncés (n°343) ; « Les six familles » citées toutes les six, sans la figure qui les donnait (n°344) ; quatre questions de classement (« … relève de… ») se lisent avec les six familles et leurs questions sous les yeux, sans les exemples de la borne. 5 → 7 questions sur document.
+- **Billet de sortie** (fin de la dernière séance, ~5 min, avant le Bonus) : la fontaine à eau de la cour. Deux réponses écrites, chacune
+  avec sa version étayée ; une correction complète avec ses critères. Il ne valide rien.
+
+Exécuté le 21/11/2026 :
+- `python3 tests_4e_C2.1-C2.2_hangzhou.py` : **66 / 66** — dont le test du billet (deux zones sauvegardées, deux versions étayées,
+  deux critères, avant le Bonus, aucun bouton) et le nouveau compte des questions sur document ;
+- `node _outils/mode_mission/banc_generique.mjs` : la séquence jouée écran par écran à 390 px, aucun refus, le billet
+  est un écran de la dernière séance ;
+- `python3 _outils/controle_question_seule.py` : aucun refus sur le QCM (S1 à S4, E1) ;
+- `python3 _outils/document_qcm.py documents_qcm_4e_C2.1.json --verifier` : les documents sont ceux des données ;
+- les questions sur document regardées à 390 px dans le QCM (aucun débordement, l'image se charge).
+
+Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
+revient au professeur.

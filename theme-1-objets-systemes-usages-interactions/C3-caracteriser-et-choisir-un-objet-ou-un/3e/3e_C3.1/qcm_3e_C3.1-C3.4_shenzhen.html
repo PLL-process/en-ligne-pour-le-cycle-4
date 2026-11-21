@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 </head>
 <body>
@@ -160,7 +162,7 @@
 <div class="badges">
   <span class="badge niveau">3e</span>
   <span title="Programme 2024 — 3e_C3.1 : Établir une liste d’objets ou de systèmes techniques possibles en vue de répondre à un besoin." class="badge code">3e_C3.1</span><span title="Programme 2024 — 3e_C3.2 : Choisir un objet ou système technique et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable." class="badge code">3e_C3.2</span><span title="Programme 2024 — 3e_C3.3 : Évaluer les objets ou systèmes techniques selon des exigences ou des critères identifiés (caractéristiques, performances, coût, indice de réparabilité)." class="badge code">3e_C3.3</span><span title="Programme 2024 — 3e_C3.4 : Définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d’un objet ou système technique." class="badge code">3e_C3.4</span>
-  <span class="badge theme">30 questions · 1 illustrée · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 6 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center"><a href="sequence_3e_C3.1-C3.4_shenzhen.html">⬅ Revenir à la séquence</a></p>
 
@@ -376,19 +378,21 @@ const QUESTIONS = [
  err:"Voir la réparabilité comme un argument secondaire.",
  d:["Il peut même l'augmenter légèrement.","Il ne change rien à ce que l'appareil fait le premier jour.","","Le bruit dépend du ventilateur et du compresseur, pas de la facilité à réparer."],
  ret:"La réparabilité prolonge la vie, donc réduit le coût réel."},
-{c:"C3.3",n:"Coût d'installation ou coût réel",q:"Pour comparer honnêtement deux solutions, il faut regarder…",
- o:["le prix du matériel seul, à l'achat","le coût de l'installation, seul","le coût annuel de fonctionnement, seul","le coût sur toute la durée d'usage"],r:3,
- expl:"Une solution deux fois moins chère à l'installation peut coûter trois fois plus sur dix ans.",
+{c:"C3.3",n:"Coût d'installation ou coût réel",q:"Sur dix ans d'usage, laquelle de ces deux solutions revient le moins cher ?",
+ img:{src:"Images/doc_cout_deux_solutions.svg",alt:"Deux fiches. Climatiseur : installation 2 400 euros, fonctionnement 340 euros par an, durée de vie 10 ans. Refroidissement par eau : installation 3 100 euros, fonctionnement 210 euros par an, durée de vie 15 ans."},
+ o:["le climatiseur, qui reste le moins cher à installer","le climatiseur : 2 400 euros contre 3 100 pour l'eau","aucune des deux : elles reviennent au même prix","le refroidissement par eau : 5 200 euros contre 5 800"],r:3,
+ expl:"Climatiseur : 2 400 + 10 × 340 = 5 800 euros. Refroidissement par eau : 3 100 + 10 × 210 = 5 200 euros. La solution la moins chère à installer devient la plus chère à l'usage : on compare sur toute la durée d'usage.",
  ex:"2400 € d'installation plus 340 €/an font 5800 € sur dix ans.",
  err:"Comparer des devis d'installation en croyant comparer des coûts.",
- d:["Il ignore la pose et le fonctionnement.","Il ignore ce que la solution coûtera chaque année.","Il ignore l'investissement de départ.",""],
+ d:["Moins cher à installer, oui. Ajoute dix années de fonctionnement à chaque fiche.","Ce sont les prix d'installation. Sur dix ans, il faut ajouter dix fois le coût annuel.","Fais les deux totaux : installation + 10 × coût annuel. Ils ne sont pas égaux.",""],
  ret:"Le coût se compte sur la durée d'usage."},
-{c:"C3.3",n:"Une case vide",q:"Dans un tableau, une case vide peut signifier…",
- o:["que la solution est mauvaise sur ce critère","toujours une donnée manquante","que la question n'a pas d'objet pour cette solution","qu'il faut mettre zéro"],r:2,
+{c:"C3.3",n:"Une case vide",q:"Pour « réduire le nombre de machines », deux cases sont vides. Pourquoi ?",
+ img:{src:"Images/doc_cases_vides.svg",alt:"Deux fiches. Climatiseur : installation 2 400 euros, baisse de température 9 degrés, durée de vie 10 ans, réparabilité 5 sur 10. Réduire le nombre de machines : installation 0 euro, baisse de température 5 degrés, durée de vie : case vide, réparabilité : case vide."},
+ o:["elle est mauvaise sur ces deux critères","ces données ont été oubliées au relevé","ces critères n'ont pas d'objet ici","il faut lire zéro dans ces deux cases"],r:2,
  expl:"Une solution qui n'installe aucun matériel n'a ni durée de vie ni indice de réparabilité : ces colonnes n'ont pas d'objet.",
  ex:"« Réduire le nombre de machines » n'a pas d'indice de réparabilité — et ce n'est pas un oubli.",
  err:"Remplacer une case sans objet par un zéro dans une formule.",
- d:["Une absence n'est pas une mauvaise note.","Parfois, mais pas toujours — et la différence compte.","","Mettre zéro fausserait tout calcul."],
+ d:["Une absence n'est pas une mauvaise note. Demande-toi ce que cette solution installe.","Regarde ce que la solution installe : aucun matériel. Y a-t-il quelque chose à réparer ?","","Zéro an de durée de vie voudrait dire « hors d'usage tout de suite », et fausserait tout calcul."],
  ret:"Une case vide n'est pas toujours une donnée manquante."},
 {c:"C3.3",n:"Pondérer",q:"Pondérer des critères, c'est…",
  o:["décider lesquels comptent le plus, et l'assumer","faire la moyenne de tous les critères","supprimer les critères gênants","classer les critères par ordre alphabétique"],r:0,
@@ -404,12 +408,13 @@ const QUESTIONS = [
  err:"Croire qu'un classement chiffré est neutre.",
  d:["Les données sont les mêmes, les poids ne le sont pas.","","Ce n'est pas la première hypothèse à retenir.","La différence est justement le sujet de la discussion."],
  ret:"Deux pondérations honnêtes peuvent donner deux résultats."},
-{c:"C3.3",n:"Une performance se paie",q:"La solution la plus performante du tableau est aussi…",
- o:["la plus durable dans le temps","la moins chère à l'achat","la plus gourmande et la moins réparable","la plus silencieuse en fonctionnement"],r:2,
+{c:"C3.3",n:"Une performance se paie",q:"D'après ce document, la solution qui fait le plus baisser la température est aussi…",
+ img:{src:"Images/doc_trois_solutions_actives.svg",alt:"Trois fiches. Extracteur d'air : baisse de température 4 degrés, consommation 310 kilowattheures par an, durée de vie 12 ans, réparabilité 8 sur 10. Climatiseur : baisse 9 degrés, consommation 1 850 kilowattheures par an, durée de vie 10 ans, réparabilité 5 sur 10. Refroidissement par eau : baisse 7 degrés, consommation 540 kilowattheures par an, durée de vie 15 ans, réparabilité 6 sur 10."},
+ o:["celle qui dure le plus longtemps","celle qui consomme le moins d'énergie","la plus gourmande et la moins réparable","celle qui se répare le mieux des trois"],r:2,
  expl:"Une performance élevée se paie quelque part : le tableau sert à savoir où, pas à l'ignorer.",
- ex:"9 °C gagnés, mais 1850 kWh/an et 5/10 de réparabilité.",
+ ex:"9 °C gagnés, mais 1 850 kWh (kilowattheures) par an et 5 sur 10 de réparabilité.",
  err:"Retenir la meilleure performance sans regarder son coût sur les autres colonnes.",
- d:["Elle a la durée de vie la plus courte du tableau.","Elle est la plus chère à l'installation et à l'usage.","","Une autre solution l'est davantage."],
+ d:["Relis sa durée de vie : 10 ans, la plus courte des trois fiches.","C'est l'inverse : relis sa consommation, bien au-dessus des deux autres.","","Sa note est de 5 sur 10 : la plus basse des trois fiches."],
  ret:"Une performance se paie toujours quelque part."},
 {c:"C3.3",n:"Trop de critères",q:"Une grille à quinze critères…",
  o:["se défend mal : quatre bien choisis suffisent","est nettement plus rigoureuse","est obligatoire au niveau 3e","donne toujours exactement le même résultat"],r:0,
@@ -440,12 +445,13 @@ const QUESTIONS = [
  err:"Prendre une mesure locale pour la température du local.",
  d:["","Le centre ne représente ni le plafond ni les machines.","Répéter au même endroit ne renseigne pas les autres.","L'air d'un local n'est pas homogène."],
  ret:"Plusieurs points, parce que l'air se stratifie."},
-{c:"C3.4",n:"Le bon moment",q:"Pour dimensionner une solution, le relevé qui compte est celui…",
- o:["d'un jour de pluie","de la moyenne de la journée","du matin, quand le local est frais","du moment le plus défavorable"],r:3,
+{c:"C3.4",n:"Le bon moment",q:"Pour dimensionner la solution, quelle valeur de ce relevé faut-il retenir ?",
+ img:{src:"Images/doc_releves_journee_juin.svg",alt:"Cinq relevés de la température du local, un jour de juin. À 8 heures : 29 degrés. À 11 heures : 33 degrés. À 14 heures : 38 degrés. À 17 heures : 41 degrés. À 20 heures : 35 degrés. Moyenne des cinq relevés : environ 35 degrés."},
+ o:["29 °C, le relevé du matin","35 °C, la moyenne de la journée","38 °C, le relevé du milieu de journée","41 °C, le relevé de 17 h"],r:3,
  expl:"On dimensionne sur le pic, pas sur la moyenne : c'est au pic que les machines s'arrêtent.",
  ex:"41 °C en fin d'après-midi de juin : voilà le chiffre qui décide.",
  err:"Se rassurer avec une moyenne.",
- d:["Un jour de pluie est un jour frais : il ne dit rien du local au plus chaud de l'été, celui qu'il faut prévoir.","Une solution dimensionnée sur la moyenne échouera au pic.","C'est le moment le moins informatif.",""],
+ d:["Le matin, le local est frais : c'est le moment le moins informatif.","Une solution dimensionnée sur la moyenne échouera au moment le plus chaud.","À 14 h, le local n'a pas fini de chauffer : cherche la barre la plus longue.",""],
  ret:"On dimensionne sur le cas le plus défavorable."},
 {c:"C3.4",n:"Les conditions constantes",q:"Pour que des relevés soient comparables, il faut maintenir constant(e)s…",
  o:["rien de particulier à noter dans le protocole","l'heure de la mesure, et rien d'autre","l'appareil utilisé, et rien d'autre","la position, la porte, les machines"],r:3,
@@ -476,12 +482,12 @@ const QUESTIONS = [
  err:"Réduire le développement durable à l'écologie.",
  d:["Ce sont des milieux, pas les piliers.","","Ce sont trois gestes, utiles mais différents.","Ce sont trois entrées de l'analyse technique."],
  ret:"Environnement, économie, social : les trois ensemble."},
-{c:"C3.2",n:"Le pilier social",q:"Dans ce projet, le pilier social apparaît sous la forme…",
- o:["du prix payé par le collège à l'achat","du service rendu et de ce qu'on demande","des émissions de CO₂ évitées chaque année","de la durée de vie du matériel installé"],r:1,
+{c:"C3.2",n:"Le pilier social",q:"« Renoncer à deux serveurs » enlève un service à des usagers du collège. Cette conséquence relève du pilier…",
+ o:["économique","social","environnemental","technique"],r:1,
  expl:"Le social est le pilier le plus souvent oublié parce qu'il ne se met pas facilement en colonne.",
  ex:"Deux serveurs en moins, c'est un service en moins pour des usagers réels.",
  err:"Ne retenir que ce qui se chiffre.",
- d:["C'est le pilier économique.","","C'est le pilier environnemental.","Elle relève de l'économique et de l'environnemental."],
+ d:["L'économique compte l'argent : la facture qui baisse. Ici, on parle de personnes qui perdent un service.","","L'environnemental compte l'énergie et le CO₂. Ici, on parle de personnes qui perdent un service.","La technique n'est pas l'un des trois piliers du développement durable."],
  ret:"Le social, c'est ce que le choix change pour les gens."},
 {c:"C3.2",n:"Composer",q:"Face à une exigence qu'aucune solution seule n'atteint…",
  o:["on abaisse l'exigence de départ","on retient la moins mauvaise des solutions","on abandonne purement et simplement le projet","on combine plusieurs solutions"],r:3,
@@ -490,12 +496,13 @@ const QUESTIONS = [
  err:"Chercher LA solution quand une combinaison ferait mieux.",
  d:["L'exigence vient de la mesure : la baisser ne change pas la réalité.","Ce serait accepter de ne pas répondre au besoin.","Rien ne l'impose : plusieurs combinaisons dépassent l'exigence.",""],
  ret:"Parfois on ne choisit pas : on compose."},
-{c:"C3.2",n:"Additionner les effets",q:"Additionner les baisses de température de trois solutions donne…",
- o:["un résultat systématiquement surestimé","le résultat exact, au gramme près","un ordre de grandeur, pas un résultat","un calcul interdit à ce niveau"],r:2,
+{c:"C3.2",n:"Additionner les effets",q:"Ces trois solutions réunies : 2,5 + 4 + 5 = 11,5 °C. Peut-on promettre que le local perdra 11,5 °C ?",
+ img:{src:"Images/doc_trois_baisses.svg",alt:"Quatre fiches. À combler : gagner 9 degrés au moment le plus chaud. Ventilation naturelle, seule : baisse mesurée de 2,5 degrés. Extracteur d'air, seul : baisse mesurée de 4 degrés. Réduire le nombre de machines, seule : baisse mesurée de 5 degrés."},
+ o:["oui : 11,5 dépasse les 9 °C à combler","oui : chaque baisse a été mesurée à part","non : c'est un ordre de grandeur, à vérifier","non : additionner des baisses est interdit"],r:2,
  expl:"Les effets se recouvrent partiellement : la somme dit quoi essayer, pas ce qu'on obtiendra. Avant de promettre une baisse, on vérifie la combinaison en place.",
  ex:"C'est la même prudence que pour un bilan carbone : un ordre de grandeur.",
  err:"Annoncer une valeur exacte issue d'une simple addition.",
- d:["Il peut aussi être sous-estimé selon les cas.","Les effets n'agissent pas indépendamment les uns des autres.","","Il est utile, à condition d'annoncer sa nature."],
+ d:["Le total dépasse 9 °C sur le papier. Mais les effets se recouvrent : rien ne dit qu'ils s'ajoutent en entier.","Mesurées à part, justement : rien ne dit ce qu'elles donnent ensemble, dans le même local.","","Le calcul est utile : il dit quoi essayer. Il faut seulement dire ce qu'il vaut."],
  ret:"Un ordre de grandeur : de quoi choisir quoi essayer, pas de quoi promettre — la combinaison se vérifie en place."},
 {c:"C3.2",n:"Le cycle de vie",q:"Argumenter un choix « en tenant compte du cycle de vie » signifie…",
  o:["regarder la durée de vie annoncée","regarder de l'extraction à la fin de vie","regarder la garantie offerte par le fabricant","regarder l'année de fabrication du matériel"],r:1,

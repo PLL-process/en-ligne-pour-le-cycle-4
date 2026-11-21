@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 </head>
 <body>
@@ -162,7 +164,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span title="Programme 2024 — 4e_C2.1 : Décrire l’expérience de l’utilisateur (ressenti et facilité d’usage) d’un objet ou système technique en partant du langage naturel (texte, croquis) pour aboutir aux schémas, graphiques, algorithmes." class="badge code">4e_C2.1</span><span title="Programme 2024 — 4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." class="badge code">4e_C2.2</span>
-  <span class="badge theme">30 questions · 5 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 7 illustrées · chaque distracteur réfuté</span>
 </div>
 <p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
 <p style="text-align:center"><a href="sequence_4e_C2_hangzhou_borne.html">⬅ Revenir à la séquence</a></p>
@@ -302,10 +304,10 @@
 
 <script>
 "use strict";
-/* Banque de questions — Hangzhou 4e : 30 questions (4e_C2.1 : 15 · 4e_C2.2 : 15), dont 5 illustrées */
+/* Banque de questions — Hangzhou 4e : 30 questions (4e_C2.1 : 15 · 4e_C2.2 : 15), dont 7 illustrées */
 const QUESTIONS = [
 /* ═══ C2.1 ═══ */
-{c:"C2.1",n:"Le trajet imposé",q:"Décrire l'expérience d'un utilisateur, au programme de 4e, c'est aller…",
+{c:"C2.1",n:"Le trajet imposé",q:"Décrire l'expérience d'un utilisateur, c'est aller…",
  img:{src:"Images/du_verbatim_a_l_algorigramme.svg",alt:"Quatre représentations d'une même expérience, reliées par des flèches : le langage naturel, le schéma du parcours en étapes, le graphique des durées et l'algorithme. Chacune est présentée avec ce qu'elle apporte et ce qu'elle ne sait pas dire."},
  o:["du langage naturel vers schémas et algorithmes","des schémas techniques vers le langage naturel","des mesures chiffrées vers les opinions","du dessin à main levée vers la photographie"],r:0,
  expl:"Le programme fixe un sens de marche : on part de ce que les gens disent, et on aboutit à des représentations qui se comparent, se mesurent et s'exécutent.",
@@ -414,9 +416,8 @@ const QUESTIONS = [
  d:["L'algorithme ne contient ni les durées, ni les mots, ni les ressentis : il décrit un enchaînement de décisions, et rien de plus.","","Refaire les verbatims à partir de l'algorithme serait inventer des témoignages : le sens de marche ne s'inverse pas.","Les verbatims servent jusqu'à la dernière séance : ce sont eux qui rattachent chaque exigence à une attente d'utilisateur."],
  ret:"Chaque représentation garde ce que les autres ne savent pas dire."},
 /* ═══ C2.2 ═══ */
-{c:"C2.2",n:"Les six familles",q:"Les familles d'exigences nommées par le programme sont…",
- img:{src:"Images/six_familles_d_exigences.svg",alt:"Tableau des six familles d'exigences du programme — sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité — avec la question que chacune pose et ce qu'elle donne sur la borne de Hangzhou."},
- o:["conception, fabrication, vente, recyclage","prix, solidité, couleur, poids, taille, marque","mécanique, électrique, informatique, chimique","sécurité, environnement, formes, ergonomie, qualité"],r:3,
+{c:"C2.2",n:"Les six familles",q:"Les six familles d'exigences nommées par le programme sont…",
+ o:["conception, fabrication, vente, recyclage","prix, solidité, couleur, poids, taille, marque","mécanique, électrique, informatique, chimique","sécurité, environnement, formes, ergonomie, qualité, fiabilité"],r:3,
  expl:"Six familles, six questions différentes à poser au même objet. Les connaître, c'est disposer d'une grille qui empêche d'oublier une dimension.",
  ex:"Un même écran relève des formes et fonctions (lisible) et des incidences (consommation).",
  err:"N'examiner qu'une ou deux familles, et croire l'objet couvert.",
@@ -437,6 +438,7 @@ const QUESTIONS = [
  d:["Le classement en famille ne change rien : quelle que soit la famille, une phrase qui nomme un composant à installer reste une solution.","Le coût n'est pas le critère : une solution gratuite resterait une solution, et le problème est qu'elle ferme le champ des possibles.","Le lecteur est bien concerné par l'étape « identifier » ; ce n'est pas la pertinence technique qui est en cause, c'est la nature de la phrase.",""],
  ret:"Une exigence dit le besoin ; la solution dira comment."},
 {c:"C2.2",n:"La fiabilité se chiffre",q:"« Le déverrouillage doit réussir au moins 98 fois sur 100 » relève de…",
+ img:{src:"Images/doc_six_familles_questions.svg",alt:"Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ?"},
  o:["la sécurité, car un blocage est dangereux","l'ergonomie, car c'est un geste de l'usager","la fiabilité, et cela se vérifie par comptage","la qualité, car il s'agit de bien faire"],r:2,
  expl:"La fiabilité répond à une question précise : combien de fois sur cent l'objet échoue-t-il ? Elle s'écrit donc toujours avec un nombre.",
  ex:"Aujourd'hui : 21 réussites sur 30, soit 70 %. L'écart avec 98 % chiffre le travail à faire.",
@@ -444,6 +446,7 @@ const QUESTIONS = [
  d:["Un ancrage bloqué est agaçant plus que dangereux ; la sécurité concerne les situations où quelqu'un peut se blesser.","L'ergonomie porte sur l'adaptation au corps et aux gestes ; ici ce n'est pas le geste qui est en cause, c'est le fait que la machine réussisse ou non.","","La qualité porte sur le fait que l'objet fasse ce qu'il annonce et informe correctement ; le taux de réussite a sa propre famille."],
  ret:"La fiabilité se compte, donc elle se chiffre."},
 {c:"C2.2",n:"La qualité informe",q:"« Pendant une attente, la borne doit afficher le temps restant » relève de…",
+ img:{src:"Images/doc_six_familles_questions.svg",alt:"Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ?"},
  o:["les incidences environnementales de la borne","la sécurité des usagers pendant le retrait","la qualité : l'objet fait ce qu'il annonce","rien du tout : c'est un détail d'affichage"],r:2,
  expl:"Informer fait partie du service rendu. Une machine qui travaille sans le dire laisse l'usager dans l'incertitude, et c'est cette incertitude qui se raconte.",
  ex:"C'est l'exigence qui répond exactement à Feng (V12).",
@@ -458,7 +461,7 @@ const QUESTIONS = [
  d:["","Ma se plaint du temps, pas du geste : son verbatim porte sur l'étape « choisir », qu'il trouve d'ailleurs pratique.","Guo bute sur la signalétique, ce qui relève de la lisibilité et non du nombre de mains nécessaires.","Cette exigence vient au contraire directement d'un verbatim, et c'est ce qui lui donne sa légitimité."],
  ret:"L'ergonomie part d'un corps réel, pas d'un usager idéal."},
 {c:"C2.2",n:"Les incidences environnementales",q:"« L'écran ne s'allume qu'à l'approche d'un usager » relève de…",
- img:{src:"Images/six_familles_d_exigences.svg",alt:"Tableau des six familles d'exigences du programme — sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité — avec la question que chacune pose et ce qu'elle donne sur la borne de Hangzhou."},
+ img:{src:"Images/doc_six_familles_questions.svg",alt:"Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ?"},
  o:["la fiabilité du système sur la durée","les incidences environnementales","la sécurité des usagers de la borne","l'ergonomie du poste de retrait"],r:1,
  expl:"Cette famille regarde ce que l'objet coûte en matière et en énergie, sur toute sa durée de vie — pas seulement au moment de sa fabrication.",
  ex:"Un écran allumé nuit et jour pendant dix ans, contre un écran qui se réveille au besoin.",
@@ -466,6 +469,7 @@ const QUESTIONS = [
  d:["La fiabilité porte sur le taux d'échec ; un écran en veille n'échoue pas davantage, il consomme seulement moins.","","Aucun risque physique n'est en jeu ; un écran éteint pourrait même poser une question de lisibilité, mais pas de sécurité.","Le confort de lecture est un effet secondaire agréable, mais ce qui motive ce choix, c'est l'énergie économisée sur des années."],
  ret:"La matière et l'énergie, sur toute la durée de vie."},
 {c:"C2.2",n:"Formes et fonctions",q:"« L'écran doit rester lisible sous la pluie et sans se pencher » relève surtout de…",
+ img:{src:"Images/doc_six_familles_questions.svg",alt:"Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ?"},
  o:["les incidences environnementales","les formes et fonctions de l'objet","la fiabilité du mécanisme d'ancrage","la sécurité de l'usager au retrait"],r:1,
  expl:"Cette famille demande si la forme donnée à l'objet sert réellement sa fonction — ici, un écran sert à être lu, y compris quand il pleut.",
  ex:"Un écran plat et bas remplit sa fonction par beau temps seulement.",
@@ -486,7 +490,7 @@ const QUESTIONS = [
  err:"Chercher à tout prix une case unique.",
  d:["Le recoupement peut concerner n'importe quelle paire : ergonomie et formes, qualité et fiabilité, sécurité et ergonomie.","Rien n'impose qu'une exigence ne produise qu'un effet : une même contrainte peut servir plusieurs attentes en même temps.","","Servir deux familles est le signe d'une exigence bien trouvée, pas d'une maladresse d'écriture."],
  ret:"Quand deux familles se recoupent, dis laquelle domine."},
-{c:"C2.2",n:"Remonter à l'attente",q:"Ce qui rattache une exigence à un utilisateur, dans notre travail, c'est…",
+{c:"C2.2",n:"Remonter à l'attente",q:"Ce qui rattache une exigence à un utilisateur, c'est…",
  o:["l'avis du professeur qui encadre le projet","le code du verbatim où l'attente est exprimée","le nom de la famille d'exigences concernée","le chiffre que contient l'exigence rédigée"],r:1,
  expl:"Une exigence sans attente nommée flotte : personne ne peut dire pourquoi elle existe, ni la défendre quand elle coûte cher.",
  ex:"« ...répond à Deng (V11), qui tient son enfant. »",
