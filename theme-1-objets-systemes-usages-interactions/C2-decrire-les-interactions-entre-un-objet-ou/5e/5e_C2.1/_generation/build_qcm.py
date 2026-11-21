@@ -99,7 +99,10 @@ def construire(gabarit: str, sortie: str) -> None:
         ('<span class="badge code">3e_C3.1</span><span class="badge code">3e_C3.2</span>'
          '<span class="badge code">3e_C3.3</span><span class="badge code">3e_C3.4</span>',
          '<span class="badge code">5e_C2.1</span><span class="badge code">5e_C2.2</span>'),
-        ("30 questions · 1 illustrée · chaque distracteur réfuté",
+        # Le gabarit (le QCM de Shenzhen, `3e_C3.1`) change de nombre de questions illustrées quand son lot est
+        # révisé (1, puis 6 le 21/11/2026, PR #838 — ce générateur refusait alors de tourner) : le motif lit ce
+        # nombre au lieu de le citer.
+        (re.compile(r"30 questions · \d+ illustrées? · chaque distracteur réfuté"),
          "%d questions · %d illustrées · chaque distracteur réfuté" % (n, nimg)),
         ("""      <option value="C3.1">3e_C3.1 — Établir une liste de solutions possibles</option>
       <option value="C3.3">3e_C3.3 — Évaluer selon des exigences identifiées</option>
@@ -117,6 +120,11 @@ def construire(gabarit: str, sortie: str) -> None:
         ('<b id="rTot">30</b>', '<b id="rTot">%d</b>' % n),
     ]
     for avant, apres in remplacements:
+        if isinstance(avant, re.Pattern):       # un motif qui lit un nombre du gabarit au lieu de le citer
+            if len(avant.findall(s)) != 1:
+                raise SystemExit("Motif absent ou ambigu dans le gabarit :\n%r" % avant.pattern[:70])
+            s = avant.sub(lambda _m: apres, s)
+            continue
         if s.count(avant) != 1:
             raise SystemExit("Motif absent ou ambigu dans le gabarit :\n%r" % avant[:70])
         s = s.replace(avant, apres)

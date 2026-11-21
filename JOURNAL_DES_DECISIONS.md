@@ -34850,3 +34850,15 @@ précédente, inchangés.
 la question 7 de `4e_C2.1`, une planche d'ordinateur réduite au téléphone : aucun outil ne mesure encore la taille du
 texte d'une figure telle qu'elle s'affiche dans un QCM — à faire avec les lots de C1.
 
+**Une casse introduite par la PR #838, réparée (21/11, soir).** Six générateurs de QCM empruntent leur gabarit au QCM
+de Shenzhen (`3e_C3.1`) : `5e_C1.1`, `5e_C1.2`, `5e_C2.1`, `4e_C2.1`, `3e_C2.1` et l'atelier de planification (thème 3).
+En révisant ce QCM (1 → 6 questions illustrées), la PR #838 a fait disparaître le motif « 30 questions · 1 illustrée »
+que leurs `build_qcm.py` cherchaient : ils refusaient de tourner, et `verif_chaine_qcm.py` (atelier de planification)
+sortait à 1 sur `main`. Aucun contrôle de la série de fin de lot ne le voyait. Dans les six, le motif lit maintenant le
+nombre au lieu de le citer. Vérifié : chaque générateur du thème 1 rejoué à part avec le gabarit d'aujourd'hui, puis
+`fix_r.js` et sa graine — la banque régénérée est celle de la page publiée, ordre des propositions compris, pour les
+cinq (30, 30, 34, 30, 30 questions). L'atelier de planification est réparé dans la PR #840 (thème 3), qui corrige aussi
+sa barre de navigation, plus large que l'écran du téléphone (628 px pour 390 ; `verif_chaine_qcm.py` ✅, balayage 0 écart).
+**À retenir pour la suite** : toucher au QCM de `3e_C3.1`, c'est toucher au gabarit de six autres ; `verif_chaine_qcm.py`
+se lance après toute révision de ce QCM. **Non fait** : les 8 lots de C1 (décision 4) ne sont pas commencés.
+
