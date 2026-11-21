@@ -55,9 +55,17 @@ try:
 except FileNotFoundError:
     COMPLEMENTS = {"ranges_ailleurs": [], "acces_rapide": []}
 _RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+# 21/11/2026 — une entrée peut viser une séance : « ancre » est l'id du panneau à ouvrir (la page ouvre la séance
+# que son adresse nomme). Une ancre absente de la page arrête la génération, comme un chemin disparu : le lien
+# tomberait sur le début de la séquence sans rien dire.
 for _e in COMPLEMENTS.get("ranges_ailleurs", []) + COMPLEMENTS.get("acces_rapide", []):
-    if not os.path.isfile(os.path.join(_RACINE, _e["chemin"])):
+    _chemin = os.path.join(_RACINE, _e["chemin"])
+    if not os.path.isfile(_chemin):
         raise SystemExit("✘ index_complements.json : le fichier n'existe plus : " + _e["chemin"])
+    if _e.get("ancre"):
+        with open(_chemin, encoding="utf-8") as _f:
+            if not re.search(r'\sid="' + re.escape(_e["ancre"]) + '"', _f.read()):
+                raise SystemExit("✘ index_complements.json : l'ancre #" + _e["ancre"] + " n'existe pas dans " + _e["chemin"])
 EMOJI_COMPLEMENT = {"Activité": "🔧", "Évaluation": "📝", "EPI": "🤝", "Séquence": "📘", "QCM": "🧠"}
 
 
@@ -559,6 +567,8 @@ a,a:where(:visited){color:#9ecbff}
 .rapide-groupe ul{margin:0;padding-left:18px;font-size:.88em}
 .rapide-groupe li{margin:4px 0;overflow-wrap:anywhere}
 .rapide .niv{color:var(--sub);font-size:.85em;white-space:nowrap}
+/* 21/11/2026 — le code du repère est un lien vers sa ligne : une pastille de 24 px de haut, pour le doigt (WCAG 2.5.8). */
+.rapide a.niv{display:inline-block;min-width:24px;min-height:24px;line-height:22px;padding:0 8px;margin-left:2px;border:1px solid var(--border);border-radius:999px;vertical-align:baseline}
 .ailleurs{color:var(--sub);cursor:help}
 @media print{.rapide,.rapide-groupe{background:#fff!important;border-color:#999!important}.rapide h2,.rapide-groupe h3{color:#274a8a!important}.rapide-note,.rapide .niv{color:#4b74c6!important}}
 
@@ -637,9 +647,25 @@ if COMPLEMENTS.get("acces_rapide"):
     for e in COMPLEMENTS["acces_rapide"]:
         groupes.setdefault(e["groupe"], []).append(e)
     blocs_rapides = []
+    # 21/11/2026 — « repere » (facultatif) remplace le niveau par le code du repère que la ressource travaille :
+    # un lien vers sa ligne dans l'index, où se lit la formulation du programme. Tout autre texte (« CRCN 3.4 »)
+    # reste un simple libellé.
+    _formulations = {f"{niv}_{code}": texte for niv, comps in COMP_BY_LEVEL.items()
+                     for liste in comps.values() for code, texte, _socle in liste}
+
+    def _etiquette(e):
+        rep = e.get("repere")
+        if rep in _formulations:
+            return (f'<a class="niv" href="#{html.escape(rep)}" title="{html.escape(_formulations[rep])}">'
+                    f'{html.escape(rep)}</a>')
+        return f'<span class="niv">{html.escape(rep or e["niveau"])}</span>'
+
+    def _adresse(e):
+        return e["chemin"] + ("#" + e["ancre"] if e.get("ancre") else "")
+
     for g, items in groupes.items():
-        lis = "".join(f'<li><a href="{html.escape(e["chemin"])}">{html.escape(e["titre"])}</a> '
-                      f'<span class="niv">{html.escape(e["niveau"])}</span></li>' for e in items)
+        lis = "".join(f'<li><a href="{html.escape(_adresse(e))}">{html.escape(e["titre"])}</a> '
+                      f'{_etiquette(e)}</li>' for e in items)
         blocs_rapides.append(f'<div class="rapide-groupe"><h3>{html.escape(g)}</h3><ul>{lis}</ul></div>')
     parts.append('<section class="rapide" id="acces-rapide" aria-labelledby="titre-rapide">'
                  '<h2 id="titre-rapide">⚡ Accès rapide</h2>'

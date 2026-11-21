@@ -4570,6 +4570,24 @@ commande l’énergie (en bas)</title><desc id="c22d">Convention de la technolog
     });
   });
   activer(typeof etat.__onglet === "number" ? etat.__onglet : 0);
+  /* 21/11/2026 — l'adresse peut nommer une séance ou l'un de ses blocs (…book-train.html#s3, depuis l'accès rapide
+     de l'accueil ou le cahier de textes) : on ouvre son onglet, comme le font les autres séquences. */
+  function ouvrirSelonAdresse(){
+    var id = ""; try { id = decodeURIComponent(location.hash.slice(1)); } catch(e){}
+    var cible = id ? document.getElementById(id) : null;
+    var i = cible ? panneaux.indexOf(cible.closest(".panneau")) : -1;
+    if(i < 0) return;
+    if(!panneaux[i].classList.contains("actif")) activer(i);
+    if(cible.tagName === "DETAILS") cible.open = true;
+    setTimeout(function(){
+      var nav = document.querySelector(".rail-nav");
+      /* une séance entière : on montre les gares et le début de la séance, sous la barre fixe (64 px) */
+      if(cible === panneaux[i] && nav) window.scrollTo({top: Math.max(0, nav.getBoundingClientRect().top + window.pageYOffset - 64)});
+      else cible.scrollIntoView({block:"start"});
+    }, 80);
+  }
+  ouvrirSelonAdresse();
+  window.addEventListener("hashchange", ouvrirSelonAdresse);
   /* Un lien vers un élément d'un onglet (#seance-N du plan de mission, #capsule-5e de l'ouverture)
      doit ACTIVER cet onglet (panneau masqué), ouvrir le repli visé, puis défiler (RC-1). */
   Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).forEach(function(a){
