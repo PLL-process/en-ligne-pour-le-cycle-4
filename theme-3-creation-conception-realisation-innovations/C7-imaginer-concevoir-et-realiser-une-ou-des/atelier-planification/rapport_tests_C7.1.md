@@ -127,3 +127,33 @@ Les contrôles ont donc été rejoués à la main sur la page, et voici ce qu'il
 | n°31 version étayée | ⚑ **manquante** — reconnue, et assumée pour l'instant : la voie B (papier) joue déjà ce rôle pour l'activité du logiciel, mais pas pour les parcours de calcul |
 
 **Le seul manquement connu est la n°31**, et il est écrit ici plutôt que passé sous silence.
+
+## 21/11/2026 — Le QCM au téléphone, et sa chaîne réparée
+
+**Le QCM sortait de l'écran du téléphone.** À 390 px, la page mesurait 628 px, à ses 30 questions : les sept liens de
+la barre de navigation (accueil, trois ateliers, trois séquences) restaient sur une seule ligne. Trouvé par
+`_outils/balayer_questions_qcm.mjs` (B1), le 21/11/2026 ; corrigé sur décision de Pascal. La barre passe maintenant à
+la ligne (`flex-wrap`) ; sous 720 px de large elle ne colle plus en haut de l'écran, où ses trois lignes cacheraient la
+question. Les sept liens restent (décision du 27/09/2026). À l'ordinateur, rien ne change : une ligne, collée en haut.
+
+**La chaîne du QCM était cassée depuis la PR #838.** `build_qcm.py` emprunte son gabarit au QCM de Shenzhen
+(`3e_C3.1`, thème 1). La PR #838 a révisé ce QCM (1 → 6 questions illustrées) : le motif « 30 questions · 1 illustrée »
+n'existait plus, et `verif_chaine_qcm.py` sortait à 1 (« Motif absent ou ambigu dans le gabarit »). Le motif lit
+maintenant le nombre au lieu de le citer. Le gabarit porte aussi, depuis #838, le style des documents de QCM
+(`.q-figure img[src*="/doc_"]`) : la page régénérée le reprend, sans effet ici (ce QCM n'a pas de document `doc_…`).
+
+Exécuté :
+- `python3 verif_chaine_qcm.py` : ✅ la page est exactement ce que `q.py`, `build_qcm.py` et `fix_r.js` (graine 617)
+  produisent ; par rapport à la page d'avant, quatre lignes de style en plus (deux pour la barre, deux venues du
+  gabarit), rien d'autre ;
+- `node _outils/balayer_questions_qcm.mjs --apres` sur l'atelier : 30 questions jouées à 390 px, 90 écrans d'aide
+  après une réponse fausse, 0 écart (avant : 30 questions en écart) ;
+- `python3 tests_atelier_C7.1.py` : 48 contrôles, 48 réussis ;
+- le haut de la page regardé à 390 px (barre sur trois lignes, non collée) et à 1 280 px (une ligne, collée) ;
+- contrôles transversaux : en-tête des QCM, mêmes nombres, aides, tactile, contraste des liens — verts.
+
+Non fait, à dire : `python3 verif_chaine.py` (la chaîne des trois pages d'atelier) sort à 1, sur `main` aussi — les
+pages publiées portent des blocs posés depuis par les outils communs (les onglets de séance, entre autres), que
+`build_atelier.py` ne reproduit pas. Ce contrôle réécrit les trois pages quand on le lance : elles ont été remises
+telles quelles. Hors du périmètre de ce correctif.
+
