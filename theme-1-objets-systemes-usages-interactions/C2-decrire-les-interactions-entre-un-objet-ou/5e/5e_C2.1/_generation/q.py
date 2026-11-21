@@ -593,20 +593,22 @@ q("C2.2", "Transposer", "Pour installer cette station à Sainte-Luce, il faudrai
    "Avoir fait ses preuves à Shenzhen ne prouve rien pour Sainte-Luce, précisément parce que les interacteurs — sel, pluies intenses, cyclone — n'y sont pas les mêmes."],
   "On transpose en repartant des interacteurs qui changent.")
 
-q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, on repère les choix de conception. L'an prochain, on apprendra en plus à…",
-  ["décrire l'expérience vécue par l'utilisateur de l'objet",
-   "recenser les interacteurs, qui n'est pas au programme cette année",
-   "mesurer les dimensions de l'objet avec précision",
-   "fabriquer l'objet en atelier"],
-  "Repérer un choix visible dans la forme et décrire un vécu ne sont pas la même chose. Cette "
-  "année, on lit l'objet ; l'an prochain, on écoutera celui qui s'en sert.",
-  "« L'angle est arrondi » (5e) et « l'usager hésite devant la borne » (4e).",
-  "Croire qu'on doit déjà raconter ce que ressent l'utilisateur.",
+# 21/11/2026 (décision de Pascal) : « L'an prochain, on apprendra en plus à… » interrogeait le programme ;
+# celle-ci fait expliquer un choix de conception sur un objet que la séquence n'a pas étudié.
+q("C2.2", "Expliquer sur un autre objet",
+  "Sur une poubelle de rue, l'ouverture est à hauteur de main, pas au ras du sol. Quelle phrase explique ce choix ?",
+  ["« On jette sans se baisser : c'est de l'ergonomie. »",
+   "« L'ouverture est ronde, avec un bord gris. »",
+   "« Elle résiste aux coups de pied : c'est de la sécurité. »",
+   "« Elle se vide moins souvent : c'est durable. »"],
+  "Expliquer un choix, c'est dire à quoi il répond. Une ouverture à hauteur de main s'adapte au corps et au geste de celui qui jette : c'est le domaine de l'ergonomie. Le regard appris sur la station de vélos vaut pour n'importe quel objet.",
+  "Même question sur un banc : « pourquoi un dossier incliné ? » — pour que le dos se repose.",
+  "Décrire la forme (« elle est ronde »), ou citer un domaine sans le relier à la hauteur de l'ouverture.",
   ["",
-   "Le recensement des interacteurs est au contraire le cœur du programme de 5e : c'est exactement ce que fait la séance 2 de cette séquence.",
-   "La mesure précise relève d'une autre compétence, travaillée ailleurs dans le cycle, et non de la description des interactions.",
-   "La fabrication concerne la réalisation d'un prototype, qui est un autre moment du programme et ne remplace pas la description de l'expérience utilisateur."],
-  "En 5e on lit l'objet ; en 4e on décrira le vécu de l'utilisateur.")
+   "Cette phrase décrit ce qu'on voit, elle ne dit pas pourquoi l'ouverture est à cette hauteur. Cherche la phrase qui répond à « pourquoi pas autrement ? ».",
+   "Résister aux chocs explique peut-être l'épaisseur de la tôle, pas la hauteur de l'ouverture. Relis ce que la question fait expliquer.",
+   "Rien ne relie la hauteur de l'ouverture au nombre de vidages. Demande-toi qui se sert de cette ouverture, et avec quel geste."],
+  "Expliquer un choix de conception : dire à quoi il répond, et dans quel domaine — sur n'importe quel objet.")
 
 assert len(Q) == 34, len(Q)
 assert sum(1 for x in Q if x["c"] == "C2.1") == 19

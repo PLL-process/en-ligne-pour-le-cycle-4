@@ -132,3 +132,16 @@ Exécuté le 21/11/2026 :
 
 Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
 revient au professeur.
+
+## Ajout du 21/11/2026 (soir) — la question 1 fait faire la compétence
+
+Décision de Pascal (« oui pour tout »). « Décrire l'expérience d'un utilisateur, c'est aller… » récitait le programme.
+La question 1 fait maintenant ranger une parole d'usager (« Je ne savais pas où poser ma carte… ») à son étape du
+parcours, sur un document dessiné pour le téléphone : `Images/doc_parcours_cinq_etapes.svg`, les cinq étapes et ce que
+fait l'usager à chacune (les libellés du fichier de données du lot). La planche `du_verbatim_a_l_algorigramme.svg`,
+large de 900 unités, ne se lisait pas à 390 px ; elle reste sous la question 7, avec une description complète.
+Notion renommée « De la parole à l'étape » (`qcm_aides_4e_C2.1.json`, aides reposées). `q.py` à l'identique : 0 écart.
+
+Exécuté : banc 66 / 66 ; n°311 34 / 34 ; `controle_question_seule.py --strict` 0 refus ;
+`balayer_questions_qcm.mjs --apres` sur le lot, 0 écart ; `controle_schemas.mjs` 0 ✘, aucun ⚠ sur le nouveau document ;
+la question regardée à 390 px. Le QCM garde 7 questions illustrées, dont 5 sur un document dessiné pour le téléphone.
