@@ -171,3 +171,16 @@ contrôle un **contenu institutionnel** plutôt qu'un comportement.
   signalement non chromatique sont en place et vérifiés dans le DOM, mais aucun test avec NVDA ou
   VoiceOver n'a été mené.
 - La séquence sur mobile réel : seule la fenêtre 1280×900 a été utilisée.
+
+## Ajout du 21/11/2026 — la dernière question fait faire la compétence
+
+Décision de Pascal (« oui pour tout »). La question 34 (« L'an prochain, on apprendra en plus à… ») interrogeait le
+programme d'une autre année. Elle fait maintenant expliquer un choix de conception sur un objet que la séquence n'a pas
+étudié — l'ouverture d'une poubelle de rue, à hauteur de main : la phrase qui explique (l'ergonomie), contre celle qui
+décrit et celles qui citent un domaine sans le relier au choix. Notion « Expliquer sur un autre objet », rangée dans le
+piège « Expliquer un choix (pas le décrire) » (`qcm_aides_5e_C2.1.json`, aides reposées). `q.py` à l'identique : 0 écart.
+Le test du banc « la dernière question reste la frontière avec la 4e » est remplacé par « la dernière question fait
+expliquer un choix sur un autre objet, sans renvoi à une autre année ».
+
+Exécuté : banc 152 / 152 ; n°311 34 / 34 ; `controle_question_seule.py --strict` 0 refus ;
+`balayer_questions_qcm.mjs --apres` sur le lot (les deux QCM), 0 écart ; la question regardée à 390 px.

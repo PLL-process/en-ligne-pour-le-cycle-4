@@ -34811,3 +34811,54 @@ classe, ou le replier sous son titre. 2. La suite : les 8 lots de C1
 de lot. 3. Les trois questions gardées bien qu'elles portent sur le programme ou l'anecdote (`4e_C2.1` Q1, `3e_C2.1`
 Q17, `5e_C2.1` Q34) : les remplacer ou non. 4. Le QCM de planification du thème 3, plus large que l'écran du
 téléphone : le corriger dans une PR du thème 3. Rapport : `docs/audits/AUDIT_THEME_1_2026-11-21.md`.
+
+## 21/11/2026 — Décisions de Pascal après la PR #838 : le bilan de Pékin validé, trois questions « de programme » remplacées
+
+**Les décisions (21/11, PR #838 fusionnée).** Aux quatre questions de l'entrée précédente, Pascal répond « oui pour
+tout » : 1. le bilan de Pékin à 7 minutes et les billets tels qu'ils sont — **validé** ; 2. les trois questions qui
+portaient sur le programme ou l'anecdote — **à remplacer** ; 3. le QCM de planification du thème 3, plus large que
+l'écran — **à corriger, dans une PR du thème 3** ; 4. la suite : **les 8 lots de C1**, avec de vraies captures prises
+sur son poste. Cette entrée fait la décision 2 ; les décisions 3 et 4 ont leurs propres PR.
+
+**Trois questions, trois remplacements** — chacune fait faire ce que dit le code qu'elle porte (n°343, quatrième
+lecture : « de sa compétence »).
+- **`4e_C2.1`, question 1.** « Décrire l'expérience d'un utilisateur, c'est aller… du langage naturel vers schémas et
+  algorithmes » récitait le programme. Elle fait maintenant le premier pas de ce trajet : ranger une parole d'usager
+  (« Je ne savais pas où poser ma carte : le logo est dans l'ombre, sous l'écran ») à son étape du parcours. Le leurre
+  qui compte : « arriver », pour qui s'arrête au mot « écran ». Le schéma du parcours est un document dessiné pour le
+  téléphone (`doc_parcours_cinq_etapes.svg`, les libellés du fichier de données du lot) : la planche des quatre
+  représentations, large de 900 unités, ne se lisait pas à 390 px. Elle reste sous la question 7, avec une
+  description qui dit tout ce qu'elle montre.
+- **`3e_C2.1`, question 17.** « Storyboard et carte d'empathie sont des mots venus du monde professionnel » était une
+  anecdote. Elle fait maintenant remplir une carte d'empathie : une dame plisse les yeux devant la borne, puis repart
+  sans titre — « elle repart sans titre » va dans « fait ». Le leurre qui compte : « ressent », la déduction mise à la
+  place de l'observation.
+- **`5e_C2.1`, question 34.** « L'an prochain, on apprendra en plus à… » interrogeait le programme d'une autre année
+  (le banc la gardait comme « frontière avec la 4e »). Elle fait maintenant expliquer un choix de conception sur un
+  objet que la séquence n'a pas étudié : l'ouverture d'une poubelle de rue, à hauteur de main. Les leurres : la phrase
+  qui décrit, et deux phrases qui citent un domaine sans le relier au choix. Le test du banc suit.
+- Les trois lots ont un générateur : `q.py` et la page modifiés à l'identique, la place de la bonne réponse gardée
+  (la permutation de la graine), les banques comparées — 0 écart. Notions renommées, pièges à jour, aides reposées.
+
+**Mesure, vérifié.** `controle_question_seule.py --strict`, thème 1 : 0 refus. `balayer_questions_qcm.mjs --apres` sur
+les trois lots : 4 QCM, 124 questions, 372 écrans d'aide, 0 écart. Bancs : `5e_C2.1` 152 / 152, `4e_C2.1` 66 / 66,
+`3e_C2.1` 59 / 59 ; n°311 : 34 / 34 sur les trois. `controle_schemas.mjs` sur `4e_C2.1` : 0 ✘, aucun ⚠ sur le nouveau
+document. Les trois questions regardées à 390 px. Les contrôles qui refusent sur le site sont ceux de l'entrée
+précédente, inchangés.
+
+**Non fait.** Les trois questions n'ont pas été essayées en classe. La planche des quatre représentations reste, sous
+la question 7 de `4e_C2.1`, une planche d'ordinateur réduite au téléphone : aucun outil ne mesure encore la taille du
+texte d'une figure telle qu'elle s'affiche dans un QCM — à faire avec les lots de C1.
+
+**Une casse introduite par la PR #838, réparée (21/11, soir).** Six générateurs de QCM empruntent leur gabarit au QCM
+de Shenzhen (`3e_C3.1`) : `5e_C1.1`, `5e_C1.2`, `5e_C2.1`, `4e_C2.1`, `3e_C2.1` et l'atelier de planification (thème 3).
+En révisant ce QCM (1 → 6 questions illustrées), la PR #838 a fait disparaître le motif « 30 questions · 1 illustrée »
+que leurs `build_qcm.py` cherchaient : ils refusaient de tourner, et `verif_chaine_qcm.py` (atelier de planification)
+sortait à 1 sur `main`. Aucun contrôle de la série de fin de lot ne le voyait. Dans les six, le motif lit maintenant le
+nombre au lieu de le citer. Vérifié : chaque générateur du thème 1 rejoué à part avec le gabarit d'aujourd'hui, puis
+`fix_r.js` et sa graine — la banque régénérée est celle de la page publiée, ordre des propositions compris, pour les
+cinq (30, 30, 34, 30, 30 questions). L'atelier de planification est réparé dans la PR #840 (thème 3), qui corrige aussi
+sa barre de navigation, plus large que l'écran du téléphone (628 px pour 390 ; `verif_chaine_qcm.py` ✅, balayage 0 écart).
+**À retenir pour la suite** : toucher au QCM de `3e_C3.1`, c'est toucher au gabarit de six autres ; `verif_chaine_qcm.py`
+se lance après toute révision de ce QCM. **Non fait** : les 8 lots de C1 (décision 4) ne sont pas commencés.
+

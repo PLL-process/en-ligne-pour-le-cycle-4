@@ -314,20 +314,22 @@ q(C, "L'angle mort du storyboard", "Le storyboard se comprend sans mode d'emploi
    "Montrer une action est précisément sa spécialité : chaque vignette en représente une."],
   "Le storyboard dit peu — et c'est parfois ce qu'il faut.")
 
-q(C, "Deux mots venus du travail", "« Storyboard » et « carte d'empathie » sont des mots…",
-  ["venus du monde professionnel, pas de l'école",
-   "inventés pour les besoins de cette séquence",
-   "synonymes l'un de l'autre, en réalité",
-   "réservés aux études d'art appliqué"],
-  "Les connaître n'est pas anecdotique : ce sont des outils employés dans la conception de "
-  "produits et de services, au lycée comme après.",
-  "Le storyboard vient du cinéma ; la carte d'empathie, du design de services.",
-  "Croire qu'un mot inconnu désigne une notion compliquée.",
+# 21/11/2026 (décision de Pascal) : « des mots venus du monde professionnel » était une anecdote ;
+# celle-ci fait remplir une carte d'empathie — un acte observé ne va pas dans « ressent ».
+q(C, "Remplir une carte d'empathie",
+  "Une dame plisse les yeux devant la borne, puis repart sans titre. Dans une carte d'empathie, « elle repart sans titre » se range dans la case…",
+  ["« fait » : ses gestes et ses actes",
+   "« voit » : ce qu'elle a sous les yeux",
+   "« ressent » : ce qu'elle éprouve",
+   "« dit » : ses mots exacts"],
+  "Repartir sans titre est un acte : on l'a vu, on peut le compter. La carte d'empathie sépare ce qu'on observe (dit, fait, voit) de ce qu'on en déduit (ressent) : c'est ce qui la rend honnête.",
+  "« Je n'y arrive pas » va dans « dit » ; l'écran pâle au soleil, dans « voit » ; le découragement, dans « ressent ».",
+  "Écrire « elle est découragée » à la place de ce qu'on a vu : c'est une déduction, pas une observation.",
   ["",
-   "Ils existaient bien avant cette séquence et s'emploient couramment dans les métiers de la conception.",
-   "Ils désignent des choses très différentes : l'un raconte une suite d'actions, l'autre range des observations sur une personne.",
-   "Ils sont employés en design, en informatique, en marketing et en ingénierie — pas seulement dans les filières artistiques."],
-  "Deux outils de métier, pas deux mots d'école.")
+   "« Voit » décrit ce qu'elle a devant elle : l'écran, les boutons. Repartir, c'est elle qui agit. Demande-toi qui fait l'action.",
+   "Le découragement se devine, il ne se voit pas : on écrit d'abord l'acte. Demande-toi ce qu'une caméra aurait filmé.",
+   "Elle n'a rien dit : aucune parole n'est rapportée. Cherche ce qu'on a vu d'elle."],
+  "Dans une carte d'empathie, un acte observé va dans « fait » ; ce qu'on en déduit va dans « ressent ».")
 
 q(C, "Aucun n'est meilleur", "Parmi les six modes, lequel est le meilleur ?",
   ["aucun : chacun a son angle mort",

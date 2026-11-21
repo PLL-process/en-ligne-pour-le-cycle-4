@@ -605,7 +605,12 @@ with sync_playwright() as p:
       and all(x[1] == "C2.1" and x[2] == 3 for x in nouv), str(nouv))
     t("QCM : la bonne réponse de « Fonction d'usage ou fonction technique » est la fonction d'usage",
       nouv[2][3].startswith("sa fonction d'usage"))
-    t("QCM : la dernière question reste la frontière avec la 4e", pg.evaluate("QUESTIONS[QUESTIONS.length-1].n") == "Ce qu'on fera l'an prochain")
+    # 21/11/2026 (décision de Pascal) : la dernière question n'interroge plus le programme de l'an prochain ; elle fait
+    # expliquer un choix de conception sur un objet que la séquence n'a pas étudié (n°343 : de sa compétence).
+    der = pg.evaluate("(q => [q.n, q.c, q.q, q.o[q.r]])(QUESTIONS[QUESTIONS.length-1])")
+    t("QCM : la dernière question fait expliquer un choix sur un autre objet, sans renvoi à une autre année",
+      der[0] == "Expliquer sur un autre objet" and der[1] == "C2.2" and "poubelle" in der[2] and "ergonomie" in der[3]
+      and "prochain" not in der[2] and "4e" not in der[2], str(der))
     t("QCM : l'en-tête annonce 34 questions", "34 questions" in pg.inner_text(".badges") and "(34)" in pg.inner_text('[data-mode="complet"]'))
     t("QCM : nouvelle clé de sauvegarde (la banque a changé)", pg.evaluate("KEY") == "qcm_5e_C2_shenzhen_34q")
     q4 = pg.evaluate("[QUESTIONS[3].n, QUESTIONS[3].o[QUESTIONS[3].r], QUESTIONS[3].d.filter((x,j)=>j!==QUESTIONS[3].r).join(' | '), QUESTIONS[3].expl]")

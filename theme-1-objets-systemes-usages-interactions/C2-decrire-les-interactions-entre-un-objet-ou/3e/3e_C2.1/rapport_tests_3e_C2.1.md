@@ -126,3 +126,13 @@ Exécuté le 21/11/2026 :
 
 Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
 revient au professeur.
+
+## Ajout du 21/11/2026 (soir) — la question 17 fait faire la compétence
+
+Décision de Pascal (« oui pour tout »). « Storyboard et carte d'empathie sont des mots venus du monde professionnel »
+était une anecdote. La question 17 fait maintenant remplir une carte d'empathie : « elle repart sans titre » est un acte
+observé (case « fait »), pas un ressenti. Notion renommée « Remplir une carte d'empathie » (`qcm_aides_3e_C2.1.json`,
+aides reposées). `q.py` à l'identique : 0 écart. « Mon bilan personnel » à 7 minutes (séance 3) : validé par Pascal.
+
+Exécuté : banc 59 / 59 ; n°311 34 / 34 ; `controle_question_seule.py --strict` 0 refus ;
+`balayer_questions_qcm.mjs --apres` sur le lot, 0 écart ; la question regardée à 390 px.

@@ -12,9 +12,8 @@ l'élève avait en tête.
 
 IMG_TRAJET = {
     "src": "Images/du_verbatim_a_l_algorigramme.svg",
-    "alt": "Quatre représentations d'une même expérience, reliées par des flèches : le langage "
-           "naturel, le schéma du parcours en étapes, le graphique des durées et l'algorithme. "
-           "Chacune est présentée avec ce qu'elle apporte et ce qu'elle ne sait pas dire.",
+    # 21/11/2026 (n°345) : la description dit tout ce que montre la figure, pour répondre sans la voir
+    "alt": "Quatre représentations d'une même expérience, de gauche à droite, reliées par des flèches. 1. Langage naturel, ce qu'on dit : « tu tires, ça résiste, et tu ne sais pas si c'est toi ou la borne » ; il donne le ressenti tel qu'il est vécu, mais rien n'est comparable. 2. Schéma, le parcours en étapes : arriver, identifier, choisir, déverrouiller, partir ; tout le monde parle du même endroit, mais on ne sait pas encore où le temps part. 3. Graphique, les durées mesurées en secondes, par étape ; ce qui coûte du temps devient comparable, mais il ne dit pas ce que la machine décide. 4. Algorithme, actions et tests : présenter la carte, si reconnue alors ouvrir l'ancrage, sinon recommencer ; les cas d'échec apparaissent, mais il ne dit rien du ressenti. En bas : on n'efface pas les étapes précédentes ; un ressenti n'est pas une mesure, et une mesure n'est pas un ressenti.",
 }
 IMG_EXIG = {
     "src": "Images/six_familles_d_exigences.svg",
@@ -27,6 +26,13 @@ IMG_EXIG = {
 IMG_FAMILLES_Q = {
     "src": "Images/doc_six_familles_questions.svg",
     "alt": "Six fiches, une par famille d'exigences, avec la question que chacune pose. Sécurité : quelqu'un peut-il se blesser ou être mis en danger ? Incidences environnementales : que coûte l'objet en matière et en énergie, sur sa durée de vie ? Formes et fonctions : la forme sert-elle ce que l'objet doit faire ? Ergonomie : le corps et les gestes sont-ils respectés ? Qualité : l'objet fait-il toujours ce qu'il annonce ? Fiabilité : combien de fois sur cent l'objet échoue-t-il ?",
+}
+# 21/11/2026 (n°345) : le schéma du parcours, dessiné pour le téléphone — les cinq étapes et ce que fait l'usager à
+# chacune (les libellés de `donnees_parcours_borne_hangzhou_simulees.csv`). La planche IMG_TRAJET, large de 900 unités,
+# ne se lit pas à 390 px.
+IMG_PARCOURS = {
+    "src": "Images/doc_parcours_cinq_etapes.svg",
+    "alt": "Cinq fiches, dans l'ordre du parcours. 1. Arriver : s'approcher de la borne et lire l'écran. 2. Identifier : présenter sa carte ou son téléphone. 3. Choisir : parcourir la liste des vélos disponibles. 4. Déverrouiller : attendre le déverrouillage du point d'ancrage. 5. Partir : sortir le vélo de son ancrage.",
 }
 IMG_GRAPH = {
     "src": "Images/corrige_temps_par_etape.svg",
@@ -53,21 +59,23 @@ def q(c, n, question, options, expl, ex, err, refs, ret, img=None):
 
 # ═══════════ 4e_C2.1 — décrire l'expérience de l'utilisateur (15) ═══════════
 
-q("C2.1", "Le trajet imposé", "Décrire l'expérience d'un utilisateur, c'est aller…",
-  ["du langage naturel vers schémas et algorithmes",
-   "des schémas techniques vers le langage naturel",
-   "des mesures chiffrées vers les opinions",
-   "du dessin à main levée vers la photographie"],
-  "Le programme fixe un sens de marche : on part de ce que les gens disent, et on aboutit à des "
-  "représentations qui se comparent, se mesurent et s'exécutent.",
-  "« Tu tires, ça résiste » (mots) → cinq étapes (schéma) → 83 s (graphique) → un test (algorithme).",
-  "S'arrêter au récit, sans jamais le traduire.",
+# 21/11/2026 (décision de Pascal) : la question « Décrire l'expérience, c'est aller… » récitait le programme ;
+# celle-ci fait faire le premier pas du trajet — ranger une parole d'usager à son étape du schéma.
+q("C2.1", "De la parole à l'étape",
+  "Li dit : « Je ne savais pas où poser ma carte : le logo est dans l'ombre, sous l'écran. » Sur ce schéma du parcours, sa parole se range à l'étape…",
+  ["identifier",
+   "arriver",
+   "choisir",
+   "déverrouiller"],
+  "« Poser sa carte », c'est se faire reconnaître par la borne : l'étape « identifier ». Ranger chaque parole à son étape est le premier pas du langage naturel vers le schéma : on sait ensuite à quel endroit du parcours la borne gêne.",
+  "« J'ai attendu, et rien ne venait » se range à « déverrouiller » ; « la liste est trop longue », à « choisir ».",
+  "Ranger la parole à l'étape dont elle reprend un mot (« écran »), au lieu de chercher ce que l'usager est en train de faire.",
   ["",
-   "Le sens inverse ferait perdre l'essentiel : un schéma tout fait empêche d'entendre ce que les gens vivent réellement, et on ne schématise bien que ce qu'on a d'abord écouté.",
-   "Une opinion n'est pas un aboutissement : elle est le point de départ. Le trajet va vers des représentations plus partageables, pas vers des avis.",
-   "Le mode de reproduction de l'image n'est pas la question : un croquis à la main fait très bien l'affaire au départ, et une photo ne serait pas un aboutissement."],
-  "On part des mots, on aboutit aux schémas, graphiques et algorithmes.",
-  img=IMG_TRAJET)
+   "Li parle bien de l'écran, mais pour dire où se cache le logo. Ce qu'il cherche à faire, c'est poser sa carte. Relis la fiche 2 du document.",
+   "Il ne parle ni de liste ni de vélo à prendre : il n'en est pas encore là. Relis, sur le document, ce que l'usager fait à chaque étape.",
+   "Le déverrouillage vient plus tard : ici, la borne ne sait pas encore qui il est. Cherche, sur le document, l'étape où l'on présente sa carte."],
+  "Chaque parole d'usager se range à une étape du parcours : celle de ce qu'il est en train de faire.",
+  img=IMG_PARCOURS)
 
 q("C2.1", "Le langage naturel", "Partir du « langage naturel », cela veut dire recueillir…",
   ["les mots exacts des usagers, sans les reformuler",
