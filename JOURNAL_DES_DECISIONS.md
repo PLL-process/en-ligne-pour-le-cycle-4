@@ -34604,3 +34604,28 @@ plus bas. Non exécuté : un vrai téléphone, Firefox, Safari.
 **Vu en passant, non traité ici.** `controle_impression.mjs` refuse trois pages sur `main`, avant comme après ce
 changement : le TP d'algorigrammes de domotique (26 textes sombres sur fond sombre à l'impression), sa page de
 redirection `qcm_algorigrammes_domotique.html` (26) et `4e_C4.1/atelier_pix_crcn_jardin.html` (14).
+
+## 21/11/2026 — Impression : le TP d'algorigrammes de domotique et l'atelier Pix du jardin ne perdent plus de texte sur le papier (`4e_C6.2`, `4e_C4.1`)
+
+Vu en livrant l'accès rapide des algorigrammes (entrée précédente) : `controle_impression.mjs` refusait trois pages sur
+`main`. Ce contrôle refuse une seule chose, un texte sombre posé sur un fond sombre à l'impression — le texte disparaît.
+
+**Mesuré sur `main`.**
+- `4e_C6.2/tp_algorigrammes_domotique.html`, 26 textes : la carte « 🎯 Avant de commencer » et les propositions à
+  cocher de la phase 0 gardaient leur fond d'écran sous un texte que l'impression noircit. Les deux datent du 20/11
+  (#832, #833).
+- `4e_C6.2/qcm_algorigrammes_domotique.html`, 26 : c'est la page de redirection vers ce TP, la même mesure.
+- `4e_C4.1/atelier_pix_crcn_jardin.html`, 14 textes : l'algorithme des corrections (n°336, 16/11) est un bloc
+  de code hors d'un « Doc » ; la règle d'impression ne blanchissait que `.doc pre`, et les mots passaient aux couleurs
+  du papier sur un fond resté marine.
+
+**Corrigé**, dans le bloc `@media print` de chaque page, rien d'autre : fond blanc pour `.trois-lignes` et `.option`
+(TP) ; pour tout `pre` (atelier Pix).
+
+**Mesure.** `controle_impression.mjs` : 412 pages, **0 refusée** (3 avant). À l'écran, mêmes fonds et mêmes couleurs
+qu'avant sur les trois blocs (lus dans le navigateur, avant et après) ; aucune erreur ; même nombre de pages A4
+(3 et 5). Les quatre blocs regardés en rendu d'impression. `tests_4e_C4.1-C4.9.mjs` vert, règles visibles et liens
+verts.
+
+**Non rejoué.** Le banc Playwright du TP cité le 20/11 (« 29 points ») : aucun fichier du dépôt ne nomme
+`tp_algorigrammes_domotique.html`, il n'est donc pas rejouable d'ici. Le changement ne touche que l'impression.
