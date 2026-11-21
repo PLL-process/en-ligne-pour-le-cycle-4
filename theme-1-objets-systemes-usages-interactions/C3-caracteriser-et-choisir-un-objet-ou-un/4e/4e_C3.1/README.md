@@ -6,7 +6,7 @@ Deuxième lot du **C3**, après [Shanghai en 5e](../../5e/5e_C3.1/README.md).
 laissé qu'une phrase : « qu'ils durent, qu'ils ne coûtent pas un bras, qu'on puisse les réparer, et
 qu'on ne les retrouve pas au fond du canal ». Aucun cahier des charges. C'est ce qui manque.
 
-➡ **[QCM d'entraînement](qcm_4e_C3.1-C3.3_hangzhou.html)** — 30 questions, 2 illustrées, chaque
+➡ **[QCM d'entraînement](qcm_4e_C3.1-C3.3_hangzhou.html)** — 30 questions, 6 illustrées, chaque
 distracteur réfuté.
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_4e_C3.1-C3.3.html) ·

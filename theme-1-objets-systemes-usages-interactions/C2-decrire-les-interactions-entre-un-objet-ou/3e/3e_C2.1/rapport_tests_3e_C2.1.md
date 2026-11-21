@@ -105,3 +105,24 @@ les deux sens.
 - La séquence sur mobile réel : seule la fenêtre 1280×900 a été utilisée.
 - La **variante B** (l'enseignant impose le mode) : elle ne demande aucune modification de la page,
   donc rien de mécanique à vérifier — mais elle n'a pas été essayée en classe.
+
+## Ajout du 21/11/2026 — audit du thème 1 : le QCM se lit seul, la séquence se ferme par un billet de sortie
+
+Règles d'or n°343 (une question se lit seule), n°344 (ce qui est annoncé est cité en entier), n°345 (un QCM fait
+lire des documents) et n°330 (la preuve faite seul).
+
+- **QCM.** 4 questions retouchées : les abandons par profil et par étape se lisent dans deux relevés affichés sous la question (n°343) ; « En 4e à Hangzhou » devient « Dans une autre étude » ; la bonne réponse de la pièce refusée retrouve son sens (« l'idée d'un refus par erreur : il recommence », comme le relevé d'incidents). 5 → 7 questions sur document.
+- **Billet de sortie** (fin de la dernière séance, ~5 min, avant le Bonus) : la borne du self, qui refuse une carte sur dix. Deux réponses écrites, chacune
+  avec sa version étayée ; une correction complète avec ses critères. Il ne valide rien.
+
+Exécuté le 21/11/2026 :
+- `python3 tests_3e_C2.1_pekin.py` : **59 / 59** — dont le test du billet (deux zones sauvegardées, deux versions étayées,
+  deux critères, avant le Bonus, aucun bouton) et le nouveau compte des questions sur document ;
+- `node _outils/mode_mission/banc_generique.mjs` : la séquence jouée écran par écran à 390 px, aucun refus, le billet
+  est un écran de la dernière séance ;
+- `python3 _outils/controle_question_seule.py` : aucun refus sur le QCM (S1 à S4, E1) ;
+- `python3 _outils/document_qcm.py documents_qcm_3e_C2.1.json --verifier` : les documents sont ceux des données ;
+- les questions sur document regardées à 390 px dans le QCM (aucun débordement, l'image se charge).
+
+Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
+revient au professeur.

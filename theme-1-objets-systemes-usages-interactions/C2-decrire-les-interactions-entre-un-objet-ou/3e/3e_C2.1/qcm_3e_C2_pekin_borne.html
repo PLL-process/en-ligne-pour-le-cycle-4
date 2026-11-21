@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 </head>
 <body>
@@ -162,7 +164,7 @@
 <div class="badges">
   <span class="badge niveau">3e</span>
   <span title="Programme 2024 — 3e_C2.1 : Décrire l’expérience de l’utilisateur d’un objet ou système technique à l’aide de modes de représentation choisis." class="badge code">3e_C2.1</span>
-  <span class="badge theme">30 questions · 5 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 7 illustrées · chaque distracteur réfuté</span>
 </div>
 <p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
 <p style="text-align:center"><a href="sequence_3e_C2_pekin_borne.html">⬅ Revenir à la séquence</a></p>
@@ -301,7 +303,7 @@
 
 <script>
 "use strict";
-/* Banque de questions — Pékin 3e : 30 questions sur le seul code 3e_C2.1, réparties par thème (le chiffre agrégé : 8 · les six modes : 10 · choisir et justifier : 7 · l'algorigramme : 5), dont 5 illustrées */
+/* Banque de questions — Pékin 3e : 30 questions sur le seul code 3e_C2.1, réparties par thème (le chiffre agrégé : 8 · les six modes : 10 · choisir et justifier : 7 · l'algorigramme : 5), dont 7 illustrées */
 const QUESTIONS = [
 /* ═══ C2.1 ═══ */
 {c:"C2.1",n:"Un chiffre exact et insuffisant",q:"« Un usager sur cinq abandonne devant la borne. » Ce chiffre est…",
@@ -311,12 +313,13 @@ const QUESTIONS = [
  err:"Prendre un chiffre global pour un diagnostic.",
  d:["Le calcul est parfaitement exact : 8 abandons sur 40 font bien un cinquième. Le problème n'est pas l'arithmétique, c'est ce que l'addition efface.","","Savoir que 20 % échouent ne dit ni où, ni pour qui, ni pourquoi : on ne peut rien corriger avec cette seule phrase.","Quarante observations suffisent largement à faire apparaître un écart de 0 % à 50 % entre profils ; ce n'est pas la taille de l'échantillon qui pose problème."],
  ret:"Un chiffre agrégé peut être exact et inutilisable."},
-{c:"C2.1",n:"Qui abandonne vraiment",q:"En détaillant par profil, on trouve chez les habitués un taux d'abandon de…",
- o:["11 %, comme les usagers occasionnels","20 %, comme la moyenne générale relevée","0 % : aucun habitué n'a abandonné","50 %, comme les personnes âgées"],r:2,
+{c:"C2.1",n:"Qui abandonne vraiment",q:"Un usager sur cinq abandonne devant la borne. D'après ce relevé par profil, que cache cette moyenne ?",
+ img:{src:"Images/doc_abandons_par_profil.svg",alt:"Tableau de cinq profils d'usagers, avec le nombre d'usagers observés et le nombre d'abandons. Habitués : 14 usagers, 0 abandon. Occasionnels : 9 usagers, 1 abandon. Avec poussette : 4 usagers, 1 abandon. Touristes : 7 usagers, 3 abandons. Personnes âgées : 6 usagers, 3 abandons."},
+ o:["les habitués abandonnent le plus, car ils sont les plus nombreux","chaque profil abandonne environ une fois sur cinq, comme la moyenne","aucun habitué n'abandonne, mais une personne âgée sur deux","les touristes n'abandonnent pas, car ils prennent tout leur temps"],r:2,
  expl:"C'est le résultat qui renverse la lecture : l'objet est parfaitement utilisable — quand on le connaît déjà.",
  ex:"Habitués 0 % · occasionnels 11 % · poussette 25 % · touristes 43 % · personnes âgées 50 %.",
  err:"Croire que les 20 % se répartissent au hasard.",
- d:["Les occasionnels sont à 11 %, soit un abandon sur neuf ; les habitués, eux, n'en comptent aucun.","La moyenne générale ne s'applique à aucun profil en particulier : c'est justement ce que le détail révèle.","","Cinquante pour cent est le taux des personnes âgées, à l'autre extrémité de l'échelle."],
+ d:["Ils sont les plus nombreux, oui : 14 usagers. Mais lis leur nombre d'abandons.","Lis profil par profil : 0 sur 14 d'un côté, 3 sur 6 de l'autre. La moyenne ne décrit aucun des deux.","","Lis leur ligne : 3 touristes sur 7 ont abandonné."],
  ret:"Parmi ces 40 usagers, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne."},
 {c:"C2.1",n:"La moyenne qui ne décrit personne",q:"La durée moyenne est de 77 s ; l'habitué met 41 s et la personne âgée 123 s. Cela montre que…",
  o:["la moyenne a été mal calculée","l'un des deux relevés est manifestement erroné","une moyenne peut ne décrire personne","il faudrait arrondir la valeur à 80 s"],r:2,
@@ -332,14 +335,15 @@ const QUESTIONS = [
  err:"Confondre « ça marche » et « ça rend service ».",
  d:["C'est l'inverse : seule l'observation des usagers a fait apparaître un problème qu'aucun contrôle technique n'aurait détecté.","Les trois incidents sont réels mais rares ; même sans eux, la moitié des personnes âgées abandonneraient. Le service technique n'a pas tort sur les faits.","Un objet sans panne qui fait échouer la moitié de ses usagers pose un problème considérable — simplement, ce n'est pas un problème de panne.",""],
  ret:"Fonctionner et rendre service ne sont pas la même chose."},
-{c:"C2.1",n:"L'étape qui concentre les abandons",q:"Sur les cinq étapes, celle qui concentre le plus d'abandons est…",
+{c:"C2.1",n:"L'étape qui concentre les abandons",q:"D'après ce relevé, à quelle étape se produit la moitié des abandons ?",
+ img:{src:"Images/doc_abandons_par_etape.svg",alt:"Cinq barres, une par étape de l'achat, avec le nombre d'abandons. Approcher la borne : 0. Choisir la langue : 1. Choisir le titre : 4. Payer : 2. Récupérer le titre : 1."},
  o:["choisir le titre","approcher la borne","récupérer le titre","choisir la langue"],r:0,
  expl:"Quatre des huit abandons s'y produisent : c'est là que l'usager doit comprendre une offre qu'on ne lui a pas expliquée.",
  ex:"Mme Liu : « trop de boutons, et ils changent de place selon l'écran ».",
  err:"Chercher la cause à l'étape du paiement, parce qu'elle paraît plus technique.",
- d:["","Aucun abandon n'a lieu à l'approche : à ce moment, l'usager n'a encore rencontré aucune difficulté.","Un seul abandon s'y produit, et il concerne une personne qui avait les mains prises — c'est un autre problème.","Un seul abandon a lieu au choix de la langue ; l'étape suivante en concentre quatre fois plus."],
+ d:["","Aucun abandon n'a lieu à l'approche : lis la première ligne du relevé.","Un seul abandon s'y produit, sur huit : lis la dernière ligne du relevé.","Un seul abandon a lieu au choix de la langue ; l'étape suivante en compte quatre fois plus."],
  ret:"C'est au choix du titre que l'offre devient incompréhensible."},
-{c:"C2.1",n:"Deux fois le même enseignement",q:"En 4e à Hangzhou, une moyenne de 29 s cachait un maximum de 83 s. Ici, un taux de 20 % cache des taux de 0 % à 50 %. Ces deux constats…",
+{c:"C2.1",n:"Deux fois le même enseignement",q:"Dans une autre étude, une moyenne de 29 s cachait un maximum de 83 s. Ici, un taux de 20 % cache des taux de 0 % à 50 %. Ces deux constats…",
  o:["se contredisent","n'ont aucun rapport : l'un porte sur des durées, l'autre sur des taux","disent la même chose : un résumé chiffré efface ce qui n'est pas moyen","montrent que les statistiques sont trompeuses par nature"],r:2,
  expl:"Le rencontrer deux fois, sur deux objets et deux grandeurs différentes, est ce qui transforme une anecdote en méthode.",
  ex:"Moyenne et pourcentage global : deux résumés, le même angle mort.",
@@ -513,7 +517,7 @@ const QUESTIONS = [
  d:["","C'est exactement le comportement actuel, celui qui produit la panne : prévenir après coup ne rend pas le titre.","Reporter la décision sur l'usager lui demande d'arbitrer un risque qu'il ne peut pas évaluer, avec son propre argent.","Ne rien faire garantit que l'incident se reproduira au client suivant, et à tous les autres."],
  ret:"Une borne qui se sait hors service doit le dire et prévenir."},
 {c:"C2.1",n:"Une pièce refusée",q:"Le monnayeur refuse les pièces usées. Ce que vit l'usager, c'est…",
- o:["une panne complète et définitive de la borne","un abandon immédiat de l'usager","la croyance que sa pièce a été refusée","rien de particulier : il change de pièce"],r:2,
+ o:["une panne complète et définitive de la borne","un abandon immédiat de l'usager","l'idée d'un refus par erreur : il recommence","rien de particulier : il change de pièce"],r:2,
  expl:"Entre la cause technique et le vécu, il y a toujours une interprétation de l'usager — et c'est elle qui décide de ce qu'il fait ensuite.",
  ex:"Sept fois en trente jours, et à chaque fois plusieurs tentatives.",
  err:"Décrire un incident par sa cause technique seule.",

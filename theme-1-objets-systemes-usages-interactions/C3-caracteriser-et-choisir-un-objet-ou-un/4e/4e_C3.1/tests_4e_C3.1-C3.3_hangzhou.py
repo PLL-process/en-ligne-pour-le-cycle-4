@@ -36,6 +36,16 @@ with sync_playwright() as p:
 
     pg.goto(SEQ); pg.wait_for_timeout(600)
     t("séquence : aucune erreur JS", not errs, str(errs))
+    # 21/11/2026 — le billet de sortie (n°330) : deux réponses écrites, chacune sa version étayée, une correction avec
+    # ses deux critères, posé juste avant le Bonus, et aucun bouton : il ne valide rien.
+    bs = pg.evaluate("""() => { const b = document.getElementById('billetSortie'); if (!b) return null;
+      const c = b.querySelector('details.correction');
+      return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length,
+               criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0,
+               avantBonus: !!(b.nextElementSibling && b.nextElementSibling.classList.contains('approfondissement')),
+               boutons: b.querySelectorAll('button').length }; }""")
+    t("billet de sortie : deux réponses écrites, deux versions étayées, deux critères, avant le Bonus, aucun bouton",
+      bool(bs) and bs["zones"] == 2 and bs["etayees"] == 2 and bs["criteres"] == 2 and bs["avantBonus"] and bs["boutons"] == 0, str(bs))
     # `pg.content()` sérialise le DOM : chaque SVG en ligne y porte son
     # `xmlns="http://www.w3.org/2000/svg"`, qui est un identifiant d'espace de noms
     # et non une ressource — aucun navigateur ne le demande. Chercher « http:// »
@@ -127,8 +137,8 @@ with sync_playwright() as p:
     t("QCM : aucune erreur JS", not errs, str(errs))
     t("QCM : hors ligne (n°40)", "fonts.googleapis" not in pg.content())
     t("QCM : 30 questions", pg.evaluate("QUESTIONS.length")==30)
-    t("QCM : 2 illustrées avec alternative longue",
-      pg.evaluate("QUESTIONS.filter(q=>q.img).length")==2
+    t("QCM : 6 illustrées avec alternative longue",
+      pg.evaluate("QUESTIONS.filter(q=>q.img).length")==6
       and pg.evaluate("QUESTIONS.filter(q=>q.img).every(q=>q.img.alt.length>80)"))
     rep = pg.evaluate("QUESTIONS.reduce((a,q)=>(a[q.r]=(a[q.r]||0)+1,a),{})")
     t("QCM : bonnes réponses réparties sur A/B/C/D", min(rep.values())>=7, str(rep))

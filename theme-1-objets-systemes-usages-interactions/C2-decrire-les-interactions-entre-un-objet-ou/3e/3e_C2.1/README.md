@@ -7,7 +7,7 @@ du cycle.
 en une ligne : « un usager sur cinq abandonne devant la borne ». Le chiffre est exact — et il ne dit
 à **personne** ce qu'il faudrait faire, parce qu'il n'a été mis en forme **pour personne**.
 
-➡ **[QCM d'entraînement](qcm_3e_C2_pekin_borne.html)** — 30 questions, dont 5 illustrées, chaque
+➡ **[QCM d'entraînement](qcm_3e_C2_pekin_borne.html)** — 30 questions, dont 7 illustrées, chaque
 distracteur réfuté. Il s'ouvre sur un parcours court tant que la séquence n'est pas finie (n°45).
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_3e_C2.1.html) ·

@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 </head>
 <body>
@@ -160,7 +162,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span title="Programme 2024 — 4e_C3.1 : Identifier les caractéristiques à prendre en compte dans le choix d’un objet ou système technique en vue de répondre à un besoin." class="badge code">4e_C3.1</span><span title="Programme 2024 — 4e_C3.2 : Comparer qualitativement et/ou quantitativement (incidences environnementales, bilan carbone, efficacité énergétique) plusieurs objets ou systèmes techniques répondant au même besoin et arrêter un choix." class="badge code">4e_C3.2</span><span title="Programme 2024 — 4e_C3.3 : Choisir les appareils de mesure à utiliser pour mesurer une performance d’un objet ou système technique à partir d’un protocole donné." class="badge code">4e_C3.3</span>
-  <span class="badge theme">30 questions · 2 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 6 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center"><a href="sequence_4e_C3.1-C3.3_hangzhou.html">⬅ Revenir à la séquence</a></p>
 
@@ -311,13 +313,14 @@ const QUESTIONS = [
  err:"Se contenter d'un adjectif dans un cahier des charges.",
  d:["« Très solide » reste une impression : rien à mesurer, rien à comparer.","","Utile, mais un avis ne se compare pas d'une solution à l'autre.","Il ne dit rien de ce que l'objet fait."],
  ret:"Grandeur + unité + seuil — ou, à défaut, une condition oui/non que tout le monde vérifie pareil. Sinon ce n'est pas une exigence."},
-{c:"C3.1",n:"Ce qui change en 4e",q:"Par rapport à la 5e, ce qui change dans le travail sur le choix, c'est que…",
- o:["on n'utilise plus du tout de tableur","les objets étudiés sont nettement plus gros","on ne compare plus que deux solutions","les critères ne sont plus fournis"],r:3,
- expl:"En 5e on applique un cahier des charges donné ; en 4e on le construit à partir d'un besoin exprimé en mots.",
- ex:"« Qu'ils durent » devient « durée de vie ≥ 8 ans » : c'est le travail de la 4e.",
- err:"Attendre qu'on fournisse la liste des critères.",
- d:["Le tableur reste l'outil du traitement des données.","La taille de l'objet n'a rien à voir avec la compétence.","On en compare souvent davantage.",""],
- ret:"En 5e on applique, en 4e on écrit les critères."},
+{c:"C3.1",n:"Du mot à la donnée",q:"Le commanditaire demande « qu'ils durent ». Dans cette fiche, quelle donnée permet de le vérifier ?",
+ img:{src:"Images/doc_fiche_flotte_aluminium.svg",alt:"Fiche d'une flotte : vélo en aluminium léger. Masse 13,1 kilogrammes. Durée de vie estimée 8 ans. Prix d'achat 520 euros. Confort 5 sur 5."},
+ o:["la masse : 13,1 kilogrammes","le prix d'achat : 520 euros","le confort : 5 sur 5","la durée de vie estimée : 8 ans"],r:3,
+ expl:"Chaque mot du besoin se traduit par une caractéristique qu'on peut vérifier. « Qu'ils durent » se lit dans la durée de vie estimée, en années.",
+ ex:"« Qu'ils durent » devient « durée de vie d'au moins 8 ans » : une grandeur, une unité, un seuil.",
+ err:"Prendre le prix ou la masse pour une preuve que l'objet dure.",
+ d:["La masse dit si le vélo est lourd, pas combien de temps il sert. Cherche une donnée qui se compte en années.","Un vélo cher n'est pas forcément un vélo qui dure : le prix répond à une autre attente, le coût.","Le confort répond à une autre attente de l'usager. Cherche ce qui se compte en années.",""],
+ ret:"À chaque mot du besoin, sa donnée : une grandeur et son unité."},
 {c:"C3.1",n:"« Pas cher »",q:"« Qu'ils ne coûtent pas un bras » se traduit le mieux par…",
  o:["le prix du modèle le moins cher du marché","le prix d'achat","le coût d'entretien annuel seul","le coût total rapporté à la durée de vie"],r:3,
  expl:"Le prix d'achat est un instantané ; le coût réel s'étale sur toute la durée d'usage.",
@@ -325,12 +328,12 @@ const QUESTIONS = [
  err:"Confondre le prix et le coût.",
  d:["Ce n'est pas une caractéristique de la solution étudiée.","Un vélo bon marché qui dure six ans peut revenir plus cher qu'un vélo cher qui en dure douze.","Il ignore l'investissement de départ.",""],
  ret:"Le coût se rapporte toujours à une durée."},
-{c:"C3.1",n:"Un mot, deux critères",q:"« Qu'on puisse les réparer » demande…",
- o:["deux : la disponibilité des pièces et le temps","une seule : la réparabilité de l'objet","trois : les pièces, le temps et le prix de réparation","aucune : cela ne se mesure pas vraiment"],r:0,
+{c:"C3.1",n:"Un mot, deux critères",q:"« Qu'on puisse les réparer » : pour le vérifier, on regarde…",
+ o:["la disponibilité des pièces et le temps de réparation","le prix d'achat et le coût d'entretien annuel","la durée de vie estimée et le nombre de pannes par mois","la masse du vélo et sa note de confort"],r:0,
  expl:"Un mot du langage courant recouvre souvent plusieurs grandeurs distinctes. Les séparer, c'est déjà travailler.",
  ex:"Pièces disponibles pendant 10 ans, réparation en moins de 40 minutes : deux exigences.",
  err:"Traduire un mot par une seule caractéristique sans se demander s'il en cache d'autres.",
- d:["","On peut avoir les pièces sans pouvoir intervenir vite, et l'inverse.","Le prix relève du critère de coût, déjà compté ailleurs.","Les deux se mesurent très bien."],
+ d:["","Le prix et l'entretien relèvent du coût : un vélo peut être cher et facile à réparer.","Les pannes disent si le vélo tombe en panne, pas si on peut le remettre en état : c'est la fiabilité.","Ni la masse ni le confort ne disent si le vélo se répare. Cherche ce qu'il faut pour le remettre en état."],
  ret:"Un mot du besoin peut cacher plusieurs critères."},
 {c:"C3.1",n:"Proposer un critère",q:"Le commanditaire n'a rien dit du confort. L'ajouter au cahier des charges…",
  o:["est interdit : on s'en tient à la demande","est possible, si on le justifie","est obligatoire dans tout cahier des charges","est impossible : le confort ne se mesure pas"],r:1,
@@ -389,19 +392,21 @@ const QUESTIONS = [
  err:"Comparer des émissions sans les rapporter au service rendu.",
  d:["Il englobe l'extraction et le transport des matières.","Il est approximatif, pas faux.","","La teinte n'entre dans aucun calcul d'empreinte : c'est un choix esthétique."],
  ret:"Une incidence se rapporte toujours au service rendu."},
-{c:"C3.2",n:"Le calcul",q:"Pour comparer des flottes, on calcule le CO₂…",
- o:["par an, sans tenir compte des kilomètres parcourus","par vélo, à l'achat","par kilomètre parcouru sur toute la durée de vie","par euro dépensé"],r:2,
- expl:"Le service rendu par un vélo partagé se compte en kilomètres offerts aux usagers.",
+{c:"C3.2",n:"Le calcul",q:"Sur toute sa vie, ce vélo émet 118 kg (kilogrammes) de CO₂. Pour le comparer aux autres flottes, on divise ces 118 kg par…",
+ img:{src:"Images/doc_co2_flotte_acier_recycle.svg",alt:"Fiche d'une flotte : vélo en acier recyclé. CO₂ à la fabrication : 58 kilogrammes. CO₂ d'entretien : 6 kilogrammes par an. Durée de vie estimée : 10 ans. Distance parcourue : 2 100 kilomètres par an."},
+ o:["sa durée de vie : 10 ans","les kilomètres d'une seule année : 2 100","les kilomètres de toute sa vie : 21 000","le CO₂ de sa fabrication : 58 kilogrammes"],r:2,
+ expl:"Le service rendu par un vélo partagé se compte en kilomètres offerts aux usagers : 10 ans × 2 100 km = 21 000 km. 118 kg ÷ 21 000 km, c'est environ 5,6 grammes de CO₂ par kilomètre.",
  ex:"(CO₂ fabrication + CO₂ entretien × années) ÷ (années × km par an).",
  err:"Diviser par la durée de vie en oubliant les kilomètres, ou l'inverse.",
- d:["Deux flottes peuvent rouler très différemment.","C'est le chiffre de départ, pas la comparaison.","","C'est un autre indicateur, qui ne dit rien de l'usage."],
+ d:["Diviser par les années oublie les kilomètres : deux flottes peuvent rouler très différemment en un an.","Une seule année ne suffit pas : les 118 kg comptent toute la vie du vélo. Multiplie par ses 10 ans.","","Diviser du CO₂ par du CO₂ ne dit rien du service rendu. Cherche ce que le vélo offre aux usagers."],
  ret:"On divise l'impact total par le service total."},
-{c:"C3.2",n:"Le classement se déplace",q:"Rapporter les émissions au kilomètre plutôt qu'au vélo…",
- o:["change les écarts, et parfois l'ordre","ne change jamais rien","inverse toujours le classement","n'est valable que pour les véhicules à moteur"],r:0,
- expl:"C'est précisément pour cela qu'on le fait : le classement brut et le classement rapporté racontent deux histoires différentes.",
+{c:"C3.2",n:"Le classement se déplace",q:"Du composite à l'acier recyclé, que devient l'écart quand on compte le CO₂ par kilomètre, et non plus par vélo ?",
+ img:{src:"Images/doc_co2_fabrication_et_par_km.svg",alt:"Deux séries de barres pour quatre flottes. CO₂ à la fabrication, par vélo : acier recyclé 58 kilogrammes, acier robuste 96, aluminium léger 134, composite 210. CO₂ par kilomètre parcouru, sur toute la vie : acier recyclé 5,6 grammes, acier robuste 6,3, aluminium léger 8,3, composite 13,1."},
+ o:["il se réduit : de 3,6 fois à 2,3 fois","il reste le même : 3,6 fois dans les deux cas","il s'inverse : l'acier recyclé émet le plus","il disparaît : les deux émettent autant"],r:0,
+ expl:"À la fabrication : 210 kg contre 58 kg, soit 3,6 fois plus. Par kilomètre, une fois l'entretien ajouté et le total divisé par les kilomètres de toute la vie : 13,1 g contre 5,6 g, soit 2,3 fois plus. Le classement brut et le classement rapporté racontent deux histoires différentes.",
  ex:"Une flotte 3,6 fois plus émettrice à la fabrication ne l'est plus que 2,3 fois par kilomètre.",
  err:"Annoncer un classement sans dire sur quelle base il est fait.",
- d:["","Sinon le calcul serait inutile.","Il peut le confirmer comme le renverser.","Le principe vaut pour tout objet qui rend un service."],
+ d:["","Refais le second calcul : 13,1 divisé par 5,6 ne donne pas 3,6.","Regarde le bas du document : l'acier recyclé y garde la barre la plus courte.","Les deux barres du bas n'ont pas la même longueur : 13,1 g contre 5,6 g."],
  ret:"Toujours dire par rapport à quoi on a rapporté."},
 {c:"C3.2",n:"Durée courte",q:"Une solution qui émet beaucoup à la fabrication et dure peu…",
  o:["équivaut à une qui émet peu et dure peu","se rattrape si elle roule beaucoup par an","cumule les deux défauts : trop peu d'usage","est toujours la meilleure si elle est légère"],r:2,
@@ -410,12 +415,13 @@ const QUESTIONS = [
  err:"Ne regarder qu'une des deux grandeurs.",
  d:["Les deux durent peu, mais celle-ci émet beaucoup plus à la fabrication : son empreinte reste plus lourde.","Rouler beaucoup pendant peu d'années ne compense pas.","","La légèreté n'efface pas l'empreinte de fabrication."],
  ret:"Émettre beaucoup ET durer peu, c'est cumuler."},
-{c:"C3.2",n:"Qualitatif décisif",q:"« Cadre non réparable après un choc » est une donnée…",
- o:["secondaire face aux chiffres","quantitative","qualitative, et pourtant décisive","impossible à prendre en compte dans le choix"],r:2,
- expl:"Comparer n'est pas seulement calculer : certaines données ne se chiffrent pas et tranchent quand même.",
+{c:"C3.2",n:"Qualitatif décisif",q:"Dans cette fiche, une donnée ne se chiffre pas, et pourtant elle peut décider du choix. Laquelle ?",
+ img:{src:"Images/doc_fiche_flotte_composite.svg",alt:"Fiche d'une flotte : vélo en composite carbone. Masse 9,8 kilogrammes. Confort 5 sur 5. Pannes par mois : 21 pour 100 vélos. Après un choc : non réparable."},
+ o:["le confort : 5 sur 5","la masse : 9,8 kilogrammes","après un choc : non réparable","les pannes : 21 pour 100 vélos"],r:2,
+ expl:"« Non réparable après un choc » ne se mesure pas avec un nombre : c'est une donnée qualitative. Elle peut pourtant écarter une flotte à elle seule : un vélo partagé prend des chocs tous les jours.",
  ex:"Un cadre irréparable condamne la flotte au premier accident, quel que soit son bilan carbone.",
  err:"Ne retenir que ce qui se met dans une colonne de nombres.",
- d:["Elle écarte pourtant la solution à elle seule.","Quantitative voudrait dire un nombre mesuré : « non réparable après un choc » n'en porte aucun.","","Elle se traduit en oui/non, ce qui suffit à filtrer."],
+ d:["5 sur 5 est une note : elle se chiffre. Cherche la donnée écrite avec des mots.","9,8 kilogrammes, c'est un nombre avec son unité : une donnée quantitative.","","21 pannes pour 100 vélos, c'est un comptage : une donnée quantitative."],
  ret:"Une donnée qualitative peut décider."},
 {c:"C3.2",n:"Ordre de grandeur",q:"Un bilan carbone doit être présenté comme…",
  o:["une donnée tenue secrète par le fabricant","une mesure fiable, au gramme près","une estimation dépourvue de toute valeur","un ordre de grandeur, pas une valeur exacte"],r:3,
@@ -582,12 +588,12 @@ const PIEGES={
 };
 const PIEGE_DE_NOTION={
   "Caractéristique vérifiable":"verifiable",
+  "Du mot à la donnée":"verifiable",
   "« Pas cher »":"verifiable",
   "Un mot, deux critères":"verifiable",
   "Le seuil":"verifiable",
   "Du relevé au critère":"verifiable",
   "Vérifier son cahier":"verifiable",
-  "Ce qui change en 4e":"cdc",
   "Proposer un critère":"cdc",
   "Trop d'exigences":"cdc",
   "Filtre ou note":"cdc",

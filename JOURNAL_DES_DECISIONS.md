@@ -32,6 +32,9 @@
 | 340 | Une validation dit vrai : le seuil annoncé, une réponse changée la retire, la relecture et la simplification dites | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_validations.py`, skill `validations-qui-disent-vrai` |
 | 341 | Une question ne souffle pas sa réponse | Pascal (18/11/2026), sur l'audit externe de `3e_C4.1` ; écrite par Fable | ✅ En vigueur — `_outils/controle_propositions_indices.py`, `_outils/qcm_aides/indices_creux.mjs`, skill `propositions-sans-indice` |
 | 342 | Chaque consigne à la ligne : une action par ligne, numérotée | Pascal (18/11/2026), écrite par Fable | ✅ En vigueur — pilote `3e_C6.1` (#782) ; `_outils/controle_consignes_a_la_ligne.py` (mesure), skill `texte-clair-et-aere` |
+| 343 | Une question se lit seule (clé de voûte) | Pascal (21/11/2026), sur la lecture question par question des QCM du thème 1 ; écrite par Fable | ✅ En vigueur — pilote C2 et C3 du thème 1 ; `_outils/controle_question_seule.py` (S1 à S4), skill `question-qui-se-lit-seule` |
+| 344 | Ce qui est annoncé est cité en entier | Pascal (21/11/2026), même lecture ; écrite par Fable | ✅ En vigueur — `_outils/controle_question_seule.py` (E1) |
+| 345 | Un QCM fait lire des documents, et ils se lisent au téléphone | Pascal (21/11/2026), même lecture ; écrite par Fable | ✅ En vigueur — `_outils/controle_question_seule.py` (D1, chantier), `_outils/document_qcm.py` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -34654,3 +34657,157 @@ sur un titre ouvre le groupe. Contraste des liens, tactile, boutons vivants, lie
 hors ligne : verts. Captures à 390 px (replié, un groupe ouvert) et à 1 280 px regardées.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, un lecteur d'écran.
+
+## 21/11/2026 — Règles d'or n°343 (clé de voûte), n°344 et n°345 : une question se lit seule ; thème 1, C2 et C3 : QCM relus un à un, cinq billets de sortie
+
+**La demande de Pascal (21/11).** « Améliore les séances et QCM du thème 1. Tu as carte blanche. Inspire-toi des
+prompts maîtres joints » — deux prompts d'audit (multicritère, docimologie des QCM, « ce que j'ai pu oublier »). Puis :
+« le tout doit être ultra premium et engageant », et, au premier point d'étape : « ce que les outils ne voient pas, et
+que la lecture question par question trouve : il faut en faire des clés de voûte, règles d'or et/ou des skills ».
+
+**Le constat.** Sur le thème 1 (14 séquences, 22 QCM, 671 questions), tous les contrôles du dépôt étaient verts, à
+deux écarts près (n°314 dans un QCM, une séquence sans bandeau de durée). La lecture question par question des cinq
+QCM de C2 et C3 de 4e et de 3e, et de C3 de 5e (150 questions lues une à une) a trouvé ce qu'aucun outil ne mesurait :
+des listes annoncées et tronquées, des questions qui demandent un chiffre de la séquence sans le montrer, des renvois
+à une autre année, une notion affichée qui donne la réponse, des questions sur le programme plutôt que sur la
+compétence, un leurre d'une autre grandeur — et, en remontant de la question à la séquence, deux erreurs de fond.
+
+> **Règle d'or n°343 (clé de voûte) — Une question se lit seule.** L'élève qui ouvre le QCM trois semaines après la
+> séquence, au téléphone, sans la page de la séquence, trouve dans la question tout ce qu'il faut pour répondre en
+> raisonnant : chaque objet y est nommé (« le vélo-cargo », jamais « S1 » seul) ; chaque nombre dont dépend la réponse
+> est dans l'énoncé ou dans un document affiché sous la question ; aucun renvoi à « la séquence », « le tableau »,
+> « notre travail », ni à une autre année (n°304) ; la notion affichée avec la question ne dit pas la réponse. Elle
+> étend la n°331 (l'élève répond le schéma sous les yeux) aux QCM et aux billets : une question mesure un
+> raisonnement, pas le souvenir d'un chiffre. Outil : `_outils/controle_question_seule.py` (S1 code sans nom, S2
+> renvoi sans document, S3 autre année, S4 notion qui souffle) ; skill `question-qui-se-lit-seule`.
+
+> **Règle d'or n°344 — Ce qui est annoncé est cité en entier.** « Les cinq étapes », « les six familles » : la
+> bonne réponse les donne toutes, et la figure qui les montrerait n'est pas sous la question qui les demande.
+> Raccourcir une bonne réponse (n°144, n°341) raccourcit ses mots, jamais sa liste. Elle prolonge la n°338 (les mêmes
+> nombres partout). Outil : `_outils/controle_question_seule.py` (E1).
+
+> **Règle d'or n°345 — Un QCM fait lire des documents, et ils se lisent au téléphone.** Chaque QCM de séquence porte
+> au moins six questions sur document — un relevé, une fiche, un cahier des charges, des barres, une capture réelle —
+> à lire pour répondre : le document donne les données, jamais le verdict. Un document de QCM est dessiné pour le
+> téléphone (350 unités de large, texte de 15 px et plus, des blocs qui ne se touchent pas) ; une capture réelle est
+> recadrée sur ce qu'il faut lire, sans retouche. Outils : `_outils/document_qcm.py` (dessine à partir de
+> `documents_qcm_<lot>.json`), `_outils/controle_question_seule.py` (D1, mesuré comme un chantier),
+> `_outils/balayer_questions_qcm.mjs` (au navigateur, chaque question jouée à 390 px : rien ne dépasse de l'écran,
+> chaque figure est décodée et décrite).
+
+**Deux règles existantes sont désormais mesurées.** La n°304 dans les questions (S3) ; la n°330, étendue à toute
+séquence : elle se ferme par un billet de sortie, la preuve faite seul sur un objet nouveau (P1, chantier).
+
+**Pourquoi une clé de voûte.** La n°331 a montré qu'une question de lecture sans son schéma teste la mémoire. La n°343
+dit la même chose du QCM tout entier, et elle commande les deux autres : une liste tronquée ou un document absent sont
+deux façons de ne pas tout donner à l'élève.
+
+**Ce qui change, lot par lot.**
+- **`5e_C3.1` (Shanghai).** QCM : dix questions réécrites. Les véhicules sont nommés ; les cinq étapes du cycle de vie
+  sont citées toutes les cinq, sans la figure qui les montrait ; la batterie stocke en chimique et fournit en
+  électrique (la convention du 10/2026, que l'ancienne question rendait ambiguë) ; « qui passe le cahier des
+  charges ? » et « le besoin change » se lisent sur le cahier des charges affiché ; la question 26 se lit sur une
+  capture réelle du tableur, recadrée (la barre de formule affiche 9,5 sans signe =). 3 → 7 questions sur document.
+  **Séquence** : l'activité 3 faisait conclure « distance et masse vont dans le même sens » — faux pour les trois
+  véhicules du tableau affiché au-dessus (le vélo-cargo, 48 kg, freine sur 3,2 m ; le robot, 95 kg, sur 1,6 m). La
+  proposition devient « de ces deux-là, le plus lourd freine le plus long », la correction montre le contre-exemple,
+  le banc et la synthèse professeur suivent ; la question du QCM fait trouver ce contre-exemple. La planche des trois
+  solutions : la dernière ligne du robot touchait le bord de sa carte.
+- **`4e_C3.1` (Hangzhou, les vélos).** QCM : cinq questions réécrites ; « Par rapport à la 5e, ce qui change… »
+  devient une lecture de fiche ; « Qu'on puisse les réparer » n'a plus deux réponses défendables ; le CO₂ par
+  kilomètre se calcule sur document. 2 → 6 questions sur document. **Séquence** : « F3 tombe sur trois exigences » —
+  elle rate les quatre (antivol à 3 pour 4 exigé, comme F2) : question, vérificateur, correction et synthèse élève
+  corrigés ; la légende de `a1_6` s'accorde de nouveau avec ses propositions ; **72 pourquoi** écrits
+  (`mission_4e_C3.1.json`, le lot n'en avait pas) : 9 → 81 sur 81.
+- **`3e_C3.1` (Shenzhen, le local des serveurs).** QCM : six questions réécrites, cinq documents (le coût sur dix
+  ans, les cases vides, la performance qui se paie, le relevé d'une journée, les baisses additionnées) ; « au gramme
+  près » ne se dit plus d'une température. 1 → 6 questions sur document.
+- **`3e_C2.1` (Pékin).** QCM : quatre questions ; les abandons par profil et par étape se lisent dans deux relevés ;
+  « En 4e à Hangzhou » devient « Dans une autre étude » ; la bonne réponse de la pièce refusée retrouve son sens
+  (« l'idée d'un refus par erreur : il recommence », comme le relevé d'incidents). 5 → 7. `q.py` modifié à
+  l'identique : les deux banques comparées, 0 écart.
+- **`4e_C2.1` (Hangzhou, la borne).** QCM : sept questions ; « Les six familles » citées toutes les six, sans la
+  figure qui les donnait ; quatre questions de classement se lisent avec les six familles et leurs questions sous
+  les yeux, sans les exemples de la borne. 5 → 7. `q.py` à l'identique, 0 écart.
+- **`5e_C2.1` (Shenzhen).** Une question : « Cette année, en 5e… En 4e… » devient « Cette année… L'an prochain… ».
+- **`5e_C1.3`.** Cinq questions : les notions « La compétence CRCN 1.2 / 1.3 », affichées au-dessus de la bonne
+  réponse, sont renommées (n°343) ; les deux énoncés nomment la compétence en toutes lettres (n°314, le refus de
+  `controle_competences.py` sur le thème tombe) ; « le fichier de la séquence » devient « un fichier d'exercice ».
+  **La question 15 sortait de l'écran** : ses propositions sont des chemins de fichier, sans espace ; à 390 px, la
+  proposition mesurait 558 px et la page défilait de côté. Le défaut était en ligne. Les chemins se coupent après
+  chaque « / », et une proposition sans espace se coupe au bord de l'écran. Trouvé en jouant les 30 questions une à
+  une au navigateur, à la vérification finale — d'où le quatrième outil.
+- **Cinq billets de sortie (n°330)**, à la fin de la dernière séance, avant le Bonus, environ 5 minutes, sans bouton :
+  `4e_C2.1` la fontaine à eau de la cour ; `3e_C2.1` la borne du self ; `5e_C3.1` la lampe du kit cyclone ; `4e_C3.1`
+  le ventilateur de la salle ; `3e_C3.1` le bruit à la cantine. Deux réponses écrites, chacune sa version étayée, une
+  correction avec ses critères et ses contre-exemples ; la fiche pédagogique dit ce qu'on y regarde. À Pékin, la
+  séance 3 était pleine (53 min) : « Mon bilan personnel » passe de 10 à 7 minutes — **à valider par Pascal**.
+
+**Outils et skill.** `_outils/controle_question_seule.py` (mesure ; `--strict` refuse S1 à S4 et E1) ;
+`_outils/document_qcm.py` (14 documents dessinés, style posé une fois dans 5 QCM) ; `_outils/modifier_question_qcm.mjs`
+(réécrit les questions nommées d'un QCM dont la page est la source, garde tous leurs champs) ; skill
+`question-qui-se-lit-seule` (les sept lectures, de la question de souvenir à la question sur document, le billet) ;
+`qcm-html-accessible` reçoit la porte C, `audit-double-regard` la ligne de l'inspecteur.
+`_outils/balayer_questions_qcm.mjs` (au navigateur, à 390 px : chaque question de chaque QCM affichée une à une — B1
+la page plus large que l'écran, B2 une figure non décodée, B3 sans description, B4 un document sous 300 px, B5 une
+erreur ; `--apres` joue une réponse fausse et mesure les trois écrans de l'aide ; 0 / 1 / 2). Aucun outil ne jouait
+les questions : `controle_debordement.py` lit les tableaux dans le source, le balayage du navigateur s'arrête à ce
+qu'un clic révèle. Deux bancs, qui prouvent les deux contrôles par leurs refus : `tests_controle_question_seule.py`
+(24 cas : chaque mesure, et sa voisine qui ne doit pas être refusée) et `tests_balayer_questions_qcm.py` (8 cas sur
+des copies d'un vrai QCM). Les deux contrôles entrent dans la liste de fin de lot (`controle-qualite-lot`).
+
+**Mesure** (`controle_question_seule.py`). Thème 1 : 19 refus → **0** (S1 6, S2 5, S3 4, S4 2, E1 2) ; QCM sous six
+questions sur document 9 → 4 ; séquences sans billet de sortie 13 → 8. Site entier : 82 refus → 63 ; D1 49 → 44 ; P1
+57 → 52 — les thèmes 2 et 3 n'ont pas été touchés.
+**Mesure** (`balayer_questions_qcm.mjs`, 390 px). Thème 1, avec `--apres` : 22 QCM, 671 questions jouées, 130
+illustrées, 2 013 écrans d'aide après une réponse fausse — 1 question en écart → **0**. Site entier, sans `--apres` :
+77 QCM lus, 2 331 questions, 248 illustrées ; 1 QCM en écart, hors périmètre — `qcm_C7.1_planification_taches.html`
+(thème 3) : sa page mesure 628 px à ses 30 questions, les liens de retour vers les séquences ne passent pas à la
+ligne ; 1 page non lue, d'un autre gabarit (`qcm_algorigrammes_domotique.html`, `4e_C6.2`).
+
+**Vérifié le 21/11.** Bancs des lots : `4e_C2.1` 66 / 66, `3e_C2.1` 59 / 59, `5e_C2.1` 152 / 152, `5e_C3.1` 36 / 36,
+`4e_C3.1` 33 / 33, `3e_C3.1` 38 / 38 (un test du billet dans cinq bancs) ; n°311 : 34 / 34 sur cinq lots, 27 / 27 sur
+`5e_C3.1` ; mode mission joué écran par écran, aucun refus, un écran de plus par séquence. Contrôles des QCM :
+en-tête, banque, effectifs, unités, longueurs, indices, sigles, cohérence, indices creux, mêmes nombres — verts ;
+aides des QCM à jour ; `enrichir.py --verifier-tout` 50 fichiers, 0 refus ; hiérarchie, consignes, aération, liens,
+médias, licence, règles visibles, squelette, fiche papier — verts sur le thème. Regardé à 390 px : trois questions sur
+document de Shanghai dans le QCM, deux billets dans leur page ; les autres billets mesurés à 390 et 1 280 px (aucun
+débordement, aucun texte sous 14 px).
+Les quatorze documents, relus avant la livraison : `controle_schemas.mjs` (n°315) les disait « serrés » 17 fois (des
+cadres à 12 ou 13 unités) ; `document_qcm.py` les espace de 16 unités, ne laisse plus un « ? » seul à la ligne, garde
+un nombre avec ce qu'il compte et équilibre les lignes des titres — 0 ✘, 0 ⚠ sur les quatorze, tous regardés en
+planche à la taille du téléphone, et quatre questions recapturées à 390 px dans leur QCM.
+Captures avant / après à 390 px (cinq questions, deux billets, les quatorze documents en deux planches) :
+`_outils/captures_question_seule_2026-11-21/`.
+Rejoué sur l'arbre livré : les bancs ci-dessus, `5e_C1.3` 44 / 44 et 34 / 34, la voix du vélo-cargo 24 / 24. Les
+contrôles qui refusent encore sur le site refusent de la même façon sur `main` (comparé sur une copie témoin de
+`981b0e9`), sauf `controle_competences.py`, qui passe de 2 fichiers à 1. `audit_aeration.py`, mesure hors score :
+297 → 307 paragraphes de plus de quatre phrases — ce sont les corrections des cinq billets, une idée par ligne.
+
+**Non fait, à dire.**
+- Les 8 QCM de C1 n'ont pas été lus un à un : seuls leurs refus mesurés sont corrigés. Quatre restent sous six
+  questions sur document (`3e_C1.5` 0, `4e_C1.4` 0, `5e_C1.5` 1, `5e_C1.3` 3) ; les 8 séquences de C1 n'ont pas de
+  billet de sortie. Les 7 QCM des ateliers et `qcm_fonctionnement_objet` : mesurés, non lus.
+- Aucune capture neuve prise sur le poste de Pascal : la seule capture du lot est un recadrage d'une capture déjà au
+  dépôt. Les QCM de C1 (cybersécurité, données, tableur) en demanderont de vraies.
+- Les séquences n'ont pas été relues en entier : ce qui y change vient des questions remontées et des billets. Neuf
+  séances sur dix-neuf restent au-dessus de 1 200 mots visibles (`mesurer_charge.mjs`), et le billet en alourdit deux :
+  Pékin, séance 3, 1 411 → 1 571 mots ; Shanghai, séance 4, 1 416 → 1 639. Les trois autres dernières séances restent
+  sous le repère (606, 842, 1 002). En mode mission, le billet est un écran à lui seul.
+- Sur `main`, hors périmètre : `index.html` refuse `controle_sauvegarde_locale.py` et `controle_competences.py`
+  (« CRCN 3.4 » sans intitulé) ; `5e_C8.2` une énumération en ligne ; le TP d'algorigrammes un tableau sans filet ;
+  `4e_C4.1` (thème 2) une étiquette de code sans bulle et deux consignes à deux actions (n°342) ; les ateliers de
+  représentation, de planification et le TP Onshape du texte à aérer (`audit_aeration.py --strict`).
+- `balayer_questions_qcm.mjs --apres` n'a été joué que sur le thème 1 : les écrans d'aide des 55 QCM des thèmes 2 et
+  3 ne sont pas mesurés. Le QCM de planification (thème 3), qui déborde, n'est pas corrigé : hors du thème demandé.
+  La coupe des mots longs (`.option span`) n'est posée que dans le QCM de `5e_C1.3` : le gabarit des 76 autres ne
+  l'a pas — aucun n'en a besoin aujourd'hui, la mesure le dit.
+- Non exécuté : un vrai téléphone, Firefox, Safari, un lecteur d'écran, l'impression des fiches avec leur billet
+  regardée page par page (`controle_impression_papier.py` les dit à jour).
+
+**À décider (Pascal).** 1. Le bilan de Pékin à 7 minutes, et les deux séances que le billet alourdit : le garder en
+classe, ou le replier sous son titre. 2. La suite : les 8 lots de C1
+(lecture, documents, billets), puis les thèmes 2 et 3 par vagues, avec `controle_question_seule.py --strict` en fin
+de lot. 3. Les trois questions gardées bien qu'elles portent sur le programme ou l'anecdote (`4e_C2.1` Q1, `3e_C2.1`
+Q17, `5e_C2.1` Q34) : les remplacer ou non. 4. Le QCM de planification du thème 3, plus large que l'écran du
+téléphone : le corriger dans une PR du thème 3. Rapport : `docs/audits/AUDIT_THEME_1_2026-11-21.md`.

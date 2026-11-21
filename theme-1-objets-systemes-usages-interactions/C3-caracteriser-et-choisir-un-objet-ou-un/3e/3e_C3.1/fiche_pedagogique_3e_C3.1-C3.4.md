@@ -74,3 +74,15 @@ bandeau de tâches (n°30) · billet sans note (n°26) · hors ligne intégral (
 Les six solutions sont **simulées**. Et la séquence dit que l'addition des baisses de température
 donne un **ordre de grandeur** : les effets ne se cumulent pas parfaitement. De quoi choisir quoi
 essayer, pas de quoi promettre — la combinaison se vérifie en place.
+
+## Billet de sortie — la preuve faite seul (21/11/2026, règle d'or n°330)
+
+Fin de la dernière séance, environ 5 minutes, chacun pour soi, sans aide ni document de la séquence.
+
+- **L'objet, nouveau pour l'élève** : le bruit à la cantine.
+- **Ce qui est demandé** : trois solutions vraiment différentes (passive, active, organisationnelle) ; un protocole de mesure en trois lignes.
+- **Ce qu'on regarde** : trois familles représentées (trois modèles de panneaux = une seule solution) ; la grandeur et son unité, l'appareil, le moment le plus défavorable et un endroit fixe.
+
+Le QCM entraîne ; ce billet montre ce que chaque élève sait faire seul, sur un cas qu'il n'a pas étudié. Il ne
+valide rien dans la page : les deux réponses se relisent, écran ou fiche papier. La version étayée (des phrases à
+compléter) retire l'obstacle de la rédaction, pas l'exigence.

@@ -220,3 +220,21 @@ Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 - Fiche papier : 11 pages (5 / 2 / 4) ; la quatrième page de la séance 3 ne porte que la licence.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 21/11/2026 — Le QCM, question par question (règles d'or n°343 à n°345)
+
+- **Cinq questions réécrites** (24 à 28). Les notions « La compétence CRCN 1.2 » et « La compétence CRCN 1.3 »
+  s'affichaient au-dessus de la bonne réponse : elles sont renommées (« Ranger et sauvegarder : quelle compétence ? »…),
+  et les énoncés nomment la compétence en toutes lettres (n°314) ; « le fichier de la séquence » devient « un fichier
+  d'exercice ». `qcm_aides_5e_C1.3.json` suit, les aides sont reposées (`qcm_aides/poser.py --verifier` : à jour).
+- **Question 15, au téléphone.** Ses propositions sont des chemins de fichier, sans espace : à 390 px, la proposition
+  mesurait 558 px et la page défilait de côté. Les chemins se coupent maintenant après chaque « / » (`<wbr>`), et une
+  proposition sans espace se coupe au bord de l'écran (`.option span`). Le défaut était déjà en ligne ; il a été trouvé
+  en jouant les 30 questions une à une.
+- `node _outils/balayer_questions_qcm.mjs --apres` sur le lot : 30 questions jouées à 390 px, 90 écrans d'aide après
+  une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le QCM porte 3 questions sur document
+  pour 6 attendues (n°345, chantier).
+- Bancs rejoués : `tests_5e_C1.3-C1.4_sequence.mjs` 44 / 44 ; n°311 34 / 34.
+
+Non fait : les 25 autres questions n'ont pas été relues une à une ; aucun document neuf n'a été dessiné pour ce QCM.
+

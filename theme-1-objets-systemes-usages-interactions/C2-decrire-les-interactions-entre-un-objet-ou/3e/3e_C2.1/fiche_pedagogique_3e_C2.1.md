@@ -117,3 +117,15 @@ cette séquence seul, du début à la fin.
 tirés au hasard — un premier tirage avait donné zéro abandon chez les touristes, c'est-à-dire une
 histoire que les corrigés auraient décrite de travers. Une donnée simulée n'a pas à être
 imprévisible : elle a à être **vraie par rapport à ce qu'on en dit**.
+
+## Billet de sortie — la preuve faite seul (21/11/2026, règle d'or n°330)
+
+Fin de la dernière séance, environ 5 minutes, chacun pour soi, sans aide ni document de la séquence.
+
+- **L'objet, nouveau pour l'élève** : la borne du self, qui refuse une carte sur dix.
+- **Ce qui est demandé** : un mode de représentation choisi pour la gestionnaire, puis pour un élève de 6e, avec ce qu'on laisse de côté.
+- **Ce qu'on regarde** : le mode est nommé, la justification part de ce que le destinataire doit faire (pas de « c'est plus visuel »), et l'élève dit ce qu'il a écarté.
+
+Le QCM entraîne ; ce billet montre ce que chaque élève sait faire seul, sur un cas qu'il n'a pas étudié. Il ne
+valide rien dans la page : les deux réponses se relisent, écran ou fiche papier. La version étayée (des phrases à
+compléter) retire l'obstacle de la rédaction, pas l'exigence.

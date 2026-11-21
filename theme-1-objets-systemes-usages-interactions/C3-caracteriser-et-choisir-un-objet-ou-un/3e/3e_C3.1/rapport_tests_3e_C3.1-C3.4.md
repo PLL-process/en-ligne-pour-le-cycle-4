@@ -74,3 +74,23 @@ pas testé : que la mesure ait vraiment été faite en classe — cela se relèv
 - `banc_rappels_cdc.py` (ateliers des représentations) : **302 / 302** — le banc déplie désormais un rappel replié, comme l'élève (`shenzhen-3e` et `hangzhou-4e` échouaient sur ce point) ; `banc_ateliers.py besoin` : **128 / 128**.
 - Non testé : la lecture par un élève en classe ; le rendu sur un autre navigateur que Chromium.
 
+## Ajout du 21/11/2026 — audit du thème 1 : le QCM se lit seul, la séquence se ferme par un billet de sortie
+
+Règles d'or n°343 (une question se lit seule), n°344 (ce qui est annoncé est cité en entier), n°345 (un QCM fait
+lire des documents) et n°330 (la preuve faite seul).
+
+- **QCM.** 6 questions retouchées : cinq se lisent sur document (le coût sur dix ans, les cases vides, la performance qui se paie, le relevé d'une journée, les baisses additionnées) ; « Dans ce projet, le pilier social… » devient une question qui se lit seule ; « au gramme près » ne se dit plus d'une température. 1 → 6 questions sur document.
+- **Billet de sortie** (fin de la dernière séance, ~5 min, avant le Bonus) : le bruit à la cantine. Deux réponses écrites, chacune
+  avec sa version étayée ; une correction complète avec ses critères. Il ne valide rien.
+
+Exécuté le 21/11/2026 :
+- `python3 tests_3e_C3.1-C3.4_shenzhen.py` : **38 / 38** — dont le test du billet (deux zones sauvegardées, deux versions étayées,
+  deux critères, avant le Bonus, aucun bouton) et le nouveau compte des questions sur document ;
+- `node _outils/mode_mission/banc_generique.mjs` : la séquence jouée écran par écran à 390 px, aucun refus, le billet
+  est un écran de la dernière séance ;
+- `python3 _outils/controle_question_seule.py` : aucun refus sur le QCM (S1 à S4, E1) ;
+- `python3 _outils/document_qcm.py documents_qcm_3e_C3.1.json --verifier` : les documents sont ceux des données ;
+- les questions sur document regardées à 390 px dans le QCM (aucun débordement, l'image se charge).
+
+Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
+revient au professeur.

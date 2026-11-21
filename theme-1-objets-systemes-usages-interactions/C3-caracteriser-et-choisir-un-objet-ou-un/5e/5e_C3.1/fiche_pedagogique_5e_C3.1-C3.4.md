@@ -96,3 +96,15 @@ limite.
 Toutes les données sont **simulées**. La page le dit à l'élève dès la situation déclenchante. Elles
 sont réalistes et cohérentes, mais ne décrivent aucun véhicule commercialisé — et on ne les
 présentera jamais comme des mesures du monde réel.
+
+## Billet de sortie — la preuve faite seul (21/11/2026, règle d'or n°330)
+
+Fin de la dernière séance, environ 5 minutes, chacun pour soi, sans aide ni document de la séquence.
+
+- **L'objet, nouveau pour l'élève** : la lampe du kit cyclone de la maison (trois lampes, trois exigences).
+- **Ce qui est demandé** : la source et les formes d'énergie d'une lampe à batterie ; le choix de la lampe qui respecte les trois exigences, preuve à l'appui.
+- **Ce qu'on regarde** : la source n'est pas confondue avec la forme ; chaque lampe est comparée aux trois exigences avec ses nombres, et une seule exigence ratée l'écarte (15 euros pour 15 au plus : accepté).
+
+Le QCM entraîne ; ce billet montre ce que chaque élève sait faire seul, sur un cas qu'il n'a pas étudié. Il ne
+valide rien dans la page : les deux réponses se relisent, écran ou fiche papier. La version étayée (des phrases à
+compléter) retire l'obstacle de la rédaction, pas l'exigence.

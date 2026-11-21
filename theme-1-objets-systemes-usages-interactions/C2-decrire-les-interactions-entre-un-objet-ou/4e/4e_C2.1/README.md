@@ -8,7 +8,7 @@ graphiques et aux algorithmes**, puis remonter aux exigences.
 réclamation : « vos bornes sont trop lentes ». Une réponse : « aucune n'est en panne ». **Les deux
 ont raison, et personne n'avance.**
 
-➡ **[QCM d'entraînement](qcm_4e_C2_hangzhou_borne.html)** — 30 questions, dont 5 illustrées, chaque
+➡ **[QCM d'entraînement](qcm_4e_C2_hangzhou_borne.html)** — 30 questions, dont 7 illustrées, chaque
 distracteur réfuté. Il s'ouvre sur **ce que l'élève a déjà travaillé** (règle n°45).
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_4e_C2.1-C2.2.html) ·

@@ -77,3 +77,24 @@ une production sur sa seule longueur. Deux cas sont ajoutés au banc : une produ
 (mesures chiffrées avec unité, ou protocole à cinq étapes avec unité, appareil et conditions
 constantes) est validée ; une production longue mais creuse ne l'est pas. Ce qui n'est toujours
 pas testé : que la mesure ait vraiment été faite en classe — cela se relève en salle.
+
+## Ajout du 21/11/2026 — audit du thème 1 : le QCM se lit seul, la séquence se ferme par un billet de sortie
+
+Règles d'or n°343 (une question se lit seule), n°344 (ce qui est annoncé est cité en entier), n°345 (un QCM fait
+lire des documents) et n°330 (la preuve faite seul).
+
+- **QCM.** 10 questions retouchées : les véhicules sont nommés (plus de « S1 » seul), les cinq étapes du cycle de vie sont citées toutes les cinq, sans la figure qui les donnait, la batterie stocke en chimique et fournit en électrique, deux documents (les mesures, le cahier des charges) et une capture réelle du tableur se lisent sous la question. 3 → 7 questions sur document. Dans la séquence, « distance et masse vont dans le même sens » était faux pour les trois véhicules du tableau (le vélo-cargo, le plus léger, freine plus long que le robot) : la question, sa correction, le banc et la synthèse professeur le disent maintenant.
+- **Billet de sortie** (fin de la dernière séance, ~5 min, avant le Bonus) : la lampe du kit cyclone de la maison (trois lampes, trois exigences). Deux réponses écrites, chacune
+  avec sa version étayée ; une correction complète avec ses critères. Il ne valide rien.
+
+Exécuté le 21/11/2026 :
+- `python3 tests_5e_C3.1-C3.4_shanghai.py` : **36 / 36** — dont le test du billet (deux zones sauvegardées, deux versions étayées,
+  deux critères, avant le Bonus, aucun bouton) et le nouveau compte des questions sur document ;
+- `node _outils/mode_mission/banc_generique.mjs` : la séquence jouée écran par écran à 390 px, aucun refus, le billet
+  est un écran de la dernière séance ;
+- `python3 _outils/controle_question_seule.py` : aucun refus sur le QCM (S1 à S4, E1) ;
+- `python3 _outils/document_qcm.py documents_qcm_5e_C3.1.json --verifier` : les documents sont ceux des données ;
+- les questions sur document regardées à 390 px dans le QCM (aucun débordement, l'image se charge).
+
+Non testé : que le billet soit fait seul et sans aide — cela se voit en classe ; la lecture des réponses écrites
+revient au professeur.
