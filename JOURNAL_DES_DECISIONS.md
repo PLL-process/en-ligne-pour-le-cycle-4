@@ -34520,3 +34520,31 @@ Contrôles : le banc Playwright du TP passe à 29 points (ceux de #832, dont un 
 `region` reste, sur la licence commune. Contrôles de `_outils/` : atteignabilité, boutons vivants,
 loupe, médias, règles visibles, sigles, tactile, unités, liens, validations, mêmes nombres, sauvegarde locale, consignes
 à la ligne, propositions sans indice, statut : verts. Index régénéré.
+
+## 21/11/2026 — Registre des skills : la liste « 12 skills Blender » n'en est pas une ; rien à installer (transversal : `SKILLS_AUDIT.md`)
+
+**Demande de Pascal (21/11).** « Je te donne carte blanche et que penses-tu de ces skills : », suivi d'une publication qui
+propose douze objets à modéliser dans Blender, chacun avec un dépôt GitHub « à explorer ».
+
+**Constat.** Ce ne sont pas des skills au sens du dépôt (des consignes qu'un agent charge) : ce sont douze exercices pour
+une personne qui apprend Blender, et cinq dépôts — le code source de Blender, cité cinq fois, et quatre extensions. La
+publication le dit elle-même : ces dépôts ne sont pas des tutoriels des objets montrés. Lu : la page de chaque dépôt
+(README, licence). Aucun dépôt cloné, aucun code exécuté, Blender non lancé ; les liens, tronqués dans la publication,
+sont reconstitués d'après leur auteur pour quatre d'entre eux.
+
+**Décisions (carte blanche).**
+- **Rien n'est installé, rien n'est créé.** Le détail par dépôt est dans `SKILLS_AUDIT.md`, « Skills externes ».
+- **Pour l'élève, rien à prendre de Blender.** La CAO du dépôt se fait dans Onshape. L'idée de fond de la publication —
+  une compétence, un objet, qu'on finit — est déjà celle de l'atelier CAO : le dé en 5e, l'assemblage en 4e, le boîtier
+  étanche en 3e (entrée du 9 août 2026).
+- **Pour les images du site**, quatre exercices sur douze touchent le programme : la vue éclatée (les skills `anatomy`
+  la couvrent déjà), l'intérieur révélé, le mouvement articulé (deux exercices). Les huit autres sont du rendu de
+  produit.
+- **`blender-visualisation-pedagogique` reste une skill prévue, pas créée** : aucun lot n'en a besoin aujourd'hui, et le
+  registre dit « créées au moment où un lot en aura besoin, pas avant ».
+
+**Ce qui n'a pas été vérifié.** Le contenu des dépôts au-delà de leur page d'accueil ; la licence de `tissue` et celle
+d'`animation_nodes` (non affichées sur les pages lues) ; l'état d'`animation_nodes`, donné par un relevé tiers
+(dernier envoi le 03/03/2024), pas par GitHub.
+
+**Mesure.** Aucune page ni aucun outil modifié : `SKILLS_AUDIT.md` et ce journal seulement.
