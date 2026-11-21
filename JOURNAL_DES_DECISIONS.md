@@ -34629,3 +34629,28 @@ verts.
 
 **Non rejoué.** Le banc Playwright du TP cité le 20/11 (« 29 points ») : aucun fichier du dépôt ne nomme
 `tp_algorigrammes_domotique.html`, il n'est donc pas rejouable d'ici. Le changement ne touche que l'impression.
+
+## 21/11/2026 — Accès rapide, suite : il se replie sur téléphone, et la séance 2 du jardin programmé le rejoint (transversal : index, `_outils`)
+
+**Décision de Pascal (21/11).** « Oui » aux deux choix laissés ouverts par l'entrée des algorigrammes : ajouter la
+séance 2 du jardin programmé (`4e_C9.2`), et replier les groupes de l'accès rapide sur téléphone. Les deux étaient
+proposés avec « non » par défaut ; son « oui » est lu comme un oui aux deux.
+
+**Ce qui change.**
+- **Sur téléphone (680 px au plus), chaque groupe de l'accès rapide se replie sous son titre** : un bouton qui dit le
+  nom du groupe et le nombre de ses liens, 44 px de haut. Un toucher l'ouvre ; le groupe laissé ouvert l'est encore
+  à la visite suivante (gardé sur l'appareil, sous `index:acces-rapide`). Le bouton est posé par script : sans script,
+  tout reste ouvert. À l'impression, et sur un écran large, tous les groupes se montrent ; la page d'ordinateur ne
+  change pas.
+- **« Le jardin connecté se programme — séance 2 : retrouver l'algorigramme dans le code »** (`4e_C9.2`, « traduire un
+  algorithme… en un programme ») entre dans le groupe de 4e, après la séance 1. Douze liens d'algorigrammes.
+
+**Mesure.** À 390 px, l'accès rapide fait 601 px de haut au chargement (1 520 avant ce changement, 733 avant les
+algorigrammes) : six titres sur un écran. `tests_index.py` 31 / 31 (cinq contrôles nouveaux : replié au chargement,
+un toucher ouvre un groupe et lui seul, il reste ouvert au retour, l'impression montre tout, l'écran large n'a aucun
+bouton) ; sans le repli, il refuse (26 / 31). Les dix liens vers une séance joués, dont le nouveau. axe-core sur le
+bloc à 390 px, replié puis un groupe ouvert : aucun défaut ; `controle_axe.mjs` à 1 280 px : vert. Clavier : Entrée
+sur un titre ouvre le groupe. Contraste des liens, tactile, boutons vivants, liens, impression (412 pages, 0 refusée),
+hors ligne : verts. Captures à 390 px (replié, un groupe ouvert) et à 1 280 px regardées.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, un lecteur d'écran.

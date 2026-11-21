@@ -87,7 +87,29 @@ with sync_playwright() as p:
       pg.evaluate("document.documentElement.scrollWidth<=window.innerWidth+2"))
     t("accès rapide : aucun groupe ne déborde à 390 px",
       pg.evaluate("[...document.querySelectorAll('#acces-rapide .rapide-groupe')].every(g=>g.scrollWidth<=g.clientWidth+1)"))
+    # 21/11/2026 — sur téléphone, chaque groupe de l'accès rapide se replie sous son titre ; le groupe laissé ouvert
+    # le reste ; l'impression et l'écran large montrent tout.
+    plis = pg.eval_on_selector_all("#acces-rapide .rapide-pli", "a=>a.map(x=>x.getAttribute('aria-expanded'))")
+    listes_visibles = "[...document.querySelectorAll('#acces-rapide ul')].filter(u=>u.getClientRects().length).length"
+    t("accès rapide, 390 px : chaque groupe est replié sous un bouton",
+      len(plis) >= 6 and all(x == "false" for x in plis) and pg.evaluate(listes_visibles) == 0, str(plis))
+    if plis:   # sans bouton, rien à toucher : le contrôle suivant le dit, sans faire tomber le banc
+        pg.click("#acces-rapide .rapide-groupe:last-child .rapide-pli"); pg.wait_for_timeout(200)
+    t("accès rapide, 390 px : un toucher ouvre le groupe, et lui seul",
+      plis and pg.evaluate(listes_visibles) == 1
+      and pg.evaluate("document.querySelector('#acces-rapide .rapide-groupe:last-child li a').getClientRects().length>0"))
+    pg.reload(); pg.wait_for_timeout(500)
+    t("accès rapide, 390 px : le groupe laissé ouvert l'est encore au retour",
+      pg.eval_on_selector_all("#acces-rapide .rapide-pli[aria-expanded=true]", "a=>a.length") == 1
+      and pg.evaluate(listes_visibles) == 1)
+    pg.emulate_media(media="print"); pg.wait_for_timeout(150)
+    t("accès rapide : à l'impression, tous les groupes se montrent", plis and pg.evaluate(listes_visibles) == len(plis))
+    pg.emulate_media(media="screen")
+    pg.evaluate("localStorage.removeItem('index:acces-rapide')")
     pg.set_viewport_size({"width": 1280, "height": 900}); pg.wait_for_timeout(200)
+    t("accès rapide, 1280 px : aucun bouton de repli, tous les groupes ouverts",
+      plis and pg.eval_on_selector_all("#acces-rapide .rapide-pli", "a=>a.length") == 0
+      and pg.evaluate(listes_visibles) == len(plis))
 
     # L'accès rapide (08/11 et 21/11/2026) : chaque lien mène à une page qui existe, et à la séance qu'il annonce ;
     # chaque code de repère mène à sa ligne, qui s'ouvre.
