@@ -569,6 +569,16 @@ a,a:where(:visited){color:#9ecbff}
 .rapide .niv{color:var(--sub);font-size:.85em;white-space:nowrap}
 /* 21/11/2026 — le code du repère est un lien vers sa ligne : une pastille de 24 px de haut, pour le doigt (WCAG 2.5.8). */
 .rapide a.niv{display:inline-block;min-width:24px;min-height:24px;line-height:22px;padding:0 8px;margin-left:2px;border:1px solid var(--border);border-radius:999px;vertical-align:baseline}
+/* 21/11/2026 — sur téléphone, chaque groupe se replie sous son titre : un bouton posé par script (sans script, tout
+   reste ouvert), qui retient les groupes laissés ouverts. À l'impression, tout se montre. */
+.rapide-pli{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;margin:0;padding:2px 0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.rapide-pli small{margin-left:auto;font-weight:400;font-size:.85em;color:var(--sub);white-space:nowrap}
+.rapide-pli::after{content:"▸";flex:none;color:var(--sub)}
+.rapide-pli[aria-expanded=true]::after{content:"▾"}
+.rapide-pli:focus-visible{outline:2px solid var(--head);outline-offset:2px;border-radius:6px}
+.rapide-groupe.pliable h3{margin:0}
+.rapide-groupe.pliable.ouvert h3{margin:0 0 6px}
+@media print{.rapide-groupe ul[hidden]{display:block!important}.rapide-pli::after{content:""}}
 .ailleurs{color:var(--sub);cursor:help}
 @media print{.rapide,.rapide-groupe{background:#fff!important;border-color:#999!important}.rapide h2,.rapide-groupe h3{color:#274a8a!important}.rapide-note,.rapide .niv{color:#4b74c6!important}}
 
@@ -835,6 +845,41 @@ const NV_DUREE_DEFAUT = {NV_DUREE_DEFAUT};
   }}
   window.addEventListener("hashchange", ouvrir);
   ouvrir();
+}})();
+/* ── Accès rapide : sur téléphone, chaque groupe se replie sous son titre (21/11/2026) ── */
+(function(){{
+  var mq = window.matchMedia("(max-width:680px)");
+  var groupes = [].slice.call(document.querySelectorAll("#acces-rapide .rapide-groupe"));
+  var CLE = "index:acces-rapide";
+  function lus(){{ try {{ return JSON.parse(localStorage.getItem(CLE) || "[]"); }} catch (e) {{ return []; }} }}
+  function garder(){{
+    var o = groupes.filter(function(g){{ return g.classList.contains("ouvert"); }}).map(function(g){{ return g.dataset.titre; }});
+    try {{ localStorage.setItem(CLE, JSON.stringify(o)); }} catch (e) {{}}
+  }}
+  function regler(g, ouvert){{
+    g.classList.toggle("ouvert", ouvert);
+    g.querySelector(".rapide-pli").setAttribute("aria-expanded", ouvert ? "true" : "false");
+    g.querySelector("ul").hidden = !ouvert;
+  }}
+  function poser(){{
+    var ouverts = lus();
+    groupes.forEach(function(g, i){{
+      var h = g.querySelector("h3"), ul = g.querySelector("ul"), b = g.querySelector(".rapide-pli");
+      if (mq.matches && !b){{
+        g.dataset.titre = h.textContent; ul.id = "rapide-liste-" + i;
+        b = document.createElement("button"); b.type = "button"; b.className = "rapide-pli"; b.setAttribute("aria-controls", ul.id);
+        var t = document.createElement("span"); t.textContent = g.dataset.titre;
+        var n = document.createElement("small"); n.textContent = ul.children.length + " lien" + (ul.children.length > 1 ? "s" : "");
+        b.appendChild(t); b.appendChild(document.createTextNode(" ")); b.appendChild(n); h.textContent = ""; h.appendChild(b); g.classList.add("pliable");
+        b.addEventListener("click", function(){{ regler(g, !g.classList.contains("ouvert")); garder(); }});
+        regler(g, ouverts.indexOf(g.dataset.titre) !== -1);
+      }} else if (!mq.matches && b){{
+        h.textContent = g.dataset.titre; ul.hidden = false; g.classList.remove("pliable", "ouvert");
+      }}
+    }});
+  }}
+  poser();
+  if (mq.addEventListener) mq.addEventListener("change", poser); else if (mq.addListener) mq.addListener(poser);
 }})();
 </script>
 </body>
