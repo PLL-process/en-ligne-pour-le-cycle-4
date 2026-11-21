@@ -264,3 +264,19 @@ qu'en 2.3, deux activités après le tableau 2.1 qui disait « regarde bien les 
 - Captures à 1 280 et 390 px (2.1 défilée, 3.1) regardées avant livraison ; aucun défilement horizontal.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Reprise du 21/11/2026 — l'adresse nomme une séance
+
+Demande de Pascal : retrouver les séances d'algorigrammes depuis l'accès rapide de l'accueil. Le lien mène à
+`…book-train.html#s3`. Mesuré sur la page de `main` : l'ancre était ignorée, on arrivait à la station Départ (les liens
+internes de la page, eux, ouvraient déjà le bon onglet).
+
+- La page ouvre l'onglet de la séance que son adresse nomme (`#s0` à `#s4`), ou celui du bloc nommé (`#seance-4`,
+  un volet), au chargement et quand l'ancre change. Une séance entière : les gares et le début de la séance sous la
+  barre fixe. Une ancre inconnue ne change rien.
+- `node tests_4e_C4.1-C4.2-C4.4_book-train.mjs` : **43 / 43** (tests 39 à 42, nouveaux ; sur la page de `main`, 39, 40 et
+  41 échouent) · `node tests_regle_311_4e_C4.1_book-train.mjs` : **38 / 38** · mode mission, banc générique sur la page :
+  aucun refus ; l'élève déjà en mode mission qui ouvre `…#s3` arrive à la séance 3, sans erreur (joué à 390 px) ·
+  `banc_effacement.mjs` sur la page : rien de gardé · `controle_axe.mjs` : pas de défaut grave de plus que la référence.
+
+Non exécuté : un vrai téléphone, Firefox, Safari.

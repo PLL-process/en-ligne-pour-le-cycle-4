@@ -394,6 +394,41 @@ q.on('pageerror', e => qerr.push(e.message));
 await q.goto(pathToFileURL(QCM).href, { waitUntil: 'load' }); await q.waitForTimeout(300);
 ok('27 · le QCM se charge sans erreur JS', qerr.length === 0, qerr.join(' | '));
 
+/* ── 12. L'adresse nomme une séance (21/11/2026) ─────────────────────────────
+   Pascal ne retrouvait pas les séances d'algorigrammes : l'accès rapide de l'accueil mène à « …book-train.html#s3 ».
+   Sur la page d'avant, l'ancre était ignorée : on arrivait à la station Départ. */
+async function parAdresse(ancre) {
+  const c = await b.newContext({ viewport: { width: 1280, height: 900 } });
+  const pg = await c.newPage(); const e = [];
+  pg.on('pageerror', x => e.push(x.message));
+  await pg.goto(pathToFileURL(PAGE).href + (ancre ? '#' + ancre : ''), { waitUntil: 'load' });
+  await pg.waitForTimeout(500);
+  const etat = await pg.evaluate(id => {
+    const actif = document.querySelector('.panneau.actif'), cible = id ? document.getElementById(id) : null;
+    const gare = document.querySelector('[role="tab"][aria-selected="true"]'), r = gare.getBoundingClientRect();
+    return { panneau: actif && actif.id, gare: gare.id, gareVisible: r.top >= 0 && r.bottom <= innerHeight,
+             cibleVisible: !!cible && cible.getClientRects().length > 0, cibleOuverte: !cible || cible.tagName !== 'DETAILS' || cible.open };
+  }, ancre);
+  return { pg, c, e, etat };
+}
+{
+  const a = await parAdresse('s3');
+  ok('39 · l\'adresse « …#s3 » ouvre la séance 3, sa gare sélectionnée et visible', a.etat.panneau === 's3' && a.etat.gare === 'tab-s3' && a.etat.gareVisible && !a.e.length, JSON.stringify(a.etat) + a.e.join(' | '));
+  // un lien vers une autre séance, sans recharger la page
+  await a.pg.evaluate(() => { location.hash = '#s1'; }); await a.pg.waitForTimeout(400);
+  ok('40 · changer l\'ancre sans recharger ouvre l\'autre séance', await a.pg.evaluate(() => document.querySelector('.panneau.actif').id) === 's1');
+  await a.c.close();
+  // un bloc DANS une séance : la première ancre que porte la séance 4
+  const dedans = (src.split('id="s4"')[1] || '').match(/\sid="([A-Za-z][\w-]*)"/);
+  const d = await parAdresse(dedans ? dedans[1] : 'introuvable');
+  ok('41 · l\'adresse d\'un bloc de la séance 4 (« #' + (dedans ? dedans[1] : '?') + ' ») ouvre la séance 4 et montre le bloc',
+     !!dedans && d.etat.panneau === 's4' && d.etat.cibleVisible && d.etat.cibleOuverte, JSON.stringify(d.etat));
+  await d.c.close();
+  const i = await parAdresse('une-ancre-qui-n-existe-pas');
+  ok('42 · une ancre inconnue laisse la page à la station Départ, sans erreur', i.etat.panneau === 's0' && !i.e.length, JSON.stringify(i.etat) + i.e.join(' | '));
+  await i.c.close();
+}
+
 await b.close();
 const n = T.filter(t => t.ok).length;
 for (const t of T) console.log(`${t.ok ? '✅' : '❌'} ${t.n}${!t.ok && t.d ? '  — ' + t.d : ''}`);

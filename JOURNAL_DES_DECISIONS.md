@@ -34548,3 +34548,59 @@ d'`animation_nodes` (non affichées sur les pages lues) ; l'état d'`animation_n
 (dernier envoi le 03/03/2024), pas par GitHub.
 
 **Mesure.** Aucune page ni aucun outil modifié : `SKILLS_AUDIT.md` et ce journal seulement.
+
+## 21/11/2026 — Accès rapide : les séances d'algorigrammes, par niveau, et un lien qui mène à la séance (transversal : index, `_outils` ; `4e_C4.1_book-train`)
+
+**Demande de Pascal (21/11).** « J'aimerais que les séances des algorigrammes soient accessibles dans l'accès rapide car je
+ne les retrouve pas. Quelles sont les compétences relatives ? »
+
+**Constat, mesuré sur `main`.**
+- Les deux pages dédiées — le TP de domotique (4e) et l'entraînement DNB (3e) — sont dans le volet fermé « C6 » du
+  thème 2. Les autres séances d'algorigrammes sont des séances de séquences rangées sous d'autres compétences (C2, C7,
+  C9), dans les trois thèmes : rien ne les réunit.
+- Relevé du mot « algorigramme », séance par séance, dans les pages en ligne : onze pages ou séances où l'algorigramme
+  est l'objet du travail (on le lit, on le remet en ordre, on le dessine), deux en 5e, quatre en 4e, cinq en 3e.
+- `make_index.py` savait mener à une page, pas à une séance.
+- Le Book Train ignorait l'ancre de son adresse : `…book-train.html#s3` ouvrait la station Départ. Les huit autres
+  séquences visées ouvrent déjà la séance nommée.
+
+**Décisions.**
+- **Trois groupes « Algorigrammes » dans l'accès rapide, un par niveau** (5e, 4e, 3e), onze liens. Chaque lien mène à
+  **la séance**, pas au début de la séquence. Un seul groupe aurait empilé onze liens à côté de groupes de cinq, trois
+  et deux ; trois groupes font une seconde rangée.
+- **À côté de chaque lien, le repère que la séance travaille**, tel que la page l'annonce (`5e_C6.2`, `4e_C9.1`…) :
+  une pastille qui mène à sa ligne dans l'index, où se lit la formulation du programme. Quand la page ne revendique
+  aucun code du référentiel pour cette activité, le libellé le dit : « CRCN 3.4 » (Book Train, capteur de confort),
+  « DNB » (l'entraînement, dont le manifeste écrit « aucun code n'est revendiqué »).
+- **`index_complements.json`, deux champs facultatifs** : `ancre` (l'id du panneau de la séance) et `repere`. Une ancre
+  absente de la page arrête `make_index.py`, comme un chemin disparu.
+- **Le Book Train ouvre la séance que son adresse nomme**, au chargement et quand l'ancre change.
+- **Non retenu** : la seconde séance du jardin programmé (`4e_C9.2`, « retrouver l'algorigramme dans le code ») — elle
+  suit la première, déjà dans la liste ; les QCM des lots, qui ne sont pas des séances.
+
+**Les repères du référentiel qui nomment l'algorithme** (`_outils/data_competences.py`) : `5e_C6.2` (comprendre et
+traduire en un algorithme en langage naturel le programme…), `4e_C9.1` (modifier un algorithme), `4e_C9.2` (traduire
+un algorithme en un programme), `3e_C6.2` (programmer un algorithme lié à une nouvelle fonctionnalité), `3e_C9.1`
+(élaborer ou concevoir un algorithme…) ; et, comme outil de description parmi d'autres, `4e_C2.1`, `4e_C7.2`,
+`3e_C7.2`. Constaté en passant, non traité : sous `3e_C9.1`, la séquence du site (« variables, types et systèmes ») ne
+contient le mot « algorigramme » qu'une fois ; en 3e, on le conçoit dans « L'auto-test de la station » (`3e_C6.2`).
+
+**Le banc de l'index disait rouge sans raison.** `tests_index.py` : 18 / 20 sur `main` avant tout changement. Deux
+contrôles cherchaient un état passé : l'ancienne phrase « codes de classement internes » (la page dit « Codification
+opérationnelle… ils ne viennent pas du programme officiel ») et tout lien sortant, dont celui de la licence (n°321).
+Le premier lit la phrase d'aujourd'hui ; le second écoute ce que la page charge. Le banc gagne six contrôles : il joue
+chaque lien de l'accès rapide (neuf mènent à une séance) et le clic sur un code.
+
+**Mesure.** `tests_index.py` 26 / 26 ; sans le correctif du Book Train, il refuse (« ratés : Book Train — séance 3 »).
+Une ancre fausse dans le fichier : `make_index.py` s'arrête. Book Train : 43 / 43 (39 à 42 nouveaux, trois échouent sur
+la page de `main`), n°311 38 / 38, mode mission sans refus, effacement complet. `index.html` : seuls changent le bloc
+de l'accès rapide et la règle de style de ses pastilles. `controle_axe.mjs` avait refusé la première forme (huit codes trop petits pour le doigt,
+`target-size`) : les codes sont des pastilles de 24 px de haut. Liens, atteignabilité, règles visibles, boutons
+vivants, sauvegarde locale, tactile, contraste des liens, hors ligne : verts.
+
+**À savoir.** Sur téléphone, l'accès rapide passe de 733 à 1 520 px de haut : le reste de l'index commence un écran
+plus bas. Non exécuté : un vrai téléphone, Firefox, Safari.
+
+**Vu en passant, non traité ici.** `controle_impression.mjs` refuse trois pages sur `main`, avant comme après ce
+changement : le TP d'algorigrammes de domotique (26 textes sombres sur fond sombre à l'impression), sa page de
+redirection `qcm_algorigrammes_domotique.html` (26) et `4e_C4.1/atelier_pix_crcn_jardin.html` (14).
