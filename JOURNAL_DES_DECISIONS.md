@@ -34862,3 +34862,75 @@ sa barre de navigation, plus large que l'écran du téléphone (628 px pour 390 
 **À retenir pour la suite** : toucher au QCM de `3e_C3.1`, c'est toucher au gabarit de six autres ; `verif_chaine_qcm.py`
 se lance après toute révision de ce QCM. **Non fait** : les 8 lots de C1 (décision 4) ne sont pas commencés.
 
+
+## 21/11/2026 — 4e_C6.2 : le TP « algorigrammes de domotique », suite de l'audit en 12 axes (corrections expliquées, aides, simulation, bilan-preuve)
+
+Sur la carte blanche de Pascal (21/11, soir). Les PR #832, #833 et #836 avaient livré les cinq priorités de l'audit
+(schémas, essais, code de validation, thème clair, phase 0 en boutons radio, bon QCM, sortie de `heritees.json`). Ce lot
+prend le **reste de l'audit**, mesuré sur la page de `main` (e94d45e) avant correction :
+- **Les huit corrections se terminaient par la même phrase** (« les couleurs ne sont ici qu'une aide visuelle ») et
+  n'expliquaient rien. Préférence de Pascal : des corrections exhaustives.
+- **Aucune aide avant la correction** : l'élève avait deux essais, puis la réponse.
+- **La question 1 montrait un bloc dessiné** (un rectangle orange « si <condition> alors sinon », fabriqué en JavaScript
+  par `svgScratch()`) : contraire à la n°308. `controle_blocs_dessines.py` ne le voyait pas (il lit le HTML, pas un
+  dessin écrit par un script).
+- **La simulation testait une règle fixe**, pas l'algorigramme de l'élève, sur un curseur de 0 à 1 000 lux pour un
+  seuil à 50.
+- **Le PDF du bilan ne montrait aucune construction** ; la date venait de l'heure UTC (après 20 h en Martinique, le
+  lendemain) et s'affichait « 2026-11-21 ».
+- **Le nom, le débogage, les deux questions et le mini-projet** se perdaient au rechargement (n°15).
+- Notes d'auteur visibles par l'élève (« Précision pédagogique », « Phrase élève à retenir », « Pour un débutant »),
+  un même bloc ajoutable trois fois, un libellé long du mini-projet qui débordait de son rectangle, le pseudo-code du
+  débogage en une seule couleur (n°13), un tableau à trois colonnes sans filet mobile (n°135,
+  `controle_debordement.py` rouge sur `main` à cause de cette page).
+- **Le TP n'était lié depuis aucune page de sa séquence** : on n'y arrivait que par l'index.
+
+**Corrigé** (même adresse, même clé de sauvegarde) :
+1. **Chaque correction** dit la réponse, **pourquoi** elle est juste, et le **piège fréquent** (8 corrections). Un
+   indice « 🔍 Touche ou clique le schéma pour l'agrandir » suit chaque schéma corrigé.
+2. **Aides à deux niveaux** (un indice, puis la démarche), repliées, pour les cinq exercices construits ; un indice pour
+   chacune des deux questions de la phase 4. Elles ne s'impriment pas.
+3. **Question 1 « du losange au bloc »** : plus de bloc dessiné ; la correction montre le losange et ses deux sorties,
+   puis la même décision en Python (`if … else`), en couleurs.
+4. **La simulation joue les sorties choisies par l'élève** : sans sorties, elle les demande ; avec des sorties fausses,
+   elle dit ce que fait la lampe et pourquoi ce n'est pas le besoin. Curseur de 0 à 200 lux, seuil affiché.
+5. **Le bilan devient une preuve** : niveau et essais ratés par exercice, puis « Mes constructions et mes réponses »
+   (ordre des blocs de chaque phase, sorties des losanges, cases du débogage, réponses aux deux questions, mini-projet).
+   Date du poste, affichée jj/mm/aaaa ; le code de validation garde la date AAAA-MM-JJ du champ.
+6. **Tout ce que l'élève écrit ou coche est gardé** (nom, classe, date, débogage, questions, mini-projet) ; la note
+   « ordinateur partagé » redit « ton nom et tes réponses » ; « Effacer toute ma progression » efface tout.
+7. Notes d'auteur réécrites pour l'élève ; un bloc posé grise son bouton « Ajouter » ; mélange équitable des blocs ;
+   libellés longs coupés sur deux ou trois lignes dans les schémas ; pseudo-code et Python en couleurs avec le
+   colorisateur commun (`_ressources-communes/code-colore/`), fond sombre gardé en thème clair ; ↑ ↓ ✕ à 44 px au
+   toucher ; filet mobile sur le tableau des symboles ; description de page.
+8. **Revue d'écran en trois tours à 390 px** : tour 1, le tableau coupait ses mots en syllabes (« Paral-lélo-gram me »),
+   le pseudo-code passait à la ligne au milieu d'une instruction, les schémas n'invitaient pas à la loupe ; tour 2, la
+   longue condition du débogage sortait du cadre (« < 5… ») et devenait défilable sans que rien le dise ; tour 3, elle
+   est écrite sur deux lignes (« SI présence = oui OU » / « luminosité < 50 lux ») et chaque listing tient (0 px de
+   dépassement).
+9. **La séquence renvoie au TP**, dans son « Avant de commencer », sous la définition de l'algorigramme : « → jamais
+   construit d'algorigramme, ou pas encore sûr·e ? entraîne-toi pas à pas… (environ 50 minutes) », au format des liens
+   de rattrapage (n°304, couleur lisible n°303).
+
+**Banc commité** : `4e_C6.2/tests_tp_algorigrammes_4e_C6.2.mjs` — les bancs de 28 et 29 points annoncés par #832 et
+#833 n'avaient jamais été commités (n°259, n°266). 31 points, rejouables : 31 / 31 (date du poste à 22 h 30 en
+Martinique, corrections fermées au départ, aides, essais et correction, réussite après correction sans points, bloc
+non dupliqué, simulation sur les sorties de l'élève, deux ordres de lecture, deux losanges, marqueurs uniques, aucun
+bloc dessiné, listings en couleurs, mini-projet, bilan et code vérifié, rechargement, effacement, 390 px sans
+débordement, cibles tactiles, réseau coupé, zéro erreur JS, lien depuis la séquence). Sortie 2 si Playwright manque
+(n°299).
+
+Contrôles : banc de la séquence `tests_4e_C6.2.mjs` 56 / 56, `tests_regle_311_4e_C6.2.mjs` 34 / 34,
+`controle_squelette.mjs` vert ; axe-core (WCAG 2.1 AA) sur le dossier vert, et sur le TP **toutes corrections et aides
+ouvertes**, six phases, thèmes sombre et clair, 390 et 1 280 px : 0 défaut. `controle_impression`, `controle_code_colore`
+(1 listing, puis 2 une fois la correction ouverte), `controle_contraste_liens`, `controle_hors_ligne`,
+`controle_debordement` (redevenu vert sur `main`), `controle_hierarchie` sur les deux pages, `controle_boutons_vivants`,
+`controle_regles_visibles`, `controle_unites`, `controle_sigles`, `controle_liens`, `controle_atteignabilite`,
+`controle_blocs_dessines`, `controle_tactile`, `controle_consignes_a_la_ligne`, `controle_memes_nombres`,
+`controle_rapports_tests` : verts. Index et audit régénérés.
+
+**Vu, pas corrigé (hors périmètre de ce lot)** : `controle_sauvegarde_locale.py` sort à 1 sur `main` à cause de
+`index.html` (il écrit dans le navigateur depuis l'accès rapide, sans note « ordinateur partagé » ni bouton
+d'effacement) ; `controle_hierarchie.py` sort à 1 sur `main` à cause d'une énumération en ligne dans
+`5e_C8.2/sequence_5e_C8.2_patere-du-hall.html` (correction du billet). **Non vérifié** : Safari sur iPad et iPhone
+réels, lecteur d'écran réel.
