@@ -36278,3 +36278,14 @@ vérifie désormais Bonus → Bilan → QCM. Les trois pages sont régénérées
 **Vérifié.** `tests_atelier_C7.1.py` 48/48 ; `verif_chaine.py` (chaque page est ce que le générateur produit) ;
 `controle_regle4.py` : les trois ateliers ne sont plus en écart (reste le TP algorigrammes de 4e_C6.2, décision de Pascal) ;
 `verif_regles_audit.py` : aucun ✘ sur ces pages. **Non exécuté** : la revue d'écran à 390 px.
+
+## 22/11/2026 — `controle_regle4.py` vert : le TP « algorigrammes de domotique » de 4e_C6.2 est toléré, avec sa raison (thème 2 : `_outils`)
+
+**Carte blanche de Pascal** (22/11). Dernier écart de la n°4 relevé par l'audit du 22/11 (#867) : le TP de 4e_C6.2, sorti
+des ressources héritées le 20/11 (n°12), est jugé depuis comme une séquence, et n'a ni « Prêt·e à t'entraîner », ni Bonus,
+ni bouton QCM. Ce n'est pas une séquence : sa porte (n°366) est `sequence-jardin-connecte-arrosage-automatique.html`, qui
+porte la clôture Bonus → Bilan → QCM ; le TP ferme sur son bilan imprimé (n°363) et son mini-projet de phase 4. Il entre
+dans `TOLEREES` avec cette raison écrite, comme le modèle de TP de l'atelier CAO. Si Pascal préfère que le TP porte
+lui-même les deux blocs, la ligne se retire et le TP les reçoit.
+
+**Vérifié.** `controle_regle4.py` : 84 pages conformes, 0 écart (sortie 0) ; banc `tests_controle_regle4.py` 25/25.
