@@ -35037,3 +35037,57 @@ questions et trois billets regardés à 390 px.
 **À décider (Pascal).** 1. Les séances que le billet alourdit : le garder ainsi, ou le replier sous son titre.
 2. La capture de « Sécurité Windows », sur son poste, pour la question du pare-feu. 3. La phrase de `3e_C1.5` sur le
 consentement à 15 ans.
+
+## 21/11/2026 — Thème 1, C1 : les trois décisions de Pascal après la PR #843 (« Tu as carte blanche ») — le billet reste visible, le consentement de `3e_C1.5` redit juste, une vraie capture de « Sécurité Windows »
+
+**Les décisions.** Pascal, à propos des trois points laissés ouverts par l'entrée précédente : « Tu as carte blanche ».
+Tranché ainsi :
+
+1. **Le billet de sortie reste déplié**, dans la dernière séance. Il est la preuve de compétence (n°330) : replié sous son
+   titre, il se saute. Les séances qu'il alourdit (environ 150 mots chacune) gardent leur charge ; c'est la séance
+   entière qui se reprendra si elle passe en révision (`revision-sequence`), pas le billet.
+2. **La capture de « Sécurité Windows » est faite**, sur le poste de Pascal, avec son accord donné dans la session
+   (accès à l'application seule, puis à un dossier créé pour la capture).
+3. **La phrase de `3e_C1.5` est réécrite**, après vérification des sources.
+
+**Ce qui était faux dans `3e_C1.5`.** Le Bonus du club de handball donnait pour bonne réponse « Pour publier la photo
+d'un joueur de moins de 15 ans, il faut son accord et celui d'un parent », et sa correction en faisait la contrainte de
+l'argumentaire. La phrase n'est pas fausse pour un joueur de 13 ans, mais elle fait croire qu'à 15 ans un mineur décide
+seul de la publication de sa photo. Or deux droits se mêlaient :
+- le **droit à l'image** : pour diffuser l'image d'un mineur, l'autorisation écrite de ses parents est obligatoire, sans
+  exception, jusqu'à 18 ans (ministère de la Justice, fiche « Droit à l'image et respect de la vie privée ») ; le mineur
+  en âge de comprendre donne aussi son accord ;
+- le **consentement numérique** : à partir de 15 ans, un jeune peut s'inscrire seul à un service en ligne qui repose sur
+  son consentement ; en dessous, il faut son accord et celui d'un parent (CNIL, recommandation 4).
+La page citait déjà les deux règles dans « Ce que dit la loi, en bref », mais ses réponses n'en gardaient qu'une.
+
+**Ce qui change.**
+- `3e_C1.5`, séquence : la bonne réponse devient « Publier la photo d'un joueur mineur demande son accord et celui de ses
+  parents. » (attribut `data-bonne`, valeur, libellé, correction) ; la situation dit « les joueurs, des collégiens, sont
+  tous mineurs » ; « Ce que dit la loi » sépare les deux âges (18 ans pour la photo, 15 ans pour s'inscrire seul) ; les
+  deux aides, l'argumentaire modèle (« et celui de leurs parents, puisqu'ils sont mineurs », « une case pour ses
+  parents ») et une erreur classique de plus : confondre les deux âges. La fiche du ministère de la Justice rejoint les
+  sources. Le QCM du lot (question 19, l'âge du consentement numérique pour un service en ligne) et le lexique étaient
+  justes : inchangés. Le banc suit l'argumentaire modèle.
+- `4e_C1.4`, QCM, question 8 : « Quelle est la différence entre un pare-feu et un antivirus ? », question de souvenir,
+  devient une question sur document. Sous l'énoncé, la **capture d'écran réelle** de l'accueil de Sécurité Windows
+  (Windows 11, poste de Pascal, 21/11/2026) : la fenêtre a été rétrécie pour que l'application range elle-même ses
+  vignettes sur trois colonnes, lisibles à 390 px ; recadrée au titre et aux deux premières rangées, réduite à 800 px,
+  sans retouche ; aucune donnée personnelle (ni compte, ni fichier, ni réseau nommé). L'élève choisit la vignette qui
+  bloque une connexion inattendue venue d'internet ; les trois leurres sont les vignettes voisines, chacune avec son
+  erreur d'élève nommée (l'antivirus examine les fichiers ; « connexion » n'est pas « ouvrir sa session » ; le contrôle
+  des applications vérifie ce qu'on ouvre soi-même). La notion affichée « Pare-feu ou antivirus » soufflait deux
+  propositions sur quatre : elle devient « Les protections d'un ordinateur », renommée dans les pièges.
+- `4e_C1.4` : 6 → **7 illustrées** (ligne « Banque ») ; la carte « Prêt·e à t'entraîner » disait encore « Aucune n'est
+  illustrée » depuis la PR #843 (n°338, mêmes nombres) : elle dit les sept documents. `SOURCES_MEDIAS.md` déclare la
+  capture (« Capture d'écran réelle », n°94) et ne dit plus « aucune capture de logiciel tiers ».
+
+**Vérifié.** Bancs `3e_C1.5` 46 / 46, 23 / 23 et n°311 34 / 34 ; `4e_C1.4` 32 / 32 et n°311 34 / 34. Mode mission joué sur
+`3e_C1.5` : aucun refus. `controle_question_seule.py --strict` : thème 1 toujours à 0 refus. `balayer_questions_qcm.mjs`
+sur le QCM de `4e_C1.4` : 30 questions, 7 illustrées, 0 écart ; la question 8 capturée à 390 px (image 312 × 348, aucun
+débordement). Contrôles des QCM (banque, en-tête, effectifs, unités, indices, longueurs, cohérence, aides), place par
+longueur des séquences, médias : verts.
+
+**Non fait, à dire.** La séance 4 de `3e_C1.5` reste à 1 626 mots visibles, comme avant ce lot (la retouche n'y change
+rien de visible). La capture brute pleine fenêtre et la capture étroite restent sur le poste de Pascal, dans un
+dossier créé pour l'occasion, `captures-cycle4-claude`, sous son dossier « Images » : à garder ou à supprimer, à son choix.

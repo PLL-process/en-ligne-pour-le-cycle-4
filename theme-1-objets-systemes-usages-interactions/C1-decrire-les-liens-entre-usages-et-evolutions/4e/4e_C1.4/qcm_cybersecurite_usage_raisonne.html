@@ -303,7 +303,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 C1.5 + 10 C1.4 + 10 C1.6), 6 illustrées.
+/* Banque : 30 questions (10 C1.5 + 10 C1.4 + 10 C1.6), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque de questions — Sainte-Luce 5e : 30 questions sur le seul
    code 5e_C1.2, réparties par thème (fonction, p… » : elle venait d'un gabarit, par copie, et
@@ -361,12 +361,13 @@ const QUESTIONS = [
  err:"Repousser indéfiniment parce que « ça marche très bien comme ça ». Cela marche, en effet — pour l'attaquant aussi.",
  d:["C'est une rumeur tenace. Les correctifs de sécurité sont au contraire les plus légers.","","La publicité ne se distribue pas par correctif de sécurité.","Certaines mises à jour changent l'apparence, mais ce n'est pas leur raison d'être."],
  ret:"Une faille corrigée est une faille rendue publique : la mise à jour est une course."},
-{c:"C1.5",n:"Pare-feu ou antivirus",q:"Quelle est la différence entre un pare-feu et un antivirus ?",
- o:["le pare-feu cherche les virus, l'antivirus filtre le réseau","le pare-feu protège le wifi, l'antivirus les clés USB","ce sont deux noms du même logiciel","l'un filtre le réseau, l'autre cherche les virus"],r:3,
- expl:"Deux fonctions différentes, et complémentaires : l'un surveille la PORTE (qui a le droit de dialoguer avec la machine), l'autre surveille l'INTÉRIEUR (ce qui s'exécute). Aucun ne remplace l'autre.",
- ex:"Le pare-feu bloque une connexion entrante inattendue ; l'antivirus repère un fichier téléchargé qui se comporte mal.",
+{c:"C1.5",n:"Les protections d'un ordinateur",q:"Sur cet écran « Sécurité Windows », quelle vignette bloque une connexion inattendue venue d'internet ?",
+ img:{src:"Images/doc_capture_securite_windows.png",alt:"Capture d'écran réelle de l'application Sécurité Windows, écran d'accueil « La sécurité en un clin d'œil ». Six vignettes, chacune avec son état : Protection contre les virus et menaces, aucune action requise ; Protection du compte, aucune action requise ; Pare-feu et protection du réseau, aucune action requise ; Contrôle des applications et du navigateur, aucune action requise ; Sécurité des appareils ; Performances et intégrité de l'appareil, aucune action requise."},
+ o:["Protection contre les virus et menaces","Protection du compte","Contrôle des applications et du navigateur","Pare-feu et protection du réseau"],r:3,
+ expl:"Le pare-feu est une barrière sur les connexions : il décide quelles données ont le droit d'entrer dans l'ordinateur ou d'en sortir. L'antivirus, lui, examine les fichiers et les programmes déjà présents. Les deux sont complémentaires : aucun ne remplace l'autre.",
+ ex:"Un programme inconnu, sur internet, essaie de joindre l'ordinateur : le pare-feu bloque la connexion. Un fichier téléchargé se comporte mal : l'antivirus le met à l'écart.",
  err:"Croire qu'un seul des deux suffit — ou qu'un antivirus rend prudent. Aucun logiciel ne remplace le fait de réfléchir avant de cliquer.",
- d:["C'est l'inverse : le pare-feu est une barrière sur les connexions. Demande-toi lequel examine les fichiers.","Le pare-feu filtre toutes les connexions, pas seulement le wifi ; l'antivirus examine tous les fichiers. Cherche ce que fait chacun.","Ce sont deux logiciels distincts, aux rôles différents. Cherche ce que fait chacun.",""],
+ d:["Cette vignette, c'est l'antivirus : il examine les fichiers et les programmes déjà présents sur l'ordinateur. Demande-toi qui surveille ce qui entre par le réseau.","Cette vignette protège ta façon d'ouvrir ta session (un code, ton visage). La connexion de la question, elle, arrive par internet : relis les vignettes pour trouver celle qui parle de ce chemin.","Cette vignette vérifie les applications et les sites que tu ouvres toi-même. La connexion de la question arrive de l'extérieur, sans que tu aies rien ouvert : cherche qui garde la porte.",""],
  ret:"Le pare-feu surveille la porte, l'antivirus surveille l'intérieur. Les deux, ou rien."},
 {c:"C1.5",n:"Le gestionnaire de mots de passe",q:"Que fait un gestionnaire de mots de passe ?",
  o:["il retient un mot de passe par site", "il impose le même mot de passe partout", "il envoie tes mots de passe à tes contacts", "il supprime les mots de passe trop longs"],r:0,
@@ -602,7 +603,7 @@ const PIEGE_DE_NOTION={
   "Ce que dit le cadenas":"message",
   "Le wifi public":"message",
   "À quoi sert une mise à jour":"logiciels",
-  "Pare-feu ou antivirus":"logiciels",
+  "Les protections d'un ordinateur":"logiciels",
   "Les permissions d'une application":"logiciels",
   "Ce qu'est un cookie":"traces",
   "Refuser les cookies non essentiels":"traces",

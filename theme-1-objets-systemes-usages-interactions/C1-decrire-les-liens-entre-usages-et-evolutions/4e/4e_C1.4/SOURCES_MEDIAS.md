@@ -1,7 +1,7 @@
 # Sources des médias — Lot 4e_C1.4 « Cybersécurité et protection des données »
 
-Le média de ce lot est une **création originale** (règle images v2 : image-objet).
-Aucune capture d'écran de logiciel tiers, aucune image de manuel, aucun hotlinking.
+Les médias de ce lot sont des **créations originales** (règle images v2 : image-objet), sauf une **capture d'écran réelle** de Sécurité Windows (règle d'or n°94).
+Aucune image de manuel, aucun hotlinking.
 
 | Fichier | Type | Usage pédagogique (règle v2) | Licence | Poids |
 |---|---|---|---|---|
@@ -12,6 +12,7 @@ Aucune capture d'écran de logiciel tiers, aucune image de manuel, aucun hotlink
 | `Images/doc_bandeau_cookies.svg` | SVG original, dessiné par `_outils/document_qcm.py` (`documents_qcm_4e_C1.4.json`), 21/11/2026 | document de QCM, à lire pour répondre : Le bandeau de cookies d'un site, données simulées. Cookies essentiels, pour le panier et la connexion : toujours actifs. Mesure d'audience : à choisir. Publicité personnalisée : à choisir. Trois boutons : Tout accepter, Tout refuser sauf les essentiels, Personnaliser. Données simulées, dites sur le document. | CC0 | ~3 Ko |
 | `Images/doc_historique_positions.svg` | SVG original, dessiné par `_outils/document_qcm.py` (`documents_qcm_4e_C1.4.json`), 21/11/2026 | document de QCM, à lire pour répondre : L'historique de positions gardé par une application, données simulées. Lundi 7 h 40 : domicile. Lundi 7 h 58 : collège. Lundi 17 h 30 : stade. Mardi 7 h 41 : domicile. Mardi 7 h 57 : collège. Mercredi 14 h : stade. Données simulées, dites sur le document. | CC0 | ~3 Ko |
 | `Images/doc_reglage_confidentialite.svg` | SVG original, dessiné par `_outils/document_qcm.py` (`documents_qcm_4e_C1.4.json`), 21/11/2026 | document de QCM, à lire pour répondre : Le réglage « Qui peut voir tes publications ? » d'un compte, données simulées. Trois choix : Public, tout le monde, même sans compte ; Amis, les personnes que tu as acceptées ; Moi uniquement. Le choix coché est Public. Données simulées, dites sur le document. | CC0 | ~3 Ko |
+| `Images/doc_capture_securite_windows.png` | **Capture d'écran réelle**, application Sécurité Windows (Windows 11 Professionnel, fr, mode sombre), poste de Pascal, 21/11/2026 ; fenêtre rétrécie pour que l'application range ses vignettes sur trois colonnes, puis recadrée au titre et aux deux premières rangées et réduite à 800 px de large, sans retouche | document de QCM (question 8), à lire pour répondre : l'écran d'accueil « La sécurité en un clin d'œil », six vignettes avec leur état, dont « Protection contre les virus et menaces » et « Pare-feu et protection du réseau ». Aucune donnée personnelle visible (ni nom de compte, ni fichier, ni réseau nommé) | interface © Microsoft, reproduite telle quelle à des fins d'illustration pédagogique | ~208 Ko |
 
 Le fichier porte `role="img"`, un `<title>` et un `<desc>` : *« une touche de clavier
 rectangulaire portant le mot Tab et deux flèches horizontales opposées butant sur un
