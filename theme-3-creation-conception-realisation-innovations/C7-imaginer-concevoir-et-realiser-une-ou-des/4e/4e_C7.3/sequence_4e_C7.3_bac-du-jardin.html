@@ -1725,7 +1725,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <details class="referentiel-replie">
   <summary>🎯 Ce que dit le programme</summary>
 <div class="bloc referentiel-eleve">
-  <table class="refs">
+  <table class="refs" tabindex="0">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>4e_C7.3</b></td><td>Comparer différents matériaux pour choisir le plus adapté.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
     <tr><td>4e_C3.2 <span style="color:var(--sub)">(appui)</span></td><td>Comparer qualitativement et/ou quantitativement (incidences environnementales, bilan carbone, efficacité énergétique) plusieurs <abbr class="sigle" title="objet ou système technique" tabindex="0">OST</abbr> répondant au même besoin et arrêter un choix.</td><td>Activités 0 et 3, et synthèse</td></tr>
@@ -2099,7 +2099,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
       <div class="jauge" id="jMoins"><b id="nMoins">—</b><span>le moins cher des retenus</span></div>
     </div>
 
-    <table class="mat" id="tab">
+    <table class="mat" id="tab" tabindex="0">
       <tr><th>Matériau</th><th>Résistance<br><small>MPa</small></th><th>Tenue au soleil<br><small>ans</small></th><th>Tenue au sel<br><small>/5</small></th><th>Tenue à l'eau<br><small>/5</small></th><th>Recyclabilité<br><small>%</small></th><th>Masse de la pièce<br><small>kg</small></th><th>Coût<br><small>€</small></th><th>Verdict</th></tr>
     </table>
 
@@ -2207,7 +2207,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <table class="refs">
+      <table class="refs" tabindex="0">
       <tr><th>Ce que tu lis dans la colonne « Coût »</th><th>En euros</th></tr>
       <tr><td>Le PP recyclé, à l'achat</td><td><b>90 €</b></td></tr>
       <tr><td>Le PP recyclé, sur 15 ans</td><td><b>271 €</b></td></tr>
@@ -2343,7 +2343,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Le teck passe devant le PVC l'année … : le PVC en est à … achats, le teck à …. »</li><li>« Il repasse derrière l'année …, parce que …. »</li><li>« Ces deux dates dépendent de … et de …, pas de … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du Bonus — les deux années où le classement bascule, et d'où viennent les durées</summary><div>
     <p><b>On compte les achats.</b><br>Sur une durée donnée, on rachète un bac chaque fois que le précédent arrive au bout de sa vie. <br>Le PVC (8 ans) s'achète une fois jusqu'à 8 ans, deux fois de 9 à 16 ans, trois fois de 17 à 24 ans. <br>Le teck (15 ans) s'achète une fois jusqu'à 15 ans, deux fois de 16 à 30 ans.</p>
-    <table class="refs">
+    <table class="refs" tabindex="0">
       <tr><th>Durée de comparaison</th><th>PVC</th><th>Teck</th><th>Le moins cher des deux</th></tr>
       <tr><td>jusqu'à 8 ans</td><td>1 × 166,60 = 166,60 €</td><td>1 × 309,40 = 309,40 €</td><td>le PVC</td></tr>
       <tr><td>de 9 à 15 ans</td><td>2 × 166,60 = 333,20 €</td><td>1 × 309,40 = 309,40 €</td><td><b>le teck</b></td></tr>
@@ -3477,6 +3477,50 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         return r;
       };
     } catch(e){}
+  }
+
+  /* Une zone qui défile s'atteint au clavier (axe-core, « scrollable-region-focusable », mesuré page ouverte sur les
+     341 pages le 22/11/2026 : 108 des 142 zones fautives étaient les schémas et les tableaux de ce kit). À 600 px et
+     moins, un schéma garde 560 px de large pour rester lisible, un grand tableau garde ses colonnes : la zone défile de
+     côté. Quand elle déborde vraiment, elle reçoit le focus (Tab, puis les flèches pour la faire défiler) et un nom lu
+     par le lecteur d'écran ; quand elle ne déborde plus (écran plus large), on retire ce qu'on avait posé, et cela
+     seulement. Une zone cachée (onglet fermé) mesure 0 : l'observateur de taille la reprend quand elle s'ouvre. En mode
+     incrusté, seules les zones des exercices sont touchées ; le tableau lui-même aussi, quand la séquence le fait
+     défiler (`table{display:block;overflow-x:auto}` dans sa feuille de style). */
+  var zones = [];
+  (source ? [document] : Array.prototype.slice.call(incrustes)).forEach(function(r){
+    r.querySelectorAll(".figure, .defile, .defile > table").forEach(function(el){ zones.push(el); });
+  });
+  function marquerZone(el){
+    var deborde = el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1;
+    var pose = el.getAttribute("data-zone-clavier");
+    if (deborde && pose === null){
+      pose = "";
+      if (!el.hasAttribute("tabindex")){ el.setAttribute("tabindex", "0"); pose += "t"; }
+      if (!el.hasAttribute("role")){ el.setAttribute("role", "region"); pose += "r"; }
+      if (!el.hasAttribute("aria-label") && !el.hasAttribute("aria-labelledby")){
+        var leg = el.querySelector("figcaption") || el.querySelector("caption");
+        var nom = leg ? leg.textContent.replace(/\s+/g, " ").trim() : "";
+        if (nom.length > 100) nom = nom.slice(0, 99) + "…";
+        el.setAttribute("aria-label", (el.classList.contains("defile") || el.tagName === "TABLE" ? "Tableau" : "Schéma") + (nom ? " : " + nom : "") + " (il défile de côté)");
+        pose += "l";
+      }
+      el.setAttribute("data-zone-clavier", pose);
+    } else if (!deborde && pose !== null){
+      if (pose.indexOf("t") !== -1) el.removeAttribute("tabindex");
+      if (pose.indexOf("r") !== -1) el.removeAttribute("role");
+      if (pose.indexOf("l") !== -1) el.removeAttribute("aria-label");
+      el.removeAttribute("data-zone-clavier");
+    }
+  }
+  if (zones.length){
+    if (typeof ResizeObserver === "function"){
+      var observateur = new ResizeObserver(function(entrees){ entrees.forEach(function(e){ marquerZone(e.target); }); });
+      zones.forEach(function(el){ observateur.observe(el); });
+    } else {
+      zones.forEach(marquerZone);
+      window.addEventListener("resize", function(){ zones.forEach(marquerZone); });
+    }
   }
 })();
 </script>

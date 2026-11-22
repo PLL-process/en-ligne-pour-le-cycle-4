@@ -1639,6 +1639,11 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-height:24px}
 details.bonus-replie[open]>summary{margin-bottom:8px}
 </style>
+<style>
+/* Ce qui défile est caché (règle d'or n°364, 22/11/2026) : sur un téléphone, un bloc de code ou de données revient
+   à la ligne au lieu de défiler. Aucun caractère n'est changé : ce qu'on copie reste le même. */
+@media (max-width:600px){.codebox{white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
 </head>
 <body>
 
@@ -1687,7 +1692,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <details class="referentiel-replie">
   <summary>🎯 Ce que dit le programme</summary>
 <div class="bloc referentiel-eleve">
-  <table class="refs">
+  <table class="refs" tabindex="0">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>5e_C8.2</b></td>
         <td>Mettre en œuvre un protocole de test fourni pour valider la tenue mécanique d'un matériau.</td>
@@ -2050,7 +2055,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
   <div class="feedback" id="fb2"></div>
   <details class="correction"><summary>📖 Correction — les cinq relevés</summary><div>
-    <table class="refs">
+    <table class="refs" tabindex="0">
       <tr><th>Matériau</th><th>Charge de rupture</th></tr>
       <tr><td>Bois (pin)</td><td><b>41 kg</b></td></tr>
       <tr><td>PLA imprimé en 3D</td><td><b>51 kg</b></td></tr>

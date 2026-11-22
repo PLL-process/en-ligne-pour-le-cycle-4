@@ -10,7 +10,9 @@ Sur des pages fabriquées, sans navigateur :
      un lien ; dans un lien, pas de tabindex ; jamais dans la navigation, un listing, une option de liste ;
   3. le style commun posé une seule fois, et rien d'autre ne change dans le texte ;
   4. relancé, l'outil ne pose rien (n°149) ; le contrôle compte l'infobulle pour une explication ;
-  5. `infobuller` (pour les générateurs) : QCM en clair d'abord, les autres sigles en infobulle, et idempotent.
+  5. `infobuller` (pour les générateurs) : QCM en clair d'abord, les autres sigles en infobulle, et idempotent ;
+  6. la barre de navigation en dernier recours : un sigle qui n'apparaît d'abord que là y reçoit l'infobulle, sans
+     tabindex ; jamais quand le texte de la page peut la porter.
 
 Sortie : 0 tout passe · 1 un échec (n°299 : ce banc lit toujours ses pages fabriquées, il ne peut pas sortir à 2).
 """
@@ -121,6 +123,30 @@ SANS_HEAD = MORCEAUX.replace("<head><title>Station</title></head>", '<meta chars
 m8 = es.infobuller(SANS_HEAD)
 t("infobulles sans style, page sans </head> : le style se pose avant la première feuille de style",
   m8.count('id="sigles-css"') == 1 and m8.index('id="sigles-css"') < m8.index("<style>p{}") and es.infobuller(m8) == m8, m8)
+
+# 8. La barre de navigation en dernier recours (22/11/2026) : « 🧠 QCM » d'une synthèse, et rien d'autre
+SYNTHESE = """<!doctype html><html><head><title>Synthèse</title></head><body>
+<nav id="navharm"><a href="../index.html">⌂ Accueil</a><a href="../qcm_x.html">🧠 QCM</a></nav>
+<h1>Ce qu'il faut retenir</h1><p>Une adresse IP identifie une machine.</p>
+</body></html>"""
+g8 = es.infobuller(SYNTHESE)
+m8b = cse.mesurer_source(g8)
+t("barre : « QCM » seulement dans la barre reçoit l'infobulle, sans tabindex, et la page est expliquée",
+  '<a href="../qcm_x.html">🧠 <abbr class="sigle" title="questionnaire à choix multiples">QCM</abbr></a>' in g8
+  and m8b.get("QCM") == "ok" and m8b.get("IP") == "ok" and g8.count('id="sigles-css"') == 1, (m8b, g8[:400]))
+t("barre : relancé, rien ne change ; le texte de la page ne bouge pas", es.infobuller(g8) == g8
+  and texte(g8) == texte(SYNTHESE))
+PLUS_BAS = SYNTHESE.replace("<p>Une adresse IP", "<p>" + "Un réseau relie des machines entre elles. " * 6
+                            + "</p><p>Le QCM (questionnaire à choix multiples) te prépare.</p><p>Une adresse IP")
+g9 = es.infobuller(PLUS_BAS)
+t("barre : expliqué en clair plus bas (P), la barre reçoit l'infobulle, l'explication en clair reste",
+  cse.mesurer_source(PLUS_BAS).get("QCM") == "P" and
+  'class="sigle" title="questionnaire à choix multiples">QCM</abbr></a>' in g9
+  and "Le QCM (questionnaire à choix multiples) te prépare" in g9 and cse.mesurer_source(g9).get("QCM") == "ok", g9)
+AILLEURS = SYNTHESE.replace("<p>Une adresse IP", "<p>Refais le QCM demain.</p><p>Une adresse IP")
+g10 = es.infobuller(AILLEURS)
+t("barre : le sigle a aussi sa place dans le texte, la barre n'est pas touchée",
+  '>🧠 QCM</a></nav>' in g10 and cse.mesurer_source(g10).get("QCM") == "ok", g10)
 
 print(f"\n{sum(RES)} / {len(RES)}")
 sys.exit(0 if all(RES) else 1)

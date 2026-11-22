@@ -1976,7 +1976,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <div class="bloc referentiel-eleve">
 <table class="refs">
 <tr><th>Code</th><th>Je serai capable de…</th><th>Où, dans cette séquence</th></tr>
-<tr><td><b>4e_C8.1</b></td><td>Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.</td><td>Activité 0 (banc de tests virtuel)</td></tr>
+<tr><td><b>4e_C8.1</b></td><td>Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.</td><td>Activité 2 bis (la console de la jardinière) ; le banc de l'activité 0 y prépare</td></tr>
 <tr><td><b>4e_C8.2</b></td><td>Proposer un protocole de test pour valider la tenue mécanique d'un matériau.</td><td>Activités 1 et 2</td></tr>
 <tr><td><b>4e_C8.3</b></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Activités 2, 3 et le réinvestissement</td></tr>
 </table>
@@ -2226,7 +2226,7 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <section class="card ou-jen-suis pp-ecran" id="taches">
 <details id="tachesVolet" open>
 <summary>🗺 Où j'en suis — <span id="tachesResume">0 / 6 activités validées</span></summary>
-<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
+<h2>🗺 Où j'en suis — les 7 activités de cette séquence</h2>
 <p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
 <div class="taches-bandeau" id="tachesBandeau"></div>
 </details>
@@ -2407,7 +2407,8 @@ ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le m
 <section class="card seance-tete">
 <h2>🧭 Séance 2 — Analyser les résultats, ligne par ligne</h2>
 <p class="question-directrice">Question directrice : que disent les résultats du banc, exigence par exigence — conforme, non conforme, et pourquoi ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme : relier chaque exigence à son test, juger la conformité et poser un diagnostic (activité 2, environ 35 min, exercice du diagramme des exigences compris).</p>
+<p class="mots-seance"><a href="lexique_4e_C8.1.html#seance-s2">📖 Les mots de cette séance</a></p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① relier chaque exigence à son test, juger la conformité et poser un diagnostic (activité 2, environ 35 min, exercice du diagramme des exigences compris)&nbsp;; <br>② avant de fabriquer, vérifier qu'une pièce tiendra en réglant une simulation (activité 2 bis, environ 15 min). <br>La séance tient dans 55 min.</p>
 </section>
 
 <section class="card">
@@ -2590,6 +2591,260 @@ tension ?</span></td></tr></tbody></table></div></div><label class="champ" for=
 </div>
 </section>
 
+<!-- debut:act-simulation — engendré par _generation/console_jardiniere.py, ne pas éditer à la main -->
+<style>
+#act2bis .schema-console{width:100%;max-width:620px;height:auto;display:block;margin:10px auto;background:#081b3a;border-radius:10px}
+#act2bis .simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:14px;margin:12px 0;text-align:left}
+#act2bis .simu h4{margin:0 0 8px;color:var(--hl)}
+#act2bis .parametres-mat{border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin:8px 0}
+#act2bis .parametres-mat{display:flex;flex-wrap:wrap;gap:4px 14px;text-align:left}
+#act2bis .parametres-mat legend{padding:0 4px}
+#act2bis .puce-mat{display:inline-flex;align-items:center;gap:6px;margin:4px 0;font-size:.95em;white-space:nowrap}
+#act2bis .cmd{display:grid;grid-template-columns:max-content minmax(90px,140px);gap:8px 12px;align-items:center;justify-content:start;margin:8px 0}
+#act2bis .cmd input[type=number]{width:100%;font-size:16px}
+#act2bis .sortie-simu{margin:10px 0;padding:10px 12px;border-radius:10px;line-height:1.55}
+#act2bis .sortie-simu:empty{display:none}
+#act2bis .sortie-simu.ok{background:rgba(129,251,161,.12);border-left:4px solid var(--ok)}
+#act2bis .sortie-simu.ko{background:rgba(255,123,136,.10);border-left:4px solid var(--err)}
+#act2bis table.releve{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+#act2bis table.releve th,#act2bis table.releve td{border:1px solid var(--border);padding:5px 7px;text-align:left}
+#act2bis #simReleve{font-size:.85em}
+#act2bis #simReleve th,#act2bis #simReleve td{padding:4px 6px;white-space:nowrap}
+/* sur téléphone, chaque essai tient sur ses lignes : rien ne défile de côté (n°364) */
+@media(max-width:600px){
+  #act2bis #simReleve,#act2bis #simReleve tbody{display:block;overflow:visible;width:100%}
+  #act2bis #simReleve thead{display:none}
+  #act2bis #simReleve caption{display:block;width:100%;text-align:left}
+  #act2bis #simReleve tr{display:block;border:1px solid var(--border);border-radius:8px;margin:6px 0;padding:4px 6px}
+  #act2bis #simReleve td{display:inline-block;border:0;padding:2px 8px 2px 0}
+  #act2bis #simReleve td[data-l]::before{content:attr(data-l)}
+  #act2bis #simReleve td[data-u]::after{content:attr(data-u)}
+}
+#act2bis table.releve th{background:#173666;color:var(--hl)}
+#act2bis table.releve caption{text-align:left;color:var(--sub);font-size:.95em;padding:4px 0}
+#act2bis table.releve tr.ok td{background:rgba(129,251,161,.10)}
+#act2bis table.releve tr.ko td{background:rgba(255,123,136,.08)}
+#act2bis table.releve tr.choisie td{outline:2px solid var(--ok)}
+#act2bis .ecart{border-left:4px solid var(--warn);background:rgba(255,214,102,.08);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+#act2bis .petit{font-size:.88em;color:var(--sub)}
+#act2bis .materiaux-toit li{margin:6px 0}
+@media(max-width:520px){#act2bis .cmd{grid-template-columns:1fr}}
+@media print{#act2bis .simu,#act2bis .sortie-simu{background:#fff!important;color:#111!important}#act2bis .schema-console{background:#081b3a}}
+</style>
+<section class="card" id="act2bis">
+<h2>🧮 Activité 2 bis — La console tiendra-t-elle&nbsp;? Paramétrer une simulation (C8.1) <span class="chrono">⏱ ~15 min</span></h2>
+<div class="exo">
+<p>Sur le toit, le club veut accrocher ses jardinières au muret.
+<br>Chaque jardinière est posée sur <b>deux consoles</b> (une console&nbsp;: une barre fixée au mur, qui porte une charge en avançant dans le vide).</p>
+<p>Avant d'en imprimer quarante, on vérifie qu'elles tiennent — sans en casser une seule&nbsp;: on <b>simule</b>.
+<br>La simulation est fournie&nbsp;: c'est toi qui la <b>règles</b>.</p>
+<div class="ecart"><b>Le cahier des charges</b>&nbsp;: chaque console tient <b>3 fois</b> la charge la plus lourde qu'elle portera.
+<br>On l'écrit avec un nombre, le <b>coefficient de sécurité k</b>&nbsp;: il doit valoir <b>3 ou plus</b>.</div>
+<p><b>Les données</b>&nbsp;:
+<br>· la jardinière pleine de terre mouillée pèse <b>16 kg</b>&nbsp;;
+<br>· après une tempête de janvier, la neige posée dessus pèse <b>6 kg</b> de plus&nbsp;;
+<br>· la console proposée par le club&nbsp;: <b><abbr class="sigle" title="acide polylactique, le plastique des imprimantes 3D" tabindex="0">PLA</abbr> imprimé en 3D, 6 mm d'épaisseur</b> — c'est ce que l'imprimante fait le plus vite.</p>
+<svg viewBox="0 0 660 330" role="img" aria-labelledby="consT consD" class="schema-console">
+<title id="consT">La console de la jardinière, vue de côté, et les quatre réglages de la simulation</title>
+<desc id="consD">À gauche, le muret du toit. Une console horizontale sort du muret ; la jardinière est posée dessus.
+Son poids s'applique au milieu de la jardinière, à 150 millimètres du muret : c'est la longueur L. La console a une
+épaisseur e, vue de côté, et une largeur de 30 millimètres. Les quatre réglages sont le matériau, l'épaisseur,
+la longueur et la charge.</desc>
+<defs><marker id="consFl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+<path d="M0 0 10 5 0 10z" fill="currentColor"/></marker>
+<pattern id="consMur" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#12305e"/>
+<path d="M0 7h22M11 0v7M0 14h22" stroke="#274a8a" stroke-width="1.4"/></pattern></defs>
+<rect x="20" y="40" width="80" height="270" fill="url(#consMur)"/>
+<text x="60" y="30" text-anchor="middle" fill="#9bbefc" font-size="20">muret</text>
+<rect x="100" y="196" width="330" height="20" rx="3" fill="#ffd66b"/>
+<text x="360" y="242" text-anchor="middle" fill="#ffd66b" font-size="20" font-weight="bold">la console</text>
+<path d="M140 120h250l-14 72H154z" fill="#3aa76d" stroke="#81fba1" stroke-width="2"/>
+<path d="M160 120q22-16 44 0M326 120q22-16 44 0" fill="none" stroke="#81fba1" stroke-width="3"/>
+<text x="265" y="152" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">jardinière</text>
+<text x="265" y="176" text-anchor="middle" fill="#e4eaf5" font-size="16">terre, et neige l'hiver</text>
+<line x1="265" y1="30" x2="265" y2="112" stroke="#ff7b88" stroke-width="4" marker-end="url(#consFl)" color="#ff7b88"/>
+<text x="277" y="52" fill="#ff7b88" font-size="20" font-weight="bold">charge (kg)</text>
+<line x1="100" y1="282" x2="263" y2="282" stroke="#61dafb" stroke-width="2.5" marker-end="url(#consFl)" color="#61dafb"/>
+<line x1="100" y1="274" x2="100" y2="290" stroke="#61dafb" stroke-width="2.5"/>
+<line x1="265" y1="226" x2="265" y2="288" stroke="#61dafb" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="106" y="312" fill="#61dafb" font-size="20" font-weight="bold">longueur L = 150 mm</text>
+<line x1="460" y1="196" x2="460" y2="216" stroke="#c68ef2" stroke-width="2.5"/>
+<line x1="440" y1="196" x2="480" y2="196" stroke="#c68ef2" stroke-width="1.5"/>
+<line x1="440" y1="216" x2="480" y2="216" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="490" y="203" fill="#c68ef2" font-size="20" font-weight="bold">épaisseur e</text>
+<text x="490" y="224" fill="#c68ef2" font-size="17">(largeur : 30 mm)</text>
+<text x="490" y="262" fill="#e4eaf5" font-size="20" font-weight="bold">+ le matériau</text>
+</svg>
+<p><b>Q1 — Quelle charge entres-tu dans la simulation, pour UNE console&nbsp;?</b>
+<br>Fais le calcul sur une feuille de brouillon avant de choisir.</p>
+<fieldset class="qcm-groupe" id="a6q1">
+  <legend>Q1 — La charge d'une console, dans le cas le plus lourd</legend>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__1" value="16 kg" data-pourquoi="Tu as oublié la neige : le cahier des charges parle de la charge la plus lourde. Ajoute les 6 kg de la tempête, puis partage."><label for="a6q1__1">16 kg</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__2" value="22 kg" data-pourquoi="Toute la jardinière ne pèse pas sur une seule console. Relis les données : combien de consoles la portent ?"><label for="a6q1__2">22 kg</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__3" value="11 kg"><label for="a6q1__3">11 kg</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q1" id="a6q1__4" value="8 kg" data-pourquoi="Tu as partagé la terre seule. Ajoute d'abord la neige, puis partage entre les deux consoles."><label for="a6q1__4">8 kg</label></div>
+</fieldset>
+
+<div class="simu" id="simuConsole">
+<h4>🧮 La simulation fournie — règle-la, puis lance-la</h4>
+<p class="petit">Le schéma ci-dessus nomme les quatre réglages.</p>
+<fieldset class="parametres-mat"><legend>① Le matériau</legend>
+  <label class="puce-mat"><input type="radio" name="simMat" value="Bois (pin)"> Bois (pin)</label>
+  <label class="puce-mat"><input type="radio" name="simMat" value="PLA imprimé en 3D" checked> PLA imprimé en 3D</label>
+  <label class="puce-mat"><input type="radio" name="simMat" value="PVC rigide"> PVC rigide</label>
+  <label class="puce-mat"><input type="radio" name="simMat" value="Aluminium"> Aluminium</label>
+  <label class="puce-mat"><input type="radio" name="simMat" value="Acier doux"> Acier doux</label>
+</fieldset>
+<div class="cmd">
+<label for="simEp">② L'épaisseur e (millimètres)</label> <input type="number" id="simEp" min="2" max="40" step="1" value="6" inputmode="numeric">
+<label for="simLong">③ La longueur L (millimètres)</label> <input type="number" id="simLong" min="50" max="400" step="10" value="150" inputmode="numeric">
+<label for="simCharge">④ La charge (kilogrammes)</label> <input type="number" id="simCharge" min="1" max="60" step="1" value="" placeholder="ta réponse à Q1" inputmode="numeric">
+</div>
+<button class="btn" id="simLancer" type="button">▶ Lancer la simulation</button>
+<div id="simSortie" class="sortie-simu" role="status" aria-live="polite"></div>
+<table class="releve" id="simReleve" aria-label="Le relevé de tes essais"><caption>Le relevé de tes essais (le dernier en haut)</caption>
+<thead><tr><th>Matériau</th><th>e (millimètres, mm)</th><th>L (millimètres, mm)</th><th>charge (kilogrammes, kg)</th><th>σ (mégapascals, MPa)</th><th>k</th><th>Résultat</th></tr></thead><tbody></tbody></table>
+<p class="petit"><b>Ce que la simulation suppose</b>&nbsp;: une console neuve, fixée solidement dans le muret, le poids posé au milieu de la jardinière, à température ordinaire.
+<br>Elle ne dit rien du soleil, de l'eau ou du gel&nbsp;: ça, c'est à toi de le lire à côté.
+<br>σ (sigma) est la <b>contrainte</b>&nbsp;: l'effort que supporte chaque millimètre carré de la console, en MPa (mégapascals).
+<br>La <b>limite élastique</b> d'un matériau est la contrainte au-delà de laquelle il plie pour toujours.</p>
+</div>
+
+<p><b>Q2 — Règle la simulation sur la console du club</b> (PLA imprimé en 3D, 6 mm, 150 mm, et ta charge de Q1), lance-la. Que lis-tu&nbsp;?</p>
+<fieldset class="qcm-groupe" id="a6q2">
+  <legend>Q2 — Ce que dit la simulation pour la console du club</legend>
+  <div class="qcm-option"><input type="radio" name="a6q2" id="a6q2__1" value="k = 1,39 : elle tient, mais k est plus petit que 3" data-pourquoi="C'est ce que donne une console de 10 mm. Vérifie le réglage de l'épaisseur : le club propose 6 mm."><label for="a6q2__1">k = 1,39 : elle tient, mais k est plus petit que 3</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q2" id="a6q2__2" value="k = 0,50 : elle casse"><label for="a6q2__2">k = 0,50 : elle casse</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q2" id="a6q2__3" value="k = 0,25 : elle casse" data-pourquoi="C'est le résultat avec 22 kg sur une seule console. Relis ta réponse à Q1, puis règle la charge d'UNE console."><label for="a6q2__3">k = 0,25 : elle casse</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q2" id="a6q2__4" value="k = 3,13 : elle est validée" data-pourquoi="C'est le résultat pour 15 mm. Règle l'épaisseur du club, 6 mm, puis relance."><label for="a6q2__4">k = 3,13 : elle est validée</label></div>
+</fieldset>
+
+<p><b>Q3 — Le club garde le PLA. Change UN SEUL réglage&nbsp;: l'épaisseur.</b>
+<br>Essaie au moins trois épaisseurs, puis réponds&nbsp;: quelle est la plus petite épaisseur qui respecte le cahier des charges&nbsp;?</p>
+<fieldset class="qcm-groupe" id="a6q3">
+  <legend>Q3 — La plus petite épaisseur de PLA validée</legend>
+  <div class="qcm-option"><input type="radio" name="a6q3" id="a6q3__1" value="8 mm" data-pourquoi="À 8 mm, la simulation dit que la console casse encore. Relance avec une épaisseur plus grande, sans toucher au reste."><label for="a6q3__1">8 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q3" id="a6q3__2" value="10 mm" data-pourquoi="À 10 mm, la console tient, mais k reste plus petit que 3. Essaie plus épais."><label for="a6q3__2">10 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q3" id="a6q3__3" value="12 mm" data-pourquoi="À 12 mm, k vaut 2 : la console tient, mais pas trois fois la charge. Essaie l'épaisseur suivante."><label for="a6q3__3">12 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q3" id="a6q3__4" value="15 mm"><label for="a6q3__4">15 mm</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q3" id="a6q3__5" value="20 mm" data-pourquoi="20 mm valide, mais ce n'est pas la plus PETITE épaisseur validée. Essaie entre 12 et 20 mm."><label for="a6q3__5">20 mm</label></div>
+</fieldset>
+
+<p><b>Q4 — Pourquoi ne change-t-on qu'un seul réglage à la fois&nbsp;?</b></p>
+<fieldset class="qcm-groupe" id="a6q4">
+  <legend>Q4 — Un seul réglage à la fois</legend>
+  <div class="qcm-option"><input type="radio" name="a6q4" id="a6q4__1" value="Pour savoir quel réglage a changé le résultat"><label for="a6q4__1">Pour savoir quel réglage a changé le résultat</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q4" id="a6q4__2" value="Parce que la simulation refuse deux changements à la fois" data-pourquoi="La simulation accepte deux changements à la fois : essaie. Demande-toi plutôt ce que tu sauras du résultat."><label for="a6q4__2">Parce que la simulation refuse deux changements à la fois</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q4" id="a6q4__3" value="Pour faire moins de calculs à la main" data-pourquoi="C'est la simulation qui calcule, pas toi. Pense à ce que tu veux comprendre en comparant deux essais."><label for="a6q4__3">Pour faire moins de calculs à la main</label></div>
+  <div class="qcm-option"><input type="radio" name="a6q4" id="a6q4__4" value="Pour que le coefficient de sécurité monte plus vite" data-pourquoi="Changer un seul réglage ne fait pas monter k plus vite. Relis la question : que veux-tu savoir en comparant deux essais ?"><label for="a6q4__4">Pour que le coefficient de sécurité monte plus vite</label></div>
+</fieldset>
+
+<p><b>Q5 — Ta décision, en une ou deux phrases</b>&nbsp;: valides-tu la console du club&nbsp;? Que proposes-tu&nbsp;? Donne le nombre qui le prouve.</p>
+<textarea id="a6dec" rows="3" placeholder="Je ne valide pas la console de … mm, parce que k = … Je propose …" aria-label="Q5 — ta décision, avec le nombre qui la prouve"></textarea>
+<button class="btn check" data-check="6" type="button">✅ Vérifier l'activité 2 bis</button>
+<p class="feedback" id="fb6" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS tes essais)</summary><div>
+<p><b>Q1 — 11 kg.</b>
+<br>Le cahier des charges parle de la charge <b>la plus lourde</b>&nbsp;: c'est l'hiver, terre ET neige, 16 + 6 = 22 kg.
+<br>Deux consoles se partagent la jardinière&nbsp;: chacune porte la moitié, 22 ÷ 2 = <b>11 kg</b>.
+<br>· 16 kg oublie la neige&nbsp;; · 22 kg oublie que les consoles sont deux&nbsp;; · 8 kg partage la terre et oublie la neige.</p>
+<p><b>Q2 — k = 0,50&nbsp;: elle casse.</b>
+<br>Réglages&nbsp;: PLA, e = 6 mm, L = 150 mm, charge = 11 kg.
+<br>La simulation donne σ = 89,9 MPa.
+<br>Le PLA plie pour toujours au-dessus de 45 MPa et casse au-dessus de 50 MPa&nbsp;: à 89,9 MPa, la console <b>casse</b>.
+<br>k = 45 ÷ 89,9 = <b>0,50</b>&nbsp;: bien moins que 3.
+<br>Avec 22 kg (une seule console pour toute la jardinière), on lirait k = 0,25&nbsp;: c'est le résultat d'un mauvais réglage, pas de la console du club.</p>
+<p><b>Q3 — 15 mm.</b> Le relevé, en ne changeant que l'épaisseur (PLA, 150 mm, 11 kg)&nbsp;:</p>
+<table class="releve"><thead><tr><th>Épaisseur e (en millimètres, mm)</th><th>Contrainte σ (en mégapascals, MPa)</th><th>Coefficient k</th><th>Résultat</th></tr></thead><tbody>
+<tr><td>6 mm</td><td>89,9 MPa</td><td>0,50</td><td>✘ casse</td></tr>
+<tr><td>8 mm</td><td>50,6 MPa</td><td>0,89</td><td>✘ casse</td></tr>
+<tr><td>10 mm</td><td>32,4 MPa</td><td>1,39</td><td>⚠ tient, mais k &lt; 3</td></tr>
+<tr><td>12 mm</td><td>22,5 MPa</td><td>2,00</td><td>⚠ tient, mais k &lt; 3</td></tr>
+<tr class="choisie"><td>15 mm</td><td>14,4 MPa</td><td>3,13</td><td>✔ validée</td></tr>
+<tr><td>20 mm</td><td>8,1 MPa</td><td>5,56</td><td>✔ validée</td></tr>
+</tbody></table>
+<p>À 8 mm, σ = 50,6 MPa&nbsp;: plus que les 50 MPa de rupture du PLA, la console casse encore (k = 0,89).
+<br>À 12 mm, elle tient (k = 2,00), mais k &lt; 3&nbsp;: le cahier des charges n'est pas respecté.
+<br>À 15 mm, k = 3,13&nbsp;: c'est la plus petite épaisseur validée.
+<br>Remarque&nbsp;: doubler l'épaisseur rend la console quatre fois plus résistante (l'épaisseur compte « au carré »).</p>
+<p><b>Q4 — Pour savoir quel réglage a changé le résultat.</b>
+<br>Si tu changes l'épaisseur ET le matériau à la fois, et que k monte, tu ne sais pas lequel des deux l'a fait monter.
+<br>La simulation accepte tous les changements&nbsp;; c'est le <b>raisonnement</b> qui demande d'en changer un seul.</p>
+<p><b>Q5 — Une réponse attendue</b>&nbsp;: «&nbsp;Je ne valide pas la console de 6 mm en PLA&nbsp;: la simulation donne k = 0,50, elle casserait sous la neige. Je propose 15 mm de PLA (k = 3,13), ou un autre matériau.&nbsp;»
+<br>Toute décision juste <b>donne le nombre</b> (k) et le <b>compare à 3</b>.</p>
+<p><b>Et les autres matériaux&nbsp;?</b> La plus petite épaisseur validée, à 150 mm et 11 kg, puis ce qu'un toit leur fait (la simulation ne le calcule pas)&nbsp;:</p>
+<ul class="materiaux-toit">
+<li><b>Bois (pin)</b> — plie au-dessus de 25 MPa&nbsp;; validé à partir de <b>20 mm</b>.<br>Sur un toit&nbsp;: gonfle et pourrit si l'eau reste : sur un toit, il faut le traiter.</li>
+<li><b>PLA imprimé en 3D</b> — plie au-dessus de 45 MPa&nbsp;; validé à partir de <b>15 mm</b>.<br>Sur un toit&nbsp;: ramollit vers 55 degrés Celsius : au soleil d'été, sur un toit, une console sombre peut y arriver.</li>
+<li><b><abbr class="sigle" title="polychlorure de vinyle" tabindex="0">PVC</abbr> rigide</b> — plie au-dessus de 45 MPa&nbsp;; validé à partir de <b>15 mm</b>.<br>Sur un toit&nbsp;: ne craint pas l'eau ; devient cassant au froid et après quelques années de soleil.</li>
+<li><b>Aluminium</b> — plie au-dessus de 140 MPa&nbsp;; validé à partir de <b>10 mm</b>.<br>Sur un toit&nbsp;: ne rouille pas : sa couche d'oxyde le protège toute seule.</li>
+<li><b>Acier doux</b> — plie au-dessus de 235 MPa&nbsp;; validé à partir de <b>8 mm</b>.<br>Sur un toit&nbsp;: rouille sous la pluie s'il n'est pas galvanisé.</li>
+</ul>
+<p>Le PLA validé à 15 mm reste un pari l'été&nbsp;: il ramollit vers 55&nbsp;°C (degrés Celsius). C'est pourquoi on fera, après la simulation, un <b>essai réel</b>&nbsp;: la simulation prépare l'essai, elle ne le remplace pas.</p>
+</div></details>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> paramétrer une simulation, c'est entrer les <b>vraies valeurs du cas le plus défavorable</b> (matériau, dimensions, charge), lire le résultat, le <b>comparer au cahier des charges</b> (k ≥ 3), et ne changer qu'<b>un réglage à la fois</b>.</div>
+</div>
+<script>
+/* La simulation de la console (4e_C8.1) — les matériaux et la formule viennent de _generation/console_jardiniere.py ;
+   le banc tests_simulation_4e_C8.1.mjs vérifie que la page calcule exactement comme le modèle. */
+(function(){
+  "use strict";
+  var MAT = [{"nom": "Bois (pin)", "se": 25, "sr": 40}, {"nom": "PLA imprimé en 3D", "se": 45, "sr": 50}, {"nom": "PVC rigide", "se": 45, "sr": 52}, {"nom": "Aluminium", "se": 140, "sr": 190}, {"nom": "Acier doux", "se": 235, "sr": 400}], LARGEUR = 30.0, G = 9.81, COEF = 3;
+  var BONNES = {"a6q1": "11 kg", "a6q2": "k = 0,50 : elle casse", "a6q3": "15 mm", "a6q4": "Pour savoir quel réglage a changé le résultat"};
+  window.__bonnesSimu = BONNES;
+  function simuConsole(nom, e, L, charge){
+    var m = MAT.filter(function(x){ return x.nom === nom; })[0];
+    if(!m || !(e > 0) || !(L > 0) || !(charge > 0)) return null;
+    var s = charge * G * L / (LARGEUR * e * e / 6), k = m.se / s;
+    var etat = s > m.sr ? "casse" : (s > m.se ? "plie" : (k < COEF ? "tient-insuffisant" : "valide"));
+    return {sigma: Math.round(s * 10) / 10, k: Math.round(k * 100) / 100, etat: etat};
+  }
+  window.simuConsole = simuConsole;
+  var $ = function(id){ return document.getElementById(id); };
+  var fr = function(x, d){ return x.toFixed(d).replace(".", ","); };
+  var COURT = {"Bois (pin)": "Bois", "PLA imprimé en 3D": "PLA", "PVC rigide": "PVC", "Aluminium": "Alu", "Acier doux": "Acier"};
+  var BREF = {"casse": "✘ casse", "plie": "✘ plie", "tient-insuffisant": "⚠ k < 3", "valide": "✔ validée"};
+  var TEXTE = {
+    "casse": "✘ La console CASSE : σ dépasse la contrainte de rupture du matériau.",
+    "plie": "✘ La console PLIE pour toujours : σ dépasse la limite élastique.",
+    "tient-insuffisant": "⚠ La console tient, mais k est plus petit que 3 : le cahier des charges n'est pas respecté.",
+    "valide": "✔ Validée : k vaut 3 ou plus."
+  };
+  function lignes(){
+    var t = $("simReleve"); if(!t) return;
+    var essais = ((window.__exp || {}).simu) || [];
+    t.tBodies[0].innerHTML = essais.slice().reverse().map(function(x){
+      var r = simuConsole(x.m, x.e, x.L, x.c); if(!r) return "";
+      var td = function(v, l, u){ return "<td" + (l ? " data-l=\"" + l + "\"" : "") + (u ? " data-u=\"" + u + "\"" : "") + ">" + v + "</td>"; };
+      return "<tr class=\"" + (r.etat === "valide" ? "ok" : "ko") + "\">" + td(COURT[x.m] || x.m) + td(x.e, "e = ", " mm") +
+             td(x.L, "L = ", " mm") + td(x.c, "", " kg") + td(fr(r.sigma, 1), "σ = ", " MPa") + td(fr(r.k, 2), "k = ") + td(BREF[r.etat]) + "</tr>";
+    }).join("");
+  }
+  window.__lignesSimu = lignes;
+  $("simLancer").addEventListener("click", function(){
+    var coche = document.querySelector('input[name="simMat"]:checked');
+    var nom = coche ? coche.value : "", e = parseFloat($("simEp").value), L = parseFloat($("simLong").value), c = parseFloat($("simCharge").value);
+    var r = simuConsole(nom, e, L, c), out = $("simSortie");
+    if(!r){ out.className = "sortie-simu ko"; out.textContent = "Il manque un réglage : choisis le matériau, et entre l'épaisseur, la longueur et la charge (des nombres plus grands que zéro)."; return; }
+    var m = MAT.filter(function(x){ return x.nom === nom; })[0];
+    out.className = "sortie-simu " + (r.etat === "valide" ? "ok" : "ko");
+    out.innerHTML = "Contrainte dans la console : <b>σ = " + fr(r.sigma, 1) + " MPa</b> (mégapascals)" +
+      "<br>Le " + nom + " plie pour toujours au-dessus de " + m.se + " MPa et casse au-dessus de " + m.sr + " MPa." +
+      "<br>Coefficient de sécurité : <b>k = " + m.se + " ÷ " + fr(r.sigma, 1) + " = " + fr(r.k, 2) + "</b>" +
+      "<br><b>" + TEXTE[r.etat] + "</b>";
+    window.__exp = window.__exp || {};
+    var essais = window.__exp.simu = window.__exp.simu || [];
+    var cle = nom + "|" + e + "|" + L + "|" + c;
+    if(!essais.some(function(x){ return x.m + "|" + x.e + "|" + x.L + "|" + x.c === cle; })) essais.push({m: nom, e: e, L: L, c: c});
+    lignes();
+    if(typeof window.__sauverSequence === "function") window.__sauverSequence();
+  });
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ setTimeout(lignes, 0); }); else setTimeout(lignes, 0);
+})();
+</script>
+</section>
+<!-- fin:act-simulation -->
+
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Améliorer, refaire, conclure ›</button></p>
 
 </div>
@@ -2675,7 +2930,7 @@ tension ?</span></td></tr></tbody></table></div></div><label class="champ" for=
 <p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Auto-positionnement 1"></p><p>Je sais faire&nbsp;: <input id="bilan2" aria-label="Auto-positionnement 2"></p><p>À revoir&nbsp;: <input id="bilan3" aria-label="Auto-positionnement 3"></p>
 <h3>📍 Je me positionne</h3>
 <p style="font-size:.9em;color:var(--sub)">Les quatre niveaux sont ceux du livret scolaire : 1 maîtrise insuffisante · 2 maîtrise fragile · 3 maîtrise satisfaisante · 4 très bonne maîtrise.</p>
-<fieldset class="positionnement"><legend>4e_C8.1 — paramétrer et exécuter un protocole de test</legend>
+<fieldset class="positionnement"><legend>4e_C8.1 — régler une simulation fournie pour vérifier qu'une pièce tient</legend>
 <label><input type="radio" name="pos_c81" value="1"> 1</label> <label><input type="radio" name="pos_c81" value="2"> 2</label> <label><input type="radio" name="pos_c81" value="3"> 3</label> <label><input type="radio" name="pos_c81" value="4"> 4</label></fieldset>
 <fieldset class="positionnement"><legend>4e_C8.2 — analyser les résultats et juger la conformité</legend>
 <label><input type="radio" name="pos_c82" value="1"> 1</label> <label><input type="radio" name="pos_c82" value="2"> 2</label> <label><input type="radio" name="pos_c82" value="3"> 3</label> <label><input type="radio" name="pos_c82" value="4"> 4</label></fieldset>
@@ -2770,8 +3025,18 @@ const CHECKS = {
     return {score: s, total: 6, exp: exigences,
       expMsg: "Vérifie d'abord l'exercice du diagramme des exigences, en tête de cette activité : il doit être réussi. Tes réponses du tableau sont déjà marquées ✔ ou ✘."}; },
   4(){ return {score: pres("a3amel", 30), total: 1, exp: true, libre: true}; },
-  5(){ return {score: pres("reinv", 25), total: 1, exp: true, libre: true}; }
+  5(){ return {score: pres("reinv", 25), total: 1, exp: true, libre: true}; },
+  /* activité 2 bis (4e_C8.1) : la simulation se RÈGLE et se LANCE — la console du club, puis au moins trois épaisseurs
+     de PLA, un seul réglage changé ; les bonnes réponses sont écrites par _generation/console_jardiniere.py */
+  6(){ const B = window.__bonnesSimu || {}; let s = 0;
+    s += sv("a6q1", B.a6q1); s += sv("a6q2", B.a6q2); s += sv("a6q3", B.a6q3); s += sv("a6q4", B.a6q4); s += pres("a6dec", 25);
+    const essais = (window.__exp.simu) || [];
+    const club = essais.some(x => x.m === "PLA imprimé en 3D" && x.e === 6 && x.L === 150 && x.c === 11);
+    const ep = new Set(essais.filter(x => x.m === "PLA imprimé en 3D" && x.L === 150 && x.c === 11).map(x => x.e)).size;
+    return {score: s, total: 5, exp: club && ep >= 3,
+      expMsg: "Lance d'abord la simulation : la console du club (PLA, 6 mm, 150 mm, et la charge d'UNE console), puis au moins trois épaisseurs de PLA, sans changer le reste (épaisseurs essayées : " + ep + "/3)."}; }
 };
+window.__sauverSequence = function(){ save(); };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
@@ -2818,7 +3083,7 @@ function majHyp(){
 if($("hypothese")) $("hypothese").addEventListener("input", majHyp);
 
 /* ══ Séances à onglets (squelette n°306) ══ */
-const SEANCES = {s1:["0","1","2"], s2:["3"], s3:["4","5"]};   // les contrôles (data-check) de chaque séance
+const SEANCES = {s1:["0","1","2"], s2:["3","6"], s3:["4","5"]};   // les contrôles (data-check) de chaque séance
 function montrerSeance(id, memoriser){
   document.querySelectorAll(".seance-tab").forEach(x=>{ const on = x.dataset.panel === id; x.classList.toggle("active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
   document.querySelectorAll(".seance-panel").forEach(p=>p.classList.toggle("active", p.id === id));
@@ -2869,6 +3134,7 @@ const TACHES = [
   {n:"1", libelle:"Le raisonnement de validation, en diagramme"},
   {n:"2", libelle:"Le protocole : actions et résultats attendus"},
   {n:"3", libelle:"Relier chaque exigence à son test (diagramme des exigences), puis juger la conformité et poser un diagnostic"},
+  {n:"6", a:"2 bis", libelle:"Régler la simulation : la console de la jardinière tiendra-t-elle ?"},
   {n:"4", libelle:"Deux améliorations, appuyées sur des essais"},
   {n:"5", libelle:"REFAIRE — un protocole sur un nouvel objet"}
 ];
@@ -2879,13 +3145,13 @@ function majTaches(){
   c.innerHTML = TACHES.map(t => {
     const fait = par.s.includes(t.n);
     return '<div class="tache' + (fait ? " fait" : "") + '"><span class="coche">' +
-           (fait ? "✔" : "☐") + "</span> <b>Activité " + t.n + "</b> — " + t.libelle + "</div>";
+           (fait ? "✔" : "☐") + "</span> <b>Activité " + (t.a || t.n) + "</b> — " + t.libelle + "</div>";
   }).join("");
 }
 function updateProg(){
   const n = par.s.length;
-  if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
-  if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
+  if($("progTxt")) $("progTxt").textContent = n + " / " + TACHES.length + " activités validées";
+  if($("progFill")) $("progFill").style.width = Math.round(n * 100 / TACHES.length) + "%";
   if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
   Object.entries(SEANCES).forEach(([id, acts]) => { const d = $("done-" + id); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
   majTaches();
@@ -3984,6 +4250,50 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         return r;
       };
     } catch(e){}
+  }
+
+  /* Une zone qui défile s'atteint au clavier (axe-core, « scrollable-region-focusable », mesuré page ouverte sur les
+     341 pages le 22/11/2026 : 108 des 142 zones fautives étaient les schémas et les tableaux de ce kit). À 600 px et
+     moins, un schéma garde 560 px de large pour rester lisible, un grand tableau garde ses colonnes : la zone défile de
+     côté. Quand elle déborde vraiment, elle reçoit le focus (Tab, puis les flèches pour la faire défiler) et un nom lu
+     par le lecteur d'écran ; quand elle ne déborde plus (écran plus large), on retire ce qu'on avait posé, et cela
+     seulement. Une zone cachée (onglet fermé) mesure 0 : l'observateur de taille la reprend quand elle s'ouvre. En mode
+     incrusté, seules les zones des exercices sont touchées ; le tableau lui-même aussi, quand la séquence le fait
+     défiler (`table{display:block;overflow-x:auto}` dans sa feuille de style). */
+  var zones = [];
+  (source ? [document] : Array.prototype.slice.call(incrustes)).forEach(function(r){
+    r.querySelectorAll(".figure, .defile, .defile > table").forEach(function(el){ zones.push(el); });
+  });
+  function marquerZone(el){
+    var deborde = el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1;
+    var pose = el.getAttribute("data-zone-clavier");
+    if (deborde && pose === null){
+      pose = "";
+      if (!el.hasAttribute("tabindex")){ el.setAttribute("tabindex", "0"); pose += "t"; }
+      if (!el.hasAttribute("role")){ el.setAttribute("role", "region"); pose += "r"; }
+      if (!el.hasAttribute("aria-label") && !el.hasAttribute("aria-labelledby")){
+        var leg = el.querySelector("figcaption") || el.querySelector("caption");
+        var nom = leg ? leg.textContent.replace(/\s+/g, " ").trim() : "";
+        if (nom.length > 100) nom = nom.slice(0, 99) + "…";
+        el.setAttribute("aria-label", (el.classList.contains("defile") || el.tagName === "TABLE" ? "Tableau" : "Schéma") + (nom ? " : " + nom : "") + " (il défile de côté)");
+        pose += "l";
+      }
+      el.setAttribute("data-zone-clavier", pose);
+    } else if (!deborde && pose !== null){
+      if (pose.indexOf("t") !== -1) el.removeAttribute("tabindex");
+      if (pose.indexOf("r") !== -1) el.removeAttribute("role");
+      if (pose.indexOf("l") !== -1) el.removeAttribute("aria-label");
+      el.removeAttribute("data-zone-clavier");
+    }
+  }
+  if (zones.length){
+    if (typeof ResizeObserver === "function"){
+      var observateur = new ResizeObserver(function(entrees){ entrees.forEach(function(e){ marquerZone(e.target); }); });
+      zones.forEach(function(el){ observateur.observe(el); });
+    } else {
+      zones.forEach(marquerZone);
+      window.addEventListener("resize", function(){ zones.forEach(marquerZone); });
+    }
   }
 })();
 </script>

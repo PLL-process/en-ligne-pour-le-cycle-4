@@ -156,8 +156,8 @@ OVERLAY = {
                 "pièces sont là. Relu le 22/11/2026 (audit #867) : SOURCES_MEDIAS.md existe, le mode "
                 "essentiel est câblé, les images extraites de l'ancien HTML ont été compressées "
                 "(2,3 Mo pour tout le dossier, contre 9,3 Mo).",
-        anomalies="Une image reste au-dessus de 1 Mo (situation_fichiers_melanges.png, 2,1 Mo) : à "
-                  "compresser. Pas de grille LSU écrite dans la page.",
+        anomalies="Image de la situation compressée le 22/11/2026 (situation_fichiers_melanges.png, "
+                  "2,1 Mo → 0,6 Mo). Pas de grille LSU écrite dans la page.",
         accessibilite="Textes alternatifs présents ; contrôles axe du dépôt.",
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
@@ -258,8 +258,11 @@ OVERLAY = {
                 "conformité des quatre tests et propose le test discriminant qui départagerait "
                 "deux causes. Le tableau « Ce que dit le programme » de la séquence l'annonce "
                 "explicitement.",
-        anomalies="Aucune. Le dossier 4e_C8.2 reste un squelette, ce qui est normal pour un "
-                  "code mutualisé — mais il gagnerait un README pointeur (règle n°205).",
+        anomalies="Le protocole est travaillé sur le COMPORTEMENT du système (pluie, gel, LED), pas "
+                  "sur la tenue mécanique d'un MATÉRIAU que la formulation nomme (relu le 22/11/2026, "
+                  "audit #867). La suite naturelle : après la simulation de la console (activité 2 bis "
+                  "de 4e_C8.1), faire écrire le protocole de l'essai réel qui la confirmera. Le dossier "
+                  "reste un squelette, ce qui est normal pour un code mutualisé.",
         accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C8.3": dict(
@@ -358,29 +361,40 @@ OVERLAY = {
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C1.4": dict(
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=None, problematique=True,
-        qualite="Séquence cybersécurité + activité bonus 2FA + QCM au gabarit maison + deux synthèses "
-                "+ bancs de tests. Relu le 22/11/2026 (audit #867) : les deux images manquantes de "
-                "l'activité bonus ne sont plus appelées (elles ne restent que dans des commentaires), "
-                "SOURCES_MEDIAS.md existe, le mode essentiel est câblé, les synthèses élève et "
-                "professeur sont séparées.",
-        anomalies="Il manque deux pièces pour le statut complet : la fiche pédagogique et la matrice "
-                  "de couverture. Une image au-dessus de 1 Mo (situation_compte_pirate.png, 1,7 Mo).",
+        qualite="Séquence cybersécurité en quatre séances (reconnaître, mes données, mes traces, ma "
+                "réputation) + activité bonus double authentification + QCM 30 q. au gabarit maison "
+                "(10 par code : rappel 5e_C1.5, 4e_C1.4, rappel 5e_C1.6) + deux synthèses + bancs de "
+                "tests. Fiche pédagogique et matrice de couverture écrites le 22/11/2026 (audit #867, "
+                "« 2 oui » de Pascal) : chacune des 30 questions est rattachée à sa notion et à "
+                "l'activité qui l'enseigne. Synthèse professeur : le déroulé suit les quatre séances.",
+        anomalies="Quatre questions du QCM (9 gestionnaire de mots de passe, 10 permissions d'une "
+                  "application, 24 rôle du témoin, 29 droit à l'effacement) portent sur des rappels de "
+                  "5e que la séquence n'enseigne pas : la matrice les marque « à renforcer ». Les "
+                  "durées par activité ne sont pas affichées (règle n°23 non mesurable). Image de la "
+                  "situation compressée le 22/11/2026 (1,7 Mo → 0,6 Mo).",
         accessibilite="Bonne — contrôles axe du dépôt.",
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
     "3e_C1.5": dict(
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « Numérique, société, économie, environnement, santé », 4 séances de 55 min "
-                "(argumentaires courts : activité 1 bis pour 3e_C1.4, activité 5 pour 3e_C1.3) + QCM 30 q. "
-                "Relu le 22/11/2026 (audit #867) : mode essentiel câblé, positionnement sur les quatre "
-                "niveaux LSU présent.",
-        anomalies="Il manque deux pièces pour le statut complet : la fiche pédagogique et la matrice "
-                  "de couverture. Une image au-dessus de 1 Mo (situation_photo_publiee.png, 2,6 Mo).",
+                "(durées annoncées 50, 49, 45 et 53 min ; argumentaires courts : activité 1 bis pour "
+                "3e_C1.4, 2.d pour 3e_C1.5, activité 5 pour 3e_C1.3) + QCM 30 q. (10 par code). Fiche "
+                "pédagogique et matrice de couverture écrites le 22/11/2026 (audit #867, « 2 oui » de "
+                "Pascal) : chacune des 30 questions est rattachée à sa notion et à l'activité qui "
+                "l'enseigne. Correction de 1.b réparée le même jour (deux corrections portaient le même "
+                "identifiant : le second bouton ouvrait la correction de la première question).",
+        anomalies="Huit questions du QCM (1, 9, 14, 16, 20, 21, 22, 29) portent sur des notions que la "
+                  "séquence n'enseigne pas (télétravail, fracture numérique, écrans et sommeil, biais "
+                  "d'une IA, dématérialisation, indices de réparabilité et de durabilité, critères "
+                  "d'achat) : la matrice les marque « à renforcer ». Pas de synthèse élève ; la synthèse "
+                  "professeur reste « à compléter ». Image de la situation compressée le 22/11/2026 "
+                  "(2,6 Mo → 0,8 Mo).",
         accessibilite="Contrôles axe du dépôt.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
                "Delagrave n'est plus visée, ni rediffusée par le dépôt (arbitrage A5, 23/10/2026).",
@@ -1057,22 +1071,27 @@ OVERLAY = {
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
     "4e_C8.1": dict(
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Lot « Jardin connecté — valider une solution » : séquence, QCM de 30 questions, "
-                "fiche, matrice, deux synthèses, rapport et banc de tests — les six pièces sont là. "
-                "Il porte très bien 4e_C8.3 (un protocole écrit avant l'essai, la conformité, le test "
-                "qui départage deux causes, l'amélioration rattachée à un résultat d'essai).",
-        anomalies="Ce qui manque, lu le 22/11/2026 (audit #867) : le code demande de PARAMÉTRER une "
-                  "simulation fournie pour valider la TENUE MÉCANIQUE D'UN MATÉRIAU. L'activité 0 de "
-                  "la séquence est un banc de tests virtuel du comportement de l'arrosage : ni "
-                  "matériau, ni charge, ni déformation. À ajouter : une activité courte où l'élève "
-                  "règle une simulation fournie (matériau, charge, dimensions) et lit si la pièce "
-                  "tient — par exemple le support du bac du jardin, sur le modèle de 5e_C8.1. Même "
-                  "réserve pour 4e_C8.2, mutualisé ici.",
-        accessibilite="Corrections dépliables, deux synthèses séparées.",
-        medias="Voir SOURCES_MEDIAS.md du dossier.",
+                "fiche, matrice, deux synthèses, rapport et bancs de tests. Il porte très bien 4e_C8.3 "
+                "(un protocole écrit avant l'essai, la conformité, le test qui départage deux causes, "
+                "l'amélioration rattachée à un résultat d'essai). Depuis le 22/11/2026 (audit #867, "
+                "« 1 oui » de Pascal), il porte aussi son propre code : l'activité 2 bis fait RÉGLER par "
+                "l'élève une simulation fournie de tenue mécanique — la console de la jardinière du toit "
+                "(matériau, épaisseur, longueur, charge), le coefficient de sécurité comparé au cahier des "
+                "charges, un seul réglage changé à la fois. Les nombres viennent d'un seul modèle "
+                "(_generation/console_jardiniere.py, matériaux de la patère de 5e_C8.1) ; le banc "
+                "tests_simulation_4e_C8.1.mjs vérifie la page sur 480 cas, et que l'activité ne se "
+                "valide pas sans simulation lancée.",
+        anomalies="La question 1 du QCM est la seule qui porte sur le geste de paramétrer ; le QCM "
+                  "reste à 30 questions fixes (choix du 23/10/2026). 4e_C8.2 (un protocole pour la "
+                  "tenue mécanique d'un MATÉRIAU) n'est pas encore travaillé sur un matériau : voir "
+                  "son entrée.",
+        accessibilite="Corrections dépliables, deux synthèses séparées ; le relevé des essais se lit "
+                      "sur téléphone sans défiler de côté.",
+        medias="Voir SOURCES_MEDIAS.md du dossier ; schéma de la console écrit dans la page (SVG).",
     ),
     "3e_C7.6": dict(
         statut="COMPLET ET VALIDABLE",
