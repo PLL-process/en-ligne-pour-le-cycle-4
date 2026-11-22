@@ -1,23 +1,51 @@
 {
  "_lire": "Données du mode mission pour la séquence 3e_C6.1 (comprendre et modifier le programme d'alerte). Posées dans la page par _outils/mode_mission/enrichir.py. « pourquoi » : pourquoi une mauvaise proposition ne convient pas, sans dire la bonne ; pour une trace, le renvoi au test à relire.",
  "pourquoi": {
+  "be_1": {
+   "un capteur défaillant, qu'il faudra remplacer": "On a vérifié que le capteur mesure juste : le remplacer ne changera rien. Le programme fait exactement ce qu'on lui a écrit : cherche quelle règle le permet.",
+   "à réécrire le programme entier, depuis le début": "Tout réécrire, c'est risquer de nouvelles erreurs sans comprendre la première. On cherche d'abord la règle en cause."
+  },
+  "be_2": {
+   "s'arrête : aucune des deux branches ne convient": "Un SI … SINON couvre tous les cas : quand la condition est fausse, c'est le SINON qui s'applique.",
+   "déclenche la sirène : le vent souffle déjà fort": "Le programme ne juge pas « fort » : il compare 60 à 90. Est-ce que 60 > 90 ?"
+  },
+  "be_3": {
+   "le teste directement sur l'objet réel": "Tester sur l'objet réel sans copie de l'original, c'est risquer de ne plus pouvoir revenir en arrière.",
+   "efface l'ancien pour ne pas se tromper": "Si la modification échoue, tu n'aurais plus le programme qui marchait. On le garde de côté."
+  },
   "d1_1": {
-   "produite (sortie)": "Cherche d'où vient sa valeur : le programme la calcule-t-il, ou la reçoit-il d'un capteur ?"
+   "utilisée — un paramètre choisi par le concepteur": "Regarde la ligne 6 : sa valeur vient de lire_capteur, pas d'un nombre écrit par le concepteur.",
+   "produite — calculée par le programme": "Cherche d'où vient sa valeur : le programme la calcule-t-il, ou la reçoit-il d'un capteur ? Relis la ligne 6."
   },
   "d1_2": {
-   "produite (sortie)": "Une constante est écrite une fois pour toutes en tête de programme : le programme ne la calcule pas."
+   "utilisée — une mesure lue sur un capteur": "Aucun capteur ne fournit 118 : relis la ligne 4, où le concepteur l'a écrit.",
+   "produite — calculée par le programme": "Une constante est écrite une fois pour toutes en tête de programme : le programme ne la calcule pas. Relis la ligne 4."
   },
   "d1_3": {
-   "utilisée (entrée)": "Elle sert au message, mais qui lui donne sa valeur : un capteur, ou les tests du programme ?"
+   "utilisée — une mesure lue sur un capteur": "Aucun capteur ne fournit le niveau : relis les lignes 12 à 19, qui le choisissent.",
+   "utilisée — un paramètre choisi par le concepteur": "Sa valeur change selon le vent : ce n'est pas un réglage fixe. Relis les lignes 12 à 19."
   },
   "d1_4": {
-   "utilisée (entrée)": "Aucun capteur ne fournit sirene_active : regarde quelles lignes la passent à True."
+   "utilisée — une mesure lue sur un capteur": "Aucun capteur ne fournit sirene_active : regarde quelles lignes la passent à True.",
+   "utilisée — un paramètre choisi par le concepteur": "Le concepteur la met à False au départ, mais ce sont les tests qui la passent à True : relis les lignes 14 et 17."
   },
   "d1_5": {
-   "produite (sortie)": "Regarde comment elle reçoit sa valeur : par un calcul, ou par lire_capteur ?"
+   "utilisée — un paramètre choisi par le concepteur": "Regarde la ligne 7 : sa valeur vient de lire_capteur, pas d'un nombre écrit par le concepteur.",
+   "produite — calculée par le programme": "Regarde comment elle reçoit sa valeur : par un calcul, ou par lire_capteur ? Relis la ligne 7."
   },
   "d1_6": {
-   "utilisée (entrée)": "Le message n'existe pas avant le programme : c'est lui qui l'assemble, puis l'envoie."
+   "utilisée — une mesure lue sur un capteur": "Aucun capteur ne fournit de message : cherche la ligne qui l'assemble avec le signe +.",
+   "utilisée — un paramètre choisi par le concepteur": "Son texte change avec le niveau : ce n'est pas un réglage fixe. Relis la ligne 21."
+  },
+  "d1_7": {
+   "vent_kmh": "Relis les lignes 12, 15 et 18 : elles comparent toutes vent_kmh à un seuil.",
+   "aucune des deux": "Cherche, dans les lignes 12 à 19, un test qui compare pression_hpa : en trouves-tu un ?",
+   "les deux": "Relis la ligne 12 : vent_kmh y est comparé à un seuil, il change donc une décision."
+  },
+  "d1_8": {
+   "elle la remplace par une nouvelle mesure": "Aucun capteur n'est lu sur cette ligne : relis ce qui est à droite du signe =.",
+   "elle déclenche directement la sirène": "La sirène se commande aux lignes 23 et 24 : relis ce que fabrique cette ligne.",
+   "elle la remet à « verte » pour la suite": "Sur cette ligne, vigilance est à droite du = : on lit sa valeur, on ne la change pas. Relis la ligne."
   },
   "d2_a1": {
    "\"verte\"": "Verte, c'est la valeur de départ : avec 95, un des tests est vrai. Lequel, en premier ?",
@@ -28,13 +56,13 @@
    "False": "False est la valeur de départ : la branche où 95 entre la change-t-elle ?"
   },
   "d2_b1": {
-   "\"violette\"": "118 > 118 : vrai ou faux ? Regarde bien l'opérateur de la ligne 12.",
    "\"verte\"": "Le premier test est faux, mais ce n'est pas fini : descends aux elif, dans l'ordre.",
+   "\"violette\"": "118 > 118 : vrai ou faux ? Regarde bien l'opérateur de la ligne 12.",
    "\"orange\"": "118 dépasse le seuil orange, mais un elif placé avant est déjà vrai : le premier gagne."
   },
   "d3_1": {
-   "vigilance orange": "Orange, c'était avec l'ancien seuil : retrace 55 avec la nouvelle valeur de la ligne 2.",
-   "vigilance rouge": "Pour rouge, il faut dépasser SEUIL_ROUGE : compare 55 à sa valeur, ligne 3."
+   "« Vigilance orange » est envoyé, la sirène reste arrêtée": "Orange, c'était avec l'ancien seuil : retrace 55 avec la nouvelle valeur de la ligne 2.",
+   "« Vigilance rouge » est envoyé et la sirène se déclenche": "Pour rouge, il faut dépasser SEUIL_ROUGE : compare 55 à sa valeur, ligne 3."
   },
   "d3_2": {
    "ça rend le programme plus long": "Plus long, oui, de trois lignes : mais qu'as-tu gagné en changeant le seuil orange à l'instant ?",
@@ -42,38 +70,43 @@
    "aucun intérêt": "Tu viens de changer un seuil : combien de lignes as-tu dû modifier ?"
   },
   "d5_1": {
-   "orange + gyrophare": "Ton seuil orange vaut 60 depuis l'activité 3 : 55 le dépasse-t-il ?",
-   "rouge + sirène": "Rouge demande plus de 90 km/h : 55 en est loin. Redéroule les tests dans l'ordre.",
-   "violette + les deux": "Violette demande plus de 118 km/h : 55 en est loin. Redéroule les tests dans l'ordre."
+   "orange · gyrophare seul": "Le seuil orange vaut 60 depuis l'activité 3 : 55 est-il « plus de 60 » ? Relis la dernière ligne du cahier des charges.",
+   "rouge · sirène seule": "Rouge demande plus de 90 km/h : 55 en est loin. Redescends le cahier des charges ligne par ligne.",
+   "violette · sirène et gyrophare": "Violette demande plus de 118 km/h : 55 en est loin. Redescends le cahier des charges ligne par ligne."
   },
   "d5_2": {
-   "orange + gyrophare": "60 > 60 : vrai ou faux ? Tous les > du programme sont stricts.",
-   "rouge + sirène": "Rouge demande plus de 90 km/h : avec 60, ce test est faux. Continue vers le suivant.",
-   "violette + les deux": "Violette demande plus de 118 km/h : avec 60, ce test est faux. Continue vers les suivants."
+   "orange · gyrophare seul": "60 est-il « plus de 60 » ? Relis la ligne « 60 ou moins » du cahier des charges.",
+   "rouge · sirène seule": "Rouge demande plus de 90 km/h : avec 60, ce n'est pas le cas. Continue vers les lignes du bas.",
+   "violette · sirène et gyrophare": "Violette demande plus de 118 km/h : avec 60, ce n'est pas le cas. Continue vers les lignes du bas."
   },
   "d5_3": {
-   "verte/jaune, rien": "61 > 60 : vrai ou faux ? Une branche se déclenche bien.",
-   "rouge + sirène": "61 ne dépasse pas 90 : le test rouge est faux. Passe au elif suivant.",
-   "violette + les deux": "61 ne dépasse pas 118 : le premier test est faux. Descends les elif dans l'ordre."
+   "verte · sirène arrêtée · gyrophare arrêté": "61 est-il « plus de 60 » ? Relis la ligne « plus de 60, jusqu'à 90 inclus ».",
+   "rouge · sirène seule": "61 ne dépasse pas 90 : relis la ligne du rouge, puis celle d'en dessous.",
+   "violette · sirène et gyrophare": "61 ne dépasse pas 118 : descends le cahier des charges jusqu'à la ligne qui contient 61."
+  },
+  "d5_8": {
+   "verte · sirène arrêtée · gyrophare arrêté": "90 dépasse 60 : relis la ligne « plus de 60, jusqu'à 90 inclus ».",
+   "rouge · sirène seule": "90 est-il « plus de 90 » ? Relis la ligne du rouge : elle commence après 90.",
+   "violette · sirène et gyrophare": "Violette demande plus de 118 km/h : avec 90, ce n'est pas le cas. Descends d'une ligne."
   },
   "d5_4": {
-   "violette + les deux": "118 > 118 : vrai ou faux ? La frontière ne déclenche pas la branche violette.",
-   "orange + gyrophare": "118 dépasse le seuil orange, mais un elif placé avant est déjà vrai : le premier gagne.",
-   "verte/jaune, rien": "Le premier test est faux, mais 118 dépasse d'autres seuils : descends les elif dans l'ordre."
+   "verte · sirène arrêtée · gyrophare arrêté": "118 dépasse plusieurs seuils : relis le cahier des charges depuis le haut.",
+   "orange · gyrophare seul": "118 dépasse 90 : relis la ligne du rouge, au-dessus de l'orange.",
+   "violette · sirène et gyrophare": "118 est-il « plus de 118 » ? Relis la ligne « plus de 90, jusqu'à 118 inclus »."
   },
   "d5_5": {
-   "rouge + sirène": "119 > 118 : vrai ou faux ? Le premier test vrai gagne, les elif sont ignorés.",
-   "orange + gyrophare": "119 dépasse le seuil orange, mais le programme teste d'abord les seuils les plus forts.",
-   "verte/jaune, rien": "119 dépasse plusieurs seuils : commence par le premier test, ligne 12."
+   "verte · sirène arrêtée · gyrophare arrêté": "119 dépasse tous les seuils : relis la première ligne du cahier des charges.",
+   "orange · gyrophare seul": "119 dépasse le seuil orange, mais aussi celui de la première ligne : relis-la.",
+   "rouge · sirène seule": "119 est-il « plus de 118 » ? Relis la première ligne du cahier des charges."
   },
   "d5_6": {
-   "le capteur est cassé": "Dans un test, on donne la valeur 118 à la main : le capteur n'intervient pas.",
+   "le capteur est cassé": "Dans un test, on donne la valeur 118 à la main : le capteur n'intervient pas. Relis l'opérateur du test.",
    "Python ne sait pas comparer": "Python compare juste, et toujours pareil : il fait ce qui est écrit. Relis l'opérateur du test.",
-   "118 est un nombre spécial": "118 n'a rien de spécial pour Python : il est spécial pour le programme, c'est un seuil."
+   "118 est un nombre spécial": "118 n'a rien de spécial pour Python : il est spécial pour le programme, c'est un seuil. Relis l'opérateur du test."
   },
   "d5_7": {
    "pour aller plus vite": "Trois valeurs proches ou éloignées prennent le même temps : que montre 118, que 200 cache ?",
-   "par tradition": "Ce n'est pas une habitude : le bug du schéma n'apparaît qu'à une seule valeur. Laquelle ?",
+   "par tradition": "Ce n'est pas une habitude : le bug de la copie B n'apparaît qu'à une seule valeur. Laquelle ?",
    "ce sont des nombres plus jolis": "Regarde ces nombres : chacun est un seuil, ou son voisin immédiat. Ce n'est pas un hasard."
   },
   "d6_1": {

@@ -62,6 +62,8 @@
 | 370 | Une page se lit à 200 % et avec des lettres espacées | idem | 🧪 En essai — `_outils/controle_zoom_espacement.mjs` (mesure ; `--strict`) ; départ : 9 pages sur 395 défilent de côté, 4 coupent du texte |
 | 371 | Le QCM entrelace ses compétences : un « Entraînement mélangé » à côté du parcours complet | idem | 🧪 En essai — `_outils/mesurer_entrelacement.py` ; départ : 69 banques sur 70 par blocs, 0 mode mélangé |
 | 372 | Le bilan dit ce qui reste flou et quand on le reprend | idem | 🧪 En essai — `controle_reprise_espacee.py` (R4) ; départ : 57 bilans sur 60 sans ce champ |
+| 373 | Un programme qui change dit sa version | Fable, sur les audits de « Programmer l'alerte » (`3e_C6.1`) — audit externe du 21/11/2026 transmis par Pascal (« fabriquer des […] règles d'or ») et audit Fable du 22/11 | 🧪 En essai (n°147) — pilote `3e_C6.1` (banc du lot, tests 6, 12, 20 quater) ; skill `banc-essai-programme` |
+| 374 | On prévoit avant d'essayer, et une prévision juste ne vaut pas un essai | idem | 🧪 En essai (n°147) — pilote `3e_C6.1` (banc du lot, tests 17 à 17 quinquies) ; complète n°333 et n°349 ; skill `banc-essai-programme` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -36374,6 +36376,105 @@ Vu au pilote de `4e_C1.4` : ses panneaux de séance sont des `<section class="se
 `<div>`. Corrigé (les deux balises) ; un cas de plus au banc (9/9). Sur `main`, la mesure de départ devient **123 séances
 n°2 et suivantes, 0 conforme** (au lieu de 113 : dix séances en `<section>` n'étaient pas comptées). Le chiffre « 113 » des
 entrées du matin (audit #867, installation #868) est à lire « 123 ».
+
+## 22/11/2026 — 3e_C6.1 « Programmer l'alerte » : deux audits, un banc d'essai qui exécute le programme de l'élève ; règles d'or n°373 et n°374 (en essai) ; la n°333 mesurée sur tout le site (thème 2, `_outils`)
+
+**Consignes de Pascal** (21-22/11/2026), avec l'audit externe `Audit_3e_Programmer_alerte.md` (21/11) en pièce jointe :
+« Corrige ce qui ne va pas en fonction de cet audit et avec des améliorations qui sont tiennes si besoin, quelle que
+soit l'importance, puis fabrique des skills, clefs de voûte, règles d'or grandies de cette expérience et de cet audit » ;
+puis « Fais un audit poussé dès maintenant pour cette séquence et effectue les modifications nécessaires en fonction des
+deux audits ». Branche `fable/theme-2/3e-c6.1-audit-alerte` ; les skills dans une PR transversale à part.
+
+**Ce qui existait déjà.** La n°333 (14/11) : « une autre solution juste est acceptée : on compare le comportement, pas
+le texte du programme », et « un code modifié après le test est à retester ». La n°362 : une simulation joue le travail
+de l'élève. Depuis le 04/11, l'éditeur Python commun (`_ressources-communes/editeur-python/`, Skulpt) exécute un vrai
+Python et sert de vérification en 5e_C9.1 et 3e_C9.1. La séquence, antérieure à la n°333, n'avait jamais été remise à
+l'aune ; **aucun outil ne mesurait la n°333 hors des bancs de lot**.
+
+**L'audit externe, vérifié remarque par remarque** (skill `relire-un-audit-externe`, sur la page rendue) : les six
+priorités 1 confirmées et corrigées — l'activité 4 cherchait sept motifs dans le texte (apostrophes : 5 / 7 pour un
+programme juste ; `>=` à 118 : 7 / 7 pour un programme faux) ; l'activité 5 donnait « maîtrisé » à des prévisions avec
+la version 1 dans l'éditeur ; l'algorigramme de la spécification testait 50 après la consigne qui fixe 60 ; le plan de
+tests « de la v1 » commandait un gyrophare que la v1 n'a pas ; le récit faisait sonner la sirène en orange et prêtait
+le réglage à Météo-France. Les priorités 2 et 3 confirmées et corrigées (classement mesure / paramètre, numéros de ligne
+fragiles, justification jugée aux mots-clés, `60.5` accepté pour 60, QCM « 10 / 10 » affiché 6,7 / 20, billet qui
+concluait « rien n'est en place », bilan à une seule hypothèse). Les propositions d'interface non retenues : la vue en
+blocs (Blockly) et un troisième éditeur ; le lecteur d'écran, la tablette réelle et le zoom 200 % restent à éprouver.
+
+**Mon audit, en plus** (ce que l'audit externe n'avait pas vu) : le Bonus n'avait pas de correction (n°4) ; la question
+d1_8 nommait « la ligne 21 », réponse de la question d1_l2 (n°341) ; la carte « Le contrat de la séquence » répétait
+l'ouverture ; la synthèse élève et la synthèse professeur parlaient encore de « verte/jaune » et de l'analyse du code ;
+le QCM n'avait pas de `<main>` (comme 77 QCM sur 78 du site) ; six sigles nus (CRCN, DNB, IDE, LED, OST, QCM). Et un
+défaut de mon propre outil, trouvé en le jouant : le petit Python disait « SyntaxError » à des programmes justes
+(f-string, `is True`, `a if c else b`, `;`) — corrigé (ci-dessous).
+
+**Ce qui change dans la séquence.** Version 1 figée pour les lectures de la séance 1 ; la version du programme dite en
+permanence (« version 1 d'origine », « version 1 recalibrée », « version 2 », « ta version modifiée ») ; activités 3 à 5
+vérifiées en **exécutant** le programme de l'élève sur dix vents (55, 59, 60, 61, 89, 90, 91, 117, 118, 119), le premier
+écart nommé (« 118 km/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu ») ;
+activité 5 « prévoir, exécuter, comparer » : six prévisions écrites avant que le banc s'ouvre, prévisions, diagnostic et
+essais comptés à part, un essai « à rejouer » dès que le programme change ; chemin suivi pas à pas (« 118 > 118 → faux ») ;
+différences + / − ligne à ligne avec la version 1 ; « Simulation scolaire : seuils fictifs du club » à l'ouverture et sur
+le banc ; image légendée « générée par IA » ; Bonus corrigé, avec le programme corrigé en `.py` (rejoué : 10 / 10 au
+banc, sorties vérifiées dans Python) ; reprise de mémoire en tête des séances 2 et 3 et champ « ce qui reste flou » au
+bilan (n°369 et n°372, en essai, posées le jour même) ; deux hypothèses au bilan. QCM : Q03, Q04, Q05, Q08, Q10, Q12,
+Q13, Q19, Q20, Q22, Q24, Q25, Q26, Q29, Q30 réécrites ; « x / y réussies » et « r / 30 travaillées » séparés, la note
+/20 seulement au parcours complet. Cinq schémas recalés sur la spécification. Vocabulaire du lot (11 mots), lexique
+régénéré, synthèses, fiche, matrice, manifeste, rapport de tests à jour.
+
+**Outils.**
+- `_outils/banc_python/` (nouveau ; `banc_python.js`, `poser.py`, `tests_banc_python.mjs` 24 / 24, `LISEZMOI.md`) : un
+  petit Python posé dans la page, synchrone, qui donne la trace des tests évalués. Une écriture qu'il ne lit pas est dite
+  « limite du banc, pas forcément une erreur de ton programme », jamais « SyntaxError » (n°340, n°146). Le LISEZMOI dit
+  ce que l'éditeur commun (Skulpt) sait faire et lui ne sait pas, et l'inverse.
+- `_outils/controle_verification_execute.py` (nouveau, **mesure de la n°333**) : dans les pages à éditeur de code, les
+  vérifications qui lisent le programme l'exécutent-elles, ou cherchent-elles des motifs dans son texte ? Éprouvé d'abord
+  sur des cas connus (n°194) : `tests_controle_verification_execute.py` 12 / 12, dont la page d'avant l'audit (f745eca) :
+  ✘ T, 8 motifs. **Mesure de départ** (22/11/2026, 410 pages) : 7 pages à éditeur ; 3 exécutent (3e_C6.1, 3e_C9.1,
+  5e_C9.1), 0 ne juge par le texte seul, 0 mêlé, 4 éditeurs sans vérification du programme (4e_C6.2, 3e_C7.1, 5e_C7.1,
+  4e_C9.1 : exercices ouverts, rien à juger). Sortie 0 en mesure, `--strict` refuse un ✘ T.
+
+### Les règles
+
+> **Règle d'or n°373 — Un programme qui change dit sa version.**
+> Quand une séquence fait évoluer un programme, chaque version porte un nom (« version 1 d'origine », « version 1
+> recalibrée », « version 2 ») ; une seule spécification par version nourrit le schéma, les attendus des vérifications,
+> le code de la correction et le QCM ; chaque document, chaque attendu, chaque essai dit la version qu'il montre ;
+> l'éditeur dit en permanence la version du programme qu'il contient, ou « ta version modifiée ». Une lecture sur une
+> version précise se fait sur cette version figée, pas dans l'éditeur que l'élève modifie.
+> *Pourquoi* : l'algorigramme de la spécification testait 50 après la consigne qui fixe 60, le plan de tests « de la
+> v1 » commandait le gyrophare de la v2 ; à 55 km/h, deux documents donnaient deux réponses. Deux versions ont le droit
+> d'avoir deux nombres (complète n°338), à condition de se nommer. Méthode : skill `banc-essai-programme`.
+
+> **Règle d'or n°374 — On prévoit avant d'essayer, et une prévision juste ne vaut pas un essai.**
+> Un essai remplit trois cases, dans l'ordre : la prévision, écrite AVANT, d'après le cahier des charges ; l'observation,
+> le programme ACTUEL exécuté ; la conclusion, conforme ou le premier écart nommé. L'exécution reste fermée tant que la
+> prévision manque ; prévisions justes et essais conformes se comptent à part ; une prévision juste ne valide jamais un
+> programme, et un essai sans prévision n'est pas un test.
+> *Pourquoi* : sept bonnes prévisions sur la v2 théorique donnaient « activité maîtrisée » avec la v1 dans l'éditeur.
+> Complète n°333 (une réussite prouve la production) et n°349 (prédire avant de voir les propositions). Méthode : skill
+> `banc-essai-programme`.
+
+**Proposition, à trancher par Pascal** : faire de la n°333 (« une réussite affichée prouve la production réelle ») une
+clé de voûte. Elle tient tout ce lot, elle vaut pour tout exercice qui produit (programme, schéma, montage), et la
+grille des clés de voûte n'a aujourd'hui aucune clé sur la preuve de la production.
+
+**Vérifié** (22/11/2026, après fusion de `main` à be3b8f2) : banc du lot 57 / 57 ; `tests_banc_python.mjs` 24 / 24 ;
+n°311 34 / 34 ; écrit du brevet 11 / 11 ; mode mission joué écran par écran, 69 pourquoi à jour ; élève qui ne lit pas :
+0 validation ; axe (séquence et QCM) au niveau de la référence ; page ouverte, squelette, hors ligne, impression,
+contraste des liens, code coloré (12 listings), schémas, indices du QCM ; tous les contrôles Python du dossier à 0, dont
+sigles expliqués, reprise espacée `--strict`, validations, mêmes nombres, propositions, correction complète ;
+`controle_verification_execute.py` sur tout le site. Revue d'écran à 390 et 1 280 px (banc, traceur, correction du
+Bonus, reprise).
+
+**Non vérifié** : un vrai téléphone ou une tablette Android, un lecteur d'écran, le zoom 200 % de bout en bout, une
+impression réelle, la durée en classe (séances 2 et 3 : 53 min annoncées, avec la reprise de 3 min), un élève.
+
+**À trancher par Pascal** : 1. unifier le banc-python et l'éditeur Python commun (Skulpt), ou garder les deux (LISEZMOI
+du banc) ; 2. la n°333 en clé de voûte ; 3. le `<main>` des 77 autres QCM (gabarit commun, lot transversal) ; 4. le
+poids de l'image de situation (2 Mo) : les conditions de Canva interdisent d'en retirer les métadonnées de provenance,
+une version allégée doit donc être réexportée depuis Canva ; 5. l'effacement de la sauvegarde depuis le mode mission
+(outil commun `_outils/mode_mission/`).
 
 ## 22/11/2026 — `controle_regle4.py` : une page-pointeur se mesure sans ses feuilles de style ni ses scripts (thème 2 : `_outils`)
 
