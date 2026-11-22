@@ -21,7 +21,9 @@ C2 = T1 + "C2-decrire-les-interactions-entre-un-objet-ou/"
 C3 = T1 + "C3-caracteriser-et-choisir-un-objet-ou-un/"
 
 ENTREES = [
-    dict(id="bc-5e-shanghai-c3", module="besoin", niveau="5e", exos=["e1", "e3"],
+    dict(id="bc-5e-shanghai-c3",
+         # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
+         replie="🐂 D'abord (15 min)&nbsp;: le besoin, sur la bête à cornes d'un autre vélo-cargo — ouvre l'exercice", module="besoin", niveau="5e", exos=["e1", "e3"],
          sequence=C3 + "5e/5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html",
          avant='  <figure class="fig">\n    <img src="Images/trois_solutions_shanghai.svg"',
          balise="h4", balise_exo="h5",
@@ -33,7 +35,9 @@ ENTREES = [
                "d'heure&nbsp;; chacun se vérifie tout seul et a sa correction complète. Le même geste servira en "
                "séance 4, pour choisir entre S1, S2 et S3.",
          suite="un exercice pour compléter la bête à cornes d'un lampadaire, et le QCM de l'atelier"),
-    dict(id="bc-4e-hangzhou-c3", module="besoin", niveau="4e", exos=["e5"],
+    dict(id="bc-4e-hangzhou-c3",
+         # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
+         replie="🐂 D'abord (10 min)&nbsp;: de la bête à cornes aux caractéristiques, sur un autre objet — ouvre l'exercice", module="besoin", niveau="4e", exos=["e5"],
          sequence=C3 + "4e/4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html",
          avant='  <figure class="fig">\n    <img src="Images/du_besoin_aux_caracteristiques.svg"',
          balise="h4", balise_exo="h5",
@@ -45,7 +49,9 @@ ENTREES = [
                "le besoin ne compte pas. Un exercice, environ dix minutes&nbsp;; il se vérifie tout seul et a sa "
                "correction complète.",
          suite="un exercice sur le besoin qui évolue, de l'arrosoir au système connecté, et le QCM de l'atelier"),
-    dict(id="bc-3e-shenzhen-c3", module="besoin", niveau="3e", exos=["e6"],
+    dict(id="bc-3e-shenzhen-c3",
+         # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
+         replie="🐂 D'abord (12 min)&nbsp;: la méthode, sur un autre besoin, l'alerte cyclonique — ouvre l'exercice", module="besoin", niveau="3e", exos=["e6"],
          sequence=C3 + "3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
          avant="  <p><b>Consigne.</b> Avant toute chose, et <b>avant d'ouvrir le tableau de données</b>",
          balise="h4", balise_exo="h5",
@@ -55,7 +61,9 @@ ENTREES = [
                "plus proche de nous&nbsp;: prévenir les habitants d'un quartier de Sainte-Luce de l'arrivée d'un "
                "cyclone. Un exercice, environ douze minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
          suite="un exercice sur le besoin mal formulé qui ferme la liste, et le QCM de l'atelier"),
-    dict(id="ex-3e-shenzhen-c3", module="exigences", niveau="3e", exos=["e5"],
+    dict(id="ex-3e-shenzhen-c3",
+         # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
+         replie="📏 Avant la grille (8 min)&nbsp;: ce que le client accepte, la flexibilité — ouvre l'exercice", module="exigences", niveau="3e", exos=["e5"],
          sequence=C3 + "3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
          avant="  <h4>b) Construire la grille</h4>",
          balise="h4", balise_exo="h5",
@@ -67,7 +75,9 @@ ENTREES = [
                "quartier de Martinique, dont la cliente, la présidente du comité de quartier, dit ce qu'elle accepte. "
                "Un exercice, environ huit minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
          suite="l'évaluation de deux boîtiers exigence par exigence, l'arbitrage entre eux, et le QCM de l'atelier"),
-    dict(id="cu-3e-pekin-c2", module="cas_utilisation", niveau="3e", exos=["e6"],
+    dict(id="cu-3e-pekin-c2",
+         # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
+         replie="🧭 D'abord (13 min)&nbsp;: choisir le mode de représentation selon la question — ouvre l'exercice", module="cas_utilisation", niveau="3e", exos=["e6"],
          sequence=C2 + "3e/3e_C2.1/sequence_3e_C2_pekin_borne.html",
          avant="  <p>Tu as produit l'algorigramme du technicien.",
          balise="h4", balise_exo="h5",
