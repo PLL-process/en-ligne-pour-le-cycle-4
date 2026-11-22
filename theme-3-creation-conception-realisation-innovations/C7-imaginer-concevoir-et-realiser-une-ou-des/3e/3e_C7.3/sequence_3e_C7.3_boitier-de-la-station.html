@@ -1733,7 +1733,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 <details class="referentiel-replie">
   <summary>🎯 Ce que dit le programme</summary>
 <div class="bloc referentiel-eleve">
-  <table class="refs">
+  <table class="refs" tabindex="0">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>3e_C7.3</b></td><td>Choisir un matériau constitutif d’un objet et/ou système technique.</td><td>Activités 1 à 3 et REFAIRE — séances 1 à 4</td></tr>
     <tr><td>3e_C4.2 <span style="color:var(--sub)">(appui)</span></td><td>Justifier le choix d’un matériau et de son procédé de mise en forme au regard des contraintes techniques et environnementales.</td><td>Activité 3 (séance 3), REFAIRE et synthèse (séance 4)</td></tr>
@@ -2053,7 +2053,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <div class="feedback" id="fb0"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <table class="refs">
+      <table class="refs" tabindex="0">
       <tr><th>À calculer — e = 3,00 × √(50 ÷ σ), puis m = ρ × surface × e</th><th>Ta valeur</th></tr>
       <tr><td>Épaisseur de paroi en PLA (σ = 50 MPa, en mégapascals)</td><td><b>3 mm</b></td></tr>
       <tr><td>Épaisseur de paroi en aluminium (σ = 160 MPa)</td><td><b>1,68 mm</b></td></tr>
@@ -2106,7 +2106,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
       <div class="jauge" id="jMoins"><b id="nMoins">—</b><span>le moins cher des retenus</span></div>
     </div>
 
-    <table class="mat" id="tab">
+    <table class="mat" id="tab" tabindex="0">
       <tr><th>Matériau</th><th>Résistance<br><small>MPa</small></th><th>Tenue au soleil<br><small>ans</small></th><th>Tenue au sel<br><small>/5</small></th><th>Température au soleil<br><small>°C</small></th><th>Masse de la pièce<br><small>kg</small></th><th>Coût<br><small>€</small></th><th>Verdict</th></tr>
     </table>
 
@@ -2267,7 +2267,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
     <div class="feedback" id="fb2"></div>
     <details class="correction"><summary>📖 Correction</summary><div>
 
-      <table class="refs">
+      <table class="refs" tabindex="0">
       <tr><th>Le seuil déplacé</th><th>Retenus</th><th>Qui entre</th></tr>
       <tr><td>Tenue au sel : 5 → 4</td><td><b>1</b></td><td>Aluminium anodisé — 0,557 kg, 2,90 €</td></tr>
       <tr><td>Masse : 1,2 → 1,4 kg</td><td><b>1</b></td><td>Inox 316 — 1,320 kg, 8,58 €</td></tr>
@@ -3609,6 +3609,50 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         return r;
       };
     } catch(e){}
+  }
+
+  /* Une zone qui défile s'atteint au clavier (axe-core, « scrollable-region-focusable », mesuré page ouverte sur les
+     341 pages le 22/11/2026 : 108 des 142 zones fautives étaient les schémas et les tableaux de ce kit). À 600 px et
+     moins, un schéma garde 560 px de large pour rester lisible, un grand tableau garde ses colonnes : la zone défile de
+     côté. Quand elle déborde vraiment, elle reçoit le focus (Tab, puis les flèches pour la faire défiler) et un nom lu
+     par le lecteur d'écran ; quand elle ne déborde plus (écran plus large), on retire ce qu'on avait posé, et cela
+     seulement. Une zone cachée (onglet fermé) mesure 0 : l'observateur de taille la reprend quand elle s'ouvre. En mode
+     incrusté, seules les zones des exercices sont touchées ; le tableau lui-même aussi, quand la séquence le fait
+     défiler (`table{display:block;overflow-x:auto}` dans sa feuille de style). */
+  var zones = [];
+  (source ? [document] : Array.prototype.slice.call(incrustes)).forEach(function(r){
+    r.querySelectorAll(".figure, .defile, .defile > table").forEach(function(el){ zones.push(el); });
+  });
+  function marquerZone(el){
+    var deborde = el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1;
+    var pose = el.getAttribute("data-zone-clavier");
+    if (deborde && pose === null){
+      pose = "";
+      if (!el.hasAttribute("tabindex")){ el.setAttribute("tabindex", "0"); pose += "t"; }
+      if (!el.hasAttribute("role")){ el.setAttribute("role", "region"); pose += "r"; }
+      if (!el.hasAttribute("aria-label") && !el.hasAttribute("aria-labelledby")){
+        var leg = el.querySelector("figcaption") || el.querySelector("caption");
+        var nom = leg ? leg.textContent.replace(/\s+/g, " ").trim() : "";
+        if (nom.length > 100) nom = nom.slice(0, 99) + "…";
+        el.setAttribute("aria-label", (el.classList.contains("defile") || el.tagName === "TABLE" ? "Tableau" : "Schéma") + (nom ? " : " + nom : "") + " (il défile de côté)");
+        pose += "l";
+      }
+      el.setAttribute("data-zone-clavier", pose);
+    } else if (!deborde && pose !== null){
+      if (pose.indexOf("t") !== -1) el.removeAttribute("tabindex");
+      if (pose.indexOf("r") !== -1) el.removeAttribute("role");
+      if (pose.indexOf("l") !== -1) el.removeAttribute("aria-label");
+      el.removeAttribute("data-zone-clavier");
+    }
+  }
+  if (zones.length){
+    if (typeof ResizeObserver === "function"){
+      var observateur = new ResizeObserver(function(entrees){ entrees.forEach(function(e){ marquerZone(e.target); }); });
+      zones.forEach(function(el){ observateur.observe(el); });
+    } else {
+      zones.forEach(marquerZone);
+      window.addEventListener("resize", function(){ zones.forEach(marquerZone); });
+    }
   }
 })();
 </script>
