@@ -35987,6 +35987,48 @@ sans `--strict`, un L ou un B sort à 1, C seul à 0). Les trois points nouveaux
 (vérifié : 11 / 14). Les skills `controle-qualite-lot`, `texte-clair-et-aere` et `audit-douze-axes`, qui disaient
 « mesure », sont mis à jour dans une PR transversale à part (`.claude/` est hors du périmètre du thème 2).
 
+## 22/11/2026 — Audit hebdomadaire, avancé à la demande de Pascal : 3 ✘ (n°23 seule), 52 séquences propres sur 56, 36 fichiers de dérive (+25) ; un seul rouge bloquant, un manifeste (transversal : `docs/audits`)
+
+**Demande de Pascal** (22/11, 0 h 50 Martinique) : « Pourrais-tu faire cet audit maintenant et rechercher les skills qui me
+seraient utiles, plugins, règles d'or et clefs de voûte » ; « ils seront à installer automatiquement ensuite ».
+`rapport_audit.py --complet --generateurs` sur `main` après #860 (`e0a9fc5`) : `docs/audits/RAPPORT_AUDIT_2026-11-22.md`, avec
+« Depuis la semaine dernière », le crible et la veille. Rien n'est corrigé, rien n'est fusionné. `axe-core` 4.10.2 installé
+dans le bac à sable (outil de contrôle retenu le 11/11, non versionné) : `controle_axe.mjs` a tourné, vert.
+
+**Ce qui a bougé depuis le 15/11** (134 PR, #726 → #860 ; règles n°331 → n°368). Règles d'or : **3 ✘, toutes n°23** — zéro
+liste n°300, zéro ancien gabarit, n°301 réglée côté contrôle (#725) ; mais **trois dépassements de minutes nouveaux** (3e_C1.1
++5, 3e_C2.1 +13, 4e_C9.1 +17) : billets de sortie, écrits et enquête ajoutés sans reprendre la durée. Séquences propres : 52
+sur 56 (pas les mêmes). Verts depuis le 15/11 : `sauvegarde_locale`, `schema_sous_les_yeux`, `chaine_a_completer`. Dérive
+**11 → 36**, dans les deux sens : des pages en retard sur leur source (« 7 illustrées » pour 8 ; un lexique qui dit encore
+« l'an prochain », contraire à la n°304) et des retouches posées à la main que la source ignore (onglets au clavier des
+ateliers de planification, n°364 sur 3e_C9.2, « (volts) »). Couverture inchangée pour le quatrième rapport.
+
+**Rouges, criblés.** `controle_medias` (bloquant) : un manifeste de 3e_C6.2 range une phrase en médias — rien ne manque à
+l'élève. `regle4` : le TP algorigrammes de 4e_C6.2 (sorti des héritées le 20/11) et les 3 ateliers de planification (bouton
+QCM à 53 %). `competences` : « CRCN 3.4 » sans « Programmer » dans `index_complements.json`. `flux_animes` : un SVG de 5e_C4.1
+réécrit par la passe « cinétique » (#752). `schemas` : intermittent. Les 6 COUVERT « sans preuve » de 4e_C4.x sont un artefact
+de `preuves_couverts()` (un QCM hérité marqué par code dans le dossier), plus deux README qui pointent 4e_C4.1 au lieu de 4e_C4.7.
+
+**Chantiers proposés, dans l'ordre.** 1) Le manifeste de 3e_C6.2 (une ligne). 2) Petites PR : `index_complements.json`,
+`animer_flux.py`, deux README, `preuves_couverts()`. 3) n°23 sur trois pages, et la ligne de méthode « une règle qui ajoute un
+bloc dit ce qu'il coûte en minutes ». 4) La dérive : retouches reportées dans leurs sources, régénération jusqu'à zéro. 5) Le
+TP de 4e_C6.2 (blocs ou tolérance). 6) Clés de voûte : la n°331 et la n°361 hors grille ; décisions de couverture en attente.
+
+**Veille** (dix dépôts clonés en lecture seule, rien exécuté, rien installé) : aucun plugin à installer (crochets à chaque
+message, paquets téléchargés et exécutés, licences absentes) ; quatre propositions **réécrites de zéro**, à la décision de
+Pascal : **K1, clé de voûte « Ce qui compte revient »** (reprise espacée des 🔑 en tête de séance, maîtrise confirmée plus
+tard ; « à concevoir » dans `PLAN.md` depuis le 11/11), **R2** (lisible à 200 % et lettres espacées, WCAG 1.4.4 et 1.4.12),
+**R3** (le QCM entrelace : 69 QCM sur 70 posent leurs questions par blocs de compétence), **R4** (le bilan dit ce qui reste
+flou et quand on le reprend). Deux des trois idées du 08/11 sont couvertes (n°347, n°367, n°331).
+
+**Vérifié.** Le rapport a tourné une fois, complet avec générateurs (≈ 22 min) ; `controle_medias`, `controle_competences`,
+`controle_regle4`, `controle_flux_animes`, `controle_schemas.mjs`, `verif_regles_audit.py`, `bilan_revision.py` relancés à
+part ; régénération d'essai dans une copie (`git archive`) et comparaison page par page ; mesure de l'entrelacement des 70 QCM.
+**Non exécuté** : les bancs des lots, un navigateur réel, aucun script des dépôts de la veille.
+
+**Reste à Pascal.** Fusionner cette PR (transversale : la fusion automatique ne vaut que pour les thèmes) ; dire lesquelles
+de K1, R2, R3, R4 s'installent — elles le seront dans une PR à part, en essai (n°147).
+
 ## 22/11/2026 — Thème 3, n°364 : six blocs de code ou de données qui n'étaient pas des `<pre>` ne défilent plus
 
 Le contrôle de la page ouverte apprend à voir les listings qui ne sont pas des `<pre>` : tout bloc en police à chasse
