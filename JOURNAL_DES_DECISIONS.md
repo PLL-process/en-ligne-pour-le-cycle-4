@@ -35141,3 +35141,11 @@ ouverte seule, schémas hauts à 5,7 cm, exercice insécable) ; tour 3, pied de 
 **Non vérifié** : lecteur d'écran réel, appareils Android et Galaxy Tab physiques, zoom navigateur réel à 200 %,
 impression sur une vraie imprimante, durée de chaque manche (à mesurer au premier essai en classe), et aucun essai
 avec des élèves.
+
+**Décisions de Pascal sur ce lot** (21/11/2026, 21 h 31, « Tu as carte blanche »), prises pour l'élève :
+1. **Seuils gardés** : 6 / 8, 6 / 8, 4 / 6, 6 / 8. L'audit dit « conserver le seuil pédagogique si souhaité » ; la
+   manche 3 est la plus exigeante, et le seuil est écrit à côté de son bouton. La fiche pédagogique ne parle plus des
+   « trois quarts » : elle donne les quatre nombres.
+2. **Impression de la manche ouverte, sans bouton « toute la banque »** : un élève imprime ce qu'il vient de faire, et
+   les photocopies sont comptées ; la page entière, schémas compris, ferait une trentaine de pages A4. « 📄 Ma fiche
+   bilan » garde la trace de toutes les manches sur une page.
