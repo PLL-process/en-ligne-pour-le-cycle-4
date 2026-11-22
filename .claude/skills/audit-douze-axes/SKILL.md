@@ -62,7 +62,7 @@ Chaque geste est une mesure à citer dans l'annexe :
 ## 4. Ouvrir tout, puis regarder (n°361)
 
 ```bash
-node _outils/controle_page_ouverte.mjs <dossier> --axe     # L listing qui défile · B bloc dessiné · C correction recopiée · A axe
+node _outils/controle_page_ouverte.mjs <dossier> --axe     # L listing qui défile · B bloc dessiné (L, B : sortie 1) · C correction recopiée · A axe
 ```
 
 Si la page fabrique ses corrections par script, lui poser `window.__toutOuvrir()` (pilote : le TP `4e_C6.2`). Puis à
