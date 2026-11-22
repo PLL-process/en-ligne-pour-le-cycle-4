@@ -35966,3 +35966,21 @@ phrase est corrigée dans ses sources : `atelier-planification/_generation/build
 
 **Mesure** : pages avec un QCM jamais expliqué, 267 → 173 ; thème 3 : 161 → 120 pages avec au moins un sigle nu. Reste
 le thème 1 (sessions en cours), puis OST et les autres sigles.
+
+## 22/11/2026 — Thème 1, n°364 : les bandeaux « machine à écrire » de 4e_C1.4 ne coupent plus leur phrase ; un renvoi répété exprès marqué
+
+Le contrôle de la page ouverte apprend à voir les listings qui ne sont pas des `<pre>` (blocs en chasse fixe qui gardent
+leurs lignes : PR de `_outils/` en cours, thème 2). Il en trouve deux au thème 1, tous deux dans `4e_C1.4` : le bandeau
+`.terminal` de l'activité bonus 2FA (« Protéger ses données • Comprendre les risques • Devenir citoyen numérique
+éclairé ») et celui de la séquence (`#terminalIntro`, tapé lettre à lettre par script). En `nowrap` et `overflow:hidden`,
+ils coupaient la phrase au bord de l'écran : à 390 px, plus de la moitié du bandeau de l'activité bonus (743 px) était
+cachée. Sur un téléphone (600 px et moins), le bandeau revient à la ligne, sans animation de largeur. Vu à 390 px : les
+deux phrases entières. Dans la séquence, deux mots du bandeau reprennent leurs accents (« encadrée », « protège tes
+données »).
+
+Les cinq renvois « Le quiz : sa correction complète est sous le quiz » de la séquence (dans cinq corrections) portent
+`data-repete` : répétés exprès, ils ne sont plus lus comme une correction recopiée (C de `controle_page_ouverte.mjs`).
+
+Contrôles : `tests_regle_311_4e_C1.4.mjs` 34 / 34, `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_page_ouverte.mjs --axe`
+(version qui voit les blocs en chasse fixe) : L 0 · C 0 ; reste un `color-contrast` (badge de score de `#bloc1-risques`),
+déjà sur `main`. `controle_impression`, `controle_mode_mission`, `controle_mode_essentiel`, `controle_regles_visibles` à 0.
