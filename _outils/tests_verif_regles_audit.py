@@ -663,6 +663,26 @@ def main():
             if V.regle_26(h, n_)[0] == a and m_ in V.regle_26(h, n_)[1]
             else "rendu %s : %s" % V.regle_26(h, n_))
 
+    # n°23 (22/11/2026, audit #867) : le résumé d'un exercice incrusté et une activité « 🏠 Facultatif »
+    # ne s'ajoutent pas au temps de classe ; « 🏠 Peut se faire à la maison » reste compté.
+    badge = '<span class="badge duree">⏱ 1 séance de 55 min</span>'
+    act = lambda n_, extra="": ('<div class="activite"><header><span class="num">A</span><h3>T</h3>'
+                                '<span class="duree">⏱ ~%d min</span></header>%s</div>' % (n_, extra))
+    incruste = ('<details class="incruste-repliee"><summary>🧭 D\'abord (13 min)&nbsp;: choisir</summary>'
+                '<section>exercice</section></details>')
+    for titre, html, attendu, total in [
+        ("l'exercice incrusté (13 min) est compté dans son activité de 43 → 43", badge + act(43, incruste), "OK", 43),
+        ("une activité facultative à la maison n'est pas comptée → 40",
+         badge + act(40) + act(12, '<p class="pastille-maison">🏠 Facultatif — pour la prochaine fois, à la maison</p>'),
+         "OK", 40),
+        ("« peut se faire à la maison » reste compté → 52, refusé",
+         badge + act(40) + act(12, '<p class="pastille-maison">🏠 Peut se faire à la maison (sans matériel)</p>'),
+         "ECHEC", 52),
+    ]:
+        cas("n°23 — " + titre, lambda h=html, a=attendu, t=total: None
+            if V.regle_23(h)[0] == a and sum(V.durees_activites(h)) == t
+            else "rendu %s : %s (somme %d)" % (V.regle_23(h) + (sum(V.durees_activites(h)),)))
+
     if echecs:
         for e in echecs:
             print("❌ " + e)
