@@ -36807,3 +36807,15 @@ d'autre ne change.
   34 / 34 et 39 / 39).
 
 **Mesure** (`controle_sigles_expliques.py`) : thème 1, 14 → 0 page avec un sigle jamais expliqué.
+
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 3 : à 200 %, plus aucune page ne défile de côté (7 pages)
+
+**Carte blanche de Pascal** (22/11). `controle_zoom_espacement.mjs` relevait, au thème 3, sept pages qui défilaient de côté à
+200 % (fenêtre de 640 px) : les synthèses élève de 4e_C7.4, 5e_C7.4 et 5e_C7.5 (la chaîne des fonctions ne s'empilait
+qu'en dessous de 600 px), les synthèses professeur de 3e, 4e et 5e_C7.3 (tableaux larges), le TP mBot2 de 3e_C9.1 (un
+commentaire de listing et des tableaux). Les règles qui valaient sous 600 px valent maintenant sous 760 px, et les tableaux
+replient leurs cellules au lieu de pousser la page ; rien ne change au-dessus de 760 px.
+
+**Vérifié.** `controle_zoom_espacement.mjs` sur le thème 3 : 174 pages, 0 défile de côté (reste 1 texte coupé dans le
+dessin de la chaîne à compléter de 4e_C7.5, outil commun, à traiter à sa source) ; `controle_debordement`,
+`controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hierarchie` verts.
