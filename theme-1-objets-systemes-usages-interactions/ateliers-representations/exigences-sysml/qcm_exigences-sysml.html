@@ -164,7 +164,7 @@
   <span title="Programme 2024 — 4e_C2.2 : Repérer et expliquer les contraintes, exigences prises en compte (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité) pour répondre aux attentes des utilisateurs." class="badge code">4e_C2.2</span>
   <span title="Programme 2024 — 4e_C8.3 : Proposer un protocole de test pour valider le comportement et les performances d’un objet technique." class="badge code">4e_C8.3</span>
   <span title="Programme 2024 — 3e_C3.3 : Évaluer les objets ou systèmes techniques selon des exigences ou des critères identifiés (caractéristiques, performances, coût, indice de réparabilité)." class="badge code">3e_C3.3</span>
-  <span class="badge theme">30 questions · 5 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 6 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center">⬅ Revenir à l'atelier de ton niveau : <a href="atelier_4e_exigences-sysml.html">Atelier 4e</a> · <a href="atelier_3e_exigences-sysml.html">Atelier 3e</a></p>
 
@@ -303,16 +303,17 @@
 
 <script>
 "use strict";
-/* Banque de questions — Atelier : le diagramme des exigences (diagramme des exigences SysML). 30 questions (4e_C2.2 : 12 · 4e_C8.3 : 8 · 3e_C3.3 : 10), dont 5 illustrées. Source : _generation/q_exigences.py */
+/* Banque de questions — Atelier : le diagramme des exigences (diagramme des exigences SysML). 30 questions (4e_C2.2 : 12 · 4e_C8.3 : 8 · 3e_C3.3 : 10), dont 6 illustrées. Source : _generation/q_exigences.py */
 const QUESTIONS = [
 /* ═══ 4e_C2.2 ═══ */
-{c:"4e_C2.2",n:"Les deux noms du schéma",q:"Le diagramme des exigences est souvent appelé…",
- o:["le diagramme pieuvre des contraintes","le diagramme des exigences SysML","le diagramme de Gantt des exigences","le diagramme FAST du cahier des charges"],r:1,
- expl:"Les ingénieurs l'appellent <b>diagramme des exigences SysML</b>, du nom du langage de schémas SysML. Les deux noms désignent le même schéma : des blocs d'exigence reliés entre eux.",
- ex:"Dans un logiciel d'ingénierie, le menu « requirement diagram » ouvre ce schéma.",
- err:"Confondre les représentations entre elles parce qu'elles ont toutes un surnom.",
- d:["Le diagramme pieuvre montre les interacteurs autour de l'objet ; il ne contient ni Id ni niveau chiffré.","","Le diagramme de Gantt place des tâches dans le temps : il organise un projet, il ne range pas des exigences.","Le FAST va des fonctions techniques aux solutions, le « comment » : il ne fait pas partie du cahier des charges."],
- ret:"Diagramme des exigences = diagramme des exigences SysML."},
+{c:"4e_C2.2",n:"Une exigence, un compteur",q:"Sur ce diagramme, quelle exigence-fille vérifie-t-on avec un compteur d'eau ?",
+ img:{src:"Images/exigences_arrosage.svg",alt:"Diagramme des exigences du système d'arrosage : en haut l'exigence 1, Arrosage autonome ; reliées à elle par un petit cercle à croix, quatre exigences-filles : 1.1 Étanchéité (IPX4 au moins), 1.2 Sobriété (au plus 10 L par jour), 1.3 Réglage (sans outil, 2 min au plus), 1.4 Sécurité électrique (très basse tension, 12 V, en volts)."},
+ o:["1.1 Étanchéité : IPX4 au moins","1.2 Sobriété : au plus 10 L par jour","1.3 Réglage : sans outil, 2 min au plus","1.4 Sécurité électrique : très basse tension"],r:1,
+ expl:"Un compteur d'eau mesure des litres : il vérifie la seule exigence dont le niveau est un volume d'eau, la <b>sobriété</b> (au plus 10 L par jour). L'unité du niveau dit quel instrument prendre.",
+ ex:"Pour l'étanchéité, on arrose le boîtier et on regarde s'il entre une goutte ; pour le réglage, on chronomètre.",
+ err:"Choisir l'exigence qui parle d'eau sans lire l'unité de son niveau.",
+ d:["L'étanchéité parle aussi d'eau, mais elle se vérifie en arrosant le boîtier, pas en comptant des litres. Lis l'unité de chaque niveau.","","Le réglage se mesure en minutes : il faut un chronomètre. Cherche le niveau écrit en litres.","La très basse tension se mesure en volts, avec un multimètre. Cherche le niveau écrit en litres."],
+ ret:"L'unité du niveau dit l'instrument."},
 {c:"4e_C2.2",n:"Ce que veut dire SysML",q:"SysML (Systems Modeling Language) désigne…",
  o:["un langage de schémas pour modéliser les systèmes","un logiciel qui simule le fonctionnement des machines","une norme qui fixe la tension des appareils électriques","une liste officielle des systèmes autorisés en France"],r:0,
  expl:"SysML veut dire « langage de modélisation des systèmes » : un ensemble de schémas normalisés, lus de la même façon par les ingénieurs du monde entier. Le diagramme des exigences en fait partie.",
@@ -363,7 +364,7 @@ const QUESTIONS = [
  err:"Écrire une solution, ou une phrase sans niveau.",
  d:["","Une électrovanne est une solution : elle dit COMMENT faire. Elle satisfera peut-être l'exigence, elle n'en est pas une.","« Vraiment très économe » n'a ni nombre ni unité : personne ne peut dire si c'est réussi.","Plaire est un avis, qui change d'une personne à l'autre : aucun test ne peut le trancher."],
  ret:"Une exigence : ce que, avec critère et niveau."},
-{c:"4e_C2.2",n:"La catégorie de la sobriété",q:"« Le système doit utiliser au plus 10 L d'eau par jour. » Dans quelle catégorie du programme range-t-on cette exigence ?",
+{c:"4e_C2.2",n:"La catégorie de la sobriété",q:"« Le système doit utiliser au plus 10 L d'eau par jour. » Dans quelle catégorie range-t-on cette exigence ?",
  o:["les incidences environnementales","l'ergonomie et le confort d'usage","la fiabilité dans le temps","la qualité de fabrication"],r:0,
  expl:"Ne pas gaspiller l'eau de la cuve, c'est limiter les effets du système sur la planète : <b>incidences environnementales</b>.",
  ex:"Économiser l'énergie ou réduire les déchets relève aussi des incidences environnementales.",
@@ -588,7 +589,7 @@ const PIEGES={
   flexibilite:"Choisir avec la flexibilité : F1, la marge en chiffres, l'exigence F0 manquée, départager, améliorer"
 };
 const PIEGE_DE_NOTION={
-  "Les deux noms du schéma":"schema",
+  "Une exigence, un compteur":"schema",
   "Ce que veut dire SysML":"schema",
   "Lire un Id":"schema",
   "Le petit cercle à croix":"schema",

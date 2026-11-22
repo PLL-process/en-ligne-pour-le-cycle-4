@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 4e_C2.2 (12) · 4e_C8.3 (8) · 3e_C3.3 (10). Cinq questions illustrées.
+Répartition : 4e_C2.2 (12) · 4e_C8.3 (8) · 3e_C3.3 (10). Six questions illustrées.
 La flexibilité (classes F0–F3, tolérance chiffrée) porte cinq questions.
 """
 from qbanque import Banque
@@ -36,21 +36,21 @@ IMG_STATION_A = {"src": "Images/exigences_station_boitier_a.svg",
 # ═══════════════ 4e_C2.2 — Repérer et expliquer les contraintes, exigences (12) ═══════════════
 C = "4e_C2.2"
 
-q(C, "Les deux noms du schéma",
-  "Le diagramme des exigences est souvent appelé…",
-  ["le diagramme des exigences SysML",
-   "le diagramme pieuvre des contraintes",
-   "le diagramme de Gantt des exigences",
-   "le diagramme FAST du cahier des charges"],
-  "Les ingénieurs l'appellent <b>diagramme des exigences SysML</b>, du nom du langage de schémas SysML. Les deux noms "
-  "désignent le même schéma : des blocs d'exigence reliés entre eux.",
-  "Dans un logiciel d'ingénierie, le menu « requirement diagram » ouvre ce schéma.",
-  "Confondre les représentations entre elles parce qu'elles ont toutes un surnom.",
+q(C, "Une exigence, un compteur",
+  "Sur ce diagramme, quelle exigence-fille vérifie-t-on avec un compteur d'eau ?",
+  ["1.2 Sobriété : au plus 10 L par jour",
+   "1.1 Étanchéité : IPX4 au moins",
+   "1.3 Réglage : sans outil, 2 min au plus",
+   "1.4 Sécurité électrique : très basse tension"],
+  "Un compteur d'eau mesure des litres : il vérifie la seule exigence dont le niveau est un volume d'eau, la "
+  "<b>sobriété</b> (au plus 10 L par jour). L'unité du niveau dit quel instrument prendre.",
+  "Pour l'étanchéité, on arrose le boîtier et on regarde s'il entre une goutte ; pour le réglage, on chronomètre.",
+  "Choisir l'exigence qui parle d'eau sans lire l'unité de son niveau.",
   ["",
-   "Le diagramme pieuvre montre les interacteurs autour de l'objet ; il ne contient ni Id ni niveau chiffré.",
-   "Le diagramme de Gantt place des tâches dans le temps : il organise un projet, il ne range pas des exigences.",
-   "Le FAST va des fonctions techniques aux solutions, le « comment » : il ne fait pas partie du cahier des charges."],
-  "Diagramme des exigences = diagramme des exigences SysML.")
+   "L'étanchéité parle aussi d'eau, mais elle se vérifie en arrosant le boîtier, pas en comptant des litres. Lis l'unité de chaque niveau.",
+   "Le réglage se mesure en minutes : il faut un chronomètre. Cherche le niveau écrit en litres.",
+   "La très basse tension se mesure en volts, avec un multimètre. Cherche le niveau écrit en litres."],
+  "L'unité du niveau dit l'instrument.", img=IMG_ARROSAGE)
 
 q(C, "Ce que veut dire SysML",
   "SysML (Systems Modeling Language) désigne…",
@@ -163,7 +163,7 @@ q(C, "Ce que, pas comment",
   "Une exigence : ce que, avec critère et niveau.")
 
 q(C, "La catégorie de la sobriété",
-  "« Le système doit utiliser au plus 10 L d'eau par jour. » Dans quelle catégorie du programme range-t-on cette exigence ?",
+  "« Le système doit utiliser au plus 10 L d'eau par jour. » Dans quelle catégorie range-t-on cette exigence ?",
   ["les incidences environnementales",
    "l'ergonomie et le confort d'usage",
    "la fiabilité dans le temps",

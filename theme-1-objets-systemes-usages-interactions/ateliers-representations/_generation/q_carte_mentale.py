@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 5e_C1.4 (10) · 4e_C1.2 (10) · 3e_C1.3 (10). Cinq questions illustrées.
+Répartition : 5e_C1.4 (10) · 4e_C1.2 (10) · 3e_C1.3 (10). Six questions illustrées.
 """
 from qbanque import Banque
 
@@ -319,8 +319,8 @@ q(C, "Pas de flèches",
   "Pas de flèches, pas d'ordre : c'est normal.")
 
 q(C, "Pour qui ?",
-  "« Mme Joseph suit tout sur son téléphone. » Pour qui est-ce surtout un avantage ?",
-  ["pour la gardienne, qui sait sans venir",
+  "« Mme Joseph, la gardienne du jardin, suit tout sur son téléphone. » Pour qui est-ce surtout un avantage ?",
+  ["pour elle, qui sait sans se déplacer",
    "pour les plantes, qui boivent mieux",
    "pour la pompe, qui s'use moins vite",
    "pour le réseau wifi du collège"],
@@ -335,7 +335,7 @@ q(C, "Pour qui ?",
   "Un avantage se dit toujours pour quelqu'un.")
 
 q(C, "Une évolution technologique",
-  "Dans cet atelier, quelle est l'évolution technologique étudiée ?",
+  "Laquelle de ces phrases décrit une évolution technologique ?",
   ["le passage de l'arrosoir à l'arrosage connecté",
    "la croissance des plantes du potager du collège",
    "le changement des saisons au jardin partagé",
@@ -402,7 +402,7 @@ q(C, "Un connecteur d'opposition",
   "Opposer : mais, cependant, pourtant, en revanche.")
 
 q(C, "Le plan de l'argumentaire",
-  "Dans quel ordre écrit-on un argumentaire court ?",
+  "Pour peser le pour et le contre en trois phrases, quel plan suivre ?",
   ["un effet positif, un effet négatif, une conclusion",
    "la conclusion, puis toutes les idées de la carte",
    "le fonctionnement, puis le prix, puis la conclusion",
@@ -481,7 +481,7 @@ q(C, "Ce qu'elle cache",
    "Les mots-clés sont écrits dans les feuilles : la carte les montre."],
   "Une carte mentale ne montre pas d'ordre.")
 
-q(C, "Pieuvre ou carte mentale",
+q(C, "Reconnaître un schéma",
   "Un schéma place la station au centre et, autour, les habitants, le vent, la pluie et le réseau. C'est…",
   ["le diagramme des interacteurs extérieurs",
    "une carte mentale pour réviser le cours",

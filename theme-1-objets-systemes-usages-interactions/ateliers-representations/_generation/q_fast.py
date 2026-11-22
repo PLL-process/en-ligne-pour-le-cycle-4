@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 5e_C4.1 (8) · 5e_C1.2 (5) · 4e_C4.4 (6) · 4e_C7.2 (5) · 3e_C7.2 (6). Sept questions illustrées.
+Répartition : 5e_C4.1 (8) · 5e_C1.2 (5) · 4e_C4.4 (6) · 4e_C7.2 (5) · 3e_C7.2 (6). Huit questions illustrées.
 """
 from qbanque import Banque
 
@@ -328,7 +328,7 @@ q(C, "Hors de la chaîne d'information",
   "Ce qui agit sur le monde : chaîne d'énergie.")
 
 q(C, "Pourquoi une électrovanne",
-  "Lis le FAST vers la gauche : pourquoi le système d'arrosage a-t-il une électrovanne ?",
+  "Lis ce FAST vers la gauche : pourquoi le système d'arrosage a-t-il une électrovanne ?",
   ["pour laisser passer l'eau ou la bloquer",
    "pour mesurer l'humidité de la terre",
    "pour envoyer l'état au smartphone",
@@ -341,7 +341,7 @@ q(C, "Pourquoi une électrovanne",
    "Mesurer l'humidité, c'est la ligne du capteur d'humidité du sol.",
    "Envoyer l'état au smartphone, c'est la ligne du module Wi-Fi.",
    "Décider, c'est la ligne de la carte programmable : l'électrovanne ne fait qu'obéir."],
-  "Vers la gauche : la fonction du constituant.")
+  "Vers la gauche : la fonction du constituant.", img=IMG_JARDIN)
 
 q(C, "Deux constituants, une fonction",
   "La pompe et les tuyaux sont tous les deux en face de « faire circuler l'eau jusqu'aux bacs ». Est-ce possible ?",
@@ -480,17 +480,17 @@ q(C, "Quand le réseau tombe",
   img=IMG_STATION)
 
 q(C, "Un critère qui élimine",
-  "Le critère « alimentée en très basse tension » est rempli par les trois solutions d'alerte. Ce critère…",
-  ["écarte toute solution qui ne le remplit pas",
-   "peut être effacé : il ne départage rien",
-   "désigne la solution la plus économe",
-   "ne concerne que la sirène de la station"],
+  "Le critère « alimentée en très basse tension » est rempli par les trois solutions d'alerte. Faut-il le garder dans la liste ?",
+  ["oui : il élimine toute solution qui ne le remplit pas",
+   "non : il ne départage rien, on peut donc l'effacer",
+   "non : il désigne déjà la solution la plus économe",
+   "oui, mais il ne concerne que la sirène de la station"],
   "C'est une <b>exigence impérative</b> (flexibilité F0) : elle ne départage pas, elle <b>élimine</b>. Une solution sur le 230 V (volts), "
   "sous la pluie d'un cyclone, serait écartée d'office.",
   "« Résister à des vents de cyclone » élimine aussi tout panneau qui s'envolerait.",
   "Effacer un critère parce que toutes les solutions le remplissent.",
   ["",
-   "Effacé, le critère ne protégerait plus contre une solution dangereuse proposée plus tard.",
+   "Effacé, le critère ne protégerait plus contre une solution dangereuse proposée plus tard. Demande-toi à quoi il sert, même quand il ne départage pas.",
    "Il dit oui ou non, il ne classe pas les consommations : il ne désigne aucune solution.",
    "La sirène, le module de messages et le panneau sont tous concernés : tous doivent rester en très basse tension."],
   "Un critère impératif élimine.")
