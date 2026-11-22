@@ -68,6 +68,16 @@ voisin avant de clore.
   quatre règles en vigueur (n°137, 144, 300, 340) : la cause n'était pas un manque de règle mais une page qu'aucun
   outil ne rejouait. La réponse décide du geste : une règle neuve, un outil qui manque, ou une page à faire entrer
   dans la mesure (`eleve_qui_ne_lit_pas.py --tout`, skill `eleve-qui-ne-lit-pas`).
+- **Avant de construire ce que l'audit propose, chercher ce que le dépôt a déjà** (n°208), et **avant de numéroter une
+  règle, lire les règles voisines** (`registre_regles.py --prochain`, puis le tableau de tête). Le 22/11/2026, l'audit
+  de `3e_C6.1` proposait « Skulpt, à prototyper » : le dépôt avait depuis le 04/11 un éditeur Python commun bâti sur
+  Skulpt (`_ressources-communes/editeur-python/`), et un petit Python neuf a été écrit sans l'avoir consulté. Les deux
+  règles qu'on s'apprêtait à écrire (« la vérification exécute le programme », « un essai ne vaut que pour la version
+  essayée ») étaient déjà dans la n°333 ; la page enfreignait une règle en vigueur, qu'aucun outil ne mesurait — d'où
+  `controle_verification_execute.py`. Seule la version dite (n°373) et la prévision avant l'essai (n°374) étaient
+  neuves. Et les numéros prévus le matin étaient pris le soir : relire le tableau juste avant de pousser.
+- **Jouer sa propre correction comme l'audit a joué la page.** Le banc neuf de `3e_C6.1` disait « SyntaxError » à des
+  programmes Python justes (f-string, `is True`) : vu en essayant des variantes justes, pas par un contrôle.
 - Relire aussi ce que la correction elle-même a pu casser : `controle_axe.mjs` sur tout le site après une passe qui
   touche l'accessibilité (le 17/11, l'agrandisseur annoncé « bouton » sur des schémas porteurs de texte a fait 24
   reculs graves, repris avant la fusion).

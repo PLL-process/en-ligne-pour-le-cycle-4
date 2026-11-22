@@ -36555,3 +36555,27 @@ explications écrites de la séance 3, trop pâle sur papier, défaut du 21/11).
 QCM montrent le schéma à compléter au lieu du schéma complet, qui portait la réponse (n°348) ; la question 1 reçoit des
 propositions crédibles. **Leçon** : la liste de fin de lot doit nommer aussi les bancs des sous-dossiers de `_outils/`
 (`qcm_aides/`, `impression_papier/`, `mode_mission/`) — ajoutée au skill `controle-qualite-lot` (PR transversale).
+
+## 22/11/2026 — Skills tirés de « Programmer l'alerte » : `banc-essai-programme` (nouveau) ; quatre skills mis à jour ; l'audit écrit (transversal : `.claude/skills`, `SKILLS_AUDIT.md`, `docs/audits`)
+
+Suite des PR #886 et #889 (thème 2), sur la consigne de Pascal du 21/11 (« fabriquer des skills, clefs de voûte, règles
+d'or grandis de cette expérience et de cet audit »). Thème 2 seulement pour les exemples ; les skills valent pour les trois.
+
+- **`banc-essai-programme`** (nouveau) : vérifier une activité où l'élève programme dans la page en exécutant son
+  programme — chercher d'abord l'éditeur Python commun (Skulpt) ; une spécification par version (n°373) ; exécuter,
+  comparer, nommer le premier écart (n°333) ; prévoir avant d'essayer (n°374) ; l'essai périmé par une modification ;
+  les limites de l'outil dites ; le chemin suivi ; les critères de recette dans le banc ; la mesure du site.
+- **`validations-qui-disent-vrai`** : § 2 ter, « un programme se juge en l'exécutant », et la mesure
+  `controle_verification_execute.py`.
+- **`relire-un-audit-externe`** : chercher ce que le dépôt a déjà avant de construire ce que l'audit propose (n°208), lire
+  les règles voisines avant de numéroter, relire le tableau juste avant de pousser ; jouer sa propre correction.
+- **`cadrage-cles-de-voute`** : question 18 (un programme se vérifie en l'exécutant) ; les versions et la prévision au
+  cadrage. **La proposition du journal de #886 est corrigée** : après la décision « sept, pas neuf » de l'audit #867, la
+  n°333 ne devient pas une huitième clé ; elle se range sous la **clé 6** (« un score dit quoi reprendre » : un score ne
+  dit vrai que s'il juge la production réelle). À confirmer par Pascal.
+- **`controle-qualite-lot`** : le contrôle `controle_verification_execute.py`, `banc_python/poser.py --verifier-tout`, et
+  la liste des bancs des sous-dossiers de `_outils/` (deux refus vus après la fusion de #886).
+- **`docs/audits/AUDIT_3e_C6.1_2026-11-22.md`** : l'audit externe trié remarque par remarque (✅ / ♻️ / 💡 / 🔶), mon audit
+  (P1 à P3), la grille sur 100 avant (≈ 58) et après (≈ 87), le non-vérifié.
+- `SKILLS_AUDIT.md` et `docs/REGISTRE_DES_REGLES_OR.md` (réengendré) à jour.
+
