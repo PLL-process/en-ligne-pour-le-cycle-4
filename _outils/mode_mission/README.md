@@ -99,6 +99,7 @@ après, sur les 5 pages qui portent un éditeur).
 | `banc_barre.mjs` | sur **toute** page qui porte le bloc : la barre d'étapes ne s'éteint pas en revenant en arrière (B1), un écrit dépassé s'allume (B2), un bouton visible ramène en mission une fois la page défilée (B3) ; `--racine` pour une autre copie du site |
 | `banc_editeur.mjs` | sur chaque page qui porte un éditeur Python (`.editeur-py`) : l'annonce « l'éditeur Python est intégré à l'activité » ne s'affiche que sur un écran qui le montre (E1) ; une fois montré dans une activité, l'éditeur reste sur chacun de ses écrans de question jusqu'à « Je retiens » (E2) |
 | `enrichir.py` | écrit dans une page le pourquoi des erreurs et les réponses leurres, depuis `mission_<lot>.json` |
+| `tests_enrichir.py` | banc de `enrichir.py` : un leurre ajouté, l'outil relancé sans rien changer, une infobulle de sigle posée après coup dans une légende gardée à l'octet près (22/11/2026) |
 | `../controle_mode_mission.py` | le bloc d'une page est celui de la source, une fois |
 
 ## Poser le mode mission sur une séquence
@@ -164,6 +165,7 @@ séquence — modèle : `5e_C4.1/mission_5e_C4.1.json` — puis :
 ```bash
 python3 _outils/mode_mission/enrichir.py <sequence.html> <mission_<lot>.json>      # --verifier : dit si la page est à jour
 python3 _outils/mode_mission/enrichir.py --etapes                                  # les pourquoi sans étape suivante (mesure)
+python3 _outils/mode_mission/enrichir.py --verifier-tout                           # chaque mission_*.json et sa page sont à jour
 ```
 
 **Un pourquoi nomme l'étape suivante** (veille du 15/11/2026, idée de `k12-check-for-understanding`, Apache 2.0,

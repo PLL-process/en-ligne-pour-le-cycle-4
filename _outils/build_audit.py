@@ -156,8 +156,8 @@ OVERLAY = {
                 "pièces sont là. Relu le 22/11/2026 (audit #867) : SOURCES_MEDIAS.md existe, le mode "
                 "essentiel est câblé, les images extraites de l'ancien HTML ont été compressées "
                 "(2,3 Mo pour tout le dossier, contre 9,3 Mo).",
-        anomalies="Une image reste au-dessus de 1 Mo (situation_fichiers_melanges.png, 2,1 Mo) : à "
-                  "compresser. Pas de grille LSU écrite dans la page.",
+        anomalies="Image de la situation compressée le 22/11/2026 (situation_fichiers_melanges.png, "
+                  "2,1 Mo → 0,6 Mo). Pas de grille LSU écrite dans la page.",
         accessibilite="Textes alternatifs présents ; contrôles axe du dépôt.",
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
@@ -361,29 +361,40 @@ OVERLAY = {
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C1.4": dict(
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=None, problematique=True,
-        qualite="Séquence cybersécurité + activité bonus 2FA + QCM au gabarit maison + deux synthèses "
-                "+ bancs de tests. Relu le 22/11/2026 (audit #867) : les deux images manquantes de "
-                "l'activité bonus ne sont plus appelées (elles ne restent que dans des commentaires), "
-                "SOURCES_MEDIAS.md existe, le mode essentiel est câblé, les synthèses élève et "
-                "professeur sont séparées.",
-        anomalies="Il manque deux pièces pour le statut complet : la fiche pédagogique et la matrice "
-                  "de couverture. Une image au-dessus de 1 Mo (situation_compte_pirate.png, 1,7 Mo).",
+        qualite="Séquence cybersécurité en quatre séances (reconnaître, mes données, mes traces, ma "
+                "réputation) + activité bonus double authentification + QCM 30 q. au gabarit maison "
+                "(10 par code : rappel 5e_C1.5, 4e_C1.4, rappel 5e_C1.6) + deux synthèses + bancs de "
+                "tests. Fiche pédagogique et matrice de couverture écrites le 22/11/2026 (audit #867, "
+                "« 2 oui » de Pascal) : chacune des 30 questions est rattachée à sa notion et à "
+                "l'activité qui l'enseigne. Synthèse professeur : le déroulé suit les quatre séances.",
+        anomalies="Quatre questions du QCM (9 gestionnaire de mots de passe, 10 permissions d'une "
+                  "application, 24 rôle du témoin, 29 droit à l'effacement) portent sur des rappels de "
+                  "5e que la séquence n'enseigne pas : la matrice les marque « à renforcer ». Les "
+                  "durées par activité ne sont pas affichées (règle n°23 non mesurable). Image de la "
+                  "situation compressée le 22/11/2026 (1,7 Mo → 0,6 Mo).",
         accessibilite="Bonne — contrôles axe du dépôt.",
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
     "3e_C1.5": dict(
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « Numérique, société, économie, environnement, santé », 4 séances de 55 min "
-                "(argumentaires courts : activité 1 bis pour 3e_C1.4, activité 5 pour 3e_C1.3) + QCM 30 q. "
-                "Relu le 22/11/2026 (audit #867) : mode essentiel câblé, positionnement sur les quatre "
-                "niveaux LSU présent.",
-        anomalies="Il manque deux pièces pour le statut complet : la fiche pédagogique et la matrice "
-                  "de couverture. Une image au-dessus de 1 Mo (situation_photo_publiee.png, 2,6 Mo).",
+                "(durées annoncées 50, 49, 45 et 53 min ; argumentaires courts : activité 1 bis pour "
+                "3e_C1.4, 2.d pour 3e_C1.5, activité 5 pour 3e_C1.3) + QCM 30 q. (10 par code). Fiche "
+                "pédagogique et matrice de couverture écrites le 22/11/2026 (audit #867, « 2 oui » de "
+                "Pascal) : chacune des 30 questions est rattachée à sa notion et à l'activité qui "
+                "l'enseigne. Correction de 1.b réparée le même jour (deux corrections portaient le même "
+                "identifiant : le second bouton ouvrait la correction de la première question).",
+        anomalies="Huit questions du QCM (1, 9, 14, 16, 20, 21, 22, 29) portent sur des notions que la "
+                  "séquence n'enseigne pas (télétravail, fracture numérique, écrans et sommeil, biais "
+                  "d'une IA, dématérialisation, indices de réparabilité et de durabilité, critères "
+                  "d'achat) : la matrice les marque « à renforcer ». Pas de synthèse élève ; la synthèse "
+                  "professeur reste « à compléter ». Image de la situation compressée le 22/11/2026 "
+                  "(2,6 Mo → 0,8 Mo).",
         accessibilite="Contrôles axe du dépôt.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
                "Delagrave n'est plus visée, ni rediffusée par le dépôt (arbitrage A5, 23/10/2026).",
