@@ -210,6 +210,12 @@ pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline)
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
 
+<style>
+/* Ce qui défile est caché (règle d'or n°364, 22/11/2026) : sur un téléphone, un listing à lire revient à la ligne
+   au lieu de défiler. Aucun caractère n'est changé : le code copié reste le même. Le calque coloré d'un éditeur
+   (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */
+@media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
 </head>
   
 <!-- ===================== Fin SECTION 1 — HEAD + CSS ===================== -->

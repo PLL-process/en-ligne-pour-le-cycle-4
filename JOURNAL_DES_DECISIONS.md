@@ -35726,3 +35726,21 @@ attend 10 secondes et relit la PR ; si elle est fusionnée, il écrit « déjà 
 
 **Vérifié.** `actionlint` : aucune erreur. Au banc, fusion simulée refusée sur #851 (réellement fusionnée) → « déjà
 fusionnée par ailleurs » ; même cas avec une PR lue comme non fusionnée → l'avertissement.
+
+## 22/11/2026 — Vague n°364, thème 3 : quatre pages dont les listings ne défilent plus (15 listings)
+
+Suite de la PR #854 (thème 2, fusionnée seule à 23 h 58), sur la même carte blanche de Pascal. Pages :
+`3e_C9.1/sequence_3e_C9.1_variables_types_systemes.html` (la mémoire numérotée), `3e_C9.1/tp_mbot2_python.html`
+(six listings, dont une ligne de 93 caractères qui sortait de 557 px), `3e_C9.1/vittascience_variables.html`,
+`3e_C9.2/sequence_3e_C9.2-C8.3_station_3_interaction.html` (sept listings C++ commentés, jusqu'à 83 caractères).
+Même geste qu'au thème 2 : à 600 px et moins, un listing à lire revient à la ligne (`pre-wrap`), aucun caractère
+changé, le code copié reste celui de l'IDE. La séquence 3e_C9.2 n'a pas de `</head>` : le bloc est posé avant sa
+première feuille de style. Regardé à 390 px : les commentaires longs passent à la ligne sous leur instruction, rien
+n'est caché.
+
+Contrôles : `tests_3e_C9.1.mjs` 89 / 89, `tests_regle_311_3e_C9.1.mjs` 34 / 34, `tests_3e_C9.2-C8.3.mjs` 167 / 167,
+`tests_pont_en_h.mjs` 37 / 37, `tests_regle_311_3e_C9.2.mjs` 34 / 34 ; `controle_impression`, `controle_squelette`,
+`controle_code_colore` à 0 sur les deux dossiers ; `controle_page_ouverte.mjs` : L 0 · B 0 · C 0 (16 pages).
+
+**Reste pour la n°364** : un listing, `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` (thème 1). Laissé pour
+après le chantier 2 du thème 1, que la conversation parallèle mène en ce moment sur les séquences de ce thème.
