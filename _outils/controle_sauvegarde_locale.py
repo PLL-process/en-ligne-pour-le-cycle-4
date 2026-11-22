@@ -54,6 +54,15 @@ donc un quatrième point — « effacer, c'est tout effacer » — et son banc, 
 
     node _outils/banc_effacement.mjs [--muet] [page.html | dossier …]
 
+UNE PRÉFÉRENCE D'AFFICHAGE N'EST PAS UNE RÉPONSE (21/11/2026)
+------------------------------------------------------------
+Depuis la PR #837, l'index garde sur l'appareil les groupes de l'accès rapide laissés ouverts sur téléphone
+(`index:acces-rapide`, décision de Pascal du 21/11 : « le groupe laissé ouvert l'est encore à la visite suivante »).
+Aucun nom, aucune réponse : l'élève suivant apprend seulement quel groupe était ouvert. Le contrôle sortait pourtant
+à 1 sur `main` (« sans aucun moyen d'effacer », « aucune note poste partagé »). PREFERENCES_SEULES nomme ces pages,
+leur clé et ce qu'elle garde. L'exception est étroite et se vérifie à chaque passage : si la page écrit une AUTRE clé
+que celle déclarée, elle redevient une page ordinaire et le contrôle la refuse comme avant.
+
 Usage : python3 _outils/controle_sauvegarde_locale.py [--racine .] [--corriger] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste un écart (effacement ou note manquants sur une
 séquence ou un atelier), 2 si aucune page n'a pu être lue (règle d'or n°299).
@@ -126,6 +135,24 @@ SCRIPT_RESET = '''
 FAUX = [
     ("rien n'est envoyé, personne d'autre ne les voit", "rien n'est envoyé en ligne"),
 ]
+
+
+#: page → (clé, ce qu'elle garde). Seulement des préférences d'affichage, jamais une réponse ni un nom.
+PREFERENCES_SEULES = {
+    "index.html": ("index:acces-rapide", "les groupes de l'accès rapide laissés ouverts sur téléphone (21/11/2026)"),
+}
+
+
+def ecrit_seulement(src, cle):
+    """Vrai si chaque `localStorage.setItem(` des scripts écrit la clé `cle` : en clair, ou par une
+    variable à laquelle la page donne cette valeur (`var CLE = "…"`). Les arguments se lisent dans
+    le script brut (`code_seul` retire les chaînes, donc une clé écrite en clair) ; un appel laissé
+    en commentaire compte aussi : l'exception reste du côté le plus strict."""
+    js = "\n".join(re.findall(r"<script[^>]*>(.*?)</script>", src, re.S))
+    appels = len(re.findall(r"localStorage\.setItem\(", sans_modale.code_seul(src)))
+    args = [a.strip() for a in re.findall(r"localStorage\.setItem\(\s*([^,)]*?)\s*,", js)]
+    noms = set(re.findall(r"(?:var|let|const)\s+(\w+)\s*=\s*['\"]" + re.escape(cle) + r"['\"]", js))
+    return appels > 0 and all(a.strip("'\"`") == cle or a in noms for a in args)
 
 
 def pages_html(racine):
@@ -201,6 +228,8 @@ def mesurer(racine):
         rel = os.path.relpath(p, racine).replace("\\", "/")
         e = mesurer_page(src)
         e["rel"], e["genre"] = rel, genre(rel)
+        pref = PREFERENCES_SEULES.get(rel)
+        e["preference"] = pref[1] if pref and ecrit_seulement(src, pref[0]) else None
         lignes.append(e)
     return lignes
 
@@ -275,8 +304,11 @@ def main(argv):
         lignes = mesurer(racine)
 
     refus = []
-    comptes = {"qcm_sans_note": [], "modale": [], "faux": []}
+    comptes = {"qcm_sans_note": [], "modale": [], "faux": [], "preference": []}
     for e in lignes:
+        if e.get("preference"):
+            comptes["preference"].append((e["rel"], e["preference"]))
+            continue
         if not e["efface"]:
             refus.append((e["rel"], "stocke dans le navigateur sans aucun moyen d'effacer"))
         if not e["note"]:
@@ -298,6 +330,8 @@ def main(argv):
                   "source principale : kit.js des ateliers de représentation) :" % len(comptes["modale"]))
             for rel in comptes["modale"]:
                 print("    · " + rel)
+        for rel, quoi in comptes["preference"]:
+            print("ℹ %s — garde seulement une préférence d'affichage : %s (aucune réponse, pas de refus)" % (rel, quoi))
         if comptes["qcm_sans_note"]:
             print("ℹ %d QCM gardent un score dans le navigateur sans note poste partagé (décision, pas un refus)"
                   % len(comptes["qcm_sans_note"]))
