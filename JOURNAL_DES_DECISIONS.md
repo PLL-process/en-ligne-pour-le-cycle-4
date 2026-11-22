@@ -53,9 +53,9 @@
 | 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
-| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 3 pages — 11 faux positifs retirés le 21/11 au soir : pages-pointeurs et renvoi), banc `tests_controle_porte_sequence.py` |
+| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
@@ -35883,3 +35883,13 @@ côte à 390 px (« IndentationError » sur trois lignes) → l'une sous l'autre
 `controle_mode_mission`, `controle_navigation_seances`, `controle_debordement`, `controle_hierarchie`,
 `controle_date_locale`, `controle_atteignabilite`, `controle_licence`. `controle_regle4` sort à 1 sur les quatre
 dossiers, avec la même sortie qu'avant le lot (pages d'activité sans clôture « QCM » : déjà sur `main`).
+
+## 22/11/2026 — Porte de séquence (n°366) : la référence est vide, toute page sans porte est refusée (thème 2 : `_outils/`)
+
+Suite de la PR #862 (thème 1, fusionnée seule) : les trois dernières pages de la liste REFERENCE de
+`_outils/controle_porte_sequence.py` ont leur porte. La liste est vidée (`REFERENCE = set()`, n°273 : elle ne peut que
+le rester) : une page d'élève rangée dans le dossier d'une séquence et qu'aucune page `sequence*.html` de ce dossier ne
+relie fait maintenant sortir le contrôle à 1. Le banc `tests_controle_porte_sequence.py` passe de 5 à 6 points (la
+référence du dépôt est vide). Registre : n°364 (0 listing qui défile sur les 341 pages) et n°366 (référence vide) mis à
+jour. Contrôles : `controle_porte_sequence.py` 0 page sans porte sur 56 dossiers de séquence ; banc 6 / 6 ;
+`registre_regles.py --verifier` vert (prochain n°369).
