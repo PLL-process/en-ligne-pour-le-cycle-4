@@ -21,8 +21,8 @@ présents, preuve de couverture, anomalies, statut.
 
 Ne pas partir de `AUDIT_COUVERTURE_PEDAGOGIQUE.md` ni de `FEUILLE_DE_ROUTE_COMPLETION.md` : figés
 en juillet 2026. La feuille de route dit encore « ChatGPT seul autorisé à pousser », contredit par
-la règle n°5 amendée (30/07/2026 : Fable pousse ses branches et ouvre ses PR ; la fusion reste à
-Pascal).
+la règle n°5 amendée (30/07/2026 : Fable pousse ses branches et ouvre ses PR ; 21/11/2026 : les PR
+de thème se fusionnent seules au vert, les PR transversales restent à Pascal).
 
 ## Procédure
 

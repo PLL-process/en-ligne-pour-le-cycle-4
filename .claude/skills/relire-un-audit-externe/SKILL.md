@@ -38,6 +38,10 @@ Une ligne par remarque : où (page, bloc, question), ce qu'elle affirme, ce qu'e
   correction et passe après (`tests_3e_C4.1-C4.2.mjs`, tests 10 bis et 10 ter). Les validations : skill
   `validations-qui-disent-vrai` ; les questions qui soufflent : skill `propositions-sans-indice`.
 
+- **Les critères de recette de l'audit se recopient au mot près** dans le banc (audit de l'entraînement DNB,
+  21/11/2026 : « avec 6 justes et 2 blancs, afficher « 6 / 8 renseignés · seuil atteint · Q7 et Q8 à faire » »). Le
+  banc échoue sur l'ancienne version, passe sur la nouvelle (n°194).
+
 ## 3. Classer
 
 | Statut | Quand | Ce qu'on écrit |
@@ -60,6 +64,10 @@ voisin avant de clore.
   d'une page parle souvent d'un gabarit : celui de `3e_C4.1` a fait trouver 34 pages aux onglets sans clavier
   (`onglets_clavier.py`), 6 pages qui promettaient le hors-ligne, 14 seuils codés sous le seuil annoncé dans 9
   séquences (`controle_validations.py`).
+- **Demander pourquoi aucune règle ne l'avait vu.** Le 21/11/2026, l'ancienne page de l'entraînement DNB enfreignait
+  quatre règles en vigueur (n°137, 144, 300, 340) : la cause n'était pas un manque de règle mais une page qu'aucun
+  outil ne rejouait. La réponse décide du geste : une règle neuve, un outil qui manque, ou une page à faire entrer
+  dans la mesure (`eleve_qui_ne_lit_pas.py --tout`, skill `eleve-qui-ne-lit-pas`).
 - Relire aussi ce que la correction elle-même a pu casser : `controle_axe.mjs` sur tout le site après une passe qui
   touche l'accessibilité (le 17/11, l'agrandisseur annoncé « bouton » sur des schémas porteurs de texte a fait 24
   reculs graves, repris avant la fusion).

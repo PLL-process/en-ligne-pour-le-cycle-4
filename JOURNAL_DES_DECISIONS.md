@@ -7,7 +7,7 @@
 | 2 | En-tête QCM standard (gabarit LOT 01) | Fondatrices | ✅ En vigueur |
 | 3 | Versions 🅰 réel / 🅱 simulation / 🅲 sans matériel | Fondatrices | ✅ En vigueur |
 | 4 | Blocs élève obligatoires (mission, 🧠 entraînement, 🎁 bonus) | Fondatrices | ✅ En vigueur |
-| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur — amendée le 30/07/2026 : autonomie de poussée pour Fable (voir entrée du jour) |
+| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur — amendée le 30/07/2026 : autonomie de poussée pour Fable (voir entrée du jour) ; amendée le 21/11/2026 : les PR des trois thèmes se fusionnent seules au vert (`.github/workflows/fusion-auto-themes.yml`) |
 | 6 | Convention des chaînes : information en haut, énergie en bas | Fondatrices | ✅ En vigueur |
 | 7 | CRCN observable, tracé, justifié | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
 | 8 | Représentations technologiques utiles, progressives, traçables | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
@@ -35,6 +35,29 @@
 | 343 | Une question se lit seule (clé de voûte) | Pascal (21/11/2026), sur la lecture question par question des QCM du thème 1 ; écrite par Fable | ✅ En vigueur — pilote C2 et C3 du thème 1 ; `_outils/controle_question_seule.py` (S1 à S4), skill `question-qui-se-lit-seule` |
 | 344 | Ce qui est annoncé est cité en entier | Pascal (21/11/2026), même lecture ; écrite par Fable | ✅ En vigueur — `_outils/controle_question_seule.py` (E1) |
 | 345 | Un QCM fait lire des documents, et ils se lisent au téléphone | Pascal (21/11/2026), même lecture ; écrite par Fable | ✅ En vigueur — `_outils/controle_question_seule.py` (D1, chantier), `_outils/document_qcm.py` |
+| 346 | Choisir n'est pas expliquer (clé de voûte) | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — skill `tache-finale-redigee` |
+| 347 | Un score dit quoi reprendre (clé de voûte) | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — skill `validations-qui-disent-vrai` § 2 bis |
+| 348 | Le document parle la langue du cours (clé de voûte) | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — skill `cadrage-cles-de-voute` |
+| 349 | On prédit avant de voir les propositions | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
+| 350 | L'énoncé donne tout ce dont dépend la réponse | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — prolonge la n°343 |
+| 351 | Un seuil se joue sous la valeur, à la valeur et au-dessus | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
+| 352 | Un ordre ne se demande que s'il est obligatoire | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
+| 353 | Les acquis indispensables sont marqués 🔑 et peu nombreux | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
+| 354 | Une boucle montre comment on en sort | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) (C6, C9) |
+| 355 | Ce que contient la variable, ce qui est affiché, ce qui est reçu : trois choses | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) (C6, C9) |
+| 356 | Chaque correction donne sa phrase de copie | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
+| 357 | On prépare le brevet tel que le Bulletin officiel le décrit | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — skill `tache-finale-redigee` § 4 |
+| 358 | On imprime ce qu'on vient de faire | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
+| 359 | Un lien vers une partie ouvre cette partie | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — PR #845 |
+| 360 | Les tests jouent l'élève qui ne lit pas | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai (n°147), déjà mesurée sur tout le site le 21/11/2026 — `_outils/eleve_qui_ne_lit_pas.py`, skill `eleve-qui-ne-lit-pas` |
+| 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
+| 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
+| 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure : 24 listings dans 8 pages au 21/11) ; skill `texte-clair-et-aere` |
+| 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
+| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 14 pages au 21/11) |
+| 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
+| 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -35229,6 +35252,139 @@ longueur des séquences, médias : verts.
 rien de visible). La capture brute pleine fenêtre et la capture étroite restent sur le poste de Pascal, dans un
 dossier créé pour l'occasion, `captures-cycle4-claude`, sous son dossier « Images » : à garder ou à supprimer, à son choix.
 
+## 21/11/2026 — Règles d'or n°346 à n°360, dont trois clés de voûte, et sept compléments : ce que l'audit de l'entraînement DNB enseigne pour toutes les séquences (transversal : `_outils`, `.claude/skills`, thème 2 `4e_C6.2` et `3e_C6.2`)
+
+**Demande de Pascal** (21/11/2026) : à 22 h 38, « Que peut-on tirer comme clefs de voûte ou règles d'or (le plus possible
+afin de mieux cadrer mes séquences » ; à 22 h 39, « De l'audit, tes réflexions etc. y compris » ; à 22 h 56, « Ok » à la
+proposition (quinze règles, sept compléments, une grille de sept clés de voûte, un test réutilisable), avec un prompt
+maître qui demande un référentiel complet ; à 23 h 04, « Si tu peux aussi fabriquer des skills ou autres, fort de cet
+enseignement ».
+
+**Le constat qui fonde le lot.** L'ancienne page de l'entraînement DNB enfreignait quatre règles déjà en vigueur
+(n°137, 144, 300, 340) : aucune règle ne manquait, aucun outil ne la relisait. D'où une règle d'outil (n°360) mesurée
+tout de suite sur le site, et une grille courte pour cadrer, au lieu d'un registre que plus personne ne lit en entier.
+
+**Statut.** Les n°346 à n°360 sont **en essai** sur `3e_C6.2` (n°147 : une règle naît sur un lot, elle s'adopte après
+mesure sur l'ensemble). La n°360 est déjà mesurée sur tout le site (plus bas).
+
+### Les trois clés de voûte
+
+> **Règle d'or n°346 (clé de voûte) — Choisir n'est pas expliquer.** Toute série de questions à choix se termine par
+> une réponse écrite, sans propositions, sur un document que l'élève n'a jamais vu. Un QCM mesure la reconnaissance ;
+> la compétence et le brevet demandent de produire (audit : « je peux reconnaître la bonne explication sans parvenir à
+> l'écrire sur ma copie »). Modèle : l'épreuve écrite de l'entraînement DNB (`#ep`). Skill `tache-finale-redigee`.
+
+> **Règle d'or n°347 (clé de voûte) — Un score dit quoi reprendre.** Après « Vérifier », l'élève lit séparément ce qu'il
+> a rempli, ce qu'il a réussi et ce qu'il doit reprendre, par numéro, sans la solution ; « Revoir mon erreur » donne
+> l'indice avant le corrigé. Elle prolonge la n°340 (audit : 7 / 8 sans savoir quoi revoir ; 6 justes et 2 blancs qui
+> cochaient « 8 exercices »). Skill `validations-qui-disent-vrai`, § 2 bis.
+
+> **Règle d'or n°348 (clé de voûte) — Le document parle la langue du cours.** Un document montre les mêmes formes, les
+> mêmes mots et les mêmes nombres que le rappel (un envoi est un parallélogramme partout) ; un document à interpréter
+> ne porte pas sa réponse, ni dans l'image ni dans sa description lue à voix haute. Une planche annotée est un exemple
+> guidé, pas un document d'exercice. Elle étend la n°338 (mots et nombres) aux formes, et la n°345 à toute page.
+
+### Concevoir l'exercice
+
+> **Règle d'or n°349 — On prédit avant de voir les propositions.** La prédiction est écrite, gardée, puis comparée à
+> la proposition choisie (manche 2 de l'entraînement DNB).
+
+> **Règle d'or n°350 — L'énoncé donne tout ce dont dépend la réponse.** État de départ, unité, type de nombre, capteur
+> et comportement entre deux seuils sont écrits (audit : la serre, la lampe, le four et la machine admettaient deux
+> réponses selon une hypothèse tue). Elle prolonge la n°343.
+
+> **Règle d'or n°351 — Un seuil se joue sous la valeur, à la valeur et au-dessus.** 79, 80 et 81 lux ; 14, 15 et
+> 16 unités : c'est à l'égalité que l'élève lit le signe du comparateur.
+
+> **Règle d'or n°352 — Un ordre ne se demande que s'il est obligatoire.** On mesure avant de décider ; la préparation
+> du thé admet plusieurs ordres justes et ne se demande pas (audit, exercice 16).
+
+> **Règle d'or n°353 — Les acquis indispensables sont marqués 🔑 et peu nombreux.** Quatre sur huit dans la manche 1 ;
+> le reste est de la révision.
+
+> **Règle d'or n°354 — Une boucle montre comment on en sort.** On entoure le test, on souligne ce qui change, on
+> fléche le retour (C6, C9).
+
+> **Règle d'or n°355 — Ce que contient la variable, ce qui est affiché, ce qui est reçu : trois choses.** Une absence
+> de message n'identifie pas une panne (audit, exercice 22) (C6, C9).
+
+### Écrire, préparer le brevet
+
+> **Règle d'or n°356 — Chaque correction donne sa phrase de copie.** « ✍️ Sur ta copie, on peut écrire… », après le
+> pourquoi de chaque proposition fausse (n°96).
+
+> **Règle d'or n°357 — On prépare le brevet tel que le Bulletin officiel le décrit.** Les chiffres de l'épreuve sont
+> cités avec leur source et leur date, et relus chaque année ; la consigne est « explique ton raisonnement en une ou
+> deux phrases », jamais « le brevet se joue dans les distracteurs ».
+
+### Usage en classe
+
+> **Règle d'or n°358 — On imprime ce qu'on vient de faire.** La partie ouverte, plus une fiche bilan d'une page (la
+> page entière de l'entraînement faisait 39 pages A4 ; une manche en fait de 4 à 8).
+
+> **Règle d'or n°359 — Un lien vers une partie ouvre cette partie.** Une adresse `#ancre` ouvre l'onglet qui la
+> contient, même fermé (PR #845).
+
+### Tester
+
+> **Règle d'or n°360 — Les tests jouent l'élève qui ne lit pas.** Toujours la proposition la plus longue, la plus
+> courte, la même place ou au hasard : aucune activité ne se valide ainsi. Outil `_outils/eleve_qui_ne_lit_pas.py`
+> (banc `tests_eleve_qui_ne_lit_pas.py`), skill `eleve-qui-ne-lit-pas`.
+
+### Sept compléments (aucun numéro nouveau)
+
+- **Complément à la n°29** : alléger la page retire le décor, jamais le rappel replié, « Revoir mon erreur » ni les
+  corrections (l'audit avait vu le mode essentiel supprimer les corrections).
+- **Complément à la n°41** : après chaque fusion, on relit l'accès rapide pour ce qui a changé (consigne permanente de
+  Pascal, même jour).
+- **Complément à la n°44** : les onglets se nomment en mots entiers (« Symboles », pas « Sym. »).
+- **Complément à la n°99** : un exemple guidé est suivi d'un cas neuf à dérouler seul.
+- **Complément à la n°106** : un entraînement ne revendique pas un code ; il mène, par un lien direct, à l'activité
+  qui le travaille.
+- **Complément à la n°315** : une étiquette « oui » ou « non » touche le segment qu'elle nomme.
+- **Complément à la n°328** : quand la progression n'a pas pu être enregistrée, la page le dit à l'élève.
+
+### La grille de cadrage
+
+En tête de `_outils/METHODE.md` : squelette (n°306) · rappel avant d'exiger (n°87, n°311) · trois lignes (n°337) · une
+question se lit seule (n°343) · choisir n'est pas expliquer (n°346) · un score dit quoi reprendre (n°347) · le document
+parle la langue du cours (n°348) ; et, côté fabrique, une règle n'existe que mesurée sur tout le site (n°95, n°211).
+
+### Skills
+
+- Nouveaux, dans `.claude/skills/` : `cadrage-cles-de-voute` (cadrer en sept lignes, seize questions vérifiables,
+  grille sur 100 où un zéro aux critères 1 ou 2 bloque, anti-patterns) ; `tache-finale-redigee` (document inédit,
+  quatre questions, coup de pouce, phrase de copie, grille à trois critères, aucun bouton qui note) ;
+  `eleve-qui-ne-lit-pas` (mesurer, lire, corriger dans l'ordre).
+- Mis à jour : `validations-qui-disent-vrai` (§ 2 bis, n°347), `relire-un-audit-externe` (critères de recette recopiés
+  au mot près ; demander pourquoi aucune règle n'avait vu le défaut), `sequence-pedagogique-engageante` (la grille en
+  tête). `SKILLS_AUDIT.md` à jour (le skill des validations y manquait depuis le 18/11).
+- Skill `methode-fable` du compte de Pascal : mise à jour proposée sur une carte (séances de 55 min et travail maison
+  de 20 min au plus, comme `METHODE.md` depuis le 24/10 ; la grille des clés de voûte). Il disait encore « une séance
+  de 1 h 30 ».
+- Hors dépôt : le référentiel complet (diagnostic, clés de voûte, règles par phase, skills, vigilance, anti-patterns,
+  checklist, grille sur 100, protocole, priorités) est un document Claude de Pascal, « Référentiel des séquences — clés
+  de voûte et règles d'or ».
+
+### Mesure de la n°360 sur tout le site
+
+`python3 _outils/eleve_qui_ne_lit_pas.py --tout` : 58 pages des trois thèmes ont des `CHECKS` ; **55 lues, une seule
+validée sans lire** au premier passage : `4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html`, activité 4, par
+« la plus longue » (deux bonnes réponses sur trois étaient les plus longues, d'un caractère ; la troisième, à égalité,
+était en première place). Corrigé dans ce lot : la proposition fausse « en marche — c'est la limite » devient « en marche
+— on est pile sur la limite », réfutation comprise ; banc du lot `tests_4e_C6.2.mjs` 56 / 56. Après correction : **0 page
+validée sans lire sur 55**. Listées à part : 12 pages dont le billet d'entrée est validé dès qu'il est répondu (voulu :
+il oriente, il ne note pas) ; 23 pages dont des activités sont fermées par un verrou d'expérience, donc non mesurées
+sans le geste. Non lues : les trois ateliers de planification `C7.1` (aucun groupe radio dans un `<fieldset>`).
+
+**Vérifié.** `tests_eleve_qui_ne_lit_pas.py` 7 / 7 (trois pages à réponse connue, plus `CHECKS` enfermé, billet, page sans
+`CHECKS`) ; `3e_C6.2/tests_entrainement_dnb.py` 54 / 54 (un test de plus : l'outil commun n°360 sur la page) ;
+`4e_C6.2/tests_4e_C6.2.mjs` 56 / 56 ; `registre_regles.py` sans numéro défini deux fois.
+
+**Non vérifié.** Les quatorze règles en essai ne sont pas encore mesurées hors de `3e_C6.2` ; aucun essai en classe ;
+l'outil n°360 ne lit ni les listes déroulantes, ni les champs à écrire, ni les activités fermées par un verrou
+d'expérience (il les nomme).
+
 ## 22/11/2026 — Thème 1, chantier 1 : les sept QCM des ateliers de représentation et `qcm_fonctionnement_objet` relus question par question (transversal : pages-pointeurs des thèmes 2 et 3)
 
 **La demande.** Pascal, le 21/11/2026 au soir : « Termine en toute confiance et autonomie les trois chantiers ouverts sur
@@ -35284,6 +35440,154 @@ questions sur document capturées à 390 px (aucun débordement). Contrôles des
 sigles, indices, longueurs) : verts. `controle_question_seule.py --strict` : aucun refus dans les ateliers.
 
 En tout, 22 questions retouchées sur 240.
+
+## 21/11/2026 — Règle d'or n°5 amendée : les PR des trois thèmes se fusionnent seules quand leurs contrôles sont verts (transversal : `.github/`, skills du dépôt)
+
+**Décision de Pascal** (21/11/2026, 23 h 15) : « J'aimerais automatiser la fusion [de] chaque PR des trois thèmes quand
+ses contrôles sont verts » ; puis « Modifie tes autorisations pour cela », « applique cela aux conversations en cours, en
+parallèle en ce moment », « et de façon générale aussi » — précisé : **les trois thèmes, pour toutes les sessions**, en
+cours et à venir ; les PR transversales (`fable/…` sans thème) restent à sa fusion.
+
+**Ce qui change dans la règle n°5.** L'amendement du 30/07/2026 disait : « la fusion reste la validation manuelle de
+Pascal après lecture » et « `.github/`, rulesets et paramètres du dépôt restent à Pascal ». Désormais :
+1. **Une PR de thème** — branche du dépôt dont le nom contient `theme-1`, `theme-2` ou `theme-3`, le même motif que la
+   garde-périmètre — **est fusionnée dès que le contrôle `perimetre` est vert** sur son dernier commit, et qu'aucun autre
+   contrôle n'est rouge ou en cours (commit de fusion, comme à la main). C'est le workflow
+   `.github/workflows/fusion-auto-themes.yml` qui le fait : il s'éveille à la fin de chaque passage de la garde, relit
+   la PR, et fusionne **ce commit précis** (`--match-head-commit`) — un commit poussé entre-temps n'est jamais fusionné
+   sans être passé par la garde.
+2. **Aucun réglage du dépôt n'a changé.** La première version passait par la fusion automatique native de GitHub, qui
+   demande d'activer « Allow auto-merge » et d'exiger `perimetre` dans la règle de `main` ; le proxy de la session cloud
+   refuse ces deux écritures (403 « Repository settings writes are not permitted through this proxy »). Le workflow fait
+   donc l'attente lui-même : la règle « Protection de main — validation Pascal » et les paramètres restent tels quels.
+3. **Pour tout arrêter** : Actions › « Fusion automatique des PR de thème » › « Disable workflow ».
+4. **Pour garder une PR de thème à la main** — un choix pédagogique qu'il veut lire avant (exercices E01–E16, visuels
+   V01–V12, tout ce qui lui est réservé) : **l'étiquette `attendre-Pascal`** (créée le 21/11/2026). Une PR qui la porte
+   n'est jamais fusionnée seule ; la retirer relance l'examen. Une session qui livre un tel choix pose l'étiquette
+   aussitôt la PR ouverte (`gh api repos/PLL-process/en-ligne-pour-le-cycle-4/issues/<n>/labels -f "labels[]=attendre-Pascal"`),
+   avant la fin de la garde.
+5. **Ce qui ne change pas** : les brouillons, les PR venues d'un fork, les branches transversales (`fable/<slug>`) et les
+   branches `pascal/…` ne se fusionnent jamais seules ; la garde-périmètre ne se contourne pas ; `.github/` reste interdit
+   depuis une branche de thème.
+
+**Conséquence pour les sessions.** Une PR de thème part en ligne dans la minute où la garde est verte : **ce qui doit
+être dans la fusion est dans la PR avant de l'ouvrir** — en particulier l'actualisation des liens « ⚡ Accès rapide »
+(consigne permanente du 21/11/2026, après la PR #844), l'index et l'audit régénérés, l'entrée au journal. Une session
+n'a plus à fusionner elle-même une PR de thème.
+
+**Sessions en cours.** Une PR de thème dont la garde a fini avant l'arrivée du workflow sur `main` n'a réveillé
+personne : le workflow a un rattrapage (« Run workflow », `workflow_dispatch`) qui examine toutes les PR de thème
+ouvertes, lancé une fois après la fusion de la présente PR. Toute nouvelle poussée sur une PR ouverte la rattrape aussi
+(la garde repasse, le workflow suit).
+
+**Sécurité.** Le workflow (`workflow_run`, `pull_request_target`) n'extrait ni n'exécute le code de la PR : il ne lit que
+des métadonnées (numéro, branche, étiquettes, origine, résultats des contrôles), et le nom de branche passe par une
+variable d'environnement, jamais dans le script. Une PR d'un fork est écartée par son origine (`head.repo`), même si sa
+branche s'appelle `theme-1`.
+
+**Vérifié.** `actionlint` (avec `shellcheck`) : aucune erreur. Le script, rejoué au banc sur de vraies PR sans fusion
+réelle : #846 (thème 1, garde verte) → fusionnée au bon commit ; #847 (transversale) → laissée à Pascal ; garde en
+échec, garde d'un fork, commit sans PR ouverte → rien. Filtres testés sur données fabriquées : étiquette
+`attendre-Pascal` reconnue ; seul le **dernier** passage de `perimetre` compte (un échec suivi d'un passage en cours
+→ pas de fusion) ; un autre contrôle rouge bloque, un contrôle « skipped » non. Une fusion faite par le robot GitHub
+Actions republie bien le site : le 11/05/2026, une poussée de `github-actions[bot]` a déclenché « pages build and
+deployment ». Le premier passage réel se lit sur la prochaine PR de thème.
+
+## 21/11/2026 — Huit règles d'or nées de l'audit en 12 axes du TP « Algorigrammes de domotique » (n°361 à n°368), trois contrôles, un skill (transversal : `_outils`, `.claude/skills`, thème 2 `4e_C6.2`)
+
+Pascal, 21/11 au soir : « Si tu peux aussi fabriquer des skills, clés de voûte, règles d'or ou autres, fort de cet
+enseignement issu des audits, de tes réflexions… » puis « Sur tous les plans ». L'audit du TP (20/11, 4,6 / 10) et
+ses suites (#832, #833, #836, #841, #842) ont montré des défauts que les règles en vigueur couvraient mal, ou que les
+contrôles ne voyaient pas. Chaque règle ci-dessous part d'un constat mesuré ; sept sont outillées ou pilotées. **Numéros n°361 à n°368** : réservés d'abord n°346 à n°353, après vérification de `main` (d8cb3ea) et des PR ouvertes (aucune) ; mais la conversation parallèle ouvrait au même moment la PR #849 (n°346 à n°360, « Choisir n'est pas expliquer »…), fusionnée la première. Renumérotées avant toute fusion, comme le veut la n°10 : c'est le doublon n°322/n°323 du 14/11 évité, pas reproduit.
+
+### Règle d'or n°361 (clé de voûte) — Un contrôle regarde la page ouverte
+
+*Plan : gouvernance des contrôles.* Le TP était vert pour tous les contrôles. Pourtant : un bloc « si / alors / sinon »
+dessiné (n°308) qu'aucun HTML ne contenait, parce qu'un script le fabriquait en ouvrant la correction ; la même phrase
+fermant les huit corrections (n°96) ; un défaut de contraste dans la légende du code coloré ; un algorithme qui cachait
+« 50 lux » en défilant. Tout cela n'existe qu'APRÈS un geste de l'élève. La n°49 dit « on teste ce qui est rendu » ;
+celle-ci ajoute : **ce qui est rendu après**. Un contrôle déplie les détails, affiche corrections, aides, bilan et
+onglets, puis mesure. Une page qui fabrique ses corrections par script expose `window.__toutOuvrir()` (pilote : le TP),
+que les contrôles appellent — jamais la page elle-même.
+**Outil** : `_outils/controle_page_ouverte.mjs` (L listing qui défile, B bloc dessiné dans un SVG, C même phrase dans
+3 corrections ou plus, A axe-core avec `--axe`) ; mesure, `--strict` pour sortir à 1 ; banc
+`_outils/tests_controle_page_ouverte.mjs` 10 / 10. Rejoué sur l'ANCIENNE version du TP (e94d45e, crochet ajouté) : B et
+C le voient ; sur la version corrigée : rien. **Mesure du site au 21/11** : 341 pages ouvertes à 390 px, 0 en panne ;
+L : 24 listings dans 8 pages ; B : 0 ; C : 3 pages (des intitulés répétés, « Correction question par question — la
+réponse, et pourquoi pas les autres », à regarder).
+
+### Règle d'or n°362 — Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle
+
+*Plan : pédagogie.* La simulation du TP testait une règle fixe, quelles que soient les sorties choisies par l'élève :
+elle ne pouvait ni le contredire ni l'aider. Une simulation d'exercice exécute ce que l'élève a construit ou choisi ;
+sans choix, elle le demande ; si elle ne peut que montrer un modèle, elle l'écrit (« voici le modèle »). Complète
+n°333 (une réussite affichée prouve la production) et n°340. Méthode : skill `validations-qui-disent-vrai`, § 3 bis.
+
+### Règle d'or n°363 — Le bilan imprimé est une preuve
+
+*Plan : évaluation.* Le PDF rendu par l'ENT ne montrait aucune construction, et le code de validation, calculé sur les
+sept premières lettres du nom, était le même à 0 / 20 et à 20 / 20. Le bilan imprimé montre ce que l'élève a construit
+et répondu, et ses essais ratés ; son code atteste TOUT ce qu'il affiche (nom, classe, score, date) : une valeur changée,
+un code refusé. Méthode : même § 3 bis ; pilote le TP (#841), banc qui retouche la note.
+
+### Règle d'or n°364 — Ce qui défile est caché
+
+*Plan : ergonomie et accessibilité.* À 390 px, la condition du débogage défilait et cachait la valeur du seuil, sans
+que rien ne le dise. Un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet (après OU, ET,
+un opérateur) ; un tableau trop large garde son filet (n°135) et le dit ; un cadre qui défile est atteignable au clavier.
+Un `<br>` garde un espace devant lui (le lecteur d'écran lit le `textContent`). Mesure : `controle_page_ouverte.mjs`
+(L) — 24 listings dans 8 pages au 21/11, première vague à venir (thème 2 `3e_C6.1`, `4e_C6.2`, `4e_C4.1` ;
+thème 3 `3e_C9.1`, `3e_C9.2` ; thème 1 `4e_C1.4`). Méthode : skill `texte-clair-et-aere`.
+
+### Règle d'or n°365 — La date du jour est celle du poste
+
+*Plan : technique.* `new Date().toISOString().slice(0, 10)` rend la date en heure universelle : en Martinique, après
+20 h, le lendemain. Le bilan du TP était daté du jour suivant, et son code ne correspondait plus. La date du jour se
+construit avec `getFullYear()`, `getMonth() + 1`, `getDate()` et s'affiche jj/mm/aaaa ; un horodatage complet reste
+permis. **Outil** : `_outils/controle_date_locale.py` — 421 fichiers lus, 0 occurrence au 21/11 (référence vide, n°273).
+
+### Règle d'or n°366 — La séquence est la porte de ses pages
+
+*Plan : navigation et stratégie.* Le TP n'était relié par aucune page de sa séquence : on n'y arrivait que par l'index ;
+le 08/11, Pascal ne retrouvait plus le TP des variables (`3e_C9.1/vittascience_variables.html`), dans le même cas. Une
+page d'élève rangée dans le dossier d'une séquence (atelier, TP, activité) s'ouvre depuis cette séquence, là où elle
+sert ; l'index peut la lister en plus. Prolonge la n°83. **Outil** : `_outils/controle_porte_sequence.py` — 56 dossiers
+de séquence, 14 pages sans porte au 21/11 (thème 1 : 9 ; thème 2 : 1 ; thème 3 : 4), en référence datée qui ne peut que
+rétrécir (n°273) ; une nouvelle page sans porte sort à 1.
+
+### Règle d'or n°367 — Un exercice aide avant de corriger : un indice, puis la démarche
+
+*Plan : pédagogie et différenciation.* Le TP donnait deux essais, puis la réponse, sans rien entre les deux. La n°339
+l'a dit pour les QCM ; celle-ci l'étend aux exercices des séquences et des TP : avant d'ouvrir la correction, deux aides
+repliées — un indice, puis la démarche — qui ne s'impriment pas. Méthode : skill `differenciation-dans-la-page` (aides à
+deux niveaux) ; pilote le TP (#841, 5 exercices × 2 aides).
+
+### Règle d'or n°368 — Un corrigé fait exactement ce que demande sa consigne
+
+*Plan : didactique.* La phase 3 du TP demandait « deux tests successifs » ; son corrigé dessinait UN losange
+(« Luminosité < 50 ? puis présence ? »), et une flèche de retour traversait un bloc. Un corrigé faux enseigne l'erreur
+avec l'autorité de la correction. Le corrigé se vérifie contre sa consigne, élément par élément (deux tests → deux
+losanges, une boucle → un retour qui ne croise rien), et le banc de la page compte cette structure. Pilote :
+`tests_tp_algorigrammes_4e_C6.2.mjs` (« correction de la phase 3 : deux losanges »). Proche de la n°334 (une règle
+enseignée est juste dans toute sa portée), mais pour la figure du corrigé.
+
+### Ce que ce lot livre aussi
+
+- **Skill `audit-douze-axes`** (`.claude/skills/`) : la méthode de l'audit — relire l'historique avant tout, fixer la
+  cible par défaut, lire tout le code, jouer la page « en tricheur », l'ouvrir, la situer, noter, rendre un Doc, et
+  suivre jusqu'à `main`. Inscrit dans `SKILLS_AUDIT.md`.
+- Skills complétés : `controle-qualite-lot` (trois contrôles, et la limite de `controle_blocs_dessines.py` face aux
+  dessins fabriqués par script), `validations-qui-disent-vrai` (§ 3 bis : simulation, bilan, date), `texte-clair-et-aere`
+  (un listing tient à 390 px).
+- `controle_regles_visibles.py` (n°309) refuse désormais les notes d'auteur : « Précision pédagogique », « Phrase élève
+  (à retenir) », « Vocabulaire corrigé », « Remarque / Note pédagogique », « Pour un débutant ». 0 occurrence sur `main`.
+- TP `4e_C6.2` : le crochet `window.__toutOuvrir()` (pilote de la n°361) ; la ligne « 🔍 Touche ou clique le schéma pour
+  l'agrandir », répétée exprès sous chaque schéma corrigé, porte `data-repete` (la mesure C ne la compte pas).
+
+**Vu, pas corrigé** (les deux conversations parallèles de ce soir travaillent sur le site : aucune page hors du TP n'est
+touchée) : les 24 listings qui défilent (n°364) et les 14 pages sans porte (n°366), listés par leurs contrôles ; les
+titres « V16 » et « V5 » des pages `4e_C1.4` (n°309), relevés par la mesure mais pas encore refusés : le motif d'un
+numéro de version attrapait aussi des personas (« Feng (V12) ») et « version 1 » d'un programme d'élève.
 
 ## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances (transversal : `docs/revision/SUIVI_REVISION.md`)
 

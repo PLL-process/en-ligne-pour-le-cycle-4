@@ -11,7 +11,7 @@ python3 tests_entrainement_dnb.py     # Playwright + Chromium ; sortie 2 si Play
 La page se reconstruit avec `python3 _outils/dnb_build.py <page>`, puis les quatre outils d'injection
 (`onglets_clavier`, `retrait_validation`, `onglets_seance`, `entete_telephone`, avec `--ecrire`).
 
-## Résultat : 53 / 53 tests passés
+## Résultat : 54 / 54 tests passés
 
 | Ce que le banc vérifie | Résultat |
 |---|---|
@@ -25,6 +25,7 @@ La page se reconstruit avec `python3 _outils/dnb_build.py <page>`, puis les quat
 | rappel « cinq repères pour cet entraînement » ; chaque envoi au gardien dessiné dans un parallélogramme | ✅ |
 | bonne réponse : chaque place dans chaque manche, au plus 2 fois ; jamais 3 fois de suite ; aucun motif répété | ✅ |
 | **choisir toujours la plus longue ne valide aucune manche** ; répondre toujours à la même place non plus | ✅ |
+| outil commun de la règle n°360 (`_outils/eleve_qui_ne_lit_pas.py`, ajouté le 21/11/2026) : aucune des huit stratégies sans lecture (plus longue, plus courte, chaque place, deux tirages au hasard) ne valide une manche | ✅ |
 | manche parfaite : validée, « 8 / 8 renseignés », progression, deux tâches cochées, chaque exercice « ✔ juste » | ✅ |
 | **6 justes + 2 blancs : « 6 / 8 renseignés · seuil atteint », exercices 15 et 16 à faire, tâche « Répondre aux 8 » non cochée** | ✅ |
 | **une erreur en 17 : « À revoir : exercice 17 », « Revoir mon erreur » sans la bonne réponse, aide 1 ouverte d'un appui** | ✅ |

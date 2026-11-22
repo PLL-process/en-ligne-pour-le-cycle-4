@@ -1,6 +1,6 @@
 ---
 name: validations-qui-disent-vrai
-description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règle d'or n°340.
+description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règles d'or n°340, n°347, n°362 et n°363.
 ---
 
 # Une validation dit la vérité
@@ -62,6 +62,27 @@ de réussite, message de réussite) et ce que le code **exige** :
    sous la question qui demande les 432 Wh) : `python3 _outils/controle_propositions_indices.py` (skill
    `propositions-sans-indice`).
 
+## 2 bis. Un score dit quoi reprendre (n°347, 21/11/2026)
+
+Une validation juste ne suffit pas : l'élève doit savoir quoi refaire. Né de l'audit de l'entraînement DNB de
+`3e_C6.2` : avec 7 / 8, l'élève ne savait pas quel exercice revoir ; avec 6 justes et 2 blancs, la page cochait
+« répondre aux 8 exercices ». Modèle en place : `_outils/dnb_gabarit.html` (fonctions `corriger`, `poserEtat`,
+`message`, `majTaches`).
+
+1. **Trois comptes séparés** : renseignés, justes, seuil. « 6 / 8 renseignés · seuil atteint · exercices 15 et 16 à
+   faire ». Une `CHECKS[n]()` renvoie aussi `vides` et `detail` (l'état de chaque exercice).
+2. **Une marque par exercice** après « Vérifier » : ✔ juste, ✘ à revoir, ○ à faire — en mots, pas en couleur seule
+   (n°119).
+3. **Le message cite les numéros**, jamais la bonne réponse : « À revoir : exercice 17 ».
+4. **« 🔎 Revoir mon erreur »** dit ce qui cloche dans le choix de l'élève (le `data-pourquoi` de sa proposition),
+   puis ouvre l'aide 1 : l'indice ciblé avant le corrigé (n°339).
+5. **Le bandeau des tâches** sépare « répondre à tous » (non cochée tant qu'une case est vide) et « atteindre le
+   seuil ».
+6. **Après rechargement**, les marques et le bilan « Où en suis-je ? » reviennent.
+
+Critères de banc : 6 justes + 2 blancs → le message exact ci-dessus et la tâche « répondre à tous » non cochée ; une
+erreur en 17 → « À revoir : exercice 17 », sans la bonne réponse dans le message.
+
 ## 3. Rejouer chaque constat en test de banc
 
 Un défaut de validation se corrige avec le test qui l'aurait vu (n°333 : le code modifié se reteste). Dans le banc du
@@ -73,6 +94,21 @@ lot (`tests_<lot>.mjs`), un cas par défaut corrigé — modèle `3e_C4.1`, test
 - valider, changer une réponse : l'activité n'est plus validée, le message le dit (le retrait).
 
 Lancer le banc du lot et `tests_regle_311_<lot>.mjs` ; le mode mission : `node _outils/mode_mission/banc_generique.mjs <page>`.
+
+## 3 bis. La simulation et le bilan disent vrai aussi (n°362, n°363, 21/11/2026)
+
+Nés de l'audit en 12 axes du TP `4e_C6.2` (PR #841) :
+
+- **Une simulation joue le travail de l'élève** (n°362). Celle du TP testait une règle fixe (« < 50 lux → la lampe
+  s'allume ») quelles que soient les sorties que l'élève avait choisies : elle ne pouvait ni le contredire ni l'aider.
+  Elle lit maintenant ses choix : sans choix, elle les demande ; avec un choix faux, elle dit ce que fait la lampe et
+  pourquoi ce n'est pas le besoin. Si une simulation ne peut que montrer un modèle, elle le dit (« voici le modèle »).
+  Test de banc : choix faux → message d'erreur ; choix juste → réussite, aux deux bords du seuil.
+- **Le bilan imprimé est une preuve** (n°363). Il montre ce que l'élève a construit et répondu (ordre des blocs,
+  sorties, cases, réponses, mini-projet), le nombre d'essais ratés par exercice, et un code de validation calculé sur
+  TOUT ce qu'il affiche (nom, classe, score, date). Le code du TP ne lisait que les sept premières lettres du nom :
+  identique à 0 / 20 et à 20 / 20. Test de banc : le vrai code est reconnu, une note retouchée est refusée.
+- **La date du bilan est celle du poste** (n°365, `controle_date_locale.py`).
 
 ## 4. Généraliser et dire
 

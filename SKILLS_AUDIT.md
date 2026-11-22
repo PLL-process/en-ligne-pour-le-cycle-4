@@ -9,14 +9,14 @@ journal jusqu'à la règle d'or n°311. Détail par skill (raison, preuve, quest
 `inventaire_skills_2026-10-23.json`, remis à Pascal. Entrée du journal du 23/10/2026.
 Depuis : `synthese-vulgarisee` (29/10, n°316) et quatre skills le 07/11/2026 (voir ci-dessous) ; le
 dépôt compte douze skills, quatorze avec `texte-clair-et-aere` et `revision-sequence` (08/11/2026), dix-huit avec les quatre
-skills de l'audit « double regard » (17/11/2026).
+skills de l'audit « double regard » (17/11/2026). Le 21/11/2026, `audit-douze-axes` (n°361 à n°368).
 
 ## Skills du dépôt (`.claude/skills/`)
 
 | Nom | Créée | Mise à jour | Utilité | Dépendances | Décision |
 |---|---|---|---|---|---|
 | `audit-couverture-cycle4` | 21/07/2026 (lot 0) | 23/10/2026 | matrice des 114 codes : `build_audit.py`, `controle_statut.py`, `controle_couverture.py` | Python 3 stdlib | **UTILISÉE** |
-| `sequence-pedagogique-engageante` | 21/07/2026 (lot 0) | 23/10/2026 | squelette de séquence (n°306) et règles de forme de la page élève | aucune | **UTILISÉE** |
+| `sequence-pedagogique-engageante` | 21/07/2026 (lot 0) | 21/11/2026 (grille des clés de voûte) | squelette de séquence (n°306) et règles de forme de la page élève | aucune | **UTILISÉE** |
 | `qcm-html-accessible` | 21/07/2026 (lot 0) | 23/10/2026 | QCM d'entraînement : en-tête standard, distracteurs, contrôles des QCM | Python 3 stdlib, Node | **UTILISÉE** — ne plus relancer `build_qcms.py` |
 | `controle-qualite-lot` | 21/07/2026 (lot 0) | 23/10/2026 | revue de fin de lot : les contrôles de `_outils/`, livraison par `livraison-depot-cycle4` | Python 3 stdlib, Node, Playwright | **UTILISÉE** |
 | `arduino-grove-college` | 21/07/2026 (lot 0) | 23/10/2026 | activités carte/capteurs, versions A/B/C, très basse tension | aucune | **UTILISÉE** |
@@ -31,9 +31,14 @@ skills de l'audit « double regard » (17/11/2026).
 | `revision-sequence` | 08/11/2026 | 08/11/2026 | révision des trois thèmes, une passe complète par séquence : règles d'or à zéro, lecture visible par séance sous 1 200 mots, texte aéré, lecture comme un élève ; `bilan_revision.py`, `mesurer_charge.mjs`, `grilles_radio.py`, suivi `docs/revision/SUIVI_REVISION.md` | Python 3 stdlib, Node, Playwright ; enchaîne les skills du dépôt | **UTILISÉE** — 5e_C1.5, première séquence de l'ordre |
 | `question-qui-se-lit-seule` | 21/11/2026 (n°343-345) | 21/11/2026 | lire un QCM question par question : les sept lectures que les contrôles ne font pas ; questions de souvenir changées en questions sur document dessiné pour le téléphone ; billet de sortie | Python 3, Node + Playwright ; `_outils/controle_question_seule.py`, `document_qcm.py`, `modifier_question_qcm.mjs` | **UTILISÉE** — pilote : C2 et C3 du thème 1 (21/11/2026) |
 | `audit-double-regard` | 17/11/2026 (n°337-339) | 21/11/2026 | une séquence et son QCM sous deux regards, l'élève en mode mission puis l'inspecteur ; P0 / P1 / P2 ; le skill de la généralisation | Python 3, Node + Playwright | **UTILISÉE** — pilote 5e_C2.1 (#760, #761, #762) |
-| `relire-un-audit-externe` | 17/11/2026 (n°167, 191, 293) | 17/11/2026 | un audit venu d'ailleurs vérifié remarque par remarque, sur la page rendue et dans l'historique, avant toute correction | git, Playwright | **UTILISÉE** — l'audit du QCM de Shenzhen (son P0 était l'incident de la n°51, corrigé en août) |
+| `relire-un-audit-externe` | 17/11/2026 (n°167, 191, 293) | 21/11/2026 | un audit venu d'ailleurs vérifié remarque par remarque, sur la page rendue et dans l'historique, avant toute correction | git, Playwright | **UTILISÉE** — l'audit du QCM de Shenzhen (son P0 était l'incident de la n°51, corrigé en août) |
 | `avant-de-commencer-trois-lignes` | 17/11/2026 (n°337) | 17/11/2026 | la carte « 🎯 Avant de commencer » : apprendre, savoir faire, réussir ; `trois_lignes.py` | Python 3 stdlib | **UTILISÉE** — pilote 5e_C2.1 ; 59 séquences à poser |
 | `qcm-aides-et-pieges` | 17/11/2026 (n°339) | 17/11/2026 | QCM qui aide avant de corriger (indice, règle, correction) et révision par pièges ; `qcm_aides/poser.py` | Python 3 stdlib | **UTILISÉE** — pilote 5e_C2.1 ; 71 QCM à poser |
+| `cadrage-cles-de-voute` | 21/11/2026 (n°346-348) | 21/11/2026 | cadrer une séquence avec les sept clés de voûte, puis l'auditer : seize questions vérifiables, grille sur 100 (un zéro aux critères 1 ou 2 bloque), anti-patterns | aucune | **NOUVELLE** |
+| `tache-finale-redigee` | 21/11/2026 (n°346, 351, 356, 357) | 21/11/2026 | la tâche finale rédigée : document inédit, quatre questions (trajet, cas limite, modification, essai qui distingue), coup de pouce, phrase de copie, grille à trois critères, aucun bouton qui note | aucune | **NOUVELLE** — modèle : épreuve écrite de `3e_C6.2` |
+| `eleve-qui-ne-lit-pas` | 21/11/2026 (n°360) | 21/11/2026 | jouer l'élève qui ne lit pas (plus longue, plus courte, même place, hasard) et corriger les questions qui se devinent ; `eleve_qui_ne_lit_pas.py` | Python 3, Playwright | **NOUVELLE** |
+| `validations-qui-disent-vrai` | 18/11/2026 (n°340) | 21/11/2026 (n°347) | une validation dit vrai (seuil, ordre, retrait, réponse écrite) ; depuis le 21/11, un score dit quoi reprendre (§ 2 bis) | Python 3 stdlib, Node | **UTILISÉE** — absente de ce registre jusqu'au 21/11/2026 |
+| `audit-douze-axes` | 21/11/2026 (n°361-368) | 21/11/2026 | audit noté sur les 12 axes du gabarit de Pascal d'une page interactive (TP, atelier, séquence) : lire tout le code, jouer la page « en tricheur », l'ouvrir (`controle_page_ouverte.mjs`), situer dans le site (`controle_porte_sequence.py`), rendre un Doc, suivre jusqu'à `main` (top 5, lot « suite », banc commité, suivi). Né de l'audit du TP `4e_C6.2` (PR #832 à #842) | Python 3 stdlib, Node, Playwright, axe-core (option) | **UTILISÉE** |
 
 **Origine des quatre skills du 07/11/2026** : une liste de quinze « skills » proposée par Grok à Pascal, par
 curiosité. Onze ont été écartées — doublons de skills existants (`methode-fable`, `curriculum-assessment-cycle4`,
