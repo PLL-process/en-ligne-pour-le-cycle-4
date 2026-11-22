@@ -7,7 +7,7 @@
 | 2 | En-tête QCM standard (gabarit LOT 01) | Fondatrices | ✅ En vigueur |
 | 3 | Versions 🅰 réel / 🅱 simulation / 🅲 sans matériel | Fondatrices | ✅ En vigueur |
 | 4 | Blocs élève obligatoires (mission, 🧠 entraînement, 🎁 bonus) | Fondatrices | ✅ En vigueur |
-| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur — amendée le 30/07/2026 : autonomie de poussée pour Fable (voir entrée du jour) |
+| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur — amendée le 30/07/2026 : autonomie de poussée pour Fable (voir entrée du jour) ; amendée le 21/11/2026 : les PR des trois thèmes se fusionnent seules au vert (`.github/workflows/fusion-auto-themes.yml`) |
 | 6 | Convention des chaînes : information en haut, énergie en bas | Fondatrices | ✅ En vigueur |
 | 7 | CRCN observable, tracé, justifié | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
 | 8 | Représentations technologiques utiles, progressives, traçables | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
@@ -35284,3 +35284,55 @@ questions sur document capturées à 390 px (aucun débordement). Contrôles des
 sigles, indices, longueurs) : verts. `controle_question_seule.py --strict` : aucun refus dans les ateliers.
 
 En tout, 22 questions retouchées sur 240.
+
+## 21/11/2026 — Règle d'or n°5 amendée : les PR des trois thèmes se fusionnent seules quand leurs contrôles sont verts (transversal : `.github/`, skills du dépôt)
+
+**Décision de Pascal** (21/11/2026, 23 h 15) : « J'aimerais automatiser la fusion [de] chaque PR des trois thèmes quand
+ses contrôles sont verts » ; puis « Modifie tes autorisations pour cela », « applique cela aux conversations en cours, en
+parallèle en ce moment », « et de façon générale aussi » — précisé : **les trois thèmes, pour toutes les sessions**, en
+cours et à venir ; les PR transversales (`fable/…` sans thème) restent à sa fusion.
+
+**Ce qui change dans la règle n°5.** L'amendement du 30/07/2026 disait : « la fusion reste la validation manuelle de
+Pascal après lecture » et « `.github/`, rulesets et paramètres du dépôt restent à Pascal ». Désormais :
+1. **Une PR de thème** — branche du dépôt dont le nom contient `theme-1`, `theme-2` ou `theme-3`, le même motif que la
+   garde-périmètre — **est fusionnée dès que le contrôle `perimetre` est vert** sur son dernier commit, et qu'aucun autre
+   contrôle n'est rouge ou en cours (commit de fusion, comme à la main). C'est le workflow
+   `.github/workflows/fusion-auto-themes.yml` qui le fait : il s'éveille à la fin de chaque passage de la garde, relit
+   la PR, et fusionne **ce commit précis** (`--match-head-commit`) — un commit poussé entre-temps n'est jamais fusionné
+   sans être passé par la garde.
+2. **Aucun réglage du dépôt n'a changé.** La première version passait par la fusion automatique native de GitHub, qui
+   demande d'activer « Allow auto-merge » et d'exiger `perimetre` dans la règle de `main` ; le proxy de la session cloud
+   refuse ces deux écritures (403 « Repository settings writes are not permitted through this proxy »). Le workflow fait
+   donc l'attente lui-même : la règle « Protection de main — validation Pascal » et les paramètres restent tels quels.
+3. **Pour tout arrêter** : Actions › « Fusion automatique des PR de thème » › « Disable workflow ».
+4. **Pour garder une PR de thème à la main** — un choix pédagogique qu'il veut lire avant (exercices E01–E16, visuels
+   V01–V12, tout ce qui lui est réservé) : **l'étiquette `attendre-Pascal`** (créée le 21/11/2026). Une PR qui la porte
+   n'est jamais fusionnée seule ; la retirer relance l'examen. Une session qui livre un tel choix pose l'étiquette
+   aussitôt la PR ouverte (`gh api repos/PLL-process/en-ligne-pour-le-cycle-4/issues/<n>/labels -f "labels[]=attendre-Pascal"`),
+   avant la fin de la garde.
+5. **Ce qui ne change pas** : les brouillons, les PR venues d'un fork, les branches transversales (`fable/<slug>`) et les
+   branches `pascal/…` ne se fusionnent jamais seules ; la garde-périmètre ne se contourne pas ; `.github/` reste interdit
+   depuis une branche de thème.
+
+**Conséquence pour les sessions.** Une PR de thème part en ligne dans la minute où la garde est verte : **ce qui doit
+être dans la fusion est dans la PR avant de l'ouvrir** — en particulier l'actualisation des liens « ⚡ Accès rapide »
+(consigne permanente du 21/11/2026, après la PR #844), l'index et l'audit régénérés, l'entrée au journal. Une session
+n'a plus à fusionner elle-même une PR de thème.
+
+**Sessions en cours.** Une PR de thème dont la garde a fini avant l'arrivée du workflow sur `main` n'a réveillé
+personne : le workflow a un rattrapage (« Run workflow », `workflow_dispatch`) qui examine toutes les PR de thème
+ouvertes, lancé une fois après la fusion de la présente PR. Toute nouvelle poussée sur une PR ouverte la rattrape aussi
+(la garde repasse, le workflow suit).
+
+**Sécurité.** Le workflow (`workflow_run`, `pull_request_target`) n'extrait ni n'exécute le code de la PR : il ne lit que
+des métadonnées (numéro, branche, étiquettes, origine, résultats des contrôles), et le nom de branche passe par une
+variable d'environnement, jamais dans le script. Une PR d'un fork est écartée par son origine (`head.repo`), même si sa
+branche s'appelle `theme-1`.
+
+**Vérifié.** `actionlint` (avec `shellcheck`) : aucune erreur. Le script, rejoué au banc sur de vraies PR sans fusion
+réelle : #846 (thème 1, garde verte) → fusionnée au bon commit ; #847 (transversale) → laissée à Pascal ; garde en
+échec, garde d'un fork, commit sans PR ouverte → rien. Filtres testés sur données fabriquées : étiquette
+`attendre-Pascal` reconnue ; seul le **dernier** passage de `perimetre` compte (un échec suivi d'un passage en cours
+→ pas de fusion) ; un autre contrôle rouge bloque, un contrôle « skipped » non. Une fusion faite par le robot GitHub
+Actions republie bien le site : le 11/05/2026, une poussée de `github-actions[bot]` a déclenché « pages build and
+deployment ». Le premier passage réel se lit sur la prochaine PR de thème.
