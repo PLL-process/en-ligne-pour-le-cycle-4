@@ -35284,3 +35284,53 @@ questions sur document capturées à 390 px (aucun débordement). Contrôles des
 sigles, indices, longueurs) : verts. `controle_question_seule.py --strict` : aucun refus dans les ateliers.
 
 En tout, 22 questions retouchées sur 240.
+
+## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances (transversal : `docs/revision/SUIVI_REVISION.md`)
+
+**La demande.** Le deuxième des trois chantiers de Pascal (« Termine en toute confiance et autonomie… »), confirmé le
+21/11 à 23 h 46 (« Ok tu as carte blanche ») : les séances au-delà du repère de 1 200 mots visibles
+(`mesurer_charge.mjs`, skill `revision-sequence`).
+
+**Le constat.** Sur les 14 séquences du thème, **21 séances** au-delà du repère au matin (les dernières séances avaient
+pris environ 150 mots de billet de sortie, PR #843). Les replis communs (fiches, Bonus, captures) étaient déjà faits
+partout : ce qui pesait, c'était surtout **les exercices d'atelier incrustés** (de 560 à 1 180 mots chacun).
+
+**Ce qui change.**
+- **Sept exercices « D'abord… / Avant la grille… » repliés sous leur résumé, à leur place** — ceux qui font travailler la
+  méthode sur un autre objet avant la tâche : `5e_C1.3` (la carte mentale d'un autre projet), `3e_C2.1` (choisir le mode
+  selon la question), `4e_C2.1` (la pieuvre d'un autre objet), `3e_C3.1` (deux : l'alerte cyclonique, la flexibilité),
+  `4e_C3.1` (de la bête à cornes aux caractéristiques), `5e_C3.1` (la bête à cornes d'un autre vélo-cargo). Le repli se
+  déclare à la source (`replie="…"` dans `incrustations_lots/` et `incrustations_table.py`, comme le cahier des charges
+  replié le 10/11/2026), puis `incrustations.py --seq` : le diff ne contient que l'ouverture et la fermeture du
+  `<details>`. Le résumé dit le moment, la durée, le contenu et le geste : « 🐂 D'abord (12 min) : la méthode, sur un
+  autre besoin, l'alerte cyclonique — ouvre l'exercice ». Aucune page ne vérifie ces exercices hors de leur bloc (vérifié).
+- **Les exercices d'atelier qui sont l'activité elle-même ne sont pas repliés** : Pascal a décidé le 15/11/2026, pour
+  `5e_C2.1`, qu'« on garde les exercices d'atelier » (plutôt que replier leurs consignes) — la même logique vaut pour
+  le FAST de `5e_C1.2`, le croquis de `4e_C2.1`, les deux exercices de la séance 5 de `4e_C1.1`. Un premier essai les
+  repliait ; il a été défait avant livraison.
+- **Les billets de sortie resserrés** : la phrase commune « Chacun pour soi, sans aide à ouvrir : ce billet dit au
+  professeur, et à toi, ce qui est acquis » devient « Seul, sans aide : ce billet dit ce qui est acquis » (11 billets) ;
+  le billet de `3e_C1.1` est raccourci de moitié dans son entrée en matière.
+- `3e_C1.1`, séance 5 : les deux consignes d'argumentaire (54 et 59 mots d'un seul tenant) passent en lignes ①…④,
+  sans rien retirer de ce qui est demandé.
+- **Les bancs** qui remplissent un exercice replié l'ouvrent d'abord, comme l'élève (un script posé à l'ouverture de la
+  page, dans six bancs : `5e_C1.3`, `3e_C2.1`, `4e_C2.1`, `3e_C3.1`, `4e_C3.1`, `5e_C3.1`).
+
+**Mesure.** Séances au-delà du repère : **21 → 12**. Ramenées sous le repère : `5e_C1.3` S1 1 202 → 406 ; `3e_C2.1` S3
+1 571 → 873 ; `4e_C2.1` S3 1 338 → 573 ; `3e_C3.1` S1 1 205 → 659 et S2 1 237 → 541 ; `4e_C3.1` S1 1 293 → 744 ;
+`5e_C3.1` S1 1 864 → 768 ; `3e_C1.1` S5 1 216 → 1 186 ; `4e_C1.1` S6 1 212 → 1 198.
+
+**Ce qui reste au-dessus, et pourquoi** (écrit dans le suivi) :
+- les exercices d'atelier gardés par décision de Pascal : `5e_C2.1` S1 (2 126) et S2 (1 941), `5e_C1.2` S4 (2 025),
+  `4e_C1.1` S5 (1 733), `4e_C2.1` S1 (1 509) ;
+- un document à lire, ou des définitions qui servent tout de suite : `5e_C1.1` S1 (1 389, la planche des trois principes),
+  `3e_C1.1` S1 (1 287, les quatre définitions dont les questions suivantes ont besoin) ;
+- la dernière séance, qui porte la clôture du squelette (n°306, n°311) et le billet (n°330) : `3e_C1.5` S4 (1 612 :
+  cinq blocs de clôture hérités de l'ancien gabarit — une piste pour sa prochaine révision : les fusionner), `5e_C1.1` S5
+  (1 425), `5e_C1.5` S3 (1 354), `5e_C3.1` S4 (1 639, avec les quatre gestes du tableur à faire en échauffement) ;
+- `3e_C2.1` S2 (1 344) : deux activités et le bloc commun des rôles.
+
+**Vérifié.** Les 30 bancs des 14 séquences, verts (`5e_C1.5` lancés avec leurs arguments documentés : 39 / 39, 34 / 34).
+Mode mission joué sur les 14 : aucun refus, écrans identiques avant et après (les incrustations n'y sont pas découpées).
+`incrustations.py --verifier` : tout à jour. `controle_squelette.mjs` vert ; `audit_aeration.py --strict` vert sur
+`3e_C1.1` ; `controle_question_seule.py --strict` : thème 1 à 0 refus.
