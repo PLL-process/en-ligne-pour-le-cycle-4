@@ -36475,3 +36475,10 @@ du banc) ; 2. la n°333 en clé de voûte ; 3. le `<main>` des 77 autres QCM (ga
 poids de l'image de situation (2 Mo) : les conditions de Canva interdisent d'en retirer les métadonnées de provenance,
 une version allégée doit donc être réexportée depuis Canva ; 5. l'effacement de la sauvegarde depuis le mode mission
 (outil commun `_outils/mode_mission/`).
+
+## 22/11/2026 — `controle_regle4.py` : une page-pointeur se mesure sans ses feuilles de style ni ses scripts (thème 2 : `_outils`)
+
+La vague des infobulles de sigles du thème 3 (n°44, #883) a posé sa feuille commune sur toutes les pages : quatre
+pages-pointeurs (les trois `atelier_C7.1_planification_taches.html` rangés dans 3e, 4e et 5e_C7.1, et `tp_5e_de_calottes.html`
+de 5e_C7.2) ont franchi les 6 000 octets et passaient pour des séquences sans « Prêt·e », ni Bonus, ni QCM. La taille se
+mesure désormais hors `<style>` et `<script>` : 0 écart sur `main` (sortie 0), banc 27/27.
