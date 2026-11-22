@@ -24,7 +24,7 @@
 | 19 | Consignes a l infinitif (verbe d action en tete de chaque consigne) | ChatGPT/Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
 | 20 | Guides logiciels inclusifs pas-a-pas (A->H, captures, aucune etape implicite) | Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
 | 21 | Convocation systematique des skills - avant toute creation d exercice et toute redaction relevant des trois themes, convoquer les skills pertinents (curriculum-assessment-cycle4, methode-fable, explicit-instruction, questioning-discussion, dnb-technologie, skill-crcn-2026, manuels-2024-mecaniques) et faire arbitrer toute etiquette de competence par _outils/data_competences.py ; aucun code pose de memoire | Pascal (decision du 02/08/2026), redaction Fable | 🔄 PR en cours |
-| 333 | Une réussite affichée prouve la production réelle | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°322 le 14/11, numéro déjà pris le 10/11 |
+| 333 | Une réussite affichée prouve la production réelle | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°322 le 14/11, numéro déjà pris le 10/11 ; **rangée sous la clé de voûte n°6** le 22/11/2026 (décision de Pascal) ; mesurée par `controle_verification_execute.py` |
 | 334 | Une règle enseignée est juste dans toute sa portée | Fable (audit de `3e_C9.1`, 14/11/2026) | ✅ En vigueur — **renumérotée** le 15/11/2026 (#721) : écrite n°323 le 14/11, numéro déjà pris le 10/11 |
 | 337 | Avant de commencer, trois lignes : ce que tu vas apprendre, ce que tu dois savoir faire, comment réussir | Pascal (17/11/2026), écrite par Fable | ✅ En vigueur — pilote 5e_C2.1 (#762) ; outil `_outils/trois_lignes.py`, skill `avant-de-commencer-trois-lignes` |
 | 338 | Un même attendu se dit avec les mêmes nombres et les mêmes mots partout | Fable (audit « double regard » de 5e_C2.1, 17/11/2026) | ✅ En vigueur — `_outils/controle_memes_nombres.py` (mesure) |
@@ -36724,3 +36724,41 @@ fait qu'ajouter le moteur nouveau. Trois zones du thème 1 hors du kit reçoiven
 `color-contrast`, 1 `label`, 1 `list`, déjà sur `main`. `banc_ateliers.py` 530 / 530, `banc_rappels_cdc.py` 302 / 302,
 `incrustations.py --verifier` : thème 1 à jour ; `tests_regle_311` des onze dossiers de séquence 34 / 34 (27 / 27 pour
 5e_C3.1) ; `controle_page_ouverte.mjs` L 0 · B 0 · C 0.
+
+## 22/11/2026 — Les quatre décisions de l'audit de « Programmer l'alerte » (carte blanche de Pascal) : deux moteurs Python à leur place, la n°333 sous la clé 6, le `<main>` sur les 78 QCM, l'image de situation gardée (transversal : thèmes 1, 2, 3, `_outils`, `.claude/skills`, `docs`)
+
+**Consigne de Pascal** (22/11/2026, 06 h 51) : « Tu as carte blanche pour les quatre décisions » — celles que le
+journal de #886 et l'audit `docs/audits/AUDIT_3e_C6.1_2026-11-22.md` lui laissaient.
+
+1. **Deux moteurs Python, une seule vérité.** On garde l'éditeur Python commun (`_ressources-communes/editeur-python/`,
+   Skulpt) **par défaut**, dès que l'élève écrit un vrai Python ; le banc-python (`_outils/banc_python/`) **seulement**
+   pour le chemin suivi pas à pas, avec chaque test évalué, ou la vérification instantanée du Python du collège.
+   **Garde-fou** : test 20 de `tests_banc_python.mjs` — 7 programmes du lot et leurs variantes (apostrophes, `>=`,
+   f-string, `is True`, expression conditionnelle, `;`, initialisation oubliée, `==` au lieu de `=`) tournent dans le
+   banc ET dans CPython, sur les 10 vents : mêmes sorties exigées (25 / 25). Une écriture que le banc accepte et que
+   Python juge autrement est un défaut du banc. Unifier (donner la trace à l'éditeur commun) attendra qu'une deuxième
+   séquence ait besoin du pas à pas. Écrit dans `LISEZMOI.md` et le skill `banc-essai-programme`.
+2. **La n°333 se range sous la clé de voûte n°6** (« un score dit quoi reprendre ») : un score ne dit vrai que s'il juge
+   la production réelle — un programme exécuté, pas son texte ; un essai, pas une prévision. Tableau de tête (ligne
+   n°333), `_outils/METHODE.md` (grille des sept clés), skill `cadrage-cles-de-voute`. Sept clés, pas huit (décision
+   « sept, pas neuf » de l'audit #867).
+3. **Le `<main id="principal">` sur les 78 QCM** (accessibilité : `landmark-one-main`, `region`). Outil
+   `_outils/poser_main_qcm.py` : ouvre la région avant le `<h1>` (ou son conteneur), la ferme avant le pied, au même
+   niveau de l'arbre, navigation `#navharm` dehors ; idempotent (n°149) ; liste « à la main » ce qu'il ne sait pas
+   poser (n°146) ; sortie 2 si rien n'est lu (n°299). Éprouvé d'abord sur 8 cas connus (`tests_poser_main_qcm.py`,
+   n°194). Le gabarit `theme-1-…/ateliers-representations/_generation/gabarit_qcm.tpl` reçoit le `<main>` : son
+   générateur reproduit les 7 QCM à l'octet (`build_qcm.py --verifier`). **Mesure** : 1 QCM sur 78 avant, 78 sur 78
+   après ; `poser_main_qcm.py` sans `--ecrire` sert de contrôle (sortie 1 s'il en manque un).
+4. **L'image de situation garde son fichier d'origine** (`synthese_station_alerte.png`, 2 022 508 octets). Les
+   conditions Canva AI interdisent d'en retirer la provenance hors de Canva ; un export JPG allégé depuis la création
+   `DAHaEhWWmSY` (1 536 px, qualité 82) réussit côté Canva, mais son serveur d'export est refusé par le proxy de
+   l'atelier (403, vérifié deux fois le 22/11) : le fichier ne peut pas entrer dans le dépôt d'ici. Les huit copies
+   (3e_C4.3, C4.7, C5.1, C6.1, C6.2, C7.4, C7.5, C7.8) sont identiques à l'octet — git n'en stocke qu'un objet ; les six
+   séquences la chargent en différé, les synthèses tout de suite pour l'impression. À reprendre si une page s'ouvre
+   trop lentement en classe : exporter depuis Canva (JPG, 1 536 px, qualité 80) et remplacer les huit copies et leurs
+   liens dans le même commit. Écrit dans `3e_C6.1/SOURCES_MEDIAS.md`.
+
+**Vérifié** : `tests_banc_python.mjs` 25 / 25 ; `tests_poser_main_qcm.py` 8 / 8 ; `poser_main_qcm.py` : 78 / 78 ;
+générateur des ateliers 7 / 7 à l'octet ; banc des aides (`qcm_aides/banc_aides.mjs`) et axe sur les QCM touchés
+(résultats dans la PR) ; `registre_regles.py` sans doublon. **Non vérifié** : un lecteur d'écran réel sur un QCM.
+

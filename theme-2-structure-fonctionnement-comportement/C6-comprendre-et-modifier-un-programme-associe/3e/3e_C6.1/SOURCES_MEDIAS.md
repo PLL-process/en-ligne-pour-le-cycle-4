@@ -25,10 +25,20 @@ Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C4-de
 |---|---|---|---|---|
 | `Images/synthese_station_alerte.png` | La station d'alerte cyclonique sur le toit d'un collège : mât, anémomètre, girouette, panneau solaire, sirène, gyrophare, boîtier ; la mer au loin. PNG 1 536 × 1 024, 2.0 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small autonomous cyclone warning station on a galvanized steel mast on the flat roof of a school in Martinique: cup anemometer and wind vane at the top, a small solar panel on a side arm, a white weatherproof electronics box, a horn siren and a small orange beacon light mounted on the mast, a short radio antenna, the sea in the distance, cloudy sky, no people, no text, no logos, the whole mast visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
 
-## Poids de l'image de la situation (audit du 21/11/2026)
+## Poids de l'image de la situation (audit du 21/11/2026 ; décision du 22/11/2026)
 
-L'audit propose une variante légère de `synthese_station_alerte.png` (2 022 508 octets). **Non faite** le 22/11/2026 : les
-conditions Canva AI rappelées ci-dessus interdisent d'en retirer les métadonnées de provenance (C2PA, XMP), et un
-redimensionnement les retire. La décision revient à Pascal : réexporter l'image depuis Canva à une taille plus petite
-(métadonnées gardées par Canva), ou garder le fichier tel quel. L'image reste chargée en différé (`loading="lazy"`) et sa
-légende dit désormais « Image générée par IA (Canva) : ce n'est pas une photographie ».
+L'audit proposait une variante légère de `synthese_station_alerte.png` (2 022 508 octets).
+
+**Décision du 22/11/2026** (carte blanche de Pascal) : **on garde le fichier d'origine, non modifié.**
+- Les conditions Canva AI rappelées ci-dessus interdisent d'en retirer les métadonnées de provenance (C2PA, XMP), et
+  un redimensionnement fait hors de Canva les retire. La seule version légère permise est un nouvel export depuis
+  Canva. Il a été fait le 22/11/2026 (création `DAHaEhWWmSY`, JPG, 1 536 px de large, qualité 82), mais le serveur
+  d'export de Canva est hors de la liste des sites que l'atelier de Claude peut joindre : le fichier n'a pas pu entrer
+  dans le dépôt.
+- Le dépôt garde ce poids une seule fois : les huit copies de l'image (3e_C4.3, 3e_C4.7, 3e_C5.1, 3e_C6.1, 3e_C6.2,
+  3e_C7.4, 3e_C7.5, 3e_C7.8) sont identiques octet pour octet, et git ne stocke qu'un seul objet pour un même contenu.
+- Dans les six séquences, l'image est chargée en différé (`loading="lazy"`) ; les cinq synthèses, faites pour
+  l'impression, la chargent tout de suite, pour qu'elle soit sur la feuille. Sa légende dit « Image générée par IA (Canva) : ce n'est pas
+  une photographie ».
+- À reprendre si une page met trop longtemps à s'ouvrir en classe : exporter la création depuis Canva en JPG
+  (1 536 px, qualité 80), puis remplacer les huit copies et leurs liens dans le même commit.

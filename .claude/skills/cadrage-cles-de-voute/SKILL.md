@@ -33,7 +33,8 @@ contre elles.
 (n°373), les entrées du banc (sous, à, au-dessus de chaque seuil), et où l'élève écrit sa prévision avant d'essayer
 (n°374) — skill `banc-essai-programme`. La n°333 (« une réussite affichée prouve la production réelle ») se range sous
 la **clé 6** : un score ne dit quoi reprendre que s'il juge ce que l'élève a vraiment produit — un programme exécuté,
-pas son texte ; un essai, pas une prévision (`3e_C6.1`, 22/11/2026). Elle se vérifie par la question 18 ci-dessous.
+pas son texte ; un essai, pas une prévision (`3e_C6.1` ; décision de Pascal du 22/11/2026). Elle se vérifie par la
+question 18 ci-dessous.
 
 Ajouter le critère de recette demandé par Pascal (« avec 6 justes et 2 blancs, la page affiche… »). Sans critère, on
 ne sait pas quand c'est fini.

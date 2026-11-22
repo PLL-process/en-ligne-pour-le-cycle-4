@@ -6,7 +6,7 @@ Source unique : `banc_python.js`. Posé dans une page par `poser.py`, entre deux
 ```
 python3 _outils/banc_python/poser.py <page.html>         # pose ou met à jour le bloc
 python3 _outils/banc_python/poser.py --verifier-tout     # chaque page porte la version de la source
-node _outils/banc_python/tests_banc_python.mjs           # 24 / 24 au 22/11/2026, sans navigateur
+node _outils/banc_python/tests_banc_python.mjs           # 25 / 25 au 22/11/2026, sans navigateur (test 20 : contre CPython)
 ```
 
 ## Pourquoi il existe (audit de « Programmer l'alerte », 3e_C6.1, 21 et 22/11/2026)
@@ -21,8 +21,20 @@ simulées (`lire_capteur`, `envoyer`, `activer_sirene`…), et compare ses sorti
 Le dépôt a, depuis le 04/11/2026, un éditeur Python commun : `_ressources-communes/editeur-python/` (Skulpt 1.2.0).
 Son API `EditeurPython.executer(code, {simulation, entrees})` exécute un vrai Python et sert déjà de vérification
 (5e_C9.1, 3e_C9.1). **C'est l'outil par défaut pour juger un programme.** Le banc-python a été écrit sans l'avoir
-consulté d'abord ; il est gardé dans cette séquence pour trois choses que l'éditeur commun ne donne pas aujourd'hui,
-et la décision de l'unifier revient à Pascal :
+consulté d'abord.
+
+**Décision du 22/11/2026** (carte blanche de Pascal) : **on garde les deux, chacun à sa place.**
+- **L'éditeur commun (Skulpt) par défaut**, dès que l'élève écrit un vrai Python : boucles, fonctions, listes, `print`
+  à la console.
+- **Le banc-python** seulement quand il faut le chemin suivi pas à pas, avec chaque test évalué, ou une vérification
+  instantanée du Python du collège (`if` / `elif` / `else`, affectations, textes) — comme dans `3e_C6.1`.
+- **Garde-fou** (test 20 de `tests_banc_python.mjs`) : sur les programmes du lot et leurs variantes (apostrophes, `>=`,
+  f-string, `is True`, expression conditionnelle, `;`, initialisation oubliée, `==` au lieu de `=`), le banc et le vrai
+  Python (CPython) donnent les mêmes sorties, vent par vent. Une écriture que le banc accepte et que Python juge
+  autrement est un défaut du banc, à corriger dans la source.
+- Unifier (ajouter la trace à l'éditeur commun) ne se fera que si une deuxième séquence a besoin du pas à pas.
+
+Ce que chacun sait faire :
 
 | Besoin de la séquence | banc-python | EditeurPython (Skulpt) |
 |---|---|---|
