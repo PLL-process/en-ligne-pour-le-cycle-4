@@ -85,6 +85,11 @@ MOTIFS = [
     ("un lot nommé (« Lot Shanghai »)", re.compile(r"\bLot\s+[A-ZÉ]")),
     ("« recopié, pas reformulé »", re.compile(r"recopi[ée],?\s+pas\s+reformul", re.I)),
     ("« mise en conformité règles … »", re.compile(r"mise\s+en\s+conformit[ée]\s+r[èe]gles?", re.I)),
+    # 21/11/2026, audit en 12 axes du TP 4e_C6.2 : des notes d'auteur restaient visibles (« Précision pédagogique : … »,
+    # « Phrase élève à retenir », « Vocabulaire corrigé : … », « Pour un débutant, … »). 0 occurrence sur main après #841.
+    ("une note d'auteur (« Précision pédagogique », « Phrase élève à retenir »…)",
+     re.compile(r"Pr[ée]cision\s+p[ée]dagogique|Phrase\s+[ée]l[èe]ve|Vocabulaire\s+corrig[ée]|Remarque\s+p[ée]dagogique"
+                r"|Note\s+p[ée]dagogique|Pour\s+un\s+d[ée]butant", re.I)),
 ]
 EXTENSIONS = (".html", ".svg")
 

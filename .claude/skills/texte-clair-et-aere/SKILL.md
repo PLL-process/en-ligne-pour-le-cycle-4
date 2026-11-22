@@ -130,6 +130,23 @@ Pascal veut des corrections exhaustives : on garde tout, on le range. L'ordre, u
 Un bloc de plus de 45 mots d'un tenant se coupe (C1) ; deux « ; » qui cousent des idées, ou plus de trois « → »,
 se mettent en lignes (C2).
 
+## Un listing tient à 390 px (règle d'or n°349, 21/11/2026)
+
+Ce qui défile est caché : à 390 px, l'algorithme du débogage du TP `4e_C6.2` défilait et cachait « 50 lux », la valeur
+du seuil, sans que rien le dise. Un listing, une formule, un pseudo-code se coupent **là où le sens le permet** :
+
+```
+  SI présence = oui OU
+     luminosité < 50 lux
+```
+
+- couper après l'opérateur (OU, ET, +, une virgule), et décaler la suite sous ce qu'elle prolonge ;
+- un tableau trop large garde son filet (n°135) et dit « ↔ fais glisser » ; un cadre qui défile est atteignable au
+  clavier (`tabindex="0"` et un nom) ;
+- un retour à la ligne `<br>` garde un espace devant lui : le lecteur d'écran lit le `textContent`, qui collerait
+  sinon « alimentation2. dévisser » ;
+- mesure : `node _outils/controle_page_ouverte.mjs <page>` (L), page ouverte, corrections comprises.
+
 ## Les outils
 
 ```bash

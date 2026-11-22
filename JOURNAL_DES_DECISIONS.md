@@ -35,6 +35,14 @@
 | 343 | Une question se lit seule (clé de voûte) | Pascal (21/11/2026), sur la lecture question par question des QCM du thème 1 ; écrite par Fable | ✅ En vigueur — pilote C2 et C3 du thème 1 ; `_outils/controle_question_seule.py` (S1 à S4), skill `question-qui-se-lit-seule` |
 | 344 | Ce qui est annoncé est cité en entier | Pascal (21/11/2026), même lecture ; écrite par Fable | ✅ En vigueur — `_outils/controle_question_seule.py` (E1) |
 | 345 | Un QCM fait lire des documents, et ils se lisent au téléphone | Pascal (21/11/2026), même lecture ; écrite par Fable | ✅ En vigueur — `_outils/controle_question_seule.py` (D1, chantier), `_outils/document_qcm.py` |
+| 346 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
+| 347 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
+| 348 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
+| 349 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure : 24 listings dans 8 pages au 21/11) ; skill `texte-clair-et-aere` |
+| 350 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
+| 351 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 14 pages au 21/11) |
+| 352 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
+| 353 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -35284,3 +35292,100 @@ questions sur document capturées à 390 px (aucun débordement). Contrôles des
 sigles, indices, longueurs) : verts. `controle_question_seule.py --strict` : aucun refus dans les ateliers.
 
 En tout, 22 questions retouchées sur 240.
+
+## 21/11/2026 — Huit règles d'or nées de l'audit en 12 axes du TP « Algorigrammes de domotique » (n°346 à n°353), trois contrôles, un skill (transversal : `_outils`, `.claude/skills`, thème 2 `4e_C6.2`)
+
+Pascal, 21/11 au soir : « Si tu peux aussi fabriquer des skills, clés de voûte, règles d'or ou autres, fort de cet
+enseignement issu des audits, de tes réflexions… » puis « Sur tous les plans ». L'audit du TP (20/11, 4,6 / 10) et
+ses suites (#832, #833, #836, #841, #842) ont montré des défauts que les règles en vigueur couvraient mal, ou que les
+contrôles ne voyaient pas. Chaque règle ci-dessous part d'un constat mesuré ; sept sont outillées ou pilotées. Numéros
+réservés au registre de tête, après vérification de `main` (d8cb3ea) et des PR ouvertes (aucune).
+
+### Règle d'or n°346 (clé de voûte) — Un contrôle regarde la page ouverte
+
+*Plan : gouvernance des contrôles.* Le TP était vert pour tous les contrôles. Pourtant : un bloc « si / alors / sinon »
+dessiné (n°308) qu'aucun HTML ne contenait, parce qu'un script le fabriquait en ouvrant la correction ; la même phrase
+fermant les huit corrections (n°96) ; un défaut de contraste dans la légende du code coloré ; un algorithme qui cachait
+« 50 lux » en défilant. Tout cela n'existe qu'APRÈS un geste de l'élève. La n°49 dit « on teste ce qui est rendu » ;
+celle-ci ajoute : **ce qui est rendu après**. Un contrôle déplie les détails, affiche corrections, aides, bilan et
+onglets, puis mesure. Une page qui fabrique ses corrections par script expose `window.__toutOuvrir()` (pilote : le TP),
+que les contrôles appellent — jamais la page elle-même.
+**Outil** : `_outils/controle_page_ouverte.mjs` (L listing qui défile, B bloc dessiné dans un SVG, C même phrase dans
+3 corrections ou plus, A axe-core avec `--axe`) ; mesure, `--strict` pour sortir à 1 ; banc
+`_outils/tests_controle_page_ouverte.mjs` 10 / 10. Rejoué sur l'ANCIENNE version du TP (e94d45e, crochet ajouté) : B et
+C le voient ; sur la version corrigée : rien. **Mesure du site au 21/11** : 341 pages ouvertes à 390 px, 0 en panne ;
+L : 24 listings dans 8 pages ; B : 0 ; C : 3 pages (des intitulés répétés, « Correction question par question — la
+réponse, et pourquoi pas les autres », à regarder).
+
+### Règle d'or n°347 — Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle
+
+*Plan : pédagogie.* La simulation du TP testait une règle fixe, quelles que soient les sorties choisies par l'élève :
+elle ne pouvait ni le contredire ni l'aider. Une simulation d'exercice exécute ce que l'élève a construit ou choisi ;
+sans choix, elle le demande ; si elle ne peut que montrer un modèle, elle l'écrit (« voici le modèle »). Complète
+n°333 (une réussite affichée prouve la production) et n°340. Méthode : skill `validations-qui-disent-vrai`, § 3 bis.
+
+### Règle d'or n°348 — Le bilan imprimé est une preuve
+
+*Plan : évaluation.* Le PDF rendu par l'ENT ne montrait aucune construction, et le code de validation, calculé sur les
+sept premières lettres du nom, était le même à 0 / 20 et à 20 / 20. Le bilan imprimé montre ce que l'élève a construit
+et répondu, et ses essais ratés ; son code atteste TOUT ce qu'il affiche (nom, classe, score, date) : une valeur changée,
+un code refusé. Méthode : même § 3 bis ; pilote le TP (#841), banc qui retouche la note.
+
+### Règle d'or n°349 — Ce qui défile est caché
+
+*Plan : ergonomie et accessibilité.* À 390 px, la condition du débogage défilait et cachait la valeur du seuil, sans
+que rien ne le dise. Un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet (après OU, ET,
+un opérateur) ; un tableau trop large garde son filet (n°135) et le dit ; un cadre qui défile est atteignable au clavier.
+Un `<br>` garde un espace devant lui (le lecteur d'écran lit le `textContent`). Mesure : `controle_page_ouverte.mjs`
+(L) — 24 listings dans 8 pages au 21/11, première vague à venir (thème 2 `3e_C6.1`, `4e_C6.2`, `4e_C4.1` ;
+thème 3 `3e_C9.1`, `3e_C9.2` ; thème 1 `4e_C1.4`). Méthode : skill `texte-clair-et-aere`.
+
+### Règle d'or n°350 — La date du jour est celle du poste
+
+*Plan : technique.* `new Date().toISOString().slice(0, 10)` rend la date en heure universelle : en Martinique, après
+20 h, le lendemain. Le bilan du TP était daté du jour suivant, et son code ne correspondait plus. La date du jour se
+construit avec `getFullYear()`, `getMonth() + 1`, `getDate()` et s'affiche jj/mm/aaaa ; un horodatage complet reste
+permis. **Outil** : `_outils/controle_date_locale.py` — 421 fichiers lus, 0 occurrence au 21/11 (référence vide, n°273).
+
+### Règle d'or n°351 — La séquence est la porte de ses pages
+
+*Plan : navigation et stratégie.* Le TP n'était relié par aucune page de sa séquence : on n'y arrivait que par l'index ;
+le 08/11, Pascal ne retrouvait plus le TP des variables (`3e_C9.1/vittascience_variables.html`), dans le même cas. Une
+page d'élève rangée dans le dossier d'une séquence (atelier, TP, activité) s'ouvre depuis cette séquence, là où elle
+sert ; l'index peut la lister en plus. Prolonge la n°83. **Outil** : `_outils/controle_porte_sequence.py` — 56 dossiers
+de séquence, 14 pages sans porte au 21/11 (thème 1 : 9 ; thème 2 : 1 ; thème 3 : 4), en référence datée qui ne peut que
+rétrécir (n°273) ; une nouvelle page sans porte sort à 1.
+
+### Règle d'or n°352 — Un exercice aide avant de corriger : un indice, puis la démarche
+
+*Plan : pédagogie et différenciation.* Le TP donnait deux essais, puis la réponse, sans rien entre les deux. La n°339
+l'a dit pour les QCM ; celle-ci l'étend aux exercices des séquences et des TP : avant d'ouvrir la correction, deux aides
+repliées — un indice, puis la démarche — qui ne s'impriment pas. Méthode : skill `differenciation-dans-la-page` (aides à
+deux niveaux) ; pilote le TP (#841, 5 exercices × 2 aides).
+
+### Règle d'or n°353 — Un corrigé fait exactement ce que demande sa consigne
+
+*Plan : didactique.* La phase 3 du TP demandait « deux tests successifs » ; son corrigé dessinait UN losange
+(« Luminosité < 50 ? puis présence ? »), et une flèche de retour traversait un bloc. Un corrigé faux enseigne l'erreur
+avec l'autorité de la correction. Le corrigé se vérifie contre sa consigne, élément par élément (deux tests → deux
+losanges, une boucle → un retour qui ne croise rien), et le banc de la page compte cette structure. Pilote :
+`tests_tp_algorigrammes_4e_C6.2.mjs` (« correction de la phase 3 : deux losanges »). Proche de la n°334 (une règle
+enseignée est juste dans toute sa portée), mais pour la figure du corrigé.
+
+### Ce que ce lot livre aussi
+
+- **Skill `audit-douze-axes`** (`.claude/skills/`) : la méthode de l'audit — relire l'historique avant tout, fixer la
+  cible par défaut, lire tout le code, jouer la page « en tricheur », l'ouvrir, la situer, noter, rendre un Doc, et
+  suivre jusqu'à `main`. Inscrit dans `SKILLS_AUDIT.md`.
+- Skills complétés : `controle-qualite-lot` (trois contrôles, et la limite de `controle_blocs_dessines.py` face aux
+  dessins fabriqués par script), `validations-qui-disent-vrai` (§ 3 bis : simulation, bilan, date), `texte-clair-et-aere`
+  (un listing tient à 390 px).
+- `controle_regles_visibles.py` (n°309) refuse désormais les notes d'auteur : « Précision pédagogique », « Phrase élève
+  (à retenir) », « Vocabulaire corrigé », « Remarque / Note pédagogique », « Pour un débutant ». 0 occurrence sur `main`.
+- TP `4e_C6.2` : le crochet `window.__toutOuvrir()` (pilote de la n°346) ; la ligne « 🔍 Touche ou clique le schéma pour
+  l'agrandir », répétée exprès sous chaque schéma corrigé, porte `data-repete` (la mesure C ne la compte pas).
+
+**Vu, pas corrigé** (les deux conversations parallèles de ce soir travaillent sur le site : aucune page hors du TP n'est
+touchée) : les 24 listings qui défilent (n°349) et les 14 pages sans porte (n°351), listés par leurs contrôles ; les
+titres « V16 » et « V5 » des pages `4e_C1.4` (n°309), relevés par la mesure mais pas encore refusés : le motif d'un
+numéro de version attrapait aussi des personas (« Feng (V12) ») et « version 1 » d'un programme d'élève.
