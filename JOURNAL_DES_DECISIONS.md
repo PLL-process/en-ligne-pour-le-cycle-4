@@ -36856,3 +36856,23 @@ vague des infobulles du thème 3 a posé des infobulles dans la légende des gri
 **Encore ouvert, hors de ces lots** : la vague « sigles de la barre de navigation » est en cours dans l'autre session
 (#897, #898) ; le thème 3 reste à faire (`controle_sigles_expliques.py` : 59 pages avec un sigle jamais expliqué ce matin,
 la plupart le « QCM » de la barre).
+
+## 22/11/2026 — `enrichir.py` garde le balisage d'une légende de grille : 3e_C7.5 et 4e_C7.7 de nouveau « à jour » (transversal : `_outils/mode_mission` ; aucune page touchée)
+
+**Trouvé en vérifiant l'audit #867** (`enrichir.py --verifier-tout` sur `main`) : 2 refus sur 50 fichiers
+`mission_*.json`. La vague des infobulles du thème 3 (#883) avait posé des infobulles de sigles (PLA, USB, LCD) dans les
+légendes de grilles que le mode mission écrit ; l'outil réécrivait la légende en texte brut. Les pages étaient justes
+(n°44) ; c'est l'outil qui les aurait abîmées au prochain passage — et la vérification le criait sans que personne ne la
+lise.
+
+**La réparation** : l'outil garde, pour chaque réponse déjà dans la légende, son balisage tel qu'il est ; une réponse
+nouvelle (un leurre ajouté) s'écrit en texte brut, comme avant. Plutôt que d'appeler `infobuller()` sur toute la page :
+essayé, cela changeait six pages que la vague avait laissées telles quelles (des sigles expliqués plus bas, à juger
+page par page) — un outil du mode mission n'a pas à décider des sigles d'une page.
+
+**Vérifié** : `enrichir.py --verifier-tout` 50 fichiers, **0 refus**, sans réécrire aucune page ; banc nouveau
+`_outils/mode_mission/tests_enrichir.py` **9/9** (l'ancienne version de l'outil y échoue à 3 tests sur 9 : l'infobulle
+disparaît).
+
+**Thème par thème** (n°302) : `_outils/mode_mission/enrichir.py`, son banc et son README ; aucune page des thèmes 1, 2
+ou 3 n'est modifiée.
