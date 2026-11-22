@@ -36374,3 +36374,10 @@ Vu au pilote de `4e_C1.4` : ses panneaux de séance sont des `<section class="se
 `<div>`. Corrigé (les deux balises) ; un cas de plus au banc (9/9). Sur `main`, la mesure de départ devient **123 séances
 n°2 et suivantes, 0 conforme** (au lieu de 113 : dix séances en `<section>` n'étaient pas comptées). Le chiffre « 113 » des
 entrées du matin (audit #867, installation #868) est à lire « 123 ».
+
+## 22/11/2026 — `controle_regle4.py` : une page-pointeur se mesure sans ses feuilles de style ni ses scripts (thème 2 : `_outils`)
+
+La vague des infobulles de sigles du thème 3 (n°44, #883) a posé sa feuille commune sur toutes les pages : quatre
+pages-pointeurs (les trois `atelier_C7.1_planification_taches.html` rangés dans 3e, 4e et 5e_C7.1, et `tp_5e_de_calottes.html`
+de 5e_C7.2) ont franchi les 6 000 octets et passaient pour des séquences sans « Prêt·e », ni Bonus, ni QCM. La taille se
+mesure désormais hors `<style>` et `<script>` : 0 écart sur `main` (sortie 0), banc 27/27.

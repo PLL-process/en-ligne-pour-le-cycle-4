@@ -172,9 +172,13 @@ def juger(chemin):
     rel = os.path.relpath(chemin, DEPOT).replace(os.sep, "/")
     if rel in TOLEREES:
         return None, "tolérée par déclaration", TOLEREES[rel]
-    if os.path.getsize(chemin) < POINTEUR:
-        return None, "page-pointeur", ("%d octets : elle renvoie vers la ressource réelle"
-                                       % os.path.getsize(chemin))
+    # La taille se mesure SANS les feuilles de style ni les scripts : la vague des infobulles de sigles (n°44,
+    # 22/11/2026) a posé une feuille commune sur toutes les pages, et quatre pages-pointeurs ont franchi les 6 000
+    # octets sans rien gagner à lire — elles passaient pour des séquences sans Bonus ni QCM.
+    utile = len(re.sub(r"<(style|script)\b.*?</\1\s*>", "", texte, flags=re.S | re.I).encode("utf-8"))
+    if utile < POINTEUR:
+        return None, "page-pointeur", ("%d octets hors style et script : elle renvoie vers la ressource réelle"
+                                       % utile)
     if (os.path.basename(rel).startswith("atelier_") and "ateliers-representations/" not in rel
             and not ACTIVITE.search(texte)):
         m = VERS_ATELIER.search(texte)
