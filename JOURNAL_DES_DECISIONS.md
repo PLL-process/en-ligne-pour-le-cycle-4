@@ -34935,6 +34935,7 @@ d'effacement) ; `controle_hierarchie.py` sort à 1 sur `main` à cause d'une én
 `5e_C8.2/sequence_5e_C8.2_patere-du-hall.html` (correction du billet). **Non vérifié** : Safari sur iPad et iPhone
 réels, lecteur d'écran réel.
 
+<<<<<<< HEAD
 ## 21/11/2026 — Thème 1, C1 : les huit QCM relus question par question, seize documents pour le téléphone, huit billets de sortie
 
 **La décision (Pascal, 21/11, « oui pour tout », point 4).** Après C2 et C3 (PR #838), les huit lots de C1 : lire leurs
@@ -35011,3 +35012,31 @@ questions et trois billets regardés à 390 px.
 2. La capture de « Sécurité Windows », sur son poste, pour la question du pare-feu. 3. La phrase de `3e_C1.5` sur le
 consentement à 15 ans.
 
+=======
+## 21/11/2026 — Deux contrôles rouges sur `main` remis au vert : la préférence d'affichage de l'index, l'énumération du billet de la patère (transversal : `_outils` ; thème 3 `5e_C8.2`)
+
+Sur la carte blanche de Pascal (21/11, soir), suite de la PR #841 qui les avait signalés « vus, pas corrigés ». Avant ce
+lot, deux contrôles de la série de fin de lot sortaient à 1 sur `main` (d2a39ea) quelle que soit la PR : chaque lot
+devait expliquer un rouge qui n'était pas le sien.
+
+**1. `controle_sauvegarde_locale.py` refusait `index.html`** (« sans aucun moyen d'effacer », « aucune note poste
+partagé »). Depuis la PR #837, l'index garde sur l'appareil les groupes de l'accès rapide laissés ouverts sur
+téléphone (`index:acces-rapide`), à la demande de Pascal (« le groupe laissé ouvert l'est encore à la visite
+suivante »). Ce n'est ni un nom ni une réponse : la règle n°322 vise les pages qui gardent le travail de l'élève.
+Plutôt que poser sur l'index une note « tes réponses » fausse, ou passer au `sessionStorage` (qui casserait la
+décision du 21/11), le contrôle reçoit un registre étroit, `PREFERENCES_SEULES` (page → clé → ce qu'elle garde), avec sa
+vérification : l'exception ne vaut que si **chaque** `localStorage.setItem(` de la page écrit la clé déclarée, en clair
+ou par une variable qui en porte la valeur. Joué : clé déclarée seule → exception ; une autre clé ajoutée en clair, ou
+par une variable → la page redevient ordinaire et refusée. Le contrôle l'affiche en « ℹ », jamais en silence.
+Sortie : 1 → **0** (168 pages qui écrivent dans le navigateur, 0 refus).
+
+**2. `controle_hierarchie.py` refusait `5e_C8.2/sequence_5e_C8.2_patere-du-hall.html`** (H1, énumération en ligne) :
+la question 1 du billet d'entrée et sa correction écrivaient « 1. couper l'alimentation ; 2. dévisser ;
+3. remplacer » sur une ligne. Les trois étapes sont maintenant une par ligne, dans la question et dans la correction
+(n°33, n°97). Un espace reste avant chaque retour à la ligne : le mode mission lit la question au lecteur d'écran par
+son `textContent`, qui collait sinon « alimentation2. dévisser3. ». Sortie : 1 → **0** (195 pages).
+
+Contrôles : `tests_5e_C8.2_sequence.mjs` 24 / 24, `tests_regle_311_5e_C8.2.mjs` 34 / 34, `controle_axe.mjs` sur le
+dossier vert, `controle_consignes_a_la_ligne`, `controle_liens`, `controle_regles_visibles` verts ; la question du billet
+regardée à 390 px. Index et audit régénérés. Non exécuté : un vrai téléphone, un lecteur d'écran réel.
+>>>>>>> origin/main
