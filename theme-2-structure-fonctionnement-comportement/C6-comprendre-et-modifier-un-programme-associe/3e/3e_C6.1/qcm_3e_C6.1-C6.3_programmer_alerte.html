@@ -304,14 +304,14 @@
 /* Banque de questions LOT 04 — 30 questions (15 C6.1 + 15 C6.3), 6 illustrées (règle images v2) */
 const QUESTIONS = [
 /* ═══ C6.1 — données utilisées/produites (15 q) ═══ */
-{c:"C6.1",n:"Donnée utilisée",q:"Dans le programme de la station, vent_kmh = lire_capteur(\"anemometre\"). vent_kmh est une donnée…",
- img:{src:"Images/programme_entrees_sorties.svg",alt:"Schéma des données utilisées en entrée et produites en sortie du programme d'alerte"},
- o:["utilisée : sa valeur vient du capteur","produite : le programme l'invente","décorative, et sans usage réel","interdite par le langage Python"],r:0,
- expl:"Une donnée UTILISÉE entre dans le programme depuis l'extérieur : capteur, constante, saisie. Le programme la lit, il ne la crée pas.",
- ex:"Sur le schéma, vent_kmh arrive à gauche, côté entrées, depuis l'anémomètre.",
+{c:"C6.1",n:"Donnée utilisée",q:"Dans le programme de la station, la ligne 6 est vent_kmh = lire_capteur(\"anemometre\"). Sur le schéma à compléter, où se range vent_kmh, et pourquoi ?",
+ img:{src:"Images/programme_entrees_sorties_muet.svg",alt:"Schéma à compléter : à gauche, trois cases « ? » pour les données utilisées (entrées) ; au centre, le programme qui lit, compare et décide ; à droite, trois cases « ? » pour les données produites (sorties)"},
+ o:["utilisée : une mesure lue sur un capteur","utilisée : un paramètre choisi par le concepteur","produite : calculée par le programme","produite : envoyée par le programme à l'application"],r:0,
+ expl:"vent_kmh reçoit ce que renvoie lire_capteur(\"anemometre\") : une mesure du monde réel, donc une donnée UTILISÉE. Un paramètre (SEUIL_ROUGE = 90) est aussi utilisé, mais il est écrit par le concepteur et ne change pas avec le vent.",
+ ex:"Sur le schéma à compléter, vent_kmh se range à gauche, côté entrées, en face de l'anémomètre.",
  err:"Confondre « le programme range la valeur dans une variable » avec « le programme produit la donnée ».",
- d:["","La valeur 132 vient du monde réel, pas d'un calcul du programme.","Aucune donnée n'est décorative dans un programme.","C'est une variable parfaitement valide."],
- ret:"Donnée utilisée = lue depuis l'extérieur (capteur, constante, saisie)."},
+ d:["","Un paramètre est un nombre écrit dans le programme (SEUIL_ROUGE = 90). Ici, la valeur vient de lire_capteur(…) : elle change avec le vent.","Le programme ne calcule pas le vent : il le lit. Ranger une valeur dans une variable n'est pas la produire.","Ce que le programme envoie, c'est le message. vent_kmh entre dans le programme, il n'en sort pas."],
+ ret:"Donnée utilisée = lue par le programme : une mesure (capteur) ou un paramètre (choisi par le concepteur)."},
 {c:"C6.1",n:"Donnée produite",q:"Toujours dans ce programme, message = \"Vigilance \" + vigilance. message est une donnée…",
  o:["utilisée : elle vient d'un capteur","ni l'une ni l'autre des deux","produite : le programme la calcule","c'est une constante de réglage"],r:2,
  expl:"Une donnée PRODUITE est créée ou transformée par le programme : résultat d'un calcul, commande d'actionneur, message. Ici, la concaténation fabrique le texte.",
@@ -369,11 +369,11 @@ const QUESTIONS = [
  err:"Confondre « non utilisé dans la décision » et « erreur de programme ».",
  d:["Le programme fonctionne : la variable est juste inexploitée.","La pression est un excellent indicateur — c'est le programme qui est incomplet.","","Le capteur pourra servir dès la v3 !"],
  ret:"Identifier les données révèle aussi les entrées INEXPLOITÉES : des pistes d'amélioration."},
-{c:"C6.1",n:"Sorties vers le système",q:"Vu depuis la fonctionnalité (ce que le programme calcule), quelles sont les TROIS données produites par la version 1 d'origine ?",
- img:{src:"Images/programme_entrees_sorties.svg",alt:"Schéma montrant les trois sorties : vigilance, sirene_active, message"},
+{c:"C6.1",n:"Sorties vers le système",q:"La version 1 d'origine lit vent_kmh et pression_hpa, règle SEUIL_ORANGE = 50, puis écrit vigilance = \"verte\", sirene_active = False et message = \"Vigilance \" + vigilance. Vu depuis la fonctionnalité (ce que le programme calcule), quelles sont ses TROIS données produites ?",
+ img:{src:"Images/programme_entrees_sorties_muet.svg",alt:"Schéma à compléter : à gauche, trois cases « ? » pour les données utilisées (entrées) ; au centre, le programme qui lit, compare et décide ; à droite, trois cases « ? » pour les données produites (sorties)"},
  o:["vigilance, sirene_active, message","vent_kmh, pression_hpa, SEUIL_ORANGE","anemometre, barometre, sirene","50, 90, 118"],r:0,
  expl:"Le programme calcule un état (vigilance), mémorise une décision (sirene_active) et fabrique un message. Ce qu'on observe dehors, ce sont le message reçu par l'application et la sirène qui sonne — par la commande activer_sirene(), qui applique la décision.",
- ex:"Côté droit du schéma : les trois flèches vertes de sortie.",
+ ex:"Sur le schéma à compléter, elles se rangent à droite, dans les trois cases des sorties.",
  err:"Mélanger noms de variables, noms de capteurs et valeurs.",
  d:["","Ce sont les ENTRÉES du programme.","Ce sont des périphériques, pas des données.","Ce sont les valeurs des constantes."],
  ret:"Les sorties de la v1 : vigilance (résultat), sirene_active (commande), message (information)."},
@@ -768,7 +768,7 @@ function rendreDash(){
   const p=parcours();
   $("dReste").hidden=!s.rep;
   $("dReste").textContent=(p.l.length<N? "Ce parcours ("+p.l.length+" questions) : "+p.ok+" / "+p.faites+" réussie"+(p.ok>1?"s":"")+(p.faites<p.l.length?" · "+(p.l.length-p.faites)+" à faire":"")+". " : "")
-    +"Banque : "+s.rep+" / "+N+" questions travaillées."+(s.rest? " La note sur 20 s'affichera quand les "+N+" seront faites." : "");
+    +"Banque : "+s.rep+" / "+N+" questions travaillées."+(s.rest? " Les deux notes sur 20 comptent les "+N+" questions (une question pas faite y vaudrait zéro) : elles s'afficheront quand les "+N+" seront faites." : "");
   $("dNote").textContent=s.rest? "— /20" : (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20";
   $("dNote1").textContent=s.rest? "— /20" : notePremierEssai().toFixed(1).replace(".",",")+" /20";
   $("pfill").style.width=(s.rep/N*100)+"%";
@@ -908,7 +908,7 @@ function rendreResultat(){
   $("rNote").textContent=s.rest? p.ok+" / "+p.faites+" réussie"+(p.ok>1?"s":"") : note.toFixed(1).replace(".",",")+" /20";
   $("rEssais").innerHTML=s.rest
     ? "🎯 <b>Ce parcours&nbsp;: "+p.ok+" / "+p.faites+" réussie"+(p.ok>1?"s":"")+"</b>"+(p.faites<p.l.length?" ("+(p.l.length-p.faites)+" question"+(p.l.length-p.faites>1?"s":"")+" de ce parcours à faire)":"")+"."
-      +"<br>📚 <b>Banque&nbsp;: "+s.rep+" / "+N+" questions travaillées</b>&nbsp;: la note sur 20 s'affichera quand les "+N+" seront faites."
+      +"<br>📚 <b>Banque&nbsp;: "+s.rep+" / "+N+" questions travaillées</b>, "+s.rest+" question"+(s.rest>1?"s":"")+" pas encore faite"+(s.rest>1?"s":"")+"&nbsp;: la note sur 20 s'affichera quand les "+N+" seront faites."
     : "🎯 <b>Premier essai&nbsp;: "+notePremierEssai().toFixed(1).replace(".",",")+" /20</b> — ce que tu savais du premier coup."
       +"<br>🔁 <b>Après aides&nbsp;: "+note.toFixed(1).replace(".",",")+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant.";
   $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;

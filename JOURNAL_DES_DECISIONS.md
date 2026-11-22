@@ -36545,3 +36545,13 @@ de situation au-dessus de 1 Mo (5e_C1.3, 4e_C1.4, 3e_C1.5).
 74/74), `controle_statut`, `controle_couverture`, `controle_liens`, `registre_regles --verifier` ; bancs de lot
 3e_C1.1 51/51, 4e_C9.1 153/153, TP 4e_C6.2 31/31, `banc_effacement` sur le TP ; revue d'écran du TP à 390 et 1 280 px.
 **Non exécuté** : `rapport_audit.py --complet` rejoué en entier (la prochaine tâche hebdomadaire le fera).
+
+## 22/11/2026 — 3e_C6.1 (suite de #886) : deux bancs communs non rejoués à la livraison, deux questions dont le schéma donnait la réponse (thème 2)
+
+Après la fusion de #886, la relecture des bancs rangés hors des `controle_*` a trouvé deux refus : `qcm_aides/banc_aides.mjs`
+(A9 : le tableau de bord du QCM ne disait plus que les notes sur 20 comptent les 30 questions, ni le résultat combien en
+restent — une phrase perdue en séparant « parcours » et « banque ») et `impression_papier/banc_papier.py` (l'état des
+explications écrites de la séance 3, trop pâle sur papier, défaut du 21/11). Corrigés ; 0 refus. Les questions 1 et 10 du
+QCM montrent le schéma à compléter au lieu du schéma complet, qui portait la réponse (n°348) ; la question 1 reçoit des
+propositions crédibles. **Leçon** : la liste de fin de lot doit nommer aussi les bancs des sous-dossiers de `_outils/`
+(`qcm_aides/`, `impression_papier/`, `mode_mission/`) — ajoutée au skill `controle-qualite-lot` (PR transversale).
