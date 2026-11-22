@@ -20,6 +20,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   .box,code,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.4_energie-du-jardin.html">📘 La séquence</a><a href="synthese_eleve_4e_C7.4.html">🧑‍🎓 Synthèse élève</a></nav>
@@ -31,7 +32,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>4e_C7.4</b></td><td>Comparer différentes sources d'énergie pour choisir la plus adaptée.</td><td>Activités 0, 2, 3, 4 et REFAIRE</td></tr>
-    <tr><td>4e_C3.1 <span style="color:var(--sub)">(appui)</span></td><td>Identifier les caractéristiques à prendre en compte dans le choix d'un OST en vue de répondre à un besoin.</td><td>Activité 1</td></tr>
+    <tr><td>4e_C3.1 <span style="color:var(--sub)">(appui)</span></td><td>Identifier les caractéristiques à prendre en compte dans le choix d'un <abbr class="sigle" title="objet ou système technique" tabindex="0">OST</abbr> en vue de répondre à un besoin.</td><td>Activité 1</td></tr>
   </table>
   <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>4e_C3.1</code> · <code>4e_C7.4</code> sont des codes de classement <b>internes à ce dépôt</b>&nbsp;; ils ne figurent pas comme tels au BO.</p>
 </div>
@@ -51,7 +52,7 @@ problème.</p></div>
 <tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
 <tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td>92,0 %</td></tr>
 <tr><td>Capteur d'humidité du sol</td><td>2 mA</td><td>24 h</td><td>0,240 Wh</td><td>4,1 %</td></tr>
-<tr><td>Écran LCD RGB</td><td>40 mA</td><td>1 h</td><td>0,200 Wh</td><td>3,4 %</td></tr>
+<tr><td>Écran <abbr class="sigle" title="écran à cristaux liquides" tabindex="0">LCD</abbr> RGB</td><td>40 mA</td><td>1 h</td><td>0,200 Wh</td><td>3,4 %</td></tr>
 <tr><td>Pompe immergée 5 V</td><td>300 mA</td><td>60 s</td><td>0,025 Wh</td><td>0,4 %</td></tr>
 <tr><td>Module relais</td><td>70 mA</td><td>60 s</td><td>0,006 Wh</td><td>0,1 %</td></tr>
 <tr><th>Total</th><td></td><td></td><th>5,87 Wh</th><th>100 %</th></tr>
@@ -62,15 +63,15 @@ problème.</p></div>
 <tr><td>Pile 9 V alcaline</td><td>2,8 Wh</td><td>11 heures</td></tr>
 <tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>2,1 jours</td></tr>
 <tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>38 heures</td></tr>
-<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
+<tr><td>Secteur — adaptateur <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
 <tr><td>Panneau solaire 1 W crête + accu</td><td>3,2 Wh <b>par jour</b></td><td><b>ne suffit pas</b> : il manque 2,67 Wh/jour</td></tr>
 </table>
 <p>Toutes ces valeurs sont <b>calculées</b> par <code>energie.py</code>, livré dans le dossier. Le rendement d'un régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas un réglage. L'ensoleillement retenu pour New York (le jardin est à Brooklyn) est de 4,5 heures équivalent plein soleil par jour en moyenne annuelle, pour un panneau fixe incliné de 20° plein sud, avec 30 % de pertes de chaîne : le panneau 1 W récolte 3,2 Wh par jour, le panneau 2 W 6,3 Wh — il tient les 5,87 Wh, de peu. Source : NREL, PVWatts v8 (base NSRDB), relevé par <a href="https://www.thegreenwatt.com/new-york-peak-sun-hours/">thegreenwatt.com</a>.</p>
 <h2>Ce que ce lot ne fait pas, et le dit</h2>
-<div class="box limite"><ul><li><b>Aucune mesure réelle.</b> Les 45 mA de la carte sont une valeur usuelle : une UNO réelle mesurée au multimètre peut en donner 35 ou 60. Le défi bonus « mesure » demande justement l'écart.</li><li><b>Les 5 mA de la carte sobre sont une hypothèse d'étude.</b> La correction dit explicitement qu'une UNO complète ne descend pas sous 30 mA à cause de sa DEL d'alimentation et de son composant USB : c'est la carte qu'il faudrait changer.</li><li><b>Le coût annuel est un ordre de grandeur.</b> Prix indicatifs, hors remises et hors transport.</li><li><b>La grille ne pondère pas les critères.</b> C'est volontaire : la hiérarchisation est le travail de l'activité 3, et une question de QCM (questionnaire à choix multiples) y est consacrée.</li></ul></div>
+<div class="box limite"><ul><li><b>Aucune mesure réelle.</b> Les 45 mA de la carte sont une valeur usuelle : une UNO réelle mesurée au multimètre peut en donner 35 ou 60. Le défi bonus « mesure » demande justement l'écart.</li><li><b>Les 5 mA de la carte sobre sont une hypothèse d'étude.</b> La correction dit explicitement qu'une UNO complète ne descend pas sous 30 mA à cause de sa <abbr class="sigle" title="diode électroluminescente" tabindex="0">DEL</abbr> d'alimentation et de son composant USB : c'est la carte qu'il faudrait changer.</li><li><b>Le coût annuel est un ordre de grandeur.</b> Prix indicatifs, hors remises et hors transport.</li><li><b>La grille ne pondère pas les critères.</b> C'est volontaire : la hiérarchisation est le travail de l'activité 3, et une question de QCM (questionnaire à choix multiples) y est consacrée.</li></ul></div>
 <h2>Différenciation</h2>
 <ul><li><b>🅰 avec le matériel</b> — montage réel, multimètre en série. Les valeurs mesurées remplacent alors celles du banc, et ce sont elles qui font foi.</li><li><b>🅱 avec le banc</b> — hors ligne, sans installation. Seule voie qui permette d'éteindre un consommateur pour voir ce qu'il pesait.</li><li><b>🅲 sans écran</b> — tableaux imprimables, valeurs dans les corrections.</li></ul>
-<h2>Évaluation — repères LSU</h2>
+<h2>Évaluation — repères <abbr class="sigle" title="livret scolaire unique" tabindex="0">LSU</abbr></h2>
 <table><tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
 <tr><td>🔴 Insuffisante</td><td>choisit une source sans grille de comparaison</td></tr>
 <tr><td>🟠 Fragile</td><td>remplit la grille si les critères lui sont donnés</td></tr>
