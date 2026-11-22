@@ -50,14 +50,18 @@
 | 358 | On imprime ce qu'on vient de faire | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
 | 359 | Un lien vers une partie ouvre cette partie | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — PR #845 |
 | 360 | Les tests jouent l'élève qui ne lit pas | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai (n°147), déjà mesurée sur tout le site le 21/11/2026 — `_outils/eleve_qui_ne_lit_pas.py`, skill `eleve-qui-ne-lit-pas` |
-| 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
+| 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (L et B refusent depuis le 22/11/2026, C et A mesurent ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, **refus depuis le 22/11/2026** ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862 ; puis L voit aussi les blocs en chasse fixe hors `<pre>` : 8 de plus, corrigés par #869 et #870) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
 | 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
+| 369 | 🔑 Ce qui compte revient (clé de voûte) : à partir de la séance 2, une reprise de mémoire avant le rappel | Pascal (22/11/2026, « ils seront à installer automatiquement ensuite »), sur la veille de l'audit du 22/11 (#867) ; écrite par Fable | 🧪 En essai (n°147) — `_outils/controle_reprise_espacee.py` (mesure ; `--strict`), skill `reprise-espacee` ; mesure de départ : 0 séance conforme sur 113 |
+| 370 | Une page se lit à 200 % et avec des lettres espacées | idem | 🧪 En essai — `_outils/controle_zoom_espacement.mjs` (mesure ; `--strict`) ; départ : 9 pages sur 395 défilent de côté, 4 coupent du texte |
+| 371 | Le QCM entrelace ses compétences : un « Entraînement mélangé » à côté du parcours complet | idem | 🧪 En essai — `_outils/mesurer_entrelacement.py` ; départ : 69 banques sur 70 par blocs, 0 mode mélangé |
+| 372 | Le bilan dit ce qui reste flou et quand on le reprend | idem | 🧪 En essai — `controle_reprise_espacee.py` (R4) ; départ : 57 bilans sur 60 sans ce champ |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -35966,3 +35970,200 @@ phrase est corrigée dans ses sources : `atelier-planification/_generation/build
 
 **Mesure** : pages avec un QCM jamais expliqué, 267 → 173 ; thème 3 : 161 → 120 pages avec au moins un sigle nu. Reste
 le thème 1 (sessions en cours), puis OST et les autres sigles.
+
+## 22/11/2026 — Page ouverte (n°361) : un listing qui défile ou un bloc dessiné est refusé ; un intitulé de correction n'est plus compté (thème 2 : `_outils/`)
+
+**La décision.** Carte blanche de Pascal (22/11/2026, 1 h 33), sur la question posée après la PR #863 : « le contrôle
+des listings ne fait que mesurer, alors qu'il est à zéro sur tout le site ». Le 22/11/2026, `controle_page_ouverte.mjs`
+trouve **L 0 et B 0 sur les 341 pages** (vague n°364 : PR #854, #856, #862 ; aucun bloc dessiné, n°308). Ces deux
+mesures deviennent des refus : un listing qui défile à 390 px ou un SVG qui dessine un bloc de programmation, page
+ouverte, fait sortir le contrôle à 1, même sans `--strict` (n°273 : référence nommée, datée, vide). C (correction
+recopiée) et A (axe-core) restent des mesures ; `--strict` les fait toujours refuser.
+
+**Un faux positif de C corrigé.** Trois pages relevées en C le 22/11/2026, deux à tort : `4e_C4.7` et `5e_C4.7` ouvrent
+chacune de leurs cinq corrections sur l'intitulé « **Question par question — la réponse, et pourquoi pas les autres** »,
+un paragraphe tout en gras. Un intitulé se répète à bon droit, comme le `summary` déjà écarté : un titre (`h1` à `h6`)
+ou un paragraphe dont le seul contenu est un `<b>` ou un `<strong>` n'est plus lu. Reste `4e_C1.4` (« Le quiz : sa
+correction complète est sous le quiz… », renvoi répété exprès) : `data-repete` dans la page, lot du thème 1.
+
+**Banc.** `tests_controle_page_ouverte.mjs` passe de 11 à 14 points (intitulé en gras et titre repris non comptés ;
+sans `--strict`, un L ou un B sort à 1, C seul à 0). Les trois points nouveaux échouent sur la version d'avant
+(vérifié : 11 / 14). Les skills `controle-qualite-lot`, `texte-clair-et-aere` et `audit-douze-axes`, qui disaient
+« mesure », sont mis à jour dans une PR transversale à part (`.claude/` est hors du périmètre du thème 2).
+
+## 22/11/2026 — Audit hebdomadaire, avancé à la demande de Pascal : 3 ✘ (n°23 seule), 52 séquences propres sur 56, 36 fichiers de dérive (+25) ; un seul rouge bloquant, un manifeste (transversal : `docs/audits`)
+
+**Demande de Pascal** (22/11, 0 h 50 Martinique) : « Pourrais-tu faire cet audit maintenant et rechercher les skills qui me
+seraient utiles, plugins, règles d'or et clefs de voûte » ; « ils seront à installer automatiquement ensuite ».
+`rapport_audit.py --complet --generateurs` sur `main` après #860 (`e0a9fc5`) : `docs/audits/RAPPORT_AUDIT_2026-11-22.md`, avec
+« Depuis la semaine dernière », le crible et la veille. Rien n'est corrigé, rien n'est fusionné. `axe-core` 4.10.2 installé
+dans le bac à sable (outil de contrôle retenu le 11/11, non versionné) : `controle_axe.mjs` a tourné, vert.
+
+**Ce qui a bougé depuis le 15/11** (134 PR, #726 → #860 ; règles n°331 → n°368). Règles d'or : **3 ✘, toutes n°23** — zéro
+liste n°300, zéro ancien gabarit, n°301 réglée côté contrôle (#725) ; mais **trois dépassements de minutes nouveaux** (3e_C1.1
++5, 3e_C2.1 +13, 4e_C9.1 +17) : billets de sortie, écrits et enquête ajoutés sans reprendre la durée. Séquences propres : 52
+sur 56 (pas les mêmes). Verts depuis le 15/11 : `sauvegarde_locale`, `schema_sous_les_yeux`, `chaine_a_completer`. Dérive
+**11 → 36**, dans les deux sens : des pages en retard sur leur source (« 7 illustrées » pour 8 ; un lexique qui dit encore
+« l'an prochain », contraire à la n°304) et des retouches posées à la main que la source ignore (onglets au clavier des
+ateliers de planification, n°364 sur 3e_C9.2, « (volts) »). Couverture inchangée pour le quatrième rapport.
+
+**Rouges, criblés.** `controle_medias` (bloquant) : un manifeste de 3e_C6.2 range une phrase en médias — rien ne manque à
+l'élève. `regle4` : le TP algorigrammes de 4e_C6.2 (sorti des héritées le 20/11) et les 3 ateliers de planification (bouton
+QCM à 53 %). `competences` : « CRCN 3.4 » sans « Programmer » dans `index_complements.json`. `flux_animes` : un SVG de 5e_C4.1
+réécrit par la passe « cinétique » (#752). `schemas` : intermittent. Les 6 COUVERT « sans preuve » de 4e_C4.x sont un artefact
+de `preuves_couverts()` (un QCM hérité marqué par code dans le dossier), plus deux README qui pointent 4e_C4.1 au lieu de 4e_C4.7.
+
+**Chantiers proposés, dans l'ordre.** 1) Le manifeste de 3e_C6.2 (une ligne). 2) Petites PR : `index_complements.json`,
+`animer_flux.py`, deux README, `preuves_couverts()`. 3) n°23 sur trois pages, et la ligne de méthode « une règle qui ajoute un
+bloc dit ce qu'il coûte en minutes ». 4) La dérive : retouches reportées dans leurs sources, régénération jusqu'à zéro. 5) Le
+TP de 4e_C6.2 (blocs ou tolérance). 6) Clés de voûte : la n°331 et la n°361 hors grille ; décisions de couverture en attente.
+
+**Veille** (dix dépôts clonés en lecture seule, rien exécuté, rien installé) : aucun plugin à installer (crochets à chaque
+message, paquets téléchargés et exécutés, licences absentes) ; quatre propositions **réécrites de zéro**, à la décision de
+Pascal : **K1, clé de voûte « Ce qui compte revient »** (reprise espacée des 🔑 en tête de séance, maîtrise confirmée plus
+tard ; « à concevoir » dans `PLAN.md` depuis le 11/11), **R2** (lisible à 200 % et lettres espacées, WCAG 1.4.4 et 1.4.12),
+**R3** (le QCM entrelace : 69 QCM sur 70 posent leurs questions par blocs de compétence), **R4** (le bilan dit ce qui reste
+flou et quand on le reprend). Deux des trois idées du 08/11 sont couvertes (n°347, n°367, n°331).
+
+**Vérifié.** Le rapport a tourné une fois, complet avec générateurs (≈ 22 min) ; `controle_medias`, `controle_competences`,
+`controle_regle4`, `controle_flux_animes`, `controle_schemas.mjs`, `verif_regles_audit.py`, `bilan_revision.py` relancés à
+part ; régénération d'essai dans une copie (`git archive`) et comparaison page par page ; mesure de l'entrelacement des 70 QCM.
+**Non exécuté** : les bancs des lots, un navigateur réel, aucun script des dépôts de la veille.
+
+**Reste à Pascal.** Fusionner cette PR (transversale : la fusion automatique ne vaut que pour les thèmes) ; dire lesquelles
+de K1, R2, R3, R4 s'installent — elles le seront dans une PR à part, en essai (n°147).
+
+## 22/11/2026 — Thème 3, n°364 : six blocs de code ou de données qui n'étaient pas des `<pre>` ne défilent plus
+
+Le contrôle de la page ouverte apprend à voir les listings qui ne sont pas des `<pre>` : tout bloc en police à chasse
+fixe qui garde ses lignes (PR de `_outils/` à suivre, thème 2). Les « 0 listing qui défile sur les 341 pages » du matin
+ne comptaient que `pre`, `.programme` et `.code-box` ; axe-core (« scrollable-region-focusable ») a montré les autres. Au
+thème 3, cinq pages :
+`3e_C7.8/sequence_3e_C7.8_deux-stations.html` et `4e_C7.8/sequence_4e_C7.8_le-jardin-publie.html` (le message JSON
+publié, `.codebox`, 314 et 289 px de trop à 390 px), `4e_C7.5/sequence_4e_C7.5_jardin-incomplet.html` et
+`5e_C7.5/sequence_5e_C7.5_eclairage-du-preau.html` (le programme commenté, `.prog`, 319 et 236 px),
+`4e_C9.1/sequence_4e_C9_jardin-programme.html` (deux algorithmes, `.py`, 307 et 213 px). Même geste que la vague du
+matin : à 600 px et moins, ces blocs reviennent à la ligne (`pre-wrap`), aucun caractère changé. Vu à 390 px :
+commentaires longs sous leur instruction, indentation gardée.
+
+Contrôles : `tests_*_sequence.mjs` 58 / 58 (3e_C7.8), 46 / 46 (4e_C7.8), 41 / 41 (4e_C7.5), 40 / 40 (5e_C7.5) ;
+`tests_*_qcm.mjs` 32 / 32 (les quatre) ; `tests_4e_C9.mjs` 153 / 153 ; `tests_regle_311` des cinq dossiers 34 / 34 ;
+`controle_page_ouverte.mjs --axe` (version qui voit les blocs en chasse fixe) : L 0 · B 0 · C 0 · A 0 sur les cinq
+pages ; `controle_impression`, `controle_mode_mission`, `controle_regles_visibles` à 0.
+
+**Vu, non repris.** Les programmes `.prog` de 4e_C7.5 et 5e_C7.5 ne sont colorés qu'à moitié (texte cyan, commentaires
+gris) : `controle_code_colore.mjs` ne les lit pas (0 listing trouvé dans 4e_C7.5). À reprendre avec le code coloré
+commun (n°13).
+
+## 22/11/2026 — Thème 1, n°364 : les bandeaux « machine à écrire » de 4e_C1.4 ne coupent plus leur phrase ; un renvoi répété exprès marqué
+
+Le contrôle de la page ouverte apprend à voir les listings qui ne sont pas des `<pre>` (blocs en chasse fixe qui gardent
+leurs lignes : PR de `_outils/` en cours, thème 2). Il en trouve deux au thème 1, tous deux dans `4e_C1.4` : le bandeau
+`.terminal` de l'activité bonus 2FA (« Protéger ses données • Comprendre les risques • Devenir citoyen numérique
+éclairé ») et celui de la séquence (`#terminalIntro`, tapé lettre à lettre par script). En `nowrap` et `overflow:hidden`,
+ils coupaient la phrase au bord de l'écran : à 390 px, plus de la moitié du bandeau de l'activité bonus (743 px) était
+cachée. Sur un téléphone (600 px et moins), le bandeau revient à la ligne, sans animation de largeur. Vu à 390 px : les
+deux phrases entières. Dans la séquence, deux mots du bandeau reprennent leurs accents (« encadrée », « protège tes
+données »).
+
+Les cinq renvois « Le quiz : sa correction complète est sous le quiz » de la séquence (dans cinq corrections) portent
+`data-repete` : répétés exprès, ils ne sont plus lus comme une correction recopiée (C de `controle_page_ouverte.mjs`).
+
+Contrôles : `tests_regle_311_4e_C1.4.mjs` 34 / 34, `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_page_ouverte.mjs --axe`
+(version qui voit les blocs en chasse fixe) : L 0 · C 0 ; reste un `color-contrast` (badge de score de `#bloc1-risques`),
+déjà sur `main`. `controle_impression`, `controle_mode_mission`, `controle_mode_essentiel`, `controle_regles_visibles` à 0.
+
+## 22/11/2026 — Veille du 22/11 installée, en essai : règles d'or n°369 (clé de voûte) à n°372, un skill, trois mesures (transversal : `_outils`, `.claude/skills`, `SKILLS_AUDIT.md`)
+
+**Demande de Pascal** (22/11/2026, 0 h 50 Martinique) : « rechercher les skills qui me seraient utiles, pluggins, règles
+d'or et clefs de voûte » ; « ils seront à installer automatiquement ensuite ». La veille est dans l'audit du jour
+(`docs/audits/RAPPORT_AUDIT_2026-11-22.md`, PR #867). **Aucun plugin ni skill tiers n'est installé** (crochets à chaque
+message, paquets téléchargés et exécutés, licences absentes) : « installer » veut dire, dans ce dépôt, **réécrire de zéro**.
+Les quatre règles naissent **en essai** (n°147) : mesurées tout de suite, elles ne refusent rien sans `--strict`, et
+s'adoptent après un pilote.
+
+### Les règles
+
+> **Règle d'or n°369 (clé de voûte) — Ce qui compte revient.**
+> - À partir de la séance 2, chaque séance s'ouvre sur une « 🔁 Reprise » de deux ou trois questions que l'élève résout
+>   **de mémoire**, **avant** le volet « 📖 Rappel » déplié, sur les acquis 🔑 (n°353) d'une séance précédente — une sur
+>   la séance d'avant, une plus ancienne quand il y en a une.
+> - La correction d'une erreur renvoie au rappel ; la reprise se coche « faite », elle ne valide rien (n°340).
+> - Un acquis réussi le jour même n'est pas maîtrisé : il l'est quand une reprise suivante le retrouve.
+> - Trois à cinq minutes, **comptées** dans les 55 (n°23).
+> *Pourquoi* : réexpliquer fait reconnaître, retrouver fait tenir (effet de test : Roediger et Karpicke, 2006 ;
+> espacement : Cepeda et al., 2006 ; méta-analyse en classe : Adesope et al., 2017). Le « rappel en début de séance »
+> était « à concevoir » dans `docs/mode-mission/PLAN.md` depuis le 11/11. Idées tirées de `THU-MAIC/OpenMAIC`
+> (`learning-to-learn`, MIT), `agent-tutor-skill` (MIT) et `bretzay/skills-fr` (`apprendre`, MIT), réécrites.
+> Dans la grille des clés de voûte, elle **précise la clé n°2** (« on rappelle avant d'exiger ») au lieu d'en ajouter une.
+
+> **Règle d'or n°370 — Une page se lit à 200 % et avec des lettres espacées.**
+> À 200 % (fenêtre de 640 px), la page ne défile pas de côté ; avec l'espacement du texte WCAG 1.4.12 (lignes 1,5 ;
+> paragraphes 2 ; lettres 0,12 em ; mots 0,16 em), aucun texte n'est coupé ; les cibles de moins de 24 × 24 px (2.5.8)
+> sont comptées. *Pourquoi* : ce sont les réglages des élèves dyslexiques et malvoyants, jamais mesurés jusqu'ici.
+> Idée tirée de `masuP9/a11y-specialist-skills` (MIT), réécrite sans lancer aucun paquet tiers.
+
+> **Règle d'or n°371 — Le QCM entrelace ses compétences.**
+> À côté du parcours complet, dont l'ordre peut être voulu, un mode « 🔀 Entraînement mélangé » alterne les compétences
+> dans un ordre fixe, sans hasard. *Pourquoi* : mélanger des notions voisines aide à les distinguer (Rohrer et Taylor,
+> 2007 ; Brunmair et Richter, 2019 — effet net quand les notions se ressemblent, plus faible ailleurs).
+
+> **Règle d'or n°372 — Le bilan dit ce qui reste flou et quand on le reprend.**
+> Le bilan (n°301) porte un champ `data-flou` : « ce qui reste flou pour moi, et quand je le reprends ».
+
+### Ce qui est installé
+
+- **Skill `reprise-espacee`** (nouveau) : la reprise en tête de séance, la maîtrise confirmée plus tard, le champ du
+  bilan, l'entraînement mélangé ; gabarits HTML, garde-fous (n°23, n°300, n°309, n°323, n°340, n°341, n°343, n°349).
+- **Mesures**, toutes « en panne » (sortie 2) si elles n'ont rien lu (n°299), sortie 0 sinon, `--strict` pour refuser :
+  `_outils/controle_reprise_espacee.py` (n°369, n°372), `_outils/mesurer_entrelacement.py` (n°371 ; `--ordre <qcm>`
+  imprime l'ordre entrelacé), `_outils/controle_zoom_espacement.mjs` (n°370, Playwright, sans clic ni saisie).
+  Bancs : `tests_controle_reprise_espacee.py` 8/8, `tests_controle_zoom_espacement.mjs` 2/2.
+- **Skills et méthode mis à jour** : `cadrage-cles-de-voute` et `METHODE.md` (clé n°2 précisée par la n°369, en essai) ;
+  `controle-qualite-lot` (les trois mesures) ; `qcm-html-accessible` (l'entraînement mélangé) ; `lexique-sequence` (les
+  mots de niveau 2, idée du 08/11 restée en attente) ; `SKILLS_AUDIT.md` (le skill, la veille).
+
+### Mesures de départ (22/11/2026, `main` après #860)
+
+- n°369 : **0 séance conforme sur 113** séances n°2 et suivantes (60 pages) ; au plus 8 s'ouvrent sur une question de
+  mémoire sans le bloc ni sa place.
+- n°372 : **57 bilans sur 60** sans « ce qui reste flou ».
+- n°371 : **69 banques sur 70** posées par blocs de compétence (médiane : 2 changements pour 30 questions) ; 0 mode mélangé.
+- n°370 : sur 395 pages ouvertes, **9 défilent de côté à 200 %** (surtout des synthèses : `4e_C4.1`, Book Train, `4e_C7.4`,
+  `5e_C7.4`, `5e_C7.5`, trois synthèses professeur de C7) et **4 coupent du texte** quand on espace les lettres
+  (`4e_C4.1` et `4e_C7.5` : le dessin de la chaîne à compléter ; `3e_C6.1` : un listing ; `3e_C9.1` : un tableau du TP
+  mBot2) ; 289 ont au moins une cible sous 24 px (compté, non refusé).
+
+**Vérifié.** Les trois mesures sur tout le site ; les deux bancs ; `registre_regles.py --ecrire` (aucun doublon, prochain
+n°373). **Non exécuté** : un pilote sur une page (proposé dans le skill : une séquence de trois séances dont les 🔑 sont déjà
+marqués) ; aucune page élève n'est modifiée dans ce lot.
+
+**Reste à Pascal.** Fusionner (lot transversal) ; choisir la séquence pilote de la n°369 ; dire si la n°370 entre dans les
+contrôles de livraison dès le pilote, ou après la correction des 13 pages relevées.
+
+## 22/11/2026 — Page ouverte (n°361) : L voit aussi les blocs de code qui ne sont pas des `<pre>` (thème 2 : `_outils/`)
+
+**Le constat.** Le matin, `controle_page_ouverte.mjs` disait « L 0 sur les 341 pages », et la PR #866 a rendu L
+bloquant. Mais L ne lisait que `pre`, `.programme` et `.code-box`. Un passage d'axe-core sur tout le site, page ouverte,
+a relevé des zones qui défilent sans être atteignables au clavier (« scrollable-region-focusable ») : parmi elles, des
+blocs de code ou de données écrits dans un `div` — `.codebox` (JSON publié), `.prog` (programme Arduino commenté), `.py`
+(algorithme), `.terminal` (bandeau « machine à écrire »). Huit listings dans sept pages, que L ne voyait pas. Ce que
+j'avais écrit à Pascal (« plus aucun listing ne défile sur le site ») était trop large : vrai pour les `<pre>`, faux pour
+ceux-là.
+
+**La correction.** L lit aussi tout bloc visible en police à chasse fixe qui garde ses lignes (`white-space: pre` ou
+`nowrap`), le plus extérieur seulement, hors calques d'éditeur et hors SVG. Les huit listings ont été corrigés avant que
+ce contrôle n'arrive sur `main` : thème 1 par la PR #869 (les deux bandeaux de `4e_C1.4`), thème 3 par la PR #870 (six
+blocs dans cinq pages). Sur les 341 pages : **L 0 · B 0 · C 0**, sortie 0.
+
+**Banc.** `tests_controle_page_ouverte.mjs` : 15 points (nouveau : un `div` en chasse fixe `white-space:pre` et un
+bandeau `nowrap` coupé sont vus, le même bloc en `pre-wrap` ne l'est pas) ; le point nouveau échoue sur la version de
+`main` (14 / 15, vérifié). Les pages du banc portent maintenant la balise `viewport` : sans elle, l'émulation mobile met
+la page à 980 px de large, et un bandeau de 80 caractères ne déborde pas.
+
+**Reste, mesuré le 22/11/2026 (axe-core, page ouverte, 341 pages)** : 64 pages avec un défaut grave — zones qui
+défilent sans clavier (51 pages ; 108 des 142 zones sont les figures et tableaux du kit des ateliers de représentation),
+contraste (26), étiquettes (4), attributs ARIA (3), liste (1). Le kit des ateliers ne peut pas être régénéré tel quel :
+`build.py` et `incrustations.py` défont aujourd'hui les explications de sigles posées à la main dans les pages
+(« CDI — le centre de documentation et d'information », « QCM (questionnaire à choix multiples) ») ; leurs sources
+(`build.py`, `cahiers.py`, `moteur.py`, les textes des incrustations) sont à mettre d'accord avant toute régénération.

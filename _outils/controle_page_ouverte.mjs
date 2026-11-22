@@ -22,17 +22,26 @@
  *
  * CE QU'IL MESURE, page ouverte, à 390 px
  * ---------------------------------------
- *   L  un listing (`pre`, `.programme`, `.code-box`) qui défile en largeur : ce qui défile est caché (n°364) ;
+ *   L  un listing qui défile en largeur : ce qui défile est caché (n°364) — `pre`, `.programme`, `.code-box`, et tout
+ *      bloc en police à chasse fixe qui garde ses lignes (`div.codebox`, `div.py`, `.terminal`…, depuis le 22/11/2026) ;
  *      (le calque coloré d'un éditeur intégré, posé sur sa zone de saisie, défile avec elle : il n'est pas compté) ;
  *   B  un SVG qui dessine un bloc de programmation (« alors » et « sinon », « répéter… », « quand … cliqué ») : n°308 ;
  *   C  une même phrase (8 mots ou plus) dans 3 corrections ou plus : une correction qui se recopie n'explique pas (n°96) ;
- *      (une ligne d'aide répétée exprès — « 🔍 Touche le schéma pour l'agrandir » — porte `data-repete` et n'est pas lue) ;
+ *      (une ligne d'aide répétée exprès — « 🔍 Touche le schéma pour l'agrandir » — porte `data-repete` et n'est pas lue ;
+ *      un intitulé non plus : titre, ou paragraphe tout en gras comme « Question par question — la réponse, et pourquoi
+ *      pas les autres », que 4e_C4.7 et 5e_C4.7 posent en tête de chaque correction, 22/11/2026) ;
  *   A  avec --axe : les défauts graves (critical, serious) d'axe-core sur la page ouverte.
  *
  * Usage :
  *   node _outils/controle_page_ouverte.mjs [chemins…] [--axe] [--strict] [--muet] [--json f]
  *   Sans chemin : les trois thèmes et l'index, hors synthèses professeur, fiches et rapports.
- * Sortie : 0 mesure faite (ou rien trouvé avec --strict) · 1 avec --strict, au moins un écart ·
+ * L ET B REFUSENT (règle n°273 : référence nommée, datée, vide)
+ * -------------------------------------------------------------
+ * Le 22/11/2026, sur les 341 pages, L et B sont à 0 (vague n°364 : PR #854, #856, #862). Une page qui fait défiler un
+ * listing ou qui dessine un bloc fait maintenant sortir à 1, même sans --strict. C et A restent des mesures ; --strict
+ * les fait refuser aussi.
+ *
+ * Sortie : 0 aucun L ni B (C et A mesurés) · 1 au moins un L ou un B, ou, avec --strict, au moins un écart ·
  *          2 EN PANNE : Playwright absent, aucune page mesurée, ou une page qui ne s'ouvre pas (n°299).
  */
 import fs from 'node:fs';
@@ -99,8 +108,17 @@ function mesurer() {
   // un calque coloré d'éditeur (caché aux lecteurs d'écran, posé sur une zone de saisie) défile AVEC la saisie : ce n'est
   // pas un listing à lire, il ne compte pas (21/11/2026 : `pre.cl-hl` de 3e_C6.1, `pre.editeur-py-couleurs` de 4e_C6.2)
   const calque = el => el.getAttribute('aria-hidden') === 'true' || !!(el.parentElement && el.parentElement.querySelector(':scope > textarea'));
-  const L = [...document.querySelectorAll('pre, .programme, .code-box')].filter(vis).filter(el => !calque(el))
-    .filter(el => el.scrollWidth > el.clientWidth + 2)
+  // un listing, c'est `pre`, `.programme`, `.code-box`… et tout bloc en police à chasse fixe qui garde ses lignes
+  // (`white-space: pre` ou `nowrap`) : `div.codebox`, `div.py`, `div.prog`, `.terminal` (22/11/2026 : neuf listings de
+  // ce genre défilaient sans que L les voie, trouvés par axe-core, « scrollable-region-focusable »)
+  const mono = el => /mono|courier|consolas|menlo/i.test(getComputedStyle(el).fontFamily);
+  const candidats = new Set(document.querySelectorAll('pre, .programme, .code-box'));
+  document.querySelectorAll('body div, body p, body td, body li').forEach(el => {
+    if (/^(pre|nowrap)$/.test(getComputedStyle(el).whiteSpace) && mono(el)) candidats.add(el);
+  });
+  const defilants = [...candidats].filter(vis).filter(el => !calque(el) && !el.closest('svg'))
+    .filter(el => el.scrollWidth > el.clientWidth + 2);
+  const L = defilants.filter(el => !defilants.some(o => o !== el && o.contains(el)))   // le plus extérieur seulement
     .map(el => ({ debut: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 50), px: el.scrollWidth - el.clientWidth }));
   const B = [];
   document.querySelectorAll('svg').forEach(svg => {
@@ -119,7 +137,12 @@ function mesurer() {
     const vues = new Set();
     // le texte de la correction, sans son intitulé (« 📖 Correction complète… » se répète à bon droit), ni styles ni scripts
     const c = b.cloneNode(true);
-    c.querySelectorAll(':scope > summary, style, script, [data-repete]').forEach(x => x.remove());
+    c.querySelectorAll(':scope > summary, style, script, [data-repete], h1, h2, h3, h4, h5, h6').forEach(x => x.remove());
+    // un intitulé tout en gras (« <p><b>Question par question…</b></p> ») se répète à bon droit, comme un titre
+    c.querySelectorAll('p').forEach(x => {
+      const kids = [...x.childNodes].filter(k => !(k.nodeType === 3 && !k.textContent.trim()));
+      if (kids.length === 1 && kids[0].nodeType === 1 && /^(B|STRONG)$/.test(kids[0].tagName)) x.remove();
+    });
     c.querySelectorAll('p, li, div, h1, h2, h3, h4, h5, h6, tr, br, pre, svg').forEach(x => x.after('\n'));  // un bloc = une coupure
     (c.textContent || '').split(/(?<=[.!?…])\s+|\n+/).forEach(ph => {
       const n = ph.toLowerCase().replace(/[«»"“”’']/g, ' ').replace(/\s+/g, ' ').trim();
@@ -168,6 +191,11 @@ const n = k => resultats.filter(r => !r.panne && r[k] && r[k].length).length;
 console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390 px · ${pannes} en panne · L ${n('L')} · B ${n('B')} · C ${n('C')}${AXE ? ` · A ${n('A')}` : ''} page(s) concernées`);
 if (JSON_OUT) fs.writeFileSync(JSON_OUT, JSON.stringify(resultats, null, 1));
 if (!resultats.length || pannes) { console.log('⛔ EN PANNE (n°299)'); process.exit(2); }
+const refus = resultats.filter(r => !r.panne && (r.L.length || r.B.length));
+if (refus.length) {
+  console.log(`✘ ${refus.length} page(s) font défiler un listing (n°364) ou dessinent un bloc (n°308), page ouverte — référence vide depuis le 22/11/2026 (n°273)`);
+  process.exit(1);
+}
 if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°361)'); process.exit(1); }
 console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°361)` : '✅ rien à signaler, page ouverte');
 process.exit(0);
