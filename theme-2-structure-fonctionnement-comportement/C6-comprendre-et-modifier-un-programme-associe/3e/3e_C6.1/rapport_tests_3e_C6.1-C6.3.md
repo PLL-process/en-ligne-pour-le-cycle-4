@@ -1,20 +1,100 @@
 # Rapport de tests — LOT 04 « Programmer l'alerte » (3e_C6.1 + C6.3)
 
 **Suite** : `tests_3e_C6.1-C6.3.mjs`, livrée dans ce dossier · **Outil** : Playwright
-(Chromium headless), viewport téléphone 390 × 844 · **Rejouée le 21/11/2026** ·
-**Verdict : 38 / 38 ✅** (35 / 35 le 31/08/2026 ; trois tests de l'écrit ajoutés le 21/11)
+(Chromium headless), viewport téléphone 390 × 844 · **Rejouée le 22/11/2026** ·
+**Verdict : 57 / 57 ✅** (38 / 38 le 21/11/2026 ; refonte du banc pour les audits des 21 et 22/11/2026)
 
 ```
 cd theme-2-.../C6-.../3e/3e_C6.1 && node tests_3e_C6.1-C6.3.mjs
+node _outils/banc_python/tests_banc_python.mjs      # le petit Python de la page, sans navigateur : 24 / 24
 ```
 
-> **Ce que ce rapport disait avant le 31/08/2026.** Il portait 17 coches et ne citait
-> **aucun** script : une dette honnête, pas une promesse fausse (règle d'or n°259). Son
-> titre annonçait « 22/22 réussis » là où ses tableaux comptaient 17 lignes — un nombre
-> écrit en prose, que `_outils/controle_effectifs_qcm.py` ne lit pas et ne prétend pas
-> lire (règle n°264). Les 17 lignes sont reprises, et dix-huit contrôles s'y ajoutent.
+## Ce qui a changé le 22/11/2026 (audits des 21 et 22/11/2026 ; règle d'or n°333 appliquée, n°373 et n°374 en essai)
 
-## Ce que cette suite éprouve en propre
+La page **exécute** désormais le programme de l'élève (le petit Python `banc-python`, source
+`_outils/banc_python/`), au lieu de chercher des motifs dans son texte. Les critères de recette de
+l'audit sont recopiés dans la suite, au mot près quand c'était possible :
+
+- « Remplacer seulement les guillemets doubles des chaînes par des apostrophes » → même verdict, 10 / 10 (test 16) ;
+- « Remplacer seulement le test strict du seuil supérieur par un test inclusif » → refusé, « 118 km/h · niveau :
+  rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu » (test 16 bis ; l'audit écrivait
+  « violet obtenu » : la page dit l'état exact du programme, « violette ») ;
+- « Avec la v1 restaurée dans l'éditeur, les sept bonnes réponses théoriques donnent 7/7 » → refusé, « Mes prévisions »
+  et « Essais de ma version » séparés, « à exécuter » puis « 3 / 10 » puis « à rejouer » (tests 17 à 17 quater) ;
+- « La frontière de mot après 60 accepte aussi le début de 60.5 » → refusé, la valeur lue est 60.5 (test 11 bis) ;
+- « Les lignes 6 et 21 sont attendues même si un élève insère un commentaire en tête » → la version 1 est figée (test 8) ;
+- « Accepter « 118 ne dépasse pas 118 ; il dépasse 90 » » → validé, sans mot-clé (test 10) ;
+- « 10 bonnes réponses sur 10 travaillées ne donnent que 6,7/20 » → « 10 / 10 réussies », « 10 / 30 travaillées », pas de /20 (test 29 bis) ;
+- le billet, les documents (algorigramme à 60, plan de tests authentique de la v1, récit fictif), les deux hypothèses (tests 7 bis, 20 quater, 19 sexies) ;
+- une écriture Python juste que le banc ne connaissait pas (f-string) obtient 10 / 10 ; une écriture qu'il ne lit pas (liste) est dite « limite du banc, pas forcément une erreur », jamais « SyntaxError » (test 16 quinquies, audit Fable) ;
+- les séances 2 et 3 s'ouvrent sur une reprise de mémoire (n°369, en essai) qui ne valide rien et renvoie au rappel ; le bilan demande ce qui reste flou et quand on le reprend (n°372) (test 19 septies) ;
+- le Bonus a désormais sa correction, et son fichier `.py` est le programme de la correction de l'activité 4, qui passe le banc 10 / 10 (test 21 bis).
+
+## Les 57 contrôles (sortie du 22/11/2026)
+
+| # | Contrôle | Résultat |
+|---|---|---|
+| 1 | chargement, titre « Programmer l'alerte » et les codes 3e_C6.1 / 3e_C6.3 | ✅ |
+| 2 | programme d'origine chargé dans l'éditeur, 24 lignes annoncées et comptées | ✅ |
+| 3 | coloration syntaxique active : 6 familles de jetons colorées | ✅ |
+| 3 bis | séance 1 : « surligner les lignes 6-7 » surligne 2 lignes de la version 1 figée, l'éditeur ne bouge pas | ✅ |
+| 4 | le bouton « surligner les lignes 2-4 » surligne exactement 3 ligne(s) | ✅ |
+| 4 bis | le bouton « ne plus surligner » rend le programme à sa lecture normale | ✅ |
+| 5 | A+ agrandit la police de l'éditeur (14 → 15 px, et le style suit) | ✅ |
+| 6 | à l'ouverture, l'éditeur déclare le programme identique à la version 1 d'origine, et la version se dit | ✅ |
+| 7 | attendus extraits des CHECKS : 22 égalités, 4 préfixes, 3 nombres, 0 rédaction | ✅ |
+| 7 bis | billet sans réponse : « 0 réussie · 0 à revoir · 3 sans réponse », et jamais « rien n'est en place » | ✅ |
+| 7 ter | activités 1 et 2 : la version 1 d'origine figée (24 lignes, la ligne 6 lit le vent), au lieu de l'éditeur | ✅ |
+| 8 | activité 1 validée 10 / 10 (mesure, paramètre, donnée produite, mesure sans décision, lignes 6 et 21) | ✅ |
+| 9 | activité 2 REFUSÉE : « Choix : 3 / 3 corrects » et « Justification : pas encore écrite », deux lignes séparées | ✅ |
+| 10 | activité 2 validée avec « 118 ne dépasse pas 118 ; il dépasse 90 » (justification écrite, à relire par le professeur) | ✅ |
+| 10 bis | après « Vérifier », le chemin suivi pas à pas : à 118, « 118 > 118 → faux », puis « 118 > 90 → vrai » | ✅ |
+| 11 | activité 3 REFUSÉE : les 2 réponses justes, mais le banc lit SEUIL_ORANGE = 50 dans le programme | ✅ |
+| 11 bis | SEUIL_ORANGE = 60.5 : refusé, le banc lit la valeur effective (« SEUIL_ORANGE = 60.5 … le club a fixé 60 ») | ✅ |
+| 12 | une seule ligne changée : le comparateur annonce 1 ligne ajoutée (+) et 1 retirée (−), pas davantage | ✅ |
+| 13 | activité 3 validée une fois la ligne 2 réellement recalibrée à 60 : seuil lu, « Vigilance verte » à 55 km/h | ✅ |
+| 14 | activité 4 REFUSÉE sur la version 1 recalibrée : le premier écart est nommé | ✅ |
+| 15 | le programme v2 est lu dans la correction publiée par la page (30 lignes) | ✅ |
+| 16 | critère de l'audit : la v2 écrite avec des apostrophes obtient 10 / 10, comme avec des guillemets | ✅ |
+| 16 bis | critère de l'audit : `>=` au seuil ouragan → refusé, « 118 km/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu » | ✅ |
+| 16 ter | programme non exécutable : « IndentationError » avec sa ligne, et la version le dit | ✅ |
+| 16 quinquies | une f-string juste obtient 10 / 10 ; une liste (hors du banc) donne « Le banc n'a pas pu essayer ton programme », « limite du banc », jamais « SyntaxError » | ✅ |
+| 16 quater | activité 4 validée 10 / 10 sur la v2 de la correction, et la version se dit « version 2 » | ✅ |
+| 17 | prévisions et diagnostic justes, rien exécuté : REFUSÉE, « Essais de ma version : à exécuter » | ✅ |
+| 17 bis | la v1 restaurée exécutée : REFUSÉE, « 3 / 10 vents conformes » | ✅ |
+| 17 ter | version modifiée depuis l'essai : « à rejouer », et le journal marque l'ancien essai | ✅ |
+| 17 quater | la v2 exécutée sur 10 vents : activité 5 validée, « 10 / 10 … dix cas essayés, pas tous les vents possibles » | ✅ |
+| 17 quinquies | le tableau des essais montre 10 vents, la prévision de l'élève et l'obtenu de sa version | ✅ |
+| 18 | activité 6 validée 6 / 6 (transfert : lire un programme qu'on n'a pas écrit) | ✅ |
+| 19 | toutes les activités sont validées (6 / 6 activités validées) | ✅ |
+| 19 bis | les 3 onglets de séance portent leur coche | ✅ |
+| 19 ter | réinvestissement : trois explications écrites, sans proposition, chacune avec sa version étayée, correction repliée avec trois phrases de copie, grille à trois critères (n°346, n°356) | ✅ |
+| 19 quater | l'état compte ce qui est écrit et coché (2 / 3, 1 / 3) sans rien valider ni noter (n°340) | ✅ |
+| 19 quinquies | la bouée : les lignes 4 à 7 écrites s'essaient à 2,0 · 3,0 · 4,0 · 5,0 m, sans note (5,0 m → « Baignade : rouge ») | ✅ |
+| 19 sexies | bilan : les DEUX hypothèses de départ reviennent, face à deux champs | ✅ |
+| 19 septies | reprise en tête des séances 2 et 3 : une erreur renvoie au rappel, « 2 / 2 retrouvée(s) », et rien n'est validé | ✅ |
+| 20 | rechargement : le programme v2 de l'élève est restauré, pas la version d'origine | ✅ |
+| 20 bis | rechargement : réponses, validations et journal d'essai restaurés, taille de police comprise | ✅ |
+| 20 ter | rechargement : les explications écrites et la case cochée de la grille reviennent | ✅ |
+| 20 quater | documents : l'algorigramme (spécification de la v2) teste 60, pas 50 ; le plan de tests de la v1 ne commande aucun gyrophare ; aucun « verte/jaune » ; récit fictif, seuil du club | ✅ |
+| 21 | les 14 liens internes existent | ✅ |
+| 21 bis | Bonus : le fichier .py donné commence par la simulation, porte le programme de la correction de l'activité 4, et passe le banc 10 / 10 | ✅ |
+| 22 | les 5 SVG référencés existent sur le disque | ✅ |
+| 23 | hors ligne : aucune ressource distante, aucune modale, aucune erreur JS | ✅ |
+| 24 | chargement du QCM, titre « Programmer l'alerte », taille annoncée exacte | ✅ |
+| 25 | 30 questions, 2 compétences : C6.1 15 · C6.3 15 | ✅ |
+| 26 | bonnes réponses A/B/C/D = 7/8/7/8 (écart max 1) et d[r] vide partout | ✅ |
+| 27 | 6 questions illustrées, fichiers présents sur le disque | ✅ |
+| 28 | gabarit maison complet : 4 options, 4 réfutations, explication, exemple, erreur, à retenir | ✅ |
+| 29 | parcours complet 30 / 30 joué → note 20,0 /20, bilan sur 2 compétences | ✅ |
+| 29 bis | parcours « 10 questions » réussi : « 10 / 10 réussies » et « 10 / 30 questions travaillées », aucune note sur 20 (pas de 6,7 /20) | ✅ |
+| 30 | la clé localStorage du QCM est écrite | ✅ |
+| 31 | le lien de retour vers la séquence existe et pointe sur un fichier réel | ✅ |
+| 32 | aucune erreur JS sur le QCM | ✅ |
+
+## Historique
+
+### Ce que la suite éprouvait avant le 22/11/2026
 
 Ce lot ne vérifie pas des menus déroulants : il **lit le programme que l'élève a écrit**.
 

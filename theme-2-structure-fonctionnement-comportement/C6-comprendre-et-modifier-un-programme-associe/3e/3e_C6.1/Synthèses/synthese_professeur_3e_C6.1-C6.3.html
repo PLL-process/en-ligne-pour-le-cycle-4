@@ -77,11 +77,11 @@
 <h2 style="margin-top:0">Réponses complètes attendues</h2>
 <table>
 <tr><th>Act.</th><th>Réponses</th></tr>
-<tr><td>1</td><td>utilisée · utilisée · produite · produite · utilisée · produite ; vent lu ligne 6 ; message fabriqué ligne 21.</td></tr>
-<tr><td>2</td><td>A : rouge, True. B : rouge — 118 &gt; 118 faux (opérateur strict), 118 &gt; 90 vrai. Justification citant le &gt; strict.</td></tr>
-<tr><td>3</td><td>Ligne 2 → <code>SEUIL_ORANGE = 60</code> (vérifié dans CodeLab) ; 55 → verte/jaune ; intérêt des constantes : un seul point de modification.</td></tr>
-<tr><td>4</td><td>4 ajouts : init False · True en violette ET orange (pas rouge !) · bloc final indenté. Le vérificateur analyse le code de l'élève et liste ce qui manque.</td></tr>
-<tr><td>5</td><td>55 verte/jaune · 60 verte/jaune (frontière) · 61 orange+gyro · 118 rouge+sirène · 119 violette+les deux ; bug = &gt;= au lieu de &gt; ; frontières = seuls points discriminants.</td></tr>
+<tr><td>1</td><td>vent_kmh : mesure · SEUIL_OURAGAN : paramètre · vigilance, sirene_active, message : produites · pression_hpa : mesure, qu'aucun test ne compare ; la ligne 21 relit vigilance pour fabriquer le message ; vent lu ligne 6 ; message fabriqué ligne 21 (dans la version 1 d'origine, affichée figée : ses numéros ne bougent pas).</td></tr>
+<tr><td>2</td><td>A : rouge, True. B : rouge — 118 &gt; 118 faux (opérateur strict), 118 &gt; 90 vrai. Justification écrite, relue par l'enseignant : toute phrase qui dit quel test est faux et lequel est vrai ensuite est juste (« 118 ne dépasse pas 118 ; il dépasse 90 »). Aucun mot-clé n'est exigé par la page. Après « Vérifier », le chemin suivi pas à pas (95, 117, 118, 119).</td></tr>
+<tr><td>3</td><td>Ligne 2 → <code>SEUIL_ORANGE = 60</code> : la page EXÉCUTE le programme et lit la valeur (60.5 est refusé), puis vérifie « Vigilance verte » à 55 km/h et « Vigilance orange » à 61 ; 55 → « Vigilance verte », sirène arrêtée (version 1 recalibrée, pas encore de gyrophare) ; intérêt des constantes : un seul point de modification.</td></tr>
+<tr><td>4</td><td>4 ajouts : init False · True en violette ET orange (pas rouge !) · bloc final indenté. Le banc d'essai exécute le programme de l'élève sur 10 vents (55, 59, 60, 61, 89, 90, 91, 117, 118, 119) et compare message, sirène et gyrophare au cahier des charges de la version 2 : 10 / 10 exigé. Il nomme le premier écart (« 118 km/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu ») sans dire la ligne à corriger, et montre le chemin suivi. Une écriture équivalente (apostrophes, <code>== True</code>) obtient le même verdict.</td></tr>
+<tr><td>5</td><td>Prévisions d'après le cahier des charges : 55 verte · 60 verte (frontière) · 61 orange, gyrophare seul · 90 orange (frontière) · 118 rouge, sirène seule · 119 violette, les deux. Essais : le banc exécute la version ACTUELLE de l'élève ; un essai porte l'empreinte de la version essayée et devient « à rejouer » si le programme change. Diagnostic : la copie B a écrit &gt;= 118 ; frontières = seuls points discriminants (119 ne voit pas l'erreur).</td></tr>
 <tr><td>R</td><td>utilisée · produite · vert (4.0 &gt; 4 faux) · ligne 1 · 2,9/3,0/3,1 · un elif intermédiaire testé après le cas le plus fort.</td></tr>
 </table>
 </div>
@@ -93,7 +93,7 @@
 <tr><td>&gt; lu comme ≥ (frontières)</td><td>Rituel : « 5 &gt; 5, vrai ou faux ? » à l'oral ; revenir à la droite graduée.</td></tr>
 <tr><td>elif : plusieurs branches « actives »</td><td>Jeu de rôle : 3 élèves-tests en file, le premier qui dit OUI ferme la porte aux suivants.</td></tr>
 <tr><td>Indentation perçue comme décorative</td><td>Démonstration au vidéoprojecteur : désindenter gyrophare_actif = True et tracer — gyrophare toujours allumé.</td></tr>
-<tr><td>Vérificateur act. 4 : « il manque… »</td><td>Le message liste précisément l'ajout manquant : apprendre à le LIRE (comme un message d'erreur Python).</td></tr>
+<tr><td>Banc act. 4 : « premier écart… »</td><td>Le message nomme le vent, l'attendu et l'obtenu, ou l'erreur Python et sa ligne : apprendre à le LIRE, puis ouvrir le chemin suivi à ce vent avant de corriger.</td></tr>
 <tr><td>Élèves rapides</td><td>Bonus Python réel (input/print), défi pression (condition croisée), transposition mBot2.</td></tr>
 </table>
 </div>
@@ -101,9 +101,9 @@
 <div class="bloc">
 <h2 style="margin-top:0">CodeLab, versions, évaluation</h2>
 <ul>
-<li><b>CodeLab Techno</b> : coloration Python, gutter synchronisé, A−/A+, retour à la ligne, plein écran, export .py, import, sauvegarde locale auto, surlignage de lignes piloté par les consignes, comparaison avec la version d'origine. Conforme au standard du projet — réutilisable par les autres thèmes.</li>
-<li><b>Versions :</b> 🅰 maquette Arduino/Grove (potentiomètre = vent, buzzer = sirène, <abbr class="sigle" title="Light-Emitting Diode, diode électroluminescente" tabindex="0">LED</abbr> = gyrophare) ; 🅱 VittaScience/mBlock ; 🅲 complète dans la page (CodeLab + plan de tests à la main).</li>
-<li><b>Évaluation :</b> vérificateurs intégrés (dont l'analyse du code réel de l'élève en act. 3-4) ; QCM (questionnaire à choix multiples) 30 q (15/15) → <abbr class="sigle" title="livret scolaire unique" tabindex="0">LSU</abbr> ; sommative à construire, corrigé non publié.</li>
+<li><b>CodeLab Techno</b> : coloration Python, gutter synchronisé, A−/A+, retour à la ligne, plein écran, export .py, import, sauvegarde locale auto, surlignage de lignes piloté par les consignes, version affichée en permanence, différences + / − avec la version 1. Conforme au standard du projet — réutilisable par les autres thèmes.</li>
+<li><b>Versions :</b> 🅰 maquette Arduino/Grove (potentiomètre = vent, buzzer = sirène, <abbr class="sigle" title="Light-Emitting Diode, diode électroluminescente" tabindex="0">LED</abbr> = gyrophare) ; 🅱 VittaScience/mBlock ; 🅲 complète dans la page (CodeLab + banc d'essai + plan de tests à la main).</li>
+<li><b>Évaluation :</b> vérificateurs intégrés, dont l'exécution du programme de l'élève sur 10 vents (act. 3 à 5, petit Python « banc-python »), un essai périmé par toute modification ; QCM (questionnaire à choix multiples) 30 q (15/15) → <abbr class="sigle" title="livret scolaire unique" tabindex="0">LSU</abbr> ; sommative à construire, corrigé non publié.</li>
 <li><b>Prolongements :</b> 3e_C9 (écrire un programme complet, Thème 3 — signalé à l'agent concerné) ; <abbr class="sigle" title="enseignement pratique interdisciplinaire" tabindex="0">EPI</abbr> maths (inéquations, intervalles).</li>
 </ul>
 </div>
