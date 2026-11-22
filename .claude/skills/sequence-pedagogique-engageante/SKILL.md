@@ -11,6 +11,14 @@ la fin des vagues « onglets + volet » et D6 obligatoire.
 Le journal fait foi (règle d'or n°10). Pour le texte complet d'une règle, chercher « Règle d'or n°NNN » dans
 `JOURNAL_DES_DECISIONS.md`. Ce skill fixe la forme. Le fond pédagogique reste la décision de Pascal.
 
+## Avant d'écrire : les sept clés de voûte (21/11/2026)
+
+Cadrer la séquence en une ligne par clé, puis la valider avec la checklist et la grille sur 100 du skill
+`cadrage-cles-de-voute` : squelette (n°306) · rappel avant d'exiger (n°87, n°311) · trois lignes (n°337) · une
+question se lit seule (n°343) · choisir n'est pas expliquer (n°346, tâche finale : skill `tache-finale-redigee`) · un
+score dit quoi reprendre (n°347) · le document parle la langue du cours (n°348). Avant livraison, une page à boutons
+radio passe `_outils/eleve_qui_ne_lit_pas.py` (n°360, skill `eleve-qui-ne-lit-pas`).
+
 ## Référence
 
 - **Squelette** : règle d'or n°306 (22/09/2026), amendée par la n°311 (22/10/2026). On le vérifie à l'écran avec

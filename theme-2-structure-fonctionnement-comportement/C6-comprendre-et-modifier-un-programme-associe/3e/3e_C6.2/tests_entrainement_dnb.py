@@ -141,6 +141,17 @@ with sync_playwright() as p:
     t("choisir toujours la proposition la plus longue ne valide aucune manche", jouer(longue) == 0)
     t("répondre toujours à la même place ne valide aucune manche",
       all(jouer(lambda v, k=k: v[k]) == 0 for k in range(4)))
+    # l'outil commun de la règle n°360 (21/11/2026) : huit stratégies, contexte à part
+    sys.path.insert(0, str(ICI.parents[3] / "_outils"))
+    from eleve_qui_ne_lit_pas import mesurer
+    cx = nav.new_context()
+    pm = cx.new_page()
+    pm.goto(URL)
+    pm.wait_for_timeout(300)
+    m360 = mesurer(pm)
+    cx.close()
+    t("outil commun n°360 : aucune des huit stratégies sans lecture ne valide une manche",
+      m360["lu"] and not m360["validations"], m360.get("validations") or m360.get("raison"))
 
     # ── une manche parfaite ──
     pg.evaluate("localStorage.clear()")
