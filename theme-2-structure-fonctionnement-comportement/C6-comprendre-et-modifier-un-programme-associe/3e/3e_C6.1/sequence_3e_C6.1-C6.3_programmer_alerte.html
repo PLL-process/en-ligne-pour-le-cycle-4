@@ -150,7 +150,7 @@
   .cl-miroir-tete b{color:var(--hl)}
   .cl-miroir-tete button{margin-left:auto;background:#173666;border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:5px 11px;font-size:.95em;cursor:pointer;font-family:inherit;min-height:36px}
   .cl-miroir pre{margin:0;padding:10px 12px;max-height:min(42vh,380px);overflow:auto;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.86em;line-height:1.5;color:#d7e6ff;white-space:pre}
-  .cl-miroir .cl-n{display:inline-block;min-width:2.2em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none}
+  .cl-miroir .cl-n{display:inline-block;min-width:2.2em;margin-right:10px;text-align:right;color:#7f9bd0;user-select:none}
   .codelab-ici:has(.codelab) .cl-miroir{display:none}
   #codelab-ailleurs{display:none;margin:8px 0;padding:10px 12px;border:1px dashed var(--border);border-radius:10px;font-size:.9em;color:var(--sub)}
   #codelab-ailleurs button{margin-left:6px}
@@ -180,7 +180,7 @@
   .cl-tools button,.cl-tools label{background:#173666;border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:4px 10px;font-size:.78em;cursor:pointer;font-family:inherit}
   .cl-tools button:hover{background:#1d4e89}
   .cl-body{display:flex;max-height:430px;overflow:auto;position:relative}
-  .cl-gutter{user-select:none;text-align:right;padding:12px 8px 12px 12px;color:#5b7bb8;background:#0a1b3d;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;border-right:1px solid var(--border)}
+  .cl-gutter{user-select:none;text-align:right;padding:12px 8px 12px 12px;color:#7f9bd0;background:#0a1b3d;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;border-right:1px solid var(--border)}
   .cl-gutter .cl-ln-hl{background:rgba(255,214,102,.25);color:#ffd66b;display:block;border-radius:3px}
   .cl-editwrap{position:relative;flex:1;min-width:0}
   .cl-hl,.cl-ta{margin:0;padding:12px 14px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;tab-size:4;min-height:100%;box-sizing:border-box}
@@ -1706,6 +1706,12 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 })();
 </script>
 <!-- mode-mission v1 : fin -->
+<style>
+/* Ce qui défile est caché (règle d'or n°364, 21/11/2026) : sur un téléphone, un listing à lire revient à la ligne
+   au lieu de défiler. Aucun caractère n'est changé : le code copié reste le même. Le calque coloré d'un éditeur
+   (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */
+@media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
@@ -2830,7 +2836,7 @@ document.querySelectorAll("[data-hl]").forEach(b=>{
   ICI.forEach(z => {
     const m = document.createElement("div"); m.className = "cl-miroir";
     m.innerHTML = '<div class="cl-miroir-tete"><b>⌨ Le programme de la station</b><span>— ta version, telle qu\'elle est</span>'
-      + '<button type="button" class="cl-amener">✏️ Modifier ici</button></div><pre></pre>';
+      + '<button type="button" class="cl-amener">✏️ Modifier ici</button></div><pre tabindex="0" aria-label="Le programme de la station, ta version"></pre>';
     z.appendChild(m);
     m.querySelector(".cl-amener").addEventListener("click", () => { placer(z); ta.focus({preventScroll:true}); });
   });

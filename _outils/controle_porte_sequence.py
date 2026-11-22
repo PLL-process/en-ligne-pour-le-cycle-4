@@ -8,14 +8,19 @@ aucune page de cette séquence ne le reliait : on n'y arrivait que par l'index d
 20/11/2026 ; lien posé par la PR #841). `controle_atteignabilite.py` le disait atteignable, et il l'était — depuis
 l'accueil. Mais l'élève travaille dans sa séquence, pas dans l'index ; et le 08/11/2026 Pascal disait ne plus
 retrouver le TP des variables (`3e_C9.1/vittascience_variables.html`) : il n'est relié par aucune page de sa séquence.
-Mesuré le 21/11/2026 sur `main` (d7dc83c) : 14 ateliers, TP ou activités dans un dossier de séquence, qu'aucune page
-`sequence*.html` du dossier ne relie.
+Mesuré le 21/11/2026 sur `main` (d7dc83c) : 14 pages. **Corrigé le 21/11/2026 au soir** : 11 étaient de faux positifs.
+Dix sont des PAGES-POINTEURS (n°83) : une carte et un bouton vers l'atelier commun (`ateliers-representations/…`,
+`atelier-planification/…`), atelier que la séquence relie déjà ou incruste ; une est un renvoi (« Ressource déplacée » :
+le TP des variables de 3e_C9.1 a été refondu DANS sa séquence). Restent 3 pages vraiment sans porte.
 
 LA RÈGLE
 --------
 Une page d'élève rangée dans le dossier d'une séquence (atelier, TP, activité) s'ouvre depuis cette séquence : un lien
 (`href`) ou un cadre (`src`) dans une page `sequence*.html` du même dossier, à l'endroit où elle sert. L'index peut la
 lister en plus ; il ne la remplace pas.
+
+Une page-pointeur a sa porte quand la séquence relie la page que vise son bouton (`class="btn"`). Un renvoi (page
+« déplacée » ou « refondue », ou `<meta http-equiv="refresh">`) n'en demande pas : il ne fait que renvoyer.
 
 CE QU'IL LIT
 ------------
@@ -41,21 +46,36 @@ HORS_PORTE = re.compile(r"^(qcm|lexique|fiche|rapport|evaluation)|synthese", re.
 
 #: pages sans porte relevées le 21/11/2026 (main d7dc83c) — ne peut que rétrécir (n°273).
 REFERENCE = {
+    # relevées le 21/11/2026, triées le même soir (11 faux positifs retirés) — ne peut que rétrécir (n°273).
+    # Ajouter ces pages à leur séquence est un choix pédagogique : question posée à Pascal le 21/11/2026.
     "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/activite_crcn_donnees_freinage_5e_C1.2.html",
-    "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/atelier_diagramme_fast.html",
-    "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/3e/3e_C2.1/atelier_diagramme_cas_utilisation.html",
-    "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/atelier_croquis.html",
     "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/atelier_diagramme_cas_utilisation.html",
     "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/5e/5e_C2.1/atelier_diagramme_cas_utilisation.html",
-    "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/5e/5e_C2.1/atelier_diagramme_pieuvre.html",
-    "theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/3e/3e_C3.1/atelier_bete_a_cornes.html",
-    "theme-1-objets-systemes-usages-interactions/C3-caracteriser-et-choisir-un-objet-ou-un/4e/4e_C3.1/atelier_bete_a_cornes.html",
-    "theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/atelier_diagramme_fast.html",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/atelier_C7.1_planification_taches.html",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/4e/4e_C7.1/atelier_C7.1_planification_taches.html",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/5e/5e_C7.1/atelier_C7.1_planification_taches.html",
-    "theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.1/vittascience_variables.html",
 }
+
+
+RENVOI = re.compile(r"http-equiv\s*=\s*[\"']refresh|Ressource\s+d[ée]plac[ée]e|a\s+[ée]t[ée]\s+refondue", re.I)
+
+
+def liens(chemin, texte=None):
+    """Les chemins (normalisés) que la page relie par `href` ou `src`."""
+    if texte is None:
+        texte = open(chemin, encoding="utf-8", errors="replace").read()
+    d = os.path.dirname(chemin)
+    return {os.path.normpath(os.path.join(d, h)) for h in re.findall(r"""(?:href|src)\s*=\s*["']([^"'#?]+)""", texte)
+            if not h.startswith(("http:", "https:", "mailto:", "data:", "javascript:", "//"))}
+
+
+def boutons(chemin, texte):
+    """Les pages que visent les boutons (`class="btn"`) d'une page-pointeur."""
+    d = os.path.dirname(chemin)
+    cibles = set()
+    for balise in re.findall(r"<a\b[^>]*>", texte):
+        if re.search(r"""class\s*=\s*["'][^"']*\bbtn\b""", balise):
+            m = re.search(r"""href\s*=\s*["']([^"'#?]+)""", balise)
+            if m:
+                cibles.add(os.path.normpath(os.path.join(d, m.group(1))))
+    return cibles
 
 
 def mesurer(racine=RACINE):
@@ -69,11 +89,19 @@ def mesurer(racine=RACINE):
                 continue
             dossiers += 1
             texte = "".join(open(os.path.join(dossier, s), encoding="utf-8", errors="replace").read() for s in sequences)
+            relies = set().union(*(liens(os.path.join(dossier, s)) for s in sequences))
             for nom in pages:
                 if nom in sequences or HORS_PORTE.search(nom):
                     continue
-                if not re.search(r"""(?:href|src)\s*=\s*["'](?:\./)?""" + re.escape(nom) + r"""(?:[#?"'])""", texte):
-                    sans_porte.append(os.path.relpath(os.path.join(dossier, nom), racine).replace(os.sep, "/"))
+                if re.search(r"""(?:href|src)\s*=\s*["'](?:\./)?""" + re.escape(nom) + r"""(?:[#?"'])""", texte):
+                    continue
+                chemin = os.path.join(dossier, nom)
+                page = open(chemin, encoding="utf-8", errors="replace").read()
+                if RENVOI.search(page):
+                    continue                                   # un renvoi ne demande pas de porte
+                if boutons(chemin, page) & relies:
+                    continue                                   # page-pointeur : la séquence relie déjà ce qu'elle vise
+                sans_porte.append(os.path.relpath(chemin, racine).replace(os.sep, "/"))
     return dossiers, sans_porte
 
 

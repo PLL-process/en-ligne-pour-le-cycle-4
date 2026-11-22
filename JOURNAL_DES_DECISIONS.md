@@ -53,9 +53,9 @@
 | 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure : 24 listings dans 8 pages au 21/11) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
-| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 14 pages au 21/11) |
+| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 3 pages — 11 faux positifs retirés le 21/11 au soir : pages-pointeurs et renvoi), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
@@ -35674,3 +35674,40 @@ partout : ce qui pesait, c'était surtout **les exercices d'atelier incrustés**
 Mode mission joué sur les 14 : aucun refus, écrans identiques avant et après (les incrustations n'y sont pas découpées).
 `incrustations.py --verifier` : tout à jour. `controle_squelette.mjs` vert ; `audit_aeration.py --strict` vert sur
 `3e_C1.1` ; `controle_question_seule.py --strict` : thème 1 à 0 refus.
+
+## 21/11/2026 — Vague n°364 et n°366, thème 2 : trois pages dont les listings ne défilent plus, et les deux contrôles corrigés (11 faux positifs pour la porte, les calques d'éditeur pour les listings)
+
+Carte blanche de Pascal (21/11, 23 h 45), après la fusion de la PR #850. Première vague des deux règles, par le thème 2
+(ses PR se fusionnent seules quand la garde est verte, n°5 amendée) ; les thèmes 3 et 1 suivent, une PR chacun.
+
+**Ce que la mesure avait de faux** — corrigé avant de corriger les pages :
+- **n°366, 14 pages sans porte → 3.** Dix étaient des pages-pointeurs (n°83) : une carte et un bouton vers l'atelier
+  commun (`ateliers-representations/…`, `atelier-planification/…`), que la séquence relie déjà ou incruste. La onzième,
+  `3e_C9.1/vittascience_variables.html`, est un renvoi « Ressource déplacée » : le TP des variables a été refondu DANS
+  sa séquence. **L'entrée de la n°366 citait ce TP comme exemple : c'était faux**, il a sa place dans la séquence. Le
+  contrôle reconnaît maintenant les pointeurs (le bouton `class="btn"` vise une page que la séquence relie) et les
+  renvois ; banc `_outils/tests_controle_porte_sequence.py` 5 / 5. **Restent 3 pages**, toutes du thème 1 :
+  `5e_C1.2/activite_crcn_donnees_freinage_5e_C1.2.html`, et les ateliers « cas d'utilisation » de `4e_C2.1` et
+  `5e_C2.1`. Les relier depuis leur séquence ajoute une activité à la séquence : choix pédagogique, question posée à
+  Pascal ; elles restent dans la référence.
+- **n°364, 24 listings → 21.** Trois étaient le calque coloré d'un éditeur intégré (`pre.cl-hl` de 3e_C6.1, caché aux
+  lecteurs d'écran ; `pre.editeur-py-couleurs` de 4e_C6.2), posé sur sa zone de saisie et qui défile avec elle : un
+  éditeur, pas un listing à lire. `controle_page_ouverte.mjs` les écarte ; banc 11 / 11 (cas ajouté).
+
+**Corrigé dans le thème 2** (5 listings, 3 pages) : `3e_C6.1` (le programme d'origine, les deux listings miroirs
+numérotés), `4e_C6.2` (le listing de l'activité Python), `4e_C4.1/atelier_pix_crcn_jardin.html` (le pseudo-code à
+compléter). Sur un écran de 600 px ou moins, un listing à lire **revient à la ligne au lieu de défiler**
+(`white-space: pre-wrap`) : aucun caractère n'est changé, le code copié reste le même ; les calques d'éditeur gardent
+leurs lignes. Couper une instruction Python à la main aurait changé le programme que l'élève recopie : le retour à la
+ligne visuel est la coupe « là où le sens le permet » d'un listing qu'on exécute. Mesure après : 0 listing qui défile
+dans ces trois pages ; 16 restent, dans 5 pages des thèmes 3 et 1.
+
+**Vu en chemin, dans la même page** (`3e_C6.1`, accessibilité) : les deux listings miroirs défilaient sans être
+atteignables au clavier (axe `scrollable-region-focusable`, déjà rouge sur `main`) → `tabindex="0"` et un nom ; les
+numéros de ligne étaient à 4,4 : 1 sur leur fond (`color-contrast`, 29 nœuds contre 11 dans la référence, déjà rouge
+sur `main`) → #7f9bd0, 6,6 : 1. `controle_axe.mjs` sur la page : vert.
+
+Contrôles : `tests_3e_C6.1-C6.3.mjs` 35 / 35, `tests_regle_311_3e_C6.1.mjs` 34 / 34, `tests_4e_C6.2.mjs` 56 / 56,
+`tests_regle_311_4e_C6.2.mjs` 34 / 34, `tests_tp_algorigrammes_4e_C6.2.mjs` 31 / 31 ; `controle_impression`,
+`controle_squelette`, `controle_code_colore` sur les trois dossiers : 0 ; `controle_page_ouverte.mjs` sur les trois :
+L 0, B 0, C 0 ; listings regardés à 390 px. Non vérifié : un vrai téléphone.
