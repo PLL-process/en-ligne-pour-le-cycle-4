@@ -2751,6 +2751,51 @@ Fin du programme.</code></pre>
 
   </section>
 <section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" data-titre="Séance 2 — Mes données">
+<section class="section panel reprise" data-reprise id="reprise-s2">
+  <h2>🔁 Reprise — sans regarder, retrouve</h2>
+  <p class="consigne">1. Réponds de mémoire, sans ouvrir les séances d'avant.<br>2. Clique sur « Vérifier ma reprise ».<br>3. Si tu t'es trompé·e, relis la séance indiquée.</p>
+  <p class="note">Quelques minutes, sans note : ce qu'on retrouve seul·e tient longtemps.</p>
+  <fieldset class="reprise-q" id="rep2_1" data-bonne="ton compte, qu&#x27;elle veut ouvrir" data-seance="1">
+  <legend>1. Un message te demande de « confirmer ton mot de passe » sur une fausse page de connexion. Quelle est la cible de cette attaque ? <span class="note">(séance 1)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep2_1" id="rep2_1__1" value="tes fichiers, qu&#x27;elle veut bloquer" data-pourquoi="Bloquer des fichiers pour une rançon, c&#x27;est le rançongiciel. Ici, on te demande ton mot de passe : c&#x27;est ton compte qui est visé."><label for="rep2_1__1">tes fichiers, qu&#x27;elle veut bloquer</label></div>
+  <div class="qcm-option"><input type="radio" name="rep2_1" id="rep2_1__2" value="ton compte, qu&#x27;elle veut ouvrir"><label for="rep2_1__2">ton compte, qu&#x27;elle veut ouvrir</label></div>
+  <div class="qcm-option"><input type="radio" name="rep2_1" id="rep2_1__3" value="le serveur du collège, qu&#x27;elle veut saturer" data-pourquoi="Saturer un serveur, c&#x27;est l&#x27;attaque par déni de service. Ici, la fausse page vise ton compte."><label for="rep2_1__3">le serveur du collège, qu&#x27;elle veut saturer</label></div>
+  <div class="qcm-option"><input type="radio" name="rep2_1" id="rep2_1__4" value="ton clavier, qu&#x27;elle veut écouter" data-pourquoi="Écouter le clavier, c&#x27;est l&#x27;enregistreur de frappe, un logiciel caché sur l&#x27;ordinateur. Ici, c&#x27;est une fausse page qui te demande ton mot de passe."><label for="rep2_1__4">ton clavier, qu&#x27;elle veut écouter</label></div>
+  </fieldset>
+  <fieldset class="reprise-q" id="rep2_2" data-bonne="contre un programme installé à ton insu" data-seance="1">
+  <legend>2. Un logiciel caché enregistre tout ce que tu tapes au clavier. Contre quoi faut-il d&#x27;abord se protéger ? <span class="note">(séance 1)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep2_2" id="rep2_2__1" value="contre un appel inconnu sur ton téléphone" data-pourquoi="L&#x27;attaque est déjà dans l&#x27;ordinateur : un appel n&#x27;a rien à voir avec le clavier."><label for="rep2_2__1">contre un appel inconnu sur ton téléphone</label></div>
+  <div class="qcm-option"><input type="radio" name="rep2_2" id="rep2_2__2" value="contre une personne qui regarde ton écran" data-pourquoi="Regarder par-dessus l&#x27;épaule existe, mais ici c&#x27;est un logiciel qui enregistre les touches."><label for="rep2_2__2">contre une personne qui regarde ton écran</label></div>
+  <div class="qcm-option"><input type="radio" name="rep2_2" id="rep2_2__3" value="contre une panne du clavier lui-même" data-pourquoi="Le clavier marche très bien : c&#x27;est ce qu&#x27;on tape qui est copié en secret."><label for="rep2_2__3">contre une panne du clavier lui-même</label></div>
+  <div class="qcm-option"><input type="radio" name="rep2_2" id="rep2_2__4" value="contre un programme installé à ton insu"><label for="rep2_2__4">contre un programme installé à ton insu</label></div>
+  </fieldset>
+  <button class="btn btn-secondary" type="button" onclick="repriseVerifier('reprise-s2')">Vérifier ma reprise</button>
+  <div class="reprise-retour" role="status" aria-live="polite"></div>
+</section>
+<style>
+/* Reprise (n°369) : même lecture que les questions de la page, sans bord coupé par une légende sur deux lignes. */
+fieldset.reprise-q{border:0;padding:0;margin:0 0 14px;min-width:0}
+fieldset.reprise-q>legend{display:block;width:100%;float:none;padding:0;margin:0 0 6px;font-weight:600}
+fieldset.reprise-q>.qcm-option:has(input:checked){border-color:var(--hl,#61dafb);background:rgba(97,218,251,.10)}
+@media print{fieldset.reprise-q>legend{color:#111!important}}
+</style>
+<script>
+/* Règle d'or n°369 (en essai, pilote du 22/11/2026) : la reprise se coche « faite », elle ne valide rien (n°340). */
+window.repriseVerifier = window.repriseVerifier || function(id){
+  var bloc = document.getElementById(id); if (!bloc) return;
+  var qs = bloc.querySelectorAll("fieldset.reprise-q"), ok = 0, vides = 0, html = [];
+  for (var i = 0; i < qs.length; i++){
+    var f = qs[i], c = f.querySelector("input:checked"), n = i + 1;
+    if (!c){ vides++; html.push("<li>" + n + ". Pas encore répondu.</li>"); continue; }
+    if (c.value === f.getAttribute("data-bonne")){ ok++; html.push("<li>✔ " + n + ". Retrouvé.</li>"); }
+    else html.push("<li>✘ " + n + ". " + c.getAttribute("data-pourquoi") + " Relis la séance " + f.getAttribute("data-seance") + ".</li>");
+  }
+  var tete = vides ? "Réponds à toutes les questions, puis vérifie." :
+    "Reprise faite : " + ok + " sur " + qs.length + " retrouvée" + (ok > 1 ? "s" : "") + " de mémoire. Ce n'est pas une note.";
+  bloc.querySelector(".reprise-retour").innerHTML = "<p><b>" + tete + "</b></p><ul>" + html.join("") + "</ul>";
+};
+</script>
+
 <!-- 3. Données personnelles -->
   <div class="section panel activite" id="sec3">
     <h2 id="bloc3-donnee-personnelle">🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="sc3">0</span>/<span id="scm3">…</span></span></h2>
@@ -3166,6 +3211,35 @@ Fin du programme.</code></pre>
 <p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Mes traces ›</button></p>
   </section>
 <section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Mes traces">
+<section class="section panel reprise" data-reprise id="reprise-s3">
+  <h2>🔁 Reprise — sans regarder, retrouve</h2>
+  <p class="consigne">1. Réponds de mémoire, sans ouvrir les séances d'avant.<br>2. Clique sur « Vérifier ma reprise ».<br>3. Si tu t'es trompé·e, relis la séance indiquée.</p>
+  <p class="note">Quelques minutes, sans note : ce qu'on retrouve seul·e tient longtemps.</p>
+  <fieldset class="reprise-q" id="rep3_1" data-bonne="ta religion" data-seance="2">
+  <legend>1. Laquelle de ces informations est une donnée sensible, la plus protégée par la loi ? <span class="note">(séance 2)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep3_1" id="rep3_1__1" value="ta pointure" data-pourquoi="La pointure ne dit presque rien de toi : la loi ne la range pas parmi les données sensibles."><label for="rep3_1__1">ta pointure</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_1" id="rep3_1__2" value="ta religion"><label for="rep3_1__2">ta religion</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_1" id="rep3_1__3" value="ton film préféré" data-pourquoi="Un goût pour un film ne te désigne pas et n&#x27;est pas protégé à part : ce n&#x27;est pas une donnée sensible."><label for="rep3_1__3">ton film préféré</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_1" id="rep3_1__4" value="l&#x27;heure de ton réveil" data-pourquoi="Une habitude de réveil n&#x27;est pas une donnée sensible : les données sensibles parlent de santé, d&#x27;opinions, de religion."><label for="rep3_1__4">l&#x27;heure de ton réveil</label></div>
+  </fieldset>
+  <fieldset class="reprise-q" id="rep3_2" data-bonne="la sauvegarde" data-seance="2">
+  <legend>2. Ton ordinateur tombe en panne et tous tes fichiers sont perdus. Quelle protection, faite avant, te permet de les retrouver ? <span class="note">(séance 2)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep3_2" id="rep3_2__1" value="la sauvegarde"><label for="rep3_2__1">la sauvegarde</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_2" id="rep3_2__2" value="l&#x27;antivirus" data-pourquoi="L&#x27;antivirus agit pendant : il repère un logiciel malveillant. Il ne remet pas en place des fichiers perdus."><label for="rep3_2__2">l&#x27;antivirus</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_2" id="rep3_2__3" value="un mot de passe long" data-pourquoi="Un mot de passe protège l&#x27;accès au compte. Il ne recopie pas tes fichiers ailleurs."><label for="rep3_2__3">un mot de passe long</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_2" id="rep3_2__4" value="la validation en deux étapes" data-pourquoi="La validation en deux étapes protège la connexion. Elle ne garde aucune copie de tes fichiers."><label for="rep3_2__4">la validation en deux étapes</label></div>
+  </fieldset>
+  <fieldset class="reprise-q" id="rep3_3" data-bonne="tes fichiers" data-seance="1">
+  <legend>3. Un rançongiciel bloque des documents et demande de l&#x27;argent pour les rendre. Quelle est sa cible ? <span class="note">(séance 1)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep3_3" id="rep3_3__1" value="ton compte" data-pourquoi="Le compte, c&#x27;est la cible de l&#x27;hameçonnage. Le rançongiciel, lui, chiffre des fichiers."><label for="rep3_3__1">ton compte</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_3" id="rep3_3__2" value="tes fichiers"><label for="rep3_3__2">tes fichiers</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_3" id="rep3_3__3" value="ton clavier" data-pourquoi="Le clavier, c&#x27;est la cible de l&#x27;enregistreur de frappe."><label for="rep3_3__3">ton clavier</label></div>
+  <div class="qcm-option"><input type="radio" name="rep3_3" id="rep3_3__4" value="un serveur" data-pourquoi="Saturer un serveur, c&#x27;est le déni de service, pas le rançongiciel."><label for="rep3_3__4">un serveur</label></div>
+  </fieldset>
+  <button class="btn btn-secondary" type="button" onclick="repriseVerifier('reprise-s3')">Vérifier ma reprise</button>
+  <div class="reprise-retour" role="status" aria-live="polite"></div>
+</section>
+
 <!-- 5. Limiter ses traces en ligne -->
   <div class="section panel activite" id="sec5">
     <h2 id="bloc5-traces">🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="sc5">0</span>/<span id="scm5">…</span></span></h2>
@@ -3342,6 +3416,28 @@ Fin du programme.</code></pre>
 <!-- Séance 4 (14/11/2026, décision de Pascal : « créer une séance 4 ») : la séance 3 portait deux sections et la clôture
      (1 350 mots visibles). La section 6 et la clôture viennent ici, déplacées sans être réécrites. -->
 <section class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4" data-titre="Séance 4 — Ma réputation">
+<section class="section panel reprise" data-reprise id="reprise-s4">
+  <h2>🔁 Reprise — sans regarder, retrouve</h2>
+  <p class="consigne">1. Réponds de mémoire, sans ouvrir les séances d'avant.<br>2. Clique sur « Vérifier ma reprise ».<br>3. Si tu t'es trompé·e, relis la séance indiquée.</p>
+  <p class="note">Quelques minutes, sans note : ce qu'on retrouve seul·e tient longtemps.</p>
+  <fieldset class="reprise-q" id="rep4_1" data-bonne="ton historique, aux autres sur l&#x27;appareil" data-seance="3">
+  <legend>1. La navigation privée cache quelque chose. Quoi, et à qui ? <span class="note">(séance 3)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep4_1" id="rep4_1__1" value="ton adresse, à ton fournisseur d&#x27;accès" data-pourquoi="Ton fournisseur d&#x27;accès voit toujours ton adresse, même en navigation privée."><label for="rep4_1__1">ton adresse, à ton fournisseur d&#x27;accès</label></div>
+  <div class="qcm-option"><input type="radio" name="rep4_1" id="rep4_1__2" value="ton identité, au site où tu te connectes avec ton compte" data-pourquoi="Connecté à ton compte, le site sait que c&#x27;est toi, en navigation privée aussi."><label for="rep4_1__2">ton identité, au site où tu te connectes avec ton compte</label></div>
+  <div class="qcm-option"><input type="radio" name="rep4_1" id="rep4_1__3" value="tout ce que tu fais, à tout le monde" data-pourquoi="Aucun outil ne cache tout à tout le monde : c&#x27;est ce que retient la séance 3."><label for="rep4_1__3">tout ce que tu fais, à tout le monde</label></div>
+  <div class="qcm-option"><input type="radio" name="rep4_1" id="rep4_1__4" value="ton historique, aux autres sur l&#x27;appareil"><label for="rep4_1__4">ton historique, aux autres sur l&#x27;appareil</label></div>
+  </fieldset>
+  <fieldset class="reprise-q" id="rep4_2" data-bonne="pendant, en repérant le logiciel" data-seance="2">
+  <legend>2. L&#x27;antivirus agit-il avant, pendant ou après une attaque ? <span class="note">(séance 2)</span></legend>
+  <div class="qcm-option"><input type="radio" name="rep4_2" id="rep4_2__1" value="avant, comme un mot de passe" data-pourquoi="Avant, ce sont le mot de passe, la validation en deux étapes et les mises à jour."><label for="rep4_2__1">avant, comme un mot de passe</label></div>
+  <div class="qcm-option"><input type="radio" name="rep4_2" id="rep4_2__2" value="pendant, en repérant le logiciel"><label for="rep4_2__2">pendant, en repérant le logiciel</label></div>
+  <div class="qcm-option"><input type="radio" name="rep4_2" id="rep4_2__3" value="après, comme une sauvegarde" data-pourquoi="Après, c&#x27;est la sauvegarde, qui permet de retrouver ce qui est perdu."><label for="rep4_2__3">après, comme une sauvegarde</label></div>
+  <div class="qcm-option"><input type="radio" name="rep4_2" id="rep4_2__4" value="jamais, il ne sert plus à rien du tout" data-pourquoi="L&#x27;antivirus sert toujours : il repère un logiciel malveillant pendant qu&#x27;il agit."><label for="rep4_2__4">jamais, il ne sert plus à rien du tout</label></div>
+  </fieldset>
+  <button class="btn btn-secondary" type="button" onclick="repriseVerifier('reprise-s4')">Vérifier ma reprise</button>
+  <div class="reprise-retour" role="status" aria-live="polite"></div>
+</section>
+
    <!-- 6. Propriété intellectuelle & e-réputation -->
   <div class="section panel activite" id="sec6">
     <h2 id="bloc6-propriete">⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="sc6">0</span>/<span id="scm6">…</span></span></h2>
@@ -3814,6 +3910,11 @@ Fin du programme.</code></pre>
   hypothèse&nbsp;: avais-tu pensé aux traces que tu laisses sans rien publier — cookies,
   géolocalisation, autorisations des applis&nbsp;? Qu'y ajouterais-tu aujourd'hui&nbsp;?</label>
   <textarea id="hyp_retour" style="width:100%;box-sizing:border-box;min-height:72px"></textarea>
+  <label class="response-label" for="flou" style="display:block">Ce qui reste flou pour moi, et quand je le
+  reprends (une séance, ou le QCM en mode « Mes erreurs »)&nbsp;:</label>
+  <textarea id="flou" data-flou style="width:100%;box-sizing:border-box;min-height:60px"
+  placeholder="Je ne sais pas encore … ; je le reprends …"></textarea>
+
   <script>
   /* Rappel de la réponse de départ (#pbm), au « load », après la reprise de la mémoire. */
   (function(){

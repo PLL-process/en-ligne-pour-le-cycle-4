@@ -43,8 +43,9 @@ import sys
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IGNORES = {".git", "node_modules", "_archive-anciennes-versions", "_outils", "_exports"}
 
-PANNEAU = re.compile(r'<div\b[^>]*\bclass="[^"]*\bseance-panel\b[^"]*"[^>]*\bid="s(\d+)"[^>]*>'
-                     r'|<div\b[^>]*\bid="s(\d+)"[^>]*\bclass="[^"]*\bseance-panel\b[^"]*"[^>]*>')
+#: un panneau de séance est un <div> OU une <section> (4e_C1.4, entre autres : vu au pilote du 22/11/2026)
+PANNEAU = re.compile(r'<(?:div|section)\b[^>]*\bclass="[^"]*\bseance-panel\b[^"]*"[^>]*\bid="s(\d+)"[^>]*>'
+                     r'|<(?:div|section)\b[^>]*\bid="s(\d+)"[^>]*\bclass="[^"]*\bseance-panel\b[^"]*"[^>]*>')
 REPRISE = re.compile(r'<(\w+)\b[^>]*\bdata-reprise\b[^>]*>')
 RAPPEL = re.compile(r'<details\b[^>]*\bclass="[^"]*\brappel-ouverture\b')
 QUESTION = re.compile(r'<fieldset\b|\bdata-question\b')

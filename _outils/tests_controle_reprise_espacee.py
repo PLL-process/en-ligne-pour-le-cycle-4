@@ -32,6 +32,8 @@ CAS = [
     ("deux séances, une seule reprise", P1 + s(2, REPRISE_OK) + s(3, "<p>x</p>") + BILAN_OK, 2, ["R1"], True),
     ("bilan sans « ce qui reste flou »", P1 + s(2, REPRISE_OK) + BILAN_SANS, 1, [], False),
     ("une seule séance : rien à exiger", P1 + BILAN_OK, 0, [], True),
+    ("panneaux en <section> (4e_C1.4)", P1.replace("<div", "<section").replace("</div>", "</section>")
+     + '<section class="seance-panel" id="s2" role="tabpanel">' + REPRISE_OK + "</section>" + BILAN_OK, 1, [], True),
 ]
 
 
