@@ -1,11 +1,12 @@
 /* tests_controle_page_ouverte.mjs — banc de `controle_page_ouverte.mjs` (règle d'or n°361).
  *
- * Six pages fabriquées dans un dossier temporaire, chacune pour une frontière :
+ * Sept pages fabriquées dans un dossier temporaire, chacune pour une frontière :
  *   propre      corrections différentes, listing court → rien ;
  *   crochet     corrections fabriquées par `window.__toutOuvrir()`, avec la même phrase et un bloc dessiné → B et C ;
  *   sans_crochet les mêmes corrections, sans crochet → rien (c'est la limite que le crochet lève) ;
  *   listing     une ligne de code de 120 caractères à 390 px → L ;
  *   repete      une ligne d'aide marquée `data-repete` dans chaque correction → rien ;
+ *   editeur     le calque coloré d'un éditeur intégré, 150 caractères → rien (il défile avec la saisie) ;
  *   details     trois <details> « Correction » qui répètent une phrase → C.
  * Puis : --strict sort à 1 quand il y a un écart, 0 sur la page propre.
  * Usage : node _outils/tests_controle_page_ouverte.mjs   · Sortie 0 / 1, 2 si le contrôle est en panne.
@@ -30,6 +31,7 @@ const pages = {
   sans_crochet: page('<div id="corr1" hidden></div><div id="qcorr2" hidden></div><div id="corrB" hidden></div>', `${fab};`),
   listing: page('<pre>' + 'valeur = lire_capteur(A0) * 100 / 1023 + correction_de_temperature(ambiante) - decalage_du_capteur_mesure * 2'.padEnd(120, ' ') + '</pre>'),
   repete: page(['a', 'b', 'c'].map((x, i) => `<details><summary>Correction</summary><p>Réponse ${i + 1}, propre à cet exercice numéro ${i + 1}.</p><p data-repete>Touche ou clique le schéma pour l'agrandir et voir tous ses détails dessinés.</p></details>`).join('')),
+  editeur: page('<div class="saisie"><textarea>' + 'x'.repeat(150) + '</textarea><pre aria-hidden="true">' + 'x'.repeat(150) + '</pre></div>'),
   details: page([1, 2, 3].map(i => `<details><summary>Correction ${i}</summary><p>Réponse ${i}.</p><p>${PHRASE}</p></details>`).join('')),
 };
 for (const [n, h] of Object.entries(pages)) fs.writeFileSync(path.join(D, `${n}.html`), h);
@@ -47,6 +49,7 @@ ok('crochet : le bloc dessiné par script est vu (B)', de('crochet').B.length ==
 ok('crochet : la phrase recopiée dans 3 corrections est vue (C)', de('crochet').C.some(c => c.fois === 3), JSON.stringify(de('crochet').C));
 ok('sans crochet : les corrections fabriquées par script restent invisibles (la limite que le crochet lève)', !de('sans_crochet').B.length && !de('sans_crochet').C.length);
 ok('listing de 120 caractères à 390 px : il défile (L)', de('listing').L.length === 1 && de('listing').L[0].px > 100, JSON.stringify(de('listing').L));
+ok('le calque coloré d\'un éditeur (aria-hidden, sur sa zone de saisie) n\'est pas compté comme listing', !de('editeur').L.length, JSON.stringify(de('editeur').L));
 ok('une ligne d\'aide marquée data-repete n\'est pas comptée', !de('repete').C.length, JSON.stringify(de('repete').C));
 ok('trois <details> « Correction » qui répètent une phrase : vus (C), sans compter leur intitulé', de('details').C.length === 1 && !/correction \d/.test(de('details').C[0].phrase), JSON.stringify(de('details').C));
 ok('mesure sans --strict : sortie 0', tout.code === 0, String(tout.code));
