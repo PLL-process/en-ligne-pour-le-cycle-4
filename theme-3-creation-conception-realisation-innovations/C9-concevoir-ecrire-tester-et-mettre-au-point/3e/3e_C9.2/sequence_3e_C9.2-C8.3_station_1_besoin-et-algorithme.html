@@ -2035,7 +2035,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <p>Non, New York n'est pas en zone tropicale : aucun cyclone ne s'y <i>forme</i>. <br>Mais les cyclones nés près des
       Antilles <b>remontent la côte Est</b>, et arrivent là-haut affaiblis… sur une ville qui n'est pas faite pour eux.</p>
       <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse">
+        <table style="width:100%;border-collapse:collapse" tabindex="0">
           <thead><tr><th scope="col">Ouragan</th><th scope="col">Ce qui est arrivé à New York</th></tr></thead>
           <tbody>
             <tr><td><b>1938</b><br><span style="font-size:.9em">« Long Island Express »</span></td><td>Le seul <b>vrai</b> ouragan majeur à avoir frappé la région de plein fouet : catégorie 3, environ 190 km/h en touchant Long Island. Des centaines de morts sur la côte Nord-Est. À l'époque, aucune alerte n'avait prévenu la population.</td></tr>
@@ -2050,7 +2050,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       de kilomètres de tunnels et de sous-sols sous le niveau de la mer. <br>La Martinique et New York ne sont pas exposées
       au même danger, alors que le phénomène de départ, lui, est le même.</p>
       <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse">
+        <table style="width:100%;border-collapse:collapse" tabindex="0">
           <thead><tr><th scope="col"></th><th scope="col">Martinique</th><th scope="col">New York</th></tr></thead>
           <tbody>
             <tr><td>Fréquence</td><td>chaque année, de juin à novembre</td><td>rare — quelques fois par siècle</td></tr>
@@ -2113,7 +2113,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 
 <section class="card">
   <h2>🧰 Choix de l'outil</h2>
-  <table class="refs">
+  <table class="refs" tabindex="0">
     <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
     <tr><td><b>Vittascience</b> — interface Arduino, mode BLOCS (fr.vittascience.com)</td><td>Programmation par blocs en français <b>avec simulateur intégré</b> : chaque palier se vérifie immédiatement, <b>sans carte, sans câble, sans attendre son tour</b> — y compris à la maison. Le téléversement vers l'UNO reste possible pour la version 🅰.<br>C'est la simulation qui a fait la différence : c'est elle qui permet de tester les <b>six frontières</b> (62/63, 117/118, 177/178), geste central de la compétence C8.3.<br><i>Écart assumé :</i> Vittascience demande une connexion Internet — un repli hors-ligne complet est prévu aux séances 3 et 4.</td><td><b>ArduBlock Éducation 1.7</b> (le logiciel du labo, sans simulateur) : conservé en <b>bonus facultatif</b> de la séance 4, avec les captures réelles des paliers 1 et 2 · Arduino <abbr class="sigle" title="environnement de développement" tabindex="0">IDE</abbr> avec le programme C++ de référence (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino" download>station_alerte_cyclonique.ino</a>)</td></tr>
     <tr><td>Arduino UNO + shield Grove — <b>le montage de la station</b> (séances 3 à 8)</td><td>Un seul et même montage du début à la fin : potentiomètre « anémomètre simulé » (<b>A1</b>), voyants vert (<b>D6</b>), jaune (<b>D7</b>), orange (<b>D3</b>), rouge (<b>D4</b>), buzzer (<b>D5</b>), bouton d'acquittement (<b>D2</b>), écran <abbr class="sigle" title="écran à cristaux liquides" tabindex="0">LCD</abbr> RGB (<b>I2C</b>).<br>Très basse tension 5 V (volts). <b>Utilisable sans aucun matériel</b> grâce au simulateur.</td><td>Le simulateur intégré de Vittascience</td></tr>
@@ -4195,6 +4195,50 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         return r;
       };
     } catch(e){}
+  }
+
+  /* Une zone qui défile s'atteint au clavier (axe-core, « scrollable-region-focusable », mesuré page ouverte sur les
+     341 pages le 22/11/2026 : 108 des 142 zones fautives étaient les schémas et les tableaux de ce kit). À 600 px et
+     moins, un schéma garde 560 px de large pour rester lisible, un grand tableau garde ses colonnes : la zone défile de
+     côté. Quand elle déborde vraiment, elle reçoit le focus (Tab, puis les flèches pour la faire défiler) et un nom lu
+     par le lecteur d'écran ; quand elle ne déborde plus (écran plus large), on retire ce qu'on avait posé, et cela
+     seulement. Une zone cachée (onglet fermé) mesure 0 : l'observateur de taille la reprend quand elle s'ouvre. En mode
+     incrusté, seules les zones des exercices sont touchées ; le tableau lui-même aussi, quand la séquence le fait
+     défiler (`table{display:block;overflow-x:auto}` dans sa feuille de style). */
+  var zones = [];
+  (source ? [document] : Array.prototype.slice.call(incrustes)).forEach(function(r){
+    r.querySelectorAll(".figure, .defile, .defile > table").forEach(function(el){ zones.push(el); });
+  });
+  function marquerZone(el){
+    var deborde = el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1;
+    var pose = el.getAttribute("data-zone-clavier");
+    if (deborde && pose === null){
+      pose = "";
+      if (!el.hasAttribute("tabindex")){ el.setAttribute("tabindex", "0"); pose += "t"; }
+      if (!el.hasAttribute("role")){ el.setAttribute("role", "region"); pose += "r"; }
+      if (!el.hasAttribute("aria-label") && !el.hasAttribute("aria-labelledby")){
+        var leg = el.querySelector("figcaption") || el.querySelector("caption");
+        var nom = leg ? leg.textContent.replace(/\s+/g, " ").trim() : "";
+        if (nom.length > 100) nom = nom.slice(0, 99) + "…";
+        el.setAttribute("aria-label", (el.classList.contains("defile") || el.tagName === "TABLE" ? "Tableau" : "Schéma") + (nom ? " : " + nom : "") + " (il défile de côté)");
+        pose += "l";
+      }
+      el.setAttribute("data-zone-clavier", pose);
+    } else if (!deborde && pose !== null){
+      if (pose.indexOf("t") !== -1) el.removeAttribute("tabindex");
+      if (pose.indexOf("r") !== -1) el.removeAttribute("role");
+      if (pose.indexOf("l") !== -1) el.removeAttribute("aria-label");
+      el.removeAttribute("data-zone-clavier");
+    }
+  }
+  if (zones.length){
+    if (typeof ResizeObserver === "function"){
+      var observateur = new ResizeObserver(function(entrees){ entrees.forEach(function(e){ marquerZone(e.target); }); });
+      zones.forEach(function(el){ observateur.observe(el); });
+    } else {
+      zones.forEach(marquerZone);
+      window.addEventListener("resize", function(){ zones.forEach(marquerZone); });
+    }
   }
 })();
 </script>

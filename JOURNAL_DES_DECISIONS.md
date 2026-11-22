@@ -36725,6 +36725,24 @@ fait qu'ajouter le moteur nouveau. Trois zones du thème 1 hors du kit reçoiven
 `incrustations.py --verifier` : thème 1 à jour ; `tests_regle_311` des onze dossiers de séquence 34 / 34 (27 / 27 pour
 5e_C3.1) ; `controle_page_ouverte.mjs` L 0 · B 0 · C 0.
 
+## 22/11/2026 — Thème 3 : les tableaux et schémas qui défilent s'atteignent au clavier
+
+Suite du lot du kit des ateliers (thème 1, PR #893) : axe-core page ouverte relevait des zones qui défilent sans
+clavier (« scrollable-region-focusable ») dans 17 pages du thème 3.
+- **Moteur des ateliers** greffé (bloc `ateliers-representations:moteur` seul, sans régénération) dans les onze
+  séquences qui incrustent des exercices. Dans `3e_C7.1`, `3e_C7.3` et `4e_C8.1`, `incrustations.py` défait encore une
+  infobulle (LED, PLA, QCM) : la greffe la garde.
+- **Tableaux des séquences** qui défilent sur téléphone : `tabindex="0"` sur les tableaux de mesures (`#tab` :
+  `3e_C7.3`, `3e_C7.7`, `4e_C7.3`, `4e_C7.7`, `5e_C7.3`, `5e_C8.1`) et les tableaux de repères (`table.refs` :
+  les mêmes pages, plus `4e_C7.4`, `3e_C8.2`, `5e_C8.2`).
+- `3e_C9.2` : la page tout-en-un reçoit `tabindex` sur ses quatre tableaux, puis `generer_les_quatre_pages.py` refait
+  les quatre pages (vérifié avant : sur `main`, il les reproduit à l'identique).
+- Le message publié `.codebox` de `3e_C8.2` et `5e_C8.2` : le bloc n°364 (à 600 px et moins, il revient à la ligne).
+
+Contrôles : axe-core page ouverte sur les 20 pages : zones fautives 0 (restent 3 `color-contrast` et 1 `label`, déjà
+sur `main`) ; L 0 · B 0 · C 0 ; `tests_regle_311` des seize dossiers 34 / 34 ; `tests_3e_C9.2-C8.3.mjs` 167 / 167
+(découpage et persistance croisée) ; `controle_impression` à 0.
+
 ## 22/11/2026 — Thème 2 : les tableaux et schémas qui défilent s'atteignent au clavier
 
 Suite du lot du kit des ateliers (thème 1, PR #893) : axe-core page ouverte relevait 5 pages du thème 2 avec des zones
