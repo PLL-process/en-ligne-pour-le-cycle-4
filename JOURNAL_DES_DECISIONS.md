@@ -35638,3 +35638,47 @@ partout : ce qui pesait, c'était surtout **les exercices d'atelier incrustés**
 Mode mission joué sur les 14 : aucun refus, écrans identiques avant et après (les incrustations n'y sont pas découpées).
 `incrustations.py --verifier` : tout à jour. `controle_squelette.mjs` vert ; `audit_aeration.py --strict` vert sur
 `3e_C1.1` ; `controle_question_seule.py --strict` : thème 1 à 0 refus.
+
+## 22/11/2026 — Thème 1, chantier 3 : les 14 séquences relues en entier, sous le double regard
+
+**La demande.** Le troisième chantier de Pascal (21/11, « Tu as carte blanche pour tout ») : aucune séquence du thème
+n'avait été relue en entier comme un élève depuis la relecture des QCM. Méthode : skill `audit-double-regard` — d'abord
+les outils, puis la lecture de ce qu'ils ne voient pas.
+
+**Les outils (douze par séquence, 168 passages).** `trois_lignes --etat`, `qcm_aides/poser --etat`,
+`controle_memes_nombres`, `corriger_billet`, `controle_correction_illustree`, `controle_correction_complete`,
+`controle_schema_sous_les_yeux`, `eleve_qui_ne_lit_pas` (n°360), `controle_validations`, `retrait_validation --etat
+--strict`, `annoncer_validations`, `verif_regles_audit` : tout vert, sauf **un avertissement que le chantier 2 venait de
+créer** — `5e_C1.3`, séance 1 : la carte mentale de l'activité 1 était repliée, alors que l'en-tête de la séance
+l'annonce (« l'activité 1 : une carte mentale, puis qui fait quoi ») et que c'est l'activité même (n°331). Elle redevient
+visible, comme les autres exercices d'atelier que Pascal garde (15/11/2026) ; la durée dite deux fois en tête de séance
+est retirée : la séance reste sous le repère (1 199 mots). Le suivi de révision est corrigé à part (`docs/`).
+
+**La lecture (ce qu'aucun outil ne voyait).**
+- **Le « vous »** (n°302) : `3e_C1.5` vouvoyait l'élève dans une bonne part de ses consignes héritées (une photo « de
+  vous », « Répondez », « Votre réponse… », « Vous devez rendre un devoir signé », les onze défis Python…) — **73
+  passages** passés au tutoiement, consignes, aides et textes d'exemple dans les zones de réponse compris. Les messages
+  que les programmes affichent à leur utilisateur (« Entrez une URL », « Préférez HTTPS ») gardent leur vouvoiement :
+  c'est le programme qui parle. Même défaut dans `3e_C3.1`, `4e_C3.1` et `5e_C3.1` (« En 5e, on vous donnait… »,
+  « c'est votre travail », « C'est vous qu'il appelle »).
+- **L'élève à la troisième personne** (`audit_personne_eleve.mjs`) : les trois blocs « CRCN réellement travaillé » des
+  séquences C3 (« l'élève saisit… », « l'élève ne remplit pas une grille… ») lui parlent maintenant.
+- **Une autre année présumée faite** (n°304 — Pascal change de collège chaque année) : trois billets d'entrée
+  annonçaient « trois questions sur ce que tu as travaillé l'an dernier » (`3e_C2.1`, `4e_C2.1`, `4e_C3.1`) → « pour faire
+  le point sur ce que tu sais déjà » ; `4e_C3.1` disait « L'an dernier, les critères vous étaient fournis » → ce que le
+  programme fournit en 5e, ce que l'élève fait en 4e.
+- **Des blocs d'un seul tenant** (plus de 45 mots, `mesurer_charge --longs`) : la défense en trois points de `3e_C2.1`,
+  les critères de réussite de `5e_C2.1` et de `3e_C1.5`, les trois conditions d'un assistant d'IA dans `4e_C1.4` passent
+  en lignes, sans un mot de moins.
+- **Des mots** : « scroller », « une alerte push de ton app favorite » → « faire défiler ton fil », « une notification
+  de ton application préférée » ; une phrase de passe « ne s'écrit pas dans un cahier » → « sur un papier » (les élèves
+  de Pascal n'ont pas de cahier).
+
+**Vu, non repris (P2).** `5e_C2.1` : cinq identifiants SVG en double (`pv-bp`…), la même figure posée par deux
+exercices de l'incrustation pieuvre — définitions identiques, rendu juste ; la correction est dans le générateur, qui
+sert aussi les pages d'atelier. Les gestes du tableur de `3e_C1.1` et `4e_C1.1` (« Nommer », « Sortir », 50 à 60 mots
+d'un seul tenant) viennent d'un composant commun : à reprendre là. Deux blocs longs dans des incrustations (`4e_C2.1`,
+`5e_C1.2`) : à leur source.
+
+**Vérifié.** Bancs des 14 séquences (voir la PR) ; mode mission joué sur les 14 : aucun refus ; `audit_aeration
+--strict` vert sur les neuf pages retouchées ; `controle_question_seule --strict` : thème 1 à 0 refus.
