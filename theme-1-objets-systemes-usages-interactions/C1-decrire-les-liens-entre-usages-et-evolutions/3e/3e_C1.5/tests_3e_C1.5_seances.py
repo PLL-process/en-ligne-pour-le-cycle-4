@@ -61,9 +61,9 @@ MODELE = "\n".join([
 DERNIERE_FAUSSE = "Mon argumentaire est complet : il n'y a rien à ajouter."
 B1_MODELE = "\n".join([
     "Le RGPD et le droit à l'image obligent le club à obtenir l'accord des joueurs avant de publier leur photo, "
-    "et celui d'un parent pour ceux qui ont moins de 15 ans.",
-    "Cette règle protège les joueurs, presque tous mineurs : une photo publiée peut les suivre longtemps.",
-    "C'est pourquoi l'application affiche, avant toute publication, une case à cocher vide pour le joueur et une autre pour un parent.",
+    "et celui de leurs parents, puisqu'ils sont mineurs.",
+    "Cette règle protège des joueurs mineurs : une photo publiée peut les suivre longtemps.",
+    "C'est pourquoi l'application affiche, avant toute publication, une case à cocher vide pour le joueur et une autre pour ses parents.",
     "Elle réserve aussi les photos aux membres du club et ajoute un bouton « Demander le retrait de ma photo ».",
     "En conclusion, la loi rend l'application plus longue à concevoir, mais les familles peuvent lui faire confiance."])
 B1_ETAYE = "\n".join([
