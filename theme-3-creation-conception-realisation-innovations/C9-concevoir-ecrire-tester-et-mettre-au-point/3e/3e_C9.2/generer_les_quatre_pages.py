@@ -68,6 +68,10 @@ _spec.loader.exec_module(FICHE_PAPIER)
 _spec_m = importlib.util.spec_from_file_location("poser_mission", _racine / "_outils" / "mode_mission" / "poser.py")
 MODE_MISSION = importlib.util.module_from_spec(_spec_m)
 _spec_m.loader.exec_module(MODE_MISSION)
+# Les sigles (n°44, décision de Pascal du 22/11/2026) : chaque page s'explique elle-même, QCM en clair, les autres en
+# infobulle ; posé ici, une régénération ne l'efface pas (n°283)
+sys.path.append(str(_racine / "_outils"))
+from expliquer_sigles import infobuller  # noqa: E402
 SRC = LOT / "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"
 L = io.open(SRC, encoding="utf-8").read().split("\n")
 
@@ -436,5 +440,6 @@ for p in PAGES:
     page = FICHE_PAPIER.poser(page)     # la fiche papier, source unique (_outils/impression_papier/)
     page = MODE_MISSION.poser(page)     # le mode mission, source unique (_outils/mode_mission/)
     page = poser_n364(page)         # n°364, ce qui défile est caché (22/11/2026)
+    page = infobuller(page)         # n°44, chaque sigle s'explique (22/11/2026)
     io.open(LOT / p["fichier"], "w", encoding="utf-8").write(page)
     print("écrit :", p["fichier"], len(page) // 1024, "Ko")

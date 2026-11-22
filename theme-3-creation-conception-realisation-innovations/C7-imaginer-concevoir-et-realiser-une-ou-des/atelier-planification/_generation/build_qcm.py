@@ -127,7 +127,7 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="4e">4e — Organiser un processus avec des tâches identifiées</option>
       <option value="3e">3e — Élaborer un processus avec des tâches identifiées</option>"""),
 
-        ("""  <p>QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_3e_C3.1-C3.4_shenzhen.html">séquence associée</a></p>""",
+        ("""  <p>QCM (questionnaire à choix multiples) d’entraînement 3e_C3.1 à C3.4 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_3e_C3.1-C3.4_shenzhen.html">séquence associée</a></p>""",
          """  <p>QCM d’entraînement C7.1 · Thème 3 · Technologie cycle 4 (2024) · ateliers associés : <a href="atelier_5e_C7.1_planification_taches.html">Atelier 5e</a> · <a href="atelier_4e_C7.1_planification_taches.html">4e</a> · <a href="atelier_3e_C7.1_planification_taches.html">3e</a></p>"""),
 
         # Navigation croisée : cet atelier a trois niveaux (5e, 4e, 3e), chacun avec

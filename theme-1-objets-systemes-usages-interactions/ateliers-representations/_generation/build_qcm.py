@@ -130,7 +130,7 @@ def construire(module, verifier=False):
          % (" · ".join(niveaux), "\n".join('  <span class="badge code">%s</span>' % c for c in codes), len(Q), nb_img)),
         (r'(<select id="selComp"[^>]*>).*?(</select>)', r"\g<1>" + "\n" + options.replace("\\", "\\\\") + "\n    \\g<2>"),
         (r"<footer>\s*<p>.*?</p>",
-         "<footer>\n  <p>QCM d’entraînement %s · Thème 1 · Technologie cycle 4 (2024) · ateliers associés : %s</p>"
+         "<footer>\n  <p>QCM (questionnaire à choix multiples) d’entraînement %s · Thème 1 · Technologie cycle 4 (2024) · ateliers associés : %s</p>"
          % (" · ".join(codes), pages)),
         (r"#navharm\{position:sticky;top:0;z-index:1200;display:flex;gap:8px;",
          "#navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;"),
@@ -155,6 +155,12 @@ def construire(module, verifier=False):
         if reste in s:
             raise SystemExit("Reste du gabarit d'origine non remplacé : %r" % reste)
     s = intituler_codes.poser_texte(s)   # chaque étiquette de code dit sa compétence au survol
+    # n°44 : une option de liste ne porte pas d'infobulle ; l'étiquette du menu explique le sigle des options (comme aux
+    # thèmes 2 et 3, « Compétence à réviser (OST : objet ou système technique) »)
+    for sig, expl in (("OST", "objet ou système technique"), ("CRCN", "cadre de référence des compétences numériques")):
+        if re.search(r"<option[^>]*>[^<]*\b%s\b" % sig, s) and "Compétence à réviser :" in s:
+            s = s.replace("Compétence à réviser :", "Compétence à réviser (%s : %s) :" % (sig, expl), 1)
+    s = build.infobuller(s)   # chaque sigle s'explique : QCM en clair, les autres en infobulle (n°44, 22/11/2026)
     graine = sum(ord(c) for c in at.SLUG) % 997
     if verifier:
         # même chaîne (gabarit, banque, fix_r.js et sa graine), dans un dossier temporaire : la page n'est pas touchée

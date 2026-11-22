@@ -21,7 +21,7 @@ ENTREES = [
                "<br>Entraîne-toi sur un autre projet, le <b>lampadaire intelligent</b> d'une classe de 5e&nbsp;: recense ses "
                "données, puis range-les dans une <b>carte mentale</b> (on dit aussi carte heuristique). <br>Un exercice, "
                "environ un quart d'heure&nbsp;; il se vérifie tout seul et a sa correction complète.",
-         suite="un second exercice qui passe de la carte mentale aux dossiers de l'ordinateur, et le QCM de l'atelier"),
+         suite="un second exercice qui passe de la carte mentale aux dossiers de l'ordinateur, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="cm-3e-numerique-societe", module="carte_mentale", niveau="3e", exos=["e5"],
          sequence=C1 + "3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
          # en fin de partie 2, dans son cadre (.section), juste avant le bouton vers la séance 3
@@ -34,7 +34,7 @@ ENTREES = [
                "vérifie tout seul et a sa correction complète. La même méthode te resservira à la séance 4.",
          # 24/10/2026 (séance 4 ajoutée) : l'exercice reste en séance 2 — la séance 4 n'aurait pas tenu en 55 min avec
          # lui, l'activité 5 et la clôture ; il y sert d'entraînement, l'activité 5 de réinvestissement.
-         suite="un exercice pour choisir entre la carte mentale et une autre représentation, et le QCM de l'atelier"),
+         suite="un exercice pour choisir entre la carte mentale et une autre représentation, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="ex-4e-jardin-validation", module="exigences", niveau="4e", exos=["e3"],
          sequence=C8 + "4e/4e_C8.1/sequence_4e_C8_jardin-validation.html",
          avant="<p>Le banc virtuel (activité 0) t'a donné les observés. Juge la conformité de chacun&nbsp;:</p>",

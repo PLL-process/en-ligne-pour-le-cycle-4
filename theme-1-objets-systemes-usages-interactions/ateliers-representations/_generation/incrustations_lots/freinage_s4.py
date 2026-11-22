@@ -28,5 +28,5 @@ ENTREES = [
                "extrait de celui du vélo-cargo de <b>Léa</b>, et un choix à faire pour elle&nbsp;; le cours, juste en "
                "dessous, présente le schéma. Un exercice d'environ un quart d'heure&nbsp;; il se vérifie tout seul et "
                "a sa correction complète.",
-         suite="les exercices qui lisent puis complètent le diagramme FAST d'un lampadaire, et le QCM de l'atelier"),
+         suite="les exercices qui lisent puis complètent le diagramme FAST d'un lampadaire, et le QCM (questionnaire à choix multiples) de l'atelier"),
 ]

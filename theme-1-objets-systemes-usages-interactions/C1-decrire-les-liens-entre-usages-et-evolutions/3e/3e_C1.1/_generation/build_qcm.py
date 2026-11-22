@@ -185,8 +185,8 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="C1.3">3e_C1.3 — L'incidence d'un OST sur la société</option>
       <option value="C1.4">3e_C1.4 — L'incidence des contraintes sociétales</option>"""),
 
-        ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
-         "QCM d’entraînement 3e_C1.1 à C1.4 · Thème 1"),
+        ("QCM (questionnaire à choix multiples) d’entraînement 3e_C3.1 à C3.4 · Thème 1",
+         "QCM (questionnaire à choix multiples) d’entraînement 3e_C1.1 à C1.4 · Thème 1"),
     ]
     for avant, apres in remplacements:
         if s.count(avant) != 1:

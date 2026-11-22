@@ -59,7 +59,7 @@ def page(niv, ats, cahier, page_niveau, chemins_fn):
         if c.get("qcm"):
             qcms.append('<li><a href="%s">%s %s</a> — %d questions</li>' % (c["qcm"] + c.get("qcm_ancre", ""), at.EMOJI, at.TITRE, c["qcm_nb"]))
     if qcms:
-        fin.append('<section class="card"><h2>🧠 Prêt·e à t\'entraîner&nbsp;?</h2><p>Chaque représentation a son QCM, avec une '
+        fin.append('<section class="card"><h2>🧠 Prêt·e à t\'entraîner&nbsp;?</h2><p>Chaque représentation a son QCM (questionnaire à choix multiples), avec une '
                    'correction complète pour chaque question. Le lien ouvre directement les questions de ton niveau.</p><ul>%s</ul></section>'
                    % "".join(qcms))
     onglets.append(('🏁 Mon bilan<span class="etat">et les QCM</span>', "c-fin"))

@@ -28,7 +28,7 @@ def debut(ident):
 
 
 NOTE_RAPPEL = ("Ce rappel accompagne <a href=\"%s\">l'atelier de {niv} « Le besoin »</a>, qui a le sien, sur {objet}, avec les "
-               "autres exercices et le QCM.")
+               "autres exercices et le QCM (questionnaire à choix multiples).")
 
 ENTREES = [
     dict(id="bc-ref-carte", module="besoin", html="FIG_REFERENCE_CARTE",

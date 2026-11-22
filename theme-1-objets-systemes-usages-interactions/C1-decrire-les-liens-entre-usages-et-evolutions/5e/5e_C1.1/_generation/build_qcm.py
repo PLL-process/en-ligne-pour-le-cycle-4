@@ -197,8 +197,8 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="C1.5">5e_C1.5 — Sécuriser, et respecter la propriété intellectuelle</option>
       <option value="C1.6">5e_C1.6 — La responsabilité de chacun dans les dérives</option>"""),
 
-        ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
-         "QCM d’entraînement 5e_C1.1 à C1.6 · Thème 1"),
+        ("QCM (questionnaire à choix multiples) d’entraînement 3e_C3.1 à C3.4 · Thème 1",
+         "QCM (questionnaire à choix multiples) d’entraînement 5e_C1.1 à C1.6 · Thème 1"),
     ]
     for avant, apres in remplacements:
         if isinstance(avant, re.Pattern):       # un motif qui lit un nombre du gabarit au lieu de le citer
