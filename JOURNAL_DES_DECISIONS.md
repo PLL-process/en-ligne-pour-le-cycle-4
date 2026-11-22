@@ -35930,6 +35930,31 @@ de la soirée écrivent déjà leurs sigles en clair.
 
 **Skills** : `cadrage-cles-de-voute` (dix-septième question) et `tache-finale-redigee` (les sigles du bloc).
 
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 2 : 58 pages, un outil qui pose l'explication, le générateur des lexiques (thème 2, `_outils`)
+
+**Décision.** Pascal (22/11/2026, 1 h 03) : « Ok vas y » — la vague QCM proposée après la PR #861 ; puis, à 1 h 32,
+« Attention aux autres tâches en cours dans d'autres sessions avec Claude pour éviter les conflits ».
+
+**Précautions contre les conflits.** Aucune PR ouverte au moment de la vague ; les fichiers touchés par les autres
+sessions dans les cinq dernières heures (PR #850 à #858, #862, #863 : 48 fichiers, dont 25 du thème 1) sont écartés.
+Le thème 1, où d'autres sessions travaillent encore (C1 à C3, portes, charge des séances), attend leur fin. Une seule
+insertion par page, sur une seule ligne ; une PR par thème, fusionnée seule au vert.
+
+**Ce qui change.**
+- `_outils/expliquer_sigles.py` : pose l'explication d'un sigle à sa première apparition dans le texte d'une page
+  (« le QCM (questionnaire à choix multiples) de l'atelier », au pluriel après « des », « les »…), jamais dans le titre,
+  la barre de navigation, un lien, un bouton, une étiquette, un listing ; essai à blanc par défaut, `--ecrire` pour
+  écrire ; relancé, il ne pose rien deux fois (n°149).
+- 58 pages du thème 2 (séquences, synthèses, lexiques, QCM) : l'explication posée.
+- `_outils/generer_lexique.py` (et son banc, 29 / 29) : le sous-titre des lexiques dit « des QCM (questionnaires à
+  choix multiples) du lot » — un lexique régénéré garde l'explication (n°283).
+
+**Mesure** (`controle_sigles_expliques.py`) : pages avec un QCM jamais expliqué, 325 → 267 ; thème 2 : 93 → 67 pages
+avec au moins un sigle nu (restent les autres sigles, et les pages où « QCM » n'est que dans la navigation ou un
+lien : à traiter avec les sessions qui posent les portes, n°366).
+
+**Suite.** Le thème 3 dans la PR suivante ; le thème 1 quand ses sessions auront fini.
+
 ## 22/11/2026 — Page ouverte (n°361) : un listing qui défile ou un bloc dessiné est refusé ; un intitulé de correction n'est plus compté (thème 2 : `_outils/`)
 
 **La décision.** Carte blanche de Pascal (22/11/2026, 1 h 33), sur la question posée après la PR #863 : « le contrôle
