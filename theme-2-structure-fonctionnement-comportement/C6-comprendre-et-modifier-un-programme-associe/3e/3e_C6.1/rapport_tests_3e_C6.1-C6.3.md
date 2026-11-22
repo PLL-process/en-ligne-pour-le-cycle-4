@@ -237,3 +237,15 @@ Le bloc « ✍️ Explique comme au brevet » reçoit deux aides repliées avant
 s'exécute, le signe qui inclut ou non l'égalité), puis la démarche en trois temps. Banc commun
 `_outils/tests_ecrit_brevet.py` : 11 / 11 (il voyait le manque : 10 / 11 avant).
 
+
+## 22/11/2026 (suite, après la fusion de #886) — deux bancs communs que la livraison n'avait pas rejoués
+
+- `_outils/qcm_aides/banc_aides.mjs` refusait le QCM (A9) : le nouveau tableau de bord ne disait plus que les deux
+  notes sur 20 comptent les 30 questions, ni le résultat combien de questions restent. Les deux phrases sont revenues,
+  sans réafficher de note avant la fin : **0 refus**.
+- `_outils/impression_papier/banc_papier.py` voyait un texte trop pâle à l'impression de la séance 3 (l'état des trois
+  explications écrites, 1,7:1, défaut antérieur au lot) : il s'imprime en noir. **✅**
+- QCM, questions 1 et 10 : le schéma complet donnait la réponse ; elles montrent le schéma à compléter, et la question 1
+  a des propositions crédibles (mesure, paramètre, produite, envoyée).
+- Rejoués : banc du lot 57 / 57, mode mission (générique, éditeur, barre, défaut), effacement, loupe, cohérence et
+  indices du QCM, longueurs, ordre des propositions, question seule, lexique régénéré.

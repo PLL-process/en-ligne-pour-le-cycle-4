@@ -36482,3 +36482,14 @@ La vague des infobulles de sigles du thème 3 (n°44, #883) a posé sa feuille c
 pages-pointeurs (les trois `atelier_C7.1_planification_taches.html` rangés dans 3e, 4e et 5e_C7.1, et `tp_5e_de_calottes.html`
 de 5e_C7.2) ont franchi les 6 000 octets et passaient pour des séquences sans « Prêt·e », ni Bonus, ni QCM. La taille se
 mesure désormais hors `<style>` et `<script>` : 0 écart sur `main` (sortie 0), banc 27/27.
+
+## 22/11/2026 — 3e_C6.1 (suite de #886) : deux bancs communs non rejoués à la livraison, deux questions dont le schéma donnait la réponse (thème 2)
+
+Après la fusion de #886, la relecture des bancs rangés hors des `controle_*` a trouvé deux refus : `qcm_aides/banc_aides.mjs`
+(A9 : le tableau de bord du QCM ne disait plus que les notes sur 20 comptent les 30 questions, ni le résultat combien en
+restent — une phrase perdue en séparant « parcours » et « banque ») et `impression_papier/banc_papier.py` (l'état des
+explications écrites de la séance 3, trop pâle sur papier, défaut du 21/11). Corrigés ; 0 refus. Les questions 1 et 10 du
+QCM montrent le schéma à compléter au lieu du schéma complet, qui portait la réponse (n°348) ; la question 1 reçoit des
+propositions crédibles. **Leçon** : la liste de fin de lot doit nommer aussi les bancs des sous-dossiers de `_outils/`
+(`qcm_aides/`, `impression_papier/`, `mode_mission/`) — ajoutée au skill `controle-qualite-lot` (PR transversale).
+
