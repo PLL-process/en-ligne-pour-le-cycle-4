@@ -8,6 +8,13 @@ le disait pour l'interface (badges, codes, boutons) : une explication à portée
 la page, parce qu'une infobulle ne s'ouvre pas au doigt. Aucun outil ne le mesurait dans le texte lu par l'élève : un
 « TTL » ou un « CDI » pouvait rester nu. La n°313, elle, ne regarde que les capitales (FAST, jamais fast).
 
+DÉCISION DE PASCAL (22/11/2026, 1 h 45)
+---------------------------------------
+« Les autres sigles (OST, CRCN, USB, IP…) pourront être communiqués à l'aide d'un survol avec la souris. » QCM
+s'explique en clair dans le texte ; les autres sigles peuvent porter une infobulle `<abbr class="sigle" title="…"
+tabindex="0">` : au survol à la souris, à l'appui au doigt (la règle n°44 rappelle qu'une infobulle seule ne s'ouvre
+pas au doigt : le style commun l'affiche au focus), et en clair à l'impression. Une telle infobulle compte « ok ».
+
 LA RÈGLE MESURÉE
 ----------------
 Sur chaque page, chaque sigle connu (liste SIGLES ci-dessous, avec son explication) est expliqué en clair au moins
@@ -126,14 +133,33 @@ class Texte(HTMLParser):
 
 
 def lire(page):
+    return lire_source(page.read_text(encoding="utf-8", errors="ignore"))
+
+
+def lire_source(src):
     p = Texte()
-    p.feed(page.read_text(encoding="utf-8", errors="ignore"))
+    p.feed(src)
     return re.sub(r"[ \t  ]+", " ", "".join(p.morceaux)), p.abbr
+
+
+def infobulles(page):
+    return infobulles_source(page.read_text(encoding="utf-8", errors="ignore"))
+
+
+def infobulles_source(src):
+    """Les sigles portés par une infobulle <abbr title="…">SIGLE</abbr> (décision de Pascal du 22/11/2026)."""
+    return {m.group(2) for m in re.finditer(r'<abbr\b[^>]*\btitle="([^"]{4,})"[^>]*>\s*([A-Za-z]{2,6})\s*</abbr>', src)}
 
 
 def mesurer(page):
     """{sigle: 'ok' | 'P' | 'E'} pour les sigles connus présents dans la page."""
-    texte, _ = lire(page)
+    return mesurer_source(page.read_text(encoding="utf-8", errors="ignore"))
+
+
+def mesurer_source(src):
+    """Comme `mesurer`, sur le source d'une page (pour un générateur, avant d'écrire)."""
+    texte, _ = lire_source(src)
+    bulles = infobulles_source(src)
     t_plat = plat(texte)
     res = {}
     for m in re.finditer(r"(?<![\w./_-])([A-Z][A-Za-z]{1,5})(?![\w/_-])", texte):
@@ -147,7 +173,7 @@ def mesurer(page):
             apres, avant = texte[i + len(mot):i + len(mot) + 4], texte[max(0, i - 3):i]
             fen = plat(texte[max(0, i - 160):i + len(mot) + 160])
             return apres.lstrip().startswith("(") or avant.rstrip().endswith("(") or any(e in fen for e in SIGLES[cle][1])
-        if explique_a(occ[0]):
+        if explique_a(occ[0]) or mot in bulles:
             res[cle] = "ok"
         elif any(explique_a(i) for i in occ[1:]) or any(e in t_plat for e in SIGLES[cle][1]):
             res[cle] = "P"

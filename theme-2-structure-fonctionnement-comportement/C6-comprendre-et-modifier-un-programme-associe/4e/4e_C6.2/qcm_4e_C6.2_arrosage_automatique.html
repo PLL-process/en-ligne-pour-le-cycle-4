@@ -141,6 +141,7 @@
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <style id="navharm-css">
@@ -155,7 +156,7 @@
 @media print{#navharm{display:none}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence-jardin-connecte-arrosage-automatique.html">← Séquence</a></nav>
-<h1>🌱 QCM — Le jardin connecté : arrosage automatique</h1>
+<h1>🌱 <abbr class="sigle" title="questionnaire à choix multiples" tabindex="0">QCM</abbr> — Le jardin connecté : arrosage automatique</h1>
 <p class="subtitle">Analyser les relevés, l'hystérésis et la plage horaire, la méthode de test et de validation</p>
 <div class="badges">
   <span class="badge niveau">4e</span>
@@ -222,7 +223,7 @@
     <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
   </div>
   <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
-    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser (OST : objet ou système technique) :</label>
     <select id="selComp" style="max-width:420px;display:inline-block">
       <option value="C4.4">4e_C4.4 — Identifier les constituants de la chaîne d’information d’un objet réel et les associer à leur fonction.</option>
       <option value="C4.1">4e_C4.1 — Identifier les constituants d’une chaîne d’énergie et les associer à leurs fonctions.</option>
