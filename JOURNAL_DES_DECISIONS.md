@@ -35955,6 +35955,18 @@ lien : à traiter avec les sessions qui posent les portes, n°366).
 
 **Suite.** Le thème 3 dans la PR suivante ; le thème 1 quand ses sessions auront fini.
 
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 3 : 94 pages et quatre sources de générateurs (thème 3)
+
+Suite de l'entrée précédente (même décision, mêmes précautions : aucune PR ouverte, aucune fusion d'une autre session
+depuis la vague du thème 2). `_outils/expliquer_sigles.py` pose « QCM (questionnaire à choix multiples) » à la première
+apparition du sigle dans le texte de 94 pages du thème 3. Pour qu'une page régénérée garde l'explication (n°283), la même
+phrase est corrigée dans ses sources : `atelier-planification/_generation/build_atelier.py` et les quatre scénarios de
+`atelier-cao/scenarios/` (« Le QCM qui accompagne ce travail »). Banc de l'atelier de planification
+`tests_atelier_C7.1.py` 48 / 48 ; les quatre scénarios restent du JSON valide.
+
+**Mesure** : pages avec un QCM jamais expliqué, 267 → 173 ; thème 3 : 161 → 120 pages avec au moins un sigle nu. Reste
+le thème 1 (sessions en cours), puis OST et les autres sigles.
+
 ## 22/11/2026 — Page ouverte (n°361) : un listing qui défile ou un bloc dessiné est refusé ; un intitulé de correction n'est plus compté (thème 2 : `_outils/`)
 
 **La décision.** Carte blanche de Pascal (22/11/2026, 1 h 33), sur la question posée après la PR #863 : « le contrôle
