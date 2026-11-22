@@ -2,7 +2,7 @@
 
 **Objet-fil** : le jardin connecté du collège (suite de C7 — concevoir le support — et C8 — le valider)
 **Codes** : 4e_C9.1 · 4e_C9.2 · 4e_C9.3
-**Durée** : 3 séances de 55 min — **155 min d'activités annoncées** pour 165 disponibles
+**Durée** : 3 séances de 55 min — **155 min d'activités annoncées** pour 165 disponibles — 25 + 25 · 30 + 25 · 30 + 20, l'enquête facultative non comptée. Le 22/11/2026 (audit #867, n°23), l'activité 6 passe de 25 à 20 min : l'activité 1 était passée de 20 à 25 min le 19/11 (les deux chaînes bâties par l'élève) sans reprise ailleurs, et les séances 2 et 3 n'avaient plus une minute de service. Le programme du lampadaire reprend la structure que l'activité 5 vient de construire : c'est un transfert, pas une découverte.
 **Socle évalué** : D1.3 · D2 · D4 — *D5 est du contexte, non évalué (règle n°126)*
 **CRCN** : 3.4 (programmer, niveaux 2-3) · 1.3 (traiter des données, niveau 2)
 
@@ -52,7 +52,7 @@ reste quand tout le reste est oublié.
 | | 4. Le jeu d'essais | 25 min | Tableau à 6 essais, ATTENDU rempli **avant**, OBSERVÉ lu sur l'écran du banc (les six essais réellement exécutés, 250 % compris) |
 | | Enquête **facultative**, en fin de séance. « POMPE ON… et l'eau ne coule pas » | 12 min, pour les rapides ou à la maison ; elle ne compte pas dans la progression | Le maillon en panne de trois jardins (ALIMENTER, DISTRIBUER, le circuit d'eau) + une vérification écrite |
 | **3** — Mettre au point | 5. La pompe qui s'affole | 30 min | Diagnostic + programme à trois cas, construit et exécuté dans l'atelier du programme + démonstration sur le même tremblement |
-| | 6. Le lampadaire | 25 min | Les deux chaînes du lampadaire (cinq étiquettes, seul, 2 à 3 min) + programme écrit **sans squelette** + justification chiffrée |
+| | 6. Le lampadaire | 20 min | Les deux chaînes du lampadaire (cinq étiquettes, seul, 2 à 3 min) + programme écrit **sans squelette** + justification chiffrée |
 
 ---
 

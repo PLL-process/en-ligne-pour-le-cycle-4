@@ -191,7 +191,7 @@ EFFACER_PANNEAU = (
     '<div class="card"><p><button class="btn" id="btnReset" type="button" style="border:0;cursor:pointer;font:inherit;'
     'font-weight:700" title="Effacer définitivement ce rappel, ici et dans ta séquence. Un second clic te sera demandé.">'
     '🗑 Effacer ma sauvegarde</button></p>\n'
-    '<p class="note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève '
+    '<p class="note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI — le centre de documentation et d\'information)&nbsp;: un autre élève '
     'qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux '
     'garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p></div>')
 SCRIPT_EFFACER_PANNEAU = """<script>
