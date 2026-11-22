@@ -9,45 +9,55 @@
   "commentaire_codes": "Aucun code n'est revendiqué : la page entraîne à la lecture d'algorigrammes pour l'épreuve du brevet. Le code 3e_C6.2 est couvert par la séquence « L'auto-test de la station », qui fait ÉCRIRE un algorithme.",
   "branche": "fable/theme-2/entrainement-dnb-algorigrammes",
   "date_production": "2026-08-08",
-  "version": "v1.0 — réécriture au gabarit maison de la banque héritée",
+  "version": "v2.0 — révision du 21/11/2026 après l'audit pédagogique et fonctionnel (journal du jour)",
   "particularite": "Le dossier contenait une banque de 30 exercices héritée d'une organisation antérieure du dépôt : bonne sur le fond, mais sans sauvegarde locale, sans mode essentiel, sans barre d'outils, et surtout avec des corrections qui donnent la bonne réponse sans dire pourquoi les trois autres sont fausses. Cette page réécrit les 30 exercices au gabarit maison, avec réfutation de chaque distracteur. L'ancienne banque n'est ni modifiée ni déplacée : quatorze fichiers du dépôt y font référence.",
   "fichiers": {
     "page": "entrainement_dnb_algorigrammes.html",
     "fiche_pedagogique": "fiche_pedagogique_entrainement_dnb.md",
     "rapport_tests": "rapport_tests_entrainement_dnb.md",
     "suite_de_tests": "tests_entrainement_dnb.py",
-    "generateur": "_outils/dnb_exercices.py + _outils/dnb_build.py + _outils/dnb_gabarit.html",
+    "generateur": "_outils/dnb_build.py + _outils/dnb_exercices.py + _outils/dnb_schemas.py + _outils/dnb_gabarit.html (puis onglets_clavier, retrait_validation, onglets_seance, entete_telephone)",
     "images": [
-      "Images/symboles_algorigramme.svg",
-      "Images/algorigramme_auto_test.svg",
-      "Images/trace_banc_essai.svg"
+      "12 algorigrammes SVG écrits dans la page par _outils/dnb_schemas.py (la page ne charge aucun fichier voisin)"
     ],
-    "version_archivee": "_archive-anciennes-versions/C6-comprendre-et-modifier-un-programme-associe/3e_C6.2-banque-dnb-v1/ (sequence_algorigrammes_dnb.html et son QCM, archivés le 08/08/2026, contenu non modifié)"
+    "version_archivee": "_archive-anciennes-versions/C6-comprendre-et-modifier-un-programme-associe/3e_C6.2-banque-dnb-v1/ (sequence_algorigrammes_dnb.html et son QCM, archivés le 08/08/2026, contenu non modifié)",
+    "images_du_lot_modifiees": [
+      "Images/algorigramme_auto_test.svg (régénéré par dnb_schemas.py --fichiers, pour le QCM du lot)",
+      "Images/symboles_algorigramme.svg (textes : cinq repères, il en existe d'autres)"
+    ]
   },
   "contenu": {
     "exercices": 30,
     "manches": 4,
+    "epreuve_ecrite": "4 questions rédigées, sans propositions, non notées par la machine",
     "repartition": {
-      "manche 1 — vocabulaire et symboles": 8,
-      "manche 2 — lire et dérouler": 8,
-      "manche 3 — compteurs, tests et cas limites": 6,
-      "manche 4 — sujets type DNB": 8
+      "manche 1 — Symboles": 8,
+      "manche 2 — Déroulement": 8,
+      "manche 3 — Auto-test": 6,
+      "manche 4 — Transfert": 8
     },
-    "repartition_reponses": "8/8/7/7 sur les positions A/B/C/D, répartition déterministe (graine 2608)",
-    "aides": "2 niveaux par exercice, soit 60 aides rédigées",
-    "refutations": "3 par exercice, soit 90 réfutations rédigées",
-    "figures": 3,
-    "seuil_de_validation": "trois quarts des réponses justes par manche",
+    "seuils": "6/8, 6/8, 4/6, 6/8 — écrits à côté de chaque bouton « Vérifier », appliqués tels quels",
+    "places_bonne_reponse": "8/8/7/7, chaque place une ou deux fois par manche, ni trois fois de suite, ni motif périodique (dnb_build.places, graine 2111)",
+    "aides": "2 par exercice (60) ; un coup de pouce par question de l'épreuve (4)",
+    "refutations": "3 par exercice (90), citées par leur texte ; chaque pourquoi sert aussi à « Revoir mon erreur »",
+    "schemas": 12,
     "regles_appliquees": [
-      "n°29 mode essentiel persistant",
-      "n°30 bandeau de tâches, une manche = une tâche",
-      "n°33 aération : une idée, un bloc",
-      "n°34 étiquettes, alternatives textuelles, aucun défilement horizontal"
+      "n°29 mode essentiel",
+      "n°30 bandeau de tâches",
+      "n°101 manche suivante",
+      "n°300 boutons radio",
+      "n°305 page autonome hors ligne",
+      "n°311 rappel replié après la manche 1",
+      "n°326 onglets au clavier",
+      "n°331 le schéma sous les yeux",
+      "n°338 mêmes nombres",
+      "n°340 validations qui disent vrai",
+      "n°341 propositions sans indice",
+      "n°343 une question se lit seule"
     ],
-    "regle_sans_objet": "n°31 version étayée : la page ne demande aucune production écrite (réponses par liste déroulante, choix hérité de la méthode pour les élèves DYS)",
-    "tests": "21 tests Playwright exécutés, 21 passés"
+    "tests": "tests_entrainement_dnb.py : 52 tests exécutés, 52 passés (21/11/2026)"
   },
-  "medias_licences": "3 SVG originaux CC0 déjà produits pour le lot 3e_C6.2, réutilisés ici (voir SOURCES_MEDIAS.md). Aucun média nouveau, aucune capture propriétaire.",
+  "medias_licences": "SVG originaux CC0, écrits par dnb_schemas.py pour ce dépôt (voir SOURCES_MEDIAS.md). Aucun média extérieur, aucune capture.",
   "hors_perimetre_modifie": [
     "README.md du dossier",
     "SOURCES_MEDIAS.md du dossier",
@@ -56,5 +66,7 @@
     "nouveautes.json (+1)",
     "JOURNAL_DES_DECISIONS.md"
   ],
-  "prive_non_publie": "aucune évaluation sommative incluse"
+  "prive_non_publie": "aucune évaluation sommative incluse",
+  "date_revision": "2026-11-21",
+  "branche_revision": "fable/entrainement-dnb-suite-audit"
 }

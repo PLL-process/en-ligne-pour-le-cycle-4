@@ -135,12 +135,8 @@ JUGES = {
     T2 + "C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html": {
         "🔔 La sonnette connectée": "transfert : l'élève applique les fonctions de la chaîne à un objet nouveau, de mémoire"},
     T2 + "C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.2/entrainement_dnb_algorigrammes.html": {
-        "Exercice 3 — Début et fin": "question de connaissance sur les symboles de l'algorigramme",
-        "Exercice 6 — Le mot-clé de départ": "question de connaissance ; l'algorigramme n'est cité que dans les aides",
-        "Exercice 7 — Le mot-clé de répétition": "question de connaissance ; l'algorigramme n'est cité que dans les aides",
-        "Exercice 8 — L'ordre de lecture": "question de connaissance sur la lecture d'un algorigramme",
-        "Exercice 9 — Lire un algorithme simple": "« le schéma de base entrée → traitement → sortie » est une phrase de la correction",
-        "Exercice 21 — L'indentation": "question de connaissance ; l'algorigramme n'est cité que dans l'aide"},
+        "Exercice 1 — Ce qu'est un algorithme": "« un schéma qui montre les pièces » est une proposition fausse, réfutée",
+        "Exercice 7 — Le mot-clé de la répétition": "question de connaissance ; l'algorigramme n'est cité que dans l'aide 2"},
     T2 + "C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.2/sequence_3e_C6.2_auto_test_station.html": {
         "✏️ Activité 2 — CONCEVOIR l'algorigramme": "conception sans modèle, voulue (« avant toute référence »)"},
     T3 + "C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html": {

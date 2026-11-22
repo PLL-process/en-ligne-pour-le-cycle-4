@@ -4,94 +4,242 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thème 2 · Martinique — 3e · Entraînement DNB : lire et interpréter un algorigramme</title>
+<meta name="description" content="Entraînement au brevet, 3e : lire, dérouler et modifier un algorigramme. 30 exercices en quatre manches, puis une épreuve écrite. Page autonome, hors ligne.">
+<!-- Page fabriquée par _outils/dnb_build.py (banque : dnb_exercices.py, schémas : dnb_schemas.py, gabarit : ce
+     fichier). Ne pas la modifier à la main : la régénérer, puis rejouer les quatre outils d'injection (dnb_build.py
+     le rappelle en fin d'exécution). -->
 <style>
   :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;
         --head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88;
-        --input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+        --input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89;
+        /* audit du 21/11/2026 : le contour d'un choix doit se voir (3:1 au moins sur la carte) — #7093ce ≈ 5:1 */
+        --choix-bd:#7093ce;--doc-bg:#061330}
   *{box-sizing:border-box}
   body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;
        padding:0 0 44px;line-height:1.6}
   .page{max-width:940px;margin:0 auto;padding:0 16px}
-  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
-  h2{font-size:1.12em;color:var(--head);margin:18px 0 8px}
-  h3{font-size:1em;color:var(--hl);margin:20px 0 6px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px;line-height:1.3}
+  h2{font-size:1.12em;color:var(--head);margin:18px 0 8px;line-height:1.35}
+  h3{font-size:1em;color:var(--hl);margin:4px 0 8px;line-height:1.4}
+  h4{font-size:.95em;color:var(--title);margin:14px 0 6px}
   .sous{text-align:center;color:var(--sub);margin:0 0 12px}
   .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
   .badge.niveau{background:#0d2347;color:var(--hl)}
   .badge.code{background:#173666;color:#fff}
   .badge.theme{background:#2b1a3f;color:var(--head)}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;
-        padding:14px 18px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
   .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
-  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;
-       cursor:pointer;font-family:inherit;font-weight:600;font-size:.92em}
-  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
-  .btn:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--hl);outline-offset:2px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;min-height:40px;
+       cursor:pointer;font-family:inherit;font-weight:600;font-size:.92em;line-height:1.3}
+  .btn:hover{filter:brightness(1.15)}
+  .btn.ghost{background:transparent;border:1px solid var(--choix-bd);color:var(--sub)}
+  .btn:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--hl);outline-offset:2px}
   .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .alerte-stockage{max-width:940px;margin:10px auto;padding:10px 14px;border-radius:10px;border:1px solid #ff9aa5;
+       background:rgba(255,123,136,.14);color:#ffd0d6;font-size:.9em}
   .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
-  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress{background:var(--input-bg);border:1px solid var(--choix-bd);border-radius:999px;height:12px;overflow:hidden}
   .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
   #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  /* « Où en suis-je ? » : le bilan qui se relit après une reprise */
+  .ou-jen-suis{max-width:908px;margin:10px auto}
+  @media (max-width:940px){.ou-jen-suis{margin:10px 16px}}
+  .ou-jen-suis summary{font-weight:700;color:var(--title);cursor:pointer}
+  .ou-jen-suis ul{list-style:none;margin:8px 0 0;padding:0}
+  .ou-jen-suis li{padding:6px 0;border-top:1px solid rgba(112,147,206,.25);font-size:.9em}
+  .ou-jen-suis li:first-child{border-top:0}
+  .ou-jen-suis .m-nom{font-weight:700;color:var(--text)}
+  .ou-jen-suis .m-detail{display:block;color:var(--sub)}
   .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
-  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
-    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;
+  .seance-tab{flex:1;min-width:120px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--choix-bd);cursor:pointer;text-align:center;font-size:.84em;
     font-weight:600;color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab small{display:block;font-weight:700;font-size:1.05em;color:var(--hl)}
   .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab.active small{color:#fff}
   .seance-tab .done{color:var(--ok)}
   .seance-panel{display:none}
   .seance-panel.active{display:block}
-  .exo{border-left:3px solid var(--input-bd);padding-left:14px;margin:18px 0}
-  .assoc{margin:8px 0}
-  .assoc label{display:block;margin-bottom:5px}
-  select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);
-         border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
-  pre.algo{background:#08132c;border:1px solid var(--input-bd);border-radius:9px;padding:11px 14px;
-           font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.88em;overflow-x:auto;white-space:pre}
-  .ex-figure{margin:10px 0}
-  .ex-figure img{width:100%;max-width:700px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
-  .ex-figure figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
-  details.aide,details.correction{margin:6px 0;border:1px solid var(--input-bd);border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
-  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  /* ── les exercices ── */
+  .exo{border-left:4px solid var(--input-bd);padding:10px 0 10px 14px;margin:22px 0}
+  .exo[data-etat="juste"]{border-left-color:var(--ok)}
+  .exo[data-etat="faux"]{border-left-color:var(--err)}
+  .exo[data-etat="vide"]{border-left-color:#8796b3}
+  .exo-tete{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;margin-bottom:6px}
+  .exo-tete h3{margin:0;flex:1 1 260px}
+  .tag{font-size:.72em;padding:2px 9px;border-radius:999px;border:1px solid var(--border);white-space:nowrap}
+  .tag.cle{background:#2a2410;color:var(--warn);border-color:#8a7330}
+  .tag.rev{background:#13243f;color:var(--sub)}
+  .etat{font-size:.8em;font-weight:700;padding:2px 10px;border-radius:999px;white-space:nowrap}
+  .etat:empty{display:none}
+  .etat.juste{background:rgba(129,251,161,.14);color:var(--ok)}
+  .etat.faux{background:rgba(255,123,136,.16);color:#ffc2c9}
+  .etat.vide{background:rgba(155,190,252,.12);color:var(--sub)}
+  .etat.modifie{background:rgba(255,214,107,.14);color:var(--warn)}
+  /* n°300 : la question se lit pendant qu'on y répond — groupe de boutons radio, énoncé dans la légende */
+  fieldset.qcm-groupe{border:0;margin:10px 0 6px;padding:0;min-width:0}
+  fieldset.qcm-groupe legend{padding:0;margin:0 0 8px;font-weight:600;color:var(--text);line-height:1.5;white-space:normal}
+  .qcm-option{display:flex;align-items:center;gap:10px;margin:7px 0;padding:9px 12px;border:1.5px solid var(--choix-bd);
+    border-radius:10px;background:var(--input-bg);cursor:pointer;transition:background .15s,border-color .15s}
+  .qcm-option:hover{background:#10264d}
+  .qcm-option input{width:20px;height:20px;flex:none;margin:0;accent-color:var(--hl);cursor:pointer}
+  .qcm-option label{flex:1;min-width:0;cursor:pointer;overflow-wrap:anywhere;line-height:1.45}
+  .qcm-option:has(input:checked){border-color:var(--hl);background:rgba(97,218,251,.12);box-shadow:inset 4px 0 0 var(--hl)}
+  .qcm-option .icone-forme{flex:none}
+  .exo[data-etat="faux"] .qcm-option:has(input:checked){border-color:var(--err);box-shadow:inset 4px 0 0 var(--err)}
+  .exo[data-etat="juste"] .qcm-option:has(input:checked){border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+  /* prédire avant de voir les propositions */
+  .prediction{margin:8px 0;padding:10px 12px;border:1px dashed var(--choix-bd);border-radius:10px}
+  .prediction label{display:block;margin-bottom:6px;font-weight:600;color:var(--warn)}
+  .prediction .ligne{display:flex;gap:8px;flex-wrap:wrap}
+  .prediction input{flex:1 1 160px;min-width:0;background:var(--input-bg);color:var(--text);border:1px solid var(--choix-bd);
+    border-radius:8px;padding:8px 10px;font:inherit}
+  .voile{display:none}
+  .voile.vu{display:block}
+  /* revoir mon erreur : ce qui cloche dans le choix, sans la solution */
+  .revoir{margin:8px 0;padding:10px 13px;border-radius:10px;background:rgba(255,123,136,.10);border:1px solid #c9566a}
+  .revoir p{margin:4px 0}
+  .revoir .btn{margin-top:6px;padding:7px 12px;min-height:36px;font-size:.86em}
+  /* documents */
+  .doc{margin:10px 0}
+  .doc .doc-titre{font-size:.84em;color:var(--sub);margin:0 0 5px;font-weight:600}
+  .algo-svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto;border-radius:14px}
+  .doc details.desc-schema{max-width:440px;margin:6px auto 0}
+  .doc details.desc-schema summary{font-size:.84em}
+  .doc details.desc-schema ol{font-size:.86em;color:var(--sub);margin:6px 0;padding-left:22px}
+  .doc details.desc-schema li{margin:3px 0}
+  .loupe-indice{font-size:.78em;color:var(--sub);text-align:center;margin:4px 0 0}
+  pre.algo{background:#08132c;border:1px solid var(--input-bd);border-radius:9px;padding:11px 14px;margin:8px 0;
+           font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.9em;
+           overflow-x:auto;white-space:pre;line-height:1.55;color:var(--text)}
+  .tableau-defile{overflow-x:auto;margin:8px 0}
+  table.trace{border-collapse:collapse;width:100%;min-width:300px;font-size:.9em}
+  table.trace caption{text-align:left;color:var(--sub);font-size:.86em;padding-bottom:4px;caption-side:top}
+  table.trace th,table.trace td{border:1px solid #3f6bb5;padding:6px 9px;text-align:left;vertical-align:middle}
+  table.trace th{background:#122a52;color:var(--title);font-weight:700}
+  table.trace td{background:rgba(6,19,48,.6)}
+  table.trace input{width:4.2em;background:var(--input-bg);color:var(--text);border:1.5px solid var(--choix-bd);border-radius:6px;
+    padding:5px 7px;font:inherit}
+  table.trace td.case-ok input{border-color:var(--ok)}
+  table.trace td.case-ko input{border-color:var(--err)}
+  .marque{font-weight:700;margin-left:4px}
+  code{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.92em;
+       color:var(--hl);background:#08132c;padding:1px 5px;border-radius:4px;white-space:nowrap}
+  /* aides et corrections */
+  details.aide,details.correction{margin:7px 0;border:1px solid var(--input-bd);border-radius:9px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub);min-height:28px}
   details.correction summary{color:var(--warn)}
   details.correction ul{margin:6px 0;padding-left:22px}
-  details.correction li{margin:5px 0}
+  details.correction li{margin:7px 0}
+  details.correction .copie{border-left:3px solid var(--ok);padding:4px 0 4px 10px;margin:6px 0}
   .retenir{color:var(--ok)}
-  .tag-dnb{font-size:.7em;padding:2px 9px;border-radius:999px;background:#2b1a3f;color:var(--head);
-           border:1px solid var(--border);vertical-align:middle}
-  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .apres{color:var(--text)}
+  .critere{font-size:.9em;color:var(--sub)}
+  .feedback{margin:10px 0;padding:10px 14px;border-radius:10px;display:none;line-height:1.55}
   .feedback.show{display:block}
-  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
-  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
-  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
-  /* Règle d'or n°29 — mode essentiel */
-  body.essentiel .referentiel-card, body.essentiel details.correction,
-  body.essentiel .approfondissement{display:none}
-  /* Règle d'or n°30 — tableau de bord des tâches : la barre COMPTE, ce bandeau SITUE */
+  .feedback p{margin:4px 0}
+  .feedback.ok{background:rgba(129,251,161,.12);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.12);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffc2c9}
+  .feedback a{color:inherit;text-decoration:underline}
+  .page-suivante{text-align:right;margin:6px 0 20px}
+  /* rappel de cours */
+  details.rappel > summary{color:var(--head)}
+  details.rappel > summary h2{display:inline;font-size:1.05em;margin:0}
+  .planche{list-style:none;margin:10px 0;padding:0}
+  .planche li{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid rgba(112,147,206,.25)}
+  .planche li:first-child{border-top:0}
+  .planche .forme{flex:none;width:64px;display:flex;justify-content:center}
+  .planche .forme svg{width:64px;height:auto}
+  .planche p{margin:0;flex:1;min-width:0}
+  .encadre{border:1.5px solid var(--warn);border-radius:12px;padding:10px 14px;margin:14px 0;background:rgba(255,214,107,.06)}
+  .encadre h3{color:var(--warn)}
+  .encadre ol{margin:6px 0;padding-left:22px}
+  .encadre li{margin:5px 0}
+  .a-toi{border:1.5px dashed var(--hl);border-radius:12px;padding:10px 14px;margin:14px 0}
+  .a-toi h3{color:var(--hl)}
+  /* épreuve écrite */
+  .question-ecrite{margin:16px 0}
+  .question-ecrite label.q{display:block;font-weight:600;margin-bottom:6px}
+  .question-ecrite textarea{width:100%;min-height:92px;background:var(--input-bg);color:var(--text);border:1.5px solid var(--choix-bd);
+    border-radius:9px;padding:9px 11px;font:inherit;line-height:1.5;resize:vertical}
+  .question-ecrite .etayee{font-size:.9em}
+  .grille label{display:flex;gap:10px;align-items:flex-start;margin:8px 0;cursor:pointer}
+  .grille input{width:20px;height:20px;flex:none;margin-top:3px;accent-color:var(--ok)}
+  .contre{color:#ffc2c9}
+  .note-relue{font-size:.9em;color:var(--sub)}
+  /* n°29 — mode essentiel : moins de texte autour, rien de ce qui aide à comprendre ne disparaît */
+  body.essentiel .complement, body.essentiel .approfondissement, body.essentiel .prediction{display:none}
+  body.essentiel .voile{display:block}
+  /* n°30 — tableau de bord des tâches : la barre COMPTE, ce bandeau SITUE */
   #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
     border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  @media (max-width:972px){#tachesBandeau{margin:10px 16px 14px}}
   #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
   #tachesBandeau ul{list-style:none;margin:0;padding:0}
-  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  #tachesBandeau li.faite{opacity:.65;text-decoration:line-through}
+  #ficheBilan{display:none}
   footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:24px}
-  @media(max-width:620px){.seance-tab{min-width:120px;font-size:.78em}}
+  @media(max-width:620px){.seance-tab{min-width:92px;font-size:.78em;padding:8px 4px} .card{padding:12px 13px} .exo{padding-left:11px}
+    .tableau-defile{overflow-x:auto}
+    table.trace{font-size:.84em} table.trace th,table.trace td{padding:5px 6px}
+    /* au téléphone, un schéma prend toute la largeur de la carte : son texte reste lisible sans loupe */
+    .exo .doc{margin-left:-26px;margin-right:-11px} .rappel .doc,#ep .doc{margin-left:-11px;margin-right:-11px}
+    .exo .doc .doc-titre,.exo .doc .loupe-indice,.exo .doc details{padding:0 11px 0 26px}
+    .rappel .doc .doc-titre,#ep .doc .doc-titre{padding:0 11px}}
   @media print{
     body{background:#fff;color:#111}
-    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note,#tachesBandeau,#navharm{display:none!important}
-    .seance-panel{display:block!important}
-    .card{background:#fff;border-color:#999}
-    h1,h2,h3{color:#111}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note,#tachesBandeau,#navharm,.ou-jen-suis,.revoir,.loupe-indice,
+    .alerte-stockage,.prediction{display:none!important}
+    /* audit du 21/11/2026, sortie papier : on imprime la manche ouverte (39 pages pour la page entière, schémas compris),
+       les replis fermés ne prennent aucune place, les schémas passent à 8 cm, le texte est noir sur blanc */
+    .seance-panel{display:none!important}
+    .seance-panel.active{display:block!important}
+    .voile{display:block!important}
+    details:not([open]){display:none!important}
+    .card{background:#fff;border-color:#999;break-inside:auto;padding:8px 12px;margin:8px 0}
+    .exo{margin:10px 0;padding:4px 0 4px 10px}
+    .card,.card p,.card li,legend,label,td,th,summary,.critere,.apres,.complement,.copie,pre.algo{color:#111!important}
+    pre.algo{background:#fff!important;border-color:#999!important;white-space:pre-wrap}
+    .algo-svg{max-width:280px}
+    .algo-svg.haut{max-width:215px}
+    .exo{break-inside:avoid;page-break-inside:avoid}
+    #methode,.badges,.sous,.complement,.desc-schema,.approfondissement,footer > p:first-child{display:none!important}
+    footer{margin-top:6px;break-before:avoid;page-break-before:avoid}
+    table.trace input{background:#fff!important;color:#111!important;border-color:#777!important}
+    h1,h2,h3,h4{color:#111;break-after:avoid;page-break-after:avoid}
+    p,li{orphans:3;widows:3}
+    figure,.doc,table,pre,fieldset.qcm-groupe{break-inside:avoid;page-break-inside:avoid}
     details{border-color:#999}details[open] summary{color:#111}
+    .qcm-option{background:#fff!important;border-color:#777!important;box-shadow:none!important;padding:3px 9px;margin:3px 0}
+    .qcm-option:has(input:checked){border:2px solid #111!important}
+    .etat{border:1px solid #777}
+    body.imprime-fiche > :not(#ficheBilan){display:none!important}
+    body.imprime-fiche #ficheBilan{display:block!important;color:#111}
   }
+  #ficheBilan h2{color:#111;margin:0 0 6px}
+  #ficheBilan h3{color:#111;margin:12px 0 4px}
+  #ficheBilan p,#ficheBilan li{margin:2px 0;font-size:10.5pt}
+  #ficheBilan .reponse{border-left:2px solid #999;padding-left:8px;white-space:pre-wrap}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+@media (pointer:coarse){.qcm-option{min-height:48px}}
 </style>
+<!-- code coloré façon IDE (n°13) : copie, faite par dnb_build.py, de _ressources-communes/code-colore/ — la page
+     se copie seule sur un poste sans réseau, sans dossier à côté -->
+<style id="code-colore-css">
+@@CODE_COLORE_CSS@@
+</style>
+<script id="code-colore-js">
+@@CODE_COLORE_JS@@
+</script>
 </head>
 <body>
 <style id="navharm-css">
-#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+#navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
  padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 #navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
@@ -102,13 +250,16 @@
 
 @media print{
 /* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
-  #q1,#q10,#q11,#q12,#q13,#q14,#q15,#q16,#q17,#q18,#q19,#q2,#q20,#q21,#q22,#q23,#q24,#q25,#q26,#q27,#q28,#q29,#q3,#q30,#q4,#q5,#q6,#q7,#q8,#q9,.aide,.algo,.badge,.correction,.loupe-cliquable,.tag-dnb{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .aide,.algo,.badge,.correction,.loupe-cliquable,.tag{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
   .retenir{color:#048827!important}
-  .aide summary,.assoc option{color:#0b1b39!important}
+  .aide summary{color:#0b1b39!important}
   .badge{color:#0d2347!important}
-  .ex-figure figcaption,.sous{color:#1a6af8!important}
-  .tag-dnb{color:#2b1a3f!important}
+  .doc .doc-titre,.sous,.critere{color:#1a6af8!important}
+  .tag{color:#2b1a3f!important}
   .correction summary{color:#946b00!important}
+  table.trace th{background:#e8eefc!important;color:#111!important}
+  table.trace td{background:#fff!important;color:#111!important}
+  .algo-svg{print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
 
   /* ── Règle d'or n°303 — un lien se lit ───────────────────────────
@@ -121,33 +272,41 @@
     a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
 </style>
-<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a>  <a href="../3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">&#8592; La séquence de 3e</a>
-  <a href="../3e_C6.1/qcm_3e_C6.1-C6.3_programmer_alerte.html">&#129504; Le QCM</a>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a>
+  <a href="../3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">&#8592; Programmer l'alerte</a>
+  <a href="sequence_3e_C6.2_auto_test_station.html">🩺 Atelier C6.2 · auto-test</a>
 </nav>
 
+<main id="principal">
 <div class="page">
 <h1>🧠 Entraînement DNB — lire et interpréter un algorigramme</h1>
-<p class="sous">@@TOTAL@@ exercices en @@NBMANCHES@@ manches · corrections qui expliquent chaque réponse fausse</p>
+<p class="sous">@@TOTAL@@ exercices en @@NBMANCHES@@ manches, puis une épreuve écrite · des corrections qui expliquent chaque réponse</p>
 <div class="badges">
   <span class="badge niveau">3e</span>
   <span class="badge code">Entraînement — brevet</span>
   <span class="badge theme">Thème 2 · ressource d'entraînement, pas une séquence</span>
 </div>
 <div class="toolbar">
-  <button class="btn" id="btnPrint">🖨 Imprimer</button>
-  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
-  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn" id="btnPrint" type="button">🖨 Imprimer la manche ouverte</button>
+  <button class="btn" id="btnFiche" type="button">📄 Ma fiche bilan</button>
+  <button class="btn ghost" id="btnReset" type="button">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
-<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
-rien n'est envoyé en ligne. Le <b>mode essentiel</b> masque les corrections
-et les compléments si la page te paraît chargée.</p>
-<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;: rien n'est envoyé en ligne.
+<br>Le <b>mode essentiel</b> retire les textes d'accompagnement&nbsp;: les aides, «&nbsp;Revoir mon erreur&nbsp;», le rappel et les corrections restent.</p>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime «&nbsp;📄 Ma fiche bilan&nbsp;» si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
+<p class="alerte-stockage" id="alerteStockage" role="alert" aria-live="assertive" hidden>⚠️ <b>Ta progression n'est pas enregistrée</b>&nbsp;: ce navigateur refuse la sauvegarde (navigation privée, stockage plein ou bloqué).<br>Tes réponses seront perdues à la fermeture de la page&nbsp;: imprime «&nbsp;📄 Ma fiche bilan&nbsp;» avant de partir.</p>
 </div>
 
 <div class="progress-wrap">
-  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="@@NBMANCHES@@" aria-valuenow="0" aria-label="Progression"><div id="progFill"></div></div>
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="@@NBMANCHES@@" aria-valuenow="0" aria-label="Manches validées"><div id="progFill"></div></div>
   <p id="progTxt">0 / @@NBMANCHES@@ manches validées</p>
 </div>
+
+<details class="card ou-jen-suis" id="ouJenSuis">
+  <summary>📍 Où en suis-je&nbsp;? <span id="ouJenSuisResume"></span></summary>
+  <ul id="ouJenSuisListe"></ul>
+</details>
 
 <div class="seance-tabs" role="tablist" id="seances" aria-label="Manches d'entraînement">
   @@ONGLETS@@
@@ -156,60 +315,152 @@ et les compléments si la page te paraît chargée.</p>
 
 <div class="page">
 
-<section class="card referentiel-card">
-  <h2>📚 Rappel de cours — algorithme et algorigramme</h2>
-  <p>Un <b>algorithme</b> est une suite <b>ordonnée</b> d'instructions qui résout un problème.
-  On peut l'exécuter pas à pas, sans rien deviner.</p>
-  <p>Un <b>algorigramme</b> en est la représentation graphique. Il utilise cinq symboles
-  normalisés, et cinq seulement&nbsp;:</p>
-  <ul>
-    <li><b>Terminal</b> (arrondi)&nbsp;: DÉBUT et FIN, une seule fois chacun.</li>
-    <li><b>Rectangle</b>&nbsp;: un traitement — une flèche entre, une flèche sort.</li>
-    <li><b>Losange</b>&nbsp;: une décision — une flèche entre, <b>deux</b> sortent, étiquetées.</li>
-    <li><b>Parallélogramme</b>&nbsp;: une entrée ou une sortie de donnée.</li>
-    <li><b>Flèche</b>&nbsp;: le sens du parcours, sans ambiguïté.</li>
-  </ul>
-  <figure class="ex-figure">
-    <img src="Images/symboles_algorigramme.svg" alt="Planche des cinq symboles normalisés de l'algorigramme : terminal arrondi pour début et fin, rectangle pour un traitement, losange pour une décision avec deux sorties étiquetées, parallélogramme pour une entrée ou une sortie, flèche pour le sens du parcours.">
-    <figcaption>📷 Les cinq symboles, et ce que chacun promet</figcaption>
-  </figure>
-  <p>Trois structures suffisent à tout écrire&nbsp;: la <b>séquence</b> (les instructions
-  s'enchaînent), la <b>condition</b> (SI … ALORS … SINON) et la <b>boucle</b> (TANT QUE).</p>
-</section>
+<details class="card rappel" id="rappel" open>
+  <summary><h2>📖 Rappel de cours — les cinq repères, et comment suivre un algorigramme</h2></summary>
+  <p>Un <b>algorithme</b> est une suite <b>ordonnée</b> d'instructions qui résout un problème&nbsp;: on peut l'exécuter pas à pas, sans rien deviner.
+  <br>Un <b>algorigramme</b> en est le dessin.</p>
 
-<section class="card">
+  <h3>Les cinq repères de cet entraînement</h3>
+  <p>Pour cet entraînement, tu utiliseras <b>cinq repères graphiques</b>.
+  <br>Il en existe d'autres (par exemple le <i>connecteur</i>, un petit cercle qui relie deux morceaux d'un même schéma)&nbsp;: tu ne les rencontreras pas ici.</p>
+  <ul class="planche">
+    <li><span class="forme">@@ICONE:terminal@@</span><p><b>Terminal</b>, aux bords arrondis&nbsp;: <b>DÉBUT</b> et <b>FIN</b> d'un traitement qui se termine, comme l'auto-test du matin.
+    <br>Un système qui surveille en continu revient lire son capteur&nbsp;: son parcours n'atteint pas FIN.</p></li>
+    <li><span class="forme">@@ICONE:rectangle@@</span><p><b>Rectangle</b>&nbsp;: un traitement à l'intérieur du système — un calcul, une affectation comme <code>defauts ← defauts + 1</code>.
+    <br>Une flèche entre, une flèche sort.</p></li>
+    <li><span class="forme">@@ICONE:losange@@</span><p><b>Losange</b>&nbsp;: une question fermée.
+    <br>Une flèche entre, <b>deux</b> sortent, étiquetées «&nbsp;oui&nbsp;» et «&nbsp;non&nbsp;».</p></li>
+    <li><span class="forme">@@ICONE:parallelogramme@@</span><p><b>Parallélogramme</b>&nbsp;: une donnée qui <b>entre</b> (lire un capteur) ou qui <b>sort</b> (afficher, envoyer un message, commander un actionneur).</p></li>
+    <li><span class="forme"><svg viewBox="0 0 64 20" width="64" height="20" aria-hidden="true" focusable="false" data-loupe="non"><path d="M2 10 H52" stroke="#8fb8ff" stroke-width="2.4"/><path d="M50 4 L62 10 L50 16 z" fill="#8fb8ff"/></svg></span><p><b>Flèche</b>&nbsp;: le sens du parcours.
+    <br>On suit sa <b>pointe</b>, même quand elle remonte.</p></li>
+  </ul>
+  <p>Trois structures suffisent à tout écrire&nbsp;:
+  <br>· la <b>séquence</b> — les instructions s'enchaînent&nbsp;;
+  <br>· la <b>condition</b> (SI … ALORS … SINON) — un losange, on choisit <b>une</b> branche, une fois&nbsp;;
+  <br>· la <b>boucle</b> (TANT QUE) — un losange <b>et</b> une flèche de retour qui ramène au test.</p>
+
+  <div class="encadre" id="suivre">
+    <h3>🧭 Comment suivre un algorigramme&nbsp;?</h3>
+    <ol>
+      <li>Repère d'abord ce que <b>reçoit</b> le système, ce qu'il doit <b>produire</b>, et la <b>valeur de départ</b> de chaque variable.</li>
+      <li>Pose ton doigt sur DÉBUT et suis <b>une flèche à la fois</b>, dans le sens de sa pointe.</li>
+      <li>À chaque losange&nbsp;: lis la question, <b>remplace la variable par sa valeur actuelle</b>, puis suis une seule branche, «&nbsp;oui&nbsp;» ou «&nbsp;non&nbsp;».</li>
+      <li>Quand une instruction modifie une valeur, <b>note la nouvelle valeur</b> (sur une feuille de brouillon).</li>
+      <li>Si une flèche te ramène à un test, <b>recommence avec cette nouvelle valeur</b>.</li>
+      <li>À la fin, distingue ce que <b>contient la variable</b>, ce que le système <b>a affiché</b>, et ce qu'un destinataire <b>a vraiment reçu</b>.</li>
+    </ol>
+  </div>
+
+  <h3>Deux signes à ne pas confondre</h3>
+  <p><code>←</code> <b>range</b> une valeur dans une variable (on dit «&nbsp;reçoit&nbsp;»)&nbsp;: <code>compteur ← compteur + 1</code>.
+  <br><code>=</code> <b>compare</b> deux valeurs, dans un losange&nbsp;: «&nbsp;compteur = 0&nbsp;?&nbsp;» se répond par oui ou non.
+  <br>Un compteur mis à 0, puis qui trouve une panne, vaut 1&nbsp;; si l'élément suivant fonctionne, il <b>reste à 1</b>&nbsp;: rien ne le fait redescendre.</p>
+
+  <h3>Un seuil s'essaie trois fois</h3>
+  <p>Écris l'unité, puis essaie une valeur <b>sous</b> le seuil, <b>pile sur</b> le seuil, et <b>au-dessus</b>.
+  <br><code>&gt;</code> et <code>&lt;</code> <b>excluent</b> l'égalité&nbsp;; <code>≥</code> et <code>≤</code> l'<b>incluent</b>.
+  <br>Sur un compteur entier (0, 1, 2…), «&nbsp;&gt; 0&nbsp;» et «&nbsp;≥ 1&nbsp;» disent la même chose.</p>
+
+  <h3>Une boucle se lit en trois gestes</h3>
+  <ol>
+    <li><b>Entoure le test</b>.</li>
+    <li><b>Souligne ce qui peut changer</b> d'un tour à l'autre.</li>
+    <li><b>Indique où l'on revient</b>.</li>
+  </ol>
+  <p>En pseudo-code, le bloc répété est <b>encadré</b> par TANT QUE … FIN TANT QUE et <b>décalé</b> vers la droite&nbsp;: ce qui est écrit après FIN TANT QUE ne s'exécute qu'une fois.</p>
+<pre class="algo" data-code-colore="algo">compteur ← 0
+TANT QUE il reste un voyant FAIRE
+  SI le voyant est en panne ALORS
+    compteur ← compteur + 1
+  FIN SI
+FIN TANT QUE
+Afficher compteur</pre>
+
+  <h3>ET, OU&nbsp;: essaie les quatre cas</h3>
+  <p>La porte d'un garage s'ouvre si «&nbsp;badge valide <b>ET</b> bouton appuyé&nbsp;». On essaie les quatre couples&nbsp;:</p>
+  <div class="tableau-defile"><table class="trace"><thead><tr><th scope="col">Badge valide&nbsp;?</th><th scope="col">Bouton appuyé&nbsp;?</th><th scope="col">badge ET bouton</th></tr></thead>
+  <tbody><tr><td>non</td><td>non</td><td>faux</td></tr><tr><td>non</td><td>oui</td><td>faux</td></tr><tr><td>oui</td><td>non</td><td>faux</td></tr><tr><td>oui</td><td>oui</td><td>vrai</td></tr></tbody></table></div>
+  <p><b>ET</b> n'est vrai que si les deux le sont. <b>OU</b> est vrai dès qu'un des deux l'est. <b>NON</b> inverse&nbsp;: NON vrai = faux.</p>
+
+  <h3>Un exemple guidé&nbsp;: une station du Lamentin teste deux voyants</h3>
+  <p><i>Exemple fictif, pour la classe.</i> Le compteur de défauts vaut 0 au départ. Un voyant qui échoue au test ajoute 1 au compteur.
+  <br>Après les deux tests, la station affiche le total, <b>une seule fois</b>.</p>
+  <div class="doc"><p class="doc-titre">📄 L'algorigramme de la station</p>@@SVG:voyants@@
+  <p class="loupe-indice">🔍 Touche ou clique le schéma pour l'agrandir.</p></div>
+  <p>Ce matin, le voyant A est en panne et le voyant B fonctionne. On suit le compteur ligne à ligne&nbsp;:</p>
+  <div class="tableau-defile"><table class="trace"><caption>La trace du modèle</caption>
+  <thead><tr><th scope="col">Étape</th><th scope="col">Résultat du test</th><th scope="col">Compteur avant</th><th scope="col">Compteur après</th><th scope="col">Affichage réalisé</th></tr></thead>
+  <tbody><tr><td>Mise à zéro</td><td>—</td><td>—</td><td>0</td><td>aucun</td></tr>
+  <tr><td>Voyant A</td><td>en panne</td><td>0</td><td>1</td><td>aucun</td></tr>
+  <tr><td>Voyant B</td><td>fonctionne</td><td>1</td><td>1</td><td>aucun</td></tr>
+  <tr><td>Après la boucle</td><td>—</td><td>1</td><td>1</td><td>1 défaut</td></tr></tbody></table></div>
+
+  <div class="a-toi" id="aToi">
+    <h3>✋ À toi&nbsp;: les deux voyants tombent en panne</h3>
+    <p>Refais les lignes de la trace avec ce nouveau matin.</p>
+    <div class="tableau-defile"><table class="trace"><thead><tr><th scope="col">Étape</th><th scope="col">Résultat du test</th><th scope="col">Compteur après</th></tr></thead>
+    <tbody><tr><td>Voyant A</td><td>en panne</td><td><input type="number" inputmode="numeric" id="ra_a" aria-label="Compteur après le voyant A"><span class="marque" id="m_ra_a"></span></td></tr>
+    <tr><td>Voyant B</td><td>en panne</td><td><input type="number" inputmode="numeric" id="ra_b" aria-label="Compteur après le voyant B"><span class="marque" id="m_ra_b"></span></td></tr>
+    <tr><td>Après la boucle&nbsp;: nombre affiché</td><td>—</td><td><input type="number" inputmode="numeric" id="ra_aff" aria-label="Nombre de défauts affiché après la boucle"><span class="marque" id="m_ra_aff"></span></td></tr></tbody></table></div>
+    <fieldset class="qcm-groupe" id="rappel_rz">
+      <legend>Avec ces deux pannes, on déplace «&nbsp;compteur ← 0&nbsp;» au <b>début de chaque tour</b>, dans la boucle. Quel nombre la station affiche-t-elle alors&nbsp;?</legend>
+      <div class="qcm-option"><input type="radio" name="rappel_rz" id="rappel_rz__1" value="0 défaut"><label for="rappel_rz__1">0 défaut</label></div>
+      <div class="qcm-option"><input type="radio" name="rappel_rz" id="rappel_rz__2" value="1 défaut"><label for="rappel_rz__2">1 défaut</label></div>
+      <div class="qcm-option"><input type="radio" name="rappel_rz" id="rappel_rz__3" value="2 défauts"><label for="rappel_rz__3">2 défauts</label></div>
+      <div class="qcm-option"><input type="radio" name="rappel_rz" id="rappel_rz__4" value="3 défauts"><label for="rappel_rz__4">3 défauts</label></div>
+    </fieldset>
+    <p class="critere">🎯 Critère de réussite&nbsp;: les quatre réponses justes.</p>
+    <button class="btn check" data-check="r" type="button">✅ Vérifier ma trace</button>
+    <div class="feedback" id="fbr" role="status"></div>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p><b>✅ La trace&nbsp;:</b> après le voyant A, le compteur vaut <b>1</b>&nbsp;; après le voyant B, il vaut <b>2</b>&nbsp;; après la boucle, la station affiche <b>2</b> défauts.</p>
+      <p class="copie"><b>✍️ Sur ta copie&nbsp;:</b> «&nbsp;Chaque voyant en panne ajoute 1 au compteur, qui garde sa valeur d'un tour à l'autre&nbsp;: 0 + 1 = 1, puis 1 + 1 = 2. Le total, 2, est affiché une seule fois, après la boucle.&nbsp;»</p>
+      <p><b>✅ La remise à zéro dans la boucle&nbsp;:</b> la station afficherait <b>1 défaut</b>. Au 2ᵉ tour, le compteur repart de 0, puis le voyant B en panne le fait passer à 1&nbsp;: <b>le premier défaut a été oublié</b>.</p>
+      <ul>
+        <li>«&nbsp;0 défaut&nbsp;» — la remise à zéro a lieu au <b>début</b> du tour, avant le test&nbsp;: le dernier voyant, en panne, ajoute encore 1.</li>
+        <li>«&nbsp;2 défauts&nbsp;» — c'est le bon résultat… mais seulement avec une mise à zéro avant la boucle, une seule fois.</li>
+        <li>«&nbsp;3 défauts&nbsp;» — il n'y a que deux voyants&nbsp;: le compteur ne peut pas dépasser 2.</li>
+      </ul>
+      <p class="retenir">🧠 À retenir&nbsp;: un compteur se met à zéro avant la boucle. Placée dans la boucle, la remise à zéro ne fait pas planter le programme&nbsp;: elle donne un résultat faux, sans prévenir.</p>
+    </details>
+  </div>
+</details>
+
+<section class="card complement" id="methode">
   <h2>🎯 Comment travailler cette page</h2>
-  <p>Réponds d'abord <b>sans ouvrir la correction</b>&nbsp;: c'est le seul moyen de savoir ce que
-  tu sais vraiment.</p>
-  <p>Ouvre ensuite la correction, <b>même quand tu as juste</b>. Elle explique pourquoi chacune
-  des trois autres réponses est fausse — et c'est là que se joue la note au brevet, parce que les
-  distracteurs du DNB sont conçus pour être plausibles.</p>
-  <p>Deux aides sont disponibles avant chaque correction. La première remet sur la piste, la
-  seconde explique le raisonnement complet. Les utiliser n'est pas tricher.</p>
+  <ol>
+    <li>Réponds d'abord <b>sans ouvrir l'aide ni la correction</b>&nbsp;: c'est le seul moyen de savoir ce que tu sais vraiment.</li>
+    <li>Clique sur «&nbsp;Vérifier la manche&nbsp;»&nbsp;: chaque exercice affiche <b>✔ juste</b>, <b>✘ à revoir</b> ou <b>○ à faire</b>.</li>
+    <li>Pour un ✘, lis «&nbsp;🔎 Revoir mon erreur&nbsp;», puis l'aide 1. Garde la correction pour la fin.</li>
+    <li>Après avoir choisi, <b>entraîne-toi à expliquer ton cheminement en une ou deux phrases</b>, sur une feuille de brouillon.
+    <br>Au brevet, la technologie se rédige&nbsp;: la correction te montre, à chaque exercice, ce qu'on peut écrire sur sa copie.</li>
+  </ol>
+  <p>🔑 marque les exercices <b>indispensables</b> de la manche 1&nbsp;; 🔁 ceux de <b>révision</b>.</p>
 </section>
 
 @@PANNEAUX@@
 
 <section class="card approfondissement">
   <h2>🔗 Pour aller plus loin</h2>
-  <p>Cette page <b>entraîne</b>&nbsp;: elle ne remplace pas une séquence. Pour apprendre à
-  <b>écrire</b> un algorithme de zéro, et pas seulement à en lire un&nbsp;:</p>
-  <p>➡ <a href="sequence_3e_C6.2_auto_test_station.html">L'auto-test de la station (3e_C6.2)</a>
-  — 3 séances, un besoin réel, un banc d'essai intégré.</p>
-  <p>➡ <a href="../3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">Programmer l'alerte
-  (3e_C6.1 · C6.3)</a> — lire les données d'un programme, puis le modifier et le tester.</p>
+  <p>Cette page <b>entraîne</b>&nbsp;: elle ne remplace pas une séquence. Pour <b>écrire</b> un algorithme de zéro, et pas seulement en lire un&nbsp;:</p>
+  <p>➡ <a href="sequence_3e_C6.2_auto_test_station.html">L'auto-test de la station (atelier 3e_C6.2)</a> — trois séances, un besoin réel, un banc d'essai intégré.</p>
+  <p>➡ <a href="../3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">Programmer l'alerte (3e_C6.1 · C6.3)</a> — lire les données d'un programme, puis le modifier et le tester.</p>
 </section>
 
 <footer>
-  <p>Entraînement DNB · Thème 2 · Technologie cycle 4 (2024) — page autonome, hors ligne,
-  aucune donnée envoyée.</p>
+  <p>Entraînement DNB · Thème 2 · Technologie cycle 4 (2024) — page autonome, hors ligne, aucune donnée envoyée.</p>
 <style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>
 </footer>
 </div>
 
+</main>
+<section id="ficheBilan" aria-hidden="true"></section>
 <script>
 "use strict";
-const KEY="entrainement_dnb_algorigrammes";
+const KEY="entrainement_dnb_algorigrammes_v2";
+/* la version du 08/08/2026 gardait ses choix sous une autre clé, avec d'autres textes : on ne la relit pas (une
+   « manche validée » sur d'anciennes questions mentirait), mais « Effacer » l'efface aussi */
+const ANCIENNE="entrainement_dnb_algorigrammes";
 const $=id=>document.getElementById(id);
 /* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
    #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
@@ -248,94 +499,260 @@ function demande(cle,msg){
   signale(msg + " — clique une seconde fois pour confirmer.");
   return false;
 }
-const val=id=>{ const e=$(id); return e ? e.value : ""; };
+
+/* ══════ Les données de la page (écrites par dnb_build.py) ══════ */
+const MANCHES=@@MANCHES_JS@@;
+const NB_EP=4;
 window.__valid = window.__valid || {};
 window.__exp = window.__exp || {};
+window.__res = window.__res || {};
+const choix=nom=>{ const r=document.querySelector('input[name="'+nom+'"]:checked'); return r ? r.value : ""; };
+const num=id=>{ const e=$(id); return e && e.value!=="" ? Number(e.value) : null; };
+const mancheDe=id=>Object.keys(MANCHES).find(m=>MANCHES[m].ids.includes(id));
+const liste=a=>a.length<2 ? a.join("") : a.slice(0,-1).join(", ")+" et "+a[a.length-1];
+const echap=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* ══════ Sauvegarde locale ══════ */
 function collect(){
-  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
-  document.querySelectorAll("select").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  const o={v:2, radios:{}, champs:{}, cases:{}, valid:window.__valid, exp:window.__exp, res:window.__res};
+  document.querySelectorAll('main input[type=radio]:checked').forEach(r=>{ o.radios[r.name]=r.value; });
+  document.querySelectorAll('main input[type=text], main input[type=number], main textarea').forEach(e=>{
+    if(e.id && e.value!=="") o.champs[e.id]=e.value; });
+  document.querySelectorAll('main input[type=checkbox]').forEach(e=>{ if(e.id) o.cases[e.id]=e.checked; });
   return o;
 }
-function save(silencieux){
-  try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){}
-  if(!silencieux){}
+/* audit du 21/11/2026 : une écriture refusée par le navigateur ne passe plus sous silence */
+function stockage(ok){ const a=$("alerteStockage"); if(a) a.hidden=ok; }
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(collect())); stockage(true); }
+  catch(err){ stockage(false); }
 }
 function restore(){
   let o=null;
-  try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){ stockage(false); }
   if(!o) return;
-  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
-  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+  Object.entries(o.radios||{}).forEach(([n,v])=>{
+    document.querySelectorAll('input[name="'+n+'"]').forEach(r=>{ if(r.value===v) r.checked=true; }); });
+  Object.entries(o.champs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  Object.entries(o.cases||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.checked=!!v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{}; window.__res=o.res||{};
 }
-document.addEventListener("change", ev=>{ if(ev.target.tagName==="SELECT") save(true); });
 
 $("btnPrint").addEventListener("click", ()=>window.print());
 $("btnReset").addEventListener("click", ()=>{
   if(demande("effacer-definitivement-tes-reponses","Effacer définitivement tes réponses enregistrées dans ce navigateur ?")){
-    localStorage.removeItem(KEY); location.reload(); }
+    try{ localStorage.removeItem(KEY); localStorage.removeItem(ANCIENNE);
+         localStorage.removeItem("seance-active:"+location.pathname); }catch(err){}
+    location.reload(); }
 });
 
-/* ══════ Onglets de manche ══════ */
+/* ══════ Onglets ══════ */
+function ongletActif(){ const o=document.querySelector(".seance-tab.active"); return o ? o.dataset.panel : "m1"; }
 document.querySelectorAll(".seance-tab").forEach(tab=>{
   tab.addEventListener("click", ()=>{
     document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
     document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
     tab.classList.add("active"); tab.setAttribute("aria-selected","true");
     $(tab.dataset.panel).classList.add("active");
+    /* n°311 : le rappel est ouvert en manche 1, replié ensuite — il reste à un appui */
+    const r=$("rappel"); if(r) r.open = tab.dataset.panel==="m1" && !document.body.classList.contains("essentiel");
     majTaches();
     window.scrollTo({top:$("seances").offsetTop-8,
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   });
 });
+/* Règle d'or n°101 — chaque manche mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b=>b.addEventListener("click", ()=>{
+  const onglet=document.querySelector('.seance-tab[data-panel="'+b.dataset.vers+'"]');
+  if(onglet){ onglet.click(); onglet.focus(); }
+}));
 
-/* ══════ Vérificateurs ══════ */
+/* ══════ Prédire avant de voir les propositions ══════ */
+function montrer(id, enregistrer){
+  const f=$(id); if(!f) return;
+  f.classList.add("vu");
+  const b=document.querySelector('[data-montrer="'+id+'"]'); if(b) b.hidden=true;
+  if(enregistrer){ window.__exp["vu_"+id]=1; save(); }
+}
+document.querySelectorAll("[data-montrer]").forEach(b=>b.addEventListener("click", ()=>{
+  montrer(b.dataset.montrer, true);
+  const premier=document.querySelector('input[name="'+b.dataset.montrer+'"]'); if(premier) premier.focus();
+}));
+
+/* ══════ Vérificateurs ══════
+   Chaque manche rend : score, total, vides, le détail par exercice, et « valide » (le seuil écrit dans le critère). */
+function corriger(att){
+  let ok=0, vides=0; const detail={};
+  Object.entries(att).forEach(([id,v])=>{
+    const r=choix(id);
+    if(!r){ vides++; detail[id]="vide"; } else if(r===v){ ok++; detail[id]="juste"; } else detail[id]="faux";
+  });
+  return {ok:ok, vides:vides, detail:detail};
+}
 const CHECKS = {
-@@CHECKS@@
+@@CHECKS@@,
+  r: function(){
+    const attendu={ra_a:1, ra_b:2, ra_aff:2};
+    let ok=0; const detail={};
+    Object.entries(attendu).forEach(([id,v])=>{ const x=num(id); detail[id]= x===null ? "vide" : (x===v ? "juste" : "faux"); if(x===v) ok++; });
+    const rz=choix("rappel_rz"); detail.rappel_rz = !rz ? "vide" : (rz==="1 défaut" ? "juste" : "faux");
+    if(rz==="1 défaut") ok++;
+    return {score:ok, total:4, detail:detail, valide: ok >= 4};
+  }
 };
+
+const ETATS={juste:"✔ juste", faux:"✘ à revoir", vide:"○ à faire", modifie:"✏️ à vérifier"};
+function poserEtat(id, etat){
+  const chip=$("etat-"+id), art=$("exo"+id.slice(1)), rv=$("revoir-"+id);
+  if(chip){ chip.className="etat "+(etat||""); chip.textContent=etat ? ETATS[etat] : ""; }
+  if(art){ if(etat) art.dataset.etat=etat; else delete art.dataset.etat; }
+  if(!rv) return;
+  if(etat!=="faux"){ rv.hidden=true; rv.innerHTML=""; return; }
+  const c=document.querySelector('input[name="'+id+'"]:checked');
+  if(!c){ rv.hidden=true; return; }
+  rv.innerHTML='<p><b>🔎 Revoir mon erreur</b> — tu as choisi «&nbsp;'+echap(c.value)+'&nbsp;».</p>'
+    +'<p>'+echap(c.dataset.pourquoi||"")+'</p>'
+    +'<button type="button" class="btn ghost" data-aide1="'+id+'">💡 Ouvrir l\'aide 1</button>';
+  rv.hidden=false;
+  rv.querySelector("[data-aide1]").addEventListener("click", ()=>{
+    const a=document.querySelector("#exo"+id.slice(1)+" details.aide1");
+    if(a){ a.open=true; a.querySelector("summary").focus(); a.scrollIntoView({block:"nearest"}); }
+  });
+}
+function afficherEtats(m){
+  const d=window.__res[m]||{};
+  MANCHES[m].ids.forEach(id=>poserEtat(id, d[id]));
+}
+function lien(id){ return '<a href="#exo'+id.slice(1)+'">'+id.slice(1)+'</a>'; }
+function message(m, r){
+  const M=MANCHES[m], d=r.detail;
+  const faux=M.ids.filter(id=>d[id]==="faux"), vides=M.ids.filter(id=>d[id]==="vide");
+  const rens=M.total-r.vides;
+  let h='<p><b>📊 '+rens+' / '+M.total+' renseignés · '+r.score+' juste'+(r.score>1?'s':'')+' · '
+    +(r.valide ? '✅ seuil atteint' : '⏳ seuil pas encore atteint')+'</b> (au moins '+M.seuil+' justes sur '+M.total+').</p>';
+  if(faux.length) h+='<p>✘ À revoir&nbsp;: exercice'+(faux.length>1?'s ':' ')+liste(faux.map(lien))
+    +'. Commence par «&nbsp;🔎 Revoir mon erreur&nbsp;», puis l\'aide 1.</p>';
+  if(vides.length) h+='<p>○ À faire&nbsp;: exercice'+(vides.length>1?'s ':' ')+liste(vides.map(lien))+'.</p>';
+  if(r.valide && !faux.length && !vides.length)
+    h+='<p>🎉 Tout est juste. Avant de passer à la suite, choisis un exercice et explique ton cheminement en deux phrases, sur une feuille de brouillon&nbsp;: c\'est ce que demande le brevet.</p>';
+  else if(r.valide)
+    h+='<p>La manche est validée&nbsp;: termine quand même les exercices signalés, ce sont eux qui te font progresser.</p>';
+  return h;
+}
 document.querySelectorAll("[data-check]").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n);
+    if(n==="r"){
+      Object.entries(r.detail).forEach(([id,e])=>{
+        const mk=$("m_"+id); if(mk) mk.textContent= e==="juste" ? "✔" : (e==="faux" ? "✘" : "");
+        const td=$(id) && $(id).closest("td"); if(td){ td.classList.toggle("case-ok", e==="juste"); td.classList.toggle("case-ko", e==="faux"); }
+      });
+      fb.className="feedback show "+(r.valide ? "ok" : (r.score>=2 ? "mixte" : "err"));
+      fb.textContent = r.valide ? "🎉 4 / 4 : ta trace est juste. Lis quand même la correction : elle montre ce qu'on écrit sur sa copie."
+        : r.score+" / 4 justes. Reprends la ligne marquée ✘ avec la règle : un voyant en panne ajoute 1, et le compteur garde sa valeur d'un tour à l'autre.";
+      window.__valid.r=!!r.valide; save(); return;
+    }
+    window.__res[n]=r.detail;
+    window.__valid[n]=!!r.valide;
+    afficherEtats(n);
+    if(n==="3") marquerTrace();
     fb.className="feedback show " + (r.valide ? "ok" : (r.score >= r.total/2 ? "mixte" : "err"));
-    let msg = r.score + " / " + r.total + " réponses justes.";
-    if(r.vides) msg += " Il te reste " + r.vides + " exercice(s) sans réponse.";
-    else if(r.valide) msg += " Solide. Ouvre quand même les corrections : les explications des réponses fausses valent des points au brevet.";
-    else if(r.score >= r.total/2) msg += " La moitié est là. Reprends les corrections des exercices ratés, une par une.";
-    else msg += " Rien de grave : ouvre les aides de niveau 2, puis refais la manche. C'est exactement à ça que sert cette page.";
-    fb.textContent = msg;
-    window.__valid[n] = !!r.valide;
-    save(true); majProgress();
+    fb.innerHTML=message(n, r);
+    save(); majProgress();
   });
 });
-
-/* ══════ Progression ══════ */
-function majProgress(){
-  const v=window.__valid||{};
-  const n=[1,2,3,4].filter(k=>v[k]).length;
-  $("progTxt").textContent = n + " / @@NBMANCHES@@ manches validées";
-  $("progFill").style.width = (n/@@NBMANCHES@@*100)+"%";
-  $("progBar").setAttribute("aria-valuenow", n);
-  [1,2,3,4].forEach(k=>{ const d=$("done-m"+k); if(d) d.textContent = v[k] ? " ✔" : ""; });
-  majTaches();
+/* La trace de l'exercice 18 se complète à côté de la question : elle n'est pas notée, mais « Vérifier la manche 3 »
+   marque chaque case remplie */
+const TRACE={tr_1:1, tr_2:1, tr_3:2, tr_4:2};
+function marquerTrace(){
+  Object.entries(TRACE).forEach(([id,v])=>{
+    const x=num(id), mk=$("m_"+id), td=$(id) && $(id).closest("td");
+    const etat = x===null ? "" : (x===v ? "juste" : "faux");
+    if(mk) mk.textContent = etat==="juste" ? "✔" : (etat==="faux" ? "✘" : "");
+    if(td){ td.classList.toggle("case-ok", etat==="juste"); td.classList.toggle("case-ko", etat==="faux"); }
+  });
 }
+/* Une prédiction ou une case de trace n'est pas une réponse : la modifier ne retire pas la validation de la manche
+   (l'événement ne remonte pas jusqu'au bloc retrait-validation) — on l'enregistre ici */
+document.querySelectorAll(".prediction input, .trace-a-completer input").forEach(i=>["input","change"].forEach(t=>
+  i.addEventListener(t, ev=>{ ev.stopPropagation(); save(); })));
 
-/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
-const TACHES = {
-@@TACHES@@
-};
+/* une réponse changée après la vérification : l'exercice redevient « à vérifier » (la manche, elle, est retirée par
+   le bloc retrait-validation, règle d'or n°340) */
+document.addEventListener("change", ev=>{
+  const t=ev.target;
+  if(t.type==="radio" && /^q\d+$/.test(t.name)){
+    const m=mancheDe(t.name);
+    if(m && window.__res[m] && window.__res[m][t.name]){ window.__res[m][t.name]="modifie"; poserEtat(t.name,"modifie"); }
+  }
+  save(); majProgress();
+});
+document.addEventListener("input", ev=>{ if(ev.target.matches("textarea, input[type=text], input[type=number]")){ save(); majProgress(); } });
+
+/* ══════ Progression, tâches, « Où en suis-je ? » ══════ */
+function etatManche(m){
+  const M=MANCHES[m], d=window.__res[m]||{};
+  return {rens: M.ids.filter(id=>choix(id)).length, total:M.total,
+          faux: M.ids.filter(id=>d[id]==="faux"), vides: M.ids.filter(id=>!choix(id)),
+          valide: !!window.__valid[m], verifiee: Object.keys(d).length>0};
+}
+function etatEpreuve(){
+  const ecrites=[1,2,3,4].filter(k=>{ const e=$("ep"+k); return e && e.value.trim().length>0; }).length;
+  const cases=["crit1","crit2","crit3"].filter(k=>{ const e=$(k); return e && e.checked; }).length;
+  return {ecrites:ecrites, corr:!!window.__exp.ep_corr, cases:cases};
+}
+function majProgress(){
+  const ms=Object.keys(MANCHES), n=ms.filter(k=>window.__valid[k]).length, ep=etatEpreuve();
+  $("progTxt").textContent = n + " / " + ms.length + " manches validées · épreuve écrite : " + ep.ecrites + " / " + NB_EP + " réponses écrites";
+  $("progFill").style.width = (n/ms.length*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  ms.forEach(k=>{ const d=$("done-m"+k); if(d) d.textContent = window.__valid[k] ? " ✔" : ""; });
+  const de=$("done-ep"); if(de) de.textContent = ep.ecrites===NB_EP ? " ✔" : "";
+  majTaches(); majOuJenSuis();
+}
 function majTaches(){
   const hote=$("tachesBandeau"); if(!hote) return;
-  const onglet=document.querySelector(".seance-tab.active");
-  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
-  if(!bloc){ hote.hidden=true; return; }
-  hote.hidden=false;
-  const v=window.__valid||{};
-  const faites=bloc.taches.filter(t=>v[t.n]).length;
-  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
-    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
-    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+  const p=ongletActif();
+  let titre, taches;
+  if(p==="ep"){
+    const e=etatEpreuve();
+    titre="Épreuve écrite — l'abri à vélos";
+    taches=[{ok:e.ecrites===NB_EP, t:"Écrire les "+NB_EP+" réponses ("+e.ecrites+" / "+NB_EP+")"},
+            {ok:e.corr, t:"Lire la correction, question par question"},
+            {ok:e.cases>0, t:"Cocher la grille : ce que ma copie montre"}];
+  } else {
+    const m=p.slice(1), M=MANCHES[m], e=etatManche(m);
+    titre="Manche "+m+" · "+M.titre;
+    taches=[{ok:e.rens===e.total, t:"Répondre aux "+e.total+" exercices ("+e.rens+" / "+e.total+")"},
+            {ok:e.valide, t:"Vérifier : au moins "+M.seuil+" justes sur "+e.total}];
+    if(e.faux.length) taches.push({ok:false, t:"Reprendre "+(e.faux.length>1?"les exercices ":"l'exercice ")+liste(e.faux.map(x=>x.slice(1)))});
+  }
+  const faites=taches.filter(x=>x.ok).length;
+  hote.innerHTML="<span class='tb-titre'>"+titre+" — "+faites+" tâche"+(faites>1?"s":"")+" faite"+(faites>1?"s":"")+" sur "+taches.length+"</span><ul>"+
+    taches.map(x=>"<li class='"+(x.ok?"faite":"")+"'>"+(x.ok?"☑":"☐")+" "+x.t+"</li>").join("")+"</ul>";
 }
+function majOuJenSuis(){
+  const ul=$("ouJenSuisListe"); if(!ul) return;
+  let lignes="", total=0;
+  Object.keys(MANCHES).forEach(m=>{
+    const M=MANCHES[m], e=etatManche(m); total+=e.rens;
+    let d=e.rens+" / "+e.total+" renseignés";
+    if(e.verifiee) d+=" · "+(e.valide ? "✅ seuil atteint" : "⏳ seuil pas encore atteint");
+    else if(e.rens) d+=" · pas encore vérifiée";
+    if(e.faux.length) d+=" · à revoir : "+liste(e.faux.map(x=>x.slice(1)));
+    if(e.vides.length && e.vides.length<e.total) d+=" · à faire : "+liste(e.vides.map(x=>x.slice(1)));
+    lignes+="<li><span class='m-nom'>Manche "+m+" · "+M.titre+(e.valide?" ✔":"")+"</span><span class='m-detail'>"+d+"</span></li>";
+  });
+  const ep=etatEpreuve();
+  lignes+="<li><span class='m-nom'>Épreuve écrite · l'abri à vélos</span><span class='m-detail'>"+ep.ecrites+" / "+NB_EP
+    +" réponses écrites"+(ep.corr ? " · correction lue" : "")+(ep.cases ? " · grille : "+ep.cases+" / 3 critères cochés" : "")+"</span></li>";
+  ul.innerHTML=lignes;
+  $("ouJenSuisResume").textContent = total||ep.ecrites ? "" : "— rien de commencé pour l'instant";
+}
+
+/* ══════ L'épreuve écrite : la correction lue se note dans le bandeau ══════ */
+const epc=$("epCorrection");
+if(epc) epc.addEventListener("toggle", ()=>{ if(epc.open && !window.__exp.ep_corr){ window.__exp.ep_corr=1; save(); majProgress(); } });
 
 /* ══════ Règle d'or n°29 — mode essentiel ══════ */
 function majEssentiel(){
@@ -346,14 +763,67 @@ function majEssentiel(){
 }
 $("btnEssentiel").addEventListener("click", ()=>{
   document.body.classList.toggle("essentiel");
-  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
-  majEssentiel(); save(true);
+  const on=document.body.classList.contains("essentiel");
+  window.__exp["mode_essentiel"] = on ? 1 : 0;
+  if(on){ const r=$("rappel"); if(r) r.open=false; }
+  majEssentiel(); save();
 });
+
+/* ══════ Ma fiche bilan : mes réponses et mes erreurs, sur une page ══════ */
+function ficheBilan(){
+  const f=$("ficheBilan"), date=new Date().toLocaleDateString("fr-FR");
+  let h="<h2>Entraînement DNB — algorigrammes · ma fiche bilan</h2><p>Imprimée le "+date
+    +" · Nom&nbsp;: ________________________ · Classe&nbsp;: __________</p>";
+  Object.keys(MANCHES).forEach(m=>{
+    const M=MANCHES[m], e=etatManche(m), d=window.__res[m]||{};
+    h+="<h3>Manche "+m+" · "+M.titre+" — "+e.rens+" / "+e.total+" renseignés"
+      +(e.verifiee ? " · "+M.ids.filter(id=>d[id]==="juste").length+" justes · "+(e.valide?"seuil atteint":"seuil pas encore atteint") : " · pas encore vérifiée")+"</h3>";
+    const err=M.ids.filter(id=>d[id]==="faux");
+    if(err.length){ h+="<ul>"+err.map(id=>{ const c=document.querySelector('input[name="'+id+'"]:checked');
+      return "<li><b>Exercice "+id.slice(1)+" — "+echap(M.titres[id])+"</b> · j'ai choisi «&nbsp;"+echap(c?c.value:"")+"&nbsp;» · "+echap(c?c.dataset.pourquoi||"":"")+"</li>"; }).join("")+"</ul>"; }
+    if(e.vides.length) h+="<p>À faire&nbsp;: exercice"+(e.vides.length>1?"s ":" ")+liste(e.vides.map(x=>x.slice(1)))+".</p>";
+  });
+  h+="<h3>Épreuve écrite — l'abri à vélos</h3>";
+  [1,2,3,4].forEach(k=>{ const t=$("ep"+k); h+="<p class='reponse'><b>Question "+k+"&nbsp;:</b> "+(t && t.value.trim() ? echap(t.value.trim()) : "(pas encore écrite)")+"</p>"; });
+  const g=[["crit1","Je suis la bonne branche et je la nomme"],["crit2","Je justifie avec les données : les valeurs et le signe du comparateur"],["crit3","Je modifie la condition et je propose des essais qui vérifient"]];
+  h+="<p><b>Ma grille&nbsp;:</b> "+g.map(([id,t])=>($(id)&&$(id).checked?"☑ ":"☐ ")+t).join(" · ")+"</p>";
+  h+="<p style='font-size:9pt'>CC BY-NC-SA 4.0 — © Pascal Gouacide, 2026 · Technologie cycle 4</p>";
+  f.innerHTML=h;
+}
+$("btnFiche").addEventListener("click", ()=>{
+  ficheBilan();
+  document.body.classList.add("imprime-fiche");
+  window.print();
+  setTimeout(()=>document.body.classList.remove("imprime-fiche"), 400);
+});
+window.addEventListener("afterprint", ()=>document.body.classList.remove("imprime-fiche"));
+
+/* Un tableau qui défile sur un petit écran se parcourt aussi au clavier (WCAG 2.1.1) : il devient une région nommée,
+   atteignable par Tab, seulement quand il déborde vraiment */
+function majDefilants(){
+  document.querySelectorAll(".tableau-defile").forEach(d=>{
+    const deborde = d.scrollWidth > d.clientWidth + 1;
+    if(deborde){ d.tabIndex=0; d.setAttribute("role","region");
+      const c=d.querySelector("caption"), h=d.closest(".doc, .a-toi, article, details, section");
+      d.setAttribute("aria-label", "Tableau à faire défiler : "+(c ? c.textContent : (h && h.querySelector("h2,h3,.doc-titre") ? h.querySelector("h2,h3,.doc-titre").textContent : "données")).trim()); }
+    else { d.removeAttribute("tabindex"); d.removeAttribute("role"); d.removeAttribute("aria-label"); }
+  });
+}
+window.addEventListener("resize", majDefilants);
+document.querySelectorAll("details").forEach(d=>d.addEventListener("toggle", majDefilants));
+document.querySelectorAll(".seance-tab").forEach(t=>t.addEventListener("click", ()=>setTimeout(majDefilants, 0)));
 
 /* ══════ Init ══════ */
 restore();
-if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
-majEssentiel(); majProgress();
+try{ localStorage.setItem(KEY+"_essai","1"); localStorage.removeItem(KEY+"_essai"); }catch(err){ stockage(false); }
+if(window.__exp["mode_essentiel"]){ document.body.classList.add("essentiel"); const r=$("rappel"); if(r) r.open=false; }
+document.querySelectorAll(".voile").forEach(f=>{ if(window.__exp["vu_"+f.id] || choix(f.id)) montrer(f.id, false); });
+Object.keys(MANCHES).forEach(m=>{ if(window.__res[m]) afficherEtats(m); });
+majEssentiel(); majProgress(); majDefilants();
+const commence = Object.keys(MANCHES).some(m=>etatManche(m).rens>0) || etatEpreuve().ecrites>0;
+$("ouJenSuis").open = commence;
+/* le rappel s'ouvre seul à la première visite ; après une reprise, il attend un appui */
+if(commence){ const r=$("rappel"); if(r) r.open=false; }
 </script>
 <!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
      réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
