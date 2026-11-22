@@ -2,7 +2,7 @@
 
 **Séquence principale :** `sequence-cybersecurite-protection-donnees.html` (V16 — PWA, accessibilité)
 
-**QCM existant à moderniser :** `qcm_cybersecurite_usage_raisonne.html` (24 questions ; migration vers l’en-tête standard et le moteur commun encore requise)
+**QCM :** `qcm_cybersecurite_usage_raisonne.html` (30 questions au gabarit maison : 10 par code, aides progressives, un pourquoi par mauvaise réponse)
 
 **Activité bonus :** `activite-bonus-cyber-immersive-2fa.html` (mini-exercice 2FA « Cyber Immersive »)
 
@@ -10,13 +10,16 @@
 
 **Guide et synthèse professeur :** `synthese_professeur_4e_C1.4.html`
 
-## État du lot de complétion
+**Fiche pédagogique :** `fiche_pedagogique_4e_C1.4.md` · **Matrice de couverture :** `matrice_couverture_4e_C1.4.csv` (22/11/2026)
 
-- deux synthèses accessibles et imprimables ajoutées ;
-- structuration pédagogique sur quatre séances depuis le 14/11/2026 : les risques ; mes données ; mes traces ; ma réputation (la propriété intellectuelle, puis la clôture) ;
-- corrections, erreurs fréquentes et différenciation A/B/C explicitées dans le guide professeur ;
-- QCM encore non conforme à l’en-tête standard : pas de minuteur, pas des sept compteurs permanents et pas des modes de travail attendus ;
-- aucun test navigateur nouveau n’est déclaré à ce stade.
+## État du lot (22/11/2026)
+
+- les six pièces sont là : séquence, QCM, fiche pédagogique, matrice de couverture, deux synthèses, bancs de tests
+  (`tests_4e_C1.4_quiz.mjs`, `tests_regle_311_4e_C1.4.mjs`) ;
+- quatre séances depuis le 14/11/2026 : reconnaître ; mes données ; mes traces ; ma réputation (la propriété
+  intellectuelle, puis la clôture) ;
+- ce qui reste, dit par la fiche et la matrice : quatre questions du QCM (9, 10, 24, 29) portent sur des rappels de 5e
+  que la séquence n'enseigne pas, et les durées par activité ne sont pas affichées (règle n°23 non mesurable).
 
 ## Note sur les codes
 
