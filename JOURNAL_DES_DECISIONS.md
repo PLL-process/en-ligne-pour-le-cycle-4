@@ -35788,3 +35788,30 @@ d'un seul tenant) viennent d'un composant commun : à reprendre là. Deux blocs 
 
 **Vérifié.** Bancs des 14 séquences (voir la PR) ; mode mission joué sur les 14 : aucun refus ; `audit_aeration
 --strict` vert sur les neuf pages retouchées ; `controle_question_seule --strict` : thème 1 à 0 refus.
+
+## 22/11/2026 — 3e_C4.7-C4.8, deuxième écrit « comme au brevet » (n°346) ; deux aides dans celui de 3e_C6.1 (n°367) ; un banc commun des écrits (thème 2)
+
+**Décision.** Pascal (22/11/2026, 0 h 25) : « Prochaine étape possible, tu as carte blanche » — la même réponse écrite
+dans les séquences de 3e qui finissaient sans écrit. Ce lot fait « Le pont numérique » (thème 2) ; « Le mât de la
+station » (`3e_C8.1`, thème 3) suit dans sa propre PR.
+
+**Ce qui change.**
+- `3e_C4.7-C4.8` : après l'activité 5, une carte « ✍️ Explique comme au brevet — sans propositions » (~10 min, 🏠 faisable
+  à la maison sans matériel). Document imaginé, déclaré comme tel : un ping puis un tracert depuis le CDI vers le
+  serveur de la médiathèque (TTL=125, quatre sauts). Trois questions : le nombre de routeurs justifié par le TTL et
+  vérifié par le tracert ; le « Request timed out » du premier ping, qui n'est pas une panne ; le tracert d'un routeur
+  en panne et ce qu'il localise. Version étayée par question, deux aides (indice, démarche), correction avec trois
+  phrases de copie, grille à trois critères ; rien de noté ; hors de la zone de vérification de l'activité 5. Les
+  sigles du bloc sont écrits en clair (TTL, CDI), à la demande de Pascal du même soir (entrée suivante).
+- `3e_C6.1` : le bloc de la bouée reçoit ses deux aides avant la correction (n°367, née le 21/11 dans une autre session).
+- `_outils/tests_ecrit_brevet.py` : un banc commun pour tout bloc `.ecrit-brevet` (forme, document sous les yeux, rien
+  de noté, reprise, lien direct, aucune erreur, aucun défilement). Il a vu le manque d'aides de `3e_C6.1` (10 / 11).
+
+**Vérifié.** Banc commun 22 / 22 sur les deux pages ; `tests_regle_311_3e_C4.8.mjs` 34 / 34 ; mode mission sans refus ;
+`controle_page_ouverte`, impression, hors ligne, squelette, règles visibles, hiérarchie, consignes à la ligne,
+propositions sans indice, tactile, validations, `eleve_qui_ne_lit_pas.py` : verts. Revue d'écran à 390 px en deux tours
+(lignes de la transcription raccourcies : plus aucune ligne coupée).
+
+**Accès rapide** : aucun lien ne mène à ces deux séquences ; rien à actualiser. Nouveauté du jour : `#ecritPont`.
+
+**Non vérifié.** Les durées (~10 min annoncées) ; un essai en classe.
