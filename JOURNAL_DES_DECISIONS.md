@@ -36611,3 +36611,63 @@ cette vague ; leurs QCM sont identiques.
 --verifier` : thème 1 à jour ; les 32 bancs des 14 séquences verts (`5e_C1.5` avec ses arguments documentés) ; mode
 mission joué sur les 14 : aucun refus ; contrôles des QCM (effectifs, banque, en-tête), sauvegarde locale et mêmes
 nombres : verts.
+
+## 22/11/2026 — Sigles expliqués (n°44), vague des infobulles du thème 1 : 104 pages, 202 infobulles ; les générateurs des ateliers et de la station les posent eux-mêmes ; l'infobulle ne double plus une explication en clair (transversal : `_outils`, générateurs des thèmes 1 et 3, pages des trois thèmes)
+
+**Décision.** Pascal (22/11/2026, 1 h 45, pour tous les sigles autres que QCM : « pourront être communiquées à l'aide
+d'un survol avec la souris » ; 2 h 05 : « Continue. Tu as carte blanche pour tout, puis fusionne automatiquement »).
+Les vagues des thèmes 2 et 3 laissaient le thème 1 « quand ses sessions auront fini » ; la vague QCM du thème 1 (#891)
+était la dernière.
+
+**Ce qui change.**
+- **104 pages du thème 1, 202 infobulles** — OST, CRCN, FAST, SysML, LED, IP, RGPD, IA, ENT, DNB, CNIL, GPS… et QCM
+  là où il n'apparaît d'abord que dans un lien. Même outil, même règle que les thèmes 2 et 3 (`infobuller`) : à la
+  première apparition de la page, puis à la première de chaque séance ; jamais dans la navigation, un listing, une
+  option de liste ; dans un lien, sans `tabindex`.
+- **Les QCM des ateliers et celui de `3e_C1.1`** citent « un OST » seulement dans le menu « Compétence à réviser » :
+  l'étiquette le dit en clair, « Compétence à réviser (OST : objet ou système technique) », comme aux thèmes 2 et 3.
+  `build_qcm.py` (ateliers) l'écrit lui-même quand une option porte OST ou CRCN.
+- **Les générateurs posent les infobulles** (n°283) : `build.py` (pages, cahiers, synthèses et pointeurs des ateliers),
+  `build_qcm.py` (les sept QCM), `incrustations.py` (la page entière après chaque bloc réécrit : un bloc régénéré
+  retrouve ses infobulles aux mêmes places) et `generer_les_quatre_pages.py` (`3e_C9.2`). Les pointeurs des ateliers
+  écartés par la vague du thème 3 (`atelier_croquis` et `atelier_diagramme_fast` de `3e_C7.2` et `4e_C7.2`,
+  `atelier_diagramme_des_exigences` de `4e_C8.3`) et trois séquences à incrustations des thèmes 2 et 3 (`4e_C6.2`,
+  `4e_C7.5`, `3e_C9.2` et ses quatre pages) reçoivent les leurs par leur générateur. Les deux incrustations FAST du
+  thème 2 (`4e_C4.4`, `5e_C4.1`), posées à la main par la vague du thème 2, sont maintenant ce que `build.py` produit.
+- **Un défaut de l'outil, vu en vérifiant que les générateurs reproduisent leurs pages** : une infobulle se posait sur
+  « QCM » déjà suivi de « (questionnaire à choix multiples) » — au focus et sur papier, l'explication s'écrivait deux
+  fois (16 pages des thèmes 2 et 3 sur `main`, dont les quatre TP de CAO). `expliquer_sigles.py` : une apparition
+  suivie de son explication en clair suffit à sa séance, on ne choisit que parmi celles qui la précèdent ; les 16 pages
+  sont reprises (12 à la main, les 4 TP par `build_tp.py`, `verif_chaine.py` vert). Et une page qui porte des
+  infobulles reçoit toujours le style commun, même sans `</head>` : les quatre pages de la station, assemblées de
+  morceaux de la séquence, en portaient sans leur style. Banc de l'outil : 15 → 20 cas (avec l'outil de `main`, l'un
+  des cas neufs échoue).
+
+**Mesure** (`controle_sigles_expliques.py`, site). Pages avec un sigle jamais expliqué : 138 → 59 ; thème 1 : 81 → 14
+(il n'y reste que des pages où « QCM » n'est que dans la barre de navigation, comme aux thèmes 2 et 3, à traiter avec
+les portes, n°366). Pages où un sigle est expliqué plus bas que sa première apparition : 84 → 37 — la barre de
+navigation d'abord, puis l'explication en clair ; l'infobulle en double les comptait pour expliquées, elles le sont
+honnêtement plus bas. Thème 2 : 4 → 3 ; thème 3 : 53 → 42.
+
+**Constaté, non repris.** `incrustations.py --verifier` voit toujours les cinq pages déjà en retard sur `main`
+(`3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1`, `3e_C7.3`) : elles ne sont pas régénérées (retouches faites dans les
+pages, à reporter d'abord à la source) ; deux d'entre elles (`3e_C7.1`, `4e_C8.1`) perdent seulement leur infobulle en
+double.
+
+**Vérifié.**
+- Texte et balises des 132 pages identiques avant et après, une fois retirés les `<abbr>`, le style commun et
+  l'explication en clair du QCM ; seule autre différence, l'étiquette du menu des huit QCM.
+- Dérive des huit générateurs de `rapport_audit.py`, dans une copie : **0 fichier** (6 avant : les quatre lexiques du
+  thème 1 et les deux incrustations FAST du thème 2). `build_qcm.py --verifier` 7 / 7 ; `banc_ateliers.py` 530 / 530 ;
+  `verif_chaine.py` (TP de CAO) vert.
+- Les 132 pages ouvertes à 390 px : aucune erreur JavaScript, aucune infobulle focalisable dans un lien ou un bouton, le
+  style présent partout ; la première infobulle visible prend le focus et affiche son explication. Six synthèses du
+  professeur et la carte des représentations défilent en largeur, exactement comme sur `main`.
+- `controle_page_ouverte.mjs --axe` sur les 132 pages : L 0, B 0, C 0 ; axe-core signale les mêmes 37 pages que sur
+  `main`, avec les mêmes règles (trois synthèses du professeur en ont une de moins : une zone qui défile contient
+  maintenant un élément focalisable).
+- Mode mission joué sur les 24 séquences changées : aucun refus. Bancs des séquences du thème 1 : 30 / 30, et les deux
+  de `5e_C1.5` avec leurs arguments (39 / 39, 34 / 34) ; bancs des dossiers touchés des thèmes 2 et 3 : 29 / 29 (dix
+  lancés avec les arguments de leur documentation). `tests_expliquer_sigles.py` 20 / 20 ; `controle_sigles.py`
+  (n°313) vert.
+- **Non exécuté** : la revue d'écran à 390 px par captures (rien de visible ne change, sauf un pointillé sous le sigle).

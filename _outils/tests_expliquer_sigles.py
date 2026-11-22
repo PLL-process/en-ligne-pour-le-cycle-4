@@ -92,5 +92,35 @@ t("infobuller : QCM écrit en clair, IP en infobulle", "lire un QCM (questionnai
   and '<abbr class="sigle"' in g and m.get("QCM") == "ok" and m.get("IP") == "ok", m)
 t("infobuller : relancé, la page ne change pas d'un octet", es.infobuller(g) == g)
 
+# 6. Une apparition déjà expliquée en clair ne reçoit pas d'infobulle (vu le 22/11/2026 : « QCM (questionnaire à choix
+#    multiples) » s'écrivait deux fois au focus et sur papier)
+DOUBLE = """<!doctype html><html><head></head><body>
+<p>Ouvre le <a href="qcm.html">QCM</a>.</p>
+<div class="seance-panel" id="s1"><p>Le QCM (questionnaire à choix multiples) de l'atelier.</p></div>
+<div class="seance-panel" id="s2"><p>Refais le QCM.</p></div>
+</body></html>"""
+d = es.infobuller(DOUBLE)
+t("déjà en clair : pas d'infobulle collée à « QCM (questionnaire à choix multiples) »",
+  "QCM</abbr> (questionnaire" not in d and "Le QCM (questionnaire à choix multiples) de" in d, d)
+e, _ = es.poser_infobulle(DOUBLE, "QCM")
+t("déjà en clair plus bas : le lien qui le précède porte l'infobulle, sans tabindex ; la séance 2 a la sienne ; "
+  "l'apparition en clair reste nue",
+  e and re.search(r'<a href="qcm.html"><abbr class="sigle" title="[^"]+">QCM</abbr></a>', e)
+  and re.search(r'Refais le <abbr class="sigle" title="[^"]+" tabindex="0">QCM</abbr>', e)
+  and "Le QCM (questionnaire à choix multiples) de" in e, e)
+t("déjà en clair : relancé, rien ne change", es.infobuller(d) == d)
+
+# 7. Une page assemblée de morceaux qui portent déjà des infobulles reçoit le style commun
+MORCEAUX = """<!doctype html><html><head><title>Station</title></head><body>
+<p>Ouvre le QCM (questionnaire à choix multiples).</p><p>Une adresse <abbr class="sigle" title="Internet Protocol" tabindex="0">IP</abbr>.</p>
+</body></html>"""
+m7 = es.infobuller(MORCEAUX)
+t("infobulles sans style : infobuller pose le style commun, une fois", m7.count('id="sigles-css"') == 1
+  and m7.index('id="sigles-css"') < m7.index("</head>") and es.infobuller(m7) == m7, m7)
+SANS_HEAD = MORCEAUX.replace("<head><title>Station</title></head>", '<meta charset="utf-8"><title>Station</title><style>p{}</style>')
+m8 = es.infobuller(SANS_HEAD)
+t("infobulles sans style, page sans </head> : le style se pose avant la première feuille de style",
+  m8.count('id="sigles-css"') == 1 and m8.index('id="sigles-css"') < m8.index("<style>p{}") and es.infobuller(m8) == m8, m8)
+
 print(f"\n{sum(RES)} / {len(RES)}")
 sys.exit(0 if all(RES) else 1)

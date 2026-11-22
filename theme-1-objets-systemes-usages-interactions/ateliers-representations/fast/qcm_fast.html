@@ -143,6 +143,7 @@
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <style id="navharm-css">
@@ -157,8 +158,8 @@
 @media print{#navharm{display:none}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">⌂ Accueil</a><a href="atelier_5e_fast.html">← Atelier 5e</a><a href="atelier_4e_fast.html">← Atelier 4e</a><a href="atelier_3e_fast.html">← Atelier 3e</a><a href="../../_reperes/carte_des_representations.html">🧭 Toutes les représentations</a></nav>
-<h1>🌳 QCM — Des fonctions aux solutions techniques</h1>
-<p class="subtitle">Lire et compléter un diagramme FAST, comparer deux principes (5e) ; associer constituants et fonctions, ajouter une fonction (4e) ; proposer, contrôler et choisir des solutions (3e)</p>
+<h1>🌳 <abbr class="sigle" title="questionnaire à choix multiples" tabindex="0">QCM</abbr> — Des fonctions aux solutions techniques</h1>
+<p class="subtitle">Lire et compléter un diagramme <abbr class="sigle" title="Function Analysis System Technique, le diagramme des fonctions techniques" tabindex="0">FAST</abbr>, comparer deux principes (5e) ; associer constituants et fonctions, ajouter une fonction (4e) ; proposer, contrôler et choisir des solutions (3e)</p>
 <div class="badges">
   <span class="badge niveau">5e · 4e · 3e</span>
   <span title="Programme 2024 — 5e_C4.1 : Associer des solutions techniques à une ou des fonctions techniques." class="badge code">5e_C4.1</span>
@@ -228,7 +229,7 @@
     <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
   </div>
   <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
-    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser (OST : objet ou système technique) :</label>
     <select id="selComp" style="max-width:420px;display:inline-block">
       <option value="5e_C4.1">5e_C4.1 — Associer des solutions techniques à une ou des fonctions techniques.</option>
       <option value="5e_C1.2">5e_C1.2 — Comparer des principes techniques pour une même fonction technique.</option>

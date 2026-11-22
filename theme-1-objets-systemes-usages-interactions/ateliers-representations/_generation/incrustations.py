@@ -201,6 +201,8 @@ def main(argv):
         texte = avant
         for inc in incs:
             texte = poser(inc, texte)
+        # un bloc réécrit perd les infobulles que la page y avait (n°44) : la page entière les retrouve, aux mêmes places
+        texte = build.infobuller(texte)
         if texte != avant:
             ecarts += 1
             print(("À METTRE À JOUR : " if verifier else "écrit : ") + seq)

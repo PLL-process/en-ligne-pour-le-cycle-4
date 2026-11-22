@@ -23,6 +23,8 @@ ICI = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(ICI))
 
 import moteur  # noqa: E402
+sys.path.append(str(moteur.DEPOT / "_outils"))   # en dernier : les modules de ce dossier passent avant
+from expliquer_sigles import infobuller  # noqa: E402  (n°44, décision de Pascal du 22/11/2026)
 import syntheses  # noqa: E402
 
 RACINE = moteur.RACINE_ATELIERS
@@ -119,6 +121,10 @@ def preparer(at):
 
 
 def ecrire(chemin, contenu):
+    if chemin.suffix == ".html":
+        # chaque sigle s'explique : QCM en clair, les autres en infobulle (n°44, décision de Pascal du 22/11/2026) ;
+        # posé ici, une régénération ne l'efface pas (n°283)
+        contenu = infobuller(contenu)
     chemin.parent.mkdir(parents=True, exist_ok=True)
     ancien = chemin.read_text(encoding="utf-8") if chemin.exists() else None
     if ancien != contenu:
