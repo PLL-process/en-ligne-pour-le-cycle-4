@@ -35986,3 +35986,25 @@ correction complète est sous le quiz… », renvoi répété exprès) : `data-r
 sans `--strict`, un L ou un B sort à 1, C seul à 0). Les trois points nouveaux échouent sur la version d'avant
 (vérifié : 11 / 14). Les skills `controle-qualite-lot`, `texte-clair-et-aere` et `audit-douze-axes`, qui disaient
 « mesure », sont mis à jour dans une PR transversale à part (`.claude/` est hors du périmètre du thème 2).
+
+## 22/11/2026 — Thème 3, n°364 : six blocs de code ou de données qui n'étaient pas des `<pre>` ne défilent plus
+
+Le contrôle de la page ouverte apprend à voir les listings qui ne sont pas des `<pre>` : tout bloc en police à chasse
+fixe qui garde ses lignes (PR de `_outils/` à suivre, thème 2). Les « 0 listing qui défile sur les 341 pages » du matin
+ne comptaient que `pre`, `.programme` et `.code-box` ; axe-core (« scrollable-region-focusable ») a montré les autres. Au
+thème 3, cinq pages :
+`3e_C7.8/sequence_3e_C7.8_deux-stations.html` et `4e_C7.8/sequence_4e_C7.8_le-jardin-publie.html` (le message JSON
+publié, `.codebox`, 314 et 289 px de trop à 390 px), `4e_C7.5/sequence_4e_C7.5_jardin-incomplet.html` et
+`5e_C7.5/sequence_5e_C7.5_eclairage-du-preau.html` (le programme commenté, `.prog`, 319 et 236 px),
+`4e_C9.1/sequence_4e_C9_jardin-programme.html` (deux algorithmes, `.py`, 307 et 213 px). Même geste que la vague du
+matin : à 600 px et moins, ces blocs reviennent à la ligne (`pre-wrap`), aucun caractère changé. Vu à 390 px :
+commentaires longs sous leur instruction, indentation gardée.
+
+Contrôles : `tests_*_sequence.mjs` 58 / 58 (3e_C7.8), 46 / 46 (4e_C7.8), 41 / 41 (4e_C7.5), 40 / 40 (5e_C7.5) ;
+`tests_*_qcm.mjs` 32 / 32 (les quatre) ; `tests_4e_C9.mjs` 153 / 153 ; `tests_regle_311` des cinq dossiers 34 / 34 ;
+`controle_page_ouverte.mjs --axe` (version qui voit les blocs en chasse fixe) : L 0 · B 0 · C 0 · A 0 sur les cinq
+pages ; `controle_impression`, `controle_mode_mission`, `controle_regles_visibles` à 0.
+
+**Vu, non repris.** Les programmes `.prog` de 4e_C7.5 et 5e_C7.5 ne sont colorés qu'à moitié (texte cyan, commentaires
+gris) : `controle_code_colore.mjs` ne les lit pas (0 listing trouvé dans 4e_C7.5). À reprendre avec le code coloré
+commun (n°13).
