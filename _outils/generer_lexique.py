@@ -250,7 +250,7 @@ GABARIT = """<!DOCTYPE html>
 STYLE_VOCAB = ("  small.source{display:block;color:var(--sub);font-size:.8em;margin-top:.1em;"
                "overflow-wrap:anywhere}\n")
 STYLE_VOCAB_IMPR = "    small.source{color:#444}\n"
-SOUS_TITRE = "{compte} notions, tirées mot pour mot des QCM du lot"
+SOUS_TITRE = "{compte} notions, tirées mot pour mot des QCM (questionnaires à choix multiples) du lot"
 PIED = ("  Chaque ligne provient d'une question de {sources}. Rien n'a été réécrit ici :\n"
         "  ce lexique rassemble ce que les corrections disaient déjà, une par une.")
 PIED_VOCAB = ("  Les mots des séances viennent de {fichier} : chacun porte sa source, et chacun\n"
