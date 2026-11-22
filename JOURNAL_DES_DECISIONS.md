@@ -35589,7 +35589,7 @@ touchée) : les 24 listings qui défilent (n°364) et les 14 pages sans porte (n
 titres « V16 » et « V5 » des pages `4e_C1.4` (n°309), relevés par la mesure mais pas encore refusés : le motif d'un
 numéro de version attrapait aussi des personas (« Feng (V12) ») et « version 1 » d'un programme d'élève.
 
-## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances (transversal : `docs/revision/SUIVI_REVISION.md`)
+## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances
 
 **La demande.** Le deuxième des trois chantiers de Pascal (« Termine en toute confiance et autonomie… »), confirmé le
 21/11 à 23 h 46 (« Ok tu as carte blanche ») : les séances au-delà du repère de 1 200 mots visibles
@@ -35624,7 +35624,7 @@ partout : ce qui pesait, c'était surtout **les exercices d'atelier incrustés**
 1 571 → 873 ; `4e_C2.1` S3 1 338 → 573 ; `3e_C3.1` S1 1 205 → 659 et S2 1 237 → 541 ; `4e_C3.1` S1 1 293 → 744 ;
 `5e_C3.1` S1 1 864 → 768 ; `3e_C1.1` S5 1 216 → 1 186 ; `4e_C1.1` S6 1 212 → 1 198.
 
-**Ce qui reste au-dessus, et pourquoi** (écrit dans le suivi) :
+**Ce qui reste au-dessus, et pourquoi** (reporté dans `docs/revision/SUIVI_REVISION.md` par une PR à part, sans motif de thème : la garde lit « theme-1 » dans un nom de branche et applique le périmètre du thème) :
 - les exercices d'atelier gardés par décision de Pascal : `5e_C2.1` S1 (2 126) et S2 (1 941), `5e_C1.2` S4 (2 025),
   `4e_C1.1` S5 (1 733), `4e_C2.1` S1 (1 509) ;
 - un document à lire, ou des définitions qui servent tout de suite : `5e_C1.1` S1 (1 389, la planche des trois principes),

@@ -23,16 +23,16 @@ d'autant.
 | N° | Séquence | Séance la plus lourde (mots) | ✘ règles | Menus | Aération | État |
 |---|---|---|---|---|---|---|
 | 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
-| 2 | `5e_C1.3` | 1050 → 1043 → 1199 | 0 | 0 | 5 → 0 | livrée #620 ; #681 : 24 questions fermées vérifiées par la page (thème 1) ; 22/11 : séance 1, 1 202 → 406 (l'exercice « D'abord, qu'est-ce qu'une donnée ? » replié sous son résumé) |
-| 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 ; 22/11 : séance 6, 1 212 → 1 198 (billet resserré) ; séance 5 (1 733, deux exercices d'atelier, gardés) reste au-dessus |
+| 2 | `5e_C1.3` | 1050 → 1043 → 1199 | 0 | 0 | 5 → 0 | livrée #620 ; #681 : 24 questions fermées vérifiées par la page (thème 1) |
+| 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 |
 | 4 | `4e_C1.4` | 1291 → 1056 → 1350 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations ; #627 répare le jeu des licences (6.c) ; #684 : les cinq quiz réécrits (35 questions à quatre propositions, vérifiées quiz par quiz) ; #686 : une séance 4 (la section 6 et la clôture) — séance 3, 1 350 → 439 |
 | 5 | `3e_C1.5` | 2017 → 1448 | 0 | 0 | 19 → 0 | livrée #624 ; #628 ramène la séance 4 à 1 448 — au-dessus du repère, justifiée ; #685 : 13 questions fermées vérifiées par la page (séance 2 : 1 234, justifiée) |
-| 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées ; 22/11 : séance 3, 1 571 → 873 (l'exercice « D'abord, choisir le mode » replié) ; séance 2 (1 344) reste au-dessus, justifiée |
+| 6 | `3e_C2.1` | 1861 → 1424 | 0 | 0 | 6 → 0 | livrée #624 — séances 2 et 3 au-dessus du repère, justifiées |
 | 7 | `5e_C1.1` | 1629 → 1301 | 0 | 0 | 26 → 0 | livrée #630 — séances 1 et 5 au-dessus du repère, justifiées |
 | 8 | `5e_C1.2` | 2117 → 1967 | 0 | 0 | 26 → 0 | livrée #630 — séance 4 au-dessus du repère, justifiée |
-| 9 | `5e_C3.1` | 2912 → 1994 | 0 | 0 | 0 | livrée #630 — séances 1 et 4 au-dessus du repère, justifiées ; 22/11 : séance 1, 1 864 → 768 (l'exercice « D'abord le besoin » replié) ; séance 4 (1 639) reste au-dessus, justifiée |
-| 10 | `4e_C2.1` | 2625 → 1548 | 1 → 0 | 0 | 24 → 0 | livrée #630 ; quatrième séance (décision de Pascal) #643 — séances 1 et 3 au-dessus du repère, justifiées ; 22/11 : séance 3, 1 338 → 573 (l'exercice « D'abord les contraintes » replié) ; séance 1 (1 509, l'exercice d'atelier du croquis, gardé) reste au-dessus |
-| 11 | `4e_C3.1` | 1850 → 1299 | 0 | 0 | 10 → 0 | livrée #630 — séance 1 au-dessus du repère, justifiée ; 22/11 : séance 1, 1 293 → 744 (l'exercice « D'abord la méthode » replié) |
+| 9 | `5e_C3.1` | 2912 → 1994 | 0 | 0 | 0 | livrée #630 — séances 1 et 4 au-dessus du repère, justifiées |
+| 10 | `4e_C2.1` | 2625 → 1548 | 1 → 0 | 0 | 24 → 0 | livrée #630 ; quatrième séance (décision de Pascal) #643 — séances 1 et 3 au-dessus du repère, justifiées |
+| 11 | `4e_C3.1` | 1850 → 1299 | 0 | 0 | 10 → 0 | livrée #630 — séance 1 au-dessus du repère, justifiée |
 | 12 | `3e_C4.1` | 1444 → 1032 | 1 → 0 | 33 → 0 | 6 → 0 | livrée #632 |
 | 13 | `3e_C4.3` | 1928 → 817 | 2 → 0 | 33 → 0 | 8 → 0 | livrée #633 ; #646 coupe la séance 4 en deux (décision de Pascal du 11/11) : cinq séances, 817 · 460 · 437 · 737 · 551 |
 | 14 | `5e_C2.1` | 2272 → 2166 | 0 | 0 | 20 → 0 | #687 — séances 1 (2 166) et 2 (2 004) au-dessus du repère : un exercice d'atelier chacune (bête à cornes, pieuvre), gardé par décision de Pascal (15/11/2026) |
@@ -76,8 +76,8 @@ d'autant.
 | 52 | `5e_C8.1` | 1421 → 1364 | 5 → 0 | 17 → 0 | 13 → 0 | livrée #719 — migrée au gabarit commun ; une réponse en double remplacée ; 18 propositions fausses allongées ; séance 2 (1 364) au-dessus : le simulateur, deux tableaux, la synthèse et le bilan |
 | 53 | `5e_C8.2` | 1412 → 1035 | 5 → 0 | 16 → 0 | 12 → 0 | livrée #720 — migrée au gabarit commun ; la grille de l'activité 4 ne se lit plus toute seule ; 12 propositions fausses remplacées ou allongées ; les deux séances sous le repère |
 | 54 | `5e_C9.1` | 1761 → 1282 | 1 → 0 | 24 → 0 | 5 → 0 | livrée #723 — 24 listes en boutons radio ; pas à pas de l'Explorateur, notes Vittascience et Bonus repliés ; séance 2 (1 282) juste au-dessus : l'encart des gestes, commun à six pages |
-| 55 | `3e_C1.1` | 1451 → 1259 | 0 → 0 | 0 → 0 | 23 → 0 | livrée #728 — 15 captures du tableur et le Bonus repliés ; deux encadrés qui donnaient les réponses passés en aide ; la bonne réponse ne se devine plus à sa longueur ; 84 pourquoi avec leur étape suivante ; séance 1 (1 259) juste au-dessus : une activité de 50 min, définitions et neuf questions ; 22/11 : séance 5, 1 216 → 1 186 (deux consignes en lignes, billet resserré) ; séance 1 (1 287, les quatre définitions) reste au-dessus, justifiée |
-| 56 | `3e_C3.1` | 1939 → 1181 | 0 → 0 | 0 → 0 | 19 → 0 | livrée #729 — les deux piqûres de rappel et le Bonus repliés ; la bonne réponse ne se devine plus à sa longueur (18 raccourcies, 18 leurres allongés) ; 78 pourquoi avec leur étape suivante ; chaque séance sous le repère ; 22/11 : séances 1 et 2, 1 205 → 659 et 1 237 → 541 (deux exercices « D'abord / Avant la grille » repliés) |
+| 55 | `3e_C1.1` | 1451 → 1259 | 0 → 0 | 0 → 0 | 23 → 0 | livrée #728 — 15 captures du tableur et le Bonus repliés ; deux encadrés qui donnaient les réponses passés en aide ; la bonne réponse ne se devine plus à sa longueur ; 84 pourquoi avec leur étape suivante ; séance 1 (1 259) juste au-dessus : une activité de 50 min, définitions et neuf questions |
+| 56 | `3e_C3.1` | 1939 → 1181 | 0 → 0 | 0 → 0 | 19 → 0 | livrée #729 — les deux piqûres de rappel et le Bonus repliés ; la bonne réponse ne se devine plus à sa longueur (18 raccourcies, 18 leurres allongés) ; 78 pourquoi avec leur étape suivante ; chaque séance sous le repère |
 
 ## Deuxième passe (15/11/2026)
 
