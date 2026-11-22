@@ -20,6 +20,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   .box,code,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.5_station-a-equiper.html">← Séquence</a><a href="qcm_3e_C7.5_station-a-equiper.html">🧠 QCM</a><a href="lexique_3e_C7.5.html">📖 Lexique</a></nav>
@@ -31,7 +32,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>3e_C7.5</b></td><td>Choisir les constituants et assembler un prototype.</td><td>Séance 2 : activité 1 · séance 3 : activités 2 et 3 · séance 4 : activité 4 et REFAIRE</td></tr>
-    <tr><td>3e_C4.3 <span style="color:var(--sub)">(appui)</span></td><td>Décrire un OST en caractérisant sa chaîne d'information.</td><td>Séance 1 : activité 0 · séance 4 : synthèse</td></tr>
+    <tr><td>3e_C4.3 <span style="color:var(--sub)">(appui)</span></td><td>Décrire un <abbr class="sigle" title="objet ou système technique" tabindex="0">OST</abbr> en caractérisant sa chaîne d'information.</td><td>Séance 1 : activité 0 · séance 4 : synthèse</td></tr>
   </table>
   <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>3e_C4.3</code> · <code>3e_C7.5</code> sont des codes de classement <b>internes à ce dépôt</b>&nbsp;; ils ne figurent pas comme tels au BO.</p>
 </div>
@@ -40,7 +41,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
 choisit — et choisir suppose qu'on puisse se tromper autrement qu'en se trompant de port. Le
 catalogue contient dix constituants pour un cahier des charges à quatre exigences.</p>
 <p>Le pari du lot est ailleurs que dans le tri : il est dans la <b>propagation</b>. L'exigence
-« visible depuis la cour » impose le bandeau de DEL ; le bandeau impose 480 mA ; 480 mA imposent
+« visible depuis la cour » impose le bandeau de <abbr class="sigle" title="diode électroluminescente" tabindex="0">DEL</abbr> ; le bandeau impose 480 mA ; 480 mA imposent
 la batterie ; et la batterie remet en cause l'autonomie de 72 heures, qui était tenue.
 <b>Le bon choix crée le problème suivant</b> — c'est exactement ce qu'est une conception, et
 c'est ce qu'un exercice de tri ne montre jamais.</p>
@@ -53,11 +54,11 @@ décider de la source d'énergie de la station.</p>
 <tr><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td>relier (hors des quatre)</td><td>SOCLE</td><td>0 mA</td></tr>
 <tr><td><b>Anémomètre Grove</b></td><td>il mesure la vitesse du vent</td><td>acquérir</td><td>A</td><td>15 mA</td></tr>
 <tr><td><b>Capteur de pluie Grove</b></td><td>il détecte la présence de pluie</td><td>acquérir</td><td>D</td><td>8 mA</td></tr>
-<tr><td><b>Écran LCD I2C Grove (16 × 2)</b></td><td>il affiche la mesure, lisible à 30 cm</td><td>agir</td><td>I2C</td><td>20 mA</td></tr>
+<tr><td><b>Écran <abbr class="sigle" title="écran à cristaux liquides" tabindex="0">LCD</abbr> I2C Grove (16 × 2)</b></td><td>il affiche la mesure, lisible à 30 cm</td><td>agir</td><td>I2C</td><td>20 mA</td></tr>
 <tr><td><b>Bandeau de 8 DEL de puissance</b></td><td>il signale l'alerte, visible de la cour</td><td>agir</td><td>D</td><td>480 mA</td></tr>
 <tr><td><b>Buzzer Grove</b></td><td>il émet un son d'alerte</td><td>agir</td><td>D</td><td>30 mA</td></tr>
 <tr><td><b>Module carte SD Grove</b></td><td>il enregistre les mesures et leur heure</td><td>relier (hors des quatre)</td><td>UART</td><td>40 mA</td></tr>
-<tr><td><b>Câble USB 5 V (500 mA)</b></td><td>il alimente depuis un ordinateur</td><td>alimenter</td><td>SOCLE</td><td>0 mA</td></tr>
+<tr><td><b>Câble <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> 5 V (500 mA)</b></td><td>il alimente depuis un ordinateur</td><td>alimenter</td><td>SOCLE</td><td>0 mA</td></tr>
 <tr><td><b>Batterie 5 V / 2 A + panneau solaire (TBT)</b></td><td>elle alimente la station sur site</td><td>alimenter</td><td>ALIM</td><td>0 mA</td></tr>
 </table>
 <h2>Ce que l'élève sait faire à la fin</h2>
@@ -88,7 +89,7 @@ décider de la source d'énergie de la station.</p>
 <tr><td>1</td><td>situation, problématique, hypothèse de départ, sécurité ; activité 0 (ce que chaque exigence impose)</td><td>25</td></tr>
 <tr><td>2</td><td>activité 1 (choisir, et l'écrire)</td><td>35</td></tr>
 <tr><td>3</td><td>activités 2 (assembler et prouver) et 3 (ce que coûte chaque retrait)</td><td>55</td></tr>
-<tr><td>4</td><td>activité 4 (le choix qui coûte) et REFAIRE ; synthèse, Bonus facultatif, bilan, renvoi au QCM (questionnaire à choix multiples)</td><td>35</td></tr>
+<tr><td>4</td><td>activité 4 (le choix qui coûte) et REFAIRE ; synthèse, Bonus facultatif, bilan, renvoi au <abbr class="sigle" title="questionnaire à choix multiples" tabindex="0">QCM</abbr> (questionnaire à choix multiples)</td><td>35</td></tr>
 </table>
 <p>Aucune activité n'est coupée. La séance 3 est pleine : le montage et les retraits se font dans la même heure, car le verrou des retraits ne s'ouvre qu'après un essai réussi dans la même ouverture de la page. La séance 1 est courte en activités annoncées, la lecture de la situation et l'hypothèse de départ s'y ajoutent.</p>
 <footer>Synthèse professeur — 3e_C7.5. Programme 2024, Thème 3.<style>.licence-cc a,.licence-cc a:visited{color:inherit;text-decoration:underline}@media print{.licence-cc a,.licence-cc a:visited{color:#000}}</style><p class="licence-cc" data-licence="cc-by-nc-sa" style="font-size:.85em;margin-top:.8em">📄 Ressource sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" rel="license">CC BY-NC-SA 4.0</a> — © Pascal Gouacide, 2026 · Technologie cycle 4 · réutilisation et adaptation libres à condition de citer l’auteur, sans usage commercial et en partageant dans les mêmes conditions.</p>

@@ -20,6 +20,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   .box,code,th{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
 }
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C7.4_indicateur-du-hall.html">📘 La séquence</a><a href="synthese_eleve_5e_C7.4.html">🧑‍🎓 Synthèse élève</a></nav>
@@ -31,7 +32,7 @@ ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
   <table class="refs">
     <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
     <tr><td><b>5e_C7.4</b></td><td>Choisir une source d'énergie parmi plusieurs proposées et une forme d'énergie possible.</td><td>Activités 0, 2, 3 et REFAIRE</td></tr>
-    <tr><td>5e_C3.1 <span style="color:var(--sub)">(appui)</span></td><td>Repérer pour un OST les matériaux, les sources et les formes d'énergies, le traitement de l'information.</td><td>Activités 1 et 4</td></tr>
+    <tr><td>5e_C3.1 <span style="color:var(--sub)">(appui)</span></td><td>Repérer pour un <abbr class="sigle" title="objet ou système technique" tabindex="0">OST</abbr> les matériaux, les sources et les formes d'énergies, le traitement de l'information.</td><td>Activités 1 et 4</td></tr>
   </table>
   <p style="font-size:.9em"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. <b>Codification opérationnelle</b>&nbsp;: les codes <code>5e_C3.1</code> · <code>5e_C7.4</code> sont des codes de classement <b>internes à ce dépôt</b>&nbsp;; ils ne figurent pas comme tels au BO.</p>
 </div>
@@ -48,7 +49,7 @@ du choix ne se trompe pas. Le REFAIRE ferme la démonstration : le même objet, 
 <table>
 <tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
 <tr><td>Carte Arduino UNO</td><td>45 mA</td><td>10 h</td><td>2,250 Wh</td><td>81,1 %</td></tr>
-<tr><td>DEL indicatrice</td><td>10 mA</td><td>10 h</td><td>0,500 Wh</td><td>18,0 %</td></tr>
+<tr><td><abbr class="sigle" title="diode électroluminescente" tabindex="0">DEL</abbr> indicatrice</td><td>10 mA</td><td>10 h</td><td>0,500 Wh</td><td>18,0 %</td></tr>
 <tr><td>Capteur de présence du sac</td><td>0,5 mA</td><td>10 h</td><td>0,025 Wh</td><td>0,9 %</td></tr>
 <tr><th>Total</th><td></td><td></td><th>2,78 Wh</th><th>100 %</th></tr>
 </table>
@@ -58,7 +59,7 @@ du choix ne se trompe pas. Le REFAIRE ferme la démonstration : le même objet, 
 <tr><td>Pile 9 V alcaline</td><td>2,8 Wh</td><td>24 heures</td></tr>
 <tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>4,5 jours</td></tr>
 <tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>3,4 jours</td></tr>
-<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
+<tr><td>Secteur — adaptateur <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
 <tr><td>Panneau solaire 1 W crête + accu</td><td>3,7 Wh <b>par jour</b></td><td>suffit, un tiers de marge</td></tr>
 </table>
 <p>Toutes ces valeurs sont <b>calculées</b> par <code>energie.py</code>, livré dans le dossier. Le rendement d'un régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas un réglage. L'ensoleillement retenu pour la Martinique est de 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
@@ -66,7 +67,7 @@ du choix ne se trompe pas. Le REFAIRE ferme la démonstration : le même objet, 
 <div class="box limite"><ul><li><b>Aucune mesure réelle.</b> Les courants sont des valeurs constructeur usuelles, les capacités des ordres de grandeur du commerce. La version 🅰 (multimètre en série) remplace ces valeurs par des mesures, et ce sont elles qui font foi.</li><li><b>Le banc ignore l'éclairement intérieur.</b> Il compte l'ensoleillement extérieur de la Martinique. C'est exactement ce qui rend l'activité 3 intéressante — mais un élève qui lit vite peut croire le panneau bon partout, et il faut le reprendre.</li><li><b>Le vieillissement n'est pas modélisé.</b> Une pile alcaline stockée deux ans a déjà perdu une partie de sa charge.</li></ul></div>
 <h2>Différenciation</h2>
 <ul><li><b>🅰 avec le matériel</b> — montage réel, multimètre en série. Les valeurs mesurées remplacent alors celles du banc, et ce sont elles qui font foi.</li><li><b>🅱 avec le banc</b> — hors ligne, sans installation. Seule voie qui permette d'éteindre un consommateur pour voir ce qu'il pesait.</li><li><b>🅲 sans écran</b> — tableaux imprimables, valeurs dans les corrections.</li></ul>
-<h2>Évaluation — repères LSU</h2>
+<h2>Évaluation — repères <abbr class="sigle" title="livret scolaire unique" tabindex="0">LSU</abbr></h2>
 <table><tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
 <tr><td>🔴 Insuffisante</td><td>ne sait pas encore lire ce que donne une source au banc</td></tr>
 <tr><td>🟠 Fragile</td><td>lit le banc, mais choisit sans citer de chiffre</td></tr>
