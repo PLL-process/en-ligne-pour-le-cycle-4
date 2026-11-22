@@ -50,10 +50,10 @@
 | 358 | On imprime ce qu'on vient de faire | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
 | 359 | Un lien vers une partie ouvre cette partie | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — PR #845 |
 | 360 | Les tests jouent l'élève qui ne lit pas | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai (n°147), déjà mesurée sur tout le site le 21/11/2026 — `_outils/eleve_qui_ne_lit_pas.py`, skill `eleve-qui-ne-lit-pas` |
-| 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
+| 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (L et B refusent depuis le 22/11/2026, C et A mesurent ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, **refus depuis le 22/11/2026** ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
 | 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
@@ -35966,6 +35966,26 @@ phrase est corrigée dans ses sources : `atelier-planification/_generation/build
 
 **Mesure** : pages avec un QCM jamais expliqué, 267 → 173 ; thème 3 : 161 → 120 pages avec au moins un sigle nu. Reste
 le thème 1 (sessions en cours), puis OST et les autres sigles.
+
+## 22/11/2026 — Page ouverte (n°361) : un listing qui défile ou un bloc dessiné est refusé ; un intitulé de correction n'est plus compté (thème 2 : `_outils/`)
+
+**La décision.** Carte blanche de Pascal (22/11/2026, 1 h 33), sur la question posée après la PR #863 : « le contrôle
+des listings ne fait que mesurer, alors qu'il est à zéro sur tout le site ». Le 22/11/2026, `controle_page_ouverte.mjs`
+trouve **L 0 et B 0 sur les 341 pages** (vague n°364 : PR #854, #856, #862 ; aucun bloc dessiné, n°308). Ces deux
+mesures deviennent des refus : un listing qui défile à 390 px ou un SVG qui dessine un bloc de programmation, page
+ouverte, fait sortir le contrôle à 1, même sans `--strict` (n°273 : référence nommée, datée, vide). C (correction
+recopiée) et A (axe-core) restent des mesures ; `--strict` les fait toujours refuser.
+
+**Un faux positif de C corrigé.** Trois pages relevées en C le 22/11/2026, deux à tort : `4e_C4.7` et `5e_C4.7` ouvrent
+chacune de leurs cinq corrections sur l'intitulé « **Question par question — la réponse, et pourquoi pas les autres** »,
+un paragraphe tout en gras. Un intitulé se répète à bon droit, comme le `summary` déjà écarté : un titre (`h1` à `h6`)
+ou un paragraphe dont le seul contenu est un `<b>` ou un `<strong>` n'est plus lu. Reste `4e_C1.4` (« Le quiz : sa
+correction complète est sous le quiz… », renvoi répété exprès) : `data-repete` dans la page, lot du thème 1.
+
+**Banc.** `tests_controle_page_ouverte.mjs` passe de 11 à 14 points (intitulé en gras et titre repris non comptés ;
+sans `--strict`, un L ou un B sort à 1, C seul à 0). Les trois points nouveaux échouent sur la version d'avant
+(vérifié : 11 / 14). Les skills `controle-qualite-lot`, `texte-clair-et-aere` et `audit-douze-axes`, qui disaient
+« mesure », sont mis à jour dans une PR transversale à part (`.claude/` est hors du périmètre du thème 2).
 
 ## 22/11/2026 — Audit hebdomadaire, avancé à la demande de Pascal : 3 ✘ (n°23 seule), 52 séquences propres sur 56, 36 fichiers de dérive (+25) ; un seul rouge bloquant, un manifeste (transversal : `docs/audits`)
 
