@@ -35228,3 +35228,59 @@ longueur des séquences, médias : verts.
 **Non fait, à dire.** La séance 4 de `3e_C1.5` reste à 1 626 mots visibles, comme avant ce lot (la retouche n'y change
 rien de visible). La capture brute pleine fenêtre et la capture étroite restent sur le poste de Pascal, dans un
 dossier créé pour l'occasion, `captures-cycle4-claude`, sous son dossier « Images » : à garder ou à supprimer, à son choix.
+
+## 22/11/2026 — Thème 1, chantier 1 : les sept QCM des ateliers de représentation et `qcm_fonctionnement_objet` relus question par question (transversal : pages-pointeurs des thèmes 2 et 3)
+
+**La demande.** Pascal, le 21/11/2026 au soir : « Termine en toute confiance et autonomie les trois chantiers ouverts sur
+le thème 1. Effectue la fusion également. Tu as carte blanche pour tout. » Le premier chantier : les huit QCM du thème
+que la relecture de C1 n'avait pas lus un à un — les sept des ateliers de représentation (bête à cornes, carte mentale,
+cas d'utilisation, croquis, exigences, FAST, pieuvre) et `4e_C2.1/qcm_fonctionnement_objet.html`. Fusion : Pascal la
+confie désormais à l'agent, contrôles verts (garde, bancs, contrôles).
+
+**Méthode.** 240 questions lues une à une avec le skill `question-qui-se-lit-seule` (n°343 à n°345) et les deux portes
+de `qcm-html-accessible`. Les ateliers ont un générateur sain (`build_qcm.py --verifier` : 7 sur 7 à l'octet avant
+retouche) : les retouches sont faites dans les banques `_generation/q_<module>.py`, puis `build_qcm.py --tous`
+(assemblage et répartition déterministes, graines inchangées).
+
+**Ce que la lecture a trouvé (aucun outil ne le voyait).**
+- **Le « programme » cité à l'élève** — six questions ou leurres renvoyaient au texte officiel (« Le programme cite des
+  critères… », « Le programme demande de décrire… », « parce que le programme interdit… ») : l'élève ne l'a pas sous
+  les yeux. Réécrits sans lui (besoin, croquis, exigences, pieuvre).
+- **Un renvoi sans document** — « Dans cet atelier, quelle est l'évolution étudiée ? » (carte mentale) ; « Lis le FAST
+  vers la gauche » sans FAST (FAST) ; « Que faut-il ajouter au diagramme ? » sans diagramme (cas d'utilisation) ; le
+  trou du câble « sous le boîtier » sans croquis (croquis). Les trois derniers reçoivent le document que la banque avait
+  déjà (diagramme de la station d'alerte, FAST du jardin, croquis coté du boîtier).
+- **Une personne que la question ne présente pas** — « Mme Joseph suit tout sur son téléphone. Pour qui est-ce un
+  avantage ? — pour la gardienne » : il fallait savoir que Mme Joseph est la gardienne. La phrase le dit maintenant.
+- **Une question circulaire** — « Le diagramme des exigences est souvent appelé… le diagramme des exigences SysML ».
+  Remplacée par une question sur le diagramme : quelle exigence-fille vérifie-t-on avec un compteur d'eau (l'unité du
+  niveau dit l'instrument). Même défaut dans le croquis (« comment appelle-t-on le croquis ? — un croquis à main
+  levée ») : la question demande maintenant comment on dit d'un dessin fait sans règle.
+- **Deux réponses défendables (porte A)** — « Le critère “très basse tension” est rempli par les trois solutions. Ce
+  critère… — peut être effacé : il ne départage rien » se défendait. La question demande maintenant s'il faut le garder.
+- **Des leurres que personne ne choisit (porte B)** — « la couleur du boîtier, assortie aux plantes », « la marque du
+  fabricant » face à l'autonomie : remplacés par de vraies caractéristiques qui servent une autre partie du besoin
+  (la résistance à la pluie, la hauteur du jet).
+- **Une bonne réponse reconnaissable à sa forme** — trois leurres en « parce que… », la bonne réponse sans : alignée.
+- **Une notion affichée qui souffle** — « Pieuvre ou carte mentale » au-dessus d'une question dont ce sont deux des
+  propositions : renommée « Reconnaître un schéma » (et les pièges suivent dans `qcm_aides_<module>.json`).
+- **Des unités** — « 12 V, en volts » devient « 12 V (volts) » (n°312) ; une question qui demandait « qui est
+  l'utilisateur ? » et proposait « à la mairie… » se lit maintenant « à qui le lampadaire rend-il service ? ».
+
+**Questions sur document (chantier D1).** Croquis 5 → 6, exigences 5 → 6, pieuvre 4 → **6** (les rebords du bac sur le
+dessin du vélo-cargo ; la gardienne reliée par les traits 1 et 5 sur le diagramme du jardin), cas d'utilisation 8 → 9,
+FAST 7 → 8. Le nombre suit partout où il est écrit : en-tête de banque, docstring, fiche pédagogique, et les **17
+pages-pointeurs** des ateliers (« 30 questions, dont N illustrées »), dont sept dans les thèmes 2 et 3 (`5e_C4.1`,
+`4e_C4.4`, `4e_C7.2`, `3e_C7.2`, `4e_C8.3`) — d'où la branche sans motif de thème (n°302, n°307). Ces pages sont
+engendrées par `build.py`, qu'on ne lance jamais dans le dépôt : la phrase y est corrigée à l'identique de ce qu'il
+produirait (il lit le nombre dans la banque).
+
+**`qcm_fonctionnement_objet`** (4e_C2.1) : lu en entier, rien qui ne se lise pas seul ; six questions sur document ; non
+modifié.
+
+**Vérifié.** `build_qcm.py --verifier` : 7 sur 7 à l'octet après régénération. `banc_ateliers.py` : 530 / 530.
+`balayer_questions_qcm.mjs` : 7 QCM, 210 questions, 47 illustrées, 0 écart à 390 px ; les six questions devenues
+questions sur document capturées à 390 px (aucun débordement). Contrôles des QCM (banque, en-tête, effectifs, unités,
+sigles, indices, longueurs) : verts. `controle_question_seule.py --strict` : aucun refus dans les ateliers.
+
+En tout, 22 questions retouchées sur 240.

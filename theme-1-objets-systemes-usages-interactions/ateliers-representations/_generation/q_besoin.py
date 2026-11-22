@@ -87,7 +87,7 @@ q(C, "Un but bien écrit",
   "But = verbe à l'infinitif, sans solution.")
 
 q(C, "Celui qui paie",
-  "La mairie a commandé et payé le lampadaire du parking. Dans sa bête à cornes, qui est l'utilisateur, celui à qui il rend service ?",
+  "La mairie a commandé et payé le lampadaire du parking. Dans sa bête à cornes, à qui le lampadaire rend-il service ?",
   ["aux piétons qui traversent le parking la nuit",
    "à la mairie, puisque c'est elle qui l'a commandé",
    "à l'entreprise qui a fabriqué le lampadaire",
@@ -290,17 +290,17 @@ C = "4e_C3.1"
 q(C, "L'absence de la gardienne",
   "Besoin : arroser les plantes même en l'absence de la gardienne. Quelle caractéristique sert cette partie du besoin ?",
   ["l'autonomie, en nombre de jours sans intervention",
-   "la couleur du boîtier, assortie aux plantes du jardin",
+   "la résistance du boîtier à la pluie (IPX4)",
    "le nombre de boutons sur le boîtier",
-   "la marque du fabricant, connue de tous"],
+   "la hauteur du jet d'eau, en mètres"],
   "« Même en l'absence de la gardienne » se mesure en jours : combien de temps le système arrose-t-il seul ? C'est son "
   "<b>autonomie</b>.",
   "Pour une lampe de secours après un cyclone : l'autonomie, en heures.",
   "Choisir une caractéristique qui se voit au lieu de celle qui sert le besoin.",
   ["",
-   "La couleur ne fait pas arroser plus longtemps.",
+   "La pluie menace le boîtier que la gardienne soit là ou non : cette caractéristique sert « dehors », pas « en son absence ». Cherche ce qui se compte en jours.",
    "Le nombre de boutons ne dit pas combien de jours le système tient seul.",
-   "Une marque connue ne dit rien de l'autonomie d'un modèle."],
+   "La hauteur du jet dit jusqu'où va l'eau, pas combien de jours le système arrose seul. Cherche ce qui se compte en jours."],
   "Absence → autonomie.")
 
 q(C, "Sans gaspiller l'eau",
@@ -349,14 +349,14 @@ q(C, "Le point de départ",
    "La couleur ne répond à aucune partie du besoin du jardin."],
   "Le besoin d'abord, les caractéristiques ensuite.")
 
-q(C, "Un critère du programme",
-  "Le programme cite des critères de choix valables pour presque tous les objets. Lequel en fait partie ?",
+q(C, "Un critère de choix",
+  "Lequel de ces critères sert à choisir presque n'importe quel objet technique ?",
   ["l'efficacité énergétique",
    "la couleur la plus à la mode",
    "le nombre de boutons",
    "la marque la plus connue"],
-  "Le programme cite la qualité, l'efficacité énergétique, la durabilité et la recyclabilité : des critères qui se "
-  "mesurent et qui comptent aussi pour la planète.",
+  "Quatre critères comptent pour presque tous les objets : la qualité, l'efficacité énergétique, la durabilité et la "
+  "recyclabilité. Ils se mesurent, et ils comptent aussi pour la planète.",
   "Deux systèmes d'arrosage qui arrosent aussi bien : on préfère celui qui consomme le moins d'énergie.",
   "Confondre un critère de choix avec un goût personnel.",
   ["",

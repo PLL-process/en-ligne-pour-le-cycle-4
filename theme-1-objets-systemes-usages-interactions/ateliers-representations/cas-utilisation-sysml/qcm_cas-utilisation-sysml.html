@@ -164,7 +164,7 @@
   <span title="Programme 2024 — 5e_C2.1 : Faire la liste des interacteurs extérieurs d’un objet ou système technique." class="badge code">5e_C2.1</span>
   <span title="Programme 2024 — 4e_C2.1 : Décrire l’expérience de l’utilisateur (ressenti et facilité d’usage) d’un objet ou système technique en partant du langage naturel (texte, croquis) pour aboutir aux schémas, graphiques, algorithmes." class="badge code">4e_C2.1</span>
   <span title="Programme 2024 — 3e_C2.1 : Décrire l’expérience de l’utilisateur d’un objet ou système technique à l’aide de modes de représentation choisis." class="badge code">3e_C2.1</span>
-  <span class="badge theme">30 questions · 8 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 9 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center">⬅ Revenir à l'atelier de ton niveau : <a href="atelier_5e_cas-utilisation-sysml.html">Atelier 5e</a> · <a href="atelier_4e_cas-utilisation-sysml.html">Atelier 4e</a> · <a href="atelier_3e_cas-utilisation-sysml.html">Atelier 3e</a></p>
 
@@ -303,7 +303,7 @@
 
 <script>
 "use strict";
-/* Banque de questions — Atelier : le diagramme de cas d'utilisation (use case). 30 questions (5e_C2.1 : 8 · 4e_C2.1 : 12 · 3e_C2.1 : 10), dont 8 illustrées. Source : _generation/q_cas_utilisation.py */
+/* Banque de questions — Atelier : le diagramme de cas d'utilisation (use case). 30 questions (5e_C2.1 : 8 · 4e_C2.1 : 12 · 3e_C2.1 : 10), dont 9 illustrées. Source : _generation/q_cas_utilisation.py */
 const QUESTIONS = [
 /* ═══ 5e_C2.1 ═══ */
 {c:"5e_C2.1",n:"Ce qu'est un acteur",q:"Dans un diagramme de cas d'utilisation, un acteur est…",
@@ -512,7 +512,8 @@ const QUESTIONS = [
  err:"Prendre une pièce (la sirène) pour un acteur.",
  d:["La sirène est une pièce de la station ; « Chaque matin » dit quand, pas quoi : ni l'un ni l'autre ne convient.","","La sirène est une pièce, dedans : ce n'est pas un acteur.","C'est inversé : le technicien est un bonhomme, et la sirène n'est ni l'un ni l'autre."],
  ret:"Qui agit → bonhomme ; ce qu'il fait → ellipse."},
-{c:"3e_C2.1",n:"Un acteur de plus",q:"La station prévient aussi le centre de secours des pompiers, en même temps que les habitants. Que faut-il ajouter au diagramme ?",
+{c:"3e_C2.1",n:"Un acteur de plus",q:"Sur ce diagramme, la station doit aussi prévenir le centre de secours des pompiers, en même temps que les habitants. Que faut-il ajouter ?",
+ img:{src:"Images/station_alerte_cas_utilisation_corrige.svg",alt:"Diagramme de cas d'utilisation de la station d'alerte cyclonique : l'agent municipal relié à Déclencher une alerte, le technicien à Tester la sirène, l'habitant à Recevoir une alerte, le service météo à Envoyer un bulletin météo."},
  o:["rien : les pompiers sont des habitants comme les autres","une ellipse « Prévenir les pompiers », sans acteur","un acteur, relié à « Recevoir une alerte »","un bonhomme « la sirène », relié aux pompiers"],r:2,
  expl:"Le centre de secours est un autre système, dehors, qui reçoit l'alerte : c'est un <b>acteur</b>, relié à l'ellipse existante. L'action ne change pas : « Recevoir une alerte » a maintenant deux acteurs.",
  ex:"« Payer la location » est reliée à deux acteurs : l'usager et le serveur de paiement.",

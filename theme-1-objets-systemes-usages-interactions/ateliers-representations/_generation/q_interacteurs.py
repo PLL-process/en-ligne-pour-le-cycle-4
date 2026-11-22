@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 5e_C2.1 (10) · 5e_C2.2 (10) · 4e_C2.2 (10). Quatre questions illustrées.
+Répartition : 5e_C2.1 (10) · 5e_C2.2 (10) · 4e_C2.2 (10). Six questions illustrées.
 """
 from qbanque import Banque
 
@@ -48,7 +48,7 @@ q(C, "Ce qu'est un interacteur",
   "Interacteur = en dehors + en relation.")
 
 q(C, "Les deux noms du schéma",
-  "Le programme dit « diagramme des interacteurs extérieurs ». Sous quel autre nom ce schéma est-il très connu ?",
+  "« Diagramme des interacteurs extérieurs » : sous quel autre nom ce schéma est-il très connu ?",
   ["le diagramme pieuvre",
    "la bête à cornes",
    "le diagramme de Gantt",
@@ -197,7 +197,7 @@ q(C, "Une règle n'est pas un interacteur",
 C = "5e_C2.2"
 
 q(C, "Pour qui, les rebords hauts",
-  "Les rebords hauts du bac du vélo-cargo répondent surtout à quel interacteur ?",
+  "Sur ce dessin, le repère A montre les rebords hauts du bac. À quel interacteur répondent-ils surtout ?",
   ["les enfants",
    "la pluie",
    "la route en pente",
@@ -209,7 +209,7 @@ q(C, "Pour qui, les rebords hauts",
    "Contre la pluie, on ajoute une housse ou des garde-boue : les rebords ne protègent pas de l'eau qui tombe.",
    "Pour la pente, on ajoute des vitesses : la hauteur du bac ne change pas l'effort.",
    "L'itinéraire est une information sur un écran : il n'a aucun lien avec la hauteur du bac."],
-  "Un choix de conception répond à un interacteur.")
+  "Un choix de conception répond à un interacteur.", img=IMG_CHOIX)
 
 q(C, "Le domaine des ceintures",
   "Dans quel domaine range-t-on les ceintures des enfants dans le bac ?",
@@ -433,7 +433,7 @@ q(C, "D'où vient IPX4",
   "Le code IP vient d'une norme.")
 
 q(C, "Très basse tension",
-  "« Le boîtier fonctionne en très basse tension (12 V, en volts). » Dans quelle catégorie range-t-on cette exigence ?",
+  "« Le boîtier fonctionne en très basse tension : 12 V (volts). » Dans quelle catégorie range-t-on cette exigence ?",
   ["la sécurité",
    "l'ergonomie",
    "les incidences environnementales",
@@ -467,7 +467,7 @@ q(C, "Pourquoi commencer par la pieuvre",
   "Pourquoi tracer toutes les bulles du diagramme pieuvre AVANT d'écrire les exigences ?",
   ["pour ne pas oublier un interacteur, donc une contrainte",
    "pour que le cahier des charges ait une jolie image",
-   "parce que le programme interdit d'écrire d'abord",
+   "parce qu'un cahier des charges commence toujours par un dessin",
    "pour connaître le prix de vente de l'objet"],
   "Chaque interacteur pose la question « quelle contrainte m'impose-t-il ? ». Un interacteur oublié, c'est une contrainte que "
   "personne n'écrira — et une plainte plus tard.",
@@ -475,7 +475,7 @@ q(C, "Pourquoi commencer par la pieuvre",
   "Écrire les exigences de mémoire, sans faire le tour des interacteurs.",
   ["",
    "Le diagramme n'est pas une décoration : il sert à ne rien oublier.",
-   "Rien n'interdit d'écrire avant de dessiner ; dessiner d'abord aide simplement à ne rien oublier.",
+   "Un cahier des charges peut s'écrire sans dessin ; le diagramme pieuvre aide simplement à ne rien oublier.",
    "Le diagramme pieuvre ne contient aucun prix."],
   "Le diagramme pieuvre sert à ne rien oublier.")
 
@@ -496,7 +496,7 @@ q(C, "La colonne flexibilité",
   "Flexibilité : l'écart accepté autour du niveau.")
 
 q(C, "Dans la FP et dans une FC",
-  "La gardienne apparaît dans la fonction principale et dans une fonction contrainte. Est-ce une erreur ?",
+  "Sur ce diagramme, la gardienne est reliée par le trait 1 et par le trait 5. Est-ce une erreur ?",
   ["Non : l'objet la sert, et elle lui impose aussi une condition.",
    "Oui : un interacteur ne peut avoir qu'un seul trait.",
    "Oui : une personne ne peut jamais être dans une FC.",
@@ -509,6 +509,6 @@ q(C, "Dans la FP et dans une FC",
    "Dans ce diagramme, la gardienne a bien deux traits, et c'est juste : elle est servie et elle impose une condition.",
    "Une FC peut concerner une personne : « être facile à régler par la gardienne » concerne la gardienne.",
    "L'importance n'est pas la raison : c'est parce qu'elle a deux relations différentes avec l'objet."],
-  "Un interacteur peut avoir plusieurs traits.")
+  "Un interacteur peut avoir plusieurs traits.", img=IMG_JARDIN)
 
 Q = B.fin(30, {"5e_C2.1": 10, "5e_C2.2": 10, "4e_C2.2": 10})

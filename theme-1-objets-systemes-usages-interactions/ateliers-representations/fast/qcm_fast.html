@@ -166,7 +166,7 @@
   <span title="Programme 2024 — 4e_C4.4 : Identifier les constituants de la chaîne d’information d’un objet réel et les associer à leur fonction." class="badge code">4e_C4.4</span>
   <span title="Programme 2024 — 4e_C7.2 : Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un objet ou système technique (croquis, schéma, graphique, algorithme, modélisation)." class="badge code">4e_C7.2</span>
   <span title="Programme 2024 — 3e_C7.2 : Proposer et fabriquer un ensemble de solutions pour produire un nouvel objet ou système technique (croquis, schéma, graphique, algorithme, modélisation)." class="badge code">3e_C7.2</span>
-  <span class="badge theme">30 questions · 7 illustrées · chaque distracteur réfuté</span>
+  <span class="badge theme">30 questions · 8 illustrées · chaque distracteur réfuté</span>
 </div>
 <p style="text-align:center">⬅ Revenir à l'atelier de ton niveau : <a href="atelier_5e_fast.html">Atelier 5e</a> · <a href="atelier_4e_fast.html">Atelier 4e</a> · <a href="atelier_3e_fast.html">Atelier 3e</a></p>
 
@@ -307,7 +307,7 @@
 
 <script>
 "use strict";
-/* Banque de questions — Atelier : des fonctions aux solutions techniques (diagramme FAST). 30 questions (5e_C4.1 : 8 · 5e_C1.2 : 5 · 4e_C4.4 : 6 · 4e_C7.2 : 5 · 3e_C7.2 : 6), dont 7 illustrées. Source : _generation/q_fast.py */
+/* Banque de questions — Atelier : des fonctions aux solutions techniques (diagramme FAST). 30 questions (5e_C4.1 : 8 · 5e_C1.2 : 5 · 4e_C4.4 : 6 · 4e_C7.2 : 5 · 3e_C7.2 : 6), dont 8 illustrées. Source : _generation/q_fast.py */
 const QUESTIONS = [
 /* ═══ 5e_C4.1 ═══ */
 {c:"5e_C4.1",n:"Reconnaître une fonction",q:"Dans un diagramme FAST, laquelle de ces étiquettes est une fonction technique ?",
@@ -435,7 +435,8 @@ const QUESTIONS = [
  err:"Mettre dans la chaîne d'information tout ce qui reçoit un ordre.",
  d:["Le capteur d'humidité prend une information sur la terre : il acquiert, il est dans la chaîne d'information.","","La carte compare et décide : elle traite, au cœur de la chaîne d'information.","Le module Wi-Fi envoie l'état au smartphone : il communique, il est dans la chaîne d'information."],
  ret:"Ce qui agit sur le monde : chaîne d'énergie."},
-{c:"4e_C4.4",n:"Pourquoi une électrovanne",q:"Lis le FAST vers la gauche : pourquoi le système d'arrosage a-t-il une électrovanne ?",
+{c:"4e_C4.4",n:"Pourquoi une électrovanne",q:"Lis ce FAST vers la gauche : pourquoi le système d'arrosage a-t-il une électrovanne ?",
+ img:{src:"Images/fast_jardin_arrosage.svg",alt:"Diagramme FAST du système d'arrosage : mesurer l'humidité du sol, le capteur d'humidité du sol ; décider quand arroser, la carte programmable ; envoyer l'état au smartphone, le module Wi-Fi ; laisser passer l'eau ou la bloquer, l'électrovanne ; faire circuler l'eau jusqu'aux bacs, la pompe et les tuyaux ; stocker l'eau de pluie, la cuve."},
  o:["pour laisser passer l'eau ou la bloquer","pour mesurer l'humidité de la terre","pour envoyer l'état au smartphone","pour décider à quelle heure arroser les bacs"],r:0,
  expl:"Vers la gauche, l'électrovanne mène à « laisser passer l'eau ou la bloquer », puis à la fonction d'usage : arroser les plantes quand la terre est sèche.",
  ex:"Pourquoi une cuve ? → vers la gauche → stocker l'eau de pluie.",
@@ -503,12 +504,12 @@ const QUESTIONS = [
  err:"Oublier de quoi chaque solution a besoin pour atteindre les habitants.",
  d:["La sirène est branchée sur la station, alimentée par sa batterie : elle n'a pas besoin du réseau.","","Le panneau lumineux est relié à la station : il s'allume sans antenne de téléphone.","Le message, lui, dépend des antennes : sans réseau, il n'arrive pas."],
  ret:"Une solution dépend de ce qu'elle utilise."},
-{c:"3e_C7.2",n:"Un critère qui élimine",q:"Le critère « alimentée en très basse tension » est rempli par les trois solutions d'alerte. Ce critère…",
- o:["ne concerne que la sirène de la station","peut être effacé : il ne départage rien","désigne la solution la plus économe","écarte toute solution qui ne le remplit pas"],r:3,
+{c:"3e_C7.2",n:"Un critère qui élimine",q:"Le critère « alimentée en très basse tension » est rempli par les trois solutions d'alerte. Faut-il le garder dans la liste ?",
+ o:["oui, mais il ne concerne que la sirène de la station","non : il ne départage rien, on peut donc l'effacer","non : il désigne déjà la solution la plus économe","oui : il élimine toute solution qui ne le remplit pas"],r:3,
  expl:"C'est une <b>exigence impérative</b> (flexibilité F0) : elle ne départage pas, elle <b>élimine</b>. Une solution sur le 230 V (volts), sous la pluie d'un cyclone, serait écartée d'office.",
  ex:"« Résister à des vents de cyclone » élimine aussi tout panneau qui s'envolerait.",
  err:"Effacer un critère parce que toutes les solutions le remplissent.",
- d:["La sirène, le module de messages et le panneau sont tous concernés : tous doivent rester en très basse tension.","Effacé, le critère ne protégerait plus contre une solution dangereuse proposée plus tard.","Il dit oui ou non, il ne classe pas les consommations : il ne désigne aucune solution.",""],
+ d:["La sirène, le module de messages et le panneau sont tous concernés : tous doivent rester en très basse tension.","Effacé, le critère ne protégerait plus contre une solution dangereuse proposée plus tard. Demande-toi à quoi il sert, même quand il ne départage pas.","Il dit oui ou non, il ne classe pas les consommations : il ne désigne aucune solution.",""],
  ret:"Un critère impératif élimine."},
 {c:"3e_C7.2",n:"Combiner deux solutions",q:"Pourquoi une équipe peut-elle choisir de combiner la sirène et le panneau lumineux ?",
  o:["deux appareils coûtent moins cher qu'un seul","chacune couvre le point faible de l'autre","la sirène ne marche pas sans le panneau","il est interdit de n'avoir qu'une alerte"],r:1,

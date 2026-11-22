@@ -60,7 +60,7 @@ Analyse externe : besoin (bête à cornes) → interacteurs (diagramme pieuvre) 
 ## Évaluation
 
 - Positionnement de l'élève, en fin de page, sur chaque code (quatre niveaux, formulation du référentiel mot pour mot).
-- QCM d'entraînement : 30 questions fixes, dont 5 illustrées, chaque distracteur réfuté.
+- QCM d'entraînement : 30 questions fixes, dont 6 illustrées, chaque distracteur réfuté.
 - Aucun corrigé d'évaluation sommative dans le dépôt.
 
 ## Notes et sources

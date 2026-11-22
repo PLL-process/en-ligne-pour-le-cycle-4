@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 4e_C2.1 (10) · 4e_C7.2 (8) · 3e_C7.2 (12). Cinq questions illustrées.
+Répartition : 4e_C2.1 (10) · 4e_C7.2 (8) · 3e_C7.2 (12). Six questions illustrées.
 """
 from qbanque import Banque
 
@@ -46,23 +46,23 @@ q(C, "Ce qu'est un croquis",
    "Un dessin en volume fait avec un logiciel est une modélisation ; le croquis se fait au crayon, en quelques minutes."],
   "Croquis = rapide, à main levée, l'essentiel.")
 
-q(C, "Les deux noms",
-  "Dans les ateliers, comment appelle-t-on souvent le croquis ?",
-  ["un croquis à main levée",
-   "un dessin d'ensemble",
-   "un plan d'architecte",
-   "une vue éclatée"],
-  "« À main levée » veut dire sans règle ni compas : le crayon suit la main. C'est le même dessin que le croquis du programme.",
+q(C, "À main levée",
+  "Un dessin fait sans règle ni compas, d'un trait rapide, est dit…",
+  ["à main levée",
+   "à l'échelle",
+   "coté",
+   "en vue éclatée"],
+  "« À main levée » veut dire sans règle ni compas : le crayon suit la main. C'est ainsi qu'on trace un croquis.",
   "« Fais-moi un croquis à main levée de ton idée » : on attend un dessin rapide, pas un plan.",
   "Confondre le croquis avec les dessins techniques précis.",
   ["",
-   "Le dessin d'ensemble montre toutes les pièces d'un objet assemblé, tracées avec précision : ce n'est pas un croquis.",
-   "Un plan d'architecte est tracé à l'échelle, avec des instruments ou un logiciel.",
+   "Un dessin à l'échelle respecte les proportions exactes : il se trace avec une règle, pas d'un trait rapide.",
+   "Un dessin coté porte des dimensions ; il peut être à main levée, mais « coté » ne dit pas comment il a été tracé.",
    "Une vue éclatée montre les pièces écartées les unes des autres, dessinées avec précision."],
-  "Croquis = croquis à main levée.")
+  "Croquis : à main levée, sans règle.")
 
 q(C, "Le langage naturel",
-  "Le programme demande de décrire l'expérience de l'usager « en partant du langage naturel ». Le langage naturel, c'est…",
+  "Décrire ce que vit l'usager « en partant du langage naturel » : le langage naturel, c'est…",
   ["les mots de tous les jours, ceux de l'usager",
    "le langage des programmes informatiques",
    "les symboles normés des schémas électriques",
@@ -158,7 +158,7 @@ q(C, "Commencer par un croquis",
   "Pourquoi commence-t-on souvent par un croquis pour décrire l'expérience d'un usager ?",
   ["parce qu'il se fait vite et garde ce que vit l'usager",
    "parce qu'il est plus précis qu'un schéma ou qu'un plan",
-   "parce que le programme interdit de commencer par un texte",
+   "parce qu'un texte n'a pas sa place dans un dossier technique",
    "parce qu'on peut l'envoyer tel quel à une imprimante 3D"],
   "Le croquis traduit vite le témoignage en image ; on passe ensuite au schéma, au graphique ou à l'algorithme quand il faut "
   "préciser.",
@@ -166,7 +166,7 @@ q(C, "Commencer par un croquis",
   "Croire que le croquis est l'étape la plus précise.",
   ["",
    "Un croquis est moins précis qu'un schéma : c'est justement pour cela qu'il est rapide.",
-   "Le programme part du langage naturel, donc d'un texte : on ne l'interdit pas, on le traduit.",
+   "Un dossier technique part au contraire du texte de l'usager, son témoignage : on ne l'écarte pas, on le traduit en croquis.",
    "Une imprimante 3D (en trois dimensions) a besoin d'une modélisation exacte, pas d'un dessin à main levée."],
   "Croquis d'abord : vite, et centré sur l'usager.")
 
@@ -349,7 +349,7 @@ q(C, "Vraiment différentes",
 
 q(C, "Le vent et le bras",
   "Pourquoi un long bras, qui éloigne la sirène du poteau, est-il risqué face au vent ?",
-  ["plus la sirène est loin, plus elle force sur la fixation",
+  ["parce que, loin du poteau, elle force sur la fixation",
    "parce qu'un bras long rouille plus vite qu'un collier",
    "parce que le son porte moins loin au bout d'un bras",
    "parce qu'un bras ne peut pas se démonter pour l'entretien"],
@@ -410,7 +410,7 @@ q(C, "Les pointillés",
   "Pointillés = caché.")
 
 q(C, "La bonne vue",
-  "Le trou du câble est sous le boîtier. Que faut-il ajouter au croquis pour le fabriquer ?",
+  "Sur ce croquis, le trou du câble est sous le boîtier. Que faut-il ajouter pour le fabriquer ?",
   ["une vue de dessous, avec son diamètre et sa place",
    "une ombre sous le boîtier, pour qu'il ait l'air vrai",
    "une deuxième vue de face, plus grande que la première",
@@ -423,7 +423,7 @@ q(C, "La bonne vue",
    "Une ombre ne donne ni le diamètre ni la place du trou.",
    "Une autre vue de face montre encore la face avant : le dessous reste caché.",
    "Le câble ne dit pas où percer : il faut le diamètre et la place du trou."],
-  "Chaque détail sur une vue qui le montre.")
+  "Chaque détail sur une vue qui le montre.", img=IMG_BOITIER)
 
 q(C, "Pour câbler",
   "On veut montrer à un électricien comment brancher la sirène sur la batterie. Quelle représentation ?",

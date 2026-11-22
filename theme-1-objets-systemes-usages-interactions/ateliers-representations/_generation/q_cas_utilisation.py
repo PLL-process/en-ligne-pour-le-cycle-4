@@ -4,7 +4,7 @@
 Toutes les bonnes réponses sont en position 0 ici : la répartition sur A/B/C/D
 est faite ensuite par `_outils/fix_r.js`, de façon déterministe.
 
-Répartition : 5e_C2.1 (8) · 4e_C2.1 (12) · 3e_C2.1 (10). Huit questions illustrées.
+Répartition : 5e_C2.1 (8) · 4e_C2.1 (12) · 3e_C2.1 (10). Neuf questions illustrées.
 """
 from qbanque import Banque
 
@@ -495,7 +495,7 @@ q(C, "Une phrase, un acteur, un cas",
   "Qui agit → bonhomme ; ce qu'il fait → ellipse.")
 
 q(C, "Un acteur de plus",
-  "La station prévient aussi le centre de secours des pompiers, en même temps que les habitants. Que faut-il ajouter au diagramme ?",
+  "Sur ce diagramme, la station doit aussi prévenir le centre de secours des pompiers, en même temps que les habitants. Que faut-il ajouter ?",
   ["un acteur, relié à « Recevoir une alerte »",
    "une ellipse « Prévenir les pompiers », sans acteur",
    "rien : les pompiers sont des habitants comme les autres",
@@ -508,7 +508,7 @@ q(C, "Un acteur de plus",
    "Une ellipse sans acteur ne sert à rien, et l'action « recevoir l'alerte » existe déjà.",
    "Le centre de secours n'est pas un habitant : c'est un autre système, qui a son propre trait.",
    "La sirène est une pièce de la station : elle n'a pas de bonhomme."],
-  "Un acteur de plus ne veut pas dire une ellipse de plus.")
+  "Un acteur de plus ne veut pas dire une ellipse de plus.", img=IMG_CYCLONE)
 
 q(C, "Une bonne justification",
   "Quelle justification du choix d'un mode de représentation est la meilleure ?",
