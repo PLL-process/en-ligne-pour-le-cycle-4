@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Poser dans une page le petit Python de la page (banc_python.js), entre ses marqueurs, ou dire si la copie est à jour.
 
-Pourquoi (audit de « Programmer l'alerte », 3e_C6.1, 21/11/2026 ; règle d'or n°369) : une validation de programme
+Pourquoi (audit de « Programmer l'alerte », 3e_C6.1, 21/11/2026 ; règle d'or n°333) : une validation de programme
 exécute le programme de l'élève et compare ses sorties au cahier des charges ; elle ne cherche pas des motifs dans
 son texte. La page reste monofichier et hors ligne (règle d'or n°305) : le script est COPIÉ dans la page, comme le
 mode mission ; la source unique est `_outils/banc_python/banc_python.js`.

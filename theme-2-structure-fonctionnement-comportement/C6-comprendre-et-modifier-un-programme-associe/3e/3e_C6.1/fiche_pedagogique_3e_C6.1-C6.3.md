@@ -43,7 +43,7 @@ Aides ×2 ; corrections exhaustives dont correction commentée ligne par ligne (
 
 ## Évaluation
 
-Formative : vérificateurs intégrés qui **exécutent le programme réellement écrit par l'élève** (règle d'or n°369) — act. 3 : la valeur de SEUIL_ORANGE et son effet ; act. 4 : 10 vents comparés au cahier des charges, le premier écart nommé ; act. 5 : « mes prévisions » et « essais de ma version » séparés, un essai périmé dès que la version change (n°370). La justification d'act. 2 est écrite et relue par l'enseignant, jamais jugée par mots-clés. QCM 30 q (15/15, 6 illustrées) → bilan par compétence → LSU. Sommative à construire par l'enseignant, corrigé non publié.
+Formative : vérificateurs intégrés qui **exécutent le programme réellement écrit par l'élève** (règle d'or n°333) — act. 3 : la valeur de SEUIL_ORANGE et son effet ; act. 4 : 10 vents comparés au cahier des charges, le premier écart nommé ; act. 5 : « mes prévisions » et « essais de ma version » séparés, un essai périmé dès que la version change (n°333), la version toujours dite (n°369), la prévision écrite avant l'essai (n°370). La justification d'act. 2 est écrite et relue par l'enseignant, jamais jugée par mots-clés. QCM 30 q (15/15, 6 illustrées) → bilan par compétence → LSU. Sommative à construire par l'enseignant, corrigé non publié.
 
 ## Bilan et prolongements
 

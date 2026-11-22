@@ -2,14 +2,14 @@
 
 **Suite** : `tests_3e_C6.1-C6.3.mjs`, livrée dans ce dossier · **Outil** : Playwright
 (Chromium headless), viewport téléphone 390 × 844 · **Rejouée le 22/11/2026** ·
-**Verdict : 55 / 55 ✅** (38 / 38 le 21/11/2026 ; refonte du banc pour les audits des 21 et 22/11/2026)
+**Verdict : 56 / 56 ✅** (38 / 38 le 21/11/2026 ; refonte du banc pour les audits des 21 et 22/11/2026)
 
 ```
 cd theme-2-.../C6-.../3e/3e_C6.1 && node tests_3e_C6.1-C6.3.mjs
-node _outils/banc_python/tests_banc_python.mjs      # le petit Python de la page, sans navigateur
+node _outils/banc_python/tests_banc_python.mjs      # le petit Python de la page, sans navigateur : 24 / 24
 ```
 
-## Ce qui a changé le 22/11/2026 (audits des 21 et 22/11/2026, règles d'or n°369 à n°371)
+## Ce qui a changé le 22/11/2026 (audits des 21 et 22/11/2026 ; règle d'or n°333 appliquée, n°369 et n°370 en essai)
 
 La page **exécute** désormais le programme de l'élève (le petit Python `banc-python`, source
 `_outils/banc_python/`), au lieu de chercher des motifs dans son texte. Les critères de recette de
@@ -26,9 +26,10 @@ l'audit sont recopiés dans la suite, au mot près quand c'était possible :
 - « Accepter « 118 ne dépasse pas 118 ; il dépasse 90 » » → validé, sans mot-clé (test 10) ;
 - « 10 bonnes réponses sur 10 travaillées ne donnent que 6,7/20 » → « 10 / 10 réussies », « 10 / 30 travaillées », pas de /20 (test 29 bis) ;
 - le billet, les documents (algorigramme à 60, plan de tests authentique de la v1, récit fictif), les deux hypothèses (tests 7 bis, 20 quater, 19 sexies) ;
+- une écriture Python juste que le banc ne connaissait pas (f-string) obtient 10 / 10 ; une écriture qu'il ne lit pas (liste) est dite « limite du banc, pas forcément une erreur », jamais « SyntaxError » (test 16 quinquies, audit Fable) ;
 - le Bonus a désormais sa correction, et son fichier `.py` est le programme de la correction de l'activité 4, qui passe le banc 10 / 10 (test 21 bis).
 
-## Les 55 contrôles (sortie du 22/11/2026)
+## Les 56 contrôles (sortie du 22/11/2026)
 
 | # | Contrôle | Résultat |
 |---|---|---|
@@ -56,6 +57,7 @@ l'audit sont recopiés dans la suite, au mot près quand c'était possible :
 | 16 | critère de l'audit : la v2 écrite avec des apostrophes obtient 10 / 10, comme avec des guillemets | ✅ |
 | 16 bis | critère de l'audit : `>=` au seuil ouragan → refusé, « 118 km/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu » | ✅ |
 | 16 ter | programme non exécutable : « IndentationError » avec sa ligne, et la version le dit | ✅ |
+| 16 quinquies | une f-string juste obtient 10 / 10 ; une liste (hors du banc) donne « Le banc n'a pas pu essayer ton programme », « limite du banc », jamais « SyntaxError » | ✅ |
 | 16 quater | activité 4 validée 10 / 10 sur la v2 de la correction, et la version se dit « version 2 » | ✅ |
 | 17 | prévisions et diagnostic justes, rien exécuté : REFUSÉE, « Essais de ma version : à exécuter » | ✅ |
 | 17 bis | la v1 restaurée exécutée : REFUSÉE, « 3 / 10 vents conformes » | ✅ |

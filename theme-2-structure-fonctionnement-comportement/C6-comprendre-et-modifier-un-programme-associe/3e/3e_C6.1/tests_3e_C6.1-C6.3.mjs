@@ -13,7 +13,7 @@
  * source `_outils/banc_python/`). Audit du 21/11/2026 : l'activité 4 cherchait
  * sept motifs dans le TEXTE du programme — un programme juste écrit avec des
  * apostrophes obtenait 5 / 7, un programme faux à 118 obtenait 7 / 7. Depuis le
- * 22/11/2026 (règles d'or n°369 à n°371) :
+ * 22/11/2026 (règle d'or n°333, appliquée ; n°369 et n°370, en essai) :
  *
  *   · l'activité 3 lit la VALEUR de `SEUIL_ORANGE` dans le programme exécuté
  *     (60.5 n'est pas 60) et vérifie son effet à 55 et 61 km/h ;
@@ -321,6 +321,15 @@ await ecrireCode(v2.replace('if gyrophare_actif:               # ④ nouveau blo
 ok('16 ter · programme non exécutable : « IndentationError » avec sa ligne, et la version le dit',
    /Ligne 29 · IndentationError/.test(await retour(4)) && !(await valide(4)) && /erreur/.test(await p.textContent('#clVersion')),
    (await retour(4)).slice(0, 120));
+/* audit Fable du 22/11/2026 : une écriture Python juste que le banc ne connaissait pas (f-string) est lue ;
+   une écriture qu'il ne lit pas (liste) est dite « limite du banc », jamais « SyntaxError » (n°340, n°146) */
+await ecrireCode(v2.replace('message = "Vigilance " + vigilance', 'message = f"Vigilance {vigilance}"')); await valider(4);
+const fstr = await retour(4), fstrOk = await valide(4);
+await ecrireCode(v2.replace('vigilance = "verte"        # sorties initialisées « au repos »', 'niveaux = ["verte"]\nvigilance = niveaux[0]')); await valider(4);
+const liste = await retour(4);
+ok('16 quinquies · une f-string juste obtient 10 / 10 ; une liste (hors du banc) donne « Le banc n\'a pas pu essayer ton programme », « limite du banc », jamais « SyntaxError »',
+   /10 \/ 10 vents conformes/.test(fstr) && fstrOk && /Le banc n'a pas pu essayer ton programme/.test(liste) && /limite du banc, pas forcément une erreur/.test(liste) && !/SyntaxError/.test(liste),
+   fstr.slice(0, 50) + ' | ' + liste.slice(0, 120));
 await ecrireCode(v2); await valider(4);
 ok(`16 quater · activité 4 validée 10 / 10 sur la v2 de la correction, et la version se dit « version 2 »`,
    /10 \/ 10 vents conformes/.test(await retour(4)) && await valide(4) && /version 2/.test(await p.textContent('#clVersion')),

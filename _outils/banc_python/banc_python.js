@@ -4,7 +4,7 @@
  * Le bouton « Vérifier » de l'activité 4 cherchait des motifs dans le TEXTE du programme : un programme juste écrit
  * avec des apostrophes obtenait 5 / 7 et le conseil de réparer deux branches justes ; un programme faux à 118 km/h
  * (`>=` au lieu de `>`) obtenait 7 / 7. Une validation de programme regarde ce que le programme FAIT : on l'exécute
- * sur des entrées fictives et on compare ses sorties au cahier des charges (règle d'or n°369).
+ * sur des entrées fictives et on compare ses sorties au cahier des charges (règle d'or n°333 : une autre solution juste est acceptée, on compare le comportement, pas le texte).
  *
  * CE QU'IL EXÉCUTE — le Python d'un programme de collège, un passage, sans boucle :
  *   affectations (`x = …`, `x += …`), `if` / `elif` / `else` avec l'indentation, `pass`,
@@ -62,7 +62,20 @@
   var MOTS = { "if": 1, "elif": 1, "else": 1, "and": 1, "or": 1, "not": 1, "True": 1, "False": 1, "None": 1, "pass": 1,
     "while": 1, "for": 1, "def": 1, "import": 1, "from": 1, "return": 1, "in": 1, "is": 1, "class": 1, "lambda": 1,
     "break": 1, "continue": 1, "with": 1, "try": 1, "except": 1, "global": 1 };
-  var OPS = ["**", "//", "==", "!=", ">=", "<=", "+=", "-=", "*=", "/=", ">", "<", "=", "+", "-", "*", "/", "%", "(", ")", ",", ":", "[", "]", ".", "{", "}"];
+  var OPS = ["**", "//", "==", "!=", ">=", "<=", "+=", "-=", "*=", "/=", ">", "<", "=", "+", "-", "*", "/", "%", "(", ")", ",", ":", "[", "]", ".", "{", "}", ";"];
+
+  /* un texte entre guillemets, depuis son guillemet ouvrant ; brut (r"…") : sans séquences \n */
+  function lireTexte(ligne, i, n, brut) {
+    var q = ligne[i], j = i + 1, s = "", L = ligne.length;
+    if (ligne.substr(i, 3) === q + q + q) throw new Erreur("SyntaxError", n, "texte sur plusieurs lignes (''' ou \"\"\")",
+      "le banc de la page lit les textes d'une seule ligne : écris \"…\" ou '…'.");
+    while (j < L && ligne[j] !== q) {
+      if (ligne[j] === "\\" && j + 1 < L) { var e = ligne[j + 1]; s += brut ? "\\" + e : (e === "n" ? "\n" : e === "t" ? "\t" : e); j += 2; continue; }
+      s += ligne[j]; j++;
+    }
+    if (j >= L) throw new Erreur("SyntaxError", n, "unterminated string literal", "un texte commence par " + q + " mais ne se ferme pas : ajoute le " + q + " de fin.");
+    return { s: s, fin: j + 1 };
+  }
 
   function decouper(ligne, n) {
     var toks = [], i = 0, L = ligne.length;
@@ -70,6 +83,13 @@
       var c = ligne[i];
       if (c === " " || c === "\t") { i++; continue; }
       if (c === "#") break;
+      var pref = /^([fFrRuUbB]{1,2})(?=["'])/.exec(ligne.slice(i));
+      if (pref && !/[A-Za-z_À-ÿ0-9]/.test(ligne[i - 1] || "")) {
+        var p = pref[1].toLowerCase();
+        if (p.indexOf("b") >= 0) throw new Erreur("NonPrisEnCharge", n, "les octets (b\"…\")", "le banc de la page lit les textes ordinaires \"…\" : ton programme est peut-être juste en Python, essaie-le sur ordinateur (Bonus).");
+        var lu = lireTexte(ligne, i + p.length, n, p.indexOf("r") >= 0);
+        toks.push({ k: p.indexOf("f") >= 0 ? "fstr" : "str", v: lu.s, n: n }); i = lu.fin; continue;
+      }
       if (c === '"' || c === "'") {
         var q = c, j = i + 1, s = "";
         if (ligne.substr(i, 3) === q + q + q) throw new Erreur("SyntaxError", n, "texte sur plusieurs lignes (''' ou \"\"\")",
@@ -125,6 +145,16 @@
       toks.forEach(function (t) { if (t.k === "op" && (t.v === "(" || t.v === "[")) prof++; if (t.k === "op" && (t.v === ")" || t.v === "]")) prof--; });
       if (prof > 0) throw new Erreur("SyntaxError", n, "'(' was never closed", "une parenthèse ouverte sur cette ligne n'est pas refermée.");
       if (prof < 0) throw new Erreur("SyntaxError", n, "unmatched ')'", "une parenthèse fermante n'a pas d'ouvrante.");
+      var morceaux = [[]];
+      toks.forEach(function (t) { if (t.k === "op" && t.v === ";") morceaux.push([]); else morceaux[morceaux.length - 1].push(t); });
+      if (morceaux.length > 1) {
+        var t0 = toks[0];
+        if (t0.k === "mot" && /^(if|elif|else|while|for|def|class|try|with)$/.test(t0.v)) throw new Erreur("NonPrisEnCharge", n, "plusieurs instructions sur une ligne « " + t0.v + " »",
+          "le banc de la page lit une instruction par ligne après « " + t0.v + " » : ton programme est peut-être juste en Python ; va à la ligne pour l'essayer ici.");
+        morceaux = morceaux.filter(function (m) { return m.length; });
+        morceaux.forEach(function (m) { out.push({ n: n, retrait: largeur, toks: m, source: l.trim() }); });
+        continue;
+      }
       out.push({ n: n, retrait: largeur, toks: toks, source: l.trim() });
     }
     return out;
@@ -144,7 +174,15 @@
       this.i++; return x;
     },
     fin: function () { return this.i >= this.t.length; },
-    expr: function () { return this.ou(); },
+    expr: function () {
+      var g = this.ou();
+      if (this.est("mot", "if")) {
+        this.i++; var c = this.ou();
+        if (!this.est("mot", "else")) throw new Erreur("SyntaxError", this.n, "expected 'else' after 'if' expression", "« valeur if test » demande aussi « else autre_valeur ».");
+        this.i++; return { k: "tern", c: c, g: g, d: this.expr() };
+      }
+      return g;
+    },
     ou: function () {
       var g = this.et();
       while (this.est("mot", "or")) { this.i++; g = { k: "ou", g: g, d: this.et() }; }
@@ -161,8 +199,13 @@
     },
     comparaison: function () {
       var g = this.somme(), ops = [], termes = [g];
-      while (this.est("op", ">") || this.est("op", "<") || this.est("op", ">=") || this.est("op", "<=") || this.est("op", "==") || this.est("op", "!=")) {
-        ops.push(this.voir().v); this.i++; termes.push(this.somme());
+      while (true) {
+        if (this.est("op", ">") || this.est("op", "<") || this.est("op", ">=") || this.est("op", "<=") || this.est("op", "==") || this.est("op", "!=")) { ops.push(this.voir().v); this.i++; }
+        else if (this.est("mot", "is")) { this.i++; if (this.est("mot", "not")) { this.i++; ops.push("is not"); } else ops.push("is"); }
+        else if (this.est("mot", "in")) { this.i++; ops.push("in"); }
+        else if (this.est("mot", "not") && this.t[this.i + 1] && this.t[this.i + 1].k === "mot" && this.t[this.i + 1].v === "in") { this.i += 2; ops.push("not in"); }
+        else break;
+        termes.push(this.somme());
       }
       if (this.est("op", "=")) throw new Erreur("SyntaxError", this.n, "invalid syntax. Maybe you meant '==' or ':=' instead of '='?",
         "dans un test, on compare avec == (deux signes égal) ; un seul = range une valeur dans une variable.");
@@ -193,6 +236,7 @@
       if (!x) throw new Erreur("SyntaxError", this.n, "invalid syntax", "la ligne s'arrête avant la fin de l'expression.");
       if (x.k === "num") { this.i++; return { k: "lit", v: x.v, src: x.brut }; }
       if (x.k === "str") { this.i++; return { k: "lit", v: vStr(x.v), src: repr(vStr(x.v)) }; }
+      if (x.k === "fstr") { this.i++; return { k: "fstr", parts: morceauxF(x.v, this.n), src: "f" + repr(vStr(x.v)) }; }
       if (x.k === "mot" && (x.v === "True" || x.v === "False")) { this.i++; return { k: "lit", v: vBool(x.v === "True"), src: x.v }; }
       if (x.k === "mot" && x.v === "None") { this.i++; return { k: "lit", v: NONE, src: "None" }; }
       if (x.k === "op" && x.v === "(") {
@@ -215,9 +259,42 @@
       }
       if (x.k === "mot" && (x.v === "true" || x.v === "false")) throw new Erreur("NameError", this.n, "name '" + x.v + "' is not defined", "");
       if (x.k === "op" && x.v === "[") throw new Erreur("NonPrisEnCharge", this.n, "listes", "le banc de la page ne sait pas encore exécuter les listes.");
+      if (x.k === "op" && x.v === "{") throw new Erreur("NonPrisEnCharge", this.n, "dictionnaires et ensembles { }", "le banc de la page ne sait pas encore exécuter { } : ton programme est peut-être juste en Python, essaie-le sur ordinateur (Bonus).");
+      if (x.k === "mot" && MOTS_INCONNUS[x.v]) throw nonLu(x.v, this.n);
       throw new Erreur("SyntaxError", this.n, "invalid syntax", "je ne m'attendais pas à lire « " + x.v + " » ici.");
     }
   };
+
+  /* mots de Python que le banc ne lit pas à cet endroit : jamais une « SyntaxError » pour un programme peut-être juste */
+  var MOTS_INCONNUS = { "lambda": 1, "yield": 1, "await": 1, "async": 1, "del": 1, "assert": 1, "raise": 1, "nonlocal": 1, "global": 1, "for": 1, "in": 1, "is": 1, "while": 1, "with": 1, "as": 1 };
+  function nonLu(mot, n) {
+    return new Erreur("NonPrisEnCharge", n, "« " + mot + " » à cet endroit",
+      "le banc de la page ne lit pas cette écriture : ton programme est peut-être juste en Python. Essaie-le dans Python sur ordinateur (Bonus), ou écris cette ligne plus simplement.");
+  }
+  /* f"Vigilance {vigilance}" : les morceaux de texte et les expressions entre accolades */
+  function morceauxF(s, n) {
+    var parts = [], i = 0, cur = "";
+    while (i < s.length) {
+      var c = s[i];
+      if (c === "{" && s[i + 1] === "{") { cur += "{"; i += 2; continue; }
+      if (c === "}" && s[i + 1] === "}") { cur += "}"; i += 2; continue; }
+      if (c === "{") {
+        var j = s.indexOf("}", i);
+        if (j < 0) throw new Erreur("SyntaxError", n, "f-string: expecting '}'", "une accolade { ouverte dans le texte n'est pas refermée.");
+        var dedans = s.slice(i + 1, j);
+        if (/[:!]/.test(dedans.replace(/(["'])(?:(?!\1).)*\1/g, "")) || /=\s*$/.test(dedans)) throw new Erreur("NonPrisEnCharge", n, "les f-strings avec un format ({…:…})",
+          "le banc de la page lit f\"…{nom}…\" sans format : ton programme est peut-être juste en Python, essaie-le sur ordinateur (Bonus).");
+        if (cur) parts.push(cur); cur = "";
+        var a = new Analyseur(decouper(dedans, n), n), e = a.expr();
+        if (!a.fin()) throw new Erreur("SyntaxError", n, "f-string: invalid syntax", "entre accolades, une seule expression.");
+        parts.push(e); i = j + 1; continue;
+      }
+      if (c === "}") throw new Erreur("SyntaxError", n, "f-string: single '}' is not allowed", "une accolade } seule : double-la (}}) pour l'écrire.");
+      cur += c; i++;
+    }
+    if (cur) parts.push(cur);
+    return parts;
+  }
 
   var NON_PRIS = { "while": "les boucles while", "for": "les boucles for", "def": "les fonctions (def)", "import": "import", "from": "import",
     "return": "return", "class": "les classes", "try": "try", "with": "with", "lambda": "lambda", "break": "break", "continue": "continue", "global": "global" };
@@ -233,7 +310,10 @@
       a.i++;
       if (a.fin() || a.est("op", ":")) throw new Erreur("SyntaxError", ll.n, "invalid syntax", "« " + t0.v + " » doit être suivi d'un test, par exemple « " + t0.v + " vent_kmh > SEUIL_ROUGE: ».");
       var test = a.expr();
-      if (!a.est("op", ":")) throw new Erreur("SyntaxError", ll.n, "expected ':'", "une ligne « " + t0.v + " … » se termine par deux-points « : ».");
+      if (!a.est("op", ":")) {
+        if (a.voir() && a.voir().k === "mot" && MOTS_INCONNUS[a.voir().v]) throw nonLu(a.voir().v, ll.n);
+        throw new Erreur("SyntaxError", ll.n, "expected ':'", "une ligne « " + t0.v + " … » se termine par deux-points « : ».");
+      }
       a.i++;
       var reste = a.fin() ? null : instructionSimple(a, ll);
       return { k: t0.v, test: test, n: ll.n, src: sourceTest(ll), seule: reste };
@@ -271,6 +351,7 @@
     if (!a.fin()) {
       var t = a.voir();
       if (t.k === "op" && t.v === ":") throw new Erreur("SyntaxError", ll.n, "invalid syntax", "deux-points « : » en trop : seules les lignes if, elif et else en portent.");
+      if (t.k === "mot" && MOTS_INCONNUS[t.v]) throw nonLu(t.v, ll.n);
       throw new Erreur("SyntaxError", ll.n, "invalid syntax", "je lis encore « " + t.v + " » après la fin de l'instruction.");
     }
   }
@@ -377,6 +458,8 @@
         case "et": { var g = this.eval(x.g, n); return vrai(g) ? this.eval(x.d, n) : g; }
         case "ou": { var g2 = this.eval(x.g, n); return vrai(g2) ? g2 : this.eval(x.d, n); }
         case "bin": return this.binaire(x.op, this.eval(x.g, n), this.eval(x.d, n), n);
+        case "tern": return vrai(this.eval(x.c, n)) ? this.eval(x.g, n) : this.eval(x.d, n);
+        case "fstr": return vStr(x.parts.map(function (p) { return typeof p === "string" ? p : texte(self.eval(p, n)); }).join(""));
         case "cmp": {
           var gauche = this.eval(x.termes[0], n), res = true;
           for (var i = 0; i < x.ops.length; i++) {
@@ -424,6 +507,15 @@
       throw new Erreur("SyntaxError", n, "invalid syntax", "");
     },
     compare: function (op, a, b, n) {
+      if (op === "is" || op === "is not") {
+        var meme = a.t === b.t && (a.t === "none" || a.v === b.v);
+        return op === "is" ? meme : !meme;
+      }
+      if (op === "in" || op === "not in") {
+        if (a.t !== "str" || b.t !== "str") throw new Erreur("NonPrisEnCharge", n, "« in » hors des textes", "le banc de la page sait chercher un texte dans un texte (\"rouge\" in message), pas encore dans une liste.");
+        var dans = b.v.indexOf(a.v) >= 0;
+        return op === "in" ? dans : !dans;
+      }
       if (op === "==" || op === "!=") {
         var eg = (estNombre(a) && estNombre(b)) ? nombre(a) === nombre(b) : (a.t === b.t && a.v === b.v) || (a.t === "none" && b.t === "none");
         return op === "==" ? eg : !eg;
@@ -506,9 +598,9 @@
   /* Une phrase pour l'élève : « Ligne 17 · IndentationError — … » */
   function phraseErreur(e) {
     if (!e) return "";
-    var debut = e.type === "NonPrisEnCharge" ? "Ligne " + e.ligne + " · le banc de la page ne sait pas encore exécuter " + e.message
-      : "Ligne " + e.ligne + " · " + e.type + " : " + e.message;
-    return debut + (e.conseil ? " — " + e.conseil : "");
+    /* une limite du banc n'est jamais présentée comme une erreur de l'élève (n°340 : la simplification dite ; n°146) */
+    if (e.type === "NonPrisEnCharge") return "Ligne " + e.ligne + " · limite du banc, pas forcément une erreur de ton programme — " + (e.conseil || "le banc de la page ne sait pas encore lire " + e.message + ".");
+    return "Ligne " + e.ligne + " · " + e.type + " : " + e.message + (e.conseil ? " — " + e.conseil : "");
   }
   /* Une ligne de trace lisible : « ligne 12 · vent_kmh > SEUIL_OURAGAN → 118 > 118 → faux » */
   function phraseTrace(p) {
@@ -520,12 +612,12 @@
     if (p.t === "pass") return "ligne " + p.n + " · pass : rien à faire";
     return "";
   }
-  /* Une empreinte courte du programme : un essai se rattache à la version qu'il a essayée (règle d'or n°370). */
+  /* Une empreinte courte du programme : un essai se rattache à la version qu'il a essayée (règle d'or n°333 : un code modifié après le test est « à retester »). */
   function empreinte(code) {
     var s = String(code).replace(/\r\n?/g, "\n"), h = 0x811c9dc5;
     for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
     return ("0000000" + h.toString(16)).slice(-8);
   }
 
-  global.BancPython = { analyser: analyser, executer: executer, phraseErreur: phraseErreur, phraseTrace: phraseTrace, empreinte: empreinte, Erreur: Erreur, version: "1" };
+  global.BancPython = { analyser: analyser, executer: executer, phraseErreur: phraseErreur, phraseTrace: phraseTrace, empreinte: empreinte, Erreur: Erreur, version: "1.1" };
 })(typeof window !== "undefined" ? window : globalThis);

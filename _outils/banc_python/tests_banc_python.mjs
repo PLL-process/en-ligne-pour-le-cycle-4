@@ -1,6 +1,6 @@
 /* tests_banc_python.mjs — le banc du petit Python de la page (banc_python.js), sans navigateur.
  *
- * Il éprouve ce qui fonde la règle d'or n°369 (une validation de programme exécute le programme) : deux écritures
+ * Il éprouve ce qui fonde la règle d'or n°333 (une réussite affichée prouve la production réelle : on compare le comportement, pas le texte) : deux écritures
  * équivalentes donnent les mêmes sorties, un opérateur faux change la sortie à sa frontière, et chaque erreur de
  * Python arrive avec sa ligne. Les critères de recette de l'audit du 21/11/2026 (3e_C6.1) y sont recopiés :
  *   · « Remplacer seulement les guillemets doubles des chaînes par des apostrophes » : même comportement ;
@@ -144,6 +144,20 @@ ok('15 · empreinte : la moindre modification change la version', B.empreinte(V2
 // 16 · entiers et décimaux s'affichent comme en Python
 const r16 = B.executer('print(4.0, 7 / 2, 7 // 2, 10 / 5)');
 ok('16 · print(4.0, 7 / 2, 7 // 2, 10 / 5) → « 4.0 3.5 3 2.0 »', r16.ok && r16.sorties.affichages[0] === '4.0 3.5 3 2.0', r16.sorties.affichages[0]);
+
+// 17 · écritures Python justes que le banc lit (audit Fable du 22/11/2026) : f-string, is, expression conditionnelle, « ; », in
+const r17 = B.executer('v = "rouge"\nm = f"Vigilance {v}"\na = True\nb = 1 if a is True else 0; c = "ou" in "rouge"\nd = None\ne = d is None and "x" not in m');
+ok('17 · f"…{v}", is True, a if c else b, « ; », in, not in, is None : lus comme Python', r17.ok && r17.variables.m === 'Vigilance rouge' && r17.variables.b === 1 && r17.variables.c === true && r17.variables.e === true, r17.ok ? JSON.stringify(r17.variables) : B.phraseErreur(r17.erreur));
+
+// 18 · ce que le banc ne lit pas n'est JAMAIS une SyntaxError : « limite du banc, pas forcément une erreur »
+const nonLus = ['x = [1, 2]', 'f = lambda y: y', 'd = {"a": 1}', 'for i in range(3):\n    pass', 'm = f"{3.14159:.2f}"', 'b = b"ab"', 'if True: x = 1; y = 2'];
+const mal = nonLus.map(c => [c, B.executer(c)]).filter(([c, r]) => r.ok || r.erreur.type !== 'NonPrisEnCharge' || !/limite du banc, pas forcément une erreur/.test(B.phraseErreur(r.erreur)));
+ok('18 · listes, lambda, { }, for, f-string formatée, b"…", « ; » après if : refus nommés « limite du banc », jamais « SyntaxError »', mal.length === 0, mal.map(([c, r]) => c + ' → ' + (r.ok ? 'ok ?' : B.phraseErreur(r.erreur))).join(' | '));
+
+// 19 · une vraie erreur reste une vraie erreur
+const r19 = B.executer('if 3 > 2\n    x = 1');
+const r19b = B.executer('x = 1 if True');
+ok('19 · « if 3 > 2 » sans deux-points et « 1 if True » sans else restent des SyntaxError', !r19.ok && r19.erreur.type === 'SyntaxError' && !r19b.ok && r19b.erreur.type === 'SyntaxError');
 
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d && !t.ok ? ' — ' + t.d : ''}`).join('\n'));
