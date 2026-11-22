@@ -35893,3 +35893,39 @@ relie fait maintenant sortir le contrôle à 1. Le banc `tests_controle_porte_se
 référence du dépôt est vide). Registre : n°364 (0 listing qui défile sur les 341 pages) et n°366 (référence vide) mis à
 jour. Contrôles : `controle_porte_sequence.py` 0 page sans porte sur 56 dossiers de séquence ; banc 6 / 6 ;
 `registre_regles.py --verifier` vert (prochain n°369).
+
+## 22/11/2026 — Complément à la n°44 : aucun sigle ne reste nu, dans le texte aussi ; un contrôle, une première correction commune (transversal : `_outils`, trois thèmes, skills du dépôt)
+
+**Consigne de Pascal** (22/11/2026, 0 h 35) : « Tous les sigles doivent être expliqués pour éviter les charges
+cognitives » ; puis, à 0 h 36, « À ajouter ».
+
+**Ce qui existait.** La n°44 (août 2026) le disait déjà : tout badge, code, sigle ou bouton porte une explication à
+portée immédiate, avec une mention en clair sur la page, parce qu'une infobulle ne s'ouvre pas au doigt. Elle visait
+surtout l'interface, et **aucun outil ne la mesurait dans le texte** ; la n°313 ne regarde que les capitales.
+
+**Complément à la n°44** (aucun numéro nouveau) : dans le texte lu par l'élève, chaque sigle s'écrit en clair au moins
+une fois sur la page, à sa première apparition quand c'est possible — « le TTL (<i>Time To Live</i>, la durée de vie du
+paquet) », « le CDI (le centre de documentation et d'information) ». Dans une formulation du programme recopiée mot
+pour mot (« un OST »), on ne réécrit pas la formulation (n°105) : l'explication se pose à côté. Une lettre de formule se
+traite de même (« ρ : la masse volumique de l'air »).
+
+**Outil.** `_outils/controle_sigles_expliques.py` : 42 sigles suivis, chacun avec son explication (liste qui ne peut que
+grandir) ; E = jamais expliqué sur la page (défaut), P = expliqué plus bas que sa première apparition (signal). Texte
+lu hors `<script>`, `<style>`, `<pre>`, `<code>`, `<svg>`.
+
+**Première mesure, puis première correction commune.**
+- Avant : 410 pages lues, **385 avec au moins un sigle jamais expliqué**. Les plus fréquents : QCM (325 pages), CDI (168),
+  OST (126), CRCN (46), USB (30), IP (28).
+- CDI venait presque toujours de l'avertissement commun « Ordinateur partagé (salle de techno, CDI) » : corrigé à la
+  source (`_outils/controle_sauvegarde_locale.py`, les deux modèles) et dans les 166 pages qui le portent —
+  « (salle de techno, CDI — le centre de documentation et d'information) ». `controle_sauvegarde_locale.py` reste vert
+  (168 pages, 0 refus).
+- OST : son explication est « objet ou système technique » (singulier du programme : « un OST »).
+- Après : **378 pages** avec un sigle nu ; CDI ne figure plus dans les plus fréquents. QCM 325, OST 108, CRCN 46.
+
+**La suite, par thème** (PR de thème, fusionnées seules au vert) : QCM d'abord — l'explication se pose dans le bloc
+« 🧠 Prêt·e à t'entraîner ? » et dans l'en-tête des QCM, pas dans la barre de navigation ; puis OST à côté des
+formulations du programme ; puis les sigles d'un seul thème (USB, IP, LED, PVC…). Les trois écrits « comme au brevet »
+de la soirée écrivent déjà leurs sigles en clair.
+
+**Skills** : `cadrage-cles-de-voute` (dix-septième question) et `tache-finale-redigee` (les sigles du bloc).

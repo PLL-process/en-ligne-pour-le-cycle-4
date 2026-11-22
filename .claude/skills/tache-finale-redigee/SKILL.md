@@ -33,12 +33,18 @@ La question 3 fournit le bloc d'origine à part : un élève qui s'est trompé e
 ## 3. Dans la page
 
 - Une zone de texte par question, sauvegardée (n°15) ; aucune proposition visible.
-- Un **coup de pouce** replié par question : une phrase à compléter, pas la réponse.
+- Une **version étayée** repliée par question (n°31) : des phrases à compléter, pas la réponse.
+- **Deux aides repliées avant la correction** (n°367) : un indice, puis la démarche ; elles ne s'impriment pas.
+- **Hors de la zone d'un bouton « Vérifier »** : le retrait de validation (n°340, `_outils/retrait_validation.py`)
+  regarde tous les champs de l'activité ; un écrit posé dedans retirerait la validation des questions à choix
+  (vu sur `3e_C6.1`, 21/11/2026). Le bloc va dans sa propre carte, ou après la fin de l'activité.
 - Une **correction** repliée, exhaustive (n°96), qui donne **la phrase de copie** (« ✍️ Sur ta copie, on peut
   écrire… », n°356).
 - Une **grille à trois critères** que l'élève coche après avoir lu la correction : suivre la branche, justifier avec
   les données, modifier et vérifier.
-- **Aucun bouton qui note** : la page ne juge pas un texte libre (n°340). Le bandeau dit « réponses écrites, correction
+- **Aucun bouton qui note** : la page ne juge pas un texte libre (n°340).
+- **Chaque sigle écrit en clair** dans le bloc, même s'il est expliqué ailleurs sur la page (TTL, CDI… ; n°44,
+  consigne de Pascal du 22/11/2026) ; une lettre de formule aussi (« ρ : la masse volumique de l'air »). Le bandeau dit « réponses écrites, correction
   lue, grille cochée », pas « réussi ».
 - La fiche bilan imprimable reprend les réponses écrites (n°358).
 
@@ -55,6 +61,19 @@ Jamais « le brevet se joue dans les distracteurs » ; toujours « après avoir 
 deux phrases ».
 
 ## 5. Vérifier
+
+```bash
+python3 _outils/tests_ecrit_brevet.py <page.html>     # ou --tout : chaque bloc .ecrit-brevet du site
+```
+
+Le banc commun joue chaque bloc à 390 px : forme (zones, aucune proposition, étayage, deux aides, correction repliée
+avec une phrase de copie par zone, grille), document sous les yeux (n°331), rien de noté (n°340), reprise après
+rechargement, lien direct `#id` qui ouvre la séance (n°359), aucune erreur, aucun défilement.
+
+Blocs en place (22/11/2026) : `3e_C6.1` (`#ecritBouee`), `3e_C4.7-C4.8` (`#ecritPont`), `3e_C8.1` (`#ecritPort`,
+livré par la PR du thème 3 qui suit). L'épreuve écrite de l'entraînement DNB (`3e_C6.2`, `#ep`) a son propre gabarit
+et son banc (`tests_entrainement_dnb.py`), hors de ce banc commun.
+
 
 - Le banc remplit les quatre zones, recharge, et retrouve les textes et la grille.
 - Le banc vérifie qu'aucune zone n'affiche « juste » ou « faux ».

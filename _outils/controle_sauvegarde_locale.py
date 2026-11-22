@@ -77,7 +77,7 @@ import sans_modale  # noqa: E402  (le code seul : un mot dans un commentaire n'e
 EXCLUS = {"_archive-anciennes-versions", ".git", "node_modules", "__pycache__", "_exports", "_generation"}
 
 NOTE_POSTE_PARTAGE = (
-    '<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: '
+    '<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI — le centre de documentation et d\'information)&nbsp;: '
     'un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>'
     'Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur '
     '«&nbsp;{bouton}&nbsp;».</p>'
@@ -88,7 +88,7 @@ NOTE_POSTE_PARTAGE = (
 NOTE_QCM = (
     '<p class="saved-note" data-note="poste-partage" style="font-size:.88em;color:var(--sub);'
     'text-align:left;max-width:880px;margin:6px auto 12px">🖥️ <b>Ordinateur partagé</b> (salle de techno, '
-    'CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>'
+    'CDI — le centre de documentation et d\'information)&nbsp;: un autre élève qui ouvre cette page sur la même session verra ton nom et tes réponses.<br>'
     'Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis efface ta sauvegarde.<br>'
     '<button class="btn ghost" id="btnEffacer" type="button" title="Effacer de ce navigateur ton nom, '
     'tes réponses et ton temps. Un second clic te sera demandé.">🗑 Effacer ma sauvegarde</button></p>'
