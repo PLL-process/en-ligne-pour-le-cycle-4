@@ -21,6 +21,9 @@ une fois par page) l'affiche au survol, à l'appui au doigt et à l'impression.
 Une apparition déjà suivie de son explication en clair (« QCM (questionnaire à choix multiples) ») ne reçoit pas
 d'infobulle : l'explication s'écrirait deux fois, au focus et sur papier ; elle suffit à sa séance (22/11/2026).
 Une page qui porte des infobulles reçoit toujours le style commun, même assemblée de morceaux, même sans </head>.
+La barre de navigation en dernier recours (22/11/2026, carte blanche de Pascal) : quand un sigle n'apparaît d'abord
+que dans la barre (« 🧠 QCM » d'une synthèse), sa première apparition dans la barre reçoit l'infobulle, sans tabindex
+(c'est un lien) ; seulement si rien d'autre ne l'explique à sa première apparition. La barre ne s'imprime pas.
 
 Un outil qui réécrit prouve d'abord qu'il sait ne rien changer (n°149) : lancé deux fois, il ne pose rien la seconde
 fois (la page est alors « ok » pour `controle_sigles_expliques.py`).
@@ -200,6 +203,51 @@ def poser_style(src):
     return src
 
 
+class Barre(HTMLParser):
+    """La première apparition du sigle dans le texte d'une barre de navigation (`<nav>`, `#navharm`)."""
+    def __init__(self, src, sigle):
+        super().__init__(convert_charrefs=False)
+        self.sigle, self.pile, self.trouve = sigle, [], None
+        self.lignes = [0] + [m.end() for m in re.finditer("\n", src)]
+
+    def handle_starttag(self, tag, attrs):
+        if tag in VIDES:
+            return
+        a = dict(attrs)
+        self.pile.append((tag, tag == "nav" or a.get("id") == "navharm"))
+
+    def handle_endtag(self, tag):
+        for i in range(len(self.pile) - 1, -1, -1):
+            if self.pile[i][0] == tag:
+                del self.pile[i:]
+                return
+
+    def handle_data(self, d):
+        if self.trouve is not None or not any(n for _, n in self.pile):
+            return
+        if any(t in ("script", "style", "abbr", "option", "select") for t, _ in self.pile):
+            return
+        m = re.search(r"(?<![\w./_-])" + re.escape(self.sigle) + r"(?![\w/_-])", d)
+        if m:
+            ligne, col = self.getpos()
+            self.trouve = self.lignes[ligne - 1] + col + m.start()
+
+
+def poser_infobulle_barre(src, sigle):
+    """L'infobulle sur la première apparition du sigle dans la barre de navigation, sans tabindex (un lien)."""
+    if re.search(r'<abbr class="sigle"[^>]*>' + re.escape(sigle) + "</abbr>", src):
+        return None, "déjà posé"
+    p = Barre(src, sigle)
+    p.feed(src)
+    if p.trouve is None:
+        return None, "sigle absent de la barre de navigation"
+    i = p.trouve
+    assert src[i:i + len(sigle)] == sigle
+    titre = html.escape(cse.SIGLES[sigle][0], quote=True)
+    neuf = src[:i] + f'<abbr class="sigle" title="{titre}">{sigle}</abbr>' + src[i + len(sigle):]
+    return poser_style(neuf), "1 infobulle dans la barre"
+
+
 def infobuller(src):
     """Explique dans ce source tous les sigles que `controle_sigles_expliques.py` voit non expliqués (E) ou expliqués trop
     bas (P), et le rend : QCM jamais expliqué s'écrit en clair (`poser`) quand il est dans le texte, tout le reste reçoit
@@ -212,6 +260,10 @@ def infobuller(src):
         neuf = neuf or poser_infobulle(src, sigle)[0]
         if neuf:
             src = neuf
+    # en dernier recours, la barre de navigation : le sigle n'apparaît d'abord que là (« 🧠 QCM » d'une synthèse)
+    for sigle, etat in cse.mesurer_source(src).items():
+        if etat != "ok":
+            src = poser_infobulle_barre(src, sigle)[0] or src
     # une infobulle sans le style commun ne s'ouvre ni au doigt ni sur papier : une page assemblée de morceaux qui en
     # portent déjà (les quatre pages de la station, 3e_C9.2) reçoit le style elle aussi (vu le 22/11/2026)
     return poser_style(src) if 'class="sigle"' in src else src

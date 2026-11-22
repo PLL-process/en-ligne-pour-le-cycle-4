@@ -36756,3 +36756,31 @@ qui défilent sans clavier (« scrollable-region-focusable »).
 
 Contrôles : axe-core page ouverte sur les 7 pages : zones fautives 0 (reste un `label` dans `3e_C4.3`, déjà sur
 `main`) ; L 0 · B 0 · C 0 ; `tests_regle_311` des sept dossiers 34 / 34 ; `controle_impression` à 0.
+
+## 22/11/2026 — Sigles expliqués (n°44) : la barre de navigation en dernier recours ; les dernières pages du thème 2 (thème 2 : `_outils`)
+
+**Décision.** Pascal (22/11/2026, 5 h 43), à la question « dans 34 pages, “QCM” n'est que dans la barre de navigation,
+j'y mets l'infobulle ? » : « Tu as carte blanche ». Mesure du jour : 81 pages où « QCM » apparaît d'abord dans la
+barre (« 🧠 QCM »), et nulle part ailleurs avant lui (thème 1 : 34 ; thème 2 : 3 ; thème 3 : 44).
+
+**Ce qui change.**
+- `_outils/expliquer_sigles.py` : `infobuller` finit par la barre de navigation. Un sigle que rien n'explique encore à
+  sa première apparition, et qui apparaît dans la barre (`<nav>`, `#navharm`), y reçoit son infobulle — sans
+  `tabindex`, puisque c'est un lien. Jamais quand le texte de la page peut la porter. La barre ne s'imprime pas (n°11) :
+  au survol seulement, ce qui suffit ici — l'élève qui touche « 🧠 QCM » arrive sur le QCM, où le sigle est écrit en
+  clair. Les générateurs qui appellent `infobuller` (ateliers, lexiques, TP de CAO, station `3e_C9.2`) la posent
+  d'eux-mêmes.
+- Banc `_outils/tests_expliquer_sigles.py` : 20 → 24 cas (seulement dans la barre ; expliqué en clair plus bas ; le
+  texte peut la porter, la barre n'est pas touchée ; relancé, rien ne change). Deux outils volontairement cassés
+  (`tabindex` dans la barre ; étape de la barre retirée) le font échouer, deux fois chacun.
+- Les quatre dernières pages du thème 2, écartées par la vague du thème 2 parce que d'autres sessions y travaillaient
+  (PR #881 et #889 fusionnées depuis) : `4e_C4.1/atelier_pix_crcn_jardin.html` (QCM en clair, USB, LED),
+  `4e_C6.2/tp_algorigrammes_domotique.html`, les deux synthèses de `4e_C6.2` (QCM dans la barre).
+
+**Vérifié.** Les quatre pages à 390 px : aucune erreur JavaScript, aucun défilement, la première infobulle visible
+prend le focus et l'affiche, aucune infobulle focalisable dans un lien. Texte identique, sauf « QCM (questionnaire à
+choix multiples) » écrit en clair dans l'atelier Pix. Bancs des deux dossiers : 5 / 5 (`4e_C4.1` 72 / 72 et 34 / 34 ;
+`4e_C6.2` 56 / 56, 34 / 34, TP 31 / 31). `controle_sigles.py` (n°313) vert, son banc 9 / 9.
+
+**Mesure** (`controle_sigles_expliques.py`) : thème 2, 3 → 0 page avec un sigle jamais expliqué. Les thèmes 1 et 3
+suivent dans leurs PR, une fois celle-ci fusionnée (leurs générateurs ont besoin de l'outil).
