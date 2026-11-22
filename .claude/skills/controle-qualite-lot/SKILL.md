@@ -221,8 +221,11 @@ la boucle corrige des défauts, elle ne choisit pas un style.
   - Il ne cite que des scripts livrés (`controle_rapports_tests.py`).
 - Le manifeste du lot (`manifest_lot_*.json`) et l'entrée au journal : voir `_outils/METHODE.md`, « Le lot est un ensemble INDIVISIBLE ».
 - Puis la livraison, par le skill `livraison-depot-cycle4` : régénération, branche, PR sous garde-périmètre. Depuis la règle d'or n°5
-  amendée (30/07/2026), Fable pousse sa branche et ouvre sa PR ; la fusion reste la validation de Pascal ; le colis
-  (bundle → Downloads) est le plan B.
+  amendée (30/07/2026), Fable pousse sa branche et ouvre sa PR ; le colis (bundle → Downloads) est le plan B.
+  Depuis le 21/11/2026 (n°5 amendée), **une PR de thème (`theme-1/2/3` dans la branche) se fusionne seule dès que
+  `perimetre` est vert** : tout ce qui doit partir (accès rapide, index, audit, journal) est dans la PR AVANT de l'ouvrir ;
+  un choix pédagogique que Pascal doit lire d'abord part avec l'étiquette `attendre-Pascal`. Les PR transversales
+  (`fable/<slug>`) restent à sa fusion.
 
 ## Critères de réussite
 

@@ -1,0 +1,118 @@
+name: Fusion automatique des PR de thème
+
+# Décision de Pascal du 21/11/2026 (règle d'or n°5 amendée, voir le journal) :
+# chaque PR des trois thèmes se fusionne SEULE dès que ses contrôles sont verts,
+# pour toutes les sessions, en cours et à venir.
+#
+# - Une PR de thème = une branche du dépôt dont le nom contient theme-1, theme-2
+#   ou theme-3 (le même motif que la garde-périmètre), ouverte vers main.
+# - « Contrôles verts » = le contrôle « perimetre » réussi sur le DERNIER commit
+#   de la PR, et aucun autre contrôle rouge ou en cours. La fusion vise ce commit
+#   précis (--match-head-commit) : un commit poussé entre-temps n'est jamais
+#   fusionné sans être passé par la garde.
+# - Fusion par commit de fusion, comme les fusions faites à la main.
+# - Pour garder une PR à la main (choix pédagogique à lire d'abord) : lui poser
+#   l'étiquette « attendre-Pascal ». La retirer relance l'examen.
+# - Jamais fusionnées seules : les brouillons, les PR venues d'un fork, les
+#   branches transversales (fable/… sans thème) et les branches de Pascal.
+# - Pour tout arrêter : Actions › « Fusion automatique des PR de thème » ›
+#   « Disable workflow ».
+#
+# Aucun code de la PR n'est extrait ni exécuté ici : le workflow ne lit que des
+# métadonnées (numéro, branche, étiquettes, origine, résultats des contrôles).
+
+on:
+  # La garde vient de finir sur une PR : on examine cette PR.
+  workflow_run:
+    workflows: ["Garde-périmètre des thèmes"]
+    types: [completed]
+  # L'étiquette attendre-Pascal retirée, ou un brouillon prêt : on réexamine.
+  pull_request_target:
+    types: [unlabeled, ready_for_review]
+    branches: [main]
+  # Rattrapage : examine toutes les PR de thème ouvertes (sessions en cours).
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+
+concurrency:
+  group: fusion-auto-${{ github.event.workflow_run.head_branch || github.event.pull_request.head.ref || 'rattrapage' }}
+  cancel-in-progress: false
+
+jobs:
+  fusion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Examiner et fusionner les PR de thème vertes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          EVENEMENT: ${{ github.event_name }}
+          GARDE_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          GARDE_SHA: ${{ github.event.workflow_run.head_sha }}
+          GARDE_ORIGINE: ${{ github.event.workflow_run.head_repository.full_name }}
+          PR_NUMERO: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          R="$GH_REPO"
+
+          examiner() {
+            local PR="$1" J ETAT DRAFT ORIGINE BRANCHE BASE SHA ATTENDRE CR PERI AUTRES ST
+            J=$(gh api "repos/$R/pulls/$PR")
+            ETAT=$(jq -r '.state' <<<"$J")
+            DRAFT=$(jq -r '.draft' <<<"$J")
+            ORIGINE=$(jq -r '.head.repo.full_name // ""' <<<"$J")
+            BRANCHE=$(jq -r '.head.ref' <<<"$J")
+            BASE=$(jq -r '.base.ref' <<<"$J")
+            SHA=$(jq -r '.head.sha' <<<"$J")
+            ATTENDRE=$(jq -r '[.labels[].name] | index("attendre-Pascal") != null' <<<"$J")
+
+            if [ "$ETAT" != "open" ]; then echo "#$PR : déjà fermée."; return 0; fi
+            if [ "$ORIGINE" != "$R" ]; then echo "#$PR : vient d'un fork, jamais fusionnée seule."; return 0; fi
+            if [ "$BASE" != "main" ]; then echo "#$PR : ne vise pas main."; return 0; fi
+            if ! grep -qE 'theme-[123]' <<<"$BRANCHE"; then echo "#$PR : branche hors thème, laissée à Pascal."; return 0; fi
+            if [ "$DRAFT" = "true" ]; then echo "#$PR : brouillon, on attend."; return 0; fi
+            if [ "$ATTENDRE" = "true" ]; then echo "#$PR : étiquette attendre-Pascal, laissée à la main."; return 0; fi
+
+            CR=$(gh api "repos/$R/commits/$SHA/check-runs?per_page=100")
+            PERI=$(jq -r '[.check_runs[] | select(.name == "perimetre")] | sort_by(.started_at) | last | if . == null then "absent" else (.conclusion // .status) end' <<<"$CR")
+            AUTRES=$(jq -r '[.check_runs[] | select(.name != "perimetre" and .name != "fusion")
+                             | select(.status != "completed" or ((.conclusion // "") | IN("success", "neutral", "skipped") | not))
+                             | .name] | unique | join(", ")' <<<"$CR")
+            ST=$(gh api "repos/$R/commits/$SHA/status" --jq 'if .total_count == 0 then "aucun" else .state end')
+
+            if [ "$PERI" != "success" ]; then echo "#$PR : perimetre = $PERI, pas de fusion."; return 0; fi
+            if [ -n "$AUTRES" ]; then echo "#$PR : contrôles pas tous verts ($AUTRES), on attend."; return 0; fi
+            if [ "$ST" != "aucun" ] && [ "$ST" != "success" ]; then echo "#$PR : statut $ST, on attend."; return 0; fi
+
+            if gh pr merge "$PR" --merge --match-head-commit "$SHA"; then
+              echo "#$PR : fusionnée (commit $SHA, contrôles verts)."
+            else
+              echo "::warning::#$PR : fusion refusée (conflit ou règle de main) — à regarder."
+            fi
+          }
+
+          case "$EVENEMENT" in
+            workflow_run)
+              if [ "$GARDE_CONCLUSION" != "success" ]; then echo "Garde : $GARDE_CONCLUSION — rien à fusionner."; exit 0; fi
+              if [ "$GARDE_ORIGINE" != "$R" ]; then echo "Garde passée sur un fork : ignoré."; exit 0; fi
+              PRS=$(gh api "repos/$R/pulls?state=open&base=main&per_page=100" \
+                    | jq -r --arg sha "$GARDE_SHA" '.[] | select(.head.sha == $sha) | .number')
+              ;;
+            pull_request_target)
+              PRS="$PR_NUMERO"
+              ;;
+            workflow_dispatch)
+              PRS=$(gh api "repos/$R/pulls?state=open&base=main&per_page=100" \
+                    | jq -r '.[] | select(.head.ref | test("theme-[123]")) | .number')
+              ;;
+            *)
+              echo "Événement $EVENEMENT non prévu."; exit 0 ;;
+          esac
+
+          if [ -z "$PRS" ]; then echo "Aucune PR à examiner."; exit 0; fi
+          for PR in $PRS; do examiner "$PR"; done

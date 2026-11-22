@@ -14,6 +14,25 @@ Référence des décisions : `JOURNAL_DES_DECISIONS.md` à la racine du dépôt.
 > pratique) — pilier 3 corrigé (il disait une séance de 1 h 30), et toute séquence s'écrit
 > en séances de 55 min.
 
+## La grille de cadrage : sept clés de voûte (21/11/2026)
+
+Avant d'écrire une séquence, et avant de valider une révision, on vérifie ces sept principes ; les autres règles du
+registre se rangent sous eux (décision de Pascal du 21/11/2026, sur l'audit de l'entraînement DNB de `3e_C6.2`).
+Méthode et grille d'audit sur 100 points : skill `cadrage-cles-de-voute`.
+
+| # | Clé de voûte | Règle | Ce qu'on vérifie |
+|---|---|---|---|
+| 1 | Un squelette unique | n°306 | ouverture, séances en onglets, Bonus → Bilan → QCM à la dernière séance |
+| 2 | On rappelle avant d'exiger | n°87, n°311 | rappel court (règle, exemple guidé, cas neuf), replié à partir de la séance 2 |
+| 3 | Trois lignes avant de commencer | n°337 | apprendre, savoir faire, réussir — avec les mêmes seuils que le code (n°338) |
+| 4 | Une question se lit seule | n°343 | objet nommé, nombres, état de départ, unité sous les yeux (n°350) |
+| 5 | Choisir n'est pas expliquer | n°346 | une réponse rédigée, sans propositions, sur un document inédit |
+| 6 | Un score dit quoi reprendre | n°347 | rempli, réussi et à reprendre séparés ; numéros sans la solution |
+| 7 | Le document parle la langue du cours | n°348 | mêmes formes, mots, nombres que le rappel ; aucun document qui porte sa réponse |
+
+Et, côté fabrique : **une règle n'existe que mesurée sur tout le site** (n°95, n°211). L'ancienne page de
+l'entraînement DNB enfreignait quatre règles en vigueur (n°137, 144, 300, 340) parce qu'aucun outil ne la relisait.
+
 ## Pilier 1 — Produire un lot pédagogique premium
 
 ### Avant de concevoir (préalables obligatoires)
