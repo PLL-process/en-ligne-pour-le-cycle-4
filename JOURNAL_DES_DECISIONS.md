@@ -36289,3 +36289,10 @@ dans `TOLEREES` avec cette raison écrite, comme le modèle de TP de l'atelier C
 lui-même les deux blocs, la ligne se retire et le TP les reçoit.
 
 **Vérifié.** `controle_regle4.py` : 84 pages conformes, 0 écart (sortie 0) ; banc `tests_controle_regle4.py` 25/25.
+
+## 22/11/2026 — `controle_reprise_espacee.py` voit aussi les séances écrites en `<section>` : la mesure de départ de la n°369 est 0 sur 123, pas 0 sur 113 (thème 2 : `_outils`)
+
+Vu au pilote de `4e_C1.4` : ses panneaux de séance sont des `<section class="seance-panel">`, et la mesure ne lisait que les
+`<div>`. Corrigé (les deux balises) ; un cas de plus au banc (9/9). Sur `main`, la mesure de départ devient **123 séances
+n°2 et suivantes, 0 conforme** (au lieu de 113 : dix séances en `<section>` n'étaient pas comptées). Le chiffre « 113 » des
+entrées du matin (audit #867, installation #868) est à lire « 123 ».
