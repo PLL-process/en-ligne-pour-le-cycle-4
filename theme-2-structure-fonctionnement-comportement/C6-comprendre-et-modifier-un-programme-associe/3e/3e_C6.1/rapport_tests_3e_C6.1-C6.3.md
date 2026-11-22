@@ -1,8 +1,8 @@
 # Rapport de tests — LOT 04 « Programmer l'alerte » (3e_C6.1 + C6.3)
 
 **Suite** : `tests_3e_C6.1-C6.3.mjs`, livrée dans ce dossier · **Outil** : Playwright
-(Chromium headless), viewport téléphone 390 × 844 · **Rejouée le 31/08/2026** ·
-**Verdict : 35 / 35 ✅**
+(Chromium headless), viewport téléphone 390 × 844 · **Rejouée le 21/11/2026** ·
+**Verdict : 38 / 38 ✅** (35 / 35 le 31/08/2026 ; trois tests de l'écrit ajoutés le 21/11)
 
 ```
 cd theme-2-.../C6-.../3e/3e_C6.1 && node tests_3e_C6.1-C6.3.mjs
@@ -123,3 +123,31 @@ gauche sur grand écran, au-dessus sur téléphone). Le programme de la bouée (
 | `impression_papier/banc_papier.py --filtre 3e_C6.1` | 0 | la fiche papier s'imprime ; le programme déplacé n'y apparaît pas en double |
 
 Revue d'écran : captures à 1 280 px (mission, côte à côte) et en page complète, regardées ; rien à reprendre.
+
+## 21/11/2026 — Trois explications écrites après la bouée (règle d'or n°346)
+
+Pilote de la n°346 (« choisir n'est pas expliquer »), choisi sur mesure : de toutes les séquences de 3e, la séance 3
+de celle-ci finissait sans aucune réponse écrite (0 zone de texte, 12 groupes de boutons radio). Après les six questions
+de la bouée, un bloc « ✍️ Explique comme au brevet » : le programme de la bouée repris sous les yeux (n°331), trois
+questions sans propositions (le cas limite 4,0 m justifié ; la ligne 4 modifiée et l'essai qui distingue les deux
+versions ; le drapeau orange écrit en `elif` et l'essai qui prouve l'ordre des tests), une version étayée par question
+(n°31), une correction repliée avec trois phrases de copie (n°356), une grille à trois critères que l'élève coche. Rien
+n'est noté : l'état compte ce qui est écrit et coché (n°340). Le bloc est placé hors de la zone de vérification de
+l'activité 6 : écrire une explication ne retire pas sa validation (vu au banc, corrigé avant livraison).
+
+| Contrôle | Sortie | Résultat |
+|---|---|---|
+| `tests_3e_C6.1-C6.3.mjs` | 0 | 38 / 38 (19 ter, 19 quater, 20 ter nouveaux) |
+| `tests_regle_311_3e_C6.1.mjs` | 0 | 34 / 34 |
+| `mode_mission/banc_generique.mjs` (la page) | 0 | aucun refus ; pourquoi des erreurs 48 / 48 |
+| `eleve_qui_ne_lit_pas.py` (n°360) | 0 | 26 groupes radio, 8 stratégies : aucune activité validée |
+| `controle_validations`, `controle_regles_visibles`, `controle_hierarchie`, `controle_debordement`, `controle_consignes_a_la_ligne`, `controle_propositions_indices`, `controle_schema_sous_les_yeux`, `controle_memes_nombres` (dossier), `controle_tactile` | 0 | rien à signaler |
+| `controle_code_colore.mjs` (dossier), `controle_hors_ligne.mjs`, `controle_impression.mjs` | 0 | 8 / 8 listings en couleurs ; aucune ressource réseau ; impression lisible |
+| lien direct `#ecritBouee` | — | ouvre la séance 3, le bloc visible |
+
+Revue d'écran à 390 px : bloc, version étayée, correction ouverte, grille ; aucun défilement horizontal. Zones de
+texte agrandies après le premier tour (le texte de la question 2 était coupé).
+
+**Non vérifié** : la durée réelle du réinvestissement avec l'écrit (annoncé 25 min, à mesurer en classe) ; un essai
+avec des élèves.
+

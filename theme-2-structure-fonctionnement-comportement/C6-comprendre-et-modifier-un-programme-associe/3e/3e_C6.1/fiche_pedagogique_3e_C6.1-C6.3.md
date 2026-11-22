@@ -31,7 +31,7 @@
 
 ## Déroulé
 
-S1 : CodeLab découverte + carte d'identité entrées/sorties (act. 1) + trace d'exécution, piège de la frontière (act. 2). S2 : modification de paramètre avec vérification du code réel (act. 3) + implémentation de l'alerte graduée d'après l'algorigramme, vérificateur analysant le code de l'élève (act. 4). S3 : plan de tests aux frontières + diagnostic d'un bug >= (act. 5) + réinvestissement « programme de la bouée » + bilan + QCM.
+S1 : CodeLab découverte + carte d'identité entrées/sorties (act. 1) + trace d'exécution, piège de la frontière (act. 2). S2 : modification de paramètre avec vérification du code réel (act. 3) + implémentation de l'alerte graduée d'après l'algorigramme, vérificateur analysant le code de l'élève (act. 4). S3 : plan de tests aux frontières + diagnostic d'un bug >= (act. 5) + réinvestissement « programme de la bouée », six questions puis trois explications écrites sans propositions, comme au brevet (n°346, 21/11/2026 : version étayée, correction avec phrases de copie, grille à trois critères cochée par l'élève, rien de noté) + bilan + QCM.
 
 ## Outils, versions, sécurité
 
