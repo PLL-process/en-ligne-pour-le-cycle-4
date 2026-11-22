@@ -12,9 +12,7 @@ C1 = T1 + "C1-decrire-les-liens-entre-usages-et-evolutions/"
 C8 = T3 + "C8-valider-les-solutions-techniques-par-des/"
 
 ENTREES = [
-    dict(id="cm-5e-hangzhou-donnees",
-         # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
-         replie="🗺️ D'abord (15 min)&nbsp;: qu'est-ce qu'une donnée&nbsp;? La carte mentale d'un autre projet — ouvre l'exercice", module="carte_mentale", niveau="5e", exos=["e1"],
+    dict(id="cm-5e-hangzhou-donnees", module="carte_mentale", niveau="5e", exos=["e1"],
          sequence=C1 + "5e/5e_C1.3/sequence_C1.3-C1.4_SI_gestion_donnees.html",
          avant="<p><strong>Consigne :</strong> observe le schéma puis classe les éléments suivants",
          balise="h4", balise_exo="h5",

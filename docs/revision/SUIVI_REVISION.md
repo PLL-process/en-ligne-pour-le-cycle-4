@@ -23,7 +23,7 @@ d'autant.
 | N° | Séquence | Séance la plus lourde (mots) | ✘ règles | Menus | Aération | État |
 |---|---|---|---|---|---|---|
 | 1 | `5e_C1.5` | 1549 → 1206 | 4 → 0 | 27 → 0 | 18 → 0 | livrée #619 |
-| 2 | `5e_C1.3` | 1050 → 1043 → 1199 | 0 | 0 | 5 → 0 | livrée #620 ; #681 : 24 questions fermées vérifiées par la page (thème 1) ; 22/11 : séance 1, 1 202 → 406 (l'exercice « D'abord, qu'est-ce qu'une donnée ? » replié sous son résumé) |
+| 2 | `5e_C1.3` | 1050 → 1043 → 1199 | 0 | 0 | 5 → 0 | livrée #620 ; #681 : 24 questions fermées vérifiées par la page (thème 1) ; 22/11 : séance 1, 1 202 → 1 199 (la carte mentale de l'activité 1 reste visible, #857 — n°331 ; la durée dite deux fois retirée) |
 | 3 | `4e_C1.1` | 3570 → 1836 | 0 | 0 | 22 → 0 | livrée #620 ; séance 5 coupée en deux (décision de Pascal) #624 ; 22/11 : séance 6, 1 212 → 1 198 (billet resserré) ; séance 5 (1 733, deux exercices d'atelier, gardés) reste au-dessus |
 | 4 | `4e_C1.4` | 1291 → 1056 → 1350 | 0 | 0 | 9 → 0 | livrée #624 ; #625 replie les leçons des situations ; #627 répare le jeu des licences (6.c) ; #684 : les cinq quiz réécrits (35 questions à quatre propositions, vérifiées quiz par quiz) ; #686 : une séance 4 (la section 6 et la clôture) — séance 3, 1 350 → 439 |
 | 5 | `3e_C1.5` | 2017 → 1448 | 0 | 0 | 19 → 0 | livrée #624 ; #628 ramène la séance 4 à 1 448 — au-dessus du repère, justifiée ; #685 : 13 questions fermées vérifiées par la page (séance 2 : 1 234, justifiée) |

@@ -227,3 +227,9 @@ texte agrandies après le premier tour (le texte de la question 2 était coupé)
 **Non vérifié** : la durée réelle du réinvestissement avec l'écrit (annoncé 25 min, à mesurer en classe) ; un essai
 avec des élèves.
 
+## 22/11/2026 — Deux aides avant la correction de l'écrit (n°367)
+
+Le bloc « ✍️ Explique comme au brevet » reçoit deux aides repliées avant sa correction : un indice (la ligne qui
+s'exécute, le signe qui inclut ou non l'égalité), puis la démarche en trois temps. Banc commun
+`_outils/tests_ecrit_brevet.py` : 11 / 11 (il voyait le manque : 10 / 11 avant).
+

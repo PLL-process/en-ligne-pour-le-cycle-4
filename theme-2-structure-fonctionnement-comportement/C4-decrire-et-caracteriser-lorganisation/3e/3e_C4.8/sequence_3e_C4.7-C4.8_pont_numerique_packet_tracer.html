@@ -1649,6 +1649,15 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 .recette h4{margin-top:2px;color:var(--hl)}
 
   /* Règle d'or n°31 — version étayée : même exigence, obstacle de rédaction en moins */
+  /* Règle d'or n°346 — choisir n'est pas expliquer : des réponses écrites, sans propositions (22/11/2026) */
+  .ecrit-brevet textarea{min-height:6.5em}
+  .ecrit-brevet textarea.code-ecrit,.ecrit-brevet pre.transcription{font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace}
+  .ecrit-brevet pre.transcription{white-space:pre-wrap;word-break:break-word;background:#08132c;color:#d7e6ff;border-radius:10px;padding:10px 12px;font-size:.85em;line-height:1.45}
+  .grille-ecrit{margin:10px 0 4px;border:1px solid #3f6bb5;border-radius:8px;padding:6px 12px}
+  .grille-ecrit label{display:block;margin:6px 0;cursor:pointer}
+  .etat-ecrit{font-size:.92em;margin:6px 0 0;opacity:.85}
+  @media print{.ecrit-brevet .exo{break-inside:avoid}.ecrit-brevet pre.transcription{background:#fff!important;color:#000!important;border:1px solid #999}.ecrit-brevet textarea{background:#fff!important;color:#000!important}}
+
   details.etayage{margin:8px 0;border:1px solid #3f6bb5;border-left:4px solid #61dafb;
     border-radius:8px;background:rgba(13,35,71,.55);padding:6px 12px}
   details.etayage>summary{cursor:pointer;font-weight:600;color:#61dafb}
@@ -1675,7 +1684,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
   <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
-<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Tout effacer&nbsp;».</p>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI — le centre de documentation et d'information)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Tout effacer&nbsp;».</p>
 <p class="saved-note" id="savedNote" aria-live="polite"></p>
 <details class="rappel-ouverture" id="ouverture" open>
 <summary>📖 Rappel : la situation et ton hypothèse</summary>
@@ -2507,6 +2516,84 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   l'aller, 6 au retour, ~1 ms par saut. À chaque frontière, le routeur LIT SA TABLE. Sans table — sans routage — pas de
   communication entre réseaux&nbsp;: c'est la justification demandée par le programme, prouvée par l'expérience.</div>
   <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 4 bonnes réponses + les DEUX expériences du poste-frontière réellement jouées.</div>
+</section>
+<section class="card">
+  <h2>✍️ Explique comme au brevet — sans propositions (~10 min)</h2>
+  <p class="pastille-maison" style="display:inline-block;margin:.2rem 0 .5rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
+  <div class="ecrit-brevet" id="ecritPont">
+  <p>Document imaginé pour l'exercice&nbsp;: depuis le CDI du collège (le centre de documentation et d'information), un poste interroge le serveur de la médiathèque (172.16.4.20). Réponds en phrases complètes, ici ou sur une feuille de brouillon.<br>Personne ne corrige ces réponses à ta place&nbsp;: tu les compares à la correction, puis tu coches ta grille.</p>
+  <pre class="transcription" aria-label="Transcription imaginée : un ping puis un tracert vers le serveur 172.16.4.20">C:\&gt; ping 172.16.4.20
+Request timed out.
+Reply from 172.16.4.20: TTL=125
+Reply from 172.16.4.20: TTL=125
+Reply from 172.16.4.20: TTL=125
+
+C:\&gt; tracert 172.16.4.20
+  1   1 ms   192.168.1.1
+  2   3 ms   10.0.5.1
+  3   4 ms   10.0.7.2
+  4   5 ms   172.16.4.20
+Trace complete.</pre>
+  <div class="exo">
+    <label for="ecritPont1"><b>1.</b> Combien de routeurs la réponse du serveur a-t-elle traversés&nbsp;? Justifie avec le TTL (<i>Time To Live</i>, la «&nbsp;durée de vie&nbsp;» du paquet), puis vérifie avec le tracert.</label>
+    <textarea id="ecritPont1" placeholder="La réponse a traversé … routeurs, car…"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>Le TTL part de ____&nbsp;; chaque routeur traversé lui retire ____.</li>
+      <li>128 − 125 = ____&nbsp;: la réponse a traversé ____ routeurs.</li>
+      <li>Le tracert liste ____ lignes&nbsp;: ____ routeurs, puis ____.</li>
+    </ul>
+  </details>
+  </div>
+  <div class="exo">
+    <label for="ecritPont2"><b>2.</b> Un camarade lit le «&nbsp;Request timed out&nbsp;» de la première ligne et conclut&nbsp;: «&nbsp;le serveur était en panne&nbsp;». Écris ce que tu lui réponds.</label>
+    <textarea id="ecritPont2" placeholder="Ce n'est pas une panne, car…"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>Après un seul échec, le serveur a donné ____ réponses&nbsp;: le chemin ____.</li>
+      <li>Au premier voyage, chaque maillon doit d'abord ____.</li>
+      <li>Avant de conclure à une panne, un technicien ____.</li>
+    </ul>
+  </details>
+  </div>
+  <div class="exo">
+    <label for="ecritPont3"><b>3.</b> Le lendemain, le routeur 10.0.7.2 tombe en panne. Écris ce qu'afficherait le tracert vers 172.16.4.20, puis explique comment il te dit où chercher la panne.</label>
+    <textarea id="ecritPont3" class="code-ecrit" spellcheck="false" placeholder="1   1 ms   192.168.1.1&#10;…"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>Les lignes 1 et 2 répondent encore&nbsp;: 192.168.1.1 et ____.</li>
+      <li>À partir de la ligne ____, le tracert n'affiche plus que ____.</li>
+      <li>La panne est donc après ____&nbsp;: sur ____ ou sur le câble qui y mène.</li>
+    </ul>
+  </details>
+  </div>
+  <details class="aide"><summary>💡 Aide de niveau 1 — un indice</summary><p>Le TTL (<i>Time To Live</i>) est un compteur, pas un temps&nbsp;: il part de 128 et chaque routeur lui retire 1.<br>Le tracert numérote les routeurs dans l'ordre du voyage, et sa dernière ligne est la destination.</p></details>
+  <details class="aide"><summary>💡💡 Aide de niveau 2 — la démarche</summary><p>1. Calcule 128 − 125, puis compte les lignes du tracert sans la dernière.<br>2. Rappelle-toi l'activité 4&nbsp;: que font les premiers pings d'un tout premier voyage&nbsp;?<br>3. Refais le tracert ligne par ligne&nbsp;: quel est le dernier routeur qui peut encore répondre&nbsp;?</p></details>
+  <details class="correction"><summary>✅ Correction des 3 explications</summary>
+    <p><b>1.</b> La réponse a traversé <b>3 routeurs</b>&nbsp;: le TTL part de 128, et 128 − 125 = 3.<br>Le tracert le confirme&nbsp;: trois routeurs (192.168.1.1, 10.0.5.1, 10.0.7.2), puis le serveur 172.16.4.20 sur la quatrième ligne.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;Le TTL est passé de 128 à 125&nbsp;: la réponse a franchi 3 routeurs, comme le montrent les trois premières lignes du tracert.&nbsp;»<br>⚠ «&nbsp;125 millisecondes&nbsp;»&nbsp;: le TTL n'est pas un temps.<br>⚠ «&nbsp;4 routeurs&nbsp;»&nbsp;: la dernière ligne du tracert est le serveur lui-même.</p>
+    <p><b>2.</b> Ce n'est pas une panne. Au premier voyage, chaque maillon doit d'abord découvrir l'adresse physique du suivant&nbsp;: le premier ping expire pendant ce temps.<br>Les trois réponses suivantes prouvent que le chemin fonctionne. Avant de conclure à une panne, on relance le ping.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;Le premier échec vient de la découverte du chemin&nbsp;; les trois réponses suivantes montrent que le serveur répond.&nbsp;»<br>⚠ Conclure «&nbsp;panne&nbsp;» sur un seul échec, sans relancer.</p>
+    <p><b>3.</b> Le tracert afficherait&nbsp;:</p>
+    <pre class="transcription">  1   1 ms   192.168.1.1
+  2   3 ms   10.0.5.1
+  3   *   Request timed out.
+  4   *   Request timed out.
+  …</pre>
+    <p>Les deux premiers routeurs répondent encore&nbsp;; à partir de la ligne 3, plus rien ne revient.<br>La panne est donc après 10.0.5.1&nbsp;: sur le routeur 10.0.7.2, ou sur le câble qui y mène.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;Le tracert s'arrête après 10.0.5.1&nbsp;: la panne se trouve au-delà, sur le routeur 10.0.7.2 ou sur le lien qui y mène.&nbsp;»<br>⚠ «&nbsp;Le ping suffit&nbsp;»&nbsp;: il dirait seulement que le serveur ne répond plus, pas où le chemin est coupé.</p>
+  </details>
+  <fieldset class="grille-ecrit">
+    <legend>Ma grille, après avoir lu la correction</legend>
+    <label><input type="checkbox" id="ecritPontg1"> Je lis le TTL comme un compteur de routeurs, pas comme un temps.</label>
+    <label><input type="checkbox" id="ecritPontg2"> Je relie deux preuves&nbsp;: le TTL et le tracert racontent le même chemin.</label>
+    <label><input type="checkbox" id="ecritPontg3"> Je localise une panne avec l'outil qui montre le chemin.</label>
+  </fieldset>
+  <p class="etat-ecrit" role="status"></p>
+</div>
 </section>
 <section class="card">
   <h2>📝 Synthèse de la séquence — à retenir</h2>
@@ -3547,5 +3634,23 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- entete-telephone v3 : fin -->
+<script>
+/* Règle d'or n°346 (22/11/2026) : l'état des explications écrites — il compte ce qui est écrit et coché, il ne juge pas (n°340) */
+(function(){
+  function maj(z){
+    var e = z.querySelector(".etat-ecrit"); if(!e) return;
+    var zs = [].slice.call(z.querySelectorAll("textarea")), cs = [].slice.call(z.querySelectorAll(".grille-ecrit input[type=checkbox]"));
+    var n = zs.filter(function(t){ return (t.value || "").trim().length >= 10; }).length;
+    var c = cs.filter(function(x){ return x.checked; }).length;
+    e.textContent = "Explications écrites : " + n + " / " + zs.length + " · grille : " + c + " / " + cs.length +
+      " critère" + (c > 1 ? "s" : "") + " coché" + (c > 1 ? "s" : "") + " — aucune note n'est calculée.";
+  }
+  function tous(){ [].forEach.call(document.querySelectorAll(".ecrit-brevet"), maj); }
+  function suivre(ev){ var z = ev.target.closest && ev.target.closest(".ecrit-brevet"); if(z) maj(z); }
+  document.addEventListener("input", suivre);
+  document.addEventListener("change", suivre);
+  if(document.readyState === "complete") setTimeout(tous, 0); else window.addEventListener("load", function(){ setTimeout(tous, 0); });
+})();
+</script>
 </body>
 </html>

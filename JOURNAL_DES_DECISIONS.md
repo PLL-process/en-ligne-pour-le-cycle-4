@@ -53,9 +53,9 @@
 | 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
-| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 3 pages — 11 faux positifs retirés le 21/11 au soir : pages-pointeurs et renvoi), banc `tests_controle_porte_sequence.py` |
+| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
@@ -35744,3 +35744,225 @@ Contrôles : `tests_3e_C9.1.mjs` 89 / 89, `tests_regle_311_3e_C9.1.mjs` 34 / 34,
 
 **Reste pour la n°364** : un listing, `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` (thème 1). Laissé pour
 après le chantier 2 du thème 1, que la conversation parallèle mène en ce moment sur les séquences de ce thème.
+
+## 22/11/2026 — Thème 1, chantier 3 : les 14 séquences relues en entier, sous le double regard
+
+**La demande.** Le troisième chantier de Pascal (21/11, « Tu as carte blanche pour tout ») : aucune séquence du thème
+n'avait été relue en entier comme un élève depuis la relecture des QCM. Méthode : skill `audit-double-regard` — d'abord
+les outils, puis la lecture de ce qu'ils ne voient pas.
+
+**Les outils (douze par séquence, 168 passages).** `trois_lignes --etat`, `qcm_aides/poser --etat`,
+`controle_memes_nombres`, `corriger_billet`, `controle_correction_illustree`, `controle_correction_complete`,
+`controle_schema_sous_les_yeux`, `eleve_qui_ne_lit_pas` (n°360), `controle_validations`, `retrait_validation --etat
+--strict`, `annoncer_validations`, `verif_regles_audit` : tout vert, sauf **un avertissement que le chantier 2 venait de
+créer** — `5e_C1.3`, séance 1 : la carte mentale de l'activité 1 était repliée, alors que l'en-tête de la séance
+l'annonce (« l'activité 1 : une carte mentale, puis qui fait quoi ») et que c'est l'activité même (n°331). Elle redevient
+visible, comme les autres exercices d'atelier que Pascal garde (15/11/2026) ; la durée dite deux fois en tête de séance
+est retirée : la séance reste sous le repère (1 199 mots). Le suivi de révision est corrigé à part (`docs/`).
+
+**La lecture (ce qu'aucun outil ne voyait).**
+- **Le « vous »** (n°302) : `3e_C1.5` vouvoyait l'élève dans une bonne part de ses consignes héritées (une photo « de
+  vous », « Répondez », « Votre réponse… », « Vous devez rendre un devoir signé », les onze défis Python…) — **73
+  passages** passés au tutoiement, consignes, aides et textes d'exemple dans les zones de réponse compris. Les messages
+  que les programmes affichent à leur utilisateur (« Entrez une URL », « Préférez HTTPS ») gardent leur vouvoiement :
+  c'est le programme qui parle. Même défaut dans `3e_C3.1`, `4e_C3.1` et `5e_C3.1` (« En 5e, on vous donnait… »,
+  « c'est votre travail », « C'est vous qu'il appelle »).
+- **L'élève à la troisième personne** (`audit_personne_eleve.mjs`) : les trois blocs « CRCN réellement travaillé » des
+  séquences C3 (« l'élève saisit… », « l'élève ne remplit pas une grille… ») lui parlent maintenant.
+- **Une autre année présumée faite** (n°304 — Pascal change de collège chaque année) : trois billets d'entrée
+  annonçaient « trois questions sur ce que tu as travaillé l'an dernier » (`3e_C2.1`, `4e_C2.1`, `4e_C3.1`) → « pour faire
+  le point sur ce que tu sais déjà » ; `4e_C3.1` disait « L'an dernier, les critères vous étaient fournis » → ce que le
+  programme fournit en 5e, ce que l'élève fait en 4e.
+- **Des blocs d'un seul tenant** (plus de 45 mots, `mesurer_charge --longs`) : la défense en trois points de `3e_C2.1`,
+  les critères de réussite de `5e_C2.1` et de `3e_C1.5`, les trois conditions d'un assistant d'IA dans `4e_C1.4` passent
+  en lignes, sans un mot de moins.
+- **Des mots** : « scroller », « une alerte push de ton app favorite » → « faire défiler ton fil », « une notification
+  de ton application préférée » ; une phrase de passe « ne s'écrit pas dans un cahier » → « sur un papier » (les élèves
+  de Pascal n'ont pas de cahier).
+
+**Vu, non repris (P2).** `5e_C2.1` : cinq identifiants SVG en double (`pv-bp`…), la même figure posée par deux
+exercices de l'incrustation pieuvre — définitions identiques, rendu juste ; la correction est dans le générateur, qui
+sert aussi les pages d'atelier. Les gestes du tableur de `3e_C1.1` et `4e_C1.1` (« Nommer », « Sortir », 50 à 60 mots
+d'un seul tenant) viennent d'un composant commun : à reprendre là. Deux blocs longs dans des incrustations (`4e_C2.1`,
+`5e_C1.2`) : à leur source.
+
+**Vérifié.** Bancs des 14 séquences (voir la PR) ; mode mission joué sur les 14 : aucun refus ; `audit_aeration
+--strict` vert sur les neuf pages retouchées ; `controle_question_seule --strict` : thème 1 à 0 refus.
+
+## 22/11/2026 — 3e_C4.7-C4.8, deuxième écrit « comme au brevet » (n°346) ; deux aides dans celui de 3e_C6.1 (n°367) ; un banc commun des écrits (thème 2)
+
+**Décision.** Pascal (22/11/2026, 0 h 25) : « Prochaine étape possible, tu as carte blanche » — la même réponse écrite
+dans les séquences de 3e qui finissaient sans écrit. Ce lot fait « Le pont numérique » (thème 2) ; « Le mât de la
+station » (`3e_C8.1`, thème 3) suit dans sa propre PR.
+
+**Ce qui change.**
+- `3e_C4.7-C4.8` : après l'activité 5, une carte « ✍️ Explique comme au brevet — sans propositions » (~10 min, 🏠 faisable
+  à la maison sans matériel). Document imaginé, déclaré comme tel : un ping puis un tracert depuis le CDI vers le
+  serveur de la médiathèque (TTL=125, quatre sauts). Trois questions : le nombre de routeurs justifié par le TTL et
+  vérifié par le tracert ; le « Request timed out » du premier ping, qui n'est pas une panne ; le tracert d'un routeur
+  en panne et ce qu'il localise. Version étayée par question, deux aides (indice, démarche), correction avec trois
+  phrases de copie, grille à trois critères ; rien de noté ; hors de la zone de vérification de l'activité 5. Les
+  sigles du bloc sont écrits en clair (TTL, CDI), à la demande de Pascal du même soir (entrée suivante).
+- `3e_C6.1` : le bloc de la bouée reçoit ses deux aides avant la correction (n°367, née le 21/11 dans une autre session).
+- `_outils/tests_ecrit_brevet.py` : un banc commun pour tout bloc `.ecrit-brevet` (forme, document sous les yeux, rien
+  de noté, reprise, lien direct, aucune erreur, aucun défilement). Il a vu le manque d'aides de `3e_C6.1` (10 / 11).
+
+**Vérifié.** Banc commun 22 / 22 sur les deux pages ; `tests_regle_311_3e_C4.8.mjs` 34 / 34 ; mode mission sans refus ;
+`controle_page_ouverte`, impression, hors ligne, squelette, règles visibles, hiérarchie, consignes à la ligne,
+propositions sans indice, tactile, validations, `eleve_qui_ne_lit_pas.py` : verts. Revue d'écran à 390 px en deux tours
+(lignes de la transcription raccourcies : plus aucune ligne coupée).
+
+**Accès rapide** : aucun lien ne mène à ces deux séquences ; rien à actualiser. Nouveauté du jour : `#ecritPont`.
+
+**Non vérifié.** Les durées (~10 min annoncées) ; un essai en classe.
+
+## 22/11/2026 — 3e_C8.1, troisième écrit « comme au brevet » (n°346) : le mât sur le quai du port (thème 3)
+
+**Décision.** Même carte blanche que l'entrée précédente (Pascal, 22/11/2026, 0 h 25) : la dernière des trois séquences
+de 3e qui finissaient sans écrit.
+
+**Ce qui change.** Après le réinvestissement du quai du port, une carte « ✍️ Explique comme au brevet — sans
+propositions » (~10 min, 🏠 faisable à la maison). Les données sous les yeux, dans un tableau : le tube aluminium
+Ø50 × 3 retenu pour le toit (coefficient de sécurité 3,4, flèche 27 mm à 150 km/h), le cahier des charges (coefficient
+d'au moins 3, flèche de 40 mm au plus), le vent de 180 km/h au port, la formule de la pression avec ses lettres
+expliquées. Trois questions : pourquoi 1,44 et non 1,2 ; le coefficient (3,4 ÷ 1,44 ≈ 2,4) et la flèche
+(27 × 1,44 ≈ 39 mm) au port, puis la conclusion — le tube ne convient plus, par sa résistance ; ce qu'on dit à la mairie,
+et la fatigue qui reste à étudier. Version étayée, deux aides, correction avec trois phrases de copie, grille ; rien de
+noté ; hors de la zone de vérification ; les cases de la grille entrent dans la sauvegarde de la page.
+
+**Vérifié.** Banc commun `tests_ecrit_brevet.py` 11 / 11 ; banc de la séquence 62 / 62 ; n°311 34 / 34 ; mode mission sans
+refus ; page ouverte, impression, hors ligne, squelette, règles visibles, hiérarchie, consignes, propositions sans
+indice, tactile, validations, débordement, élève qui ne lit pas : verts. Revue d'écran à 390 px : le texte d'exemple de
+la question 1 soufflait « 1,44 » (n°341), retiré.
+
+**Accès rapide** : aucun lien ne mène à cette séquence ; rien à actualiser. Nouveauté du jour : `#ecritPort`.
+
+**Non vérifié.** La durée ; un essai en classe.
+
+## 22/11/2026 — Thème 1 : trois pages reçoivent leur porte (n°366), le dernier listing ne défile plus (n°364)
+
+**La décision de Pascal (22/11/2026, 0 h 40) : « 1a 2b ».** 1a : relier, en activité facultative, les trois pages du
+thème 1 qu'aucune séquence ne reliait (liste REFERENCE de `controle_porte_sequence.py`). 2b : corriger tout de suite le
+dernier listing de la vague n°364 — le chantier 3 du thème 1 (PR #857) est fusionné, la conversation parallèle n'a plus
+ces pages en main.
+
+**Les portes.** Un paragraphe `plus-loin approfondissement` (« Pour aller plus loin (facultatif) »), à la fin de
+l'activité où la page sert, avec ce qu'elle apporte et sa durée quand la page la dit. La classe `approfondissement` le
+cache en mode essentiel, comme le Bonus.
+- `5e_C1.2`, fin de l'activité 2 (le tableau comparatif) → `activite_crcn_donnees_freinage_5e_C1.2.html` : les mêmes
+  trois freins, au tableur (colonne ajoutée, tri, filtre, recommandation).
+- `5e_C2.1`, fin de l'activité 2 (recenser les interacteurs) → `atelier_diagramme_cas_utilisation.html` : parmi les
+  interacteurs, ceux qui se servent de la station.
+- `4e_C2.1`, fin de l'activité 1 (des verbatims au schéma) → `atelier_diagramme_cas_utilisation.html` : des phrases
+  d'usagers, un schéma « qui fait quoi ».
+`controle_porte_sequence.py` : 0 page sans porte ; les trois sont annoncées « à retirer de REFERENCE ». La liste se
+vide par une PR à part, `_outils/` étant hors du périmètre du thème 1.
+
+**L'activité CRCN, devenue atteignable, est revue avant d'ouvrir sa porte** (revue d'écran à 390 px, trois défauts) :
+- son tableau de trois colonnes imposait 760 px et défilait (`scrollable-region-focusable` d'axe, colonne « Unité ou
+  échelle » hors de l'écran) → il tient à 390 px, sans couper un mot au milieu ;
+- la carte « CRCN observable, tracé et justifié » s'ouvrait avant la mission, en langue de référentiel (n°298) → repliée
+  sous « Pour le professeur » ; le nom du fichier à rendre passe dans la consigne de l'élève ;
+- le tri et le filtre étaient demandés sans aucune aide, et le Bonus n'avait pas de réponse (n°367, et « chaque
+  exercice devrait avoir son bouton de correction ») → une aide pour la colonne I, deux aides pour le tri (le piège : trier
+  une colonne seule désaccorde les lignes ; puis où cliquer, LibreOffice et Excel), un exemple de réponse au Bonus (le
+  frein à rouleaux, valeurs dites fictives, et les mesures qui les remplaceraient). Corrigé vérifié contre le CSV : ordre
+  6,4 / 6,9 / 8,9 m, filtre corrosion ≥ 4 → disque et tambour (n°368).
+
+**Le listing.** `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` : le bloc n°364 (à 600 px et moins, `pre-wrap`, aucun
+caractère changé). Et, vu sur la même capture : les deux cartes « Erreur fréquente » / « Exécution OK » restaient côte à
+côte à 390 px (« IndentationError » sur trois lignes) → l'une sous l'autre sur un téléphone. **La vague n°364 est finie :
+`controle_page_ouverte.mjs` ne trouve plus aucun listing qui défile.**
+
+**Contrôles.** Bancs : `tests_5e_C1.2_sainte_luce.py` 51 / 51, `tests_4e_C2.1-C2.2_hangzhou.py` 66 / 66,
+`tests_5e_C2.1-C2.2_shenzhen.py` 152 / 152, `tests_regle_311` des quatre dossiers 34 / 34. `controle_page_ouverte.mjs
+--axe` sur les sept pages : L 0 · B 0 · C 0 ; restent deux `scrollable-region-focusable` dans `4e_C2.1` et `5e_C2.1`,
+**déjà sur `main`** (tableaux et figures des incrustations d'atelier : à corriger dans le générateur, pas dans la page).
+À 0 : `controle_impression`, `controle_contraste_liens`, `controle_hors_ligne`, `controle_squelette`,
+`controle_code_colore`, `controle_liens`, `controle_regles_visibles`, `controle_mode_essentiel`,
+`controle_mode_mission`, `controle_navigation_seances`, `controle_debordement`, `controle_hierarchie`,
+`controle_date_locale`, `controle_atteignabilite`, `controle_licence`. `controle_regle4` sort à 1 sur les quatre
+dossiers, avec la même sortie qu'avant le lot (pages d'activité sans clôture « QCM » : déjà sur `main`).
+
+## 22/11/2026 — Porte de séquence (n°366) : la référence est vide, toute page sans porte est refusée (thème 2 : `_outils/`)
+
+Suite de la PR #862 (thème 1, fusionnée seule) : les trois dernières pages de la liste REFERENCE de
+`_outils/controle_porte_sequence.py` ont leur porte. La liste est vidée (`REFERENCE = set()`, n°273 : elle ne peut que
+le rester) : une page d'élève rangée dans le dossier d'une séquence et qu'aucune page `sequence*.html` de ce dossier ne
+relie fait maintenant sortir le contrôle à 1. Le banc `tests_controle_porte_sequence.py` passe de 5 à 6 points (la
+référence du dépôt est vide). Registre : n°364 (0 listing qui défile sur les 341 pages) et n°366 (référence vide) mis à
+jour. Contrôles : `controle_porte_sequence.py` 0 page sans porte sur 56 dossiers de séquence ; banc 6 / 6 ;
+`registre_regles.py --verifier` vert (prochain n°369).
+
+## 22/11/2026 — Complément à la n°44 : aucun sigle ne reste nu, dans le texte aussi ; un contrôle, une première correction commune (transversal : `_outils`, trois thèmes, skills du dépôt)
+
+**Consigne de Pascal** (22/11/2026, 0 h 35) : « Tous les sigles doivent être expliqués pour éviter les charges
+cognitives » ; puis, à 0 h 36, « À ajouter ».
+
+**Ce qui existait.** La n°44 (août 2026) le disait déjà : tout badge, code, sigle ou bouton porte une explication à
+portée immédiate, avec une mention en clair sur la page, parce qu'une infobulle ne s'ouvre pas au doigt. Elle visait
+surtout l'interface, et **aucun outil ne la mesurait dans le texte** ; la n°313 ne regarde que les capitales.
+
+**Complément à la n°44** (aucun numéro nouveau) : dans le texte lu par l'élève, chaque sigle s'écrit en clair au moins
+une fois sur la page, à sa première apparition quand c'est possible — « le TTL (<i>Time To Live</i>, la durée de vie du
+paquet) », « le CDI (le centre de documentation et d'information) ». Dans une formulation du programme recopiée mot
+pour mot (« un OST »), on ne réécrit pas la formulation (n°105) : l'explication se pose à côté. Une lettre de formule se
+traite de même (« ρ : la masse volumique de l'air »).
+
+**Outil.** `_outils/controle_sigles_expliques.py` : 42 sigles suivis, chacun avec son explication (liste qui ne peut que
+grandir) ; E = jamais expliqué sur la page (défaut), P = expliqué plus bas que sa première apparition (signal). Texte
+lu hors `<script>`, `<style>`, `<pre>`, `<code>`, `<svg>`.
+
+**Première mesure, puis première correction commune.**
+- Avant : 410 pages lues, **385 avec au moins un sigle jamais expliqué**. Les plus fréquents : QCM (325 pages), CDI (168),
+  OST (126), CRCN (46), USB (30), IP (28).
+- CDI venait presque toujours de l'avertissement commun « Ordinateur partagé (salle de techno, CDI) » : corrigé à la
+  source (`_outils/controle_sauvegarde_locale.py`, les deux modèles) et dans les 166 pages qui le portent —
+  « (salle de techno, CDI — le centre de documentation et d'information) ». `controle_sauvegarde_locale.py` reste vert
+  (168 pages, 0 refus).
+- OST : son explication est « objet ou système technique » (singulier du programme : « un OST »).
+- Après : **378 pages** avec un sigle nu ; CDI ne figure plus dans les plus fréquents. QCM 325, OST 108, CRCN 46.
+
+**La suite, par thème** (PR de thème, fusionnées seules au vert) : QCM d'abord — l'explication se pose dans le bloc
+« 🧠 Prêt·e à t'entraîner ? » et dans l'en-tête des QCM, pas dans la barre de navigation ; puis OST à côté des
+formulations du programme ; puis les sigles d'un seul thème (USB, IP, LED, PVC…). Les trois écrits « comme au brevet »
+de la soirée écrivent déjà leurs sigles en clair.
+
+**Skills** : `cadrage-cles-de-voute` (dix-septième question) et `tache-finale-redigee` (les sigles du bloc).
+
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 2 : 58 pages, un outil qui pose l'explication, le générateur des lexiques (thème 2, `_outils`)
+
+**Décision.** Pascal (22/11/2026, 1 h 03) : « Ok vas y » — la vague QCM proposée après la PR #861 ; puis, à 1 h 32,
+« Attention aux autres tâches en cours dans d'autres sessions avec Claude pour éviter les conflits ».
+
+**Précautions contre les conflits.** Aucune PR ouverte au moment de la vague ; les fichiers touchés par les autres
+sessions dans les cinq dernières heures (PR #850 à #858, #862, #863 : 48 fichiers, dont 25 du thème 1) sont écartés.
+Le thème 1, où d'autres sessions travaillent encore (C1 à C3, portes, charge des séances), attend leur fin. Une seule
+insertion par page, sur une seule ligne ; une PR par thème, fusionnée seule au vert.
+
+**Ce qui change.**
+- `_outils/expliquer_sigles.py` : pose l'explication d'un sigle à sa première apparition dans le texte d'une page
+  (« le QCM (questionnaire à choix multiples) de l'atelier », au pluriel après « des », « les »…), jamais dans le titre,
+  la barre de navigation, un lien, un bouton, une étiquette, un listing ; essai à blanc par défaut, `--ecrire` pour
+  écrire ; relancé, il ne pose rien deux fois (n°149).
+- 58 pages du thème 2 (séquences, synthèses, lexiques, QCM) : l'explication posée.
+- `_outils/generer_lexique.py` (et son banc, 29 / 29) : le sous-titre des lexiques dit « des QCM (questionnaires à
+  choix multiples) du lot » — un lexique régénéré garde l'explication (n°283).
+
+**Mesure** (`controle_sigles_expliques.py`) : pages avec un QCM jamais expliqué, 325 → 267 ; thème 2 : 93 → 67 pages
+avec au moins un sigle nu (restent les autres sigles, et les pages où « QCM » n'est que dans la navigation ou un
+lien : à traiter avec les sessions qui posent les portes, n°366).
+
+**Suite.** Le thème 3 dans la PR suivante ; le thème 1 quand ses sessions auront fini.
+
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 3 : 94 pages et quatre sources de générateurs (thème 3)
+
+Suite de l'entrée précédente (même décision, mêmes précautions : aucune PR ouverte, aucune fusion d'une autre session
+depuis la vague du thème 2). `_outils/expliquer_sigles.py` pose « QCM (questionnaire à choix multiples) » à la première
+apparition du sigle dans le texte de 94 pages du thème 3. Pour qu'une page régénérée garde l'explication (n°283), la même
+phrase est corrigée dans ses sources : `atelier-planification/_generation/build_atelier.py` et les quatre scénarios de
+`atelier-cao/scenarios/` (« Le QCM qui accompagne ce travail »). Banc de l'atelier de planification
+`tests_atelier_C7.1.py` 48 / 48 ; les quatre scénarios restent du JSON valide.
+
+**Mesure** : pages avec un QCM jamais expliqué, 267 → 173 ; thème 3 : 161 → 120 pages avec au moins un sigle nu. Reste
+le thème 1 (sessions en cours), puis OST et les autres sigles.
