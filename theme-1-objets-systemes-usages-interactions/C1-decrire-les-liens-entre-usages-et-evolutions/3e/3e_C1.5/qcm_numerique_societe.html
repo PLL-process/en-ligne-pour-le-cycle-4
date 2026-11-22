@@ -221,6 +221,7 @@
   <div class="modes">
     <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
     <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="melange" title="Les compétences alternent : on apprend à les distinguer">🔀 Entraînement mélangé</button>
     <button class="btn" data-mode="cible">Révision ciblée</button>
     <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
     <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
@@ -693,6 +694,14 @@ function setMode(mode){
   document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
   $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
   if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="melange"){
+    /* Règle d'or n°371 (en essai) : un tour par compétence, tant qu'il en reste ; ordre fixe, sans hasard. */
+    const files={}, ordre=[];
+    QUESTIONS.forEach((q,i)=>{ const c=q.c||"—"; if(!files[c]){ files[c]=[]; ordre.push(c); } files[c].push(i); });
+    const suite=[]; let reste=true;
+    while(reste){ reste=false; ordre.forEach(c=>{ if(files[c].length){ suite.push(files[c].shift()); reste=true; } }); }
+    etat.sousListe=suite;
+  }
   else if(mode==="dix"){
     const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
     const base=nonRep.length>=10?nonRep:[...Array(N).keys()];

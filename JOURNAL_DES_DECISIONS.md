@@ -36888,6 +36888,32 @@ est comptée à part. **Reste** (thèmes 2 et 3) : le dessin de la chaîne à co
 **Vérifié.** Mesure sur le thème 2 : 97 pages, 0 défile de côté ; banc 2/2 ; `controle_page_ouverte.mjs`,
 `controle_impression.mjs`, `controle_debordement` verts.
 
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 3 : à 200 %, plus aucune page ne défile de côté (7 pages)
+
+**Carte blanche de Pascal** (22/11). `controle_zoom_espacement.mjs` relevait, au thème 3, sept pages qui défilaient de côté à
+200 % (fenêtre de 640 px) : les synthèses élève de 4e_C7.4, 5e_C7.4 et 5e_C7.5 (la chaîne des fonctions ne s'empilait
+qu'en dessous de 600 px), les synthèses professeur de 3e, 4e et 5e_C7.3 (tableaux larges), le TP mBot2 de 3e_C9.1 (un
+commentaire de listing et des tableaux). Les règles qui valaient sous 600 px valent maintenant sous 760 px, et les tableaux
+replient leurs cellules au lieu de pousser la page ; rien ne change au-dessus de 760 px.
+
+**Vérifié.** `controle_zoom_espacement.mjs` sur le thème 3 : 174 pages, 0 défile de côté (reste 1 texte coupé dans le
+dessin de la chaîne à compléter de 4e_C7.5, outil commun, à traiter à sa source) ; `controle_debordement`,
+`controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hierarchie` verts.
+
+## 22/11/2026 — Règle d'or n°371 (en essai) : un « 🔀 Entraînement mélangé » dans les 76 QCM du gabarit (transversal : trois thèmes, `_outils`, `.claude/skills`)
+
+**Carte blanche de Pascal** (22/11). Mesuré le matin : 69 QCM sur 70 posent leurs questions par blocs de compétence, et
+aucun ne proposait de les mélanger. `_outils/poser_entrainement_melange.py` (nouveau, idempotent) ajoute à côté de
+« 10 questions » un bouton « 🔀 Entraînement mélangé » : un tour par compétence tant qu'il en reste, dans un ordre fixe
+(sans hasard), calculé dans la page comme `mesurer_entrelacement.ordre_entrelace()`. Le parcours complet ne change pas.
+Posé sur **76 QCM** ; deux pages `qcm_` sans ce moteur sont laissées (une page de renvoi et un QCM hérité de 4e_C6.2).
+Le gabarit des QCM d'ateliers (`gabarit_qcm.tpl`) le porte aussi : `build_qcm.py --verifier` reproduit les 7 QCM à l'octet.
+
+**Vérifié.** `mesurer_entrelacement.py` : 70 banques sur 70 ont le mode ; le mode joué au navigateur sur trois QCM (4e_C1.4,
+3e_C6.1, FAST) : 30 questions, compétences alternées, bouton actif, 0 erreur ; `controle_entete_qcm`, `controle_boutons_vivants`,
+`controle_longueurs`, `controle_tactile`, `controle_effectifs_qcm`, `controle_ordre_propositions` verts ; bancs 3e_C6.1 57/57
+et 3e_C9.2 167/167 (qui cliquent les modes). **Non exécuté** : un essai en classe.
+
 ## 22/11/2026 — Vague contraste, thème 2 et accueil : 143 textes passent au-dessus de 4,5 : 1
 
 Choix de Pascal (22/11/2026, « 1a ») après la vague des zones qui défilent : une vague contraste, thème par thème. Mesure

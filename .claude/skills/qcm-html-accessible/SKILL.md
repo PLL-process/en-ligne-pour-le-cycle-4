@@ -66,7 +66,9 @@ commencer » en trois lignes. Skill `qcm-aides-et-pieges`, outil `_outils/qcm_ai
 69 QCM sur 70 posent leurs questions par blocs de compétence. Sans toucher au parcours complet (son ordre est
 parfois voulu), ajouter un mode « 🔀 Entraînement mélangé » (`data-mode="melange"`) dont la liste est l'ordre
 déterministe de `python3 _outils/mesurer_entrelacement.py --ordre <qcm.html>` : un tour par compétence, sans
-hasard. Détail : skill `reprise-espacee`, § 4.
+hasard. Détail : skill `reprise-espacee`, § 4. **Posé le 22/11/2026 sur les 76 QCM du gabarit** par
+`python3 _outils/poser_entrainement_melange.py` (idempotent ; `--verifier` sort à 1 si un QCM ne l'a pas) ; un QCM neuf
+le reçoit en relançant l'outil, et le gabarit des ateliers (`gabarit_qcm.tpl`) le porte déjà.
 
 ## Deux portes avant de livrer une question (veille du 15/11/2026)
 
