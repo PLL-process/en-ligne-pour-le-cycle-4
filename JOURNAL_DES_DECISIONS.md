@@ -36899,3 +36899,17 @@ replient leurs cellules au lieu de pousser la page ; rien ne change au-dessus de
 **Vérifié.** `controle_zoom_espacement.mjs` sur le thème 3 : 174 pages, 0 défile de côté (reste 1 texte coupé dans le
 dessin de la chaîne à compléter de 4e_C7.5, outil commun, à traiter à sa source) ; `controle_debordement`,
 `controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hierarchie` verts.
+
+## 22/11/2026 — Règle d'or n°371 (en essai) : un « 🔀 Entraînement mélangé » dans les 76 QCM du gabarit (transversal : trois thèmes, `_outils`, `.claude/skills`)
+
+**Carte blanche de Pascal** (22/11). Mesuré le matin : 69 QCM sur 70 posent leurs questions par blocs de compétence, et
+aucun ne proposait de les mélanger. `_outils/poser_entrainement_melange.py` (nouveau, idempotent) ajoute à côté de
+« 10 questions » un bouton « 🔀 Entraînement mélangé » : un tour par compétence tant qu'il en reste, dans un ordre fixe
+(sans hasard), calculé dans la page comme `mesurer_entrelacement.ordre_entrelace()`. Le parcours complet ne change pas.
+Posé sur **76 QCM** ; deux pages `qcm_` sans ce moteur sont laissées (une page de renvoi et un QCM hérité de 4e_C6.2).
+Le gabarit des QCM d'ateliers (`gabarit_qcm.tpl`) le porte aussi : `build_qcm.py --verifier` reproduit les 7 QCM à l'octet.
+
+**Vérifié.** `mesurer_entrelacement.py` : 70 banques sur 70 ont le mode ; le mode joué au navigateur sur trois QCM (4e_C1.4,
+3e_C6.1, FAST) : 30 questions, compétences alternées, bouton actif, 0 erreur ; `controle_entete_qcm`, `controle_boutons_vivants`,
+`controle_longueurs`, `controle_tactile`, `controle_effectifs_qcm`, `controle_ordre_propositions` verts ; bancs 3e_C6.1 57/57
+et 3e_C9.2 167/167 (qui cliquent les modes). **Non exécuté** : un essai en classe.
