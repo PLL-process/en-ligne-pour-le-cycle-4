@@ -2,6 +2,8 @@
 """Suite de tests du lot Shanghai 5e_C3.1 à C3.4.  python3 tests_5e_C3.1-C3.4_shanghai.py"""
 from playwright.sync_api import sync_playwright
 import pathlib, sys
+# 22/11/2026 (chantier 2 du thème 1) : un exercice d'atelier se replie sous son résumé ; l'élève l'ouvre, le banc aussi
+OUVRIR_INCRUSTES = "document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('details.incruste-repliee').forEach(d=>d.open=true))"
 SEQ = pathlib.Path("sequence_5e_C3.1-C3.4_shanghai.html").resolve().as_uri()
 QCM = pathlib.Path("qcm_5e_C3.1-C3.4_shanghai.html").resolve().as_uri()
 res = []
@@ -31,7 +33,7 @@ def exercice_insere(pg, uid, nom, textes=None):
     t(f"{nom} : rempli juste, il est réussi", "Tout est juste" in pg.inner_text(f"#{uid} .retour"))
 
 with sync_playwright() as p:
-    b = p.chromium.launch(); pg = b.new_page(viewport={"width":1280,"height":900})
+    b = p.chromium.launch(); pg = b.new_page(viewport={"width":1280,"height":900}); pg.add_init_script(OUVRIR_INCRUSTES)
     errs = []; pg.on("pageerror", lambda e: errs.append(str(e)))
 
     pg.goto(SEQ); pg.wait_for_timeout(600)

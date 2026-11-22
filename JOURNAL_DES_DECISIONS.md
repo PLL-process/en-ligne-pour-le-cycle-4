@@ -35589,6 +35589,92 @@ touchée) : les 24 listings qui défilent (n°364) et les 14 pages sans porte (n
 titres « V16 » et « V5 » des pages `4e_C1.4` (n°309), relevés par la mesure mais pas encore refusés : le motif d'un
 numéro de version attrapait aussi des personas (« Feng (V12) ») et « version 1 » d'un programme d'élève.
 
+## 21/11/2026 — 3e_C6.1, pilote de la n°346 : trois explications écrites après le programme de la bouée (thème 2)
+
+**Décision.** Pascal (21/11/2026, 23 h 45) : « Tu as carte blanche », en réponse aux deux questions laissées ouvertes
+après la PR #849 — dont la liste des séquences par où commencer la tâche finale rédigée (n°346). Choix fait sur mesure :
+la dernière séance de chaque séquence de 3e a été lue (zones de texte et groupes radio avant le Bonus) ; celle de
+« Programmer l'alerte » (`3e_C6.1-C6.3`) finissait sans aucune réponse écrite — 0 zone de texte, 12 groupes de boutons
+radio — et c'est la séquence de programmation qui mène à l'entraînement DNB. `3e_C9.1` a été écartée : sa séance 4 fait
+déjà écrire un programme testé (activité 5, n°114).
+
+**Ce qui change.** Après les six questions de la bouée, un bloc « ✍️ Explique comme au brevet — sans propositions » :
+le programme de la bouée repris sous les yeux (n°331) ; trois questions graduées (le cas limite 4,0 m justifié par le
+signe ; la ligne 4 modifiée en `>=` et l'essai qui distingue les deux versions ; le drapeau orange écrit en `elif` et
+l'essai qui prouve l'ordre des tests) ; une version étayée par question (n°31) ; une correction repliée, exhaustive,
+avec trois phrases de copie (n°356) et les erreurs attendues ; une grille à trois critères que l'élève coche (suivre la
+branche, justifier avec les données, modifier et vérifier). Rien n'est noté : la ligne d'état compte ce qui est écrit
+et coché, « aucune note n'est calculée » (n°340). Fiche de l'activité, consigne (③) et critère de réussite le disent.
+
+**Un défaut vu au banc, corrigé avant livraison.** Placé d'abord dans l'activité 6, le bloc tombait dans la zone du
+retrait de validation (n°340, `_outils/retrait_validation.py`) : écrire une explication retirait la validation des six
+questions. Le bloc est maintenant hors de la zone de vérification, dans la même carte. Le module commun n'a pas été
+touché ; à retenir pour la vague suivante : un écrit non noté se pose hors de la zone d'un bouton « Vérifier ».
+
+**Vérifié.** `tests_3e_C6.1-C6.3.mjs` 38 / 38 (trois tests nouveaux : structure de l'écrit, état sans validation,
+reprise après rechargement) ; `tests_regle_311_3e_C6.1.mjs` 34 / 34 ; mode mission sans refus (pourquoi 48 / 48) ;
+`eleve_qui_ne_lit_pas.py` sans validation ; contrôles validations, règles visibles, hiérarchie, débordement, consignes à
+la ligne, propositions sans indice, schéma sous les yeux, mêmes nombres, tactile, code coloré (8 / 8), hors ligne,
+impression : verts. Le lien `#ecritBouee` ouvre la séance 3. Revue d'écran à 390 px (zones de texte agrandies au
+premier tour).
+
+**Accès rapide** : aucun lien de l'accès rapide ne mène à cette séquence ; rien à actualiser. La nouveauté du jour
+pointe sur `#ecritBouee`.
+
+**Non vérifié.** La durée du réinvestissement avec l'écrit (25 min annoncées, à mesurer en classe) ; un essai avec des
+élèves. Les autres séquences de 3e qui finissent sans écrit (`3e_C4.7` pont numérique, `3e_C8.1` mât de la station)
+sont la vague suivante.
+
+## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances
+
+**La demande.** Le deuxième des trois chantiers de Pascal (« Termine en toute confiance et autonomie… »), confirmé le
+21/11 à 23 h 46 (« Ok tu as carte blanche ») : les séances au-delà du repère de 1 200 mots visibles
+(`mesurer_charge.mjs`, skill `revision-sequence`).
+
+**Le constat.** Sur les 14 séquences du thème, **21 séances** au-delà du repère au matin (les dernières séances avaient
+pris environ 150 mots de billet de sortie, PR #843). Les replis communs (fiches, Bonus, captures) étaient déjà faits
+partout : ce qui pesait, c'était surtout **les exercices d'atelier incrustés** (de 560 à 1 180 mots chacun).
+
+**Ce qui change.**
+- **Sept exercices « D'abord… / Avant la grille… » repliés sous leur résumé, à leur place** — ceux qui font travailler la
+  méthode sur un autre objet avant la tâche : `5e_C1.3` (la carte mentale d'un autre projet), `3e_C2.1` (choisir le mode
+  selon la question), `4e_C2.1` (la pieuvre d'un autre objet), `3e_C3.1` (deux : l'alerte cyclonique, la flexibilité),
+  `4e_C3.1` (de la bête à cornes aux caractéristiques), `5e_C3.1` (la bête à cornes d'un autre vélo-cargo). Le repli se
+  déclare à la source (`replie="…"` dans `incrustations_lots/` et `incrustations_table.py`, comme le cahier des charges
+  replié le 10/11/2026), puis `incrustations.py --seq` : le diff ne contient que l'ouverture et la fermeture du
+  `<details>`. Le résumé dit le moment, la durée, le contenu et le geste : « 🐂 D'abord (12 min) : la méthode, sur un
+  autre besoin, l'alerte cyclonique — ouvre l'exercice ». Aucune page ne vérifie ces exercices hors de leur bloc (vérifié).
+- **Les exercices d'atelier qui sont l'activité elle-même ne sont pas repliés** : Pascal a décidé le 15/11/2026, pour
+  `5e_C2.1`, qu'« on garde les exercices d'atelier » (plutôt que replier leurs consignes) — la même logique vaut pour
+  le FAST de `5e_C1.2`, le croquis de `4e_C2.1`, les deux exercices de la séance 5 de `4e_C1.1`. Un premier essai les
+  repliait ; il a été défait avant livraison.
+- **Les billets de sortie resserrés** : la phrase commune « Chacun pour soi, sans aide à ouvrir : ce billet dit au
+  professeur, et à toi, ce qui est acquis » devient « Seul, sans aide : ce billet dit ce qui est acquis » (11 billets) ;
+  le billet de `3e_C1.1` est raccourci de moitié dans son entrée en matière.
+- `3e_C1.1`, séance 5 : les deux consignes d'argumentaire (54 et 59 mots d'un seul tenant) passent en lignes ①…④,
+  sans rien retirer de ce qui est demandé.
+- **Les bancs** qui remplissent un exercice replié l'ouvrent d'abord, comme l'élève (un script posé à l'ouverture de la
+  page, dans six bancs : `5e_C1.3`, `3e_C2.1`, `4e_C2.1`, `3e_C3.1`, `4e_C3.1`, `5e_C3.1`).
+
+**Mesure.** Séances au-delà du repère : **21 → 12**. Ramenées sous le repère : `5e_C1.3` S1 1 202 → 406 ; `3e_C2.1` S3
+1 571 → 873 ; `4e_C2.1` S3 1 338 → 573 ; `3e_C3.1` S1 1 205 → 659 et S2 1 237 → 541 ; `4e_C3.1` S1 1 293 → 744 ;
+`5e_C3.1` S1 1 864 → 768 ; `3e_C1.1` S5 1 216 → 1 186 ; `4e_C1.1` S6 1 212 → 1 198.
+
+**Ce qui reste au-dessus, et pourquoi** (reporté dans `docs/revision/SUIVI_REVISION.md` par une PR à part, sans motif de thème : la garde lit « theme-1 » dans un nom de branche et applique le périmètre du thème) :
+- les exercices d'atelier gardés par décision de Pascal : `5e_C2.1` S1 (2 126) et S2 (1 941), `5e_C1.2` S4 (2 025),
+  `4e_C1.1` S5 (1 733), `4e_C2.1` S1 (1 509) ;
+- un document à lire, ou des définitions qui servent tout de suite : `5e_C1.1` S1 (1 389, la planche des trois principes),
+  `3e_C1.1` S1 (1 287, les quatre définitions dont les questions suivantes ont besoin) ;
+- la dernière séance, qui porte la clôture du squelette (n°306, n°311) et le billet (n°330) : `3e_C1.5` S4 (1 612 :
+  cinq blocs de clôture hérités de l'ancien gabarit — une piste pour sa prochaine révision : les fusionner), `5e_C1.1` S5
+  (1 425), `5e_C1.5` S3 (1 354), `5e_C3.1` S4 (1 639, avec les quatre gestes du tableur à faire en échauffement) ;
+- `3e_C2.1` S2 (1 344) : deux activités et le bloc commun des rôles.
+
+**Vérifié.** Les 30 bancs des 14 séquences, verts (`5e_C1.5` lancés avec leurs arguments documentés : 39 / 39, 34 / 34).
+Mode mission joué sur les 14 : aucun refus, écrans identiques avant et après (les incrustations n'y sont pas découpées).
+`incrustations.py --verifier` : tout à jour. `controle_squelette.mjs` vert ; `audit_aeration.py --strict` vert sur
+`3e_C1.1` ; `controle_question_seule.py --strict` : thème 1 à 0 refus.
+
 ## 21/11/2026 — Vague n°364 et n°366, thème 2 : trois pages dont les listings ne défilent plus, et les deux contrôles corrigés (11 faux positifs pour la porte, les calques d'éditeur pour les listings)
 
 Carte blanche de Pascal (21/11, 23 h 45), après la fusion de la PR #850. Première vague des deux règles, par le thème 2

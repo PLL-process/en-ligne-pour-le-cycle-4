@@ -11,6 +11,8 @@ import glob
 import pathlib
 import statistics as st
 import sys
+# 22/11/2026 (chantier 2 du thème 1) : un exercice d'atelier se replie sous son résumé ; l'élève l'ouvre, le banc aussi
+OUVRIR_INCRUSTES = "document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('details.incruste-repliee').forEach(d=>d.open=true))"
 
 SEQ = pathlib.Path("sequence_3e_C2_pekin_borne.html").resolve().as_uri()
 QCM = pathlib.Path("qcm_3e_C2_pekin_borne.html").resolve().as_uri()
@@ -134,7 +136,7 @@ t("n°43 : les six modes offerts ont tous leur corrigé", not manquants, str(man
 
 with sync_playwright() as p:
     b = p.chromium.launch()
-    pg = b.new_page(viewport={"width": 1280, "height": 900})
+    pg = b.new_page(viewport={"width": 1280, "height": 900}); pg.add_init_script(OUVRIR_INCRUSTES)
     errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
 
@@ -341,7 +343,7 @@ with sync_playwright() as p:
 
     for ancre, attendu, lab in (("#depart=court", 10, "parcours court"), ("", None, "sans ancre")):
         ctx = b.new_context()
-        p2 = ctx.new_page()
+        p2 = ctx.new_page(); p2.add_init_script(OUVRIR_INCRUSTES)
         e2 = []
         p2.on("pageerror", lambda e: e2.append(str(e)))
         p2.goto(QCM + ancre)
