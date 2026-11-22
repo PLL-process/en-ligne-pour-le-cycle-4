@@ -89,6 +89,17 @@ with sync_playwright() as p:
       && !!document.querySelector('#m3 a[href="sequence_3e_C6.2_auto_test_station.html#banc-essai"]')"""))
     atelier = (ICI / "sequence_3e_C6.2_auto_test_station.html").read_text(encoding="utf-8")
     t("l'ancre #banc-essai existe dans l'atelier (activité 4)", 'id="banc-essai"' in atelier)
+    # lien de l'accès rapide de l'index (21/11/2026) : l'adresse #ep ouvre l'épreuve écrite, #exo17 la manche 3 ;
+    # contexte à part, pour que l'onglet retenu n'influe pas sur la suite du banc
+    cx = nav.new_context(viewport={"width": 390, "height": 800})
+    pa = cx.new_page(); e2 = []; pa.on("pageerror", lambda e: e2.append(str(e)))
+    pa.goto(URL + "#ep"); pa.wait_for_timeout(400)
+    vu_ep = pa.evaluate("document.querySelector('.seance-panel.active')?.id")
+    pa.evaluate("location.hash='exo17'"); pa.wait_for_timeout(300)
+    vu_17 = pa.evaluate("document.querySelector('.seance-panel.active')?.id")
+    t("lien direct de l'index : #ep ouvre « Épreuve écrite », #exo17 ouvre la manche 3",
+      vu_ep == "ep" and vu_17 == "m3" and not e2, (vu_ep, vu_17, e2))
+    cx.close()
     t("rappel : « cinq repères pour cet entraînement », pas une liste exhaustive",
       "cinq repères graphiques" in pg.inner_text("#rappel") and "Il en existe d'autres" in pg.inner_text("#rappel"))
     t("schémas : chaque envoi au gardien est un parallélogramme (polygone vert), jamais un rectangle", pg.evaluate("""

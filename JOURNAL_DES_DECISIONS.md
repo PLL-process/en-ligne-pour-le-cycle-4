@@ -35149,3 +35149,28 @@ avec des élèves.
 2. **Impression de la manche ouverte, sans bouton « toute la banque »** : un élève imprime ce qu'il vient de faire, et
    les photocopies sont comptées ; la page entière, schémas compris, ferait une trentaine de pages A4. « 📄 Ma fiche
    bilan » garde la trace de toutes les manches sur une page.
+
+## 21/11/2026 — Accès rapide actualisé après la PR #844 : l'entraînement DNB annonce ses manches, son épreuve écrite a son lien (transversal : `_outils` ; thème 2 `3e_C6.2`)
+
+**Demande de Pascal** (21/11/2026, après la fusion de #844) : « actualise toujours les liens vers l'accès rapide ».
+Décision non numérotée, gardée pour toutes les sessions : **après chaque fusion, les entrées « ⚡ Accès rapide » de
+l'index qui portent sur ce qui a changé sont relues et mises à jour** (titre, ancre, lien nouveau), dans
+`_outils/index_complements.json` (clé `acces_rapide`), puis l'index est régénéré — jamais retouché à la main.
+
+**Ce qui change.**
+- L'entrée de 3e « Algorigrammes » de l'entraînement DNB dit ce que la page est devenue : « 30 exercices en 4 manches :
+  symboles, déroulement, auto-test, transfert ».
+- Une entrée nouvelle mène droit à l'**épreuve écrite** (l'abri à vélos), `entrainement_dnb_algorigrammes.html#ep` :
+  c'est la partie qu'on donne en préparation à l'écrit, et elle était au cinquième onglet, invisible depuis l'index.
+- Pour que ce lien tienne, la page ouvre désormais l'onglet que nomme l'adresse (`#ep`, `#m3`, ou un exercice comme
+  `#exo17`), au chargement comme sur un changement d'ancre, puis descend jusqu'à lui. Sans ancre, rien ne change :
+  l'onglet laissé ouvert revient (onglets-séance). Le geste est dans `_outils/dnb_gabarit.html`, la page est
+  reconstruite par la chaîne habituelle (`dnb_build.py` puis les quatre outils d'injection).
+- Non ajouté : un lien vers le banc d'essai de l'atelier (`#banc-essai`) — la manche 3 y mène, et le groupe compte
+  déjà six liens.
+
+**Vérifié.** `tests_entrainement_dnb.py` **53 / 53** (un test de plus : `#ep` ouvre « Épreuve écrite », `#exo17` la
+manche 3, sans erreur JavaScript) ; à 390 px, `#ep`, `#m3`, `#exo17`, sans ancre et changement d'ancre : 5 / 5 ;
+depuis l'index à 390 px, le groupe « Algorigrammes — 3e » ouvert, le clic sur le lien de l'épreuve ouvre l'onglet
+`ep`, sans défilement horizontal. `_outils/tests_index.py` 31 / 31 ; `controle_liens` sur l'index : aucun lien mort,
+aucune ancre introuvable. `build_audit.py` : couverture inchangée.
