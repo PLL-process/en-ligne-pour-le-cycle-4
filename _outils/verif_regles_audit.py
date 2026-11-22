@@ -76,8 +76,28 @@ def duree_annoncee(src: str) -> int | None:
     return int(m.group(1)) * int(m.group(2)) if m else None
 
 
+#: Le résumé d'un exercice d'atelier incrusté (« 🧭 D'abord (13 min) : … ») : ses minutes sont DÉJÀ
+#: comptées dans l'activité qui l'accueille (`incrustations.py` le dit : « elles s'écrivent dans la ligne
+#: Durée, pas dans le titre »). Les compter une seconde fois a fait échouer 3e_C2.1 de 13 min le 22/11/2026
+#: (audit #867) : l'activité 4 annonce 43 min = 30 + les 13 de l'exercice.
+RESUME_INCRUSTE = re.compile(r'(<details\b[^>]*class="[^"]*incruste-repliee[^"]*"[^>]*>\s*<summary>)(.*?)(</summary>)',
+                             re.S | re.I)
+
+#: La durée d'une activité « 🏠 Facultatif » (à la maison, ou en classe s'il reste du temps) n'est pas du
+#: temps de classe : Pascal, 19/11/2026, « l'enquête à la maison n'est pas une obligation » (4e_C9.1).
+#: Une activité qui « peut se faire à la maison » reste comptée : elle est prévue en classe.
+DUREE_FACULTATIVE = re.compile(r'<span class="duree">[^<]*</span>(\s*</header>\s*(?:<!--.*?-->\s*)*'
+                               r'<p\b[^>]*class="[^"]*pastille-maison[^"]*"[^>]*>\s*🏠\s*Facultatif)', re.S | re.I)
+
+
 def durees_activites(src: str) -> list[int]:
-    """Minutes annoncées activité par activité (~45 min, 30 min, 5 min…)."""
+    """Minutes annoncées activité par activité (~45 min, 30 min, 5 min…).
+
+    Ni le résumé d'un exercice incrusté (déjà compté dans son activité), ni une activité facultative
+    hors temps de classe (22/11/2026, audit #867).
+    """
+    src = RESUME_INCRUSTE.sub(lambda m: m.group(1) + re.sub(r"\(\s*\d+\s*min\s*\)", "", m.group(2)) + m.group(3), src)
+    src = DUREE_FACULTATIVE.sub(r"\1", src)
     return [int(x) for x in re.findall(r"[(~≈]\s*(\d+)\s*min", texte_visible(src))]
 
 

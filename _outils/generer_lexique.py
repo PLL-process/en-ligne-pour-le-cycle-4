@@ -98,6 +98,7 @@ from html.parser import HTMLParser
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from licence_cc import MENTION as MENTION_LICENCE  # règle d'or n°321
+from expliquer_sigles import infobuller  # n°44, décision de Pascal du 22/11/2026
 
 CHAMP = lambda bloc, nom: (
     m.group(1) if (m := re.search(r'"?\b%s"?\s*:\s*"((?:[^"\\]|\\.)*)"' % nom, bloc)) else ""
@@ -574,6 +575,9 @@ def ecrire_lexique(dossier, titre, retour, commun=None):
                               sous_titre=SOUS_TITRE.format(compte=total),
                               corps="\n".join(corps), pied=PIED.format(sources=sources),
                               licence=MENTION_LICENCE)
+    # Les sigles des définitions (tirées mot pour mot des QCM) reçoivent leur infobulle, comme dans les pages : un
+    # lexique régénéré garde ses explications (n°44, décision de Pascal du 22/11/2026 ; n°283).
+    page = infobuller(page)
     sortie = os.path.join(dossier, "lexique_%s.html" % code)
     garde_ecrasement(sortie, page)
     open(sortie, "w", encoding="utf-8").write(page)

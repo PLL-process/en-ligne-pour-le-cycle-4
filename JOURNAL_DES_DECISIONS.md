@@ -36168,6 +36168,67 @@ contraste (26), étiquettes (4), attributs ARIA (3), liste (1). Le kit des ateli
 (« CDI — le centre de documentation et d'information », « QCM (questionnaire à choix multiples) ») ; leurs sources
 (`build.py`, `cahiers.py`, `moteur.py`, les textes des incrustations) sont à mettre d'accord avant toute régénération.
 
+## 22/11/2026 — Sigles expliqués (n°44), vague des infobulles, thème 2 : 84 pages, 214 infobulles qui s'ouvrent aussi au doigt et sur papier (thème 2, `_outils`)
+
+**Décision de Pascal** (22/11/2026, 1 h 45) : « autres sigles : OST sur 108 pages, puis CRCN, USB, IP ainsi que les
+autres pourront être communiquées à l'aide d'un survol avec la souris » ; puis « Le reste tu as carte blanche ».
+
+**Ce que la décision change au complément de la n°44.** La n°44 demandait une mention en clair parce qu'« une infobulle
+ne s'ouvre pas au doigt ». Pour les sigles autres que QCM (déjà écrit en clair par les deux vagues précédentes),
+l'infobulle suffit désormais, posée de façon à lever l'objection :
+- au survol : l'attribut `title` de `<abbr class="sigle">` ;
+- à l'appui au doigt et au clavier : `tabindex="0"`, et le style commun `#sigles-css` (posé une fois par page) écrit
+  l'explication à côté du sigle tant qu'il a le focus — « IP (Internet Protocol, l'adresse d'une machine sur le réseau) » ;
+- sur papier : `@media print` écrit l'explication après le sigle.
+
+Où : à la première apparition du sigle dans la page, puis à la première de chaque séance (un onglet fermé cache la
+première). Le texte courant passe avant un lien, un bouton ou une étiquette de choix ; quand le sigle n'est que là,
+l'infobulle s'y pose sans `tabindex` (un élément focalisable dans un autre gêne le clavier et les lecteurs d'écran).
+Jamais dans la navigation, un listing, un script, une option de liste. Rien de visible ne change, sauf un pointillé
+sous le sigle. Le bloc d'un écrit « comme au brevet » garde ses sigles en clair (skill `tache-finale-redigee`).
+
+**Outils.**
+- `_outils/expliquer_sigles.py --infobulle` : essai à blanc par défaut, `--ecrire` pour écrire ; relancé, il ne pose rien
+  (n°149, vérifié sur les 84 pages). Pour un générateur, `infobuller(page)` explique tout ce que le contrôle voit nu
+  (QCM en clair quand il est dans le texte, le reste en infobulle) avant d'écrire : une page régénérée garde ses
+  explications (n°283). Banc neuf `_outils/tests_expliquer_sigles.py` (15 / 15 ; un outil volontairement cassé — premier
+  sigle pris dans un lien, `tabindex` dans un lien — le fait échouer deux fois).
+- `_outils/controle_sigles_expliques.py` : un sigle porté par une infobulle `<abbr title>` compte pour expliqué ; la
+  mesure se lit aussi sur un source (`mesurer_source`), pour les générateurs.
+- `_outils/generer_lexique.py` : `sans_balises` prenait « < seuil », il faut seuil > » pour une balise et coupait la
+  phrase (« Pour capturer une valeur V avec « V. », lexique de `5e_C6.1`, vu en régénérant). Une balise commence
+  désormais par une lettre ; deux cas ajoutés au banc (31 / 31, avec les infobulles branchées).
+
+**Précautions contre les conflits.** PR ouvertes au moment de la vague : #866, #867, #868 ; aucune ne touche une page du
+thème 2. Écartées : les quatre pages du TP d'algorigrammes et des listings (n°364) que d'autres sessions ont travaillées
+dans la nuit et dont la PR #866 continue le chantier — `3e_C6.1` (séquence), `4e_C4.1` (atelier Pix CRCN), `4e_C6.2`
+(séquence du jardin, TP d'algorigrammes). Une insertion par sigle et par séance, sans retour à la ligne.
+
+**Ce qui change** : 84 pages du thème 2 (séquences, QCM, synthèses, lexiques, ateliers FAST, « en pièces »,
+entraînement DNB), 214 infobulles — LSU, IP, OST, LED, CRCN, DNB, USB, TTL, DHCP, FAST, PLA, TBT, PVC, LCD, CDI, IA,
+IDE, DNS, NFC, RFID, PIR, CAO, EPI, LDR ; QCM aussi, dans les 41 pages où il n'était expliqué que plus bas ou que dans
+un lien. Deux QCM citent « un OST » dans le menu « Compétence à réviser » : une option de liste ne porte pas d'infobulle,
+l'étiquette du menu le dit donc en clair (« Compétence à réviser (OST : objet ou système technique) »).
+
+**Les lexiques ne sont pas régénérés.** Régénérer un lexique aujourd'hui effacerait les unités écrites en clair après
+coup dans les pages (« 6 W (watts) ») : les dix lexiques reçoivent leurs infobulles comme les autres pages. Le
+générateur, lui, pose désormais les mêmes infobulles (`infobuller`, n°283 ; vérifié en régénérant les dix lexiques, puis en
+remettant la version de la vague : mêmes sigles, mêmes places) ; les unités restent à lui apprendre avant toute régénération.
+
+**Vérifié.**
+- Texte et balises des 84 pages identiques avant et après, une fois retirés les `<abbr>` et le style ajouté : rien
+  d'autre n'a bougé.
+- Les 84 pages ouvertes à 390 px : aucune erreur JavaScript ; la première infobulle visible prend le focus et affiche
+  son explication ; à l'impression, l'explication s'écrit ; aucune infobulle focalisable dans un lien ou un bouton.
+  Une page défile en largeur (`synthese_professeur_4e_C4.1-C4.9.html`, 458 px) : c'était déjà le cas sur `main`.
+- `controle_sigles.py` (n°313) vert, son banc 9 / 9.
+
+**Mesure** (`controle_sigles_expliques.py`) : pages avec au moins un sigle jamais expliqué, 312 → 250 ; thème 2,
+67 → 5 (les quatre pages écartées, et une synthèse où « QCM » n'est que dans la barre de navigation). Thème 1 : 125,
+thème 3 : 120.
+
+**Suite.** Le thème 3 dans la PR suivante ; le thème 1 quand ses sessions auront fini.
+
 ## 22/11/2026 — Audit du 22/11, chantier 4 : la dérive des générateurs ramenée à zéro (57 → 0) ; deux défauts de source réparés (transversal : `_outils`, générateurs des thèmes 1 et 3, pages engendrées)
 
 **Carte blanche de Pascal** (22/11, « Tu as carte blanche continue », « Et fusionne automatiquement »). Sur `main` du

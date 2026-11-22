@@ -104,6 +104,11 @@ algorigramme, croquis, carte mentale), la correction montre le dessin complet, e
 
 ### 5. Le reste du lot, vérifié au passage
 - **Séances de 55 minutes** : les durées annoncées des activités tiennent dans 55 minutes (n°23).
+  **Tout bloc ajouté dit ce qu'il coûte** (audit du 22/11/2026) : un billet, un écrit, une enquête, une reprise posés
+  par une règle ou une vague portent leurs minutes, et la séance où ils entrent est recomptée **dans la même PR** —
+  on retire ailleurs ce qu'on ajoute, ou le bloc devient « 🏠 Facultatif ». Trois dépassements sont nés ainsi la
+  semaine du 15/11 (3e_C1.1 +5, billet de sortie ; 4e_C9.1 +5, activité 1 passée de 20 à 25 min). Le résumé d'un
+  exercice incrusté (« D'abord (13 min) ») est déjà dans son activité : `verif_regles_audit.py` ne le recompte plus.
 - **Lexique** (skill `lexique-sequence`) : chaque mot technique de la séance y est, rattaché à sa séance.
 - **Situation déclenchante** illustrée et glosée (`situation-declenchante-ancree`) : faite en vagues 1 et 2 (05-06/11).
 - **Code en couleurs** (n°13), **schémas premium** (n°315), **chaînes d'énergie** (n°310) : leurs contrôles verts.
