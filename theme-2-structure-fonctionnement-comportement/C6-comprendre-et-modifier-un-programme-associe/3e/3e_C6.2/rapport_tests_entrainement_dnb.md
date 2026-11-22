@@ -11,7 +11,7 @@ python3 tests_entrainement_dnb.py     # Playwright + Chromium ; sortie 2 si Play
 La page se reconstruit avec `python3 _outils/dnb_build.py <page>`, puis les quatre outils d'injection
 (`onglets_clavier`, `retrait_validation`, `onglets_seance`, `entete_telephone`, avec `--ecrire`).
 
-## Résultat : 52 / 52 tests passés
+## Résultat : 53 / 53 tests passés
 
 | Ce que le banc vérifie | Résultat |
 |---|---|
@@ -21,6 +21,7 @@ La page se reconstruit avec `python3 _outils/dnb_build.py <page>`, puis les quat
 | trois propositions fausses par exercice, chacune avec son pourquoi ; 2 aides et 3 réfutations par exercice | ✅ |
 | corrections citées par leur texte, jamais par une lettre ; aides et corrections repliées au chargement | ✅ |
 | onglets Symboles, Déroulement, Auto-test, Transfert, Épreuve écrite ; liens vers l'atelier en haut et en fin de manche 3 ; ancre `#banc-essai` présente dans l'atelier | ✅ |
+| lien direct de l'accès rapide de l'index (ajouté le 21/11/2026, après la PR #844) : l'adresse `#ep` ouvre l'onglet « Épreuve écrite », `#exo17` ouvre la manche 3 | ✅ |
 | rappel « cinq repères pour cet entraînement » ; chaque envoi au gardien dessiné dans un parallélogramme | ✅ |
 | bonne réponse : chaque place dans chaque manche, au plus 2 fois ; jamais 3 fois de suite ; aucun motif répété | ✅ |
 | **choisir toujours la plus longue ne valide aucune manche** ; répondre toujours à la même place non plus | ✅ |

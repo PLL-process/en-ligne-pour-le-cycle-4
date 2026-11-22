@@ -813,6 +813,18 @@ window.addEventListener("resize", majDefilants);
 document.querySelectorAll("details").forEach(d=>d.addEventListener("toggle", majDefilants));
 document.querySelectorAll(".seance-tab").forEach(t=>t.addEventListener("click", ()=>setTimeout(majDefilants, 0)));
 
+/* Lien direct (accès rapide de l'index, 21/11/2026) : #ep, #m3 ou #exo17 ouvrent l'onglet qui les contient, puis
+   descendent jusqu'à eux ; sans ancre, la page rouvre l'onglet laissé ouvert (onglets-seance) */
+function ouvrirAncre(){
+  const id=decodeURIComponent(location.hash.slice(1)); if(!id) return;
+  const cible=document.getElementById(id); if(!cible) return;
+  const pan=cible.classList.contains("seance-panel") ? cible : cible.closest(".seance-panel");
+  if(!pan) return;
+  if(!pan.classList.contains("active")){ const o=document.querySelector('.seance-tab[data-panel="'+pan.id+'"]'); if(o) o.click(); }
+  setTimeout(()=>{ (cible===pan ? $("seances") : cible).scrollIntoView({block:"start"}); }, 60);
+}
+window.addEventListener("hashchange", ouvrirAncre);
+
 /* ══════ Init ══════ */
 restore();
 try{ localStorage.setItem(KEY+"_essai","1"); localStorage.removeItem(KEY+"_essai"); }catch(err){ stockage(false); }
@@ -824,6 +836,7 @@ const commence = Object.keys(MANCHES).some(m=>etatManche(m).rens>0) || etatEpreu
 $("ouJenSuis").open = commence;
 /* le rappel s'ouvre seul à la première visite ; après une reprise, il attend un appui */
 if(commence){ const r=$("rappel"); if(r) r.open=false; }
+ouvrirAncre();
 </script>
 <!-- loupe-images-v2 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
      réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
