@@ -9,13 +9,11 @@ import { chromium } from 'playwright';
 import { pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs';
-// 22/11/2026 (chantier 2 du thème 1) : un exercice d'atelier se replie sous son résumé ; l'élève l'ouvre, le banc aussi
-const OUVRIR_INCRUSTES = "document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('details.incruste-repliee').forEach(d=>d.open=true))";
 
 const URL0 = pathToFileURL(path.join(import.meta.dirname, 'sequence_C1.3-C1.4_SI_gestion_donnees.html')).href;
 const T = []; const ok = (n, c, d = '') => T.push({ n, ok: !!c, d });
 const b = await chromium.launch();
-const p = await b.newPage({ viewport: { width: 1280, height: 900 } }); await p.addInitScript(OUVRIR_INCRUSTES);
+const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
 const err = [], fail = [];
 p.on('pageerror', (e) => err.push(e.message));
 p.on('console', (m) => { if (m.type() === 'error') err.push('console: ' + m.text()); });
