@@ -714,8 +714,15 @@ details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-he
 details.bonus-replie[open]>summary{margin-bottom:8px}
 </style>
 <style id="css-banc-essai">
+/* n°369 (en essai) : la reprise en tête des séances 2 et 3 — de mémoire, avant tout rappel */
+.reprise{border-left:4px solid var(--hl)}
+.reprise .reprise-duree{font-size:.88em;color:var(--sub);margin:4px 0 10px}
+.reprise .reprise-num{margin:12px 0 4px}
+.reprise pre.reprise-doc{background:#08132c;border-radius:10px;padding:10px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.82em;color:#d7e6ff;white-space:pre;overflow:auto;margin:4px 0 8px}
+.reprise .feedback a{color:inherit;text-decoration:underline}
+
 /* Audits du 21 et du 22/11/2026 : le banc d'essai qui exécute le programme de l'élève (n°333), la version qui se dit
-   (n°369), le programme figé des lectures, le chemin suivi pas à pas, les différences ligne à ligne. */
+   (n°373), le programme figé des lectures, le chemin suivi pas à pas, les différences ligne à ligne. */
 .feedback{white-space:pre-line}
 .simulation-scolaire{border:1px dashed var(--warn);border-radius:10px;padding:8px 12px;margin:0 0 12px;color:var(--warn);background:rgba(255,214,102,.07);font-size:.92em}
 .cl-version{display:block;margin:2px 0 10px;padding:7px 12px;border-radius:10px;background:var(--panel2);border:1px solid var(--border);font-size:.9em;color:var(--text)}
@@ -2182,7 +2189,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     </div></details>
     <div class="consigne"><b>Consigne :</b><br>① Lis la version 1 d'origine du programme, juste en dessous.<br>② Pour chaque donnée, dis d'où vient sa valeur.<br>③ Relève les deux lignes demandées.<br><button class="btn small ghost" type="button" data-hl="6-7">✨ Surligner les lignes 6-7</button> <button class="btn small ghost" type="button" data-hl="20-23">✨ Surligner les lignes 20-23</button></div>
 <div class="programme-fige" data-version="v1" aria-label="La version 1 d'origine du programme, sous tes yeux"></div>
-    <div class="rappel-besoin"><b>📌 Rappel — lire un programme avec quatre mots</b>
+    <div class="rappel-besoin" id="rappel-quatre-mots"><b>📌 Rappel — lire un programme avec quatre mots</b>
     <br>Une donnée <b>utilisée</b> est soit une <b>mesure</b> (le capteur fournit 95&nbsp;km/h), soit un <b>paramètre</b> (le concepteur a choisi 90).
     <br>Une donnée <b>produite</b> est calculée par le programme&nbsp;: un <b>état</b> (la station retient «&nbsp;rouge&nbsp;»), une <b>décision</b> mémorisée (<code>sirene_active = True</code>), un <b>message</b>.
     <br>La <b>commande</b> vient ensuite&nbsp;: <code>activer_sirene()</code> fait vraiment sonner.</div>
@@ -2357,6 +2364,38 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <!-- ══════ SÉANCE 2 ══════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
+<section class="card reprise" data-reprise id="repriseS2">
+  <h3>🔁 Reprise : sans regarder, retrouve</h3>
+  <p class="consigne">1. Réponds de mémoire, sans revenir en arrière.<br>2. Clique sur «&nbsp;✔ Vérifier ma reprise&nbsp;».<br>3. Si tu t'es trompé·e, suis le lien vers le rappel.</p>
+  <p class="reprise-duree">⏱ 3 min · cette reprise ne compte pas dans tes étoiles&nbsp;: elle te dit ce que tu as retenu.</p>
+  <p class="reprise-num"><b>1.</b> Deux lignes du programme de la station&nbsp;:</p>
+  <pre class="reprise-doc" data-code-colore="python">SEUIL_ROUGE = 90
+vent_kmh = lire_capteur("anemometre")</pre>
+  <fieldset class="qcm-groupe" id="rp2_1" data-melange="1">
+  <legend>Dans ces deux lignes, quelle donnée est une <b>mesure</b> lue sur un capteur, et laquelle est un <b>paramètre</b> choisi par le concepteur&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="rp2_1" id="rp2_1__1" value="SEUIL_ROUGE est la mesure, vent_kmh est le paramètre"><label for="rp2_1__1">SEUIL_ROUGE est la mesure, vent_kmh est le paramètre</label></div>
+  <div class="qcm-option"><input type="radio" name="rp2_1" id="rp2_1__2" value="les deux sont des mesures lues sur un capteur"><label for="rp2_1__2">les deux sont des mesures lues sur un capteur</label></div>
+  <div class="qcm-option"><input type="radio" name="rp2_1" id="rp2_1__3" value="vent_kmh est la mesure, SEUIL_ROUGE est le paramètre"><label for="rp2_1__3">vent_kmh est la mesure, SEUIL_ROUGE est le paramètre</label></div>
+  <div class="qcm-option"><input type="radio" name="rp2_1" id="rp2_1__4" value="les deux sont des paramètres choisis par le concepteur"><label for="rp2_1__4">les deux sont des paramètres choisis par le concepteur</label></div>
+  </fieldset>
+  <p class="reprise-num"><b>2.</b> Le vent mesuré vaut <b>90&nbsp;km/h</b>. La station exécute&nbsp;:</p>
+  <pre class="reprise-doc" data-code-colore="python">vigilance = "verte"
+if vent_kmh &gt; 118:
+    vigilance = "violette"
+elif vent_kmh &gt; 90:
+    vigilance = "rouge"
+elif vent_kmh &gt; 50:
+    vigilance = "orange"</pre>
+  <fieldset class="qcm-groupe" id="rp2_2" data-melange="1">
+  <legend>À 90&nbsp;km/h, que vaut <code>vigilance</code> après ces lignes&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="rp2_2" id="rp2_2__1" value="&quot;rouge&quot;"><label for="rp2_2__1">"rouge"</label></div>
+  <div class="qcm-option"><input type="radio" name="rp2_2" id="rp2_2__2" value="&quot;verte&quot;"><label for="rp2_2__2">"verte"</label></div>
+  <div class="qcm-option"><input type="radio" name="rp2_2" id="rp2_2__3" value="&quot;orange&quot;"><label for="rp2_2__3">"orange"</label></div>
+  <div class="qcm-option"><input type="radio" name="rp2_2" id="rp2_2__4" value="&quot;violette&quot;"><label for="rp2_2__4">"violette"</label></div>
+  </fieldset>
+  <button type="button" class="btn small" data-reprise-verif="S2">✔ Vérifier ma reprise</button>
+  <div class="feedback" id="fbRepriseS2" aria-live="polite"></div>
+</section>
 <section class="card">
   <h2>✏ Séance 2 — Modifier le programme</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment ajouter l'alerte graduée sans casser l'existant ?</p>
@@ -2504,6 +2543,37 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
 
 <!-- ══════ SÉANCE 3 ══════ -->
 <div class="seance-panel" id="s3" role="tabpanel">
+<section class="card reprise" data-reprise id="repriseS3">
+  <h3>🔁 Reprise : sans regarder, retrouve</h3>
+  <p class="consigne">1. Réponds de mémoire, sans revenir en arrière.<br>2. Clique sur «&nbsp;✔ Vérifier ma reprise&nbsp;».<br>3. Si tu t'es trompé·e, suis le lien vers le rappel.</p>
+  <p class="reprise-duree">⏱ 3 min · cette reprise ne compte pas dans tes étoiles&nbsp;: elle te dit ce que tu as retenu.</p>
+  <p class="reprise-num"><b>1.</b> Le club a changé une seule ligne&nbsp;: <code>SEUIL_ORANGE = 50</code> est devenu <code>SEUIL_ORANGE = 60</code>. Le reste ne change pas&nbsp;:</p>
+  <pre class="reprise-doc" data-code-colore="python">vigilance = "verte"
+if vent_kmh &gt; SEUIL_OURAGAN:    # 118
+    vigilance = "violette"
+elif vent_kmh &gt; SEUIL_ROUGE:    # 90
+    vigilance = "rouge"
+elif vent_kmh &gt; SEUIL_ORANGE:   # 60
+    vigilance = "orange"
+message = "Vigilance " + vigilance</pre>
+  <fieldset class="qcm-groupe" id="rp3_1" data-melange="1">
+  <legend>Le vent mesuré vaut <b>57&nbsp;km/h</b>. Avec <code>SEUIL_ORANGE = 60</code>, quel message la station fabrique-t-elle&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="rp3_1" id="rp3_1__1" value="« Vigilance orange »"><label for="rp3_1__1">« Vigilance orange »</label></div>
+  <div class="qcm-option"><input type="radio" name="rp3_1" id="rp3_1__2" value="« Vigilance rouge »"><label for="rp3_1__2">« Vigilance rouge »</label></div>
+  <div class="qcm-option"><input type="radio" name="rp3_1" id="rp3_1__3" value="aucun message, le programme s'arrête"><label for="rp3_1__3">aucun message, le programme s'arrête</label></div>
+  <div class="qcm-option"><input type="radio" name="rp3_1" id="rp3_1__4" value="« Vigilance verte »"><label for="rp3_1__4">« Vigilance verte »</label></div>
+  </fieldset>
+  <p class="reprise-num"><b>2.</b> La station lit le vent ET la pression, mais ses tests <code>if</code> / <code>elif</code> ne comparent que <code>vent_kmh</code>.</p>
+  <fieldset class="qcm-groupe" id="rp3_2" data-melange="1">
+  <legend>Le vent reste à 70&nbsp;km/h&nbsp;; la pression passe de 1013 à 960&nbsp;hPa (hectopascals). Le message envoyé change-t-il&nbsp;?</legend>
+  <div class="qcm-option"><input type="radio" name="rp3_2" id="rp3_2__1" value="Oui : une pression plus basse fait monter la vigilance"><label for="rp3_2__1">Oui : une pression plus basse fait monter la vigilance</label></div>
+  <div class="qcm-option"><input type="radio" name="rp3_2" id="rp3_2__2" value="Non : aucun test ne lit la pression, le message reste le même"><label for="rp3_2__2">Non : aucun test ne lit la pression, le message reste le même</label></div>
+  <div class="qcm-option"><input type="radio" name="rp3_2" id="rp3_2__3" value="Oui : le programme envoie un second message, pour la pression"><label for="rp3_2__3">Oui : le programme envoie un second message, pour la pression</label></div>
+  <div class="qcm-option"><input type="radio" name="rp3_2" id="rp3_2__4" value="Non : le programme s'arrête, la pression est trop basse"><label for="rp3_2__4">Non : le programme s'arrête, la pression est trop basse</label></div>
+  </fieldset>
+  <button type="button" class="btn small" data-reprise-verif="S3">✔ Vérifier ma reprise</button>
+  <div class="feedback" id="fbRepriseS3" aria-live="polite"></div>
+</section>
 <section class="card">
   <h2>🧪 Séance 3 — Prouver que ça marche : le plan de tests</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment être SÛR que la v2 fait ce qu'on attend — et n'a rien cassé ?</p>
@@ -2923,14 +2993,14 @@ else:
     <li>La preuve, une ligne de mon journal d&#x27;essai&nbsp;: «&nbsp;____ km/h · attendu ____ · obtenu ____&nbsp;».</li>
   </ul>
 </details></div>
-    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir, et quand je le reprends :</b></label>
     <div class="choix-revoir" role="group" aria-label="Ce que je dois revoir">
       <label><input type="checkbox" id="rev_branches"> les branches if / elif (activité 2)</label>
       <label><input type="checkbox" id="rev_egalite"> l'égalité au seuil, &gt; ou &gt;= (activités 2 et 5)</label>
       <label><input type="checkbox" id="rev_indentation"> l'indentation (activité 4)</label>
       <label><input type="checkbox" id="rev_essai"> le choix d'un essai (activité 5)</label>
     </div>
-    <textarea id="bilan3" placeholder="Un exemple de ce qui me pose problème…"></textarea>
+    <textarea id="bilan3" data-flou placeholder="Je ne sais pas encore… ; je le reprends à la séance… ou dans le QCM, mode « Uniquement mes erreurs »."></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
   <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. <br>Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
@@ -3865,7 +3935,37 @@ document.querySelectorAll("[data-hl]").forEach(b=>{
   window.addEventListener("load", miroirs);
 })();
 
-/* ══════ Le banc d'essai de la station (audits des 21 et 22/11/2026 ; règles d'or n°333, n°369 et n°370) ══════
+/* ══════ La reprise des séances 2 et 3 (n°369, en essai) : de mémoire, avant le rappel ; elle ne valide rien ══════ */
+const REPRISES = {
+  S2: [
+    {id:"rp2_1", bon:"vent_kmh est la mesure, SEUIL_ROUGE est le paramètre", pourquoi:"vent_kmh reçoit ce que renvoie lire_capteur(…) : c'est une mesure. SEUIL_ROUGE est un nombre écrit dans le programme par le concepteur : un paramètre.", ancre:"rappel-quatre-mots", lien:"le rappel « lire un programme avec quatre mots »"},
+    {id:"rp2_2", bon:'"orange"', pourquoi:"90 > 118 est faux ; 90 > 90 est faux aussi, car > n'inclut pas l'égalité ; 90 > 50 est vrai : la branche orange s'exécute.", ancre:"act2", lien:"l'activité 2 et le chemin suivi pas à pas"}
+  ],
+  S3: [
+    {id:"rp3_1", bon:"« Vigilance verte »", pourquoi:"57 > 118, 57 > 90 et 57 > 60 sont faux : aucune branche ne s'exécute, vigilance garde sa valeur de départ \"verte\".", ancre:"act3", lien:"l'activité 3, le seuil recalibré"},
+    {id:"rp3_2", bon:"Non : aucun test ne lit la pression, le message reste le même", pourquoi:"pression_hpa est lue, mais aucun if ne la compare : à vent égal, le message ne change pas. Lire une donnée ne suffit pas pour qu'elle décide.", ancre:"rappel-quatre-mots", lien:"le rappel « lire un programme avec quatre mots »"}
+  ]
+};
+document.querySelectorAll("[data-reprise-verif]").forEach(btn => btn.addEventListener("click", () => {
+  const s = btn.dataset.repriseVerif, fb = $("fbReprise" + s); if(!fb) return;
+  fb.innerHTML = "";
+  let justes = 0, vides = 0;
+  REPRISES[s].forEach((q, i) => {
+    const v = $(q.id).value, p = document.createElement("p"); p.style.margin = "4px 0";
+    if(!v){ vides++; p.textContent = (i + 1) + ". Pas de réponse : réponds de mémoire, puis vérifie."; }
+    else if(v === q.bon){ justes++; p.textContent = (i + 1) + ". ✔ Retrouvé."; }
+    else {
+      p.textContent = (i + 1) + ". ✘ Pas encore : " + q.pourquoi + " ";
+      const a = document.createElement("a"); a.href = "#" + q.ancre; a.textContent = "↩ Revoir " + q.lien; p.appendChild(a);
+    }
+    fb.appendChild(p);
+  });
+  const fin = document.createElement("p"); fin.style.margin = "6px 0 0";
+  fin.textContent = vides ? "Reprise à finir." : "Reprise faite : " + justes + " / " + REPRISES[s].length + " retrouvée(s) de mémoire. Elle ne valide rien : elle te dit ce que tu as retenu.";
+  fb.appendChild(fin);
+  fb.className = "feedback show " + (!vides && justes === REPRISES[s].length ? "ok" : "mixte");
+}));
+/* ══════ Le banc d'essai de la station (audits des 21 et 22/11/2026 ; règles d'or n°333, n°373 et n°374) ══════
    Une vérification de programme EXÉCUTE le programme de l'élève (le petit Python de la page, banc-python) sur des vents
    inventés, et compare ses sorties — le message, la sirène, le gyrophare — au cahier des charges de la version
    demandée. Deux écritures équivalentes obtiennent donc le même verdict ; un `>=` faux se voit à 118. Un essai garde
@@ -3922,7 +4022,7 @@ function ecart(v, att, obs){
   if(obs.gyro !== att.gyro) p.push("gyrophare : " + (att.gyro ? "actif" : "arrêté") + " attendu, " + (obs.gyro ? "actif" : "arrêté") + " obtenu");
   return v + " km/h · " + p.join(" · ");
 }
-/* La version se dit (n°369) : version 1 d'origine, version 1 recalibrée, version 2, ou version modifiée. */
+/* La version se dit (n°373) : version 1 d'origine, version 1 recalibrée, version 2, ou version modifiée. */
 function versionDe(code){
   const a = BancPython.analyser(code);
   if(!a.ok) return a.erreur.type === "NonPrisEnCharge"
@@ -4224,7 +4324,7 @@ const CHECKS = {
     return {score:n,total:res.length,valide:n===res.length,message:m,premier:premier};
   },
   /* audit du 21/11/2026 : « Mes prévisions » et « Essais de ma version » sont deux comptes séparés ; le second reste
-     « à exécuter » tant que le banc n'a pas essayé la version ACTUELLE (n°333 ; la prévision d'abord, n°370) */
+     « à exécuter » tant que le banc n'a pas essayé la version ACTUELLE (n°333 ; la prévision d'abord, n°374) */
   5: function(){
     let ok=0;
     const att={d5_1:"verte · sirène arrêtée · gyrophare arrêté",d5_2:"verte · sirène arrêtée · gyrophare arrêté",d5_3:"orange · gyrophare seul",d5_8:"orange · gyrophare seul",d5_4:"rouge · sirène seule",d5_5:"violette · sirène et gyrophare"};

@@ -13,7 +13,7 @@
  * source `_outils/banc_python/`). Audit du 21/11/2026 : l'activité 4 cherchait
  * sept motifs dans le TEXTE du programme — un programme juste écrit avec des
  * apostrophes obtenait 5 / 7, un programme faux à 118 obtenait 7 / 7. Depuis le
- * 22/11/2026 (règle d'or n°333, appliquée ; n°369 et n°370, en essai) :
+ * 22/11/2026 (règle d'or n°333, appliquée ; n°373 et n°374, en essai) :
  *
  *   · l'activité 3 lit la VALEUR de `SEUIL_ORANGE` dans le programme exécuté
  *     (60.5 n'est pas 60) et vérifie son effet à 55 et 61 km/h ;
@@ -411,6 +411,25 @@ await p.waitForTimeout(80);
 const rappels = await p.evaluate(() => [document.getElementById('hypRappelTxt').textContent, document.getElementById('hypRappelTxt2').textContent]);
 ok('19 sexies · bilan : les DEUX hypothèses de départ reviennent, face à deux champs', /ses données/.test(rappels[0]) && /118/.test(rappels[1])
    && await p.evaluate(() => !!document.getElementById('hyp_retour2')), rappels.join(' | '));
+
+/* 19 septies · la reprise des séances 2 et 3 (n°369, en essai) : en tête de séance, de mémoire ; elle ne valide rien */
+await p.click('.seance-tab[data-panel="s2"]'); await p.waitForTimeout(120);
+const enTete = await p.evaluate(() => { const pan = document.getElementById('s2'); return pan.firstElementChild && pan.firstElementChild.id; });
+const repValidAvant = await p.evaluate(() => JSON.stringify(window.__valid || {}));
+await p.check('#rp2_1__1'); await p.check('#rp2_2__1');           // deux réponses fausses
+await p.click('[data-reprise-verif="S2"]'); await p.waitForTimeout(60);
+const rFaux = await p.textContent('#fbRepriseS2');
+const lienRappel = await p.$eval('#fbRepriseS2 a', a => a.getAttribute('href')).catch(() => '');
+await p.check('#rp2_1__3'); await p.check('#rp2_2__3');           // les bonnes
+await p.click('[data-reprise-verif="S2"]'); await p.waitForTimeout(60);
+const rJuste = await p.textContent('#fbRepriseS2');
+const repValidApres = await p.evaluate(() => JSON.stringify(window.__valid || {}));
+await p.click('.seance-tab[data-panel="s3"]'); await p.waitForTimeout(120);
+const enTete3 = await p.evaluate(() => { const pan = document.getElementById('s3'); return pan.firstElementChild && pan.firstElementChild.id; });
+ok('19 septies · reprise en tête des séances 2 et 3 : une erreur renvoie au rappel, « 2 / 2 retrouvée(s) », et rien n\'est validé',
+   enTete === 'repriseS2' && enTete3 === 'repriseS3' && /✘ Pas encore/.test(rFaux) && lienRappel === '#rappel-quatre-mots'
+   && /2 \/ 2 retrouvée\(s\) de mémoire/.test(rJuste) && /Elle ne valide rien/.test(rJuste) && repValidAvant === repValidApres,
+   [enTete, enTete3, lienRappel, rJuste.slice(0, 80)].join(' | '));
 
 /* ── persistance : le CODE de l'élève doit revenir, pas la version d'origine ── */
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(360);

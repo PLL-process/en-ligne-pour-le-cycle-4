@@ -2,14 +2,14 @@
 
 **Suite** : `tests_3e_C6.1-C6.3.mjs`, livrée dans ce dossier · **Outil** : Playwright
 (Chromium headless), viewport téléphone 390 × 844 · **Rejouée le 22/11/2026** ·
-**Verdict : 56 / 56 ✅** (38 / 38 le 21/11/2026 ; refonte du banc pour les audits des 21 et 22/11/2026)
+**Verdict : 57 / 57 ✅** (38 / 38 le 21/11/2026 ; refonte du banc pour les audits des 21 et 22/11/2026)
 
 ```
 cd theme-2-.../C6-.../3e/3e_C6.1 && node tests_3e_C6.1-C6.3.mjs
 node _outils/banc_python/tests_banc_python.mjs      # le petit Python de la page, sans navigateur : 24 / 24
 ```
 
-## Ce qui a changé le 22/11/2026 (audits des 21 et 22/11/2026 ; règle d'or n°333 appliquée, n°369 et n°370 en essai)
+## Ce qui a changé le 22/11/2026 (audits des 21 et 22/11/2026 ; règle d'or n°333 appliquée, n°373 et n°374 en essai)
 
 La page **exécute** désormais le programme de l'élève (le petit Python `banc-python`, source
 `_outils/banc_python/`), au lieu de chercher des motifs dans son texte. Les critères de recette de
@@ -27,9 +27,10 @@ l'audit sont recopiés dans la suite, au mot près quand c'était possible :
 - « 10 bonnes réponses sur 10 travaillées ne donnent que 6,7/20 » → « 10 / 10 réussies », « 10 / 30 travaillées », pas de /20 (test 29 bis) ;
 - le billet, les documents (algorigramme à 60, plan de tests authentique de la v1, récit fictif), les deux hypothèses (tests 7 bis, 20 quater, 19 sexies) ;
 - une écriture Python juste que le banc ne connaissait pas (f-string) obtient 10 / 10 ; une écriture qu'il ne lit pas (liste) est dite « limite du banc, pas forcément une erreur », jamais « SyntaxError » (test 16 quinquies, audit Fable) ;
+- les séances 2 et 3 s'ouvrent sur une reprise de mémoire (n°369, en essai) qui ne valide rien et renvoie au rappel ; le bilan demande ce qui reste flou et quand on le reprend (n°372) (test 19 septies) ;
 - le Bonus a désormais sa correction, et son fichier `.py` est le programme de la correction de l'activité 4, qui passe le banc 10 / 10 (test 21 bis).
 
-## Les 56 contrôles (sortie du 22/11/2026)
+## Les 57 contrôles (sortie du 22/11/2026)
 
 | # | Contrôle | Résultat |
 |---|---|---|
@@ -71,6 +72,7 @@ l'audit sont recopiés dans la suite, au mot près quand c'était possible :
 | 19 quater | l'état compte ce qui est écrit et coché (2 / 3, 1 / 3) sans rien valider ni noter (n°340) | ✅ |
 | 19 quinquies | la bouée : les lignes 4 à 7 écrites s'essaient à 2,0 · 3,0 · 4,0 · 5,0 m, sans note (5,0 m → « Baignade : rouge ») | ✅ |
 | 19 sexies | bilan : les DEUX hypothèses de départ reviennent, face à deux champs | ✅ |
+| 19 septies | reprise en tête des séances 2 et 3 : une erreur renvoie au rappel, « 2 / 2 retrouvée(s) », et rien n'est validé | ✅ |
 | 20 | rechargement : le programme v2 de l'élève est restauré, pas la version d'origine | ✅ |
 | 20 bis | rechargement : réponses, validations et journal d'essai restaurés, taille de police comprise | ✅ |
 | 20 ter | rechargement : les explications écrites et la case cochée de la grille reviennent | ✅ |
