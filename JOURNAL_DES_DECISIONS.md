@@ -36340,3 +36340,30 @@ pages écartées, et 33 pages où « QCM » n'est que dans la barre de navigatio
 tout : 175 pages (thème 1 : 117, où d'autres sessions travaillent ; thème 2 : 5 ; thème 3 : 53).
 
 **Suite.** Le thème 1 quand ses sessions auront fini ; les pages écartées après la fusion de #877.
+
+## 22/11/2026 — Pilote de la règle d'or n°369 (« Ce qui compte revient ») et de la n°372 sur `4e_C1.4` (cybersécurité) (thème 1)
+
+**Carte blanche de Pascal** (22/11, « Tu as carte blanche continue »). La n°369 (en essai depuis #868) demandait une séquence
+pilote ; `4e_C1.4` est retenue : quatre séances, des acquis nets dans ses « À retenir » (l'attaque et sa cible ; la donnée
+personnelle et la donnée sensible ; avant, pendant, après ; ce que cache chaque outil, et à qui). Les 🔑 de la page sont
+des icônes de correction, pas des acquis marqués (n°353) : les questions ont été tirées des « À retenir ».
+
+**Ce qui est posé.**
+- En tête des séances 2, 3 et 4, une « 🔁 Reprise — sans regarder, retrouve » : 2, 3 et 2 questions (sept en tout), sur
+  la séance d'avant et, en séance 3, une sur la séance 1 (l'espacement). Consigne numérotée à la ligne (n°342) ; chaque
+  question dit sa séance d'origine ; chaque mauvaise réponse a son pourquoi et renvoie à la séance à relire ; places des
+  bonnes réponses mélangées, longueurs équilibrées (2 plus courtes, 2 plus longues, 3 au milieu) ; aucun sigle nu (n°44).
+- « Vérifier ma reprise » dit « Reprise faite : N sur M retrouvées de mémoire. Ce n'est pas une note. » : la reprise ne
+  valide rien (n°340) ; le mode mission la lit comme un écran de lecture (`fieldset.reprise-q`, pas `qcm-groupe`).
+- Au bilan, un champ « Ce qui reste flou pour moi, et quand je le reprends » (`data-flou`, n°372), sauvegardé avec la page.
+
+**Vérifié.** `controle_reprise_espacee.py --strict` sur la page : 3 séances sur 3, bilan conforme ; bancs de la séquence
+34/34 (n°311) et 32/32 (quiz) ; mode mission joué écran par écran, aucun refus ; `controle_page_ouverte.mjs` (390 px) rien à
+signaler ; `controle_axe.mjs` ; `eleve_qui_ne_lit_pas.py` 0 activité validée ; `controle_sigles`, `controle_consignes_a_la_ligne`,
+`controle_regles_visibles`, `controle_sauvegarde_locale`, `controle_impression_papier` verts ; la reprise jouée au navigateur
+(vide → « Réponds à toutes les questions » ; une erreur → son pourquoi et la séance à relire) ; revue d'écran à 390 px : une
+légende sur deux lignes coupait le bord du cadre, corrigé par une feuille de cinq lignes. **Non exécuté** : un essai en classe —
+c'est lui qui dira si trois à cinq minutes suffisent.
+
+**Reste à Pascal.** Dire, après une séance, si la reprise tient dans le temps ; si oui, la généraliser par vagues (skill
+`reprise-espacee`).
