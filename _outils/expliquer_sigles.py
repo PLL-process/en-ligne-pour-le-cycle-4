@@ -18,6 +18,9 @@ première de chaque séance, en préférant le texte courant à un lien ou un bo
 tabindex, pour ne pas imbriquer deux éléments focalisables) ; rien de visible ne change, sauf un pointillé ; jamais
 dans la navigation, un listing, un script, une option de liste. Le style commun (`#sigles-css`, posé
 une fois par page) l'affiche au survol, à l'appui au doigt et à l'impression.
+Une apparition déjà suivie de son explication en clair (« QCM (questionnaire à choix multiples) ») ne reçoit pas
+d'infobulle : l'explication s'écrirait deux fois, au focus et sur papier ; elle suffit à sa séance (22/11/2026).
+Une page qui porte des infobulles reçoit toujours le style commun, même assemblée de morceaux, même sans </head>.
 
 Un outil qui réécrit prouve d'abord qu'il sait ne rien changer (n°149) : lancé deux fois, il ne pose rien la seconde
 fois (la page est alors « ok » pour `controle_sigles_expliques.py`).
@@ -119,6 +122,10 @@ class Bulles(HTMLParser):
         super().__init__(convert_charrefs=False)
         self.sigle, self.pile, self.occ = sigle, [], []
         self.lignes = [0] + [m.end() for m in re.finditer("\n", src)]
+        # « QCM (questionnaire à choix multiples) » : une apparition suivie de son explication en clair est déjà
+        # expliquée ; une infobulle de plus l'écrirait deux fois, au focus et sur papier (vu le 22/11/2026)
+        mot = re.findall(r"[^\W\d_]{3,}", cse.SIGLES[sigle][0])[:1] if sigle in cse.SIGLES else []
+        self.clair = re.compile(r"\s*\(\s*" + re.escape(mot[0]), re.I) if mot else None
 
     def handle_starttag(self, tag, attrs):
         if tag in VIDES:
@@ -143,18 +150,22 @@ class Bulles(HTMLParser):
         inter = any(i for _, _, _, i in self.pile)
         for m in re.finditer(r"(?<![\w./_-])" + re.escape(self.sigle) + r"(?![\w/_-])", d):
             ligne, col = self.getpos()
-            self.occ.append((self.lignes[ligne - 1] + col + m.start(), seance, inter))
+            clair = bool(self.clair and self.clair.match(d, m.end()))
+            self.occ.append((self.lignes[ligne - 1] + col + m.start(), seance, inter, clair))
 
     def choisir(self):
         """La première apparition de la page, puis la première de chaque séance qui n'en a pas encore ; dans chaque
-        groupe, une apparition dans le texte passe avant une apparition dans un élément qu'on clique."""
+        groupe, une apparition dans le texte passe avant une apparition dans un élément qu'on clique. Une apparition
+        expliquée en clair suffit à son groupe : on ne choisit que parmi celles qui la précèdent."""
         groupes = [self.occ] + [[o for o in self.occ if o[1] == s]
                                 for s in dict.fromkeys(o[1] for o in self.occ if o[1])]
         choisis = []
         for g in groupes:
             if not g or any(o in choisis for o in g):
                 continue
-            choisis.append(next((o for o in g if not o[2]), g[0]))
+            avant = [o for o in g[:next((i for i, o in enumerate(g) if o[3]), len(g))]]
+            if avant:
+                choisis.append(next((o for o in avant if not o[2]), avant[0]))
         return choisis
 
 
@@ -168,15 +179,25 @@ def poser_infobulle(src, sigle):
         return None, "sigle absent du texte (ou seulement dans la navigation, un listing, un titre d'onglet)"
     titre = html.escape(cse.SIGLES[sigle][0], quote=True)
     neuf = src
-    for i, _, inter in sorted(choisis, reverse=True):
+    for i, _, inter, _ in sorted(choisis, reverse=True):
         assert neuf[i:i + len(sigle)] == sigle
         # Dans un lien ou un bouton, pas de tabindex : un élément focalisable dans un élément focalisable gêne le
         # clavier et les lecteurs d'écran ; l'infobulle reste au survol et à l'impression.
         foc = "" if inter else ' tabindex="0"'
         neuf = neuf[:i] + f'<abbr class="sigle" title="{titre}"{foc}>{sigle}</abbr>' + neuf[i + len(sigle):]
-    if 'id="sigles-css"' not in neuf and "</head>" in neuf:
-        neuf = neuf.replace("</head>", CSS_SIGLES + "\n</head>", 1)
-    return neuf, f"{len(choisis)} infobulle(s)"
+    return poser_style(neuf), f"{len(choisis)} infobulle(s)"
+
+
+def poser_style(src):
+    """Le style commun, une fois par page : avant </head> ; une page écrite sans </head> (les quatre pages de la
+    station, 3e_C9.2) le reçoit avant sa première feuille de style, ou avant <body>."""
+    if 'id="sigles-css"' in src:
+        return src
+    for repere in ("</head>", "<style", "<body"):
+        i = src.find(repere)
+        if i >= 0:
+            return src[:i] + CSS_SIGLES + "\n" + src[i:]
+    return src
 
 
 def infobuller(src):
@@ -191,7 +212,9 @@ def infobuller(src):
         neuf = neuf or poser_infobulle(src, sigle)[0]
         if neuf:
             src = neuf
-    return src
+    # une infobulle sans le style commun ne s'ouvre ni au doigt ni sur papier : une page assemblée de morceaux qui en
+    # portent déjà (les quatre pages de la station, 3e_C9.2) reçoit le style elle aussi (vu le 22/11/2026)
+    return poser_style(src) if 'class="sigle"' in src else src
 
 
 def main(argv):
