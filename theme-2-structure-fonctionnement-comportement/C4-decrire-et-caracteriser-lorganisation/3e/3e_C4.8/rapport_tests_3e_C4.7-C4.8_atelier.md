@@ -69,3 +69,28 @@ Chargement sans erreur JS des deux synthèses ; le schéma embarqué (`<object>`
   10.0.0.2 → 192.168.30.10`, `Trace complete`), Event List 0.000 → 0.010 s, verdict
   Successful.
 - Script de test : suite Playwright du lot (37 vérifications), rejouable.
+
+## 22/11/2026 — Trois explications écrites après l'activité 5 (règle d'or n°346)
+
+La séance 3 finissait sans aucune réponse écrite (0 zone de texte, 9 groupes de boutons radio). Après l'activité 5, une
+carte « ✍️ Explique comme au brevet — sans propositions » (~10 min, faisable à la maison sans matériel) : une
+transcription imaginée (un ping puis un tracert depuis le CDI vers le serveur de la médiathèque, TTL=125, quatre sauts),
+trois questions — le nombre de routeurs justifié par le TTL et vérifié par le tracert ; le « Request timed out » du
+premier ping, qui n'est pas une panne ; le tracert d'un routeur en panne et ce qu'il localise —, une version étayée par
+question, deux aides repliées (un indice, puis la démarche, n°367), une correction repliée avec trois phrases de copie
+(n°356), une grille à trois critères. Rien n'est noté (n°340) ; la carte est hors de la zone de vérification de
+l'activité 5. Les sigles du bloc sont écrits en clair (TTL, CDI ; n°44, consigne de Pascal du 22/11/2026).
+
+| Contrôle | Sortie | Résultat |
+|---|---|---|
+| `_outils/tests_ecrit_brevet.py` (banc commun des écrits, nouveau) | 0 | 11 / 11 |
+| `tests_regle_311_3e_C4.8.mjs` | 0 | 34 / 34 |
+| `mode_mission/banc_generique.mjs` | 0 | aucun refus |
+| `controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hors_ligne.mjs`, `controle_squelette.mjs` | 0 | rien à signaler |
+| `controle_regles_visibles`, `controle_hierarchie`, `controle_consignes_a_la_ligne`, `controle_propositions_indices`, `controle_tactile`, `controle_validations`, `eleve_qui_ne_lit_pas.py` | 0 | rien à signaler |
+
+Revue d'écran à 390 px : deux tours ; au premier, les lignes de la transcription se coupaient (« TTL=125 » seul sur sa
+ligne, « Request timed / out ») : lignes raccourcies, plus aucune ligne coupée.
+
+**Non vérifié** : la durée réelle (~10 min annoncées) ; un essai en classe.
+

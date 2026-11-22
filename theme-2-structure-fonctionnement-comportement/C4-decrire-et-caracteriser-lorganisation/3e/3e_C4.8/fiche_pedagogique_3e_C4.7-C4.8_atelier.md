@@ -54,7 +54,7 @@ justification rédigée de la nécessité du protocole (act. 2). S2 : constructi
 Packet Tracer — recette A→H : deux réseaux, deux routeurs 1941, câble croisé, 2×2 interfaces, routes
 statiques miroir (act. 3). S3 : les preuves — ping (TTL=126), tracert (3 sauts), valeurs réellement
 mesurées (act. 4) ; le film en mode Simulation (Event List 0.000→0.010 s) + contre-épreuve « route
-effacée » sur le mini-simulateur à verrou (act. 5) ; bilan, auto-positionnement par code, QCM 30 q.
+effacée » sur le mini-simulateur à verrou (act. 5) ; trois explications écrites sans propositions sur un ping et un tracert imaginés, comme au brevet (n°346, 22/11/2026, ~10 min, faisable à la maison) ; bilan, auto-positionnement par code, QCM 30 q.
 
 ## Outils, versions, sécurité
 
