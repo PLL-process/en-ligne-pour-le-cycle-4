@@ -78,6 +78,7 @@ footer{text-align:center;color:#667;padding:20px;font-size:.85rem}
    (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */
 @media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <style id="navharm-css">
@@ -217,7 +218,7 @@ FIN SI</pre>
 <p class="retour" id="r3" role="status"></p>
 <details class="correction" id="cor3"><summary>✅ Correction de l'atelier 3 — elle s'ouvre quand tu as vérifié</summary>
 <p><b>La démarche, du plus simple au plus lourd</b>&nbsp;:</p>
-<ol><li>Vérifier que le câble USB est bien branché des deux côtés.</li><li>Essayer un autre port USB, puis un autre câble.</li><li>Redémarrer le logiciel, puis l'ordinateur.</li><li>Tester la même chaîne avec une autre carte, pour isoler la panne.</li></ol>
+<ol><li>Vérifier que le câble <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> est bien branché des deux côtés.</li><li>Essayer un autre port USB, puis un autre câble.</li><li>Redémarrer le logiciel, puis l'ordinateur.</li><li>Tester la même chaîne avec une autre carte, pour isoler la panne.</li></ol>
 <p><b>Pourquoi cet ordre</b>&nbsp;: on commence par ce qui est rapide et gratuit, et on ne change <b>qu'un élément à la fois</b>. <br>Ainsi, quand ça remarche, on sait ce qui était en panne.</p>
 <p><b>Le coupable&nbsp;: la carte du jardin elle-même.</b> <br>Le câble marche avec une autre carte&nbsp;: ce n'est pas lui. <br>Le port et le câble marchent avec une autre carte&nbsp;: ce n'est ni le port, ni le logiciel. <br>Il ne reste qu'un élément non disculpé&nbsp;: la carte.</p>
 <p><b>Refusé</b>&nbsp;: <br>réinstaller le logiciel ou le système en premier (long, et sans effet sur un câble débranché)&nbsp;; <br>racheter une carte avant d'avoir isolé la panne (une dépense sans preuve)&nbsp;; <br>débrancher le capteur d'humidité (il ne touche pas la liaison USB)&nbsp;; <br>abandonner.</p>
@@ -242,7 +243,7 @@ FIN SI</pre>
 
 <section class="r4" id="pret-a-s-entrainer">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
-  <p>Le QCM du jardin connecté comporte <strong>30 questions</strong> sur le code
+  <p>Le QCM (questionnaire à choix multiples) du jardin connecté comporte <strong>30 questions</strong> sur le code
   <strong>4e_C4.1–C4.9</strong>, dont <strong>4 illustrées</strong>.</p>
   <p><a class="btn" href="qcm_4e_C4.1-C4.9_jardin_connecte.html">🚀 Ouvrir le QCM d'entraînement</a></p>
   <p style="font-size:.88em;opacity:.85">Il porte sur ce que tu viens de faire ici&nbsp;: trier un
@@ -269,7 +270,7 @@ FIN SI</pre>
   <details class="corrige-bonus"><summary>🔍 Voir la correction des trois défis</summary>
   <p><b>1. Le tableau qui ment sans mentir.</b> <br>Par exemple&nbsp;: trier par heure et <b>cacher la colonne Humidité</b>. On ne voit plus que «&nbsp;12 h, 13 h, 14 h&nbsp;: ON&nbsp;»&nbsp;: on croit que la pompe part à l'heure du déjeuner, quel que soit le sol. <br>Pour être honnête, il fallait montrer l'humidité à côté de la pompe, triée&nbsp;: les trois «&nbsp;ON&nbsp;» sont les trois relevés les plus secs. <br>Aucune valeur n'est fausse&nbsp;: c'est la <b>relation</b> entre deux colonnes qu'on a cachée.</p>
   <p><b>2. L'algorithme du voisin.</b> <br>Tomates (peu d'eau)&nbsp;: SI humidité &lt; 30 ALORS démarrer, SINON SI humidité ≥ 40 ALORS arrêter, SINON ne rien changer. <br>Concombres (beaucoup d'eau)&nbsp;: les mêmes lignes, avec 45 et 60. <br>Les valeurs sont des exemples&nbsp;: seuls les <b>deux seuils</b> changent, la <b>structure</b> reste la même. Ce sont des paramètres.</p>
-  <p><b>3. La donnée qui manque.</b> Sans la sonde, le jardin ne sait plus&nbsp;: <br>l'humidité réelle du sol&nbsp;; <br>quand démarrer, ni quand arrêter la pompe (elle reste dans son dernier état&nbsp;: noyade ou sécheresse)&nbsp;; <br>si ses relevés et sa trace sont vrais. <br>Un signe simple&nbsp;: si la valeur ne bouge plus pendant plusieurs heures, ou sort de 0-100&nbsp;%, allumer une LED rouge «&nbsp;sonde à vérifier&nbsp;».</p>
+  <p><b>3. La donnée qui manque.</b> Sans la sonde, le jardin ne sait plus&nbsp;: <br>l'humidité réelle du sol&nbsp;; <br>quand démarrer, ni quand arrêter la pompe (elle reste dans son dernier état&nbsp;: noyade ou sécheresse)&nbsp;; <br>si ses relevés et sa trace sont vrais. <br>Un signe simple&nbsp;: si la valeur ne bouge plus pendant plusieurs heures, ou sort de 0-100&nbsp;%, allumer une <abbr class="sigle" title="Light-Emitting Diode, diode électroluminescente" tabindex="0">LED</abbr> rouge «&nbsp;sonde à vérifier&nbsp;».</p>
   </details>
 </section>
 
