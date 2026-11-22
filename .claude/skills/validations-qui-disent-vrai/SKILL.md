@@ -1,6 +1,6 @@
 ---
 name: validations-qui-disent-vrai
-description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règles d'or n°340, n°347, n°362 et n°363.
+description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règles d'or n°340, n°347, n°362 et n°363 ; pour un programme écrit dans la page, n°333 mesurée et skill `banc-essai-programme`.
 ---
 
 # Une validation dit la vérité
@@ -34,6 +34,9 @@ python3 _outils/controle_validations.py --detail <dossier du lot>
 | V5 | un curseur `type="range"` sans « modèle simplifié » dans la page | ⚠ |
 
 Ce que l'outil ne lit pas se fait à la main, activité par activité (étape 2).
+
+Une page où l'élève écrit un programme se mesure en plus avec `python3 _outils/controle_verification_execute.py
+--detail` (n°333 : ✘ T si une vérification juge le programme par des motifs dans son texte, sans l'exécuter).
 
 ## 2. Lire chaque vérification comme l'auditeur
 
@@ -82,6 +85,23 @@ Une validation juste ne suffit pas : l'élève doit savoir quoi refaire. Né de 
 
 Critères de banc : 6 justes + 2 blancs → le message exact ci-dessus et la tâche « répondre à tous » non cochée ; une
 erreur en 17 → « À revoir : exercice 17 », sans la bonne réponse dans le message.
+
+## 2 ter. Un programme se juge en l'exécutant (n°333 ; n°373, n°374 en essai — 22/11/2026)
+
+Né des audits de « Programmer l'alerte » (`3e_C6.1`) : sept motifs cherchés dans le texte refusaient un programme
+juste écrit avec des apostrophes et acceptaient un programme faux à 118 km/h ; des prévisions justes validaient une
+version jamais essayée. Méthode complète : skill `banc-essai-programme`. En bref :
+
+1. **Exécuter** le programme de l'élève sur les entrées du cahier des charges (sous, à, au-dessus de chaque seuil) et
+   comparer ses sorties ; le message nomme le premier écart, jamais la ligne à corriger.
+2. **La version se dit** (n°373) : l'éditeur affiche la version qu'il contient ; chaque document dit la sienne ; les
+   lectures se font sur la version figée.
+3. **Prévoir avant d'essayer** (n°374) : prévisions, diagnostic et essais comptés à part ; une prévision juste ne
+   valide jamais un programme.
+4. **Un code modifié périme l'essai** (n°333) : l'empreinte du programme essayé est gardée ; une frappe la change → « à
+   rejouer ».
+5. **Une limite de l'outil n'est pas une erreur de l'élève** (n°340, la simplification dite) : « limite du banc, pas
+   forcément une erreur de ton programme », jamais « SyntaxError » pour du Python juste.
 
 ## 3. Rejouer chaque constat en test de banc
 

@@ -1,6 +1,6 @@
 ---
 name: cadrage-cles-de-voute
-description: Cadrer une séquence du dépôt en-ligne-pour-le-cycle-4 avant de l'écrire, puis l'auditer avant de la valider, avec les sept clés de voûte (n°306, 87/311, 337, 343, 346, 347, 348), une checklist de seize questions à réponse vérifiable et une grille sur 100 points où un zéro aux critères 1 ou 2 bloque. À utiliser au début de tout lot, à chaque révision, et pour noter une page après un audit externe.
+description: Cadrer une séquence du dépôt en-ligne-pour-le-cycle-4 avant de l'écrire, puis l'auditer avant de la valider, avec les sept clés de voûte (n°306, 87/311, 337, 343, 346, 347, 348), une checklist de dix-huit questions à réponse vérifiable et une grille sur 100 points où un zéro aux critères 1 ou 2 bloque. À utiliser au début de tout lot, à chaque révision, et pour noter une page après un audit externe.
 ---
 
 # Cadrer, puis auditer, avec sept clés de voûte
@@ -29,10 +29,16 @@ Sept, pas neuf (22/11/2026, audit #867) : la n°331 se range sous la clé 4, la 
 séquence doit être. Une règle nouvelle qui se dit « clé de voûte » précise l'une des sept, ou se justifie
 contre elles.
 
+**Si la séquence fait programmer dans la page** (C6, C8, C9) : écrire aussi les versions du programme et leur table
+(n°373), les entrées du banc (sous, à, au-dessus de chaque seuil), et où l'élève écrit sa prévision avant d'essayer
+(n°374) — skill `banc-essai-programme`. La n°333 (« une réussite affichée prouve la production réelle ») se range sous
+la **clé 6** : un score ne dit quoi reprendre que s'il juge ce que l'élève a vraiment produit — un programme exécuté,
+pas son texte ; un essai, pas une prévision (`3e_C6.1`, 22/11/2026). Elle se vérifie par la question 18 ci-dessous.
+
 Ajouter le critère de recette demandé par Pascal (« avec 6 justes et 2 blancs, la page affiche… »). Sans critère, on
 ne sait pas quand c'est fini.
 
-## 2. Avant de valider : dix-sept questions
+## 2. Avant de valider : dix-huit questions
 
 Chacune se répond par un nombre ou un oui/non constaté.
 
@@ -54,6 +60,9 @@ Chacune se répond par un nombre ou un oui/non constaté.
 16. Chaque chiffre du journal, de la fiche et du rapport a-t-il été recalculé ?
 17. Chaque sigle de la page est-il écrit en clair au moins une fois, à sa première apparition si possible
     (`controle_sigles_expliques.py` ; n°44, consigne de Pascal du 22/11/2026) ?
+18. Si l'élève écrit un programme : chaque vérification l'exécute-t-elle, et une écriture juste différente (apostrophes,
+    `is True`) obtient-elle le même verdict ? (`controle_verification_execute.py` : 0 ✘ T ; n°333, skill
+    `banc-essai-programme`)
 
 ## 3. Noter sur 100
 
