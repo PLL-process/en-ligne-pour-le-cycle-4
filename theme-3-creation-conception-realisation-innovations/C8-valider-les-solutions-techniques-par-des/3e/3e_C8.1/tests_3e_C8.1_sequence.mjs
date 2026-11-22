@@ -59,7 +59,9 @@ const src = readFileSync(f, 'utf8');
  * Chercher la consigne de sécurité dans le texte brut la faisait manquer selon
  * l'endroit où la ligne était pliée — un contrôle qui dépend de la mise en page
  * ne contrôle pas le contenu. On compare donc sur du texte aplati. */
-const norm = t => t.replace(/<[^>]+>/g, ' ').replace(/[’‘]/g, "'").replace(/\s+/g, ' ');
+// Une balise de texte (abbr, b, i, em, strong, span, a) s'efface sans laisser d'espace : « d’un <abbr>OST</abbr>. » se
+// lit « d’un OST. », comme à l'écran (infobulles des sigles, n°44, 22/11/2026). Les autres balises séparent les mots.
+const norm = t => t.replace(/<\/?(?:abbr|b|i|em|strong|span|a)\b[^>]*>/g, '').replace(/<[^>]+>/g, ' ').replace(/[’‘]/g, "'").replace(/\s+/g, ' ');
 const plat = norm(src);
 const dit = phrase => plat.includes(norm(phrase));
 /* Règle d'or n°298 (vague du thème 3, 26/10/2026) : le référentiel — formulation officielle, code d'appui —

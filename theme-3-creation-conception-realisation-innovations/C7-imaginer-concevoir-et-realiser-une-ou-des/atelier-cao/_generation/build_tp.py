@@ -36,6 +36,7 @@ Usage :
 import sys as _sys_ic
 _sys_ic.path.insert(0, next(str(d / "_outils") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "intituler_codes.py").is_file()))
 import intituler_codes  # noqa: E402
+from expliquer_sigles import infobuller  # noqa: E402  (n°44, décision de Pascal du 22/11/2026)
 import html
 import json
 import pathlib
@@ -452,6 +453,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
         raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
                          "dans la page — arrêt avant écriture.")
     page = intituler_codes.poser_texte(page)   # chaque étiquette de code dit sa compétence au survol (17/11/2026)
+    page = infobuller(page)   # chaque sigle s'explique : QCM en clair, les autres en infobulle (n°44, 22/11/2026)
     sortie.write_text(page, encoding="utf-8")
     n_etapes = sum(len(p.get("etapes", [])) for p in paliers)
     print("TP écrit : %s (%d paliers, %d étapes, %d o)"
