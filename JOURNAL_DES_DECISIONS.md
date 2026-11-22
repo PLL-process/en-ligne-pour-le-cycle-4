@@ -36784,3 +36784,26 @@ choix multiples) » écrit en clair dans l'atelier Pix. Bancs des deux dossiers 
 
 **Mesure** (`controle_sigles_expliques.py`) : thème 2, 3 → 0 page avec un sigle jamais expliqué. Les thèmes 1 et 3
 suivent dans leurs PR, une fois celle-ci fusionnée (leurs générateurs ont besoin de l'outil).
+
+## 22/11/2026 — Sigles expliqués (n°44) : « QCM » de la barre de navigation, thème 1 — 34 pages (thème 1)
+
+Suite de l'entrée précédente (PR #897, fusionnée : la barre de navigation en dernier recours ; carte blanche de Pascal
+du 22/11/2026, 5 h 43).
+
+**Ce qui change.** 34 pages du thème 1 où « QCM » n'apparaissait que dans la barre (« 🧠 QCM ») reçoivent son
+infobulle, sans `tabindex` : 18 pages des ateliers de représentation (pages, cahiers, synthèses), les synthèses des
+séquences de `C1`, deux activités (`activite_crcn_donnees_freinage`, `activite-bonus-cyber-immersive-2fa`). Rien
+d'autre ne change.
+
+**Vérifié.**
+- Texte et balises des 34 pages identiques avant et après, une fois retirés les `<abbr>` et le style commun.
+- Dérive des huit générateurs de `rapport_audit.py`, dans une copie : 0 fichier — `build.py` (ateliers) produit les
+  pages que la vague a écrites. `build_qcm.py --verifier` 7 / 7. `incrustations.py --verifier` : les six séquences
+  déjà en retard sur `main` (aucune n'est du thème 1, aucune n'est touchée ici).
+- Les 34 pages à 390 px : aucune erreur JavaScript, aucune infobulle focalisable dans un lien. Une synthèse professeur
+  défile en largeur (`4e_C1.4`, 499 px) : comme sur `main`.
+- `controle_page_ouverte.mjs --axe` : les mêmes 12 pages à regarder que sur `main`, avec les mêmes écarts.
+- Bancs des dossiers touchés : 15 / 15 (`banc_ateliers.py` 530 / 530 ; les deux de `5e_C1.5` avec leurs arguments,
+  34 / 34 et 39 / 39).
+
+**Mesure** (`controle_sigles_expliques.py`) : thème 1, 14 → 0 page avec un sigle jamais expliqué.
