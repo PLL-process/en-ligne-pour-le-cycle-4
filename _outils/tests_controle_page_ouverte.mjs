@@ -7,8 +7,10 @@
  *   listing     une ligne de code de 120 caractères à 390 px → L ;
  *   repete      une ligne d'aide marquée `data-repete` dans chaque correction → rien ;
  *   editeur     le calque coloré d'un éditeur intégré, 150 caractères → rien (il défile avec la saisie) ;
- *   details     trois <details> « Correction » qui répètent une phrase → C.
- * Puis : --strict sort à 1 quand il y a un écart, 0 sur la page propre.
+ *   details     trois <details> « Correction » qui répètent une phrase → C ;
+ *   intitule    trois corrections qui ouvrent sur le même intitulé tout en gras, et le même titre → rien.
+ * Puis les sorties : sans --strict, un L ou un B sort à 1 (référence vide depuis le 22/11/2026) et C seul sort à 0 ;
+ * --strict sort à 1 quand il y a un écart, 0 sur la page propre.
  * Usage : node _outils/tests_controle_page_ouverte.mjs   · Sortie 0 / 1, 2 si le contrôle est en panne.
  */
 import fs from 'node:fs';
@@ -33,6 +35,7 @@ const pages = {
   repete: page(['a', 'b', 'c'].map((x, i) => `<details><summary>Correction</summary><p>Réponse ${i + 1}, propre à cet exercice numéro ${i + 1}.</p><p data-repete>Touche ou clique le schéma pour l'agrandir et voir tous ses détails dessinés.</p></details>`).join('')),
   editeur: page('<div class="saisie"><textarea>' + 'x'.repeat(150) + '</textarea><pre aria-hidden="true">' + 'x'.repeat(150) + '</pre></div>'),
   details: page([1, 2, 3].map(i => `<details><summary>Correction ${i}</summary><p>Réponse ${i}.</p><p>${PHRASE}</p></details>`).join('')),
+  intitule: page([1, 2, 3].map(i => `<details><summary>Correction ${i}</summary><h4>La correction détaillée de cet exercice, question après question</h4><p><b>Question par question — la réponse, et pourquoi pas les autres</b></p><p>Réponse ${i}, propre à cet exercice.</p></details>`).join('')),
 };
 for (const [n, h] of Object.entries(pages)) fs.writeFileSync(path.join(D, `${n}.html`), h);
 
@@ -52,7 +55,10 @@ ok('listing de 120 caractères à 390 px : il défile (L)', de('listing').L.leng
 ok('le calque coloré d\'un éditeur (aria-hidden, sur sa zone de saisie) n\'est pas compté comme listing', !de('editeur').L.length, JSON.stringify(de('editeur').L));
 ok('une ligne d\'aide marquée data-repete n\'est pas comptée', !de('repete').C.length, JSON.stringify(de('repete').C));
 ok('trois <details> « Correction » qui répètent une phrase : vus (C), sans compter leur intitulé', de('details').C.length === 1 && !/correction \d/.test(de('details').C[0].phrase), JSON.stringify(de('details').C));
-ok('mesure sans --strict : sortie 0', tout.code === 0, String(tout.code));
+ok('un intitulé tout en gras ou un titre repris dans chaque correction n\'est pas compté', !de('intitule').C.length, JSON.stringify(de('intitule').C));
+ok('sans --strict, un listing qui défile ou un bloc dessiné : sortie 1 (référence vide, n°273)', tout.code === 1, String(tout.code));
+ok('sans --strict, un listing seul : sortie 1', jouer([path.join(D, 'listing.html')]).code === 1);
+ok('sans --strict, des écarts C seulement : sortie 0 (mesure)', jouer(['propre', 'details', 'repete', 'editeur', 'sans_crochet', 'intitule'].map(n => path.join(D, `${n}.html`))).code === 0);
 ok('--strict sur une page à écarts : sortie 1', jouer([path.join(D, 'crochet.html')], ['--strict']).code === 1);
 ok('--strict sur la page propre : sortie 0', jouer([path.join(D, 'propre.html')], ['--strict']).code === 0);
 
