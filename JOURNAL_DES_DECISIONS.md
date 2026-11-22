@@ -36808,7 +36808,87 @@ d'autre ne change.
 
 **Mesure** (`controle_sigles_expliques.py`) : thème 1, 14 → 0 page avec un sigle jamais expliqué.
 
-## 22/11/2026 — Vague contraste, thème 2 et accueil : 145 textes passent au-dessus de 4,5 : 1
+## 22/11/2026 — Audit du 22/11 (#867), la suite : 4e_C8.1 fait paramétrer une simulation ; 4e_C1.4 et 3e_C1.5 ont fiche et matrice ; les parts des deux sessions vérifiées sur `main` (thèmes 1 et 3)
+
+**Réponses de Pascal** (22/11, 5 h 20) : « 1 oui » (une activité courte de simulation de tenue mécanique dans 4e_C8.1),
+« 2 oui » (fiche et matrice de 4e_C1.4 et 3e_C1.5), et « vérifie que la partie de chaque session a été faite ainsi que
+la nôtre ».
+
+**4e_C8.1 — activité 2 bis « La console tiendra-t-elle ? »** (#896, thème 3, fusionnée). Séance 2, ~15 min : l'élève
+règle une simulation fournie (matériau, épaisseur, longueur, charge) de la console qui porte la jardinière, lit la
+contrainte σ (en mégapascals) et le coefficient de sécurité k, relève ses essais et décide. Un seul modèle décide des
+chiffres (n°233) : `_generation/console_jardiniere.py` écrit l'activité, le corrigé, la partie 7 de la synthèse élève et
+les 480 cas attendus du banc. La validation dit vrai (n°340) : elle attend la proposition du club simulée et trois
+épaisseurs essayées. Statut : **COMPLET ET VALIDABLE**. Bancs 13/13 (nouveau) et 54/54.
+
+**4e_C1.4 et 3e_C1.5 — fiche pédagogique et matrice de couverture** (cette PR, thème 1). Écrites depuis la page en
+ligne, séance par séance. Les deux lots passent **COMPLET ET VALIDABLE** (`controle_statut`). Chaque matrice rattache
+les 30 questions du QCM à une notion et à l'activité qui l'enseigne — et dit ce qui manque :
+- **4e_C1.4** : 4 questions (9, 10, 24, 29) évaluent des rappels de 5e que la séquence n'enseigne pas ;
+- **3e_C1.5** : 8 questions (1, 9, 14, 16, 20, 21, 22, 29) évaluent des notions absentes de la séquence (télétravail,
+  fracture numérique, écrans et sommeil, biais d'une IA, dématérialisation, indices de réparabilité et de durabilité,
+  critères d'achat).
+Deux voies, à la décision de Pascal : une ligne de cours dans la séance, ou des questions sur ce que la séquence fait
+travailler. En relisant, trois réparations : en 3e_C1.5 (activité 1.b), deux corrections portaient le même
+identifiant — le second bouton ouvrait la correction de la première question (vérifié dans Chromium, avant et après) ;
+la synthèse professeur de 4e_C1.4 décrivait trois séances qui n'existent pas (déroulé réécrit sur les quatre réelles) ;
+le README de 4e_C1.4 annonçait un QCM de 24 questions « à moderniser » (il en a 30, au gabarit maison). Les trois
+images de situation au-dessus de 1 Mo (4e_C1.4, 3e_C1.5, 5e_C1.3) passent à 0,6–0,8 Mo (palette de 256 couleurs, même
+nom, rendu comparé à l'écran).
+
+**Les parts des deux sessions, vérifiées sur `main`** (`rapport_audit.py --complet --generateurs`, rejoué en entier
+avec Chromium, puis `controle_axe.mjs` avec axe-core 4.10.2 installé dans le bac à sable) :
+- chantier 1 (le rouge bloquant) et chantier 2 (petites PR) : `controle_medias` vert, 0 code couvert sans preuve ;
+- chantier 3 (n°23) : `verif_regles_audit` 0 ✘ ;
+- chantier 4 (la dérive, #877, l'autre session) : 0 fichier qu'une régénération changerait, huit générateurs à 0 ;
+- chantier 5 (TP 4e_C6.2) et n°4 des ateliers de planification (#880, #888, l'autre session) : `controle_regle4` vert ;
+- chantier 6 : 0 code à vérifier, 0 rouge bloquant ; plus aucun « existant à améliorer » après cette PR ;
+- veille du 22/11 (l'autre session) : n°369 à n°372 au registre (prochain n°375), skill `reprise-espacee` présent,
+  `controle_reprise_espacee.py` tourne (mesure, rien n'est refusé sans `--strict`) ; pilote de la n°369 visible sur
+  4e_C1.4 (une reprise en tête des séances 2, 3 et 4) ;
+- `controle_axe.mjs` : aucune page au-dessus de la référence (409 pages, 109 nœuds connus).
+`controle_schemas.mjs` sortait ✘ 1 dans le rapport ; relancé seul sur `main` : 0 ✘ (sortie 0).
+
+**Un écart trouvé en vérifiant** : `enrichir.py --verifier-tout` refuse deux pages du thème 3 (3e_C7.5, 4e_C7.7). La
+vague des infobulles du thème 3 a posé des infobulles dans la légende des grilles que le mode mission écrit ; relancer
+`enrichir.py` les effacerait. Réparé dans la PR transversale qui suit (l'outil garde le balisage d'une réponse déjà là).
+
+**Encore ouvert, hors de ces lots** : la vague « sigles de la barre de navigation » est en cours dans l'autre session
+(#897, #898) ; le thème 3 reste à faire (`controle_sigles_expliques.py` : 59 pages avec un sigle jamais expliqué ce matin,
+la plupart le « QCM » de la barre).
+
+## 22/11/2026 — `enrichir.py` garde le balisage d'une légende de grille : 3e_C7.5 et 4e_C7.7 de nouveau « à jour » (transversal : `_outils/mode_mission` ; aucune page touchée)
+
+**Trouvé en vérifiant l'audit #867** (`enrichir.py --verifier-tout` sur `main`) : 2 refus sur 50 fichiers
+`mission_*.json`. La vague des infobulles du thème 3 (#883) avait posé des infobulles de sigles (PLA, USB, LCD) dans les
+légendes de grilles que le mode mission écrit ; l'outil réécrivait la légende en texte brut. Les pages étaient justes
+(n°44) ; c'est l'outil qui les aurait abîmées au prochain passage — et la vérification le criait sans que personne ne la
+lise.
+
+**La réparation** : l'outil garde, pour chaque réponse déjà dans la légende, son balisage tel qu'il est ; une réponse
+nouvelle (un leurre ajouté) s'écrit en texte brut, comme avant. Plutôt que d'appeler `infobuller()` sur toute la page :
+essayé, cela changeait six pages que la vague avait laissées telles quelles (des sigles expliqués plus bas, à juger
+page par page) — un outil du mode mission n'a pas à décider des sigles d'une page.
+
+**Vérifié** : `enrichir.py --verifier-tout` 50 fichiers, **0 refus**, sans réécrire aucune page ; banc nouveau
+`_outils/mode_mission/tests_enrichir.py` **9/9** (l'ancienne version de l'outil y échoue à 3 tests sur 9 : l'infobulle
+disparaît).
+
+**Thème par thème** (n°302) : `_outils/mode_mission/enrichir.py`, son banc et son README ; aucune page des thèmes 1, 2
+ou 3 n'est modifiée.
+
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 2 : les deux synthèses du jardin et de Book Train ne défilent plus à 200 % ; la mesure laisse les pages de renvoi (thème 2 : pages, `_outils`)
+
+**Carte blanche de Pascal** (22/11). Les synthèses élève de 4e_C4.1 et de Book Train empilaient leur chaîne des fonctions
+sous 600 px seulement : à 200 % (640 px), elle débordait. L'empilement vaut maintenant sous 760 px. `controle_zoom_espacement.mjs`
+ne tente plus d'ouvrir une page de renvoi (`<meta http-equiv="refresh">`, comme `qcm_algorigrammes_domotique.html`) : elle
+est comptée à part. **Reste** (thèmes 2 et 3) : le dessin de la chaîne à compléter (`_outils/chaine_a_completer/`) coupe une
+étiquette quand on espace les lettres, sur trois pages — à traiter à la source de l'outil.
+
+**Vérifié.** Mesure sur le thème 2 : 97 pages, 0 défile de côté ; banc 2/2 ; `controle_page_ouverte.mjs`,
+`controle_impression.mjs`, `controle_debordement` verts.
+
+## 22/11/2026 — Vague contraste, thème 2 et accueil : 143 textes passent au-dessus de 4,5 : 1
 
 Choix de Pascal (22/11/2026, « 1a ») après la vague des zones qui défilent : une vague contraste, thème par thème. Mesure
 d'axe-core, page ouverte, sur `main` le matin : 232 textes sous le seuil dans 26 pages, plus 10 champs sans étiquette,
