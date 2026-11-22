@@ -8,19 +8,22 @@
  *
  * CE QUE CETTE SUITE ÉPROUVE EN PROPRE
  * ------------------------------------
- * Ce lot ne vérifie pas des réponses à des menus déroulants : il **lit le
- * programme que l'élève a écrit**. Deux activités analysent le contenu réel de
- * l'éditeur CodeLab :
+ * Ce lot ne vérifie pas des réponses à des menus déroulants : il **exécute le
+ * programme que l'élève a écrit** (le petit Python de la page, `banc-python`,
+ * source `_outils/banc_python/`). Audit du 21/11/2026 : l'activité 4 cherchait
+ * sept motifs dans le TEXTE du programme — un programme juste écrit avec des
+ * apostrophes obtenait 5 / 7, un programme faux à 118 obtenait 7 / 7. Depuis le
+ * 22/11/2026 (règles d'or n°369 à n°371) :
  *
- *   · l'activité 3 exige que `SEUIL_ORANGE` ait vraiment été recalibré dans le
- *     code — répondre juste aux deux questions ne suffit pas ;
- *   · l'activité 4 passe **sept** expressions régulières sur le programme :
- *     l'initialisation, les deux passages à True, le bloc final, son
- *     indentation, et l'absence de gyrophare dans la branche rouge. Elle nomme
- *     précisément ce qui manque.
+ *   · l'activité 3 lit la VALEUR de `SEUIL_ORANGE` dans le programme exécuté
+ *     (60.5 n'est pas 60) et vérifie son effet à 55 et 61 km/h ;
+ *   · l'activité 4 exécute le programme sur dix vents et compare le message, la
+ *     sirène et le gyrophare au cahier des charges de la version 2 ;
+ *   · l'activité 5 sépare « mes prévisions » et « essais de ma version », et un
+ *     essai ne vaut que pour la version qu'il a essayée (son empreinte).
  *
- * La suite éprouve les deux dans les deux sens : refus tant que le code n'est
- * pas modifié, message d'erreur qui nomme les ajouts manquants, puis validation.
+ * Les critères de recette de l'audit sont recopiés dans les tests 14 à 17
+ * (relire-un-audit-externe, § 2).
  *
  * CE QU'ELLE NE RECOPIE PAS — Y COMPRIS LE PROGRAMME
  * --------------------------------------------------
@@ -116,9 +119,16 @@ ok(`3 · coloration syntaxique active : ${teintes.length} familles de jetons col
    // la palette du site (règle d'or n°13, code-colore.js, 05/11/2026) : mots-clés, nombres, variables, commentaires, textes, opérateurs
    ['py-kw', 'py-num', 'py-var', 'py-com', 'py-str', 'py-op'].filter(c => teintes.includes(c)).length >= 5, teintes.join(','));
 
-/* Le surlignage est piloté par les consignes : on prend un bouton de la page. */
-const hl = await p.$eval('[data-hl]', e => e.dataset.hl);
-await p.click(`[data-hl="${hl}"]`); await p.waitForTimeout(120);
+/* Le surlignage est piloté par les consignes. En séance 1, l'activité lit la version 1 FIGÉE : le bouton surligne
+   là (audit du 21/11/2026 : des numéros de ligne qui ne bougent pas). */
+await p.click('#act1 [data-hl="6-7"]'); await p.waitForTimeout(100);
+ok('3 bis · séance 1 : « surligner les lignes 6-7 » surligne 2 lignes de la version 1 figée, l\'éditeur ne bouge pas',
+   (await p.$$('#act1 .programme-fige .pf-l.hl')).length === 2 && (await p.$$('#clHl .cl-line-hl')).length === 0);
+/* En séance 2, l'éditeur vient sous la consigne de l'activité qui le fait modifier. */
+await p.click('.seance-tab[data-panel="s2"]'); await p.waitForTimeout(120);
+await p.evaluate(() => { document.querySelector('#act3 details.fiche-activite').open = true; }); await p.waitForTimeout(60);
+const hl = await p.$eval('#act3 [data-hl]', e => e.dataset.hl);
+await p.click(`#act3 [data-hl="${hl}"]`); await p.waitForTimeout(120);
 const [a1, a2] = hl.split('-').map(Number);
 ok(`4 · le bouton « surligner les lignes ${hl} » surligne exactement ${a2 - a1 + 1} ligne(s)`,
    (await p.$$('#clHl .cl-line-hl')).length === a2 - a1 + 1
@@ -135,9 +145,11 @@ ok(`5 · A+ agrandit la police de l'éditeur (${tailleAvant} → ${tailleApres} 
    tailleApres === tailleAvant + 1
    && (await p.$eval('#codelab', e => e.style.getPropertyValue('--cl-fs')))
       === tailleApres + 'px');
+await p.click('.seance-tab[data-panel="s1"]'); await p.waitForTimeout(120);
 
-ok('6 · à l\'ouverture, l\'éditeur déclare le programme identique à la version d\'origine',
-   /identique à la version d'origine/.test(await p.textContent('#clDiffInfo')),
+ok('6 · à l\'ouverture, l\'éditeur déclare le programme identique à la version 1 d\'origine, et la version se dit',
+   /identique à la version 1 d'origine/.test(await p.textContent('#clDiffInfo'))
+   && /version 1 d'origine/.test(await p.textContent('#clVersion')),
    await p.textContent('#clDiffInfo'));
 
 /* ── les attendus, LUS dans la page ─────────────────────────────────────── */
@@ -171,8 +183,9 @@ const compte = m => Object.values(PLAN)
   .reduce((s, o) => s + Object.values(o).filter(c => c.mode === m).length, 0);
 ok(`7 · attendus extraits des CHECKS : ${compte('exact')} égalités, ${compte('prefixe')} préfixes, `
    + `${compte('nombre')} nombres, ${compte('prose')} rédaction — rien n'est recopié ici`,
-   Object.keys(PLAN).length === 6 && compte('exact') >= 14 && compte('prefixe') >= 4
-   && compte('nombre') >= 3 && compte('prose') === 1,
+   // n°340 (V4) : la justification d'A2 n'est plus jugée par mots-clés — aucune « rédaction » dans les CHECKS
+   Object.keys(PLAN).length === 6 && compte('exact') >= 22 && compte('prefixe') >= 4
+   && compte('nombre') >= 3 && compte('prose') === 0,
    Object.keys(PLAN).join(','));
 
 const ONGLETS = await p.$$eval('.seance-tab', l => l.map(e => e.dataset.panel));
@@ -216,68 +229,127 @@ const ecrireCode = async code => {
   await p.$eval('#clTa', (t, v) => {
     t.value = v; t.dispatchEvent(new Event('input', { bubbles: true }));
   }, code);
-  await p.waitForTimeout(110);
+  await p.waitForTimeout(450);   // la version et la péremption suivent la frappe après 350 ms
 };
 
+/* ── billet : un état par question, jamais « rien n'est en place » sur des blancs (audit du 21/11/2026) ── */
+await ouvrirPour('btnBillet'); await p.click('#btnBillet'); await p.waitForTimeout(80);
+const billetVide = (await p.textContent('#fbBillet')).replace(/\s+/g, ' ');
+ok('7 bis · billet sans réponse : « 0 réussie · 0 à revoir · 3 sans réponse », et jamais « rien n\'est en place »',
+   /0 réussie · 0 à revoir · 3 sans réponse/.test(billetVide) && !/rien n'est encore en place/.test(billetVide), billetVide.slice(0, 90));
+
+/* ── séance 1 : la version 1 d'origine est figée sous les questions de lecture ── */
+const fige = await p.evaluate(() => [...document.querySelectorAll('#act1 .programme-fige, #act2 .programme-fige')].map(z => ({
+  n: z.querySelectorAll('.pf-l').length, l6: (z.querySelector('.pf-l[data-n="6"]') || {}).textContent || '' })));
+ok('7 ter · activités 1 et 2 : la version 1 d\'origine figée (24 lignes, la ligne 6 lit le vent), au lieu de l\'éditeur',
+   fige.length === 2 && fige.every(f => f.n === lignesV1 && /vent_kmh = lire_capteur/.test(f.l6))
+   && await p.evaluate(() => !document.querySelector('#act1 .codelab-ici, #act2 .codelab-ici')), JSON.stringify(fige));
+
+/* critère de recette de l'audit : « Les lignes 6 et 21 sont attendues même si un élève insère un commentaire en tête » */
+await ecrireCode('# mon commentaire en tête\n' + v1);
 await remplir(1); await valider(1);
-ok('8 · activité 1 validée 8 / 8 (six classements entrée/sortie + deux numéros de ligne)',
-   /8 \/ 8/.test(await retour(1)) && await valide(1), (await retour(1)).slice(0, 60));
+ok('8 · activité 1 validée 10 / 10 (mesure, paramètre, donnée produite, mesure sans décision, lignes 6 et 21) — même avec un commentaire inséré en tête de CodeLab',
+   /10 \/ 10/.test(await retour(1)) && await valide(1), (await retour(1)).slice(0, 60));
+await ecrireCode(v1);
 
-const prose2 = Object.entries(PLAN[2]).find(([, c]) => c.mode === 'prose')[0];
-await remplir(2, Object.keys(PLAN[2]).filter(i => i !== prose2));
-await ouvrirPour(prose2); await p.fill('#' + prose2, 'Parce que.');
+await remplir(2); await ouvrirPour('d2_just'); await p.fill('#d2_just', 'Parce que.');
 await valider(2);
-ok('9 · activité 2 REFUSÉE : les 3 traces justes, mais la justification est trop courte',
-   /3 \/ 3/.test(await retour(2)) && /justification/i.test(await retour(2))
-   && !(await valide(2)), (await retour(2)).slice(0, 70));
-await remplir(2); await valider(2);
-ok('10 · activité 2 validée 3 / 3 (118 > 118 est faux : l\'opérateur est strict)',
-   /3 \/ 3/.test(await retour(2)) && await valide(2), (await retour(2)).slice(0, 60));
+ok('9 · activité 2 REFUSÉE : « Choix : 3 / 3 corrects » et « Justification : pas encore écrite », deux lignes séparées',
+   /Choix : 3 \/ 3 corrects/.test(await retour(2)) && /Justification : pas encore écrite/.test(await retour(2))
+   && !(await valide(2)), (await retour(2)).slice(0, 90));
+/* critère de recette de l'audit : « Accepter « 118 ne dépasse pas 118 ; il dépasse 90 » » — aucun mot-clé exigé */
+await p.fill('#d2_just', '118 ne dépasse pas 118 ; il dépasse 90');
+await valider(2);
+ok('10 · activité 2 validée avec « 118 ne dépasse pas 118 ; il dépasse 90 » (justification écrite, à relire par le professeur)',
+   /Justification : écrite/.test(await retour(2)) && /relire par ton professeur/.test(await retour(2)) && await valide(2),
+   (await retour(2)).slice(0, 90));
+const trace2 = await p.evaluate(() => { const t = document.querySelector('#act2 .traceur'); return t && !t.hidden ? t.textContent.replace(/\s+/g, ' ') : ''; });
+await p.evaluate(() => { const b = [...document.querySelectorAll('#act2 .traceur button')].find(x => /118 km\/h/.test(x.textContent)); b && b.click(); });
+await p.waitForTimeout(60);
+await p.evaluate(() => { const b = [...document.querySelectorAll('#act2 .traceur button')].find(x => /Tout afficher/.test(x.textContent)); b && b.click(); });
+const trace118 = await p.evaluate(() => [...document.querySelectorAll('#act2 .traceur li')].map(l => l.textContent).join(' / '));
+ok('10 bis · après « Vérifier », le chemin suivi pas à pas : à 118, « 118 > 118 → faux », puis « 118 > 90 → vrai »',
+   trace2.length > 0 && /118 > 118 → faux/.test(trace118) && /118 > 90 → vrai/.test(trace118), trace118.slice(0, 120));
 
-/* ── LE VÉRIFICATEUR QUI LIT LE CODE ─────────────────────────────────────── */
-const SEUIL = await p.evaluate(() =>
-  Number((CHECKS[3].toString().match(/SEUIL_ORANGE\\s\*=\\s\*(\d+)/) || [])[1]));
+/* ── LE VÉRIFICATEUR EXÉCUTE LE CODE ─────────────────────────────────────── */
+const SEUIL = await p.evaluate(() => Number((CHECKS[3].toString().match(/seuil!==(\d+)/) || [])[1]));
 await remplir(3); await valider(3);
-ok(`11 · activité 3 REFUSÉE : les 2 réponses justes, mais SEUIL_ORANGE = ${SEUIL} n'est pas dans le code`,
-   /2 \/ 3/.test(await retour(3)) && /Je ne trouve pas SEUIL_ORANGE/.test(await retour(3))
-   && !(await valide(3)), (await retour(3)).slice(0, 75));
+ok(`11 · activité 3 REFUSÉE : les 2 réponses justes, mais le banc lit SEUIL_ORANGE = 50 dans le programme`,
+   /Questions : 2 \/ 2/.test(await retour(3)) && /SEUIL_ORANGE = 50/.test(await retour(3))
+   && !(await valide(3)), (await retour(3)).slice(0, 90));
+/* critère de recette de l'audit : « La frontière de mot après 60 accepte aussi le début de 60.5 » */
+await ecrireCode(v1.replace(/SEUIL_ORANGE\s*=\s*\d+/, 'SEUIL_ORANGE = 60.5'));
+await valider(3);
+ok('11 bis · SEUIL_ORANGE = 60.5 : refusé, le banc lit la valeur effective (« SEUIL_ORANGE = 60.5 … le club a fixé 60 »)',
+   /SEUIL_ORANGE = 60\.5/.test(await retour(3)) && !(await valide(3)), (await retour(3)).slice(0, 90));
 
 await ecrireCode(v1.replace(/SEUIL_ORANGE\s*=\s*\d+/, 'SEUIL_ORANGE = ' + SEUIL));
-ok('12 · une seule ligne changée dans l\'éditeur : le comparateur en annonce exactement une',
-   /^1 ligne\(s\) diffèrent/.test(await p.textContent('#clDiffInfo')),
-   await p.textContent('#clDiffInfo'));
+await p.evaluate(() => { const d = document.querySelector('.cl-diff'); if (d) d.open = true; });
+ok('12 · une seule ligne changée : le comparateur annonce 1 ligne ajoutée (+) et 1 retirée (−), pas davantage',
+   /^1 ligne ajoutée \(\+\) et 1 ligne retirée/.test(await p.textContent('#clDiffInfo'))
+   && /version 1 recalibrée/.test(await p.textContent('#clVersion')),
+   (await p.textContent('#clDiffInfo')) + ' · ' + await p.textContent('#clVersion'));
 
 await valider(3);
-ok(`13 · activité 3 validée 3 / 3 une fois la ligne 2 réellement recalibrée à ${SEUIL}`,
-   /3 \/ 3/.test(await retour(3)) && !/Je ne trouve pas/.test(await retour(3))
-   && await valide(3), (await retour(3)).slice(0, 60));
+ok(`13 · activité 3 validée une fois la ligne 2 réellement recalibrée à ${SEUIL} : seuil lu, « Vigilance verte » à 55 km/h`,
+   /SEUIL_ORANGE = 60 ✔/.test(await retour(3)) && /Vigilance verte/.test(await retour(3))
+   && await valide(3), (await retour(3)).slice(0, 90));
 
-/* ── LES SEPT CONTRÔLES DE CODE DE L'ACTIVITÉ 4 ──────────────────────────── */
+/* ── L'ACTIVITÉ 4 EXÉCUTE LE PROGRAMME SUR DIX VENTS ─────────────────────── */
 await valider(4);
 const incomplet = await retour(4);
-/* Le nombre de contrôles de code n'est pas compté ici : on demande son total à
-   la fonction elle-même, qui ne fait que lire l'éditeur. */
-const attendus = await p.evaluate(() => CHECKS[4]().total);
-ok(`14 · activité 4 REFUSÉE sur le programme v1, et le message NOMME les ajouts manquants`,
-   /Il manque :/.test(incomplet) && /gyrophare_actif = False/.test(incomplet)
-   && !(await valide(4)), incomplet.slice(0, 90));
+ok('14 · activité 4 REFUSÉE sur la version 1 recalibrée : le premier écart est nommé — 61 km/h, gyrophare actif attendu, arrêté obtenu',
+   /Premier écart : 61 km\/h/.test(incomplet) && /gyrophare : actif attendu, arrêté obtenu/.test(incomplet)
+   && !(await valide(4)) && await p.evaluate(() => !!document.querySelector('#bancA4 .traceur')), incomplet.slice(0, 120));
 
-/* Le programme v2 n'est pas écrit ici : il est lu dans la correction que la
-   page publie. Si la correction et le vérificateur divergeaient, on le saurait. */
+/* Le programme v2 n'est pas écrit ici : il est lu dans la correction que la page publie. */
 const v2 = (await p.$eval('#act4 details.correction pre', e => e.textContent)).trim() + '\n';
 ok(`15 · le programme v2 est lu dans la correction publiée par la page (${v2.split('\n').length} lignes)`,
-   v2.length > v1.length * 0.8 && /gyrophare_actif/.test(v2),
-   v2.split('\n').length + ' lignes');
+   v2.length > v1.length * 0.8 && /gyrophare_actif/.test(v2), v2.split('\n').length + ' lignes');
 
-await ecrireCode(v2);
-await valider(4);
-ok(`16 · activité 4 validée ${attendus} / ${attendus} : les sept contrôles de code passent sur le v2`,
-   new RegExp(`${attendus} / ${attendus}`).test(await retour(4)) && !/Il manque/.test(await retour(4))
-   && await valide(4), (await retour(4)).slice(0, 60));
+/* critère de recette de l'audit : « Remplacer seulement les guillemets doubles des chaînes par des apostrophes » */
+await ecrireCode(v2.replace(/"/g, "'")); await valider(4);
+ok('16 · critère de l\'audit : la v2 écrite avec des apostrophes obtient 10 / 10, comme avec des guillemets',
+   /10 \/ 10 vents conformes/.test(await retour(4)) && await valide(4), (await retour(4)).slice(0, 80));
+/* critère de recette : « Remplacer seulement le test strict du seuil supérieur par un test inclusif » */
+await ecrireCode(v2.replace('vent_kmh > SEUIL_OURAGAN', 'vent_kmh >= SEUIL_OURAGAN')); await valider(4);
+ok('16 bis · critère de l\'audit : `>=` au seuil ouragan → refusé, « 118 km/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu »',
+   /118 km\/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu/.test(await retour(4)) && !(await valide(4)),
+   (await retour(4)).slice(0, 140));
+/* « programme non exécutable signalé avec ligne » */
+await ecrireCode(v2.replace('if gyrophare_actif:               # ④ nouveau bloc de commande\n    activer_gyrophare()', 'if gyrophare_actif:\nactiver_gyrophare()')); await valider(4);
+ok('16 ter · programme non exécutable : « IndentationError » avec sa ligne, et la version le dit',
+   /Ligne 29 · IndentationError/.test(await retour(4)) && !(await valide(4)) && /erreur/.test(await p.textContent('#clVersion')),
+   (await retour(4)).slice(0, 120));
+await ecrireCode(v2); await valider(4);
+ok(`16 quater · activité 4 validée 10 / 10 sur la v2 de la correction, et la version se dit « version 2 »`,
+   /10 \/ 10 vents conformes/.test(await retour(4)) && await valide(4) && /version 2/.test(await p.textContent('#clVersion')),
+   (await retour(4)).slice(0, 60));
 
+/* ── L'ACTIVITÉ 5 : PRÉVOIR, EXÉCUTER, COMPARER — et l'essai périmé ─────── */
+/* critère de recette de l'audit : « Avec la v1 restaurée dans l'éditeur, les sept bonnes réponses théoriques donnent
+   7/7 et un message de maîtrise » → deux indicateurs, et « à exécuter » tant qu'aucune observation */
+await ecrireCode(v1);
 await remplir(5); await valider(5);
-ok('17 · activité 5 validée 7 / 7 (cinq jeux d\'essai aux frontières + le bug diagnostiqué)',
-   /7 \/ 7/.test(await retour(5)) && await valide(5), (await retour(5)).slice(0, 60));
+ok('17 · prévisions et diagnostic justes, rien exécuté : REFUSÉE, « Essais de ma version : à exécuter »',
+   /Mes prévisions : 6 \/ 6/.test(await retour(5)) && /Diagnostic de la copie B : 2 \/ 2/.test(await retour(5))
+   && /Essais de ma version : à exécuter/.test(await retour(5)) && !(await valide(5)), (await retour(5)).replace(/\n/g, ' / ').slice(0, 160));
+await p.click('#banc5Tout'); await p.waitForTimeout(120); await valider(5);
+ok('17 bis · la v1 restaurée exécutée : REFUSÉE, « 3 / 10 vents conformes » — la prévision juste ne vaut pas exécution de sa copie',
+   /Essais de ma version : 3 \/ 10 vents conformes/.test(await retour(5)) && !(await valide(5)), (await retour(5)).replace(/\n/g, ' / ').slice(0, 160));
+await ecrireCode(v2); await valider(5);
+ok('17 ter · version modifiée depuis l\'essai : « à rejouer », et le journal marque l\'ancien essai',
+   /Essais de ma version : à rejouer/.test(await retour(5)) && !(await valide(5))
+   && /à rejouer/.test(await p.textContent('.banc-journal')), (await retour(5)).replace(/\n/g, ' / ').slice(0, 160));
+await p.click('#banc5Tout'); await p.waitForTimeout(120); await valider(5);
+ok('17 quater · la v2 exécutée sur 10 vents : activité 5 validée, « 10 / 10 … dix cas essayés, pas tous les vents possibles »',
+   /10 \/ 10 vents conformes/.test(await retour(5)) && /pas tous les vents possibles/.test(await retour(5)) && await valide(5),
+   (await retour(5)).replace(/\n/g, ' / ').slice(0, 160));
+const lignesBanc = await p.$$eval('#banc5Table tr', l => l.length - 1);
+ok('17 quinquies · le tableau des essais montre 10 vents, la prévision de l\'élève et l\'obtenu de sa version',
+   lignesBanc === 10 && /orange · gyrophare seul/.test(await p.textContent('#banc5Table')), String(lignesBanc));
+/* l'aller-retour v1 → v2 a périmé les activités 3 et 4 : on les vérifie de nouveau sur la v2 */
+await valider(3); await valider(4);
 
 await remplir(6); await valider(6);
 ok('18 · activité 6 validée 6 / 6 (transfert : lire un programme qu\'on n\'a pas écrit)',
@@ -319,15 +391,27 @@ ok('19 quater · l\'état compte ce qui est écrit et coché (2 / 3, 1 / 3) sans
    /2 \/ 3/.test(etat) && /1 \/ 3/.test(etat) && /aucune note/.test(etat)
    && await p.evaluate(() => JSON.stringify(window.__valid || {})) === validAvant, etat);
 
+await p.evaluate(() => { document.getElementById('boueeEssai').click(); });
+const bouee = (await p.textContent('#boueeRes')).replace(/\s+/g, ' ');
+ok('19 quinquies · la bouée : les lignes 4 à 7 écrites s\'essaient à 2,0 · 3,0 · 4,0 · 5,0 m, sans note (5,0 m → « Baignade : rouge »)',
+   /2,0 m → « Baignade : vert »/.test(bouee) && /3,0 m → « Baignade : orange »/.test(bouee) && /5,0 m → « Baignade : rouge »/.test(bouee)
+   && /rien n'est noté/.test(bouee), bouee.slice(0, 140));
+await ouvrirPour('hyp1');
+await p.fill('#hyp1', 'Il faut connaître ses données.'); await p.fill('#hyp2', 'J\'essaierai 118 et je prévois rouge.');
+await p.waitForTimeout(80);
+const rappels = await p.evaluate(() => [document.getElementById('hypRappelTxt').textContent, document.getElementById('hypRappelTxt2').textContent]);
+ok('19 sexies · bilan : les DEUX hypothèses de départ reviennent, face à deux champs', /ses données/.test(rappels[0]) && /118/.test(rappels[1])
+   && await p.evaluate(() => !!document.getElementById('hyp_retour2')), rappels.join(' | '));
+
 /* ── persistance : le CODE de l'élève doit revenir, pas la version d'origine ── */
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(360);
 ok('20 · rechargement : le programme v2 de l\'élève est restauré, pas la version d\'origine',
    (await p.inputValue('#clTa')).includes('gyrophare_actif')
    && (await p.inputValue('#clTa')) !== v1,
    (await p.textContent('#clDiffInfo')).slice(0, 60));
-ok('20 bis · rechargement : réponses et validations restaurées, taille de police comprise',
+ok('20 bis · rechargement : réponses, validations et journal d\'essai restaurés, taille de police comprise',
    (await p.textContent('#progTxt')).trim().length > 0
-   && await p.evaluate(() => !!window.__valid[4])
+   && await p.evaluate(() => !!window.__valid[4] && !!window.__valid[5] && window.__banc.journal.length > 0)
    && await p.evaluate(() => window.__clFs) === tailleApres,
    await p.textContent('#progTxt'));
 ok('20 ter · rechargement : les explications écrites et la case cochée de la grille reviennent',
@@ -335,12 +419,33 @@ ok('20 ter · rechargement : les explications écrites et la case cochée de la 
    && await p.isChecked('#ebg2') && !(await p.isChecked('#ebg1')),
    (await p.textContent('#ebEtat')).slice(0, 60));
 
+const corps = (await p.textContent('body')).replace(/\s+/g, ' ');
+const svgAlgo = fs.readFileSync(path.join(ICI, 'Images/algorigramme_alerte_graduee.svg'), 'utf8');
+const svgPlan = fs.readFileSync(path.join(ICI, 'Images/plan_de_tests_jeux_essai_muet.svg'), 'utf8');
+ok('20 quater · documents : l\'algorigramme (spécification de la v2) teste 60, pas 50 ; le plan de tests de la v1 ne commande aucun gyrophare ; aucun « verte/jaune » ; récit fictif, seuil du club',
+   /vent_kmh &gt; 60 \?/.test(svgAlgo) && !/&gt; 50/.test(svgAlgo) && /orange · sirène arrêtée/.test(svgPlan) && !/orange \+ gyrophare|sirène \+ gyro/.test(svgPlan)
+   && !/verte\/jaune/.test(corps + svgAlgo + svgPlan) && /Simulation scolaire/.test(corps) && /inventés pour l'exercice/.test(corps)
+   && !/Météo-France recalibre/.test(corps) && /le club fixe son seuil expérimental/i.test(corps), '');
+
 const liens = await p.$$eval('a[href]', a => a.map(x => x.getAttribute('href')));
-const casses = liens.filter(h => h && !/^(https?:|mailto:|#|javascript:)/.test(h))
+const casses = liens.filter(h => h && !/^(https?:|mailto:|#|javascript:|data:)/.test(h))
   .map(h => decodeURIComponent(h.split('#')[0]))
   .filter(h => h && !fs.existsSync(path.join(ICI, h)));
 ok(`21 · les ${liens.length} liens internes existent`, casses.length === 0,
    casses.slice(0, 3).join(' · '));
+
+/* 21 bis · le fichier du Bonus est le programme de la correction de l'activité 4, et il passe le banc */
+const bonus = await p.evaluate(() => {
+  const a = document.querySelector('a[download="station_alerte_v2_corrige.py"]');
+  if (!a) return null;
+  const fichier = decodeURIComponent(a.getAttribute('href').replace(/^data:[^,]*,/, ''));
+  const code = sansSimulation(fichier);
+  const essais = essayerStation(code, 'v2', VENTS_BANC);
+  const corr = [...document.querySelectorAll('details.correction pre')].map(x => x.textContent).find(x => /programme d'alerte v2/.test(x)) || '';
+  return { entete: fichier.indexOf('# --- Simulation de la maquette') === 0, memeCode: code.trim() === corr.trim(), conformes: essais.filter(e => e.conforme).length, n: essais.length };
+});
+ok('21 bis · Bonus : le fichier .py donné commence par la simulation, porte le programme de la correction de l\'activité 4, et passe le banc 10 / 10',
+   !!bonus && bonus.entete && bonus.memeCode && bonus.conformes === 10 && bonus.n === 10, JSON.stringify(bonus));
 
 const svg = await p.$$eval('img[src$=".svg"], object[data$=".svg"]',
   l => l.map(e => e.getAttribute('src') || e.getAttribute('data')));
@@ -418,6 +523,26 @@ ok(`29 · parcours complet ${Q.length} / ${Q.length} joué → note ${note}, bil
    /20,0/.test(note) && (await p.textContent('#rOk')) === String(Q.length)
    && lignes.length === 2 && lignes.every(l => /15 \/ 15/.test(l)),
    note + ' · ' + lignes.join(' | ').slice(0, 70));
+
+/* critère de recette de l'audit : « Afficher « 10/10 réussies dans ce parcours » et « 10/30 travaillées ». Réserver le
+   /20 au parcours complet terminé. » — dans un contexte neuf */
+{
+  const c2 = await b.newContext({ viewport: { width: 390, height: 844 } }); const q = await c2.newPage();
+  await q.goto(pathToFileURL(QCM).href, { waitUntil: 'load' }); await q.waitForTimeout(250);
+  await q.click('[data-mode="dix"]'); await q.waitForTimeout(80);
+  for (let i = 0; i < 10; i++) {
+    const r = await q.evaluate(() => QUESTIONS[Number(document.getElementById('qNum').textContent) - 1].r);
+    await (await q.$$('#qOptions .option'))[r].click(); await q.click('#btnValider'); await q.waitForTimeout(20);
+    if (i < 9) { await q.click('#btnSuiv'); await q.waitForTimeout(20); }
+  }
+  const reste = (await q.textContent('#dReste')).replace(/\s+/g, ' ');
+  await q.click('#btnTerminer'); await q.waitForTimeout(150);
+  const rn = (await q.textContent('#rNote')).trim(), re = (await q.textContent('#rEssais')).replace(/\s+/g, ' ');
+  ok('29 bis · parcours « 10 questions » réussi : « 10 / 10 réussies » et « 10 / 30 questions travaillées », aucune note sur 20 (pas de 6,7 /20)',
+     /10 \/ 10 réussies/.test(rn) && /10 \/ 30 questions travaillées/.test(re) && !/\/20/.test(rn) && /10 \/ 10 réussie/.test(reste)
+     && (await q.textContent('#dNote')).trim() === '— /20', rn + ' · ' + re.slice(0, 90));
+  await c2.close();
+}
 
 const cles = await p.evaluate(() => Object.keys(window.localStorage));
 ok('30 · la clé localStorage du QCM est écrite',

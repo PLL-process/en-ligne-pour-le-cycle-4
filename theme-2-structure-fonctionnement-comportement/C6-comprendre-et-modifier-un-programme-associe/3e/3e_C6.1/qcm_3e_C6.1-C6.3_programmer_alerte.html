@@ -155,6 +155,7 @@
 @media print{#navharm{display:none}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C6.1-C6.3_programmer_alerte.html">← Séquence</a></nav>
+<main id="principal">
 <h1>Thème 2 · Martinique — 3e · S6 : QCM — Programmer l'alerte</h1>
 <p class="subtitle">Données utilisées et produites, modification du programme, plan de tests</p>
 <div class="badges">
@@ -290,6 +291,7 @@
   </div>
 </section>
 
+</main>
 <footer>
   <p>QCM d'entraînement 3e_C6.1 + C6.3 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence_3e_C6.1-C6.3_programmer_alerte.html">séquence associée</a></p>
   <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
@@ -316,21 +318,21 @@ const QUESTIONS = [
  err:"Croire qu'une donnée textuelle « ne compte pas » : un message est une sortie à part entière.",
  d:["Aucun capteur ne fournit un message tout fait.","Toute variable d'un programme est utilisée et/ou produite.","","Sa valeur change selon la vigilance : ce n'est pas une constante."],
  ret:"Donnée produite = créée par le programme (résultat, commande, message)."},
-{c:"C6.1",n:"Pourquoi identifier les données",q:"Pourquoi identifier les données utilisées et produites AVANT de modifier un programme (C6.1) ?",
- o:["pour faire joli dans le cahier de bord","pour savoir ce qu'on risque de casser","parce que le langage Python l'exige","c'est inutile quand on va vite"],r:1,
- expl:"C'est la carte d'identité de la fonctionnalité : les sorties du programme (message, commandes) sont les ENTRÉES d'autres éléments (application, sirène). Modifier à l'aveugle peut casser toute la chaîne.",
- ex:"Supprimer la ligne du message couperait l'alerte sur les téléphones — même si la sirène locale marche toujours.",
+{c:"C6.1",n:"Pourquoi identifier les données",q:"Un élève a modifié le programme de la station. La sirène marche toujours, mais les téléphones ne reçoivent plus aucun message. Quelle étape avait-il sautée avant de modifier ?",
+ o:["tester la sirène sur la maquette du club","repérer qui reçoit les données produites","recalibrer les trois seuils de vigilance","ajouter des commentaires en tête du code"],r:1,
+ expl:"C'est la carte d'identité de la fonctionnalité : les sorties du programme (le message, les commandes) sont les ENTRÉES d'autres éléments (l'application, la sirène). En repérant que message part vers l'application, on sait qu'il ne faut pas le casser.",
+ ex:"Renommer ou supprimer la ligne du message coupe l'alerte sur les téléphones — même si la sirène locale marche toujours.",
  err:"Foncer modifier « juste une petite ligne » sans vue d'ensemble.",
- d:["L'enjeu est technique, pas esthétique.","","Python n'exige rien de tel : c'est une MÉTHODE humaine.","La rapidité sans carte, c'est l'accident assuré."],
+ d:["La sirène marche : ce n'est pas elle qui est en cause. Cherche qui attendait le message.","","Les seuils décident du niveau, pas de l'envoi du message : relis ce que reçoit l'application.","Un commentaire aide à lire, il ne dit pas qui reçoit le message."],
  ret:"Identifier entrées/sorties = savoir ce que la modification peut impacter ailleurs."},
 {c:"C6.1",n:"Constante",q:"SEUIL_OURAGAN = 118 est écrit en MAJUSCULES en tête de programme. Pourquoi ?",
  o:["parce que les majuscules attirent l'œil","pour que le programme aille plus vite","c'est un bug de mise en forme","c'est la convention pour une constante"],r:3,
- expl:"Les majuscules signalent une constante nommée : un paramètre de la fonctionnalité, regroupé en tête, modifiable en un unique endroit. C'est ce qui rend la modification de paramètre (C6.3) sûre.",
+ expl:"Les majuscules signalent une constante nommée : un paramètre de la fonctionnalité, regroupé en tête, modifiable en un unique endroit. C'est une convention pour le lecteur : Python n'empêche pas de changer sa valeur, mais tout le monde sait qu'on n'y touche qu'en tête de programme.",
  ex:"Passer le seuil orange de 50 à 60 = changer UNE ligne, sans toucher aux tests.",
  err:"Écrire les valeurs « en dur » dans les tests : pour changer un seuil, il faudrait les chercher partout.",
  d:["La convention aide le LECTEUR humain, pas le haut-parleur.","Aucun effet sur la vitesse.","C'est au contraire une bonne pratique.",""],
  ret:"Constante nommée (MAJUSCULES) = paramètre modifiable en un seul point."},
-{c:"C6.1",n:"Trace simple",q:"Programme de la station (seuils 50/90/118, tests avec >) : pour vent_kmh = 95, que vaut vigilance ?",
+{c:"C6.1",n:"Trace simple",q:"Version 1 d'origine de la station (seuils 50/90/118, tests avec >) : pour vent_kmh = 95, que vaut vigilance ?",
  o:["« orange », comme au tour précédent","« rouge » : 95 dépasse 90","« violette », le niveau maximal","« verte », faute de mieux"],r:1,
  expl:"On descend les tests dans l'ordre : 95 > 118 ? non. 95 > 90 ? OUI → rouge, et les elif suivants sont ignorés.",
  ex:"C'est la trace de l'activité 2, situation A.",
@@ -351,10 +353,10 @@ const QUESTIONS = [
  err:"Croire que plusieurs branches peuvent s'activer en même temps.",
  d:["Ce serait le comportement de ifs INDÉPENDANTS, pas de elif.","Le programme continue après la structure (message, commandes).","Une structure if / elif s'exécute une seule fois, de haut en bas : elle ne revient pas au début.",""],
  ret:"if/elif = un seul chemin : le premier test vrai gagne, les autres sont ignorés."},
-{c:"C6.1",n:"Ordre des tests",q:"Pourquoi le programme teste-t-il vent > 118 AVANT vent > 90 et vent > 50 ?",
- img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme testant les seuils du plus fort au plus faible : 118, puis 90, puis 50"},
+{c:"C6.1",n:"Ordre des tests",q:"Dans l'algorigramme de la version 2, pourquoi teste-t-on vent > 118 AVANT vent > 90 et vent > 60 ?",
+ img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme de la version 2 testant les seuils du plus fort au plus faible : plus de 118, puis plus de 90, puis plus de 60"},
  o:["pour que le programme aille plus vite","parce que Python lit les tests de bas en haut","sinon un ouragan serait classé orange","l'ordre des tests n'a aucune importance"],r:2,
- expl:"130 dépasse TOUS les seuils. Si on testait > 50 en premier, la branche orange capterait l'ouragan et les autres tests seraient ignorés. On teste donc du plus fort au plus faible.",
+ expl:"130 dépasse TOUS les seuils. Si on testait > 60 en premier, la branche orange capterait l'ouragan et les autres tests seraient ignorés. On teste donc du plus fort au plus faible.",
  ex:"L'algorigramme montre cet ordre : ouragan → rouge → orange.",
  err:"Ranger les tests « dans l'ordre croissant » qui paraît naturel — et classer tous les cyclones en orange.",
  d:["Le nombre de tests ne change pas : c'est le résultat qui change. Avec elif, le premier test vrai l'emporte.","Python lit les tests de haut en bas : le premier test vrai l'emporte, les suivants sont ignorés.","","Avec elif, l'ordre change complètement le résultat."],
@@ -366,10 +368,10 @@ const QUESTIONS = [
  err:"Confondre « non utilisé dans la décision » et « erreur de programme ».",
  d:["Le programme fonctionne : la variable est juste inexploitée.","La pression est un excellent indicateur — c'est le programme qui est incomplet.","","Le capteur pourra servir dès la v3 !"],
  ret:"Identifier les données révèle aussi les entrées INEXPLOITÉES : des pistes d'amélioration."},
-{c:"C6.1",n:"Sorties vers le système",q:"Quelles sont les TROIS données produites par le programme d'alerte v1 ?",
+{c:"C6.1",n:"Sorties vers le système",q:"Vu depuis la fonctionnalité (ce que le programme calcule), quelles sont les TROIS données produites par la version 1 d'origine ?",
  img:{src:"Images/programme_entrees_sorties.svg",alt:"Schéma montrant les trois sorties : vigilance, sirene_active, message"},
  o:["vigilance, sirene_active, message","vent_kmh, pression_hpa, SEUIL_ORANGE","anemometre, barometre, sirene","50, 90, 118"],r:0,
- expl:"Le programme calcule le niveau (vigilance), décide de la commande (sirene_active) et fabrique le message. Les trois partent vers le reste du système.",
+ expl:"Le programme calcule un état (vigilance), mémorise une décision (sirene_active) et fabrique un message. Ce qu'on observe dehors, ce sont le message reçu par l'application et la sirène qui sonne — par la commande activer_sirene(), qui applique la décision.",
  ex:"Côté droit du schéma : les trois flèches vertes de sortie.",
  err:"Mélanger noms de variables, noms de capteurs et valeurs.",
  d:["","Ce sont les ENTRÉES du programme.","Ce sont des périphériques, pas des données.","Ce sont les valeurs des constantes."],
@@ -381,7 +383,7 @@ const QUESTIONS = [
  err:"Réécrire de zéro « parce que c'est plus simple » : on perd les corrections de bugs accumulées.",
  d:["Repartir de zéro jette des mois de mise au point.","","Le hasard n'est pas une méthode.","Le programme doit vivre sans son auteur : c'est l'intérêt du code clair."],
  ret:"Comprendre (C6.1) avant de modifier (C6.3) : toujours dans cet ordre."},
-{c:"C6.1",n:"Variable réutilisée",q:"vigilance est produite ligne 13 puis UTILISÉE ligne 21 (dans le message). Est-ce contradictoire ?",
+{c:"C6.1",n:"Variable réutilisée",q:"vigilance est produite par les tests (lignes 13, 16 ou 19) puis UTILISÉE ligne 21, dans le message. Est-ce contradictoire ?",
  o:["oui : une variable est entrée ou sortie","oui : le langage Python l'interdit","non, mais c'est un bug à corriger","non : une sortie peut être réutilisée"],r:3,
  expl:"Le flux des données traverse le programme : on PRODUIT vigilance (décision), puis on l'UTILISE pour fabriquer le message. Vis-à-vis de l'extérieur, vigilance reste une donnée produite par la fonctionnalité.",
  ex:"Comme en cuisine : la pâte est produite par le mélange, puis utilisée par la cuisson.",
@@ -390,7 +392,7 @@ const QUESTIONS = [
  ret:"Au sein du programme, une donnée produite peut être réutilisée ; le classement C6.1 se fait vis-à-vis de l'extérieur."},
 {c:"C6.1",n:"Initialisation",q:"Pourquoi le programme écrit-il vigilance = \"verte\" et sirene_active = False AVANT les tests ?",
  o:["pour gaspiller quelques lignes de code","pour garantir un état sûr par défaut","parce que le vert est la couleur du maire","c'est une erreur restée dans le programme"],r:1,
- expl:"L'initialisation donne l'état « au repos » : vent faible → aucun test vrai → les valeurs par défaut (verte, sirène éteinte) s'appliquent. Sans elle, les variables n'existeraient même pas dans ce cas.",
+ expl:"L'initialisation donne l'état « au repos » : vent faible → aucun test vrai → les valeurs par défaut (verte, sirène éteinte) s'appliquent. Sans elle, les variables n'existeraient même pas dans ce cas : Python s'arrêterait sur la ligne qui les relit (NameError).",
  ex:"Tu as reproduit ce modèle avec gyrophare_actif = False (activité 4, ajout ①).",
  err:"Initialiser un actionneur à True « pour tester » : une sirène qui hurle par défaut !",
  d:["Deux lignes qui évitent un plantage, ce n'est pas du gaspillage.","","La sécurité, pas l'esthétique.","C'est une bonne pratique fondamentale."],
@@ -431,15 +433,15 @@ const QUESTIONS = [
  err:"Inventer une logique différente pour chaque ajout : le programme devient illisible.",
  d:["","On imite un modèle VALIDÉ, pas n'importe quoi.","La concision reste une qualité.","La cohérence interne est une vertu cardinale du code."],
  ret:"Étendre un programme = imiter ses motifs validés (initialisation → décision → commande)."},
-{c:"C6.3",n:"Indentation",q:"En Python, la ligne gyrophare_actif = True doit être INDENTÉE (4 espaces) dans sa branche. Sinon ?",
+{c:"C6.3",n:"Indentation",q:"Dans la branche orange, la DERNIÈRE de la structure, on colle au bord gauche la ligne gyrophare_actif = True, sans ses 4 espaces. Que se passe-t-il ?",
  o:["rien ne change dans l'exécution","Python ajoute l'indentation tout seul","elle sort de la branche : toujours exécutée","le programme devient un peu plus rapide"],r:2,
- expl:"En Python, l'indentation EST la structure : elle dit quelles lignes appartiennent à quelle branche. Une ligne désindentée quitte le bloc conditionnel et s'exécute inconditionnellement.",
- ex:"gyrophare_actif = True collé à la marge = gyrophare allumé même par temps calme — belle panique dans le quartier.",
+ expl:"En Python, l'indentation EST la structure : elle dit quelles lignes appartiennent à quelle branche. Ici, la ligne est la dernière de la dernière branche : collée au bord, elle devient une instruction APRÈS le if/elif, exécutée à chaque passage. Collée au bord au milieu d'une branche (dans la violette, avant un elif), elle couperait la structure : le elif n'aurait plus de if, et Python afficherait une erreur de syntaxe.",
+ ex:"gyrophare_actif = True collé à la marge après la branche orange = gyrophare allumé même par temps calme — le banc d'essai le voit dès 55 km/h.",
  err:"Traiter l'indentation comme de la déco : c'est du SENS.",
- d:["La position change radicalement le comportement.","Python signale IndentationError ou exécute autre chose — il ne devine pas.","","La vitesse n'a rien à voir."],
- ret:"En Python, l'indentation fait partie du langage : elle délimite les blocs."},
+ d:["La position change le comportement : relis à quel bloc appartient une ligne collée au bord.","Python ne devine pas : selon l'endroit, il exécute autre chose ou signale une erreur.","","La vitesse n'a rien à voir : relis à quel bloc appartient la ligne."],
+ ret:"En Python, l'indentation fait partie du langage : elle délimite les blocs. Désindenter change le comportement, ou casse la structure, selon l'endroit."},
 {c:"C6.3",n:"Lire l'algorigramme",q:"D'après l'algorigramme de l'alerte graduée, en vigilance ROUGE, quels actionneurs sont actifs ?",
- img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme : violette = sirène et gyrophare, rouge = sirène seule, orange = gyrophare seul"},
+ img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme de la version 2. Si vent plus de 118 : violette, sirène active, gyrophare actif. Sinon, si vent plus de 90 : rouge, sirène active, gyrophare arrêté. Sinon, si vent plus de 60 : orange, gyrophare actif, sirène arrêtée. Sinon : verte, aucun actionneur."},
  o:["le gyrophare seul s'allume","la sirène seule, gyrophare éteint","les deux ensemble, comme prévu","aucun des deux ne se déclenche"],r:1,
  expl:"L'algorigramme est la SPÉCIFICATION : violette = les deux, rouge = sirène seule, orange = gyrophare seul. Le code doit s'y conformer — pas l'inverse.",
  ex:"C'est pour cela que l'activité 4 interdit gyrophare_actif = True dans la branche rouge.",
@@ -458,7 +460,7 @@ const QUESTIONS = [
  img:{src:"Images/plan_de_tests_jeux_essai.svg",alt:"Plan de tests visant les valeurs frontières autour des seuils"},
  o:["ce sont les vents les plus fréquents en Martinique","les frontières sont où > et >= diffèrent","parce que 30, 75 et 200 ne sont pas des vents possibles","au hasard, comme n'importe quelle valeur"],r:1,
  expl:"Loin des seuils, un programme correct et un programme bogué répondent pareil. À la frontière exacte (50, 118), la moindre confusion >/>= apparaît immédiatement.",
- ex:"Le test n°4 du schéma (118) démasque le bug >= alors que 200 ne l'aurait jamais vu.",
+ ex:"Le test n°5 du schéma (118) démasque le bug >= de la copie B, alors que 200 — ou même 119 — ne l'aurait jamais vu.",
  err:"Choisir des valeurs « variées » mais toutes loin des seuils : couverture illusoire.",
  d:["La fréquence ne compte pas ici : on teste là où le programme hésite, juste autour de chaque seuil.","","Ces vents sont possibles, mais loin des seuils : ils ne montrent pas si le test utilise > ou >=.","Le choix est au contraire ultra-ciblé."],
  ret:"Tester AUX frontières : seuil-1, seuil, seuil+1."},
@@ -471,25 +473,25 @@ const QUESTIONS = [
  ret:"Un échec de test aux frontières oriente vers l'opérateur de comparaison."},
 {c:"C6.3",n:"Non-régression",q:"Ta v2 (gyrophare) passe ses nouveaux tests. Pourquoi rejouer AUSSI les anciens tests de la sirène ?",
  o:["pour vérifier la non-régression","pour vérifier que le gyrophare clignote","parce que les anciens tests ont pu changer","c'est totalement inutile de les rejouer"],r:0,
- expl:"Tester la non-régression = re-vérifier l'existant après chaque modification. En ajoutant le gyrophare, une erreur d'indentation aurait pu déplacer une ligne de la sirène.",
+ expl:"Tester la non-régression = re-vérifier l'existant après chaque modification. En ajoutant le gyrophare, une erreur d'indentation aurait pu déplacer une ligne de la sirène. Attention : certains anciens attendus changent VOLONTAIREMENT (à 55 km/h, la version 1 d'origine envoyait orange, la version 2 envoie verte) ; d'autres doivent rester (à 118 km/h, rouge et sirène active). On rejoue les anciens essais avec le nouveau cahier des charges.",
  ex:"Les pros rejouent TOUTE leur batterie de tests à chaque version — souvent automatiquement.",
  err:"Ne tester que la nouveauté : les régressions sont les bugs les plus fréquents en entreprise.",
  d:["","Les nouveaux tests vérifient déjà le gyrophare : les anciens vérifient que la sirène marche encore.","Les anciens tests n'ont pas changé : c'est le programme qui a changé, et il a pu casser la sirène.","C'est au contraire la moitié de la validation."],
  ret:"Après toute modification : tester le NOUVEAU et re-tester l'ANCIEN (non-régression)."},
 {c:"C6.3",n:"Un seul échec",q:"Sur tes 5 jeux d'essai, 4 passent et 1 échoue. Verdict sur la version ?",
  o:["acceptée : quatre sur cinq, c'est bien","refusée : un seul échec suffit","acceptée, si l'on cache le test raté","on supprime du plan le test qui échoue"],r:1,
- expl:"Un test n'est pas un contrôle noté : c'est une preuve binaire. Un échec = un comportement faux qui frappera en situation réelle — précisément à 118 km/h, au pire moment.",
+ expl:"Un test n'est pas un contrôle noté : un échec = un comportement faux qui frappera en situation réelle — précisément à 118 km/h, au pire moment. Et cinq succès sur cinq ne prouvent pas tout : ils montrent que ces cinq cas respectent le cahier des charges. C'est pour cela qu'on choisit les cas aux frontières.",
  ex:"Le bug >= : invisible 364 jours par an, catastrophique le jour de l'ouragan à 118.",
  err:"Raisonner en pourcentage : 80 % de tests OK = 100 % de programme refusé.",
  d:["Les 4/5 ne consolent pas les habitants mal alertés.","","Cacher un échec, c'est mentir au système ET aux gens.","Supprimer le test ne supprime pas le bug !"],
- ret:"Validation = TOUS les tests passent. Un échec → corriger → tout rejouer."},
+ ret:"Validation = TOUS les tests passent, et elle vaut pour les cas essayés. Un échec → corriger → tout rejouer."},
 {c:"C6.3",n:"Tester sans machine",q:"En version 🅲 (sans matériel), peut-on quand même TESTER le programme modifié ?",
  o:["non : tester exige toujours un ordinateur","non : il faut attendre le professeur","oui : en calculant les sorties à la main","oui, mais cela ne compte pas vraiment"],r:2,
- expl:"La trace manuelle EST une exécution — par un humain. Plan de tests, attendus, verdicts : toute la méthode fonctionne sur papier ; la machine ne fait que l'accélérer.",
- ex:"L'activité 5 valide ta v2 entièrement à la main ; la version 🅰 ne fait que confirmer sur la maquette.",
+ expl:"La trace à la main a une vraie valeur si elle déroule le programme LUI-MÊME, ligne par ligne, et si la sortie attendue a été écrite avant, d'après le cahier des charges. Elle ne remplace pas tout : une faute de frappe, une indentation, le matériel se vérifient sur machine — on le dit.",
+ ex:"Dans l'activité 5, tu prévois d'après le cahier des charges, puis le banc exécute ta version ; la version 🅰 confirme sur la maquette.",
  err:"Croire que « tester » = « appuyer sur Exécuter » : c'est calculer l'attendu qui teste.",
- d:["Dijkstra traçait ses programmes à la main bien avant les écrans.","Pas besoin d'attendre : tu calcules toi-même la sortie de chaque essai, le programme sous les yeux.","","La validation à la main compte pleinement : c'est la même logique."],
- ret:"Tester = comparer attendu et obtenu ; la trace manuelle est un vrai test."},
+ d:["Dijkstra traçait ses programmes à la main bien avant les écrans.","Pas besoin d'attendre : tu calcules toi-même la sortie de chaque essai, le programme sous les yeux.","","Elle compte : c'est la même logique, à condition de dire ce qui reste à vérifier sur machine."],
+ ret:"Tester = comparer attendu et obtenu ; la trace à la main est un vrai test, qui dit ce qu'il reste à vérifier sur machine."},
 {c:"C6.3",n:"L'erreur d'indentation",q:"Python affiche IndentationError: expected an indented block après if gyrophare_actif:. Que faire ?",
  o:["indenter la ligne suivante de quatre espaces","supprimer purement et simplement le if","réinstaller Python sur l'ordinateur","ignorer le message d'erreur affiché"],r:0,
  expl:"Le message d'erreur DIT le problème : après un if, Python attend un bloc indenté. Lire le message (nom + ligne) est la première compétence du débogueur.",
@@ -504,7 +506,7 @@ const QUESTIONS = [
  err:"Considérer les tests comme une option « si on a le temps ».",
  d:["La qualité ne se mesure pas en lignes.","Publier sans tests = tester en production… sur de vrais habitants.","Attendre la casse, c'est déjà trop tard pour une alerte cyclonique.",""],
  ret:"C6.3 = modifier + tester, indissociables : la preuve fait partie de la modification."},
-{c:"C6.3",n:"Étendre la structure",q:"Pour ajouter un niveau « jaune » entre verte et orange, la bonne approche est :",
+{c:"C6.3",n:"Étendre la structure",q:"Pour ajouter un niveau « jaune » (plus de 40 km/h, jusqu'à 60 inclus), entre verte et orange, la bonne approche est :",
  o:["ajouter un if indépendant, n'importe où","ajouter un elif en dernier, avec ses essais","changer le sens de tous les tests existants","recopier le programme entier une seconde fois"],r:1,
  expl:"L'extension suit les règles apprises : nouvelle constante nommée, elif inséré À SA PLACE dans l'ordre décroissant des seuils, et jeux d'essai aux nouvelles frontières.",
  ex:"Exactement le raisonnement du réinvestissement (drapeau orange de la bouée).",
@@ -514,7 +516,7 @@ const QUESTIONS = [
 {c:"C6.3",n:"Sauvegarder et versionner",q:"Avant de modifier le programme, CodeLab conserve la version d'origine (bouton Réinitialiser / Comparer). Pourquoi est-ce essentiel ?",
  o:["pour occuper de la mémoire disponible","parce que la version 1 est déjà parfaite","ce n'est pas vraiment essentiel","pour pouvoir revenir en arrière et comparer"],r:3,
  expl:"Toute modification doit être réversible : garder la version précédente permet de comparer (qu'ai-je changé ?) et de restaurer en cas d'échec. C'est le principe que les professionnels industrialisent avec Git.",
- ex:"Le bouton « Comparer avec la version d'origine » de CodeLab compte les lignes qui diffèrent — un mini-diff.",
+ ex:"Le volet « Ce qui a changé depuis la version 1 d'origine » de CodeLab montre les lignes ajoutées (+) et retirées (−). « Revenir à la version 1 d'origine » rend l'original mais efface ta version : exporte-la d'abord.",
  err:"Écraser la seule copie du programme qui marchait : plus de retour possible.",
  d:["Quelques kilo-octets pour une assurance totale.","La v1 avait justement une fonctionnalité manquante !","Sans filet, une erreur de modification peut coûter la fonctionnalité entière.",""],
  ret:"Toujours garder la version qui marche : comparer et pouvoir revenir en arrière."}
@@ -742,6 +744,10 @@ function rendreGrille(){
 }
 
 /* ───── tableau de bord ───── */
+function parcours(){
+  const l=listeActive(), faites=l.filter(i=>etat.validees[i]).length, ok=l.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+  return {l:l, faites:faites, ok:ok};
+}
 function stats(){
   let ok=0,err=0,rep=0;
   for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
@@ -756,10 +762,14 @@ function rendreDash(){
   const pct=s.rep? Math.round(s.ok/s.rep*100):0;
   $("dScore").textContent=s.rep? pct+" %" : "—";
   $("dScoreLbl").textContent=s.rep? "Réussite sur "+s.rep+(s.rep>1?" faites":" faite") : "Réussite";
-  $("dReste").hidden=!(s.rep&&s.rest);
-  $("dReste").textContent="Les deux notes sur 20 comptent les "+N+" questions : "+(s.rest>1?"les "+s.rest+" qui restent valent":"celle qui reste vaut")+" zéro pour l'instant.";
-  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
-  $("dNote1").textContent=s.rep? notePremierEssai().toFixed(1).replace(".",",")+" /20" : "— /20";
+  /* Audit du 21/11/2026 : 10 bonnes réponses sur 10 travaillées donnaient 6,7 /20. La note sur 20 attend les 30
+     questions ; avant, on lit ce parcours (réussies sur faites) et la banque (travaillées sur 30). */
+  const p=parcours();
+  $("dReste").hidden=!s.rep;
+  $("dReste").textContent=(p.l.length<N? "Ce parcours ("+p.l.length+" questions) : "+p.ok+" / "+p.faites+" réussie"+(p.ok>1?"s":"")+(p.faites<p.l.length?" · "+(p.l.length-p.faites)+" à faire":"")+". " : "")
+    +"Banque : "+s.rep+" / "+N+" questions travaillées."+(s.rest? " La note sur 20 s'affichera quand les "+N+" seront faites." : "");
+  $("dNote").textContent=s.rest? "— /20" : (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20";
+  $("dNote1").textContent=s.rest? "— /20" : notePremierEssai().toFixed(1).replace(".",",")+" /20";
   $("pfill").style.width=(s.rep/N*100)+"%";
   $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
 }
@@ -891,12 +901,15 @@ $("btnRecommencer").addEventListener("click",()=>{
   }
 });
 function rendreResultat(){
-  const s=stats();
+  const s=stats(), p=parcours();
   const note=Math.round(s.ok/N*20*10)/10;
-  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
-  $("rEssais").innerHTML="🎯 <b>Premier essai&nbsp;: "+notePremierEssai().toFixed(1).replace(".",",")+" /20</b> — ce que tu savais du premier coup."
-    +"<br>🔁 <b>Après aides&nbsp;: "+note.toFixed(1).replace(".",",")+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant."
-    +(s.rest? "<br>⏳ <b>"+s.rest+" question"+(s.rest>1?"s":"")+" pas encore faite"+(s.rest>1?"s":"")+"</b>&nbsp;: "+(s.rest>1?"elles comptent":"elle compte")+" zéro dans ces deux notes." : "");
+  /* le /20 au parcours complet terminé ; avant, ce parcours et la banque, séparés (audit du 21/11/2026) */
+  $("rNote").textContent=s.rest? p.ok+" / "+p.faites+" réussie"+(p.ok>1?"s":"") : note.toFixed(1).replace(".",",")+" /20";
+  $("rEssais").innerHTML=s.rest
+    ? "🎯 <b>Ce parcours&nbsp;: "+p.ok+" / "+p.faites+" réussie"+(p.ok>1?"s":"")+"</b>"+(p.faites<p.l.length?" ("+(p.l.length-p.faites)+" question"+(p.l.length-p.faites>1?"s":"")+" de ce parcours à faire)":"")+"."
+      +"<br>📚 <b>Banque&nbsp;: "+s.rep+" / "+N+" questions travaillées</b>&nbsp;: la note sur 20 s'affichera quand les "+N+" seront faites."
+    : "🎯 <b>Premier essai&nbsp;: "+notePremierEssai().toFixed(1).replace(".",",")+" /20</b> — ce que tu savais du premier coup."
+      +"<br>🔁 <b>Après aides&nbsp;: "+note.toFixed(1).replace(".",",")+" /20</b> — la note ci-dessus, avec les questions réussies en te corrigeant.";
   $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
   $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
   $("rBrut").textContent=s.ok+" / "+N;
@@ -932,9 +945,10 @@ function rendreResultat(){
   if(fs.length) html+='<p><b>🎯 Tes pièges, du plus fréquent au moins fréquent&nbsp;:</b></p><ul class="pieges-bilan">'
     +fs.map(f=>'<li>«&nbsp;'+PIEGES[f]+'&nbsp;» — '+rates[f]+' erreur'+(rates[f]>1?"s":"")+' <button class="btn small" data-piege="'+f+'">Réviser ce piège&nbsp;: '+questionsDuPiege(f).length+' questions</button></li>').join("")+'</ul>';
   $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
-  const msg= note>=16?"Remarquable ! Lire, modifier et tester un programme n'a plus de secret pour toi — tu es prêt·e pour l'évaluation.":
-    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
-    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+  const ratioP = p.faites ? p.ok/p.faites*20 : 0, base = s.rest ? ratioP : note;
+  const msg= s.rest && !p.faites ? "Réponds aux questions de ce parcours pour construire ton bilan." : base>=16?"Remarquable ! Lire, modifier et tester un programme n'a plus de secret pour toi — tu es prêt·e pour l'évaluation.":
+    base>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    base>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
     "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
   $("rEncoura").textContent=msg;
 }
