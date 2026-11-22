@@ -36877,6 +36877,17 @@ disparaît).
 **Thème par thème** (n°302) : `_outils/mode_mission/enrichir.py`, son banc et son README ; aucune page des thèmes 1, 2
 ou 3 n'est modifiée.
 
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 2 : les deux synthèses du jardin et de Book Train ne défilent plus à 200 % ; la mesure laisse les pages de renvoi (thème 2 : pages, `_outils`)
+
+**Carte blanche de Pascal** (22/11). Les synthèses élève de 4e_C4.1 et de Book Train empilaient leur chaîne des fonctions
+sous 600 px seulement : à 200 % (640 px), elle débordait. L'empilement vaut maintenant sous 760 px. `controle_zoom_espacement.mjs`
+ne tente plus d'ouvrir une page de renvoi (`<meta http-equiv="refresh">`, comme `qcm_algorigrammes_domotique.html`) : elle
+est comptée à part. **Reste** (thèmes 2 et 3) : le dessin de la chaîne à compléter (`_outils/chaine_a_completer/`) coupe une
+étiquette quand on espace les lettres, sur trois pages — à traiter à la source de l'outil.
+
+**Vérifié.** Mesure sur le thème 2 : 97 pages, 0 défile de côté ; banc 2/2 ; `controle_page_ouverte.mjs`,
+`controle_impression.mjs`, `controle_debordement` verts.
+
 ## 22/11/2026 — Règle d'or n°370 (en essai), thème 3 : à 200 %, plus aucune page ne défile de côté (7 pages)
 
 **Carte blanche de Pascal** (22/11). `controle_zoom_espacement.mjs` relevait, au thème 3, sept pages qui défilaient de côté à
