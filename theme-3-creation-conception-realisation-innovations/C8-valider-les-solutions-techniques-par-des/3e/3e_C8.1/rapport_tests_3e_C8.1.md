@@ -95,3 +95,30 @@ Exécuté le 08/11/2026 (Chromium Playwright, session cloud) : `tests_3e_C8.1_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_verrous`, `controle_rapports_tests` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_3e_2026-11-08/`. Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 22/11/2026 — Trois explications écrites après le réinvestissement (règle d'or n°346)
+
+La séance 3 finissait sans aucune réponse écrite (0 zone de texte, 6 groupes de boutons radio). Après le réinvestissement
+du quai du port, une carte « ✍️ Explique comme au brevet — sans propositions » (~10 min, faisable à la maison) : les
+données sous les yeux (le tube aluminium Ø50 × 3 à 150 km/h, coefficient 3,4 et flèche 27 mm ; le cahier des charges,
+coefficient d'au moins 3 et flèche de 40 mm au plus ; le vent de 180 km/h au port ; la formule de la pression, ses
+lettres expliquées), trois questions — pourquoi la pression est multipliée par 1,44 et non 1,2 ; le coefficient
+(3,4 ÷ 1,44 ≈ 2,4, sous 3) et la flèche (27 × 1,44 ≈ 39 mm, sous 40) au port, et la conclusion : le tube ne convient plus ;
+ce qu'on dit à la mairie, et la fatigue qui reste à étudier —, une version étayée par question, deux aides (n°367),
+une correction avec trois phrases de copie (n°356), une grille à trois critères. Rien n'est noté (n°340) ; la carte est
+hors de la zone de vérification du réinvestissement ; les cases de la grille sont sauvegardées avec le travail.
+
+| Contrôle | Sortie | Résultat |
+|---|---|---|
+| `_outils/tests_ecrit_brevet.py` (banc commun des écrits) | 0 | 11 / 11 |
+| `node tests_3e_C8.1_sequence.mjs sequence_3e_C8.1_mat-de-la-station.html attendus_3e.json 3e` | 0 | 62 / 62 |
+| `tests_regle_311_3e_C8.1.mjs` | 0 | 34 / 34 |
+| `mode_mission/banc_generique.mjs` | 0 | aucun refus |
+| `controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hors_ligne.mjs`, `controle_squelette.mjs` | 0 | rien à signaler |
+| `controle_regles_visibles`, `controle_hierarchie`, `controle_consignes_a_la_ligne`, `controle_propositions_indices`, `controle_tactile`, `controle_validations`, `controle_debordement`, `eleve_qui_ne_lit_pas.py` | 0 | rien à signaler |
+
+Revue d'écran à 390 px : le texte d'exemple de la question 1 donnait la réponse (« 1,44 ») : retiré (n°341) ; la lettre
+ρ de la formule est expliquée.
+
+**Non vérifié** : la durée réelle (~10 min annoncées) ; un essai en classe.
+

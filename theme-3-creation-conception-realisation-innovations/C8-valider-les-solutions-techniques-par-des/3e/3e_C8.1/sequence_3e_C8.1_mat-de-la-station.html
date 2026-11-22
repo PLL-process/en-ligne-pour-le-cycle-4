@@ -179,6 +179,17 @@ details.fiche-activite[open]>summary{margin-bottom:6px}
 section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizing:border-box;padding:14px 18px;border-radius:12px;border:1px solid var(--border,rgba(127,127,127,.35));background:var(--panel,rgba(127,127,127,.08))}
 .trois-lignes-liste{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
 .trois-lignes-liste li{border-left:3px solid var(--head,#61dafb);padding:2px 0 2px 12px;line-height:1.55}
+  /* Règle d'or n°346 — choisir n'est pas expliquer : des réponses écrites, sans propositions (22/11/2026) */
+  .ecrit-brevet textarea{min-height:6.5em}
+  .ecrit-brevet textarea.code-ecrit,.ecrit-brevet pre.transcription{font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace}
+  .ecrit-brevet pre.transcription{white-space:pre-wrap;word-break:break-word;background:#08132c;color:#d7e6ff;border-radius:10px;padding:10px 12px;font-size:.85em;line-height:1.45}
+  .grille-ecrit{margin:10px 0 4px;border:1px solid #3f6bb5;border-radius:8px;padding:6px 12px}
+  .grille-ecrit label{display:block;margin:6px 0;cursor:pointer}
+  .etat-ecrit{font-size:.92em;margin:6px 0 0;opacity:.85}
+  .ecrit-brevet details.aide{margin:8px 0;border:1px solid #3f6bb5;border-radius:8px;padding:6px 12px}
+  .ecrit-brevet details.aide>summary{cursor:pointer;font-weight:600}
+  @media print{.ecrit-brevet details.aide{display:none}.ecrit-brevet .exo{break-inside:avoid}.ecrit-brevet pre.transcription{background:#fff!important;color:#000!important;border:1px solid #999}.ecrit-brevet textarea{background:#fff!important;color:#000!important}}
+
 </style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
@@ -2210,6 +2221,76 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
 </section>
 
 <section class="card">
+  <h2>✍️ Explique comme au brevet — sans propositions <span class="chrono">⏱ ~10 min</span></h2><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
+  <div class="ecrit-brevet" id="ecritPort">
+  <p>Toujours le mât, cette fois sur le quai du port. Réponds en phrases complètes, ici ou sur une feuille de brouillon.<br>Personne ne corrige ces réponses à ta place&nbsp;: tu les compares à la correction, puis tu coches ta grille.</p>
+  <table class="releve">
+    <caption>Le tube aluminium Ø50 × 3, retenu pour le toit (mât de 2 000 mm, vent, limite élastique)</caption>
+    <thead><tr><th scope="col">Grandeur</th><th scope="col">Toit : vent de 150 km/h</th><th scope="col">Exigé par le cahier des charges</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Coefficient de sécurité</th><td>3,4</td><td>au moins 3</td></tr>
+      <tr><th scope="row">Flèche en haut du mât</th><td>27 mm</td><td>40 mm au plus</td></tr>
+    </tbody>
+  </table>
+  <p>Au quai du port, le vent de référence monte à <b>180 km/h</b>. La pression du vent vaut ½ · ρ · V² (ρ&nbsp;: la masse volumique de l'air&nbsp;; V&nbsp;: la vitesse du vent).</p>
+  <div class="exo">
+    <label for="ecritPort1"><b>1.</b> Explique en une phrase pourquoi la pression du vent est multipliée par environ 1,4, et pas par 1,2, quand le vent passe de 150 à 180 km/h.</label>
+    <textarea id="ecritPort1" placeholder="La pression est multipliée par …, car…"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>180 ÷ 150 = ____&nbsp;: la vitesse est multipliée par ____.</li>
+      <li>La pression dépend du ____ de la vitesse.</li>
+      <li>Elle est donc multipliée par ____ × ____ = ____.</li>
+    </ul>
+  </details>
+  </div>
+  <div class="exo">
+    <label for="ecritPort2"><b>2.</b> Avec ce vent de 180 km/h, calcule le coefficient de sécurité et la flèche du tube aluminium, puis dis s'il respecte encore le cahier des charges.</label>
+    <textarea id="ecritPort2" placeholder="Coefficient : … ; flèche : … mm. Le tube…"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>Les efforts, la contrainte et la flèche sont multipliés par ____.</li>
+      <li>Le coefficient de sécurité est donc divisé par ____&nbsp;: 3,4 ÷ ____ ≈ ____.</li>
+      <li>La flèche devient 27 × ____ ≈ ____ mm.</li>
+      <li>Le tube respecte / ne respecte plus le cahier des charges, car ____.</li>
+    </ul>
+  </details>
+  </div>
+  <div class="exo">
+    <label for="ecritPort3"><b>3.</b> Le simulateur ne permet pas de régler la vitesse du vent. Écris en deux phrases ce que tu dirais à la mairie, puis une vérification qu'il faudrait encore faire.</label>
+    <textarea id="ecritPort3" placeholder="Pour le quai du port, …"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>Pour le port, le tube aluminium ____, car ____.</li>
+      <li>Il faut choisir ____, et le vérifier avec ____.</li>
+      <li>Il restera aussi à étudier ____, que ni le banc ni la simulation ne voient.</li>
+    </ul>
+  </details>
+  </div>
+  <details class="aide"><summary>💡 Aide de niveau 1 — un indice</summary><p>La pression dépend du carré de la vitesse.<br>Un coefficient de sécurité est la limite divisée par la contrainte&nbsp;: si la contrainte augmente, le coefficient diminue.</p></details>
+  <details class="aide"><summary>💡💡 Aide de niveau 2 — la démarche</summary><p>1. Calcule 180 ÷ 150, puis élève ce nombre au carré.<br>2. Multiplie la flèche par ce nombre, et divise le coefficient de sécurité par ce nombre.<br>3. Compare chaque résultat à sa limite du cahier des charges, une ligne après l'autre.</p></details>
+  <details class="correction"><summary>✅ Correction des 3 explications</summary>
+    <p><b>1.</b> 180 ÷ 150 = 1,2&nbsp;: la vitesse est multipliée par 1,2. La pression vaut ½ · ρ · V²&nbsp;: elle dépend du <b>carré</b> de la vitesse, donc elle est multipliée par 1,2 × 1,2 = <b>1,44</b>.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;La pression dépend du carré de la vitesse&nbsp;: 1,2² = 1,44, la pression augmente de 44&nbsp;%.&nbsp;»<br>⚠ «&nbsp;1,2&nbsp;»&nbsp;: ce serait vrai si la pression suivait la vitesse, pas son carré.</p>
+    <p><b>2.</b> Les efforts sur le mât, la contrainte dans le tube et la flèche sont multipliés par 1,44.<br>Coefficient de sécurité&nbsp;: 3,4 ÷ 1,44 ≈ <b>2,4</b>, sous le 3 exigé&nbsp;: <b>ne respecte plus</b>.<br>Flèche&nbsp;: 27 × 1,44 ≈ <b>39 mm</b>, sous les 40 mm&nbsp;: respectée, de justesse.<br>Conclusion&nbsp;: au port, le tube aluminium <b>ne respecte plus le cahier des charges</b>, à cause de sa résistance.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;À 180 km/h, le coefficient de sécurité tombe à 2,4, sous les 3 demandés&nbsp;: le tube aluminium ne convient plus, même si sa flèche (39 mm) reste sous 40 mm.&nbsp;»<br>⚠ Multiplier le coefficient par 1,44&nbsp;: plus la contrainte grandit, plus la marge de sécurité diminue.<br>⚠ Conclure «&nbsp;il passe&nbsp;» sur la seule flèche&nbsp;: les deux exigences doivent être tenues.</p>
+    <p><b>3.</b> Une réponse possible&nbsp;: «&nbsp;Le tube aluminium validé pour le toit ne convient pas au quai du port&nbsp;: à 180 km/h, son coefficient de sécurité tombe à 2,4, sous les 3 demandés. Il faut un profilé plus résistant, vérifié avec un simulateur où la vitesse du vent est réglable.&nbsp;»<br>Vérification qui reste à faire&nbsp;: la <b>fatigue</b> — le vent fait vibrer le mât des milliers de fois, et ni le banc ni la simulation ne la voient.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;Le calcul à la main montre que le tube ne suffit plus&nbsp;; il faut un autre profilé, à valider par une simulation réglée à 180 km/h, puis étudier la fatigue.&nbsp;»<br>⚠ Proposer un profilé précis «&nbsp;qui passe&nbsp;» sans l'avoir vérifié à 180 km/h&nbsp;: le simulateur ne l'a jugé qu'à 150 km/h.</p>
+  </details>
+  <fieldset class="grille-ecrit">
+    <legend>Ma grille, après avoir lu la correction</legend>
+    <label><input type="checkbox" id="ecritPortg1"> J'explique avec la loi : la pression suit le carré de la vitesse.</label>
+    <label><input type="checkbox" id="ecritPortg2"> Je calcule avec les données : × 1,44 pour la flèche, ÷ 1,44 pour le coefficient.</label>
+    <label><input type="checkbox" id="ecritPortg3"> Je conclus avec le cahier des charges, et je dis ce qui reste à vérifier.</label>
+  </fieldset>
+  <p class="etat-ecrit" role="status"></p>
+</div>
+</section>
+
+<section class="card">
   <h2>📝 Synthèse — à retenir</h2>
   <ul>
     <li><b>Mettre en œuvre</b> une simulation, c'est choisir le cas de charge, la géométrie et
@@ -2443,7 +2524,7 @@ function save(){
     if(e.type === "radio" && e.closest(".qcm-groupe")) return;   // n°300 : le groupe porte sa valeur, pas ses boutons
     o.inputs[e.id] = e.value; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
-  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox], .grille-ecrit input[type=checkbox]").forEach(c => { o.inputs[c.id] = c.checked; });
   // les réponses du billet d'entrée (n°26) : à part, pour que restore() ne réécrive pas leur valeur
   o.billet = {}; document.querySelectorAll("#billet input[type=radio]").forEach(c => { o.billet[c.id] = c.checked; });
   // le positionnement (boutons radio, sans identifiant) et l'onglet en cours (vague n°311, 04/11/2026)
@@ -2458,7 +2539,7 @@ function restore(){
   Object.entries(o.inputs || {}).forEach(([k, v]) => {
     const e = document.getElementById(k); if(e) e.value = v; });
   // les cases « Avant de commencer » (règle n°304) : cochée ou non, rien d'autre
-  document.querySelectorAll(".rappel-spiralaire input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox], .grille-ecrit input[type=checkbox]").forEach(c => { const v = (o.inputs || {})[c.id]; if(v !== undefined) c.checked = (v === true); });
   Object.entries(o.billet || {}).forEach(([k, v]) => { const c = document.getElementById(k); if(c) c.checked = (v === true); });
   Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   // auto1 est passé le 04/11/2026 aux quatre niveaux du livret : une réponse sur l'ancienne échelle se relit au niveau voisin
@@ -3529,5 +3610,23 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- entete-telephone v3 : fin -->
+<script>
+/* Règle d'or n°346 (22/11/2026) : l'état des explications écrites — il compte ce qui est écrit et coché, il ne juge pas (n°340) */
+(function(){
+  function maj(z){
+    var e = z.querySelector(".etat-ecrit"); if(!e) return;
+    var zs = [].slice.call(z.querySelectorAll("textarea")), cs = [].slice.call(z.querySelectorAll(".grille-ecrit input[type=checkbox]"));
+    var n = zs.filter(function(t){ return (t.value || "").trim().length >= 10; }).length;
+    var c = cs.filter(function(x){ return x.checked; }).length;
+    e.textContent = "Explications écrites : " + n + " / " + zs.length + " · grille : " + c + " / " + cs.length +
+      " critère" + (c > 1 ? "s" : "") + " coché" + (c > 1 ? "s" : "") + " — aucune note n'est calculée.";
+  }
+  function tous(){ [].forEach.call(document.querySelectorAll(".ecrit-brevet"), maj); }
+  function suivre(ev){ var z = ev.target.closest && ev.target.closest(".ecrit-brevet"); if(z) maj(z); }
+  document.addEventListener("input", suivre);
+  document.addEventListener("change", suivre);
+  if(document.readyState === "complete") setTimeout(tous, 0); else window.addEventListener("load", function(){ setTimeout(tous, 0); });
+})();
+</script>
 </body>
 </html>

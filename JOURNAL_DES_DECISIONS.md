@@ -35815,3 +35815,26 @@ propositions sans indice, tactile, validations, `eleve_qui_ne_lit_pas.py` : vert
 **Accès rapide** : aucun lien ne mène à ces deux séquences ; rien à actualiser. Nouveauté du jour : `#ecritPont`.
 
 **Non vérifié.** Les durées (~10 min annoncées) ; un essai en classe.
+
+## 22/11/2026 — 3e_C8.1, troisième écrit « comme au brevet » (n°346) : le mât sur le quai du port (thème 3)
+
+**Décision.** Même carte blanche que l'entrée précédente (Pascal, 22/11/2026, 0 h 25) : la dernière des trois séquences
+de 3e qui finissaient sans écrit.
+
+**Ce qui change.** Après le réinvestissement du quai du port, une carte « ✍️ Explique comme au brevet — sans
+propositions » (~10 min, 🏠 faisable à la maison). Les données sous les yeux, dans un tableau : le tube aluminium
+Ø50 × 3 retenu pour le toit (coefficient de sécurité 3,4, flèche 27 mm à 150 km/h), le cahier des charges (coefficient
+d'au moins 3, flèche de 40 mm au plus), le vent de 180 km/h au port, la formule de la pression avec ses lettres
+expliquées. Trois questions : pourquoi 1,44 et non 1,2 ; le coefficient (3,4 ÷ 1,44 ≈ 2,4) et la flèche
+(27 × 1,44 ≈ 39 mm) au port, puis la conclusion — le tube ne convient plus, par sa résistance ; ce qu'on dit à la mairie,
+et la fatigue qui reste à étudier. Version étayée, deux aides, correction avec trois phrases de copie, grille ; rien de
+noté ; hors de la zone de vérification ; les cases de la grille entrent dans la sauvegarde de la page.
+
+**Vérifié.** Banc commun `tests_ecrit_brevet.py` 11 / 11 ; banc de la séquence 62 / 62 ; n°311 34 / 34 ; mode mission sans
+refus ; page ouverte, impression, hors ligne, squelette, règles visibles, hiérarchie, consignes, propositions sans
+indice, tactile, validations, débordement, élève qui ne lit pas : verts. Revue d'écran à 390 px : le texte d'exemple de
+la question 1 soufflait « 1,44 » (n°341), retiré.
+
+**Accès rapide** : aucun lien ne mène à cette séquence ; rien à actualiser. Nouveauté du jour : `#ecritPort`.
+
+**Non vérifié.** La durée ; un essai en classe.

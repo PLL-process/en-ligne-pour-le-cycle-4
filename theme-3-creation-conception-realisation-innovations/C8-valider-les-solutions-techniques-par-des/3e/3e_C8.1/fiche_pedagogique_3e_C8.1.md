@@ -58,6 +58,7 @@ reproduira pas.*
 | 2 | 3 — À quelle limite compares-tu ? | 25 min | `bonreglage` | 2 nombres + 1 réponse |
 | 3 | 4 — Le bon réglage, et ce qu'il ne voit pas | 30 min | `bonreglage` | 1 profilé + 1 réserve |
 | 3 | 5 — Réinvestissement (le quai du port, 180 km/h) | 20 min | — | 2 réponses |
+| 3 | Explique comme au brevet (le quai du port, sans propositions — n°346, 22/11/2026) | ~10 min, faisable à la maison | — | 3 réponses écrites, comparées à la correction, grille cochée par l'élève |
 
 ## 5. Les trois versions
 
