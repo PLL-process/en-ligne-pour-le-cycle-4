@@ -1925,6 +1925,12 @@ section.card .doc-html table.chaine-banc th,section.card .doc-html table.chaine-
   html body .ligne-q>li{padding-top:2px!important;padding-bottom:2px!important}
 }
 </style>
+<style>
+/* Ce qui défile est caché (règle d'or n°364, 22/11/2026) : sur un téléphone, un listing à lire revient à la ligne
+   au lieu de défiler. Aucun caractère n'est changé : le code copié reste le même. Le calque coloré d'un éditeur
+   (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */
+@media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#seances">Aller directement aux activités</a>

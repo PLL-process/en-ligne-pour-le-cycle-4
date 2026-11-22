@@ -28,6 +28,12 @@
 })();
 </script>
 <style>
+/* Ce qui défile est caché (règle d'or n°364, 22/11/2026) : sur un téléphone, un listing à lire revient à la ligne
+   au lieu de défiler. Aucun caractère n'est changé : le code copié reste le même. Le calque coloré d'un éditeur
+   (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */
+@media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
+<style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
     --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
