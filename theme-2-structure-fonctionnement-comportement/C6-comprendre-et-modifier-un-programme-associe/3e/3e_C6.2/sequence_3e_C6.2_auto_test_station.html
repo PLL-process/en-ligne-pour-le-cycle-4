@@ -2311,7 +2311,7 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="banc-essai">
   <h2>🧪 Activité 4 — Le banc d'essai&nbsp;: mon algorithme face à la panne <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> éprouver l'algorithme sur des pannes qu'on provoque soi-même.</div>
@@ -3093,7 +3093,7 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
 })();
 </script>
 <!-- onglets-seance v1 : fin -->
-<!-- entete-telephone v2 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->
+<!-- entete-telephone v3 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->
 <style>
 .entete-bascule,.entete-carte-bascule{display:none}
 @media screen and (max-width:600px){
@@ -3169,10 +3169,13 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
     premier.parentNode.insertBefore(bouton, premier);
   }
   var champs = [].slice.call(document.querySelectorAll("#identite input, .identite input")).filter(function(i){ return reglages.some(function(r){ return r.contains(i); }); });
+  /* v3 : le bouton dit ce qu'il replie — un nom seulement si la page en demande un (audit du 21/11/2026) */
+  var parcours = invites.length || reglages.some(function(r){ return r.matches(".choix-parcours-boutons") || r.querySelector(".choix-parcours-boutons"); });
   function libelle(){
     if (!bouton) return;
     var qui = champs.map(function(i){ return String(i.value || "").trim(); }).filter(Boolean).join(" ");
-    bouton.innerHTML = "⚙️ Mon nom, mon parcours, mes réglages"
+    bouton.innerHTML = (champs.length ? "⚙️ Mon nom, mon parcours, mes réglages" : parcours ? "⚙️ Mon parcours et mes réglages"
+      : "⚙️ Affichage, impression et sauvegarde")
       + (champs.length ? "<small>" + (qui ? "👤 " + qui.replace(/[&<>"]/g, "") : "✏️ Ton nom n'est pas encore écrit") + "</small>" : "");
   }
   function titre(carte){
@@ -3229,6 +3232,6 @@ document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", preparer); else preparer();
 })();
 </script>
-<!-- entete-telephone v2 : fin -->
+<!-- entete-telephone v3 : fin -->
 </body>
 </html>

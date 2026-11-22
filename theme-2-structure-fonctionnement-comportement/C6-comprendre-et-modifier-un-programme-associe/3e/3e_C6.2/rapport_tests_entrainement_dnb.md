@@ -1,74 +1,74 @@
 # Rapport de tests — Entraînement DNB « algorigrammes »
 
-**Date** 08/08/2026 · **Agent** Fable (Thème 2) · **Branche** `fable/theme-2/entrainement-dnb-algorigrammes`
+**Date** 21/11/2026 · **Agent** Fable (Thème 2) · révision après l'audit pédagogique et fonctionnel du même jour
 
-Ce rapport ne déclare **que des tests réellement exécutés** :
+Ce rapport ne déclare **que des tests réellement exécutés**. Le banc se rejoue depuis ce dossier :
 
 ```
-python3 tests_entrainement_dnb.py     # depuis ce dossier, Playwright + Chromium
+python3 tests_entrainement_dnb.py     # Playwright + Chromium ; sortie 2 si Playwright manque (n°299)
 ```
 
-## Résultat : 21 / 21 tests passés
+La page se reconstruit avec `python3 _outils/dnb_build.py <page>`, puis les quatre outils d'injection
+(`onglets_clavier`, `retrait_validation`, `onglets_seance`, `entete_telephone`, avec `--ecrire`).
 
-| Test exécuté | Résultat |
+## Résultat : 52 / 52 tests passés
+
+| Ce que le banc vérifie | Résultat |
 |---|---|
-| aucune erreur JavaScript au chargement | ✅ passé |
-| 30 exercices présents | ✅ passé |
-| chaque exercice propose 4 options plus le choix vide | ✅ passé |
-| chaque liste déroulante porte une étiquette (n°34) | ✅ passé |
-| chaque exercice a 2 aides et 1 correction | ✅ passé |
-| chaque correction réfute les 3 distracteurs | ✅ passé |
-| corrections repliées au chargement | ✅ passé |
-| images avec alternative textuelle de plus de 40 caractères | ✅ passé |
-| bandeau de tâches affiché (n°30) | ✅ passé |
-| bonnes réponses réparties sur les 4 positions (8/8/7/7) | ✅ passé |
-| manche 1 : score parfait reconnu | ✅ passé |
-| progression mise à jour après vérification | ✅ passé |
-| bandeau coché après validation | ✅ passé |
-| manche 2 : les exercices sans réponse sont signalés | ✅ passé |
-| mode essentiel masque corrections et rappel de cours (n°29) | ✅ passé |
-| mode essentiel laisse les exercices et les aides | ✅ passé |
-| réponses et progression restaurées après rechargement | ✅ passé |
-| les 4 onglets affichent leur bandeau | ✅ passé |
-| pas de défilement horizontal à 1280 px | ✅ passé |
-| pas de défilement horizontal à 420 px | ✅ passé |
-| liens internes vers les séquences présents | ✅ passé |
+| aucune erreur JavaScript, au chargement et pendant tout le banc | ✅ |
+| 30 exercices, 4 manches et l'épreuve écrite ; aucune liste déroulante (n°300) | ✅ |
+| chaque exercice : fieldset, légende, 4 boutons radio d'un même groupe, valeur = texte de l'étiquette | ✅ |
+| trois propositions fausses par exercice, chacune avec son pourquoi ; 2 aides et 3 réfutations par exercice | ✅ |
+| corrections citées par leur texte, jamais par une lettre ; aides et corrections repliées au chargement | ✅ |
+| onglets Symboles, Déroulement, Auto-test, Transfert, Épreuve écrite ; liens vers l'atelier en haut et en fin de manche 3 ; ancre `#banc-essai` présente dans l'atelier | ✅ |
+| rappel « cinq repères pour cet entraînement » ; chaque envoi au gardien dessiné dans un parallélogramme | ✅ |
+| bonne réponse : chaque place dans chaque manche, au plus 2 fois ; jamais 3 fois de suite ; aucun motif répété | ✅ |
+| **choisir toujours la plus longue ne valide aucune manche** ; répondre toujours à la même place non plus | ✅ |
+| manche parfaite : validée, « 8 / 8 renseignés », progression, deux tâches cochées, chaque exercice « ✔ juste » | ✅ |
+| **6 justes + 2 blancs : « 6 / 8 renseignés · seuil atteint », exercices 15 et 16 à faire, tâche « Répondre aux 8 » non cochée** | ✅ |
+| **une erreur en 17 : « À revoir : exercice 17 », « Revoir mon erreur » sans la bonne réponse, aide 1 ouverte d'un appui** | ✅ |
+| une réponse changée après « Vérifier » retire la validation et le dit (n°340) | ✅ |
+| trace de l'exercice 18 marquée case par case, sans retirer la validation ; « À toi » du rappel validé | ✅ |
+| prédiction : les propositions attendent « Voir les propositions », la prédiction est gardée | ✅ |
+| **après rechargement, les mêmes propositions sont cochées à la même place**, états et « Revoir » reviennent, « Où en suis-je ? » dit ce qui est à revoir | ✅ |
+| mode essentiel : rappel replié mais présent, corrections et « Revoir » gardés, textes d'accompagnement retirés | ✅ |
+| épreuve écrite : 4 réponses et grille gardées ; bandeau (réponses, correction lue, grille) ; aucun bouton qui note | ✅ |
+| « Ma fiche bilan » : manches, erreurs avec leur pourquoi, réponses écrites | ✅ |
+| contour d'un choix ≥ 3:1 sur la carte (mesuré ≈ 5:1) | ✅ |
+| stockage refusé par le navigateur : l'élève est prévenu | ✅ |
+| **page copiée seule dans un dossier vide, réseau coupé** : aucune erreur, aucun fichier manquant, schémas et couleurs présents | ✅ |
+| aucun défilement horizontal à 320, 390 et 1 280 px, sur les cinq pages | ✅ |
+| impression : manche ouverte seule, sans boutons ni replis fermés, texte foncé ; manche 4 en 6 pages A4 au plus (5 mesurées) | ✅ |
 
-## Deux défauts trouvés par les tests, et corrigés
+Rejoué sur l'ancienne page (`main`, d2a39ea), le banc échoue dès la structure : il sait voir ce que l'audit a vu.
 
-**La répartition des bonnes réponses.** Le premier tirage aléatoire plaçait **15 bonnes réponses
-sur 30 en position C**. Un élève qui répond C au hasard aurait eu la moyenne sans rien lire. Le
-générateur applique désormais une répartition déterministe — 8 / 8 / 7 / 7 — comme le fait
-`_outils/fix_r.js` pour les QCM. Le test vérifie que les quatre positions sont servies.
+## Contrôles du dépôt exécutés
 
-**Un test qui mentait, pas la page.** Le contrôle « le mode essentiel laisse les exercices
-visibles » échouait : il interrogeait le premier exercice de la page, qui appartient à la manche 1
-— masquée puisque le test venait de basculer sur la manche 2. Le test cible maintenant le panneau
-actif. La page, elle, était correcte.
+Sur le dossier ou la page : `controle_validations`, `controle_propositions_indices`, `controle_schemas` (0 ✘ ; les deux
+⚠ restants portent sur `trace_banc_essai.svg`, non modifié), `controle_schema_sous_les_yeux`, `controle_hors_ligne`,
+`controle_code_colore` (8 listings en couleurs), `controle_contraste_liens`, `controle_tactile`, `controle_liens`,
+`controle_hierarchie`, `controle_debordement`, `controle_impression`, `controle_verrous`, `banc_effacement`,
+`sans_modale`, `controle_consignes_a_la_ligne`, `controle_ordre_propositions`, `controle_unites`, `controle_sigles`,
+`controle_memes_nombres`, `controle_navigation_seances`, `controle_atteignabilite`, `controle_rapports_tests` : verts.
 
-## Ce que la suite ne couvre pas
+**axe-core 4.14** (WCAG 2.2 AA et bonnes pratiques), en 20 états — cinq onglets, 390 et 1 280 px, mode essentiel ou
+non, après une vérification avec erreurs, tous les replis ouverts : **0 défaut**. Pendant la mesure, la barre de
+navigation collante est rendue statique : sans cela, elle recouvrait un bouton radio au moment du calcul de
+`target-size`, ce qui n'est pas un défaut de la page.
 
-Le rendu à l'impression A4, le contraste mesuré point par point, la lecture par un vrai lecteur
-d'écran et le zoom navigateur à 200 % **n'ont pas été vérifiés automatiquement**. Ils sont donc
-déclarés **non vérifiés**, et non « conformes ».
+Atelier voisin (ancre `#banc-essai` ajoutée) : `tests_3e_C6.2.py` 22 / 22, `tests_regle_311_3e_C6.2.mjs` 34 / 34.
 
-## Vérificateur des règles d'or
+## Revue d'écran (trois tours, 390 px)
 
-La page n'est pas nommée `sequence_*.html` : elle n'entre donc pas dans le champ de
-`_outils/verif_regles_audit.py`, qui audite les séquences. Les règles applicables ont été tenues à
-l'écriture et vérifiées par la suite ci-dessus : n°29 (mode essentiel), n°30 (bandeau), n°33
-(aération), n°34 (étiquettes, alternatives, absence de défilement horizontal).
+1. Schémas lus à 11 px environ → texte des schémas passé à 16, schéma pleine largeur de la carte au téléphone (≈ 13 px) ;
+   tableau modèle à cinq colonnes qui débordait → filet mobile et région atteignable au clavier ; instruction citée
+   coupée en fin de ligne (« pieces ← pieces + / 1 ») → espaces insécables.
+2. Impression : 39 pages A4 pour la page entière, un schéma séparé de sa question → manche ouverte seule, replis fermés
+   exclus, schémas hauts réduits à 5,7 cm de large, exercice insécable : 8, 4, 6, 5 et 2 pages.
+3. Pied de page seul sur sa dernière page → retiré du papier, licence gardée.
 
-La règle n°31 (version étayée) est **sans objet** : la page ne demande aucune production écrite,
-toutes les réponses se font par liste déroulante — un choix assumé pour les élèves DYS, hérité de
-la méthode du dépôt.
+## Ce qui n'a pas été vérifié
 
-## L'ancienne banque, laissée en place
-
-`sequence_algorigrammes_dnb.html` et `qcm_algorigrammes_dnb.html` ne sont **pas modifiés ni
-déplacés**. Quatorze fichiers du dépôt y font référence, dont la séquence 3e_C6.1 et plusieurs
-fichiers générés : les déplacer casserait ces liens et dépasserait le périmètre de ce lot.
-
-Conséquence assumée : l'ancienne banque reste signalée sans mode essentiel, et c'est **le dernier
-manquement mécanique du Thème 2**. Son archivage relève d'une décision de gouvernance, pas d'un
-correctif technique.
+Lecteur d'écran réel ; appareils Android et Galaxy Tab physiques ; zoom réel du navigateur à 200 % (la largeur de
+320 px, qui lui correspond, est vérifiée) ; impression sur une vraie imprimante (les PDF A4 de Chromium sont vérifiés) ;
+durée réelle de chaque manche ; essai avec des élèves.

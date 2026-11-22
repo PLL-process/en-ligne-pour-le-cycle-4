@@ -40,14 +40,25 @@ ci-dessus.
 dans tout le dépôt (SIL Open Font License 1.1). En l'absence de réseau, la page bascule sur
 la police système : aucune information n'est perdue.
 
-## Réemploi dans l'entraînement DNB
+## L'entraînement DNB : douze algorigrammes écrits dans la page (révision du 21/11/2026)
 
-La page `entrainement_dnb_algorigrammes.html` réutilise les **trois mêmes SVG**, sans en produire
-de nouveaux : la planche des symboles illustre l'exercice sur le losange et le rappel de cours,
-l'algorigramme de l'auto-test illustre l'exercice sur l'initialisation du compteur, et la trace
-d'exécution illustre celui sur le compteur qui ne redescend pas.
+Depuis la révision qui suit l'audit du 21/11/2026, `entrainement_dnb_algorigrammes.html` ne charge plus aucune image :
+ses **douze algorigrammes** sont des SVG originaux, **CC0 1.0**, écrits dans la page par `_outils/dnb_schemas.py`
+(Fable, agent Thème 2) — ventilateur, compteur qui remonte, boucle qui ne tourne pas, auto-test à trois emplacements,
+auto-test complet, auto-test annoté (correction), deux voyants du Lamentin (rappel), serre à deux seuils, lampadaire,
+tri des déchets, porte automatique, abri à vélos (épreuve). Mêmes conventions partout : parallélogramme pour lire,
+envoyer, afficher ou commander ; étiquette « oui » / « non » contre le segment qu'elle nomme. Chacun porte un `<title>`
+et un `<desc>` qui décrivent le contenu, et la page affiche la même description en étapes (« 📝 Le schéma, en texte »).
 
-Un média produit une fois et lu trois fois vaut mieux que trois médias décoratifs.
+Deux fichiers du lot ont changé avec lui, parce que le QCM s'en sert aussi :
+- `Images/algorigramme_auto_test.svg` est **régénéré** par `dnb_schemas.py --fichiers` (le même dessin que l'exemple
+  guidé de la correction) : les envois au gardien sont des parallélogrammes, le libellé « non » est contre la flèche
+  qui descend, et la description ne dit plus que le message nomme les organes (un compteur ne retient qu'un nombre) ;
+- `Images/symboles_algorigramme.svg` : ses textes disent « cinq repères… il en existe d'autres », et les bornes
+  « d'un traitement qui se termine ».
+
+`Images/trace_banc_essai.svg` n'est plus utilisé par l'entraînement ; le QCM le garde (son message cite les organes,
+comme l'algorithme de l'atelier, qui les mémorise dans une liste).
 
 ## Image générée par IA (Canva) pour la synthèse élève
 

@@ -35037,3 +35037,115 @@ questions et trois billets regardés à 390 px.
 **À décider (Pascal).** 1. Les séances que le billet alourdit : le garder ainsi, ou le replier sous son titre.
 2. La capture de « Sécurité Windows », sur son poste, pour la question du pare-feu. 3. La phrase de `3e_C1.5` sur le
 consentement à 15 ans.
+
+## 21/11/2026 — 3e_C6.2, entraînement DNB « algorigrammes » : l'audit pédagogique et fonctionnel appliqué point par point (transversal : `_outils/entete_telephone.py` v3, 63 pages des trois thèmes)
+
+Pascal joint un audit externe de `entrainement_dnb_algorigrammes.html` (« Audit pédagogique et fonctionnel • 3e •
+Algorigrammes et préparation au DNB », 21/11/2026) et demande de « modifier la séquence en respectant tous les points
+de l'audit, de façon pédagogique, didactique et ultra premium ». Relu selon `relire-un-audit-externe` : chaque constat
+a été **rejoué au navigateur** sur la page de `main` (d2a39ea) avant toute correction.
+
+**Constats confirmés (✅), mesurés sur `main` :**
+- la bonne réponse suivait le motif 2-1-4-3 de la question 1 à la question 30, et elle était **strictement la plus
+  longue dans 23 exercices sur 30**, dont les 8 de la manche 4 ;
+- avec 6 réponses justes et 2 blancs, la manche 1 était validée **et** la tâche « Traiter les 8 exercices » cochée ;
+  avec 7 justes et 1 fausse, le score s'affichait sans dire quel exercice reprendre ;
+- l'algorigramme de l'auto-test dessinait les deux envois au gardien dans des **rectangles** (la planche les range
+  dans les entrées-sorties) ; le libellé « non — on sort » était posé à droite d'une flèche qui descend ; la trace
+  de Q18 nommait les organes en panne alors que l'algorigramme ne compte qu'un total ;
+- le rappel présentait cinq symboles « et cinq seulement », DÉBUT/FIN « une seule fois chacun » comme règle générale ;
+- en mode essentiel, le rappel et les corrections disparaissaient alors que le message de réussite invitait à les
+  ouvrir ; les sous-titres d'onglets étaient « Ce… », « On… », « Là… », « Des… » ;
+- contour des listes : ≈ 2,1:1 sur la carte (WCAG 1.4.11 demande 3:1) ;
+- une écriture refusée par le navigateur passait sous silence ; la fiche pédagogique disait la page « copiable telle
+  quelle » alors qu'elle chargeait trois SVG et deux fichiers partagés ;
+- la page posait ses 30 questions par **listes déroulantes** (règle n°300) ; la fiche annonçait un seuil des « trois
+  quarts » que la manche 3 ne suivait pas (4 sur 6, n°338).
+
+**Corrigé** (même adresse ; nouvelle clé de sauvegarde `entrainement_dnb_algorigrammes_v2` — l'ancienne gardait des
+validations sur d'anciens textes ; « Effacer » efface les deux) :
+1. **Banque réécrite** (`_outils/dnb_exercices.py`) : quatre propositions de même forme et de longueurs voisines, la
+   justification sortie de la bonne réponse et écrite dans la correction (« ✍️ Sur ta copie, on peut écrire »), chaque
+   proposition fausse avec son pourquoi ; place de la bonne réponse tirée une fois pour toutes, chaque place une ou
+   deux fois par manche, ni trois fois de suite, ni motif périodique (`dnb_build.places`). Mesuré : la plus longue
+   n'est plus la bonne que 7 fois sur 30 (le hasard en donne 7,5) ; « toujours la plus longue » et « toujours la même
+   place » ne valident aucune manche. Corrections citées par leur texte, jamais par une lettre.
+2. **Les 30 exercices revus un par un selon l'audit** : losange à suivre avec une valeur (2), formes seules et « quelle
+   donnée quitte le système ? » (4), affectation ← contre comparaison = (5), surveillance continue sans FIN (6), flèche
+   qui remonte (8), prédiction avant les propositions (9 à 15), colonne 9/10/11 (10), « quelle ligne ne change rien »
+   (12), 5 affichages / 6 tests / i = 6 (13), le chemin tracé sur un schéma et « aucune sortie » (14), la mise à jour
+   à ajouter, vérifiée sur deux tours (15), dépendance « lire avant de décider » au lieu du thé (16), emplacements ①②③
+   sur un schéma sans indice (17), trace à compléter sur un autre matin (18), moment et contenu de l'envoi (19), deux
+   écritures entières de « au moins un » (20), délimiteurs et indentation (21), ce que sait le gardien sans message
+   (22), serre avec état initial et zone neutre (23), ET sur quatre situations avec branche d'extinction (24),
+   justification du cas limite (25), branche « refus » dite par le besoin (26), pièce confirmée et non tour de boucle
+   (27), présence relue à chaque tour (28), sonde à cœur (29), 14/15/16 et défi « commande en cours » (30).
+3. **Schémas** (`_outils/dnb_schemas.py`, nouveau) : douze algorigrammes écrits dans la page, mêmes conventions partout
+   (parallélogramme pour lire, envoyer, afficher ou commander ; étiquette contre le segment qu'elle nomme ; flèche qui
+   rejoint le flux sur un point de jonction), 400 à 440 unités, texte de 16 ; au téléphone ils prennent toute la largeur
+   de la carte. Chacun a sa description en étapes (« 📝 Le schéma, en texte »), la même que lit un lecteur d'écran.
+   `Images/algorigramme_auto_test.svg` (QCM du lot) est régénéré par le même code ; la planche
+   `Images/symboles_algorigramme.svg` dit « cinq repères… il en existe d'autres ».
+4. **Rappel de cours** : « tu utiliseras cinq repères graphiques » ; bornes d'un traitement qui se termine ; l'encadré
+   « 🧭 Comment suivre un algorigramme ? » de l'audit, en six étapes ; ← et = ; un seuil s'essaie trois fois ; une
+   boucle en trois gestes ; ET sur quatre couples (badge et bouton d'un garage : pas nuit/présence, qui aurait soufflé
+   l'exercice 24) ; l'exemple guidé des deux voyants du Lamentin (schéma + trace modèle) et « ✋ À toi » (deux pannes,
+   puis la remise à zéro dans la boucle : 1 au lieu de 2).
+5. **Vérification** : après « Vérifier », chaque exercice dit ✔ juste, ✘ à revoir ou ○ à faire ; le message sépare
+   l'avancement (« 6 / 8 renseignés »), la réussite (« seuil atteint ») et les exercices à reprendre, en liens ;
+   « 🔎 Revoir mon erreur » cite le choix et ce qui cloche, sans la solution, puis ouvre l'aide 1. Le bandeau a deux
+   tâches distinctes (« Répondre aux 8 exercices (6 / 8) » ne se coche qu'à 8 / 8). Seuils inchangés et écrits :
+   6 / 8, 6 / 8, 4 / 6, 6 / 8. Une réponse changée remet l'exercice « ✏️ à vérifier » (et la manche, n°340) ; une
+   prédiction ou une case de trace ne retire rien.
+6. **Épreuve écrite** (cinquième onglet) : l'abri à vélos de l'audit, sans propositions, deux documents (dont la
+   condition d'origine à part), quatre réponses rédigées sauvegardées avec un coup de pouce chacune, correction
+   (réponse possible, ce qui est attendu, contre-exemples), grille « suivre la branche / justifier avec les données /
+   modifier et vérifier ». Aucun bouton ne note une réponse écrite (n°340, n°333).
+7. **Interface** : onglets « Symboles », « Déroulement », « Auto-test », « Transfert », « Épreuve écrite » ; « 🩺 Atelier
+   C6.2 · auto-test » en haut et, à la fin de la manche 3, un lien vers le banc d'essai (`#banc-essai`, ancre posée sur
+   l'activité 4 de l'atelier) ; questions en boutons radio (n°300) au contour ≈ 5:1 ; mode essentiel qui garde rappel
+   replié, aides, « Revoir » et corrections ; « 📍 Où en suis-je ? » ouvert après une reprise ; alerte si le navigateur
+   refuse la sauvegarde ; « 📄 Ma fiche bilan » (manches, erreurs avec leur pourquoi, réponses écrites, grille : une page
+   A4, deux mesurées avec des erreurs dans les quatre manches) ; impression de la **manche ouverte** seule, replis fermés exclus, texte noir (8, 4, 6, 5 et 2 pages A4 ;
+   la page entière en faisait 39 dans la première version de ce lot) ; **page autonome** : schémas et colorisateur
+   (`_ressources-communes/code-colore/`, copié par `dnb_build.py`) sont dans la page, qui s'ouvre seule, sans réseau,
+   depuis un dossier vide.
+8. **Message au brevet** : plus aucune phrase qui fait croire que l'examen se joue dans les distracteurs ; « Après avoir
+   choisi, entraîne-toi à expliquer ton cheminement en une ou deux phrases » dans chaque manche ; barème 2027 rappelé
+   dans l'épreuve (10 points, 30 minutes environ, dont 1 pour la langue — note de service MENE2623228N).
+
+**Généralisé (transversal)** — même défaut ailleurs (n°293) : le bouton replié au téléphone annonçait « ⚙️ Mon nom, mon
+parcours, mes réglages » sur **36 pages sur 63** qui ne demandent aucun nom. `entete_telephone.py` v3 : le bouton dit
+ce qu'il replie (« Mon nom… » si la page demande un nom, sinon « Mon parcours et mes réglages », sinon « Affichage,
+impression et sauvegarde ») ; reposé sur les 63 pages à onglets (thème 1 : 14, thème 2 : 17 dont cette page et l'atelier, thème 3 : 32) ; banc
+`tests_entete_telephone.py` 24 / 24 (deux cas v3 ajoutés). `controle_schema_sous_les_yeux.py` : exemptions de cette
+page remises sur ses nouveaux titres.
+
+**Bancs et contrôles exécutés** : `3e_C6.2/tests_entrainement_dnb.py` réécrit, **52 / 52** (les critères de recette de
+l'audit : 6 justes + 2 blancs, « Q17 à revoir » sans la solution, stratégie de la plus longue, réponses retrouvées
+après rechargement, stockage refusé, page seule sans réseau, 320 / 390 / 1 280 px, impression) ; sur l'ancienne page,
+il échoue dès la structure. Atelier : `tests_3e_C6.2.py` 22 / 22, `tests_regle_311_3e_C6.2.mjs` 34 / 34. axe-core 4.14
+(WCAG 2.2 AA + bonnes pratiques) dans 20 états (cinq onglets, 390 et 1 280 px, mode essentiel, après une vérification
+fausse, tous replis ouverts) : 0 défaut — la barre de navigation collante rendue statique pendant la mesure (elle
+recouvrait un bouton radio au moment du calcul de `target-size`). `controle_validations`, `controle_propositions_indices`,
+`controle_schemas` (0 ✘ ; 2 ⚠ restent sur `trace_banc_essai.svg`, que ce lot ne touche pas), `controle_schema_sous_les_yeux`,
+`controle_hors_ligne`, `controle_code_colore` (8 listings), `controle_contraste_liens`, `controle_tactile`,
+`controle_liens`, `controle_hierarchie`, `controle_debordement`, `controle_impression`, `controle_verrous`,
+`banc_effacement` (44 réponses posées, rien ne reste), `sans_modale`, `controle_ordre_propositions`, `controle_unites`,
+`controle_sigles`, `controle_memes_nombres`, `controle_navigation_seances`, `controle_atteignabilite` : verts.
+Revue d'écran en trois tours à 390 px : tour 1, schémas à 11 px (texte passé à 16, schéma pleine largeur de la carte),
+tableau modèle à cinq colonnes qui débordait (filet mobile, région clavier), « « pieces ← pieces + » coupé en fin de
+ligne (instruction citée insécable) ; tour 2, impression de 39 pages et un schéma séparé de sa question (manche
+ouverte seule, schémas hauts à 5,7 cm, exercice insécable) ; tour 3, pied de page seul sur sa page (retiré du papier).
+
+**Non vérifié** : lecteur d'écran réel, appareils Android et Galaxy Tab physiques, zoom navigateur réel à 200 %,
+impression sur une vraie imprimante, durée de chaque manche (à mesurer au premier essai en classe), et aucun essai
+avec des élèves.
+
+**Décisions de Pascal sur ce lot** (21/11/2026, 21 h 31, « Tu as carte blanche »), prises pour l'élève :
+1. **Seuils gardés** : 6 / 8, 6 / 8, 4 / 6, 6 / 8. L'audit dit « conserver le seuil pédagogique si souhaité » ; la
+   manche 3 est la plus exigeante, et le seuil est écrit à côté de son bouton. La fiche pédagogique ne parle plus des
+   « trois quarts » : elle donne les quatre nombres.
+2. **Impression de la manche ouverte, sans bouton « toute la banque »** : un élève imprime ce qu'il vient de faire, et
+   les photocopies sont comptées ; la page entière, schémas compris, ferait une trentaine de pages A4. « 📄 Ma fiche
+   bilan » garde la trace de toutes les manches sur une page.

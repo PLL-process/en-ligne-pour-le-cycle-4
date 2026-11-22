@@ -122,6 +122,24 @@ with tempfile.TemporaryDirectory() as d, sync_playwright() as p:
                     and s2["banc"] and s2["mission"] and s2["carte"] is None, s2)
         verifie("%d px : aucune erreur JavaScript" % w, not err, err[:1])
         ctx.close()
+    # v3 : une page sans nom à écrire — le bouton ne parle pas d'un nom (audit du 21/11/2026, 3e_C6.2)
+    sans_nom = PAGE.replace(PAGE[PAGE.index('<div class="identite"'):PAGE.index('</span></div>') + len('</span></div>')], '')
+    for nom_page, page, attendu in (
+            ("sans nom, avec parcours", sans_nom, "⚙️ Mon parcours et mes réglages"),
+            ("sans nom ni parcours", sans_nom.replace(' choix-parcours-boutons', '').replace(
+                PAGE[PAGE.index('<div class="progress-wrap">'):PAGE.index('</div></div>') + 12], ''),
+             "⚙️ Affichage, impression et sauvegarde")):
+        f3 = os.path.join(d, "v3.html")
+        open(f3, "w", encoding="utf-8").write(ET.poser(page))
+        ctx = b.new_context(viewport={"width": 390, "height": 844})
+        pg = ctx.new_page()
+        pg.goto("file://" + f3)
+        pg.wait_for_timeout(80)
+        pg.click('.seance-tab >> nth=1')
+        pg.wait_for_timeout(80)
+        lib = pg.evaluate("(document.querySelector('.entete-bascule') || {}).textContent || ''")
+        verifie("v3, page %s : le bouton dit « %s »" % (nom_page, attendu), lib == attendu, lib)
+        ctx.close()
     # des onglets qui sont des liens : la page n'est pas touchée
     f2 = os.path.join(d, "lien.html")
     open(f2, "w", encoding="utf-8").write(ET.poser(lien))

@@ -48,6 +48,10 @@ v2 (19/11/2026, les 14 pages qui restaient) :
     l'ouvre sous le doigt. Repliée, elle garde sa largeur (un simulateur se dessine à la bonne taille) et elle est
     inerte ; une carte courte (moins de deux fois et demie la hauteur du bouton) ne se replie pas ;
   · le titre de la séquence passe à 1,3 em (ses marges restent : une barre de navigation fixe le recouvrirait).
+v3 (21/11/2026, audit de l'entraînement DNB de 3e_C6.2) : le bouton dit ce qu'il replie. « ⚙️ Mon nom, mon parcours,
+mes réglages » seulement si la page demande un nom ; sinon « ⚙️ Mon parcours et mes réglages » (choix du parcours ou
+mode mission) ou « ⚙️ Affichage, impression et sauvegarde ». Mesuré : 36 pages sur 63 annonçaient un nom qu'elles ne
+demandent pas.
 Mesure à 390 px, séance 2, page complète : onglets sous le premier écran sur 27 pages sur 63 avant la v1, 14 après la
 v1, **1** après la v2 (`3e_C9.2`, huit onglets : bas à 859 px, la première rangée se voit).
 
@@ -63,8 +67,8 @@ import sys
 
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUT = "<!-- entete-telephone v2 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->"
-FIN = "<!-- entete-telephone v2 : fin -->"
+DEBUT = "<!-- entete-telephone v3 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->"
+FIN = "<!-- entete-telephone v3 : fin -->"
 BLOC_RE = re.compile(r"<!-- entete-telephone v\d+ : début.*?<!-- entete-telephone v\d+ : fin -->\n?", re.S)
 BLOC_CORPS = r"""<style>
 .entete-bascule,.entete-carte-bascule{display:none}
@@ -141,10 +145,13 @@ BLOC_CORPS = r"""<style>
     premier.parentNode.insertBefore(bouton, premier);
   }
   var champs = [].slice.call(document.querySelectorAll("#identite input, .identite input")).filter(function(i){ return reglages.some(function(r){ return r.contains(i); }); });
+  /* v3 : le bouton dit ce qu'il replie — un nom seulement si la page en demande un (audit du 21/11/2026) */
+  var parcours = invites.length || reglages.some(function(r){ return r.matches(".choix-parcours-boutons") || r.querySelector(".choix-parcours-boutons"); });
   function libelle(){
     if (!bouton) return;
     var qui = champs.map(function(i){ return String(i.value || "").trim(); }).filter(Boolean).join(" ");
-    bouton.innerHTML = "⚙️ Mon nom, mon parcours, mes réglages"
+    bouton.innerHTML = (champs.length ? "⚙️ Mon nom, mon parcours, mes réglages" : parcours ? "⚙️ Mon parcours et mes réglages"
+      : "⚙️ Affichage, impression et sauvegarde")
       + (champs.length ? "<small>" + (qui ? "👤 " + qui.replace(/[&<>"]/g, "") : "✏️ Ton nom n'est pas encore écrit") + "</small>" : "");
   }
   function titre(carte){
