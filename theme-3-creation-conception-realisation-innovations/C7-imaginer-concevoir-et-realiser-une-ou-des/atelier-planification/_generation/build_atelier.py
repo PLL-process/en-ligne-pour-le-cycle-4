@@ -996,6 +996,10 @@ BAS_T = """
 </main>
 <div class="page">
 
+<!-- Règles d'or n°4, n°301, n°306 : la clôture se lit Bonus → Bilan → renvoi au QCM. Jusqu'au 22/11/2026 le Bonus
+     venait après le QCM ; l'audit du 22/11 l'a vu quand les scripts de fin de page ont repoussé le bouton à 53 %%. -->
+%(bonus)s
+
 <section class="card">
   <h2>&#127937; Bilan — et ton hypothèse de départ</h2>
   <p>Tu avais répondu, au début, à cette question&nbsp;: <i>un projet dure 9 séances, on divise par
@@ -1023,8 +1027,6 @@ BAS_T = """
   questions qui vont un peu plus loin que ta page.</p>
   <p><a class="btn qcm" href="qcm_C7.1_planification_taches.html">&#129504; Ouvrir le QCM (30 questions)</a></p>
 </section>
-
-%(bonus)s
 
 </div>
 <section class="card syntheses">

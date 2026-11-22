@@ -36265,3 +36265,16 @@ cours dans une autre session : son générateur des lexiques pose déjà les inf
 (13 lexiques en retard sur leur source), et deux incrustations FAST (4e_C4.4, 5e_C4.1) ont reçu à la main des
 infobulles que `build.py` ne sait pas poser. Ces **17 fichiers** sont laissés à cette vague : régénérer ici les effacerait
 ou devancerait son travail. Hors d'eux, la dérive reste à zéro.
+
+## 22/11/2026 — Ateliers de planification (3e, 4e, 5e) : la clôture se lit Bonus → Bilan → QCM (n°4, n°301, n°306) (thème 3)
+
+**Carte blanche de Pascal** (22/11). L'audit du 22/11 (#867) voyait le bouton QCM des trois ateliers de planification « à
+53 % de la page » (`controle_regle4.py`). Lu sur la page : le QCM venait **avant** le Bonus — ordre Bilan → QCM → Bonus,
+écrit tel quel par `build_atelier.py` et vérifié tel quel par le banc `tests_atelier_C7.1.py`. Le défaut existait depuis
+toujours ; il ne se voyait pas tant que la page était courte, et les scripts de fin de page ajoutés le 19/11 (onglets de
+séance, en-tête téléphone) l'ont fait apparaître. **Corrigé à la source** : `BAS_T` pose le Bonus avant le Bilan ; le banc
+vérifie désormais Bonus → Bilan → QCM. Les trois pages sont régénérées.
+
+**Vérifié.** `tests_atelier_C7.1.py` 48/48 ; `verif_chaine.py` (chaque page est ce que le générateur produit) ;
+`controle_regle4.py` : les trois ateliers ne sont plus en écart (reste le TP algorigrammes de 4e_C6.2, décision de Pascal) ;
+`verif_regles_audit.py` : aucun ✘ sur ces pages. **Non exécuté** : la revue d'écran à 390 px.
