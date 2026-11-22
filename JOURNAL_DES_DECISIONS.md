@@ -53,9 +53,9 @@
 | 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure : 24 listings dans 8 pages au 21/11) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
-| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 14 pages au 21/11) |
+| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 3 pages — 11 faux positifs retirés le 21/11 au soir : pages-pointeurs et renvoi), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
@@ -35589,6 +35589,42 @@ touchée) : les 24 listings qui défilent (n°364) et les 14 pages sans porte (n
 titres « V16 » et « V5 » des pages `4e_C1.4` (n°309), relevés par la mesure mais pas encore refusés : le motif d'un
 numéro de version attrapait aussi des personas (« Feng (V12) ») et « version 1 » d'un programme d'élève.
 
+## 21/11/2026 — 3e_C6.1, pilote de la n°346 : trois explications écrites après le programme de la bouée (thème 2)
+
+**Décision.** Pascal (21/11/2026, 23 h 45) : « Tu as carte blanche », en réponse aux deux questions laissées ouvertes
+après la PR #849 — dont la liste des séquences par où commencer la tâche finale rédigée (n°346). Choix fait sur mesure :
+la dernière séance de chaque séquence de 3e a été lue (zones de texte et groupes radio avant le Bonus) ; celle de
+« Programmer l'alerte » (`3e_C6.1-C6.3`) finissait sans aucune réponse écrite — 0 zone de texte, 12 groupes de boutons
+radio — et c'est la séquence de programmation qui mène à l'entraînement DNB. `3e_C9.1` a été écartée : sa séance 4 fait
+déjà écrire un programme testé (activité 5, n°114).
+
+**Ce qui change.** Après les six questions de la bouée, un bloc « ✍️ Explique comme au brevet — sans propositions » :
+le programme de la bouée repris sous les yeux (n°331) ; trois questions graduées (le cas limite 4,0 m justifié par le
+signe ; la ligne 4 modifiée en `>=` et l'essai qui distingue les deux versions ; le drapeau orange écrit en `elif` et
+l'essai qui prouve l'ordre des tests) ; une version étayée par question (n°31) ; une correction repliée, exhaustive,
+avec trois phrases de copie (n°356) et les erreurs attendues ; une grille à trois critères que l'élève coche (suivre la
+branche, justifier avec les données, modifier et vérifier). Rien n'est noté : la ligne d'état compte ce qui est écrit
+et coché, « aucune note n'est calculée » (n°340). Fiche de l'activité, consigne (③) et critère de réussite le disent.
+
+**Un défaut vu au banc, corrigé avant livraison.** Placé d'abord dans l'activité 6, le bloc tombait dans la zone du
+retrait de validation (n°340, `_outils/retrait_validation.py`) : écrire une explication retirait la validation des six
+questions. Le bloc est maintenant hors de la zone de vérification, dans la même carte. Le module commun n'a pas été
+touché ; à retenir pour la vague suivante : un écrit non noté se pose hors de la zone d'un bouton « Vérifier ».
+
+**Vérifié.** `tests_3e_C6.1-C6.3.mjs` 38 / 38 (trois tests nouveaux : structure de l'écrit, état sans validation,
+reprise après rechargement) ; `tests_regle_311_3e_C6.1.mjs` 34 / 34 ; mode mission sans refus (pourquoi 48 / 48) ;
+`eleve_qui_ne_lit_pas.py` sans validation ; contrôles validations, règles visibles, hiérarchie, débordement, consignes à
+la ligne, propositions sans indice, schéma sous les yeux, mêmes nombres, tactile, code coloré (8 / 8), hors ligne,
+impression : verts. Le lien `#ecritBouee` ouvre la séance 3. Revue d'écran à 390 px (zones de texte agrandies au
+premier tour).
+
+**Accès rapide** : aucun lien de l'accès rapide ne mène à cette séquence ; rien à actualiser. La nouveauté du jour
+pointe sur `#ecritBouee`.
+
+**Non vérifié.** La durée du réinvestissement avec l'écrit (25 min annoncées, à mesurer en classe) ; un essai avec des
+élèves. Les autres séquences de 3e qui finissent sans écrit (`3e_C4.7` pont numérique, `3e_C8.1` mât de la station)
+sont la vague suivante.
+
 ## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances
 
 **La demande.** Le deuxième des trois chantiers de Pascal (« Termine en toute confiance et autonomie… »), confirmé le
@@ -35638,6 +35674,76 @@ partout : ce qui pesait, c'était surtout **les exercices d'atelier incrustés**
 Mode mission joué sur les 14 : aucun refus, écrans identiques avant et après (les incrustations n'y sont pas découpées).
 `incrustations.py --verifier` : tout à jour. `controle_squelette.mjs` vert ; `audit_aeration.py --strict` vert sur
 `3e_C1.1` ; `controle_question_seule.py --strict` : thème 1 à 0 refus.
+
+## 21/11/2026 — Vague n°364 et n°366, thème 2 : trois pages dont les listings ne défilent plus, et les deux contrôles corrigés (11 faux positifs pour la porte, les calques d'éditeur pour les listings)
+
+Carte blanche de Pascal (21/11, 23 h 45), après la fusion de la PR #850. Première vague des deux règles, par le thème 2
+(ses PR se fusionnent seules quand la garde est verte, n°5 amendée) ; les thèmes 3 et 1 suivent, une PR chacun.
+
+**Ce que la mesure avait de faux** — corrigé avant de corriger les pages :
+- **n°366, 14 pages sans porte → 3.** Dix étaient des pages-pointeurs (n°83) : une carte et un bouton vers l'atelier
+  commun (`ateliers-representations/…`, `atelier-planification/…`), que la séquence relie déjà ou incruste. La onzième,
+  `3e_C9.1/vittascience_variables.html`, est un renvoi « Ressource déplacée » : le TP des variables a été refondu DANS
+  sa séquence. **L'entrée de la n°366 citait ce TP comme exemple : c'était faux**, il a sa place dans la séquence. Le
+  contrôle reconnaît maintenant les pointeurs (le bouton `class="btn"` vise une page que la séquence relie) et les
+  renvois ; banc `_outils/tests_controle_porte_sequence.py` 5 / 5. **Restent 3 pages**, toutes du thème 1 :
+  `5e_C1.2/activite_crcn_donnees_freinage_5e_C1.2.html`, et les ateliers « cas d'utilisation » de `4e_C2.1` et
+  `5e_C2.1`. Les relier depuis leur séquence ajoute une activité à la séquence : choix pédagogique, question posée à
+  Pascal ; elles restent dans la référence.
+- **n°364, 24 listings → 21.** Trois étaient le calque coloré d'un éditeur intégré (`pre.cl-hl` de 3e_C6.1, caché aux
+  lecteurs d'écran ; `pre.editeur-py-couleurs` de 4e_C6.2), posé sur sa zone de saisie et qui défile avec elle : un
+  éditeur, pas un listing à lire. `controle_page_ouverte.mjs` les écarte ; banc 11 / 11 (cas ajouté).
+
+**Corrigé dans le thème 2** (5 listings, 3 pages) : `3e_C6.1` (le programme d'origine, les deux listings miroirs
+numérotés), `4e_C6.2` (le listing de l'activité Python), `4e_C4.1/atelier_pix_crcn_jardin.html` (le pseudo-code à
+compléter). Sur un écran de 600 px ou moins, un listing à lire **revient à la ligne au lieu de défiler**
+(`white-space: pre-wrap`) : aucun caractère n'est changé, le code copié reste le même ; les calques d'éditeur gardent
+leurs lignes. Couper une instruction Python à la main aurait changé le programme que l'élève recopie : le retour à la
+ligne visuel est la coupe « là où le sens le permet » d'un listing qu'on exécute. Mesure après : 0 listing qui défile
+dans ces trois pages ; 16 restent, dans 5 pages des thèmes 3 et 1.
+
+**Vu en chemin, dans la même page** (`3e_C6.1`, accessibilité) : les deux listings miroirs défilaient sans être
+atteignables au clavier (axe `scrollable-region-focusable`, déjà rouge sur `main`) → `tabindex="0"` et un nom ; les
+numéros de ligne étaient à 4,4 : 1 sur leur fond (`color-contrast`, 29 nœuds contre 11 dans la référence, déjà rouge
+sur `main`) → #7f9bd0, 6,6 : 1. `controle_axe.mjs` sur la page : vert.
+
+Contrôles : `tests_3e_C6.1-C6.3.mjs` 35 / 35, `tests_regle_311_3e_C6.1.mjs` 34 / 34, `tests_4e_C6.2.mjs` 56 / 56,
+`tests_regle_311_4e_C6.2.mjs` 34 / 34, `tests_tp_algorigrammes_4e_C6.2.mjs` 31 / 31 ; `controle_impression`,
+`controle_squelette`, `controle_code_colore` sur les trois dossiers : 0 ; `controle_page_ouverte.mjs` sur les trois :
+L 0, B 0, C 0 ; listings regardés à 390 px. Non vérifié : un vrai téléphone.
+
+## 22/11/2026 — Fusion automatique des PR de thème : premiers passages réels, et plus de fausse alerte quand une session fusionne au même instant (transversal : `.github/`)
+
+**Premiers passages réels** (nuit du 21 au 22/11/2026). #851 (thème 1) : première garde rouge → « rien à fusionner » ;
+garde verte → le workflow tente la fusion à la seconde où la session la fait elle-même (« Merge already in progress ») :
+une seule fusion, mais un avertissement « fusion refusée — à regarder » qui ne l'était pas. #853 et #854 (thème 2) :
+**fusionnées par `github-actions[bot]`** au vert, et le site republié après #853 (« pages build and deployment »
+réussi). Le circuit de la règle n°5 amendée du 21/11/2026 marche de bout en bout.
+
+**Correction, sur demande de Pascal (« Oui pour tout », 22/11/2026)** : quand la fusion est refusée, le workflow
+attend 10 secondes et relit la PR ; si elle est fusionnée, il écrit « déjà fusionnée par ailleurs au même moment, rien
+à faire », sans avertissement. L'avertissement reste pour un vrai refus (conflit, règle de `main`).
+
+**Vérifié.** `actionlint` : aucune erreur. Au banc, fusion simulée refusée sur #851 (réellement fusionnée) → « déjà
+fusionnée par ailleurs » ; même cas avec une PR lue comme non fusionnée → l'avertissement.
+
+## 22/11/2026 — Vague n°364, thème 3 : quatre pages dont les listings ne défilent plus (15 listings)
+
+Suite de la PR #854 (thème 2, fusionnée seule à 23 h 58), sur la même carte blanche de Pascal. Pages :
+`3e_C9.1/sequence_3e_C9.1_variables_types_systemes.html` (la mémoire numérotée), `3e_C9.1/tp_mbot2_python.html`
+(six listings, dont une ligne de 93 caractères qui sortait de 557 px), `3e_C9.1/vittascience_variables.html`,
+`3e_C9.2/sequence_3e_C9.2-C8.3_station_3_interaction.html` (sept listings C++ commentés, jusqu'à 83 caractères).
+Même geste qu'au thème 2 : à 600 px et moins, un listing à lire revient à la ligne (`pre-wrap`), aucun caractère
+changé, le code copié reste celui de l'IDE. La séquence 3e_C9.2 n'a pas de `</head>` : le bloc est posé avant sa
+première feuille de style. Regardé à 390 px : les commentaires longs passent à la ligne sous leur instruction, rien
+n'est caché.
+
+Contrôles : `tests_3e_C9.1.mjs` 89 / 89, `tests_regle_311_3e_C9.1.mjs` 34 / 34, `tests_3e_C9.2-C8.3.mjs` 167 / 167,
+`tests_pont_en_h.mjs` 37 / 37, `tests_regle_311_3e_C9.2.mjs` 34 / 34 ; `controle_impression`, `controle_squelette`,
+`controle_code_colore` à 0 sur les deux dossiers ; `controle_page_ouverte.mjs` : L 0 · B 0 · C 0 (16 pages).
+
+**Reste pour la n°364** : un listing, `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` (thème 1). Laissé pour
+après le chantier 2 du thème 1, que la conversation parallèle mène en ce moment sur les séquences de ce thème.
 
 ## 22/11/2026 — Thème 1, chantier 3 : les 14 séquences relues en entier, sous le double regard
 

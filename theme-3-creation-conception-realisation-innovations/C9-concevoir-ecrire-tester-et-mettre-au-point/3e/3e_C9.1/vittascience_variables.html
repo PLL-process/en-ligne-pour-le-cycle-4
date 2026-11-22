@@ -25,6 +25,12 @@
     a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
 </style>
+<style>
+/* Ce qui défile est caché (règle d'or n°364, 22/11/2026) : sur un téléphone, un listing à lire revient à la ligne
+   au lieu de défiler. Aucun caractère n'est changé : le code copié reste le même. Le calque coloré d'un éditeur
+   (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */
+@media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site">

@@ -23,6 +23,7 @@
  * CE QU'IL MESURE, page ouverte, à 390 px
  * ---------------------------------------
  *   L  un listing (`pre`, `.programme`, `.code-box`) qui défile en largeur : ce qui défile est caché (n°364) ;
+ *      (le calque coloré d'un éditeur intégré, posé sur sa zone de saisie, défile avec elle : il n'est pas compté) ;
  *   B  un SVG qui dessine un bloc de programmation (« alors » et « sinon », « répéter… », « quand … cliqué ») : n°308 ;
  *   C  une même phrase (8 mots ou plus) dans 3 corrections ou plus : une correction qui se recopie n'explique pas (n°96) ;
  *      (une ligne d'aide répétée exprès — « 🔍 Touche le schéma pour l'agrandir » — porte `data-repete` et n'est pas lue) ;
@@ -95,7 +96,10 @@ function ouvrir() {
 /* Mesure L, B, C dans la page ouverte. */
 function mesurer() {
   const vis = el => el.getClientRects().length > 0;
-  const L = [...document.querySelectorAll('pre, .programme, .code-box')].filter(vis)
+  // un calque coloré d'éditeur (caché aux lecteurs d'écran, posé sur une zone de saisie) défile AVEC la saisie : ce n'est
+  // pas un listing à lire, il ne compte pas (21/11/2026 : `pre.cl-hl` de 3e_C6.1, `pre.editeur-py-couleurs` de 4e_C6.2)
+  const calque = el => el.getAttribute('aria-hidden') === 'true' || !!(el.parentElement && el.parentElement.querySelector(':scope > textarea'));
+  const L = [...document.querySelectorAll('pre, .programme, .code-box')].filter(vis).filter(el => !calque(el))
     .filter(el => el.scrollWidth > el.clientWidth + 2)
     .map(el => ({ debut: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 50), px: el.scrollWidth - el.clientWidth }));
   const B = [];

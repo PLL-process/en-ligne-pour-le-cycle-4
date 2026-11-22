@@ -291,6 +291,34 @@ const coches = await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.tr
 ok(`19 bis · les ${coches.length} onglets de séance portent leur coche`,
    coches.length > 0 && coches.every(c => c === '✔'), coches.join('|'));
 
+/* ── n°346 (21/11/2026) : trois explications écrites, sans propositions, qui ne notent rien ── */
+const ecrit = await p.evaluate(() => {
+  const z = document.querySelector('#ecritBouee');
+  return z && {
+    zones: z.querySelectorAll('textarea').length,
+    radios: z.querySelectorAll('input[type=radio], select').length,
+    etayages: z.querySelectorAll('details.etayage').length,
+    correctionFermee: !!z.querySelector('details.correction') && !z.querySelector('details.correction').open,
+    copie: (z.querySelector('details.correction').textContent.match(/Sur ta copie, on peut écrire/g) || []).length,
+    grille: z.querySelectorAll('.grille-ecrit input[type=checkbox]').length,
+  };
+});
+ok('19 ter · réinvestissement : trois explications écrites, sans proposition, chacune avec sa version étayée, correction repliée avec trois phrases de copie, grille à trois critères (n°346, n°356)',
+   ecrit && ecrit.zones === 3 && ecrit.radios === 0 && ecrit.etayages === 3 && ecrit.correctionFermee
+   && ecrit.copie === 3 && ecrit.grille === 3, JSON.stringify(ecrit));
+const validAvant = await p.evaluate(() => JSON.stringify(window.__valid || {}));
+await p.evaluate(() => {
+  const f = (id, v) => { const t = document.getElementById(id); t.value = v; t.dispatchEvent(new Event('input', { bubbles: true })); };
+  f('eb1', '4.0 > 4 est faux : > est strict, la ligne 5 est sautée, le drapeau reste vert.');
+  f('eb3', 'if hauteur_m > SEUIL_HOULE:\n    drapeau = "rouge"\nelif hauteur_m > 2:\n    drapeau = "orange"');
+  const c = document.getElementById('ebg2'); c.checked = true; c.dispatchEvent(new Event('change', { bubbles: true }));
+});
+await p.waitForTimeout(700);
+const etat = (await p.textContent('#ebEtat')).replace(/\s+/g, ' ');
+ok('19 quater · l\'état compte ce qui est écrit et coché (2 / 3, 1 / 3) sans rien valider ni noter (n°340)',
+   /2 \/ 3/.test(etat) && /1 \/ 3/.test(etat) && /aucune note/.test(etat)
+   && await p.evaluate(() => JSON.stringify(window.__valid || {})) === validAvant, etat);
+
 /* ── persistance : le CODE de l'élève doit revenir, pas la version d'origine ── */
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(360);
 ok('20 · rechargement : le programme v2 de l\'élève est restauré, pas la version d\'origine',
@@ -302,6 +330,10 @@ ok('20 bis · rechargement : réponses et validations restaurées, taille de pol
    && await p.evaluate(() => !!window.__valid[4])
    && await p.evaluate(() => window.__clFs) === tailleApres,
    await p.textContent('#progTxt'));
+ok('20 ter · rechargement : les explications écrites et la case cochée de la grille reviennent',
+   (await p.inputValue('#eb1')).startsWith('4.0 > 4 est faux')
+   && await p.isChecked('#ebg2') && !(await p.isChecked('#ebg1')),
+   (await p.textContent('#ebEtat')).slice(0, 60));
 
 const liens = await p.$$eval('a[href]', a => a.map(x => x.getAttribute('href')));
 const casses = liens.filter(h => h && !/^(https?:|mailto:|#|javascript:)/.test(h))
