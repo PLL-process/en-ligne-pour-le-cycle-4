@@ -25,13 +25,21 @@ Méthode et grille d'audit sur 100 points : skill `cadrage-cles-de-voute`.
 | 1 | Un squelette unique | n°306 | ouverture, séances en onglets, Bonus → Bilan → QCM à la dernière séance |
 | 2 | On rappelle avant d'exiger | n°87, n°311 (n°369 en essai) | rappel court (règle, exemple guidé, cas neuf), replié à partir de la séance 2 ; en essai depuis le 22/11 : une « 🔁 Reprise » de deux ou trois questions résolues de mémoire AVANT le rappel (skill `reprise-espacee`) |
 | 3 | Trois lignes avant de commencer | n°337 | apprendre, savoir faire, réussir — avec les mêmes seuils que le code (n°338) |
-| 4 | Une question se lit seule | n°343 | objet nommé, nombres, état de départ, unité sous les yeux (n°350) |
+| 4 | Une question se lit seule | n°343 (n°331) | objet nommé, nombres, état de départ, unité sous les yeux (n°350) ; le schéma dont elle parle affiché avec elle (n°331) |
 | 5 | Choisir n'est pas expliquer | n°346 | une réponse rédigée, sans propositions, sur un document inédit |
 | 6 | Un score dit quoi reprendre | n°347 | rempli, réussi et à reprendre séparés ; numéros sans la solution |
 | 7 | Le document parle la langue du cours | n°348 | mêmes formes, mots, nombres que le rappel ; aucun document qui porte sa réponse |
 
-Et, côté fabrique : **une règle n'existe que mesurée sur tout le site** (n°95, n°211). L'ancienne page de
+Et, côté fabrique : **une règle n'existe que mesurée sur tout le site** (n°95, n°211), **et le contrôle regarde la
+page ouverte** (n°361 : corrections, aides, bilan, onglets, ce qu'un script dessine). L'ancienne page de
 l'entraînement DNB enfreignait quatre règles en vigueur (n°137, 144, 300, 340) parce qu'aucun outil ne la relisait.
+
+**Sept, pas neuf** (décision du 22/11/2026, audit #867, carte blanche de Pascal). Les règles marquées « clé de voûte »
+avant le 21/11 (n°91, n°93, n°95, n°104, n°109, n°297…) se rangent sous les sept ; les deux plus récentes aussi :
+la **n°331** (l'élève répond le schéma sous les yeux) précise la clé 4 — une question qui renvoie à un schéma
+ne se lit pas seule s'il est ailleurs ; la **n°361** (un contrôle regarde la page ouverte) est une règle de
+fabrique, à côté des n°95 et n°211 : elle dit comment on vérifie, pas ce qu'une séquence doit être. La n°369
+(« Ce qui compte revient ») précise déjà la clé 2 de la même façon.
 
 ## Pilier 1 — Produire un lot pédagogique premium
 

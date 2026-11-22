@@ -93,6 +93,10 @@ def main():
     cas("un long script posé après le contenu ne fait pas croire le bouton « pas à la fin »",
         page(apres=PRET + BONUS + "<script>/* onglets au clavier */" + "var x = 1;\n" * 4000 + "</script>"),
         False)
+    cas("une page-pointeur qui reçoit une longue feuille de style reste une page-pointeur",
+        "<!doctype html><html><head><style>" + ".infobulle{color:red}\n" * 600 + "</style></head><body>"
+        "<p>Cette ressource a déménagé : <a href=\"../ailleurs/sequence.html\">elle est ici</a>.</p></body></html>",
+        False)
     cas("…mais un bouton QCM au début reste refusé, script ou pas",
         page(avant=PRET, apres=BONUS + "<script>" + "var x = 1;\n" * 4000 + "</script>"), True,
         "pas à la fin")

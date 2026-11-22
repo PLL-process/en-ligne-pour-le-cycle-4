@@ -113,18 +113,14 @@ CODE_NON_LU = re.compile(r"<(script|style)\b[^>]*>.*?</\1\s*>", re.S | re.I)
 #: l'octet 20 826, et une fenêtre plus courte les accusait toutes les trois.
 ETAPE = re.compile(r"Page\s+(\d+)\s+sur\s+(\d+)", re.I)
 
+#: Le TP « algorigrammes de domotique » de 4e_C6.2 y est entré puis sorti le même jour (22/11/2026) : deux
+#: sessions ont traité le même écart de l'audit #867, l'une en le tolérant, l'autre en donnant au TP ses deux
+#: blocs (PR #881). Le TP les porte : il est jugé comme les autres, et il passe.
 TOLEREES = {
     "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-"
     "une-ou-des/atelier-cao/tp_modele_demonstration.html":
         "modèle de TP destiné à l'enseignant (« Modèle de TP de prise en main ») : "
         "il montre la forme d'un TP, il n'en est pas un, et aucun QCM ne lui correspond.",
-    "theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/"
-    "4e/4e_C6.2/tp_algorigrammes_domotique.html":
-        "TP rattaché à sa séquence (`sequence-jardin-connecte-arrosage-automatique.html`, sa porte, n°366), "
-        "qui porte la clôture Bonus → Bilan → QCM ; le TP ferme sur son propre bilan imprimé, preuve du travail "
-        "(n°363), et son mini-projet de la phase 4. Sorti des ressources héritées le 20/11/2026 (n°12), il est "
-        "jugé depuis comme une séquence — l'audit du 22/11/2026 (#867) l'a relevé ; toléré sur carte blanche "
-        "de Pascal (22/11/2026).",
 }
 
 #: les DEUX apostrophes, droite et typographique
