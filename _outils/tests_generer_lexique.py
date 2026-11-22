@@ -331,11 +331,18 @@ def main():
     finally:
         shutil.rmtree(d)
 
+    # Un « < » de comparaison n'est pas une balise (22/11/2026) : la phrase entre au lexique entière.
+    from generer_lexique import sans_balises
+    for brut, net in (("Pour capturer V avec « < seuil », il faut seuil > V.", "Pour capturer V avec « < seuil », il faut seuil > V."),
+                      ("Si <b>T</b> &lt; 28 °C : <i>éteint</i>", "Si T &lt; 28 °C : éteint")):
+        if sans_balises(brut) != net:
+            echecs.append("balises : %r devient %r" % (brut, sans_balises(brut)))
+
     e_vocab, n_vocab = cas_vocabulaire()
     e_garde, n_garde = cas_garde()
     e_commun, n_commun = cas_commun()
     echecs += e_vocab + e_garde + e_commun
-    n = len(CAS) + 1 + n_vocab + n_garde + n_commun
+    n = len(CAS) + 1 + 2 + n_vocab + n_garde + n_commun
     if echecs:
         for e in echecs:
             print("❌ " + e)
