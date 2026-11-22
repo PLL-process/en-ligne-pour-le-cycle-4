@@ -11,11 +11,15 @@ Suite directe de 4e_C7, et amont direct de 4e_C9 (le programme). Trois séances 
 
 ## Fichiers du lot
 
-- `sequence_4e_C8_jardin-validation.html` — la séquence (6 activités, banc de tests virtuel)
+- `sequence_4e_C8_jardin-validation.html` — la séquence (7 activités : le banc de tests virtuel, et depuis le 22/11/2026
+  l'activité 2 bis, la simulation de la console de la jardinière, qui porte 4e_C8.1)
 - `qcm_4e_C8_jardin-validation.html` — QCM 30 questions, chacune avec ses réfutations
 - `Synthèses/`, `synthese_eleve_4e_C8.html`, `synthese_professeur_4e_C8.html`
 - `fiche_pedagogique_4e_C8.md`, `matrice_couverture_4e_C8.csv`, `SOURCES_MEDIAS.md`, `CRCN_regle7.md`
-- **`tests_4e_C8.mjs`** — la suite du lot, rejouable : `node tests_4e_C8.mjs .` (48 tests au 30/10/2026)
+- **`tests_4e_C8.mjs`** — la suite du lot, rejouable : `node tests_4e_C8.mjs .` (54 tests au 22/11/2026)
+- `_generation/console_jardiniere.py` — le modèle de la console (matériaux de la patère de 5e_C8.1) : il écrit
+  l'activité 2 bis, la partie 7 de la synthèse élève et les attendus ; `tests_simulation_4e_C8.1.mjs` vérifie que la
+  page calcule comme lui (480 cas) et que l'activité ne se valide pas sans simulation lancée (13 tests)
 
 ## Harmonisation du 26 août 2026
 
