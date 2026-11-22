@@ -53,9 +53,9 @@
 | 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (mesure ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, mesure ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
-| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence datée : 3 pages — 11 faux positifs retirés le 21/11 au soir : pages-pointeurs et renvoi), banc `tests_controle_porte_sequence.py` |
+| 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
 
@@ -35838,6 +35838,61 @@ la question 1 soufflait « 1,44 » (n°341), retiré.
 **Accès rapide** : aucun lien ne mène à cette séquence ; rien à actualiser. Nouveauté du jour : `#ecritPort`.
 
 **Non vérifié.** La durée ; un essai en classe.
+
+## 22/11/2026 — Thème 1 : trois pages reçoivent leur porte (n°366), le dernier listing ne défile plus (n°364)
+
+**La décision de Pascal (22/11/2026, 0 h 40) : « 1a 2b ».** 1a : relier, en activité facultative, les trois pages du
+thème 1 qu'aucune séquence ne reliait (liste REFERENCE de `controle_porte_sequence.py`). 2b : corriger tout de suite le
+dernier listing de la vague n°364 — le chantier 3 du thème 1 (PR #857) est fusionné, la conversation parallèle n'a plus
+ces pages en main.
+
+**Les portes.** Un paragraphe `plus-loin approfondissement` (« Pour aller plus loin (facultatif) »), à la fin de
+l'activité où la page sert, avec ce qu'elle apporte et sa durée quand la page la dit. La classe `approfondissement` le
+cache en mode essentiel, comme le Bonus.
+- `5e_C1.2`, fin de l'activité 2 (le tableau comparatif) → `activite_crcn_donnees_freinage_5e_C1.2.html` : les mêmes
+  trois freins, au tableur (colonne ajoutée, tri, filtre, recommandation).
+- `5e_C2.1`, fin de l'activité 2 (recenser les interacteurs) → `atelier_diagramme_cas_utilisation.html` : parmi les
+  interacteurs, ceux qui se servent de la station.
+- `4e_C2.1`, fin de l'activité 1 (des verbatims au schéma) → `atelier_diagramme_cas_utilisation.html` : des phrases
+  d'usagers, un schéma « qui fait quoi ».
+`controle_porte_sequence.py` : 0 page sans porte ; les trois sont annoncées « à retirer de REFERENCE ». La liste se
+vide par une PR à part, `_outils/` étant hors du périmètre du thème 1.
+
+**L'activité CRCN, devenue atteignable, est revue avant d'ouvrir sa porte** (revue d'écran à 390 px, trois défauts) :
+- son tableau de trois colonnes imposait 760 px et défilait (`scrollable-region-focusable` d'axe, colonne « Unité ou
+  échelle » hors de l'écran) → il tient à 390 px, sans couper un mot au milieu ;
+- la carte « CRCN observable, tracé et justifié » s'ouvrait avant la mission, en langue de référentiel (n°298) → repliée
+  sous « Pour le professeur » ; le nom du fichier à rendre passe dans la consigne de l'élève ;
+- le tri et le filtre étaient demandés sans aucune aide, et le Bonus n'avait pas de réponse (n°367, et « chaque
+  exercice devrait avoir son bouton de correction ») → une aide pour la colonne I, deux aides pour le tri (le piège : trier
+  une colonne seule désaccorde les lignes ; puis où cliquer, LibreOffice et Excel), un exemple de réponse au Bonus (le
+  frein à rouleaux, valeurs dites fictives, et les mesures qui les remplaceraient). Corrigé vérifié contre le CSV : ordre
+  6,4 / 6,9 / 8,9 m, filtre corrosion ≥ 4 → disque et tambour (n°368).
+
+**Le listing.** `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` : le bloc n°364 (à 600 px et moins, `pre-wrap`, aucun
+caractère changé). Et, vu sur la même capture : les deux cartes « Erreur fréquente » / « Exécution OK » restaient côte à
+côte à 390 px (« IndentationError » sur trois lignes) → l'une sous l'autre sur un téléphone. **La vague n°364 est finie :
+`controle_page_ouverte.mjs` ne trouve plus aucun listing qui défile.**
+
+**Contrôles.** Bancs : `tests_5e_C1.2_sainte_luce.py` 51 / 51, `tests_4e_C2.1-C2.2_hangzhou.py` 66 / 66,
+`tests_5e_C2.1-C2.2_shenzhen.py` 152 / 152, `tests_regle_311` des quatre dossiers 34 / 34. `controle_page_ouverte.mjs
+--axe` sur les sept pages : L 0 · B 0 · C 0 ; restent deux `scrollable-region-focusable` dans `4e_C2.1` et `5e_C2.1`,
+**déjà sur `main`** (tableaux et figures des incrustations d'atelier : à corriger dans le générateur, pas dans la page).
+À 0 : `controle_impression`, `controle_contraste_liens`, `controle_hors_ligne`, `controle_squelette`,
+`controle_code_colore`, `controle_liens`, `controle_regles_visibles`, `controle_mode_essentiel`,
+`controle_mode_mission`, `controle_navigation_seances`, `controle_debordement`, `controle_hierarchie`,
+`controle_date_locale`, `controle_atteignabilite`, `controle_licence`. `controle_regle4` sort à 1 sur les quatre
+dossiers, avec la même sortie qu'avant le lot (pages d'activité sans clôture « QCM » : déjà sur `main`).
+
+## 22/11/2026 — Porte de séquence (n°366) : la référence est vide, toute page sans porte est refusée (thème 2 : `_outils/`)
+
+Suite de la PR #862 (thème 1, fusionnée seule) : les trois dernières pages de la liste REFERENCE de
+`_outils/controle_porte_sequence.py` ont leur porte. La liste est vidée (`REFERENCE = set()`, n°273 : elle ne peut que
+le rester) : une page d'élève rangée dans le dossier d'une séquence et qu'aucune page `sequence*.html` de ce dossier ne
+relie fait maintenant sortir le contrôle à 1. Le banc `tests_controle_porte_sequence.py` passe de 5 à 6 points (la
+référence du dépôt est vide). Registre : n°364 (0 listing qui défile sur les 341 pages) et n°366 (référence vide) mis à
+jour. Contrôles : `controle_porte_sequence.py` 0 page sans porte sur 56 dossiers de séquence ; banc 6 / 6 ;
+`registre_regles.py --verifier` vert (prochain n°369).
 
 ## 22/11/2026 — Complément à la n°44 : aucun sigle ne reste nu, dans le texte aussi ; un contrôle, une première correction commune (transversal : `_outils`, trois thèmes, skills du dépôt)
 
