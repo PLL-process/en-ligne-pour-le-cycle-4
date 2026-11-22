@@ -26,7 +26,7 @@ principes cadrent une séquence, et les autres règles se rangent sous eux. Gril
 Ajouter le critère de recette demandé par Pascal (« avec 6 justes et 2 blancs, la page affiche… »). Sans critère, on
 ne sait pas quand c'est fini.
 
-## 2. Avant de valider : seize questions
+## 2. Avant de valider : dix-sept questions
 
 Chacune se répond par un nombre ou un oui/non constaté.
 
@@ -46,6 +46,8 @@ Chacune se répond par un nombre ou un oui/non constaté.
 14. Chaque lien de l'accès rapide ouvre-t-il l'onglet qu'il nomme (n°359) ?
 15. Le rapport de tests écrit-il ce qui n'a pas été vérifié ?
 16. Chaque chiffre du journal, de la fiche et du rapport a-t-il été recalculé ?
+17. Chaque sigle de la page est-il écrit en clair au moins une fois, à sa première apparition si possible
+    (`controle_sigles_expliques.py` ; n°44, consigne de Pascal du 22/11/2026) ?
 
 ## 3. Noter sur 100
 
