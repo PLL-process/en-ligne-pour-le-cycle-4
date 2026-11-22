@@ -1720,6 +1720,16 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 #navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
 @media print{#navharm{display:none}}
 
+  /* Règle d'or n°346 — choisir n'est pas expliquer : trois réponses écrites, sans propositions (21/11/2026) */
+  .ecrit-brevet{margin-top:16px;padding:10px 14px;border:1px dashed #3f6bb5;border-radius:10px}
+  .ecrit-brevet h4{margin:4px 0 8px;color:#61dafb}
+  .ecrit-brevet textarea{min-height:6.5em}
+  .ecrit-brevet textarea.code-ecrit{font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace}
+  .grille-ecrit{margin:10px 0 4px;border:1px solid #3f6bb5;border-radius:8px;padding:6px 12px}
+  .grille-ecrit label{display:block;margin:6px 0;cursor:pointer}
+  .etat-ecrit{font-size:.92em;color:#b9c7e4;margin:6px 0 0}
+  @media print{.ecrit-brevet .exo{break-inside:avoid}}
+
   /* Règle d'or n°31 — version étayée : même exigence, obstacle de rédaction en moins */
   details.etayage{margin:8px 0;border:1px solid #3f6bb5;border-left:4px solid #61dafb;
     border-radius:8px;background:rgba(13,35,71,.55);padding:6px 12px}
@@ -2396,10 +2406,10 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> réutiliser toute la démarche C6.1 → C6.3 sur un programme jamais vu.</div>
       <div><b>Compétences :</b> 3e_C6.1 + C6.3 (bilan).</div>
-      <div><b>Production attendue :</b> 6 réponses, sans rouvrir les corrections.</div>
+      <div><b>Production attendue :</b> 6 réponses, sans rouvrir les corrections, puis 3 explications écrites, comme au brevet.</div>
       <div><b>Ressources :</b> uniquement le programme ci-dessous — c'est volontaire !</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme.<br>① Lis-le.<br>② Réponds aux questions.</div>
+    <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme.<br>① Lis-le.<br>② Réponds aux questions.<br>③ Explique trois réponses par écrit, sans propositions.</div>
     <div class="programme-ici" aria-label="Le programme de la bouée, sous tes yeux">
       <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff" data-code-colore="python"><span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">1</span>SEUIL_HOULE = 4
 <span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">2</span>hauteur_m = lire_capteur("houlographe")
@@ -2457,8 +2467,74 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> « rouge » à 4.0 (encore la frontière !) ; jeux d'essai autour de l'ANCIEN seuil (4) au lieu du nouveau (3) ; vouloir réécrire tout le programme pour ajouter un niveau.</div>
     <div class="retenir"><b>📌 À retenir :</b> la démarche est transférable à tout programme : <b>identifier les données → tracer → modifier au bon endroit → tester aux frontières</b>.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 6/6 sans avoir rouvert les corrections.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6/6 sans avoir rouvert les corrections, et trois explications qui cochent ta grille.</div>
   </div>
+  <div class="ecrit-brevet" id="ecritBouee">
+      <h4>✍️ Explique comme au brevet — sans propositions</h4>
+      <p>Toujours le programme de la bouée. Réponds en phrases complètes, ici ou sur une feuille de brouillon.<br>Personne ne corrige ces trois réponses à ta place&nbsp;: tu les compares à la correction, puis tu coches ta grille.</p>
+      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff" data-code-colore="python"><span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">1</span>SEUIL_HOULE = 4
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">2</span>hauteur_m = lire_capteur("houlographe")
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">3</span>drapeau = "vert"
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">4</span>if hauteur_m &gt; SEUIL_HOULE:
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">5</span>    drapeau = "rouge"
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">6</span>envoyer("Baignade : " + drapeau)</pre>
+      <div class="exo">
+        <label for="eb1"><b>1.</b> La houle mesure exactement 4,0&nbsp;m. Explique en une phrase pourquoi le drapeau reste «&nbsp;vert&nbsp;».</label>
+        <textarea id="eb1" placeholder="Le drapeau reste vert, car…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique.</p>
+  <ul>
+    <li>À la ligne 4, le programme compare ____ et ____.</li>
+    <li>4.0 &gt; 4 est ____, car le signe &gt; veut dire ____.</li>
+    <li>La ligne 5 n'est donc pas ____ : le drapeau garde la valeur ____ de la ligne 3.</li>
+  </ul>
+</details>
+      </div>
+      <div class="exo">
+        <label for="eb2"><b>2.</b> La mairie veut maintenant qu'une houle de 4,0&nbsp;m exactement donne «&nbsp;rouge&nbsp;». Écris la nouvelle ligne 4, puis propose une hauteur qui montre la différence entre l'ancien et le nouveau programme.</label>
+        <textarea id="eb2" placeholder="Nouvelle ligne 4 : …&#10;Hauteur d'essai : … m, car…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique.</p>
+  <ul>
+    <li>La nouvelle ligne 4 est&nbsp;: <code>if hauteur_m ____ SEUIL_HOULE:</code></li>
+    <li>Avec une houle de ____ m, l'ancien programme envoie «&nbsp;____&nbsp;» et le nouveau «&nbsp;____&nbsp;».</li>
+    <li>Au-dessus et en dessous de cette hauteur, les deux programmes donnent ____ : l'essai ne les distinguerait pas.</li>
+  </ul>
+</details>
+      </div>
+      <div class="exo">
+        <label for="eb3"><b>3.</b> On garde le seuil de 4&nbsp;m et on ajoute un drapeau «&nbsp;orange&nbsp;» quand la houle dépasse 2&nbsp;m sans dépasser 4&nbsp;m. Écris les lignes 4 à 7 du nouveau programme, puis propose une hauteur qui prouve que l'orange ne cache pas le rouge.</label>
+        <textarea id="eb3" class="code-ecrit" spellcheck="false" placeholder="if hauteur_m &gt; SEUIL_HOULE:&#10;    …"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique.</p>
+  <ul>
+    <li>Ligne 4 : le cas le plus fort d'abord, <code>if hauteur_m ____ SEUIL_HOULE:</code></li>
+    <li>Ligne 6 : <code>____ hauteur_m &gt; 2:</code>, puis ligne 7 : <code>drapeau = ____</code></li>
+    <li>Avec une houle de ____ m, le drapeau doit être «&nbsp;____&nbsp;», car le premier test est ____.</li>
+  </ul>
+</details>
+      </div>
+      <details class="correction"><summary>✅ Correction des trois explications</summary>
+        <p><b>1.</b> À 4,0&nbsp;m, la ligne 4 compare 4.0 et 4&nbsp;: <b>4.0 &gt; 4 est faux</b>, car &gt; veut dire «&nbsp;strictement plus grand&nbsp;» et l'égalité ne compte pas.<br>La ligne 5 n'est pas exécutée&nbsp;: le drapeau garde la valeur <code>"vert"</code> donnée ligne 3.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;4,0 n'est pas strictement supérieur à 4&nbsp;: la condition est fausse, la ligne 5 est sautée et le drapeau reste vert.&nbsp;»<br>⚠ «&nbsp;Il est vert parce que 4 c'est la limite&nbsp;» ne suffit pas&nbsp;: il faut nommer le signe et dire s'il inclut l'égalité.</p>
+        <p><b>2.</b> Nouvelle ligne 4&nbsp;: <code>if hauteur_m &gt;= SEUIL_HOULE:</code><br>Essai qui distingue&nbsp;: <b>4,0&nbsp;m</b>. L'ancien programme envoie «&nbsp;vert&nbsp;», le nouveau «&nbsp;rouge&nbsp;».<br>C'est la seule hauteur qui les sépare&nbsp;: au-dessus de 4&nbsp;m les deux disent rouge, en dessous les deux disent vert.<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;Je remplace &gt; par &gt;=. À 4,0&nbsp;m, l'ancienne version donne vert et la nouvelle rouge.&nbsp;»<br>⚠ Une houle de 5&nbsp;m ne prouve rien&nbsp;: les deux versions donnent rouge.<br>⚠ Passer <code>SEUIL_HOULE</code> à 3 change aussi 3,5&nbsp;m en rouge&nbsp;: ce n'est pas la demande.</p>
+        <p><b>3.</b> Les lignes 4 à 7&nbsp;:</p>
+        <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff" data-code-colore="python"><span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">4</span>if hauteur_m &gt; SEUIL_HOULE:
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">5</span>    drapeau = "rouge"
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">6</span>elif hauteur_m &gt; 2:
+<span style="display:inline-block;min-width:1.6em;margin-right:10px;text-align:right;color:#5b7bb8;user-select:none">7</span>    drapeau = "orange"</pre>
+        <p>Essai&nbsp;: <b>5&nbsp;m</b> doit donner «&nbsp;rouge&nbsp;», pas orange. Le premier test est vrai, donc le <code>elif</code> n'est même pas lu.<br>Autres essais utiles&nbsp;: 3&nbsp;m → orange&nbsp;; 2,0&nbsp;m → vert (2,0 &gt; 2 est faux, encore une frontière).<br>✍️ Sur ta copie, on peut écrire&nbsp;: «&nbsp;À 5&nbsp;m, la condition de la ligne 4 est vraie&nbsp;: le drapeau devient rouge et la ligne 6 n'est pas évaluée.&nbsp;»<br>⚠ Tester <code>hauteur_m &gt; 2</code> en premier déclarerait 5&nbsp;m «&nbsp;orange&nbsp;»&nbsp;: le cas le plus fort se teste d'abord.<br>⚠ Deux <code>if</code> séparés au lieu d'un <code>elif</code>&nbsp;: à 5&nbsp;m, le second <code>if</code> repasserait le drapeau en orange.</p>
+      </details>
+      <fieldset class="grille-ecrit">
+        <legend>Ma grille, après avoir lu la correction</legend>
+        <label><input type="checkbox" id="ebg1"> Je suis la branche&nbsp;: je dis quelle ligne s'exécute, et pourquoi.</label>
+        <label><input type="checkbox" id="ebg2"> Je justifie avec les données&nbsp;: la valeur et le signe du comparateur.</label>
+        <label><input type="checkbox" id="ebg3"> Je modifie et je vérifie&nbsp;: un essai qui distingue les deux versions.</label>
+      </fieldset>
+      <p class="etat-ecrit" id="ebEtat" role="status"></p>
+    </div>
 </section>
 
 <section class="card">
@@ -2596,7 +2672,7 @@ function collect(){
   document.querySelectorAll("input[id],textarea[id],select[id],fieldset.qcm-groupe[id]").forEach(el=>{ if(el.type!=="radio" && el.id!=="clTa") o.inputs[el.id]=el.value; });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
   // les cases « Avant de commencer » (n°304) et les réponses du billet d'entrée (n°26) : cochées ou non
-  document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio]").forEach(c=>{ o.inputs[c.id]=c.checked; });
+  document.querySelectorAll(".rappel-spiralaire input[type=checkbox], #billet input[type=radio], .grille-ecrit input[type=checkbox]").forEach(c=>{ o.inputs[c.id]=c.checked; });
   return o;
 }
 function save(showNote){
@@ -2610,7 +2686,7 @@ function restore(){
   let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
   if(!o) return;
   Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(!el) return;
-    if((el.type==="checkbox" || el.type==="radio") && el.closest(".rappel-spiralaire, #billet")) el.checked = (v===true); else el.value=v; });
+    if((el.type==="checkbox" || el.type==="radio") && el.closest(".rappel-spiralaire, #billet, .grille-ecrit")) el.checked = (v===true); else el.value=v; });
   Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=[...document.getElementsByName(n)].find(x=>x.value===v); if(r) r.checked=true; });  /* une valeur peut porter des guillemets ("verte") : pas de sélecteur */
   window.__valid = o.valid || {};
   if(typeof o.code === "string" && o.code.length) $("clTa").value = o.code;
@@ -2876,6 +2952,16 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
   });
 });
 
+/* n°346 : l'état des trois explications — il compte ce qui est écrit et coché, il ne juge pas (n°340) */
+function majEcrit(){
+  const e = document.getElementById("ebEtat"); if(!e) return;
+  const ecrits = ["eb1","eb2","eb3"].filter(id => ($(id).value || "").trim().length >= 10).length;
+  const coches = ["ebg1","ebg2","ebg3"].filter(id => $(id).checked).length;
+  e.textContent = "Explications écrites : " + ecrits + " / 3 · grille : " + coches + " / 3 critère" + (coches > 1 ? "s" : "") + " coché" + (coches > 1 ? "s" : "") + " — aucune note n'est calculée.";
+}
+document.addEventListener("input", ev => { if(ev.target.closest && ev.target.closest("#ecritBouee")) majEcrit(); });
+document.addEventListener("change", ev => { if(ev.target.closest && ev.target.closest("#ecritBouee")){ majEcrit(); save(false); } });
+
 /* ══════ Progression ══════ */
 function majProgress(){
   const v = window.__valid||{};
@@ -2919,7 +3005,7 @@ function majEssentiel(){
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
 majEssentiel();
-clRender(); majProgress(); majHyp();
+clRender(); majProgress(); majHyp(); majEcrit();
 $("clSaved").textContent = "● prêt — sauvegarde automatique";
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */

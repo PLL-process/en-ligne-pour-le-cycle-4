@@ -35589,6 +35589,42 @@ touchée) : les 24 listings qui défilent (n°364) et les 14 pages sans porte (n
 titres « V16 » et « V5 » des pages `4e_C1.4` (n°309), relevés par la mesure mais pas encore refusés : le motif d'un
 numéro de version attrapait aussi des personas (« Feng (V12) ») et « version 1 » d'un programme d'élève.
 
+## 21/11/2026 — 3e_C6.1, pilote de la n°346 : trois explications écrites après le programme de la bouée (thème 2)
+
+**Décision.** Pascal (21/11/2026, 23 h 45) : « Tu as carte blanche », en réponse aux deux questions laissées ouvertes
+après la PR #849 — dont la liste des séquences par où commencer la tâche finale rédigée (n°346). Choix fait sur mesure :
+la dernière séance de chaque séquence de 3e a été lue (zones de texte et groupes radio avant le Bonus) ; celle de
+« Programmer l'alerte » (`3e_C6.1-C6.3`) finissait sans aucune réponse écrite — 0 zone de texte, 12 groupes de boutons
+radio — et c'est la séquence de programmation qui mène à l'entraînement DNB. `3e_C9.1` a été écartée : sa séance 4 fait
+déjà écrire un programme testé (activité 5, n°114).
+
+**Ce qui change.** Après les six questions de la bouée, un bloc « ✍️ Explique comme au brevet — sans propositions » :
+le programme de la bouée repris sous les yeux (n°331) ; trois questions graduées (le cas limite 4,0 m justifié par le
+signe ; la ligne 4 modifiée en `>=` et l'essai qui distingue les deux versions ; le drapeau orange écrit en `elif` et
+l'essai qui prouve l'ordre des tests) ; une version étayée par question (n°31) ; une correction repliée, exhaustive,
+avec trois phrases de copie (n°356) et les erreurs attendues ; une grille à trois critères que l'élève coche (suivre la
+branche, justifier avec les données, modifier et vérifier). Rien n'est noté : la ligne d'état compte ce qui est écrit
+et coché, « aucune note n'est calculée » (n°340). Fiche de l'activité, consigne (③) et critère de réussite le disent.
+
+**Un défaut vu au banc, corrigé avant livraison.** Placé d'abord dans l'activité 6, le bloc tombait dans la zone du
+retrait de validation (n°340, `_outils/retrait_validation.py`) : écrire une explication retirait la validation des six
+questions. Le bloc est maintenant hors de la zone de vérification, dans la même carte. Le module commun n'a pas été
+touché ; à retenir pour la vague suivante : un écrit non noté se pose hors de la zone d'un bouton « Vérifier ».
+
+**Vérifié.** `tests_3e_C6.1-C6.3.mjs` 38 / 38 (trois tests nouveaux : structure de l'écrit, état sans validation,
+reprise après rechargement) ; `tests_regle_311_3e_C6.1.mjs` 34 / 34 ; mode mission sans refus (pourquoi 48 / 48) ;
+`eleve_qui_ne_lit_pas.py` sans validation ; contrôles validations, règles visibles, hiérarchie, débordement, consignes à
+la ligne, propositions sans indice, schéma sous les yeux, mêmes nombres, tactile, code coloré (8 / 8), hors ligne,
+impression : verts. Le lien `#ecritBouee` ouvre la séance 3. Revue d'écran à 390 px (zones de texte agrandies au
+premier tour).
+
+**Accès rapide** : aucun lien de l'accès rapide ne mène à cette séquence ; rien à actualiser. La nouveauté du jour
+pointe sur `#ecritBouee`.
+
+**Non vérifié.** La durée du réinvestissement avec l'écrit (25 min annoncées, à mesurer en classe) ; un essai avec des
+élèves. Les autres séquences de 3e qui finissent sans écrit (`3e_C4.7` pont numérique, `3e_C8.1` mât de la station)
+sont la vague suivante.
+
 ## 22/11/2026 — Thème 1, chantier 2 : la charge de lecture des séances
 
 **La demande.** Le deuxième des trois chantiers de Pascal (« Termine en toute confiance et autonomie… »), confirmé le
