@@ -1,4 +1,4 @@
-/* controle_page_ouverte.mjs — un contrôle regarde la page ouverte (règle d'or n°346, clé de voûte).
+/* controle_page_ouverte.mjs — un contrôle regarde la page ouverte (règle d'or n°361, clé de voûte).
  *
  * LE CONSTAT
  * ----------
@@ -22,7 +22,7 @@
  *
  * CE QU'IL MESURE, page ouverte, à 390 px
  * ---------------------------------------
- *   L  un listing (`pre`, `.programme`, `.code-box`) qui défile en largeur : ce qui défile est caché (n°349) ;
+ *   L  un listing (`pre`, `.programme`, `.code-box`) qui défile en largeur : ce qui défile est caché (n°364) ;
  *   B  un SVG qui dessine un bloc de programmation (« alors » et « sinon », « répéter… », « quand … cliqué ») : n°308 ;
  *   C  une même phrase (8 mots ou plus) dans 3 corrections ou plus : une correction qui se recopie n'explique pas (n°96) ;
  *      (une ligne d'aide répétée exprès — « 🔍 Touche le schéma pour l'agrandir » — porte `data-repete` et n'est pas lue) ;
@@ -164,6 +164,6 @@ const n = k => resultats.filter(r => !r.panne && r[k] && r[k].length).length;
 console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390 px · ${pannes} en panne · L ${n('L')} · B ${n('B')} · C ${n('C')}${AXE ? ` · A ${n('A')}` : ''} page(s) concernées`);
 if (JSON_OUT) fs.writeFileSync(JSON_OUT, JSON.stringify(resultats, null, 1));
 if (!resultats.length || pannes) { console.log('⛔ EN PANNE (n°299)'); process.exit(2); }
-if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°346)'); process.exit(1); }
-console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°346)` : '✅ rien à signaler, page ouverte');
+if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°361)'); process.exit(1); }
+console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°361)` : '✅ rien à signaler, page ouverte');
 process.exit(0);

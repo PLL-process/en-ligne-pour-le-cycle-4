@@ -1,4 +1,4 @@
-/* tests_controle_page_ouverte.mjs — banc de `controle_page_ouverte.mjs` (règle d'or n°346).
+/* tests_controle_page_ouverte.mjs — banc de `controle_page_ouverte.mjs` (règle d'or n°361).
  *
  * Six pages fabriquées dans un dossier temporaire, chacune pour une frontière :
  *   propre      corrections différentes, listing court → rien ;

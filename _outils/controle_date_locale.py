@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""controle_date_locale.py — la date du jour est celle du poste (règle d'or n°350).
+"""controle_date_locale.py — la date du jour est celle du poste (règle d'or n°365).
 
 LE CONSTAT
 ----------
@@ -82,7 +82,7 @@ def main(argv):
             print(f"ℹ {rel} — n'a plus de date UTC : à retirer de REFERENCE (n°273)")
     print(f"{lus} fichier(s) lus · {len(trouves)} date(s) du jour prise(s) en heure universelle · {len(nouveaux)} hors référence")
     if nouveaux:
-        print("✘ la date du jour se construit avec l'heure du poste (getFullYear, getMonth + 1, getDate) — règle d'or n°350")
+        print("✘ la date du jour se construit avec l'heure du poste (getFullYear, getMonth + 1, getDate) — règle d'or n°365")
         return 1
     print("✅ chaque date du jour est celle du poste")
     return 0

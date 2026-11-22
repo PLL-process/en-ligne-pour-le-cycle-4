@@ -1,6 +1,6 @@
 ---
 name: audit-douze-axes
-description: Auditer une page interactive du dépôt (TP, atelier, séquence) sur les 12 axes du gabarit de Pascal — conception, didactique, contenus, évaluation, engagement, UX, accessibilité, légal, suivi, technique, innovation, stratégie — en jouant la page « en tricheur », page ouverte, à 390 et 1 280 px ; rendre un rapport noté (Doc) puis suivre jusqu'à `main` : top 5 en un lot, le reste en lot « suite », banc commité, tableau de suivi. À utiliser quand Pascal joint son gabarit d'audit ou demande « audite cette page ». Règles d'or n°346 à n°353.
+description: Auditer une page interactive du dépôt (TP, atelier, séquence) sur les 12 axes du gabarit de Pascal — conception, didactique, contenus, évaluation, engagement, UX, accessibilité, légal, suivi, technique, innovation, stratégie — en jouant la page « en tricheur », page ouverte, à 390 et 1 280 px ; rendre un rapport noté (Doc) puis suivre jusqu'à `main` : top 5 en un lot, le reste en lot « suite », banc commité, tableau de suivi. À utiliser quand Pascal joint son gabarit d'audit ou demande « audite cette page ». Règles d'or n°361 à n°368.
 ---
 
 # Audit en 12 axes d'une page du dépôt
@@ -8,7 +8,7 @@ description: Auditer une page interactive du dépôt (TP, atelier, séquence) su
 Né le 20/11/2026 de l'audit du TP « Algorigrammes de domotique » (`4e_C6.2`), demandé par Pascal avec son gabarit
 (rôles multiples, 12 axes, score sur 10, 🔴 / 🟡 / 🟢, top 5, feuille de route, quick wins, SWOT). Note : 4,6 / 10.
 Suivi jusqu'à `main` : PR #832, #833, #836 (top 5), #841 (le reste), #842 (deux contrôles rouges vus en chemin).
-Les huit règles d'or n°346 à n°353 en sont sorties. Ce skill garde la méthode, pour que le prochain audit aille plus
+Les huit règles d'or n°361 à n°368 en sont sorties. Ce skill garde la méthode, pour que le prochain audit aille plus
 vite et ne rate pas ce que celui-ci a failli rater.
 
 **Quel skill, quand** : un audit écrit ailleurs → `relire-un-audit-externe` ; la lecture élève + inspecteur d'une
@@ -43,8 +43,8 @@ Tout le fichier, pas un échantillon. Repérer et noter la ligne de :
 
 - chaque validation (`Vérifier`, seuils, ordre exigé) — skill `validations-qui-disent-vrai` ;
 - chaque correction **fabriquée par script** (un dessin qui n'existe pas dans le HTML échappe aux contrôles statiques) ;
-- la simulation : joue-t-elle le travail de l'élève ou une règle fixe (n°347) ?
-- le score, le code de validation, la date du bilan (n°348, n°350) ;
+- la simulation : joue-t-elle le travail de l'élève ou une règle fixe (n°362) ?
+- le score, le code de validation, la date du bilan (n°363, n°365) ;
 - ce qui est gardé dans le navigateur, ce qui ne l'est pas, ce que l'effacement efface (n°15, n°322).
 
 ## 3. Jouer la page « en tricheur » (Playwright, contexte neuf)
@@ -59,7 +59,7 @@ Chaque geste est une mesure à citer dans l'annexe :
 6. recharger : qu'est-ce qui revient, qu'est-ce qui se perd ? puis « Effacer » deux fois ;
 7. un même bloc ajouté trois fois ; les boutons au doigt (44 px) ; 390 px sans débordement.
 
-## 4. Ouvrir tout, puis regarder (n°346)
+## 4. Ouvrir tout, puis regarder (n°361)
 
 ```bash
 node _outils/controle_page_ouverte.mjs <dossier> --axe     # L listing qui défile · B bloc dessiné · C correction recopiée · A axe
@@ -67,12 +67,12 @@ node _outils/controle_page_ouverte.mjs <dossier> --axe     # L listing qui défi
 
 Si la page fabrique ses corrections par script, lui poser `window.__toutOuvrir()` (pilote : le TP `4e_C6.2`). Puis à
 l'œil, en sombre et en clair, à 390 et 1 280 px : chaque schéma corrigé (flèches qui traversent un bloc, pointes
-perdues, nombre de losanges contre ce que demande la consigne — n°353), l'impression PDF (nombre de pages, ce que la
+perdues, nombre de losanges contre ce que demande la consigne — n°368), l'impression PDF (nombre de pages, ce que la
 trace contient), les contrastes calculés des couleurs des schémas.
 
 ## 5. Situer la page dans le site
 
-- La séquence du dossier la relie-t-elle (n°351, `controle_porte_sequence.py`) ?
+- La séquence du dossier la relie-t-elle (n°366, `controle_porte_sequence.py`) ?
 - Le bouton « QCM » mène-t-il au bon QCM (celui du programme 2024) ?
 - Le vocabulaire est-il celui des autres pages du même sujet (« ovale » ou « ellipse ») ?
 - Est-elle héritée (`_outils/heritees.json`) ? L'audit devient alors son cahier des charges.
@@ -103,6 +103,6 @@ copie, avec leur code), SWOT, annexe des preuves. La réponse dans la conversati
 - Une note d'auteur visible par l'élève (« Précision pédagogique », « Phrase élève à retenir ») : n°309, désormais
   refusée par `controle_regles_visibles.py`.
 - Un `<br>` sans espace devant colle les mots pour le lecteur d'écran (`textContent` : « alimentation2. dévisser »).
-- Une condition longue dans un listing défile à 390 px et cache sa valeur (« < 5… ») : la couper sur deux lignes (n°349).
-- `toISOString().slice(0, 10)` donne le lendemain après 20 h en Martinique (n°350, `controle_date_locale.py`).
+- Une condition longue dans un listing défile à 390 px et cache sa valeur (« < 5… ») : la couper sur deux lignes (n°364).
+- `toISOString().slice(0, 10)` donne le lendemain après 20 h en Martinique (n°365, `controle_date_locale.py`).
 - Un contrôle qui refuse une page à tort reçoit une exception nommée, datée et vérifiée (n°273), jamais un silence.

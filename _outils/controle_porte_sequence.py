@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""controle_porte_sequence.py — la séquence est la porte de ses pages (règle d'or n°351).
+"""controle_porte_sequence.py — la séquence est la porte de ses pages (règle d'or n°366).
 
 LE CONSTAT
 ----------
@@ -91,7 +91,7 @@ def main(argv):
             print(f"ℹ {p} — a maintenant sa porte : à retirer de REFERENCE (n°273)")
     print(f"{dossiers} dossier(s) de séquence lus · {len(sans_porte)} page(s) sans porte, dont {len(sans_porte) - len(nouvelles)} connue(s) au 21/11/2026 · {len(nouvelles)} nouvelle(s)")
     if nouvelles:
-        print("✘ une page d'élève rangée dans le dossier d'une séquence s'ouvre depuis cette séquence — règle d'or n°351")
+        print("✘ une page d'élève rangée dans le dossier d'une séquence s'ouvre depuis cette séquence — règle d'or n°366")
         return 1
     print("✅ aucune page nouvelle sans porte" + (f" (reste {len(sans_porte)} à relier, liste REFERENCE)" if sans_porte else ""))
     return 0

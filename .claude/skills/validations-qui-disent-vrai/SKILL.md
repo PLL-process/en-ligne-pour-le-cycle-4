@@ -74,20 +74,20 @@ lot (`tests_<lot>.mjs`), un cas par défaut corrigé — modèle `3e_C4.1`, test
 
 Lancer le banc du lot et `tests_regle_311_<lot>.mjs` ; le mode mission : `node _outils/mode_mission/banc_generique.mjs <page>`.
 
-## 3 bis. La simulation et le bilan disent vrai aussi (n°347, n°348, 21/11/2026)
+## 3 bis. La simulation et le bilan disent vrai aussi (n°362, n°363, 21/11/2026)
 
 Nés de l'audit en 12 axes du TP `4e_C6.2` (PR #841) :
 
-- **Une simulation joue le travail de l'élève** (n°347). Celle du TP testait une règle fixe (« < 50 lux → la lampe
+- **Une simulation joue le travail de l'élève** (n°362). Celle du TP testait une règle fixe (« < 50 lux → la lampe
   s'allume ») quelles que soient les sorties que l'élève avait choisies : elle ne pouvait ni le contredire ni l'aider.
   Elle lit maintenant ses choix : sans choix, elle les demande ; avec un choix faux, elle dit ce que fait la lampe et
   pourquoi ce n'est pas le besoin. Si une simulation ne peut que montrer un modèle, elle le dit (« voici le modèle »).
   Test de banc : choix faux → message d'erreur ; choix juste → réussite, aux deux bords du seuil.
-- **Le bilan imprimé est une preuve** (n°348). Il montre ce que l'élève a construit et répondu (ordre des blocs,
+- **Le bilan imprimé est une preuve** (n°363). Il montre ce que l'élève a construit et répondu (ordre des blocs,
   sorties, cases, réponses, mini-projet), le nombre d'essais ratés par exercice, et un code de validation calculé sur
   TOUT ce qu'il affiche (nom, classe, score, date). Le code du TP ne lisait que les sept premières lettres du nom :
   identique à 0 / 20 et à 20 / 20. Test de banc : le vrai code est reconnu, une note retouchée est refusée.
-- **La date du bilan est celle du poste** (n°350, `controle_date_locale.py`).
+- **La date du bilan est celle du poste** (n°365, `controle_date_locale.py`).
 
 ## 4. Généraliser et dire
 

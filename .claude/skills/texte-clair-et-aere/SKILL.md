@@ -130,7 +130,7 @@ Pascal veut des corrections exhaustives : on garde tout, on le range. L'ordre, u
 Un bloc de plus de 45 mots d'un tenant se coupe (C1) ; deux « ; » qui cousent des idées, ou plus de trois « → »,
 se mettent en lignes (C2).
 
-## Un listing tient à 390 px (règle d'or n°349, 21/11/2026)
+## Un listing tient à 390 px (règle d'or n°364, 21/11/2026)
 
 Ce qui défile est caché : à 390 px, l'algorithme du débogage du TP `4e_C6.2` défilait et cachait « 50 lux », la valeur
 du seuil, sans que rien le dise. Un listing, une formule, un pseudo-code se coupent **là où le sens le permet** :
