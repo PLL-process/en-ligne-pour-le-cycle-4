@@ -59,7 +59,10 @@ if (!liste.length) { console.log('⛔ EN PANNE : aucune page lue (n°299).'); pr
 
 const navigateur = await chromium.launch();
 const resultats = [];
+let renvois = 0;
 for (const fichier of liste) {
+  // une page de renvoi (<meta http-equiv="refresh">) part ailleurs dès l'ouverture : elle se compte à part
+  if (/<meta[^>]+http-equiv=["']?refresh/i.test(fs.readFileSync(fichier, 'utf8').slice(0, 4000))) { renvois++; continue; }
   const ctx = await navigateur.newContext({ viewport: { width: 640, height: 900 }, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
   try {
@@ -110,6 +113,7 @@ if (!muet) {
     if (r.nCoupes) console.log(`   · E1 lettres espacées : ${r.nCoupes} texte(s) coupé(s) — ${r.coupes.join(', ')}`);
   }
 }
+if (renvois) console.log(`ℹ ${renvois} page(s) de renvoi (meta refresh) non mesurées : elles mènent à une page mesurée.`);
 console.log(`${lues.length} page(s) ouvertes à 200 % avec l'espacement du texte WCAG 1.4.12 · ${z.length} défilent de côté · `
   + `${e.length} coupent du texte · ${c.length} ont au moins une cible sous 24 × 24 px (compté, non refusé)`);
 console.log('ℹ Non vu : lecteur d\'écran, clavier pas à pas, ce qui ne s\'ouvre qu\'après un clic.');

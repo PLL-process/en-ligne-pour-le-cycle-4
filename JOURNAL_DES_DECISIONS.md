@@ -36807,3 +36807,14 @@ d'autre ne change.
   34 / 34 et 39 / 39).
 
 **Mesure** (`controle_sigles_expliques.py`) : thème 1, 14 → 0 page avec un sigle jamais expliqué.
+
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 2 : les deux synthèses du jardin et de Book Train ne défilent plus à 200 % ; la mesure laisse les pages de renvoi (thème 2 : pages, `_outils`)
+
+**Carte blanche de Pascal** (22/11). Les synthèses élève de 4e_C4.1 et de Book Train empilaient leur chaîne des fonctions
+sous 600 px seulement : à 200 % (640 px), elle débordait. L'empilement vaut maintenant sous 760 px. `controle_zoom_espacement.mjs`
+ne tente plus d'ouvrir une page de renvoi (`<meta http-equiv="refresh">`, comme `qcm_algorigrammes_domotique.html`) : elle
+est comptée à part. **Reste** (thèmes 2 et 3) : le dessin de la chaîne à compléter (`_outils/chaine_a_completer/`) coupe une
+étiquette quand on espace les lettres, sur trois pages — à traiter à la source de l'outil.
+
+**Vérifié.** Mesure sur le thème 2 : 97 pages, 0 défile de côté ; banc 2/2 ; `controle_page_ouverte.mjs`,
+`controle_impression.mjs`, `controle_debordement` verts.
