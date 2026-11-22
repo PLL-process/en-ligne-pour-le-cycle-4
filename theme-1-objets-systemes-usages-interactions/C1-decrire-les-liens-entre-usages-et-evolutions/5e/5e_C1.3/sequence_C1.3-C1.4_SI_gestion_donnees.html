@@ -1519,7 +1519,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 </section>
 <section class="card"><h2>💡 Mon hypothèse de départ</h2><label>Avant de commencer : d'après toi, pourquoi l'équipe ne retrouve-t-elle pas ses informations, et n'arrive-t-elle pas à les comparer ? Que lui manque-t-il ?<textarea id="hyp" data-save="hypothese" rows="3" placeholder="À mon avis, il manque à l'équipe…"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>À mon avis, l'équipe ne retrouve pas ses informations parce que ____ .</li><li>Pour pouvoir les comparer, il lui faudrait ____ .</li></ul></details></label><p class="programme-seance">Personne ne la corrige : tu la reliras au bilan, pour mesurer le chemin parcouru.</p></section>
 <section class="card"><h2>🎯 Compétences de technologie</h2><ul><li><strong>5e_C1.3 :</strong> décrire le rôle des systèmes d’information dans le partage d’information.</li><li><strong>5e_C1.4 :</strong> recenser des données, les identifier, les classer, les représenter, les stocker et les retrouver dans une arborescence.</li></ul><figure><img src="Images/schema_systeme_information_velos.svg" alt="Schéma d’un système d’information reliant utilisateurs, capteurs, réseau, traitements et stockage"><figcaption>Le système d’information transforme des données en informations utiles à des acteurs.</figcaption></figure></section>
-<section class="card crcn"><h2>📌 CRCN observable, tracé et justifié</h2><div class="scroll"><table><thead><tr><th>Compétence exacte</th><th>Niveau visé</th><th>Repère pour enseigner — verbatim</th><th>Action observable</th><th>Trace produite</th></tr></thead><tbody><tr><td><strong>CRCN 1.2 — Gérer des données</strong></td><td>2</td><td>« Sauvegarder des fichiers dans l’ordinateur utilisé et dans un espace de stockage partagé et sécurisé, afin de pouvoir les réutiliser. »</td><td>Créer une arborescence imposée, renommer et déplacer les six fichiers du paquet de départ fourni, puis enregistrer une copie dans deux espaces distincts.</td><td>Capture de l’arborescence et archive ZIP du dossier de groupe.</td></tr><tr><td><strong>CRCN 1.3 — Traiter des données</strong></td><td>2</td><td>« Insérer, saisir et trier des données dans un tableur pour les exploiter. »</td><td>Importer le CSV, ajouter une colonne, saisir un statut, trier et filtrer les lignes.</td><td>Fichier ODS/XLSX transformé et export PDF du tableau filtré.</td></tr></tbody></table></div><p><strong>Règle :</strong> utiliser un ordinateur n’est pas une compétence. Les compétences sont validées uniquement par les transformations observables et les fichiers remis.</p></section>
+<section class="card crcn"><h2>📌 CRCN observable, tracé et justifié</h2><div class="scroll" tabindex="0" role="region" aria-label="Tableau de la compétence numérique (il défile de côté)"><table><thead><tr><th>Compétence exacte</th><th>Niveau visé</th><th>Repère pour enseigner — verbatim</th><th>Action observable</th><th>Trace produite</th></tr></thead><tbody><tr><td><strong>CRCN 1.2 — Gérer des données</strong></td><td>2</td><td>« Sauvegarder des fichiers dans l’ordinateur utilisé et dans un espace de stockage partagé et sécurisé, afin de pouvoir les réutiliser. »</td><td>Créer une arborescence imposée, renommer et déplacer les six fichiers du paquet de départ fourni, puis enregistrer une copie dans deux espaces distincts.</td><td>Capture de l’arborescence et archive ZIP du dossier de groupe.</td></tr><tr><td><strong>CRCN 1.3 — Traiter des données</strong></td><td>2</td><td>« Insérer, saisir et trier des données dans un tableur pour les exploiter. »</td><td>Importer le CSV, ajouter une colonne, saisir un statut, trier et filtrer les lignes.</td><td>Fichier ODS/XLSX transformé et export PDF du tableau filtré.</td></tr></tbody></table></div><p><strong>Règle :</strong> utiliser un ordinateur n’est pas une compétence. Les compétences sont validées uniquement par les transformations observables et les fichiers remis.</p></section>
 </details><!-- /rappel-ouverture -->
 
 <nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
@@ -3167,6 +3167,50 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
         return r;
       };
     } catch(e){}
+  }
+
+  /* Une zone qui défile s'atteint au clavier (axe-core, « scrollable-region-focusable », mesuré page ouverte sur les
+     341 pages le 22/11/2026 : 108 des 142 zones fautives étaient les schémas et les tableaux de ce kit). À 600 px et
+     moins, un schéma garde 560 px de large pour rester lisible, un grand tableau garde ses colonnes : la zone défile de
+     côté. Quand elle déborde vraiment, elle reçoit le focus (Tab, puis les flèches pour la faire défiler) et un nom lu
+     par le lecteur d'écran ; quand elle ne déborde plus (écran plus large), on retire ce qu'on avait posé, et cela
+     seulement. Une zone cachée (onglet fermé) mesure 0 : l'observateur de taille la reprend quand elle s'ouvre. En mode
+     incrusté, seules les zones des exercices sont touchées ; le tableau lui-même aussi, quand la séquence le fait
+     défiler (`table{display:block;overflow-x:auto}` dans sa feuille de style). */
+  var zones = [];
+  (source ? [document] : Array.prototype.slice.call(incrustes)).forEach(function(r){
+    r.querySelectorAll(".figure, .defile, .defile > table").forEach(function(el){ zones.push(el); });
+  });
+  function marquerZone(el){
+    var deborde = el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1;
+    var pose = el.getAttribute("data-zone-clavier");
+    if (deborde && pose === null){
+      pose = "";
+      if (!el.hasAttribute("tabindex")){ el.setAttribute("tabindex", "0"); pose += "t"; }
+      if (!el.hasAttribute("role")){ el.setAttribute("role", "region"); pose += "r"; }
+      if (!el.hasAttribute("aria-label") && !el.hasAttribute("aria-labelledby")){
+        var leg = el.querySelector("figcaption") || el.querySelector("caption");
+        var nom = leg ? leg.textContent.replace(/\s+/g, " ").trim() : "";
+        if (nom.length > 100) nom = nom.slice(0, 99) + "…";
+        el.setAttribute("aria-label", (el.classList.contains("defile") || el.tagName === "TABLE" ? "Tableau" : "Schéma") + (nom ? " : " + nom : "") + " (il défile de côté)");
+        pose += "l";
+      }
+      el.setAttribute("data-zone-clavier", pose);
+    } else if (!deborde && pose !== null){
+      if (pose.indexOf("t") !== -1) el.removeAttribute("tabindex");
+      if (pose.indexOf("r") !== -1) el.removeAttribute("role");
+      if (pose.indexOf("l") !== -1) el.removeAttribute("aria-label");
+      el.removeAttribute("data-zone-clavier");
+    }
+  }
+  if (zones.length){
+    if (typeof ResizeObserver === "function"){
+      var observateur = new ResizeObserver(function(entrees){ entrees.forEach(function(e){ marquerZone(e.target); }); });
+      zones.forEach(function(el){ observateur.observe(el); });
+    } else {
+      zones.forEach(marquerZone);
+      window.addEventListener("resize", function(){ zones.forEach(marquerZone); });
+    }
   }
 })();
 </script>

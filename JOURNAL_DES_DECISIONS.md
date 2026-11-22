@@ -36695,6 +36695,36 @@ d'or grandis de cette expérience et de cet audit »). Thème 2 seulement pour l
   (P1 à P3), la grille sur 100 avant (≈ 58) et après (≈ 87), le non-vérifié.
 - `SKILLS_AUDIT.md` et `docs/REGISTRE_DES_REGLES_OR.md` (réengendré) à jour.
 
+## 22/11/2026 — Kit des ateliers de représentation : une zone qui défile s'atteint au clavier (thème 1 ; thèmes 2 et 3 à suivre)
+
+**Le constat.** axe-core, page ouverte sur les 341 pages (22/11/2026) : 51 pages ont des zones qui défilent sans être
+atteignables au clavier (« scrollable-region-focusable », règle grave). 108 des 142 zones sont celles du kit des
+ateliers de représentation : à 600 px et moins, un schéma garde 560 px de large pour rester lisible
+(`.figure`, `.schema-vivant`), un grand tableau garde ses colonnes (`.defile`, ou le tableau lui-même quand la séquence
+le fait défiler). Au clavier, on ne pouvait ni l'atteindre ni le faire défiler.
+
+**Pourquoi pas plus tôt.** Le kit ne se régénère que si ses générateurs reproduisent les pages. Le matin, `build.py` et
+`incrustations.py` défaisaient les sigles expliqués à la main. La vague des sigles du thème 1 (PR #891 et #892) a mis
+les générateurs d'accord : `build.py` ne change plus rien, et les incrustations du thème 1 sont à jour. Restent cinq
+séquences des thèmes 2 et 3 où `incrustations.py` défait encore une infobulle (IP, LED, PLA, QCM) : elles reçoivent le
+nouveau moteur par une greffe du seul bloc `ateliers-representations:moteur`, sans régénération (lots des thèmes 2 et 3).
+
+**La correction, à la source** (`_generation/kit.js`). Une zone qui déborde vraiment reçoit `tabindex="0"`,
+`role="region"` et un nom (« Schéma : <sa légende> (il défile de côté) ») ; quand elle ne déborde plus, on retire ce
+qu'on avait posé, et cela seulement. Un observateur de taille reprend une zone cachée quand son onglet s'ouvre. En mode
+incrusté, seules les zones des exercices sont touchées. Vérifié dans le navigateur : à 390 px, Tab puis deux flèches
+font défiler le schéma de 80 px ; à 1 280 px, aucune zone marquée ; de 390 à 1 280 px sans recharger, tout est retiré.
+
+**Régénéré** : `build.py` (ateliers et cahiers, 21 pages) et `incrustations.py` (13 séquences du thème 1). Le diff ne
+fait qu'ajouter le moteur nouveau. Trois zones du thème 1 hors du kit reçoivent la même chose à la main :
+`5e_C1.3` (tableau CRCN de la séquence), `5e_C1.1` (« Les chiffres pour choisir »), la synthèse élève de `5e_C1.3`
+(« Mes preuves CRCN », `tabindex` sur le tableau qui défile).
+
+**Contrôles.** axe-core page ouverte sur les 34 pages régénérées : zones fautives **112 → 0** ; restent 15
+`color-contrast`, 1 `label`, 1 `list`, déjà sur `main`. `banc_ateliers.py` 530 / 530, `banc_rappels_cdc.py` 302 / 302,
+`incrustations.py --verifier` : thème 1 à jour ; `tests_regle_311` des onze dossiers de séquence 34 / 34 (27 / 27 pour
+5e_C3.1) ; `controle_page_ouverte.mjs` L 0 · B 0 · C 0.
+
 ## 22/11/2026 — Thème 2 : les tableaux et schémas qui défilent s'atteignent au clavier
 
 Suite du lot du kit des ateliers (thème 1, PR #893) : axe-core page ouverte relevait 5 pages du thème 2 avec des zones
