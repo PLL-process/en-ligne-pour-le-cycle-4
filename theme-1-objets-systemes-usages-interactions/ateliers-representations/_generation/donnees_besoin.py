@@ -1527,7 +1527,7 @@ NOTES_PROF = (
     "du référentiel (choisir un OST, justifier une évolution, identifier des caractéristiques, établir une liste), jamais sur "
     "« savoir faire une bête à cornes ».</li>"
     "<li>Conséquence assumée&nbsp;: chaque page de niveau totalise 22 à 25 minutes d'exercices, en dessous des 30 à 40 minutes "
-    "habituelles des ateliers. Le reste de la séance va à l'ouverture, au bilan et au QCM, ou à l'atelier du diagramme des "
+    "habituelles des ateliers. Le reste de la séance va à l'ouverture, au bilan et au QCM (questionnaire à choix multiples), ou à l'atelier du diagramme des "
     "interacteurs, qui suit.</li>"
     "<li>Le programme ne nomme pas la « bête à cornes »&nbsp;: il parle de <i>besoin</i>, et la bête à cornes produit la "
     "fonction d'usage. Le schéma est donc nommé deux fois&nbsp;: le mot du programme d'abord, le nom courant ensuite.</li>"

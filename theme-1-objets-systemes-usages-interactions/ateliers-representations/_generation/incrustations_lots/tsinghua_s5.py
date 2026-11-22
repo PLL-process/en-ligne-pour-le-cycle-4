@@ -27,7 +27,7 @@ ENTREES = [
                "que le besoin avait changé. <br>Ici, <b>le jardin partagé d'un collège</b> passe de l'arrosoir à un "
                "système d'arrosage connecté&nbsp;: compare les deux <b>bêtes à cornes</b> pour justifier ce changement. "
                "<br>Environ douze minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
-         suite="un exercice pour passer du besoin aux caractéristiques, et le QCM de l'atelier"),
+         suite="un exercice pour passer du besoin aux caractéristiques, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="cm-4e-tsinghua-s5", module="carte_mentale", niveau="4e", exos=["e3"],
          sequence=SEQ, avant=REPERE, premier_numero=2,
          balise="h3", balise_exo="h4",
@@ -36,7 +36,7 @@ ENTREES = [
                "avait ses avantages et ses inconvénients&nbsp;; l'arrosage connecté aussi. <br>Pour les ranger face à face, "
                "on dessine une <b>carte mentale</b>&nbsp;: complète celle du club jardin. <br>Environ un quart d'heure&nbsp;; "
                "l'exercice se vérifie tout seul et a sa correction complète.",
-         suite="un exercice pour corriger une carte mentale mal faite (en séance 6), et le QCM de l'atelier"),
+         suite="un exercice pour corriger une carte mentale mal faite (en séance 6), et le QCM (questionnaire à choix multiples) de l'atelier"),
     # 08/11/2026 : la séance 5 coupée en deux, à la demande de Pascal (« la couper en deux séances ») — sa lecture
     # dépassait 2 900 mots. Le troisième exercice ouvre la séance 6, avant la clôture.
     dict(id="cm-4e-tsinghua-s6", module="carte_mentale", niveau="4e", exos=["e4"],
@@ -44,5 +44,5 @@ ENTREES = [
          balise="h3", balise_exo="h4",
          titre="Une carte mentale qui se lit mal",
          intro="Environ un quart d'heure&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
-         suite="le QCM de l'atelier"),
+         suite="le QCM (questionnaire à choix multiples) de l'atelier"),
 ]

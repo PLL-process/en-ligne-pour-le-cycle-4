@@ -110,8 +110,8 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="C3.2">3e_C3.2 — Choisir et argumenter sur les trois piliers</option>""",
          """      <option value="C2.1">5e_C2.1 — Faire la liste des interacteurs extérieurs</option>
       <option value="C2.2">5e_C2.2 — Repérer et expliquer les choix de conception (ergonomie, sécurité, développement durable)</option>"""),
-        ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
-         "QCM d’entraînement 5e_C2.1 · C2.2 · Thème 1"),
+        ("QCM (questionnaire à choix multiples) d’entraînement 3e_C3.1 à C3.4 · Thème 1",
+         "QCM (questionnaire à choix multiples) d’entraînement 5e_C2.1 · C2.2 · Thème 1"),
         # les compteurs écrits dans la page avant que le script ne les remplisse (le bouton du parcours complet,
         # lui, n'est jamais réécrit) : le gabarit en a 30, comme la banque de 3e
         ('data-mode="complet">Parcours complet (30)</button>', 'data-mode="complet">Parcours complet (%d)</button>' % n),

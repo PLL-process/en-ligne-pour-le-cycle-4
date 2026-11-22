@@ -130,7 +130,7 @@ def construire(module, verifier=False):
          % (" · ".join(niveaux), "\n".join('  <span class="badge code">%s</span>' % c for c in codes), len(Q), nb_img)),
         (r'(<select id="selComp"[^>]*>).*?(</select>)', r"\g<1>" + "\n" + options.replace("\\", "\\\\") + "\n    \\g<2>"),
         (r"<footer>\s*<p>.*?</p>",
-         "<footer>\n  <p>QCM d’entraînement %s · Thème 1 · Technologie cycle 4 (2024) · ateliers associés : %s</p>"
+         "<footer>\n  <p>QCM (questionnaire à choix multiples) d’entraînement %s · Thème 1 · Technologie cycle 4 (2024) · ateliers associés : %s</p>"
          % (" · ".join(codes), pages)),
         (r"#navharm\{position:sticky;top:0;z-index:1200;display:flex;gap:8px;",
          "#navharm{position:sticky;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:8px;"),

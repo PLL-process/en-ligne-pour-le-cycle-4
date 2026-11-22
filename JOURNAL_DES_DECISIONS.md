@@ -36555,3 +36555,59 @@ explications écrites de la séance 3, trop pâle sur papier, défaut du 21/11).
 QCM montrent le schéma à compléter au lieu du schéma complet, qui portait la réponse (n°348) ; la question 1 reçoit des
 propositions crédibles. **Leçon** : la liste de fin de lot doit nommer aussi les bancs des sous-dossiers de `_outils/`
 (`qcm_aides/`, `impression_papier/`, `mode_mission/`) — ajoutée au skill `controle-qualite-lot` (PR transversale).
+
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 1 : 69 pages, 18 notes d'atelier, trois sources d'ateliers et huit générateurs de QCM (transversal : un générateur du thème 3)
+
+**Décision.** Pascal (22/11/2026, 2 h 05) : « Continue. Tu as carte blanche pour tout, puis fusionne automatiquement. »
+La vague QCM des thèmes 2 et 3 laissait le thème 1 « quand ses sessions auront fini » : elles ont fini (#847 à #858,
+#869). Même outil, même phrase : `_outils/expliquer_sigles.py --sigle QCM` pose « QCM (questionnaire à choix
+multiples) » à la première apparition du sigle dans le texte de la page.
+
+**Ce qui change.**
+- **69 pages posées par l'outil** (séquences, QCM de lot, synthèses du professeur, lexiques, pages et cahiers des
+  ateliers). Lancé une seconde fois, il ne pose plus rien (n°149).
+- **Pour qu'une page régénérée garde l'explication (n°283), ses sources disent la même chose** :
+  - les ateliers : `moteur.py` (« Le QCM … de cet atelier compte »), `cahiers.py` (« Chaque représentation a son
+    QCM … »), `build_qcm.py` (le pied des sept QCM d'atelier), et les données de deux synthèses du professeur (`donnees_besoin.py`, `donnees_fast.py` — « (cours de 3e, QCM) » devient « dans le cours de 3e et le QCM (questionnaire à choix multiples) », sans parenthèses imbriquées) ; les sept QCM sont régénérés (`build_qcm.py --tous`,
+    7 sur 7 à l'octet) ;
+  - les **18 notes des exercices d'atelier incrustés** dans le thème 1 portent l'explication à la source : quinze
+    `suite=` (« ce que tu fais ici s'y retrouve, avec … et le QCM », dans `incrustations_table.py` et
+    `incrustations_lots/`), et `NOTE_RAPPEL` de `bete_a_cornes_mots.py`, la phrase des trois piqûres de rappel de la
+    bête à cornes (`4e_C1.1`, `4e_C3.1`, `3e_C3.1`), qui ne lisent pas `suite=` ; `incrustations.py --seq` sur les 14
+    séquences, chaque ligne changée ne diffère que par l'explication. Les incrustations des thèmes 2 et 3 (la note par
+    défaut, dans `incrustations.py`) ne sont pas touchées ;
+  - le **pied du QCM gabarit** (`3e_C3.1`) change : les **huit générateurs** qui le cherchent mot pour mot le cherchent
+    sous sa nouvelle forme — sept lots du thème 1 et `atelier-planification/_generation/build_qcm.py` (thème 3, une
+    ligne : d'où la branche sans motif de thème). Sa sortie est identique avant et après (vérifié).
+- **Une note des ateliers défaite par une régénération, rétablie** : la vague commune du 22/11 avait écrit dans les pages
+  « (salle de techno, CDI — le centre de documentation et d'information) », pas dans les quatre sources des ateliers
+  (`gabarit_qcm.tpl`, `build.py`, `cahiers.py`, `moteur.py`) ; la première régénération des QCM l'a retirée de sept
+  pages. Les quatre sources la disent maintenant, la régénération la garde.
+
+**Mesure** (`controle_sigles_expliques.py`, site entier, après fusion de `main`). Pages avec au moins un sigle jamais
+expliqué : 175 → 139 ; thème 1 : 117 → 81. Pages où le QCM n'est jamais expliqué : 147 → 80. Pages où un sigle est
+expliqué plus bas que sa première apparition : 46 → 84 — ce sont surtout des pages du thème 1 où « QCM » apparaît
+d'abord dans la navigation ou un lien, où l'outil ne pose rien en clair ; la vague des infobulles des thèmes 2 et 3 les
+a traitées par une infobulle sans `tabindex` (`--infobulle`). Restent au thème 1, pour cette vague-là : ces liens, OST,
+CRCN, et une quinzaine d'autres sigles.
+
+**Constaté, non repris (antérieur, hors de ce lot).**
+- `incrustations.py --verifier` voit cinq pages des thèmes 2 et 3 (`3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1`, et
+  depuis la vague des infobulles du thème 3, `3e_C7.3`) en retard sur leur générateur, sur `main` avant ce lot : des retouches faites dans les pages (aération, replis) que le
+  générateur ne connaît pas. Ne pas relancer `--seq` sur elles avant d'avoir reporté ces retouches à la source.
+- Les cinq générateurs de lot du thème 1 qui tournent ne reproduisent plus leur page à l'octet (le QCM gabarit a pris
+  la loupe, le style des documents, et chaque page ses trois lignes) : ils tournent, mais la page reste la source.
+- `atelier-planification/verif_chaine_qcm.py` (thème 3) signale déjà sa page différente de ce que produit sa chaîne.
+
+**Après fusion de `main` (#874 à #885).** Le chantier 4 de l'audit (#877) avait régénéré les pages des ateliers
+(elles annoncent maintenant le bon nombre de questions illustrées) : ses pages sont reprises, et l'outil y repose
+l'explication (18 pages, une insertion chacune, placée là où `moteur.py` l'écrit). La dérive des huit générateurs
+de `rapport_audit.py`, mesurée dans une copie de l'arbre fusionné : 6 fichiers, aucun venu de ce lot — quatre lexiques
+du thème 1 (`3e_C1.5`, `4e_C1.4`, `5e_C1.3`, `5e_C2.1`), où `generer_lexique.py` pose désormais des infobulles (RGPD, IA,
+CRCN, FAST) que la vague du thème 1 n'a pas encore posées, et les deux incrustations FAST du thème 2 déjà laissées à
+cette vague ; leurs QCM sont identiques.
+
+**Vérifié.** `build_qcm.py --verifier` (ateliers) 7 / 7 ; `banc_ateliers.py` 530 / 530 ; `incrustations.py
+--verifier` : thème 1 à jour ; les 32 bancs des 14 séquences verts (`5e_C1.5` avec ses arguments documentés) ; mode
+mission joué sur les 14 : aucun refus ; contrôles des QCM (effectifs, banque, en-tête), sauvegarde locale et mêmes
+nombres : verts.

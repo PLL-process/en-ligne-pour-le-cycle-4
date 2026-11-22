@@ -26,5 +26,5 @@ ENTREES = [
                "ici&nbsp;: de Léa, par le vélo-cargo, jusqu'à ses enfants. Un exercice, environ six minutes&nbsp;; il se "
                "vérifie tout seul et a sa correction complète.",
          suite="un exercice pour compléter la bête à cornes d'un lampadaire, un autre pour choisir l'objet qui répond "
-               "au besoin de Léa, et le QCM de l'atelier"),
+               "au besoin de Léa, et le QCM (questionnaire à choix multiples) de l'atelier"),
 ]

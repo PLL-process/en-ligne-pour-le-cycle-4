@@ -1176,7 +1176,7 @@ NOTES_PROF = ("<ul><li>Le programme ne nomme pas le FAST&nbsp;: il dit <i>foncti
               "<li>Inspiration&nbsp;: le cahier «&nbsp;123 Techno&nbsp;» (Bordas, 2021), fiches FAST de 5e, 4e et 3e — mécaniques "
               "reprises, transposées à nos objets et dans nos mots&nbsp;: classer fonction / solution par la grammaire (verbe ou nom)&nbsp;; "
               "FAST tiré d'un texte où chaque phrase cache un couple constituant / fonction (4e)&nbsp;; «&nbsp;corriger le corrigé&nbsp;» "
-              "— une case de fonction qui contient un nom (3e)&nbsp;; «&nbsp;ce que le FAST n'est pas&nbsp;» (cours de 3e, QCM). Écarts du "
+              "— une case de fonction qui contient un nom (3e)&nbsp;; «&nbsp;ce que le FAST n'est pas&nbsp;», dans le cours de 3e et le QCM (questionnaire à choix multiples). Écarts du "
               "cahier volontairement non repris&nbsp;: FAST sans lecture «&nbsp;pourquoi&nbsp;? / comment&nbsp;?&nbsp;», fonctions sans verbe "
               "d'action («&nbsp;être pliable&nbsp;»). Aucun énoncé, aucune image de l'éditeur n'est repris.</li>"
               "<li>Limite du dessin&nbsp;: le générateur trace un FAST à un seul niveau de fonctions techniques. Le cours de 3e et le "

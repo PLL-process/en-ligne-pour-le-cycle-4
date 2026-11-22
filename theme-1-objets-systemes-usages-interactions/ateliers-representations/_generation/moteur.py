@@ -832,7 +832,7 @@ def cloture(at, niv, chemins):
     h.append("</section>")
     # QCM
     if chemins.get("qcm"):
-        h.append('<section class="card"><h2>🧠 Prêt·e à t\'entraîner&nbsp;?</h2><p>Le QCM de cet atelier compte <b>%d questions</b>, '
+        h.append('<section class="card"><h2>🧠 Prêt·e à t\'entraîner&nbsp;?</h2><p>Le QCM (questionnaire à choix multiples) de cet atelier compte <b>%d questions</b>, '
                  'dont <b>%d illustrées</b>, chacune avec sa correction complète. Il va de la 5e à la 3e&nbsp;: '
                  'tu peux choisir de ne travailler que les questions de ton niveau.</p>'
                  '<p><a class="btn qcm" href="%s">🧠 Ouvrir le QCM de l\'atelier</a></p></section>'
