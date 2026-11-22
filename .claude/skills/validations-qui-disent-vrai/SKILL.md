@@ -1,6 +1,6 @@
 ---
 name: validations-qui-disent-vrai
-description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règle d'or n°340.
+description: Vérifier et corriger les validations automatiques d'une séquence (boutons « Vérifier », `const CHECKS`, simulateurs) pour qu'une activité affichée « réussie » le soit vraiment — seuil codé = seuil annoncé, ordre exigé vérifié, réponse changée = validation retirée, justification écrite jamais validée aux mots-clés, simulateur qui dit ses hypothèses (règles d'or n°333 et n°338). À utiliser à chaque révision ou audit de séquence, et sur toute activité neuve qui se vérifie. Règles d'or n°340 et n°347.
 ---
 
 # Une validation dit la vérité
@@ -61,6 +61,27 @@ de réussite, message de réussite) et ce que le code **exige** :
 6. **La question qui souffle (I3).** Une question ne montre pas le résultat de la précédente (« 432 Wh ÷ 12 V = … »
    sous la question qui demande les 432 Wh) : `python3 _outils/controle_propositions_indices.py` (skill
    `propositions-sans-indice`).
+
+## 2 bis. Un score dit quoi reprendre (n°347, 21/11/2026)
+
+Une validation juste ne suffit pas : l'élève doit savoir quoi refaire. Né de l'audit de l'entraînement DNB de
+`3e_C6.2` : avec 7 / 8, l'élève ne savait pas quel exercice revoir ; avec 6 justes et 2 blancs, la page cochait
+« répondre aux 8 exercices ». Modèle en place : `_outils/dnb_gabarit.html` (fonctions `corriger`, `poserEtat`,
+`message`, `majTaches`).
+
+1. **Trois comptes séparés** : renseignés, justes, seuil. « 6 / 8 renseignés · seuil atteint · exercices 15 et 16 à
+   faire ». Une `CHECKS[n]()` renvoie aussi `vides` et `detail` (l'état de chaque exercice).
+2. **Une marque par exercice** après « Vérifier » : ✔ juste, ✘ à revoir, ○ à faire — en mots, pas en couleur seule
+   (n°119).
+3. **Le message cite les numéros**, jamais la bonne réponse : « À revoir : exercice 17 ».
+4. **« 🔎 Revoir mon erreur »** dit ce qui cloche dans le choix de l'élève (le `data-pourquoi` de sa proposition),
+   puis ouvre l'aide 1 : l'indice ciblé avant le corrigé (n°339).
+5. **Le bandeau des tâches** sépare « répondre à tous » (non cochée tant qu'une case est vide) et « atteindre le
+   seuil ».
+6. **Après rechargement**, les marques et le bilan « Où en suis-je ? » reviennent.
+
+Critères de banc : 6 justes + 2 blancs → le message exact ci-dessus et la tâche « répondre à tous » non cochée ; une
+erreur en 17 → « À revoir : exercice 17 », sans la bonne réponse dans le message.
 
 ## 3. Rejouer chaque constat en test de banc
 
