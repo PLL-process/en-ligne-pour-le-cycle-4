@@ -23,7 +23,7 @@ Méthode et grille d'audit sur 100 points : skill `cadrage-cles-de-voute`.
 | # | Clé de voûte | Règle | Ce qu'on vérifie |
 |---|---|---|---|
 | 1 | Un squelette unique | n°306 | ouverture, séances en onglets, Bonus → Bilan → QCM à la dernière séance |
-| 2 | On rappelle avant d'exiger | n°87, n°311 | rappel court (règle, exemple guidé, cas neuf), replié à partir de la séance 2 |
+| 2 | On rappelle avant d'exiger | n°87, n°311 (n°369 en essai) | rappel court (règle, exemple guidé, cas neuf), replié à partir de la séance 2 ; en essai depuis le 22/11 : une « 🔁 Reprise » de deux ou trois questions résolues de mémoire AVANT le rappel (skill `reprise-espacee`) |
 | 3 | Trois lignes avant de commencer | n°337 | apprendre, savoir faire, réussir — avec les mêmes seuils que le code (n°338) |
 | 4 | Une question se lit seule | n°343 | objet nommé, nombres, état de départ, unité sous les yeux (n°350) |
 | 5 | Choisir n'est pas expliquer | n°346 | une réponse rédigée, sans propositions, sur un document inédit |
