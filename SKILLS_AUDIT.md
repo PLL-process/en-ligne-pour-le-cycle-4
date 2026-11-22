@@ -9,7 +9,7 @@ journal jusqu'à la règle d'or n°311. Détail par skill (raison, preuve, quest
 `inventaire_skills_2026-10-23.json`, remis à Pascal. Entrée du journal du 23/10/2026.
 Depuis : `synthese-vulgarisee` (29/10, n°316) et quatre skills le 07/11/2026 (voir ci-dessous) ; le
 dépôt compte douze skills, quatorze avec `texte-clair-et-aere` et `revision-sequence` (08/11/2026), dix-huit avec les quatre
-skills de l'audit « double regard » (17/11/2026).
+skills de l'audit « double regard » (17/11/2026). Le 21/11/2026, `audit-douze-axes` (n°361 à n°368).
 
 ## Skills du dépôt (`.claude/skills/`)
 
@@ -38,6 +38,7 @@ skills de l'audit « double regard » (17/11/2026).
 | `tache-finale-redigee` | 21/11/2026 (n°346, 351, 356, 357) | 21/11/2026 | la tâche finale rédigée : document inédit, quatre questions (trajet, cas limite, modification, essai qui distingue), coup de pouce, phrase de copie, grille à trois critères, aucun bouton qui note | aucune | **NOUVELLE** — modèle : épreuve écrite de `3e_C6.2` |
 | `eleve-qui-ne-lit-pas` | 21/11/2026 (n°360) | 21/11/2026 | jouer l'élève qui ne lit pas (plus longue, plus courte, même place, hasard) et corriger les questions qui se devinent ; `eleve_qui_ne_lit_pas.py` | Python 3, Playwright | **NOUVELLE** |
 | `validations-qui-disent-vrai` | 18/11/2026 (n°340) | 21/11/2026 (n°347) | une validation dit vrai (seuil, ordre, retrait, réponse écrite) ; depuis le 21/11, un score dit quoi reprendre (§ 2 bis) | Python 3 stdlib, Node | **UTILISÉE** — absente de ce registre jusqu'au 21/11/2026 |
+| `audit-douze-axes` | 21/11/2026 (n°361-368) | 21/11/2026 | audit noté sur les 12 axes du gabarit de Pascal d'une page interactive (TP, atelier, séquence) : lire tout le code, jouer la page « en tricheur », l'ouvrir (`controle_page_ouverte.mjs`), situer dans le site (`controle_porte_sequence.py`), rendre un Doc, suivre jusqu'à `main` (top 5, lot « suite », banc commité, suivi). Né de l'audit du TP `4e_C6.2` (PR #832 à #842) | Python 3 stdlib, Node, Playwright, axe-core (option) | **UTILISÉE** |
 
 **Origine des quatre skills du 07/11/2026** : une liste de quinze « skills » proposée par Grok à Pascal, par
 curiosité. Onze ont été écartées — doublons de skills existants (`methode-fable`, `curriculum-assessment-cycle4`,
