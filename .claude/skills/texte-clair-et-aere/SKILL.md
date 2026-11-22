@@ -145,7 +145,8 @@ du seuil, sans que rien le dise. Un listing, une formule, un pseudo-code se coup
   clavier (`tabindex="0"` et un nom) ;
 - un retour à la ligne `<br>` garde un espace devant lui : le lecteur d'écran lit le `textContent`, qui collerait
   sinon « alimentation2. dévisser » ;
-- mesure : `node _outils/controle_page_ouverte.mjs <page>` (L), page ouverte, corrections comprises.
+- contrôle : `node _outils/controle_page_ouverte.mjs <page>` (L), page ouverte, corrections comprises — **il refuse
+  (sortie 1) depuis le 22/11/2026** : plus aucun listing ne défile sur le site, un nouveau ne passe pas.
 
 ## Les outils
 
