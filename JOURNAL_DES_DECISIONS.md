@@ -36292,6 +36292,57 @@ lui-même les deux blocs, la ligne se retire et le TP les reçoit.
 
 **Vérifié.** `controle_regle4.py` : 84 pages conformes, 0 écart (sortie 0) ; banc `tests_controle_regle4.py` 25/25.
 
+## 22/11/2026 — Sigles expliqués (n°44), vague des infobulles, thème 3 : 119 pages, 281 infobulles ; le générateur des TP CAO les pose lui-même (thème 3)
+
+Suite de l'entrée précédente (même décision de Pascal, 22/11/2026, 1 h 45 ; même outil, fusionné par la PR #878).
+
+**Ce qui change.**
+- 110 pages du thème 3 (séquences, QCM, synthèses, lexiques, ateliers) : 266 infobulles, posées par
+  `infobuller` — OST, PVC, USB, DEL, CRCN, LED, PLA, CAO, FAST, LCD, LSU, IP, TBT, EPI, CDI, URL ; QCM aussi, là où il
+  n'était expliqué que plus bas ou que dans un lien.
+- `atelier-cao/_generation/build_tp.py` appelle `infobuller` avant d'écrire (n°283) ; les quatre TP sont régénérés
+  (10 infobulles). `verif_chaine.py` était rouge sur `main` : la vague QCM de la nuit (PR #865) avait corrigé les quatre
+  scénarios sans recalculer leurs empreintes. Recalculées (`--empreintes`) : la chaîne est verte, chaque page est
+  exactement ce que son scénario produit.
+- Treize QCM citent OST (douze) ou CRCN (un) seulement dans le menu « Compétence à réviser » : une option de liste ne
+  porte pas d'infobulle, l'étiquette du menu le dit en clair, comme au thème 2.
+
+**Écartées** (d'autres sessions y travaillent, ou leur générateur change ailleurs) :
+- les pages touchées cette nuit par d'autres sessions (portes n°366, listings n°364, durées de l'audit) : `3e_C7.8`,
+  `4e_C7.5`, `4e_C7.8`, `5e_C7.5`, `5e_C8.2`, `4e_C9.1`, `3e_C9.1`, les pointeurs `atelier_croquis` et
+  `atelier_diagramme_fast` de `3e_C7.2` et `4e_C7.2`, `atelier_diagramme_des_exigences` de `4e_C8.3` ;
+- ce que la PR #877 (dérive des générateurs) régénérait pendant la vague : l'atelier de planification et
+  `build_atelier.py` (que la PR #879 a retouchés depuis), le dossier `3e_C9.2` et `generer_les_quatre_pages.py`. Une
+  note a été laissée sur #877, en conflit avec #878 sur `generer_lexique.py` (le même correctif de `sans_balises` des
+  deux côtés) ; elle a été fusionnée avec les deux (unités nommées et infobulles).
+
+**Lexiques.** #877 fusionnée, ses lexiques régénérés n'avaient pas encore d'infobulles : `generer_lexique.py --tous`
+sur le thème 3 en pose dans cinq (`3e_C7.1`, `5e_C7.1`, `5e_C7.4`, `3e_C9.2`, `4e_C9.1`) et ne change aucun autre
+lexique — ceux que la vague avait traités sont exactement ce que le générateur produit.
+
+**Vérifié.**
+- Texte et balises des 119 pages identiques avant et après, une fois retirés les `<abbr>`, le style ajouté et les deux
+  étiquettes de menu.
+- Les 114 premières pages ouvertes à 390 px : aucune erreur JavaScript ; la première infobulle visible prend le focus et affiche
+  son explication ; l'impression l'écrit ; aucune infobulle focalisable dans un lien ou un bouton. Huit synthèses
+  professeur défilent en largeur, comme sur `main`. Sur l'une (`5e_C7.5`), l'explication affichée au focus, dans une
+  cellule de tableau, élargit encore la page (451 → 521 px) : page professeur, qui défilait déjà.
+- Les 70 bancs de lot des dossiers touchés : 70 / 70, dont 35 lancés avec les arguments écrits dans leur
+  documentation. Un seul avait d'abord échoué, `tests_3e_C8.1_sequence.mjs` (61 / 62) : il aplatissait la synthèse
+  professeur en remplaçant chaque balise par une espace, et lisait « d’un OST . » au lieu de la formulation officielle
+  « d’un OST. ». Une balise de texte (`abbr`, `b`, `i`, `span`…) s'efface désormais sans espace : 62 / 62, et une
+  formulation modifiée échouerait toujours.
+- `controle_page_ouverte.mjs --axe` sur les 114 pages : L 0, B 0, C 0 ; les 14 pages signalées par axe-core ont les
+  mêmes écarts sur `main` (une en a un de moins).
+- `verif_guidage.py` des TP : le même manquement n°77 qu'avant sur deux TP (images du résultat attendu) ;
+  `controle_entete_qcm.py` vert.
+
+**Mesure** (`controle_sigles_expliques.py`) : thème 3, 120 → 53 pages avec au moins un sigle jamais expliqué (les
+pages écartées, et 33 pages où « QCM » n'est que dans la barre de navigation, à traiter avec les portes, n°366). En
+tout : 175 pages (thème 1 : 117, où d'autres sessions travaillent ; thème 2 : 5 ; thème 3 : 53).
+
+**Suite.** Le thème 1 quand ses sessions auront fini ; les pages écartées après la fusion de #877.
+
 ## 22/11/2026 — 3e_C6.1 « Programmer l'alerte » : deux audits, un banc d'essai qui exécute le programme de l'élève ; règles d'or n°373 et n°374 (en essai) ; la n°333 mesurée sur tout le site (thème 2, `_outils`)
 
 **Consignes de Pascal** (21-22/11/2026), avec l'audit externe `Audit_3e_Programmer_alerte.md` (21/11) en pièce jointe :
