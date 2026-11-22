@@ -36259,3 +36259,9 @@ par page, découpée aux balises) ; **une seconde régénération, dans une copi
 `controle_medias`, `controle_atteignabilite`, `controle_boutons_vivants`, `controle_hierarchie` : verts.
 `controle_competences` rouge **déjà sur `main`** (une page neuve de 5e_C1.2, « CRCN 1.3 » sans son intitulé), hors de
 ce lot. **Non exécuté** : les bancs des ateliers et des lexiques dans le navigateur.
+
+**Après fusion de `main` (#874 à #878, même matinée).** La vague « sigles expliqués en infobulle » (n°44, #878) est en
+cours dans une autre session : son générateur des lexiques pose déjà les infobulles que les pages n'ont pas encore
+(13 lexiques en retard sur leur source), et deux incrustations FAST (4e_C4.4, 5e_C4.1) ont reçu à la main des
+infobulles que `build.py` ne sait pas poser. Ces **17 fichiers** sont laissés à cette vague : régénérer ici les effacerait
+ou devancerait son travail. Hors d'eux, la dérive reste à zéro.
