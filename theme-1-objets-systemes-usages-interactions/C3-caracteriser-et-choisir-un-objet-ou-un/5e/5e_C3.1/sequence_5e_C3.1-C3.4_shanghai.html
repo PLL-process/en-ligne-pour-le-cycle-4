@@ -4631,7 +4631,7 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
 })();
 </script>
 <!-- onglets-seance v1 : fin -->
-<!-- entete-telephone v2 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->
+<!-- entete-telephone v3 : début — en-tête replié au téléphone dès la séance 2 ; source unique : _outils/entete_telephone.py -->
 <style>
 .entete-bascule,.entete-carte-bascule{display:none}
 @media screen and (max-width:600px){
@@ -4707,10 +4707,13 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
     premier.parentNode.insertBefore(bouton, premier);
   }
   var champs = [].slice.call(document.querySelectorAll("#identite input, .identite input")).filter(function(i){ return reglages.some(function(r){ return r.contains(i); }); });
+  /* v3 : le bouton dit ce qu'il replie — un nom seulement si la page en demande un (audit du 21/11/2026) */
+  var parcours = invites.length || reglages.some(function(r){ return r.matches(".choix-parcours-boutons") || r.querySelector(".choix-parcours-boutons"); });
   function libelle(){
     if (!bouton) return;
     var qui = champs.map(function(i){ return String(i.value || "").trim(); }).filter(Boolean).join(" ");
-    bouton.innerHTML = "⚙️ Mon nom, mon parcours, mes réglages"
+    bouton.innerHTML = (champs.length ? "⚙️ Mon nom, mon parcours, mes réglages" : parcours ? "⚙️ Mon parcours et mes réglages"
+      : "⚙️ Affichage, impression et sauvegarde")
       + (champs.length ? "<small>" + (qui ? "👤 " + qui.replace(/[&<>"]/g, "") : "✏️ Ton nom n'est pas encore écrit") + "</small>" : "");
   }
   function titre(carte){
@@ -4767,6 +4770,6 @@ details.incruste-repliee{margin:12px 0;border:1px dashed #4a6fb5;border-radius:1
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", preparer); else preparer();
 })();
 </script>
-<!-- entete-telephone v2 : fin -->
+<!-- entete-telephone v3 : fin -->
 </body>
 </html>
