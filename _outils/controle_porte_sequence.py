@@ -30,8 +30,9 @@ Chaque dossier des trois thèmes qui contient au moins une page `sequence*.html`
 
 RÉFÉRENCE (règle n°273 : nommée, datée, ne peut que rétrécir)
 -----------------------------------------------------------
-Les 14 pages relevées le 21/11/2026. Une page de la référence qui devient reliée est annoncée « à retirer » ; une
-page NOUVELLE sans porte fait sortir à 1.
+Les 14 pages relevées le 21/11/2026 ; 3 après le tri du soir (11 faux positifs) ; **vide le 22/11/2026** : Pascal a
+choisi de relier les trois dernières en activité facultative (« 1a », PR #862). Toute page sans porte fait maintenant
+sortir à 1. Une page de la référence qui devient reliée est annoncée « à retirer ».
 
 Sortie : 0 aucune page nouvelle sans porte · 1 au moins une · 2 EN PANNE (aucun dossier de séquence lu, n°299).
 Usage : python3 _outils/controle_porte_sequence.py [--muet]
@@ -44,14 +45,9 @@ RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IGNORES = {".git", "node_modules", "_archive-anciennes-versions", "_outils", "_exports", "_generation"}
 HORS_PORTE = re.compile(r"^(qcm|lexique|fiche|rapport|evaluation)|synthese", re.I)
 
-#: pages sans porte relevées le 21/11/2026 (main d7dc83c) — ne peut que rétrécir (n°273).
-REFERENCE = {
-    # relevées le 21/11/2026, triées le même soir (11 faux positifs retirés) — ne peut que rétrécir (n°273).
-    # Ajouter ces pages à leur séquence est un choix pédagogique : question posée à Pascal le 21/11/2026.
-    "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/activite_crcn_donnees_freinage_5e_C1.2.html",
-    "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/4e/4e_C2.1/atelier_diagramme_cas_utilisation.html",
-    "theme-1-objets-systemes-usages-interactions/C2-decrire-les-interactions-entre-un-objet-ou/5e/5e_C2.1/atelier_diagramme_cas_utilisation.html",
-}
+#: pages sans porte connues — vide depuis le 22/11/2026 (PR #862) ; ne peut que le rester (n°273).
+#: 14 pages le 21/11/2026 (main d7dc83c), 3 après le tri du soir, puis reliées à leur séquence sur décision de Pascal.
+REFERENCE = set()
 
 
 RENVOI = re.compile(r"http-equiv\s*=\s*[\"']refresh|Ressource\s+d[ée]plac[ée]e|a\s+[ée]t[ée]\s+refondue", re.I)

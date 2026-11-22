@@ -7,7 +7,8 @@ Un dossier de séquence fabriqué, cinq pages, une frontière chacune :
   deplacee       « Ressource déplacée » (renvoi)                         → n'en demande pas ;
   atelier_c      reliée par personne                                     → SANS porte ;
   atelier_d      page-pointeur dont l'atelier visé n'est relié par personne → SANS porte.
-Plus : une page `qcm_*` non reliée n'est pas lue (hors porte), et un dossier sans séquence n'est pas compté.
+Plus : une page `qcm_*` non reliée n'est pas lue (hors porte), un dossier sans séquence n'est pas compté, et la
+référence du dépôt est vide (depuis le 22/11/2026).
 Sortie 0 si tout passe, 1 sinon.
 """
 import os
@@ -49,6 +50,8 @@ def main():
         T.append(("une page qcm_* n'est pas lue", "qcm_essai.html" not in noms, noms))
     T.append(("la référence du dépôt ne garde que des pages qui existent",
               all(os.path.exists(os.path.join(c.RACINE, p)) for p in c.REFERENCE), sorted(c.REFERENCE)))
+    T.append(("la référence du dépôt est vide depuis le 22/11/2026 (n°273 : elle ne peut que le rester)",
+              not c.REFERENCE, sorted(c.REFERENCE)))
     for nom, ok, detail in T:
         print(("✅ " if ok else "❌ ") + nom + ("" if ok else f" — {detail}"))
     n = sum(1 for _, ok, _ in T if ok)
