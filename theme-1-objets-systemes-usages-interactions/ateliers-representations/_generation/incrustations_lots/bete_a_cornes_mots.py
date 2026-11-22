@@ -31,14 +31,18 @@ NOTE_RAPPEL = ("Ce rappel accompagne <a href=\"%s\">l'atelier de {niv} « Le bes
                "autres exercices et le QCM.")
 
 ENTREES = [
-    dict(id="bc-ref-carte", module="besoin", html="FIG_REFERENCE_CARTE",
+    dict(id="bc-ref-carte",
+         suite="les autres exercices et le QCM (questionnaire à choix multiples)", module="besoin", html="FIG_REFERENCE_CARTE",
          sequence=T1 + "_reperes/carte_des_representations.html", avant="<h3>Analyse interne — Thème 2</h3>"),
-    dict(id="bc-ref-5e-shenzhen", module="besoin", html="FIG_REFERENCE_SHENZHEN",
+    dict(id="bc-ref-5e-shenzhen",
+         suite="les autres exercices et le QCM (questionnaire à choix multiples)", module="besoin", html="FIG_REFERENCE_SHENZHEN",
          sequence=C2 + "5e/5e_C2.1/sequence_5e_C2_shenzhen_station_velos.html",
          avant="  <!-- ══ b) : l'exercice du vélo-cargo"),
-    dict(id="bc-ref-5e-shanghai", module="besoin", html="FIG_REFERENCE_APTE",
+    dict(id="bc-ref-5e-shanghai",
+         suite="les autres exercices et le QCM (questionnaire à choix multiples)", module="besoin", html="FIG_REFERENCE_APTE",
          sequence=C3 + "5e/5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html", avant=debut("bc-5e-shanghai-c3")),
-    dict(id="bcm-4e-tsinghua-s5", module="besoin", niveau="4e", exos=["rappel-feux"], cours=False,
+    dict(id="bcm-4e-tsinghua-s5",
+         suite="les autres exercices et le QCM (questionnaire à choix multiples)", module="besoin", niveau="4e", exos=["rappel-feux"], cours=False,
          sequence=C1 + "4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html", avant=debut("bc-4e-tsinghua-s5"),
          balise="h3", balise_exo="h4",
          titre="🧠 Piqûre de rappel&nbsp;: les mots de la bête à cornes, sur ton système",
@@ -49,7 +53,8 @@ ENTREES = [
                "référence</b> — utilisateur, matière d'œuvre, produit, fonction — sur le système de détection des feux des "
                "séances 1 à 4. Deux à trois minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
          note=NOTE_RAPPEL.format(niv="4e", objet="le jardin")),
-    dict(id="bcm-4e-hangzhou-c3", module="besoin", niveau="4e", exos=["rappel-velos"], cours=False,
+    dict(id="bcm-4e-hangzhou-c3",
+         suite="les autres exercices et le QCM (questionnaire à choix multiples)", module="besoin", niveau="4e", exos=["rappel-velos"], cours=False,
          sequence=C3 + "4e/4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html", avant=debut("bc-4e-hangzhou-c3"),
          balise="h4", balise_exo="h5",
          titre="🧠 Piqûre de rappel&nbsp;: les mots de la bête à cornes, sur la flotte de Hangzhou",
@@ -59,7 +64,8 @@ ENTREES = [
                "utilisateur, matière d'œuvre, produit, fonction — sur <b>ton</b> objet, la flotte de vélos de Hangzhou. Deux "
                "à trois minutes&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
          note=NOTE_RAPPEL.format(niv="4e", objet="le jardin")),
-    dict(id="bcm-3e-shenzhen-c3", module="besoin", niveau="3e", exos=["rappel-local"], cours=False,
+    dict(id="bcm-3e-shenzhen-c3",
+         suite="les autres exercices et le QCM (questionnaire à choix multiples)", module="besoin", niveau="3e", exos=["rappel-local"], cours=False,
          sequence=C3 + "3e/3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html", avant=debut("bc-3e-shenzhen-c3"),
          balise="h4", balise_exo="h5",
          titre="🧠 Piqûre de rappel&nbsp;: les mots de la bête à cornes, sur le local des serveurs",

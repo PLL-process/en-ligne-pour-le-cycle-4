@@ -12,5 +12,5 @@ ENTREES = [
                "<b>croquis</b>. Un usager d'une autre borne de vélos raconte son geste&nbsp;; trois croquis le dessinent. "
                "Lequel le dit vraiment, et pourquoi les deux autres trahissent-ils le témoignage&nbsp;? Un exercice, "
                "environ dix minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
-         suite="le croquis du geste de la gardienne du jardin, un croquis coté à proposer, et le QCM de l'atelier"),
+         suite="le croquis du geste de la gardienne du jardin, un croquis coté à proposer, et le QCM (questionnaire à choix multiples) de l'atelier"),
 ]

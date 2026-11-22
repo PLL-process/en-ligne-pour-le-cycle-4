@@ -36167,3 +36167,48 @@ contraste (26), étiquettes (4), attributs ARIA (3), liste (1). Le kit des ateli
 `build.py` et `incrustations.py` défont aujourd'hui les explications de sigles posées à la main dans les pages
 (« CDI — le centre de documentation et d'information », « QCM (questionnaire à choix multiples) ») ; leurs sources
 (`build.py`, `cahiers.py`, `moteur.py`, les textes des incrustations) sont à mettre d'accord avant toute régénération.
+
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 1 : 69 pages, 21 notes d'atelier, trois sources d'ateliers et huit générateurs de QCM (transversal : un générateur du thème 3)
+
+**Décision.** Pascal (22/11/2026, 2 h 05) : « Continue. Tu as carte blanche pour tout, puis fusionne automatiquement. »
+La vague QCM des thèmes 2 et 3 laissait le thème 1 « quand ses sessions auront fini » : elles ont fini (#847 à #858,
+#869). Même outil, même phrase : `_outils/expliquer_sigles.py --sigle QCM` pose « QCM (questionnaire à choix
+multiples) » à la première apparition du sigle dans le texte de la page.
+
+**Ce qui change.**
+- **69 pages posées par l'outil** (séquences, QCM de lot, synthèses du professeur, lexiques, pages et cahiers des
+  ateliers). Lancé une seconde fois, il ne pose plus rien (n°149).
+- **Pour qu'une page régénérée garde l'explication (n°283), ses sources disent la même chose** :
+  - les ateliers : `moteur.py` (« Le QCM … de cet atelier compte »), `cahiers.py` (« Chaque représentation a son
+    QCM … »), `build_qcm.py` (le pied des sept QCM d'atelier), et les données de deux synthèses du professeur (`donnees_besoin.py`, `donnees_fast.py` — « (cours de 3e, QCM) » devient « dans le cours de 3e et le QCM (questionnaire à choix multiples) », sans parenthèses imbriquées) ; les sept QCM sont régénérés (`build_qcm.py --tous`,
+    7 sur 7 à l'octet) ;
+  - les **21 exercices d'atelier incrustés** dans le thème 1 : leur note (« ce que tu fais ici s'y retrouve, avec … et
+    le QCM ») porte l'explication, à la source (`suite=` dans `incrustations_table.py` et `incrustations_lots/`) ; six
+    qui prenaient la note par défaut reçoivent la leur ; `incrustations.py --seq` sur les 14 séquences, chaque ligne
+    changée ne diffère que par l'explication (22 / 22, vérifié). Les incrustations des thèmes 2 et 3 ne sont pas
+    touchées ;
+  - le **pied du QCM gabarit** (`3e_C3.1`) change : les **huit générateurs** qui le cherchent mot pour mot le cherchent
+    sous sa nouvelle forme — sept lots du thème 1 et `atelier-planification/_generation/build_qcm.py` (thème 3, une
+    ligne : d'où la branche sans motif de thème). Sa sortie est identique avant et après (vérifié).
+- **Une note des ateliers défaite par une régénération, rétablie** : la vague commune du 22/11 avait écrit dans les pages
+  « (salle de techno, CDI — le centre de documentation et d'information) », pas dans les quatre sources des ateliers
+  (`gabarit_qcm.tpl`, `build.py`, `cahiers.py`, `moteur.py`) ; la première régénération des QCM l'a retirée de sept
+  pages. Les quatre sources la disent maintenant, la régénération la garde.
+
+**Mesure.** Thème 1, pages avec au moins un sigle nu : 125 → 90 ; sur le site, pages avec un QCM jamais expliqué :
+173 → 95. Restent au thème 1 les 33 pages où « QCM » n'est que dans un lien ou la navigation (comme aux thèmes 2 et 3),
+puis OST (50 pages, surtout dans l'énoncé des codes du référentiel, qui vient de sources communes aux trois thèmes),
+CRCN (22) et une quinzaine d'autres sigles.
+
+**Constaté, non repris (antérieur, hors de ce lot).**
+- `incrustations.py --verifier` voit quatre pages des thèmes 2 et 3 (`3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1`) en
+  retard sur leur générateur, sur `main` avant ce lot : des retouches faites dans les pages (aération, replis) que le
+  générateur ne connaît pas. Ne pas relancer `--seq` sur elles avant d'avoir reporté ces retouches à la source.
+- Les cinq générateurs de lot du thème 1 qui tournent ne reproduisent plus leur page à l'octet (le QCM gabarit a pris
+  la loupe, le style des documents, et chaque page ses trois lignes) : ils tournent, mais la page reste la source.
+- `atelier-planification/verif_chaine_qcm.py` (thème 3) signale déjà sa page différente de ce que produit sa chaîne.
+
+**Vérifié.** `build_qcm.py --verifier` (ateliers) 7 / 7 ; `banc_ateliers.py` 530 / 530 ; `incrustations.py
+--verifier` : thème 1 à jour ; les 32 bancs des 14 séquences verts (`5e_C1.5` avec ses arguments documentés) ; mode
+mission joué sur les 14 : aucun refus ; contrôles des QCM (effectifs, banque, en-tête), sauvegarde locale et mêmes
+nombres : verts.

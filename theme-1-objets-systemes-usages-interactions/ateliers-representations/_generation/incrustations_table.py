@@ -19,7 +19,7 @@ INCRUSTATIONS = [
                "un <b>vélo-cargo</b>. Tu vas lister ce qui l'entoure, puis compléter son schéma — le <b>diagramme des "
                "interacteurs extérieurs</b>, qu'on appelle aussi le <b>diagramme pieuvre</b>. Deux exercices, environ "
                "un quart d'heure&nbsp;; chacun se vérifie tout seul et a sa correction complète.",
-         suite="un exercice pour classer ses interacteurs, un autre sur ses choix de conception, et le QCM de l'atelier"),
+         suite="un exercice pour classer ses interacteurs, un autre sur ses choix de conception, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="pv-4e-hangzhou",
          # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
          replie="🐙 D'abord (10 min)&nbsp;: les contraintes, sur le diagramme pieuvre d'un autre objet — ouvre l'exercice", module="interacteurs", niveau="4e", exos=["e5"],
@@ -31,7 +31,7 @@ INCRUSTATIONS = [
                "interacteur impose une condition. Entraîne-toi sur un autre objet, le <b>système d'arrosage connecté</b> "
                "d'un jardin partagé, avec son <b>diagramme des interacteurs extérieurs</b> — le <b>diagramme pieuvre</b>. "
                "Un exercice, environ dix minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
-         suite="le cahier des charges avec la flexibilité, les plaintes des usagers, et le QCM de l'atelier"),
+         suite="le cahier des charges avec la flexibilité, les plaintes des usagers, et le QCM (questionnaire à choix multiples) de l'atelier"),
 ]
 
 # Les autres séquences : un fichier par séquence dans incrustations_lots/ (variable ENTREES), pour que plusieurs

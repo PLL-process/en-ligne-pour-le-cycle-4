@@ -180,8 +180,8 @@ def construire(gabarit: str, sortie: str) -> None:
       <option value="C1.2">4e_C1.2 — Avantages et inconvénients des évolutions</option>
       <option value="C1.3">4e_C1.3 — Justifier l'évolution par le besoin</option>"""),
 
-        ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
-         "QCM d’entraînement 4e_C1.1 à C1.3 · Thème 1"),
+        ("QCM (questionnaire à choix multiples) d’entraînement 3e_C3.1 à C3.4 · Thème 1",
+         "QCM (questionnaire à choix multiples) d’entraînement 4e_C1.1 à C1.3 · Thème 1"),
     ]
     for avant, apres in remplacements:
         if s.count(avant) != 1:

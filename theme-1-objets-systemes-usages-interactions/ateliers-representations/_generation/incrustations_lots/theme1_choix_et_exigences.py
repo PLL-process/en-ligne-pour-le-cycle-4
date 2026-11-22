@@ -34,7 +34,7 @@ ENTREES = [
                "lis sa bête à cornes, puis choisis l'objet qui répond à son besoin. Deux exercices, environ un quart "
                "d'heure&nbsp;; chacun se vérifie tout seul et a sa correction complète. Le même geste servira en "
                "séance 4, pour choisir entre S1, S2 et S3.",
-         suite="un exercice pour compléter la bête à cornes d'un lampadaire, et le QCM de l'atelier"),
+         suite="un exercice pour compléter la bête à cornes d'un lampadaire, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="bc-4e-hangzhou-c3",
          # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
          replie="🐂 D'abord (10 min)&nbsp;: de la bête à cornes aux caractéristiques, sur un autre objet — ouvre l'exercice", module="besoin", niveau="4e", exos=["e5"],
@@ -48,7 +48,7 @@ ENTREES = [
                "<b>bête à cornes</b>&nbsp;: chaque partie du besoin demande une caractéristique, et ce qui ne sert pas "
                "le besoin ne compte pas. Un exercice, environ dix minutes&nbsp;; il se vérifie tout seul et a sa "
                "correction complète.",
-         suite="un exercice sur le besoin qui évolue, de l'arrosoir au système connecté, et le QCM de l'atelier"),
+         suite="un exercice sur le besoin qui évolue, de l'arrosoir au système connecté, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="bc-3e-shenzhen-c3",
          # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
          replie="🐂 D'abord (12 min)&nbsp;: la méthode, sur un autre besoin, l'alerte cyclonique — ouvre l'exercice", module="besoin", niveau="3e", exos=["e6"],
@@ -60,7 +60,7 @@ ENTREES = [
                "des systèmes techniques dans plusieurs familles. Avant le local de Shenzhen, entraîne-toi sur un besoin "
                "plus proche de nous&nbsp;: prévenir les habitants d'un quartier de Sainte-Luce de l'arrivée d'un "
                "cyclone. Un exercice, environ douze minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
-         suite="un exercice sur le besoin mal formulé qui ferme la liste, et le QCM de l'atelier"),
+         suite="un exercice sur le besoin mal formulé qui ferme la liste, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="ex-3e-shenzhen-c3",
          # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
          replie="📏 Avant la grille (8 min)&nbsp;: ce que le client accepte, la flexibilité — ouvre l'exercice", module="exigences", niveau="3e", exos=["e5"],
@@ -74,7 +74,7 @@ ENTREES = [
                "dans la grille. Entraîne-toi sur un autre objet&nbsp;: la <b>station d'alerte cyclonique</b> d'un "
                "quartier de Martinique, dont la cliente, la présidente du comité de quartier, dit ce qu'elle accepte. "
                "Un exercice, environ huit minutes&nbsp;; il se vérifie tout seul et a sa correction complète.",
-         suite="l'évaluation de deux boîtiers exigence par exigence, l'arbitrage entre eux, et le QCM de l'atelier"),
+         suite="l'évaluation de deux boîtiers exigence par exigence, l'arbitrage entre eux, et le QCM (questionnaire à choix multiples) de l'atelier"),
     dict(id="cu-3e-pekin-c2",
          # 22/11/2026 (chantier 2 du thème 1, la charge de lecture) : rangé sous son résumé, à sa place
          replie="🧭 D'abord (13 min)&nbsp;: choisir le mode de représentation selon la question — ouvre l'exercice", module="cas_utilisation", niveau="3e", exos=["e6"],
@@ -87,5 +87,5 @@ ENTREES = [
                "de mer. Deux modes s'ajoutent aux six de la séquence&nbsp;: le <b>diagramme de cas d'utilisation</b> et "
                "le <b>diagramme des interacteurs</b> (le cours, juste en dessous, les présente). <br>Environ un quart "
                "d'heure&nbsp;; l'exercice se vérifie tout seul et a sa correction complète.",
-         suite="la construction du diagramme d'une station d'alerte cyclonique, et le QCM de l'atelier"),
+         suite="la construction du diagramme d'une station d'alerte cyclonique, et le QCM (questionnaire à choix multiples) de l'atelier"),
 ]
