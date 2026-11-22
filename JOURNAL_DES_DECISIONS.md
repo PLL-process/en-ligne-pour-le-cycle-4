@@ -36899,3 +36899,21 @@ replient leurs cellules au lieu de pousser la page ; rien ne change au-dessus de
 **Vérifié.** `controle_zoom_espacement.mjs` sur le thème 3 : 174 pages, 0 défile de côté (reste 1 texte coupé dans le
 dessin de la chaîne à compléter de 4e_C7.5, outil commun, à traiter à sa source) ; `controle_debordement`,
 `controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hierarchie` verts.
+
+## 22/11/2026 — Vague contraste, thème 1 : la légende des schémas vivants, un score, trois champs et une liste
+
+Suite de la vague contraste (thème 2 et accueil : PR #903).
+- **Kit des ateliers** (`_generation/kit.css`) : la légende d'un schéma vivant est posée sur le fond clair du schéma ;
+  le bleu clair commun `#9bbefc` y donnait 1,8 : 1 → `#3b5b8f` (6,7 : 1). 24 légendes. Ateliers, cahiers et 13
+  séquences du thème 1 régénérés (le diff ne fait qu'ajouter la règle). Les pages des thèmes 2 et 3 qui incrustent des
+  exercices recevront le moteur par greffe dans leurs lots.
+- `4e_C1.4` : l'étiquette du score dans un titre prenait le violet du titre (`#c68ef2` sur `#11407a`, 4,2 : 1) →
+  `#dcbcf8` (6,2 : 1).
+- `3e_C1.5` : les champs Nom, Prénom, Classe du bilan reçoivent leur nom ; la liste des deux questions de la séance 1
+  ne contenait pas que des `<li>` (zone de réponse, bouton et correction posés entre deux items) → chaque item garde
+  sa zone de réponse, son bouton et sa correction ; le nom de la zone de réponse reste la seule question (`span`).
+
+Contrôles : axe-core page ouverte sur les 35 pages : 0 défaut grave ; L 0 · B 0 · C 0 ; `controle_impression` (site
+entier) et `controle_contraste_liens` à 0 ; `banc_ateliers.py` 530 / 530, `banc_rappels_cdc.py` 302 / 302 ;
+`tests_3e_C1.5_questions.mjs` 23 / 23, `tests_3e_C1.5_seances.py` 46 / 46, `tests_4e_C1.4_quiz.mjs` 32 / 32,
+`tests_regle_311` 34 / 34 ; `controle_mode_mission` à 0.
