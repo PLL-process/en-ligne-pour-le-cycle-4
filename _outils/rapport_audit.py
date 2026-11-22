@@ -159,6 +159,17 @@ def controles(complet):
 
 # ── 4. preuves des COUVERT ──────────────────────────────────────────────────
 def preuves_couverts(rows):
+    """Pour chaque code COUVERT, les questions de QCM qui le marquent (`c:"C2.2"`).
+
+    22/11/2026 (audit #867) : la mesure lit CHAQUE QCM pour lui-même, dans TOUS les lots
+    vers lesquels le README du code renvoie — et non plus le seul premier lien, ni un
+    marquage « par code » déduit d'un seul QCM du lot. Avant, le QCM hérité
+    `qcm_automatisation_premium.html` (marqué par code) faisait croire que le lot 4e_C4.1
+    entier marquait par code : le QCM du jardin, marqué par thème (`EN`, `ID`, `PRO`,
+    `RES`), comptait alors pour zéro, et 4e_C4.8/C4.9, prouvés dix fois chacun dans le
+    QCM de 4e_C4.7, n'étaient pas vus. Un zéro n'est écrit que si tous les QCM lus
+    marquent par code ; sinon la preuve est dite non mesurable.
+    """
     sortie = []
     for r in rows:
         if not r["statut"].startswith("COUVERT"):
@@ -167,30 +178,43 @@ def preuves_couverts(rows):
         suffixe = code.split("_", 1)[1]      # C2.2
         dossier = os.path.join(RACINE, r["chemin"])
         readme = os.path.join(dossier, "README.md")
-        cible = None
+        cibles = []
         if os.path.exists(readme):
             t = open(readme, encoding="utf-8").read()
-            m = re.search(r"\]\((\.\./[^)]+?/)(?:sequence[^)]*\.html|[^)]*\.html)\)", t) or re.search(r"\*\*(\d[a-z]_C\d\.\d+)\*\*", t)
-            if m:
-                g = m.group(1)
-                cible = os.path.normpath(os.path.join(dossier, g)) if g.startswith("..") else os.path.join(os.path.dirname(dossier), g)
-        # La mesure n'a de sens que si le QCM du lot marque ses questions par code (`c:"C2.2"`,
+            for g in re.findall(r"\]\((\.\./[^)]+?/)[^)/]*\.html(?:#[^)]*)?\)", t):
+                c = os.path.normpath(os.path.join(dossier, g))
+                if c not in cibles:
+                    cibles.append(c)
+            if not cibles:
+                m = re.search(r"\*\*(\d[a-z]_C\d\.\d+)\*\*", t)
+                if m:
+                    cibles.append(os.path.join(os.path.dirname(dossier), m.group(1)))
+        # La mesure n'a de sens que pour un QCM qui marque ses questions par code (`c:"C2.2"`,
         # convention des lots du thème 1). Un QCM qui marque autrement (`c:"EN"`, `c:"ID"`) ou pas du
         # tout, ou un lot sans QCM à sa racine, ne dit rien : le rapport l'écrit, il n'invente pas un zéro.
-        n_q, marque, trouve = 0, False, False
-        if cible and os.path.isdir(cible):
+        n_q, trouve, non_marques, ou = 0, False, 0, []
+        for cible in cibles:
+            if not os.path.isdir(cible):
+                continue
             for f in sorted(os.listdir(cible)):
                 if f.startswith("qcm") and f.endswith(".html"):
                     trouve = True
                     src = open(os.path.join(cible, f), encoding="utf-8").read()
-                    if re.search(r'\bc:"C\d\.\d+"', src):
-                        marque = True
-                    n_q += len(re.findall(r'\bc:"%s"' % re.escape(suffixe), src))
+                    if not re.search(r'\bc:"C\d\.\d+"', src):
+                        non_marques += 1
+                        continue
+                    n = len(re.findall(r'\bc:"%s"' % re.escape(suffixe), src))
+                    if n:
+                        n_q += n
+                        if cible not in ou:
+                            ou.append(cible)
         if not trouve:
             n_q = "pas de QCM à la racine du lot"
-        elif not marque:
+        elif n_q == 0 and non_marques:
             n_q = "QCM non marqué par code"
-        sortie.append((code, r["theme"], os.path.relpath(cible, RACINE) if cible else "—", n_q, r["croisement"][:80]))
+        montre = ou or [c for c in cibles if os.path.isdir(c)][:1]
+        sortie.append((code, r["theme"], " + ".join(os.path.relpath(c, RACINE) for c in montre) if montre else "—",
+                       n_q, r["croisement"][:80]))
     return sortie
 
 

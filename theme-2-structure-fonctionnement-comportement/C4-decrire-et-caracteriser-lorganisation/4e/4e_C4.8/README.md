@@ -5,7 +5,7 @@
 ➡ Séquence complète : [`../4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html`](../4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html)
 (« Le jardin connecté » — séance 3 : résolution des 3 pannes de communication).
 
-➡ QCM d'entraînement : [`../4e_C4.1/qcm_4e_C4.1-C4.9_jardin_connecte.html`](../4e_C4.1/qcm_4e_C4.1-C4.9_jardin_connecte.html) (questions RES).
+➡ QCM d'entraînement : [`../4e_C4.1/qcm_4e_C4.1-C4.9_jardin_connecte.html`](../4e_C4.1/qcm_4e_C4.1-C4.9_jardin_connecte.html) (questions RES) · [QCM « SOS serre »](../4e_C4.7/qcm_4e_C4.7-C4.9_sos_serre.html) (10 questions sur C4.8).
 
 ➡ Synthèses : [élève](../4e_C4.1/Synthèses/synthese_eleve_4e_C4.1-C4.9.html) · [professeur](../4e_C4.1/Synthèses/synthese_professeur_4e_C4.1-C4.9.html).
 

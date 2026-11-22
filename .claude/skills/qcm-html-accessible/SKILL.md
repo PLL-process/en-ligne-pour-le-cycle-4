@@ -61,6 +61,13 @@ commencer » en trois lignes. Skill `qcm-aides-et-pieges`, outil `_outils/qcm_ai
   elle s'y écrit en toutes lettres, sans parenthèse (« il ne manipule que du 5 volts ») : une parenthèse la
   distinguerait, un rappel dans l'énoncé la désignerait (le contrôle refuse l'option seule nommée).
 
+## L'entraînement mélangé (règle d'or n°371, en essai depuis le 22/11/2026)
+
+69 QCM sur 70 posent leurs questions par blocs de compétence. Sans toucher au parcours complet (son ordre est
+parfois voulu), ajouter un mode « 🔀 Entraînement mélangé » (`data-mode="melange"`) dont la liste est l'ordre
+déterministe de `python3 _outils/mesurer_entrelacement.py --ordre <qcm.html>` : un tour par compétence, sans
+hasard. Détail : skill `reprise-espacee`, § 4.
+
 ## Deux portes avant de livrer une question (veille du 15/11/2026)
 
 Idée prise de `anthropics/k12-teacher-skills` (skill `k12-check-for-understanding`, Apache 2.0), réécrite ici de

@@ -14,7 +14,9 @@ principes cadrent une séquence, et les autres règles se rangent sous eux. Gril
 
 1. **Squelette (n°306)** : combien de séances de 55 min, où vont Bonus, Bilan, QCM.
 2. **Rappel (n°87, n°311)** : quels prérequis, quel exemple guidé, quel cas neuf. Pascal change de collège chaque année :
-   aucun élève n'a fait sa séquence précédente (n°304).
+   aucun élève n'a fait sa séquence précédente (n°304). **En essai depuis le 22/11/2026 (n°369, « Ce qui compte
+   revient »)** : à partir de la séance 2, quelles deux ou trois questions l'élève résout **de mémoire**, avant le rappel
+   déplié, sur les acquis 🔑 des séances d'avant (skill `reprise-espacee`).
 3. **Trois lignes (n°337)** : ce que l'élève apprend, sait faire, et le seuil chiffré de réussite.
 4. **Question seule (n°343)** : quels nombres et quel état de départ chaque question devra donner (n°350).
 5. **Preuve écrite (n°346)** : le document inédit et ses quatre questions rédigées (skill `tache-finale-redigee`).
