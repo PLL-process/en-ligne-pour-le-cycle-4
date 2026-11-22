@@ -36742,3 +36742,17 @@ clavier (« scrollable-region-focusable ») dans 17 pages du thème 3.
 Contrôles : axe-core page ouverte sur les 20 pages : zones fautives 0 (restent 3 `color-contrast` et 1 `label`, déjà
 sur `main`) ; L 0 · B 0 · C 0 ; `tests_regle_311` des seize dossiers 34 / 34 ; `tests_3e_C9.2-C8.3.mjs` 167 / 167
 (découpage et persistance croisée) ; `controle_impression` à 0.
+
+## 22/11/2026 — Thème 2 : les tableaux et schémas qui défilent s'atteignent au clavier
+
+Suite du lot du kit des ateliers (thème 1, PR #893) : axe-core page ouverte relevait 5 pages du thème 2 avec des zones
+qui défilent sans clavier (« scrollable-region-focusable »).
+- **Moteur des ateliers** greffé (bloc `ateliers-representations:moteur` seul, sans régénération) dans les trois
+  séquences qui incrustent des exercices : `4e_C4.1`, `5e_C4.1` (ses deux zones fautives) et `4e_C6.2`. Dans `4e_C4.1`
+  et `5e_C4.1`, `incrustations.py` défait encore une infobulle (IP, LED) : la greffe la garde.
+- **Tableaux des séquences** qui défilent sur téléphone (`table.refs` en `display:block` sous 600 px) : `tabindex="0"`
+  dans `3e_C4.3`, `3e_C4.7`, `3e_C5.1` (deux chacun) ; dans `4e_C4.7`, les deux `div` qui défilent (« le plan d'adressage
+  du réseau », « le contrat du binôme ») reçoivent aussi `role="region"` et leur nom.
+
+Contrôles : axe-core page ouverte sur les 7 pages : zones fautives 0 (reste un `label` dans `3e_C4.3`, déjà sur
+`main`) ; L 0 · B 0 · C 0 ; `tests_regle_311` des sept dossiers 34 / 34 ; `controle_impression` à 0.
