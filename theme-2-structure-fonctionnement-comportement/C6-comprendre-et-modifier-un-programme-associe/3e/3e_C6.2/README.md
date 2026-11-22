@@ -22,19 +22,20 @@ distracteur réfuté.
 [Rapport de tests](rapport_tests_3e_C6.2.md) ·
 [Sources des médias](SOURCES_MEDIAS.md)
 
-## 📐 L'entraînement DNB (réécrit au gabarit maison)
+## 📐 L'entraînement DNB (révisé le 21/11/2026, après un audit pédagogique et fonctionnel)
 
 ➡ **[Entraînement DNB — lire et interpréter un algorigramme](entrainement_dnb_algorigrammes.html)**
-— 30 exercices en 4 manches : le vocabulaire et les symboles, lire et dérouler, les compteurs et
-les cas limites, puis des sujets de type brevet. Sauvegarde locale, mode essentiel, deux niveaux
-d'aide par exercice.
+— 30 exercices en 4 manches (Symboles, Déroulement, Auto-test, Transfert), puis une **épreuve écrite** sans
+propositions (l'éclairage d'un abri à vélos). Douze algorigrammes dans la page, un rappel de cours avec un exemple
+guidé, deux aides par exercice, « Revoir mon erreur », une fiche bilan imprimable. Page autonome : elle s'ouvre seule,
+sans réseau, même copiée sans son dossier.
 
-Sa particularité : **chaque réponse fausse est réfutée**, une par une. Au brevet, les distracteurs
-sont conçus pour être plausibles ; un élève qui sait *pourquoi* B est faux ne se fera pas prendre
-par une variante de B. C'est là qu'est le travail, bien plus que dans le score.
+Ce qu'elle entraîne : **suivre une branche, justifier avec les données, modifier et vérifier**. Les propositions ont
+toutes la même forme : on ne trouve plus la bonne en choisissant la plus longue. La justification est dans la
+correction, écrite comme on l'écrit sur sa copie, et l'épreuve écrite fait rédiger, comme le brevet 2027.
 
 ➡ [Fiche pédagogique](fiche_pedagogique_entrainement_dnb.md) ·
-[Rapport de tests](rapport_tests_entrainement_dnb.md)
+[Rapport de tests](rapport_tests_entrainement_dnb.md) · la page est fabriquée par `_outils/dnb_build.py`
 
 ### La version d'origine, archivée
 
