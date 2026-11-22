@@ -59,8 +59,10 @@ def verifier(niveau, PAGE):
     assert "Bonus (facultatif" in src
     ok("le bloc Bonus est présent, annoncé hors parcours obligatoire")
     i_bilan, i_qcm, i_bonus = src.index("Bilan —"), src.index("Prêt"), src.index("Bonus (facultatif")
-    assert i_bilan < i_qcm < i_bonus, "l'ordre bilan → QCM → bonus n'est pas respecté"
-    ok("l'ordre bilan → entraînement → bonus ferme la page (règle n°4)")
+    # Règles d'or n°4, n°301, n°306 : Bonus → Bilan → renvoi au QCM. L'ancien ordre (bilan → QCM → bonus) était
+    # vérifié ici tel que le générateur l'écrivait ; l'audit du 22/11/2026 l'a corrigé dans `build_atelier.py`.
+    assert i_bonus < i_bilan < i_qcm, "l'ordre Bonus → Bilan → QCM n'est pas respecté (n°306)"
+    ok("l'ordre Bonus → Bilan → entraînement ferme la page (règles n°4 et n°306)")
 
     assert "230" not in src and "secteur" not in src.lower()
     ok("aucune mention du secteur : l'activité est en papier et en logiciel")
