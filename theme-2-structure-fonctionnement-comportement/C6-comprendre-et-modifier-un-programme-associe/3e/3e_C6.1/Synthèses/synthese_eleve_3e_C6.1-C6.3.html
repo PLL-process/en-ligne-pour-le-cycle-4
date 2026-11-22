@@ -181,9 +181,9 @@
     <div><b class="sor">Ce qui sort&nbsp;?</b><code>vigilance</code>, <code>sirene_active</code> et <code>message</code>,
     envoyé à l'application.</div>
   </div>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <span class="ent">donnée utilisée</span> vient de l'extérieur&nbsp;: un
-  <b>capteur</b> ou une <b>constante</b>. Une <span class="sor">donnée produite</span> est <b>créée</b> par le programme,
-  comme le message.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <span class="ent">donnée utilisée</span> est une <b>mesure</b> (lue sur un
+  capteur) ou un <b>paramètre</b> (une constante choisie par le concepteur). Une <span class="sor">donnée produite</span> est
+  <b>calculée</b> par le programme&nbsp;: un état, une décision, un message.</p>
   <p class="piege">⚠️ <b>Le piège</b>&nbsp;: classer <code>vigilance</code> comme utilisée, parce qu'elle sert dans le
   message. Le programme la crée d'abord&nbsp;: elle est produite.</p>
 </div>
@@ -209,7 +209,7 @@
 <div class="bloc faire">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-3" style="margin-top:0">3. Comment changer un seuil sans rien casser&nbsp;?</h2>
-  <p>Météo-France recalibre ses niveaux&nbsp;: le seuil orange passe de 50 à 60&nbsp;km/h.</p>
+  <p>Le club fixe son seuil expérimental (un réglage inventé)&nbsp;: le seuil orange passe de 50 à 60&nbsp;km/h.</p>
   <div class="chaine">
     <div class="ok"><b>D'abord</b>Garder la version d'origine, pour comparer ou revenir en arrière.</div>
     <div class="ko"><b>✘ Dans les tests</b>Chercher chaque 50 du programme&nbsp;: un oubli, et c'est un bogue.</div>
@@ -246,7 +246,7 @@
   <p>Un <b>jeu d'essai</b>, c'est une entrée et sa sortie attendue, calculée à la main <b>avant</b> d'exécuter. Seuil
   orange à 60&nbsp;km/h&nbsp;:</p>
   <div class="chaine cinq">
-    <div><b>55&nbsp;km/h</b>verte ou jaune&nbsp;: rien</div>
+    <div><b>55&nbsp;km/h</b>verte&nbsp;: aucun actionneur</div>
     <div class="fr"><b>60, frontière</b>rien&nbsp;: 60&nbsp;&gt;&nbsp;60 est faux</div>
     <div><b>61&nbsp;km/h</b>orange et gyrophare</div>
     <div class="fr"><b>118, frontière</b>rouge et sirène</div>
@@ -267,10 +267,11 @@
     <div class="ko"><b>Le verdict ✘</b>Un seul échec suffit&nbsp;: la version est refusée.</div>
     <div><b>La cause probable</b><code>&gt;= 118</code> écrit à la place de <code>&gt; 118</code>.</div>
     <div class="ok"><b>Corriger, puis tout rejouer</b>Les nouveaux essais, et ceux de la sirène.</div>
-    <div><b>Sans machine&nbsp;?</b>Tu testes quand même&nbsp;: en calculant les sorties à la main.</div>
+    <div><b>Sans machine&nbsp;?</b>Tu traces ton programme à la main, l'attendu écrit avant&nbsp;: un vrai test, qui dit ce qui reste à vérifier sur machine.</div>
   </div>
   <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une version est acceptée quand <b>tous</b> les essais passent. Tu
-  rejoues aussi les essais de la sirène&nbsp;: c'est la <b>non-régression</b>.</p>
+  rejoues aussi les essais de la sirène&nbsp;: c'est la <b>non-régression</b>. Un essai ne vaut que pour la version qu'il a
+  essayée, et pour les cas essayés&nbsp;: d'où le choix des frontières.</p>
   <p class="piege">⚠️ <b>Le piège</b>&nbsp;: compter en pourcentage. Quatre essais réussis sur cinq, ce n'est pas
   «&nbsp;presque bon&nbsp;»&nbsp;: c'est refusé.</p>
 </div>

@@ -18,10 +18,16 @@ principes cadrent une séquence, et les autres règles se rangent sous eux. Gril
    revient »)** : à partir de la séance 2, quelles deux ou trois questions l'élève résout **de mémoire**, avant le rappel
    déplié, sur les acquis 🔑 des séances d'avant (skill `reprise-espacee`).
 3. **Trois lignes (n°337)** : ce que l'élève apprend, sait faire, et le seuil chiffré de réussite.
-4. **Question seule (n°343)** : quels nombres et quel état de départ chaque question devra donner (n°350).
+4. **Question seule (n°343)** : quels nombres et quel état de départ chaque question devra donner (n°350), et quel
+   schéma elle affichera avec elle quand elle en parle (n°331, « l'élève répond le schéma sous les yeux »).
 5. **Preuve écrite (n°346)** : le document inédit et ses quatre questions rédigées (skill `tache-finale-redigee`).
 6. **Retour (n°347)** : comment l'élève saura quoi reprendre après « Vérifier ».
 7. **Langue du cours (n°348)** : la planche de référence des formes, des mots et des nombres.
+
+Sept, pas neuf (22/11/2026, audit #867) : la n°331 se range sous la clé 4, la n°369 sous la clé 2 ; la n°361
+(un contrôle regarde la page ouverte) est une règle de fabrique — elle dit comment on vérifie, pas ce qu'une
+séquence doit être. Une règle nouvelle qui se dit « clé de voûte » précise l'une des sept, ou se justifie
+contre elles.
 
 Ajouter le critère de recette demandé par Pascal (« avec 6 justes et 2 blancs, la page affiche… »). Sans critère, on
 ne sait pas quand c'est fini.

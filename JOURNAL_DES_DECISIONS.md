@@ -50,7 +50,7 @@
 | 358 | On imprime ce qu'on vient de faire | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) |
 | 359 | Un lien vers une partie ouvre cette partie | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai sur `3e_C6.2` (n°147) — PR #845 |
 | 360 | Les tests jouent l'élève qui ne lit pas | Pascal (21/11/2026, « ok »), sur l'audit externe de l'entraînement DNB de `3e_C6.2` ; écrite par Fable | 🧪 En essai (n°147), déjà mesurée sur tout le site le 21/11/2026 — `_outils/eleve_qui_ne_lit_pas.py`, skill `eleve-qui-ne-lit-pas` |
-| 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (L et B refusent depuis le 22/11/2026, C et A mesurent ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
+| 361 | Un contrôle regarde la page ouverte : corrections, aides, bilan, onglets, ce qu'un script dessine — règle de fabrique (dite « clé de voûte » jusqu'au 22/11/2026, rangée à côté des n°95 et n°211 : audit #867) | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (L et B refusent depuis le 22/11/2026, C et A mesurent ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, **refus depuis le 22/11/2026** ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862 ; puis L voit aussi les blocs en chasse fixe hors `<pre>` : 8 de plus, corrigés par #869 et #870) ; skill `texte-clair-et-aere` |
@@ -62,6 +62,8 @@
 | 370 | Une page se lit à 200 % et avec des lettres espacées | idem | 🧪 En essai — `_outils/controle_zoom_espacement.mjs` (mesure ; `--strict`) ; départ : 9 pages sur 395 défilent de côté, 4 coupent du texte |
 | 371 | Le QCM entrelace ses compétences : un « Entraînement mélangé » à côté du parcours complet | idem | 🧪 En essai — `_outils/mesurer_entrelacement.py` ; départ : 69 banques sur 70 par blocs, 0 mode mélangé |
 | 372 | Le bilan dit ce qui reste flou et quand on le reprend | idem | 🧪 En essai — `controle_reprise_espacee.py` (R4) ; départ : 57 bilans sur 60 sans ce champ |
+| 373 | Un programme qui change dit sa version | Fable, sur les audits de « Programmer l'alerte » (`3e_C6.1`) — audit externe du 21/11/2026 transmis par Pascal (« fabriquer des […] règles d'or ») et audit Fable du 22/11 | 🧪 En essai (n°147) — pilote `3e_C6.1` (banc du lot, tests 6, 12, 20 quater) ; skill `banc-essai-programme` |
+| 374 | On prévoit avant d'essayer, et une prévision juste ne vaut pas un essai | idem | 🧪 En essai (n°147) — pilote `3e_C6.1` (banc du lot, tests 17 à 17 quinquies) ; complète n°333 et n°349 ; skill `banc-essai-programme` |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -36374,6 +36376,185 @@ Vu au pilote de `4e_C1.4` : ses panneaux de séance sont des `<section class="se
 `<div>`. Corrigé (les deux balises) ; un cas de plus au banc (9/9). Sur `main`, la mesure de départ devient **123 séances
 n°2 et suivantes, 0 conforme** (au lieu de 113 : dix séances en `<section>` n'étaient pas comptées). Le chiffre « 113 » des
 entrées du matin (audit #867, installation #868) est à lire « 123 ».
+
+## 22/11/2026 — 3e_C6.1 « Programmer l'alerte » : deux audits, un banc d'essai qui exécute le programme de l'élève ; règles d'or n°373 et n°374 (en essai) ; la n°333 mesurée sur tout le site (thème 2, `_outils`)
+
+**Consignes de Pascal** (21-22/11/2026), avec l'audit externe `Audit_3e_Programmer_alerte.md` (21/11) en pièce jointe :
+« Corrige ce qui ne va pas en fonction de cet audit et avec des améliorations qui sont tiennes si besoin, quelle que
+soit l'importance, puis fabrique des skills, clefs de voûte, règles d'or grandies de cette expérience et de cet audit » ;
+puis « Fais un audit poussé dès maintenant pour cette séquence et effectue les modifications nécessaires en fonction des
+deux audits ». Branche `fable/theme-2/3e-c6.1-audit-alerte` ; les skills dans une PR transversale à part.
+
+**Ce qui existait déjà.** La n°333 (14/11) : « une autre solution juste est acceptée : on compare le comportement, pas
+le texte du programme », et « un code modifié après le test est à retester ». La n°362 : une simulation joue le travail
+de l'élève. Depuis le 04/11, l'éditeur Python commun (`_ressources-communes/editeur-python/`, Skulpt) exécute un vrai
+Python et sert de vérification en 5e_C9.1 et 3e_C9.1. La séquence, antérieure à la n°333, n'avait jamais été remise à
+l'aune ; **aucun outil ne mesurait la n°333 hors des bancs de lot**.
+
+**L'audit externe, vérifié remarque par remarque** (skill `relire-un-audit-externe`, sur la page rendue) : les six
+priorités 1 confirmées et corrigées — l'activité 4 cherchait sept motifs dans le texte (apostrophes : 5 / 7 pour un
+programme juste ; `>=` à 118 : 7 / 7 pour un programme faux) ; l'activité 5 donnait « maîtrisé » à des prévisions avec
+la version 1 dans l'éditeur ; l'algorigramme de la spécification testait 50 après la consigne qui fixe 60 ; le plan de
+tests « de la v1 » commandait un gyrophare que la v1 n'a pas ; le récit faisait sonner la sirène en orange et prêtait
+le réglage à Météo-France. Les priorités 2 et 3 confirmées et corrigées (classement mesure / paramètre, numéros de ligne
+fragiles, justification jugée aux mots-clés, `60.5` accepté pour 60, QCM « 10 / 10 » affiché 6,7 / 20, billet qui
+concluait « rien n'est en place », bilan à une seule hypothèse). Les propositions d'interface non retenues : la vue en
+blocs (Blockly) et un troisième éditeur ; le lecteur d'écran, la tablette réelle et le zoom 200 % restent à éprouver.
+
+**Mon audit, en plus** (ce que l'audit externe n'avait pas vu) : le Bonus n'avait pas de correction (n°4) ; la question
+d1_8 nommait « la ligne 21 », réponse de la question d1_l2 (n°341) ; la carte « Le contrat de la séquence » répétait
+l'ouverture ; la synthèse élève et la synthèse professeur parlaient encore de « verte/jaune » et de l'analyse du code ;
+le QCM n'avait pas de `<main>` (comme 77 QCM sur 78 du site) ; six sigles nus (CRCN, DNB, IDE, LED, OST, QCM). Et un
+défaut de mon propre outil, trouvé en le jouant : le petit Python disait « SyntaxError » à des programmes justes
+(f-string, `is True`, `a if c else b`, `;`) — corrigé (ci-dessous).
+
+**Ce qui change dans la séquence.** Version 1 figée pour les lectures de la séance 1 ; la version du programme dite en
+permanence (« version 1 d'origine », « version 1 recalibrée », « version 2 », « ta version modifiée ») ; activités 3 à 5
+vérifiées en **exécutant** le programme de l'élève sur dix vents (55, 59, 60, 61, 89, 90, 91, 117, 118, 119), le premier
+écart nommé (« 118 km/h · niveau : rouge attendu, violette obtenu · gyrophare : arrêté attendu, actif obtenu ») ;
+activité 5 « prévoir, exécuter, comparer » : six prévisions écrites avant que le banc s'ouvre, prévisions, diagnostic et
+essais comptés à part, un essai « à rejouer » dès que le programme change ; chemin suivi pas à pas (« 118 > 118 → faux ») ;
+différences + / − ligne à ligne avec la version 1 ; « Simulation scolaire : seuils fictifs du club » à l'ouverture et sur
+le banc ; image légendée « générée par IA » ; Bonus corrigé, avec le programme corrigé en `.py` (rejoué : 10 / 10 au
+banc, sorties vérifiées dans Python) ; reprise de mémoire en tête des séances 2 et 3 et champ « ce qui reste flou » au
+bilan (n°369 et n°372, en essai, posées le jour même) ; deux hypothèses au bilan. QCM : Q03, Q04, Q05, Q08, Q10, Q12,
+Q13, Q19, Q20, Q22, Q24, Q25, Q26, Q29, Q30 réécrites ; « x / y réussies » et « r / 30 travaillées » séparés, la note
+/20 seulement au parcours complet. Cinq schémas recalés sur la spécification. Vocabulaire du lot (11 mots), lexique
+régénéré, synthèses, fiche, matrice, manifeste, rapport de tests à jour.
+
+**Outils.**
+- `_outils/banc_python/` (nouveau ; `banc_python.js`, `poser.py`, `tests_banc_python.mjs` 24 / 24, `LISEZMOI.md`) : un
+  petit Python posé dans la page, synchrone, qui donne la trace des tests évalués. Une écriture qu'il ne lit pas est dite
+  « limite du banc, pas forcément une erreur de ton programme », jamais « SyntaxError » (n°340, n°146). Le LISEZMOI dit
+  ce que l'éditeur commun (Skulpt) sait faire et lui ne sait pas, et l'inverse.
+- `_outils/controle_verification_execute.py` (nouveau, **mesure de la n°333**) : dans les pages à éditeur de code, les
+  vérifications qui lisent le programme l'exécutent-elles, ou cherchent-elles des motifs dans son texte ? Éprouvé d'abord
+  sur des cas connus (n°194) : `tests_controle_verification_execute.py` 12 / 12, dont la page d'avant l'audit (f745eca) :
+  ✘ T, 8 motifs. **Mesure de départ** (22/11/2026, 410 pages) : 7 pages à éditeur ; 3 exécutent (3e_C6.1, 3e_C9.1,
+  5e_C9.1), 0 ne juge par le texte seul, 0 mêlé, 4 éditeurs sans vérification du programme (4e_C6.2, 3e_C7.1, 5e_C7.1,
+  4e_C9.1 : exercices ouverts, rien à juger). Sortie 0 en mesure, `--strict` refuse un ✘ T.
+
+### Les règles
+
+> **Règle d'or n°373 — Un programme qui change dit sa version.**
+> Quand une séquence fait évoluer un programme, chaque version porte un nom (« version 1 d'origine », « version 1
+> recalibrée », « version 2 ») ; une seule spécification par version nourrit le schéma, les attendus des vérifications,
+> le code de la correction et le QCM ; chaque document, chaque attendu, chaque essai dit la version qu'il montre ;
+> l'éditeur dit en permanence la version du programme qu'il contient, ou « ta version modifiée ». Une lecture sur une
+> version précise se fait sur cette version figée, pas dans l'éditeur que l'élève modifie.
+> *Pourquoi* : l'algorigramme de la spécification testait 50 après la consigne qui fixe 60, le plan de tests « de la
+> v1 » commandait le gyrophare de la v2 ; à 55 km/h, deux documents donnaient deux réponses. Deux versions ont le droit
+> d'avoir deux nombres (complète n°338), à condition de se nommer. Méthode : skill `banc-essai-programme`.
+
+> **Règle d'or n°374 — On prévoit avant d'essayer, et une prévision juste ne vaut pas un essai.**
+> Un essai remplit trois cases, dans l'ordre : la prévision, écrite AVANT, d'après le cahier des charges ; l'observation,
+> le programme ACTUEL exécuté ; la conclusion, conforme ou le premier écart nommé. L'exécution reste fermée tant que la
+> prévision manque ; prévisions justes et essais conformes se comptent à part ; une prévision juste ne valide jamais un
+> programme, et un essai sans prévision n'est pas un test.
+> *Pourquoi* : sept bonnes prévisions sur la v2 théorique donnaient « activité maîtrisée » avec la v1 dans l'éditeur.
+> Complète n°333 (une réussite prouve la production) et n°349 (prédire avant de voir les propositions). Méthode : skill
+> `banc-essai-programme`.
+
+**Proposition, à trancher par Pascal** : faire de la n°333 (« une réussite affichée prouve la production réelle ») une
+clé de voûte. Elle tient tout ce lot, elle vaut pour tout exercice qui produit (programme, schéma, montage), et la
+grille des clés de voûte n'a aujourd'hui aucune clé sur la preuve de la production.
+
+**Vérifié** (22/11/2026, après fusion de `main` à be3b8f2) : banc du lot 57 / 57 ; `tests_banc_python.mjs` 24 / 24 ;
+n°311 34 / 34 ; écrit du brevet 11 / 11 ; mode mission joué écran par écran, 69 pourquoi à jour ; élève qui ne lit pas :
+0 validation ; axe (séquence et QCM) au niveau de la référence ; page ouverte, squelette, hors ligne, impression,
+contraste des liens, code coloré (12 listings), schémas, indices du QCM ; tous les contrôles Python du dossier à 0, dont
+sigles expliqués, reprise espacée `--strict`, validations, mêmes nombres, propositions, correction complète ;
+`controle_verification_execute.py` sur tout le site. Revue d'écran à 390 et 1 280 px (banc, traceur, correction du
+Bonus, reprise).
+
+**Non vérifié** : un vrai téléphone ou une tablette Android, un lecteur d'écran, le zoom 200 % de bout en bout, une
+impression réelle, la durée en classe (séances 2 et 3 : 53 min annoncées, avec la reprise de 3 min), un élève.
+
+**À trancher par Pascal** : 1. unifier le banc-python et l'éditeur Python commun (Skulpt), ou garder les deux (LISEZMOI
+du banc) ; 2. la n°333 en clé de voûte ; 3. le `<main>` des 77 autres QCM (gabarit commun, lot transversal) ; 4. le
+poids de l'image de situation (2 Mo) : les conditions de Canva interdisent d'en retirer les métadonnées de provenance,
+une version allégée doit donc être réexportée depuis Canva ; 5. l'effacement de la sauvegarde depuis le mode mission
+(outil commun `_outils/mode_mission/`).
+
+## 22/11/2026 — `controle_regle4.py` : une page-pointeur se mesure sans ses feuilles de style ni ses scripts (thème 2 : `_outils`)
+
+La vague des infobulles de sigles du thème 3 (n°44, #883) a posé sa feuille commune sur toutes les pages : quatre
+pages-pointeurs (les trois `atelier_C7.1_planification_taches.html` rangés dans 3e, 4e et 5e_C7.1, et `tp_5e_de_calottes.html`
+de 5e_C7.2) ont franchi les 6 000 octets et passaient pour des séquences sans « Prêt·e », ni Bonus, ni QCM. La taille se
+mesure désormais hors `<style>` et `<script>` : 0 écart sur `main` (sortie 0), banc 27/27.
+
+## 22/11/2026 — Audit du 22/11 (#867), chantiers 1, 2, 3, 5 et 6 : cinq rouges levés, plus aucun code « à vérifier », sept clés et pas neuf (transversal : `_outils`, `.claude/skills`, thèmes 1, 2 et 3)
+
+**Carte blanche de Pascal** (22/11, 1 h 59 : « pour chaque point, vérifier et effectuer les modifications nécessaires et
+la fusion », puis « tu as carte blanche pour tout »). Une session de plus travaillait le même audit : le chantier 4 (la
+dérive, #877) est le sien, et deux écarts de la n°4 ont été traités des deux côtés — voir plus bas.
+
+**Chantier 1 — le seul rouge bloquant** (PR #872, thème 2). `3e_C6.2/manifest_entrainement_dnb.json` ne range plus en
+« images » la phrase « 12 algorigrammes SVG écrits dans la page » : clé `images_ecrites_dans_la_page`. `controle_medias` 1 → 0.
+
+**Chantier 2 — les petites PR** (#872, thème 2 ; #874, thème 1). « CRCN 3.4 Programmer » dans l'accès rapide ;
+« CRCN 1.3 Traiter des données » dans la fiche professeur de l'activité tableur de 5e_C1.2 ; flux animés de
+`chaine_ventilateur_corrige.svg` (5e_C4.1) ; READMEs de 4e_C4.8 et 4e_C4.9 vers le QCM « SOS serre ». `preuves_couverts()`
+lit chaque QCM pour lui-même, dans tous les lots que le README désigne : les 6 « sans preuve » étaient un artefact (0).
+
+**Chantier 3 — la n°23** (#874 thème 1, #875 thème 3, #876 transversal). Trois dépassements, trois causes :
+- **3e_C1.1** (+5) : le billet de sortie posé le 22/11 dans la séance 5 → activité 5 de 45 à 40 min, fiche et synthèse
+  professeur alignées (265 pour 275) ;
+- **3e_C2.1** (+13) : un double comptage — le résumé replié d'un exercice incrusté (« D'abord (13 min) ») était compté
+  en plus de son activité, qui l'inclut déjà (`incrustations.py`). `verif_regles_audit` ne le recompte plus ;
+- **4e_C9.1** (+17) : 12 min d'une enquête **facultative** (décision du 19/11) — plus comptée — et 5 min réelles,
+  l'activité 1 passée de 20 à 25 min le 19/11 → activité 6 de 25 à 20 min (155 pour 165).
+
+**Ligne de méthode** (skill `revision-sequence`) : *tout bloc ajouté dit ce qu'il coûte* — un billet, un écrit, une
+enquête, une reprise posés par une règle ou une vague portent leurs minutes, et la séance est recomptée dans la même PR.
+
+**Chantier 5 — le TP algorigrammes de 4e_C6.2** (#881 thème 2, puis cette PR). Le TP porte maintenant ses deux blocs :
+un **Bonus** « le store qui se protège du vent » (deux losanges, l'ordre compte ; ① et ② vérifiés avec réfutations, ③ dit
+non vérifié ; correction complète avec l'algorigramme dessiné), à la fin de la phase 4, puis **« Prêt·e à t'entraîner ? »**
+vers le QCM du lot, après le bilan — Bonus → Bilan → QCM (n°306). **Deux sessions sur le même écart** : l'autre avait
+inscrit le TP dans `TOLEREES` (même minute, #880) en écrivant « si Pascal préfère que le TP porte lui-même les deux blocs,
+la ligne se retire » ; le TP les porte, la ligne est retirée, il est jugé et passe. Pour les trois ateliers de
+planification, l'autre session a trouvé la vraie cause — le QCM venait **avant** le Bonus, corrigé dans `build_atelier.py`
+— ; la mesure de position sans `<script>` ni `<style>` posée dans #881 reste juste (un script en fin de page ne déplace
+pas la fin de ce que lit l'élève), mais elle n'était pas, seule, la réponse : la PR #881 le disait à tort.
+Même famille, trouvée en rejouant le contrôle après la vague des infobulles du thème 3 (#883) : quatre pages-pointeurs
+(les trois `atelier_C7.1_planification_taches.html` des niveaux, `tp_5e_de_calottes.html`) avaient passé les 6 000
+octets avec leur feuille de style. La session parallèle l'a corrigé à la même minute (#888, la taille se mesure hors
+style et script) : sa version est gardée, et ce lot n'y ajoute qu'un cas au banc.
+
+**Chantier 6 — clés de voûte et couverture** (#882 thème 3, puis cette PR).
+- **Sept, pas neuf.** La n°331 (le schéma sous les yeux) précise la clé 4 « une question se lit seule » ; la n°361
+  (un contrôle regarde la page ouverte) est une règle de **fabrique**, à côté des n°95 et n°211 — elle dit comment on
+  vérifie, pas ce qu'une séquence doit être. Grille de `METHODE.md`, skill `cadrage-cles-de-voute`, registre de tête.
+- **Les quatre codes « à vérifier » → 0.** 5e_C7.1 et 3e_C7.1 : complets (il manquait la matrice : écrite, chaque
+  question rattachée une fois) ; 3e_C7.2 : couvert (enseigné en 3e_C7.1, évalué en 3e_C7.6, le report du score est
+  décidé) ; **4e_C8.1 : existant à améliorer**, avec le manque écrit — le code demande de paramétrer une simulation de
+  **tenue mécanique d'un matériau**, l'activité 0 est un banc de comportement de l'arrosage (même réserve pour 4e_C8.2).
+- **Les trois « à améliorer » relus** : 5e_C1.3 complet ; 4e_C1.4 et 3e_C1.5 attendent deux pièces nommées (fiche,
+  matrice).
+- **La convention `c:"Cx.y"`** : pas de réétiquetage des QCM marqués par famille (l'étiquette sert à l'élève). La preuve
+  se lit alors dans la **matrice** du lot : `questions_de_la_matrice()` dans `rapport_audit.py`. Codes couverts dont la
+  preuve n'est pas mesurable : 12 → 9 (8 après #882).
+
+**Ce qui reste, et à qui.** 4e_C8.1 : une activité courte de simulation de tenue mécanique (le support du bac, sur le
+modèle de 5e_C8.1) — une production, pas une correction. 4e_C1.4 et 3e_C1.5 : fiche pédagogique et matrice. Trois images
+de situation au-dessus de 1 Mo (5e_C1.3, 4e_C1.4, 3e_C1.5).
+
+**Vérifié** (sorties lues) : `controle_medias`, `controle_competences` (sauf pages d'autres sessions), `controle_flux_animes`,
+`controle_regle4` (0 écart, banc 28/28), `verif_regles_audit` (n°23 : 0 manquement une fois les PR fusionnées ; banc
+74/74), `controle_statut`, `controle_couverture`, `controle_liens`, `registre_regles --verifier` ; bancs de lot
+3e_C1.1 51/51, 4e_C9.1 153/153, TP 4e_C6.2 31/31, `banc_effacement` sur le TP ; revue d'écran du TP à 390 et 1 280 px.
+**Non exécuté** : `rapport_audit.py --complet` rejoué en entier (la prochaine tâche hebdomadaire le fera).
+
+## 22/11/2026 — 3e_C6.1 (suite de #886) : deux bancs communs non rejoués à la livraison, deux questions dont le schéma donnait la réponse (thème 2)
+
+Après la fusion de #886, la relecture des bancs rangés hors des `controle_*` a trouvé deux refus : `qcm_aides/banc_aides.mjs`
+(A9 : le tableau de bord du QCM ne disait plus que les notes sur 20 comptent les 30 questions, ni le résultat combien en
+restent — une phrase perdue en séparant « parcours » et « banque ») et `impression_papier/banc_papier.py` (l'état des
+explications écrites de la séance 3, trop pâle sur papier, défaut du 21/11). Corrigés ; 0 refus. Les questions 1 et 10 du
+QCM montrent le schéma à compléter au lieu du schéma complet, qui portait la réponse (n°348) ; la question 1 reçoit des
+propositions crédibles. **Leçon** : la liste de fin de lot doit nommer aussi les bancs des sous-dossiers de `_outils/`
+(`qcm_aides/`, `impression_papier/`, `mode_mission/`) — ajoutée au skill `controle-qualite-lot` (PR transversale).
 
 ## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 1 : 69 pages, 18 notes d'atelier, trois sources d'ateliers et huit générateurs de QCM (transversal : un générateur du thème 3)
 

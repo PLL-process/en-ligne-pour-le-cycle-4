@@ -158,6 +158,55 @@ def controles(complet):
 
 
 # ── 4. preuves des COUVERT ──────────────────────────────────────────────────
+def questions_de_la_matrice(dossier, code):
+    """Les questions de QCM que la matrice de couverture du lot rattache à `code` (22/11/2026).
+
+    Décision du 22/11/2026 (audit #867, carte blanche de Pascal) sur la convention `c:"Cx.y"` :
+    on ne réétiquette pas les QCM marqués par famille (`EN`, `CON`, `ELA`…) — l'étiquette sert à
+    l'élève — mais la preuve se lit alors dans la MATRICE du lot, qui relie déjà chaque notion à
+    un code et à des numéros de questions. Rendu : le nombre de questions (0 si la matrice nomme
+    le code sans question), ou None si aucune matrice lisible ne nomme ce code.
+    Formats lus : séparateur « ; » ou « , », une colonne de code (« code », « competence »…) et
+    une colonne de questions (« qcm_questions », « questions_qcm », « question du QCM »), les
+    numéros écrits « 3-5;7 », « 1,2 », « q1 ».
+    """
+    import csv as _csv
+    total, nomme = set(), False
+    for m in sorted(os.listdir(dossier)) if os.path.isdir(dossier) else []:
+        if not (re.match(r"matrice", m, re.I) and m.lower().endswith(".csv")):
+            continue
+        try:
+            texte = open(os.path.join(dossier, m), encoding="utf-8-sig").read()
+        except OSError:
+            continue
+        entete = texte.split("\n", 1)[0]
+        sep = ";" if entete.count(";") > entete.count(",") else ","
+        lignes = list(_csv.reader(texte.splitlines(), delimiter=sep))
+        if not lignes:
+            continue
+        noms = [c.strip().lower() for c in lignes[0]]
+        i_code = next((i for i, c in enumerate(noms) if c in ("code", "competence", "compétence", "codes")), None)
+        i_q = next((i for i, c in enumerate(noms) if "qcm" in c and "question" in c or c == "qcm_questions"), None)
+        if i_code is None or i_q is None:
+            continue
+        for l in lignes[1:]:
+            if len(l) <= max(i_code, i_q):
+                continue
+            codes = re.findall(r"\d?[a-z]?_?C\d\.\d+", l[i_code])
+            if not any(c == code or c == code.split("_", 1)[1] for c in codes):
+                continue
+            nomme = True
+            # le séparateur de la matrice peut être « , » : alors « 3;4 » est une seule cellule
+            for morceau in re.split(r"[;,\s]+", l[i_q]):
+                morceau = morceau.strip().lstrip("qQ")
+                r_ = re.fullmatch(r"(\d+)\s*[-–]\s*(\d+)", morceau)
+                if r_:
+                    total.update(range(int(r_.group(1)), int(r_.group(2)) + 1))
+                elif morceau.isdigit():
+                    total.add(int(morceau))
+    return len(total) if nomme else None
+
+
 def preuves_couverts(rows):
     """Pour chaque code COUVERT, les questions de QCM qui le marquent (`c:"C2.2"`).
 
@@ -168,7 +217,8 @@ def preuves_couverts(rows):
     entier marquait par code : le QCM du jardin, marqué par thème (`EN`, `ID`, `PRO`,
     `RES`), comptait alors pour zéro, et 4e_C4.8/C4.9, prouvés dix fois chacun dans le
     QCM de 4e_C4.7, n'étaient pas vus. Un zéro n'est écrit que si tous les QCM lus
-    marquent par code ; sinon la preuve est dite non mesurable.
+    marquent par code ; sinon la preuve est dite non mesurable — sauf si la matrice du lot
+    rattache des questions à ce code (`questions_de_la_matrice`, même jour).
     """
     sortie = []
     for r in rows:
@@ -208,9 +258,20 @@ def preuves_couverts(rows):
                         n_q += n
                         if cible not in ou:
                             ou.append(cible)
-        if not trouve:
+        if n_q == 0:
+            # Le QCM ne marque pas par code : la matrice du lot peut le dire (22/11/2026).
+            for cible in cibles:
+                nm = questions_de_la_matrice(cible, code)
+                if nm:
+                    n_q = nm
+                    if cible not in ou:
+                        ou.append(cible)
+                    break
+        if n_q:
+            pass
+        elif not trouve:
             n_q = "pas de QCM à la racine du lot"
-        elif n_q == 0 and non_marques:
+        elif non_marques:
             n_q = "QCM non marqué par code"
         montre = ou or [c for c in cibles if os.path.isdir(c)][:1]
         sortie.append((code, r["theme"], " + ".join(os.path.relpath(c, RACINE) for c in montre) if montre else "—",
