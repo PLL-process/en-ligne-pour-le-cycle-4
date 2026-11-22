@@ -101,6 +101,13 @@ POINTEUR = 6000
 #: rien fait » de « à la fin, une fois le parcours accompli ».
 FIN = 55
 
+#: Les scripts et les feuilles de style ne se lisent pas : la longueur se mesure
+#: sans eux (22/11/2026, audit #867). Les trois ateliers de planification ont reçu
+#: le 19/11 le script des onglets au clavier, posé APRÈS leur contenu ; leur bouton
+#: QCM, toujours dernier bloc de la page, est passé de 60 % à 53 % des octets et le
+#: contrôle les a crus « pas à la fin ». La page n'avait pas bougé pour l'élève.
+CODE_NON_LU = re.compile(r"<(script|style)\b[^>]*>.*?</\1\s*>", re.S | re.I)
+
 #: une page qui déclare elle-même n'être qu'une étape d'une séquence plus longue.
 #: On lit la page entière : les quatre stations de `3e_C9.2` portent la mention à
 #: l'octet 20 826, et une fenêtre plus courte les accusait toutes les trois.
@@ -111,6 +118,13 @@ TOLEREES = {
     "une-ou-des/atelier-cao/tp_modele_demonstration.html":
         "modèle de TP destiné à l'enseignant (« Modèle de TP de prise en main ») : "
         "il montre la forme d'un TP, il n'en est pas un, et aucun QCM ne lui correspond.",
+    "theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/"
+    "4e/4e_C6.2/tp_algorigrammes_domotique.html":
+        "TP rattaché à sa séquence (`sequence-jardin-connecte-arrosage-automatique.html`, sa porte, n°366), "
+        "qui porte la clôture Bonus → Bilan → QCM ; le TP ferme sur son propre bilan imprimé, preuve du travail "
+        "(n°363), et son mini-projet de la phase 4. Sorti des ressources héritées le 20/11/2026 (n°12), il est "
+        "jugé depuis comme une séquence — l'audit du 22/11/2026 (#867) l'a relevé ; toléré sur carte blanche "
+        "de Pascal (22/11/2026).",
 }
 
 #: les DEUX apostrophes, droite et typographique
@@ -171,12 +185,13 @@ def juger(chemin):
     if e and e.group(1) != e.group(2):
         return None, "étape d'une séquence en plusieurs pages", ("elle se déclare « page %s sur "
                                                                  "%s »" % e.groups())
-    navs = [(m.start(), m.end()) for m in NAV.finditer(texte)]
-    liens = [m for m in LIEN_QCM.finditer(texte)
+    lu = CODE_NON_LU.sub("", texte)   # ce que l'élève a sous les yeux, sans scripts ni styles
+    navs = [(m.start(), m.end()) for m in NAV.finditer(lu)]
+    liens = [m for m in LIEN_QCM.finditer(lu)
              if not any(a <= m.start() < b for a, b in navs)]
     boutons = [m for m in liens if BOUTON.search(m.group(0))]
-    pos = [round(100 * m.start() / len(texte)) for m in boutons]
-    tot = [round(100 * m.start() / len(texte)) for m in liens]
+    pos = [round(100 * m.start() / len(lu)) for m in boutons]
+    tot = [round(100 * m.start() / len(lu)) for m in liens]
     manques = []
     if not PRET.search(texte):
         manques.append("pas de bloc « Prêt·e à t'entraîner »")

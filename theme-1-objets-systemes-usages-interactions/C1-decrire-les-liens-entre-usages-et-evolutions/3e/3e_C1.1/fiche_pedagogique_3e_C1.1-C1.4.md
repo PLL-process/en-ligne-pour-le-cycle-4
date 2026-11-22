@@ -1,7 +1,7 @@
 # Fiche pédagogique — 3e_C1.1 à C1.4 · « Tsinghua : robots, drones et IA face aux feux »
 
 **Niveau** 3e · **Thème 1** Objets, systèmes techniques, usages et interactions
-**Durée** 5 séances de 55 min — **265 min** d'activités pour 275 disponibles depuis le 17/09/2026 (250 auparavant), marge de service de 10 min comprise. Séance par séance : **S1** billet 5 + activité 1 50 = 55 · **S2** 50 · **S3** 50 · **S4** activité 4 45 + transfert 10 = 55 · **S5** activité 5 45 + bilan 10 = 55. La séance 5, déjà rabotée en septembre, ne reçoit rien de plus. Historique : l'activité 5 était annoncée à 50 min, soit 60 avec le bilan dans un créneau de 55 ; audit du 08/09.
+**Durée** 5 séances de 55 min — **265 min** d'activités pour 275 disponibles depuis le 17/09/2026 (250 auparavant), marge de service de 10 min comprise. Séance par séance : **S1** billet 5 + activité 1 50 = 55 · **S2** 50 · **S3** 50 · **S4** activité 4 45 + transfert 10 = 55 · **S5** activité 5 40 + billet de sortie 5 + bilan 10 = 55. Historique : l'activité 5 était annoncée à 50 min, soit 60 avec le bilan dans un créneau de 55 (audit du 08/09) ; ramenée à 45, puis à **40 le 22/11/2026**, quand le billet de sortie (5 min) est entré dans la séance 5 sans qu'on reprenne sa durée (audit hebdomadaire #867, règle n°23) : deux argumentaires de 6 à 8 lignes tiennent en 40 min, le Bonus reste aux rapides.
 **Objet-fil** un système robotique d'aide à la lutte contre les feux de végétation
 
 ## Compétences visées (formulations du référentiel, BO n°9 du 29 février 2024)

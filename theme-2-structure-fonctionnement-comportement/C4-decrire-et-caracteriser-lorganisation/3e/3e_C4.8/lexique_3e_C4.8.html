@@ -33,6 +33,7 @@
     .compte,.sub{color:#1a6af8}
   }
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <nav style="padding-top:12px"><a href="sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html">← Revenir à la séquence</a></nav>
@@ -42,7 +43,7 @@
 <section>
  <h2>C4.7 <span class="compte">· 12 notions</span></h2>
  <dl>
-  <dt>À quoi sert le TTL</dt>
+  <dt>À quoi sert le <abbr class="sigle" title="Time To Live, la durée de vie du paquet" tabindex="0">TTL</abbr></dt>
   <dd>TTL = garde-fou anti-boucle : à zéro, le paquet est détruit.</dd>
   <dt>Commutateur vs routeur</dt>
   <dd>Commutateur = distribuer DANS le réseau. Routeur = franchir la frontière ENTRE réseaux.</dd>
@@ -64,7 +65,7 @@
   <dd>TTL lu = 128 − nombre de routeurs traversés. TTL=126 → 2 frontières.</dd>
   <dt>Le voyage dans l&#x27;Event List</dt>
   <dd>Event List = toutes les étapes. tracert = seulement les frontières. Même voyage, deux loupes.</dd>
-  <dt>~1 ms par saut</dt>
+  <dt>~1 ms (millisecondes) par saut</dt>
   <dd>Un saut ≈ quelques millisecondes : le voyage par étapes paraît instantané.</dd>
  </dl>
 </section>
@@ -81,7 +82,7 @@
   <dd>Ajouter une route = ip route réseau masque prochain-saut (la fenêtre l&#x27;écrit pour toi).</dd>
   <dt>Diagnostic inter-réseaux</dt>
   <dd>Local OK, étranger KO → suspecter le chemin inter-réseaux (passerelle, routes ALLER ET RETOUR, pont).</dd>
-  <dt>Du pont au DNB</dt>
+  <dt>Du pont au <abbr class="sigle" title="diplôme national du brevet" tabindex="0">DNB</abbr></dt>
   <dd>Justifier = preuve (expérience) + échelle (Internet) + conclusion (protocole nécessaire).</dd>
   <dt>L&#x27;expérience de la route effacée</dt>
   <dd>Une ligne de table effacée = communication inter-réseaux morte. Preuve par l&#x27;expérience.</dd>

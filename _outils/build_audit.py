@@ -148,15 +148,18 @@ OVERLAY = {
     ),
     "5e_C1.3": dict(
         pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Séquence SI/gestion de données complète (couvre aussi 5e_C1.4) + QCM 24 q.",
-        anomalies="8 images PNG de 1,1 à 1,9 Mo chacune (≈ 9,3 Mo au total) à compresser "
-                  "(WebP/redimensionnement) ; pas de différenciation ; provenance/licence "
-                  "des 8 images extraites non documentée (pas de SOURCES_MEDIAS.md).",
-        accessibilite="À vérifier (textes alternatifs des 8 images).",
-        medias="8 PNG extraits de l'ancien HTML base64 — origine à documenter.",
+        qualite="Séquence SI/gestion de données (couvre aussi 5e_C1.4) + QCM au gabarit maison, "
+                "fiche, matrice de couverture, deux synthèses, rapports et bancs de tests : les six "
+                "pièces sont là. Relu le 22/11/2026 (audit #867) : SOURCES_MEDIAS.md existe, le mode "
+                "essentiel est câblé, les images extraites de l'ancien HTML ont été compressées "
+                "(2,3 Mo pour tout le dossier, contre 9,3 Mo).",
+        anomalies="Une image reste au-dessus de 1 Mo (situation_fichiers_melanges.png, 2,1 Mo) : à "
+                  "compresser. Pas de grille LSU écrite dans la page.",
+        accessibilite="Textes alternatifs présents ; contrôles axe du dépôt.",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
     "5e_C1.4": dict(
         pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
@@ -358,25 +361,27 @@ OVERLAY = {
         statut="EXISTANT À AMÉLIORER",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=None, problematique=True,
-        qualite="Séquence cybersécurité V16 (PWA, accessibilité, tests intégrés, 120 Ko) "
-                "+ activité bonus 2FA + QCM 24 q + README de traçabilité soigné.",
-        anomalies="L'activité bonus référence images/tab_key.png et "
-                  "images/indentation_error.png : le premier est en fait dans "
-                  "_ressources-communes/Images/Ressources transversales/"
-                  "touche-tabulation.png, le second n'existe nulle part dans le "
-                  "dépôt (lien cassé) ; pas de grille LSU ni de différenciation "
-                  "formalisées ; pas de version professeur/inspection séparée.",
-        accessibilite="Bonne (V16 annoncée accessible) — à contre-vérifier au clavier.",
-        medias="Illustrations majoritairement inline ; sources non consignées.",
+        qualite="Séquence cybersécurité + activité bonus 2FA + QCM au gabarit maison + deux synthèses "
+                "+ bancs de tests. Relu le 22/11/2026 (audit #867) : les deux images manquantes de "
+                "l'activité bonus ne sont plus appelées (elles ne restent que dans des commentaires), "
+                "SOURCES_MEDIAS.md existe, le mode essentiel est câblé, les synthèses élève et "
+                "professeur sont séparées.",
+        anomalies="Il manque deux pièces pour le statut complet : la fiche pédagogique et la matrice "
+                  "de couverture. Une image au-dessus de 1 Mo (situation_compte_pirate.png, 1,7 Mo).",
+        accessibilite="Bonne — contrôles axe du dépôt.",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
     "3e_C1.5": dict(
         statut="EXISTANT À AMÉLIORER",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « Numérique, société, économie, environnement, santé », 4 séances de 55 min "
-                "(argumentaires courts : activité 1 bis pour 3e_C1.4, activité 5 pour 3e_C1.3) + QCM 30 q.",
-        anomalies="Pas de différenciation.",
-        accessibilite="À vérifier.",
+                "(argumentaires courts : activité 1 bis pour 3e_C1.4, activité 5 pour 3e_C1.3) + QCM 30 q. "
+                "Relu le 22/11/2026 (audit #867) : mode essentiel câblé, positionnement sur les quatre "
+                "niveaux LSU présent.",
+        anomalies="Il manque deux pièces pour le statut complet : la fiche pédagogique et la matrice "
+                  "de couverture. Une image au-dessus de 1 Mo (situation_photo_publiee.png, 2,6 Mo).",
+        accessibilite="Contrôles axe du dépôt.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
                "Delagrave n'est plus visée, ni rediffusée par le dépôt (arbitrage A5, 23/10/2026).",
     ),
@@ -1012,6 +1017,63 @@ OVERLAY = {
                       "séparées, lexique imprimable, hors ligne intégral.",
         medias="Aucun média propre.",
     ),
+    # ── Audit du 22/11/2026 (#867, chantier 6) : trois lots-projets du thème 3 n'avaient
+    # aucune entrée ; ils tombaient dans le « À VÉRIFIER » par défaut depuis le 07/11. ──
+    "5e_C7.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le mini-projet d'objet » (l'indicateur de place libre du hall) : 3 séances, "
+                "un simulateur à manipuler d'abord, deux solutions puis un choix, un planning fourni "
+                "à suivre, un protocole de tests fourni, la règle SI… ALORS… SINON en algorigramme "
+                "puis en programme ; QCM de 30 questions, fiche, deux synthèses, lexique, atelier de "
+                "planification, rapport de tests. Matrice de couverture écrite le 22/11/2026 : "
+                "7 notions, chaque question du QCM rattachée une fois (5e_C7.1, 5e_C8.3, 5e_C9.3).",
+        anomalies="Le QCM étiquette ses questions par famille (CON, VAL, PRG), pas par code : la "
+                  "matrice porte le lien notion → code. Le manifeste du lot revendique 5e_C8.1 et "
+                  "5e_C9.1 ; la séquence, elle, écrit 5e_C8.3 et 5e_C9.3, et c'est ce qu'elle fait "
+                  "(5e_C8.1 est la simulation de tenue mécanique d'un matériau, portée ailleurs).",
+        accessibilite="Corrections dépliables, deux synthèses séparées, lexique imprimable.",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
+    ),
+    "3e_C7.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le capteur de confort » (la salle 214 de New York) : 4 séances, un simulateur "
+                "thermique, deux solutions sur deux critères nommés, un planning élaboré par l'élève "
+                "(durées estimées, chemin le plus long), un protocole de quatre scénarios avec la "
+                "prédiction écrite avant l'observation, l'algorigramme puis le code, la mise au point "
+                "du clignotement, puis le FAST et les croquis du boîtier (3e_C7.2) ; QCM de 30 "
+                "questions, fiche, deux synthèses, lexique, atelier de planification, rapport de "
+                "tests. Matrice de couverture écrite le 22/11/2026 : 9 notions, chaque question "
+                "rattachée une fois.",
+        anomalies="La séquence étiquette son activité 2 « 3e_C8.1 » ; le geste qu'elle fait faire "
+                  "(prédire, observer, décider sur un protocole de quatre scénarios) est celui de "
+                  "3e_C8.3. 3e_C8.1 (simulation de la tenue mécanique d'un matériau) est porté par son "
+                  "propre lot : la matrice range l'activité sous 3e_C8.3. QCM étiqueté par famille "
+                  "(ELA, SIM, SEU), pas par code.",
+        accessibilite="Corrections dépliables, deux synthèses séparées, lexique imprimable.",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
+    ),
+    "4e_C8.1": dict(
+        statut="EXISTANT À AMÉLIORER",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Jardin connecté — valider une solution » : séquence, QCM de 30 questions, "
+                "fiche, matrice, deux synthèses, rapport et banc de tests — les six pièces sont là. "
+                "Il porte très bien 4e_C8.3 (un protocole écrit avant l'essai, la conformité, le test "
+                "qui départage deux causes, l'amélioration rattachée à un résultat d'essai).",
+        anomalies="Ce qui manque, lu le 22/11/2026 (audit #867) : le code demande de PARAMÉTRER une "
+                  "simulation fournie pour valider la TENUE MÉCANIQUE D'UN MATÉRIAU. L'activité 0 de "
+                  "la séquence est un banc de tests virtuel du comportement de l'arrosage : ni "
+                  "matériau, ni charge, ni déformation. À ajouter : une activité courte où l'élève "
+                  "règle une simulation fournie (matériau, charge, dimensions) et lit si la pièce "
+                  "tient — par exemple le support du bac du jardin, sur le modèle de 5e_C8.1. Même "
+                  "réserve pour 4e_C8.2, mutualisé ici.",
+        accessibilite="Corrections dépliables, deux synthèses séparées.",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
+    ),
     "3e_C7.6": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=False, qcm=True, projet=False, synthese=True,
@@ -1031,18 +1093,21 @@ OVERLAY = {
         medias="Aucun média propre.",
     ),
     "3e_C7.2": dict(
-        statut="À VÉRIFIER PAR L’ENSEIGNANT",
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=False, qcm=False, projet=False, synthese=False,
         evaluation=True, correction=True, situation=False, problematique=False,
-        qualite="Enseigné par la séquence « Le capteur de confort » de 3e_C7.1, et ÉVALUÉ depuis "
-                "le 30/08/2026 par les dix dernières questions du QCM du lot 3e_C7.6 « Le "
-                "boîtier étanche » — c'est là que la fabrication a lieu, le boîtier étant la "
-                "seule pièce du parcours réellement imprimée. Enseigner et évaluer à deux "
-                "endroits différents est permis (règle d'or n°81) ; le taire ne l'est pas, et le "
-                "README du dossier le dit maintenant, mesure à l'appui.",
-        anomalies="Le dossier ne porte aucune ressource propre : c'est un renvoi. Le statut reste "
-                  "« à vérifier par l'enseignant » parce que le report d'un score évalué dans un "
-                  "AUTRE lot est une décision d'enseignant, pas une conséquence mécanique.",
+        mutualise_avec="3e_C7.1 (enseigné, activités 6 et 7) · 3e_C7.6 (évalué, 10 questions)",
+        qualite="Enseigné par la séquence « Le capteur de confort » de 3e_C7.1 (activités 6 et 7 : "
+                "contrôler un FAST, proposer par des croquis, choisir la représentation ; questions 7 à 9 "
+                "de son QCM), et ÉVALUÉ depuis le 30/08/2026 par les dix dernières questions du QCM du "
+                "lot 3e_C7.6 « Le boîtier étanche » — c'est là que la fabrication a lieu, le boîtier "
+                "étant la seule pièce du parcours réellement imprimée. Enseigner et évaluer à deux "
+                "endroits différents est permis (règle d'or n°81), et le README du dossier le dit. "
+                "Décision du 22/11/2026 (audit #867, carte blanche de Pascal) : le report du score "
+                "évalué en 3e_C7.6 vaut pour ce code — « à vérifier » attendait cette décision depuis "
+                "le 07/11.",
+        anomalies="Le dossier ne porte aucune ressource propre : c'est un renvoi, ce qui est normal "
+                  "pour un code mutualisé.",
         accessibilite="README seul, lisible hors ligne, liens vérifiés sur le disque.",
         medias="Aucun.",
     ),

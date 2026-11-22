@@ -141,7 +141,8 @@
 
   /* Deux anciennes ancres, visées par la séquence 3e_C7.5 : la barre collée en haut ne recouvre pas la partie. */
   #puissance,#budget{scroll-margin-top:64px}
-</style></head>
+</style><style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
+</head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.5_jardin-incomplet.html">← Séquence</a><a href="qcm_4e_C7.5_jardin-incomplet.html">🧠 QCM</a><a href="lexique_4e_C7.5.html">📖 Lexique</a></nav>
 <div class="page">
@@ -240,7 +241,7 @@
   <h2 id="partie-4" style="margin-top:0">4. Pourquoi la carte ne fait-elle pas tourner la pompe elle-même&nbsp;?</h2>
   <p>Dans le cas 1, la pompe est raccordée à l'alimentation. Mais l'ordre de la carte ne peut pas la faire tourner&nbsp;:</p>
   <div class="chaine etapes">
-    <div><b>La sortie de la carte</b>Au mieux 20&nbsp;mA (milliampères)&nbsp;: de quoi allumer une DEL.</div>
+    <div><b>La sortie de la carte</b>Au mieux 20&nbsp;mA (milliampères)&nbsp;: de quoi allumer une <abbr class="sigle" title="diode électroluminescente" tabindex="0">DEL</abbr>.</div>
     <div><b>Le relais</b>Sur cet ordre minuscule, il ferme le circuit de la pompe.</div>
     <div><b>La pompe</b>Elle demande 700&nbsp;mA, pris à l'alimentation.</div>
   </div>
@@ -257,7 +258,7 @@
   <p>Cas 2&nbsp;: le relais est là, sur le bon port. Mais au départ de la pompe, la carte redémarre, en boucle&nbsp;:</p>
   <div class="chaine etapes">
     <div><b>Pompe à l'arrêt</b>100&nbsp;mA (milliampères)&nbsp;: tout va bien.</div>
-    <div class="ko"><b>Relais fermé</b>45 + 5 + 20 + 30 + 700 = 800&nbsp;mA. L'USB n'en donne que 500.</div>
+    <div class="ko"><b>Relais fermé</b>45 + 5 + 20 + 30 + 700 = 800&nbsp;mA. L'<abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> n'en donne que 500.</div>
     <div class="ko"><b>La tension s'effondre</b>La carte redémarre, referme le relais&nbsp;: ça recommence.</div>
     <div class="ok"><b>Le constituant manquant</b>L'alimentation externe 5&nbsp;V (volts), 2&nbsp;A (ampères)&nbsp;: 2&nbsp;000&nbsp;mA.</div>
   </div>

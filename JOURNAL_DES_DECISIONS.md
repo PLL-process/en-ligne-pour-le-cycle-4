@@ -36168,7 +36168,214 @@ contraste (26), étiquettes (4), attributs ARIA (3), liste (1). Le kit des ateli
 (« CDI — le centre de documentation et d'information », « QCM (questionnaire à choix multiples) ») ; leurs sources
 (`build.py`, `cahiers.py`, `moteur.py`, les textes des incrustations) sont à mettre d'accord avant toute régénération.
 
-## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 1 : 69 pages, 21 notes d'atelier, trois sources d'ateliers et huit générateurs de QCM (transversal : un générateur du thème 3)
+## 22/11/2026 — Sigles expliqués (n°44), vague des infobulles, thème 2 : 84 pages, 214 infobulles qui s'ouvrent aussi au doigt et sur papier (thème 2, `_outils`)
+
+**Décision de Pascal** (22/11/2026, 1 h 45) : « autres sigles : OST sur 108 pages, puis CRCN, USB, IP ainsi que les
+autres pourront être communiquées à l'aide d'un survol avec la souris » ; puis « Le reste tu as carte blanche ».
+
+**Ce que la décision change au complément de la n°44.** La n°44 demandait une mention en clair parce qu'« une infobulle
+ne s'ouvre pas au doigt ». Pour les sigles autres que QCM (déjà écrit en clair par les deux vagues précédentes),
+l'infobulle suffit désormais, posée de façon à lever l'objection :
+- au survol : l'attribut `title` de `<abbr class="sigle">` ;
+- à l'appui au doigt et au clavier : `tabindex="0"`, et le style commun `#sigles-css` (posé une fois par page) écrit
+  l'explication à côté du sigle tant qu'il a le focus — « IP (Internet Protocol, l'adresse d'une machine sur le réseau) » ;
+- sur papier : `@media print` écrit l'explication après le sigle.
+
+Où : à la première apparition du sigle dans la page, puis à la première de chaque séance (un onglet fermé cache la
+première). Le texte courant passe avant un lien, un bouton ou une étiquette de choix ; quand le sigle n'est que là,
+l'infobulle s'y pose sans `tabindex` (un élément focalisable dans un autre gêne le clavier et les lecteurs d'écran).
+Jamais dans la navigation, un listing, un script, une option de liste. Rien de visible ne change, sauf un pointillé
+sous le sigle. Le bloc d'un écrit « comme au brevet » garde ses sigles en clair (skill `tache-finale-redigee`).
+
+**Outils.**
+- `_outils/expliquer_sigles.py --infobulle` : essai à blanc par défaut, `--ecrire` pour écrire ; relancé, il ne pose rien
+  (n°149, vérifié sur les 84 pages). Pour un générateur, `infobuller(page)` explique tout ce que le contrôle voit nu
+  (QCM en clair quand il est dans le texte, le reste en infobulle) avant d'écrire : une page régénérée garde ses
+  explications (n°283). Banc neuf `_outils/tests_expliquer_sigles.py` (15 / 15 ; un outil volontairement cassé — premier
+  sigle pris dans un lien, `tabindex` dans un lien — le fait échouer deux fois).
+- `_outils/controle_sigles_expliques.py` : un sigle porté par une infobulle `<abbr title>` compte pour expliqué ; la
+  mesure se lit aussi sur un source (`mesurer_source`), pour les générateurs.
+- `_outils/generer_lexique.py` : `sans_balises` prenait « < seuil », il faut seuil > » pour une balise et coupait la
+  phrase (« Pour capturer une valeur V avec « V. », lexique de `5e_C6.1`, vu en régénérant). Une balise commence
+  désormais par une lettre ; deux cas ajoutés au banc (31 / 31, avec les infobulles branchées).
+
+**Précautions contre les conflits.** PR ouvertes au moment de la vague : #866, #867, #868 ; aucune ne touche une page du
+thème 2. Écartées : les quatre pages du TP d'algorigrammes et des listings (n°364) que d'autres sessions ont travaillées
+dans la nuit et dont la PR #866 continue le chantier — `3e_C6.1` (séquence), `4e_C4.1` (atelier Pix CRCN), `4e_C6.2`
+(séquence du jardin, TP d'algorigrammes). Une insertion par sigle et par séance, sans retour à la ligne.
+
+**Ce qui change** : 84 pages du thème 2 (séquences, QCM, synthèses, lexiques, ateliers FAST, « en pièces »,
+entraînement DNB), 214 infobulles — LSU, IP, OST, LED, CRCN, DNB, USB, TTL, DHCP, FAST, PLA, TBT, PVC, LCD, CDI, IA,
+IDE, DNS, NFC, RFID, PIR, CAO, EPI, LDR ; QCM aussi, dans les 41 pages où il n'était expliqué que plus bas ou que dans
+un lien. Deux QCM citent « un OST » dans le menu « Compétence à réviser » : une option de liste ne porte pas d'infobulle,
+l'étiquette du menu le dit donc en clair (« Compétence à réviser (OST : objet ou système technique) »).
+
+**Les lexiques ne sont pas régénérés.** Régénérer un lexique aujourd'hui effacerait les unités écrites en clair après
+coup dans les pages (« 6 W (watts) ») : les dix lexiques reçoivent leurs infobulles comme les autres pages. Le
+générateur, lui, pose désormais les mêmes infobulles (`infobuller`, n°283 ; vérifié en régénérant les dix lexiques, puis en
+remettant la version de la vague : mêmes sigles, mêmes places) ; les unités restent à lui apprendre avant toute régénération.
+
+**Vérifié.**
+- Texte et balises des 84 pages identiques avant et après, une fois retirés les `<abbr>` et le style ajouté : rien
+  d'autre n'a bougé.
+- Les 84 pages ouvertes à 390 px : aucune erreur JavaScript ; la première infobulle visible prend le focus et affiche
+  son explication ; à l'impression, l'explication s'écrit ; aucune infobulle focalisable dans un lien ou un bouton.
+  Une page défile en largeur (`synthese_professeur_4e_C4.1-C4.9.html`, 458 px) : c'était déjà le cas sur `main`.
+- `controle_sigles.py` (n°313) vert, son banc 9 / 9.
+
+**Mesure** (`controle_sigles_expliques.py`) : pages avec au moins un sigle jamais expliqué, 312 → 250 ; thème 2,
+67 → 5 (les quatre pages écartées, et une synthèse où « QCM » n'est que dans la barre de navigation). Thème 1 : 125,
+thème 3 : 120.
+
+**Suite.** Le thème 3 dans la PR suivante ; le thème 1 quand ses sessions auront fini.
+
+## 22/11/2026 — Audit du 22/11, chantier 4 : la dérive des générateurs ramenée à zéro (57 → 0) ; deux défauts de source réparés (transversal : `_outils`, générateurs des thèmes 1 et 3, pages engendrées)
+
+**Carte blanche de Pascal** (22/11, « Tu as carte blanche continue », « Et fusionne automatiquement »). Sur `main` du
+matin, une régénération d'essai changeait **57 fichiers**, dans les deux sens (crible de l'audit, PR #867).
+
+**Ce qui était posé à la main sur des pages engendrées, et qui est maintenant dans les sources** (règle n°283) :
+- l'avertissement « Ordinateur partagé » qui explique le CDI (n°44, 22/11) : `build.py`, `cahiers.py`, `moteur.py`,
+  `gabarit_qcm.tpl` (ateliers des représentations), `build_atelier.py` (planification), `_outils/dnb_gabarit.html` ;
+- les onglets de séance et l'en-tête replié au téléphone des trois ateliers de planification : `build_atelier.py` appelle
+  `_outils/onglets_seance.py` et `_outils/entete_telephone.py`, comme il appelait déjà `onglets_clavier` et `retrait_validation` ;
+- la feuille « ce qui défile est caché » (n°364) de la page 3 de la station : `generer_les_quatre_pages.py` (`poser_n364`) ;
+- les unités en toutes lettres des lexiques (n°312, campagne du 25/10 faite à la main) : `generer_lexique.py` nomme
+  l'unité à sa première apparition dans chaque notion et chaque « à retenir », avec la table de `controle_unites.py`.
+
+**Un défaut du générateur des lexiques, trouvé en comparant** : `sans_balises()` effaçait tout ce qui ressemblait à une
+balise, y compris « < seuil » ; le lexique de 5e_C6.1 aurait affiché « Pour capturer une valeur V avec « V. ». Seules
+les vraies balises s'effacent désormais.
+
+**Ce que la régénération apporte aux pages qui étaient en retard sur leur source** : les ateliers des représentations
+annoncent le bon nombre de questions illustrées de leur QCM ; les lexiques disent « QCM (questionnaires à choix multiples) »
+(n°44) et reprennent les notions des QCM réécrits sous la n°341 ; le lexique de 5e_C2.1 ne dit plus « ce qu'on fera l'an
+prochain » (n°304).
+
+**Vérifié.** Les huit générateurs de `rapport_audit.py` relancés sur le dépôt : 40 pages changent, et **aucune** ne perd
+une unité nommée, l'explication du CDI, la feuille n°364, les onglets de séance ou l'en-tête téléphone (comparaison page
+par page, découpée aux balises) ; **une seconde régénération, dans une copie, change 0 fichier**. `controle_unites`,
+`controle_sigles`, `controle_liens`, `controle_sauvegarde_locale`, `controle_licence`, `controle_regles_visibles`,
+`controle_medias`, `controle_atteignabilite`, `controle_boutons_vivants`, `controle_hierarchie` : verts.
+`controle_competences` rouge **déjà sur `main`** (une page neuve de 5e_C1.2, « CRCN 1.3 » sans son intitulé), hors de
+ce lot. **Non exécuté** : les bancs des ateliers et des lexiques dans le navigateur.
+
+**Après fusion de `main` (#874 à #878, même matinée).** La vague « sigles expliqués en infobulle » (n°44, #878) est en
+cours dans une autre session : son générateur des lexiques pose déjà les infobulles que les pages n'ont pas encore
+(13 lexiques en retard sur leur source), et deux incrustations FAST (4e_C4.4, 5e_C4.1) ont reçu à la main des
+infobulles que `build.py` ne sait pas poser. Ces **17 fichiers** sont laissés à cette vague : régénérer ici les effacerait
+ou devancerait son travail. Hors d'eux, la dérive reste à zéro.
+
+## 22/11/2026 — Ateliers de planification (3e, 4e, 5e) : la clôture se lit Bonus → Bilan → QCM (n°4, n°301, n°306) (thème 3)
+
+**Carte blanche de Pascal** (22/11). L'audit du 22/11 (#867) voyait le bouton QCM des trois ateliers de planification « à
+53 % de la page » (`controle_regle4.py`). Lu sur la page : le QCM venait **avant** le Bonus — ordre Bilan → QCM → Bonus,
+écrit tel quel par `build_atelier.py` et vérifié tel quel par le banc `tests_atelier_C7.1.py`. Le défaut existait depuis
+toujours ; il ne se voyait pas tant que la page était courte, et les scripts de fin de page ajoutés le 19/11 (onglets de
+séance, en-tête téléphone) l'ont fait apparaître. **Corrigé à la source** : `BAS_T` pose le Bonus avant le Bilan ; le banc
+vérifie désormais Bonus → Bilan → QCM. Les trois pages sont régénérées.
+
+**Vérifié.** `tests_atelier_C7.1.py` 48/48 ; `verif_chaine.py` (chaque page est ce que le générateur produit) ;
+`controle_regle4.py` : les trois ateliers ne sont plus en écart (reste le TP algorigrammes de 4e_C6.2, décision de Pascal) ;
+`verif_regles_audit.py` : aucun ✘ sur ces pages. **Non exécuté** : la revue d'écran à 390 px.
+
+## 22/11/2026 — `controle_regle4.py` vert : le TP « algorigrammes de domotique » de 4e_C6.2 est toléré, avec sa raison (thème 2 : `_outils`)
+
+**Carte blanche de Pascal** (22/11). Dernier écart de la n°4 relevé par l'audit du 22/11 (#867) : le TP de 4e_C6.2, sorti
+des ressources héritées le 20/11 (n°12), est jugé depuis comme une séquence, et n'a ni « Prêt·e à t'entraîner », ni Bonus,
+ni bouton QCM. Ce n'est pas une séquence : sa porte (n°366) est `sequence-jardin-connecte-arrosage-automatique.html`, qui
+porte la clôture Bonus → Bilan → QCM ; le TP ferme sur son bilan imprimé (n°363) et son mini-projet de phase 4. Il entre
+dans `TOLEREES` avec cette raison écrite, comme le modèle de TP de l'atelier CAO. Si Pascal préfère que le TP porte
+lui-même les deux blocs, la ligne se retire et le TP les reçoit.
+
+**Vérifié.** `controle_regle4.py` : 84 pages conformes, 0 écart (sortie 0) ; banc `tests_controle_regle4.py` 25/25.
+
+## 22/11/2026 — Sigles expliqués (n°44), vague des infobulles, thème 3 : 119 pages, 281 infobulles ; le générateur des TP CAO les pose lui-même (thème 3)
+
+Suite de l'entrée précédente (même décision de Pascal, 22/11/2026, 1 h 45 ; même outil, fusionné par la PR #878).
+
+**Ce qui change.**
+- 110 pages du thème 3 (séquences, QCM, synthèses, lexiques, ateliers) : 266 infobulles, posées par
+  `infobuller` — OST, PVC, USB, DEL, CRCN, LED, PLA, CAO, FAST, LCD, LSU, IP, TBT, EPI, CDI, URL ; QCM aussi, là où il
+  n'était expliqué que plus bas ou que dans un lien.
+- `atelier-cao/_generation/build_tp.py` appelle `infobuller` avant d'écrire (n°283) ; les quatre TP sont régénérés
+  (10 infobulles). `verif_chaine.py` était rouge sur `main` : la vague QCM de la nuit (PR #865) avait corrigé les quatre
+  scénarios sans recalculer leurs empreintes. Recalculées (`--empreintes`) : la chaîne est verte, chaque page est
+  exactement ce que son scénario produit.
+- Treize QCM citent OST (douze) ou CRCN (un) seulement dans le menu « Compétence à réviser » : une option de liste ne
+  porte pas d'infobulle, l'étiquette du menu le dit en clair, comme au thème 2.
+
+**Écartées** (d'autres sessions y travaillent, ou leur générateur change ailleurs) :
+- les pages touchées cette nuit par d'autres sessions (portes n°366, listings n°364, durées de l'audit) : `3e_C7.8`,
+  `4e_C7.5`, `4e_C7.8`, `5e_C7.5`, `5e_C8.2`, `4e_C9.1`, `3e_C9.1`, les pointeurs `atelier_croquis` et
+  `atelier_diagramme_fast` de `3e_C7.2` et `4e_C7.2`, `atelier_diagramme_des_exigences` de `4e_C8.3` ;
+- ce que la PR #877 (dérive des générateurs) régénérait pendant la vague : l'atelier de planification et
+  `build_atelier.py` (que la PR #879 a retouchés depuis), le dossier `3e_C9.2` et `generer_les_quatre_pages.py`. Une
+  note a été laissée sur #877, en conflit avec #878 sur `generer_lexique.py` (le même correctif de `sans_balises` des
+  deux côtés) ; elle a été fusionnée avec les deux (unités nommées et infobulles).
+
+**Lexiques.** #877 fusionnée, ses lexiques régénérés n'avaient pas encore d'infobulles : `generer_lexique.py --tous`
+sur le thème 3 en pose dans cinq (`3e_C7.1`, `5e_C7.1`, `5e_C7.4`, `3e_C9.2`, `4e_C9.1`) et ne change aucun autre
+lexique — ceux que la vague avait traités sont exactement ce que le générateur produit.
+
+**Vérifié.**
+- Texte et balises des 119 pages identiques avant et après, une fois retirés les `<abbr>`, le style ajouté et les deux
+  étiquettes de menu.
+- Les 114 premières pages ouvertes à 390 px : aucune erreur JavaScript ; la première infobulle visible prend le focus et affiche
+  son explication ; l'impression l'écrit ; aucune infobulle focalisable dans un lien ou un bouton. Huit synthèses
+  professeur défilent en largeur, comme sur `main`. Sur l'une (`5e_C7.5`), l'explication affichée au focus, dans une
+  cellule de tableau, élargit encore la page (451 → 521 px) : page professeur, qui défilait déjà.
+- Les 70 bancs de lot des dossiers touchés : 70 / 70, dont 35 lancés avec les arguments écrits dans leur
+  documentation. Un seul avait d'abord échoué, `tests_3e_C8.1_sequence.mjs` (61 / 62) : il aplatissait la synthèse
+  professeur en remplaçant chaque balise par une espace, et lisait « d’un OST . » au lieu de la formulation officielle
+  « d’un OST. ». Une balise de texte (`abbr`, `b`, `i`, `span`…) s'efface désormais sans espace : 62 / 62, et une
+  formulation modifiée échouerait toujours.
+- `controle_page_ouverte.mjs --axe` sur les 114 pages : L 0, B 0, C 0 ; les 14 pages signalées par axe-core ont les
+  mêmes écarts sur `main` (une en a un de moins).
+- `verif_guidage.py` des TP : le même manquement n°77 qu'avant sur deux TP (images du résultat attendu) ;
+  `controle_entete_qcm.py` vert.
+
+**Mesure** (`controle_sigles_expliques.py`) : thème 3, 120 → 53 pages avec au moins un sigle jamais expliqué (les
+pages écartées, et 33 pages où « QCM » n'est que dans la barre de navigation, à traiter avec les portes, n°366). En
+tout : 175 pages (thème 1 : 117, où d'autres sessions travaillent ; thème 2 : 5 ; thème 3 : 53).
+
+**Suite.** Le thème 1 quand ses sessions auront fini ; les pages écartées après la fusion de #877.
+
+## 22/11/2026 — Pilote de la règle d'or n°369 (« Ce qui compte revient ») et de la n°372 sur `4e_C1.4` (cybersécurité) (thème 1)
+
+**Carte blanche de Pascal** (22/11, « Tu as carte blanche continue »). La n°369 (en essai depuis #868) demandait une séquence
+pilote ; `4e_C1.4` est retenue : quatre séances, des acquis nets dans ses « À retenir » (l'attaque et sa cible ; la donnée
+personnelle et la donnée sensible ; avant, pendant, après ; ce que cache chaque outil, et à qui). Les 🔑 de la page sont
+des icônes de correction, pas des acquis marqués (n°353) : les questions ont été tirées des « À retenir ».
+
+**Ce qui est posé.**
+- En tête des séances 2, 3 et 4, une « 🔁 Reprise — sans regarder, retrouve » : 2, 3 et 2 questions (sept en tout), sur
+  la séance d'avant et, en séance 3, une sur la séance 1 (l'espacement). Consigne numérotée à la ligne (n°342) ; chaque
+  question dit sa séance d'origine ; chaque mauvaise réponse a son pourquoi et renvoie à la séance à relire ; places des
+  bonnes réponses mélangées, longueurs équilibrées (2 plus courtes, 2 plus longues, 3 au milieu) ; aucun sigle nu (n°44).
+- « Vérifier ma reprise » dit « Reprise faite : N sur M retrouvées de mémoire. Ce n'est pas une note. » : la reprise ne
+  valide rien (n°340) ; le mode mission la lit comme un écran de lecture (`fieldset.reprise-q`, pas `qcm-groupe`).
+- Au bilan, un champ « Ce qui reste flou pour moi, et quand je le reprends » (`data-flou`, n°372), sauvegardé avec la page.
+
+**Vérifié.** `controle_reprise_espacee.py --strict` sur la page : 3 séances sur 3, bilan conforme ; bancs de la séquence
+34/34 (n°311) et 32/32 (quiz) ; mode mission joué écran par écran, aucun refus ; `controle_page_ouverte.mjs` (390 px) rien à
+signaler ; `controle_axe.mjs` ; `eleve_qui_ne_lit_pas.py` 0 activité validée ; `controle_sigles`, `controle_consignes_a_la_ligne`,
+`controle_regles_visibles`, `controle_sauvegarde_locale`, `controle_impression_papier` verts ; la reprise jouée au navigateur
+(vide → « Réponds à toutes les questions » ; une erreur → son pourquoi et la séance à relire) ; revue d'écran à 390 px : une
+légende sur deux lignes coupait le bord du cadre, corrigé par une feuille de cinq lignes. **Non exécuté** : un essai en classe —
+c'est lui qui dira si trois à cinq minutes suffisent.
+
+**Reste à Pascal.** Dire, après une séance, si la reprise tient dans le temps ; si oui, la généraliser par vagues (skill
+`reprise-espacee`).
+
+## 22/11/2026 — `controle_reprise_espacee.py` voit aussi les séances écrites en `<section>` : la mesure de départ de la n°369 est 0 sur 123, pas 0 sur 113 (thème 2 : `_outils`)
+
+Vu au pilote de `4e_C1.4` : ses panneaux de séance sont des `<section class="seance-panel">`, et la mesure ne lisait que les
+`<div>`. Corrigé (les deux balises) ; un cas de plus au banc (9/9). Sur `main`, la mesure de départ devient **123 séances
+n°2 et suivantes, 0 conforme** (au lieu de 113 : dix séances en `<section>` n'étaient pas comptées). Le chiffre « 113 » des
+entrées du matin (audit #867, installation #868) est à lire « 123 ».
+
+## 22/11/2026 — Sigles expliqués (n°44), vague QCM, thème 1 : 69 pages, 18 notes d'atelier, trois sources d'ateliers et huit générateurs de QCM (transversal : un générateur du thème 3)
 
 **Décision.** Pascal (22/11/2026, 2 h 05) : « Continue. Tu as carte blanche pour tout, puis fusionne automatiquement. »
 La vague QCM des thèmes 2 et 3 laissait le thème 1 « quand ses sessions auront fini » : elles ont fini (#847 à #858,
@@ -36182,11 +36389,12 @@ multiples) » à la première apparition du sigle dans le texte de la page.
   - les ateliers : `moteur.py` (« Le QCM … de cet atelier compte »), `cahiers.py` (« Chaque représentation a son
     QCM … »), `build_qcm.py` (le pied des sept QCM d'atelier), et les données de deux synthèses du professeur (`donnees_besoin.py`, `donnees_fast.py` — « (cours de 3e, QCM) » devient « dans le cours de 3e et le QCM (questionnaire à choix multiples) », sans parenthèses imbriquées) ; les sept QCM sont régénérés (`build_qcm.py --tous`,
     7 sur 7 à l'octet) ;
-  - les **21 exercices d'atelier incrustés** dans le thème 1 : leur note (« ce que tu fais ici s'y retrouve, avec … et
-    le QCM ») porte l'explication, à la source (`suite=` dans `incrustations_table.py` et `incrustations_lots/`) ; six
-    qui prenaient la note par défaut reçoivent la leur ; `incrustations.py --seq` sur les 14 séquences, chaque ligne
-    changée ne diffère que par l'explication (22 / 22, vérifié). Les incrustations des thèmes 2 et 3 ne sont pas
-    touchées ;
+  - les **18 notes des exercices d'atelier incrustés** dans le thème 1 portent l'explication à la source : quinze
+    `suite=` (« ce que tu fais ici s'y retrouve, avec … et le QCM », dans `incrustations_table.py` et
+    `incrustations_lots/`), et `NOTE_RAPPEL` de `bete_a_cornes_mots.py`, la phrase des trois piqûres de rappel de la
+    bête à cornes (`4e_C1.1`, `4e_C3.1`, `3e_C3.1`), qui ne lisent pas `suite=` ; `incrustations.py --seq` sur les 14
+    séquences, chaque ligne changée ne diffère que par l'explication. Les incrustations des thèmes 2 et 3 (la note par
+    défaut, dans `incrustations.py`) ne sont pas touchées ;
   - le **pied du QCM gabarit** (`3e_C3.1`) change : les **huit générateurs** qui le cherchent mot pour mot le cherchent
     sous sa nouvelle forme — sept lots du thème 1 et `atelier-planification/_generation/build_qcm.py` (thème 3, une
     ligne : d'où la branche sans motif de thème). Sa sortie est identique avant et après (vérifié).
@@ -36195,18 +36403,28 @@ multiples) » à la première apparition du sigle dans le texte de la page.
   (`gabarit_qcm.tpl`, `build.py`, `cahiers.py`, `moteur.py`) ; la première régénération des QCM l'a retirée de sept
   pages. Les quatre sources la disent maintenant, la régénération la garde.
 
-**Mesure.** Thème 1, pages avec au moins un sigle nu : 125 → 90 ; sur le site, pages avec un QCM jamais expliqué :
-173 → 95. Restent au thème 1 les 33 pages où « QCM » n'est que dans un lien ou la navigation (comme aux thèmes 2 et 3),
-puis OST (50 pages, surtout dans l'énoncé des codes du référentiel, qui vient de sources communes aux trois thèmes),
-CRCN (22) et une quinzaine d'autres sigles.
+**Mesure** (`controle_sigles_expliques.py`, site entier, après fusion de `main`). Pages avec au moins un sigle jamais
+expliqué : 175 → 139 ; thème 1 : 117 → 81. Pages où le QCM n'est jamais expliqué : 147 → 80. Pages où un sigle est
+expliqué plus bas que sa première apparition : 46 → 84 — ce sont surtout des pages du thème 1 où « QCM » apparaît
+d'abord dans la navigation ou un lien, où l'outil ne pose rien en clair ; la vague des infobulles des thèmes 2 et 3 les
+a traitées par une infobulle sans `tabindex` (`--infobulle`). Restent au thème 1, pour cette vague-là : ces liens, OST,
+CRCN, et une quinzaine d'autres sigles.
 
 **Constaté, non repris (antérieur, hors de ce lot).**
-- `incrustations.py --verifier` voit quatre pages des thèmes 2 et 3 (`3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1`) en
-  retard sur leur générateur, sur `main` avant ce lot : des retouches faites dans les pages (aération, replis) que le
+- `incrustations.py --verifier` voit cinq pages des thèmes 2 et 3 (`3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1`, et
+  depuis la vague des infobulles du thème 3, `3e_C7.3`) en retard sur leur générateur, sur `main` avant ce lot : des retouches faites dans les pages (aération, replis) que le
   générateur ne connaît pas. Ne pas relancer `--seq` sur elles avant d'avoir reporté ces retouches à la source.
 - Les cinq générateurs de lot du thème 1 qui tournent ne reproduisent plus leur page à l'octet (le QCM gabarit a pris
   la loupe, le style des documents, et chaque page ses trois lignes) : ils tournent, mais la page reste la source.
 - `atelier-planification/verif_chaine_qcm.py` (thème 3) signale déjà sa page différente de ce que produit sa chaîne.
+
+**Après fusion de `main` (#874 à #885).** Le chantier 4 de l'audit (#877) avait régénéré les pages des ateliers
+(elles annoncent maintenant le bon nombre de questions illustrées) : ses pages sont reprises, et l'outil y repose
+l'explication (18 pages, une insertion chacune, placée là où `moteur.py` l'écrit). La dérive des huit générateurs
+de `rapport_audit.py`, mesurée dans une copie de l'arbre fusionné : 6 fichiers, aucun venu de ce lot — quatre lexiques
+du thème 1 (`3e_C1.5`, `4e_C1.4`, `5e_C1.3`, `5e_C2.1`), où `generer_lexique.py` pose désormais des infobulles (RGPD, IA,
+CRCN, FAST) que la vague du thème 1 n'a pas encore posées, et les deux incrustations FAST du thème 2 déjà laissées à
+cette vague ; leurs QCM sont identiques.
 
 **Vérifié.** `build_qcm.py --verifier` (ateliers) 7 / 7 ; `banc_ateliers.py` 530 / 530 ; `incrustations.py
 --verifier` : thème 1 à jour ; les 32 bancs des 14 séquences verts (`5e_C1.5` avec ses arguments documentés) ; mode

@@ -98,6 +98,7 @@ from html.parser import HTMLParser
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from licence_cc import MENTION as MENTION_LICENCE  # règle d'or n°321
+from expliquer_sigles import infobuller  # n°44, décision de Pascal du 22/11/2026
 
 CHAMP = lambda bloc, nom: (
     m.group(1) if (m := re.search(r'"?\b%s"?\s*:\s*"((?:[^"\\]|\\.)*)"' % nom, bloc)) else ""
@@ -137,7 +138,30 @@ def blocs_questions(src):
 
 
 def sans_balises(t):
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", t)).strip()
+    # Seules les vraies balises s'effacent (« <b> », « </i> », « <br/> ») : un « < seuil » de la banque est un
+    # opérateur de comparaison, pas une balise. L'ancienne expression `<[^>]+>` mangeait tout jusqu'au « > »
+    # suivant : « Pour capturer une valeur V avec « < seuil », il faut seuil > V » devenait « … avec « V. »
+    # (lexique de 5e_C6.1, audit du 22/11/2026 : la page publiée avait été corrigée à la main, pas la source).
+    return re.sub(r"\s+", " ", re.sub(r"</?[A-Za-z][^<>]*>", "", t)).strip()
+
+
+def nommer_unites(t):
+    """Règle d'or n°312 : à sa première apparition dans une notion ou un « à retenir », une unité se lit en toutes
+    lettres — « 230 V (volts) ». La campagne du 25/10/2026 l'avait écrit à la main dans les lexiques publiés, et
+    chaque régénération l'effaçait (audit du 22/11/2026 : dérive des générateurs). La table est celle du contrôle,
+    `controle_unites.py` : une seule source. Une unité déjà nommée dans le texte n'est pas renommée."""
+    from controle_unites import OCC, NOMS  # import ici : le module n'est utile qu'au moment d'écrire
+    vus = set()
+    m = OCC.search(t)
+    while m:
+        s = m.group(1)
+        if s not in vus:
+            vus.add(s)
+            motif, nom = NOMS[s]
+            if not motif.search(t):
+                t = t[:m.end()] + " (%s)" % nom + t[m.end():]
+        m = OCC.search(t, m.end())
+    return t
 
 
 def cle_tri(t):
@@ -190,7 +214,7 @@ def lire_lot(dossier):
                 continue
             comp = sans_balises(CHAMP(b, "c")) or "—"
             ret = sans_balises(CHAMP(b, "ret") or CHAMP(b, "t"))
-            par_comp.setdefault(comp, []).append((n, ret, os.path.basename(f)))
+            par_comp.setdefault(comp, []).append((nommer_unites(n), nommer_unites(ret), os.path.basename(f)))
     return par_comp
 
 
@@ -551,6 +575,9 @@ def ecrire_lexique(dossier, titre, retour, commun=None):
                               sous_titre=SOUS_TITRE.format(compte=total),
                               corps="\n".join(corps), pied=PIED.format(sources=sources),
                               licence=MENTION_LICENCE)
+    # Les sigles des définitions (tirées mot pour mot des QCM) reçoivent leur infobulle, comme dans les pages : un
+    # lexique régénéré garde ses explications (n°44, décision de Pascal du 22/11/2026 ; n°283).
+    page = infobuller(page)
     sortie = os.path.join(dossier, "lexique_%s.html" % code)
     garde_ecrasement(sortie, page)
     open(sortie, "w", encoding="utf-8").write(page)

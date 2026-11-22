@@ -85,6 +85,19 @@ def _retrait(html):
     return mod.poser(html), mod.DEBUT
 
 
+# Onglets de séance (19/11/2026) et en-tête replié au téléphone (19/11/2026) : posés à la main sur les pages publiées
+# par `_outils/onglets_seance.py` et `_outils/entete_telephone.py`, ils ne venaient pas d'ici — une régénération les
+# effaçait (audit du 22/11/2026, PR #867 : dérive des générateurs). Même geste que les deux blocs ci-dessus.
+def _outil(nom):
+    chemin = pathlib.Path(__file__).resolve().parents[4] / "_outils" / (nom + ".py")
+    if not chemin.exists():
+        raise SystemExit("_outils/%s.py est introuvable (%s)." % (nom, chemin))
+    spec = _iu.spec_from_file_location(nom, chemin)
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 # Règle d'or n°303 — un lien se lit, à l'écran comme sur le papier. Texte repris
 # tel quel des pages publiées (retouche du 21/09/2026). Le bloc se glisse dans le
 # <style> de la loupe, là où la retouche l'avait posé à la main : l'écrire ici
@@ -297,7 +310,7 @@ qui décide de la date de fin.</p>
 </div>
 <p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
 elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
-<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
+<p class="saved-note" data-note="poste-partage">🖥️ <b>Ordinateur partagé</b> (salle de techno, CDI — le centre de documentation et d'information)&nbsp;: un autre élève qui ouvre cette page sur la même session verra tes réponses.<br>Quand tu as fini&nbsp;: imprime en PDF si tu veux garder une trace, puis clique sur «&nbsp;🗑 Effacer ma sauvegarde&nbsp;».</p>
 <p class="saved-note" id="aide-essentiel">&#127919; <b>Le mode essentiel</b> masque les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Rien n'est
 perdu — un second clic ramène tout.</p>
 """   # gabarit : formaté par page()
@@ -983,6 +996,10 @@ BAS_T = """
 </main>
 <div class="page">
 
+<!-- Règles d'or n°4, n°301, n°306 : la clôture se lit Bonus → Bilan → renvoi au QCM. Jusqu'au 22/11/2026 le Bonus
+     venait après le QCM ; l'audit du 22/11 l'a vu quand les scripts de fin de page ont repoussé le bouton à 53 %%. -->
+%(bonus)s
+
 <section class="card">
   <h2>&#127937; Bilan — et ton hypothèse de départ</h2>
   <p>Tu avais répondu, au début, à cette question&nbsp;: <i>un projet dure 9 séances, on divise par
@@ -1010,8 +1027,6 @@ BAS_T = """
   questions qui vont un peu plus loin que ta page.</p>
   <p><a class="btn qcm" href="qcm_C7.1_planification_taches.html">&#129504; Ouvrir le QCM (30 questions)</a></p>
 </section>
-
-%(bonus)s
 
 </div>
 <section class="card syntheses">
@@ -1617,6 +1632,11 @@ def page(niv):
     if 'role="tab"' in resultat and debut_onglets not in resultat:
         raise SystemExit("n°326 : les onglets du parcours %s ne se parcourent pas au clavier "
                          "— arrêt avant écriture." % niv)
+    for _nom in ("onglets_seance", "entete_telephone"):
+        _mod = _outil(_nom)
+        resultat = _mod.poser(resultat)
+        if 'class="seance-tab' in resultat and _mod.DEBUT not in resultat:
+            raise SystemExit("%s n'a pas été posé dans le parcours %s — arrêt avant écriture." % (_nom, niv))
     return resultat
 
 

@@ -148,7 +148,8 @@
   .retour-carte:hover,.retour-carte:focus-visible{border-color:var(--hl)}
   #carte-titre,[id^="partie-"]{scroll-margin-top:64px}
   @media print{.retour-carte{display:none}}
-</style></head>
+</style><style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
+</head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html">← Séquence</a></nav>
 <div class="page">
@@ -262,7 +263,7 @@
   <p>Sur PC-MQ, nos preuves ont été mesurées dans le vrai logiciel&nbsp;:</p>
   <div class="chaine">
     <div><b><code>ping</code></b>Deux échecs, puis des réponses. Relancé&nbsp;: 0&nbsp;% de perte.</div>
-    <div><b>TTL=126</b>Il part de 128, et chaque routeur retire 1&nbsp;: deux routeurs traversés.</div>
+    <div><b><abbr class="sigle" title="Time To Live, la durée de vie du paquet" tabindex="0">TTL</abbr>=126</b>Il part de 128, et chaque routeur retire 1&nbsp;: deux routeurs traversés.</div>
     <div><b><code>tracert</code></b>192.168.10.1 ➜ 10.0.0.2 ➜ 192.168.30.10&nbsp;: trois sauts, sans les commutateurs.</div>
     <div><b>La simulation</b>Saut par saut, de 0,000 à 0,010 seconde. Verdict&nbsp;: <i>Successful</i>.</div>
   </div>
