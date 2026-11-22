@@ -35838,3 +35838,48 @@ la question 1 soufflait « 1,44 » (n°341), retiré.
 **Accès rapide** : aucun lien ne mène à cette séquence ; rien à actualiser. Nouveauté du jour : `#ecritPort`.
 
 **Non vérifié.** La durée ; un essai en classe.
+
+## 22/11/2026 — Thème 1 : trois pages reçoivent leur porte (n°366), le dernier listing ne défile plus (n°364)
+
+**La décision de Pascal (22/11/2026, 0 h 40) : « 1a 2b ».** 1a : relier, en activité facultative, les trois pages du
+thème 1 qu'aucune séquence ne reliait (liste REFERENCE de `controle_porte_sequence.py`). 2b : corriger tout de suite le
+dernier listing de la vague n°364 — le chantier 3 du thème 1 (PR #857) est fusionné, la conversation parallèle n'a plus
+ces pages en main.
+
+**Les portes.** Un paragraphe `plus-loin approfondissement` (« Pour aller plus loin (facultatif) »), à la fin de
+l'activité où la page sert, avec ce qu'elle apporte et sa durée quand la page la dit. La classe `approfondissement` le
+cache en mode essentiel, comme le Bonus.
+- `5e_C1.2`, fin de l'activité 2 (le tableau comparatif) → `activite_crcn_donnees_freinage_5e_C1.2.html` : les mêmes
+  trois freins, au tableur (colonne ajoutée, tri, filtre, recommandation).
+- `5e_C2.1`, fin de l'activité 2 (recenser les interacteurs) → `atelier_diagramme_cas_utilisation.html` : parmi les
+  interacteurs, ceux qui se servent de la station.
+- `4e_C2.1`, fin de l'activité 1 (des verbatims au schéma) → `atelier_diagramme_cas_utilisation.html` : des phrases
+  d'usagers, un schéma « qui fait quoi ».
+`controle_porte_sequence.py` : 0 page sans porte ; les trois sont annoncées « à retirer de REFERENCE ». La liste se
+vide par une PR à part, `_outils/` étant hors du périmètre du thème 1.
+
+**L'activité CRCN, devenue atteignable, est revue avant d'ouvrir sa porte** (revue d'écran à 390 px, trois défauts) :
+- son tableau de trois colonnes imposait 760 px et défilait (`scrollable-region-focusable` d'axe, colonne « Unité ou
+  échelle » hors de l'écran) → il tient à 390 px, sans couper un mot au milieu ;
+- la carte « CRCN observable, tracé et justifié » s'ouvrait avant la mission, en langue de référentiel (n°298) → repliée
+  sous « Pour le professeur » ; le nom du fichier à rendre passe dans la consigne de l'élève ;
+- le tri et le filtre étaient demandés sans aucune aide, et le Bonus n'avait pas de réponse (n°367, et « chaque
+  exercice devrait avoir son bouton de correction ») → une aide pour la colonne I, deux aides pour le tri (le piège : trier
+  une colonne seule désaccorde les lignes ; puis où cliquer, LibreOffice et Excel), un exemple de réponse au Bonus (le
+  frein à rouleaux, valeurs dites fictives, et les mesures qui les remplaceraient). Corrigé vérifié contre le CSV : ordre
+  6,4 / 6,9 / 8,9 m, filtre corrosion ≥ 4 → disque et tambour (n°368).
+
+**Le listing.** `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` : le bloc n°364 (à 600 px et moins, `pre-wrap`, aucun
+caractère changé). Et, vu sur la même capture : les deux cartes « Erreur fréquente » / « Exécution OK » restaient côte à
+côte à 390 px (« IndentationError » sur trois lignes) → l'une sous l'autre sur un téléphone. **La vague n°364 est finie :
+`controle_page_ouverte.mjs` ne trouve plus aucun listing qui défile.**
+
+**Contrôles.** Bancs : `tests_5e_C1.2_sainte_luce.py` 51 / 51, `tests_4e_C2.1-C2.2_hangzhou.py` 66 / 66,
+`tests_5e_C2.1-C2.2_shenzhen.py` 152 / 152, `tests_regle_311` des quatre dossiers 34 / 34. `controle_page_ouverte.mjs
+--axe` sur les sept pages : L 0 · B 0 · C 0 ; restent deux `scrollable-region-focusable` dans `4e_C2.1` et `5e_C2.1`,
+**déjà sur `main`** (tableaux et figures des incrustations d'atelier : à corriger dans le générateur, pas dans la page).
+À 0 : `controle_impression`, `controle_contraste_liens`, `controle_hors_ligne`, `controle_squelette`,
+`controle_code_colore`, `controle_liens`, `controle_regles_visibles`, `controle_mode_essentiel`,
+`controle_mode_mission`, `controle_navigation_seances`, `controle_debordement`, `controle_hierarchie`,
+`controle_date_locale`, `controle_atteignabilite`, `controle_licence`. `controle_regle4` sort à 1 sur les quatre
+dossiers, avec la même sortie qu'avant le lot (pages d'activité sans clôture « QCM » : déjà sur `main`).
