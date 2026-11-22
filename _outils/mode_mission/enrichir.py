@@ -165,7 +165,14 @@ def poser_leurres(page, source, ident, leurres):
             break
         lignes.append(g)
         pos = g.end()
-    reponses = [brut(re.sub(r'<[^>]+>', '', li)[1:]) for li in re.findall(r'<li>(.*?)</li>', cles.group(2), re.S)]
+    items = re.findall(r'<li>(.*?)</li>', cles.group(2), re.S)
+    reponses = [brut(re.sub(r'<[^>]+>', '', li)[1:]) for li in items]
+    # Le balisage d'une réponse déjà écrite dans la légende est gardé : une infobulle de sigle posée après coup (n°44,
+    # vague des infobulles du thème 3) n'est pas effacée quand on relance l'outil. Sans cela, `--verifier-tout`
+    # refusait 3e_C7.5 et 4e_C7.7, et relancer l'outil retirait l'explication des sigles (vu le 22/11/2026).
+    deja = {}
+    for li, texte in zip(items, reponses):
+        deja.setdefault(texte, re.sub(r'^\s*<b>[^<]*</b>', '', li, count=1))
     dedans = [brut(v) for _, v, _ in RADIO.findall(lignes[0].group(4))]
     if reponses != dedans:
         raise SystemExit('✘ %s : la légende et la première ligne ne portent pas les mêmes réponses' % ident)
@@ -181,7 +188,7 @@ def poser_leurres(page, source, ident, leurres):
         accord = ('%d réponses ne servent' % en_trop) if en_trop > 1 else 'une réponse ne sert'
         titre = re.sub(r'(&nbsp;:|\s:)\s*$', '', titre) + '&nbsp;; <b>%s à aucune ligne</b>&nbsp;:' % accord
     legende = '<div class="qcm-cles"><p class="qcm-cles-titre">%s</p><ol>%s</ol></div>' % (
-        titre, ''.join('<li><b>%s</b>%s</li>' % (LETTRES[k], attr(t)) for k, t in enumerate(reponses)))
+        titre, ''.join('<li><b>%s</b>%s</li>' % (LETTRES[k], deja.get(t, attr(t))) for k, t in enumerate(reponses)))
     morceaux, fin = [source[:cles.start()], legende, source[cles.end():lignes[0].start()]], lignes[0].start()
     for g in lignes:
         gid = g.group(2)
