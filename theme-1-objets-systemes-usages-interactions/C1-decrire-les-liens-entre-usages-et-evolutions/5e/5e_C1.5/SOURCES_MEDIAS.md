@@ -6,6 +6,9 @@ libre, avec `<title>` et `<desc>` accessibles.
 | Fichier | Nature | Auteur | Licence | Rôle pédagogique |
 |---|---|---|---|---|
 | `Images/licences_symboles.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | Les quatre symboles — ©, CC, CC0, ™ — chacun avec ce qu'il autorise, et la phrase qui renverse l'intuition : **une image trouvée en ligne n'est pas libre par défaut** |
+| `Images/doc_publication_mael.svg` | SVG original, dessiné par `_outils/document_qcm.py` (`documents_qcm_5e_C1.5.json`) | Claude (Fable 5.2), pour ce dépôt, 21/11/2026 | CC0 1.0 | Document de QCM, à lire pour répondre : La publication du compte du club techno. Photo : Maël, de face, au premier plan, devant le jardin du collège. Légende : « Bravo à Maël, 5e B, pour le potager ! Club techno du collège des Flamboyants. » 48 « j'aime ». Données simulées. Données simulées, dites sur le document. |
+| `Images/doc_proprietes_photo.svg` | SVG original, dessiné par `_outils/document_qcm.py` (`documents_qcm_5e_C1.5.json`) | Claude (Fable 5.2), pour ce dépôt, 21/11/2026 | CC0 1.0 | Document de QCM, à lire pour répondre : Les propriétés du fichier jardin_0412.jpg, données simulées. Appareil : téléphone T-20. Date : 14 mars 2026. Heure : 10 h 42. Position : 14,61° nord ; 61,02° ouest. Dimensions : 4 000 × 3 000 pixels. Données simulées, dites sur le document. |
+| `Images/doc_fiche_image_colibri.svg` | SVG original, dessiné par `_outils/document_qcm.py` (`documents_qcm_5e_C1.5.json`) | Claude (Fable 5.2), pour ce dépôt, 21/11/2026 | CC0 1.0 | Document de QCM, à lire pour répondre : La fiche d'une image trouvée en ligne, données simulées. Titre : Colibri au jardin. Auteur : L. Rosier. Licence : CC BY-NC 4.0. Trouvée sur : un site de partage de photos. Téléchargée le : 14 mars 2026. Données simulées, dites sur le document. |
 
 ## Pourquoi ce schéma arrive au thème 1, et pas ailleurs
 

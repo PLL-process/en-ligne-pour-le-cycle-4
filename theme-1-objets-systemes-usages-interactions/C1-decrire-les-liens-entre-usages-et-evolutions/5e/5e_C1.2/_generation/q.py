@@ -152,7 +152,7 @@ q(C, "Pourquoi ne pas nommer le moyen", "Pourquoi une fonction bien écrite ne n
    "On le connaît souvent très bien : le danger est justement de le faire entrer trop tôt dans l'énoncé."],
   "Une fonction est une question. Si elle contient sa réponse, il n'y a plus rien à comparer."),
 
-q(C, "Le même phénomène, trois fois", "Les trois freins de la séquence emploient…",
+q(C, "Le même phénomène, trois fois", "Les trois freins de la figure — à patins, à disque, à tambour — emploient…",
   ["le même phénomène, à des endroits différents",
    "trois phénomènes physiques totalement différents",
    "de l'électronique pour deux d'entre eux",
@@ -510,7 +510,7 @@ q(C, "Compter n'est pas comparer", "Le frein à patins gagne sur trois critères
   "Comparer n'est pas compter. Il faut hiérarchiser, et le dire.",
   img=IMG_TABLEAU),
 
-q(C, "Le même tableau, ailleurs", "Dans un collège de montagne sèche, où l'on répare soi-même…",
+q(C, "Le même tableau, ailleurs", "Ce tableau a été fait pour Sainte-Luce, au bord de la mer. Dans un collège de montagne sèche, où l'on répare soi-même…",
   ["le frein à patins deviendrait le meilleur choix",
    "le classement des trois freins resterait identique",
    "il faudrait refaire la totalité des essais",
@@ -525,7 +525,8 @@ q(C, "Le même tableau, ailleurs", "Dans un collège de montagne sèche, où l'o
    "Le classement change parce que la hiérarchie des critères change : c'est précisément ce que la séquence cherche à faire comprendre.",
    "Les essais restent valables : ils décrivent le comportement des freins, pas le lieu où on les installe.",
    "Les trois conviendraient techniquement ; la question n'est pas de savoir s'ils fonctionnent, mais lequel convient le mieux à un contexte."],
-  "Le même tableau, un autre lieu, un autre gagnant. Et personne ne s'était trompé."),
+  "Le même tableau, un autre lieu, un autre gagnant. Et personne ne s'était trompé.",
+  img=IMG_TABLEAU),
 
 q(C, "Défendre un choix", "Une défense de choix complète comporte…",
   ["le principe, deux raisons, et le prix payé",

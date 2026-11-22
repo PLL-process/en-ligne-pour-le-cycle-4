@@ -147,3 +147,13 @@ qu'une seule des deux, Sainte-Luce est la plus complète sur ce code.
 - **Le QCM n'a pas changé** avec la séance 4 : ce qu'elle mobilise y est déjà (l'énergie devient
   chaleur, le revers du tambour fermé, la pente change tout, le même tableau ailleurs). Elle n'y
   ajoute pas de question sur le diagramme FAST, qui a son propre QCM dans l'atelier.
+
+## Billet de sortie (ajouté le 21/11/2026, règle d'or n°330)
+
+À la fin de la dernière séance, environ 5 minutes, seul et sans aide, sur un objet que la séquence n'a pas étudié : **l'éclairage avant d'un vélo**. Il ne remplace pas le QCM : il prouve ce que le QCM entraîne.
+
+Ce qu'on y regarde :
+1. A, B et C sont justes (fonction, principe, solution), chacun justifié par le quoi, le phénomène ou l'objet ;
+2. un choix, deux raisons tirées de la situation (la nuit, les arrêts aux feux), et le prix payé.
+
+La correction est dans la page, repliée, avec ses contre-exemples. Aucun bouton : le billet ne valide rien. Le temps est pris sur le bilan si la séance déborde.

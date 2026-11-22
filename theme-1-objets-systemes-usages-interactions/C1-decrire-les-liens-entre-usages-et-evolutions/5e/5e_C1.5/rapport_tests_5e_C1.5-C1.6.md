@@ -237,3 +237,17 @@ refusée, accord oral 7 indices et 2 règles). Après les retouches : n°311 **5
 **34 / 34**, `controle_squelette` 0 défaut, aucun « à rédiger ».
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 21/11/2026 — Une question se lit seule : le QCM relu question par question, et le billet de sortie
+
+- Les questions 2 et 29 parlaient du « compte du club » sans dire qu'il est partagé à six : l'énoncé le dit. La question 18 renvoyait au « banc » de la séquence ; la 22 avait un leurre sur « le compteur d'indices du banc » : retirés.
+
+- Cinq questions de plus sur document (1 → 6, n°345) : la publication de Maël (19, 22), les propriétés d'une photo, position comprise (17), la fiche d'une image sous licence CC BY-NC (9, 14).
+
+- Le banc de séquence échouait déjà sur `main` : il attendait « 1/1 » à l'activité 5, qui n'est plus notée aux mots-clés (n°340) et répond « Réponse enregistrée… ». L'attendu de `reponses_5e_C1.5-C1.6.json` suit.
+
+- **Billet de sortie** (n°330), à la fin de la dernière séance, juste avant le Bonus : l'affiche de la fête du collège. Deux réponses écrites, chacune sa version étayée ; une correction avec ses deux critères et ses contre-exemples ; aucun bouton. Le banc le vérifie.
+
+Exécuté : Banc de séquence 39 / 39 ; banc du QCM 34 / 34 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 1368 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
+
+Non fait : les questions n'ont pas été essayées en classe.

@@ -159,3 +159,13 @@ illustrations déclarées (`data-illustration`) · `controle_axe.mjs` (dossier) 
 
 **Non exécuté** : la fiche A4 « dessin technique » du kit (`scripts/print.mjs`, titres fixes en anglais) ; la validation
 HTML ; le parcours au clavier seul, à la main (la figure se commande au clavier : Espace, Entrée, 1, 2, 3, Échap).
+
+## 21/11/2026 — Une question se lit seule : le QCM relu question par question, et le billet de sortie
+
+- Question 7 : « les trois freins de la séquence » devient « les trois freins de la figure — à patins, à disque, à tambour ». Question 27 : « Dans un collège de montagne sèche… le frein à patins deviendrait le meilleur choix » demandait le tableau sans le montrer ; elle porte maintenant le tableau comparatif. Le QCM passe de 8 à 9 questions illustrées : badge, ligne « Banque », séquence, `build_qcm.py` et banc suivent. `q.py` et la page à l'identique : banque régénérée (graine 218) = page.
+
+- **Billet de sortie** (n°330), à la fin de la dernière séance, juste avant le Bonus : l'éclairage avant d'un vélo. Deux réponses écrites, chacune sa version étayée ; une correction avec ses deux critères et ses contre-exemples ; aucun bouton. Le banc le vérifie.
+
+Exécuté : Banc 51 / 51 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 2039 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
+
+Non fait : les questions n'ont pas été essayées en classe.

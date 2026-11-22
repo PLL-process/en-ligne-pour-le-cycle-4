@@ -99,7 +99,7 @@ def construire(gabarit: str, sortie: str) -> None:
          "(C3.1 : 8 · C3.3 : 8 · C3.4 : 7 · C3.2 : 7) */",
          "/* Banque de questions — Sainte-Luce 5e : 30 questions sur le seul code 5e_C1.2, "
          "réparties par thème (fonction, principe, solution : 8 · la manipulation : 7 · "
-         "lire et comparer : 8 · choisir selon un contexte : 7), dont 8 illustrées */"),
+         "lire et comparer : 8 · choisir selon un contexte : 7), dont 9 illustrées */"),
         ('const KEY="qcm_3e_C3.1-C3.4_shenzhen";', 'const KEY="qcm_5e_C1.2_sainte_luce";'),
         ("""const COMP_LABELS={
   "C3.1":"3e_C3.1 — Établir une liste d'objets ou systèmes techniques possibles",
@@ -128,7 +128,7 @@ def construire(gabarit: str, sortie: str) -> None:
         # révisé (1, puis 6 le 21/11/2026, PR #838 — ce générateur refusait alors de tourner) : le motif lit ce
         # nombre au lieu de le citer.
         (re.compile(r"30 questions · \d+ illustrées? · chaque distracteur réfuté"),
-         "30 questions · 8 illustrées · chaque distracteur réfuté"),
+         "30 questions · 9 illustrées · chaque distracteur réfuté"),
         ("""      <option value="C3.1">3e_C3.1 — Établir une liste de solutions possibles</option>
       <option value="C3.3">3e_C3.3 — Évaluer selon des exigences identifiées</option>
       <option value="C3.4">3e_C3.4 — Définir et mettre en œuvre un protocole</option>

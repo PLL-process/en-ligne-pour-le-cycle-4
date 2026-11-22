@@ -82,6 +82,9 @@ async def tester_sequence(p):
     errs=[]; pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.on("console", lambda m: errs.append("console:"+m.text) if m.type=="error" else None)
     await pg.goto(SEQ); r=[]
+    # 21/11/2026 — le billet de sortie (n°330) : une preuve faite seul, sur un objet que la séquence n'a pas étudié ; il ne valide rien.
+    bs = await pg.evaluate("""() => { const b = document.getElementById('billetSortie'); if (!b) return null; const c = b.querySelector('details.correction'); const n = b.nextElementSibling; const pan = b.closest('.seance-panel'); const tous = [...document.querySelectorAll('.seance-panel')].filter(x => !/hors/.test(x.id)); return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length, criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0, avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))), derniere: !!pan && pan === tous[tous.length - 1], boutons: b.querySelectorAll('button').length }; }""")
+    r.append(("billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton", bool(bs) and bs["zones"] == 2 and bs["etayees"] == 2 and bs["criteres"] == 2 and bs["avantBonus"] and bs["derniere"] and bs["boutons"] == 0))
     onglets=await pg.evaluate("[...document.querySelectorAll('.seance-tab')].map(t=>t.dataset.panel)")
     r.append(("quatre onglets de séance, s1 à s4", onglets==["s1","s2","s3","s4"]))
     clot=await pg.evaluate("""(()=>{const s4=document.getElementById('s4'), t=s4?s4.textContent:'';
@@ -191,7 +194,7 @@ async def tester_qcm(p):
     r.append(("30 questions", await pg.evaluate("QUESTIONS.length")==30))
     rep=await pg.evaluate("QUESTIONS.map(q=>q.r)")
     r.append(("bonnes réponses réparties A/B/C/D", len(set(rep))==4 and min(rep.count(i) for i in range(4))>=6))
-    r.append(("8 illustrées", await pg.evaluate("QUESTIONS.filter(q=>q.img).length")==8))
+    r.append(("9 illustrées (la question 27 montre le tableau, 21/11/2026)", await pg.evaluate("QUESTIONS.filter(q=>q.img).length")==9))
     r.append(("chaque distracteur réfuté", await pg.evaluate("QUESTIONS.every(q=>q.d.filter((x,i)=>i!==q.r).every(x=>x.length>20))")))
     r.append(("réfutation de la bonne réponse vide", await pg.evaluate("QUESTIONS.every(q=>q.d[q.r]==='')")))
     r.append(("chaque question a explication, exemple, erreur, à-retenir",

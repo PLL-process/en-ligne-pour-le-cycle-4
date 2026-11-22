@@ -125,6 +125,10 @@ def banc_page(b, url):
     pg.goto(url)
     pg.evaluate("localStorage.clear()")
     pg.reload()
+    # 21/11/2026 — le billet de sortie (n°330) : une preuve faite seul, sur un objet que la séquence n'a pas étudié ; il ne valide rien.
+    if "sequence" in url:
+        bs = pg.evaluate("""() => { const b = document.getElementById('billetSortie'); if (!b) return null; const c = b.querySelector('details.correction'); const n = b.nextElementSibling; const pan = b.closest('.seance-panel'); const tous = [...document.querySelectorAll('.seance-panel')].filter(x => !/hors/.test(x.id)); return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length, criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0, avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))), derniere: !!pan && pan === tous[tous.length - 1], boutons: b.querySelectorAll('button').length }; }""")
+        t(bool(bs) and bs["zones"] == 2 and bs["etayees"] == 2 and bs["criteres"] == 2 and bs["avantBonus"] and bs["derniere"] and bs["boutons"] == 0, "billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton " + str(bs))
     pg.wait_for_timeout(300)
 
     ids = pg.evaluate("[...document.querySelectorAll('.seance-tab')].map(x => x.dataset.panel)")

@@ -122,3 +122,13 @@ ligne, aucun mot seul en fin de titre, un nombre jamais séparé de ce qu'il com
   le site porte déjà ses propres formes (mode mission, fiche papier, export Moodle du 08/11), et rien ne dit que
   Pascal en veut d'autres.
 - Pas d'essai sur un vrai téléphone, ni avec des élèves.
+
+## Suite du 21/11/2026 — C1 (décision 4 de Pascal)
+
+Les huit QCM de C1 relus question par question (247 questions) : une erreur de fond (`3e_C1.1`, question 5, une
+proposition et son pourquoi inversés : l'élève qui répondait juste était corrigé), onze questions aux leurres absurdes
+(`5e_C1.3`), des questions qui renvoyaient à la séquence ou à la question précédente (`4e_C1.1`, `5e_C1.1`, `5e_C1.5`,
+`5e_C1.2`). 55 questions réécrites, seize documents dessinés pour le téléphone et une capture réelle recadrée ; huit
+billets de sortie. Mesure : sur le thème 1, plus aucun QCM de séquence sous six questions sur document, plus aucune
+séquence sans billet. Le détail, les mesures et ce qui n'est pas fait : journal du 21/11/2026, entrée « Thème 1, C1 ».
+
