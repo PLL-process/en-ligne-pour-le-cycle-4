@@ -36167,3 +36167,34 @@ contraste (26), étiquettes (4), attributs ARIA (3), liste (1). Le kit des ateli
 `build.py` et `incrustations.py` défont aujourd'hui les explications de sigles posées à la main dans les pages
 (« CDI — le centre de documentation et d'information », « QCM (questionnaire à choix multiples) ») ; leurs sources
 (`build.py`, `cahiers.py`, `moteur.py`, les textes des incrustations) sont à mettre d'accord avant toute régénération.
+
+## 22/11/2026 — Audit du 22/11, chantier 4 : la dérive des générateurs ramenée à zéro (57 → 0) ; deux défauts de source réparés (transversal : `_outils`, générateurs des thèmes 1 et 3, pages engendrées)
+
+**Carte blanche de Pascal** (22/11, « Tu as carte blanche continue », « Et fusionne automatiquement »). Sur `main` du
+matin, une régénération d'essai changeait **57 fichiers**, dans les deux sens (crible de l'audit, PR #867).
+
+**Ce qui était posé à la main sur des pages engendrées, et qui est maintenant dans les sources** (règle n°283) :
+- l'avertissement « Ordinateur partagé » qui explique le CDI (n°44, 22/11) : `build.py`, `cahiers.py`, `moteur.py`,
+  `gabarit_qcm.tpl` (ateliers des représentations), `build_atelier.py` (planification), `_outils/dnb_gabarit.html` ;
+- les onglets de séance et l'en-tête replié au téléphone des trois ateliers de planification : `build_atelier.py` appelle
+  `_outils/onglets_seance.py` et `_outils/entete_telephone.py`, comme il appelait déjà `onglets_clavier` et `retrait_validation` ;
+- la feuille « ce qui défile est caché » (n°364) de la page 3 de la station : `generer_les_quatre_pages.py` (`poser_n364`) ;
+- les unités en toutes lettres des lexiques (n°312, campagne du 25/10 faite à la main) : `generer_lexique.py` nomme
+  l'unité à sa première apparition dans chaque notion et chaque « à retenir », avec la table de `controle_unites.py`.
+
+**Un défaut du générateur des lexiques, trouvé en comparant** : `sans_balises()` effaçait tout ce qui ressemblait à une
+balise, y compris « < seuil » ; le lexique de 5e_C6.1 aurait affiché « Pour capturer une valeur V avec « V. ». Seules
+les vraies balises s'effacent désormais.
+
+**Ce que la régénération apporte aux pages qui étaient en retard sur leur source** : les ateliers des représentations
+annoncent le bon nombre de questions illustrées de leur QCM ; les lexiques disent « QCM (questionnaires à choix multiples) »
+(n°44) et reprennent les notions des QCM réécrits sous la n°341 ; le lexique de 5e_C2.1 ne dit plus « ce qu'on fera l'an
+prochain » (n°304).
+
+**Vérifié.** Les huit générateurs de `rapport_audit.py` relancés sur le dépôt : 40 pages changent, et **aucune** ne perd
+une unité nommée, l'explication du CDI, la feuille n°364, les onglets de séance ou l'en-tête téléphone (comparaison page
+par page, découpée aux balises) ; **une seconde régénération, dans une copie, change 0 fichier**. `controle_unites`,
+`controle_sigles`, `controle_liens`, `controle_sauvegarde_locale`, `controle_licence`, `controle_regles_visibles`,
+`controle_medias`, `controle_atteignabilite`, `controle_boutons_vivants`, `controle_hierarchie` : verts.
+`controle_competences` rouge **déjà sur `main`** (une page neuve de 5e_C1.2, « CRCN 1.3 » sans son intitulé), hors de
+ce lot. **Non exécuté** : les bancs des ateliers et des lexiques dans le navigateur.
