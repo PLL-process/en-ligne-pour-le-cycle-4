@@ -59,6 +59,14 @@ prototype, norme, dispositif, optimiser, simuler, caduc. En cas de doute, le
 mot entre : une définition en trop ne coûte rien, un mot bloquant coûte la
 séance.
 
+**Les mots de niveau 2** (veille du 08/11/2026, reprise le 22/11) : on oublie
+surtout les mots qui ne sont ni techniques ni de la vie courante, mais ceux
+des consignes et des explications — *caractériser, justifier, en déduire,
+hypothèse, contrainte, critère, comparer, relever, fonction (au sens de « à
+quoi ça sert »)*. Relire chaque consigne de la séquence et relever ces mots-là
+à part : ce sont eux qui bloquent un élève fragile, et les contrôles ne les
+voient pas.
+
 Ne pas relever : les mots de la langue courante vraiment transparents ; les
 noms propres déjà expliqués dans la situation ; les mots que la situation
 glose déjà dans la phrase (décisions des 05 et 06/11/2026 : « on l'entend

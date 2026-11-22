@@ -58,6 +58,10 @@
 | 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
 | 368 | Un corrigé fait exactement ce que demande sa consigne | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — banc de la page qui compte la structure du corrigé (pilote : deux losanges, `tests_tp_algorigrammes_4e_C6.2.mjs`) ; skill `audit-douze-axes` |
+| 369 | 🔑 Ce qui compte revient (clé de voûte) : à partir de la séance 2, une reprise de mémoire avant le rappel | Pascal (22/11/2026, « ils seront à installer automatiquement ensuite »), sur la veille de l'audit du 22/11 (#867) ; écrite par Fable | 🧪 En essai (n°147) — `_outils/controle_reprise_espacee.py` (mesure ; `--strict`), skill `reprise-espacee` ; mesure de départ : 0 séance conforme sur 113 |
+| 370 | Une page se lit à 200 % et avec des lettres espacées | idem | 🧪 En essai — `_outils/controle_zoom_espacement.mjs` (mesure ; `--strict`) ; départ : 9 pages sur 395 défilent de côté, 4 coupent du texte |
+| 371 | Le QCM entrelace ses compétences : un « Entraînement mélangé » à côté du parcours complet | idem | 🧪 En essai — `_outils/mesurer_entrelacement.py` ; départ : 69 banques sur 70 par blocs, 0 mode mélangé |
+| 372 | Le bilan dit ce qui reste flou et quand on le reprend | idem | 🧪 En essai — `controle_reprise_espacee.py` (R4) ; départ : 57 bilans sur 60 sans ce champ |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -36068,3 +36072,71 @@ Les cinq renvois « Le quiz : sa correction complète est sous le quiz » de la 
 Contrôles : `tests_regle_311_4e_C1.4.mjs` 34 / 34, `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_page_ouverte.mjs --axe`
 (version qui voit les blocs en chasse fixe) : L 0 · C 0 ; reste un `color-contrast` (badge de score de `#bloc1-risques`),
 déjà sur `main`. `controle_impression`, `controle_mode_mission`, `controle_mode_essentiel`, `controle_regles_visibles` à 0.
+
+## 22/11/2026 — Veille du 22/11 installée, en essai : règles d'or n°369 (clé de voûte) à n°372, un skill, trois mesures (transversal : `_outils`, `.claude/skills`, `SKILLS_AUDIT.md`)
+
+**Demande de Pascal** (22/11/2026, 0 h 50 Martinique) : « rechercher les skills qui me seraient utiles, pluggins, règles
+d'or et clefs de voûte » ; « ils seront à installer automatiquement ensuite ». La veille est dans l'audit du jour
+(`docs/audits/RAPPORT_AUDIT_2026-11-22.md`, PR #867). **Aucun plugin ni skill tiers n'est installé** (crochets à chaque
+message, paquets téléchargés et exécutés, licences absentes) : « installer » veut dire, dans ce dépôt, **réécrire de zéro**.
+Les quatre règles naissent **en essai** (n°147) : mesurées tout de suite, elles ne refusent rien sans `--strict`, et
+s'adoptent après un pilote.
+
+### Les règles
+
+> **Règle d'or n°369 (clé de voûte) — Ce qui compte revient.**
+> - À partir de la séance 2, chaque séance s'ouvre sur une « 🔁 Reprise » de deux ou trois questions que l'élève résout
+>   **de mémoire**, **avant** le volet « 📖 Rappel » déplié, sur les acquis 🔑 (n°353) d'une séance précédente — une sur
+>   la séance d'avant, une plus ancienne quand il y en a une.
+> - La correction d'une erreur renvoie au rappel ; la reprise se coche « faite », elle ne valide rien (n°340).
+> - Un acquis réussi le jour même n'est pas maîtrisé : il l'est quand une reprise suivante le retrouve.
+> - Trois à cinq minutes, **comptées** dans les 55 (n°23).
+> *Pourquoi* : réexpliquer fait reconnaître, retrouver fait tenir (effet de test : Roediger et Karpicke, 2006 ;
+> espacement : Cepeda et al., 2006 ; méta-analyse en classe : Adesope et al., 2017). Le « rappel en début de séance »
+> était « à concevoir » dans `docs/mode-mission/PLAN.md` depuis le 11/11. Idées tirées de `THU-MAIC/OpenMAIC`
+> (`learning-to-learn`, MIT), `agent-tutor-skill` (MIT) et `bretzay/skills-fr` (`apprendre`, MIT), réécrites.
+> Dans la grille des clés de voûte, elle **précise la clé n°2** (« on rappelle avant d'exiger ») au lieu d'en ajouter une.
+
+> **Règle d'or n°370 — Une page se lit à 200 % et avec des lettres espacées.**
+> À 200 % (fenêtre de 640 px), la page ne défile pas de côté ; avec l'espacement du texte WCAG 1.4.12 (lignes 1,5 ;
+> paragraphes 2 ; lettres 0,12 em ; mots 0,16 em), aucun texte n'est coupé ; les cibles de moins de 24 × 24 px (2.5.8)
+> sont comptées. *Pourquoi* : ce sont les réglages des élèves dyslexiques et malvoyants, jamais mesurés jusqu'ici.
+> Idée tirée de `masuP9/a11y-specialist-skills` (MIT), réécrite sans lancer aucun paquet tiers.
+
+> **Règle d'or n°371 — Le QCM entrelace ses compétences.**
+> À côté du parcours complet, dont l'ordre peut être voulu, un mode « 🔀 Entraînement mélangé » alterne les compétences
+> dans un ordre fixe, sans hasard. *Pourquoi* : mélanger des notions voisines aide à les distinguer (Rohrer et Taylor,
+> 2007 ; Brunmair et Richter, 2019 — effet net quand les notions se ressemblent, plus faible ailleurs).
+
+> **Règle d'or n°372 — Le bilan dit ce qui reste flou et quand on le reprend.**
+> Le bilan (n°301) porte un champ `data-flou` : « ce qui reste flou pour moi, et quand je le reprends ».
+
+### Ce qui est installé
+
+- **Skill `reprise-espacee`** (nouveau) : la reprise en tête de séance, la maîtrise confirmée plus tard, le champ du
+  bilan, l'entraînement mélangé ; gabarits HTML, garde-fous (n°23, n°300, n°309, n°323, n°340, n°341, n°343, n°349).
+- **Mesures**, toutes « en panne » (sortie 2) si elles n'ont rien lu (n°299), sortie 0 sinon, `--strict` pour refuser :
+  `_outils/controle_reprise_espacee.py` (n°369, n°372), `_outils/mesurer_entrelacement.py` (n°371 ; `--ordre <qcm>`
+  imprime l'ordre entrelacé), `_outils/controle_zoom_espacement.mjs` (n°370, Playwright, sans clic ni saisie).
+  Bancs : `tests_controle_reprise_espacee.py` 8/8, `tests_controle_zoom_espacement.mjs` 2/2.
+- **Skills et méthode mis à jour** : `cadrage-cles-de-voute` et `METHODE.md` (clé n°2 précisée par la n°369, en essai) ;
+  `controle-qualite-lot` (les trois mesures) ; `qcm-html-accessible` (l'entraînement mélangé) ; `lexique-sequence` (les
+  mots de niveau 2, idée du 08/11 restée en attente) ; `SKILLS_AUDIT.md` (le skill, la veille).
+
+### Mesures de départ (22/11/2026, `main` après #860)
+
+- n°369 : **0 séance conforme sur 113** séances n°2 et suivantes (60 pages) ; au plus 8 s'ouvrent sur une question de
+  mémoire sans le bloc ni sa place.
+- n°372 : **57 bilans sur 60** sans « ce qui reste flou ».
+- n°371 : **69 banques sur 70** posées par blocs de compétence (médiane : 2 changements pour 30 questions) ; 0 mode mélangé.
+- n°370 : sur 395 pages ouvertes, **9 défilent de côté à 200 %** (surtout des synthèses : `4e_C4.1`, Book Train, `4e_C7.4`,
+  `5e_C7.4`, `5e_C7.5`, trois synthèses professeur de C7) et **4 coupent du texte** quand on espace les lettres
+  (`4e_C4.1` et `4e_C7.5` : le dessin de la chaîne à compléter ; `3e_C6.1` : un listing ; `3e_C9.1` : un tableau du TP
+  mBot2) ; 289 ont au moins une cible sous 24 px (compté, non refusé).
+
+**Vérifié.** Les trois mesures sur tout le site ; les deux bancs ; `registre_regles.py --ecrire` (aucun doublon, prochain
+n°373). **Non exécuté** : un pilote sur une page (proposé dans le skill : une séquence de trois séances dont les 🔑 sont déjà
+marqués) ; aucune page élève n'est modifiée dans ce lot.
+
+**Reste à Pascal.** Fusionner (lot transversal) ; choisir la séquence pilote de la n°369 ; dire si la n°370 entre dans les
+contrôles de livraison dès le pilote, ou après la correction des 13 pages relevées.
