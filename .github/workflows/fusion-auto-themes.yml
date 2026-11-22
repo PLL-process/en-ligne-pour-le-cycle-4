@@ -91,6 +91,14 @@ jobs:
 
             if gh pr merge "$PR" --merge --match-head-commit "$SHA"; then
               echo "#$PR : fusionnée (commit $SHA, contrôles verts)."
+              return 0
+            fi
+            # Refus : une session (ou Pascal) a peut-être fusionné la PR au même instant
+            # (« Merge already in progress », vu sur #851 le 22/11/2026). On relit la PR
+            # avant de crier à l'anomalie.
+            sleep 10
+            if [ "$(gh api "repos/$R/pulls/$PR" --jq '.merged')" = "true" ]; then
+              echo "#$PR : déjà fusionnée par ailleurs au même moment, rien à faire."
             else
               echo "::warning::#$PR : fusion refusée (conflit ou règle de main) — à regarder."
             fi

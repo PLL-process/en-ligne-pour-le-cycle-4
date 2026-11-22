@@ -35711,3 +35711,18 @@ Contrôles : `tests_3e_C6.1-C6.3.mjs` 35 / 35, `tests_regle_311_3e_C6.1.mjs` 34 
 `tests_regle_311_4e_C6.2.mjs` 34 / 34, `tests_tp_algorigrammes_4e_C6.2.mjs` 31 / 31 ; `controle_impression`,
 `controle_squelette`, `controle_code_colore` sur les trois dossiers : 0 ; `controle_page_ouverte.mjs` sur les trois :
 L 0, B 0, C 0 ; listings regardés à 390 px. Non vérifié : un vrai téléphone.
+
+## 22/11/2026 — Fusion automatique des PR de thème : premiers passages réels, et plus de fausse alerte quand une session fusionne au même instant (transversal : `.github/`)
+
+**Premiers passages réels** (nuit du 21 au 22/11/2026). #851 (thème 1) : première garde rouge → « rien à fusionner » ;
+garde verte → le workflow tente la fusion à la seconde où la session la fait elle-même (« Merge already in progress ») :
+une seule fusion, mais un avertissement « fusion refusée — à regarder » qui ne l'était pas. #853 et #854 (thème 2) :
+**fusionnées par `github-actions[bot]`** au vert, et le site republié après #853 (« pages build and deployment »
+réussi). Le circuit de la règle n°5 amendée du 21/11/2026 marche de bout en bout.
+
+**Correction, sur demande de Pascal (« Oui pour tout », 22/11/2026)** : quand la fusion est refusée, le workflow
+attend 10 secondes et relit la PR ; si elle est fusionnée, il écrit « déjà fusionnée par ailleurs au même moment, rien
+à faire », sans avertissement. L'avertissement reste pour un vrai refus (conflit, règle de `main`).
+
+**Vérifié.** `actionlint` : aucune erreur. Au banc, fusion simulée refusée sur #851 (réellement fusionnée) → « déjà
+fusionnée par ailleurs » ; même cas avec une PR lue comme non fusionnée → l'avertissement.
