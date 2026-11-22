@@ -53,7 +53,7 @@
 | 361 | 🔑 Un contrôle regarde la page ouverte (clé de voûte) : corrections, aides, bilan, onglets, ce qu'un script dessine | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_page_ouverte.mjs` (L et B refusent depuis le 22/11/2026, C et A mesurent ; `--strict`), crochet `window.__toutOuvrir()` (pilote TP 4e_C6.2), banc `tests_controle_page_ouverte.mjs` |
 | 362 | Une simulation joue le travail de l'élève, ou dit qu'elle montre un modèle | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
 | 363 | Le bilan imprimé est une preuve : il montre le travail, son code atteste tout ce qu'il affiche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — skill `validations-qui-disent-vrai` (§ 3 bis) ; pilote TP 4e_C6.2 (#841) |
-| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, **refus depuis le 22/11/2026** ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862) ; skill `texte-clair-et-aere` |
+| 364 | Ce qui défile est caché : un listing, une formule, un tableau tiennent à 390 px, coupés là où le sens le permet | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `controle_page_ouverte.mjs` (L, **refus depuis le 22/11/2026** ; les calques d'éditeur ne comptent plus : 21 listings dans 8 pages au 21/11, 16 dans 5 pages après le thème 2, **0 sur les 341 pages le 22/11** après les thèmes 3 et 1, PR #856 et #862 ; puis L voit aussi les blocs en chasse fixe hors `<pre>` : 8 de plus, corrigés par #869 et #870) ; skill `texte-clair-et-aere` |
 | 365 | La date du jour est celle du poste | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_date_locale.py` (0 page au 21/11) |
 | 366 | La séquence est la porte de ses pages | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — `_outils/controle_porte_sequence.py` (référence vide depuis le 22/11/2026 : 14 pages relevées, 11 faux positifs retirés le 21/11 au soir, les 3 dernières reliées en activité facultative par la PR #862 ; toute page sans porte sort à 1), banc `tests_controle_porte_sequence.py` |
 | 367 | Un exercice aide avant de corriger : un indice, puis la démarche | Fable, sur la carte blanche de Pascal (« sur tous les plans », 21/11/2026), après l'audit en 12 axes du TP `4e_C6.2` | ✅ En vigueur — prolonge la n°339 aux exercices des séquences et des TP ; skill `differenciation-dans-la-page` ; pilote TP 4e_C6.2 (#841) |
@@ -36068,3 +36068,30 @@ Les cinq renvois « Le quiz : sa correction complète est sous le quiz » de la 
 Contrôles : `tests_regle_311_4e_C1.4.mjs` 34 / 34, `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_page_ouverte.mjs --axe`
 (version qui voit les blocs en chasse fixe) : L 0 · C 0 ; reste un `color-contrast` (badge de score de `#bloc1-risques`),
 déjà sur `main`. `controle_impression`, `controle_mode_mission`, `controle_mode_essentiel`, `controle_regles_visibles` à 0.
+
+## 22/11/2026 — Page ouverte (n°361) : L voit aussi les blocs de code qui ne sont pas des `<pre>` (thème 2 : `_outils/`)
+
+**Le constat.** Le matin, `controle_page_ouverte.mjs` disait « L 0 sur les 341 pages », et la PR #866 a rendu L
+bloquant. Mais L ne lisait que `pre`, `.programme` et `.code-box`. Un passage d'axe-core sur tout le site, page ouverte,
+a relevé des zones qui défilent sans être atteignables au clavier (« scrollable-region-focusable ») : parmi elles, des
+blocs de code ou de données écrits dans un `div` — `.codebox` (JSON publié), `.prog` (programme Arduino commenté), `.py`
+(algorithme), `.terminal` (bandeau « machine à écrire »). Huit listings dans sept pages, que L ne voyait pas. Ce que
+j'avais écrit à Pascal (« plus aucun listing ne défile sur le site ») était trop large : vrai pour les `<pre>`, faux pour
+ceux-là.
+
+**La correction.** L lit aussi tout bloc visible en police à chasse fixe qui garde ses lignes (`white-space: pre` ou
+`nowrap`), le plus extérieur seulement, hors calques d'éditeur et hors SVG. Les huit listings ont été corrigés avant que
+ce contrôle n'arrive sur `main` : thème 1 par la PR #869 (les deux bandeaux de `4e_C1.4`), thème 3 par la PR #870 (six
+blocs dans cinq pages). Sur les 341 pages : **L 0 · B 0 · C 0**, sortie 0.
+
+**Banc.** `tests_controle_page_ouverte.mjs` : 15 points (nouveau : un `div` en chasse fixe `white-space:pre` et un
+bandeau `nowrap` coupé sont vus, le même bloc en `pre-wrap` ne l'est pas) ; le point nouveau échoue sur la version de
+`main` (14 / 15, vérifié). Les pages du banc portent maintenant la balise `viewport` : sans elle, l'émulation mobile met
+la page à 980 px de large, et un bandeau de 80 caractères ne déborde pas.
+
+**Reste, mesuré le 22/11/2026 (axe-core, page ouverte, 341 pages)** : 64 pages avec un défaut grave — zones qui
+défilent sans clavier (51 pages ; 108 des 142 zones sont les figures et tableaux du kit des ateliers de représentation),
+contraste (26), étiquettes (4), attributs ARIA (3), liste (1). Le kit des ateliers ne peut pas être régénéré tel quel :
+`build.py` et `incrustations.py` défont aujourd'hui les explications de sigles posées à la main dans les pages
+(« CDI — le centre de documentation et d'information », « QCM (questionnaire à choix multiples) ») ; leurs sources
+(`build.py`, `cahiers.py`, `moteur.py`, les textes des incrustations) sont à mettre d'accord avant toute régénération.
