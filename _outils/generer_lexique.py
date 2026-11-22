@@ -138,9 +138,30 @@ def blocs_questions(src):
 
 
 def sans_balises(t):
-    # Une balise commence par une lettre (ou « / » puis une lettre) : « avec « < seuil », il faut seuil > V » est du
-    # texte, pas une balise (ce motif coupait la phrase en « avec « V. » dans le lexique de 5e_C6.1, vu le 22/11/2026).
+    # Seules les vraies balises s'effacent (« <b> », « </i> », « <br/> ») : un « < seuil » de la banque est un
+    # opérateur de comparaison, pas une balise. L'ancienne expression `<[^>]+>` mangeait tout jusqu'au « > »
+    # suivant : « Pour capturer une valeur V avec « < seuil », il faut seuil > V » devenait « … avec « V. »
+    # (lexique de 5e_C6.1, audit du 22/11/2026 : la page publiée avait été corrigée à la main, pas la source).
     return re.sub(r"\s+", " ", re.sub(r"</?[A-Za-z][^<>]*>", "", t)).strip()
+
+
+def nommer_unites(t):
+    """Règle d'or n°312 : à sa première apparition dans une notion ou un « à retenir », une unité se lit en toutes
+    lettres — « 230 V (volts) ». La campagne du 25/10/2026 l'avait écrit à la main dans les lexiques publiés, et
+    chaque régénération l'effaçait (audit du 22/11/2026 : dérive des générateurs). La table est celle du contrôle,
+    `controle_unites.py` : une seule source. Une unité déjà nommée dans le texte n'est pas renommée."""
+    from controle_unites import OCC, NOMS  # import ici : le module n'est utile qu'au moment d'écrire
+    vus = set()
+    m = OCC.search(t)
+    while m:
+        s = m.group(1)
+        if s not in vus:
+            vus.add(s)
+            motif, nom = NOMS[s]
+            if not motif.search(t):
+                t = t[:m.end()] + " (%s)" % nom + t[m.end():]
+        m = OCC.search(t, m.end())
+    return t
 
 
 def cle_tri(t):
@@ -193,7 +214,7 @@ def lire_lot(dossier):
                 continue
             comp = sans_balises(CHAMP(b, "c")) or "—"
             ret = sans_balises(CHAMP(b, "ret") or CHAMP(b, "t"))
-            par_comp.setdefault(comp, []).append((n, ret, os.path.basename(f)))
+            par_comp.setdefault(comp, []).append((nommer_unites(n), nommer_unites(ret), os.path.basename(f)))
     return par_comp
 
 

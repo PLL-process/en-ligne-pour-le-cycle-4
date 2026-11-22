@@ -36228,3 +36228,40 @@ remettant la version de la vague : mêmes sigles, mêmes places) ; les unités r
 thème 3 : 120.
 
 **Suite.** Le thème 3 dans la PR suivante ; le thème 1 quand ses sessions auront fini.
+
+## 22/11/2026 — Audit du 22/11, chantier 4 : la dérive des générateurs ramenée à zéro (57 → 0) ; deux défauts de source réparés (transversal : `_outils`, générateurs des thèmes 1 et 3, pages engendrées)
+
+**Carte blanche de Pascal** (22/11, « Tu as carte blanche continue », « Et fusionne automatiquement »). Sur `main` du
+matin, une régénération d'essai changeait **57 fichiers**, dans les deux sens (crible de l'audit, PR #867).
+
+**Ce qui était posé à la main sur des pages engendrées, et qui est maintenant dans les sources** (règle n°283) :
+- l'avertissement « Ordinateur partagé » qui explique le CDI (n°44, 22/11) : `build.py`, `cahiers.py`, `moteur.py`,
+  `gabarit_qcm.tpl` (ateliers des représentations), `build_atelier.py` (planification), `_outils/dnb_gabarit.html` ;
+- les onglets de séance et l'en-tête replié au téléphone des trois ateliers de planification : `build_atelier.py` appelle
+  `_outils/onglets_seance.py` et `_outils/entete_telephone.py`, comme il appelait déjà `onglets_clavier` et `retrait_validation` ;
+- la feuille « ce qui défile est caché » (n°364) de la page 3 de la station : `generer_les_quatre_pages.py` (`poser_n364`) ;
+- les unités en toutes lettres des lexiques (n°312, campagne du 25/10 faite à la main) : `generer_lexique.py` nomme
+  l'unité à sa première apparition dans chaque notion et chaque « à retenir », avec la table de `controle_unites.py`.
+
+**Un défaut du générateur des lexiques, trouvé en comparant** : `sans_balises()` effaçait tout ce qui ressemblait à une
+balise, y compris « < seuil » ; le lexique de 5e_C6.1 aurait affiché « Pour capturer une valeur V avec « V. ». Seules
+les vraies balises s'effacent désormais.
+
+**Ce que la régénération apporte aux pages qui étaient en retard sur leur source** : les ateliers des représentations
+annoncent le bon nombre de questions illustrées de leur QCM ; les lexiques disent « QCM (questionnaires à choix multiples) »
+(n°44) et reprennent les notions des QCM réécrits sous la n°341 ; le lexique de 5e_C2.1 ne dit plus « ce qu'on fera l'an
+prochain » (n°304).
+
+**Vérifié.** Les huit générateurs de `rapport_audit.py` relancés sur le dépôt : 40 pages changent, et **aucune** ne perd
+une unité nommée, l'explication du CDI, la feuille n°364, les onglets de séance ou l'en-tête téléphone (comparaison page
+par page, découpée aux balises) ; **une seconde régénération, dans une copie, change 0 fichier**. `controle_unites`,
+`controle_sigles`, `controle_liens`, `controle_sauvegarde_locale`, `controle_licence`, `controle_regles_visibles`,
+`controle_medias`, `controle_atteignabilite`, `controle_boutons_vivants`, `controle_hierarchie` : verts.
+`controle_competences` rouge **déjà sur `main`** (une page neuve de 5e_C1.2, « CRCN 1.3 » sans son intitulé), hors de
+ce lot. **Non exécuté** : les bancs des ateliers et des lexiques dans le navigateur.
+
+**Après fusion de `main` (#874 à #878, même matinée).** La vague « sigles expliqués en infobulle » (n°44, #878) est en
+cours dans une autre session : son générateur des lexiques pose déjà les infobulles que les pages n'ont pas encore
+(13 lexiques en retard sur leur source), et deux incrustations FAST (4e_C4.4, 5e_C4.1) ont reçu à la main des
+infobulles que `build.py` ne sait pas poser. Ces **17 fichiers** sont laissés à cette vague : régénérer ici les effacerait
+ou devancerait son travail. Hors d'eux, la dérive reste à zéro.

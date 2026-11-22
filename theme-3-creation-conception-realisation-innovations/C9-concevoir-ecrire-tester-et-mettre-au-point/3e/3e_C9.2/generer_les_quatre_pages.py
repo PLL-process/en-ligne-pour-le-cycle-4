@@ -71,6 +71,24 @@ _spec_m.loader.exec_module(MODE_MISSION)
 SRC = LOT / "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"
 L = io.open(SRC, encoding="utf-8").read().split("\n")
 
+
+# Règle d'or n°364 (22/11/2026) — ce qui défile est caché : la feuille avait été posée à la main sur la page 3 (la seule
+# des quatre qui porte des listings) ; une régénération l'effaçait (audit du 22/11/2026, dérive des générateurs).
+N364 = ("<style>\n/* Ce qui défile est caché (règle d'or n°364, 22/11/2026) : sur un téléphone, un listing à lire revient à la ligne\n"
+        "   au lieu de défiler. Aucun caractère n'est changé : le code copié reste le même. Le calque coloré d'un éditeur\n"
+        "   (aria-hidden, .editeur-py-couleurs) défile avec sa zone de saisie : il garde ses lignes. */\n"
+        "@media (max-width:600px){pre:not([aria-hidden=\"true\"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}\n"
+        "</style>\n")
+
+
+def poser_n364(page):
+    if "<pre" not in page or "règle d'or n°364" in page:
+        return page
+    i = page.find("<style>\n  :root{")
+    if i < 0:
+        i = page.find("</head>")
+    return page[:i] + N364 + page[i:]
+
 def seg(a, b):                      # lignes 1-indexées, inclusives
     return "\n".join(L[a-1:b])
 
@@ -417,5 +435,6 @@ for p in PAGES:
     ])
     page = FICHE_PAPIER.poser(page)     # la fiche papier, source unique (_outils/impression_papier/)
     page = MODE_MISSION.poser(page)     # le mode mission, source unique (_outils/mode_mission/)
+    page = poser_n364(page)         # n°364, ce qui défile est caché (22/11/2026)
     io.open(LOT / p["fichier"], "w", encoding="utf-8").write(page)
     print("écrit :", p["fichier"], len(page) // 1024, "Ko")
