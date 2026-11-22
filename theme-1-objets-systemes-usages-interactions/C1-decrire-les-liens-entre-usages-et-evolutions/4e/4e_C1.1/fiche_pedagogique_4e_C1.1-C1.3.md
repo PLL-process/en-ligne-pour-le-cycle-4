@@ -143,3 +143,13 @@ légitime, il relève d'un autre moment.
 - **Aucun composant n'est étudié** — volontairement.
 - **La question politique** des moyens de lutte n'est pas traitée : le lot s'arrête à ce qu'un
   système technique apporte, et à ce qu'il ne remplace pas.
+
+## Billet de sortie (ajouté le 21/11/2026, règle d'or n°330)
+
+À la fin de la dernière séance, environ 5 minutes, seul et sans aide, sur un objet que la séquence n'a pas étudié : **le pluviomètre connecté de la commune**. Il ne remplace pas le QCM : il prouve ce que le QCM entraîne.
+
+Ce qu'on y regarde :
+1. les trois chiffres du bulletin ont leur nature juste (cumul, état instantané, proportion), et la proportion dit de quel ensemble elle est la part ;
+2. l'exigence se contrôle par oui ou par non : ce qui est attendu, pour qui, un délai, un seuil.
+
+La correction est dans la page, repliée, avec ses contre-exemples. Aucun bouton : le billet ne valide rien. Le temps est pris sur le bilan si la séance déborde.

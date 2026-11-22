@@ -103,3 +103,15 @@ parfaitement (règle n°50).
 alors que ce temps est compris dans l'activité 1. Le vérificateur additionnait les deux et concluait
 à un dépassement. Ni la page ni le contrôle n'avaient tort : c'était **l'annonce** qui laissait
 croire à un temps supplémentaire.
+
+## 21/11/2026 — Une question se lit seule : le QCM relu question par question, et le billet de sortie
+
+- Sept questions renvoyaient à la séquence ou à la question précédente : « À la fin de cette séquence… » (12), « Le ratio 20 000 000 ÷ 504 002 » sans dire d'où il vient (13), « Appliqué à 50 000 ha, ce ratio… » (14), « Cette estimation… » (15), « Autant que 14 milliards de km » sans dire de quoi (19), « en séance 4 » et « le Thème 2 » (28, 30). Chacune dit maintenant ce qu'il faut pour répondre ; les notions 12 et 28 sont renommées, avec leurs pièges.
+
+- Questions 31 à 33 : la bonne réponse se reconnaissait à sa longueur (n°144) ; elle est raccourcie, sans rien perdre.
+
+- **Billet de sortie** (n°330), à la fin de la dernière séance, juste avant le Bonus : le pluviomètre connecté de la commune. Deux réponses écrites, chacune sa version étayée ; une correction avec ses deux critères et ses contre-exemples ; aucun bouton. Le banc le vérifie.
+
+Exécuté : Banc 72 / 72 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 1212 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
+
+Non fait : les questions n'ont pas été essayées en classe.

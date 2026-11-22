@@ -34961,3 +34961,79 @@ son `textContent`, qui collait sinon « alimentation2. dévisser3. ». Sortie : 
 Contrôles : `tests_5e_C8.2_sequence.mjs` 24 / 24, `tests_regle_311_5e_C8.2.mjs` 34 / 34, `controle_axe.mjs` sur le
 dossier vert, `controle_consignes_a_la_ligne`, `controle_liens`, `controle_regles_visibles` verts ; la question du billet
 regardée à 390 px. Index et audit régénérés. Non exécuté : un vrai téléphone, un lecteur d'écran réel.
+
+## 21/11/2026 — Thème 1, C1 : les huit QCM relus question par question, seize documents pour le téléphone, huit billets de sortie
+
+**La décision (Pascal, 21/11, « oui pour tout », point 4).** Après C2 et C3 (PR #838), les huit lots de C1 : lire leurs
+QCM un à un (règles d'or n°343 à n°345, skill `question-qui-se-lit-seule`), donner à chaque QCM de séquence six
+questions sur document, fermer chaque séquence par un billet de sortie (n°330).
+
+**Constat.** `controle_question_seule.py` ne refusait rien sur C1 (0 refus, 247 questions) ; il comptait quatre QCM
+sous six questions sur document et huit séquences sans billet. La lecture a trouvé :
+- **une erreur de fond** — `3e_C1.1`, question 5 : la bonne réponse marquée était « trois niveaux hiérarchiques du
+  même service », et le pourquoi de la proposition voisine disait « Aucune hiérarchie n'est en jeu ». Une proposition et
+  son pourquoi avaient été inversés : l'élève qui répondait juste était corrigé. Aucun contrôle ne le voyait
+  (`verif_qcm_coherence.mjs` ne vérifie que le pourquoi vide de la bonne réponse) ;
+- **des leurres qu'aucun élève ne choisirait** — `5e_C1.3`, onze questions (« peindre et entretenir les stations »,
+  « informer → supprimer → fabriquer → peindre ») : un leurre absurde désigne la bonne réponse (porte B) ;
+- **des questions qui ne se lisent pas seules** — `4e_C1.1` : « À la fin de cette séquence », « ce ratio », « cette
+  estimation », « en séance 4 », « au Thème 2 » ; `5e_C1.1` : « cet incident » (la question d'avant) ; `5e_C1.5` : « le
+  banc compte les indices » ; `5e_C1.2` : un tableau demandé sans être montré ;
+- et, au passage, un « cahier » (les élèves n'en ont pas), un sigle non expliqué (OST), trois bonnes réponses qui se
+  reconnaissaient à leur longueur.
+
+**Ce qui change, lot par lot.**
+- `3e_C1.1` : la question 5 corrigée ; questions 16, 23, 32.
+- `4e_C1.1` : dix questions (sept rendues autonomes, trois raccourcies) ; deux notions renommées, avec leurs pièges.
+- `5e_C1.1` et `5e_C1.2` (lots à générateur) : `q.py` et la page à l'identique, banque régénérée = page ; la question 27
+  du freinage porte le tableau (8 → 9 illustrées, partout où ce nombre est écrit).
+- `5e_C1.3` : quatorze questions ; trois sur document, dont une **capture réelle** recadrée (la case A1 de LibreOffice
+  Calc qui garde toute la ligne, prise sur le poste de Pascal le 12/09/2026, `3e_C1.1`) — 3 → 6 illustrées.
+- `5e_C1.5` : huit questions ; cinq sur document (la publication de Maël, les propriétés d'une photo, la fiche d'une
+  image CC BY-NC) — 1 → 6.
+- `4e_C1.4` : huit questions ; six sur document (trois mots de passe, un SMS d'hameçonnage, les autorisations d'une
+  lampe de poche, un bandeau de cookies, un historique de positions, un réglage de confidentialité) — 0 → 6 ; le
+  pare-feu et l'antivirus ont enfin des leurres crédibles ; deux questions ne partagent plus la même bonne réponse.
+- `3e_C1.5` : sept questions ; six sur document — 0 → 6. La question 11 citait « 3 à 4 % des émissions mondiales,
+  selon l'Arcep », un chiffre que la séquence ne donne pas ; elle lit maintenant l'étude ADEME-Arcep que la séquence
+  cite (4,4 % de l'empreinte carbone de la France, 2022 : équipements 50 %, centres de données 46 %) (n°338).
+- Seize documents dessinés par `_outils/document_qcm.py`, à partir des données des lots ou dits « données simulées » ;
+  aucun ne donne le verdict ; tous déclarés dans `SOURCES_MEDIAS.md`.
+- **Huit billets de sortie**, sur des objets que les séquences n'étudient pas : le GPS du téléphone (`3e_C1.1`), le
+  pluviomètre connecté de la commune (`4e_C1.1`), la téléconsultation à la pharmacie (`3e_C1.5`), la console de jeu
+  familiale (`4e_C1.4`), le thermomètre de la serre (`5e_C1.1`), l'éclairage d'un vélo (`5e_C1.2`), les prêts du CDI
+  (`5e_C1.3`), l'affiche de la fête du collège (`5e_C1.5`). Chacun : deux réponses écrites, une par compétence, une
+  version étayée pour chacune, une correction avec ses critères et ses contre-exemples, aucun bouton ; dans la carte de
+  sa page (deux gabarits n'ont pas la classe `card` : le billet y prend `r4`). Chaque banc le vérifie.
+- `5e_C1.5` : le banc de séquence échouait déjà sur `main` (il attendait « 1/1 » d'une activité qui n'est plus notée aux
+  mots-clés, n°340) ; son attendu suit.
+
+En tout, 55 questions réécrites sur 247.
+
+**Mesure.** `controle_question_seule.py`, thème 1 : D1 4 → **0**, P1 8 → **0** (les 14 séquences ont leur billet, les
+QCM de séquence leurs six documents) ; site : refus 63 (inchangé), D1 44 → 40, P1 52 → 44.
+`balayer_questions_qcm.mjs --apres` sur C1 : 8 QCM, 247 questions, 741 écrans d'aide, 0 écart.
+
+**Vérifié.** Bancs : `3e_C1.1` 51 / 51, `3e_C1.5` 46 / 46 et 23 / 23, `4e_C1.1` 72 / 72, `4e_C1.4` 32 / 32, `5e_C1.1`
+44 / 44, `5e_C1.2` 51 / 51, `5e_C1.3` 45 / 45, `5e_C1.5` 39 / 39 et 34 / 34 ; n°311 34 / 34 sur les huit. Mode mission
+joué sur les huit séquences : aucun refus. Contrôles des QCM (en-tête, banque, effectifs, unités, indices, sigles, mêmes
+nombres, aides, cohérence), médias, licence, liens, hiérarchie, consignes, squelette, règles visibles : verts sur C1.
+`controle_schemas.mjs` : rien sur les seize documents ; les seize regardés en planche à la taille du téléphone, deux
+questions et trois billets regardés à 390 px.
+
+**Non fait, à dire.**
+- **Aucune capture neuve sur le poste de Pascal.** La seule capture réelle ajoutée vient d'une capture déjà prise sur son
+  poste (12/09/2026). Les questions de cybersécurité portent sur des documents dessinés : une capture des réglages de son
+  propre ordinateur aurait publié sa configuration. Une capture de « Sécurité Windows » (pare-feu, antivirus) reste
+  possible, avec lui.
+- La charge des dernières séances dépasse le repère de 1 200 mots dans cinq lots : `5e_C1.2` 2 039, `3e_C1.5` 1 626,
+  `5e_C1.1` 1 439, `5e_C1.5` 1 368, `3e_C1.1` 1 216, `4e_C1.1` 1 212 (dont, à chaque fois, environ 150 mots de billet).
+- Les sept QCM d'ateliers et `qcm_fonctionnement_objet` ne sont pas relus un à un. Aucune séquence n'est relue en
+  entier.
+- Vu en lisant, non tranché : `3e_C1.5` dit qu'à partir de 15 ans un joueur consent seul à la publication de sa photo
+  (âge du consentement numérique) ; `5e_C1.5` demande l'accord des parents pour tout mineur (droit à l'image). Les
+  deux ne parlent pas du même droit ; la phrase de `3e_C1.5` mérite d'être relue.
+
+**À décider (Pascal).** 1. Les séances que le billet alourdit : le garder ainsi, ou le replier sous son titre.
+2. La capture de « Sécurité Windows », sur son poste, pour la question du pare-feu. 3. La phrase de `3e_C1.5` sur le
+consentement à 15 ans.

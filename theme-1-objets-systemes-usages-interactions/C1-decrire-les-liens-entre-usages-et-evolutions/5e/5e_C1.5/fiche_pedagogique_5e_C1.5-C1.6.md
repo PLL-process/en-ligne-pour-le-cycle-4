@@ -79,3 +79,13 @@ problématique) et la ligne du thème, la barre d'outils (« 🖨 Imprimer / PDF
 **banc de publication**, qui sert aux trois séances : un seul banc, qui garde ce qui est coché ; il est dans l'activité 0
 à la séance 1, juste après l'en-tête de la séance 2 (avant l'activité 2), juste avant le Bonus à la séance 3.
 Sans JavaScript, la page reste d'un seul tenant, comme avant.
+
+## Billet de sortie (ajouté le 21/11/2026, règle d'or n°330)
+
+À la fin de la dernière séance, environ 5 minutes, seul et sans aide, sur un objet que la séquence n'a pas étudié : **l'affiche de la fête du collège**. Il ne remplace pas le QCM : il prouve ce que le QCM entraîne.
+
+Ce qu'on y regarde :
+1. la réponse s'appuie sur ND (ne pas modifier) et dit ce qu'on peut faire à la place ;
+2. les deux accords, celui de Lucas et celui de ses responsables légaux, et par écrit.
+
+La correction est dans la page, repliée, avec ses contre-exemples. Aucun bouton : le billet ne valide rien. Le temps est pris sur le bilan si la séance déborde.

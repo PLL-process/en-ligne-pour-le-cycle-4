@@ -122,3 +122,13 @@ Si la classe conclut « il ne faut rien publier », la publication B a gagné et
   revoir** ; ce qui se valide, ce sont les productions des cinq séances et le nettoyage du fichier.
   *(Règle n°202. Réserve la plus légère des quatre lots concernés du dépôt : ici l'écart au seuil
   est d'une question.)*
+
+## Billet de sortie (ajouté le 21/11/2026, règle d'or n°330)
+
+À la fin de la dernière séance, environ 5 minutes, seul et sans aide, sur un objet que la séquence n'a pas étudié : **le thermomètre connecté de la serre du collège**. Il ne remplace pas le QCM : il prouve ce que le QCM entraîne.
+
+Ce qu'on y regarde :
+1. les deux anomalies (une valeur impossible, une donnée manquante) sont trouvées, écartées du calcul et signalées, sans rien inventer ;
+2. le nom de fichier dit ce qu'il contient, avec une date qui se trie (année-mois-jour), sans espace ni avis.
+
+La correction est dans la page, repliée, avec ses contre-exemples. Aucun bouton : le billet ne valide rien. Le temps est pris sur le bilan si la séance déborde.

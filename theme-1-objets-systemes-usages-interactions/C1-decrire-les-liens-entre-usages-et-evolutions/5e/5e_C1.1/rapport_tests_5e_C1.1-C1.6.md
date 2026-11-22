@@ -142,3 +142,13 @@ sont des boutons natifs).
 
 **Validé par Pascal le 25/10/2026** : les onze prises de voix, à l'écoute, et l'animation, telle que publiée
 (sans podiums dans la finale ; balance 100 000 → 100 020 µg gardée).
+
+## 21/11/2026 — Une question se lit seule : le QCM relu question par question, et le billet de sortie
+
+- Question 6 : « Une fois les quatre anomalies repérées » nomme maintenant les quatre anomalies. Question 23 : « cet incident » renvoyait à la question précédente ; l'énoncé dit l'incident. `q.py` et la page modifiés à l'identique : la banque régénérée (graine 512) est celle de la page.
+
+- **Billet de sortie** (n°330), à la fin de la dernière séance, juste avant le Bonus : le thermomètre connecté de la serre du collège. Deux réponses écrites, chacune sa version étayée ; une correction avec ses deux critères et ses contre-exemples ; aucun bouton. Le banc le vérifie.
+
+Exécuté : Banc 44 / 44 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 1439 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
+
+Non fait : les questions n'ont pas été essayées en classe.

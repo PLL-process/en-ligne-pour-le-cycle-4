@@ -128,3 +128,12 @@ Ce qui a changé autour :
 - les réponses de l'activité 3 sont recalculées par le banc depuis `donnees_velos_hangzhou_simulees.csv` : si le
   fichier change, le banc le dit.
 
+## Billet de sortie (ajouté le 21/11/2026, règle d'or n°330)
+
+À la fin de la dernière séance, environ 5 minutes, seul et sans aide, sur un objet que la séquence n'a pas étudié : **les prêts de livres du CDI**. Il ne remplace pas le QCM : il prouve ce que le QCM entraîne.
+
+Ce qu'on y regarde :
+1. la donnée brute ne dit rien toute seule ; l'information fait décider la documentaliste ;
+2. la bonne colonne (le retard) et le bon sens (décroissant).
+
+La correction est dans la page, repliée, avec ses contre-exemples. Aucun bouton : le billet ne valide rien. Le temps est pris sur le bilan si la séance déborde.

@@ -238,3 +238,14 @@ Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
 Non fait : les 25 autres questions n'ont pas été relues une à une ; aucun document neuf n'a été dessiné pour ce QCM.
 
+## 21/11/2026 — Une question se lit seule : le QCM relu question par question, et le billet de sortie
+
+- Onze questions avaient des leurres qu'aucun élève ne choisirait (« peindre et entretenir les stations », « informer → supprimer → fabriquer → peindre », « rendre les vélos un peu plus lourds »…) : un leurre absurde désigne la bonne réponse. Ils sont remplacés par des confusions réelles (le réseau pris pour le stockage, l'ordre des étapes, le tri croissant…), chacun avec son pourquoi. La question 30 dit maintenant ce qu'est le transfert de Hangzhou à Sainte-Luce.
+
+- Trois questions de plus sur document (3 → 6, n°345) : le dossier du projet (13), une **capture réelle** recadrée de LibreOffice Calc, prise sur le poste de Pascal le 12/09/2026, où toute la ligne reste dans la case A1 (19), et un tableau de cinq vélos à trier (22).
+
+- **Billet de sortie** (n°330), à la fin de la dernière séance, juste avant le Bonus : les prêts de livres du CDI. Deux réponses écrites, chacune sa version étayée ; une correction avec ses deux critères et ses contre-exemples ; aucun bouton. Le banc le vérifie.
+
+Exécuté : Banc 45 / 45 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 1099 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
+
+Non fait : les questions n'ont pas été essayées en classe.

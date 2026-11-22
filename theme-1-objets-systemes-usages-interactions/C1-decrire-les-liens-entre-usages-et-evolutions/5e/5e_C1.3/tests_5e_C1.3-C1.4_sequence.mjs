@@ -20,6 +20,8 @@ p.on('console', (m) => { if (m.type() === 'error') err.push('console: ' + m.text
 p.on('requestfailed', (r) => fail.push(r.url()));
 p.on('dialog', (d) => d.dismiss().catch(() => {}));
 await p.goto(URL0, { waitUntil: 'load' }); await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
+// 21/11/2026 — le billet de sortie (n°330) : une preuve faite seul, sur un objet que la séquence n'a pas étudié ; il ne valide rien.
+{ const bs = await p.evaluate(() => { const b = document.getElementById('billetSortie'); if (!b) return null; const c = b.querySelector('details.correction'); const n = b.nextElementSibling; const pan = b.closest('.seance-panel'); const tous = [...document.querySelectorAll('.seance-panel')].filter(x => !/hors/.test(x.id)); return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length, criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0, avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))), derniere: !!pan && pan === tous[tous.length - 1], boutons: b.querySelectorAll('button').length }; }); ok('billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton', !!bs && bs.zones === 2 && bs.etayees === 2 && bs.criteres === 2 && bs.avantBonus && bs.derniere && bs.boutons === 0, JSON.stringify(bs)); }
 ok('charge sans erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '));
 

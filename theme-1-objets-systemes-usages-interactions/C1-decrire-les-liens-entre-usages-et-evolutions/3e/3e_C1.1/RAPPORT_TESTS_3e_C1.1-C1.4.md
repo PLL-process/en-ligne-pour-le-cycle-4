@@ -72,3 +72,14 @@ correction de deux pavés de plus de 110 mots dans la correction de l'activité 
 - `mesurer_charge.mjs` : 1 259 · 756 · 461 · 564 · 1 000 mots visibles (séance 1 au-dessus du repère, écart dit au suivi).
 - Non testé : la lecture par un élève en classe ; le rendu sur un autre navigateur que Chromium.
 
+## 21/11/2026 — Une question se lit seule : le QCM relu question par question, et le billet de sortie
+
+- **Question 5, une erreur de fond.** La bonne réponse marquée était « trois niveaux hiérarchiques du même service » — et le pourquoi de la proposition voisine disait « Aucune hiérarchie n'est en jeu ». Une proposition et son pourquoi avaient été inversés : l'élève qui répondait juste (trois savoir-faire différents) était corrigé. La bonne réponse est maintenant « trois savoir-faire bien différents », à la place 4, et chaque pourquoi parle de sa proposition.
+
+- Question 16 : le leurre « sans rapport avec le sujet de la séquence » devient « économique : il fait baisser le coût des secours », avec son pourquoi. Question 23 : « un argumentaire de 3e sur l'incidence d'un OST » devient « … d'un objet technique » (sigle non expliqué). Question 32 : « dans son cahier » devient « sur une feuille » (les élèves n'ont pas de cahier).
+
+- **Billet de sortie** (n°330), à la fin de la dernière séance, juste avant le Bonus : le GPS du téléphone. Deux réponses écrites, chacune sa version étayée ; une correction avec ses deux critères et ses contre-exemples ; aucun bouton. Le banc le vérifie.
+
+Exécuté : Banc 51 / 51 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 1216 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
+
+Non fait : les questions n'ont pas été essayées en classe.
