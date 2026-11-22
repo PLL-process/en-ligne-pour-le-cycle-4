@@ -36290,6 +36290,84 @@ lui-même les deux blocs, la ligne se retire et le TP les reçoit.
 
 **Vérifié.** `controle_regle4.py` : 84 pages conformes, 0 écart (sortie 0) ; banc `tests_controle_regle4.py` 25/25.
 
+## 22/11/2026 — Sigles expliqués (n°44), vague des infobulles, thème 3 : 119 pages, 281 infobulles ; le générateur des TP CAO les pose lui-même (thème 3)
+
+Suite de l'entrée précédente (même décision de Pascal, 22/11/2026, 1 h 45 ; même outil, fusionné par la PR #878).
+
+**Ce qui change.**
+- 110 pages du thème 3 (séquences, QCM, synthèses, lexiques, ateliers) : 266 infobulles, posées par
+  `infobuller` — OST, PVC, USB, DEL, CRCN, LED, PLA, CAO, FAST, LCD, LSU, IP, TBT, EPI, CDI, URL ; QCM aussi, là où il
+  n'était expliqué que plus bas ou que dans un lien.
+- `atelier-cao/_generation/build_tp.py` appelle `infobuller` avant d'écrire (n°283) ; les quatre TP sont régénérés
+  (10 infobulles). `verif_chaine.py` était rouge sur `main` : la vague QCM de la nuit (PR #865) avait corrigé les quatre
+  scénarios sans recalculer leurs empreintes. Recalculées (`--empreintes`) : la chaîne est verte, chaque page est
+  exactement ce que son scénario produit.
+- Treize QCM citent OST (douze) ou CRCN (un) seulement dans le menu « Compétence à réviser » : une option de liste ne
+  porte pas d'infobulle, l'étiquette du menu le dit en clair, comme au thème 2.
+
+**Écartées** (d'autres sessions y travaillent, ou leur générateur change ailleurs) :
+- les pages touchées cette nuit par d'autres sessions (portes n°366, listings n°364, durées de l'audit) : `3e_C7.8`,
+  `4e_C7.5`, `4e_C7.8`, `5e_C7.5`, `5e_C8.2`, `4e_C9.1`, `3e_C9.1`, les pointeurs `atelier_croquis` et
+  `atelier_diagramme_fast` de `3e_C7.2` et `4e_C7.2`, `atelier_diagramme_des_exigences` de `4e_C8.3` ;
+- ce que la PR #877 (dérive des générateurs) régénérait pendant la vague : l'atelier de planification et
+  `build_atelier.py` (que la PR #879 a retouchés depuis), le dossier `3e_C9.2` et `generer_les_quatre_pages.py`. Une
+  note a été laissée sur #877, en conflit avec #878 sur `generer_lexique.py` (le même correctif de `sans_balises` des
+  deux côtés) ; elle a été fusionnée avec les deux (unités nommées et infobulles).
+
+**Lexiques.** #877 fusionnée, ses lexiques régénérés n'avaient pas encore d'infobulles : `generer_lexique.py --tous`
+sur le thème 3 en pose dans cinq (`3e_C7.1`, `5e_C7.1`, `5e_C7.4`, `3e_C9.2`, `4e_C9.1`) et ne change aucun autre
+lexique — ceux que la vague avait traités sont exactement ce que le générateur produit.
+
+**Vérifié.**
+- Texte et balises des 119 pages identiques avant et après, une fois retirés les `<abbr>`, le style ajouté et les deux
+  étiquettes de menu.
+- Les 114 premières pages ouvertes à 390 px : aucune erreur JavaScript ; la première infobulle visible prend le focus et affiche
+  son explication ; l'impression l'écrit ; aucune infobulle focalisable dans un lien ou un bouton. Huit synthèses
+  professeur défilent en largeur, comme sur `main`. Sur l'une (`5e_C7.5`), l'explication affichée au focus, dans une
+  cellule de tableau, élargit encore la page (451 → 521 px) : page professeur, qui défilait déjà.
+- Les 70 bancs de lot des dossiers touchés : 70 / 70, dont 35 lancés avec les arguments écrits dans leur
+  documentation. Un seul avait d'abord échoué, `tests_3e_C8.1_sequence.mjs` (61 / 62) : il aplatissait la synthèse
+  professeur en remplaçant chaque balise par une espace, et lisait « d’un OST . » au lieu de la formulation officielle
+  « d’un OST. ». Une balise de texte (`abbr`, `b`, `i`, `span`…) s'efface désormais sans espace : 62 / 62, et une
+  formulation modifiée échouerait toujours.
+- `controle_page_ouverte.mjs --axe` sur les 114 pages : L 0, B 0, C 0 ; les 14 pages signalées par axe-core ont les
+  mêmes écarts sur `main` (une en a un de moins).
+- `verif_guidage.py` des TP : le même manquement n°77 qu'avant sur deux TP (images du résultat attendu) ;
+  `controle_entete_qcm.py` vert.
+
+**Mesure** (`controle_sigles_expliques.py`) : thème 3, 120 → 53 pages avec au moins un sigle jamais expliqué (les
+pages écartées, et 33 pages où « QCM » n'est que dans la barre de navigation, à traiter avec les portes, n°366). En
+tout : 175 pages (thème 1 : 117, où d'autres sessions travaillent ; thème 2 : 5 ; thème 3 : 53).
+
+**Suite.** Le thème 1 quand ses sessions auront fini ; les pages écartées après la fusion de #877.
+
+## 22/11/2026 — Pilote de la règle d'or n°369 (« Ce qui compte revient ») et de la n°372 sur `4e_C1.4` (cybersécurité) (thème 1)
+
+**Carte blanche de Pascal** (22/11, « Tu as carte blanche continue »). La n°369 (en essai depuis #868) demandait une séquence
+pilote ; `4e_C1.4` est retenue : quatre séances, des acquis nets dans ses « À retenir » (l'attaque et sa cible ; la donnée
+personnelle et la donnée sensible ; avant, pendant, après ; ce que cache chaque outil, et à qui). Les 🔑 de la page sont
+des icônes de correction, pas des acquis marqués (n°353) : les questions ont été tirées des « À retenir ».
+
+**Ce qui est posé.**
+- En tête des séances 2, 3 et 4, une « 🔁 Reprise — sans regarder, retrouve » : 2, 3 et 2 questions (sept en tout), sur
+  la séance d'avant et, en séance 3, une sur la séance 1 (l'espacement). Consigne numérotée à la ligne (n°342) ; chaque
+  question dit sa séance d'origine ; chaque mauvaise réponse a son pourquoi et renvoie à la séance à relire ; places des
+  bonnes réponses mélangées, longueurs équilibrées (2 plus courtes, 2 plus longues, 3 au milieu) ; aucun sigle nu (n°44).
+- « Vérifier ma reprise » dit « Reprise faite : N sur M retrouvées de mémoire. Ce n'est pas une note. » : la reprise ne
+  valide rien (n°340) ; le mode mission la lit comme un écran de lecture (`fieldset.reprise-q`, pas `qcm-groupe`).
+- Au bilan, un champ « Ce qui reste flou pour moi, et quand je le reprends » (`data-flou`, n°372), sauvegardé avec la page.
+
+**Vérifié.** `controle_reprise_espacee.py --strict` sur la page : 3 séances sur 3, bilan conforme ; bancs de la séquence
+34/34 (n°311) et 32/32 (quiz) ; mode mission joué écran par écran, aucun refus ; `controle_page_ouverte.mjs` (390 px) rien à
+signaler ; `controle_axe.mjs` ; `eleve_qui_ne_lit_pas.py` 0 activité validée ; `controle_sigles`, `controle_consignes_a_la_ligne`,
+`controle_regles_visibles`, `controle_sauvegarde_locale`, `controle_impression_papier` verts ; la reprise jouée au navigateur
+(vide → « Réponds à toutes les questions » ; une erreur → son pourquoi et la séance à relire) ; revue d'écran à 390 px : une
+légende sur deux lignes coupait le bord du cadre, corrigé par une feuille de cinq lignes. **Non exécuté** : un essai en classe —
+c'est lui qui dira si trois à cinq minutes suffisent.
+
+**Reste à Pascal.** Dire, après une séance, si la reprise tient dans le temps ; si oui, la généraliser par vagues (skill
+`reprise-espacee`).
+
 ## 22/11/2026 — `controle_reprise_espacee.py` voit aussi les séances écrites en `<section>` : la mesure de départ de la n°369 est 0 sur 123, pas 0 sur 113 (thème 2 : `_outils`)
 
 Vu au pilote de `4e_C1.4` : ses panneaux de séance sont des `<section class="seance-panel">`, et la mesure ne lisait que les
