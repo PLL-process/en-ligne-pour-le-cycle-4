@@ -36913,3 +36913,16 @@ Le gabarit des QCM d'ateliers (`gabarit_qcm.tpl`) le porte aussi : `build_qcm.py
 3e_C6.1, FAST) : 30 questions, compétences alternées, bouton actif, 0 erreur ; `controle_entete_qcm`, `controle_boutons_vivants`,
 `controle_longueurs`, `controle_tactile`, `controle_effectifs_qcm`, `controle_ordre_propositions` verts ; bancs 3e_C6.1 57/57
 et 3e_C9.2 167/167 (qui cliquent les modes). **Non exécuté** : un essai en classe.
+
+## 22/11/2026 — Sigles expliqués (n°44) : `infobuller` traite aussi le sigle expliqué trop bas (thème 2, `_outils`)
+
+Carte blanche de Pascal (22/11/2026, 6 h 51). Le QCM de l'atelier de planification (thème 3) restait la dernière page
+du site où un sigle était expliqué plus bas que sa première apparition (P). `infobuller` écrivait bien « QCM
+(questionnaire à choix multiples) » dans le texte, mais le titre « Thème 3 — QCM : … » venait avant lui. Désormais,
+après l'explication en clair, un sigle encore P reçoit son infobulle à sa première apparition, et l'explication en
+clair reste.
+
+**Vérifié.** Banc `tests_expliquer_sigles.py` : 26 / 26, avec deux cas neufs ; l'ancien comportement les fait échouer
+tous les deux. Dérive des huit générateurs de `rapport_audit.py`, dans une copie : 0 fichier. Ateliers du thème 1 :
+`build_qcm.py --verifier` 7 / 7, `incrustations.py --verifier` à jour. `tests_generer_lexique.py` 31 / 31. Aucune
+page n'est touchée : la seule page concernée se régénère dans la PR du thème 3 qui suit.
