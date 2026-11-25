@@ -37434,6 +37434,27 @@ Vérifié : les 34 pages rendues avant et après, à 390 et 1 280 px, image enti
 axe-core sur les 98 pages du thème 2 : `landmark-one-main` 34 → 0, `region` 293 → 38 nœuds ; aucun défaut grave ;
 `controle_impression` à 0. Les titres qui sautent un niveau (14 au thème 2) viennent dans un lot à part.
 
+## 25/11/2026 — Structure des pages, thème 1 : les titres ne sautent plus de niveau
+
+Suite de la vague de structure (choix « 1a » de Pascal, 25/11/2026) : `heading-order`, un titre qui descend de plus d'un
+niveau — le plus souvent les titres d'exercices (`.exo > h4`), de versions ou de ressources en `<h4>` posés juste sous
+le `<h2>` d'une activité. Au thème 1, 12 séquences.
+
+**Le geste** (outil de session `niveaux_titres.py`). La balise ne change pas, donc le style non plus : le titre reçoit
+`aria-level`, le niveau qu'il a dans le plan de la page (un de plus que le titre précédent), et les titres de même
+balise qui le suivent dans la même partie reçoivent le même niveau — une suite d'exercices `<h4>` sous un `<h2>`
+devient une suite de niveau 3, lue comme telle. Les zones incrustées par les ateliers ne sont ni lues ni modifiées :
+elles appartiennent à leur générateur. 105 titres dans 12 pages.
+
+**Vérifié.** axe-core, page à l'ouverture, 1 280 et 390 px, sur les 12 pages : `heading-order` 0 (13 avant),
+`aria-allowed-attr` 0. Rendu avant/après identique au pixel près sur 11 pages ; la douzième (`4e_C1.4`) mélange ses
+étiquettes à chaque chargement et ne se compare pas ainsi. `tests_regle_311` des douze dossiers verts ;
+`controle_mode_mission` 0.
+
+**Reste, vu en dépliant les corrections** : dans cinq séquences (`4e_C2.1`, `5e_C2.1`, et `C3.1` des trois niveaux),
+les exercices incrustés gardent leur propre plan (titre de carte en `<h4>`, fiche en `<h3>`, exercice en `<h5>`) :
+c'est le générateur des ateliers (`balise`, `balise_exo` de chaque incrustation) qui le fixe, à reprendre là.
+
 ## 25/11/2026 — Incrustations : un bloc réécrit garde les infobulles que la page y avait ; les cinq séquences « en retard » ne l'étaient que pour cela (thème 1 : générateur des ateliers ; aucune page touchée)
 
 **Décision.** Pascal (22/11/2026 : « Continue. Tu as carte blanche pour tout ») ; proposition 2 de la vague des
