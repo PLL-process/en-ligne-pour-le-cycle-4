@@ -37217,3 +37217,28 @@ variait d'une mesure à l'autre, selon l'ordre où les étiquettes se mélangent
 
 Contrôles : `controle_page_ouverte.mjs --axe` (règles alignées) ×3 : 0 ; `tests_regle_311_4e_C1.4.mjs` 34 / 34 ;
 `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_tactile.py` et `controle_impression` à 0.
+
+## 25/11/2026 — Accessibilité : zéro défaut grave, et le contrôle refuse qu'il en revienne (thème 2 : `_outils/`)
+
+**La décision.** Carte blanche de Pascal (25/11/2026, 15 h 41) sur la question posée après la vague contraste : faire
+refuser un défaut grave d'accessibilité, comme un listing qui défile.
+
+**Ce qui change.**
+- `controle_page_ouverte.mjs --axe` : un défaut grave d'axe-core (critical, serious), page ouverte à 390 px, fait sortir
+  à 1, même sans `--strict` (n°273 : référence nommée, datée, vide). Il lit maintenant les mêmes règles WCAG que
+  `controle_axe.mjs` : `wcag21a` et `wcag22aa` manquaient (ils portent `label-content-name-mismatch` et `target-size`).
+- `_outils/axe_reference.json` réécrit (`controle_axe.mjs --reference`, 410 pages, axe-core 4.14.1) : **aucun nœud
+  grave**. Il en comptait 138 dans 31 pages (réf. du 22/11). Toute page qui en porte un fait désormais sortir
+  `controle_axe.mjs` à 1.
+- Les trois derniers défauts trouvés en chemin : `3e_C6.1`, les boutons « A− » et « A+ » de l'éditeur ne disaient pas
+  leur texte (« Réduire la taille du texte ») → « A− : réduire la taille du texte » ; `4e_C1.4`, les étiquettes à glisser
+  soufflaient leur colonne au lecteur d'écran (PR #913) et n'étaient pas des cibles de doigt entières (PR #915) ; la
+  synthèse professeur de `4e_C9.1` (PR #914).
+- Banc `tests_controle_page_ouverte.mjs` : 18 points (un texte trop pâle dans une correction repliée est vu et sort à 1
+  avec `--axe` ; la page propre sort à 0 ; sans `--axe`, A n'est pas mesuré). Le point nouveau échoue sur la version
+  d'avant (17 / 18, vérifié). Sans axe-core, ces trois points ne se jouent pas et le banc sort à 2 (n°299).
+
+**Mesuré le 25/11/2026 sur la branche à jour de `main`** : `controle_page_ouverte.mjs --axe`, 342 pages : L 0 · B 0 ·
+C 0 · A 0, sortie 0 ; `controle_axe.mjs`, 410 pages : 0 nœud grave, sortie 0. Le 22/11 au matin : 64 pages en défaut
+grave, page ouverte. Restent, mesurés et jamais refusés, les défauts de structure (`region`, `landmark-one-main`,
+`heading-order`) que l'audit du 01/11 a laissés à la décision de Pascal.

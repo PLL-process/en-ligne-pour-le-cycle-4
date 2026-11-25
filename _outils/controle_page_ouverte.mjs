@@ -30,19 +30,27 @@
  *      (une ligne d'aide répétée exprès — « 🔍 Touche le schéma pour l'agrandir » — porte `data-repete` et n'est pas lue ;
  *      un intitulé non plus : titre, ou paragraphe tout en gras comme « Question par question — la réponse, et pourquoi
  *      pas les autres », que 4e_C4.7 et 5e_C4.7 posent en tête de chaque correction, 22/11/2026) ;
- *   A  avec --axe : les défauts graves (critical, serious) d'axe-core sur la page ouverte.
+ *   A  avec --axe : les défauts graves (critical, serious) d'axe-core sur la page ouverte, à 390 px — mêmes règles WCAG
+ *      que `controle_axe.mjs` (2.0, 2.1, 2.2 ; A et AA ; `wcag21a` manquait avant le 25/11/2026 : il porte
+ *      `label-content-name-mismatch`).
  *
  * Usage :
  *   node _outils/controle_page_ouverte.mjs [chemins…] [--axe] [--strict] [--muet] [--json f]
  *   Sans chemin : les trois thèmes et l'index, hors synthèses professeur, fiches et rapports.
- * L ET B REFUSENT (règle n°273 : référence nommée, datée, vide)
- * -------------------------------------------------------------
+ * L, B ET A REFUSENT (règle n°273 : référence nommée, datée, vide)
+ * ----------------------------------------------------------------
  * Le 22/11/2026, sur les 341 pages, L et B sont à 0 (vague n°364 : PR #854, #856, #862). Une page qui fait défiler un
- * listing ou qui dessine un bloc fait maintenant sortir à 1, même sans --strict. C et A restent des mesures ; --strict
- * les fait refuser aussi.
+ * listing ou qui dessine un bloc fait sortir à 1, même sans --strict.
+ * Le 25/11/2026, avec --axe, A est à 0 sur les 341 pages (zones qui défilent sans clavier : PR #893, #894, #895 ;
+ * contraste, étiquettes, attributs, liste : PR #903, #905, #908 ; 64 pages en défaut grave le 22/11 au matin). Un
+ * défaut grave d'axe-core, page ouverte à 390 px, fait sortir à 1 lui aussi. `controle_axe.mjs` reste le contrôle de
+ * la page à son chargement, à 1 280 px, contre sa référence chiffrée ; celui-ci voit ce qui ne s'affiche qu'au clic
+ * (corrections, aides, onglets) et sur un téléphone.
+ * C reste une mesure (une phrase répétée peut l'être à bon droit) ; --strict la fait refuser aussi.
  *
- * Sortie : 0 aucun L ni B (C et A mesurés) · 1 au moins un L ou un B, ou, avec --strict, au moins un écart ·
- *          2 EN PANNE : Playwright absent, aucune page mesurée, ou une page qui ne s'ouvre pas (n°299).
+ * Sortie : 0 aucun L, B ni A (C mesuré) · 1 au moins un L, un B ou, avec --axe, un A ; ou, avec --strict, au moins un
+ *          écart · 2 EN PANNE : Playwright absent, axe-core introuvable avec --axe, aucune page mesurée, ou une page qui
+ *          ne s'ouvre pas (n°299).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -167,7 +175,7 @@ async function une(fichier) {
     const m = await p.evaluate(mesurer);
     if (axeSource) {
       await p.evaluate(axeSource);
-      m.A = await p.evaluate(async () => (await window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa'] }))
+      m.A = await p.evaluate(async () => (await window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] }))
         .violations.filter(v => ['critical', 'serious'].includes(v.impact)).map(v => `${v.id}×${v.nodes.length}`));
     } else m.A = [];
     resultats.push({ rel, ...m });
@@ -192,10 +200,10 @@ console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390
 if (JSON_OUT) fs.writeFileSync(JSON_OUT, JSON.stringify(resultats, null, 1));
 if (!resultats.length || pannes) { console.log('⛔ EN PANNE (n°299)'); process.exit(2); }
 const refus = resultats.filter(r => !r.panne && (r.L.length || r.B.length));
-if (refus.length) {
-  console.log(`✘ ${refus.length} page(s) font défiler un listing (n°364) ou dessinent un bloc (n°308), page ouverte — référence vide depuis le 22/11/2026 (n°273)`);
-  process.exit(1);
-}
+const refusA = resultats.filter(r => !r.panne && r.A && r.A.length);
+if (refus.length) console.log(`✘ ${refus.length} page(s) font défiler un listing (n°364) ou dessinent un bloc (n°308), page ouverte — référence vide depuis le 22/11/2026 (n°273)`);
+if (refusA.length) console.log(`✘ ${refusA.length} page(s) portent un défaut grave d'axe-core, page ouverte à 390 px — référence vide depuis le 25/11/2026 (n°273)`);
+if (refus.length || refusA.length) process.exit(1);
 if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°361)'); process.exit(1); }
 console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°361)` : '✅ rien à signaler, page ouverte');
 process.exit(0);
