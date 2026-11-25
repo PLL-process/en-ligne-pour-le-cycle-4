@@ -37454,3 +37454,11 @@ elles appartiennent à leur générateur. 105 titres dans 12 pages.
 **Reste, vu en dépliant les corrections** : dans cinq séquences (`4e_C2.1`, `5e_C2.1`, et `C3.1` des trois niveaux),
 les exercices incrustés gardent leur propre plan (titre de carte en `<h4>`, fiche en `<h3>`, exercice en `<h5>`) :
 c'est le générateur des ateliers (`balise`, `balise_exo` de chaque incrustation) qui le fixe, à reprendre là.
+
+## 25/11/2026 — Structure des pages, thème 3 : les titres ne sautent plus de niveau
+
+Même geste qu'aux thèmes 1 et 2 (PR #925, #927) : `aria-level`, balise et style inchangés, zones incrustées non
+touchées. 22 pages sources, 65 titres ; `3e_C9.2` par sa page tout-en-un, puis `generer_les_quatre_pages.py`
+(stations 1 et 4 refaites). Vérifié : axe-core à l'ouverture, 1 280 et 390 px, sur les 24 pages : `heading-order`
+44 → 0, `aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 24 pages ; `tests_regle_311` des
+22 dossiers 34 / 34 ; `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `controle_mode_mission` 0.
