@@ -37189,3 +37189,18 @@ Dernier défaut grave de `controle_axe.mjs` (page au chargement, 1 280 px) aprè
 en `#5b7bb8` sur blanc, 4,2 : 1 → `#3b5b8f`, 6,8 : 1 (le bleu de la légende des schémas vivants, PR #905).
 L'impression gardait déjà son propre bleu (`#5475b5`, 4,6 : 1). Contrôles : `controle_axe.mjs` sur la page : 0 nœud
 grave ; `controle_impression` 0.
+
+## 25/11/2026 — Thème 1 : les étiquettes à glisser de 4e_C1.4 ne soufflent plus leur colonne au lecteur d'écran
+
+`controle_axe.mjs` (page au chargement, 1 280 px) relevait, après la vague contraste, un défaut grave dans
+`4e_C1.4/sequence-cybersecurite-protection-donnees.html` : `label-content-name-mismatch`, trois étiquettes à glisser dont
+le nom lu ne reprend pas le texte affiché (« Fichier .exe suspect » lu « Fichier exécutable suspect »). En les lisant, un
+défaut plus grave : les 23 étiquettes des activités 1.a et 1.c portaient, dans leur nom lu, la réponse attendue —
+« Faire glisser ou sélectionner 'Lien inconnu' — catégorie risque », « 'Hameçonnage' — type d'attaque par vol
+d'identifiants ». Un élève qui écoute la page entendait la colonne où poser chaque étiquette (n°341 : une proposition
+ne porte pas sa justification ; n°360 : aucune activité ne se valide sans lire). Chaque nom lu devient le texte
+affiché : « Faire glisser ou sélectionner « Lien inconnu » ». Les douze autres étiquettes de la page (3.x et 5.x)
+disaient déjà seulement leur texte.
+
+Contrôles : `controle_axe.mjs` sur la page : 0 nœud grave ; `controle_page_ouverte.mjs --axe` (version qui lit aussi
+`wcag21a`) : 0 ; `tests_regle_311_4e_C1.4.mjs` 34 / 34 ; `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_mode_mission` 0.
