@@ -37160,3 +37160,11 @@ retiré : ses mots (ceux de la console) sont passés en séance 3.
 
 **Reste** : les dix questions du QCM rangées sous 4e_C8.2 portent sur le protocole d'un comportement ; aucune ne porte
 encore sur l'essai d'un matériau (le QCM est aussi touché par la PR #907 d'une autre session, ouverte et en conflit).
+
+## 25/11/2026 — Thème 3 : la ligne d'étiquettes de la synthèse professeur de 4e_C9.1 passe au-dessus de 4,5 : 1
+
+Dernier défaut grave de `controle_axe.mjs` (page au chargement, 1 280 px) après la vague contraste :
+`4e_C9.1/Synthèses/synthese_professeur_4e_C9.html`, la ligne `.sous` sous le titre (niveau, thème, codes, durées)
+en `#5b7bb8` sur blanc, 4,2 : 1 → `#3b5b8f`, 6,8 : 1 (le bleu de la légende des schémas vivants, PR #905).
+L'impression gardait déjà son propre bleu (`#5475b5`, 4,6 : 1). Contrôles : `controle_axe.mjs` sur la page : 0 nœud
+grave ; `controle_impression` 0.
