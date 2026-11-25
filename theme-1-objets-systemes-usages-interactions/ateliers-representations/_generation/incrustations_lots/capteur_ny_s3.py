@@ -29,7 +29,8 @@ ENTREES = [
                "et il contient trois erreurs. Les trois questions qui les trouvent sont celles que tu poseras au FAST de "
                "ton capteur avant de le fabriquer. Un exercice, environ treize minutes&nbsp;; il se vérifie tout seul et "
                "a sa correction complète.",
-         suite="l'exercice qui arbitre entre trois solutions pour diffuser l'alerte, et le QCM de l'atelier"),
+         suite="l'exercice qui arbitre entre trois solutions pour diffuser l'alerte, et le QCM (questionnaire à "
+               "choix multiples) de l'atelier"),
     dict(id="cq-3e-capteur-confort", module="croquis", niveau="3e", exos=["e4", "e6"],
          sequence=SEQ,
          avant='<div class="exo">\n<button class="btn check" data-check="7" type="button">',

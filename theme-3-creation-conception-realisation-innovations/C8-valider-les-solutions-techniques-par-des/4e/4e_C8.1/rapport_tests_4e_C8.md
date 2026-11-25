@@ -187,3 +187,49 @@ la charge ») ; nouveau piège « L'essai d'une vraie pièce ». Commandes lanc�
 Regardé à 390 px : les trois questions et leur indice après une réponse fausse.
 
 Non exécuté : un vrai téléphone, Firefox, Safari. Reste : 3 questions sur document dessiné, pour 6 attendues (n°345).
+
+## Reprise du 25/11/2026 (soir) — six questions du QCM sur document dessiné pour le téléphone (n°345)
+
+Trois documents dessinés par `_outils/document_qcm.py` depuis `documents_qcm_4e_C8.1.json` : « Les quatre essais du
+support » (questions 2 et 15), un extrait du protocole de l'essai de la console (question 18), le relevé de la flèche
+(question 19). L'ancienne planche de la question 2 (`protocole_quatre_tests.svg`, 940 unités de large) donnait le verdict :
+retirée. Le schéma du banc de l'activité 2 ter : les deux sacs étaient à 6 unités l'un de l'autre (✘ contact de
+`controle_schemas.mjs`) ; ils sont séparés de 16 unités, reliés par la corde, page régénérée par `console_jardiniere.py`.
+
+| Commande | Résultat |
+|---|---|
+| `python3 _outils/document_qcm.py documents_qcm_4e_C8.1.json --verifier` | 3 documents, 0 écart |
+| `node _outils/controle_schemas.mjs <lot>` | 0 ✘ (1 ✘ sur `main` : les deux sacs du banc), 8 ⚠ sur les planches anciennes, aucun sur un `doc_…` |
+| `python3 _outils/controle_question_seule.py --chantiers` | le QCM sort de D1 (6 questions sur document) ; reste P1, pas de billet de sortie |
+| `node _outils/balayer_questions_qcm.mjs --apres <lot>` | 30 questions, 6 illustrées, 90 écrans d'aide, 0 écart |
+| `node _outils/qcm_aides/banc_aides.mjs <qcm>` | 0 refus |
+| `node tests_protocole_4e_C8.1.mjs` · `tests_4e_C8.mjs .` · `tests_simulation_4e_C8.1.mjs` · `tests_regle_311_4e_C8.1.mjs` | 18 / 18 · 54 / 54 · 13 / 13 · 34 / 34 |
+| `controle_unites`, `controle_indices_qcm`, `verif_qcm_coherence`, `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `poser.py --verifier` | sans écart |
+
+Regardé à 312 px (les trois documents seuls) et à 390 px dans le QCM (questions 2, 15, 18, 19) : texte lisible sans loupe,
+0 erreur JavaScript.
+
+Non exécuté : un vrai téléphone, Firefox, Safari.
+
+## Reprise du 25/11/2026 (fin de journée) — le billet de sortie (n°330)
+
+À la fin de la séance 4, juste avant le Bonus : `<section class="card" id="billetSortie">`, environ 5 minutes, seul et sans
+aide, sur le crochet à cartable (un objet que la séquence n'a pas étudié). Deux réponses écrites (4e_C8.2 : l'essai de
+tenue ; 4e_C8.3 : l'étape qui teste le comportement), deux versions étayées, une correction complète avec le critère de
+chaque question et deux contre-exemples. Aucun bouton. En chemin : les corrections des activités 2 bis et 2 ter
+(écrites par `console_jardiniere.py`) cousaient leurs idées par des « ; » ; chaque idée a maintenant sa ligne.
+
+| Commande | Résultat |
+|---|---|
+| `node tests_4e_C8.mjs .` | **56 / 56** — deux tests ajoutés : la forme du billet (deux zones, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton) ; la réponse écrite survit au rechargement. Le compte des durées passe à 8 (le billet a la sienne). |
+| `node tests_regle_311_4e_C8.1.mjs` · `tests_protocole_4e_C8.1.mjs` · `tests_simulation_4e_C8.1.mjs` | 34 / 34 · 18 / 18 · 13 / 13 |
+| `python3 _generation/console_jardiniere.py` | la page et les attendus sont à jour |
+| `python3 _outils/audit_aeration.py --strict` (séquence, synthèses élève et professeur) | 0 écart (sur `main` : C1 1, C2 5 dans les corrections 2 bis et 2 ter) |
+| `python3 _outils/controle_question_seule.py --chantiers` | la séquence sort de P1 |
+| `node _outils/controle_squelette.mjs`, `banc_generique.mjs` (mode mission), `banc_papier.py` (4 fiches, 15 pages) | verts |
+| `controle_unites`, `controle_hierarchie`, `controle_sigles`, `controle_liens`, `controle_impression_papier`, `controle_impression.mjs`, `verif_regles_audit` | sans écart |
+
+Regardé à 390 px : le billet, ses versions étayées et sa correction ouvertes ; pas de défilement de côté, 0 erreur
+JavaScript.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

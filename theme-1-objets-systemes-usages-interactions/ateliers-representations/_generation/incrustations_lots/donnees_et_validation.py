@@ -45,5 +45,6 @@ ENTREES = [
                "d'un jardin partagé, avec son <b>diagramme des exigences</b>&nbsp;: relie chaque exigence à son test, juge "
                "les résultats du prototype avec la <b>flexibilité</b>, puis écris un protocole. Un exercice, environ un "
                "quart d'heure&nbsp;; il se vérifie tout seul et a sa correction complète.",
-         suite="deux exercices pour lire le diagramme et écrire un bloc d'exigence, et le QCM de l'atelier"),
+         suite="deux exercices pour lire le diagramme et écrire un bloc d'exigence, et le QCM (questionnaire à choix "
+               "multiples) de l'atelier"),
 ]

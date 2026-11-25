@@ -37361,6 +37361,168 @@ la fiche pédagogique (le point « ce qui reste à faire » est barré) ; la not
 `controle_unites`, `controle_liens`, `enrichir.py --verifier-tout` sans écart. Vu à 390 px : la problématique, sa
 correction et la carte de la synthèse, sans défilement de côté.
 
+## 25/11/2026 — Structure des pages, thème 1 : chaque page a sa zone de contenu principal (`<main>`) et un titre de niveau 1
+
+**La décision.** Pascal, 25/11/2026 (« 1a ») : corriger, thème par thème, les défauts de structure qu'axe-core mesure
+sans les refuser et que l'audit externe du 01/11 lui avait laissés — 140 pages sans zone de contenu principal
+(`landmark-one-main`), 49 pages dont un titre saute un niveau (`heading-order`).
+
+**Thème 1.** 26 pages sans `<main>` : les 24 synthèses (élève et professeur), la carte des représentations
+(`_reperes/`) et l'activité bonus 2FA de `4e_C1.4`. `<main>` s'ouvre juste après la barre de navigation du site
+(`#navharm`) et se ferme avant le `<footer>` de premier niveau, ou avant `</body>` ; rien d'autre ne bouge (outil de
+session `poser_main.py`, qui saute une page qui a déjà son `<main>`). La carte porte des incrustations d'ateliers :
+`incrustations.py --verifier` la dit toujours à jour. L'activité bonus 2FA n'avait aucun `<h1>` : son bandeau « 💻
+Bienvenue dans la cybersécurité — Séquence 4e » le devient, avec l'allure qu'il avait (`h1.neon`).
+
+**Vérifié.** Les 27 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 134 pages du thème 1 : `landmark-one-main` 26 → 0, `page-has-heading-one` 1 → 0, `region` 591 → 277
+nœuds ; aucun défaut grave. `controle_impression` à 0. Les titres qui sautent un niveau (13 au thème 1) viennent dans un
+lot à part.
+
+## 25/11/2026 — QCM de 4e_C8 : six questions sur document dessiné pour le téléphone (thème 3)
+
+**La décision.** « 1 oui » de Pascal (25/11/2026, 16 h 38), à la proposition : le QCM de 4e_C8 n'a que 3 questions sur
+document, il en faut au moins 6 (n°345) ; dessiner trois documents pour le téléphone et y accrocher trois questions.
+
+**Ce qui change** (`documents_qcm_4e_C8.1.json`, dessinés par `_outils/document_qcm.py`) :
+- « Les quatre essais du support » : pour chaque essai, l'attendu écrit avant et l'observé, sans verdict. La question 15
+  (« Trois oui, un non ») s'y lit : il faut comparer avant de décider. La question 2 s'y lit aussi : son ancienne planche
+  (`protocole_quatre_tests.svg`, 940 unités de large, texte minuscule au téléphone) écrivait « non conforme » et « à
+  améliorer » — elle donnait le verdict. Elle est retirée.
+- Un extrait du protocole de l'essai de la console (la pièce, la charge, la mesure), le cadre du critère vide : la
+  question 18 demande ce qu'il faut y écrire.
+- Le relevé de la flèche : 0 mm à 0 kg, 4,1 mm à 11 kg, les cases de 22 et 33 kg vides. La question 19 s'y lit. Les
+  nombres sont ceux du modèle `console_jardiniere.py` (n°233).
+- Les pourquoi des questions 2 et 15 renvoient au cadre à relire, avec l'étape suivante.
+- Trouvé en chemin : sur le schéma du banc de l'activité 2 ter (posé le 25/11 par la PR #911), les deux sacs de sable
+  étaient à 6 unités l'un de l'autre, refusés par `controle_schemas.mjs` (n°315). Ils sont séparés de 16 unités, reliés par
+  la corde ; la page est régénérée par le modèle.
+
+**Mesuré** : `controle_question_seule.py --chantiers` : le QCM sort de D1 (40 QCM restent sous six questions sur
+document dans le dépôt, 41 sur `main`) ; `controle_schemas.mjs` sur le lot : 0 ✘ (1 sur `main`) ; `balayer_questions_qcm.mjs
+--apres` : 30 questions, 6 illustrées, 0 écart ; `banc_aides.mjs` 0 refus ; les quatre bancs du lot verts (18, 54, 13, 34
+tests) ; contrôles des QCM sans écart.
+
+**Reste** : la séquence 4e_C8 n'a pas de billet de sortie (n°330, P1).
+
+## 25/11/2026 — Structure des pages, thème 3 : chaque page a sa zone de contenu principal (`<main>`), un en-tête de tableau nommé
+
+Suite des thèmes 1 et 2 (PR #921, #923), même geste, 80 pages sans `<main>` : les 62 synthèses, les pages-pointeurs
+des TP de CAO et de l'atelier de planification, les fiches arts et maths, deux lexiques, le TP modèle.
+- **Les quatre TP de CAO sont engendrés** (`atelier-cao/_generation/build_tp.py`, qui les reproduisait à l'identique,
+  vérifié avant) : `<main>` est posé dans le gabarit, puis les quatre pages sont refaites ; `verif_chaine.py` : chaque
+  page est exactement ce que son scénario produit.
+- `tp_5e_de_onshape` : la quatrième colonne du tableau des couleurs de métaux (les pastilles) avait un en-tête vide
+  (`empty-table-header`). Un en-tête visible l'élargissait et le faisait défiler à 390 px : il reçoit un nom lu
+  seulement, « Aperçu de la couleur », dans le scénario JSON ; empreintes recalculées (`verif_chaine.py --empreintes`).
+- Les 76 autres pages, écrites à la main : `<main>` après la barre de navigation du site, fermé avant le `<footer>` de
+  premier niveau ou avant `</body>`.
+
+Vérifié : les 80 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 177 pages du thème 3 : `landmark-one-main` 80 → 0, `empty-table-header` 1 → 0, `region` 1 274 → 131
+nœuds ; aucun défaut grave ; `controle_impression` à 0 ; `verif_guidage.py` sur les quatre TP : 0 manquement ;
+`tests_verif_effectifs.py` 21 / 21. Les titres qui sautent un niveau (44 au thème 3) viennent dans un lot à part.
+
+## 25/11/2026 — Structure des pages, thème 2 : chaque page a sa zone de contenu principal (`<main>`)
+
+Suite du thème 1 (PR #921), même geste : 34 pages sans `<main>`, les 34 synthèses (élève et professeur) des 17
+séquences. `<main>` s'ouvre après la barre de navigation du site et se ferme avant le `<footer>` de premier niveau, ou
+avant `</body>`. Les deux synthèses de `4e_C6.2` ont un générateur, `synthese_4e_C6.2.py`, mais il est retiré
+depuis le 30/10/2026 (il refuse d'écrire : les deux pages se corrigent à la main) ; elles sont corrigées comme les autres.
+
+Vérifié : les 34 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 98 pages du thème 2 : `landmark-one-main` 34 → 0, `region` 293 → 38 nœuds ; aucun défaut grave ;
+`controle_impression` à 0. Les titres qui sautent un niveau (14 au thème 2) viennent dans un lot à part.
+
+## 25/11/2026 — Structure des pages, thème 1 : les titres ne sautent plus de niveau
+
+Suite de la vague de structure (choix « 1a » de Pascal, 25/11/2026) : `heading-order`, un titre qui descend de plus d'un
+niveau — le plus souvent les titres d'exercices (`.exo > h4`), de versions ou de ressources en `<h4>` posés juste sous
+le `<h2>` d'une activité. Au thème 1, 12 séquences.
+
+**Le geste** (outil de session `niveaux_titres.py`). La balise ne change pas, donc le style non plus : le titre reçoit
+`aria-level`, le niveau qu'il a dans le plan de la page (un de plus que le titre précédent), et les titres de même
+balise qui le suivent dans la même partie reçoivent le même niveau — une suite d'exercices `<h4>` sous un `<h2>`
+devient une suite de niveau 3, lue comme telle. Les zones incrustées par les ateliers ne sont ni lues ni modifiées :
+elles appartiennent à leur générateur. 105 titres dans 12 pages.
+
+**Vérifié.** axe-core, page à l'ouverture, 1 280 et 390 px, sur les 12 pages : `heading-order` 0 (13 avant),
+`aria-allowed-attr` 0. Rendu avant/après identique au pixel près sur 11 pages ; la douzième (`4e_C1.4`) mélange ses
+étiquettes à chaque chargement et ne se compare pas ainsi. `tests_regle_311` des douze dossiers verts ;
+`controle_mode_mission` 0.
+
+**Reste, vu en dépliant les corrections** : dans cinq séquences (`4e_C2.1`, `5e_C2.1`, et `C3.1` des trois niveaux),
+les exercices incrustés gardent leur propre plan (titre de carte en `<h4>`, fiche en `<h3>`, exercice en `<h5>`) :
+c'est le générateur des ateliers (`balise`, `balise_exo` de chaque incrustation) qui le fixe, à reprendre là.
+
+## 25/11/2026 — Incrustations : un bloc réécrit garde les infobulles que la page y avait ; les cinq séquences « en retard » ne l'étaient que pour cela (thème 1 : générateur des ateliers ; aucune page touchée)
+
+**Décision.** Pascal (22/11/2026 : « Continue. Tu as carte blanche pour tout ») ; proposition 2 de la vague des
+infobulles du thème 1 (#892) : reporter à la source ce qui rendait cinq séquences « en retard » sur leur générateur.
+Pascal (25/11/2026) : « Vérifie et continue », puis « il y a d'autres sessions en cours, attention aux conflits » —
+aucune autre session n'a touché `incrustations.py` depuis le 22/11 ; ce lot ne réécrit aucune page.
+
+**Constat.** `incrustations.py --verifier` voyait `3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1` et `3e_C7.3` en retard.
+Ce n'étaient pas des retouches de fond : chaque écart était une infobulle de sigle (LED, IP, PLA) posée dans le bloc
+par les vagues des thèmes 2 et 3, à la première apparition de la séance, et deux notes où « QCM » était expliqué en
+clair dans la page, pas dans la source. Réécrit, le bloc perdait l'infobulle ; `infobuller` ne la reposait pas, puisque
+la page explique déjà le sigle plus haut.
+
+**Ce qui change.**
+- `incrustations.py` : `garder_infobulles` — quand un bloc déjà posé est réécrit, la k-ième apparition d'un sigle
+  reçoit la balise qu'elle avait, tant que le bloc a autant d'apparitions de ce sigle ; sinon rien n'est posé au hasard
+  et `infobuller` (page entière) fait le reste. Même idée que `enrichir.py` (#901) : on garde le balisage de ce qui est
+  déjà écrit.
+- Deux notes portent l'explication à leur source : `donnees_et_validation.py` (4e_C8.1) et `capteur_ny_s3.py`
+  (3e_C7.1), « et le QCM (questionnaire à choix multiples) de l'atelier ».
+- Banc `tests_incrustations_infobulles.py` : 5 / 5 (bloc identique, bloc réécrit ailleurs, nombre d'apparitions
+  changé, sigle dans un attribut, ancien bloc sans infobulle) ; avec le générateur de `main`, il sort en panne.
+
+**Vérifié.** `incrustations.py --verifier` : **25 / 25 séquences à jour** (20 avant), sortie 0 ; régénérées pour de
+vrai, aucune page ne change. Dérive des huit générateurs de `rapport_audit.py` : 0 fichier. Sigles : 0 page avec un
+sigle nu sur 411.
+
+## 25/11/2026 — 4e_C8 : la séquence se ferme par un billet de sortie (thème 3)
+
+**La décision.** « 1 oui » de Pascal (25/11/2026, 17 h 03), à la proposition : la séquence de 4e_C8 n'a pas de billet de
+sortie (n°330) ; l'écrire, deux questions, une version étayée et une correction complète chacune, avant le Bonus, sur un
+objet proche de l'élève.
+
+**Ce qui change** (`sequence_4e_C8_jardin-validation.html`, séance 4) :
+- `<section class="card" id="billetSortie">` après la synthèse, juste avant le Bonus, environ 5 minutes ; la séance
+  l'annonce dans son programme (15 + 15 + 5 + 15 min, sous les 55).
+- L'objet, que la séquence n'a pas étudié : le crochet à cartable vissé sous une table, dans un collège de Martinique ; un
+  cartable pèse au plus 8 kg, le crochet en tient 3 fois plus, et le cartable reste accroché quand on bouscule la table.
+- Question 1 (4e_C8.2) : proposer l'essai de tenue — la charge exigée (24 kg) par paliers, et un critère écrit avant
+  (pas de casse ET retour en place). Question 2 (4e_C8.3) : écrire l'étape qui teste le comportement — une action, ses
+  conditions chiffrées, un résultat attendu observable. 4e_C8.1 n'y est pas : l'activité 2 bis et le QCM la portent.
+- Une correction complète : une réponse possible, le critère de chaque question, deux contre-exemples (✘). Aucun bouton
+  (n°333). Le banc `tests_4e_C8.mjs` le vérifie, et vérifie qu'une réponse survit au rechargement.
+- Trouvé en chemin : les corrections des activités 2 bis et 2 ter (écrites le 22 et le 25/11 par `console_jardiniere.py`)
+  cousaient leurs idées par des « ; » (5 blocs) et un critère tenait en 59 mots d'un seul tenant :
+  `audit_aeration.py --strict` les refusait. Chaque idée a sa ligne ; la page est régénérée par le modèle.
+
+**Mesuré** : `tests_4e_C8.mjs` 56 / 56 ; `tests_regle_311` 34 / 34 ; `tests_protocole` 18 / 18 ; `tests_simulation`
+13 / 13 ; `audit_aeration.py --strict` 0 (séquence et synthèses) ; `controle_question_seule.py --chantiers` : la séquence
+sort de P1 ; `controle_squelette`, mode mission joué, fiche papier (4 fiches), contrôles des unités, sigles, hiérarchie,
+liens, impression et `verif_regles_audit` sans écart. Vu à 390 px.
+
+## 25/11/2026 — Structure des pages, thème 2 : les titres ne sautent plus de niveau
+
+Même geste qu'au thème 1 (PR #925) : `aria-level` sur les titres qui descendaient de plus d'un niveau et leurs frères
+de même balise, balise et style inchangés, zones incrustées non touchées. 13 pages (9 séquences, 4 synthèses
+professeur), 100 titres. Vérifié : axe-core à l'ouverture, 1 280 et 390 px : `heading-order` 14 → 0,
+`aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 13 pages ; `tests_regle_311` des neuf
+dossiers et le banc du Book Train verts ; `controle_mode_mission` 0.
+
+## 25/11/2026 — Structure des pages, thème 3 : les titres ne sautent plus de niveau
+
+Même geste qu'aux thèmes 1 et 2 (PR #925, #927) : `aria-level`, balise et style inchangés, zones incrustées non
+touchées. 22 pages sources, 65 titres ; `3e_C9.2` par sa page tout-en-un, puis `generer_les_quatre_pages.py`
+(stations 1 et 4 refaites). Vérifié : axe-core à l'ouverture, 1 280 et 390 px, sur les 24 pages : `heading-order`
+44 → 0, `aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 24 pages ; `tests_regle_311` des
+22 dossiers 34 / 34 ; `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `controle_mode_mission` 0.
+
 ## 25/11/2026 — Vérification totale, vague 1 : que l'élève comprenne chaque question (transversal : thèmes 1, 2, 3, `_outils`)
 
 **Demande de Pascal (25/11/2026)** : « Fais une vérification totale des trois thèmes. Corrige et fusionne ce qui ne va
