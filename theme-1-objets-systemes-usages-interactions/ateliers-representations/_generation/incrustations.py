@@ -143,6 +143,37 @@ def marqueurs(ident):
     return ("<!-- ateliers-representations:debut %s -->" % ident, "<!-- ateliers-representations:fin %s -->" % ident)
 
 
+# Une infobulle de sigle (n°44) : `<abbr class="sigle" title="…">OST</abbr>`, avec ou sans tabindex
+BALISE_SIGLE = re.compile(r'<abbr class="sigle" title="[^"]*"(?: tabindex="0")?>([^<]+)</abbr>')
+
+
+def _apparitions(src, sigle):
+    """Les apparitions d'un sigle dans le texte (jamais dans une balise) : (début, fin, balise d'infobulle ou None)."""
+    mot = re.compile(r"(?<![\w-])%s(?![\w-])" % re.escape(sigle))
+    vues, pos = [], 0
+    for morceau in re.split(r"(<[^>]+>)", src):
+        if not morceau.startswith("<"):
+            vues += [(pos + m.start(), pos + m.end()) for m in mot.finditer(morceau)]
+        pos += len(morceau)
+    balises = {m.start(1): m for m in BALISE_SIGLE.finditer(src) if m.group(1) == sigle}
+    return [(a, b, balises[a].group(0) if a in balises else None) for a, b in vues]
+
+
+def garder_infobulles(ancien, neuf):
+    """Les infobulles qu'une vague a posées dans un bloc déjà écrit (n°44) passent dans le bloc réécrit : la k-ième
+    apparition d'un sigle reçoit la même balise, tant que le bloc a autant d'apparitions de ce sigle. Sans cela, un
+    bloc régénéré perdait l'infobulle de sa séance — la page ailleurs l'explique, `infobuller` ne la reposait pas — et
+    `--verifier` voyait cinq pages des thèmes 2 et 3 en retard pour cette seule raison (constaté le 25/11/2026)."""
+    for sigle in dict.fromkeys(m.group(1) for m in BALISE_SIGLE.finditer(ancien)):
+        avant, apres = _apparitions(ancien, sigle), _apparitions(neuf, sigle)
+        if len(avant) != len(apres):
+            continue
+        for (_, _, balise), (a, b, deja) in sorted(zip(avant, apres), key=lambda x: -x[1][0]):
+            if balise and not deja:
+                neuf = neuf[:a] + balise + neuf[b:]
+    return neuf
+
+
 def poser(inc, texte):
     debut, fin = marqueurs(inc["id"])
     # `html` : le nom d'un texte du module (un dessin, sans exercice) — posé tel quel, sans le moteur des exercices
@@ -158,7 +189,7 @@ def poser(inc, texte):
     bloc = "%s\n%s\n%s" % (debut, contenu, fin)
     if debut in texte:
         i, j = texte.index(debut), texte.index(fin) + len(fin)
-        texte = texte[:i] + bloc + texte[j:]
+        texte = texte[:i] + garder_infobulles(texte[i:j], bloc) + texte[j:]
     elif "remplacer" in inc:
         a, b = inc["remplacer"]
         i = texte.index(a)
