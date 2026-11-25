@@ -37506,3 +37506,11 @@ objet proche de l'élève.
 13 / 13 ; `audit_aeration.py --strict` 0 (séquence et synthèses) ; `controle_question_seule.py --chantiers` : la séquence
 sort de P1 ; `controle_squelette`, mode mission joué, fiche papier (4 fiches), contrôles des unités, sigles, hiérarchie,
 liens, impression et `verif_regles_audit` sans écart. Vu à 390 px.
+
+## 25/11/2026 — Structure des pages, thème 2 : les titres ne sautent plus de niveau
+
+Même geste qu'au thème 1 (PR #925) : `aria-level` sur les titres qui descendaient de plus d'un niveau et leurs frères
+de même balise, balise et style inchangés, zones incrustées non touchées. 13 pages (9 séquences, 4 synthèses
+professeur), 100 titres. Vérifié : axe-core à l'ouverture, 1 280 et 390 px : `heading-order` 14 → 0,
+`aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 13 pages ; `tests_regle_311` des neuf
+dossiers et le banc du Book Train verts ; `controle_mode_mission` 0.

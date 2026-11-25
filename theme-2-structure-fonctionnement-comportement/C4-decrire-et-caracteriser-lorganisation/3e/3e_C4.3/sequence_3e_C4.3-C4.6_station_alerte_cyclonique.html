@@ -2296,14 +2296,14 @@ body.ms .cac-reserve{--cac-bas:84px}
 <section class="card">
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <div class="versions">
-    <div class="version va"><h4>🅰 Matériel réel</h4>
+    <div class="version va"><h4 aria-level="3">🅰 Matériel réel</h4>
       <p>Arduino UNO (ou R4 Minima) + Grove Base Shield (sélecteur <b>5 V (volts)</b>) + capteur de luminosité sur <b>A0</b> + écran LCD RGB.
       Lire la valeur brute <code>analogRead(A0)</code> (0-1023) et l'afficher : c'est le CAN en vrai !</p>
       <p style="color:var(--sub)">Sécurité : très basse tension uniquement, câblage vérifié par le professeur avant branchement <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr>.</p></div>
-    <div class="version vb"><h4>🅱 Simulation</h4>
+    <div class="version vb"><h4 aria-level="3">🅱 Simulation</h4>
       <p>Sur <b>VittaScience</b> (mode Arduino), le même montage se simule en ligne : capteur analogique → valeur 0-1023 → affichage.
       Aucun matériel, un compte n'est pas obligatoire pour tester.</p></div>
-    <div class="version vc"><h4>🅲 Sans matériel</h4>
+    <div class="version vc"><h4 aria-level="3">🅲 Sans matériel</h4>
       <p>Tout est dans cette page : simulateur de CAN (activité 3) et jeu de données 48 h enregistré (activité 6, fichiers
       <a href="donnees/mesures_station_48h_simulees.csv">CSV</a> · <a href="donnees/mesures_station_48h_simulees.ods">ODS</a> · <a href="donnees/mesures_station_48h_simulees.xlsx">XLSX</a>). <br>Personne n'est pénalisé si le matériel manque.</p></div>
   </div>
@@ -3116,15 +3116,15 @@ body.ms .cac-reserve{--cac-bas:84px}
   <h2>📝 Synthèse de la séquence — à retenir</h2>
   <details class="bonus-replie" id="synthese-page"><summary>📝 Les quatre parties de la synthèse et le vocabulaire — à relire avant le <abbr class="sigle" title="questionnaire à choix multiples">QCM</abbr></summary>
   <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 6 — rien de nouveau ici.</p>
-  <h4>1. La chaîne d'information (activités 1-2)</h4>
+  <h4 aria-level="3">1. La chaîne d'information (activités 1-2)</h4>
   <p><b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (microcontrôleur + programme et ses seuils) → <b>COMMUNIQUER</b> (antenne, sirène, application). <br>La chaîne d'énergie (panneau solaire, batterie) alimente ces blocs mais ne transporte aucune information. <br>À chaque étape la nature du signal change : grandeur physique → signal électrique → donnée numérique → message.</p>
-  <h4>2. De l'analogique au numérique (activité 3)</h4>
+  <h4 aria-level="3">2. De l'analogique au numérique (activité 3)</h4>
   <p>Le <b>CAN</b> échantillonne un signal continu et produit un entier sur n bits : <b>2ⁿ paliers</b> (10 bits → 1024 valeurs, de 0 à 1023). <br><b>valeur = min + N × (étendue ÷ (2ⁿ − 1))</b>. <br>La donnée numérique est une approximation dont la précision dépend du nombre de bits.</p>
-  <h4>3. Représenter les informations en données (activité 4)</h4>
+  <h4 aria-level="3">3. Représenter les informations en données (activité 4)</h4>
   <p>Chaque information reçoit un <b>type</b> (entier, décimal, texte, booléen, date) et un <b>descripteur</b> explicite (<code>vent_kmh</code>). <br>Un <b>enregistrement</b> regroupe les données d'un même instant. Avec n bits on code 2ⁿ valeurs distinctes.</p>
-  <h4>4. Fichiers : mise en forme, transmission, stockage (activités 5-6)</h4>
+  <h4 aria-level="3">4. Fichiers : mise en forme, transmission, stockage (activités 5-6)</h4>
   <p>Le format suit la nature de l'information : <b>.csv/.ods</b> tableau · <b>.json</b> message structuré · <b>.png/.svg</b> image · <b>.mp3</b> son · <b>.pdf</b> document. <br>Transmettre = <b>copier</b> vers un autre équipement ; stocker = conserver, souvent en double (<b>redondance</b>) pour résister aux pannes.</p>
-  <h4>🇬🇧 Vocabulaire utile</h4>
+  <h4 aria-level="3">🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">capteur = sensor</span><span class="tag">CAN = ADC</span><span class="tag">donnée = data</span><span class="tag">booléen = boolean</span><span class="tag">chaîne de caractères = string</span><span class="tag">fichier = file</span><span class="tag">stockage = storage</span><span class="tag">téléverser = to upload</span></p>
   </details>
 </section>
