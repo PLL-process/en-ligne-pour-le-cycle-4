@@ -201,6 +201,9 @@
     .draggable {
       cursor: grab; background: #14335f; border: 1px solid var(--line); border-radius: 8px;
       padding: 8px 12px; font-size: 0.9rem; min-width: 80px; text-align: center;
+      /* une étiquette est une cible de doigt entière (25/11/2026) : en ligne, son rembourrage débordait sur les lignes
+         voisines et elle ne mesurait que 23 px de haut, à moitié couverte par sa voisine (axe-core, « target-size ») */
+      display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
       transition: all .2s ease; user-select: none;
     }
     .draggable:hover, .draggable:active { transform: scale(1.05); box-shadow: var(--glow); }
