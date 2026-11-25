@@ -37204,3 +37204,16 @@ disaient déjà seulement leur texte.
 
 Contrôles : `controle_axe.mjs` sur la page : 0 nœud grave ; `controle_page_ouverte.mjs --axe` (version qui lit aussi
 `wcag21a`) : 0 ; `tests_regle_311_4e_C1.4.mjs` 34 / 34 ; `tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_mode_mission` 0.
+
+## 25/11/2026 — Thème 1 : les étiquettes à glisser de 4e_C1.4 deviennent des cibles de doigt entières
+
+Le contrôle de la page ouverte lit maintenant les mêmes règles WCAG que `controle_axe.mjs`, dont `wcag22aa` (PR de
+`_outils/` à suivre). À 390 px, il trouve dans `4e_C1.4/sequence-cybersecurite-protection-donnees.html` deux ou trois
+étiquettes de l'activité 1.a trop petites (« target-size ») : la `span` restait en ligne, son rembourrage débordait sur
+les lignes voisines, et chaque étiquette ne mesurait que 23 px de haut, à moitié couverte par sa voisine — le nombre
+variait d'une mesure à l'autre, selon l'ordre où les étiquettes se mélangent. Les étiquettes deviennent des boîtes
+(`inline-flex`) de 44 px de haut au moins. Mesuré trois fois : 0 défaut ; les six étiquettes de 1.a font 44 px. Vu à
+390 px.
+
+Contrôles : `controle_page_ouverte.mjs --axe` (règles alignées) ×3 : 0 ; `tests_regle_311_4e_C1.4.mjs` 34 / 34 ;
+`tests_4e_C1.4_quiz.mjs` 32 / 32 ; `controle_tactile.py` et `controle_impression` à 0.
