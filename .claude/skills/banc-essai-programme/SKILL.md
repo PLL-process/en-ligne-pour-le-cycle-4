@@ -21,8 +21,10 @@ consigne qui fixe 60). Rien de tout cela n'était nouveau dans les règles : la 
   `jugerBarr` ; 3e_C9.1, la preuve rangée dans `window.__exp`).
 - **Le banc-python** (`_outils/banc_python/`, posé par `poser.py`) : un sous-ensemble du Python du collège, synchrone,
   qui rend la trace des tests évalués (« 118 > 118 → faux ») pour un chemin suivi pas à pas. Il a été écrit pour
-  `3e_C6.1` sans avoir consulté l'éditeur commun d'abord — erreur de méthode, dite au journal ; la décision de les
-  unifier revient à Pascal. Ce qu'il sait et ne sait pas : `_outils/banc_python/LISEZMOI.md`.
+  `3e_C6.1` sans avoir consulté l'éditeur commun d'abord — erreur de méthode, dite au journal. **Décision du
+  22/11/2026** (carte blanche de Pascal) : on garde les deux, l'éditeur commun par défaut, le banc-python seulement pour
+  le pas à pas ou la vérification instantanée du Python du collège ; garde-fou : le banc et CPython donnent les mêmes
+  sorties sur les programmes du lot (`tests_banc_python.mjs`, test 20). Détail : `_outils/banc_python/LISEZMOI.md`.
 - La leçon générale : un audit qui propose un outil (« Skulpt, à prototyper ») propose parfois ce que le dépôt a déjà.
   Chercher dans `_outils/`, `_ressources-communes/` et le journal (`grep -n "<outil>" JOURNAL_DES_DECISIONS.md`) avant
   de construire, et avant de numéroter une règle (`python3 _outils/registre_regles.py --prochain`, puis lire les
@@ -110,5 +112,5 @@ vérification du programme. Un ⚠ M se relit à la main : le motif décide-t-il
 
 ## Réponse à Pascal
 
-Format `reponses-actionnables`. Les décisions qui lui reviennent (🔶) : unifier les deux exécuteurs ; un seuil de
+Format `reponses-actionnables`. Les décisions qui lui reviennent (🔶) : un seuil de
 tolérance ; une écriture que l'outil devrait apprendre à lire.

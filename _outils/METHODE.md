@@ -27,7 +27,7 @@ Méthode et grille d'audit sur 100 points : skill `cadrage-cles-de-voute`.
 | 3 | Trois lignes avant de commencer | n°337 | apprendre, savoir faire, réussir — avec les mêmes seuils que le code (n°338) |
 | 4 | Une question se lit seule | n°343 (n°331) | objet nommé, nombres, état de départ, unité sous les yeux (n°350) ; le schéma dont elle parle affiché avec elle (n°331) |
 | 5 | Choisir n'est pas expliquer | n°346 | une réponse rédigée, sans propositions, sur un document inédit |
-| 6 | Un score dit quoi reprendre | n°347 | rempli, réussi et à reprendre séparés ; numéros sans la solution |
+| 6 | Un score dit quoi reprendre | n°347 (n°333) | rempli, réussi et à reprendre séparés ; numéros sans la solution ; le score juge la production réelle — un programme exécuté, pas son texte ; un essai, pas une prévision (n°333, rangée ici le 22/11/2026) |
 | 7 | Le document parle la langue du cours | n°348 | mêmes formes, mots, nombres que le rappel ; aucun document qui porte sa réponse |
 
 Et, côté fabrique : **une règle n'existe que mesurée sur tout le site** (n°95, n°211), **et le contrôle regarde la

@@ -11,6 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { spawnSync } from 'node:child_process';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname);
 const ctx = {}; vm.createContext(ctx);
@@ -158,6 +159,57 @@ ok('18 · listes, lambda, { }, for, f-string formatée, b"…", « ; » après i
 const r19 = B.executer('if 3 > 2\n    x = 1');
 const r19b = B.executer('x = 1 if True');
 ok('19 · « if 3 > 2 » sans deux-points et « 1 if True » sans else restent des SyntaxError', !r19.ok && r19.erreur.type === 'SyntaxError' && !r19b.ok && r19b.erreur.type === 'SyntaxError');
+
+// 20 · le banc et le vrai Python disent la même chose (décision du 22/11/2026 : deux exécuteurs gardés, à condition
+//      qu'ils ne divergent jamais sur ce que le banc accepte). Chaque programme est joué sur les dix vents par
+//      banc-python ET par CPython (python3 -I), avec les mêmes fonctions simulées ; les sorties doivent être identiques.
+const HARNAIS = `import sys, json
+vent = float(sys.argv[1]); ev = []
+def lire_capteur(n): return vent if n == "anemometre" else 1013
+def envoyer(m): ev.append("ENVOI " + str(m))
+def activer_sirene(): ev.append("SIRENE")
+def activer_gyrophare(): ev.append("GYRO")
+src = sys.stdin.read()
+try:
+    exec(compile(src, "station.py", "exec"), {"lire_capteur": lire_capteur, "envoyer": envoyer, "activer_sirene": activer_sirene, "activer_gyrophare": activer_gyrophare})
+    print(json.dumps({"ok": True, "ev": ev}))
+except Exception as e:
+    print(json.dumps({"ok": False, "type": type(e).__name__}))
+`;
+function cpython(code, vent) {
+  const r = spawnSync('python3', ['-I', '-c', HARNAIS, String(vent)], { input: code, encoding: 'utf8' });
+  if (r.error || r.status !== 0) return null;
+  return JSON.parse(r.stdout.trim().split('\n').pop());
+}
+function banc(code, vent) {
+  const ev = [];
+  const r = B.executer(code, { fonctions: {
+    lire_capteur: a => a[0] === 'anemometre' ? vent : 1013,
+    envoyer: a => { ev.push('ENVOI ' + (a[0] && a[0].v !== undefined ? a[0].v : a[0])); return null; },
+    activer_sirene: () => { ev.push('SIRENE'); }, activer_gyrophare: () => { ev.push('GYRO'); } } });
+  return r.ok ? { ok: true, ev } : { ok: false, type: r.erreur.type };
+}
+const VARIANTES = {
+  'v2': V2,
+  'v2 apostrophes': V2.replace(/"/g, "'"),
+  'v2 >= à 118': V2.replace('vent_kmh > SEUIL_OURAGAN', 'vent_kmh >= SEUIL_OURAGAN'),
+  'v2 f-string': V2.replace('message = "Vigilance " + vigilance', 'message = f"Vigilance {vigilance}"'),
+  'v2 is True / ternaire / ;': V2.replace('if gyrophare_actif:', 'if gyrophare_actif is True:').replace('sirene_active = False', 'sirene_active = True if vent_kmh > 1000 else False; x = 0'),
+  'v2 sans initialisation': V2.replace('gyrophare_actif = False\n', ''),
+  'v2 == au lieu de =': V2.replace('    vigilance = "rouge"', '    vigilance == "rouge"'),
+};
+const py0 = cpython('x = 1', 55);
+if (!py0) {
+  ok('20 · banc-python et CPython : NON JOUÉ (python3 absent) — ce test n\'a rien vérifié', false, 'installer python3 pour le jouer');
+} else {
+  const ecarts = [];
+  for (const [nom, code] of Object.entries(VARIANTES)) for (const v of DIX) {
+    const a = banc(code, v), b = cpython(code, v);
+    const ja = a.ok ? JSON.stringify(a.ev) : 'erreur ' + a.type, jb = b.ok ? JSON.stringify(b.ev) : 'erreur ' + b.type;
+    if (ja !== jb) ecarts.push(`${nom} à ${v} km/h : banc ${ja} · Python ${jb}`);
+  }
+  ok(`20 · banc-python et le vrai Python (CPython) donnent les mêmes sorties : ${Object.keys(VARIANTES).length} programmes × 10 vents`, ecarts.length === 0, ecarts.slice(0, 3).join(' | '));
+}
 
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d && !t.ok ? ' — ' + t.d : ''}`).join('\n'));

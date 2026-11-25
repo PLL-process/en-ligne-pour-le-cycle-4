@@ -82,8 +82,8 @@ C'est corrigé, et la règle est maintenant mesurée sur tout le site (`controle
 | Version active toujours visible ; « Effacer » éloigné et qui dit ce qu'il efface | ✅ |
 | Barre d'outils réordonnée ; un seul panneau de code | ✅ |
 | Virgule décimale acceptée à la saisie | 💡 Non traité. Le banc explique `float("4,0")` (« un nombre décimal s'écrit avec un point »). |
-| PNG de situation à 2 Mo | 🔶 Les conditions de Canva interdisent d'en retirer les métadonnées de provenance : une version allégée se réexporte depuis Canva. |
-| Skulpt « à prototyper » | ♻️ Le dépôt a, depuis le 04/11, un éditeur Python commun bâti sur Skulpt (`_ressources-communes/editeur-python/`). Il n'a pas été consulté avant d'écrire le banc-python : erreur de méthode (§ 4). 🔶 Unifier ou garder les deux (`_outils/banc_python/LISEZMOI.md`). |
+| PNG de situation à 2 Mo | ✅ décidé (§ 6) — Les conditions de Canva interdisent d'en retirer les métadonnées de provenance : une version allégée se réexporte depuis Canva. |
+| Skulpt « à prototyper » | ♻️ Le dépôt a, depuis le 04/11, un éditeur Python commun bâti sur Skulpt (`_ressources-communes/editeur-python/`). Il n'a pas été consulté avant d'écrire le banc-python : erreur de méthode (§ 4). ✅ décidé (§ 6) : garder les deux, chacun à sa place (`_outils/banc_python/LISEZMOI.md`). |
 | Vue en blocs (Blockly) | 💡 Non retenue : trois éditeurs, c'est trop ; la n°308 veut de vraies captures de Vittascience. |
 | Table de référence du banc (dix vents) | ✅ Reprise telle quelle. |
 | « Simulation scolaire — seuils fictifs du club » ; accessibilité de l'alerte ; justice du retour | ✅ |
@@ -101,7 +101,7 @@ C'est corrigé, et la règle est maintenant mesurée sur tout le site (`controle
 | P2 | Le seuil de l'activité 5 se lisait « 6 / 8 » pour `controle_validations.py`. | ✅ Écrit `ok+diag===8`, ce qui revient au même et se lit juste. |
 | P2 | La carte « Le contrat de la séquence » répétait l'ouverture. | ✅ Retirée. |
 | P2 | Les synthèses élève et professeur parlaient de « verte/jaune » et d'« analyse du code ». | ✅ |
-| P2 | Le QCM n'avait pas de `<main>` (comme **77 QCM sur 78** du site). | ✅ Pour ce QCM ; 🔶 pour les autres (gabarit commun). |
+| P2 | Le QCM n'avait pas de `<main>` (comme **77 QCM sur 78** du site). | ✅ Pour ce QCM ; puis pour les 77 autres (§ 6). |
 | P2 | Six sigles nus (CRCN, DNB, IDE, LED, OST, QCM). | ✅ En clair ou en infobulle, selon la vague n°44 du même jour. |
 | P2 | Aucune reprise de mémoire aux séances 2 et 3 (n°369, posée le jour même). | ✅ Deux questions par séance, et un champ « ce qui reste flou » au bilan (n°372). |
 | P2 | Le tableau du banc était serré à 390 px. | ✅ Il devient des cartes. |
@@ -115,7 +115,7 @@ C'est corrigé, et la règle est maintenant mesurée sur tout le site (`controle
 - **Règle d'or n°374 (en essai)** — On prévoit avant d'essayer, et une prévision juste ne vaut pas un essai.
 - **N°333 mesurée sur tout le site** : `_outils/controle_verification_execute.py`, éprouvé sur 12 cas connus.
   - Mesure de départ : 7 pages à éditeur ; 3 exécutent le programme, 0 le juge par son seul texte, 4 n'ont pas de vérification du code.
-- **La n°333 rangée sous la clé de voûte n°6** (« un score dit quoi reprendre ») 🔶 : un score ne dit vrai que s'il juge
+- **La n°333 rangée sous la clé de voûte n°6** (« un score dit quoi reprendre »), décidé le 22/11/2026 (§ 6) : un score ne dit vrai que s'il juge
   la production réelle. J'avais d'abord proposé d'en faire une huitième clé ; l'audit #867 du même jour a décidé « sept,
   pas neuf » — une règle nouvelle précise l'une des sept.
 - **Skill `banc-essai-programme`** (nouveau). Mises à jour de `validations-qui-disent-vrai` (§ 2 ter), `relire-un-audit-externe`, `cadrage-cles-de-voute` (question 18, la n°333 sous la clé 6) et `controle-qualite-lot` (le nouveau contrôle ; les bancs des sous-dossiers de `_outils/`).
@@ -128,3 +128,22 @@ C'est corrigé, et la règle est maintenant mesurée sur tout le site (`controle
 
 Un vrai téléphone ou une tablette, un lecteur d'écran, le zoom 200 % de bout en bout, une impression réelle, la durée
 des séances en classe, un élève.
+
+## 6. Les quatre décisions (carte blanche de Pascal, 22/11/2026)
+
+1. **Deux moteurs Python, une seule vérité.** On garde l'éditeur commun (Skulpt) **par défaut** pour tout vrai Python,
+   et le banc-python **seulement** pour le chemin suivi pas à pas ou la vérification instantanée du Python du collège.
+   Garde-fou : le test 20 de `tests_banc_python.mjs` fait tourner 7 programmes du lot (et leurs variantes) dans le
+   banc ET dans CPython, vent par vent, et exige les mêmes sorties (25 / 25). Unifier (donner la trace à l'éditeur
+   commun) attendra qu'une deuxième séquence ait besoin du pas à pas.
+2. **La n°333 se range sous la clé de voûte n°6** (« un score dit quoi reprendre ») : un score ne dit vrai que s'il juge
+   la production réelle. Écrit au tableau des règles, dans `_outils/METHODE.md` et dans `cadrage-cles-de-voute`.
+3. **Le `<main>` sur les 78 QCM** : `_outils/poser_main_qcm.py` (idempotent, `--ecrire`), éprouvé sur 8 cas connus
+   (`tests_poser_main_qcm.py`), plus le gabarit `ateliers-representations/_generation/gabarit_qcm.tpl` (son générateur
+   reproduit les 7 QCM à l'octet). 78 QCM sur 78 ont leur région principale.
+4. **L'image de situation garde son fichier d'origine.** Un export JPG allégé a été fait depuis Canva (création
+   `DAHaEhWWmSY`, 1 536 px, qualité 82), mais le serveur d'export de Canva n'est pas joignable depuis l'atelier : le
+   fichier n'a pas pu entrer dans le dépôt. Les huit copies sont identiques (git ne stocke qu'un objet), les séquences
+   la chargent en différé, les synthèses tout de suite pour l'impression. À reprendre si une page s'ouvre trop
+   lentement en classe : exporter depuis Canva et remplacer les huit copies dans le même commit.
+
