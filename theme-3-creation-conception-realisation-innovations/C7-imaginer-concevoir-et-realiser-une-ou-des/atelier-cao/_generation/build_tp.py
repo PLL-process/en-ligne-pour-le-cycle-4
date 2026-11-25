@@ -410,6 +410,7 @@ def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Pat
   <a href="%(retour)s">&#8592; Revenir à la séquence de %(niveau)s</a>
   <a href="tp_modele_demonstration.html">&#128209; Le modèle de démonstration</a>
 </nav>
+<main>
 <div class="page">
 <h1>%(titre)s</h1>
 <p class="sous">%(sous)s</p>
@@ -427,6 +428,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 %(apres)s<footer>%(pied)s%(licence)s
 </footer>
 </div>
+</main>
 @@LOUPE@@
 </body>
 </html>
