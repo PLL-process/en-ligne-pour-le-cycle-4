@@ -184,7 +184,8 @@
     <br>Vérifier, par des tests, que le support du capteur répond au besoin et aux contraintes, avant de le généraliser.</li>
     <li><b>🛠 Ce que tu dois savoir faire</b>
     <br>Paramétrer une simulation, et écrire un attendu qui se tranche.
-    <br>Écrire un protocole qu'un autre peut exécuter sans toi.</li>
+    <br>Écrire un protocole qu'un autre peut exécuter sans toi.
+    <br>Proposer l'essai d'une vraie pièce : jusqu'à la charge exigée, avec un critère chiffré écrit avant.</li>
     <li><b>✅ Comment réussir</b>
     <br>Écris le résultat attendu avant le test, jamais après.
     <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
@@ -430,28 +431,28 @@ const QUESTIONS = [
  
  d:["L'accord d'un adulte ne remplace pas un essai.","Nommer une cause probable est le début du diagnostic, pas sa fin : tant qu'on ne l'a pas départagée d'une autre, ce n'est qu'une hypothèse.","Le fournisseur n'entre pas dans le raisonnement technique.",""],
  ret:"Diagnostic = cause probable + un test qui ne fait varier QU'UNE chose."},
-{c:"PRO",n:"Le test discriminant",q:"Qu'est-ce qui fait qu'un test est « discriminant » ?",
- o:["il est fait par plusieurs personnes à la fois","il est plus rapide à mener que tous les autres tests du banc","son résultat diffère selon l'hypothèse qui est vraie","il utilise un appareil de mesure et pas l'œil"],r:2,
- expl:"Un test dont les deux hypothèses prédisent le même résultat n'apprend rien, même s'il est bien exécuté.",
- ex:"Attache inox à −8 °C : si elle tient, c'est le matériau ; si elle casse aussi, c'est la conception de l'attache.",
- err:"Changer plusieurs choses à la fois : si ça remarche, on ignore pourquoi.",
- d:["Le nombre d'observateurs ne rend pas un test concluant.","La rapidité est un confort, pas une propriété logique.","","Un appareil précis appliqué à un mauvais test ne le sauve pas."],
- ret:"Deux hypothèses, deux résultats attendus différents."},
-{c:"PRO",n:"Ce que la 3e ajoutera",q:"En 3e, ce protocole deviendra une « recette avec procès-verbal ». Qu'est-ce que cela ajoute ?",
- nuance:"« Un papier signé, ça prouve vraiment quelque chose ? » Pas tout seul, non — et c'est important de ne pas se raconter d'histoires. Un procès-verbal ne rend pas un mauvais essai valable : si le protocole était bancal, le procès-verbal enregistrera fidèlement un résultat qui ne veut rien dire. Ce qu'il apporte, c'est autre chose : il rend l'essai VÉRIFIABLE. Des mois plus tard, quelqu'un peut lire ce qui a été fait, repérer ce qui clochait, et refaire l'essai dans les mêmes conditions. Une preuve tient sur deux pieds : un protocole solide, et une trace fidèle. Le procès-verbal n'est que le second.",
- o:["davantage de tests, parce que le niveau est plus élevé","la signature du professeur, qui valide seul le résultat obtenu","la trace : ce qui a été fait, par qui, quand, et le résultat","une mise en page soignée, imprimée et mise en couleurs"],r:2,
- expl:"Le procès-verbal ajoute la traçabilité : qui, quand, avec quel matériel, et quel résultat. On peut y revenir des mois plus tard et savoir exactement ce qui s'est passé.",
- ex:"C'est ce qui permet à un tiers d'accepter ou de contester une validation.",
- 
- d:["Le nombre de tests dépend des contraintes, pas du niveau de classe.","Ce n'est pas le professeur qui valide : c'est le PROTOCOLE, appliqué et consigné. La signature dit qui a fait l'essai et en répond — elle ne dit pas qu'il est réussi.","","La présentation n'ajoute aucune valeur de preuve : un procès-verbal manuscrit vaut un procès-verbal imprimé."],
- ret:"Le procès-verbal rend un essai vérifiable : il dit qui, quand, comment, avec quel résultat."},
-{c:"PRO",n:"Une amélioration recevable",q:"Quelle amélioration est recevable après les essais ?",
- o:["« remplacer l'attache par de l'inox : le gel l'a fissurée »","« renforcer aussi le couvercle, tant qu'on y est »","« tout refaire depuis le tout début, ce sera bien plus propre »","« ajouter un deuxième capteur, on verra bien »"],r:0,
- expl:"Une amélioration se rattache à un résultat d'essai précis. Une amélioration qui ne cite aucun résultat est une idée, pas une correction.",
- ex:"Autre exemple recevable : un capot incliné, rattaché au test de pluie.",
- 
- d:["","Rien dans les essais ne dit que le couvercle pose problème. Améliorer ce qui n'a pas échoué coûte du temps, ajoute du poids — et peut casser ce qui marchait, comme on va le voir avec l'attache en inox.","Rien n'indique que tout soit à refaire : trois tests sur quatre sont passés. Repartir de zéro jette aussi ce qui fonctionnait.","« On verra bien » n'est pas une justification. Une amélioration se rattache à un essai précis qui a échoué."],
- ret:"Une amélioration cite le résultat d'essai qui la motive."},
+{c:"PRO",n:"Après le dernier palier",q:"Le cahier des charges exige 33 kg (kilogrammes). La console les tient sans une fissure. Que fais-tu ensuite ?",
+ nuance:"« Si on ne la casse pas, on ne saura jamais combien elle tient ? » C'est vrai, et ce n'est pas la question posée. Le cahier des charges ne demande pas la charge de rupture : il demande que la console tienne 33 kg. Pour connaître la charge de rupture, il faut casser des échantillons du même matériau. C'est un autre essai, qui sert à choisir un matériau. Ici, la console essayée est celle qu'on veut poser : l'essai prouve qu'elle tient ce qu'on exige, et elle reste utilisable.",
+ o:["je charge encore, jusqu'à la casse, pour connaître sa limite","je continue jusqu'à 40 kg, pour être encore plus sûr","je retire les sacs et je regarde si elle revient en place","rien de plus : elle a tenu, je peux déjà la poser"],r:2,
+ expl:"Le critère a deux moitiés : tenir la charge exigée sans fissure, puis revenir en place une fois déchargée. Une console restée pliée a cédé, même entière. Au-delà de 33 kg, l'essai ne prouve rien de plus, et il peut abîmer la console qu'on veut poser.",
+ ex:"Sur la règle graduée fixée debout près du bout : une lecture avant, une à chaque palier (11, 22 puis 33 kg), une dernière une fois les sacs retirés.",
+ err:"Confondre l'essai de tenue d'une pièce et l'essai de rupture d'un échantillon, ou s'arrêter à « elle n'a pas cassé ».",
+ d:["Casser sert à comparer des matériaux sur des échantillons. Ici, tu essaies la console que tu veux poser, et la charge exigée est atteinte. Passe à la mesure qui reste.","Le cahier des charges exige 33 kg : charger plus ne prouve rien de plus, et peut abîmer la console. Relis ce que le critère demande après la charge.","","« Elle n'a pas cassé » n'est que la moitié du critère : une console restée pliée a cédé. Retire les sacs, puis lis la règle graduée."],
+ ret:"On s'arrête à la charge exigée, puis on décharge et on mesure le retour."},
+{c:"PRO",n:"Le critère d'un essai de tenue",q:"Une console doit tenir 33 kg (kilogrammes). Quelle phrase du protocole permet de décider ?",
+ o:["à 33 kg, aucune fissure ; déchargée, elle revient à 1 millimètre près","elle a l'air solide, ne craque pas et ne bouge presque pas sous les sacs","on décidera en voyant les mesures, une fois l'essai terminé","elle plie moins qu'une console en bois du même format"],r:0,
+ expl:"La phrase se tranche sans discussion : une observation (aucune fissure) et une mesure (le retour en place, à 1 millimètre près). Écrite avant l'essai, elle empêche d'ajuster la règle au résultat.",
+ ex:"Deux élèves qui lisent la même règle graduée rendent le même verdict.",
+ err:"Écrire le critère après l'essai, ou avec des mots que chacun lit à sa façon.",
+ d:["","« A l'air solide », « presque pas » : deux élèves ne liraient pas la même chose. Écris ce que tu regardes, et le nombre à respecter.","Décider après avoir vu les mesures permet d'ajuster la règle au résultat. Écris le critère dans le protocole, avant de charger.","Plier moins qu'une autre pièce ne dit pas si la console tient l'exigence : la console en bois peut elle-même être trop faible. Compare la console au critère écrit."],
+ ret:"Le critère s'écrit avant l'essai, et se lit sur une mesure."},
+{c:"PRO",n:"La flèche grandit comme la charge",q:"La console reste élastique : elle revient en place. Sous 11 kg (kilogrammes), son bout descend de 4,1 mm (millimètres). Que prévoit le calcul sous 22 kg ?",
+ o:["rien : on ne peut pas prévoir avant l'essai","4,1 mm, comme sous 11 kg","8,2 mm","16,4 mm"],r:2,
+ expl:"Tant que la console est élastique, sa flèche grandit exactement comme la charge : deux fois plus de charge, deux fois plus de flèche. 2 × 4,1 mm = 8,2 mm.",
+ ex:"Les trois paliers de l'essai : 11 kg → 4,1 mm ; 22 kg → 8,2 mm ; 33 kg → 12,3 mm. Une lecture loin de ces valeurs dit d'arrêter et de chercher pourquoi.",
+ err:"Croire que la flèche ne dépend que de la console, ou qu'elle grandit comme le carré de la charge.",
+ d:["Le calcul prévoit la flèche ; l'essai vérifie cette prévision. Écris la valeur prévue dans le protocole, avant de charger.","La même console plie davantage sous une charge plus lourde. Regarde de combien la charge a changé, puis change la flèche d'autant.","","Tu as multiplié par 4 : c'est la flèche prévue sous 44 kg. La charge a doublé : double la flèche."],
+ ret:"Élastique : la flèche est proportionnelle à la charge."},
 {c:"PRO",n:"Rejouer les essais",q:"D'après ce schéma, après avoir remplacé l'attache, quels essais faut-il refaire ?",
  nuance:"« Rejouer les quatre tests à chaque petite retouche, ce n'est pas énorme ? » Si, et les professionnels se posent exactement cette question tous les jours. Dans l'industrie et en informatique, on appelle cela les essais de NON-RÉGRESSION : vérifier qu'en réparant une chose, on n'en a pas cassé une autre. Quand la série complète coûte trop cher, on ne la joue pas à chaque fois — mais on ne choisit pas au hasard : on rejoue ce que la modification peut avoir touché, et tout ce qui passait avec peu de marge. Ici, quatre tests courts : la question ne se pose pas, on refait tout. Retiens la règle du dessous : plus la marge était petite, plus il faut retester.",
  img:{src:"Images/rejouer_tout_le_protocole.svg",alt:"L'attache inox répare le gel mais alourdit le support : en rejouant tout le protocole, la stabilité passe de 0,5 à 1,2 cm et devient non conforme."},
@@ -596,8 +597,9 @@ const PIEGES={
   attendu:"Un attendu utilisable, et la conformité malgré un écart",
   validation:"Le prototype, et le diagramme de validation",
   protocole:"Un protocole exécutable sans toi : écrit avant, des étapes précises",
-  decision:"Décider et diagnostiquer : trois oui et un non, le test qui tranche, une amélioration recevable",
-  performance:"Comportement ou performance : les conditions, les critères, ce qui se réutilise, généraliser"
+  essai:"L'essai d'une vraie pièce : jusqu'à la charge exigée, un critère chiffré écrit avant",
+  decision:"Décider et diagnostiquer : trois oui et un non, la cause et le test qui la vérifie, généraliser",
+  performance:"Comportement ou performance : les conditions, les critères, ce qui se réutilise"
 };
 const PIEGE_DE_NOTION={
   "Le verbe de la compétence":"parametrer",
@@ -616,17 +618,17 @@ const PIEGE_DE_NOTION={
   "Exécutable sans toi":"protocole",
   "Le protocole avant l'essai":"protocole",
   "Une étape trop vague":"protocole",
-  "Ce que la 3e ajoutera":"protocole",
+  "Après le dernier palier":"essai",
+  "Le critère d'un essai de tenue":"essai",
+  "La flèche grandit comme la charge":"essai",
   "Trois oui, un non":"decision",
   "Le diagnostic":"decision",
-  "Le test discriminant":"decision",
-  "Une amélioration recevable":"decision",
+  "Généraliser":"decision",
   "Comportement ou performance":"performance",
   "La LED en plein soleil":"performance",
   "Le vent de canyon":"performance",
   "Ce qui se réutilise":"performance",
   "Le montage par un 6e":"performance",
-  "Généraliser":"performance",
   "Trois blocs liés":"performance",
   "Un test qui ne prouve rien":"performance",
   "Sans test":"performance"

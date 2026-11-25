@@ -37300,3 +37300,37 @@ validation dans un banc trop pressé.
 `4e_C9.1` (séquences, rapports, bancs) ; `_outils` — `banc_eleve/` (neuf), `controle_verification_execute.py` et son
 banc ; `_ressources-communes/editeur-python/eprouver_exercices.mjs` (`eprouverBanc`, `eprouverRejouer`) ;
 `.claude/skills/banc-essai-programme` et `SKILLS_AUDIT.md`. Thème 1 : rien.
+
+## 25/11/2026 — QCM de 4e_C8 : trois questions sur l'essai réel de la console (thème 3)
+
+**La décision.** « Oui stp pour les deux » de Pascal (25/11/2026, 16 h 16), à la proposition : aucune des dix questions
+du QCM rangées sous 4e_C8.2 ne porte sur l'essai d'un matériau ; en remplacer deux ou trois par des questions sur l'essai
+de la console.
+
+**Ce qui change** (`qcm_4e_C8_jardin-validation.html`, questions 17 à 19) :
+- « Après le dernier palier » : la console tient les 33 kg exigés sans fissure ; on retire les sacs et on regarde si elle
+  revient en place. Les leurres : charger jusqu'à la casse, aller « jusqu'à 40 kg pour être plus sûr », la poser tout de
+  suite.
+- « Le critère d'un essai de tenue » : la phrase du protocole qui permet de décider (aucune fissure à 33 kg ; déchargée,
+  retour à 1 millimètre près), contre une phrase vague, une décision prise après avoir vu les mesures, et une comparaison
+  avec une autre console.
+- « La flèche grandit comme la charge » : élastique, 4,1 mm sous 11 kg, donc 8,2 mm sous 22 kg.
+- Elles remplacent « Le test discriminant » (la notion reste dans « Le diagnostic » : sa réponse, son exemple, sa règle),
+  « Ce que la 3e ajoutera » (elle renvoyait à une autre année, n°343) et « Une amélioration recevable » (l'attache en
+  inox est déjà dans trois questions). « Trois oui, un non » reste : c'est la seule question sur la décision globale.
+- Elles ne recopient pas l'activité 2 ter : autre moment de l'essai, autres propositions, flèche demandée sous 22 kg et
+  non 33 kg. Les nombres sont ceux du modèle `_generation/console_jardiniere.py` (n°233).
+- Pièges (`qcm_aides_4e_C8.1.json`) : nouveau piège « L'essai d'une vraie pièce », avec les trois questions ; « Décider
+  et diagnostiquer » garde « Trois oui, un non », « Le diagnostic » et prend « Généraliser » ; « Avant de commencer »
+  reçoit une ligne de savoir-faire. Lexique régénéré, matrice, fiche et notes d'audit à jour.
+- Positions des bonnes réponses : 2, 2, 0 avant ; 2, 0, 2 après. Le compte par position ne bouge pas (8 / 7 / 7 / 8).
+
+**Mesuré** : `poser.py` posé, `poser_entrainement_melange.py --verifier` 0 ; `controle_longueurs`, `controle_indices_qcm`,
+`controle_unites`, `controle_effectifs_qcm`, `controle_banque_qcm`, `controle_entete_qcm`, `controle_sigles` sans écart ;
+`verif_qcm_coherence` : réfutations alignées ; `balayer_questions_qcm.mjs --apres` : 30 questions, 90 écrans d'aide, 0
+écart ; `banc_aides.mjs` : 0 refus, 8 pièges au bilan ; trois parcours joués au navigateur : tout juste 20,0 /20, tout faux
+0,0 /20, les trois nouvelles seules justes 2,0 /20. `controle_question_seule.py --strict` : 62 refus dans le dépôt, 63 sur
+`main` (la question « En 3e, ce protocole deviendra… » est sortie) ; 0 dans ce QCM.
+
+**Reste** : le QCM a 3 questions sur document dessiné ; il en faut au moins 6 (n°345, `controle_question_seule.py
+--chantiers`). Ce manque existait déjà.

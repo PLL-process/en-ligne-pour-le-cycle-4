@@ -167,3 +167,23 @@ nom dans sa légende.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 25/11/2026 — trois questions du QCM sur l'essai réel de la console
+
+Questions 17 à 19 remplacées (« Après le dernier palier », « Le critère d'un essai de tenue », « La flèche grandit comme
+la charge ») ; nouveau piège « L'essai d'une vraie pièce ». Commandes lancées depuis la racine :
+
+| Commande | Résultat |
+|---|---|
+| `python3 _outils/qcm_aides/poser.py <qcm> qcm_aides_4e_C8.1.json` | posé, sortie 0 |
+| `python3 _outils/poser_entrainement_melange.py --verifier` | sortie 0 |
+| `node _outils/verif_qcm_coherence.mjs <qcm>` | 30 q, positions 8 / 7 / 7 / 8, réfutations alignées |
+| `node _outils/balayer_questions_qcm.mjs --apres <lot>` | 30 questions jouées à 390 px, 90 écrans d'aide, 0 écart |
+| `node _outils/qcm_aides/banc_aides.mjs <qcm>` | 30 questions dans un piège, 8 pièges au bilan, 0 refus |
+| trois parcours joués au navigateur (clic sur les options, « Valider », « Terminer ») | tout juste 20,0 /20 · tout faux 0,0 /20 · les trois nouvelles seules justes 2,0 /20 |
+| `controle_longueurs`, `controle_indices_qcm.mjs --muet`, `controle_unites --muet`, `controle_effectifs_qcm`, `controle_banque_qcm`, `controle_entete_qcm`, `controle_sigles` | sans écart pour ce QCM |
+| `python3 _outils/controle_question_seule.py --strict` | 0 refus dans ce QCM (1 sur `main` : « En 3e, ce protocole deviendra… », n°304) |
+
+Regardé à 390 px : les trois questions et leur indice après une réponse fausse.
+
+Non exécuté : un vrai téléphone, Firefox, Safari. Reste : 3 questions sur document dessiné, pour 6 attendues (n°345).

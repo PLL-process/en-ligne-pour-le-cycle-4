@@ -261,9 +261,10 @@ OVERLAY = {
         anomalies="Depuis le 25/11/2026, l'activité 2 ter de 4e_C8.1 fait PROPOSER le protocole de "
                   "l'essai réel de la console (tenue mécanique d'un matériau : 33 kg par paliers, flèche "
                   "lue à la règle, critère écrit avant, trois consoles) — l'écart relevé le 22/11 par "
-                  "l'audit #867 est comblé. Reste : les dix questions du QCM rangées sous 4e_C8.2 portent "
-                  "sur le protocole d'un comportement, aucune sur l'essai d'un matériau. Le dossier reste "
-                  "un squelette, ce qui est normal pour un code mutualisé.",
+                  "l'audit #867 est comblé. Le QCM suit depuis le 25/11/2026 : trois des dix questions rangées "
+                  "sous 4e_C8.2 portent sur l'essai de la console (décharger et mesurer le retour, le critère "
+                  "qui décide, la flèche prévue sous 22 kg). Le dossier reste un squelette, ce qui est normal "
+                  "pour un code mutualisé.",
         accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C8.3": dict(
@@ -1088,8 +1089,9 @@ OVERLAY = {
                 "le protocole de l'essai réel (4e_C8.2) ; la console a sa séance, la séquence passe à 4 "
                 "séances de 55 min.",
         anomalies="La question 1 du QCM est la seule qui porte sur le geste de paramétrer ; le QCM "
-                  "reste à 30 questions fixes (choix du 23/10/2026), et aucune ne porte encore sur "
-                  "l'essai d'un matériau (4e_C8.2).",
+                  "reste à 30 questions fixes (choix du 23/10/2026). Depuis le 25/11/2026, trois questions "
+                  "portent sur l'essai de la console (4e_C8.2). Le QCM a 3 questions sur document dessiné, "
+                  "pour 6 attendues (n°345).",
         accessibilite="Corrections dépliables, deux synthèses séparées ; le relevé des essais se lit "
                       "sur téléphone sans défiler de côté.",
         medias="Voir SOURCES_MEDIAS.md du dossier ; schéma de la console écrit dans la page (SVG).",
