@@ -131,7 +131,7 @@
   .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
   .confiance input{accent-color:var(--hl)}
   .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
-  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#7f9bd0;font-size:.8em}
   .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:1300}
   .skip-link:focus{left:0}
   @media (prefers-reduced-motion: reduce){
@@ -176,7 +176,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 .py-num{color:var(--energie)}
 .py-kw{color:var(--head);font-weight:600}
 .py-op{color:var(--warn);font-weight:600}
-.py-com{color:#5b7bb8;font-style:italic}
+.py-com{color:#7f9bd0;font-style:italic}
 .py-lno{color:#4a6ca8}
 .val.py-str{color:var(--ok)}
 .val.py-num{color:var(--energie)}
@@ -1902,7 +1902,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   </div>
   <figure>
     <img class="figure" src="../../3e/3e_C9.1/Images/coney_island_stillwell_entree_ccby.jpg" alt="L'entrée de la station Coney Island–Stillwell Avenue avec les grandes lettres CONEY ISLAND sur la façade historique" loading="lazy">
-    <figcaption>Ton terrain de mission : Coney Island, terminus de la ligne Q — sa gare de 1919, sa plage… et son grand-huit. <span style="color:#5b7bb8">Photo : Kidfly182, licence CC BY 4.0, via Wikimedia Commons — image redimensionnée.</span></figcaption>
+    <figcaption>Ton terrain de mission : Coney Island, terminus de la ligne Q — sa gare de 1919, sa plage… et son grand-huit. <span style="color:#7f9bd0">Photo : Kidfly182, licence CC BY 4.0, via Wikimedia Commons — image redimensionnée.</span></figcaption>
   </figure>
 </section>
 
@@ -2006,8 +2006,8 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       </div>
       <p class="py-legende">🎨 Lis le code en couleurs : <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
       <div>
-        <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:#5b7bb8">— la mémoire est vide : lance l'exécution —</em></div>
-        <div class="mem-ecran" id="memEcran" aria-label="Écran du panneau"></div>
+        <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:#7f9bd0">— la mémoire est vide : lance l'exécution —</em></div>
+        <div class="mem-ecran" id="memEcran" role="group" aria-label="Écran du panneau"></div>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn" id="memNext" type="button">▶ Étape suivante</button>
           <button class="btn ghost" id="memRestart" type="button">↺ Recommencer</button>
@@ -2582,7 +2582,7 @@ let step = -1;
 function renderMem(){
   const bx = $("memBoxes");
   document.querySelectorAll("#memCode div").forEach(d => d.classList.toggle("cur", +d.dataset.l === step));
-  if(step < 0){ bx.innerHTML = '<em style="color:#5b7bb8">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
+  if(step < 0){ bx.innerHTML = '<em style="color:#7f9bd0">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
   const st = PROG[step];
   bx.innerHTML = Object.entries(st.boxes).map(([k,v]) =>
     `<span class="mem-box${k===st.chg?" chg":""}"><span class="lbl">${k}</span><span class="val ${String(v)[0]==='"'?"py-str":"py-num"}">${v}</span></span>`).join("");

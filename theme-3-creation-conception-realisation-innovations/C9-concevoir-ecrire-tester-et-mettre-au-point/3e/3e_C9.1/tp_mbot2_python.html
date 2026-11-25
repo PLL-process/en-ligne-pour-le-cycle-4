@@ -28,6 +28,10 @@ But : métadonnées + styles globaux (thème sombre, cartes, tokens, tableaux…
 .py-com{color:var(--muted);font-style:italic}
 .py-lno{color:#5b6ea8}
 *{box-sizing:border-box} html,body{margin:0;height:100%}
+/* Le fond sombre ne s'arrête pas à la hauteur de l'écran (axe-core, page ouverte, 22/11/2026) : avec `height:100%`, le
+   dégradé du corps couvrait le premier écran ; plus bas, les cartes « verre » se posaient sur le blanc du canevas
+   (texte clair sur #6d7284, 3,3 à 4,2 : 1). La page entière prend le bleu nuit de la fin du dégradé. */
+html{background:#0a1022}
 body{
   background:
     radial-gradient(1000px 600px at 80% -10%, #233064 0%, transparent 40%),
@@ -524,9 +528,9 @@ for i in range(3):
       <div class="small">Ex : #FF0000 rouge • #00FF00 vert • #0000FF bleu</div>
     </div>
     <div>
-      <label>R :</label><input id="r" type="number" min="0" max="255" value="64">
-      <label>G :</label><input id="g" type="number" min="0" max="255" value="224">
-      <label>B :</label><input id="b" type="number" min="0" max="255" value="208">
+      <label for="r">R :</label><input id="r" type="number" min="0" max="255" value="64">
+      <label for="g">G :</label><input id="g" type="number" min="0" max="255" value="224">
+      <label for="b">B :</label><input id="b" type="number" min="0" max="255" value="208">
       <div><label>Aperçu :</label><div id="preview" class="ledbox"></div></div>
     </div>
   </div>

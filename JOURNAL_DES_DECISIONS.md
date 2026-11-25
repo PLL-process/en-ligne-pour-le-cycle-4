@@ -36967,6 +36967,28 @@ tous les deux. Dérive des huit générateurs de `rapport_audit.py`, dans une co
 `build_qcm.py --verifier` 7 / 7, `incrustations.py --verifier` à jour. `tests_generer_lexique.py` 31 / 31. Aucune
 page n'est touchée : la seule page concernée se régénère dans la PR du thème 3 qui suit.
 
+## 22/11/2026 — Vague contraste, thème 3 : 71 textes, six champs et trois écrans nommés
+
+Suite de la vague contraste (thème 2 et accueil : PR #903 ; thème 1 : PR #905).
+- `3e_C9.1/tp_mbot2_python.html` (59 textes) : une seule cause. Avec `html,body{height:100%}`, le dégradé sombre du corps
+  couvrait le premier écran ; plus bas, les cartes « verre » (`rgba(20,28,56,.62)`) se posaient sur le blanc du
+  canevas : texte clair sur `#6d7284`, 3,3 à 4,2 : 1. La page entière prend le bleu nuit de la fin du dégradé
+  (`html{background:#0a1022}`) : à l'œil, rien ne change là où c'était déjà sombre. Les trois champs R, G, B ont
+  maintenant leur étiquette reliée (`for`).
+- La note de sauvegarde `.saved-note` de `3e_C7.1`, `4e_C7.1`, `4e_C8.1` (`#5b7bb8` sur `#0d2347`, 3,7 : 1) →
+  `#7f9bd0` (5,6 : 1) ; `5e_C9.1` : le même bleu (mémoire vide, crédit photo, pied de page, commentaires du code) → idem.
+- L'écran du panneau `#memEcran` de `3e_C9.1` et `5e_C9.1` portait un `aria-label` sans rôle (attribut interdit) →
+  `role="group"` : son texte reste lu.
+- `3e_C9.2` : les trois seuils de l'algorithme d'alerte reçoivent leur nom, dans la page tout-en-un, puis
+  `generer_les_quatre_pages.py`.
+- Moteur des ateliers greffé dans les onze séquences qui incrustent des exercices (légende des schémas vivants,
+  PR #905), sans régénération : les infobulles posées à la main restent.
+
+Contrôles : axe-core page ouverte sur les 19 pages : 0 défaut grave ; L 0 · B 0 · C 0 ; `controle_impression` (site
+entier) et `controle_contraste_liens` à 0 ; `tests_regle_311` des treize dossiers 34 / 34 ; `tests_3e_C9.1.mjs`
+89 / 89, `tests_3e_C9.2-C8.3.mjs` 167 / 167, `tests_pont_en_h.mjs` 37 / 37, `tests_5e_C9.1-C9.3.mjs` 66 / 66. Vu à
+390 px : le milieu de la page du mBot2, sombre de bout en bout.
+
 ## 22/11/2026 — Les quatre décisions de l'audit de « Programmer l'alerte » (carte blanche de Pascal) : deux moteurs Python à leur place, la n°333 sous la clé 6, le `<main>` sur les 78 QCM, l'image de situation gardée (transversal : thèmes 1, 2, 3, `_outils`, `.claude/skills`, `docs`)
 
 **Consigne de Pascal** (22/11/2026, 06 h 51) : « Tu as carte blanche pour les quatre décisions » — celles que le
