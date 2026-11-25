@@ -37405,6 +37405,24 @@ tests) ; contrôles des QCM sans écart.
 
 **Reste** : la séquence 4e_C8 n'a pas de billet de sortie (n°330, P1).
 
+## 25/11/2026 — Structure des pages, thème 3 : chaque page a sa zone de contenu principal (`<main>`), un en-tête de tableau nommé
+
+Suite des thèmes 1 et 2 (PR #921, #923), même geste, 80 pages sans `<main>` : les 62 synthèses, les pages-pointeurs
+des TP de CAO et de l'atelier de planification, les fiches arts et maths, deux lexiques, le TP modèle.
+- **Les quatre TP de CAO sont engendrés** (`atelier-cao/_generation/build_tp.py`, qui les reproduisait à l'identique,
+  vérifié avant) : `<main>` est posé dans le gabarit, puis les quatre pages sont refaites ; `verif_chaine.py` : chaque
+  page est exactement ce que son scénario produit.
+- `tp_5e_de_onshape` : la quatrième colonne du tableau des couleurs de métaux (les pastilles) avait un en-tête vide
+  (`empty-table-header`). Un en-tête visible l'élargissait et le faisait défiler à 390 px : il reçoit un nom lu
+  seulement, « Aperçu de la couleur », dans le scénario JSON ; empreintes recalculées (`verif_chaine.py --empreintes`).
+- Les 76 autres pages, écrites à la main : `<main>` après la barre de navigation du site, fermé avant le `<footer>` de
+  premier niveau ou avant `</body>`.
+
+Vérifié : les 80 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 177 pages du thème 3 : `landmark-one-main` 80 → 0, `empty-table-header` 1 → 0, `region` 1 274 → 131
+nœuds ; aucun défaut grave ; `controle_impression` à 0 ; `verif_guidage.py` sur les quatre TP : 0 manquement ;
+`tests_verif_effectifs.py` 21 / 21. Les titres qui sautent un niveau (44 au thème 3) viennent dans un lot à part.
+
 ## 25/11/2026 — Structure des pages, thème 2 : chaque page a sa zone de contenu principal (`<main>`)
 
 Suite du thème 1 (PR #921), même geste : 34 pages sans `<main>`, les 34 synthèses (élève et professeur) des 17
