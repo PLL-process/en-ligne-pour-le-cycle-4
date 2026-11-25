@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -305,7 +307,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 6 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ PAR ═══ */
 {c:"PAR",n:"Le verbe de la compétence",q:"La compétence 4e_C8.1 dit « PARAMÉTRER une simulation FOURNIE ». Que fais-tu, exactement ?",
@@ -315,13 +317,12 @@ const QUESTIONS = [
  
  d:["Une simulation prépare l'essai réel, elle ne le supprime pas.","Programmer une simulation demanderait un modèle physique : ce n'est pas l'objet du cycle 4.","Regarder n'est pas paramétrer : c'est toi qui choisis le cas.",""],
  ret:"Paramétrer : régler les valeurs, lancer, interpréter."},
-{c:"PAR",n:"Le test que le prototype rate",q:"D'après le protocole ci-dessous, quel test le support ne passe-t-il pas ?",
- img:{src:"Images/protocole_quatre_tests.svg",alt:"Quatre tests : stabilité 0,5 cm conforme, étanchéité conforme, LED conforme, gel à −8 °C attache fissurée non conforme. Décision : à améliorer."},
+{c:"PAR",n:"Le test que le prototype rate",q:"D'après ce relevé, quel essai le support du capteur ne passe-t-il pas ?",
+ img:{src:"Images/doc_quatre_essais.svg",alt:"Les quatre essais du support, l'attendu écrit avant puis l'observé. Secousses pendant 10 s, de combien il bouge : attendu moins de 1 cm, observé 0,5 cm. Pluie pendant 30 s, gouttes à l'intérieur : attendu 0, observé 0. LED à 3 m, en plein soleil : attendu visible, observé visible. Gel à −8 °C, l'attache : attendu intacte, observé fissurée."},
  o:["la nuit de gel à −8 °C","la stabilité aux secousses","la pluie battante","la visibilité de la LED à 3 m"],r:0,
- expl:"L'attache plastique devient cassante à basse température : elle ressort fissurée. Les trois autres critères passent.",
+ expl:"Pour chaque essai, on compare l'observé à l'attendu écrit avant. Seul le gel ne passe pas : l'attache devait rester intacte, elle ressort fissurée.",
  ex:"Stabilité 0,5 cm · aucune goutte · LED visible · attache fissurée.",
- 
- d:["","Le support bouge de 0,5 cm, soit moins que le centimètre attendu.","Aucune goutte n'est entrée pendant les 30 secondes d'arrosage.","La LED reste lisible à trois mètres en plein soleil."],
+ d:["","Le support a bougé de 0,5 cm, moins que le 1 cm permis : cet essai passe. Compare l'attendu et l'observé des autres cadres.","0 goutte attendue, 0 goutte observée : cet essai passe. Compare l'attendu et l'observé des autres cadres.","La LED devait être visible, et elle l'est : cet essai passe. Compare l'attendu et l'observé des autres cadres."],
  ret:"Un seul test raté suffit à interdire la généralisation."},
 {c:"PAR",n:"Quatre tests, pas un",q:"Pourquoi le banc propose-t-il quatre tests différents plutôt qu'un seul, bien choisi ?",
  nuance:"« Et si c'est le test qui était mal fait ? » Cela arrive, et c'est la première chose à vérifier devant un échec. Un essai peut rater parce que le ventilateur n'était pas à la bonne distance, parce que le chronomètre a dérapé, parce que le support était mal posé. C'est pourquoi la règle, devant un test non conforme, est de le refaire une seconde fois avant de conclure quoi que ce soit. Si le second essai donne le même résultat, le défaut est dans l'objet. S'il donne un résultat très différent, le défaut est dans le protocole — et il faut le corriger avant d'accuser l'objet.",
@@ -416,12 +417,13 @@ const QUESTIONS = [
  
  d:["« Étanche » ne dit ni sous quelle pluie, ni pendant combien de temps.","","Qui fait l'essai n'entre pas dans la définition de l'essai.","La référence du boîtier ne dit rien de la manière de le tester."],
  ret:"Action + conditions + attendu observable."},
-{c:"PRO",n:"Trois oui, un non",q:"Trois critères passent, le gel échoue. Quelle décision globale ?",
+{c:"PRO",n:"Trois oui, un non",q:"D'après ce relevé des quatre essais, quelle décision globale prends-tu pour le support ?",
+ img:{src:"Images/doc_quatre_essais.svg",alt:"Les quatre essais du support, l'attendu écrit avant puis l'observé. Secousses pendant 10 s, de combien il bouge : attendu moins de 1 cm, observé 0,5 cm. Pluie pendant 30 s, gouttes à l'intérieur : attendu 0, observé 0. LED à 3 m, en plein soleil : attendu visible, observé visible. Gel à −8 °C, l'attache : attendu intacte, observé fissurée."},
  o:["Aucune décision : il faudrait d'autres essais avant","Validée : trois tests réussis sur quatre, c'est une majorité","Rejetée : un seul échec suffit à tout abandonner","À améliorer : on ne généralise pas ce qui casse en janvier"],r:3,
  expl:"La validation n'est pas un vote. Le gel est une contrainte réelle d'un hiver new-yorkais : l'échec porte sur un critère prioritaire.",
  ex:"Trois oui, un non → à améliorer, puis retester.",
  err:"Compter les tests réussis. Ce n'est pas le nombre qui décide, c'est l'importance du critère.",
- d:["Les essais prévus ont tous été faits ; la décision est possible.","Une majorité de tests réussis ne compense pas une casse en usage réel.","Rejeter reviendrait à jeter une solution réparable par une attache différente.",""],
+ d:["Les quatre essais prévus sont faits : la décision est possible. Compare chaque observé à son attendu, puis décide.","Trois essais réussis ne compensent pas une attache qui casse en usage réel. Regarde lequel échoue, et s'il compte.","Rejeter jetterait une solution qu'une autre attache peut réparer. Demande-toi si l'échec se corrige.",""],
  ret:"On ne compte pas les tests : on regarde lesquels ont échoué."},
 {c:"PRO",n:"Le diagnostic",q:"« L'attache a cassé parce que le plastique est inadapté au froid. » Est-ce un diagnostic complet ?",
  nuance:"« Pourquoi ne pas simplement remonter une attache en inox ? Si elle tient, c'était bien le froid. » C'est le premier réflexe, et il est piégeux — la suite de la séquence te le montrera. L'attache inox change DEUX choses à la fois : le matériau, mais aussi la masse, puisqu'elle est plus lourde. Si elle tient, tu ne sauras pas si c'est parce que l'inox supporte le froid, ou parce que le montage a été refait plus proprement au passage. Un test qui change deux choses ne départage rien. La règle d'un bon test discriminant : on ne change QU'UNE chose entre les deux essais, et tout le reste reste identique. Ici, la seule chose qu'on veut changer, c'est la température — donc on garde la même attache et on fait varier le froid.",
@@ -439,19 +441,21 @@ const QUESTIONS = [
  err:"Confondre l'essai de tenue d'une pièce et l'essai de rupture d'un échantillon, ou s'arrêter à « elle n'a pas cassé ».",
  d:["Casser sert à comparer des matériaux sur des échantillons. Ici, tu essaies la console que tu veux poser, et la charge exigée est atteinte. Passe à la mesure qui reste.","Le cahier des charges exige 33 kg : charger plus ne prouve rien de plus, et peut abîmer la console. Relis ce que le critère demande après la charge.","","« Elle n'a pas cassé » n'est que la moitié du critère : une console restée pliée a cédé. Retire les sacs, puis lis la règle graduée."],
  ret:"On s'arrête à la charge exigée, puis on décharge et on mesure le retour."},
-{c:"PRO",n:"Le critère d'un essai de tenue",q:"Une console doit tenir 33 kg (kilogrammes). Quelle phrase du protocole permet de décider ?",
- o:["à 33 kg, aucune fissure ; déchargée, elle revient à 1 millimètre près","elle a l'air solide, ne craque pas et ne bouge presque pas sous les sacs","on décidera en voyant les mesures, une fois l'essai terminé","elle plie moins qu'une console en bois du même format"],r:0,
- expl:"La phrase se tranche sans discussion : une observation (aucune fissure) et une mesure (le retour en place, à 1 millimètre près). Écrite avant l'essai, elle empêche d'ajuster la règle au résultat.",
+{c:"PRO",n:"Le critère d'un essai de tenue",q:"Ce protocole essaie des consoles qui doivent tenir 33 kg (kilogrammes). Que faut-il écrire dans le cadre du critère ?",
+ img:{src:"Images/doc_protocole_console.svg",alt:"Extrait du protocole de l'essai d'une console qui doit tenir 33 kg. La pièce : 3 consoles de 15 mm d'épaisseur, imprimées comme celles du toit. La charge : des sacs de sable de 5,5 kg, deux par palier, 11, 22 puis 33 kg, laissés 5 minutes. La mesure : une règle graduée debout près du bout, lue avant de charger, à chaque palier, puis une fois les sacs retirés. Le cadre du critère, écrit avant l'essai, est vide."},
+ o:["à 33 kg, aucune fissure ; déchargée, elle revient à 1 millimètre près","elle a l'air solide, ne craque pas et ne bouge presque pas sous les sacs","on décidera en voyant les mesures, une fois l'essai terminé","elle plie moins qu'une console en bois du même format"],r:0,
+ expl:"La phrase se tranche sans discussion : une observation (aucune fissure) et une mesure (le retour en place, à 1 millimètre près). Écrite avant l'essai, elle empêche d'ajuster la règle au résultat.",
  ex:"Deux élèves qui lisent la même règle graduée rendent le même verdict.",
  err:"Écrire le critère après l'essai, ou avec des mots que chacun lit à sa façon.",
  d:["","« A l'air solide », « presque pas » : deux élèves ne liraient pas la même chose. Écris ce que tu regardes, et le nombre à respecter.","Décider après avoir vu les mesures permet d'ajuster la règle au résultat. Écris le critère dans le protocole, avant de charger.","Plier moins qu'une autre pièce ne dit pas si la console tient l'exigence : la console en bois peut elle-même être trop faible. Compare la console au critère écrit."],
  ret:"Le critère s'écrit avant l'essai, et se lit sur une mesure."},
-{c:"PRO",n:"La flèche grandit comme la charge",q:"La console reste élastique : elle revient en place. Sous 11 kg (kilogrammes), son bout descend de 4,1 mm (millimètres). Que prévoit le calcul sous 22 kg ?",
+{c:"PRO",n:"La flèche grandit comme la charge",q:"La console reste élastique : déchargée, elle revient en place. D'après ce relevé, quelle flèche, en millimètres, le calcul prévoit-il sous 22 kg (kilogrammes) ?",
+ img:{src:"Images/doc_releve_fleche.svg",alt:"Le relevé de la flèche, c'est-à-dire de combien le bout de la console descend sous la charge. 0 kg : 0 mm. 11 kg : 4,1 mm. 22 kg : case vide. 33 kg : case vide."},
  o:["rien : on ne peut pas prévoir avant l'essai","4,1 mm, comme sous 11 kg","8,2 mm","16,4 mm"],r:2,
  expl:"Tant que la console est élastique, sa flèche grandit exactement comme la charge : deux fois plus de charge, deux fois plus de flèche. 2 × 4,1 mm = 8,2 mm.",
  ex:"Les trois paliers de l'essai : 11 kg → 4,1 mm ; 22 kg → 8,2 mm ; 33 kg → 12,3 mm. Une lecture loin de ces valeurs dit d'arrêter et de chercher pourquoi.",
  err:"Croire que la flèche ne dépend que de la console, ou qu'elle grandit comme le carré de la charge.",
- d:["Le calcul prévoit la flèche ; l'essai vérifie cette prévision. Écris la valeur prévue dans le protocole, avant de charger.","La même console plie davantage sous une charge plus lourde. Regarde de combien la charge a changé, puis change la flèche d'autant.","","Tu as multiplié par 4 : c'est la flèche prévue sous 44 kg. La charge a doublé : double la flèche."],
+ d:["Le calcul prévoit la flèche ; l'essai vérifie cette prévision. Écris la valeur prévue dans le protocole, avant de charger.","Relis le relevé : la même console plie davantage quand la charge augmente. Regarde de combien la charge a changé, puis change la flèche d'autant.","","Tu as multiplié par 4 : c'est la flèche prévue sous 44 kg. La charge a doublé : double la flèche."],
  ret:"Élastique : la flèche est proportionnelle à la charge."},
 {c:"PRO",n:"Rejouer les essais",q:"D'après ce schéma, après avoir remplacé l'attache, quels essais faut-il refaire ?",
  nuance:"« Rejouer les quatre tests à chaque petite retouche, ce n'est pas énorme ? » Si, et les professionnels se posent exactement cette question tous les jours. Dans l'industrie et en informatique, on appelle cela les essais de NON-RÉGRESSION : vérifier qu'en réparant une chose, on n'en a pas cassé une autre. Quand la série complète coûte trop cher, on ne la joue pas à chaque fois — mais on ne choisit pas au hasard : on rejoue ce que la modification peut avoir touché, et tout ce qui passait avec peu de marge. Ici, quatre tests courts : la question ne se pose pas, on refait tout. Retiens la règle du dessous : plus la marge était petite, plus il faut retester.",

@@ -12,7 +12,9 @@ Aucune image externe. Aucun hotlinking. Aucun scan de manuel.
 
 | Fichier | Origine | Licence | Ce qu'il donne à LIRE |
 |---|---|---|---|
-| `Images/protocole_quatre_tests.svg` | Création originale Fable (2026) | CC0 | le protocole complet : quatre attendus chiffrés, les observés, et la décision « à améliorer » |
+| `Images/doc_quatre_essais.svg` | Création originale Fable (2026), `_outils/document_qcm.py` depuis `documents_qcm_4e_C8.1.json` | CC0 | les quatre essais du support : l'attendu et l'observé de chacun, sans verdict (questions 2 et 15 du QCM) |
+| `Images/doc_protocole_console.svg` | Création originale Fable (2026), même outil | CC0 | un extrait du protocole de l'essai de la console, le cadre du critère vide (question 18) |
+| `Images/doc_releve_fleche.svg` | Création originale Fable (2026), même outil ; nombres du modèle `_generation/console_jardiniere.py` | CC0 | la flèche relevée à 0 et 11 kg, les cases de 22 et 33 kg vides (question 19) |
 | `Images/rejouer_tout_le_protocole.svg` | Création originale Fable (2026) | CC0 | l'attache inox répare le gel et fait tomber la stabilité — visible seulement si l'on rejoue tout |
 | `Images/attendu_observable.svg` | Création originale Fable (2026) | CC0 | quatre attendus inutilisables et les mêmes rendus mesurables, côte à côte |
 
