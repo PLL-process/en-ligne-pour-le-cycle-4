@@ -5,8 +5,17 @@
 Ce code est travaillé par la séquence **« Jardin connecté — valider une solution »**,
 dont le dossier principal est [`4e_C8.1`](../4e_C8.1/README.md) :
 
-➡ **[Ouvrir la séquence](../4e_C8.1/sequence_4e_C8_jardin-validation.html)** — deux
+➡ **[Ouvrir la séquence](../4e_C8.1/sequence_4e_C8_jardin-validation.html)** — trois
 activités y portent 4e_C8.2 :
+
+* **Activité 2 ter — Proposer le protocole de l'essai réel** (~20 min, séance 3, depuis le
+  25/11/2026) : c'est elle qui porte la formulation au mot près — la tenue mécanique d'un
+  **matériau**. La simulation de l'activité 2 bis a dit quelle épaisseur de PLA tient ;
+  l'élève propose l'essai qui le prouvera sur de vraies consoles : charger par paliers
+  jusqu'à ce que le cahier des charges exige (33 kg), lire la flèche à la règle, écrire le
+  critère avant l'essai (aucune fissure, et le bout revient en place), essayer trois
+  consoles, dire la sécurité. En 5e (5e_C8.2), l'élève suivait un protocole fourni et
+  cassait l'éprouvette ; ici, il le propose, et ne casse rien.
 
 * **Activité 1 — Le protocole en diagramme de flux, puis en tableau** (~20 min) :
   l'élève remet en ordre le raisonnement de validation. L'ordre est le fond même du
