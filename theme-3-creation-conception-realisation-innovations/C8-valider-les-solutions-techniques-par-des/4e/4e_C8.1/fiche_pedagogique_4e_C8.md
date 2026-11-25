@@ -112,6 +112,12 @@ limite élastique du PLA : l'essai ne casse rien, et une console imprimée comme
 « jusqu'à ce qu'elle casse » est refusé avec son pourquoi, tout revient au rechargement, rien ne déborde à 390 px, les
 étiquettes du schéma ne se chevauchent pas).
 
-**Ce qui reste** : les dix questions du QCM rangées sous 4e_C8.2 portent sur le protocole d'un **comportement** (étanchéité,
-gel, diagnostic) ; aucune ne porte encore sur l'essai d'un matériau.
+**Le QCM** (25/11/2026) : trois des dix questions rangées sous 4e_C8.2 portent sur l'essai de la console — après le
+dernier palier, on décharge et on mesure le retour (n°17) ; le critère qui permet de décider (n°18) ; la flèche prévue
+sous 22 kg (n°19). Elles remplacent « Le test discriminant » (la notion reste dans « Le diagnostic »), « Ce que la 3e
+ajoutera » (une question qui renvoyait à une autre année, n°343) et « Une amélioration recevable » (l'attache en inox,
+déjà dans trois questions). Elles ne recopient pas l'activité 2 ter : autre moment de l'essai, autres propositions,
+flèche demandée sous 22 kg et non 33 kg. Leurs nombres sont ceux du modèle. Nouveau piège « L'essai d'une vraie pièce ».
+
+**Ce qui reste** : le QCM a 3 questions sur document dessiné ; il en faut au moins 6 (n°345).
 
