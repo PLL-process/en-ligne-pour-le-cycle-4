@@ -342,7 +342,9 @@ def fragment():
 <p><b>Q1 — 11 kg.</b>
 <br>Le cahier des charges parle de la charge <b>la plus lourde</b>&nbsp;: c'est l'hiver, terre ET neige, %(terre)d + %(neige)d = %(total)d kg.
 <br>Deux consoles se partagent la jardinière&nbsp;: chacune porte la moitié, %(total)d ÷ 2 = <b>11 kg</b>.
-<br>· 16 kg oublie la neige&nbsp;; · 22 kg oublie que les consoles sont deux&nbsp;; · 8 kg partage la terre et oublie la neige.</p>
+<br>· 16 kg oublie la neige.
+<br>· 22 kg oublie que les consoles sont deux.
+<br>· 8 kg partage la terre et oublie la neige.</p>
 <p><b>Q2 — k = %(kprop)s&nbsp;: elle casse.</b>
 <br>Réglages&nbsp;: PLA, e = %(e0)d mm, L = %(L)d mm, charge = 11 kg.
 <br>La simulation donne σ = %(sprop)s MPa.
@@ -675,12 +677,16 @@ def fragment_protocole():
 <br>La charge est multipliée par %(coef)d (%(p1)s → %(kg_e)s kg)&nbsp;: si la console reste élastique, la flèche aussi, %(f1)s × %(coef)d ≈ <b>%(f3)s mm</b>.
 <br>Le calcul prévoit&nbsp;: %(f1)s mm à %(p1)s kg, %(f2)s mm à %(p2)s kg, %(f3)s mm à %(p3)s kg.
 <br>Si la vraie console descend <b>beaucoup plus</b>, ou si sa flèche grandit plus vite que la charge, elle commence à plier&nbsp;: c'est un signal d'arrêt, avant même la fin de l'essai.
-<br>· %(f1)s mm, c'est oublier que la charge a triplé&nbsp;; · %(f2)s mm, c'est la flèche à %(p2)s kg&nbsp;; · %(f9)s mm, c'est multiplier par 9 au lieu de 3.</p>
+<br>· %(f1)s mm, c'est oublier que la charge a triplé.
+<br>· %(f2)s mm, c'est la flèche à %(p2)s kg.
+<br>· %(f9)s mm, c'est multiplier par 9 au lieu de 3.</p>
 <p><b>Q6 — «&nbsp;À %(kg_e)s kg tenus %(tenue)d min&nbsp;: aucune fissure&nbsp;; déchargée, le bout revient à %(retour)d mm près.&nbsp;»</b>
 <br>Ce critère a des nombres et des unités, et il dit les deux façons dont une console échoue&nbsp;:
 <br>· elle <b>casse</b> ou se fissure&nbsp;;
 <br>· elle <b>plie pour toujours</b> — elle a dépassé sa limite élastique, et elle ne revient pas en place.
-<br>«&nbsp;Ne casse pas&nbsp;» oublie le second cas&nbsp;; «&nbsp;tient bien&nbsp;» ne se mesure pas&nbsp;; «&nbsp;la plus petite flèche des trois&nbsp;» compare les consoles entre elles, pas au cahier des charges.
+<br>«&nbsp;Ne casse pas&nbsp;» oublie le second cas.
+<br>«&nbsp;Tient bien&nbsp;» ne se mesure pas.
+<br>«&nbsp;La plus petite flèche des trois&nbsp;» compare les consoles entre elles, pas au cahier des charges.
 <br>À %(kg_e)s kg, le calcul donne σ = %(s33)s MPa (mégapascals), sous les %(se)d MPa de la limite élastique du PLA&nbsp;: une console imprimée comme le modèle doit donc revenir en place.</p>
 <p><b>Q7 — Trois consoles, imprimées de la même façon.</b>
 <br>Une seule pièce peut être bonne ou mauvaise par hasard (une couche mal collée)&nbsp;: trois essais qui passent montrent que l'impression est <b>régulière</b>.
@@ -691,9 +697,17 @@ def fragment_protocole():
 <li><b>La pièce</b>&nbsp;: %(n)d consoles en PLA de %(e)d mm, imprimées avec les mêmes réglages que celles du toit.</li>
 <li><b>Le montage</b>&nbsp;: chaque console est vissée sur un montant serré à l'établi, avec les mêmes vis que sur le muret, et dépasse de %(L)d mm.</li>
 <li><b>La charge</b>&nbsp;: au bout, un crochet&nbsp;; on y accroche des sacs de sable pesés de %(sac)s kg, 2 par palier&nbsp;: %(p1)s, %(p2)s, puis %(p3)s kg, sans à-coup. On laisse %(kg_e)s kg pendant %(tenue)d minutes.</li>
-<li><b>La mesure</b>&nbsp;: avant de charger, on lit la position du bout sur la règle graduée fixée debout&nbsp;; puis la flèche à chaque palier&nbsp;; puis la position du bout une fois les sacs retirés. Tout est noté dans un tableau.</li>
-<li><b>Le critère, écrit avant</b>&nbsp;: la console est validée si, à %(kg_e)s kg tenus %(tenue)d minutes, elle n'a aucune fissure, et si, déchargée, son bout revient à %(retour)d mm près de sa position de départ. Le calcul prévoit environ %(f1)s, %(f2)s et %(f3)s mm de flèche&nbsp;: une flèche bien plus grande arrête l'essai. Les %(n)d consoles doivent passer.</li>
-<li><b>La sécurité</b>&nbsp;: lunettes de protection&nbsp;; un bac sous les sacs, à 10 cm&nbsp;; personne sous la charge&nbsp;; c'est un adulte qui accroche les sacs, et on recule d'un pas avant de les lâcher.</li>
+<li><b>La mesure</b>&nbsp;: avant de charger, on lit la position du bout sur la règle graduée fixée debout&nbsp;;
+<br>puis la flèche à chaque palier&nbsp;;
+<br>puis la position du bout une fois les sacs retirés.
+<br>Tout est noté dans un tableau.</li>
+<li><b>Le critère, écrit avant</b>&nbsp;: la console est validée si, à %(kg_e)s kg tenus %(tenue)d minutes, elle n'a aucune fissure, et si, déchargée, son bout revient à %(retour)d mm près de sa position de départ.
+<br>Le calcul prévoit environ %(f1)s, %(f2)s et %(f3)s mm de flèche&nbsp;: une flèche bien plus grande arrête l'essai.
+<br>Les %(n)d consoles doivent passer.</li>
+<li><b>La sécurité</b>&nbsp;: lunettes de protection&nbsp;;
+<br>un bac sous les sacs, à 10 cm&nbsp;;
+<br>personne sous la charge&nbsp;;
+<br>c'est un adulte qui accroche les sacs, et on recule d'un pas avant de les lâcher.</li>
 </ol>
 <p><b>Et si une console échoue&nbsp;?</b> On ne la pose pas&nbsp;: on note ce qui a cédé (une couche qui s'ouvre, le bout qui reste bas), on change <b>une</b> chose (l'épaisseur, le remplissage), et on rejoue l'essai — c'est la boucle de l'activité 1.</p>
 </div></details>

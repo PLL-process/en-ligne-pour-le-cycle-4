@@ -44,7 +44,7 @@ tirée au hasard. Le détail est dans le rapport de tests.
 | 1 — Faire d'abord, puis écrire le protocole | Comment prouver qu'un prototype répond au besoin, sans se contenter d'un avis ? | Ouverture (situation, problématique, hypothèse, billet), activité 0 (banc virtuel), activité 1 (diagramme puis protocole) | ~15 + 10 + 20 min |
 | 2 — Analyser les résultats, ligne par ligne | Que disent les résultats du banc, exigence par exigence ? | Activité 2 (diagramme des exigences, grille « Conforme ? », diagnostic) | ~35 min |
 | 3 — La console : simuler, puis proposer l'essai réel | La console de la jardinière tiendra-t-elle sur le toit ? | Activité 2 bis (régler la simulation), activité 2 ter (proposer le protocole de l'essai réel) | ~15 + 20 min |
-| 4 — Améliorer, refaire, conclure | Et si un critère change ? | Activité 3 (améliorations), réinvestissement, synthèse, Bonus, bilan (retour à l'hypothèse, « Comment j'ai travaillé », « Je me positionne » sur 4e_C8.1 à C8.3), renvoi au QCM | ~15 + 15 + 15 min |
+| 4 — Améliorer, refaire, conclure | Et si un critère change ? | Activité 3 (améliorations), réinvestissement, synthèse, billet de sortie, Bonus, bilan (retour à l'hypothèse, « Comment j'ai travaillé », « Je me positionne » sur 4e_C8.1 à C8.3), renvoi au QCM | ~15 + 15 + 5 + 15 min |
 
 Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel » (règle d'or n°311) ; le sélecteur de parcours, la progression et « Où j'en suis » restent visibles.
 
@@ -126,5 +126,15 @@ les cases de 22 et 33 kg vides. Les données sont dans `documents_qcm_4e_C8.1.js
 `_outils/document_qcm.py`. L'ancienne planche de la question 2 donnait le verdict (« non conforme », « à améliorer ») :
 elle est retirée.
 
-**Ce qui reste** : la séquence n'a pas de billet de sortie (n°330).
+**Le billet de sortie** (25/11/2026, n°330) : à la fin de la séance 4, avant le Bonus, environ 5 minutes, seul et sans
+aide, sur un objet que la séquence n'a pas étudié : le crochet à cartable vissé sous une table (un cartable pèse au plus
+8 kg ; le crochet en tient 3 fois plus). Deux questions écrites, chacune avec sa version étayée :
+- **4e_C8.2** — proposer l'essai de tenue du crochet. On regarde : la charge exigée (24 kg) atteinte par paliers, et un
+  critère écrit avant, qui se mesure (pas de casse ET retour en place). Un essai « jusqu'à la casse » ne répond pas.
+- **4e_C8.3** — écrire l'étape qui teste si le cartable reste accroché quand on bouscule la table. On regarde : une action
+  précise, ses conditions chiffrées (la charge, la poussée, le nombre de fois), un résultat attendu observable.
+
+Il ne valide rien : aucun bouton, aucune note (n°333). La correction complète donne une réponse possible, le critère de
+chaque question et deux contre-exemples. 4e_C8.1 (paramétrer la simulation) n'y est pas : l'activité 2 bis et la
+question 1 du QCM la portent.
 
