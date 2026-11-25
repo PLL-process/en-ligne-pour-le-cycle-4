@@ -37104,3 +37104,59 @@ règle 311 **34/34**) ; `controle_sigles_expliques` (les trois pages), `controle
 
 **Une autre session** a deux PR ouvertes sur ces pages depuis le 22/11, en conflit avec `main` : #905 (contrastes du
 thème 1, qui touche les deux séquences) et #907 (`<main>` sur les QCM). Elles ne sont pas touchées ici.
+
+## 25/11/2026 — 4e_C8.2 travaillé sur un matériau : l'élève propose le protocole de l'essai réel de la console ; la séquence 4e_C8 passe à quatre séances (thème 3)
+
+**Décision de Pascal** (25/11, « continue », en réponse à la troisième question du rapport du 22/11) : faire la suite de
+l'activité 2 bis. Le code **4e_C8.2** demande de *proposer un protocole de test pour valider la tenue mécanique d'un
+matériau* ; le lot ne le faisait que sur le comportement du système (pluie, gel, LED).
+
+**Activité 2 ter — Proposer le protocole de l'essai réel** (~20 min). La simulation a dit qu'en PLA la console tient à
+partir de 15 mm ; avant d'en visser quarante sur le toit, le club en essaie de vraies. Sous les yeux, le schéma du banc
+(montant, console, sacs de sable, règle graduée, bac) et sa légende ; sept questions à boutons radio (pourquoi un essai
+réel après une simulation ; la charge d'essai, 3 × 11 = 33 kg ; les paliers sur la même console ; la flèche lue à la
+règle ; la flèche attendue à 33 kg, 12,3 mm, puisqu'elle grandit comme la charge tant que la console est élastique ; le
+critère écrit avant — aucune fissure, et déchargée, le bout revient à 1 mm près ; trois consoles) ; puis le protocole en
+six lignes, sa version étayée et une grille « je relis mon protocole ». En 5e (5e_C8.2), l'élève suivait un protocole
+fourni et cassait l'éprouvette ; en 4e, il le propose, et ne casse rien.
+
+**Un seul modèle décide des chiffres** (n°233) : `_generation/console_jardiniere.py` écrit aussi l'activité 2 ter
+(épaisseur validée, charge d'essai, paliers, flèches f = F·L³ / 3EI avec le module du PLA de la patère de 5e). À 33 kg,
+σ = 43,2 MPa, sous les 45 MPa de la limite élastique : l'essai proposé ne casse rien. Les vingt et une mauvaises
+propositions ont leur pourquoi (mode mission), chacune avec l'étape suivante.
+
+**La console a sa séance.** Avec 2 bis en séance 2, celle-ci annonçait déjà 50 min d'activités : avec 10 min de service,
+elle dépassait les 55 min (la règle n°23 se mesure sur la séquence entière, et ne le voyait pas). La séquence passe de
+trois à **quatre séances de 55 min** : 1 — faire, puis écrire le protocole ; 2 — analyser les résultats (35 min) ;
+3 — la console : simuler, puis proposer l'essai (15 + 20 min) ; 4 — améliorer, refaire, conclure. Onglets, tableau de bord
+(8 activités), « Ce que dit le programme », positionnement (« 4e_C8.2 — proposer le protocole d'essai d'une pièce »),
+lexique (quatre mots de plus : flèche, palier, élastique, porte-à-faux), fiche, matrice, synthèse professeur, README :
+à jour.
+
+**Une erreur de ma part, réparée : la synthèse élève tenait sur trois pages depuis le 22/11.** J'avais annoncé « toujours
+2 pages A4 » après la partie 7 (#896) en la mesurant avec un script à moi ; l'outil du dépôt
+(`_outils/mesurer_impression.py`, marges de 10 mm) disait 3 pages — et le dit aussi pour la version du 22/11 (vérifié sur
+les commits 25d4690b, 0b6033ab et 640be093 ; avant la partie 7, c'était 2 pages à 88 %). Pour revenir à deux pages sans
+réduire le corps ni les marges : la partie 7 devient un exemple d'une ligne, son « À retenir » (simulation, puis essai
+réel) et son piège ; quelques lignes resserrées dans les parties 1, 3 et 6 ; et cinq entrées du lexique retirées parce
+que la partie qui les emploie les définit déjà, au mot près (valider, protocole de test, résultat attendu, comportement
+et performance, écart). Résultat : **2 pages**, en Inter comme en Liberation Sans, aucun titre seul. Désormais, je ne
+mesure une synthèse qu'avec `mesurer_impression.py`.
+
+**Revue d'écran** (trois tours, 390 et 1 280 px) : le premier schéma, dessiné large, était illisible sur un téléphone
+(étiquettes à 6 px, deux hors du cadre, flèche de la mesure écrasée en étoile) → schéma resserré (520 de large),
+étiquettes courtes en grand, explications dans une légende sous la figure ; « 150 mm » ne se coupe plus en fin de ligne
+(espaces insécables écrites par le générateur, hors des réponses).
+
+**Vérifié** : `tests_protocole_4e_C8.1.mjs` (nouveau) **18/18** — la page dit ce que dit le modèle, un protocole de deux
+mots ne valide rien, « jusqu'à ce qu'elle casse » est refusé avec son pourquoi, tout revient au rechargement, rien ne
+déborde à 390 px, aucune étiquette du schéma n'en chevauche une autre ; `tests_4e_C8.mjs` **54/54** et
+`tests_simulation_4e_C8.1.mjs` **13/13** et `tests_regle_311_4e_C8.1.mjs` **34/34** (mis à jour : 8 activités, la
+console en séance 3, les améliorations en séance 4) ; `console_jardiniere.py` à jour ; `enrichir.py --verifier-tout`
+0 refus ; `controle_statut`, `verif_regles_audit`, `registre_regles`, `controle_unites`, `controle_hierarchie`,
+`controle_liens`, `controle_sigles_expliques`, `controle_impression_papier`, `controle_mode_essentiel` verts ; synthèse
+élève : 2 pages A4 (`mesurer_impression.py`, deux polices). Le lien « 📖 Les mots de cette séance » de la séance 2 est
+retiré : ses mots (ceux de la console) sont passés en séance 3.
+
+**Reste** : les dix questions du QCM rangées sous 4e_C8.2 portent sur le protocole d'un comportement ; aucune ne porte
+encore sur l'essai d'un matériau (le QCM est aussi touché par la PR #907 d'une autre session, ouverte et en conflit).

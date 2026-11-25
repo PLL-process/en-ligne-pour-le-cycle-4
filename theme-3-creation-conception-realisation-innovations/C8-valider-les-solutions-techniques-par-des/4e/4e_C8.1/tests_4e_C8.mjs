@@ -141,10 +141,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const parts = [...txt.matchAll(/~\s*(\d+)\s*min/g)].map(m => parseInt(m[1], 10));
   const total = parts.reduce((a, b) => a + b, 0);
   ok("n°23 : la page annonce un cadre « N séances de M min »", !!cadre, cadre ? cadre[0] : "absent");
-  /* 6 durées pour 7 vérificateurs : l'activité 1 en porte deux (le diagramme,
+  /* 7 durées pour 8 vérificateurs : l'activité 1 en porte deux (le diagramme,
      puis le planning) — elles partagent le même créneau annoncé. L'activité 2 bis (la simulation de la console,
-     22/11/2026) a la sienne. */
-  ok("n°23 : les 6 durées d'activité sont à la convention ~n min", parts.length === 6, parts.join(" + "));
+     22/11/2026) a la sienne, l'activité 2 ter (le protocole de l'essai réel, 25/11/2026) aussi. */
+  ok("n°23 : les 7 durées d'activité sont à la convention ~n min", parts.length === 7, parts.join(" + "));
   const dispo = cadre ? parseInt(cadre[1], 10) * parseInt(cadre[2], 10) : 0;
   ok("n°23 : le total tient dans le cadre annoncé, marge comprise",
      total + 10 <= dispo, total + " min pour " + dispo + " disponibles");
@@ -190,7 +190,7 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — n°30 : le tableau de bord — */
 {
   const n = await page.locator("#tachesBandeau .tache").count();
-  ok("n°30 : le tableau de bord liste les 7 activités", n === 7, n + " tâches");
+  ok("n°30 : le tableau de bord liste les 8 activités", n === 8, n + " tâches");
   ok("n°30 : aucune tâche cochée en début de parcours",
      (await page.locator("#tachesBandeau .tache.fait").count()) === 0);
 }
@@ -246,8 +246,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await shot(page, "parcours_c");
   await page.click('.parcours-btn[data-choix="tous"]');
   await page.waitForTimeout(120);
-  ok("n°122 : aucune question retirée (7 vérificateurs)",
-     (await page.locator(".btn.check").count()) === 7);
+  ok("n°122 : aucune question retirée (8 vérificateurs)",
+     (await page.locator(".btn.check").count()) === 8);
 }
 
 /* — n°135 : les tableaux restent lisibles — */
@@ -299,11 +299,11 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
 /* — la progression suit vraiment la validation — */
 {
   const prog = await page.locator("#progTxt").textContent();
-  ok("progression : 1 / 7 après la seule activité 0", /^1 \/ 7/.test(prog.trim()), prog.trim());
+  ok("progression : 1 / 8 après la seule activité 0", /^1 \/ 8/.test(prog.trim()), prog.trim());
   ok("tableau de bord : la tâche 0 est cochée",
      (await page.locator("#tachesBandeau .tache.fait").count()) === 1);
   const largeur = await page.evaluate(() => document.getElementById("progFill").style.width);
-  ok("progression : la barre avance (14 %, une activité sur sept)", largeur === "14%", largeur);
+  ok("progression : la barre avance (13 %, une activité sur huit)", largeur === "13%", largeur);
   /* « 🗺 Où j'en suis » (04/11/2026) : ouvert à la séance 1, replié dès la séance 2 derrière une ligne qui dit le même compte */
   {
     const avant = await page.evaluate(() => document.querySelector(".seance-panel.active").id);
@@ -342,10 +342,10 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.reload();
   /* On attend que la restauration ait eu lieu, au lieu d'un délai fixe : lancé juste après
      d'autres bancs, 400 ms ne suffisaient pas toujours (31/10/2026). */
-  await page.waitForFunction(() => /^[12] \/ 7/.test((document.getElementById("progTxt") || {}).textContent?.trim() || ""),
+  await page.waitForFunction(() => /^[12] \/ 8/.test((document.getElementById("progTxt") || {}).textContent?.trim() || ""),
                              null, {timeout: 5000}).catch(() => {});
   ok("restauration : la progression survit au rechargement",
-     /^[12] \/ 7/.test((await page.locator("#progTxt").textContent()).trim()));
+     /^[12] \/ 8/.test((await page.locator("#progTxt").textContent()).trim()));
   ok("restauration : le tableau de bord retrouve ses coches",
      (await page.locator("#tachesBandeau .tache.fait").count()) >= 1);
 }
@@ -444,8 +444,8 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   await page.waitForTimeout(150);
   const fb3 = (await page.locator("#fb3").textContent()) || "";
   ok("act. 2 : validée 6/6 une fois l'exercice inséré réussi", /activité validée/.test(fb3) && /6\/6/.test(fb3), fb3.slice(0, 60));
-  ok("progression : 3 / 7 après les activités 0, 1 et 2",
-     /^3 \/ 7/.test((await page.locator("#progTxt").textContent()).trim()));
+  ok("progression : 3 / 8 après les activités 0, 1 et 2",
+     /^3 \/ 8/.test((await page.locator("#progTxt").textContent()).trim()));
 
   await page.waitForTimeout(150);
   const memo = await page.evaluate(k => JSON.parse(localStorage.getItem(k) || "{}"), CFG.cle);
