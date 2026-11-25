@@ -3060,6 +3060,7 @@ body.ms .cac-reserve{--cac-bas:84px}
    à la ligne au lieu de défiler. Aucun caractère n'est changé : ce qu'on copie reste le même. */
 @media (max-width:600px){.py{white-space:pre-wrap;overflow-wrap:anywhere}}
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 <a class="skip-link" href="#s1">Aller au contenu</a>
@@ -3098,7 +3099,7 @@ body.ms .cac-reserve{--cac-bas:84px}
   <span class="badge code" title="Programme 2024 — 4e_C9.3 : Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.">4e_C9.3</span>
   <span class="badge theme">Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser</span>
   <span class="badge socle" title="Domaines du socle commun travaillés : D1.3 Comprendre, s’exprimer en utilisant les langages mathématiques, scientifiques et informatiques · D2 Les méthodes et outils pour apprendre · D4 Les systèmes naturels et les systèmes techniques · D5 Les représentations du monde et l’activité humaine.">Socle : D1.3 · D2 · D4 · D5</span>
-  <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu traduis la règle d’arrosage en algorigramme puis en pseudo-code, l’écris dans l’éditeur, conçois un jeu d’essais, et supprimes par une hystérésis les basculements de la pompe autour du seuil.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu fais tourner le banc d’essai du jardin, intégré à la page et sans connexion, puis l’éditeur Python intégré à la page, sans connexion lui aussi, pour exécuter ton programme.">CRCN : 3.4 Programmer · 5.2 Évoluer dans un environnement numérique</span>
+  <span class="badge crcn" title="CRCN 3.4 Programmer.&#10;Le cadre : « Écrire des programmes et des algorithmes pour répondre à un besoin. »&#10;Ici : tu traduis la règle d’arrosage en algorigramme puis en pseudo-code, l’écris dans l’éditeur, conçois un jeu d’essais, et supprimes par une hystérésis les basculements de la pompe autour du seuil.&#10;&#10;CRCN 5.2 Évoluer dans un environnement numérique.&#10;Le cadre : « Installer, configurer et enrichir un environnement numérique (matériels, outils, services) pour disposer d’un cadre adapté aux activités menées, à leur contexte d’exercice ou à des valeurs. »&#10;Ici : tu fais tourner le banc d’essai du jardin, intégré à la page et sans connexion, puis l’éditeur Python intégré à la page, sans connexion lui aussi, pour exécuter ton programme."><abbr class="sigle" title="cadre de référence des compétences numériques" tabindex="0">CRCN</abbr> : 3.4 Programmer · 5.2 Évoluer dans un environnement numérique</span>
   <span class="badge duree">⏱ 3 séances de 55 min</span>
 </div>
 <section class="card trois-lignes" id="trois-lignes">
@@ -3540,7 +3541,7 @@ body.ms .cac-reserve{--cac-bas:84px}
       <summary>📖 Description détaillée du schéma</summary>
       <p><b>En haut, la chaîne d'information.</b><br>Deux entrées : l'<b>humidité du sol</b>, grandeur physique lue par le capteur, et l'<b>heure</b>, donnée par l'horloge de la carte. <br>Remarque la différence : la première vient du monde et demande un capteur, la seconde non — et pourtant elle déclenche autant que l'autre. <br>Elles arrivent à <b>ACQUÉRIR</b>, puis une flèche « mesures » mène à <b>TRAITER</b> (la carte et son programme : il compare les mesures aux seuils, et décide), puis une flèche « décision » mène à <b>COMMUNIQUER</b> (l'affichage « POMPE ON / OFF » et le voyant, vers le jardinier).</p>
       <p><b>Entre les deux chaînes</b>, la flèche verte de l'<b>ORDRE</b> descend de TRAITER et arrive sur <b>DISTRIBUER</b> : le <b>relais</b>. <br>La pompe est en 12 V (volts) et consomme cent fois ce qu'une broche peut fournir. <br>Le relais reçoit le petit signal et laisse passer la grosse énergie — c'est un <b>préactionneur</b>. <br>Avec un simple voyant, la broche de la carte suffirait : c'est elle qui distribuerait, et l'ordre arriverait toujours sur DISTRIBUER.</p>
-      <p><b>En bas, la chaîne d'énergie :</b> l'énergie électrique entre dans <b>ALIMENTER</b> (alimentation 12 V <b>séparée</b>, surtout pas l'USB), passe à <b>DISTRIBUER</b> (le relais), puis à <b>CONVERTIR</b> (la pompe : son moteur entraîne la turbine). <br>La pompe fournit de l'<b>énergie cinétique</b> : l'eau est mise en mouvement. <br>On dit aussi « mécanique » : c'est le mot qui couvre le mouvement (cinétique) et la hauteur (potentielle). <br><b>TRANSMETTRE</b> est dessiné en pointillés, grisé : la fonction est <b>absente</b>, car la pompe met elle-même l'eau en mouvement, sans mécanisme entre le moteur et la turbine.</p>
+      <p><b>En bas, la chaîne d'énergie :</b> l'énergie électrique entre dans <b>ALIMENTER</b> (alimentation 12 V <b>séparée</b>, surtout pas l'<abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr>), passe à <b>DISTRIBUER</b> (le relais), puis à <b>CONVERTIR</b> (la pompe : son moteur entraîne la turbine). <br>La pompe fournit de l'<b>énergie cinétique</b> : l'eau est mise en mouvement. <br>On dit aussi « mécanique » : c'est le mot qui couvre le mouvement (cinétique) et la hauteur (potentielle). <br><b>TRANSMETTRE</b> est dessiné en pointillés, grisé : la fonction est <b>absente</b>, car la pompe met elle-même l'eau en mouvement, sans mécanisme entre le moteur et la turbine.</p>
       <p><b>À part, le circuit d'eau :</b> réservoir → pompe → sol du jardin. L'eau est de la <b>matière</b>, pas de l'énergie : elle a ses propres flèches, d'une autre couleur.</p>
     </details>
     </details>
@@ -4647,7 +4648,7 @@ pompe_allumee = <span class="kw">False</span>
   <div class="qcm-option"><input type="radio" name="a6_c1" id="a6_c1__7" value="Énergie cinétique" data-pourquoi="Dans un bloc, on écrit un verbe : ce qui est fait. Ce qui circule s'écrit sur les flèches."><label for="a6_c1__7">Énergie cinétique</label></div>
 </fieldset>
         <fieldset class="qcm-groupe" id="a6_c2">
-  <legend>La <b>lampe à LED</b> : quelle fonction ?</legend>
+  <legend>La <b>lampe à <abbr class="sigle" title="Light-Emitting Diode, diode électroluminescente" tabindex="0">LED</abbr></b> : quelle fonction ?</legend>
   <div class="qcm-option"><input type="radio" name="a6_c2" id="a6_c2__1" value="Énergie lumineuse" data-pourquoi="Dans un bloc, on écrit un verbe : ce qui est fait. Ce qui circule s'écrit sur les flèches."><label for="a6_c2__1">Énergie lumineuse</label></div>
   <div class="qcm-option"><input type="radio" name="a6_c2" id="a6_c2__2" value="DISTRIBUER" data-pourquoi="DISTRIBUER, c'est laisser passer l'énergie, ou non. La lampe, elle, en change la forme."><label for="a6_c2__2">DISTRIBUER</label></div>
   <div class="qcm-option"><input type="radio" name="a6_c2" id="a6_c2__3" value="Ordre" data-pourquoi="Dans un bloc, on écrit un verbe : ce qui est fait. Ce qui circule s'écrit sur les flèches."><label for="a6_c2__3">Ordre</label></div>
@@ -4932,7 +4933,7 @@ SEUIL_HAUT = <span class="num">60</span>     <span class="cmt"># il fait vraimen
 <section class="card" style="text-align:center">
   <h2>🧠 Prêt·e à t'entraîner ?</h2>
   <p>30 questions sur la conception, l'écriture, les tests et la mise au point — avec, pour chacune, la correction et la <b>réfutation de chaque mauvaise réponse</b>.</p>
-  <a class="btn qcm" href="qcm_4e_C9_jardin-programme.html">🚀 Ouvrir le QCM d'entraînement</a>
+  <a class="btn qcm" href="qcm_4e_C9_jardin-programme.html">🚀 Ouvrir le <abbr class="sigle" title="questionnaire à choix multiples">QCM</abbr> d'entraînement</a>
 </section>
 
 </div>

@@ -36989,6 +36989,42 @@ entier) et `controle_contraste_liens` à 0 ; `tests_regle_311` des treize dossie
 89 / 89, `tests_3e_C9.2-C8.3.mjs` 167 / 167, `tests_pont_en_h.mjs` 37 / 37, `tests_5e_C9.1-C9.3.mjs` 66 / 66. Vu à
 390 px : le milieu de la page du mBot2, sombre de bout en bout.
 
+## 25/11/2026 — Sigles expliqués (n°44) : les dernières pages du thème 3, barre de navigation comprise ; plus aucun sigle nu sur le site (thème 3)
+
+**Décision.** Pascal (25/11/2026, 14 h 58), aux deux questions laissées ouvertes (l'infobulle dans la barre de
+navigation, le thème 1) : « Tu as carte blanche ». La barre (PR #897) et le thème 1 (PR #891, #892, #898) étaient
+déjà faits le 22/11 ; restait le thème 3, préparé le 22/11 et suspendu avec la PR #906 (fusionnée le 25/11).
+
+**Ce qui change** : 54 pages du thème 3, 77 infobulles, dont 46 sur « 🧠 QCM » dans la barre de navigation (sans
+`tabindex` : c'est un lien) — 39 synthèses, 8 séquences, les trois ateliers de planification, deux lexiques, le TP
+mBot2 et la page Vittascience de `3e_C9.1`.
+- `atelier-planification/_generation/build_atelier.py` appelle `infobuller` avant d'écrire (n°283) : les trois
+  ateliers régénérés portent leurs infobulles.
+- `atelier-planification/_generation/build_qcm.py` : le QCM de planification emprunte son gabarit au QCM de Shenzhen
+  (thème 1). Depuis la vague du thème 1, ce gabarit porte une infobulle dans son titre, et `build_qcm.py` refusait de
+  tourner (« motif absent » : `verif_chaine_qcm.py` était rouge sur `main`). Il retire d'abord les infobulles du
+  gabarit, puis pose celles de son QCM (`infobuller`). Vérifié aussi avec le gabarit de la PR #907 : il tourne.
+- `tests_atelier_C7.1.py` : le lien « 🧠 Le QCM » de la barre peut porter son infobulle (48 / 48).
+
+**Laissé à la PR #907** (ouverte, d'une autre session, qui pose `<main>` dans les 78 QCM) : le QCM de planification
+et celui de `3e_C9.2`, où « QCM » est encore expliqué plus bas que sa première apparition. Les régénérer ici aurait mis
+#907 en conflit. Une fois #907 fusionnée : `build_qcm.py <gabarit Shenzhen> ../qcm_C7.1_planification_taches.html`,
+`fix_r.js … 617`, puis `infobuller` sur le QCM de `3e_C9.2` — `verif_chaine_qcm.py` repassera au vert.
+
+**Vérifié.**
+- Texte et balises des 54 pages identiques à `main`, une fois retirés les `<abbr>` et le style commun.
+- Les 54 pages à 390 px : aucune erreur JavaScript ; la première infobulle visible prend le focus et l'affiche ; aucune
+  infobulle focalisable dans un lien. Sept pages défilent en largeur, exactement comme sur `main` (six synthèses
+  professeur, le TP mBot2 à 400 px).
+- Les 63 bancs des dossiers touchés : 63 / 63 (dont `tests_atelier_C7.1.py` 48 / 48 après sa retouche), et les quatre
+  de `4e_C7.1` et `3e_C9.1` rejoués après la fusion de #908 (contraste), qui touchait trois des mêmes pages.
+- `controle_page_ouverte.mjs --axe` : les mêmes écarts que sur `main`.
+- Dérive des huit générateurs de `rapport_audit.py`, dans une copie : 0 fichier ; `verif_chaine.py` (CAO) vert ;
+  `controle_entete_qcm.py` et `controle_sigles.py` (n°313) verts ; `tests_expliquer_sigles.py` 26 / 26.
+
+**Mesure** (`controle_sigles_expliques.py`, 410 pages) : 0 page avec un sigle jamais expliqué, dans les trois thèmes
+(thème 3 : 53 → 0). Deux pages où « QCM » est expliqué trop bas : les deux QCM laissés à #907.
+
 ## 22/11/2026 — Les quatre décisions de l'audit de « Programmer l'alerte » (carte blanche de Pascal) : deux moteurs Python à leur place, la n°333 sous la clé 6, le `<main>` sur les 78 QCM, l'image de situation gardée (transversal : thèmes 1, 2, 3, `_outils`, `.claude/skills`, `docs`)
 
 **Consigne de Pascal** (22/11/2026, 06 h 51) : « Tu as carte blanche pour les quatre décisions » — celles que le

@@ -54,7 +54,8 @@ def verifier(niveau, PAGE):
     # (« 🧠 Le QCM ») est un autre lien, voulu : il se vérifie à part (05/10/2026, le « == 1 » comptait les deux).
     assert len(re.findall(r'<a class="btn qcm" href="qcm_C7.1_planification_taches.html"', src)) == 1
     ok("un seul bouton QCM dans toute la page (règle n°4)")
-    assert len(re.findall(r'<a href="qcm_C7.1_planification_taches.html">[^<]*Le QCM', src)) == 1
+    # « QCM » peut y porter son infobulle (n°44, barre de navigation en dernier recours, 22/11/2026).
+    assert len(re.findall(r'<a href="qcm_C7.1_planification_taches.html">[^<]*Le (?:<abbr [^>]*>)?QCM', src)) == 1
     ok("la barre de navigation pointe aussi vers le QCM (un lien, hors bouton)")
     assert "Bonus (facultatif" in src
     ok("le bloc Bonus est présent, annoncé hors parcours obligatoire")
