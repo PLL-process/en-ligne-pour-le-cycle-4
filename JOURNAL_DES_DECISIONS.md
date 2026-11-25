@@ -37549,3 +37549,48 @@ refus page ouverte attendra la correction du générateur.
 
 **Thème par thème.** Thème 2 : `_outils/controle_axe.mjs`, `_outils/tests_controle_axe.mjs`. Hors thème (branche
 transversale, fusion par Pascal) : la ligne de `controle_axe.mjs` dans `.claude/skills/controle-qualite-lot/SKILL.md`.
+
+## 25/11/2026 — Vérification totale, vague 1 : que l'élève comprenne chaque question (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Demande de Pascal (25/11/2026)** : « Fais une vérification totale des trois thèmes. Corrige et fusionne ce qui ne va
+pas. Sois méticuleux et assure-toi que l'élève comprenne la question, qu'il y ait la correction, et que le mode mission
+soit pour tous les documents élèves. » Puis, à la question du périmètre du mode mission : « Tout, synthèses comprises ».
+Le chantier se livre en vagues ; celle-ci traite le premier critère.
+
+**Mesuré sur le `main` du jour** : `controle_question_seule` 62 signalements dans les 76 QCM (2 301 questions) ;
+`controle_consigne_question` 11 questions sans consigne (une page) ; `controle_consignes_a_la_ligne` 5 consignes qui
+enchaînent plusieurs actions ; `eleve_qui_ne_lit_pas --tout` 0 activité validée par un élève qui ne lit pas (55 pages) ;
+`controle_indices_qcm` aucune banque qui livre sa réponse ; `controle_sigles_expliques` 0 sigle nu.
+
+**Corrigé** :
+- **26 questions de QCM réécrites** (21 QCM, `modifier_question_qcm.mjs`, une à une) : un code sans son nom (« T2 = 0 V »
+  → les quatre points de mesure nommés ; « D6 » → « le port numérique D6 du Base Shield » ; « Ø20 » → « une sphère de
+  20 mm de diamètre » ; « Que demande 3e_C7.6 ? » → « la compétence de 3e en modélisation ») ; un renvoi à un document
+  absent (« Dans la table, L3… », « Sur le schéma du jardin… ») ; un passé supposé, contraire à la n°304 (« En 4e tu
+  écrivais… », « En 5e tu as vu la panne… », et deux leurres « de l'an dernier ») ; un mot ambigu (« le programme » →
+  « le programme officiel de technologie » ; « une source » → « une source d'énergie (pile, batterie, panneau
+  solaire) ») ; deux notions affichées qui soufflaient la réponse (« D'où vient le 8,5 », « reste en 5 V ») renommées,
+  et leurs pièges (`qcm_aides_5e_C7.2.json`, `qcm_aides_5e_C7.4.json`) reposés — 76 QCM à jour.
+- **4e_C8.1** : les 11 questions des activités 6 et 7 portaient un titre (« La charge d'une console… ») là où le mode
+  mission et le lecteur d'écran lisent la question ; la légende dit maintenant la question, et trois paragraphes qui la
+  répétaient mot pour mot sont retirés.
+- **Consignes** : 3e_C1.5 et 4e_C4.1, une action par ligne (`consignes_a_la_ligne.py`, puis à la main pour les lignes
+  déjà numérotées a), b)).
+
+**Le contrôle `controle_question_seule.py` affiné** (38 / 38 à son banc, 14 cas neufs) : il signalait aussi des codes
+déjà nommés (« le port A0 », « le routeur R2 », « T1 à la batterie », « entrée analogique (A0 à A3) »), un nom de réseau
+(« TECHNO-C4 »), une version de produit (« Base Shield V2 »), l'année du QCM lui-même (« En 5e » dans un QCM de 5e),
+« en cinquième année », « au programme de technologie », un leurre qui parle du passé de l'histoire, un nombre que
+l'énoncé dit lui-même, un « ci-dessous » suivi du programme dans l'énoncé. S3 lit désormais le passé DE L'ÉLÈVE :
+« l'an dernier », « par rapport à la 5e », une phrase qui s'adresse à lui (« En 4e tu écrivais ») ou qui raconte une
+autre séquence au passé ; « En 5e on SUIT, en 4e on ORGANISE » décrit une progression, pas son passé.
+
+**Mesure après** : S1 0 · S2 0 · S3 0 · S4 0 ; E1 11 (relus un à un : des listes que l'outil compte mal, aucune
+tronquée) ; C1 0 ; N2 0 (N3 48, « deux actions jointes par et », à juger) ; aides des QCM 76 / 76 à jour.
+
+**Vérifié** : 24 pages modifiées ouvertes dans Chromium sans erreur ; bancs `tests_3e_C1.5_questions` 23 / 23,
+`tests_4e_C4.1-C4.9` 72 / 72, `tests_4e_C8` 54 / 54, `tests_protocole_4e_C8.1` 18 / 18, `tests_simulation_4e_C8.1`
+13 / 13, n°311 34 / 34 sur 3e_C1.5, 4e_C4.1, 4e_C8.1.
+
+**Thème par thème** (n°302) : thème 1 — 3e_C1.5 (consigne) ; thème 2 — 8 QCM (C4, C5), 4e_C4.1 (consigne) ; thème 3 —
+13 QCM (C7, C8, C9), 2 fichiers d'aides, 4e_C8.1 ; `_outils` — `controle_question_seule.py` et son banc.

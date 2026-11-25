@@ -65,7 +65,13 @@ ANNONCE = re.compile(r"\b(%s)\b(?!\s+(?:fois|sur|à|ou|ans?|jours?|heures?|minut
                      % "|".join(NOMBRES), re.I)
 # S1 : une lettre et un ou deux chiffres, seuls (« S1 », « P12 ») ; ni un code de compétence (« C3.1 », « 5e_C3 »),
 # ni un format de papier, ni un domaine du socle.
-CODE = re.compile(r"(?<![\w.°])([A-Z]\d{1,2})(?![\w.]|\s*:)")
+CODE = re.compile(r"(?<![\w.°\-])([A-Z]\d{1,2})(?![\w.\-]|\s*:)")
+# (25/11/2026) un code se nomme aussi par le mot qui le précède (« le port A0 », « le routeur R2 », « les tests T1 et T2 »),
+# par ce qui le suit (« T1 à la batterie, T2 après le fusible »), dans une parenthèse (« entrée analogique (A0 à A3) »),
+# ou c'est une version de produit (« Base Shield V2 ») ; un code nommé nomme ceux de sa lettre dans la même question.
+NOMMANT = re.compile(r"\b(?:port|ports|broche|broches|routeur|routeurs|lampadaire|lampadaires|test|tests|essai|essais|point|points"
+                     r"|entrée|entrées|sortie|sorties|capteur|réseau|version|ligne|lignes|bloc|étape|module|case|niveau|poste)"
+                     r"\s+(?:analogique\s+|numérique\s+)?$", re.I)
 # connus sans leur nom : formats de papier, domaines du socle, classes de flexibilité d'un cahier des charges (F0 à F3,
 # vocabulaire enseigné), formules chimiques.
 CODES_CONNUS = {"A3", "A4", "A5", "D1", "D2", "D3", "D4", "D5", "F0", "F1", "F2", "F3", "H2", "O2"}
@@ -73,8 +79,8 @@ RENVOI = re.compile(
     r"\bdu tableau\b|\ble tableau (?:donne|montre|indique|dit)\b|\bsur (?:le|ce) (?:graphique|schéma)\b"
     r"|\bsur la planche\b|\bci-dess(?:us|ous)\b|\bdans ce projet\b|\b(?:de|dans) la séquence\b"
     r"|\bdans notre (?:travail|étude|séquence|projet)\b|\bvu(?:e|s|es)? en classe\b|\bdans l['’]activité \d", re.I)
-ANNEE = re.compile(r"\ben (?:6e|5e|4e|3e|sixième|cinquième|quatrième|troisième)\b|\bl['’]an dernier\b"
-                   r"|\bl['’]année dernière\b|\bau programme de\b|\bpar rapport à la (?:6e|5e|4e)\b", re.I)
+ANNEE = re.compile(r"\ben (?:6e|5e|4e|3e|sixième|cinquième|quatrième|troisième)\b(?!\s+année)|\bl['’]an dernier\b"
+                   r"|\bl['’]année dernière\b|\bau programme de (?:6e|5e|4e|3e)\b|\bpar rapport à la (?:6e|5e|4e)\b", re.I)
 
 
 def net(t: str) -> str:
@@ -109,12 +115,12 @@ def liste(prop: str):
     return []
 
 
-def juger(notion, enonce, props, r, doc):
+def juger(notion, enonce, props, r, doc, niveau=None):
     """Les refus d'une question : [(code, ce qui est dit)]."""
     ecarts = []
     tout = enonce + " | " + " | ".join(props)
     if not doc:
-        codes = []
+        codes, nommes = [], set()
         for m in CODE.finditer(tout):
             c = m.group(1)
             if c in CODES_CONNUS or c in codes:
@@ -122,19 +128,45 @@ def juger(notion, enonce, props, r, doc):
             # nommé à côté : « le vélo-cargo (S1) », ou « S2, la fourgonnette »
             if re.search(r"\w\s*\(%s\)" % re.escape(c), tout) or re.search(r"%s,? (?:le|la|l['’]|les|un|une) " % re.escape(c), tout):
                 continue
+            if (NOMMANT.search(tout[:m.start()][-40:]) or re.match(r"\s+(?:à|au|aux|après|avant)\b", tout[m.end():])
+                    or re.search(r"\w\s*\([^()]*\b%s\b[^()]*\)" % re.escape(c), tout)
+                    or re.search(r"[A-Z][a-z]+\s+%s\b" % re.escape(c), tout) and c.startswith("V")):
+                nommes.add(c[0])
+                continue
             codes.append(c)
+        codes = [c for c in codes if c[0] not in nommes]
         if codes:
             ecarts.append(("S1", "« %s » sans son nom, et sans document sous la question" % " », « ".join(codes)))
         m = RENVOI.search(enonce)
+        # (25/11/2026) « ci-dessous » suivi, dans l'énoncé même, du programme ou du texte qu'il désigne
+        if m and re.match(r"ci-dess", m.group(0), re.I) and len(enonce) - m.end() > 60:
+            m = None
         if m:
             ecarts.append(("S2", "« %s » : la question renvoie à un document qu'elle n'affiche pas" % m.group(0)))
-    m = ANNEE.search(tout)
-    if m:
-        ecarts.append(("S3", "« %s » : une autre année, que l'élève n'a peut-être pas faite ici (n°304)" % m.group(0)))
+    # (25/11/2026) S3 lit l'énoncé et la bonne réponse — un leurre peut parler du passé de l'histoire (« le banc de l'an
+    # dernier ») ; il ne compte pas l'année du QCM lui-même (« En 5e… » dans un QCM de 5e) ; une autre année ne fait
+    # défaut que si la phrase s'adresse à l'élève (« En 4e tu écrivais… », « En 5e tu as vu… ») ou dit « l'an dernier » :
+    # « En 5e on SUIT, en 4e on ORGANISE » décrit la progression d'une compétence, pas le passé de l'élève.
+    vise = enonce + " | " + (props[r] if 0 <= r < len(props) else "")
+    for phrase in re.split(r"(?<=[.;?!|])\s+", vise):
+        m = ANNEE.search(phrase)
+        if not m:
+            continue
+        an = re.search(r"\d", m.group(0))
+        if niveau and an and an.group(0) == niveau:
+            continue
+        # défaut : « l'an dernier », une comparaison à ce qui n'est pas dit (« par rapport à la 5e »), une phrase qui
+        # s'adresse à l'élève, ou qui raconte une autre séquence au passé (« En 4e à Hangzhou, la borne refusait… »)
+        passe = re.search(r"\b\w{3,}(?:ais|ait|aient)\b|\b(?:as|a|avez|avons|ont) (?:vu|fait|appris|écrit|construit|étudié|été)\b", phrase)
+        if (re.search(r"l['’]an(?:née)? dernière?|l['’]an passé|par rapport à", m.group(0), re.I)
+                or re.search(r"\b(?:tu|t['’]|toi|ton|ta|tes)\b", phrase, re.I) or passe):
+            ecarts.append(("S3", "« %s » : une autre année, que l'élève n'a peut-être pas faite ici (n°304)" % m.group(0)))
+            break
     if 0 <= r < len(props):
         # S4 : la notion s'affiche avec la question (« notion : … ») ; un nombre ou un code qu'elle partage avec la seule
         # bonne réponse la désigne (« La compétence CRCN 1.2 » au-dessus de « CRCN 1.2 — Gérer des données »).
-        marques = set(re.findall(r"\d+(?:[.,]\d+)?", notion))
+        # (25/11/2026) un nombre que l'énoncé dit lui-même ne souffle rien (« entre 6 et 10 » dans l'énoncé et la notion)
+        marques = set(re.findall(r"\d+(?:[.,]\d+)?", notion)) - set(re.findall(r"\d+(?:[.,]\d+)?", enonce))
         seules = [m for m in marques if re.search(r"(?<![\d.,])%s(?![\d.,])" % re.escape(m), props[r])
                   and not any(re.search(r"(?<![\d.,])%s(?![\d.,])" % re.escape(m), x) for i, x in enumerate(props) if i != r)]
         if seules:
@@ -176,8 +208,10 @@ def main(argv) -> int:
                 continue
             nqcm += 1
             nq += len(qs)
+            mn = re.search(r"(?:^|[_/])([3-6])e[_/]", rel.replace(os.sep, "/") + "/") or re.search(r"qcm_([3-6])e", nom)
+            niveau = mn.group(1) if mn else None
             for i, (notion, enonce, props, r, doc) in enumerate(qs, 1):
-                for code, dit in juger(notion, enonce, props, r, doc):
+                for code, dit in juger(notion, enonce, props, r, doc, niveau):
                     refus.append((code, rel, "Q%d « %s » — %s" % (i, enonce[:60], dit)))
             docs = sum(1 for q in qs if q[4])
             a_sequence = any(f.startswith("sequence") and f.endswith(".html") for f in os.listdir(os.path.dirname(p)))
