@@ -37522,3 +37522,30 @@ touchées. 22 pages sources, 65 titres ; `3e_C9.2` par sa page tout-en-un, puis 
 (stations 1 et 4 refaites). Vérifié : axe-core à l'ouverture, 1 280 et 390 px, sur les 24 pages : `heading-order`
 44 → 0, `aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 24 pages ; `tests_regle_311` des
 22 dossiers 34 / 34 ; `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `controle_mode_mission` 0.
+
+## 25/11/2026 — Structure des pages : quatre défauts tombés à zéro refusent désormais (thème 2, `_outils/`)
+
+**La décision.** « 1a » de Pascal (25/11/2026, 16 h 39) : corriger thème par thème les défauts de structure. Les six
+PR de la vague (#921, #923, #924 pour la zone principale ; #925, #927, #929 pour les titres) sont fusionnées. Ce qui
+est tombé à zéro ne doit plus pouvoir revenir (n°273 : une référence nommée, datée, qui ne peut que rétrécir).
+
+**Ce qui change.** `_outils/controle_axe.mjs` traite comme graves, avec une référence vide, quatre règles d'impact
+« moderate » : `landmark-one-main` (chaque page a sa zone principale), `heading-order` (un titre ne saute pas de
+niveau), `page-has-heading-one` et `empty-table-header`. Un seul nœud refuse. `region` (texte hors repère) reste
+mesuré seulement : 448 nœuds sur 121 pages (thème 1 : 277, thème 2 : 38, thème 3 : 131, index : 2).
+
+**Mesuré sur `main` (997e6904), 410 pages, 1 280 px, au chargement.** Avant la vague : 140 pages sans `<main>`
+(26 + 34 + 80), 71 titres signalés par `heading-order` (13 + 14 + 44) dans 49 pages, 2 160 nœuds `region`. Après :
+`landmark-one-main`, `heading-order`, `page-has-heading-one`, `empty-table-header` à 0 ; `region` 448.
+
+**Banc.** `tests_controle_axe.mjs` : 28 / 28. Deux refus ajoutés (page sans zone principale ; h2 → h4), le cas
+accepté devient un paragraphe resté hors d'une page qui a sa zone principale. Mutation : `STRUCTURE_REFUSEE` vidé,
+le banc tombe (3 échecs, sortie 1).
+
+**Ce qui n'est pas refusé, et pourquoi.** `controle_page_ouverte.mjs --axe` (page ouverte, 390 px) ne lit pas les
+bonnes pratiques : en dépliant les corrections, les exercices incrustés de cinq séquences (4e_C2.1, 5e_C2.1, C3.1
+des trois niveaux) gardent les niveaux de titres posés par le générateur des ateliers (`balise`, `balise_exo`). Le
+refus page ouverte attendra la correction du générateur.
+
+**Thème par thème.** Thème 2 : `_outils/controle_axe.mjs`, `_outils/tests_controle_axe.mjs`. Hors thème (branche
+transversale, fusion par Pascal) : la ligne de `controle_axe.mjs` dans `.claude/skills/controle-qualite-lot/SKILL.md`.
