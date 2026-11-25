@@ -37422,3 +37422,14 @@ Vérifié : les 80 pages rendues avant et après, à 390 et 1 280 px, image enti
 axe-core sur les 177 pages du thème 3 : `landmark-one-main` 80 → 0, `empty-table-header` 1 → 0, `region` 1 274 → 131
 nœuds ; aucun défaut grave ; `controle_impression` à 0 ; `verif_guidage.py` sur les quatre TP : 0 manquement ;
 `tests_verif_effectifs.py` 21 / 21. Les titres qui sautent un niveau (44 au thème 3) viennent dans un lot à part.
+
+## 25/11/2026 — Structure des pages, thème 2 : chaque page a sa zone de contenu principal (`<main>`)
+
+Suite du thème 1 (PR #921), même geste : 34 pages sans `<main>`, les 34 synthèses (élève et professeur) des 17
+séquences. `<main>` s'ouvre après la barre de navigation du site et se ferme avant le `<footer>` de premier niveau, ou
+avant `</body>`. Les deux synthèses de `4e_C6.2` ont un générateur, `synthese_4e_C6.2.py`, mais il est retiré
+depuis le 30/10/2026 (il refuse d'écrire : les deux pages se corrigent à la main) ; elles sont corrigées comme les autres.
+
+Vérifié : les 34 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 98 pages du thème 2 : `landmark-one-main` 34 → 0, `region` 293 → 38 nœuds ; aucun défaut grave ;
+`controle_impression` à 0. Les titres qui sautent un niveau (14 au thème 2) viennent dans un lot à part.
