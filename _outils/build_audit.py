@@ -1090,7 +1090,8 @@ OVERLAY = {
         anomalies="La question 1 du QCM est la seule qui porte sur le geste de paramétrer ; le QCM "
                   "reste à 30 questions fixes (choix du 23/10/2026). Depuis le 25/11/2026, trois questions "
                   "portent sur l'essai de la console (4e_C8.2) ; six se lisent sur un document dessiné pour "
-                  "le téléphone (n°345). Reste : la séquence n'a pas de billet de sortie (n°330).",
+                  "le téléphone (n°345). Depuis le 25/11/2026 aussi, la séquence se ferme par un billet de "
+                  "sortie (n°330) : le crochet à cartable, seul et sans aide.",
         accessibilite="Corrections dépliables, deux synthèses séparées ; le relevé des essais se lit "
                       "sur téléphone sans défiler de côté.",
         medias="Voir SOURCES_MEDIAS.md du dossier ; schéma de la console écrit dans la page (SVG).",
