@@ -210,3 +210,26 @@ Regardé à 312 px (les trois documents seuls) et à 390 px dans le QCM (questio
 0 erreur JavaScript.
 
 Non exécuté : un vrai téléphone, Firefox, Safari.
+
+## Reprise du 25/11/2026 (fin de journée) — le billet de sortie (n°330)
+
+À la fin de la séance 4, juste avant le Bonus : `<section class="card" id="billetSortie">`, environ 5 minutes, seul et sans
+aide, sur le crochet à cartable (un objet que la séquence n'a pas étudié). Deux réponses écrites (4e_C8.2 : l'essai de
+tenue ; 4e_C8.3 : l'étape qui teste le comportement), deux versions étayées, une correction complète avec le critère de
+chaque question et deux contre-exemples. Aucun bouton. En chemin : les corrections des activités 2 bis et 2 ter
+(écrites par `console_jardiniere.py`) cousaient leurs idées par des « ; » ; chaque idée a maintenant sa ligne.
+
+| Commande | Résultat |
+|---|---|
+| `node tests_4e_C8.mjs .` | **56 / 56** — deux tests ajoutés : la forme du billet (deux zones, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton) ; la réponse écrite survit au rechargement. Le compte des durées passe à 8 (le billet a la sienne). |
+| `node tests_regle_311_4e_C8.1.mjs` · `tests_protocole_4e_C8.1.mjs` · `tests_simulation_4e_C8.1.mjs` | 34 / 34 · 18 / 18 · 13 / 13 |
+| `python3 _generation/console_jardiniere.py` | la page et les attendus sont à jour |
+| `python3 _outils/audit_aeration.py --strict` (séquence, synthèses élève et professeur) | 0 écart (sur `main` : C1 1, C2 5 dans les corrections 2 bis et 2 ter) |
+| `python3 _outils/controle_question_seule.py --chantiers` | la séquence sort de P1 |
+| `node _outils/controle_squelette.mjs`, `banc_generique.mjs` (mode mission), `banc_papier.py` (4 fiches, 15 pages) | verts |
+| `controle_unites`, `controle_hierarchie`, `controle_sigles`, `controle_liens`, `controle_impression_papier`, `controle_impression.mjs`, `verif_regles_audit` | sans écart |
+
+Regardé à 390 px : le billet, ses versions étayées et sa correction ouvertes ; pas de défilement de côté, 0 erreur
+JavaScript.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

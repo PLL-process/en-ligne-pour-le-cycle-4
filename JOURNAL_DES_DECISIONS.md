@@ -37481,3 +37481,28 @@ la page explique déjà le sigle plus haut.
 **Vérifié.** `incrustations.py --verifier` : **25 / 25 séquences à jour** (20 avant), sortie 0 ; régénérées pour de
 vrai, aucune page ne change. Dérive des huit générateurs de `rapport_audit.py` : 0 fichier. Sigles : 0 page avec un
 sigle nu sur 411.
+
+## 25/11/2026 — 4e_C8 : la séquence se ferme par un billet de sortie (thème 3)
+
+**La décision.** « 1 oui » de Pascal (25/11/2026, 17 h 03), à la proposition : la séquence de 4e_C8 n'a pas de billet de
+sortie (n°330) ; l'écrire, deux questions, une version étayée et une correction complète chacune, avant le Bonus, sur un
+objet proche de l'élève.
+
+**Ce qui change** (`sequence_4e_C8_jardin-validation.html`, séance 4) :
+- `<section class="card" id="billetSortie">` après la synthèse, juste avant le Bonus, environ 5 minutes ; la séance
+  l'annonce dans son programme (15 + 15 + 5 + 15 min, sous les 55).
+- L'objet, que la séquence n'a pas étudié : le crochet à cartable vissé sous une table, dans un collège de Martinique ; un
+  cartable pèse au plus 8 kg, le crochet en tient 3 fois plus, et le cartable reste accroché quand on bouscule la table.
+- Question 1 (4e_C8.2) : proposer l'essai de tenue — la charge exigée (24 kg) par paliers, et un critère écrit avant
+  (pas de casse ET retour en place). Question 2 (4e_C8.3) : écrire l'étape qui teste le comportement — une action, ses
+  conditions chiffrées, un résultat attendu observable. 4e_C8.1 n'y est pas : l'activité 2 bis et le QCM la portent.
+- Une correction complète : une réponse possible, le critère de chaque question, deux contre-exemples (✘). Aucun bouton
+  (n°333). Le banc `tests_4e_C8.mjs` le vérifie, et vérifie qu'une réponse survit au rechargement.
+- Trouvé en chemin : les corrections des activités 2 bis et 2 ter (écrites le 22 et le 25/11 par `console_jardiniere.py`)
+  cousaient leurs idées par des « ; » (5 blocs) et un critère tenait en 59 mots d'un seul tenant :
+  `audit_aeration.py --strict` les refusait. Chaque idée a sa ligne ; la page est régénérée par le modèle.
+
+**Mesuré** : `tests_4e_C8.mjs` 56 / 56 ; `tests_regle_311` 34 / 34 ; `tests_protocole` 18 / 18 ; `tests_simulation`
+13 / 13 ; `audit_aeration.py --strict` 0 (séquence et synthèses) ; `controle_question_seule.py --chantiers` : la séquence
+sort de P1 ; `controle_squelette`, mode mission joué, fiche papier (4 fiches), contrôles des unités, sigles, hiérarchie,
+liens, impression et `verif_regles_audit` sans écart. Vu à 390 px.

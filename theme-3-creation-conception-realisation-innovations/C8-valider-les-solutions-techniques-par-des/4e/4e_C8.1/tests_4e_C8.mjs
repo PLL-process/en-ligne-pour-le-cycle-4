@@ -141,10 +141,11 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   const parts = [...txt.matchAll(/~\s*(\d+)\s*min/g)].map(m => parseInt(m[1], 10));
   const total = parts.reduce((a, b) => a + b, 0);
   ok("n°23 : la page annonce un cadre « N séances de M min »", !!cadre, cadre ? cadre[0] : "absent");
-  /* 7 durées pour 8 vérificateurs : l'activité 1 en porte deux (le diagramme,
+  /* Les durées, pour 8 vérificateurs : l'activité 1 en porte deux (le diagramme,
      puis le planning) — elles partagent le même créneau annoncé. L'activité 2 bis (la simulation de la console,
-     22/11/2026) a la sienne, l'activité 2 ter (le protocole de l'essai réel, 25/11/2026) aussi. */
-  ok("n°23 : les 7 durées d'activité sont à la convention ~n min", parts.length === 7, parts.join(" + "));
+     22/11/2026) a la sienne, l'activité 2 ter (le protocole de l'essai réel, 25/11/2026) aussi, et le billet de sortie
+     (25/11/2026, ~5 min) aussi : 8 durées. */
+  ok("n°23 : les 8 durées sont à la convention ~n min", parts.length === 8, parts.join(" + "));
   const dispo = cadre ? parseInt(cadre[1], 10) * parseInt(cadre[2], 10) : 0;
   ok("n°23 : le total tient dans le cadre annoncé, marge comprise",
      total + 10 <= dispo, total + " min pour " + dispo + " disponibles");
@@ -466,6 +467,32 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
   });
   ok("restauration : les 8 menus du tableau de l'exercice inséré retrouvent leur choix, écrit en texte dans la case",
      retrouves === 8, retrouves + " / 8");
+}
+
+/* — le billet de sortie (n°330, 25/11/2026) : une preuve faite seul, sur un objet que la séquence n'a pas étudié (le
+     crochet à cartable). Deux réponses écrites qui survivent au rechargement, deux versions étayées, deux critères dans
+     la correction, dans la dernière séance, juste avant le Bonus, et aucun bouton : il ne valide rien (n°333). — */
+{
+  const bs = await page.evaluate(() => {
+    const b = document.getElementById("billetSortie"); if (!b) return null;
+    const c = b.querySelector("details.correction"), n = b.nextElementSibling, pan = b.closest(".seance-panel");
+    const tous = [...document.querySelectorAll(".seance-panel")];
+    return { zones: b.querySelectorAll("textarea[data-save]").length, etayees: b.querySelectorAll("details.etayage").length,
+             criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0,
+             avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))),
+             derniere: !!pan && pan === tous[tous.length - 1], boutons: b.querySelectorAll("button").length };
+  });
+  ok("billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton",
+     !!bs && bs.zones === 2 && bs.etayees === 2 && bs.criteres === 2 && bs.avantBonus && bs.derniere && bs.boutons === 0,
+     JSON.stringify(bs));
+  await page.click("#tab-s4");
+  await page.fill("#bs_4e_C8_1", "Paliers de 8, 16 puis 24 kg");
+  await page.dispatchEvent("#bs_4e_C8_1", "change");
+  await page.waitForTimeout(150);
+  await page.reload();
+  await page.waitForFunction(() => /24 kg/.test((document.getElementById("bs_4e_C8_1") || {}).value || ""),
+                             null, {timeout: 5000}).catch(() => {});
+  ok("billet de sortie : la réponse écrite survit au rechargement", /24 kg/.test(await page.inputValue("#bs_4e_C8_1")));
 }
 
 /* — aucun envoi réseau — */
