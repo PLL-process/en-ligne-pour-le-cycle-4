@@ -258,11 +258,12 @@ OVERLAY = {
                 "conformité des quatre tests et propose le test discriminant qui départagerait "
                 "deux causes. Le tableau « Ce que dit le programme » de la séquence l'annonce "
                 "explicitement.",
-        anomalies="Le protocole est travaillé sur le COMPORTEMENT du système (pluie, gel, LED), pas "
-                  "sur la tenue mécanique d'un MATÉRIAU que la formulation nomme (relu le 22/11/2026, "
-                  "audit #867). La suite naturelle : après la simulation de la console (activité 2 bis "
-                  "de 4e_C8.1), faire écrire le protocole de l'essai réel qui la confirmera. Le dossier "
-                  "reste un squelette, ce qui est normal pour un code mutualisé.",
+        anomalies="Depuis le 25/11/2026, l'activité 2 ter de 4e_C8.1 fait PROPOSER le protocole de "
+                  "l'essai réel de la console (tenue mécanique d'un matériau : 33 kg par paliers, flèche "
+                  "lue à la règle, critère écrit avant, trois consoles) — l'écart relevé le 22/11 par "
+                  "l'audit #867 est comblé. Reste : les dix questions du QCM rangées sous 4e_C8.2 portent "
+                  "sur le protocole d'un comportement, aucune sur l'essai d'un matériau. Le dossier reste "
+                  "un squelette, ce qui est normal pour un code mutualisé.",
         accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C8.3": dict(
@@ -1083,11 +1084,12 @@ OVERLAY = {
                 "charges, un seul réglage changé à la fois. Les nombres viennent d'un seul modèle "
                 "(_generation/console_jardiniere.py, matériaux de la patère de 5e_C8.1) ; le banc "
                 "tests_simulation_4e_C8.1.mjs vérifie la page sur 480 cas, et que l'activité ne se "
-                "valide pas sans simulation lancée.",
+                "valide pas sans simulation lancée. Depuis le 25/11/2026, l'activité 2 ter fait proposer "
+                "le protocole de l'essai réel (4e_C8.2) ; la console a sa séance, la séquence passe à 4 "
+                "séances de 55 min.",
         anomalies="La question 1 du QCM est la seule qui porte sur le geste de paramétrer ; le QCM "
-                  "reste à 30 questions fixes (choix du 23/10/2026). 4e_C8.2 (un protocole pour la "
-                  "tenue mécanique d'un MATÉRIAU) n'est pas encore travaillé sur un matériau : voir "
-                  "son entrée.",
+                  "reste à 30 questions fixes (choix du 23/10/2026), et aucune ne porte encore sur "
+                  "l'essai d'un matériau (4e_C8.2).",
         accessibilite="Corrections dépliables, deux synthèses séparées ; le relevé des essais se lit "
                       "sur téléphone sans défiler de côté.",
         medias="Voir SOURCES_MEDIAS.md du dossier ; schéma de la console écrit dans la page (SVG).",
