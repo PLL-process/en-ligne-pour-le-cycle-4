@@ -37161,6 +37161,27 @@ retiré : ses mots (ceux de la console) sont passés en séance 3.
 **Reste** : les dix questions du QCM rangées sous 4e_C8.2 portent sur le protocole d'un comportement ; aucune ne porte
 encore sur l'essai d'un matériau (le QCM est aussi touché par la PR #907 d'une autre session, ouverte et en conflit).
 
+## 25/11/2026 — Sigles expliqués (n°44) : les deux derniers QCM ; le TP mBot2 ne défile plus à 390 px (thème 3)
+
+**Décision.** Pascal (25/11/2026, 15 h 41) : « Tu as carte blanche, continue » — les deux suites annoncées dans
+l'entrée précédente, une fois la PR #907 fusionnée.
+
+**Ce qui change.**
+- `atelier-planification/qcm_C7.1_planification_taches.html` régénéré (`build_qcm.py` avec le gabarit de Shenzhen,
+  `fix_r.js … 617`) : « QCM » porte son infobulle dans le titre ; `verif_chaine_qcm.py` vert.
+- `3e_C9.2/qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html` : l'infobulle de « QCM » dans le titre (`infobuller`).
+- `3e_C9.1/tp_mbot2_python.html` (n°364) : à 390 px, la page défilait de 10 px — une étiquette de code
+  (`cyberpi.mbot2.forward(speed=40, run_time=1)`) élargissait la colonne de la grille. La colonne ne dépasse plus son
+  conteneur (`minmax(0,1fr)`) et, sous 760 px, une étiquette trop longue passe à la ligne en gardant son indentation.
+
+**Vérifié.**
+- Les trois pages à 390 px : aucun défilement (le TP aussi à 640 et 1 280 px), aucune erreur ; une étiquette glissée
+  dans le programme y arrive ; capture de la banque d'étiquettes regardée.
+- Bancs : `tests_atelier_C7.1.py` 48 / 48 ; `3e_C9.1` 89 / 89 et 34 / 34 ; `3e_C9.2` 167 / 167, 37 / 37, 34 / 34.
+- `controle_page_ouverte.mjs --axe` : rien à signaler ; `controle_entete_qcm.py` vert.
+
+**Mesure** (`controle_sigles_expliques.py`, 411 pages) : 0 sigle jamais expliqué, 0 expliqué trop bas.
+
 ## 25/11/2026 — Thème 3 : la ligne d'étiquettes de la synthèse professeur de 4e_C9.1 passe au-dessus de 4,5 : 1
 
 Dernier défaut grave de `controle_axe.mjs` (page au chargement, 1 280 px) après la vague contraste :
