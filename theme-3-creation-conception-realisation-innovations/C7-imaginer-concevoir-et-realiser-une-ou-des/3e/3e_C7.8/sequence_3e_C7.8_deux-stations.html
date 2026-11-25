@@ -1677,6 +1677,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
    à la ligne au lieu de défiler. Aucun caractère n'est changé : ce qu'on copie reste le même. */
 @media (max-width:600px){.codebox{white-space:pre-wrap;overflow-wrap:anywhere}}
 </style>
+<style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
 
@@ -1848,7 +1849,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
       <div class="qcm-option"><input type="radio" name="be_2" id="be_2__4" value="je ne sais pas encore"><label for="be_2__4">je ne sais pas encore</label></div>
   </fieldset>
   <fieldset class="qcm-groupe" id="be_3" data-melange="1">
-      <legend>Pourquoi donne-t-on une adresse IP <b>fixe</b> à un capteur ?</legend>
+      <legend>Pourquoi donne-t-on une adresse <abbr class="sigle" title="Internet Protocol, l&#x27;adresse d&#x27;une machine sur le réseau" tabindex="0">IP</abbr> <b>fixe</b> à un capteur ?</legend>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__2" value="on doit le joindre toujours à la même adresse"><label for="be_3__2">on doit le joindre toujours à la même adresse</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__3" value="une adresse fixe le protège contre les pirates" data-pourquoi="Une adresse fixe ne protège de rien : elle permet seulement de le retrouver."><label for="be_3__3">une adresse fixe le protège contre les pirates</label></div>
       <div class="qcm-option"><input type="radio" name="be_3" id="be_3__1" value="une adresse fixe rend les échanges plus rapides" data-pourquoi="La vitesse ne dépend pas de l'adresse : il s'agit de savoir où le trouver."><label for="be_3__1">une adresse fixe rend les échanges plus rapides</label></div>
@@ -2444,7 +2445,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« Les avions embarquent trois sondes et non deux parce que, avec deux sondes qui ne sont pas d'accord, on ne sait pas …. »</li><li>« Pour la station du Marin, cela veut dire que … »</li></ul></details>
   <details class="correction"><summary>✅ Corrigé du défi horloges — une horloge qui retarde de dix minutes</summary><div>
     <p><b>Ce qui se passe.</b><br>Ta règle n'accepte que des messages de moins de 15 minutes, et chaque station juge l'âge d'un message d'après l'heure <code>t</code> qu'il porte. <br>Si l'horloge de Sainte-Anne retarde de 10 minutes, ses messages paraissent au Robert plus vieux de 10 minutes : une mesure faite il y a 6 minutes semble en avoir 16, et l'accord est refusé alors que les deux stations voient le même grain. <br>Dans l'autre sens, c'est pire : Sainte-Anne croit plus jeunes les messages du Robert, et accepte un message vieux de 20 minutes comme s'il en avait 10 — un accord périmé passe pour un accord.</p>
-    <p><b>Comment deux machines se mettent à l'heure.</b><br>Par le réseau, avec le protocole NTP (de l'anglais <i lang="en">Network Time Protocol</i>) : à intervalles réguliers, chaque station demande l'heure à un serveur de temps et corrige son horloge. <br>Une station sans réseau peut aussi prendre l'heure d'un récepteur GPS.</p>
+    <p><b>Comment deux machines se mettent à l'heure.</b><br>Par le réseau, avec le protocole NTP (de l'anglais <i lang="en">Network Time Protocol</i>) : à intervalles réguliers, chaque station demande l'heure à un serveur de temps et corrige son horloge. <br>Une station sans réseau peut aussi prendre l'heure d'un récepteur <abbr class="sigle" title="Global Positioning System, positionnement par satellites" tabindex="0">GPS</abbr>.</p>
     <p><b>Ce que ça change à ta règle.</b><br>L'heure devient une exigence : les deux horloges sont synchronisées, et un écart trop grand est signalé comme une panne. <br>On peut aussi juger la fraîcheur à l'heure d'<em>arrivée</em> du message, lue sur l'horloge de celui qui reçoit : l'écart entre les horloges ne compte plus. <br>Et un essai de plus au protocole : décaler une horloge de 10 minutes, puis vérifier ce que fait la règle.</p>
     <p><b>Attendus :</b> l'effet du retard sur la règle de fraîcheur (un accord refusé, ou un accord périmé accepté) ; <br>un moyen de synchroniser nommé (NTP ou GPS) ; <br>une modification de la règle ou un essai ajouté.</p>
     <p><b>Erreurs typiques :</b> « dix minutes, ce n'est rien » — la fenêtre de fraîcheur ne fait que 15 minutes ; <br>ne voir qu'un seul des deux sens ; <br>« on remet l'heure à la main une fois » — une horloge dérive de nouveau, il faut la recaler sans cesse.</p>

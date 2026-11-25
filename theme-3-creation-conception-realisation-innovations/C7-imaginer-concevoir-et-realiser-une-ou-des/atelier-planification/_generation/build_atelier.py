@@ -20,6 +20,7 @@ import sys
 # faux (constaté le 10/11/2026 : 3 écarts sur 3).
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[4] / "_outils"))
 from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
+from expliquer_sigles import infobuller  # noqa: E402  chaque sigle s'explique (n°44, 22/11/2026)
 
 G = pathlib.Path(__file__).resolve().parent
 D = G.parent
@@ -1642,5 +1643,5 @@ def page(niv):
 
 for _niv in ("5e", "4e", "3e"):
     _s = D / ("atelier_%s_C7.1_planification_taches.html" % _niv)
-    _s.write_text(page(_niv), encoding="utf-8")
+    _s.write_text(infobuller(page(_niv)), encoding="utf-8")   # infobulles des sigles, n°283
     print("écrit : %s (%d o)" % (_s.name, _s.stat().st_size))
