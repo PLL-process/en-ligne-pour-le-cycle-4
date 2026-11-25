@@ -1,5 +1,7 @@
 # Rapport de tests — Lot 4e_C9 « Le jardin connecté se programme »
 
+> **Mise à jour du 25/11/2026 — le programme de l'activité 3 enfin jugé (règle d'or n°333, `_outils/banc_eleve/`).** L'élève y écrit sa décision dans l'éditeur ; aucune vérification ne la lisait : l'activité se validait sur les menus, le journal et le banc du haut de page. Elle exige maintenant aussi le programme, rejoué sur huit cas (40 % pile, 6 h et 10 h pile, avant et après la plage). Suite du lot : `node tests_4e_C9.mjs .` → **161 / 161** (153 avant ; le parcours écrit et exécute la décision avant de valider l'activité 3) ; banc n°311 : **34 / 34**. Non testé : un vrai téléphone, Safari, Firefox.
+
 Date : 2026-08-26 (**réécriture complète** ; v1 : 2026-07-25, agent Grok) ·
 Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`

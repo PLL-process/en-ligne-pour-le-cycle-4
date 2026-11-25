@@ -24,7 +24,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
-import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
+import { eprouverEditeurs, eprouverPose, executerBloc, eprouverBanc, eprouverRejouer } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 import { pathToFileURL } from 'node:url';
 // Les questions posées par une liste déroulante sont devenues des boutons radio (n°300, 14/11/2026) : ce shim garde les
 // appels du banc (selectOption, fill, inputValue) — une chaîne vise la valeur ou le libellé, {index} la place.
@@ -605,8 +605,8 @@ async function verifierActivite(n) {
 }
 
 /* — l'éditeur Python intégré (04/11/2026) : il remplace l'onglet Vittascience. Le code de départ s'exécute (rien à
-     afficher : la décision est à écrire) ; le programme de la correction affiche ce que dit la correction ; une
-     exécution qui affiche quelque chose ouvre le verrou de l'activité 3b. — */
+     afficher : la décision est à écrire) ; le programme de la correction affiche ce que dit la correction ; le banc
+     d'essai juge la décision sur sept températures (n°333, 25/11/2026). — */
 {
   const ctxE = await nav.newContext({ viewport: { width: 1280, height: 900 } });
   const reseau = [];
@@ -623,7 +623,37 @@ async function verifierActivite(n) {
       corrige: { quoi: "PRÉ-ALERTE pour T = 27", sortie: "PRÉ-ALERTE\n",
         code: 'T = 27\nif T > 28:\n    print("ALERTE")\nelif T > 26:\n    print("PRÉ-ALERTE")\nelse:\n    print("ok")\n' } },
   ], ok);
-  ok("act. 3b : une exécution qui affiche quelque chose ouvre le verrou de l'éditeur (vs1)", await pe.evaluate(() => !!(window.__exp && window.__exp.vs1)));
+  /* n°333 (25/11/2026) : le banc d'essai rejoue la décision sur sept températures — seuil 28 et seuil 26 —, et seul
+     un programme qui fait ce que dit l'algorigramme ouvre le verrou. Avant : une sortie non vide suffisait. */
+  const V = 'seuil = 28\nT = 32\n';
+  await eprouverBanc(pe, "vs1", [
+    { nom: "le programme de la correction : 7 / 7", code: V + 'if T > seuil:\n    print("ALERTE")\nelse:\n    print("ok")\n', conforme: true, verdict: /7 \/ 7 essais conformes/ },
+    { nom: "apostrophes et un autre texte que « ok » : même verdict", code: V + "if T > seuil:\n    print('ALERTE')\nelse:\n    print('tout va bien')\n", conforme: true, verdict: /7 \/ 7/ },
+    { nom: "print(\"x\") seul : refusé (avant, il ouvrait le verrou)", code: V + 'print("x")\n', conforme: false, verdict: /T = 29 °C[\s\S]*Attendu : « ALERTE »/ },
+    { nom: ">= au lieu de > : refusé pile au seuil, à 28 °C", code: V + 'if T >= seuil:\n    print("ALERTE")\nelse:\n    print("ok")\n', conforme: false, verdict: /seuil = 28, T = 28 °C[\s\S]*28 > 28 est faux[\s\S]*Obtenu : « ALERTE »/ },
+    { nom: "28 écrit en dur : refusé quand le seuil passe à 26", code: V + 'if T > 28:\n    print("ALERTE")\nelse:\n    print("ok")\n', conforme: false, verdict: /seuil = 26, T = 27 °C/ },
+    { nom: "deux-points oubliés : l'erreur se dit avec sa ligne, ce n'est pas une limite du banc", code: V + 'if T > seuil\n    print("ALERTE")\n', conforme: false, verdict: /une erreur — [^\n]*ligne 3/ },
+  ], ok, { onglet: "#tab-s2" });
+  await eprouverBanc(pe, "vs2", [
+    { nom: "Bonus, le programme du corrigé : 6 / 6", code: 'T = 27\nif T > 28:\n    print("ALERTE")\nelif T > 26:\n    print("PRÉ-ALERTE")\nelse:\n    print("OK")\n', conforme: true, verdict: /6 \/ 6/ },
+    { nom: "Bonus, le seuil bas testé d'abord : refusé à 29 °C", code: 'T = 27\nif T > 26:\n    print("PRÉ-ALERTE")\nelif T > 28:\n    print("ALERTE")\nelse:\n    print("OK")\n', conforme: false, verdict: /T = 29 °C[\s\S]*Obtenu : « PRÉ-ALERTE »/ },
+  ], ok, { onglet: "#tab-s4" });
+  /* l'activité 3b de bout en bout : validée avec le banc, puis revalidée après une frappe */
+  await pe.click("#tab-s2"); await pe.waitForTimeout(150);
+  await pe.evaluate(() => { for (const [id, v] of [["algo", "DÉBUT → mesurer T → T > 28 ? → OUI : LED allumée, NON : LED éteinte → retour"], ["a3hys", "allumer si T > 29, éteindre si T < 27"], ["a3diag", "capteur débranché : je lis T sur la console"]]) { const e = document.getElementById(id); e.value = v; e.dispatchEvent(new Event("input", { bubbles: true })); } });
+  await executerBloc(pe, "vs1", V + 'if T > seuil:\n    print("ALERTE")\nelse:\n    print("ok")\n');
+  await pe.waitForFunction(() => /conformes/.test((document.getElementById("vs1-banc") || {}).textContent || ""));
+  await pe.waitForTimeout(700);   // l'éditeur sauvegarde 500 ms après la dernière frappe (un « change ») : on vérifie après, comme l'élève
+  await pe.evaluate(() => document.querySelector('.btn.check[data-check="4"]').click());
+  const prog = async () => parseInt(((await pe.locator("#progTxt").textContent()) || "0").trim(), 10);
+  const avant = await prog();
+  ok("act. 3b : validée quand le banc d'essai dit 7 / 7", /activité validée/.test(await pe.locator("#fb4").textContent()), (await pe.locator("#fb4").textContent()).slice(0, 80));
+  await eprouverRejouer(pe, "vs1", ok);
+  const apres = await prog();
+  ok("act. 3b : la validation est retirée (la progression perd une activité), et le message dit pourquoi",
+     /revalider/.test(await pe.locator("#fb4").textContent()) && apres === avant - 1, (await pe.locator("#fb4").textContent()).slice(0, 60) + " · " + avant + " → " + apres);
+  await pe.evaluate(() => document.querySelector('.btn.check[data-check="4"]').click());
+  ok("act. 3b : « Vérifier » sans rejouer → 🔒 À rejouer", /🔒 ↻ À rejouer/.test(await pe.locator("#fb4").textContent()), (await pe.locator("#fb4").textContent()).slice(0, 80));
   ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && ee.length === 0, reseau.concat(ee).slice(0, 3).join(" | "));
   await pe.close(); await ctxE.close();
 }

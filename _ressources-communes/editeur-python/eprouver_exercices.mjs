@@ -28,6 +28,31 @@ export async function executerBloc(page, bloc, code, attendre = 20000, arreterAp
   return page.evaluate(() => window.__finsBanc[window.__finsBanc.length - 1]);
 }
 
+/* Le banc-eleve (règle d'or n°333, 25/11/2026, `_outils/banc_eleve/`) : un programme joué dans l'éditeur, puis le
+   verdict que la page écrit sous lui. cas : [{nom, code, conforme: true|false, verdict: RegExp}]. Options : `onglet`
+   (le sélecteur de l'onglet de séance à ouvrir d'abord), `arreterApres` (ms : cliquer ⏹ comme l'élève, pour un
+   programme qui tourne sans fin, while True). Rend le dernier verdict lu. */
+export async function eprouverBanc(page, bloc, cas, ok, { onglet, arreterApres = 0 } = {}) {
+  let ligne = "";
+  if (onglet) { await page.click(onglet); await page.waitForTimeout(150); }
+  for (const c of cas) {
+    await executerBloc(page, bloc, c.code, 20000, arreterApres);
+    await page.waitForFunction((b) => { const l = document.getElementById(b + "-banc"); return !!l && !!l.textContent && !/⏳/.test(l.textContent); },
+      bloc, { timeout: 20000 });
+    // la page pose des espaces insécables dans le verdict (« T = 28 °C » ne se coupe pas) : on les lit comme des espaces
+    const r = await page.evaluate((b) => ({ ligne: document.getElementById(b + "-banc").textContent.replace(/\u00a0/g, " "), exp: !!(window.__exp && window.__exp[b]) }), bloc);
+    ligne = r.ligne;
+    ok("banc d'essai " + bloc + " · " + c.nom, r.exp === c.conforme && (!c.verdict || c.verdict.test(r.ligne)), r.ligne.replace(/\n/g, " ⏎ ").slice(0, 170));
+  }
+  return ligne;
+}
+/* Une frappe qui change le programme périme le verdict : la ligne dit « À rejouer » et le verrou se ferme. */
+export async function eprouverRejouer(page, bloc, ok) {
+  await page.evaluate((b) => { const t = document.querySelector("#" + b + " textarea.editeur-py-code"); t.value += "\n# une ligne de plus"; t.dispatchEvent(new Event("input", { bubbles: true })); }, bloc);
+  const r = await page.evaluate((b) => ({ ligne: (document.getElementById(b + "-banc") || {}).textContent || "", ok: typeof beOk === "function" ? beOk(b) : null }), bloc);
+  ok("banc d'essai " + bloc + " · programme changé après l'essai : « À rejouer », et le verrou se ferme", /À rejouer/.test(r.ligne) && r.ok !== true, r.ligne.slice(0, 120));
+}
+
 function conforme(r, att) {
   if (!r) return false;
   if (att.erreur) return !!r.erreur && r.erreur.type === att.erreur && (att.ligne === undefined || r.erreur.ligne === att.ligne)

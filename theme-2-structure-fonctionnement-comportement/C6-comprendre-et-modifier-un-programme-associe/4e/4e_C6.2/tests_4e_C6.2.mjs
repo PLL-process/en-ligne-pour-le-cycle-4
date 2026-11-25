@@ -78,7 +78,7 @@ function _groupesRadio(page){
   }
   return page;
 }
-import { eprouverEditeurs, eprouverPose, executerBloc } from '../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs';
+import { eprouverEditeurs, eprouverPose, executerBloc, eprouverBanc, eprouverRejouer } from '../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs';
 // les éditeurs des activités (l'éditeur d'essai de l'échauffement, 05/11/2026, n'en est pas un)
 const ACT_PY = '.editeur-py:not(.editeur-py-essai)';
 
@@ -215,15 +215,24 @@ ok('10 · activité 4 validée 3 / 3, et le pseudo-code s\'est écrit en direct'
    (await p.textContent('#pcSigne')) + ' ' + (await p.textContent('#pcAction')));
 
 await remplir(5); await valider(5);
-ok('11 · activité 5 REFUSÉE à son tour : le second éditeur n\'a pas été ouvert',
-   /🔒/.test(await retour(5)) && !(await estValidee(5)),
+ok('11 · activité 5 REFUSÉE à son tour : le programme de l\'éditeur n\'a pas passé le banc d\'essai',
+   /🔒/.test(await retour(5)) && /banc d'essai/.test(await retour(5)) && !(await estValidee(5)),
    (await retour(5)).slice(0, 70));
 await ouvrirPour('vs2');
 await p.click('#vs2 .vs-lien'); await p.waitForTimeout(200);
 await valider(5);
-ok('12 · activité 5 validée 4 / 4 (le trou de la condition et les deux appels)',
-   /4\/4/.test(await retour(5)) && await estValidee(5),
-   (await retour(5)).slice(0, 55));
+/* n°333 (25/11/2026) : l'élève ÉCRIT les trois trous ; la page ne lit pas un programme écrit dans Vittascience — le
+   geste d'ouvrir le lien ne prouve plus rien ici (il suffit encore à l'activité 3, où le programme est DONNÉ). */
+ok('11 bis · ouvrir Vittascience ne valide plus l\'activité 5 : seul le banc d\'essai de la page prouve',
+   /🔒/.test(await retour(5)) && !(await estValidee(5)), (await retour(5)).slice(0, 70));
+const PROG5 = 'seuil = 30\nwhile True:\n    humidite = lire_capteur_pourcent(A0)\n    if humidite < seuil:\n        demarrer_pompe()\n    else:\n        arreter_pompe()\n    attendre(1)\n';
+await executerBloc(p, 'vs2', PROG5, 20000, 1200);   // ⏹ au bout d'une seconde, comme l'élève : le programme tourne sans fin
+await p.waitForFunction(() => /conformes/.test((document.getElementById('vs2-banc') || {}).textContent || ''), null, { timeout: 20000 });
+await p.waitForTimeout(700);   // l'éditeur sauvegarde 500 ms après la dernière frappe : on vérifie après, comme l'élève
+await valider(5);
+ok('12 · activité 5 validée 4 / 4 une fois le programme complété dans l\'éditeur, RÉSEAU COUPÉ — banc d\'essai 6 / 6',
+   /4\/4/.test(await retour(5)) && await estValidee(5) && /6 \/ 6 essais conformes/.test(await p.textContent('#vs2-banc')),
+   (await retour(5)).slice(0, 55) + ' · ' + (await p.textContent('#vs2-banc')).slice(0, 40));
 
 /* ── LE SIMULATEUR ET LE BANC DE TESTS ───────────────────────────────────── */
 await ouvrirPour('seuilRange');
@@ -564,6 +573,25 @@ await eprouverEditeurs(p, [
 ], ok);
 ok('act. 3 : le verrou reste fermé après une exécution en erreur, et s\'ouvre quand la console affiche « Humidité du sol » (même arrêtée par ⏹)',
    !avant && await p.evaluate(() => !!window.__exp.vs1 && !!window.__exp.vs2));
+/* n°333 (25/11/2026) : le banc d'essai de l'activité 5 (six mesures, 30 % pile, puis 12 → 45 %) et du défi nuit */
+const BOUCLE = (test, oui, non) => 'seuil = 30\nwhile True:\n    humidite = lire_capteur_pourcent(A0)\n    if humidite ' + test + ' seuil:\n        ' + oui + '\n    else:\n        ' + non + '\n    attendre(1)\n';
+await eprouverBanc(p, 'vs2', [
+  { nom: 'act. 5, le programme de la correction : 6 / 6', code: BOUCLE('<', 'demarrer_pompe()', 'arreter_pompe()'), conforme: true, verdict: /6 \/ 6 essais conformes/ },
+  { nom: 'act. 5, <= au lieu de < : refusé à 30 % pile', code: BOUCLE('<=', 'demarrer_pompe()', 'arreter_pompe()'), conforme: false, verdict: /30 % pile[\s\S]*Obtenu : pompe en MARCHE/ },
+  { nom: 'act. 5, « sinon : attendre » : la pompe ne s\'arrête plus après l\'arrosage', code: BOUCLE('<', 'demarrer_pompe()', 'attendre(1)'), conforme: false, verdict: /12 %, puis à 45 %[\s\S]*Obtenu : pompe en MARCHE/ },
+  { nom: 'act. 5, > au lieu de < : refusé dès le sol humide', code: BOUCLE('>', 'demarrer_pompe()', 'arreter_pompe()'), conforme: false, verdict: /sol à 45 %/ },
+  { nom: 'act. 5, un trou laissé : l\'erreur se dit avec sa ligne', code: BOUCLE('___', '___', '___'), conforme: false, verdict: /une erreur — [^\n]*ligne 4/ },
+], ok, { onglet: '[data-panel="s2"]', arreterApres: 1200 });
+await eprouverRejouer(p, 'vs2', ok);
+const NUIT = (cond) => 'seuil = 30\nSEUIL_JOUR = 50\nluminosite = 80\nhumidite = lire_capteur_pourcent(A0)\nif ' + cond + ':\n    demarrer_pompe()\nelse:\n    arreter_pompe()\n';
+await eprouverBanc(p, 'vs3', [
+  { nom: 'Bonus, le défi nuit du corrigé : 6 / 6', code: NUIT('humidite < seuil and luminosite > SEUIL_JOUR'), conforme: true, verdict: /6 \/ 6/ },
+  { nom: 'Bonus, or au lieu de and : refusé', code: NUIT('humidite < seuil or luminosite > SEUIL_JOUR'), conforme: false },
+  { nom: 'Bonus, sans la luminosité : la pompe arrose la nuit, refusé', code: NUIT('humidite < seuil'), conforme: false, verdict: /luminosité 0[\s\S]*Obtenu : pompe en MARCHE/ },
+], ok, { onglet: '[data-panel="s3"]' });
+ok('Bonus : les trois défis ont leur corrigé, replié, à ouvrir après l\'essai (n°301 ; avant : « sans vérificateur », sans corrigé)',
+   await p.evaluate(() => { const c = [...document.querySelectorAll('#bonus details.correction')].find(d => /Corrigé du Bonus/.test(d.querySelector('summary').textContent));
+     return !!c && ['Défi nuit', 'Défi réglage', 'Défi maison'].every(x => c.textContent.includes(x)) && /30 &lt;= 30|30 <= 30/.test(c.innerHTML + c.textContent); }));
 ok('éditeur Python · réseau coupé : aucune requête tentée, zéro erreur JavaScript', reseau.length === 0 && err.length === 0, reseau.concat(err).slice(0, 3).join(' | '));
 await ctx.close();
 }

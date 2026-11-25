@@ -49,6 +49,26 @@ CAS = [
      page(EDITEUR, 'function etat(){ return {code: $("clTa").value}; }\n'
                    'const CHECKS = { 4: function(){ const r=BancPython.executer($("clTa").value, {}); const e=String(r.ok); '
                    'return {valide: /true/.test(e)}; }, 5: function(){ const e=etat(); return {valide: !!e}; } };')),
+    # 25/11/2026 — trois façons de juger après une exécution, et deux verrous faibles
+    ("le résultat de l'exécution rangé (window.__lamp = e.detail), relu par une fonction de CHECKS", "X",
+     page(PY, 'document.addEventListener("editeur-py:fin", e => { if(e.detail && e.detail.champ === "py_a4") window.__lamp = e.detail; });\n'
+              'function lampJuger(r){ return {ok: !!r && !r.erreur && /allume/.test(r.sortie)}; }\n'
+              'const CHECKS = { 4(){ const j = lampJuger(window.__lamp); return {valide: j.ok}; } };')),
+    ("banc-eleve : l'écouteur fait rejouer le programme par une fonction qui l'exécute", "X",
+     page('<div class="editeur-py" id="vs1">' + PY + '</div>',
+          'const BANC_ELEVE = {vs1: {essais: []}};\n'
+          'function beJuger(b, c){ return window.EditeurPython.executer(c, {}); }\n'
+          'function beOk(b){ return !!window.__exp[b]; }\n'
+          'document.addEventListener("editeur-py:fin", e => { const d = e.detail; beJuger(d.bloc, d.code).then(v => { window.__exp[d.bloc] = v.ok; }); });\n'
+          'const CHECKS = { 4(){ return {valide: beOk("vs1")}; } };')),
+    ("verrou faible : une sortie non vide suffit (clé calculée, 3e_C7.1 avant le 25/11)", "X",
+     page('<div class="editeur-py" id="vs1">' + PY + '</div>',
+          'document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(["vs1"].includes(d.bloc) && !d.erreur && (d.sortie || "").trim()){ window.__exp[d.bloc] = true; } });\n'
+          'const CHECKS = { 4(){ return {valide: true, exp: !!window.__exp.vs1}; } };')),
+    ("verrou faible : n'importe quelle sortie, clés sans guillemets (4e_C6.2 avant le 25/11)", "X",
+     page('<div class="editeur-py" id="vs3">' + PY + '</div>',
+          'document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; const preuve = {vs3: /./}[d.bloc]; if(preuve && preuve.test(d.sortie || "")){ window.__exp[d.bloc] = true; } });\n'
+          'const CHECKS = { 4(){ return {valide: true, exp: !!window.__exp.vs3}; } };')),
     ("ce qu'un bloc posé contient n'est pas le code de la page", "N",
      page(EDITEUR, '') .replace('</body>', '<!-- banc-python v1 : début -->\n<script>const CHECKS = { 4: function(){ return {valide: /x/.test($("clTa").value)}; } };</script>\n<!-- banc-python v1 : fin --></body>')),
 ]
@@ -64,6 +84,27 @@ def main():
         print("%s %s — attendu %s, obtenu %s%s" % ("✅" if bon else "❌", nom, attendu, obtenu,
                                                  "" if bon or not j else " " + str(j["motifs"])))
     total = len(CAS)
+    # les verrous faibles se signalent ; un juge qui compare ne se signale pas
+    attendus_faibles = {"verrou faible : une sortie non vide suffit (clé calculée, 3e_C7.1 avant le 25/11)": True,
+                        "verrou faible : n'importe quelle sortie, clés sans guillemets (4e_C6.2 avant le 25/11)": True,
+                        "banc-eleve : l'écouteur fait rejouer le programme par une fonction qui l'exécute": False,
+                        "le résultat de l'exécution rangé (window.__lamp = e.detail), relu par une fonction de CHECKS": False}
+    for nom, html in [(n, h) for n, _, h in CAS if n in attendus_faibles]:
+        bon = bool(cve.juger(html)["faibles"]) == attendus_faibles[nom]
+        ok += bon
+        total += 1
+        print("%s %s — verrou faible %s" % ("✅" if bon else "❌", nom[:60], "signalé" if attendus_faibles[nom] else "non signalé"))
+    # un éditeur d'activité que rien ne nomme est listé ; un éditeur de Bonus sans banc est compté à part
+    html = page('<div class="editeur-py" id="edpy-a3">' + PY + '</div><section id="bonus"><div class="editeur-py" id="vs9" data-fichier="X-bonus-TON NOM">'
+                '<textarea id="py_bonus" class="editeur-py-code"></textarea></div></section>',
+                'document.addEventListener("editeur-py:fin", e => { if(e.detail.champ === "reinv") window.__lamp = e.detail; });\n'
+                'const CHECKS = { 6(){ return {valide: !!window.__lamp}; } };')
+    j = cve.juger(html)
+    bon = j["sans_jugement"] == ["edpy-a3 (py_a4)"] and j["bonus_libres"] == ["vs9 (py_bonus)"]
+    ok += bon
+    total += 1
+    print("%s un éditeur d'activité que rien ne juge est listé, un Bonus sans banc compté à part — obtenu %s · %s"
+          % ("✅" if bon else "❌", j["sans_jugement"], j["bonus_libres"]))
     # sans éditeur : la page n'est pas comptée ; aucune page à éditeur → EN PANNE (n°299)
     with tempfile.TemporaryDirectory() as d:
         f = os.path.join(d, "sans.html")
@@ -88,6 +129,23 @@ def main():
               % ("✅" if bon else "❌", j["classe"] if j else None, len(j["motifs"]) if j else 0))
     else:
         print("○ la version du 21/11/2026 n'est pas dans cet historique git (clone partiel) : cas non joué")
+    # les pages d'avant le 25/11/2026 (main à 3f24c49d) : les verrous faibles et l'éditeur de 4e_C9.1 que rien ne jugeait
+    avant = [("theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html",
+              lambda j: bool(j["faibles"]), "3e_C7.1 : verrou faible signalé"),
+             ("theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.1/sequence_4e_C9_jardin-programme.html",
+              lambda j: j["sans_jugement"] == ["edpy-a3 (py_a3)"], "4e_C9.1 : l'éditeur de l'activité 3 que rien ne jugeait")]
+    for chemin2, verif, libelle in avant:
+        try:
+            v = subprocess.run(["git", "-C", os.path.dirname(ICI), "show", "3f24c49d:" + chemin2], capture_output=True, text=True, check=True).stdout
+        except (OSError, subprocess.CalledProcessError):
+            v = ""
+        if not v:
+            print("○ %s : version du 25/11/2026 absente de cet historique git, cas non joué" % libelle)
+            continue
+        bon = verif(cve.juger(v))
+        ok += bon
+        total += 1
+        print("%s avant le 25/11 (3f24c49d) — %s" % ("✅" if bon else "❌", libelle))
     print("\n%d / %d" % (ok, total))
     return 0 if ok == total else 1
 
