@@ -10,7 +10,8 @@ d'impression (3.b)
 
 - la séquence `sequence-numerique-societe-economie-environnement-sante.html` ;
 - le QCM `qcm_numerique_societe.html` (30 questions, dont 6 sur 5 documents dessinés) ;
-- la synthèse professeur `Synthèses/synthese_professeur_3e_C1.5.html` ;
+- la synthèse élève `Synthèses/synthese_eleve_3e_C1.5.html` (deux pages A4, écrite le 25/11/2026) et la synthèse
+  professeur `Synthèses/synthese_professeur_3e_C1.5.html` ;
 - le lexique `lexique_3e_C1.5.html`.
 
 *Fiche écrite le 22/11/2026 (audit hebdomadaire #867, réponse « 2 oui » de Pascal), à partir de la page telle qu'elle est
@@ -69,7 +70,8 @@ Six à huit lignes, une idée par ligne :
 2. une incidence sur la société, avec un exemple pris aux séances 1 ou 2 ;
 3. une incidence contraire, introduite par un connecteur d'opposition ;
 4. un chiffre de la séance 3, avec **qui l'a mesuré** et **l'année des données** ;
-5. une conclusion.
+5. une conclusion qui donne un avis nuancé ;
+6. en dernière ligne, ce que l'argumentaire ne sait pas.
 
 5.a prépare l'écriture : quatre questions où une seule proposition peut entrer dans un argumentaire honnête (les autres
 sont vraies mais hors sujet, ou fausses).
@@ -115,15 +117,14 @@ médical. Le pharmacien hésite à changer l'écran de la borne tous les deux an
 La matrice `matrice_couverture_3e_C1.5.csv` rattache chacune des 30 questions du QCM à une notion et à l'activité qui
 l'enseigne.
 
-## Ce qui reste à faire (relevé du 22/11/2026)
+## Ce qui reste à faire (relevé du 22/11/2026, mis à jour le 25/11/2026)
 
-- **Huit questions du QCM portent sur des notions que la séquence n'enseigne pas** : le télétravail et les réseaux à haut
-  débit (Q1), la fracture numérique (Q9), les écrans et le sommeil (Q14), le biais d'un système d'intelligence
-  artificielle (Q16), la dématérialisation des démarches (Q20), les indices de réparabilité et de durabilité (Q21, Q22),
-  le poids des critères d'achat sur la conception (Q29). La matrice les marque « à renforcer ». Deux voies, à choisir :
-  une ligne de cours dans la séance concernée (séance 2 pour Q1, Q9, Q16, Q20 ; séance 3 pour Q14, Q21, Q22, Q29), ou
-  remplacer ces questions par des questions sur ce que la séquence fait travailler.
-- **Pas de synthèse élève** ; la synthèse professeur dit elle-même que « le pari de la séquence, ce que l'élève sait
-  faire à la fin et le positionnement restent à écrire » (cette fiche en tient lieu en attendant).
+- ~~Huit questions du QCM portent sur des notions que la séquence n'enseigne pas~~ — **fait le 25/11/2026** (décision de
+  Pascal) : une ligne de cours « 📘 À savoir » dans la séance qui en parle. Séance 2, avant 2.c : le télétravail et les
+  réseaux à haut débit (Q1), les démarches en ligne (Q20), la fracture numérique (Q9), le biais d'une intelligence
+  artificielle (Q16) ; séance 3, activité 3 : les indices de réparabilité et de durabilité (Q21, Q22) et le poids de
+  l'acheteur sur la conception (Q29) ; séance 4, conclusion : l'écran et le sommeil (Q14).
+- ~~Pas de synthèse élève~~ — **écrite le 25/11/2026** (`synthese_eleve_3e_C1.5.html`, deux pages A4) ; la synthèse
+  professeur dit maintenant le pari de la séquence, ce que l'élève sait faire à la fin et le positionnement.
 - La problématique parle de « protéger sa vie numérique » ; le code principal (3e_C1.5) parle du rôle stratégique du
   numérique dans la société et les métiers. La séance 2 fait le lien, la problématique ne le dit pas.
