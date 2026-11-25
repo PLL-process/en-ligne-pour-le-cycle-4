@@ -36914,6 +36914,46 @@ Le gabarit des QCM d'ateliers (`gabarit_qcm.tpl`) le porte aussi : `build_qcm.py
 `controle_longueurs`, `controle_tactile`, `controle_effectifs_qcm`, `controle_ordre_propositions` verts ; bancs 3e_C6.1 57/57
 et 3e_C9.2 167/167 (qui cliquent les modes). **Non exécuté** : un essai en classe.
 
+## 22/11/2026 — Vague contraste, thème 2 et accueil : 143 textes passent au-dessus de 4,5 : 1
+
+Choix de Pascal (22/11/2026, « 1a ») après la vague des zones qui défilent : une vague contraste, thème par thème. Mesure
+d'axe-core, page ouverte, sur `main` le matin : 232 textes sous le seuil dans 26 pages, plus 10 champs sans étiquette,
+3 attributs interdits et une liste mal faite. Ce lot : l'accueil et le thème 2.
+- **Accueil** (`index.html`, engendré par `_outils/make_index.py`) : le bleu `#5b7bb8` des volets « Fichiers de
+  gouvernance », du pied de page et des statuts « à créer » donnait 4,0 : 1 sur le fond `#0a1b3d` → `#7f9bd0`
+  (6,1 : 1). 114 textes.
+- `3e_C4.8` et `4e_C6.1` : le titre « ⚠ Erreurs fréquentes », `#ff7b88` sur les cartes `#273b68` (4,4 : 1) →
+  `#ffa3ab` (5,8 : 1), dans les seuls volets d'erreurs.
+- `4e_C4.1/atelier_pix_crcn_jardin.html` : cartouches CRCN (`#C55A11` sur `#FDF3E7`, 3,95 : 1 → `#A84A0C`, 5,25 : 1),
+  étiquettes et titres d'atelier (blanc sur `#5B8DEF`, 3,23 : 1 → fond `#3D6FD6`, 4,73 : 1), et la légende des couleurs
+  du code, faite pour un fond sombre et posée sur un fond clair (1,2 à 2,3 : 1) → fond sombre de l'éditeur, à l'écran
+  seulement (sur papier, la feuille commune remet les couleurs en foncé : vu par `controle_impression`, corrigé).
+- `4e_C4.1_book-train` : la note de sauvegarde `#5a6068` sur `#0a1b3d` (2,7 : 1) → `#9aa3ad` (6,6 : 1).
+- `3e_C4.3` : le champ du seuil de l'alerte violette reçoit son nom (`aria-label`).
+
+Contrôles : axe-core page ouverte sur les 6 pages : 0 défaut grave ; `controle_impression` (site entier) à 0 ;
+`controle_contraste_liens` à 0 ; bancs `tests_3e_C4.3-C4.6.mjs` 23 / 23, `tests_4e_C4.1-C4.9.mjs` 72 / 72,
+`tests_4e_C4.1-C4.2-C4.4_book-train.mjs` 43 / 43, `tests_4e_C6.1-C6.3.mjs` 29 / 29, `tests_regle_311` des cinq dossiers
+verts. Vu à 390 px : cartouche, titre d'atelier, légende du code.
+
+## 22/11/2026 — Vague contraste, thème 1 : la légende des schémas vivants, un score, trois champs et une liste
+
+Suite de la vague contraste (thème 2 et accueil : PR #903).
+- **Kit des ateliers** (`_generation/kit.css`) : la légende d'un schéma vivant est posée sur le fond clair du schéma ;
+  le bleu clair commun `#9bbefc` y donnait 1,8 : 1 → `#3b5b8f` (6,7 : 1). 24 légendes. Ateliers, cahiers et 13
+  séquences du thème 1 régénérés (le diff ne fait qu'ajouter la règle). Les pages des thèmes 2 et 3 qui incrustent des
+  exercices recevront le moteur par greffe dans leurs lots.
+- `4e_C1.4` : l'étiquette du score dans un titre prenait le violet du titre (`#c68ef2` sur `#11407a`, 4,2 : 1) →
+  `#dcbcf8` (6,2 : 1).
+- `3e_C1.5` : les champs Nom, Prénom, Classe du bilan reçoivent leur nom ; la liste des deux questions de la séance 1
+  ne contenait pas que des `<li>` (zone de réponse, bouton et correction posés entre deux items) → chaque item garde
+  sa zone de réponse, son bouton et sa correction ; le nom de la zone de réponse reste la seule question (`span`).
+
+Contrôles : axe-core page ouverte sur les 35 pages : 0 défaut grave ; L 0 · B 0 · C 0 ; `controle_impression` (site
+entier) et `controle_contraste_liens` à 0 ; `banc_ateliers.py` 530 / 530, `banc_rappels_cdc.py` 302 / 302 ;
+`tests_3e_C1.5_questions.mjs` 23 / 23, `tests_3e_C1.5_seances.py` 46 / 46, `tests_4e_C1.4_quiz.mjs` 32 / 32,
+`tests_regle_311` 34 / 34 ; `controle_mode_mission` à 0.
+
 ## 22/11/2026 — Sigles expliqués (n°44) : `infobuller` traite aussi le sigle expliqué trop bas (thème 2, `_outils`)
 
 Carte blanche de Pascal (22/11/2026, 6 h 51). Le QCM de l'atelier de planification (thème 3) restait la dernière page
