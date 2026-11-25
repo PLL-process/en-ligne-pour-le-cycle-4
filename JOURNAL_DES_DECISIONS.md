@@ -37433,3 +37433,30 @@ depuis le 30/10/2026 (il refuse d'écrire : les deux pages se corrigent à la ma
 Vérifié : les 34 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
 axe-core sur les 98 pages du thème 2 : `landmark-one-main` 34 → 0, `region` 293 → 38 nœuds ; aucun défaut grave ;
 `controle_impression` à 0. Les titres qui sautent un niveau (14 au thème 2) viennent dans un lot à part.
+
+## 25/11/2026 — Incrustations : un bloc réécrit garde les infobulles que la page y avait ; les cinq séquences « en retard » ne l'étaient que pour cela (thème 1 : générateur des ateliers ; aucune page touchée)
+
+**Décision.** Pascal (22/11/2026 : « Continue. Tu as carte blanche pour tout ») ; proposition 2 de la vague des
+infobulles du thème 1 (#892) : reporter à la source ce qui rendait cinq séquences « en retard » sur leur générateur.
+Pascal (25/11/2026) : « Vérifie et continue », puis « il y a d'autres sessions en cours, attention aux conflits » —
+aucune autre session n'a touché `incrustations.py` depuis le 22/11 ; ce lot ne réécrit aucune page.
+
+**Constat.** `incrustations.py --verifier` voyait `3e_C7.1`, `4e_C8.1`, `5e_C4.1`, `4e_C4.1` et `3e_C7.3` en retard.
+Ce n'étaient pas des retouches de fond : chaque écart était une infobulle de sigle (LED, IP, PLA) posée dans le bloc
+par les vagues des thèmes 2 et 3, à la première apparition de la séance, et deux notes où « QCM » était expliqué en
+clair dans la page, pas dans la source. Réécrit, le bloc perdait l'infobulle ; `infobuller` ne la reposait pas, puisque
+la page explique déjà le sigle plus haut.
+
+**Ce qui change.**
+- `incrustations.py` : `garder_infobulles` — quand un bloc déjà posé est réécrit, la k-ième apparition d'un sigle
+  reçoit la balise qu'elle avait, tant que le bloc a autant d'apparitions de ce sigle ; sinon rien n'est posé au hasard
+  et `infobuller` (page entière) fait le reste. Même idée que `enrichir.py` (#901) : on garde le balisage de ce qui est
+  déjà écrit.
+- Deux notes portent l'explication à leur source : `donnees_et_validation.py` (4e_C8.1) et `capteur_ny_s3.py`
+  (3e_C7.1), « et le QCM (questionnaire à choix multiples) de l'atelier ».
+- Banc `tests_incrustations_infobulles.py` : 5 / 5 (bloc identique, bloc réécrit ailleurs, nombre d'apparitions
+  changé, sigle dans un attribut, ancien bloc sans infobulle) ; avec le générateur de `main`, il sort en panne.
+
+**Vérifié.** `incrustations.py --verifier` : **25 / 25 séquences à jour** (20 avant), sortie 0 ; régénérées pour de
+vrai, aucune page ne change. Dérive des huit générateurs de `rapport_audit.py` : 0 fichier. Sigles : 0 page avec un
+sigle nu sur 411.
