@@ -260,6 +260,12 @@ def infobuller(src):
         neuf = neuf or poser_infobulle(src, sigle)[0]
         if neuf:
             src = neuf
+    # l'explication en clair a pu se poser plus bas qu'une première apparition dans un titre ou un lien (P, vu le
+    # 22/11/2026 sur le QCM de l'atelier de planification : « <h1>… QCM : … » puis « QCM (questionnaire…) ») : cette
+    # première apparition reçoit l'infobulle, et l'explication en clair reste
+    for sigle, etat in cse.mesurer_source(src).items():
+        if etat == "P":
+            src = poser_infobulle(src, sigle)[0] or src
     # en dernier recours, la barre de navigation : le sigle n'apparaît d'abord que là (« 🧠 QCM » d'une synthèse)
     for sigle, etat in cse.mesurer_source(src).items():
         if etat != "ok":

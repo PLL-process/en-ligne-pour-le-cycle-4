@@ -148,5 +148,17 @@ g10 = es.infobuller(AILLEURS)
 t("barre : le sigle a aussi sa place dans le texte, la barre n'est pas touchée",
   '>🧠 QCM</a></nav>' in g10 and cse.mesurer_source(g10).get("QCM") == "ok", g10)
 
+# 9. QCM écrit en clair plus bas qu'un premier titre (22/11/2026, QCM de l'atelier de planification)
+TITRE = """<!doctype html><html><head><title>QCM</title></head><body>
+<h1>Thème 3 — QCM : le diagramme de planification</h1><p>""" + "Lis bien chaque consigne avant de répondre. " * 6 + """</p><p>Ce QCM d'entraînement compte 30 questions.</p>
+</body></html>"""
+g11 = es.infobuller(TITRE)
+t("titre puis texte : QCM s'écrit en clair dans le texte, et le titre reçoit l'infobulle (ni E ni P)",
+  "Ce QCM (questionnaire à choix multiples) d'entraînement" in g11
+  and re.search(r"<h1>Thème 3 — <abbr class=\"sigle\"[^>]*>QCM</abbr> :", g11)
+  and cse.mesurer_source(g11).get("QCM") == "ok", g11)
+t("titre puis texte : relancé, rien ne change ; le texte ne bouge que de l'explication en clair",
+  es.infobuller(g11) == g11 and texte(g11) == texte(TITRE).replace("Ce QCM d'", "Ce QCM (questionnaire à choix multiples) d'"))
+
 print(f"\n{sum(RES)} / {len(RES)}")
 sys.exit(0 if all(RES) else 1)
