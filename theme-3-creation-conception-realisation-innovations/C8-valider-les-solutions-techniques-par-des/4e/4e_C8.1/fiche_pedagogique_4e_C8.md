@@ -119,5 +119,12 @@ ajoutera » (une question qui renvoyait à une autre année, n°343) et « Une a
 déjà dans trois questions). Elles ne recopient pas l'activité 2 ter : autre moment de l'essai, autres propositions,
 flèche demandée sous 22 kg et non 33 kg. Leurs nombres sont ceux du modèle. Nouveau piège « L'essai d'une vraie pièce ».
 
-**Ce qui reste** : le QCM a 3 questions sur document dessiné ; il en faut au moins 6 (n°345).
+**Les questions sur document** (25/11/2026, n°345) : six questions se lisent sur un document dessiné pour le téléphone.
+Les questions 2 et 15 se lisent sur « Les quatre essais du support » (l'attendu et l'observé de chacun, sans verdict) ;
+la 18 sur un extrait du protocole de l'essai de la console, le cadre du critère vide ; la 19 sur le relevé de la flèche,
+les cases de 22 et 33 kg vides. Les données sont dans `documents_qcm_4e_C8.1.json`, dessinées par
+`_outils/document_qcm.py`. L'ancienne planche de la question 2 donnait le verdict (« non conforme », « à améliorer ») :
+elle est retirée.
+
+**Ce qui reste** : la séquence n'a pas de billet de sortie (n°330).
 

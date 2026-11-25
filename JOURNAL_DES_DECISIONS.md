@@ -37378,3 +37378,29 @@ Bienvenue dans la cybersécurité — Séquence 4e » le devient, avec l'allure 
 axe-core sur les 134 pages du thème 1 : `landmark-one-main` 26 → 0, `page-has-heading-one` 1 → 0, `region` 591 → 277
 nœuds ; aucun défaut grave. `controle_impression` à 0. Les titres qui sautent un niveau (13 au thème 1) viennent dans un
 lot à part.
+
+## 25/11/2026 — QCM de 4e_C8 : six questions sur document dessiné pour le téléphone (thème 3)
+
+**La décision.** « 1 oui » de Pascal (25/11/2026, 16 h 38), à la proposition : le QCM de 4e_C8 n'a que 3 questions sur
+document, il en faut au moins 6 (n°345) ; dessiner trois documents pour le téléphone et y accrocher trois questions.
+
+**Ce qui change** (`documents_qcm_4e_C8.1.json`, dessinés par `_outils/document_qcm.py`) :
+- « Les quatre essais du support » : pour chaque essai, l'attendu écrit avant et l'observé, sans verdict. La question 15
+  (« Trois oui, un non ») s'y lit : il faut comparer avant de décider. La question 2 s'y lit aussi : son ancienne planche
+  (`protocole_quatre_tests.svg`, 940 unités de large, texte minuscule au téléphone) écrivait « non conforme » et « à
+  améliorer » — elle donnait le verdict. Elle est retirée.
+- Un extrait du protocole de l'essai de la console (la pièce, la charge, la mesure), le cadre du critère vide : la
+  question 18 demande ce qu'il faut y écrire.
+- Le relevé de la flèche : 0 mm à 0 kg, 4,1 mm à 11 kg, les cases de 22 et 33 kg vides. La question 19 s'y lit. Les
+  nombres sont ceux du modèle `console_jardiniere.py` (n°233).
+- Les pourquoi des questions 2 et 15 renvoient au cadre à relire, avec l'étape suivante.
+- Trouvé en chemin : sur le schéma du banc de l'activité 2 ter (posé le 25/11 par la PR #911), les deux sacs de sable
+  étaient à 6 unités l'un de l'autre, refusés par `controle_schemas.mjs` (n°315). Ils sont séparés de 16 unités, reliés par
+  la corde ; la page est régénérée par le modèle.
+
+**Mesuré** : `controle_question_seule.py --chantiers` : le QCM sort de D1 (40 QCM restent sous six questions sur
+document dans le dépôt, 41 sur `main`) ; `controle_schemas.mjs` sur le lot : 0 ✘ (1 sur `main`) ; `balayer_questions_qcm.mjs
+--apres` : 30 questions, 6 illustrées, 0 écart ; `banc_aides.mjs` 0 refus ; les quatre bancs du lot verts (18, 54, 13, 34
+tests) ; contrôles des QCM sans écart.
+
+**Reste** : la séquence 4e_C8 n'a pas de billet de sortie (n°330, P1).

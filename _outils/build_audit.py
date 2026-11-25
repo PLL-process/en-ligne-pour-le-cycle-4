@@ -1089,8 +1089,8 @@ OVERLAY = {
                 "séances de 55 min.",
         anomalies="La question 1 du QCM est la seule qui porte sur le geste de paramétrer ; le QCM "
                   "reste à 30 questions fixes (choix du 23/10/2026). Depuis le 25/11/2026, trois questions "
-                  "portent sur l'essai de la console (4e_C8.2). Le QCM a 3 questions sur document dessiné, "
-                  "pour 6 attendues (n°345).",
+                  "portent sur l'essai de la console (4e_C8.2) ; six se lisent sur un document dessiné pour "
+                  "le téléphone (n°345). Reste : la séquence n'a pas de billet de sortie (n°330).",
         accessibilite="Corrections dépliables, deux synthèses séparées ; le relevé des essais se lit "
                       "sur téléphone sans défiler de côté.",
         medias="Voir SOURCES_MEDIAS.md du dossier ; schéma de la console écrit dans la page (SVG).",
