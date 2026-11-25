@@ -37334,3 +37334,29 @@ de la console.
 
 **Reste** : le QCM a 3 questions sur document dessiné ; il en faut au moins 6 (n°345, `controle_question_seule.py
 --chantiers`). Ce manque existait déjà.
+
+## 25/11/2026 — 3e_C1.5 : la problématique demande ce que demande le code principal (thème 1)
+
+**La décision.** « Oui stp pour les deux » de Pascal (25/11/2026, 16 h 16), à la proposition : réécrire la problématique
+de la séquence « Numérique, société, économie, environnement, santé » pour qu'elle porte le code principal, 3e_C1.5
+(exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des
+environnements professionnels).
+
+**Avant** : « Comment protéger efficacement sa vie numérique tout en respectant les droits des autres et en comprenant
+l'impact de ses actions en ligne ? » — elle ne disait rien des métiers, que la séance 2 travaille.
+
+**Après** : « Quel rôle joue le numérique dans notre vie privée, nos métiers et notre planète : qu'apporte-t-il, que
+coûte-t-il, et à qui ? » Chaque séance en apporte une partie : la vie privée (séance 1, que la situation de la photo
+publiée sans accord ouvre), les métiers (séance 2), la planète (séance 3) ; la séance 4 l'écrit en argumentaire court, et
+le bilan demande déjà « un effet précis, et qui il touche ».
+
+**Ce qui change** : la problématique de l'ouverture et sa correction (une reformulation, puis les pistes que la séquence
+vérifie, prises dans ses « À retenir » ; les mots de passe et la double authentification, que la séquence ne travaille
+pas, sortent) ; la phrase d'accueil de la séance 1 ; la citation du bilan ; la question de la carte de la synthèse élève ;
+la fiche pédagogique (le point « ce qui reste à faire » est barré) ; la note d'audit.
+
+**Mesuré** : `tests_3e_C1.5_seances.py` 46 / 46 ; `tests_3e_C1.5_questions.mjs` 23 / 23 ; `tests_regle_311_3e_C1.5.mjs`
+34 / 34 ; `controle_squelette.mjs` vert ; `audit_aeration.py --strict` (séquence, synthèse élève) 0 ;
+`mesurer_impression.py` : synthèse élève sur 2 pages, en Inter (95 % · 93 %) et en Liberation Sans (95 % · 84 %) ;
+`controle_unites`, `controle_liens`, `enrichir.py --verifier-tout` sans écart. Vu à 390 px : la problématique, sa
+correction et la carte de la synthèse, sans défilement de côté.

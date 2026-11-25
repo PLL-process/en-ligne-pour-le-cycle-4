@@ -39,8 +39,13 @@ personnelles, droit à l'image) ; création de contenus (une impression maîtris
 
 ## La problématique et la situation déclenchante
 
-> Comment protéger efficacement sa vie numérique tout en respectant les droits des autres et en comprenant l'impact de
-> ses actions en ligne ?
+> Quel rôle joue le numérique dans notre vie privée, nos métiers et notre planète : qu'apporte-t-il, que coûte-t-il, et
+> à qui ?
+
+Réécrite le 25/11/2026 (décision de Pascal) : elle demande ce que demande le code principal, 3e_C1.5 — le rôle du
+numérique dans la société et les métiers. Chaque séance en apporte une partie : la vie privée (séance 1), les métiers
+(séance 2), la planète (séance 3) ; la séance 4 l'écrit en argumentaire court. Avant, elle parlait de « protéger sa vie
+numérique » et ne disait rien des métiers, que la séance 2 travaille.
 
 **Situation** : un ami publie une photo de toi prise le week-end ; elle révèle où tu étais et qui tu es, sans ton
 accord. Quelles conséquences ? Qu'aurait-il dû faire avant de partager ?
@@ -126,5 +131,5 @@ l'enseigne.
   l'acheteur sur la conception (Q29) ; séance 4, conclusion : l'écran et le sommeil (Q14).
 - ~~Pas de synthèse élève~~ — **écrite le 25/11/2026** (`synthese_eleve_3e_C1.5.html`, deux pages A4) ; la synthèse
   professeur dit maintenant le pari de la séquence, ce que l'élève sait faire à la fin et le positionnement.
-- La problématique parle de « protéger sa vie numérique » ; le code principal (3e_C1.5) parle du rôle stratégique du
-  numérique dans la société et les métiers. La séance 2 fait le lien, la problématique ne le dit pas.
+- ~~La problématique parle de « protéger sa vie numérique », pas du rôle du numérique dans la société et les métiers~~ —
+  **réécrite le 25/11/2026** (décision de Pascal) : elle demande ce que demande le code principal.
