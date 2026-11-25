@@ -393,9 +393,8 @@ OVERLAY = {
         anomalies="Les huit questions du QCM qui évaluaient des notions absentes de la séquence (1, 9, "
                   "14, 16, 20, 21, 22, 29) ont leur ligne de cours « 📘 À savoir » depuis le 25/11/2026 "
                   "(décision de Pascal) ; la synthèse élève est écrite le même jour (deux pages A4), et la "
-                  "synthèse professeur complétée. La problématique parle de « protéger sa vie "
-                  "numérique », le code principal du rôle stratégique du numérique : la séance 2 fait le "
-                  "lien, la problématique ne le dit pas. L'image de la situation (2,6 Mo) est une image générée par IA (Canva), gardée telle quelle : ses métadonnées de provenance (C2PA, XMP) ne se retirent pas (conditions de Canva) — elle est l'exception à la limite de taille. Compressée par erreur le 22/11/2026, l'original a été remis le 25/11/2026.",
+                  "synthèse professeur complétée. La problématique, réécrite le 25/11/2026, demande le "
+                  "rôle du numérique dans la vie privée, les métiers et la planète, comme le code principal. L'image de la situation (2,6 Mo) est une image générée par IA (Canva), gardée telle quelle : ses métadonnées de provenance (C2PA, XMP) ne se retirent pas (conditions de Canva) — elle est l'exception à la limite de taille. Compressée par erreur le 22/11/2026, l'original a été remis le 25/11/2026.",
         accessibilite="Contrôles axe du dépôt.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
                "Delagrave n'est plus visée, ni rediffusée par le dépôt (arbitrage A5, 23/10/2026).",
