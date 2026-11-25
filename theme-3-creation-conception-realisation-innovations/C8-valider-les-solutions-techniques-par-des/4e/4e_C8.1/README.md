@@ -7,19 +7,23 @@
 > **4e_C8.3** — Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.
 
 **Sujet du lot** : le jardin connecté du collège — le support conçu en 4e_C7 passe à l'épreuve.
-Suite directe de 4e_C7, et amont direct de 4e_C9 (le programme). Trois séances de 55 min.
+Suite directe de 4e_C7, et amont direct de 4e_C9 (le programme). Quatre séances de 55 min (trois jusqu'au 25/11/2026 : la console de la jardinière a désormais sa séance).
 
 ## Fichiers du lot
 
-- `sequence_4e_C8_jardin-validation.html` — la séquence (7 activités : le banc de tests virtuel, et depuis le 22/11/2026
-  l'activité 2 bis, la simulation de la console de la jardinière, qui porte 4e_C8.1)
+- `sequence_4e_C8_jardin-validation.html` — la séquence (8 activités : le banc de tests virtuel ; depuis le 22/11/2026
+  l'activité 2 bis, la simulation de la console de la jardinière, qui porte 4e_C8.1 ; depuis le 25/11/2026 l'activité
+  2 ter, le protocole de l'essai réel de cette console, qui porte 4e_C8.2 — les deux en séance 3)
 - `qcm_4e_C8_jardin-validation.html` — QCM 30 questions, chacune avec ses réfutations
 - `Synthèses/`, `synthese_eleve_4e_C8.html`, `synthese_professeur_4e_C8.html`
 - `fiche_pedagogique_4e_C8.md`, `matrice_couverture_4e_C8.csv`, `SOURCES_MEDIAS.md`, `CRCN_regle7.md`
-- **`tests_4e_C8.mjs`** — la suite du lot, rejouable : `node tests_4e_C8.mjs .` (54 tests au 22/11/2026)
+- **`tests_4e_C8.mjs`** — la suite du lot, rejouable : `node tests_4e_C8.mjs .` (54 tests au 25/11/2026)
 - `_generation/console_jardiniere.py` — le modèle de la console (matériaux de la patère de 5e_C8.1) : il écrit
   l'activité 2 bis, la partie 7 de la synthèse élève et les attendus ; `tests_simulation_4e_C8.1.mjs` vérifie que la
   page calcule comme lui (480 cas) et que l'activité ne se valide pas sans simulation lancée (13 tests)
+- **`tests_protocole_4e_C8.1.mjs`** — l'activité 2 ter : la page dit ce que dit le modèle (épaisseur, charge d'essai,
+  paliers, flèches), un protocole de deux mots ne valide rien, « jusqu'à ce qu'elle casse » est refusé avec son
+  pourquoi, tout revient au rechargement, rien ne déborde à 390 px (18 tests, 25/11/2026)
 
 ## Harmonisation du 26 août 2026
 

@@ -17,6 +17,10 @@ La console est une poutre encastrée dans le muret, chargée à son extrémité 
     contrainte de flexion   σ = F · L / (I/v),   F = m · g,   I/v = b · e² / 6   (section rectangulaire)
     coefficient de sécurité k = σ_e / σ           (sur la LIMITE ÉLASTIQUE : au-delà, la console plie pour toujours)
 
+Depuis le 25/11/2026, le même modèle écrit aussi l'activité 2 ter (4e_C8.2) : le protocole de l'essai RÉEL de la
+console, que l'élève propose — la charge d'essai (3 × 11 kg), les paliers, la flèche que le calcul prévoit
+(f = F·L³ / 3EI, tant que la console reste élastique) et le critère.
+
     python3 console_jardiniere.py            # imprime le tableau, et vérifie que la page est à jour (sortie 1 sinon)
     python3 console_jardiniere.py --ecrire   # écrit l'activité dans la séquence, et les attendus du banc
 """
@@ -121,7 +125,18 @@ def attendus():
         "proposition": calcul(*PROPOSITION),
         "plus_petites": {m.nom: plus_petite_epaisseur(m.nom) for m in MATERIAUX},
         "grille": grille,
+        "protocole": protocole_attendu(),
     }
+
+
+def protocole_attendu():
+    """Ce que l'activité 2 ter doit dire (25/11/2026) : le banc tests_protocole_4e_C8.1.mjs le compare à la page."""
+    e = plus_petite_epaisseur(MATIERE)
+    return {"materiau": MATIERE, "epaisseur": e, "charge_essai": CHARGE_ESSAI, "paliers": PALIERS, "sac": SAC,
+            "fleches": [arrondi(fleche(MATIERE, e, c), 1) for c in PALIERS],
+            "sigma_essai": calcul(MATIERE, e, LONGUEUR, CHARGE_ESSAI)["sigma"],
+            "sigma_e": P.PAR_NOM[MATIERE].sigma_e, "tenue_min": TENUE_MIN, "retour_max": RETOUR_MAX,
+            "eprouvettes": EPROUVETTES}
 
 
 # ── le schéma : la console vue de côté, les quatre réglages nommés ─────────────────────────────────────
@@ -432,6 +447,278 @@ def fragment():
     }
 
 
+# ══ L'essai réel : le protocole que l'élève propose (4e_C8.2, 25/11/2026) ══════════════════════════════════
+# Pourquoi (audit #867, note de 4e_C8.2 ; décision de Pascal du 25/11, « continue ») : le code 4e_C8.2 demande de
+# PROPOSER un protocole de test pour valider la TENUE MÉCANIQUE D'UN MATÉRIAU. Le lot ne le faisait que sur le
+# comportement du système (pluie, gel, LED). La simulation de l'activité 2 bis a dit quelle épaisseur de PLA tient ;
+# l'activité 2 ter fait proposer l'essai réel qui le confirmera, avant de poser quarante consoles sur le toit.
+# En 5e (5e_C8.2), l'élève SUIVAIT un protocole fourni, et cassait l'éprouvette ; en 4e, il le PROPOSE, et ne casse
+# rien : on prouve que la vraie pièce tient ce que le cahier des charges exige, et qu'elle revient en place.
+
+CHARGE_ESSAI = COEF_EXIGE * CHARGE                          #: 33 kg — ce que le cahier des charges exige
+SAC = CHARGE / 2                                            #: 5,5 kg — un sac de sable pesé ; deux sacs = un palier
+PALIERS = [CHARGE * i for i in range(1, COEF_EXIGE + 1)]    #: 11, 22 puis 33 kg, sur la même console
+TENUE_MIN = 5            #: min — la charge d'essai reste posée cinq minutes
+RETOUR_MAX = 1           #: mm — déchargée, le bout revient à 1 mm près de sa position de départ
+EPROUVETTES = 3          #: consoles essayées, imprimées de la même façon (et qui n'iront pas sur le toit)
+MATIERE = "PLA imprimé en 3D"
+
+
+def fleche(nom, epaisseur, charge, longueur=LONGUEUR):
+    """Flèche au bout d'une console encastrée, chargée à son extrémité, en mm : f = F·L³ / (3·E·I), I = b·e³/12.
+    Vraie tant que la console reste élastique (σ ≤ σe) : la flèche grandit alors exactement comme la charge."""
+    m = P.PAR_NOM[nom]
+    return charge * G * longueur ** 3 / (3.0 * m.E * (LARGEUR * epaisseur ** 3 / 12.0))
+
+
+def mm(x):
+    """Une flèche en millimètres, au dixième, écrite à la française."""
+    return fr(arrondi(x, 1))
+
+
+SVG_BANC = """<svg viewBox="0 0 520 420" role="img" aria-labelledby="bancT bancD" class="schema-console schema-banc">
+<title id="bancT">Le banc d'essai de la console : vue de côté</title>
+<desc id="bancD">À gauche, un montant en bois serré à l'établi, où la console est vissée comme sur le muret du toit. La
+console avance de 150 millimètres dans le vide. À son bout pend un crochet qui porte les sacs de sable : deux sacs de
+5,5 kilogrammes par palier. Sous la charge, la console se courbe un peu (en pointillés) : son bout descend. Une règle
+graduée est fixée debout juste à côté du bout : on y lit de combien le bout descend, la flèche. Un bac attend sous les
+sacs, à 10 centimètres : si la console casse, la charge tombe dedans.</desc>
+<defs><marker id="bancFl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0 0 10 5 0 10z" fill="currentColor"/></marker>
+<pattern id="bancBois" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#5a3d22"/>
+<path d="M0 4q8-3 16 0M0 12q8-3 16 0" stroke="#7a5532" stroke-width="1.5" fill="none"/></pattern></defs>
+<text x="8" y="40" fill="#e8c9a0" font-size="22">montant</text>
+<rect x="12" y="56" width="48" height="310" fill="url(#bancBois)"/>
+<rect x="4" y="366" width="150" height="16" fill="#3b4a66"/>
+<line x1="60" y1="112" x2="322" y2="112" stroke="#61dafb" stroke-width="2.5" marker-start="url(#bancFl)" marker-end="url(#bancFl)" color="#61dafb"/>
+<text x="191" y="98" text-anchor="middle" fill="#61dafb" font-size="24" font-weight="bold">150 mm</text>
+<path d="M60 150Q200 152 330 192v20Q200 172 60 170z" fill="none" stroke="#ffd66b" stroke-width="2" stroke-dasharray="6 5" opacity=".8"/>
+<rect x="60" y="150" width="270" height="20" rx="3" fill="#ffd66b"/>
+<circle cx="76" cy="160" r="4.5" fill="#5a3d22"/><circle cx="98" cy="160" r="4.5" fill="#5a3d22"/>
+<text x="76" y="220" fill="#ffd66b" font-size="22" font-weight="bold">console PLA</text>
+<line x1="322" y1="170" x2="322" y2="238" stroke="#e4eaf5" stroke-width="3"/>
+<rect x="286" y="238" width="72" height="34" rx="6" fill="#c9a66b" stroke="#e8c9a0" stroke-width="1.5"/>
+<rect x="286" y="278" width="72" height="34" rx="6" fill="#c9a66b" stroke="#e8c9a0" stroke-width="1.5"/>
+<text x="322" y="261" text-anchor="middle" fill="#2a1d0e" font-size="18" font-weight="bold">5,5 kg</text>
+<text x="322" y="301" text-anchor="middle" fill="#2a1d0e" font-size="18" font-weight="bold">5,5 kg</text>
+<text x="76" y="266" fill="#e8c9a0" font-size="22">2 sacs</text>
+<text x="76" y="298" fill="#e8c9a0" font-size="22">par palier</text>
+<line x1="336" y1="150" x2="398" y2="150" stroke="#81fba1" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="336" y1="202" x2="398" y2="202" stroke="#81fba1" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="384" y1="154" x2="384" y2="198" stroke="#81fba1" stroke-width="2.5" marker-start="url(#bancFl)" marker-end="url(#bancFl)" color="#81fba1"/>
+<rect x="402" y="104" width="24" height="200" fill="#e4eaf5" rx="2"/>
+<path d="M402 124h9M402 144h15M402 164h9M402 184h15M402 204h9M402 224h15M402 244h9M402 264h15M402 284h9" stroke="#081b3a" stroke-width="2"/>
+<text x="436" y="128" fill="#e4eaf5" font-size="22" font-weight="bold">règle</text>
+<text x="436" y="154" fill="#e4eaf5" font-size="20">(mm)</text>
+<text x="436" y="230" fill="#81fba1" font-size="22" font-weight="bold">flèche</text>
+<text x="436" y="262" fill="#81fba1" font-size="22" font-weight="bold">f</text>
+<path d="M270 346h110v24H270z" fill="none" stroke="#ff7b88" stroke-width="2.5"/>
+<text x="394" y="366" fill="#ff7b88" font-size="22" font-weight="bold">bac</text>
+</svg>
+<ul class="legende-banc">
+<li><b>Le montant</b>&nbsp;: une planche serrée à l'établi&nbsp;; la console y est vissée comme sur le muret du toit.</li>
+<li><b>La console</b>&nbsp;: en PLA, %(e)d&nbsp;mm d'épaisseur&nbsp;; elle dépasse de %(L)d&nbsp;mm (son porte-à-faux).</li>
+<li><b>Les sacs</b>&nbsp;: du sable pesé, 5,5&nbsp;kg par sac, 2 sacs par palier&nbsp;: 11, puis 22, puis 33&nbsp;kg.</li>
+<li><b>La règle graduée</b>&nbsp;: en millimètres, fixée debout juste à côté du bout de la console.</li>
+<li><b>La flèche f</b>&nbsp;: de combien le bout descend sous la charge (en pointillés, la console chargée).</li>
+<li><b>Le bac</b>&nbsp;: 10&nbsp;cm sous les sacs — si la console casse, la charge tombe dedans.</li>
+</ul>"""
+
+
+def fragment_protocole():
+    e = plus_petite_epaisseur(MATIERE)
+    r33 = calcul(MATIERE, e, LONGUEUR, CHARGE_ESSAI)
+    se = P.PAR_NOM[MATIERE].sigma_e
+    # le protocole ne casse rien : à la charge d'essai, la console validée reste sous sa limite élastique
+    assert r33["sigma"] <= se, "à %g kg la console de %d mm dépasse la limite élastique" % (CHARGE_ESSAI, e)
+    f = [fleche(MATIERE, e, c) for c in PALIERS]
+    kg = lambda x: fr(x, 0) if float(x).is_integer() else fr(x, 1)
+    Q = {
+        "a7q1": ["La simulation calcule une pièce pleine ; une console imprimée a des couches et un remplissage.",
+                 "La simulation ne connaît pas le poids de la neige : il faut le peser sur le toit.",
+                 "Pour trouver à quelle charge exacte la console casse : la simulation ne le dit pas.",
+                 "Une simulation se trompe toujours de moitié : on divise son résultat par deux."],
+        "a7q2": ["%s kg : la charge la plus lourde qu'elle portera vraiment sur le toit" % kg(CHARGE),
+                 "%s kg : trois fois la charge la plus lourde, comme le cahier des charges" % kg(CHARGE_ESSAI),
+                 "jusqu'à ce qu'elle casse, en notant la charge de rupture, comme en 5e",
+                 "%s kg : la terre et la neige de toute la jardinière, sur une seule console" % kg(TERRE + NEIGE)],
+        "a7q3": ["les %s kg d'un coup, pour voir tout de suite si la console tient" % kg(CHARGE_ESSAI),
+                 "%s kg sur la première console, %s kg sur la deuxième, %s kg sur la troisième" % tuple(kg(c) for c in PALIERS),
+                 "en ajoutant les sacs au hasard, jusqu'à ce que la console ait l'air de plier",
+                 "par paliers, sur la même console : %s, %s puis %s kg, une mesure à chaque fois" % tuple(kg(c) for c in PALIERS)],
+        "a7q4": ["la masse de la console, avec une balance, pour voir si elle a perdu de la matière",
+                 "la température de la console, avec un thermomètre posé dessus",
+                 "la flèche — de combien le bout descend — avec une règle graduée fixée debout",
+                 "la longueur de la console, avec un mètre ruban, avant et après"],
+        "a7q5": ["%s mm" % mm(f[0]), "%s mm" % mm(f[1]), "%s mm" % mm(f[2]), "%s mm" % mm(9 * f[0])],
+        "a7q6": ["À %s kg, la console ne casse pas et ne se fissure pas, même au bout de %d minutes." % (kg(CHARGE_ESSAI), TENUE_MIN),
+                 "À %s kg tenus %d min : aucune fissure ; déchargée, le bout revient à %d mm près." % (kg(CHARGE_ESSAI), TENUE_MIN, RETOUR_MAX),
+                 "La console tient bien, ne fait pas de bruit et ne bouge presque pas sous les sacs.",
+                 "La flèche à %s kg est la plus petite des trois consoles, et aucune ne casse." % kg(CHARGE_ESSAI)],
+        "a7q7": ["trois, imprimées de la même façon : une seule peut être bonne ou mauvaise par hasard",
+                 "une seule : si elle tient, celles imprimées de la même façon tiendront aussi",
+                 "cinq : une de chaque matériau, pour comparer le PLA au bois, au PVC et aux métaux",
+                 "deux : une pour chaque console qui portera la jardinière sur le toit"],
+    }
+    B = {"a7q1": Q["a7q1"][0], "a7q2": Q["a7q2"][1], "a7q3": Q["a7q3"][3], "a7q4": Q["a7q4"][2],
+         "a7q5": Q["a7q5"][2], "a7q6": Q["a7q6"][1], "a7q7": Q["a7q7"][0]}
+    LEG = {"a7q1": "Q1 — Pourquoi un essai réel après la simulation",
+           "a7q2": "Q2 — La charge d'essai, pour une console",
+           "a7q3": "Q3 — Comment poser la charge",
+           "a7q4": "Q4 — Ce qu'on mesure, et avec quoi",
+           "a7q5": "Q5 — La flèche attendue à %s kg" % kg(CHARGE_ESSAI),
+           "a7q6": "Q6 — Le critère qui permet de décider",
+           "a7q7": "Q7 — Combien de consoles essayer"}
+    groupes = {k: '<fieldset class="qcm-groupe" id="%s">\n  <legend>%s</legend>\n%s\n</fieldset>'
+               % (k, LEG[k], options_radio(k, Q[k], B[k])) for k in Q}
+    js_bonnes = json.dumps({k: html.unescape(v) for k, v in B.items()}, ensure_ascii=False)
+    d = {"e": e, "L": LONGUEUR, "kg_s": kg(CHARGE), "kg_e": kg(CHARGE_ESSAI), "kg_t": kg(TERRE + NEIGE),
+         "sac": kg(SAC), "p1": kg(PALIERS[0]), "p2": kg(PALIERS[1]), "p3": kg(PALIERS[2]),
+         "f1": mm(f[0]), "f2": mm(f[1]), "f3": mm(f[2]), "f9": mm(9 * f[0]), "tenue": TENUE_MIN, "retour": RETOUR_MAX,
+         "n": EPROUVETTES, "s33": fr(r33["sigma"]), "se": se, "coef": COEF_EXIGE, "svg": SVG_BANC % {"e": e, "L": LONGUEUR},
+         "bonnes": js_bonnes}
+    d.update(groupes)
+    page = """<!-- debut:act-protocole — engendré par _generation/console_jardiniere.py, ne pas éditer à la main -->
+<style>
+#act2ter .ecart{border-left:4px solid var(--warn);background:rgba(255,214,102,.08);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+#act2ter .petit{font-size:.88em;color:var(--sub)}
+#act2ter .schema-console{width:100%%;max-width:560px;height:auto;display:block;margin:10px auto;background:#081b3a;border-radius:10px}
+#act2ter ul.legende-banc{margin:6px 0 12px;padding-left:1.2em;font-size:.93em;line-height:1.5}
+#act2ter ul.legende-banc li{margin:4px 0}
+#act2ter ol.protocole-modele li{margin:6px 0;line-height:1.5}
+#act2ter .grille-soi{border:1px solid var(--border);border-radius:10px;padding:8px 12px;margin:10px 0}
+#act2ter .grille-soi label{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+@media print{#act2ter .schema-console{background:#081b3a}}
+</style>
+<section class="card" id="act2ter">
+<h2>📐 Activité 2 ter — Proposer le protocole de l'essai réel (C8.2) <span class="chrono">⏱ ~20 min</span></h2>
+<div class="exo">
+<p>La simulation a parlé&nbsp;: en PLA, la console tient à partir de <b>%(e)d mm</b>.
+<br>Mais une simulation est un <b>modèle</b>&nbsp;: avant de visser quarante consoles sur le toit, le club en imprime quelques-unes et les <b>essaie pour de vrai</b>.</p>
+<p>Ta mission&nbsp;: <b>proposer le protocole</b> de cet essai — ce qu'on fait, dans quel ordre, ce qu'on mesure, et à quoi on reconnaîtra que la console est validée.</p>
+<div class="ecart"><b>Rappel de 5e</b>&nbsp;: avec la patère du hall, tu suivais un protocole fourni et tu <b>cassais</b> l'éprouvette, pour comparer des matériaux.
+<br>Ici, le matériau est choisi&nbsp;: on veut prouver que <b>cette pièce</b> tient ce que le cahier des charges exige — %(coef)d fois %(kg_s)s kg — et qu'elle revient en place.</div>
+<p>Le banc que le club peut monter, vu de côté&nbsp;:</p>
+%(svg)s
+
+<p><b>Q1 — La simulation dit que la console de %(e)d mm tient. Pourquoi faire quand même un essai réel&nbsp;?</b></p>
+%(a7q1)s
+
+<p><b>Q2 — Jusqu'à quelle charge l'essai va-t-il, pour une console&nbsp;?</b>
+<br>Relis le cahier des charges de l'activité 2 bis.</p>
+%(a7q2)s
+
+<p><b>Q3 — Comment poser la charge&nbsp;?</b></p>
+%(a7q3)s
+
+<p><b>Q4 — Qu'est-ce qu'on mesure à chaque palier, et avec quoi&nbsp;?</b>
+<br>Un <b>palier</b>&nbsp;: une étape où l'on ajoute de la charge, puis où l'on attend et l'on mesure.</p>
+%(a7q4)s
+
+<p><b>Q5 — À %(p1)s kg, la console de %(e)d mm descend de %(f1)s mm (c'est le calcul qui le prévoit).</b>
+<br>Tant qu'elle reste <b>élastique</b> (elle reviendrait en place si on la déchargeait), sa flèche grandit <b>comme la charge</b>.
+<br>De combien doit-elle descendre à %(kg_e)s kg&nbsp;? Fais le calcul sur une feuille de brouillon.</p>
+%(a7q5)s
+
+<p><b>Q6 — Le critère s'écrit AVANT l'essai. Lequel permet de décider, sans discussion&nbsp;?</b></p>
+%(a7q6)s
+
+<p><b>Q7 — Combien de consoles faut-il essayer&nbsp;?</b></p>
+%(a7q7)s
+
+<p><b>Q8 — Écris ton protocole</b>, en six lignes, une idée par ligne&nbsp;:</p>
+<ol class="protocole-plan">
+<li>la pièce essayée&nbsp;;</li>
+<li>le montage&nbsp;;</li>
+<li>la charge, par paliers&nbsp;;</li>
+<li>la mesure, et avec quoi&nbsp;;</li>
+<li>le critère, écrit avant l'essai&nbsp;;</li>
+<li>la sécurité.</li>
+</ol>
+<textarea id="a7prot" rows="7" placeholder="① On essaie … ② On fixe … ③ On charge … ④ À chaque palier, on mesure … ⑤ La console est validée si … ⑥ Sécurité : …" aria-label="Q8 — ton protocole, en six lignes"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>① On essaie ____ consoles en ____ , de ____ mm, imprimées ____ .</li>
+    <li>② On visse chaque console sur ____ , comme ____ .</li>
+    <li>③ On accroche au bout ____ , par paliers de ____ kg, jusqu'à ____ kg, tenus ____ minutes.</li>
+    <li>④ À chaque palier, on mesure ____ avec ____ .</li>
+    <li>⑤ La console est validée si ____ , et si, une fois déchargée, ____ .</li>
+    <li>⑥ Sécurité&nbsp;: ____ .</li>
+  </ul>
+</details>
+<div class="grille-soi" role="group" aria-label="Je relis mon protocole">
+<p class="petit" style="margin:0"><b>Je relis mon protocole</b> (pour toi, sans note — coche ce qui est vrai)&nbsp;:</p>
+<label><input type="checkbox" id="a7g1"> Mon critère a un nombre et une unité, et il est écrit avant l'essai.</label>
+<label><input type="checkbox" id="a7g2"> Une seule chose change pendant l'essai&nbsp;: la charge.</label>
+<label><input type="checkbox" id="a7g3"> Une autre classe pourrait refaire l'essai sans moi&nbsp;: la pièce, le montage, la mesure et la sécurité sont dits.</label>
+</div>
+<button class="btn check" data-check="7" type="button">✅ Vérifier l'activité 2 ter</button>
+<p class="feedback" id="fb7" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS avoir écrit ton protocole)</summary><div>
+<p><b>Q1 — La simulation calcule une pièce pleine, faite d'une seule matière.</b>
+<br>Une console imprimée est faite de <b>couches</b> collées les unes sur les autres, et d'un <b>remplissage</b> (l'intérieur n'est pas plein)&nbsp;: elle peut être plus faible que le modèle.
+<br>La simulation connaît la neige (c'est elle qui fait %(kg_s)s kg par console)&nbsp;; elle ne se trompe pas «&nbsp;de moitié&nbsp;» — elle suppose une pièce idéale.
+<br>Et on ne cherche pas la charge de rupture&nbsp;: on veut prouver que la pièce tient ce qui est exigé.</p>
+<p><b>Q2 — %(kg_e)s kg</b>&nbsp;: le cahier des charges demande que chaque console tienne <b>%(coef)d fois</b> la charge la plus lourde, %(coef)d × %(kg_s)s = <b>%(kg_e)s kg</b>.
+<br>· %(kg_s)s kg prouverait seulement qu'elle tient un jour de tempête, sans aucune marge&nbsp;;
+<br>· %(kg_t)s kg, c'est toute la jardinière sur une seule console&nbsp;: ce n'est pas le cas réel, et ce n'est pas l'exigence&nbsp;;
+<br>· aller jusqu'à la casse, c'est le protocole de 5e, fait pour comparer des matériaux&nbsp;; ici le matériau est choisi.</p>
+<p><b>Q3 — Par paliers, sur la même console&nbsp;: %(p1)s, puis %(p2)s, puis %(p3)s kg</b> (2 sacs de %(sac)s kg à chaque palier), une mesure à chaque fois.
+<br>Les %(kg_e)s kg d'un coup donneraient un <b>choc</b>&nbsp;: la console pourrait casser sous un à-coup qu'elle ne subira jamais sur le toit.
+<br>Une charge différente sur chaque console change deux choses à la fois (la console ET la charge)&nbsp;: on ne saurait plus ce qui explique le résultat.</p>
+<p><b>Q4 — La flèche</b>&nbsp;: de combien le bout de la console descend, en millimètres, lue sur une règle graduée fixée debout juste à côté du bout.
+<br>La masse, la température ou la longueur de la console ne disent rien de sa tenue sous la charge.</p>
+<p><b>Q5 — %(f3)s mm.</b>
+<br>La charge est multipliée par %(coef)d (%(p1)s → %(kg_e)s kg)&nbsp;: si la console reste élastique, la flèche aussi, %(f1)s × %(coef)d ≈ <b>%(f3)s mm</b>.
+<br>Le calcul prévoit&nbsp;: %(f1)s mm à %(p1)s kg, %(f2)s mm à %(p2)s kg, %(f3)s mm à %(p3)s kg.
+<br>Si la vraie console descend <b>beaucoup plus</b>, ou si sa flèche grandit plus vite que la charge, elle commence à plier&nbsp;: c'est un signal d'arrêt, avant même la fin de l'essai.
+<br>· %(f1)s mm, c'est oublier que la charge a triplé&nbsp;; · %(f2)s mm, c'est la flèche à %(p2)s kg&nbsp;; · %(f9)s mm, c'est multiplier par 9 au lieu de 3.</p>
+<p><b>Q6 — «&nbsp;À %(kg_e)s kg tenus %(tenue)d min&nbsp;: aucune fissure&nbsp;; déchargée, le bout revient à %(retour)d mm près.&nbsp;»</b>
+<br>Ce critère a des nombres et des unités, et il dit les deux façons dont une console échoue&nbsp;:
+<br>· elle <b>casse</b> ou se fissure&nbsp;;
+<br>· elle <b>plie pour toujours</b> — elle a dépassé sa limite élastique, et elle ne revient pas en place.
+<br>«&nbsp;Ne casse pas&nbsp;» oublie le second cas&nbsp;; «&nbsp;tient bien&nbsp;» ne se mesure pas&nbsp;; «&nbsp;la plus petite flèche des trois&nbsp;» compare les consoles entre elles, pas au cahier des charges.
+<br>À %(kg_e)s kg, le calcul donne σ = %(s33)s MPa (mégapascals), sous les %(se)d MPa de la limite élastique du PLA&nbsp;: une console imprimée comme le modèle doit donc revenir en place.</p>
+<p><b>Q7 — Trois consoles, imprimées de la même façon.</b>
+<br>Une seule pièce peut être bonne ou mauvaise par hasard (une couche mal collée)&nbsp;: trois essais qui passent montrent que l'impression est <b>régulière</b>.
+<br>Comparer les cinq matériaux, c'était le travail de la simulation&nbsp;; et le nombre de consoles du toit ne dit pas combien il faut en essayer.
+<br>Les consoles d'essai ont porté %(kg_e)s kg&nbsp;: elles ne vont pas sur le toit, on en imprime de neuves.</p>
+<p><b>Q8 — Un protocole attendu</b>&nbsp;:</p>
+<ol class="protocole-modele">
+<li><b>La pièce</b>&nbsp;: %(n)d consoles en PLA de %(e)d mm, imprimées avec les mêmes réglages que celles du toit.</li>
+<li><b>Le montage</b>&nbsp;: chaque console est vissée sur un montant serré à l'établi, avec les mêmes vis que sur le muret, et dépasse de %(L)d mm.</li>
+<li><b>La charge</b>&nbsp;: au bout, un crochet&nbsp;; on y accroche des sacs de sable pesés de %(sac)s kg, 2 par palier&nbsp;: %(p1)s, %(p2)s, puis %(p3)s kg, sans à-coup. On laisse %(kg_e)s kg pendant %(tenue)d minutes.</li>
+<li><b>La mesure</b>&nbsp;: avant de charger, on lit la position du bout sur la règle graduée fixée debout&nbsp;; puis la flèche à chaque palier&nbsp;; puis la position du bout une fois les sacs retirés. Tout est noté dans un tableau.</li>
+<li><b>Le critère, écrit avant</b>&nbsp;: la console est validée si, à %(kg_e)s kg tenus %(tenue)d minutes, elle n'a aucune fissure, et si, déchargée, son bout revient à %(retour)d mm près de sa position de départ. Le calcul prévoit environ %(f1)s, %(f2)s et %(f3)s mm de flèche&nbsp;: une flèche bien plus grande arrête l'essai. Les %(n)d consoles doivent passer.</li>
+<li><b>La sécurité</b>&nbsp;: lunettes de protection&nbsp;; un bac sous les sacs, à 10 cm&nbsp;; personne sous la charge&nbsp;; c'est un adulte qui accroche les sacs, et on recule d'un pas avant de les lâcher.</li>
+</ol>
+<p><b>Et si une console échoue&nbsp;?</b> On ne la pose pas&nbsp;: on note ce qui a cédé (une couche qui s'ouvre, le bout qui reste bas), on change <b>une</b> chose (l'épaisseur, le remplissage), et on rejoue l'essai — c'est la boucle de l'activité 1.</p>
+</div></details>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> proposer un protocole d'essai pour un matériau, c'est dire <b>la pièce</b>, <b>le montage</b>, <b>la charge</b> (par paliers, jusqu'à ce que le cahier des charges exige), <b>la mesure</b> (avec quoi), et <b>le critère chiffré, écrit avant</b>&nbsp;: elle ne casse pas, et elle revient en place. Une simulation prépare l'essai&nbsp;; l'essai, sur plusieurs pièces, le confirme.</div>
+</div>
+<script>
+/* Les bonnes réponses de l'activité 2 ter : écrites par _generation/console_jardiniere.py, depuis le même modèle. */
+window.__bonnesProtocole = %(bonnes)s;
+</script>
+</section>
+<!-- fin:act-protocole -->""" % d
+    return insecables(page)
+
+
+def insecables(fragment):
+    """Une espace insécable entre un nombre et son unité (« 150 mm » ne se coupe plus en fin de ligne), dans le texte
+    lu — jamais dans les groupes de réponses, dont les valeurs sont comparées aux bonnes réponses du modèle."""
+    morceaux = re.split(r'(<fieldset class="qcm-groupe".*?</fieldset>|<script>.*?</script>|<style>.*?</style>)', fragment, flags=re.S)
+    unite = re.compile(r'(\d) (mm|kg|cm|min|minutes|MPa)\b')
+    for k in range(0, len(morceaux), 2):
+        morceaux[k] = re.sub(r'>[^<]+', lambda m: unite.sub('\\1&nbsp;\\2', m.group(0)), morceaux[k])
+    return "".join(morceaux)
+
+
+DEBUT_P, FIN_P = "<!-- debut:act-protocole", "<!-- fin:act-protocole -->"
+
 DEBUT, FIN = "<!-- debut:act-simulation", "<!-- fin:act-simulation -->"
 DEBUT_S, FIN_S = "<!-- debut:synthese-simulation", "<!-- fin:synthese-simulation -->"
 
@@ -445,18 +732,13 @@ def fragment_synthese():
 <div class="bloc savoir">
   <a class="retour-carte" href="#carte-titre">↑ La carte</a>
   <h2 id="partie-7" style="margin-top:0">7. Comment savoir si une pièce tiendra, sans la casser&nbsp;?</h2>
-  <p>On la <b>simule</b>&nbsp;: on règle la simulation avec les vraies valeurs du cas le plus lourd — le matériau,
-  l'épaisseur, la longueur, la charge — puis on la lance.</p>
-  <div class="chaine">
-    <div class="ko"><b>PLA, %(e0)d&nbsp;mm ✘</b>k = %(k0)s&nbsp;: la console casse.</div>
-    <div class="ok"><b>PLA, %(e1)d&nbsp;mm ✔</b>k = %(k1)s&nbsp;: elle tient trois fois la charge.</div>
-  </div>
-  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le <b>coefficient de sécurité</b> k doit valoir <b>3 ou plus</b>.
-  On ne change qu'<b>un réglage à la fois</b>, pour savoir lequel compte.</p>
-  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: régler la charge d'un jour calme. Le cahier des charges parle du cas le plus
-  lourd&nbsp;: la terre ET la neige.</p>
+  <p>La console du club, en plastique imprimé de %(e0)d&nbsp;mm&nbsp;: k = %(k0)s, elle casserait&nbsp;; à %(e1)d&nbsp;mm, k = %(k1)s.</p>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on <b>simule</b> le cas le plus lourd&nbsp;; le <b>coefficient de sécurité</b> k doit
+  valoir <b>3 ou plus</b>. Un <b>essai réel</b> le confirme (%(n)d consoles, %(kg_e)s&nbsp;kg, retour en place).</p>
+  <p class="piege">⚠️ <b>Le piège</b>&nbsp;: régler la charge d'un jour calme, sans la neige.</p>
 </div>
-<!-- fin:synthese-simulation -->""" % {"e0": PROPOSITION[1], "k0": fr(prop["k"], 2), "e1": e_min, "k1": fr(ok["k"], 2)}
+<!-- fin:synthese-simulation -->""" % {"e0": PROPOSITION[1], "k0": fr(prop["k"], 2), "e1": e_min, "k1": fr(ok["k"], 2),
+                                       "n": EPROUVETTES, "kg_e": fr(CHARGE_ESSAI, 0)}
 
 
 def synthese_avec(src):
@@ -475,13 +757,17 @@ def page_avec(src):
     # les sigles expliqués (n°44, complément du 22/11/2026) : « Pour un générateur : page = infobuller(page) »
     sys.path.insert(0, os.path.join(LOT, "..", "..", "..", "..", "_outils"))
     from expliquer_sigles import infobuller
-    page = infobuller(src[:i] + fragment() + src[j + len(FIN):])
+    page = src[:i] + fragment() + src[j + len(FIN):]
+    i, j = page.find(DEBUT_P), page.find(FIN_P)
+    if i < 0 or j < 0:
+        raise SystemExit("marqueurs %s … %s introuvables dans la séquence" % (DEBUT_P, FIN_P))
+    page = infobuller(page[:i] + fragment_protocole() + page[j + len(FIN_P):])
     # le pourquoi de chaque mauvaise proposition (mode mission) : écrit par l'outil commun, depuis le fichier du lot,
     # pour que `enrichir.py --verifier` trouve la page à jour après chaque régénération
     sys.path.insert(0, os.path.join(LOT, "..", "..", "..", "..", "_outils", "mode_mission"))
     from enrichir import poser_pourquoi
     mission = json.load(open(os.path.join(LOT, "mission_4e_C8.1.json"), encoding="utf-8"))
-    for ident in ("a6q1", "a6q2", "a6q3", "a6q4"):
+    for ident in ("a6q1", "a6q2", "a6q3", "a6q4", "a7q1", "a7q2", "a7q3", "a7q4", "a7q5", "a7q6", "a7q7"):
         if ident in mission.get("pourquoi", {}):
             page = poser_pourquoi(page, ident, mission["pourquoi"][ident])
     return page
