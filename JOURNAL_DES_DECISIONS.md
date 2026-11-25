@@ -36877,6 +36877,65 @@ disparaît).
 **Thème par thème** (n°302) : `_outils/mode_mission/enrichir.py`, son banc et son README ; aucune page des thèmes 1, 2
 ou 3 n'est modifiée.
 
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 2 : les deux synthèses du jardin et de Book Train ne défilent plus à 200 % ; la mesure laisse les pages de renvoi (thème 2 : pages, `_outils`)
+
+**Carte blanche de Pascal** (22/11). Les synthèses élève de 4e_C4.1 et de Book Train empilaient leur chaîne des fonctions
+sous 600 px seulement : à 200 % (640 px), elle débordait. L'empilement vaut maintenant sous 760 px. `controle_zoom_espacement.mjs`
+ne tente plus d'ouvrir une page de renvoi (`<meta http-equiv="refresh">`, comme `qcm_algorigrammes_domotique.html`) : elle
+est comptée à part. **Reste** (thèmes 2 et 3) : le dessin de la chaîne à compléter (`_outils/chaine_a_completer/`) coupe une
+étiquette quand on espace les lettres, sur trois pages — à traiter à la source de l'outil.
+
+**Vérifié.** Mesure sur le thème 2 : 97 pages, 0 défile de côté ; banc 2/2 ; `controle_page_ouverte.mjs`,
+`controle_impression.mjs`, `controle_debordement` verts.
+
+## 22/11/2026 — Règle d'or n°370 (en essai), thème 3 : à 200 %, plus aucune page ne défile de côté (7 pages)
+
+**Carte blanche de Pascal** (22/11). `controle_zoom_espacement.mjs` relevait, au thème 3, sept pages qui défilaient de côté à
+200 % (fenêtre de 640 px) : les synthèses élève de 4e_C7.4, 5e_C7.4 et 5e_C7.5 (la chaîne des fonctions ne s'empilait
+qu'en dessous de 600 px), les synthèses professeur de 3e, 4e et 5e_C7.3 (tableaux larges), le TP mBot2 de 3e_C9.1 (un
+commentaire de listing et des tableaux). Les règles qui valaient sous 600 px valent maintenant sous 760 px, et les tableaux
+replient leurs cellules au lieu de pousser la page ; rien ne change au-dessus de 760 px.
+
+**Vérifié.** `controle_zoom_espacement.mjs` sur le thème 3 : 174 pages, 0 défile de côté (reste 1 texte coupé dans le
+dessin de la chaîne à compléter de 4e_C7.5, outil commun, à traiter à sa source) ; `controle_debordement`,
+`controle_page_ouverte.mjs`, `controle_impression.mjs`, `controle_hierarchie` verts.
+
+## 22/11/2026 — Règle d'or n°371 (en essai) : un « 🔀 Entraînement mélangé » dans les 76 QCM du gabarit (transversal : trois thèmes, `_outils`, `.claude/skills`)
+
+**Carte blanche de Pascal** (22/11). Mesuré le matin : 69 QCM sur 70 posent leurs questions par blocs de compétence, et
+aucun ne proposait de les mélanger. `_outils/poser_entrainement_melange.py` (nouveau, idempotent) ajoute à côté de
+« 10 questions » un bouton « 🔀 Entraînement mélangé » : un tour par compétence tant qu'il en reste, dans un ordre fixe
+(sans hasard), calculé dans la page comme `mesurer_entrelacement.ordre_entrelace()`. Le parcours complet ne change pas.
+Posé sur **76 QCM** ; deux pages `qcm_` sans ce moteur sont laissées (une page de renvoi et un QCM hérité de 4e_C6.2).
+Le gabarit des QCM d'ateliers (`gabarit_qcm.tpl`) le porte aussi : `build_qcm.py --verifier` reproduit les 7 QCM à l'octet.
+
+**Vérifié.** `mesurer_entrelacement.py` : 70 banques sur 70 ont le mode ; le mode joué au navigateur sur trois QCM (4e_C1.4,
+3e_C6.1, FAST) : 30 questions, compétences alternées, bouton actif, 0 erreur ; `controle_entete_qcm`, `controle_boutons_vivants`,
+`controle_longueurs`, `controle_tactile`, `controle_effectifs_qcm`, `controle_ordre_propositions` verts ; bancs 3e_C6.1 57/57
+et 3e_C9.2 167/167 (qui cliquent les modes). **Non exécuté** : un essai en classe.
+
+## 22/11/2026 — Vague contraste, thème 2 et accueil : 143 textes passent au-dessus de 4,5 : 1
+
+Choix de Pascal (22/11/2026, « 1a ») après la vague des zones qui défilent : une vague contraste, thème par thème. Mesure
+d'axe-core, page ouverte, sur `main` le matin : 232 textes sous le seuil dans 26 pages, plus 10 champs sans étiquette,
+3 attributs interdits et une liste mal faite. Ce lot : l'accueil et le thème 2.
+- **Accueil** (`index.html`, engendré par `_outils/make_index.py`) : le bleu `#5b7bb8` des volets « Fichiers de
+  gouvernance », du pied de page et des statuts « à créer » donnait 4,0 : 1 sur le fond `#0a1b3d` → `#7f9bd0`
+  (6,1 : 1). 114 textes.
+- `3e_C4.8` et `4e_C6.1` : le titre « ⚠ Erreurs fréquentes », `#ff7b88` sur les cartes `#273b68` (4,4 : 1) →
+  `#ffa3ab` (5,8 : 1), dans les seuls volets d'erreurs.
+- `4e_C4.1/atelier_pix_crcn_jardin.html` : cartouches CRCN (`#C55A11` sur `#FDF3E7`, 3,95 : 1 → `#A84A0C`, 5,25 : 1),
+  étiquettes et titres d'atelier (blanc sur `#5B8DEF`, 3,23 : 1 → fond `#3D6FD6`, 4,73 : 1), et la légende des couleurs
+  du code, faite pour un fond sombre et posée sur un fond clair (1,2 à 2,3 : 1) → fond sombre de l'éditeur, à l'écran
+  seulement (sur papier, la feuille commune remet les couleurs en foncé : vu par `controle_impression`, corrigé).
+- `4e_C4.1_book-train` : la note de sauvegarde `#5a6068` sur `#0a1b3d` (2,7 : 1) → `#9aa3ad` (6,6 : 1).
+- `3e_C4.3` : le champ du seuil de l'alerte violette reçoit son nom (`aria-label`).
+
+Contrôles : axe-core page ouverte sur les 6 pages : 0 défaut grave ; `controle_impression` (site entier) à 0 ;
+`controle_contraste_liens` à 0 ; bancs `tests_3e_C4.3-C4.6.mjs` 23 / 23, `tests_4e_C4.1-C4.9.mjs` 72 / 72,
+`tests_4e_C4.1-C4.2-C4.4_book-train.mjs` 43 / 43, `tests_4e_C6.1-C6.3.mjs` 29 / 29, `tests_regle_311` des cinq dossiers
+verts. Vu à 390 px : cartouche, titre d'atelier, légende du code.
+
 ## 22/11/2026 — Les quatre décisions de l'audit de « Programmer l'alerte » (carte blanche de Pascal) : deux moteurs Python à leur place, la n°333 sous la clé 6, le `<main>` sur les 78 QCM, l'image de situation gardée (transversal : thèmes 1, 2, 3, `_outils`, `.claude/skills`, `docs`)
 
 **Consigne de Pascal** (22/11/2026, 06 h 51) : « Tu as carte blanche pour les quatre décisions » — celles que le

@@ -277,7 +277,7 @@ STATUT_PAR_CODE, STATUT_PUCE = {}, {
     "EXISTANT À AMÉLIORER": ("🔧", "#ffb454"),
     "À VÉRIFIER PAR L’ENSEIGNANT": ("🔍", "#c68ef2"),
     "À CORRIGER": ("⚠️", "#ff7b88"),
-    "À CRÉER": ("⬜", "#5b7bb8"),
+    "À CRÉER": ("⬜", "#7f9bd0"),
 }
 try:
     import csv as _csv
@@ -531,9 +531,9 @@ h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .code-line>span:last-child{min-width:0;overflow-wrap:anywhere;word-break:break-word}
 .code-line a{color:var(--hl);text-decoration:none;overflow-wrap:anywhere;word-break:break-word}
 .code-line a:hover{text-decoration:underline}
-.code-line .empty{color:#5b7bb8}
+.code-line .empty{color:#7f9bd0}
 .pill{font-size:.85em}
-footer{max-width:1080px;margin:34px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+footer{max-width:1080px;margin:34px auto 0;text-align:center;color:#7f9bd0;font-size:.8em}
 footer a{color:var(--hl)}
 
 /* ── Règle d'or n°303 — un lien se lit ─────────────────────────────
@@ -600,7 +600,7 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var
 .rep .maint{margin-top:3px}
 .rep .renvoi .empty{display:block;margin-top:3px}
 .rep .renvoi-ou{margin:3px 0 0;color:#9db4e6;font-size:.92em;line-height:1.4;overflow-wrap:anywhere}
-.rep .maint summary{cursor:pointer;color:#5b7bb8;font-size:.92em}
+.rep .maint summary{cursor:pointer;color:#7f9bd0;font-size:.92em}
 .rep .maint a{color:#7d9bd6}
 .socle-cle{max-width:1080px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px 18px;font-size:.82em;color:var(--sub)}
 .socle-cle b{color:var(--text)}
@@ -646,7 +646,7 @@ D5 : les représentations du monde et l'activité humaine.</div>
   <span><span class="dot" style="background:#f0a878"></span>3e</span>
   <span>✅ couvert</span><span>🔗 mutualisé</span><span>🟡 partiel</span>
   <span>🔧 à actualiser</span><span>🔍 à vérifier</span><span>⚠️ à corriger</span>
-  <span style="color:#5b7bb8">⬜ à créer</span>
+  <span style="color:#7f9bd0">⬜ à créer</span>
 </div>
 <main id="contenu">
 """)
@@ -730,7 +730,7 @@ for theme_n in [1, 2, 3]:
                 n_peda += len(peda)
 
                 statut = STATUT_PAR_CODE.get(full_code, "")
-                puce, couleur = STATUT_PUCE.get(statut, ("", "#5b7bb8"))
+                puce, couleur = STATUT_PUCE.get(statut, ("", "#7f9bd0"))
                 bloc_statut = (f'<span class="statut" style="color:{couleur}" title="{html.escape(statut)}">{puce} {html.escape(statut.capitalize())}</span>'
                                if statut else "")
                 if peda:
