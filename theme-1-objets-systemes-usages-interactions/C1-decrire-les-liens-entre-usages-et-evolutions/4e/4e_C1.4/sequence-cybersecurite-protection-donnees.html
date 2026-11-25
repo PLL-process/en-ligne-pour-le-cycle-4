@@ -201,6 +201,9 @@
     .draggable {
       cursor: grab; background: #14335f; border: 1px solid var(--line); border-radius: 8px;
       padding: 8px 12px; font-size: 0.9rem; min-width: 80px; text-align: center;
+      /* une étiquette est une cible de doigt entière (25/11/2026) : en ligne, son rembourrage débordait sur les lignes
+         voisines et elle ne mesurait que 23 px de haut, à moitié couverte par sa voisine (axe-core, « target-size ») */
+      display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
       transition: all .2s ease; user-select: none;
     }
     .draggable:hover, .draggable:active { transform: scale(1.05); box-shadow: var(--glow); }
@@ -2258,37 +2261,37 @@ lui-même.</p>
 
                 <div class="pool" id="pool1a">
             <span class="draggable" tabindex="0" role="button"
-                  aria-label="Faire glisser ou sélectionner 'Hameçonnage' — type d'attaque par vol d'identifiants"
+                  aria-label="Faire glisser ou sélectionner « Hameçonnage »"
                   draggable="true" data-type="phish">
               Hameçonnage
             </span>
 
             <span class="draggable" tabindex="0" role="button"
-                  aria-label="Faire glisser ou sélectionner 'Rançongiciel' — type d'attaque qui bloque les données jusqu’à paiement"
+                  aria-label="Faire glisser ou sélectionner « Rançongiciel »"
                   draggable="true" data-type="ransom">
               Rançongiciel
             </span>
 
             <span class="draggable" tabindex="0" role="button"
-                  aria-label="Faire glisser ou sélectionner 'Cheval de Troie' — programme malveillant caché dans un logiciel"
+                  aria-label="Faire glisser ou sélectionner « Cheval de Troie »"
                   draggable="true" data-type="trojan">
               Cheval de Troie
             </span>
 
             <span class="draggable" tabindex="0" role="button"
-                  aria-label="Faire glisser ou sélectionner 'Malware' — logiciel malveillant en général"
+                  aria-label="Faire glisser ou sélectionner « Malware »"
                   draggable="true" data-type="malware">
               Malware
             </span>
 
             <span class="draggable" tabindex="0" role="button"
-                  aria-label="Faire glisser ou sélectionner 'Attaque DDoS' — attaque par déni de service visant à saturer un site"
+                  aria-label="Faire glisser ou sélectionner « Attaque DDoS »"
                   draggable="true" data-type="ddos">
               Attaque DDoS
             </span>
 
             <span class="draggable" tabindex="0" role="button"
-                  aria-label="Faire glisser ou sélectionner 'Keylogger' — logiciel espion enregistrant les frappes au clavier"
+                  aria-label="Faire glisser ou sélectionner « Keylogger »"
                   draggable="true" data-type="keylog">
               Keylogger
             </span>
@@ -2324,35 +2327,35 @@ lui-même.</p>
 <!-- Banque d’étiquettes -->
 <div class="pool" id="pool1c">
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Lien inconnu' — catégorie risque"
+        aria-label="Faire glisser ou sélectionner « Lien inconnu »"
         draggable="true" data-type="risk">Lien inconnu</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Fichier exécutable suspect' — catégorie risque"
+        aria-label="Faire glisser ou sélectionner « Fichier .exe suspect »"
         draggable="true" data-type="risk">Fichier .exe suspect</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Email d’une banque inconnue' — catégorie risque"
+        aria-label="Faire glisser ou sélectionner « Email d&#x27;une banque inconnue »"
         draggable="true" data-type="risk">Email d'une banque inconnue</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Pièce jointe non demandée' — catégorie risque"
+        aria-label="Faire glisser ou sélectionner « Pièce jointe non demandée »"
         draggable="true" data-type="risk">Pièce jointe non demandée</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Authentification à deux facteurs activée' — bonne pratique"
+        aria-label="Faire glisser ou sélectionner « 2FA activée »"
         draggable="true" data-type="good">2FA activée</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Sauvegarde régulière' — bonne pratique"
+        aria-label="Faire glisser ou sélectionner « Sauvegarde régulière »"
         draggable="true" data-type="good">Sauvegarde régulière</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'Antivirus à jour' — bonne pratique"
+        aria-label="Faire glisser ou sélectionner « Antivirus à jour »"
         draggable="true" data-type="good">Antivirus à jour</span>
 
   <span class="draggable" tabindex="0" role="button"
-        aria-label="Faire glisser ou sélectionner 'La 4G plutôt que le Wi-Fi public' — bonne pratique"
+        aria-label="Faire glisser ou sélectionner « 4G plutôt que Wi-Fi public »"
         draggable="true" data-type="good">4G plutôt que Wi-Fi public</span>
 </div>
 
@@ -2820,55 +2823,55 @@ window.repriseVerifier = window.repriseVerifier || function(id){
     <h3>✋ 3.a&nbsp;—&nbsp;Classer les données (9 étiquettes) (4 points)</h3>
     <div class="pool" id="pool3">
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Nom et prénom' — catégorie identité"
+      aria-label="Faire glisser ou sélectionner « Nom &amp; prénom »"
       draggable="true" data-type="identite">
   Nom & prénom
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Adresse e-mail' — catégorie contact"
+      aria-label="Faire glisser ou sélectionner « Adresse e-mail »"
       draggable="true" data-type="contact">
   Adresse e-mail
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Numéro de téléphone' — catégorie contact"
+      aria-label="Faire glisser ou sélectionner « N° de téléphone »"
       draggable="true" data-type="contact">
   N° de téléphone
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Données de santé' — catégorie sensible"
+      aria-label="Faire glisser ou sélectionner « Données de santé »"
       draggable="true" data-type="sens">
   Données de santé
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Date de naissance' — catégorie identité"
+      aria-label="Faire glisser ou sélectionner « Date de naissance »"
       draggable="true" data-type="identite">
   Date de naissance
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Opinion politique' — catégorie sensible"
+      aria-label="Faire glisser ou sélectionner « Opinion politique »"
       draggable="true" data-type="sens">
   Opinion politique
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Photo d’identité' — catégorie identité"
+      aria-label="Faire glisser ou sélectionner « Photo d&#x27;identité »"
       draggable="true" data-type="identite">
   Photo d'identité
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Adresse postale' — catégorie contact"
+      aria-label="Faire glisser ou sélectionner « Adresse postale »"
       draggable="true" data-type="contact">
   Adresse postale
 </span>
 
 <span class="draggable" tabindex="0" role="button"
-      aria-label="Faire glisser ou sélectionner 'Religion' — catégorie sensible"
+      aria-label="Faire glisser ou sélectionner « Religion »"
       draggable="true" data-type="sens">
   Religion
 </span>
