@@ -97,7 +97,10 @@ OVERLAY = {
                 "matériau change de camp, le bois (3,4 sur la rupture, 2,1 sur l'élastique).",
         anomalies="Aucune manipulation d'objet réel sur le parcours 🅱 : le geste sur la matière "
                   "est celui de 5e_C8.2, dont ce lot est la suite. Fatigue et vieillissement hors "
-                  "modèle — déclaré à l'élève dans la synthèse, pas tu.",
+                  "modèle — déclaré à l'élève dans la synthèse, pas tu. Depuis le 25/11/2026 : sept questions du "
+                  "QCM se lisent sur un document dessiné pour le téléphone (n°345), et la séquence se ferme "
+                  "par un billet de sortie, le crochet du carbet (n°330) ; la séance 2 est alors pleine, 55 min "
+                  "avant la synthèse et le bilan.",
         accessibilite="Vérifiée : labels sur tous les champs, title/desc sur le SVG du crochet, "
                       "signalement non chromatique (mots « retenu »/« écarté »), hors ligne intégral.",
         medias="1 SVG original CC0 écrit pour le lot — le crochet vu de côté, avec la contrainte "

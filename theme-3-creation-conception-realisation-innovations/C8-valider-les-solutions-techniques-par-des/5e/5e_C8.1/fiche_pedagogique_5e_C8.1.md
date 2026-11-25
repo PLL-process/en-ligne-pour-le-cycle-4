@@ -80,6 +80,25 @@ Les 20 questions `5e_C8.1` du QCM sont au-dessus du seuil d'évaluabilité (5). 
 `5e_C3.1` porte 10 questions et se reporte lui aussi. Le bilan de la séquence propose un
 auto-positionnement sur `5e_C8.1` et `5e_C3.1`, aux quatre niveaux du livret scolaire.
 
+**Les questions sur document** (25/11/2026, n°345) : sept questions du QCM se lisent sur un document dessiné pour le
+téléphone. Le tableau des deux coefficients (rupture, élastique) porte les questions 8 et 9 ; « quand le crochet plie,
+quand il casse », les questions 10, 11 et 12 ; « marge, coût, délai » des quatre matériaux qui tiennent, les questions 25
+et 30. Leurs nombres sont calculés par `documents_qcm.py` avec le modèle `patere.py` (n°233) ; le banc du QCM vérifie
+qu'ils sont à jour.
+
+**Le billet de sortie** (25/11/2026, n°330) : à la fin de la séance 2, avant le Bonus, environ 5 minutes, seul et sans
+aide, sur un objet que la séquence n'a pas étudié : le crochet du carbet d'un club de plage du Diamant (un sac de 10 kg,
+un coefficient de 3 exigé, trois crochets donnés par une simulation fournie). Deux questions écrites, chacune avec sa
+version étayée :
+- **5e_C8.1** — dire quels crochets tiennent, et quelle colonne on lit. On regarde : la charge exigée (30 kg) comparée à
+  la colonne « Plie pour toujours à » (la limite élastique), pas à celle de la rupture. Le bois, qui casse à 36 kg mais
+  plie à 22 kg, est écarté.
+- **5e_C3.1** — au bord de la mer, écarter un matériau pour une propriété. On regarde : un matériau nommé (l'acier non
+  galvanisé) et la propriété qui compte ici (il rouille à l'air salé).
+
+Il ne valide rien : aucun bouton, aucune note (n°333). La séance 2 est pleine : 20 + 20 + 10 + 5 = 55 minutes avant la
+synthèse et le bilan.
+
 ## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
 
 La page était d'un seul tenant ; elle a maintenant deux séances à onglets, sur le modèle du pilote 4e_C8.1, selon le
@@ -88,7 +107,7 @@ déroulé ci-dessus.
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Prendre le simulateur en main | Que calcule le simulateur, et qu'est-ce qui change d'un matériau à l'autre ? | Ouverture (situation, problématique, hypothèse, cahier des charges, billet), activités 1 et 2 | ouverture + 15 + 20 min |
-| 2 — Comparer, choisir, refaire | Pourquoi le banc et la simulation ne classent-ils pas pareil, et quel matériau choisir ? | Activités 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 20 + 10 min + clôture |
+| 2 — Comparer, choisir, refaire | Pourquoi le banc et la simulation ne classent-ils pas pareil, et quel matériau choisir ? | Activités 3 et 4, réinvestissement, synthèse, billet de sortie, Bonus (corrigé par défi), bilan, QCM | 20 + 20 + 10 + 5 min + clôture |
 
 Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Restent visibles à chaque séance : le titre, la
 mission, la barre d'outils (🖨 Imprimer / PDF) et **le simulateur**, sorti de l'activité 1 parce qu'il sert aux deux

@@ -11,3 +11,13 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 |---|---|---|---|---|
 | `Images/synthese_patere_hall.png` | Une rangée de patères en métal vissées au mur d'un hall couvert ; un sac à dos mouillé pend à l'une d'elles, quelques gouttes sur le carrelage. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a row of single metal coat hooks screwed to the painted wall of a covered school entrance hall in the Caribbean; a wet school backpack hangs from one hook, another hook is visibly bent downward, a few rain drops on the tiled floor, soft daylight, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » ; et la situation déclenchante de la séquence (05/11/2026) |
 
+## Documents du QCM (25/11/2026, n°345)
+
+Création originale Fable, CC0. Dessinés par `_outils/document_qcm.py` depuis `documents_qcm_5e_C8.1.json`, lui-même
+écrit par `documents_qcm.py` avec le modèle `patere.py` (n°233).
+
+| Fichier | Ce qu'il donne à lire | Questions |
+|---|---|---|
+| `Images/doc_deux_coefficients.svg` | le coefficient de sécurité de chaque matériau, sur la rupture et sur la limite élastique | 8, 9 |
+| `Images/doc_plie_casse.svg` | la charge où chaque crochet plie pour toujours (simulation) et celle où il casse (banc) | 10, 11, 12 |
+| `Images/doc_cout_delai.svg` | pour les quatre matériaux qui tiennent : coefficient, coût des 40 patères, heures d'atelier | 25, 30 |
