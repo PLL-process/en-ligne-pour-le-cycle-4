@@ -46,7 +46,7 @@ const ecarts = await page.evaluate(grille => grille.filter(c => {
 }).length, ATT.grille);
 ok("① la page calcule comme le modèle, cas par cas", ecarts === 0, ecarts + " écart(s) sur " + ATT.grille.length + " cas");
 
-await page.click("#tab-s2");
+await page.click("#tab-s3");   // la console est en séance 3 depuis le 25/11/2026
 const coche = async (groupe, valeur) => page.evaluate(([g, v]) => {
   const r = [...document.querySelectorAll('#' + g + ' input[type=radio]')].find(x => x.value === v);
   if (!r) return false; r.click(); r.dispatchEvent(new Event("change", {bubbles: true})); return true;
@@ -79,7 +79,7 @@ await page.click('.btn.check[data-check="6"]');
 fb = (await page.textContent("#fb6")).trim();
 ok("② réglée, lancée, répondue : l'activité est validée", fb.startsWith("🎉"), fb.slice(0, 60));
 const prog = (await page.textContent("#progTxt")).trim();
-ok("la progression compte l'activité 2 bis", /^1 \/ 7/.test(prog), prog);
+ok("la progression compte l'activité 2 bis", /^1 \/ 8/.test(prog), prog);
 
 // ③ une mauvaise réponse n'est pas validée et porte son pourquoi
 await coche("a6q1", "22 kg");
@@ -96,7 +96,7 @@ ok("③ chaque mauvaise proposition a son pourquoi", pourquoiManquants === 0, po
 
 // ④ le relevé revient après un rechargement
 await page.reload();
-await page.click("#tab-s2");
+await page.click("#tab-s3");   // la console est en séance 3 depuis le 25/11/2026
 const lignes = await page.locator("#simReleve tbody tr").count();
 ok("④ le relevé des essais revient après un rechargement", lignes === 4, lignes + " ligne(s)");
 
