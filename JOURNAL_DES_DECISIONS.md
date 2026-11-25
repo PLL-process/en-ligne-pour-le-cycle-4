@@ -37360,3 +37360,21 @@ la fiche pédagogique (le point « ce qui reste à faire » est barré) ; la not
 `mesurer_impression.py` : synthèse élève sur 2 pages, en Inter (95 % · 93 %) et en Liberation Sans (95 % · 84 %) ;
 `controle_unites`, `controle_liens`, `enrichir.py --verifier-tout` sans écart. Vu à 390 px : la problématique, sa
 correction et la carte de la synthèse, sans défilement de côté.
+
+## 25/11/2026 — Structure des pages, thème 1 : chaque page a sa zone de contenu principal (`<main>`) et un titre de niveau 1
+
+**La décision.** Pascal, 25/11/2026 (« 1a ») : corriger, thème par thème, les défauts de structure qu'axe-core mesure
+sans les refuser et que l'audit externe du 01/11 lui avait laissés — 140 pages sans zone de contenu principal
+(`landmark-one-main`), 49 pages dont un titre saute un niveau (`heading-order`).
+
+**Thème 1.** 26 pages sans `<main>` : les 24 synthèses (élève et professeur), la carte des représentations
+(`_reperes/`) et l'activité bonus 2FA de `4e_C1.4`. `<main>` s'ouvre juste après la barre de navigation du site
+(`#navharm`) et se ferme avant le `<footer>` de premier niveau, ou avant `</body>` ; rien d'autre ne bouge (outil de
+session `poser_main.py`, qui saute une page qui a déjà son `<main>`). La carte porte des incrustations d'ateliers :
+`incrustations.py --verifier` la dit toujours à jour. L'activité bonus 2FA n'avait aucun `<h1>` : son bandeau « 💻
+Bienvenue dans la cybersécurité — Séquence 4e » le devient, avec l'allure qu'il avait (`h1.neon`).
+
+**Vérifié.** Les 27 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 134 pages du thème 1 : `landmark-one-main` 26 → 0, `page-has-heading-one` 1 → 0, `region` 591 → 277
+nœuds ; aucun défaut grave. `controle_impression` à 0. Les titres qui sautent un niveau (13 au thème 1) viennent dans un
+lot à part.
