@@ -37514,3 +37514,11 @@ de même balise, balise et style inchangés, zones incrustées non touchées. 13
 professeur), 100 titres. Vérifié : axe-core à l'ouverture, 1 280 et 390 px : `heading-order` 14 → 0,
 `aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 13 pages ; `tests_regle_311` des neuf
 dossiers et le banc du Book Train verts ; `controle_mode_mission` 0.
+
+## 25/11/2026 — Structure des pages, thème 3 : les titres ne sautent plus de niveau
+
+Même geste qu'aux thèmes 1 et 2 (PR #925, #927) : `aria-level`, balise et style inchangés, zones incrustées non
+touchées. 22 pages sources, 65 titres ; `3e_C9.2` par sa page tout-en-un, puis `generer_les_quatre_pages.py`
+(stations 1 et 4 refaites). Vérifié : axe-core à l'ouverture, 1 280 et 390 px, sur les 24 pages : `heading-order`
+44 → 0, `aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 24 pages ; `tests_regle_311` des
+22 dossiers 34 / 34 ; `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `controle_mode_mission` 0.
