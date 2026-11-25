@@ -28,9 +28,13 @@
  *   · Impact « critical » ou « serious » : comparé à la référence. REFUS si, pour
  *     une règle et une page, le nombre de nœuds dépasse celui de la référence
  *     (une page ou une règle absente de la référence vaut zéro).
- *   · Impact « moderate » ou « minor » : compté et rapporté, jamais refusé. Ce
- *     sont les défauts de structure (`region`, `heading-order`) que l'audit a
- *     laissés à la décision de Pascal.
+ *   · Quatre défauts de structure (impact « moderate ») sont traités comme
+ *     graves depuis le 25/11/2026, parce qu'ils sont tombés à zéro sur le dépôt
+ *     (PR #921 à #929) : `landmark-one-main` (zone principale), `heading-order`
+ *     (un titre ne saute pas de niveau), `page-has-heading-one` et
+ *     `empty-table-header`. La référence reste vide : un seul nœud refuse (n°273).
+ *   · Les autres « moderate » ou « minor » : comptés et rapportés, jamais
+ *     refusés. Le premier d'entre eux est `region` (texte hors repère).
  *
  * CE QU'IL NE MESURE PAS, ET LE DIT
  * ---------------------------------
@@ -78,6 +82,9 @@ const RACINE = path.resolve(ICI, '..');
 export const REFERENCE = path.join(ICI, 'axe_reference.json');
 export const ETIQUETTES = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
 export const GRAVES = new Set(['critical', 'serious']);
+/* Défauts de structure qui refusent comme un défaut grave (référence vide, n°273) : tous à zéro sur le dépôt le
+   25/11/2026, après les vagues de structure (PR #921 à #929). `region` reste mesuré seulement. */
+export const STRUCTURE_REFUSEE = new Set(['landmark-one-main', 'heading-order', 'page-has-heading-one', 'empty-table-header']);
 const LARGEUR = 1280;
 const EN_PARALLELE = 4;
 
@@ -187,7 +194,7 @@ export async function main({ muet = false, cible = RACINE, racine = RACINE, json
           }, ETIQUETTES);
           version = resultat.version;
           for (const violation of resultat.violations) {
-            const sac = GRAVES.has(violation.impact) ? graves : legers;
+            const sac = GRAVES.has(violation.impact) || STRUCTURE_REFUSEE.has(violation.id) ? graves : legers;
             (sac[violation.id] ||= {})[nom] = violation.noeuds.length;
             impacts[violation.id] = violation.impact;
             details.push({ page: nom, regle: violation.id, impact: violation.impact, aide: violation.aide, noeuds: violation.noeuds });
@@ -238,11 +245,11 @@ export async function main({ muet = false, cible = RACINE, racine = RACINE, json
   const reculs = comparer(graves, connue);
   if (!muet) {
     console.log(`axe-core ${version} · ${mesurees} page(s) · ${LARGEUR} px · ${ETIQUETTES.join(', ')}`);
-    console.log('\nDéfauts graves (critical, serious) — comparés à la référence :');
+    console.log('\nDéfauts graves (critical, serious), et de structure refusés (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau) — comparés à la référence :');
     const tg = totaux(graves);
     if (!tg.length) console.log('    aucun');
     for (const t of tg) console.log(`    ${t.regle} (${impacts[t.regle]}) : ${t.noeuds} nœud(s), ${t.pages} page(s)`);
-    console.log('\nDéfauts de structure (moderate, minor) — mesurés, jamais refusés :');
+    console.log('\nAutres défauts de structure (moderate, minor) — mesurés, jamais refusés :');
     const tl = totaux(legers);
     if (!tl.length) console.log('    aucun');
     for (const t of tl) console.log(`    ${t.regle} (${impacts[t.regle]}) : ${t.noeuds} nœud(s), ${t.pages} page(s)`);

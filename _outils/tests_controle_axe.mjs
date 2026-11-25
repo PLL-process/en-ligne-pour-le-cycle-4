@@ -10,6 +10,11 @@
  *   · sans l'étiquette `best-practice`, les défauts de structure que l'audit du
  *     01/11 avait comptés (`region`, `heading-order`) n'étaient plus vus du tout.
  *
+ * Depuis le 25/11/2026, quatre défauts de structure tombés à zéro sur le dépôt
+ * refusent comme un défaut grave (`STRUCTURE_REFUSEE`) : une page sans zone
+ * principale, un titre qui saute un niveau, une page sans titre de niveau 1, un
+ * en-tête de tableau vide. `region` (texte hors repère) reste mesuré seulement.
+ *
  * Usage : node _outils/tests_controle_axe.mjs
  * Sortie : 0 si tout passe, 1 sinon, 2 si axe-core ou Playwright manquent (le
  * banc ne peut alors rien dire : règle d'or n°299).
@@ -19,7 +24,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { main, comparer, trouverAxe, lanceDirectement, ETIQUETTES, GRAVES } from './controle_axe.mjs';
+import { main, comparer, trouverAxe, lanceDirectement, ETIQUETTES, GRAVES, STRUCTURE_REFUSEE } from './controle_axe.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const SCRIPT = path.join(ICI, 'controle_axe.mjs');
@@ -44,6 +49,11 @@ const CHAMP_SANS_NOM = page('<p>Un texte.</p><input type="text">');
 const DEUX_CHAMPS_SANS_NOM = page('<p>Un texte.</p><input type="text"><input type="text">');
 const SANS_MAIN = `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>Sans repère</title></head>
 <body><h1>Essai</h1><p>Un texte hors de tout repère.</p></body></html>`;
+// une zone principale, mais un paragraphe resté dehors : seul `region` est touché
+const HORS_REPERE = `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>Hors repère</title>
+<style>body{background:#fff;color:#111}</style></head><body><main><h1>Essai</h1><p>Dedans.</p></main>
+<p>Un paragraphe resté hors de la zone principale.</p></body></html>`;
+const SAUT_DE_TITRE = page('<h2>Partie</h2><h4>Sous-partie</h4><p>Un texte.</p>');
 
 function depot(fichiers) {
   const racine = fs.mkdtempSync(path.join(os.tmpdir(), 'cax-'));
@@ -85,14 +95,28 @@ verifier('comparer : un défaut déplacé d\'une page à l\'autre est vu',
   fs.rmSync(racine, { recursive: true, force: true });
 }
 {
-  const racine = depot({ 'page.html': SANS_MAIN });
+  const racine = depot({ 'page.html': HORS_REPERE });
   const { code, texte } = await jouer(racine);
-  verifier('ACCEPTÉ — un défaut de structure (texte hors repère) est mesuré, pas refusé',
-    code === 0 && texte.includes('region'), texte);
+  verifier('ACCEPTÉ — un défaut de structure non refusé (texte hors repère) est mesuré, pas refusé',
+    code === 0 && texte.includes('region') && !texte.includes('landmark-one-main'), texte);
   fs.rmSync(racine, { recursive: true, force: true });
 }
 
 // ══ CE QU'IL DOIT REFUSER, ET LA RÉFÉRENCE ═══════════════════════════════════
+{
+  const racine = depot({ 'page.html': SANS_MAIN });
+  const { code, texte } = await jouer(racine);
+  verifier('REFUS — une page sans zone principale (`landmark-one-main`), sans référence',
+    code === 1 && texte.includes('landmark-one-main'), texte);
+  fs.rmSync(racine, { recursive: true, force: true });
+}
+{
+  const racine = depot({ 'page.html': SAUT_DE_TITRE });
+  const { code, texte } = await jouer(racine);
+  verifier('REFUS — un titre qui saute un niveau (h2 → h4, `heading-order`), sans référence',
+    code === 1 && texte.includes('heading-order'), texte);
+  fs.rmSync(racine, { recursive: true, force: true });
+}
 {
   const racine = depot({ 'theme/page.html': CHAMP_SANS_NOM, '_archive-anciennes-versions/vieille.html': CHAMP_SANS_NOM });
   const sans = await jouer(racine);
@@ -173,7 +197,10 @@ verifier('la garde de lancement ne part pas pour un autre script',
 }
 verifier('les étiquettes sont celles de l\'audit du 01/11, plus WCAG 2.2',
   ['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice', 'wcag22aa'].every((e) => ETIQUETTES.includes(e)));
-verifier('seuls « critical » et « serious » sont refusés', GRAVES.size === 2 && GRAVES.has('critical') && GRAVES.has('serious'));
+verifier('« critical » et « serious » sont refusés', GRAVES.size === 2 && GRAVES.has('critical') && GRAVES.has('serious'));
+verifier('les quatre défauts de structure tombés à zéro sont refusés, et `region` ne l\'est pas',
+  STRUCTURE_REFUSEE.size === 4 && ['landmark-one-main', 'heading-order', 'page-has-heading-one', 'empty-table-header']
+    .every((r) => STRUCTURE_REFUSEE.has(r)) && !STRUCTURE_REFUSEE.has('region'));
 
 // ══ VERDICT ══════════════════════════════════════════════════════════════════
 if (echecs.length) {
@@ -182,8 +209,9 @@ if (echecs.length) {
   console.log(`\n${controles - echecs.length} / ${controles}`);
   process.exit(1);
 }
-console.log(`✅ ${controles} contrôles — refusés : le champ sans nom hors référence, un nœud de plus, le défaut déplacé ;`);
-console.log('   acceptés : la page saine, le défaut connu, le défaut de structure, la page de renvoi ;');
+console.log(`✅ ${controles} contrôles — refusés : le champ sans nom hors référence, un nœud de plus, le défaut déplacé,`);
+console.log('   la page sans zone principale, le titre qui saute un niveau ;');
+console.log('   acceptés : la page saine, le défaut connu, le texte hors repère, la page de renvoi ;');
 console.log('   en panne (sortie 2) : axe-core absent, référence illisible, aucune page, chemin absent, référence partielle.');
 console.log(`\n${controles} / ${controles}`);
 process.exit(0);
