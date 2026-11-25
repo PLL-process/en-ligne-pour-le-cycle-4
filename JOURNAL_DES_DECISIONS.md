@@ -37433,3 +37433,11 @@ depuis le 30/10/2026 (il refuse d'écrire : les deux pages se corrigent à la ma
 Vérifié : les 34 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
 axe-core sur les 98 pages du thème 2 : `landmark-one-main` 34 → 0, `region` 293 → 38 nœuds ; aucun défaut grave ;
 `controle_impression` à 0. Les titres qui sautent un niveau (14 au thème 2) viennent dans un lot à part.
+
+## 25/11/2026 — Structure des pages, thème 2 : les titres ne sautent plus de niveau
+
+Même geste qu'au thème 1 (PR #925) : `aria-level` sur les titres qui descendaient de plus d'un niveau et leurs frères
+de même balise, balise et style inchangés, zones incrustées non touchées. 13 pages (9 séquences, 4 synthèses
+professeur), 100 titres. Vérifié : axe-core à l'ouverture, 1 280 et 390 px : `heading-order` 14 → 0,
+`aria-allowed-attr` 0 ; rendu avant/après identique au pixel près sur les 13 pages ; `tests_regle_311` des neuf
+dossiers et le banc du Book Train verts ; `controle_mode_mission` 0.
