@@ -18,8 +18,9 @@
   (`tests_4e_C1.4_quiz.mjs`, `tests_regle_311_4e_C1.4.mjs`) ;
 - quatre séances depuis le 14/11/2026 : reconnaître ; mes données ; mes traces ; ma réputation (la propriété
   intellectuelle, puis la clôture) ;
-- ce qui reste, dit par la fiche et la matrice : quatre questions du QCM (9, 10, 24, 29) portent sur des rappels de 5e
-  que la séquence n'enseigne pas, et les durées par activité ne sont pas affichées (règle n°23 non mesurable).
+- depuis le 25/11/2026, les quatre questions du QCM qui portaient sur des rappels de 5e non enseignés (9, 10, 24, 29) ont
+  chacune leur ligne de cours « 📘 À savoir » dans la séance qui en parle ;
+- ce qui reste : les durées par activité ne sont pas affichées (règle n°23 non mesurable).
 
 ## Note sur les codes
 

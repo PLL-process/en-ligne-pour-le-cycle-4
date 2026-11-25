@@ -112,10 +112,10 @@ n'est pas une autorisation, et pour un mineur, c'est l'accord des responsables l
 La matrice `matrice_couverture_4e_C1.4.csv` rattache chacune des 30 questions du QCM à une notion et à l'activité qui
 l'enseigne.
 
-## Ce qui reste à faire (relevé du 22/11/2026)
+## Ce qui reste à faire (relevé du 22/11/2026, mis à jour le 25/11/2026)
 
-- **Quatre questions du QCM portent sur des notions que la séquence n'enseigne pas** : le gestionnaire de mots de passe
-  (Q9), les permissions d'une application (Q10), le rôle du témoin d'une cyberviolence (Q24) et le droit à l'effacement
-  (Q29). Ce sont des rappels de 5e (5e_C1.5, 5e_C1.6) : la matrice les marque « à renforcer ». Deux voies, à choisir :
-  une ligne de cours dans la séance concernée, ou le renvoi explicite au lot de 5e dans la page.
+- ~~Quatre questions du QCM portent sur des notions que la séquence n'enseigne pas~~ — **fait le 25/11/2026** (décision de
+  Pascal) : une ligne de cours « 📘 À savoir » dans la séance qui en parle. Séance 1 : le gestionnaire de mots de passe
+  (Q9) ; séance 2 : le droit à l'effacement (Q29) ; séance 3 : les autorisations d'une application (Q10, avec l'exemple
+  de la météo, pour que la question de la lampe de poche reste un transfert) ; séance 4 : si tu es témoin (Q24).
 - Les durées par activité ne sont pas affichées (règle n°23 non mesurable).

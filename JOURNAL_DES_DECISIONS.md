@@ -37024,3 +37024,46 @@ et celui de `3e_C9.2`, où « QCM » est encore expliqué plus bas que sa premi�
 
 **Mesure** (`controle_sigles_expliques.py`, 410 pages) : 0 page avec un sigle jamais expliqué, dans les trois thèmes
 (thème 3 : 53 → 0). Deux pages où « QCM » est expliqué trop bas : les deux QCM laissés à #907.
+
+## 25/11/2026 — 4e_C1.4 et 3e_C1.5 : douze lignes de cours pour les questions du QCM qui n'étaient pas enseignées ; la synthèse élève de 3e_C1.5 ; trois images Canva remises telles quelles (thème 1)
+
+**Décision de Pascal** (25/11, « continue », en réponse aux questions 1 et 2 du rapport du 22/11) : une ligne de cours
+dans la séance, plutôt que de changer les questions ; et la synthèse élève de 3e_C1.5.
+
+**Douze lignes « 📘 À savoir »**, chacune dans la séance qui parle de sa notion, avant le quiz ou la question qui
+l'évalue :
+- **4e_C1.4** — séance 1 : le gestionnaire de mots de passe (Q9) ; séance 2 : le droit à l'effacement (Q29) ; séance 3 :
+  les autorisations d'une application (Q10 — avec l'exemple de la météo, pour que la question de la lampe de poche reste
+  un transfert) ; séance 4 : si tu es témoin (Q24) ;
+- **3e_C1.5** — séance 2, avant 2.c : le télétravail et les réseaux à haut débit (Q1), les démarches en ligne (Q20), la
+  fracture numérique (Q9), le biais d'une intelligence artificielle (Q16) ; séance 3, activité 3 : les indices de
+  réparabilité et de durabilité (Q21, Q22), le poids de l'acheteur sur la conception (Q29) ; séance 4, conclusion :
+  l'écran et le sommeil (Q14).
+Les deux matrices passent ces douze lignes à « couvert » ; les fiches le disent.
+
+**La synthèse élève de 3e_C1.5** (`Synthèses/synthese_eleve_3e_C1.5.html`, règle d'or n°316) : la carte « Ce que je
+dois retenir » (la problématique, le programme recopié, l'image de la situation), six parties titrées par une question
+— la loi et l'application du club, le numérique et les métiers, ce que coûte un appareil, le chiffre défendable,
+l'argumentaire court, l'écran et le corps —, chacune avec l'exemple de la séquence en cases, son « À retenir » et son
+piège ; un lexique de quatorze mots, avec l'anglais. **Deux pages A4** en Inter et en Liberation Sans
+(`mesurer_impression.py`, aucun titre seul) ; rien ne déborde à 390 px. Chaque fait relu dans la séquence (les trois
+règles de la loi, les 80 % de la fabrication, les quatre précisions d'un chiffre, les six lignes de 5.b). Elle est reliée
+depuis la séance 4 (« Synthèse et métacognition ») et listée par l'index. La synthèse professeur dit maintenant le pari
+de la séquence, ce que l'élève sait faire à la fin et le positionnement.
+
+**Une erreur de ma part, réparée.** Le 22/11 (#899), j'ai compressé trois images de situation au-dessus de 1 Mo
+(4e_C1.4, 3e_C1.5, 5e_C1.3) en les réenregistrant en 256 couleurs. Ce sont des images générées par IA avec Canva : leur
+`SOURCES_MEDIAS.md` dit « fichier non modifié », parce que les conditions de Canva interdisent d'en retirer les métadonnées
+de provenance (manifeste C2PA, XMP) — et le réenregistrement les avait retirées. Je l'ai vu en écrivant la synthèse
+(le skill `synthese-vulgarisee` le rappelle : « le fichier n'est pas retouché »). Les trois originaux sont remis, à
+l'octet près (vérifié contre le commit d'avant), C2PA et XMP présents ; les notes de l'audit disent pourquoi ces images
+restent au-dessus de 1 Mo. Avant de toucher une image, lire sa ligne de `SOURCES_MEDIAS.md`.
+
+**Vérifié** : bancs 3e_C1.5 (séances **46/46**, questions **23/23**, règle 311 **34/34**) et 4e_C1.4 (quiz **32/32**,
+règle 311 **34/34**) ; `controle_sigles_expliques` (les trois pages), `controle_unites`, `controle_liens`,
+`controle_hierarchie`, `controle_regles_visibles`, `audit_aeration --strict` (la synthèse), `controle_loupe`,
+`controle_impression_papier`, `controle_mode_essentiel`, `controle_debordement`, `controle_tactile`,
+`controle_boutons_vivants`, `controle_sauvegarde_locale`, `controle_medias`, `controle_statut` : verts.
+
+**Une autre session** a deux PR ouvertes sur ces pages depuis le 22/11, en conflit avec `main` : #905 (contrastes du
+thème 1, qui touche les deux séquences) et #907 (`<main>` sur les QCM). Elles ne sont pas touchées ici.

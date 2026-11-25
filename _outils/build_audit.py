@@ -156,8 +156,8 @@ OVERLAY = {
                 "pièces sont là. Relu le 22/11/2026 (audit #867) : SOURCES_MEDIAS.md existe, le mode "
                 "essentiel est câblé, les images extraites de l'ancien HTML ont été compressées "
                 "(2,3 Mo pour tout le dossier, contre 9,3 Mo).",
-        anomalies="Image de la situation compressée le 22/11/2026 (situation_fichiers_melanges.png, "
-                  "2,1 Mo → 0,6 Mo). Pas de grille LSU écrite dans la page.",
+        anomalies="L'image de la situation (situation_fichiers_melanges.png, 2,1 Mo) "
+                  "est une image générée par IA (Canva), gardée telle quelle : ses métadonnées de provenance (C2PA, XMP) ne se retirent pas (conditions de Canva) — elle est l'exception à la limite de taille. Compressée par erreur le 22/11/2026, l'original a été remis le 25/11/2026. Pas de grille LSU écrite dans la page.",
         accessibilite="Textes alternatifs présents ; contrôles axe du dépôt.",
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
@@ -370,11 +370,10 @@ OVERLAY = {
                 "tests. Fiche pédagogique et matrice de couverture écrites le 22/11/2026 (audit #867, "
                 "« 2 oui » de Pascal) : chacune des 30 questions est rattachée à sa notion et à "
                 "l'activité qui l'enseigne. Synthèse professeur : le déroulé suit les quatre séances.",
-        anomalies="Quatre questions du QCM (9 gestionnaire de mots de passe, 10 permissions d'une "
-                  "application, 24 rôle du témoin, 29 droit à l'effacement) portent sur des rappels de "
-                  "5e que la séquence n'enseigne pas : la matrice les marque « à renforcer ». Les "
-                  "durées par activité ne sont pas affichées (règle n°23 non mesurable). Image de la "
-                  "situation compressée le 22/11/2026 (1,7 Mo → 0,6 Mo).",
+        anomalies="Les quatre questions du QCM qui évaluaient des rappels de 5e sans que la séquence "
+                  "les enseigne (9, 10, 24, 29) ont chacune leur ligne de cours « 📘 À savoir » depuis "
+                  "le 25/11/2026 (décision de Pascal). Les durées par activité ne sont pas affichées "
+                  "(règle n°23 non mesurable). L'image de la situation (1,7 Mo) est une image générée par IA (Canva), gardée telle quelle : ses métadonnées de provenance (C2PA, XMP) ne se retirent pas (conditions de Canva) — elle est l'exception à la limite de taille. Compressée par erreur le 22/11/2026, l'original a été remis le 25/11/2026.",
         accessibilite="Bonne — contrôles axe du dépôt.",
         medias="Voir SOURCES_MEDIAS.md du dossier.",
     ),
@@ -389,12 +388,12 @@ OVERLAY = {
                 "Pascal) : chacune des 30 questions est rattachée à sa notion et à l'activité qui "
                 "l'enseigne. Correction de 1.b réparée le même jour (deux corrections portaient le même "
                 "identifiant : le second bouton ouvrait la correction de la première question).",
-        anomalies="Huit questions du QCM (1, 9, 14, 16, 20, 21, 22, 29) portent sur des notions que la "
-                  "séquence n'enseigne pas (télétravail, fracture numérique, écrans et sommeil, biais "
-                  "d'une IA, dématérialisation, indices de réparabilité et de durabilité, critères "
-                  "d'achat) : la matrice les marque « à renforcer ». Pas de synthèse élève ; la synthèse "
-                  "professeur reste « à compléter ». Image de la situation compressée le 22/11/2026 "
-                  "(2,6 Mo → 0,8 Mo).",
+        anomalies="Les huit questions du QCM qui évaluaient des notions absentes de la séquence (1, 9, "
+                  "14, 16, 20, 21, 22, 29) ont leur ligne de cours « 📘 À savoir » depuis le 25/11/2026 "
+                  "(décision de Pascal) ; la synthèse élève est écrite le même jour (deux pages A4), et la "
+                  "synthèse professeur complétée. La problématique parle de « protéger sa vie "
+                  "numérique », le code principal du rôle stratégique du numérique : la séance 2 fait le "
+                  "lien, la problématique ne le dit pas. L'image de la situation (2,6 Mo) est une image générée par IA (Canva), gardée telle quelle : ses métadonnées de provenance (C2PA, XMP) ne se retirent pas (conditions de Canva) — elle est l'exception à la limite de taille. Compressée par erreur le 22/11/2026, l'original a été remis le 25/11/2026.",
         accessibilite="Contrôles axe du dépôt.",
         medias="L'activité 3 bis s'appuie sur la page publique de l'Arcep ; l'affiche "
                "Delagrave n'est plus visée, ni rediffusée par le dépôt (arbitrage A5, 23/10/2026).",
