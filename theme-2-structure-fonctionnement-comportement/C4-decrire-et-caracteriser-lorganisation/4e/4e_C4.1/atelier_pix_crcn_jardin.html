@@ -15,14 +15,14 @@ body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--fond);colo
 header{background:var(--bleu);color:#fff;padding:22px 6vw}
 header h1{margin:0 0 6px;font-size:1.5rem}
 header p{margin:0;opacity:.92}
-.badge{display:inline-block;background:var(--bleu2);color:#fff;border-radius:999px;padding:2px 12px;font-size:.8rem;margin:8px 6px 0 0}
+.badge{display:inline-block;background:#3d6fd6;color:#fff;border-radius:999px;padding:2px 12px;font-size:.8rem;margin:8px 6px 0 0}
 main{max-width:960px;margin:0 auto;padding:18px 4vw 60px}
 .regle{border:3px solid var(--bleu);border-radius:12px;background:#EAF1FB;padding:14px 18px;margin:20px 0;font-weight:600}
 .atelier{background:#fff;border:2px solid #D8E0EC;border-radius:14px;margin:26px 0;overflow:hidden}
-.atelier>h2{background:var(--bleu2);color:#fff;margin:0;padding:12px 18px;font-size:1.15rem}
+.atelier>h2{background:#3d6fd6;color:#fff;margin:0;padding:12px 18px;font-size:1.15rem}
 .corps{padding:16px 20px}
 .cartouche{border:2px solid var(--orange);border-radius:10px;background:#FDF3E7;padding:12px 16px;margin:0 0 16px;font-size:.92rem}
-.cartouche b{color:var(--orange)}
+.cartouche b{color:#a84a0c}
 .cartouche .rep{font-style:italic}
 .doc{border:2px solid #C9D6EA;border-radius:10px;background:#F4F8FF;padding:12px 16px;margin:14px 0}
 .doc h3{margin:0 0 8px;color:var(--bleu);font-size:1rem}
@@ -69,6 +69,11 @@ footer{text-align:center;color:#667;padding:20px;font-size:.85rem}
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+/* Contraste (axe-core, page ouverte, 22/11/2026) : l'orange des cartouches CRCN (#C55A11 sur #FDF3E7) donnait 3,95 : 1,
+   le blanc des étiquettes et des titres d'atelier sur #5B8DEF 3,23 : 1 → #A84A0C (5,25 : 1) et #3D6FD6 (4,73 : 1). La légende des couleurs du
+   code prend le fond sombre de l'éditeur : ses couleurs sont faites pour lui (sur ce fond clair, 1,2 à 2,3 : 1).
+   À l'écran seulement : sur papier, la feuille commune remet les couleurs du code en foncé, sur fond blanc. */
+@media screen{.py-legende{background:#0b1324;padding:.4rem .7rem;border-radius:8px}}
 </style>
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
