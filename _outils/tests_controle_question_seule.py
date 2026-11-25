@@ -48,11 +48,11 @@ def lancer(*args):
 def main():
     echecs, controles = [], 0
 
-    def juge(titre, attendus, notion, enonce, props, r=0, doc=False):
+    def juge(titre, attendus, notion, enonce, props, r=0, doc=False, niveau=None):
         """`attendus` : les codes que `juger` doit rendre, ni plus ni moins."""
         nonlocal controles
         controles += 1
-        rendus = sorted(c for c, _ in CQ.juger(notion, enonce, props, r, doc))
+        rendus = sorted(c for c, _ in CQ.juger(notion, enonce, props, r, doc, niveau))
         if rendus != sorted(attendus):
             echecs.append("%s : attendu %s, rendu %s" % (titre, sorted(attendus) or "rien", rendus or "rien"))
 
@@ -73,6 +73,14 @@ def main():
     juge("S1 : une classe de flexibilité, « F2 », est du vocabulaire enseigné", [], "Notion", "Une exigence de flexibilité F2 est…", quatre)
     juge("S1 : un document sous la question nomme les codes", [], "Notion", "S2 consomme-t-il plus que S1 ?", quatre, doc=True)
     juge("S1 : un code de compétence n'est pas un code d'objet", [], "Notion", "La compétence C3.1 demande de…", quatre)
+    # (25/11/2026) un code se nomme aussi par le mot qui le précède, ce qui le suit, une parenthèse ; un nom composé n'en est pas un
+    juge("S1 : « le port A0 » est nommé", [], "Notion", "Le capteur est branché sur le port A0. Que lit le programme ?", quatre)
+    juge("S1 : « les tests T1 et T2, mais rate T3 » : la famille est nommée", [], "Notion", "Le programme réussit les tests T1 et T2, mais rate T3.", quatre)
+    juge("S1 : « T1 à la batterie, T2 après le fusible »", [], "Notion", "Points de mesure : T1 à la batterie, T2 après le fusible. T2 = 0 V : où chercher ?", quatre)
+    juge("S1 : « entrée analogique (A0 à A3) »", [], "Notion", "Quelle différence entre une entrée analogique (A0 à A3) et une entrée numérique (D2 à D8) ?", quatre)
+    juge("S1 : « TECHNO-C4 », un nom de réseau, n'est pas un code", [], "Notion", "Le smartphone connecté au réseau TECHNO-C4 est…", quatre)
+    juge("S1 : « Base Shield V2 », une version de produit", [], "Notion", "Le Base Shield V2 ne mesure rien. À quoi sert-il ?", quatre)
+    juge("S1 : « sur D6 », toujours sans nom", ["S1"], "Notion", "Pourquoi le bandeau doit-il être branché sur D6 ?", quatre)
 
     # ── S2 : un renvoi sans document ─────────────────────────────────────────
     juge("S2 : « du tableau », sans tableau", ["S2"], "Notion", "La solution la plus performante du tableau est aussi…", quatre)
@@ -83,11 +91,23 @@ def main():
     juge("S3 : « En 4e à Hangzhou »", ["S3"], "Notion", "En 4e à Hangzhou, la borne refusait une carte. Ici…", quatre)
     juge("S3 : « par rapport à la 5e », même sous un document", ["S3"], "Notion", "Par rapport à la 5e, ce qui change…", quatre, doc=True)
     juge("S3 : « Dans une autre étude » ne suppose aucune année", [], "Notion", "Dans une autre étude, la borne refusait une carte. Ici…", quatre)
+    # (25/11/2026) le passé de l'élève, pas la progression d'une compétence ni l'année du QCM lui-même
+    juge("S3 : « En 4e tu écrivais… »", ["S3"], "Notion", "En 4e tu écrivais 192.168.20.1 dans la case. Qu'est devenue cette passerelle ?", quatre, niveau="3")
+    juge("S3 : la progression dite (« En 5e on SUIT, en 4e on ORGANISE ») dans un QCM de 3e", [], "Notion",
+         "En 5e on SUIT un processus, en 4e on l'ORGANISE. Qu'attend-on de toi en 3e ?", quatre, niveau="3")
+    juge("S3 : « En 5e » dans un QCM de 5e", [], "Notion", "En 5e, que fais-tu du diagramme de planification ?", quatre, niveau="5")
+    juge("S3 : « en cinquième année » n'est pas une classe", [], "Notion", "Qui remontera l'échelle en cinquième année ?", quatre)
+    juge("S3 : un leurre qui parle du passé de l'histoire (« le banc de l'an dernier »)", [], "Notion", "Pourquoi la simulation calcule-t-elle la rupture ?",
+         ["pour vérifier le banc", "pour montrer que le banc de l'an dernier se trompait", "pour remplir", "par habitude"], r=0)
 
     # ── S4 : la notion affichée souffle la réponse ───────────────────────────
     crcn = ["CRCN 1.2 — Gérer des données", "CRCN 1.3 — Traiter des données", "CRCN 2.1 — Interagir", "CRCN 4.1 — Sécuriser"]
     juge("S4 : « La compétence CRCN 1.2 » au-dessus de « CRCN 1.2 — … »", ["S4"], "La compétence CRCN 1.2", "Ranger un fichier relève de…", crcn)
     juge("S4 : la notion renommée ne porte plus le nombre", [], "Ranger : quelle compétence ?", "Ranger un fichier relève de…", crcn)
+    juge("S4 : un nombre que l'énoncé dit lui-même ne souffle rien", [], "« Entre 6 et 10 »", "Comment s'écrit « l'heure est entre 6 et 10 » ?",
+         ["6 < heure < 10", "heure = 6 OU heure = 10", "heure ≥ 6 ET heure ≤ 10", "heure ENTRE 6 ET 10"], r=2)
+    juge("S2 : « ci-dessous », le programme écrit dans l'énoncé", [], "Notion",
+         "Dans le programme ci-dessous, quelle ligne correspond au losange ? SEUIL = 40 H = 25 heure = 8 if H < SEUIL and heure >= 6: print(1)", quatre)
     juge("S4 : un nombre que toutes les propositions reprennent ne désigne rien", [], "Les 5 volts",
          "Sur la carte, le 5 volts…", ["alimente en 5 volts", "coupe le 5 volts", "mesure le 5 volts", "double le 5 volts"])
 
