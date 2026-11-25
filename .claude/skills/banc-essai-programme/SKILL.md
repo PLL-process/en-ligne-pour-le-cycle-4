@@ -1,6 +1,6 @@
 ---
 name: banc-essai-programme
-description: Vérifier une activité où l'élève modifie ou écrit un programme dans la page (CodeLab, éditeur Python intégré) en EXÉCUTANT son programme sur des entrées choisies et en comparant ses sorties au cahier des charges — jamais en cherchant des mots dans son texte ; la version du programme toujours dite ; la prévision écrite avant l'essai ; un essai périmé dès que le code change ; une limite de l'outil jamais présentée comme une erreur de l'élève. Règles d'or n°333 (mesurée par `controle_verification_execute.py`), n°373 et n°374 (en essai). À utiliser sur toute séquence C6, C9 ou C8 qui fait programmer dans la page, à chaque audit d'une telle séquence, et avant d'écrire un nouvel exécuteur.
+description: Vérifier une activité où l'élève modifie ou écrit un programme dans la page (CodeLab, éditeur Python intégré, banc-eleve) en EXÉCUTANT son programme sur des entrées choisies et en comparant ses sorties au cahier des charges — jamais en cherchant des mots dans son texte ; la version du programme toujours dite ; la prévision écrite avant l'essai ; un essai périmé dès que le code change ; une limite de l'outil jamais présentée comme une erreur de l'élève. Règles d'or n°333 (mesurée par `controle_verification_execute.py`), n°373 et n°374 (en essai). À utiliser sur toute séquence C6, C9 ou C8 qui fait programmer dans la page, à chaque audit d'une telle séquence, et avant d'écrire un nouvel exécuteur.
 ---
 
 # Un banc d'essai juge ce que fait le programme
@@ -25,6 +25,12 @@ consigne qui fixe 60). Rien de tout cela n'était nouveau dans les règles : la 
   22/11/2026** (carte blanche de Pascal) : on garde les deux, l'éditeur commun par défaut, le banc-python seulement pour
   le pas à pas ou la vérification instantanée du Python du collège ; garde-fou : le banc et CPython donnent les mêmes
   sorties sur les programmes du lot (`tests_banc_python.mjs`, test 20). Détail : `_outils/banc_python/LISEZMOI.md`.
+- **Le banc-eleve** (`_outils/banc_eleve/`, 25/11/2026) : le chemin le plus court quand l'élève ÉCRIT dans l'éditeur
+  commun. La page déclare une table `BANC_ELEVE` (les essais, leurs attendus, comment lire la sortie) ; le cœur, recopié
+  à l'identique depuis la source (`poser.py --verifier-tout`), rejoue le programme après chaque ▶, écrit le premier
+  écart sous l'éditeur, garde l'empreinte, retire la validation à la frappe. Dans `CHECKS` : `exp: beOk("vs1"),
+  expMsg: beMsg("vs1")`. Modèles : `3e_C7.1` (une variable remplacée), `4e_C6.2` (une carte simulée par essai, un
+  programme `while True` arrêté par la fin des mesures). Détail : `_outils/banc_eleve/LISEZMOI.md`.
 - La leçon générale : un audit qui propose un outil (« Skulpt, à prototyper ») propose parfois ce que le dépôt a déjà.
   Chercher dans `_outils/`, `_ressources-communes/` et le journal (`grep -n "<outil>" JOURNAL_DES_DECISIONS.md`) avant
   de construire, et avant de numéroter une règle (`python3 _outils/registre_regles.py --prochain`, puis lire les
@@ -102,13 +108,32 @@ Modèle : `3e_C6.1`, tests 6 à 21 bis (57 / 57 au 22/11/2026).
 ## 8. Mesurer sur tout le site
 
 ```bash
-python3 _outils/controle_verification_execute.py --detail     # ✔ X exécute · ⚠ M exécute + motifs · ✘ T motifs seuls · ○ N
-python3 _outils/tests_controle_verification_execute.py       # 12 / 12, dont la page d'avant l'audit (✘ T)
+python3 _outils/controle_verification_execute.py --detail     # ✔ X · ⚠ M · ✘ T · ○ N, puis verrous faibles et éditeurs non jugés
+python3 _outils/tests_controle_verification_execute.py       # 23 / 23, dont les pages d'avant l'audit et d'avant le 25/11
 python3 _outils/banc_python/poser.py --verifier-tout          # chaque page porte la version de la source
+python3 _outils/banc_eleve/poser.py --verifier-tout           # idem pour le banc-eleve (4 pages au 25/11/2026)
 ```
 
 Mesure de départ (22/11/2026, 410 pages) : 7 pages à éditeur ; 3 exécutent, 0 juge par le texte seul, 4 éditeurs sans
 vérification du programme. Un ⚠ M se relit à la main : le motif décide-t-il du verdict ?
+
+Mesure du 25/11/2026, après le lot du banc-eleve : **7 ✔ X · 0 verrou faible · 0 éditeur d'activité sans jugement**
+(2 éditeurs de Bonus sans banc, des défis ouverts : un corrigé suffit). Les « 4 ○ N » du 22/11 cachaient trois choses
+différentes, que le contrôle dit maintenant :
+- **un verrou d'exécution n'est pas un jugement** : « la console affiche quelque chose » (`print("x")`) ou « une ligne
+  [pompe] » ne dit pas que le programme fait ce qu'on attend — `⚠ verrou à relire` ;
+- **un éditeur qu'aucune vérification ne nomme** : l'élève y écrit, rien ne lit (`4e_C9.1`, activité 3) — `○ éditeur
+  qu'aucune vérification ne juge` ;
+- **un juge que le contrôle ne voyait pas** : un écouteur qui range `e.detail` (`window.__lamp`, relu par `lampJuger`).
+
+Trois pièges vus dans ce lot :
+- **Le lien Vittascience ne prouve rien** quand l'élève écrit : la page ne lit pas le programme écrit là-bas. Le
+  geste d'ouvrir le lien ne vaut preuve que pour un programme DONNÉ qu'on exécute seulement (`4e_C6.2`, activité 3).
+- **Un même mot pour deux choses** : le banc disait `"arret"` pour « programme arrêté par le banc », la page `4e_C6.2`
+  pour « pompe à l'arrêt ». Un état du système et un état de l'outil ne partagent jamais un nom.
+- **L'éditeur sauvegarde 500 ms après la dernière frappe** (un `change`) : le retrait commun de validation (« tu as
+  changé une réponse ») s'y déclenche. Un banc de lot qui vérifie dans la foulée d'une frappe voit une validation
+  disparaître ; il attend 0,7 s, comme un élève.
 
 ## Réponse à Pascal
 

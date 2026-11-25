@@ -10,7 +10,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
-import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
+import { eprouverEditeurs, eprouverPose, executerBloc, eprouverBanc, eprouverRejouer } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 import { pathToFileURL } from 'node:url';
 
 let chromium;
@@ -301,8 +301,17 @@ const run = async () => {
   ok("verrou de rédaction : act. 3 refusée sans journal chiffré",
      (await page.textContent("#fb3")).includes("VALEURS"));
   await page.fill("#a3_journal", "J'ai mis H = 25 et heure = 8, la console a affiché POMPE ON. Puis H = 55 : POMPE OFF. Enfin H = 25 avec heure = 23 : POMPE OFF, ce qui m'a surpris au début.");
+  /* n°333 (25/11/2026) : l'élève écrit sa décision dans l'éditeur de l'activité 3 ; la page la juge en l'exécutant sur
+     huit cas. Avant ce jour, l'activité se validait sans que personne ne lise ce programme. */
   await page.click('[data-check="3"]');
-  ok("activité 3 validée (4/4 + journal + essais au banc)",
+  ok("activité 3 refusée tant que le programme de l'éditeur n'a pas passé le banc d'essai",
+     (await page.textContent("#fb3")).includes("Ton programme") && !(await page.evaluate(() => !!window.__valid.act3)),
+     (await page.textContent("#fb3")).slice(0, 120));
+  await executerBloc(page, "edpy-a3", 'SEUIL = 40\nHEURE_DEBUT = 6\nHEURE_FIN = 10\nH = 25\nheure = 8\nif H < SEUIL and heure >= HEURE_DEBUT and heure <= HEURE_FIN:\n    print("POMPE ON")\nelse:\n    print("POMPE OFF")\n');
+  await page.waitForFunction(() => /conformes/.test((document.getElementById("edpy-a3-banc") || {}).textContent || ""));
+  await page.waitForTimeout(700);   // l'éditeur sauvegarde 500 ms après la dernière frappe (un « change ») : on vérifie après, comme l'élève
+  await page.click('[data-check="3"]');
+  ok("activité 3 validée (4/4 + journal + essais au banc + programme 8 / 8)",
      (await page.textContent("#fb3")).includes("4 / 4") && !(await page.textContent("#fb3")).includes("banc d'essai"),
      await page.textContent("#fb3"));
   await shot(page, "act3_validee");
@@ -1013,7 +1022,8 @@ const run = async () => {
 
   /* ════════ L'ÉDITEUR PYTHON INTÉGRÉ (activité 3, 04/11/2026) — il remplace l'onglet Vittascience ════════
      Le code de départ (réglages + entrées) s'exécute sans rien afficher ; la décision de la correction affiche POMPE ON,
-     puis POMPE OFF quand H = 55 ; Skulpt n'est pas chargé à l'ouverture ; aucun réseau. */
+     puis POMPE OFF quand H = 55 ; le banc d'essai juge la décision sur huit cas (n°333, 25/11/2026) ; Skulpt n'est pas
+     chargé à l'ouverture ; aucun réseau. */
   {
     const ctxE = await navigateur.newContext({ viewport: { width: 1280, height: 900 } });
     const reseau = [], errE = [];
@@ -1029,6 +1039,19 @@ const run = async () => {
       { bloc: "edpy-a3", nom: "activité 3, H = 55", depart: { sortie: "" },
         corrige: { quoi: "POMPE OFF quand H = 55", code: depart.replace("H = 25", "H = 55") + DECISION, sortie: "POMPE OFF\n" } },
     ], ok);
+    /* n°333 (25/11/2026) : le banc d'essai de l'activité 3 — huit cas, 40 % pile, 6 h et 10 h pile */
+    await eprouverBanc(pe, "edpy-a3", [
+      { nom: "la décision de la correction : 8 / 8", code: depart + DECISION, conforme: true, verdict: /8 \/ 8 essais conformes/ },
+      { nom: "la comparaison enchaînée HEURE_DEBUT <= heure <= HEURE_FIN : même verdict",
+        code: depart + '\nif H < SEUIL and HEURE_DEBUT <= heure <= HEURE_FIN:\n    print("POMPE ON")\nelse:\n    print("POMPE OFF")\n', conforme: true, verdict: /8 \/ 8/ },
+      { nom: "> et < aux bornes : refusé à 6 h pile", code: depart + '\nif H < SEUIL and heure > HEURE_DEBUT and heure < HEURE_FIN:\n    print("POMPE ON")\nelse:\n    print("POMPE OFF")\n',
+        conforme: false, verdict: /heure = 6 h[\s\S]*Attendu : « POMPE ON »[\s\S]*Obtenu : « POMPE OFF »/ },
+      { nom: "or au lieu de and : refusé à 40 % pile", code: depart + '\nif H < SEUIL or heure >= HEURE_DEBUT:\n    print("POMPE ON")\nelse:\n    print("POMPE OFF")\n',
+        conforme: false, verdict: /H = 40 %[\s\S]*40 < 40 est faux/ },
+      { nom: "le code de départ, sans décision : refusé, « rien d'affiché »", code: depart, conforme: false, verdict: /Obtenu : rien d'affiché/ },
+    ], ok, { onglet: "#tab-s2" });
+    await eprouverBanc(pe, "edpy-a3", [{ nom: "la correction, rejouée", code: depart + DECISION, conforme: true }], ok);
+    await eprouverRejouer(pe, "edpy-a3", ok);
     ok("éditeur Python · hors du parcours 🅱 : visible dans les deux parcours, aucun champ dans un bloc [data-parcours]",
        await pe.evaluate(() => !document.getElementById("edpy-a3").closest("[data-parcours]")));
     ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && errE.length === 0, reseau.concat(errE).slice(0, 3).join(" | "));

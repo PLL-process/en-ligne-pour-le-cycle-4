@@ -1715,6 +1715,13 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 @media (max-width:600px){pre:not([aria-hidden="true"]):not(.editeur-py-couleurs){white-space:pre-wrap;overflow-wrap:anywhere}}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
+<style>/* banc-eleve (règle d'or n°333, 25/11/2026) : le verdict du banc d'essai, sous l'éditeur Python */
+.banc-eleve{margin:.5em 0 .9em;padding:.5em .75em;border-left:4px solid #6b7280;border-radius:6px;background:rgba(107,114,128,.10);white-space:pre-line;line-height:1.45}
+.banc-eleve:empty{display:none}
+.banc-eleve.ok{border-left-color:#15803d;background:rgba(21,128,61,.10)}
+.banc-eleve.ko{border-left-color:#b91c1c;background:rgba(185,28,28,.08)}
+@media print{.banc-eleve{background:none;border-left-color:#000;color:#000}}
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C6.2.html">📖 Lexique</a></nav>
@@ -2366,7 +2373,7 @@ def attendre(secondes): time.sleep(secondes)
 </fieldset>
 <div class="editeur-py" id="vs2" data-fichier="4e-ARROSAGE-act5-TON NOM" data-simulation="carte-simulee-arrosage">
   <label for="py_a5">🐍 L'éditeur Python de la page — complète les trois trous ___, puis exécute : la preuve par la console</label>
-  <p class="editeur-py-note">Remplace chaque <code>___</code> par ta réponse, puis ▶&nbsp;Exécuter. <br>Les fonctions de la carte sont simulées par la page (encadré 🔌 de l'activité 3) : le capteur lit 55, 40, 25, 12, 28, puis 45&nbsp;%, et la console montre la décision pour chaque mesure. ⏹&nbsp;Arrêter pour finir.</p>
+  <p class="editeur-py-note">Remplace chaque <code>___</code> par ta réponse, puis ▶&nbsp;Exécuter. <br>Les fonctions de la carte sont simulées par la page (encadré 🔌 de l'activité 3) : le capteur lit 55, 40, 25, 12, 28, puis 45&nbsp;%, et la console montre la décision pour chaque mesure. ⏹&nbsp;Arrêter pour finir. <br>À chaque ▶, la page essaie aussi ton programme sur six mesures, 30&nbsp;% pile compris&nbsp;: le verdict du banc d'essai s'écrit sous l'éditeur.</p>
   <textarea id="py_a5" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">seuil = 30
 while True:
     humidite = lire_capteur_pourcent(A0)
@@ -2634,7 +2641,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
 <p class="activite-en-ligne">🌐 <b>Sans connexion, tout se fait dans la page</b>&nbsp;: l'éditeur Python est intégré à l'activité. Seul le lien «&nbsp;Vittascience, si tu préfères&nbsp;» demande Internet.</p>
-  <p>Trois défis ouverts, sans vérificateur :</p>
+  <p>Trois défis ouverts. <br>Le défi nuit a son banc d'essai sous l'éditeur&nbsp;; les trois ont leur corrigé, à ouvrir après ton essai&nbsp;:</p>
   <p><b>🌙 Défi nuit :</b> on ne veut PAS arroser la nuit (l'eau s'évapore moins, la pompe réveille le gardien). <br>Ajoute une deuxième condition avec <code>luminosite</code> : la pompe ne démarre que si le sol est sec ET s'il fait jour.</p>
   <p><b>🎚 Défi réglage :</b> remplace le seuil fixe par une valeur réglable (un potentiomètre en 🅰, une variable
   modifiée en tête de programme en 🅱) — combien de lignes as-tu dû changer ? Pourquoi si peu ?</p>
@@ -2642,7 +2649,7 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   du banc. <br>S'il trouve la réponse tout seul à « et avec ≤ ? », vous avez gagné tous les deux.</p>
 <div class="editeur-py" id="vs3" data-fichier="4e-ARROSAGE-bonus-TON NOM" data-simulation="carte-simulee-arrosage">
   <label for="py_bonus">🐍 L'éditeur du Bonus — code tes défis ici</label>
-  <p class="editeur-py-note">Les fonctions simulées de la carte (encadré 🔌 de l'activité 3) y marchent aussi. Le départ est celui du défi nuit : à toi d'y ajouter la luminosité.</p>
+  <p class="editeur-py-note">Les fonctions simulées de la carte (encadré 🔌 de l'activité 3) y marchent aussi. Le départ est celui du défi nuit : à toi d'y ajouter la luminosité. <br>À chaque ▶, la page essaie ton programme de jour et de nuit&nbsp;: le verdict s'écrit sous l'éditeur.</p>
   <textarea id="py_bonus" class="editeur-py-code" rows="10" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off"># Défi nuit : la pompe ne démarre que si le sol est sec ET s'il fait jour.
 seuil = 30
 luminosite = 80   # 0 : nuit noire ; 100 : plein soleil
@@ -2674,6 +2681,21 @@ def attendre(secondes): time.sleep(secondes)
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>le même</b> : ces phrases donnent le départ, pas la réponse.</p><ul><li>« J'ai choisi le défi … parce que … »</li><li>« J'ai modifié … dans le programme, et la console a affiché … »</li><li>« Ce que j'ai compris : … »</li></ul></details>
+<details class="correction"><summary>📖 Corrigé du Bonus (à ouvrir APRÈS ton essai)</summary><div>
+<p><b>🌙 Défi nuit&nbsp;:</b> la pompe démarre seulement si les DEUX conditions sont vraies&nbsp;: le sol est sec <b>et</b> il fait jour. <br>On les relie par <code>and</code>. <br>Ici, «&nbsp;il fait jour&nbsp;» s'écrit <code>luminosite &gt; SEUIL_JOUR</code>, avec <code>SEUIL_JOUR = 50</code>&nbsp;: 50 est un choix, on pourrait prendre 30 ou 60.</p>
+<pre class="code">seuil = 30
+SEUIL_JOUR = 50
+luminosite = 80   # 0 : nuit noire ; 100 : plein soleil
+humidite = lire_capteur_pourcent(A0)
+if humidite &lt; seuil and luminosite &gt; SEUIL_JOUR:
+    demarrer_pompe()
+else:
+    arreter_pompe()</pre>
+<p><b>Ce que vérifie le banc d'essai&nbsp;:</b> de jour (luminosité 100), la pompe suit le seuil de 30&nbsp;% — à 30&nbsp;% pile, elle reste à l'arrêt. <br>La nuit (luminosité 0), elle ne démarre jamais, même sur un sol à 12&nbsp;%.</p>
+<p><b>L'erreur fréquente&nbsp;:</b> écrire <code>or</code> au lieu de <code>and</code>. <br>Avec <code>or</code>, une seule condition suffit&nbsp;: la pompe démarre la nuit dès que le sol est sec — c'est ce qu'on voulait éviter.</p>
+<p><b>🎚 Défi réglage&nbsp;:</b> une seule ligne change. <br>En 🅱, on change la valeur de la variable en tête du programme&nbsp;: <code>seuil = 40</code> au lieu de <code>seuil = 30</code>. <br>En 🅰, on lit le seuil sur un potentiomètre, dans la boucle&nbsp;: <code>seuil = lire_capteur_pourcent(A1)</code> (sur la vraie carte&nbsp;: la page ne simule pas le potentiomètre). <br>Si peu, parce que le seuil n'est écrit qu'<b>une fois</b>, dans une variable&nbsp;: le test <code>humidite &lt; seuil</code> lit cette variable, il n'a pas à changer.</p>
+<p><b>🏡 Défi maison&nbsp;:</b> à 30&nbsp;% pile, les deux symboles donnent deux résultats différents. <br><code>30 &lt; 30</code> est FAUX&nbsp;: la pompe reste à l'arrêt. <br><code>30 &lt;= 30</code> est VRAI&nbsp;: la pompe démarre. <br>Sur un sol à 12&nbsp;% ou à 80&nbsp;%, <code>&lt;</code> et <code>&lt;=</code> donnent le même résultat&nbsp;: seul le test «&nbsp;30 pile&nbsp;» montre lequel des deux le programme utilise.</p>
+</div></details>
 </details>
 </section>
 
@@ -2805,12 +2827,160 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
 }));
 
 /* ── suivi ouverture éditeurs ── */
-["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
-/* l'éditeur Python intégré (04/11/2026) : le verrou se juge sur ce que l'exécution a AFFICHÉ — act. 3 : une mesure
-   « Humidité du sol » ; act. 5 : au moins une décision « [pompe] ». Arrêter un while True par ⏹ est normal. */
+/* act. 3 : le programme est DONNÉ, l'ouvrir dans Vittascience suffit (le geste). Act. 5 et Bonus : l'élève l'ÉCRIT, et la
+   page ne lit pas le programme écrit dans Vittascience — seul le banc d'essai de l'éditeur de la page prouve (n°333). */
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id === "vs1" ? id : id + "_ouvert"] = true; save(); }); });
+/* l'éditeur Python intégré (04/11/2026) : act. 3, le programme est donné — le verrou se juge sur ce que l'exécution a
+   AFFICHÉ, une mesure « Humidité du sol ». Arrêter un while True par ⏹ est normal. Act. 5 et Bonus : plus bas, le banc. */
 document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(d.erreur) return;
-  const preuve = {vs1: /Humidité du sol/, vs2: /\[pompe\]/, vs3: /./}[d.bloc];
+  const preuve = {vs1: /Humidité du sol/}[d.bloc];
   if(preuve && preuve.test(d.sortie || "")){ window.__exp[d.bloc] = true; save(); } });
+/* l'éditeur Python intégré : le programme de l'élève jugé par le banc d'essai (n°333, 25/11/2026) */
+function bancRetirer(n){
+  const i = par.s.indexOf(n); if(i >= 0){ par.s.splice(i, 1); updateProg(); }
+  const fb = $("fb" + n);
+  if(fb){ fb.textContent = "↻ Activité à revalider : ton programme a changé depuis l'essai du banc. ▶ Exécuter, puis ✅ Vérifier."; fb.className = "feedback show warn"; }
+  save();
+}
+/* la carte simulée du banc : le capteur lit les valeurs de l'essai, une par une, puis le programme s'arrête (SystemExit) ;
+   la pompe ne fait qu'écrire ses ordres. Chaque essai part du repos : pompe à l'arrêt. */
+function beSimuArrosage(valeurs){
+  return ["A0 = 0", "A1 = 1", "_essai = [" + valeurs.join(", ") + "]", "_rang = [0]",
+    "def lire_capteur_pourcent(broche):", "    if _rang[0] >= len(_essai):", "        raise SystemExit",
+    "    v = _essai[_rang[0]]", "    _rang[0] = _rang[0] + 1", "    return v",
+    "def lire_capteur(broche):", "    return lire_capteur_pourcent(broche) * 1023 // 100",
+    "def demarrer_pompe():", "    print('§MARCHE')", "def arreter_pompe():", "    print('§ARRET')",
+    "def attendre(secondes):", "    pass"].join("\n");
+}
+const beEtatPompe = s => { let etat = "arret"; String(s).split("\n").forEach(x => { if(/§MARCHE/.test(x)) etat = "marche"; else if(/§ARRET/.test(x)) etat = "arret"; }); return etat; };
+const beDirePompe = x => x === "marche" ? "pompe en MARCHE" : x === "arret" ? "pompe à l'arrêt" : "« " + x + " »";
+const BANC_ELEVE = {
+  vs2: {
+    attente: "Complète les trois trous dans l'éditeur Python, puis exécute ton programme (▶). La page l'essaie alors sur six mesures, 30 % pile compris : c'est ce banc d'essai qui fait foi.",
+    resume: "Sol à 45, 31, 30 (pile), 29 et 12 %, puis 12 → 45 % : la pompe ne marche que si l'humidité est plus petite que 30.",
+    lire: beEtatPompe, dire: beDirePompe,
+    retirer: () => bancRetirer("5"),
+    essais: [
+      {simulation: beSimuArrosage([45]), attendu: "arret", libelle: "sol à 45 %", pourquoi: "45 < 30 est faux : le sol est humide"},
+      {simulation: beSimuArrosage([31]), attendu: "arret", libelle: "sol à 31 %", pourquoi: "31 < 30 est faux"},
+      {simulation: beSimuArrosage([30]), attendu: "arret", libelle: "sol à 30 % pile", pourquoi: "30 < 30 est faux : 30 n'est pas plus petit que 30"},
+      {simulation: beSimuArrosage([29]), attendu: "marche", libelle: "sol à 29 %", pourquoi: "29 < 30 est vrai"},
+      {simulation: beSimuArrosage([12]), attendu: "marche", libelle: "sol à 12 %", pourquoi: "12 < 30 est vrai"},
+      {simulation: beSimuArrosage([12, 45]), attendu: "arret", libelle: "sol à 12 %, puis à 45 % après l'arrosage", pourquoi: "le sol redevient humide : la pompe doit s'arrêter"}
+    ]
+  },
+  vs3: {
+    attente: "Exécute ton programme (▶) : la page l'essaie de jour et de nuit.",
+    resume: "De jour (luminosité 100), la pompe suit le seuil de 30 % ; la nuit (luminosité 0), elle ne démarre jamais.\nLe seuil « jour », entre les deux, c'est ton choix.",
+    lire: beEtatPompe, dire: beDirePompe,
+    essais: [
+      {vals: {luminosite: 100}, simulation: beSimuArrosage([12]), attendu: "marche", libelle: "sol à 12 %, luminosité 100 (plein soleil)", pourquoi: "sol sec et jour"},
+      {vals: {luminosite: 100}, simulation: beSimuArrosage([29]), attendu: "marche", libelle: "sol à 29 %, luminosité 100", pourquoi: "29 < 30 est vrai, et il fait jour"},
+      {vals: {luminosite: 100}, simulation: beSimuArrosage([30]), attendu: "arret", libelle: "sol à 30 % pile, luminosité 100", pourquoi: "30 < 30 est faux"},
+      {vals: {luminosite: 0}, simulation: beSimuArrosage([12]), attendu: "arret", libelle: "sol à 12 %, luminosité 0 (nuit noire)", pourquoi: "la nuit, on n'arrose pas, même un sol sec"},
+      {vals: {luminosite: 0}, simulation: beSimuArrosage([29]), attendu: "arret", libelle: "sol à 29 %, luminosité 0", pourquoi: "la nuit, on n'arrose pas"},
+      {vals: {luminosite: 0}, simulation: beSimuArrosage([45]), attendu: "arret", libelle: "sol à 45 %, luminosité 0", pourquoi: "sol humide, et nuit"}
+    ]
+  }
+};
+/* banc-eleve v1 : début — source unique : _outils/banc_eleve/banc_eleve.js, posée par poser.py ; ne pas la modifier dans la page */
+/* ── banc-eleve (règle d'or n°333, 25/11/2026) : le programme de l'élève est jugé en l'EXÉCUTANT ──────────────────
+   Après chaque ▶ Exécuter d'un éditeur nommé dans BANC_ELEVE, la page rejoue le programme sur des entrées choisies
+   — sous, sur et au-dessus de chaque seuil (n°351) —, en remplaçant la ligne « nom = … » par la valeur d'essai
+   (modèle : 5e_C9.1, avecPlaces), et compare ce qu'il affiche au cahier des charges. Le verdict est gardé avec
+   l'empreinte du programme : une frappe qui le change le périme (« à rejouer ») et retire la validation.
+   Une limite de l'outil n'est jamais une faute de l'élève : une erreur de Python se dit avec son nom et sa ligne. */
+const BE_ARRETE = "⏹ arrêté par le banc";   /* un programme qui ne finit pas : jamais confondu avec une sortie */
+function beEmpreinte(t){ let h = 5381; t = String(t || ""); for(let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return ("0000000" + h.toString(16)).slice(-8); }
+function beAvec(code, vals){
+  const l = String(code).split("\n");
+  Object.keys(vals || {}).forEach(nom => {
+    const re = new RegExp("^" + nom + "\\s*=(?!=)"), i = l.findIndex(x => re.test(x));
+    if(i >= 0) l[i] = nom + " = " + vals[nom]; else l.unshift(nom + " = " + vals[nom]);
+  });
+  return l.join("\n");
+}
+function beCode(bloc){ const t = document.querySelector("#" + bloc + " textarea.editeur-py-code"); return t ? t.value : ""; }
+function beLigne(bloc){
+  let p = document.getElementById(bloc + "-banc");
+  if(!p){
+    const b = document.getElementById(bloc); if(!b) return null;
+    p = document.createElement("p"); p.id = bloc + "-banc"; p.className = "banc-eleve"; p.setAttribute("aria-live", "polite");
+    b.insertAdjacentElement("afterend", p);
+  }
+  return p;
+}
+function beJuger(bloc, code){
+  const B = BANC_ELEVE[bloc];
+  return Promise.all(B.essais.map(e => window.EditeurPython.executer(beAvec(code, e.vals),
+      {simulation: e.simulation || B.simulation, limiteActive: 1500, limiteTotale: 3000})
+    .then(r => r, err => ({sortie: "", erreur: {titre: "Panne", explication: String(err)}, arret: null}))))
+  .then(rs => {
+    let n = 0, ecart = null;
+    rs.forEach((r, k) => {
+      const e = B.essais[k], obtenu = r.erreur ? null : r.arret ? BE_ARRETE : B.lire(r.sortie || "", e);
+      if(obtenu === e.attendu) n++; else if(!ecart) ecart = {e, r, obtenu};
+    });
+    return {n, total: B.essais.length, ecart};
+  });
+}
+/* les espaces insécables : « T = 28 °C » et « 30 < 30 » ne se coupent pas en fin de ligne, « : » ne commence pas une ligne */
+function beInsecables(t){
+  return t.replace(/ ([=<>!]=?) /g, "\u00a0$1\u00a0").replace(/ (°C|%|h)(?=[\s.,;)]|$)/g, "\u00a0$1")
+          .replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0");
+}
+function bePhrase(bloc, v){ return beInsecables(bePhraseBrute(bloc, v)); }
+function bePhraseBrute(bloc, v){
+  const B = BANC_ELEVE[bloc];
+  if(v.n === v.total) return "✔ Banc d'essai : " + v.n + " / " + v.total + " essais conformes.\n" + B.resume;
+  const e = v.ecart.e, r = v.ecart.r, o = v.ecart.obtenu;
+  let obt;
+  if(r.erreur) obt = "une erreur" + (r.erreur.titre ? " — " + r.erreur.titre + (r.erreur.ligne ? ", ligne " + r.erreur.ligne : "") : "") +
+                     ". Lis l'explication dans la console.";
+  else if(o === BE_ARRETE) obt = "le programme ne s'arrête pas : le banc a dû l'arrêter.";
+  else if(o === "rien") obt = (B.rien || "rien d'affiché") + ".";
+  else obt = B.dire(o) + ".";
+  return "✘ Banc d'essai : " + v.n + " / " + v.total + " essais conformes.\nPremier écart — " + e.libelle + ".\n" +
+         "Attendu : " + B.dire(e.attendu) + (e.pourquoi ? " (" + e.pourquoi + ")" : "") + ".\nObtenu : " + obt;
+}
+function beOk(bloc){ const x = window.__exp || {}; return !!x[bloc] && x[bloc + "_emp"] === beEmpreinte(beCode(bloc)); }
+function beMsg(bloc){
+  const x = window.__exp || {};
+  if(x[bloc + "_emp"] && x[bloc + "_emp"] !== beEmpreinte(beCode(bloc)))
+    return "↻ À rejouer : ton programme a changé depuis le dernier essai. Clique ▶ Exécuter : la page l'essaie de nouveau.";
+  if(x[bloc + "_verdict"] && !x[bloc]) return x[bloc + "_verdict"].replace(/\n/g, " ") + " Corrige ton programme, puis ▶ Exécuter.";
+  return BANC_ELEVE[bloc].attente;
+}
+function beAfficher(bloc){
+  const x = window.__exp || {}, p = x[bloc + "_verdict"] ? beLigne(bloc) : document.getElementById(bloc + "-banc");
+  if(!p) return;
+  if(x[bloc + "_emp"] && x[bloc + "_emp"] !== beEmpreinte(beCode(bloc))){
+    p.textContent = "↻ À rejouer : ton programme a changé depuis le dernier essai."; p.className = "banc-eleve"; return;
+  }
+  p.textContent = x[bloc + "_verdict"] || ""; p.className = "banc-eleve " + (x[bloc] ? "ok" : "ko");
+}
+document.addEventListener("editeur-py:fin", e => {
+  const d = e.detail || {}, B = d.bloc && BANC_ELEVE[d.bloc];
+  if(!B || !window.EditeurPython) return;
+  const code = beCode(d.bloc), p = beLigne(d.bloc);
+  if(p){ p.textContent = "⏳ Banc d'essai : la page essaie ton programme…"; p.className = "banc-eleve"; }
+  beJuger(d.bloc, code).then(v => {
+    const x = window.__exp;
+    x[d.bloc] = v.n === v.total; x[d.bloc + "_emp"] = beEmpreinte(code); x[d.bloc + "_verdict"] = bePhrase(d.bloc, v);
+    beAfficher(d.bloc); save();
+  });
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if(!t || !t.matches || !t.matches("textarea.editeur-py-code")) return;
+  const b = t.closest(".editeur-py"), bloc = b && b.id, B = bloc && BANC_ELEVE[bloc], x = window.__exp || {};
+  if(!B || !x[bloc + "_emp"]) return;
+  beAfficher(bloc);
+  if(B.retirer && x[bloc] && x[bloc + "_emp"] !== beEmpreinte(t.value)) B.retirer();
+});
+window.addEventListener("load", () => Object.keys(BANC_ELEVE).forEach(beAfficher));
+/* banc-eleve v1 : fin */
+
 
 /* ── activité 7 : le cahier des charges à menus (règle d'or n°317) ──
    Un retour par option fausse, écrit sous sa case après « Vérifier » : il dit pourquoi ce n'est pas une preuve du
@@ -2884,8 +3054,8 @@ const CHECKS = {
   5(){ let s = 0;
     s += sv("a5t1","<"); s += sv("a5t2","demarrer_pompe()"); s += sv("a5t3","arreter_pompe()");
     s += sv("a5q1","la pompe démarre (12 < 30 est VRAI)");
-    const exp = !!window.__exp.vs2;
-    return {score: s, total: 4, exp, expMsg: "Complète les trous dans l'éditeur Python et exécute ton programme (▶) — la console, avec ses lignes [pompe], est ta preuve."};
+    const exp = beOk("vs2");
+    return {score: s, total: 4, exp, expMsg: beMsg("vs2")};
   },
   6(){ let s = 0;
     s += sv("a6q1","c'est le cas frontière : c'est là que les erreurs de symbole (< ou <=) se cachent");

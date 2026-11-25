@@ -1720,6 +1720,13 @@ details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-he
 details.bonus-replie[open]>summary{margin-bottom:8px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
+<style>/* banc-eleve (règle d'or n°333, 25/11/2026) : le verdict du banc d'essai, sous l'éditeur Python */
+.banc-eleve{margin:.5em 0 .9em;padding:.5em .75em;border-left:4px solid #6b7280;border-radius:6px;background:rgba(107,114,128,.10);white-space:pre-line;line-height:1.45}
+.banc-eleve:empty{display:none}
+.banc-eleve.ok{border-left-color:#15803d;background:rgba(21,128,61,.10)}
+.banc-eleve.ko{border-left-color:#b91c1c;background:rgba(185,28,28,.08)}
+@media print{.banc-eleve{background:none;border-left-color:#000;color:#000}}
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_3e_C7_capteur-confort-ny.html">🧠 QCM</a><a href="lexique_3e_C7.1.html">📖 Lexique</a></nav>
@@ -2244,7 +2251,7 @@ print("2 + 3 =", 2 + 3)
 <textarea rows="5" id="algo" placeholder="SEUIL = 28&#10;mesurer T&#10;SI T &gt; SEUIL ALORS&#10;  allumer LED alerte&#10;SINON&#10;  éteindre LED&#10;FIN SI" aria-label="Mon algorigramme, en pseudo-code"></textarea>
 <div class="editeur-py" id="vs1" data-fichier="3e-CAPTEUR-TON NOM">
   <label for="py_alerte">🐍 L'éditeur Python de la page — traduis ton pseudo-code, puis exécute ton alerte</label>
-  <p class="editeur-py-note">Sous les deux premières lignes, écris la décision en Python (<code>if</code> … <code>:</code>, puis <code>else:</code>), avec <code>print("ALERTE")</code> à la place de la LED. ▶&nbsp;Exécuter : la console doit dire ALERTE. Change ensuite le seuil à 26, puis <code>T</code>, et réexécute. <br>Nomme ton fichier 3e-CAPTEUR-TON NOM, puis télécharge-le (geste 3). <br>Avec Vittascience (facultatif, mode mixte), construis aussi la décision en blocs et regarde le Python s'écrire — puis l'inverse : les deux sens disent la même chose. <br>Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.</p>
+  <p class="editeur-py-note">Sous les deux premières lignes, écris la décision en Python (<code>if</code> … <code>:</code>, puis <code>else:</code>), avec <code>print("ALERTE")</code> à la place de la LED. ▶&nbsp;Exécuter : la console doit dire ALERTE. Change ensuite le seuil à 26, puis <code>T</code>, et réexécute. <br>À chaque ▶, la page essaie aussi ta décision sur sept températures : le verdict du banc d'essai s'écrit sous l'éditeur. <br>Nomme ton fichier 3e-CAPTEUR-TON NOM, puis télécharge-le (geste 3). <br>Avec Vittascience (facultatif, mode mixte), construis aussi la décision en blocs et regarde le Python s'écrire — puis l'inverse : les deux sens disent la même chose. <br>Dans le volet Python, change seulement ce que la consigne demande. Le reste, fais-le avec les blocs.</p>
   <textarea id="py_alerte" class="editeur-py-code" rows="5" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">seuil = 28
 T = 32   # sans capteur réel, on fixe la température à la main
 # écris ici la décision : SI T &gt; seuil ALORS print("ALERTE") SINON print("ok")
@@ -2399,12 +2406,12 @@ FIN SI</pre>
 <div class="bonus">
 <p><strong>Citoyen&nbsp;:</strong> Quelles mesures urbaines (arbres, toits clairs) réduisent l'îlot de chaleur autour d'une école new-yorkaise&nbsp;?</p>
 <textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 1"></textarea>
-<p style="margin-top:12px"><strong>Technique&nbsp;:</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26&nbsp;°C, alerte à 28&nbsp;°C) — code-le dans l'éditeur Python ci-dessous.</p>
+<p style="margin-top:12px"><strong>Technique&nbsp;:</strong> Ajoute un 2ᵉ seuil : PRÉ-ALERTE quand T est plus grand que 26&nbsp;°C, ALERTE quand T est plus grand que 28&nbsp;°C — code-le dans l'éditeur Python ci-dessous.</p>
 <div class="editeur-py" id="vs2" data-fichier="3e-CAPTEUR-bonus-TON NOM">
   <label for="py_bonus">🐍 L'éditeur du Bonus — code ta pré-alerte ici</label>
-  <p class="editeur-py-note">Départ : <code>T = 27</code>. <br>Écris les DEUX conditions (<code>elif</code> !) : <code>PRÉ-ALERTE</code> entre 26 et 28, <code>ALERTE</code> au-delà de 28. ▶&nbsp;Exécuter, puis essaie <code>T = 30</code> et <code>T = 20</code>. <br>Avec Vittascience (facultatif, blocs ou Python, comme tu préfères), une précaution. En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait.</p>
+  <p class="editeur-py-note">Départ : <code>T = 27</code>. <br>Écris les DEUX conditions (<code>elif</code> !) : <code>ALERTE</code> si <code>T</code> est plus grand que 28, sinon <code>PRÉ-ALERTE</code> s'il est plus grand que 26, sinon <code>OK</code>. ▶&nbsp;Exécuter, puis essaie <code>T = 30</code> et <code>T = 20</code>. <br>À chaque ▶, la page essaie ton programme sur six températures, 26 et 28 °C pile compris : le verdict s'écrit sous l'éditeur. <br>Avec Vittascience (facultatif, blocs ou Python, comme tu préfères), une précaution. En Python, un seul élément par print, et n'additionne pas de textes : le téléchargement les abîmerait.</p>
   <textarea id="py_bonus" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">T = 27
-# écris les DEUX conditions (if, elif, else) : ALERTE au-delà de 28, PRÉ-ALERTE entre 26 et 28
+# écris les DEUX conditions (if, elif, else) : ALERTE si T &gt; 28, PRÉ-ALERTE si T &gt; 26, sinon OK
 </textarea>
   <p class="editeur-py-vitta">Avec Vittascience (facultatif, Internet nécessaire)&nbsp;: <a class="btn vs-lien" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">Vittascience, si tu préfères</a> — il s'ouvre dans un autre onglet&nbsp;; ses gestes sont écrits à la fin de l'échauffement.</p>
   <p class="editeur-py-sansjs">Pas de bouton ▶&nbsp;Exécuter sous la zone (JavaScript coupé, page imprimée)&nbsp;? Écris ton programme dans la zone ci-dessus ou sur une feuille de brouillon, puis exécute-le dans Vittascience, par le lien.</p>
@@ -2554,9 +2561,149 @@ $("simT").addEventListener("input", majSim);
 majSim();
 
 /* suivi des éditeurs (règle n°16) */
-["vs1","vs2"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
-/* l'éditeur Python intégré (04/11/2026) : une exécution sans erreur qui AFFICHE quelque chose ouvre le même verrou */
-document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(["vs1","vs2"].includes(d.bloc) && !d.erreur && (d.sortie || "").trim()){ window.__exp[d.bloc] = true; save(); } });
+/* le lien Vittascience se suit, mais il ne prouve rien : la page ne lit pas le programme écrit là-bas (n°333) */
+["vs1","vs2"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id + "_ouvert"] = true; save(); }); });
+/* l'éditeur Python intégré : le programme de l'élève jugé par le banc d'essai (n°333, 25/11/2026) */
+function beRetirer(n){
+  const i = par.s.indexOf(n); if(i >= 0){ par.s.splice(i, 1); updateProg(); }
+  const fb = $("fb" + n);
+  if(fb){ fb.textContent = "↻ Activité à revalider : ton programme a changé depuis l'essai du banc. ▶ Exécuter, puis ✅ Vérifier."; fb.className = "feedback show warn"; }
+  save();
+}
+const BANC_ELEVE = {
+  vs1: {
+    attente: "Exécute ta décision dans l'éditeur Python (▶). La page l'essaie alors sur sept températures, sous, sur et au-dessus du seuil : c'est ce banc d'essai qui fait foi.",
+    resume: "Seuil 28 : T = 27, 28, 29 et 32 °C · seuil 26 : T = 25, 26 et 27 °C.\nALERTE seulement quand T est plus grand que le seuil.",
+    lire: s => { const l = s.split("\n").map(x => x.trim()).filter(Boolean); return l.some(x => /ALERTE/i.test(x)) ? "ALERTE" : l.length ? "ok" : "rien"; },
+    dire: x => "« " + x + " »",
+    retirer: () => beRetirer("4"),
+    essais: [
+      {vals: {seuil: 28, T: 27}, attendu: "ok", libelle: "seuil = 28, T = 27 °C", pourquoi: "27 > 28 est faux"},
+      {vals: {seuil: 28, T: 28}, attendu: "ok", libelle: "seuil = 28, T = 28 °C", pourquoi: "28 > 28 est faux : 28 n'est pas plus grand que 28"},
+      {vals: {seuil: 28, T: 29}, attendu: "ALERTE", libelle: "seuil = 28, T = 29 °C", pourquoi: "29 > 28 est vrai"},
+      {vals: {seuil: 28, T: 32}, attendu: "ALERTE", libelle: "seuil = 28, T = 32 °C", pourquoi: "32 > 28 est vrai"},
+      {vals: {seuil: 26, T: 25}, attendu: "ok", libelle: "seuil = 26, T = 25 °C", pourquoi: "25 > 26 est faux"},
+      {vals: {seuil: 26, T: 26}, attendu: "ok", libelle: "seuil = 26, T = 26 °C", pourquoi: "26 > 26 est faux"},
+      {vals: {seuil: 26, T: 27}, attendu: "ALERTE", libelle: "seuil = 26, T = 27 °C", pourquoi: "27 > 26 est vrai : la décision suit la variable seuil"}
+    ]
+  },
+  vs2: {
+    attente: "Exécute ton programme (▶) : la page l'essaie sur six températures.",
+    resume: "T = 20, 26, 27, 28, 29 et 30 °C : OK jusqu'à 26, PRÉ-ALERTE au-dessus de 26, ALERTE au-dessus de 28.",
+    lire: s => {
+      const l = s.split("\n").map(x => x.trim()).filter(Boolean), t = [];
+      l.forEach(x => { const k = /PR[ÉEé]\s*-?\s*ALERTE/i.test(x) ? "PRÉ-ALERTE" : /ALERTE/i.test(x) ? "ALERTE" : null; if(k && !t.includes(k)) t.push(k); });
+      return t.length ? t.join(" puis ") : l.length ? "OK" : "rien";
+    },
+    dire: x => "« " + x + " »",
+    essais: [
+      {vals: {T: 20}, attendu: "OK", libelle: "T = 20 °C", pourquoi: "20 n'est au-dessus d'aucun seuil"},
+      {vals: {T: 26}, attendu: "OK", libelle: "T = 26 °C", pourquoi: "26 > 26 est faux"},
+      {vals: {T: 27}, attendu: "PRÉ-ALERTE", libelle: "T = 27 °C", pourquoi: "27 > 26 est vrai, 27 > 28 est faux"},
+      {vals: {T: 28}, attendu: "PRÉ-ALERTE", libelle: "T = 28 °C", pourquoi: "28 > 28 est faux : pas encore l'alerte"},
+      {vals: {T: 29}, attendu: "ALERTE", libelle: "T = 29 °C", pourquoi: "29 > 28 est vrai"},
+      {vals: {T: 30}, attendu: "ALERTE", libelle: "T = 30 °C", pourquoi: "l'alerte seule : on teste d'abord le seuil le plus haut"}
+    ]
+  }
+};
+/* banc-eleve v1 : début — source unique : _outils/banc_eleve/banc_eleve.js, posée par poser.py ; ne pas la modifier dans la page */
+/* ── banc-eleve (règle d'or n°333, 25/11/2026) : le programme de l'élève est jugé en l'EXÉCUTANT ──────────────────
+   Après chaque ▶ Exécuter d'un éditeur nommé dans BANC_ELEVE, la page rejoue le programme sur des entrées choisies
+   — sous, sur et au-dessus de chaque seuil (n°351) —, en remplaçant la ligne « nom = … » par la valeur d'essai
+   (modèle : 5e_C9.1, avecPlaces), et compare ce qu'il affiche au cahier des charges. Le verdict est gardé avec
+   l'empreinte du programme : une frappe qui le change le périme (« à rejouer ») et retire la validation.
+   Une limite de l'outil n'est jamais une faute de l'élève : une erreur de Python se dit avec son nom et sa ligne. */
+const BE_ARRETE = "⏹ arrêté par le banc";   /* un programme qui ne finit pas : jamais confondu avec une sortie */
+function beEmpreinte(t){ let h = 5381; t = String(t || ""); for(let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return ("0000000" + h.toString(16)).slice(-8); }
+function beAvec(code, vals){
+  const l = String(code).split("\n");
+  Object.keys(vals || {}).forEach(nom => {
+    const re = new RegExp("^" + nom + "\\s*=(?!=)"), i = l.findIndex(x => re.test(x));
+    if(i >= 0) l[i] = nom + " = " + vals[nom]; else l.unshift(nom + " = " + vals[nom]);
+  });
+  return l.join("\n");
+}
+function beCode(bloc){ const t = document.querySelector("#" + bloc + " textarea.editeur-py-code"); return t ? t.value : ""; }
+function beLigne(bloc){
+  let p = document.getElementById(bloc + "-banc");
+  if(!p){
+    const b = document.getElementById(bloc); if(!b) return null;
+    p = document.createElement("p"); p.id = bloc + "-banc"; p.className = "banc-eleve"; p.setAttribute("aria-live", "polite");
+    b.insertAdjacentElement("afterend", p);
+  }
+  return p;
+}
+function beJuger(bloc, code){
+  const B = BANC_ELEVE[bloc];
+  return Promise.all(B.essais.map(e => window.EditeurPython.executer(beAvec(code, e.vals),
+      {simulation: e.simulation || B.simulation, limiteActive: 1500, limiteTotale: 3000})
+    .then(r => r, err => ({sortie: "", erreur: {titre: "Panne", explication: String(err)}, arret: null}))))
+  .then(rs => {
+    let n = 0, ecart = null;
+    rs.forEach((r, k) => {
+      const e = B.essais[k], obtenu = r.erreur ? null : r.arret ? BE_ARRETE : B.lire(r.sortie || "", e);
+      if(obtenu === e.attendu) n++; else if(!ecart) ecart = {e, r, obtenu};
+    });
+    return {n, total: B.essais.length, ecart};
+  });
+}
+/* les espaces insécables : « T = 28 °C » et « 30 < 30 » ne se coupent pas en fin de ligne, « : » ne commence pas une ligne */
+function beInsecables(t){
+  return t.replace(/ ([=<>!]=?) /g, "\u00a0$1\u00a0").replace(/ (°C|%|h)(?=[\s.,;)]|$)/g, "\u00a0$1")
+          .replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0");
+}
+function bePhrase(bloc, v){ return beInsecables(bePhraseBrute(bloc, v)); }
+function bePhraseBrute(bloc, v){
+  const B = BANC_ELEVE[bloc];
+  if(v.n === v.total) return "✔ Banc d'essai : " + v.n + " / " + v.total + " essais conformes.\n" + B.resume;
+  const e = v.ecart.e, r = v.ecart.r, o = v.ecart.obtenu;
+  let obt;
+  if(r.erreur) obt = "une erreur" + (r.erreur.titre ? " — " + r.erreur.titre + (r.erreur.ligne ? ", ligne " + r.erreur.ligne : "") : "") +
+                     ". Lis l'explication dans la console.";
+  else if(o === BE_ARRETE) obt = "le programme ne s'arrête pas : le banc a dû l'arrêter.";
+  else if(o === "rien") obt = (B.rien || "rien d'affiché") + ".";
+  else obt = B.dire(o) + ".";
+  return "✘ Banc d'essai : " + v.n + " / " + v.total + " essais conformes.\nPremier écart — " + e.libelle + ".\n" +
+         "Attendu : " + B.dire(e.attendu) + (e.pourquoi ? " (" + e.pourquoi + ")" : "") + ".\nObtenu : " + obt;
+}
+function beOk(bloc){ const x = window.__exp || {}; return !!x[bloc] && x[bloc + "_emp"] === beEmpreinte(beCode(bloc)); }
+function beMsg(bloc){
+  const x = window.__exp || {};
+  if(x[bloc + "_emp"] && x[bloc + "_emp"] !== beEmpreinte(beCode(bloc)))
+    return "↻ À rejouer : ton programme a changé depuis le dernier essai. Clique ▶ Exécuter : la page l'essaie de nouveau.";
+  if(x[bloc + "_verdict"] && !x[bloc]) return x[bloc + "_verdict"].replace(/\n/g, " ") + " Corrige ton programme, puis ▶ Exécuter.";
+  return BANC_ELEVE[bloc].attente;
+}
+function beAfficher(bloc){
+  const x = window.__exp || {}, p = x[bloc + "_verdict"] ? beLigne(bloc) : document.getElementById(bloc + "-banc");
+  if(!p) return;
+  if(x[bloc + "_emp"] && x[bloc + "_emp"] !== beEmpreinte(beCode(bloc))){
+    p.textContent = "↻ À rejouer : ton programme a changé depuis le dernier essai."; p.className = "banc-eleve"; return;
+  }
+  p.textContent = x[bloc + "_verdict"] || ""; p.className = "banc-eleve " + (x[bloc] ? "ok" : "ko");
+}
+document.addEventListener("editeur-py:fin", e => {
+  const d = e.detail || {}, B = d.bloc && BANC_ELEVE[d.bloc];
+  if(!B || !window.EditeurPython) return;
+  const code = beCode(d.bloc), p = beLigne(d.bloc);
+  if(p){ p.textContent = "⏳ Banc d'essai : la page essaie ton programme…"; p.className = "banc-eleve"; }
+  beJuger(d.bloc, code).then(v => {
+    const x = window.__exp;
+    x[d.bloc] = v.n === v.total; x[d.bloc + "_emp"] = beEmpreinte(code); x[d.bloc + "_verdict"] = bePhrase(d.bloc, v);
+    beAfficher(d.bloc); save();
+  });
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if(!t || !t.matches || !t.matches("textarea.editeur-py-code")) return;
+  const b = t.closest(".editeur-py"), bloc = b && b.id, B = bloc && BANC_ELEVE[bloc], x = window.__exp || {};
+  if(!B || !x[bloc + "_emp"]) return;
+  beAfficher(bloc);
+  if(B.retirer && x[bloc] && x[bloc + "_emp"] !== beEmpreinte(t.value)) B.retirer();
+});
+window.addEventListener("load", () => Object.keys(BANC_ELEVE).forEach(beAfficher));
+/* banc-eleve v1 : fin */
+
 
 /* vérificateurs (règle n°14) */
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
@@ -2575,7 +2722,7 @@ const CHECKS = {
   3(){ let s = 0; s += sv("a3o1","1"); s += sv("a3o2","2"); s += sv("a3o3","3"); s += sv("a3o4","4"); s += sv("a3o5","5");
     return {score: s, total: 5, exp: true}; },
   4(){ let s = 0; s += pres("algo", 25); s += pres("a3hys", 15); s += pres("a3diag", 15);
-    return {score: s, total: 3, exp: !!window.__exp.vs1, expMsg: "Exécute ton alerte dans l'éditeur Python (▶) avant de valider — la console doit afficher ALERTE ou ok : c'est le test qui fait foi."}; },
+    return {score: s, total: 3, exp: beOk("vs1"), expMsg: beMsg("vs1")}; },
   5(){ return {score: pres("reinv", 25), total: 1, exp: true, libre: true}; },
   /* séance 3 : les exercices d'atelier insérés doivent être réussis (leur clé de sauvegarde, partagée avec l'atelier) */
   6(){ const fast = reussi("rep_fast_3e_e6");

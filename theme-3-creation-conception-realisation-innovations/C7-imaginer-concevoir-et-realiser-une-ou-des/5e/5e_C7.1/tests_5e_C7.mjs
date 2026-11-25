@@ -13,7 +13,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
-import { eprouverEditeurs, eprouverPose, executerBloc } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
+import { eprouverEditeurs, eprouverPose, executerBloc, eprouverBanc, eprouverRejouer } from "../../../../_ressources-communes/editeur-python/eprouver_exercices.mjs";
 import { pathToFileURL } from 'node:url';
 
 let chromium;
@@ -440,8 +440,8 @@ if (!CFG.essaisBanc) {
 }
 
 /* — l'éditeur Python intégré (04/11/2026) : il remplace l'onglet Vittascience. Le code de départ s'exécute (rien à
-     afficher : la décision est à écrire) ; le programme de la correction affiche ce que dit la correction ; une
-     exécution qui affiche quelque chose ouvre le verrou de l'activité 3b. — */
+     afficher : la décision est à écrire) ; le programme de la correction affiche ce que dit la correction ; le banc
+     d'essai juge la règle avec True et False (n°333, 25/11/2026). — */
 {
   const ctxE = await nav.newContext({ viewport: { width: 1280, height: 900 } });
   const reseau = [];
@@ -453,7 +453,27 @@ if (!CFG.essaisBanc) {
       corrige: { quoi: "ROUGE", sortie: "ROUGE\n",
         code: 'occupee = True\nif occupee:\n    print("ROUGE")\nelse:\n    print("VERT")\n' } },
   ], ok);
-  ok("act. 3b : une exécution qui affiche quelque chose ouvre le verrou de l'éditeur (vs1)", await pe.evaluate(() => !!(window.__exp && window.__exp.vs1)));
+  /* n°333 (25/11/2026) : le banc d'essai rejoue la règle avec occupee = True puis False ; seule une règle qui fait ce
+     que dit l'algorigramme ouvre le verrou. Avant : une sortie non vide suffisait. */
+  await eprouverBanc(pe, "vs1", [
+    { nom: "la règle de la correction : 2 / 2", code: 'occupee = True\nif occupee:\n    print("ROUGE")\nelse:\n    print("VERT")\n', conforme: true, verdict: /2 \/ 2 essais conformes/ },
+    { nom: "== True, minuscules, « verte » : même verdict", code: 'occupee = True\nif occupee == True:\n    print("rouge")\nelse:\n    print("verte")\n', conforme: true, verdict: /2 \/ 2/ },
+    { nom: "print(\"ROUGE\") seul : refusé quand la case est vide (avant, il ouvrait le verrou)", code: 'occupee = True\nprint("ROUGE")\n', conforme: false, verdict: /occupee = False[\s\S]*Attendu : « VERT »[\s\S]*Obtenu : « ROUGE »/ },
+    { nom: "les deux couleurs inversées : refusé dès le premier essai", code: 'occupee = True\nif occupee:\n    print("VERT")\nelse:\n    print("ROUGE")\n', conforme: false, verdict: /0 \/ 2/ },
+  ], ok, { onglet: "#tab-s2" });
+  /* l'activité 3b de bout en bout : validée avec le banc, puis revalidée après une frappe */
+  await pe.evaluate(() => { const e = document.getElementById("prog"); e.value = "SI la case est occupée ALORS rouge SINON vert"; e.dispatchEvent(new Event("input", { bubbles: true })); });
+  await executerBloc(pe, "vs1", 'occupee = True\nif occupee:\n    print("ROUGE")\nelse:\n    print("VERT")\n');
+  await pe.waitForFunction(() => /conformes/.test((document.getElementById("vs1-banc") || {}).textContent || ""));
+  await pe.waitForTimeout(700);   // l'éditeur sauvegarde 500 ms après la dernière frappe (un « change ») : on vérifie après, comme l'élève
+  const prog = async () => parseInt(((await pe.locator("#progTxt").textContent()) || "0").trim(), 10);
+  await pe.evaluate(() => document.querySelector('.btn.check[data-check="4"]').click());
+  const avant = await prog();
+  ok("act. 3b : validée quand le banc d'essai dit 2 / 2", /activité validée/.test(await pe.locator("#fb4").textContent()), (await pe.locator("#fb4").textContent()).slice(0, 80));
+  await eprouverRejouer(pe, "vs1", ok);
+  const apres = await prog();
+  ok("act. 3b : la validation est retirée (la progression perd une activité), et le message dit pourquoi",
+     /revalider/.test(await pe.locator("#fb4").textContent()) && apres === avant - 1, (await pe.locator("#fb4").textContent()).slice(0, 60) + " · " + avant + " → " + apres);
   ok("éditeur Python · aucune requête réseau, zéro erreur JavaScript", reseau.length === 0 && ee.length === 0, reseau.concat(ee).slice(0, 3).join(" | "));
   await pe.close(); await ctxE.close();
 }

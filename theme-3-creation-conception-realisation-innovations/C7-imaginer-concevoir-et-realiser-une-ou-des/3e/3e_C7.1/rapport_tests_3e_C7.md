@@ -1,5 +1,8 @@
 # Rapport de tests — 3e_C7.1 « Capteur de confort — New York » (3e_C7.1 · 3e_C8.1)
 
+> **Mise à jour du 25/11/2026 — la décision de l'activité 3b et le Bonus jugés en les exécutant (règle d'or n°333, `_outils/banc_eleve/`).** Avant : une exécution qui affichait n'importe quoi ouvrait le verrou (`print("x")` validait l'activité). Après chaque ▶, la page rejoue la décision sur sept températures (seuil 28 : 27, 28, 29, 32 °C ; seuil 26 : 25, 26, 27 °C) et le Bonus sur six (20 à 30 °C, 26 et 28 pile) ; le premier écart s'écrit sous l'éditeur ; un programme changé après l'essai retire la validation. L'énoncé du Bonus dit « plus grand que 26 / 28 », comme son corrigé. Le lien Vittascience ne prouve plus rien.
+> Suite du lot : `node tests_3e_C7.mjs .` → **93 / 93** (82 avant ; le test « une exécution qui affiche quelque chose ouvre le verrou » est remplacé par six programmes justes ou faux, deux pour le Bonus, et l'activité de bout en bout) ; banc n°311 : **34 / 34**. Non testé : un vrai téléphone, Safari, Firefox.
+
 > **Mise à jour du 15/11/2026 — une séance 4.** L'activité 7, la synthèse et la clôture passent en séance 4 ; les deux cartes de la suite du projet remontent avant le Bonus (n°301).
 > Suite du lot : `node tests_3e_C7.mjs .` → **82 / 82** (80 avant : l'ordre des cartes, le bouton vers la séance 4) ; banc n°311 : **34 / 34** (`#activite-7` ouvre la séance 4). Mode mission (`banc_generique.mjs`) : 36 écrans, aucun refus.
 

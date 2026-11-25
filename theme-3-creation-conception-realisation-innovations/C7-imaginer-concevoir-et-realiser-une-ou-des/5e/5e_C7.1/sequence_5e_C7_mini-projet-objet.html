@@ -1671,6 +1671,13 @@ details.bonus-replie>summary{cursor:pointer;font-weight:700;padding:6px 0;min-he
 details.bonus-replie[open]>summary{margin-bottom:8px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
+<style>/* banc-eleve (règle d'or n°333, 25/11/2026) : le verdict du banc d'essai, sous l'éditeur Python */
+.banc-eleve{margin:.5em 0 .9em;padding:.5em .75em;border-left:4px solid #6b7280;border-radius:6px;background:rgba(107,114,128,.10);white-space:pre-line;line-height:1.45}
+.banc-eleve:empty{display:none}
+.banc-eleve.ok{border-left-color:#15803d;background:rgba(21,128,61,.10)}
+.banc-eleve.ko{border-left-color:#b91c1c;background:rgba(185,28,28,.08)}
+@media print{.banc-eleve{background:none;border-left-color:#000;color:#000}}
+</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_5e_C7_mini-projet.html">🧠 <abbr class="sigle" title="questionnaire à choix multiples">QCM</abbr></a><a href="lexique_5e_C7.1.html">📖 Lexique</a></nav>
@@ -2133,7 +2140,7 @@ print("2 + 3 =", 2 + 3)
 <textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI" aria-label="Mon programme, en pseudo-code"></textarea>
 <div class="editeur-py" id="vs1" data-fichier="5e-HALL-TON NOM">
   <label for="py_regle">🐍 L'éditeur Python de la page — traduis ta règle, puis exécute-la</label>
-  <p class="editeur-py-note">① Sous la première ligne, écris la règle en Python&nbsp;: <code>if occupee:</code>, puis <code>else:</code>. <br>② À la place des LED, écris <code>print("ROUGE")</code> et <code>print("VERT")</code>. <br>③ Clique ▶&nbsp;Exécuter&nbsp;: la console doit dire ROUGE. <br>④ Change <code>True</code> en <code>False</code>, puis réexécute. <br>Nomme ton fichier 5e-HALL-TON NOM, puis télécharge-le (geste 3).</p>
+  <p class="editeur-py-note">① Sous la première ligne, écris la règle en Python&nbsp;: <code>if occupee:</code>, puis <code>else:</code>. <br>② À la place des LED, écris <code>print("ROUGE")</code> et <code>print("VERT")</code>. <br>③ Clique ▶&nbsp;Exécuter&nbsp;: la console doit dire ROUGE. <br>④ Change <code>True</code> en <code>False</code>, puis réexécute. <br>À chaque ▶, la page essaie aussi ta règle avec <code>True</code> et avec <code>False</code> : le verdict du banc d'essai s'écrit sous l'éditeur. <br>Nomme ton fichier 5e-HALL-TON NOM, puis télécharge-le (geste 3).</p>
   <textarea id="py_regle" class="editeur-py-code" rows="4" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off">occupee = True   # sans capteur réel : True, un sac est posé ; False, la case est vide
 # écris ici la règle : SI occupee ALORS print("ROUGE") SINON print("VERT")
 </textarea>
@@ -2341,9 +2348,130 @@ $("simBtn").addEventListener("click", () => {
 });
 
 /* suivi des éditeurs (règle n°16) */
-["vs1"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id] = true; save(); }); });
-/* l'éditeur Python intégré (04/11/2026) : une exécution sans erreur qui AFFICHE quelque chose ouvre le même verrou */
-document.addEventListener("editeur-py:fin", e => { const d = e.detail || {}; if(["vs1"].includes(d.bloc) && !d.erreur && (d.sortie || "").trim()){ window.__exp[d.bloc] = true; save(); } });
+/* le lien Vittascience se suit, mais il ne prouve rien : la page ne lit pas le programme écrit là-bas (n°333) */
+["vs1"].forEach(id => { const d = $(id); const a = d && d.querySelector(".vs-lien"); if(a) a.addEventListener("click", () => { window.__exp[id + "_ouvert"] = true; save(); }); });
+/* l'éditeur Python intégré : le programme de l'élève jugé par le banc d'essai (n°333, 25/11/2026) */
+function beRetirer(n){
+  const i = par.s.indexOf(n); if(i >= 0){ par.s.splice(i, 1); updateProg(); }
+  const fb = $("fb" + n);
+  if(fb){ fb.textContent = "↻ Activité à revalider : ton programme a changé depuis l'essai du banc. ▶ Exécuter, puis ✅ Vérifier."; fb.className = "feedback show warn"; }
+  save();
+}
+const BANC_ELEVE = {
+  vs1: {
+    attente: "Exécute ta règle dans l'éditeur Python (▶). La page l'essaie alors deux fois : un sac posé (occupee = True), puis la case vide (occupee = False). C'est ce banc d'essai qui fait foi.",
+    resume: "occupee = True → ROUGE · occupee = False → VERT : ta règle fait ce que dit l'algorigramme.",
+    lire: s => {
+      const l = s.split("\n").map(x => x.trim()).filter(Boolean), t = [];
+      l.forEach(x => { const k = /ROUGE/i.test(x) ? "ROUGE" : /VERT/i.test(x) ? "VERT" : null; if(k && !t.includes(k)) t.push(k); });
+      return t.length ? t.join(" puis ") : l.length ? l[0].slice(0, 30) : "rien";
+    },
+    dire: x => "« " + x + " »",
+    retirer: () => beRetirer("4"),
+    essais: [
+      {vals: {occupee: "True"}, attendu: "ROUGE", libelle: "occupee = True (un sac est posé)", pourquoi: "la case est occupée"},
+      {vals: {occupee: "False"}, attendu: "VERT", libelle: "occupee = False (la case est vide)", pourquoi: "la case est libre"}
+    ]
+  }
+};
+/* banc-eleve v1 : début — source unique : _outils/banc_eleve/banc_eleve.js, posée par poser.py ; ne pas la modifier dans la page */
+/* ── banc-eleve (règle d'or n°333, 25/11/2026) : le programme de l'élève est jugé en l'EXÉCUTANT ──────────────────
+   Après chaque ▶ Exécuter d'un éditeur nommé dans BANC_ELEVE, la page rejoue le programme sur des entrées choisies
+   — sous, sur et au-dessus de chaque seuil (n°351) —, en remplaçant la ligne « nom = … » par la valeur d'essai
+   (modèle : 5e_C9.1, avecPlaces), et compare ce qu'il affiche au cahier des charges. Le verdict est gardé avec
+   l'empreinte du programme : une frappe qui le change le périme (« à rejouer ») et retire la validation.
+   Une limite de l'outil n'est jamais une faute de l'élève : une erreur de Python se dit avec son nom et sa ligne. */
+const BE_ARRETE = "⏹ arrêté par le banc";   /* un programme qui ne finit pas : jamais confondu avec une sortie */
+function beEmpreinte(t){ let h = 5381; t = String(t || ""); for(let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return ("0000000" + h.toString(16)).slice(-8); }
+function beAvec(code, vals){
+  const l = String(code).split("\n");
+  Object.keys(vals || {}).forEach(nom => {
+    const re = new RegExp("^" + nom + "\\s*=(?!=)"), i = l.findIndex(x => re.test(x));
+    if(i >= 0) l[i] = nom + " = " + vals[nom]; else l.unshift(nom + " = " + vals[nom]);
+  });
+  return l.join("\n");
+}
+function beCode(bloc){ const t = document.querySelector("#" + bloc + " textarea.editeur-py-code"); return t ? t.value : ""; }
+function beLigne(bloc){
+  let p = document.getElementById(bloc + "-banc");
+  if(!p){
+    const b = document.getElementById(bloc); if(!b) return null;
+    p = document.createElement("p"); p.id = bloc + "-banc"; p.className = "banc-eleve"; p.setAttribute("aria-live", "polite");
+    b.insertAdjacentElement("afterend", p);
+  }
+  return p;
+}
+function beJuger(bloc, code){
+  const B = BANC_ELEVE[bloc];
+  return Promise.all(B.essais.map(e => window.EditeurPython.executer(beAvec(code, e.vals),
+      {simulation: e.simulation || B.simulation, limiteActive: 1500, limiteTotale: 3000})
+    .then(r => r, err => ({sortie: "", erreur: {titre: "Panne", explication: String(err)}, arret: null}))))
+  .then(rs => {
+    let n = 0, ecart = null;
+    rs.forEach((r, k) => {
+      const e = B.essais[k], obtenu = r.erreur ? null : r.arret ? BE_ARRETE : B.lire(r.sortie || "", e);
+      if(obtenu === e.attendu) n++; else if(!ecart) ecart = {e, r, obtenu};
+    });
+    return {n, total: B.essais.length, ecart};
+  });
+}
+/* les espaces insécables : « T = 28 °C » et « 30 < 30 » ne se coupent pas en fin de ligne, « : » ne commence pas une ligne */
+function beInsecables(t){
+  return t.replace(/ ([=<>!]=?) /g, "\u00a0$1\u00a0").replace(/ (°C|%|h)(?=[\s.,;)]|$)/g, "\u00a0$1")
+          .replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0");
+}
+function bePhrase(bloc, v){ return beInsecables(bePhraseBrute(bloc, v)); }
+function bePhraseBrute(bloc, v){
+  const B = BANC_ELEVE[bloc];
+  if(v.n === v.total) return "✔ Banc d'essai : " + v.n + " / " + v.total + " essais conformes.\n" + B.resume;
+  const e = v.ecart.e, r = v.ecart.r, o = v.ecart.obtenu;
+  let obt;
+  if(r.erreur) obt = "une erreur" + (r.erreur.titre ? " — " + r.erreur.titre + (r.erreur.ligne ? ", ligne " + r.erreur.ligne : "") : "") +
+                     ". Lis l'explication dans la console.";
+  else if(o === BE_ARRETE) obt = "le programme ne s'arrête pas : le banc a dû l'arrêter.";
+  else if(o === "rien") obt = (B.rien || "rien d'affiché") + ".";
+  else obt = B.dire(o) + ".";
+  return "✘ Banc d'essai : " + v.n + " / " + v.total + " essais conformes.\nPremier écart — " + e.libelle + ".\n" +
+         "Attendu : " + B.dire(e.attendu) + (e.pourquoi ? " (" + e.pourquoi + ")" : "") + ".\nObtenu : " + obt;
+}
+function beOk(bloc){ const x = window.__exp || {}; return !!x[bloc] && x[bloc + "_emp"] === beEmpreinte(beCode(bloc)); }
+function beMsg(bloc){
+  const x = window.__exp || {};
+  if(x[bloc + "_emp"] && x[bloc + "_emp"] !== beEmpreinte(beCode(bloc)))
+    return "↻ À rejouer : ton programme a changé depuis le dernier essai. Clique ▶ Exécuter : la page l'essaie de nouveau.";
+  if(x[bloc + "_verdict"] && !x[bloc]) return x[bloc + "_verdict"].replace(/\n/g, " ") + " Corrige ton programme, puis ▶ Exécuter.";
+  return BANC_ELEVE[bloc].attente;
+}
+function beAfficher(bloc){
+  const x = window.__exp || {}, p = x[bloc + "_verdict"] ? beLigne(bloc) : document.getElementById(bloc + "-banc");
+  if(!p) return;
+  if(x[bloc + "_emp"] && x[bloc + "_emp"] !== beEmpreinte(beCode(bloc))){
+    p.textContent = "↻ À rejouer : ton programme a changé depuis le dernier essai."; p.className = "banc-eleve"; return;
+  }
+  p.textContent = x[bloc + "_verdict"] || ""; p.className = "banc-eleve " + (x[bloc] ? "ok" : "ko");
+}
+document.addEventListener("editeur-py:fin", e => {
+  const d = e.detail || {}, B = d.bloc && BANC_ELEVE[d.bloc];
+  if(!B || !window.EditeurPython) return;
+  const code = beCode(d.bloc), p = beLigne(d.bloc);
+  if(p){ p.textContent = "⏳ Banc d'essai : la page essaie ton programme…"; p.className = "banc-eleve"; }
+  beJuger(d.bloc, code).then(v => {
+    const x = window.__exp;
+    x[d.bloc] = v.n === v.total; x[d.bloc + "_emp"] = beEmpreinte(code); x[d.bloc + "_verdict"] = bePhrase(d.bloc, v);
+    beAfficher(d.bloc); save();
+  });
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if(!t || !t.matches || !t.matches("textarea.editeur-py-code")) return;
+  const b = t.closest(".editeur-py"), bloc = b && b.id, B = bloc && BANC_ELEVE[bloc], x = window.__exp || {};
+  if(!B || !x[bloc + "_emp"]) return;
+  beAfficher(bloc);
+  if(B.retirer && x[bloc] && x[bloc + "_emp"] !== beEmpreinte(t.value)) B.retirer();
+});
+window.addEventListener("load", () => Object.keys(BANC_ELEVE).forEach(beAfficher));
+/* banc-eleve v1 : fin */
+
 
 /* vérificateurs (règle n°14) */
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
@@ -2380,7 +2508,7 @@ const CHECKS = {
     return {score: s, total: 6, exp: true}; },
   3(){ let s = 0; s += sv("a3o1","1"); s += sv("a3o2","2"); s += sv("a3o3","3"); s += sv("a3o4","4"); s += sv("a3o5","5");
     return {score: s, total: 5, exp: true}; },
-  4(){ return {score: pres("prog", 25), total: 1, exp: !!window.__exp.vs1, expMsg: "Exécute ta règle dans l'éditeur Python (▶) avant de valider — la console doit afficher ROUGE ou VERT : c'est le test qui fait foi."}; },
+  4(){ return {score: pres("prog", 25), total: 1, exp: beOk("vs1"), expMsg: beMsg("vs1")}; },
   5(){ return {score: pres("reinv", 25), total: 1, exp: true, libre: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {

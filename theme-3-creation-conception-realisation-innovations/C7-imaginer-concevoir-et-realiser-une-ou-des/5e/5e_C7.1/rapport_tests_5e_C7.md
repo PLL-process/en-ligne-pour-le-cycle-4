@@ -1,5 +1,7 @@
 # Rapport de tests — 5e_C7.1 « Mini-projet : le voyant du hall » (5e_C7.1 · C8.3 · C9.3)
 
+> **Mise à jour du 25/11/2026 — la règle de l'activité 3b jugée en l'exécutant (règle d'or n°333, `_outils/banc_eleve/`).** Avant : une exécution qui affichait n'importe quoi ouvrait le verrou. Après chaque ▶, la page rejoue la règle avec `occupee = True` puis `False` ; le premier écart s'écrit sous l'éditeur ; un programme changé après l'essai retire la validation. Suite du lot : `node tests_5e_C7.mjs .` → **61 / 61** (55 avant) ; banc n°311 : **34 / 34**. Non testé : un vrai téléphone, Safari, Firefox.
+
 Date : 2026-08-26 (**harmonisation du lot**) · Agent : Fable ·
 Environnement : Chromium headless (Playwright 1.55), viewport 1280×900 +
 émulation téléphone 390×844 · Suite : `tests_5e_C7.mjs` (**committée dans ce dossier**,

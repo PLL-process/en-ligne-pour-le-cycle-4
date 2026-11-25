@@ -1,5 +1,7 @@
 # Rapport de tests — Lot 4e_C6.2 « Le jardin connecté : arrosage automatique »
 
+> **Mise à jour du 25/11/2026 — le programme de l'activité 5 et le défi nuit jugés en les exécutant (règle d'or n°333, `_outils/banc_eleve/`).** Avant : ouvrir le lien Vittascience, ou une exécution qui affichait une ligne « [pompe] », ouvrait le verrou, même avec `>` au lieu de `<`. Après chaque ▶ (puis ⏹), la page rejoue les trois trous sur six mesures (45, 31, 30 pile, 29, 12 %, puis 12 → 45 %) et le défi nuit de jour et de nuit ; le Bonus a maintenant le corrigé de ses trois défis (n°301). L'activité 3, où le programme est DONNÉ, garde son verrou. Suite du lot : `node tests_4e_C6.2.mjs` → **67 / 67** (56 avant ; 11 et 12 réécrits, réseau toujours coupé ; cinq programmes de l'activité 5, trois du défi nuit, le corrigé du Bonus) ; banc n°311 : **34 / 34**. Non testé : un vrai téléphone, Safari, Firefox.
+
 **Suite** : `tests_4e_C6.2.mjs`, livrée dans ce dossier · **Outil** : Playwright
 (Chromium headless), viewport mobile 390 × 844 · **Rejouée le 31/08/2026, puis le 04/10/2026**
 (trois contrôles ajoutés, n°36 à 38, bureau 1280 × 900), puis le 31/10/2026 (sept contrôles

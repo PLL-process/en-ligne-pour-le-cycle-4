@@ -37189,3 +37189,61 @@ Dernier défaut grave de `controle_axe.mjs` (page au chargement, 1 280 px) aprè
 en `#5b7bb8` sur blanc, 4,2 : 1 → `#3b5b8f`, 6,8 : 1 (le bleu de la légende des schémas vivants, PR #905).
 L'impression gardait déjà son propre bleu (`#5475b5`, 4,6 : 1). Contrôles : `controle_axe.mjs` sur la page : 0 nœud
 grave ; `controle_impression` 0.
+
+## 25/11/2026 — Règle d'or n°333 : le programme que l'élève écrit est jugé en l'exécutant, dans les quatre pages qui ne le jugeaient pas ; le banc-eleve (transversal : thèmes 2 et 3, `_outils`, `_ressources-communes`, `.claude/skills`)
+
+**Décision de Pascal (25/11/2026)** : « je te donne l'autorisation de faire les fusions », puis « Tu as carte blanche,
+continue ». Les PR transversales de Claude se fusionnent désormais comme celles d'un thème, dès que `perimetre` est
+vert ; Claude met ensuite à jour les liens ⚡ Accès rapide de l'index pour ce qui a changé.
+
+**Le constat** : la mesure du 22/11 (`controle_verification_execute.py`) donnait 7 pages à éditeur, 3 qui exécutent le
+programme, 4 « ○ N sans vérification du code ». Relues une à une, ces quatre pages cachaient trois choses :
+- `3e_C7.1` et `5e_C7.1`, activité 3b : l'élève écrit la décision ; **une exécution qui affichait n'importe quoi**
+  ouvrait le verrou — `print("x")` validait l'activité ;
+- `4e_C6.2`, activité 5 : l'élève complète trois trous ; **une ligne « [pompe] »** suffisait, même avec `>` au lieu de
+  `<` — et cliquer le lien Vittascience l'ouvrait aussi, sans programme ; le Bonus n'avait **aucun corrigé** (n°301) ;
+- `4e_C9.1`, activité 3 : l'élève écrit sa décision dans l'éditeur, et **aucune vérification ne la lisait** (les
+  activités 5 et 6 y exécutaient déjà : l'atelier, `lampJuger`).
+
+**Ce qui change** :
+- **Le banc-eleve** (`_outils/banc_eleve/`, source unique, posée à l'identique dans les quatre pages par `poser.py`,
+  `--verifier-tout`, 9 / 9 à son banc) : après chaque ▶, la page rejoue le programme sur des entrées choisies, sous,
+  sur et au-dessus de chaque seuil (n°351) — la ligne `nom = …` remplacée, ou une carte simulée par essai —, compare à
+  l'attendu, écrit sous l'éditeur « ✔ n / n essais conformes » ou le premier écart (« Premier écart — seuil = 28,
+  T = 28 °C. Attendu : « ok » (28 > 28 est faux). Obtenu : « ALERTE ». »), garde l'empreinte du programme : une
+  frappe périme l'essai et retire la validation. Une erreur de Python se dit avec sa ligne.
+- `3e_C7.1` : 7 essais (seuil 28 : 27, 28, 29, 32 °C ; seuil 26 : 25, 26, 27 °C — la consigne fait changer le seuil, la
+  décision doit suivre la variable) ; le Bonus 6 essais, et son énoncé dit « plus grand que 26 / 28 », comme son
+  corrigé (il disait « pré-alerte à 26 °C », qui fait hésiter pile au seuil).
+- `5e_C7.1` : 2 essais (`occupee = True`, `False`).
+- `4e_C9.1` : 8 essais (40 % pile, 6 h et 10 h pile, avant et après la plage) ; l'activité 3 exige maintenant le
+  programme, en plus des menus, du journal et du banc du haut de page.
+- `4e_C6.2` : 6 essais pour l'activité 5 (45, 31, 30 pile, 29, 12 %, puis 12 → 45 % : la pompe doit s'arrêter après
+  l'arrosage) ; le défi nuit, 6 essais de jour et de nuit ; le corrigé des trois défis du Bonus. L'activité 3, où le
+  programme est DONNÉ, garde son verrou (« Humidité du sol ») et le geste du lien.
+- Le lien Vittascience ne prouve plus rien quand l'élève écrit : la page ne lit pas le programme écrit là-bas (qui
+  programme dans Vittascience recopie son programme dans l'éditeur de la page).
+- **Le contrôle n°333** voit maintenant le juge qui range `e.detail` (`window.__lamp`), le banc-eleve, les clés
+  calculées (`__exp[d.bloc]`) ; il signale les **verrous faibles** (une sortie non vide ou une exécution sans erreur
+  suffit) et les **éditeurs d'activité qu'aucune vérification ne nomme** ; les éditeurs de Bonus sans banc sont comptés
+  à part (facultatifs, un corrigé suffit). Banc : 23 / 23, dont les pages d'avant ce lot (3f24c49d).
+
+**Mesure** : avant (22/11, relue) — 3 verrous faibles, 1 éditeur d'activité sans jugement ; après (25/11) — **7 ✔ X,
+0 verrou faible, 0 éditeur d'activité sans jugement**, 2 éditeurs de Bonus sans banc (`3e_C9.1`, `5e_C9.1` : des défis
+ouverts, à choisir, dans le même éditeur).
+
+**Vérifié** : bancs des lots `tests_3e_C7.mjs` 93 / 93 (82 avant), `tests_5e_C7.mjs` 61 / 61 (55), `tests_4e_C9.mjs`
+161 / 161 (153 ; le parcours écrit et exécute la décision avant de valider l'activité 3), `tests_4e_C6.2.mjs` 67 / 67
+(56 ; réseau coupé d'un bout à l'autre) ; bancs n°311 34 / 34 sur les quatre ; `controle_squelette` conforme ;
+`audit_aeration` L1 L2 C1 C2 à 0 ; revue d'écran à 390 px des verdicts (un écart, un succès, deux pages) : aucun
+débordement, axe-core `color-contrast` sans violation ; espaces insécables pour que « T = 28 °C » ne se coupe pas.
+Trois pièges notés au skill `banc-essai-programme` : le lien Vittascience ; un même mot (« arret ») pour l'état de la
+pompe et celui de l'outil ; l'éditeur qui sauvegarde 500 ms après la frappe et déclenche le retrait commun de
+validation dans un banc trop pressé.
+
+**Non vérifié** : un vrai téléphone, Safari, Firefox ; un élève réel devant le verdict du banc.
+
+**Thème par thème** (n°302) : thème 2 — `4e_C6.2` (séquence, rapport, banc) ; thème 3 — `3e_C7.1`, `5e_C7.1`,
+`4e_C9.1` (séquences, rapports, bancs) ; `_outils` — `banc_eleve/` (neuf), `controle_verification_execute.py` et son
+banc ; `_ressources-communes/editeur-python/eprouver_exercices.mjs` (`eprouverBanc`, `eprouverRejouer`) ;
+`.claude/skills/banc-essai-programme` et `SKILLS_AUDIT.md`. Thème 1 : rien.
