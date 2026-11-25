@@ -96,8 +96,11 @@ version étayée :
 - **5e_C3.1** — au bord de la mer, écarter un matériau pour une propriété. On regarde : un matériau nommé (l'acier non
   galvanisé) et la propriété qui compte ici (il rouille à l'air salé).
 
-Il ne valide rien : aucun bouton, aucune note (n°333). La séance 2 est pleine : 20 + 20 + 10 + 5 = 55 minutes avant la
-synthèse et le bilan.
+Il ne valide rien : aucun bouton, aucune note (n°333).
+
+**Le réinvestissement se fait à la maison** (décision de Pascal, 25/11/2026) : avec le billet, la séance 2 aurait fait
+20 + 20 + 10 + 5 = 55 minutes avant la synthèse et le bilan. Elle tient maintenant en 20 + 20 + 5 minutes, puis la
+synthèse et le bilan ; l'étagère murale (environ 10 minutes) se fait après la séance, ou en classe s'il reste du temps.
 
 ## Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
 
@@ -107,7 +110,7 @@ déroulé ci-dessus.
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Prendre le simulateur en main | Que calcule le simulateur, et qu'est-ce qui change d'un matériau à l'autre ? | Ouverture (situation, problématique, hypothèse, cahier des charges, billet), activités 1 et 2 | ouverture + 15 + 20 min |
-| 2 — Comparer, choisir, refaire | Pourquoi le banc et la simulation ne classent-ils pas pareil, et quel matériau choisir ? | Activités 3 et 4, réinvestissement, synthèse, billet de sortie, Bonus (corrigé par défi), bilan, QCM | 20 + 20 + 10 + 5 min + clôture |
+| 2 — Comparer, choisir, refaire | Pourquoi le banc et la simulation ne classent-ils pas pareil, et quel matériau choisir ? | Activités 3 et 4, synthèse, billet de sortie, Bonus (corrigé par défi), bilan ; à la maison : réinvestissement, QCM | 20 + 20 + 5 min + clôture ; 10 min à la maison |
 
 Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Restent visibles à chaque séance : le titre, la
 mission, la barre d'outils (🖨 Imprimer / PDF) et **le simulateur**, sorti de l'activité 1 parce qu'il sert aux deux

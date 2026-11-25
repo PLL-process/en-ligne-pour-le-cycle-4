@@ -37626,3 +37626,14 @@ questions sur document et sans billet de sortie, un lot à la fois, en commença
 **Mesuré** : QCM 34 / 34 ; séquence 41 / 41 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
 0 partout (avant : S3 1, E1 1, D1 1, P1 1) ; `--strict` sur le dépôt : 10 refus, 11 sur `main` ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0 écart ;
 `banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens sans écart.
+
+## 25/11/2026 — 5e_C8.1 : le réinvestissement se fait à la maison (thème 3)
+
+**La décision.** Pascal (25/11/2026, 17 h 38), à la question « avec le billet de sortie, la séance 2 fait 55 minutes
+avant la synthèse et le bilan » : « propose de faire le réinvestissement (10 min) à la maison ».
+
+**Ce qui change** (`sequence_5e_C8.1_patere-du-hall.html`) : le programme de la séance 2 dit « activités 3 et 4, puis la
+synthèse, le billet de sortie, le Bonus et le bilan ; 🏠 à la maison : le réinvestissement et le QCM ». Le
+réinvestissement (l'étagère murale) garde sa place, ses questions et son vérificateur ; son titre et une ligne disent
+« à faire à la maison, après la séance 2 — ou en classe, s'il reste du temps ». La séance 2 tient en 20 + 20 + 5 minutes,
+puis la clôture. Fiche pédagogique et note d'audit à jour.
