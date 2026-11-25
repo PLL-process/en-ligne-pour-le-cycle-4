@@ -37360,3 +37360,14 @@ la fiche pédagogique (le point « ce qui reste à faire » est barré) ; la not
 `mesurer_impression.py` : synthèse élève sur 2 pages, en Inter (95 % · 93 %) et en Liberation Sans (95 % · 84 %) ;
 `controle_unites`, `controle_liens`, `enrichir.py --verifier-tout` sans écart. Vu à 390 px : la problématique, sa
 correction et la carte de la synthèse, sans défilement de côté.
+
+## 25/11/2026 — Structure des pages, thème 2 : chaque page a sa zone de contenu principal (`<main>`)
+
+Suite du thème 1 (PR #921), même geste : 34 pages sans `<main>`, les 34 synthèses (élève et professeur) des 17
+séquences. `<main>` s'ouvre après la barre de navigation du site et se ferme avant le `<footer>` de premier niveau, ou
+avant `</body>`. Les deux synthèses de `4e_C6.2` ont un générateur, `synthese_4e_C6.2.py`, mais il est retiré
+depuis le 30/10/2026 (il refuse d'écrire : les deux pages se corrigent à la main) ; elles sont corrigées comme les autres.
+
+Vérifié : les 34 pages rendues avant et après, à 390 et 1 280 px, image entière : **identiques au pixel près**.
+axe-core sur les 98 pages du thème 2 : `landmark-one-main` 34 → 0, `region` 293 → 38 nœuds ; aucun défaut grave ;
+`controle_impression` à 0. Les titres qui sautent un niveau (14 au thème 2) viennent dans un lot à part.
