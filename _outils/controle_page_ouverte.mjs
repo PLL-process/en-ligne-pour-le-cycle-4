@@ -34,7 +34,8 @@
  *      que `controle_axe.mjs` (2.0, 2.1, 2.2 ; A et AA ; `wcag21a` manquait avant le 25/11/2026 : il porte
  *      `label-content-name-mismatch`) ;
  *   S  avec --axe : les quatre défauts de structure que `controle_axe.mjs` refuse au chargement (`STRUCTURE_REFUSEE` :
- *      zone principale, ordre des titres, titre de niveau 1, en-tête de tableau), ici page ouverte, à 390 px. Un titre
+ *      zone principale, ordre des titres, titre de niveau 1, en-tête de tableau, texte hors repère depuis le 26/11/2026),
+ *      ici page ouverte, à 390 px. Un titre
  *      rangé dans une correction ou un onglet fermés n'existe pas au chargement : il ne se lit qu'ici (26/11/2026).
  *
  * Usage :
@@ -217,7 +218,7 @@ const refusA = resultats.filter(r => !r.panne && r.A && r.A.length);
 const refusS = resultats.filter(r => !r.panne && r.S && r.S.length);
 if (refus.length) console.log(`✘ ${refus.length} page(s) font défiler un listing (n°364) ou dessinent un bloc (n°308), page ouverte — référence vide depuis le 22/11/2026 (n°273)`);
 if (refusA.length) console.log(`✘ ${refusA.length} page(s) portent un défaut grave d'axe-core, page ouverte à 390 px — référence vide depuis le 25/11/2026 (n°273)`);
-if (refusS.length) console.log(`✘ ${refusS.length} page(s) portent un défaut de structure, page ouverte à 390 px (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau) — référence vide depuis le 26/11/2026 (n°273)`);
+if (refusS.length) console.log(`✘ ${refusS.length} page(s) portent un défaut de structure, page ouverte à 390 px (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau, texte hors repère) — référence vide depuis le 26/11/2026 (n°273)`);
 if (refus.length || refusA.length || refusS.length) process.exit(1);
 if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°361)'); process.exit(1); }
 console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°361)` : '✅ rien à signaler, page ouverte');
