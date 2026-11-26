@@ -9,7 +9,8 @@ boutons ; rien ne se charge ni ne se joue sans geste, rien ne vient du réseau ;
 de secours, la voix locale, le message « lis les phrases » ; le compteur d'éclats et la lentille sale ; l'horloge de la
 pesée ; les résultats de la finale (moyennes sur 1 h et 24 h, calculées à la main ci-dessous) ; le mouvement réduit ;
 aucun débordement à 390 px ; le lien direct ; zéro erreur JavaScript ; les trois appareils en 3D (26/11/2026) : fichiers,
-étapes 2, 5 et 8, légende, bouton « schéma », rien de demandé avant l'étape, aucun film sous « mouvement réduit ».
+étapes 2, 5 et 8, légende, bouton « schéma », rien de demandé avant l'étape, aucun film sous « mouvement réduit » ;
+à l'impression, la bande des trois appareils en 3D sur fond clair (cachée à l'écran).
 Ce qu'il NE vérifie PAS : que la voix soit belle ni qu'elle dise bien la phrase (cela s'écoute) ; que l'animation soit
 claire pour un élève (cela se voit en classe) ; la lecture sous Safari ou sur tablette (seul Chromium tourne ici) ;
 que les films soient justes et beaux (cela se regarde), ni leur lecture sur les postes du collège.
@@ -47,6 +48,9 @@ for nom in ("p1_lumiere", "p2_pesee", "p3_rayonnement"):
           and webm.read_bytes()[:4] == b"\x1a\x45\xdf\xa3" and jpg.read_bytes()[:2] == b"\xff\xd8")
     t("3D %s : .mp4, .webm et affiche .jpg présents, de bonne forme, moins de 400 Ko par film et 100 Ko par affiche" % nom,
       ok and mp4.stat().st_size < 400_000 and webm.stat().st_size < 400_000 and jpg.stat().st_size < 100_000)
+    clair = ICI / "Images" / ("trois-principes_%s_3d_impression.jpg" % nom)
+    t("3D %s : l'image sur fond clair, pour l'impression, présente, de bonne forme, moins de 100 Ko" % nom,
+      clair.exists() and clair.read_bytes()[:2] == b"\xff\xd8" and clair.stat().st_size < 100_000)
 
 # 2 · les phrases dites sont celles de la page
 r = subprocess.run([sys.executable, str(ICI / "_generation" / "voix_trois_principes" / "generer.py"), "--verifier"],
@@ -104,7 +108,15 @@ with sync_playwright() as p:
     t("à l'impression : l'animation disparaît, les trois schémas reviennent",
       pg.evaluate("getComputedStyle(document.getElementById('trois-principes-pas-a-pas')).display") == "none" and
       pg.evaluate("[...document.querySelectorAll('#planche3 .schema3')].every(s => getComputedStyle(s).display !== 'none')"))
+    bande = pg.evaluate("""() => { const b = document.getElementById('p3Bande3d'); return {
+      visible: getComputedStyle(b).display !== 'none', images: [...b.querySelectorAll('img')].map(i => [i.complete && i.naturalWidth, Math.round(i.getBoundingClientRect().width), (i.getAttribute('alt') || '').length]),
+      legendes: [...b.querySelectorAll('.p3-3d-legende')].map(l => (l.textContent.match(/[①②③④]/g) || []).length), dit: b.querySelector('.p3-3d-titre').textContent }; }""")
+    t("à l'impression : la bande des trois appareils en 3D, images chargées, au moins 50 mm de large, décrites, légendées (4, 3, 4 repères)",
+      bande["visible"] and len(bande["images"]) == 3 and all(i[0] == 960 and i[1] >= 189 and i[2] > 80 for i in bande["images"])
+      and bande["legendes"] == [4, 3, 4] and "modèles simplifiés" in bande["dit"], str(bande))
     pg.emulate_media(media="screen")
+    t("à l'écran : la bande imprimée est cachée (les films la remplacent)",
+      pg.evaluate("getComputedStyle(document.getElementById('p3Bande3d')).display") == "none")
     # 4 · rien ne se charge ni ne se joue sans geste
     t("à l'ouverture : aucun fichier audio demandé ni joué",
       not [u for u in demandes if "/Audio/" in u] and pg.evaluate("window.__sons.length") == 0)

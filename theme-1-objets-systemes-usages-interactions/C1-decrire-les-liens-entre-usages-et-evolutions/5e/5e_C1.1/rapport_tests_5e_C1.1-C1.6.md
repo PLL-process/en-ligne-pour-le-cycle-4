@@ -195,3 +195,25 @@ Verts : `controle_lecteur_pas_a_pas.py`, `controle_medias.py`, `controle_licence
 - que les films soient clairs pour un élève de 5e : cela se regarde en classe ;
 - `controle_medias.py` ne lit pas les fichiers vidéo (seules les images) : leur provenance est écrite dans `SOURCES_MEDIAS.md`,
   mais aucun contrôle ne le vérifie.
+
+## 26/11/2026 — Les trois appareils en 3D, à l'impression
+
+Décision de Pascal du 26/11/2026 (« 2b ») : imprimer aussi les trois images en 3D, sur fond clair. Elles forment **une bande**
+sous la planche des trois schémas (trois de front, environ 6 cm de large, leur légende dessous), cachée à l'écran.
+Branche `fable/theme-1/chengdu-3d-a-l-impression`. Lancé sur cette branche, le 26/11/2026, avec Chromium.
+
+- **Nombre de pages** : la séance 1 s'imprime en **4 pages A4, comme avant** (PDF de Chromium, compté avant et après).
+- `python3 tests_animation_trois_principes.py` : **72 / 72** — les 67 du matin, et 5 nouveaux : les trois images sur fond clair
+  (présentes, de bonne forme, moins de 100 Ko) ; à l'impression, la bande est affichée, ses trois images sont chargées, font au
+  moins 50 mm de large, sont décrites et légendées (4, 3 et 4 repères) ; à l'écran, la bande est cachée.
+- `python3 tests_5e_C1.1_chengdu.py` : 44 / 44 · `node tests_regle_311_5e_C1.1.mjs` : 34 / 34.
+- Contrôles verts : `controle_medias.py`, `controle_liens.py` ; sur la page : `controle_impression.mjs`,
+  `controle_page_ouverte.mjs`, `controle_hors_ligne.mjs`.
+
+**Un choix mesuré** : les trois images se chargent avec la page (141 Ko à trois), bien qu'elles ne servent qu'au papier. Marquées
+« à charger plus tard », Chromium les demandait quand même à l'ouverture, et un autre navigateur pourrait les oublier à
+l'impression.
+
+**Non vérifié** : l'impression depuis Firefox, Edge ou un poste du collège ; le rendu sur une imprimante noir et blanc.
+**Vu en passant, non corrigé** : à l'impression, le titre de la carte « P3 · Freiner un rayonnement » reste en bas de la page 2,
+son contenu passe page 3. C'était déjà le cas sur `main`.
