@@ -38325,6 +38325,11 @@ carte des représentations, qui n'était pas perdu).
 et les panneaux de `build.py` (ateliers de représentation), `build_tp.py` (la dispense `"sans_mode_mission"` du modèle
 retirée de `_MODELE.json`). Rejoués : les pages sortent identiques à celles du dépôt.
 
+**`make_index.py`** lisait le titre d'une page dans ses 20 000 premiers caractères : le bloc du mode (60 Ko, posé
+avant `</head>`) l'en écartait — l'index nommait « carte_des_representations.html » et « Travaux pratiques — Socle
+assemblage » ce qu'il nommait « La carte des représentations » et « TP n°2 · 4e — Le dé sur sa pointe ». Il lit la
+page entière pour le titre ; l'index sort identique à celui de `main`.
+
 **`controle_mode_mission.py`** lit désormais **toute page sous `theme-*`** : elle porte le bloc, ou elle est d'une
 sorte nommée hors mission, avec sa raison (`HORS_MISSION` : QCM, document pour l'enseignant, figure en cadre). Plus de
 panneau ni de dispense. Banc 14 / 14.
@@ -38365,4 +38370,5 @@ effacent la clé du mode (3e_C1.5, 4e_C1.4) ; thème 2 — synthèses, lexiques,
 CAO, 3 panneaux de planification, le modèle de démonstration et `_MODELE.json`, `build_tp.py`, ; les trois thèmes — le bloc reposé sur les 258 pages ; `_outils` — `mode_mission/` (moteur, feuille
 de style, `poser.py`, `banc_lecture.mjs` neuf, `banc_generique.mjs`, `banc_defaut.mjs`, `README.md`),
 `mode_lecture/` retiré, `controle_mode_mission.py` et son banc, `controle_mode_lecture.py` et son banc retirés,
-`controle_sauvegarde_locale.py` et son banc, `generer_lexique.py` et son banc, `banc_effacement.mjs` et son banc.
+`controle_sauvegarde_locale.py` et son banc, `generer_lexique.py` et son banc, `banc_effacement.mjs` et son banc,
+`make_index.py` (le titre lu dans toute la page).
