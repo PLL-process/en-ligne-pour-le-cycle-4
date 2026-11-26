@@ -37711,3 +37711,36 @@ dans la page élève ; antérieur).
 4e_C6.1, 5e_C6.1 ; thème 3 — atelier CAO (4 scénarios, 4 pages, manifeste), atelier de planification (générateur,
 3 pages), `gabarit_style.css` des TP de CAO, 9 titres de Bonus (C7, C8, C9), `qcm_5e_C7.4`, 4e_C8.1 (générateur et page), 5e_C8.2, 5e_C9.1, TP mBot2 ;
 `_outils` — `controle_bonus_corrige.py` et son banc, `replier_bonus.py`, `controle_verrous.mjs` (deux déclarations).
+
+## 26/11/2026 — 5e_C8.2 : six questions sur document, un billet de sortie, le réinvestissement à la maison (thème 3)
+
+**La décision.** « 2 oui » de Pascal (26/11/2026, 1 h 45), à la proposition : traiter 5e_C8.2 (la patère du hall, le
+banc d'essai) comme 5e_C8.1 — le QCM n'avait aucune question sur document, la séquence pas de billet de sortie, et deux
+questions étaient à reprendre. Le même message décide, pour 5e_C8.1, de faire le réinvestissement à la maison (déjà
+fusionné, PR #934) ; la même situation se présentant ici, le réinvestissement de 5e_C8.2 passe aussi à la maison.
+
+**Ce qui change** :
+- Trois documents pour le téléphone : `documents_qcm.py` (neuf) écrit `documents_qcm_5e_C8.2.json` avec le modèle
+  `../5e_C8.1/patere.py` (n°233), `_outils/document_qcm.py` les dessine. Le relevé du banc (l'exigence de 40 kg et les
+  cinq charges de rupture), la fiche d'essai de l'aluminium (comment l'essai a été fait), « ce que l'essai de traction
+  ne voit pas » (le hall et l'angle mort de chaque matériau). Six questions s'y lisent ; leurs pourquoi renvoient à la
+  ligne ou au cadre à relire.
+- Deux notions renommées, avec leur question : « Le verbe de la compétence » (l'énoncé disait « En 5e », n°304) et
+  « Croiser les contraintes » (« deux contraintes » annonçait une liste que la bonne réponse ne suivait pas, n°344) ; un
+  exemple qui renvoyait à « ce que la 3e exigera » est réécrit. Aides reposées, lexique régénéré.
+- Le billet de sortie (n°330) ferme la séance 2, avant le Bonus : le fil qui suspend un pot d'anthuriums sous le préau
+  (6 kg, coefficient 5). Trois fiches d'essai de traction sont données. Question 1 (5e_C8.2) : quelle fiche respecte le
+  protocole, le fil tient-il, que cloche-t-il dans les deux autres. Question 2 (5e_C3.1) : à la pluie, quel fil écarter
+  pour son matériau. Versions étayées, correction complète avec critères et contre-exemples, aucun bouton.
+- Le réinvestissement (l'étagère du CDI, environ 15 min) se fait à la maison : la séance 2 tient en 20 + 15 + 5 minutes,
+  puis la synthèse et le bilan. Sa correction ne renvoie plus à « la 3e » (n°304). Son titre dit « environ 15 min » : ce temps de la maison ne se
+  compte pas dans les 110 minutes de classe que mesure `verif_regles_audit.py` (n°23 : 90 + 10 de service).
+- Bancs : `tests_5e_C8.2_qcm.mjs` (six questions sur document au moins, documents du lot décrits, données à jour du
+  modèle) ; `tests_5e_C8.2_sequence.mjs` (forme du billet, réponse gardée au rechargement).
+
+**Mesuré** : QCM 34 / 34 ; séquence 26 / 26 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : S3 1, E1 1, D1 1, P1 1) ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0
+écart ; `banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens
+sans écart.
+
+**Reste**, déjà noté dans la fiche : la séance 1 porte l'ouverture et 50 minutes d'activités, environ 60 minutes en tout.

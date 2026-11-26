@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 C8.2 + 10 C3.1), 0 illustrée.
+/* Banque : 30 questions (20 C8.2 + 10 C3.1), 6 illustrées (25/11/2026 : six questions se lisent sur un document, n°345).
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -388,19 +390,21 @@ const QUESTIONS = [
  err:"Croire que le coefficient est une marge de confort arbitraire.",
  d:["Le nombre 5 ne compte pas des élèves : il couvre l'inconnu, pas une hypothèse précise.","","Aucun de ces matériaux ne perd 80 % de sa résistance en un an.","Les coefficients varient selon l'usage et le risque ; aucun chiffre unique ne s'impose."],
  ret:"Le coefficient de sécurité couvre ce qu'on ne connaît pas."},
-{c:"C8.2",n:"Une marge trop mince",q:"Le bois casse à 41 kg pour 40 kg exigés. Qu'en conclure ?",
+{c:"C8.2",n:"Une marge trop mince",q:"D'après ce relevé, le bois casse à 41 kg (kilogrammes) pour 40 kg exigés. Qu'en conclure ?",
+ img:{src:"Images/doc_releve_banc.svg",alt:"Le relevé du banc d'essai : essai de traction, une éprouvette neuve de 10 millimètres carrés par matériau, valeurs simulées. Exigé : 40 kilogrammes, un sac de 8 kilogrammes avec un coefficient de 5. Charge de rupture : Bois (pin), 41 kilogrammes ; PLA imprimé en 3D, 51 kilogrammes ; PVC rigide, 53 kilogrammes ; Aluminium, 194 kilogrammes ; Acier doux, 408 kilogrammes."},
  o:["ça passe de trop peu pour qu'on s'y fie","c'est validé : 41 est supérieur à 40","c'est le meilleur choix, il est le plus léger","il faut refaire l'essai jusqu'à obtenir 40"],r:0,
  expl:"2,5 % de marge, sur une éprouvette SANS défaut. La vraie pièce aura un nœud, une fibre de travers, de l'humidité. Un essai réussi de justesse est un essai qu'on n'a pas eu le temps de rater.",
  ex:"C'est là que le coefficient de sécurité montre à quoi il sert vraiment.",
  err:"Traiter une comparaison de nombres comme une décision technique.",
- d:["","Le nombre passe, mais la pièce réelle ne ressemble pas à l'éprouvette d'essai.","La légèreté n'était pas un critère du cahier des charges du gestionnaire.","Refaire un essai jusqu'à obtenir le résultat voulu, c'est fabriquer une donnée."],
+ d:["","Le nombre passe, mais la vraie pièce n'est pas l'éprouvette sans défaut du banc. Regarde l'écart : 1 kg sur 40.","La légèreté ne figure pas dans ce qu'exige le gestionnaire. Relis son cadre : une charge, pas une masse.","Refaire un essai jusqu'à obtenir le résultat voulu, c'est fabriquer une donnée. Regarde plutôt l'écart entre 41 et 40."],
  ret:"Une marge de 2,5 % n'est pas une marge."},
-{c:"C8.2",n:"Ce que le nombre ne dit pas",q:"« L'aluminium tient 194 kg. » Que peut-on affirmer avec ce seul chiffre ?",
+{c:"C8.2",n:"Ce que le nombre ne dit pas",q:"D'après cette fiche, que peut-on affirmer avec le seul chiffre de 194 kg (kilogrammes) ?",
+ img:{src:"Images/doc_fiche_essai.svg",alt:"La fiche d'essai de l'aluminium. Essai de traction : on tire dans l'axe de l'éprouvette. Éprouvette neuve, de 10 millimètres carrés de section, la même pour les cinq matériaux. Charge ajoutée par paliers, jusqu'à la rupture. Rupture à 194 kilogrammes. Valeurs simulées."},
  o:["qu'il est le meilleur matériau pour faire cette patère","qu'il tient 194 kg en traction, dans ces conditions d'essai","qu'il tient 194 kg quelle que soit la façon de le charger","qu'il tiendra encore 194 kg dans dix ans au mur"],r:1,
  expl:"Un essai répond à la question qu'on lui a posée, et à elle seule. Tout le reste — durée, corrosion, flexion, coût — est encore à vérifier.",
  ex:"C'est la phrase la plus utile de toute la séquence, et la plus facile à oublier.",
  err:"Transformer un résultat d'essai en jugement général sur le matériau.",
- d:["Il est un bon candidat, mais le choix demande d'autres critères que la traction.","","En flexion ou en choc, le classement des matériaux peut changer complètement.","L'essai ne dit rien du vieillissement, ni de l'air salé, ni de la fatigue."],
+ d:["C'est un bon candidat, mais le choix demande d'autres critères que la traction. Relis comment l'essai a été fait.","","En flexion ou en choc, le classement peut changer. Relis la fiche : on a tiré dans l'axe, et rien d'autre.","La fiche ne dit rien du vieillissement ni de l'air salé. Relis ce qui a été relevé, et dans quelles conditions."],
  ret:"Un essai prouve ce qu'il a mesuré, dans les conditions où il l'a mesuré."},
 {c:"C8.2",n:"Relever sans conclure",q:"Après avoir relevé les cinq charges, que reste-t-il à faire ?",
  o:["les confronter à la charge exigée par le cahier des charges","rien : le matériau le plus résistant des cinq l'emporte forcément","recommencer les cinq essais pour vérifier les chiffres","calculer la moyenne des cinq charges de rupture"],r:0,
@@ -409,14 +413,15 @@ const QUESTIONS = [
  err:"Croire que la mesure décide toute seule.",
  d:["","Le plus résistant n'est pas forcément le plus adapté : voir le coût et la corrosion.","Recommencer est utile, mais ne remplace pas la confrontation à l'exigence.","Une moyenne de cinq matériaux différents ne veut strictement rien dire."],
  ret:"Un relevé se juge contre une exigence, pas contre les autres relevés."},
-{c:"C8.2",n:"Le verbe du code de 5e",q:"En 5e, on demande de « mettre en œuvre un protocole fourni ». Cela veut dire…",
+{c:"C8.2",n:"Le verbe de la compétence",q:"La compétence de cette séquence demande de « mettre en œuvre un protocole fourni ». Cela veut dire…",
  o:["recopier le protocole proprement au cahier","inventer soi-même le protocole le mieux adapté à la question","appliquer sans en sauter une ligne un protocole donné","vérifier que le protocole fourni est bien écrit"],r:2,
  expl:"En 5e le protocole est donné et juste ; ce qui est évalué, c'est de l'exécuter fidèlement. Le proposer soi-même, c'est le travail de 3e.",
  ex:"C'est plus difficile qu'il n'y paraît : le protocole verrouille des choses qu'on a envie de simplifier.",
  err:"Croire que « fourni » veut dire « facile ».",
  d:["Recopier n'est pas mettre en œuvre : rien n'est mesuré.","Proposer un protocole est l'attendu de 3e, pas celui de la 5e.","","Juger le protocole viendra plus tard ; ici on l'exécute."],
  ret:"5e : on applique un protocole fourni. 3e : on le propose."},
-{c:"C8.2",n:"La sollicitation change tout",q:"Une étagère de CDI plie sous les livres. L'essai de traction convient-il pour la choisir ?",
+{c:"C8.2",n:"La sollicitation change tout",q:"Une étagère du centre de documentation (CDI) plie sous les livres. D'après cette fiche, l'essai de traction convient-il pour la choisir ?",
+ img:{src:"Images/doc_fiche_essai.svg",alt:"La fiche d'essai de l'aluminium. Essai de traction : on tire dans l'axe de l'éprouvette. Éprouvette neuve, de 10 millimètres carrés de section, la même pour les cinq matériaux. Charge ajoutée par paliers, jusqu'à la rupture. Rupture à 194 kilogrammes. Valeurs simulées."},
  o:["non : une étagère travaille en flexion, pas en traction","oui : un matériau résistant l'est dans tous les cas","oui, à condition de doubler le coefficient de sécurité","non : il faudrait un essai de choc et non de flexion"],r:0,
  expl:"La question posée à la matière n'est pas la même. Reconnaître qu'un protocole ne convient pas à une question, c'est déjà savoir en proposer un autre.",
  ex:"Une planche qui plie n'est pas une planche qu'on étire.",
@@ -444,7 +449,8 @@ const QUESTIONS = [
  err:"Croire qu'un chiffre précis est un chiffre fiable.",
  d:["Ressembler aux autres n'est pas une preuve : cinq erreurs identiques restent des erreurs.","Deux décimales sur un banc gradué en paliers de 10 kg sont une fausse précision.","La signature engage l'auteur ; elle ne rend pas la mesure vérifiable.",""],
  ret:"Un relevé vaut par le protocole qui l'accompagne."},
-{c:"C8.2",n:"Quand l'essai contredit l'intuition",q:"Tu pensais que le PVC tiendrait moins que le bois. Le relevé dit l'inverse. Que fais-tu ?",
+{c:"C8.2",n:"Quand l'essai contredit l'intuition",q:"Tu pensais que le PVC tiendrait moins que le bois. Ce relevé dit l'inverse. Que fais-tu ?",
+ img:{src:"Images/doc_releve_banc.svg",alt:"Le relevé du banc d'essai : essai de traction, une éprouvette neuve de 10 millimètres carrés par matériau, valeurs simulées. Exigé : 40 kilogrammes, un sac de 8 kilogrammes avec un coefficient de 5. Charge de rupture : Bois (pin), 41 kilogrammes ; PLA imprimé en 3D, 51 kilogrammes ; PVC rigide, 53 kilogrammes ; Aluminium, 194 kilogrammes ; Acier doux, 408 kilogrammes."},
  o:["tu prends la moyenne entre ton idée et le relevé obtenu","tu refais l'essai jusqu'à retrouver ton intuition de départ","tu gardes ton idée : une simulation n'est pas fiable","tu gardes le relevé et tu écris que ton idée était fausse"],r:3,
  expl:"L'hypothèse sert à mesurer le chemin parcouru, pas à être défendue. Un écart entre ce qu'on croyait et ce qu'on mesure est le moment le plus instructif de l'essai.",
  ex:"C'est exactement pourquoi la page demande l'hypothèse AVANT le premier essai.",
@@ -452,7 +458,8 @@ const QUESTIONS = [
  d:["Une moyenne entre une croyance et une mesure n'a aucun sens physique.","Refaire jusqu'à obtenir ce qu'on veut, c'est fabriquer un résultat.","Douter d'un outil est sain, mais l'écart doit être argumenté, pas invoqué.",""],
  ret:"Quand la mesure contredit l'idée de départ, c'est l'idée qui bouge."},
 /* ═══ C3.1 ═══ */
-{c:"C3.1",n:"La résistance ne suffit pas",q:"Les cinq matériaux tiennent les 40 kg exigés. Comment trancher ?",
+{c:"C3.1",n:"La résistance ne suffit pas",q:"D'après ce relevé, tous les matériaux tiennent les 40 kg (kilogrammes) exigés. Comment trancher entre eux ?",
+ img:{src:"Images/doc_releve_banc.svg",alt:"Le relevé du banc d'essai : essai de traction, une éprouvette neuve de 10 millimètres carrés par matériau, valeurs simulées. Exigé : 40 kilogrammes, un sac de 8 kilogrammes avec un coefficient de 5. Charge de rupture : Bois (pin), 41 kilogrammes ; PLA imprimé en 3D, 51 kilogrammes ; PVC rigide, 53 kilogrammes ; Aluminium, 194 kilogrammes ; Acier doux, 408 kilogrammes."},
  o:["en reprenant l'essai avec un coefficient plus exigeant","en choisissant tout simplement le plus résistant des cinq matériaux","en tirant au sort, puisqu'ils conviennent tous les cinq","avec d'autres critères : durée, corrosion, coût, fabrication"],r:3,
  expl:"Quand un critère ne départage plus, il faut en ajouter. Choisir un matériau, c'est croiser plusieurs exigences, pas maximiser une seule.",
  ex:"C'est le passage de « ça tient » à « c'est le bon choix ».",
@@ -508,10 +515,11 @@ const QUESTIONS = [
  err:"Choisir un matériau dans l'absolu, sans regarder ce qu'on peut en faire.",
  d:["Commander tout fait est une option, mais c'est un autre projet et un autre budget.","","Les moyens disponibles n'ont aucun rapport avec la résistance nécessaire.","Le coefficient couvre l'incertitude, pas le manque d'outillage."],
  ret:"Ce qu'on sait fabriquer est un critère de choix du matériau."},
-{c:"C3.1",n:"Croiser deux contraintes",q:"Quelle recommandation croise le mieux les contraintes du hall de ce collège ?",
+{c:"C3.1",n:"Croiser les contraintes",q:"D'après cette fiche, quelle recommandation croise le mieux les contraintes du hall ?",
+ img:{src:"Images/doc_angles_morts.svg",alt:"Le hall du collège : l'air de la Martinique est salé ; les sacs y arrivent trempés par l'averse de midi ; exigé 40 kilogrammes. Pour chaque matériau, sa charge de rupture au banc et ce que l'essai de traction ne voit pas. Bois (pin), 41 kilogrammes : Un nœud dans la pièce, et il casse bien plus tôt. PLA imprimé en 3D, 51 kilogrammes : En travers des couches, il se déchire à moins de la moitié. PVC rigide, 53 kilogrammes : Il flue : sous une charge permanente, il se déforme lentement. Aluminium, 194 kilogrammes : Léger et solide ; il se raye, et plie avant de casser. Acier doux, 408 kilogrammes : En bord de mer, sans protection, il rouille."},
  o:["le PLA : le collège possède déjà une imprimante 3D","le bois : il est chaleureux et il passe tout juste","l'acier : c'est le plus résistant des cinq matériaux testés","l'aluminium : large marge, léger, et il ne rouille pas"],r:3,
  expl:"L'aluminium satisfait la charge avec une marge confortable, résiste à l'air salé, et reste travaillable. C'est un croisement, pas un maximum.",
- ex:"Deux contraintes croisées : c'est exactement ce que la 3e exigera de justifier.",
+ ex:"Ici, les contraintes se croisent : la charge exigée, l'air salé, l'eau de l'averse.",
  err:"Décider sur un seul critère — le plus fort, le plus joli, ou le plus disponible.",
  d:["Le PLA se déchire en travers des couches, ce qui est le sens de charge d'une patère.","Le bois passe à 2,5 % près et casse au premier nœud : la marge est illusoire.","L'acier rouille en bord de mer, et sa résistance en excès ne sert à rien ici.",""],
  ret:"Une bonne recommandation croise au moins deux contraintes."},
@@ -574,7 +582,7 @@ const PIEGE_DE_NOTION={
   "Le rôle d'un protocole":"protocole",
   "Deux bancs différents":"protocole",
   "Charger par paliers":"protocole",
-  "Le verbe du code de 5e":"protocole",
+  "Le verbe de la compétence":"protocole",
   "Un relevé recopié":"releve",
   "Relever sans conclure":"releve",
   "Ce qui rend un relevé recevable":"releve",
@@ -595,7 +603,7 @@ const PIEGE_DE_NOTION={
   "Léger ou résistant":"recommander",
   "Le coût dans le choix":"recommander",
   "La fabrication comme critère":"recommander",
-  "Croiser deux contraintes":"recommander",
+  "Croiser les contraintes":"recommander",
   "Ce qu'on écrit au gestionnaire":"recommander"
 };
 function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }
