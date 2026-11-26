@@ -38100,3 +38100,25 @@ défaut grave.
 **Vu en passant, hors de ce lot.** Les synthèses professeur des ateliers (sept) et celle de 5e_C1.3 ont des tableaux
 qui défilent à 390 px sans être atteignables au clavier (`scrollable-region-focusable`, page ouverte). Elles sont hors
 du périmètre par défaut de `controle_page_ouverte.mjs` (pages professeur) ; c'est déjà le cas sur `main`.
+
+## 26/11/2026 — Texte hors repère (`region`), thème 3 : l'atelier de planification, le TP mBot2, le mini-quiz, les lexiques
+
+Suite des PR #944 et #945 (« 1a » de Pascal, 26/11/2026). Au thème 3, 185 nœuds hors repère page ouverte.
+
+**Ce qui change.**
+- Atelier de planification (`build_atelier.py`, 3 pages, 34 nœuds chacune) : la zone principale s'ouvre dès le titre ;
+  l'ancien `<main class="page">` devient un `<div>`. Elle se ferme après le pied, resté dans le dernier bloc `.page` :
+  fermée avant lui, elle l'en faisait sortir, et il prenait toute la largeur (vu au rendu, corrigé).
+- TP mBot2 (3e_C9.1) : « Prêt·e à t'entraîner ? » et le Bonus, posés après `</main>`, deviennent des régions nommées
+  par leur titre (`aria-labelledby`) — sans bouger : le mode mission en fait des écrans parce qu'ils suivent la zone
+  principale. La licence va dans un pied.
+- Mini-quiz du pont en H (3e_C9.2) : le titre, le sous-titre et les badges dans un `<header>`.
+- 5 pages d'atelier des représentations (3e et 4e_C7.2, 4e_C8.3) : régénérées, licence dans un pied (#945).
+- 27 lexiques régénérés (#944), dont les quatre des dossiers de TP (3e_C7.6, 4e_C7.6, 5e_C7.2, 5e_C7.6).
+
+**Vérifié.** 37 pages : `region` 0 au chargement et page ouverte ; `controle_axe.mjs` (thème 3) : plus de `region`, aucun
+défaut grave ; `controle_page_ouverte.mjs --axe` : 0. Rendu 390 et 1 280 px, fermé et déplié : identique au pixel près
+(TP mBot2 : une colonne de la page varie d'un chargement à l'autre, main contre main ; la même zone, rien d'autre).
+`tests_atelier_C7.1.py` 48 / 48 ; `tests_pont_en_h.mjs` 37 / 37 ; `tests_3e_C9.1.mjs` 89 / 89 ;
+`tests_regle_311_3e_C9.1` 34 / 34 ; `controle_lexique_a_jour.py` à jour ; `banc_lecture.mjs` (lexiques) : 0 refus ;
+`controle_licence.py` : 415 pages.

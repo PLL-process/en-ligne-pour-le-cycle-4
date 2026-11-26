@@ -298,6 +298,10 @@ TETE = """<!DOCTYPE html>
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a><a href="%(retour)s">&#8592; Revenir à la séquence de %(niv)s</a><a href="qcm_C7.1_planification_taches.html">&#129504; Le QCM</a></nav>
+<!-- Zone principale ouverte dès le titre (26/11/2026) : le titre, le bandeau des tâches et la clôture étaient du
+     texte hors repère (axe-core `region`, 34 nœuds par page). L'ancien <main class="page"> devient un <div> ; la zone
+     se ferme après le pied, resté dans le dernier bloc .page (sa largeur ne change pas). -->
+<main>
 <div class="page">
 <h1>&#128197; Le diagramme de planification des tâches</h1>
 <p class="sous">Ce qui doit attendre, ce qui peut avancer en même temps — et la seule chaîne de tâches
@@ -379,7 +383,7 @@ HAUT = """
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="gp" id="tab-gp">Le logiciel<br>Pas à pas<span class="done" id="done-gp"></span></button>
 </div>
 <div id="tachesBandeau" aria-live="polite" aria-label="Ce qu'il y a à faire dans l'étape en cours"></div>
-<main class="page" id="contenu">
+<div class="page" id="contenu">
 """
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -1013,7 +1017,7 @@ GP_HTML = """
 # 8. Bilan, auto-positionnement, blocs de la règle n°4, pied de page
 # ══════════════════════════════════════════════════════════════════════════
 BAS_T = """
-</main>
+</div>
 <div class="page">
 
 <!-- Règles d'or n°4, n°301, n°306 : la clôture se lit Bonus → Bilan → renvoi au QCM. Jusqu'au 22/11/2026 le Bonus
@@ -1059,6 +1063,7 @@ BAS_T = """
 <footer>Ressource originale &middot; Thème 3 &middot; C7.1 &middot; images, licences et
 limites dans <code>SOURCES_MEDIAS.md</code> &middot; page utilisable hors ligne, aucune donnée
 envoyée.%(licence)s</footer>
+</main>
 """   # gabarit : formaté par page(), pas au chargement
 
 POS = opts(["je ne sais pas encore", "j'y arrive avec de l'aide",
