@@ -1469,14 +1469,18 @@ function montrer(haut){
 /* Les titres d'un écran se lisent sans sauter de niveau (audit du jardin connecté, 19/11/2026) : le titre d'écran est
    de niveau 2 ; un titre de l'écran ne descend que d'un niveau à la fois — « a) » (h4) sous le titre de l'activité (h2)
    s'annonce au niveau 3. Seul le niveau annoncé change (aria-level), pas la balise ; il revient en quittant la mission. */
+/* Un titre peut porter déjà son niveau annoncé (`aria-level`) : les exercices du kit incrustés dans une séquence le
+   reçoivent de leur générateur depuis le 25/11/2026 (« les titres incrustés suivent la séquence »). C'est ce niveau-là
+   qu'on lit, et qu'on rend en quittant la mission (`data-ms-niveau` le garde). Ne lire que la balise laissait passer un
+   saut de 3 à 5 dans l'écran d'un exercice incrusté (banc_generique, quatre séquences du thème 1). */
 function niveaux(){
-  $$("[data-ms-niveau]").forEach(function(h){ h.removeAttribute("aria-level"); h.removeAttribute("data-ms-niveau"); });
+  $$("[data-ms-niveau]").forEach(function(h){ var o = h.getAttribute("data-ms-niveau"); if (o) h.setAttribute("aria-level", o); else h.removeAttribute("aria-level"); h.removeAttribute("data-ms-niveau"); });
   if (!actif || !panneau) return;
   var avant = 2;
   $$("h2,h3,h4,h5,h6", panneau).forEach(function(h){
     if (!h.getClientRects().length) return;
-    var n = +h.tagName.charAt(1), v = Math.min(n, avant + 1);
-    if (v !== n && !h.hasAttribute("aria-level")){ h.setAttribute("aria-level", String(v)); h.setAttribute("data-ms-niveau", ""); }
+    var a = h.getAttribute("aria-level"), n = +(a || h.tagName.charAt(1)), v = Math.min(n, avant + 1);
+    if (v !== n){ h.setAttribute("data-ms-niveau", a || ""); h.setAttribute("aria-level", String(v)); }
     avant = v;
   });
 }
