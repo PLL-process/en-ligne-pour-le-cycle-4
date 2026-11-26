@@ -94,12 +94,43 @@ def bloc_moteur():
     return "%s\n<style>\n%s\n</style>\n<script>\n%s</script>\n%s\n" % (KIT[0], css_incruste(), moteur.KIT_JS, KIT[1])
 
 
-def section(inc):
+TITRE = re.compile(r'<h([1-6])\b([^>]*)>|<[a-z]+\b[^>]*\brole="heading"[^>]*>', re.I)
+NIVEAU = re.compile(r'\baria-level="(\d)"')
+
+
+def dernier_niveau(source):
+    """Le niveau du dernier titre écrit avant le point de pose (balise, ou `aria-level` qui la corrige), sans compter
+    ce que portent les scripts, les styles et les commentaires ; None s'il n'y en a pas."""
+    source = re.sub(r"<!--.*?-->|<script\b.*?</script>|<style\b.*?</style>", "", source, flags=re.S | re.I)
+    dernier = None
+    for m in TITRE.finditer(source):
+        n = NIVEAU.search(m.group(0))
+        if n:
+            dernier = int(n.group(1))
+        elif m.group(1):
+            dernier = int(m.group(1))
+    return dernier
+
+
+def niveau_de_pose(inc, source_avant):
+    """Le niveau du titre de l'incrustation dans la page : celui de sa balise, sauf s'il descendrait de plus d'un
+    niveau sous le titre qui la précède (26/11/2026 : cinq séquences posaient un h4 sous un h2, ou leurs exercices
+    en h5 sous les intertitres h3 du cours — vu page ouverte, axe-core `heading-order`)."""
+    voulu = int(inc["balise"][1])
+    dernier = dernier_niveau(source_avant)
+    return min(voulu, dernier + 1) if dernier else voulu
+
+
+def section(inc, niveau=None):
+    """`niveau` : le niveau du titre de la section dans la page (`niveau_de_pose`) ; ses exercices et les
+    intertitres de son cours sont un niveau plus bas."""
     if inc.get("rappel"):
         # la piqûre de rappel du cahier des charges : un exercice hors série, décrit dans donnees_rappel_cdc.py
         import donnees_rappel_cdc as rc
         r = next(x for x in rc.RAPPELS if x["id"] == inc["rappel"])
-        return moteur.rappel_cdc(r, (DEPOT / inc["sequence"]).parent, inc["balise"], inc["balise_exo"], fiche_repliee=True)
+        return moteur.rappel_cdc(r, (DEPOT / inc["sequence"]).parent, inc["balise"], inc["balise_exo"], fiche_repliee=True,
+                                 niveau=niveau)
+    sous = niveau + 1 if niveau else None
     at = importlib.import_module("donnees_" + inc["module"])
     niv = inc["niveau"]
     N = at.NIVEAUX[niv]
@@ -107,10 +138,11 @@ def section(inc):
     d = seq.parent
     defs = {}
     h = ['<section class="card atelier-incruste" id="incruste-%s" aria-labelledby="incruste-%s-titre">' % (inc["id"], inc["id"]),
-         '<%s id="incruste-%s-titre">%s</%s>' % (inc["balise"], inc["id"], inc["titre"], inc["balise"]),
+         '<%s id="incruste-%s-titre"%s>%s</%s>' % (inc["balise"], inc["id"], moteur.niveau_aria(inc["balise"], niveau),
+                                                 inc["titre"], inc["balise"]),
          '<p>%s</p>' % inc["intro"]]
     if inc.get("cours", True):
-        h.append(moteur.bloc_cours(at, niv, moteur.rel(d, build.synthese_eleve(at))))
+        h.append(moteur.bloc_cours(at, niv, moteur.rel(d, build.synthese_eleve(at)), niveau=sous))
     # numérotés dans l'ordre du bloc inséré (1, 2…), pas dans celui de l'atelier : la séquence lit « Exercice 1 », « Exercice 2 »
     # `premier_numero` (facultatif, 1 par défaut) : quand deux blocs se suivent dans la même activité, le second
     # continue la numérotation du premier (« Exercice 2 », « Exercice 3 ») au lieu de repartir à 1.
@@ -125,7 +157,8 @@ def section(inc):
         # Les minutes de l'exercice sont déjà comptées dans celles de l'activité qui l'accueille :
         # elles s'écrivent dans la ligne « Durée », pas dans le titre.
         # la fiche de l'exercice se replie dans la séquence (décision de Pascal du 15/11/2026)
-        html, df = moteur.exercice(ex, numeros[exo], uid, cle, balise=inc["balise_exo"], duree_au_titre=False, fiche_repliee=True)
+        html, df = moteur.exercice(ex, numeros[exo], uid, cle, balise=inc["balise_exo"], duree_au_titre=False, fiche_repliee=True,
+                                   niveau=sous)
         h.append(html)
         defs[uid] = df
     page = build.page_niveau(at, niv)
@@ -176,8 +209,16 @@ def garder_infobulles(ancien, neuf):
 
 def poser(inc, texte):
     debut, fin = marqueurs(inc["id"])
+    # le point de pose, pour lire le titre qui précède l'incrustation (son niveau en dépend)
+    if debut in texte:
+        pos = texte.index(debut)
+    elif "remplacer" in inc:
+        pos = texte.index(inc["remplacer"][0])
+    else:
+        pos = texte.find(inc.get("avant", ""))
     # `html` : le nom d'un texte du module (un dessin, sans exercice) — posé tel quel, sans le moteur des exercices
-    contenu = getattr(importlib.import_module("donnees_" + inc["module"]), inc["html"]) if inc.get("html") else section(inc)
+    contenu = (getattr(importlib.import_module("donnees_" + inc["module"]), inc["html"]) if inc.get("html")
+               else section(inc, niveau_de_pose(inc, texte[:max(pos, 0)])))
     # `replie` (facultatif, 08/11/2026, révision des trois thèmes : la charge de lecture) : le texte d'un résumé ; la
     # section se range dans un <details> fermé, au même endroit. Pour un rappel, qui ne sert qu'à qui l'a oublié.
     # 10/11/2026 (révision des trois thèmes) : le texte de l'incrustation s'aère ici, à sa source — un retour à la

@@ -37777,3 +37777,34 @@ est soumise d'abord à Pascal.
 `verif_regles_audit` sans écart.
 
 **Reste**, déjà noté dans la fiche : la séance 2 annonce 35 + 25 = 60 minutes d'activités.
+
+## 26/11/2026 — Structure page ouverte, thème 1 : les titres incrustés suivent la séquence (générateur des ateliers)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 1 h 45) : corriger les niveaux de titres dans le générateur des ateliers,
+puis faire refuser aussi la page ouverte.
+
+**Le constat**, page ouverte à 390 px (détails, corrections et onglets dépliés), avec les quatre règles de structure
+que `controle_axe.mjs` refuse au chargement : 10 pages en défaut, toutes à 0 au chargement parce que le titre fautif
+dort dans un `<details>` ou un onglet fermé.
+- Générateur des ateliers (8 pages, dont 5e_C4.1 au thème 2) : les intertitres du cours incrusté sont des `<h3>`, les
+  exercices qui suivent des `<h5>` ; et dans 3e, 4e et 5e_C3.1, une incrustation posée en `<h4>` sous le `<h2>` de
+  l'activité.
+- 3e_C1.5, à la main : deux `<h4>` dans la correction de l'activité 1 bis, sous son `<h2>`.
+
+**Ce qui change.** `incrustations.py` lit le dernier titre écrit avant le point de pose (balise, ou `aria-level` qui
+la corrige) et pose l'incrustation au plus un niveau plus bas (`niveau_de_pose`). Le moteur écrit ce niveau en
+`aria-level` sur le titre de l'incrustation, sur ses exercices et sur les intertitres de son cours (`niveau_aria`).
+La balise ne change pas, donc le style non plus. Les pages d'atelier ne changent pas (`build.py` relancé : aucune page
+réécrite). 3e_C1.5 : `aria-level="3"` sur les deux `<h4>` de sa correction.
+
+**Thème 1, 10 pages** : 3e_C1.5, 4e_C1.1, 5e_C1.2, 5e_C1.3, 3e_C2.1, 4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1, 5e_C3.1 par le
+générateur (les intertitres de cours passent sous le titre de leur incrustation, même là où rien ne sautait), et la
+correction de 3e_C1.5 à la main. Les pages des thèmes 2 et 3 que le générateur réécrit suivent dans leurs PR.
+
+**Vérifié.** `tests_incrustations_niveaux.py` (nouveau) : 17 / 17 ; mutation (`niveau_de_pose` rendu à la balise) :
+3 échecs, sortie 1. `tests_incrustations_infobulles.py` 5 / 5 ; `incrustations.py --verifier` à jour partout.
+`controle_page_ouverte.mjs --axe` sur les 342 pages, toutes corrections comprises (thèmes 2 et 3 inclus) : S 0, A 0,
+L 0, B 0. `controle_axe.mjs` au chargement, 410 pages : sortie 0. Rendu avant/après, fermé et déplié, à 390 et
+1 280 px : identique au pixel près sur les 17 pages (5e_C4.1 et la page tout-en-un de 3e_C9.2 varient d'un
+chargement à l'autre, main contre main ; chacune a donné un passage identique). `tests_regle_311` des 16 dossiers
+touchés : tous verts ; `controle_mode_mission` 0 refus.
