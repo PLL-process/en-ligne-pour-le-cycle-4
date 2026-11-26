@@ -9,7 +9,7 @@
 | **Code principal** | `3e_C8.1` — 20 questions de QCM |
 | **Code d'appui** | `3e_C3.4` — *définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d’un ost.* — 10 questions |
 | **Socle** | D1.3 · D2 · D4 · D5 |
-| **Durée** | 3 séances de 55 min — 135 min d'activités obligatoires, marge +30 min |
+| **Durée** | 3 séances de 55 min — 115 min d'activités en classe (25 ; 30 + 25 ; 30 + 5), et 30 min à la maison, ou en classe s'il reste du temps (réinvestissement 20, écrit « comme au brevet » 10) |
 | **Matériel** | un navigateur, hors ligne. Aucune installation, aucun compte. |
 | **Prérequis** | `3e_C8.2` « proposer un protocole » — ce lot en reprend les cinq profilés |
 
@@ -54,10 +54,10 @@ reproduira pas.*
 | Séance | Activité | Durée | Verrou exigé | Production |
 |---|---|---|---|---|
 | 1 | 1 — Refaire dire au calcul ce que le banc a dit | 25 min | `regle` | 2 réponses |
-| 2 | 2 — Le vent ne pousse pas comme le banc | 35 min | `vent` | 3 réponses |
+| 2 | 2 — Le vent ne pousse pas comme le banc | 30 min | `vent` | 3 réponses |
 | 2 | 3 — À quelle limite compares-tu ? | 25 min | `bonreglage` | 2 nombres + 1 réponse |
 | 3 | 4 — Le bon réglage, et ce qu'il ne voit pas | 30 min | `bonreglage` | 1 profilé + 1 réserve |
-| 3 | 5 — Réinvestissement (le quai du port, 180 km/h) | 20 min | — | 2 réponses |
+| 3 | 5 — Réinvestissement (le quai du port, 180 km/h) | ~20 min, à la maison ou en classe s'il reste du temps | — | 2 réponses |
 | 3 | Explique comme au brevet (le quai du port, sans propositions — n°346, 22/11/2026) | ~10 min, faisable à la maison | — | 3 réponses écrites, comparées à la correction, grille cochée par l'élève |
 
 ## 5. Les trois versions
@@ -112,12 +112,13 @@ l'ouverture et 60 min d'activités.
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Vérifier l'instrument | Réglée comme le banc, la simulation retrouve-t-elle son verdict ? | Ouverture (situation, problématique, hypothèse, cahier des charges, billet), activité 1 | ouverture + 25 min |
-| 2 — Un réglage à la fois | Que change au verdict le cas de charge, puis la limite ? | Activités 2 et 3 | 35 + 25 = 60 min |
+| 2 — Un réglage à la fois | Que change au verdict le cas de charge, puis la limite ? | Activités 2 et 3 | 30 + 25 = 55 min |
 | 3 — Décider, refaire, conclure | Quel réglage répond au cahier des charges, et que ne voit-il pas ? | Activité 4, synthèse, billet de sortie, Bonus (corrigé par défi), bilan ; à la maison, ou en classe s'il reste du temps : réinvestissement, écrit « comme au brevet », QCM | 30 + 5 min + clôture ; 20 + 10 min à la maison |
 
-**À trancher par Pascal :** la séance 2 annonce 60 min d'activités pour 55. Trois séances ne peuvent pas faire mieux sans
-couper une activité (135 min d'activités, plus l'ouverture et la clôture, pour 165) ; si la séance déborde, l'activité 3
-se termine au début de la séance 3, qui en a la place.
+**Séance 2 ramenée à 55 min** (26/11/2026, carte blanche de Pascal) : elle annonçait 60 min d'activités. L'activité 2
+passe de 35 à 30 min : un seul réglage change (le cas de charge), et ses trois questions se lisent sur le tableau des
+moments. Si la séance déborde quand même, l'activité 3 se termine au début de la séance 3, qui en a la place depuis que
+le réinvestissement et l'écrit « comme au brevet » se font à la maison.
 
 Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Restent visibles à chaque séance : le titre, la
 mission, la barre d'outils (🖨 Imprimer / PDF) et **le simulateur**, sorti de l'activité 1 parce qu'il sert aux activités

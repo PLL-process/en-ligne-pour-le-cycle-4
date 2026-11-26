@@ -186,3 +186,20 @@ correction complète. Le réinvestissement passe à la maison, comme en 5e_C8.1.
 Regardé à 312 px (les trois documents) et à 390 px (le billet) : lisible, aucun défilement de côté, 0 erreur JavaScript.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 26/11/2026 — Séance 1 ramenée à 55 min : l'activité 0 casse deux éprouvettes
+
+Décision de Pascal (carte blanche) : l'activité 0 casse **deux** éprouvettes de matériaux différents au lieu de trois
+(par exemple le bois à 41 kg, puis l'aluminium à 194 kg) ; elle passe de 10 à 5 min. Les deux questions et leur
+correction ne changent pas ; les pourquoi « relis tes trois essais / relevés » disent « deux » (page et `mission_5e_C8.2.json`).
+Le verrou devient `banc2` (deux ruptures) ; `restore()` le rouvre depuis la liste des éprouvettes cassées, si bien qu'une
+sauvegarde d'avant (qui disait `banc3`) ne bloque pas l'élève.
+
+Exécuté, dans le dossier du lot ou à la racine :
+- `node tests_5e_C8.2_sequence.mjs` : **26 / 26** — le test 7 refuse l'activité 0 après une seule rupture (le bois) ; le
+  test 8 l'ouvre après la deuxième (l'aluminium) et lit « Deux éprouvettes cassées » ; le test 22 relit `banc2` et `banc5`
+  après rechargement.
+- `node tests_regle_311_5e_C8.2.mjs` : **34 / 34**.
+- `verif_regles_audit.py` sur le lot : n°23 « 85 min annoncés (+10 de service) pour 110 disponibles », sortie 0.
+- `audit_aeration.py --strict`, `controle_squelette.mjs`, `mode_mission/banc_generique.mjs`, `enrichir.py --verifier-tout`,
+  `controle_liens.py` : verts.

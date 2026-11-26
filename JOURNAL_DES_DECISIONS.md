@@ -38404,3 +38404,23 @@ nommait déjà les cinq du TP « Le dé, en mieux ».
 **Thème par thème** (n°302) : thème 1 — `freins_iso` et son générateur ; thème 2 — `station_en_pieces`,
 `lampadaire_en_pieces` et leurs générateurs ; thème 3 — `RELEVE_DES_CAPTURES_3e.md` ; les trois thèmes — le bloc
 reposé ; `_outils` — `mode_mission/mission.js`, `poser.py`, `banc_lecture.mjs`, `controle_mode_mission.py` et son banc.
+
+## 26/11/2026 — Deux séances ramenées à 55 minutes : 5e_C8.2 (séance 1) et 3e_C8.1 (séance 2) (thème 3)
+
+Pascal, sur les deux points laissés « à trancher » : « Tu as carte blanche ».
+
+- **5e_C8.2, séance 1** (environ 60 min) : l'activité 0 casse **deux** éprouvettes de matériaux différents au lieu de
+  trois (par exemple le bois à 41 kg, puis l'aluminium à 194 kg). Deux matériaux suffisent à voir qu'ils ne cassent pas au
+  même moment ; les deux questions et leur correction restent. L'activité passe de 10 à 5 min, la séance fait ouverture
+  (environ 10) + 5 + 15 + 25 = 55 min. Le verrou devient `banc2`, rouvert au rechargement depuis la liste des éprouvettes
+  cassées (une sauvegarde d'avant ne bloque pas l'élève) ; les cinq matériaux restent à casser à l'activité 2.
+- **3e_C8.1, séance 2** (60 min) : l'activité 2 passe de 35 à 30 min — un seul réglage change, et ses trois questions se
+  lisent sur le tableau des moments. La séance fait 30 + 25 = 55 min.
+
+Bancs rejoués : `tests_5e_C8.2_sequence.mjs` 26 / 26 (verrou à deux ruptures, relu après rechargement),
+`tests_regle_311_5e_C8.2.mjs` 34 / 34, `tests_3e_C8.1_sequence.mjs` 64 / 64 ; `verif_regles_audit.py` (n°23 : 85 min
+pour 110, 145 min pour 165), `audit_aeration.py --strict`, `controle_squelette.mjs`, le mode mission joué
+(`banc_generique.mjs`), `enrichir.py --verifier-tout`, `controle_liens.py` : verts.
+
+**Thème par thème** (n°302) : thème 3 seulement — `5e_C8.2` (séquence, mission, synthèse professeur, fiche, banc,
+rapport) et `3e_C8.1` (séquence, fiche, rapport).
