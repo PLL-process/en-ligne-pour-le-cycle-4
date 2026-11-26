@@ -69,7 +69,12 @@ for (const PAGE of pages) {
         const verif = !document.getElementById('msVerif').hidden, exo = verif || !document.getElementById('msVide').hidden;
         const champs = [...P.querySelectorAll('fieldset.qcm-groupe, select[id]:not([data-interface])')].filter(f => vu(f) && !f.classList.contains('ms-origine'));
         // page à cartes : les blocs rangés après le conteneur (« Prêt·e à t'entraîner », Bonus) font partie des écrans
-        const dehors = []; if (document.documentElement._mission.gabarit().page) for (let x = P.nextElementSibling; x; x = x.nextElementSibling) if (x.matches('section, article, .card, .carte')) dehors.push(x);
+        // ce que l'écran montre hors du panneau : les cartes qui suivent le conteneur (page sans séances), ou la clôture
+        // rangée après les panneaux d'une page à onglets — elle forme les derniers écrans du dernier panneau
+        const G0 = document.documentElement._mission.gabarit(), dehors = [];
+        if (G0.page) { for (let x = P.nextElementSibling; x; x = x.nextElementSibling) if (x.matches('section, article, .card, .carte')) dehors.push(x); }
+        else { const tous = [...document.querySelectorAll(G0.P)], der = tous[tous.length - 1];
+          if (der === P) document.querySelectorAll('section.card, div.carte').forEach((c) => { if ((der.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING) && !der.contains(c) && !c.closest(G0.P) && !(c.parentElement && c.parentElement.closest('section.card, div.carte')) && !c.closest('.ms-seul, .ms-invite, footer')) dehors.push(c); }); }
         const texte = [...P.children].concat(dehors).filter(vu).map(c => c.innerText).join(' ').replace(/\s+/g, ' ').trim();
         return { k, n: rail.length, titre: document.getElementById('msOu').childNodes[0].textContent, verif, exo,
           etq: [...P.querySelectorAll('.ms-etq, .cac.cac-pret')].filter(vu).length, avecCle: champs.filter(f => cles[f.id] !== undefined && !f.classList.contains('positionnement')).map(f => f.id),

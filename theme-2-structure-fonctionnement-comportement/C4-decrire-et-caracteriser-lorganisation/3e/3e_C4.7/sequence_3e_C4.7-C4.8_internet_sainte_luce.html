@@ -1166,9 +1166,25 @@ function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas
 /* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (« Prêt·e à t'entraîner » et le Bonus
    du TP mBot2, posés avant </body>) font des écrans comme les autres */
 function suivants(P){ var o = []; for (var x = P.nextElementSibling; x; x = x.nextElementSibling) if (estBloc(x) && rendu(x)) o.push(x); return o; }
+/* Une page à onglets qui range sa clôture APRÈS ses panneaux (l'atelier de planification : Bonus, Bilan, QCM, traces ;
+   l'entraînement au brevet : « Pour aller plus loin ») la montre sous chaque onglet. En mission, ces cartes restaient
+   sous chaque écran. Elles deviennent les derniers écrans du dernier panneau, et se cachent ailleurs (25/11/2026).
+   Aucune des 60 séquences n'en porte : leur clôture vit dans la dernière séance (règle d'or n°306). */
+var _hors = null;
+function horsPanneaux(){
+  if (_hors) return _hors; _hors = [];
+  if (G.page) return _hors;
+  var P = $$(G.panneau), der = P[P.length - 1]; if (!der) return _hors;
+  $$(CARTE).forEach(function(c){
+    if (!(der.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING) || der.contains(c)) return;      // après le dernier panneau, dans l'ordre de la page
+    if (c.closest(G.panneau) || (c.parentElement && c.parentElement.closest(CARTE)) || c.closest(".ms-seul, .ms-invite, footer") || !rendu(c)) return;
+    _hors.push(c);
+  });
+  return _hors;
+}
 function construire(P){
-  var E = [], portes = [], devant = [];
-  enfants(P).concat(G.page ? suivants(P) : []).forEach(function(C){
+  var E = [], portes = [], devant = [], tousP = $$(G.panneau);
+  enfants(P).concat(G.page ? suivants(P) : (P === tousP[tousP.length - 1] ? horsPanneaux() : [])).forEach(function(C){
     if (C.classList.contains("page-suivante") || !rendu(C)) return;          // ce que la page cache d'elle-même (fiche professeur) ne fait pas d'écran
     /* le bouton « Exercice 2 › » du kit des ateliers, seul dans son paragraphe : le mode porte le sien */
     if (C.tagName === "P" && C.children.length === 1 && C.firstElementChild.matches("button.suivant[data-vers]")){ C.classList.add("ms-origine"); return; }
@@ -1379,7 +1395,11 @@ function etatPas(e, j){
   if (avec.length) return avec.every(function(f){ return lireV(f); }) ? "repondu" : "";
   if (e.dernier && e.check) return passe ? "repondu" : "";          // la vérification de la page attend son appui
   var ts = textes(e);
-  if (e.champs.length || ts.length) return e.champs.every(function(f){ return lireV(f); }) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
+  /* une question à cases à cocher (le kit des ateliers : « coche tout ce qui manque ») n'a pas de valeur unique : elle
+     est répondue dès qu'une case l'est. Lue comme un groupe de boutons radio, elle ne l'était jamais, et son écran
+     restait éteint dans la barre, écrit et dépassé (banc_barre, B2, cinq pages du kit — 25/11/2026). */
+  function repondu(f){ return !!lireV(f) || (f.tagName === "FIELDSET" && !$("input[type=radio]", f) && !!$("input[type=checkbox]:checked", f)); }
+  if (e.champs.length || ts.length) return e.champs.every(repondu) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
   return passe ? "fait" : "";
 }
 function barre(){
@@ -1466,6 +1486,7 @@ function montrer(haut){
   s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau && panneau.contains(p); p = p.parentNode) vis.push(p); });
   if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau && panneau.contains(p); p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
+  horsPanneaux().forEach(function(n){ if (ecrans.tous.indexOf(n) < 0) n.classList.add("ms-cache"); });      // la clôture rangée après les panneaux : au dernier seulement
   var ouv = $("#ouverture"); if (ouv) ouv.classList.toggle("ms-cache", !s.ouverture);
   /* « l'éditeur Python est intégré à l'activité » ne se dit que là où on le voit : sur les écrans de prédiction,
      qui viennent avant lui, l'annonce se tait (17/11/2026) */

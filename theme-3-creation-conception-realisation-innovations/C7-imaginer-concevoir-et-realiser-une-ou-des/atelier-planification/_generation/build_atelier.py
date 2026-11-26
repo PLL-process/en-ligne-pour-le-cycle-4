@@ -1302,7 +1302,10 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
     const res=CHECKS[n]();
     const zone=$("fb"+n);
     zone.textContent = "Score : "+res.score+" / "+res.total+"."+(res.extra||"");
-    zone.className = "feedback " + (res.valide ? "ok" : (res.score>0 ? "mixte" : "err"));
+    /* « show » : la feuille de style cache `.feedback` tant qu'il n'a rien à dire. Sans ce mot, le score et le conseil
+       étaient écrits mais jamais affichés — sur les six vérifications de la page (vu le 25/11/2026 par le banc du
+       mode mission : « le message de la vérification de la page ne s'affiche pas »). */
+    zone.className = "feedback show " + (res.valide ? "ok" : (res.score>0 ? "mixte" : "err"));
     window.__valid[n] = !!res.valide;
     save(); majProgres();
   });

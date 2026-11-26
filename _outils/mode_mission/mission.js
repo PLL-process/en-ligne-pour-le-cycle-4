@@ -596,7 +596,11 @@ function etatPas(e, j){
   if (avec.length) return avec.every(function(f){ return lireV(f); }) ? "repondu" : "";
   if (e.dernier && e.check) return passe ? "repondu" : "";          // la vérification de la page attend son appui
   var ts = textes(e);
-  if (e.champs.length || ts.length) return e.champs.every(function(f){ return lireV(f); }) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
+  /* une question à cases à cocher (le kit des ateliers : « coche tout ce qui manque ») n'a pas de valeur unique : elle
+     est répondue dès qu'une case l'est. Lue comme un groupe de boutons radio, elle ne l'était jamais, et son écran
+     restait éteint dans la barre, écrit et dépassé (banc_barre, B2, cinq pages du kit — 25/11/2026). */
+  function repondu(f){ return !!lireV(f) || (f.tagName === "FIELDSET" && !$("input[type=radio]", f) && !!$("input[type=checkbox]:checked", f)); }
+  if (e.champs.length || ts.length) return e.champs.every(repondu) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
   return passe ? "fait" : "";
 }
 function barre(){
