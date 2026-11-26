@@ -27,6 +27,7 @@ a,a:where(:visited){color:var(--hl)}dl dt{font-weight:700;margin-top:8px}dl dd{m
 table{width:100%;border-collapse:collapse;font-size:.92em}th,td{border:1px solid #2f5695;padding:6px 9px;text-align:left;vertical-align:top}
 th{background:#0a1b3d;color:var(--sub)}.defile{overflow-x:auto}
 @media (max-width:600px){.defile{overflow-x:auto;-webkit-overflow-scrolling:touch}.figure{overflow-x:auto}}
+@@EMPILE@@
 .figure svg{width:100%;height:auto;max-width:820px;display:block;margin:8px auto;border:1px solid var(--border);border-radius:10px;background:#fbfcff}
 .retenir li{margin:6px 0}.piege li{margin:6px 0}
 .bloc{border-left:4px solid var(--hl);padding:8px 14px;background:rgba(11,27,57,.6);border-radius:0 8px 8px 0;margin:10px 0}
@@ -37,6 +38,7 @@ th{background:#0a1b3d;color:var(--sub)}.defile{overflow-x:auto}
 @media print{body{background:#fff;color:#111;font-size:11.5pt}#navharm,.btn{display:none}.card{background:#fff;border-color:#999;break-inside:avoid-page}
 h1,h2,h3{color:#111}a,a:visited{color:#00309e!important}.sous{color:#1a3a7a}th{background:#eee;color:#111}.bloc{background:#fff}}
 """
+CSS = CSS.replace("@@EMPILE@@", moteur.EMPILE_CSS)  # les tableaux de la synthèse professeur s'empilent sur téléphone
 
 
 def _tete(titre, description, navigation):
@@ -55,7 +57,7 @@ def professeur(at, page_niveau, chemins_fn, chemin):
     h.append("<h1>%s %s — synthèse professeur</h1>" % (at.EMOJI, at.TITRE))
     # Le référentiel, recopié sans réécriture
     h.append('<div class="bloc referentiel-eleve card"><h2>📚 Le référentiel de l\'atelier — en toutes lettres</h2>'
-             + moteur.tableau_referentiel(at))      # une seule table, partagée avec la page élève (n°298 amendée)
+             + moteur.tableau_referentiel(at, empile=True))      # une seule table, partagée avec la page élève (n°298 amendée)
     h.append("<p><small>Référence normative&nbsp;: programme de technologie du cycle 4, BO n°9 du 29 février 2024. "
              "Codification opérationnelle&nbsp;: les codes (5e_C2.1…) sont des codes de classement internes à ce dépôt&nbsp;; ils ne "
              "figurent pas comme tels au BO.</small></p></div>")
@@ -68,7 +70,7 @@ def professeur(at, page_niveau, chemins_fn, chemin):
     for niv, N in at.NIVEAUX.items():
         total = sum(x["duree"] for x in N["exercices"])
         h.append('<section class="card"><h2>🧭 %s — déroulé (≈ %d min d\'exercices, une séance de 55 min avec l\'ouverture et le bilan)</h2>'
-                 '<div class="defile"><table><thead><tr><th scope="col">Exercice</th><th scope="col">Code</th><th scope="col">Durée</th>'
+                 '<div class="defile"><table class="empile"><thead><tr><th scope="col">Exercice</th><th scope="col">Code</th><th scope="col">Durée</th>'
                  '<th scope="col">Production de l\'élève</th><th scope="col">Ce que vérifie la page</th></tr></thead><tbody>' % (niv, total))
         noms = moteur.libelles(N["exercices"])
         for i, ex in enumerate(N["exercices"]):
@@ -79,8 +81,9 @@ def professeur(at, page_niveau, chemins_fn, chemin):
                                "slots": "les cases du schéma", "croquis": "un croquis et sa relecture",
                                "tableau": "un tableau à compléter case par case (menus déroulants)",
                                "menus": "des menus posés dans les cases du schéma, un retour par mot faux"}[w["type"]])
-            h.append("<tr><td>%s — %s</td><td>%s</td><td>%d min</td><td>%s</td><td>%s</td></tr>"
-                     % (noms[i], ex["titre"], e(ex["code"]), ex["duree"], ex["production"], " ; ".join(verifs)))
+            h.append(moteur.ligne_empilee(("Exercice", "Code", "Durée", "Production de l'élève", "Ce que vérifie la page"),
+                                          ("%s — %s" % (noms[i], ex["titre"]), e(ex["code"]), "%d min" % ex["duree"],
+                                           ex["production"], " ; ".join(verifs))))
         h.append("</tbody></table></div>")
         h.append("<h3>Corrigés, en bref</h3><ol>")
         for ex in N["exercices"]:

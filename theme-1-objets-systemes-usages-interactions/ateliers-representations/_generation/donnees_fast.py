@@ -391,7 +391,8 @@ E3 = dict(
               "phénomène, à quel endroit.<br>"
               "① <b>Range chaque propriété</b>&nbsp;: est-elle vraie pour le frein à patins, pour le frein à "
               "disque, ou pour les deux&nbsp;?<br>"
-              "② <b>Choisis</b> le frein du vélo-cargo de Léa et <b>justifie</b> ton choix en une phrase.</p>"),
+              "② <b>Choisis</b> le frein du vélo-cargo de Léa.<br>"
+              "③ <b>Justifie</b> ton choix en une phrase.</p>"),
     critere="cinq propriétés bien rangées, le choix qui convient à Léa, et une phrase qui cite la pluie et les côtes (ou la charge).",
     widgets=[dict(type="classer", name="prop",
                   categories=[("patins", "le frein à patins"), ("disque", "le frein à disque"), ("deux", "les deux")],

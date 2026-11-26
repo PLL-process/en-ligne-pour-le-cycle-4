@@ -938,7 +938,7 @@ function candidats(){
   return cles;
 }
 /* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
-   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   le script JSON d'identifiant « donnees-page », par NOM de champ : `choix` {name, bonne, retours},
    `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
    Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
 var _noms = null;
@@ -999,7 +999,7 @@ function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"
    écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
    six séquences du thème 1 — vu par banc_generique avant la livraison). */
 var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
-/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (le bouton « verifier » des ateliers, seul dans son p) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
 function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
@@ -2413,7 +2413,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
       <div><b>Production attendue :</b> 2 pannes résolues au simulateur + 2 questions.</div>
       <div><b>Ressources :</b> simulateur ci-dessous — les valeurs attendues sont : T1 ≈ 12 V (volts) · T2 ≈ 12 V · T3 = signal présent · T4 ≈ 12 V pendant le test.</div>
     </div></details>
-    <div class="consigne"><b>Consigne :</b> la panne n°1 est active.<br>a) Mesure les points T1 → T4 <b>dans l'ordre</b>.<br>b) Désigne l'élément défectueux.<br>c) Remplace-le et relance le test complet.<br>d) Résous la panne n°2.<br>Le compteur de mesures t'indique ton efficacité : un bon dépanneur ne mesure pas au hasard !</div>
+    <div class="consigne"><b>Consigne :</b> la panne n°1 est active.<br>a) Mesure les points T1 → T4 <b>dans l'ordre</b>.<br>b) Désigne l'élément défectueux.<br>c) Remplace-le.<br>&emsp;Relance ensuite le test complet.<br>d) Résous la panne n°2.<br>Le compteur de mesures t'indique ton efficacité : un bon dépanneur ne mesure pas au hasard !</div>
     <div class="exo">
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center">
         <span style="font-size:.9em">Panne active : <b id="simPanneNum" style="color:var(--warn)">n°1</b></span>
@@ -2421,7 +2421,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
         <button class="btn small ghost" id="btnTestSirene" type="button">🔔 Lancer le test sirène</button>
       </div>
       <div id="simEtatSirene" role="status" aria-live="polite" style="text-align:center;font-weight:700;padding:10px;border-radius:10px;background:rgba(255,123,136,.12);color:#ffb0b8;margin-bottom:10px">— lance le test pour constater le symptôme —</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="zoneMesures">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px" id="zoneMesures">
         <button class="btn small" data-mesure="T1" type="button">📏 Mesurer T1<br><small>batterie</small></button>
         <button class="btn small" data-mesure="T2" type="button">📏 Mesurer T2<br><small>après fusible</small></button>
         <button class="btn small" data-mesure="T3" type="button">📏 Mesurer T3<br><small>sortie µC</small></button>

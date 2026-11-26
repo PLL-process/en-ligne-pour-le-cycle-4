@@ -1166,7 +1166,7 @@ function candidats(){
   return cles;
 }
 /* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
-   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   le script JSON d'identifiant « donnees-page », par NOM de champ : `choix` {name, bonne, retours},
    `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
    Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
 var _noms = null;
@@ -1227,7 +1227,7 @@ function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"
    écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
    six séquences du thème 1 — vu par banc_generique avant la livraison). */
 var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
-/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (le bouton « verifier » des ateliers, seul dans son p) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
 function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
@@ -3511,7 +3511,7 @@ commande l’énergie (en bas)</title><desc id="c22d">Convention de la technolog
       <button type="button" data-fichier="bibliotheque_chaines_book-train.xml">🧩 <strong>bibliotheque_chaines_book-train.xml</strong> — la bibliothèque de formes « chaînes » : NOS blocs dans TA palette (voir Étape H du guide)</button>
       <p style="font-size:.88rem;color:#5a6068;margin:.5rem 0 .2rem">Les fichiers sont vierges de toute numérotation — si des pastilles jaunes apparaissent chez toi, c'est un réglage d'affichage : panneau Diagramme (rien de sélectionné) → décoche <em>Numbered</em>.</p>
     </div>
-    <div class="consigne">📌 <strong>Consigne :</strong><br>① Ouvre <code>chaine_information_a_completer.drawio</code> dans draw.io et complète la chaîne d'information, étape par étape.<br>② Coche chaque étape quand elle est faite.<br>③ Vérifie.</div>
+    <div class="consigne">📌 <strong>Consigne :</strong><br>① Ouvre <code>chaine_information_a_completer.drawio</code> dans draw.io.<br>② Complète la chaîne d'information, étape par étape.<br>③ Coche chaque étape quand elle est faite.<br>④ Vérifie.</div>
     <div id="exo13">
       <div class="ligne-exo"><input type="checkbox" id="e13a" data-save style="width:1.3rem;height:1.3rem"><label for="e13a"><strong>Étape 1 —</strong> J'ai ouvert le fichier dans draw.io et repéré la <strong>réserve de blocs</strong> en bas de la page ainsi que les trois emplacements en pointillés du bloc ACQUÉRIR.</label></div>
       <div class="ligne-exo"><input type="checkbox" id="e13b" data-save style="width:1.3rem;height:1.3rem"><label for="e13b"><strong>Étape 2 —</strong> J'ai glissé les <strong>3 blocs d'acquisition</strong> (terminal de commande, capteurs de station, capteur « wagonnet vacant ») dans les bons emplacements — en réfléchissant à ce que chacun mesure.</label></div>
@@ -3839,7 +3839,7 @@ commande l’énergie (en bas)</title><desc id="c22d">Convention de la technolog
   <div class="carte">
     <h3>Activité 3.2 — Construire l'algorigramme dans draw.io <span style="font-size:.7em;font-weight:normal;opacity:.8">(~38 min)</span></h3>
     <p class="competence-visee">🎯 <strong>CRCN 3.4 Programmer</strong> — lire et construire un algorigramme normalisé (niveau 2).</p>
-    <div class="consigne">📌 <strong>Consigne :</strong><br>① Ouvre draw.io et construis l'algorigramme complet du trajet du livre, du Début à la Fin, avec <strong>au moins les deux tests</strong> (« wagonnet vacant ? » et « arrivé au 3ᵉ étage ? »).<br>② Enregistre ton fichier sous le nom <code>book-train.drawio</code>.</div>
+    <div class="consigne">📌 <strong>Consigne :</strong><br>① Ouvre draw.io.<br>② Construis l'algorigramme complet du trajet du livre, du Début à la Fin, avec <strong>au moins les deux tests</strong> (« wagonnet vacant ? » et « arrivé au 3ᵉ étage ? »).<br>③ Enregistre ton fichier sous le nom <code>book-train.drawio</code>.</div>
     <details class="guide-replie" id="guide-drawio"><summary>🧭 Guide draw.io pas à pas (étapes A à H) — ouvre-le si tu ne sais pas faire : personne ne reste sur le quai !</summary>
 
     <p><strong>Étape A — Ouvrir draw.io</strong> (aucun compte nécessaire, aucun envoi de tes fichiers sur internet) :</p>
@@ -4109,7 +4109,7 @@ commande l’énergie (en bas)</title><desc id="c22d">Convention de la technolog
   <div class="carte">
     <h3>Activité 4.1 — L'expérience du zoom 🔍 <span style="font-size:.7em;font-weight:normal;opacity:.8">(~5 min)</span> <span style="font-size:.8rem;background:var(--laiton);color:#fff;border-radius:999px;padding:.1rem .6rem;vertical-align:middle">manipulation obligatoire</span></h3>
     <p class="competence-visee">🎯 <strong>CRCN 3.3 Adapter les documents à leur finalité</strong> — choisir et justifier un format d'export (niveau 2).</p>
-    <div class="consigne">📌 <strong>Consigne :</strong> le même losange a été exporté deux fois : à gauche en image <strong>vectorielle</strong> (comme un SVG), à droite en image <strong>matricielle</strong> (comme un PNG basse résolution). Pousse le zoom <strong>au maximum</strong> et observe la différence. Cette manipulation est exigée par le vérificateur.</div>
+    <div class="consigne">📌 <strong>Consigne :</strong><br>Le même losange a été exporté deux fois : à gauche en image <strong>vectorielle</strong> (comme un SVG), à droite en image <strong>matricielle</strong> (comme un PNG basse résolution).<br>① Pousse le zoom <strong>au maximum</strong>.<br>② Observe la différence.<br>Cette manipulation est exigée par le vérificateur.</div>
     <div class="comparateur">
       <div class="fenetre-zoom"><span class="etiquette">Vectoriel (type SVG)</span>
         <div class="scene scene-zoom">

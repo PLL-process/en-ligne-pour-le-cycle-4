@@ -5,6 +5,7 @@
  *   crochet     corrections fabriquées par `window.__toutOuvrir()`, avec la même phrase et un bloc dessiné → B et C ;
  *   sans_crochet les mêmes corrections, sans crochet → rien (c'est la limite que le crochet lève) ;
  *   listing     une ligne de code de 120 caractères à 390 px → L ;
+ *   deborde     une formule dans un <code> insécable → D (un) ; deborde_remede, la même coupée après chaque « ; » → rien ;
  *   codebox     la même ligne dans un `div` en chasse fixe qui garde ses lignes (`white-space:pre`), et un bandeau
  *               `nowrap` en chasse fixe coupé au bord → L (deux) ; le même bloc en `pre-wrap` → rien ;
  *   repete      une ligne d'aide marquée `data-repete` dans chaque correction → rien ;
@@ -45,6 +46,11 @@ const pages = {
   codebox: page('<div class="codebox" style="font-family:monospace;white-space:pre;overflow-x:auto">' + 'valeur = lire_capteur(A0) * 100 / 1023 + correction_de_temperature(ambiante) - decalage'.padEnd(120, ' ') + '</div>'
     + '<div class="terminal" style="font-family:monospace;white-space:nowrap;overflow:hidden">Protéger ses données • Comprendre les risques • Devenir citoyen numérique éclairé</div>'
     + '<div class="codebox" style="font-family:monospace;white-space:pre-wrap;overflow-wrap:anywhere">' + 'x = 1 ; '.repeat(20) + '</div>'),
+  // D (26/11/2026) : une formule dans un <code> insécable, une rangée de quatre boutons trop larges ; et leurs remèdes
+  deborde: page('<p>Tape <code style="display:inline-block;font-weight:700">=MOYENNE.SI.ENS(C2:C91;C2:C91;&quot;&gt;0&quot;;C2:C91;&quot;&lt;200&quot;;D2:D91;&quot;&gt;0&quot;)</code> dans la case.</p>'
+    + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"><button>📏 Mesurer T1<br><small>batterie de secours</small></button><button>📏 Mesurer T2<br><small>après le fusible</small></button><button>📏 Mesurer T3<br><small>sortie du microcontrôleur</small></button><button>📏 Mesurer T4<br><small>entrée de la sirène</small></button></div>'),
+  deborde_remede: page('<p>Tape <code style="display:inline-block;font-weight:700">=MOYENNE.SI.ENS(C2:C91;<wbr>C2:C91;<wbr>&quot;<wbr>&gt;<wbr>0&quot;<wbr>;<wbr>C2:C91;<wbr>&quot;<wbr>&lt;<wbr>200&quot;<wbr>;<wbr>D2:D91;<wbr>&quot;<wbr>&gt;<wbr>0&quot;<wbr>)</code> dans la case.</p>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px"><button>📏 Mesurer T1<br><small>batterie de secours</small></button><button>📏 Mesurer T2<br><small>après le fusible</small></button><button>📏 Mesurer T3<br><small>sortie du microcontrôleur</small></button><button>📏 Mesurer T4<br><small>entrée de la sirène</small></button></div>'),
   listing: page('<pre>' + 'valeur = lire_capteur(A0) * 100 / 1023 + correction_de_temperature(ambiante) - decalage_du_capteur_mesure * 2'.padEnd(120, ' ') + '</pre>'),
   repete: page(['a', 'b', 'c'].map((x, i) => `<details><summary>Correction</summary><p>Réponse ${i + 1}, propre à cet exercice numéro ${i + 1}.</p><p data-repete>Touche ou clique le schéma pour l'agrandir et voir tous ses détails dessinés.</p></details>`).join('')),
   editeur: page('<div class="saisie"><textarea>' + 'x'.repeat(150) + '</textarea><pre aria-hidden="true">' + 'x'.repeat(150) + '</pre></div>'),
@@ -75,9 +81,14 @@ ok('le calque coloré d\'un éditeur (aria-hidden, sur sa zone de saisie) n\'est
 ok('une ligne d\'aide marquée data-repete n\'est pas comptée', !de('repete').C.length, JSON.stringify(de('repete').C));
 ok('trois <details> « Correction » qui répètent une phrase : vus (C), sans compter leur intitulé', de('details').C.length === 1 && !/correction \d/.test(de('details').C[0].phrase), JSON.stringify(de('details').C));
 ok('un intitulé tout en gras ou un titre repris dans chaque correction n\'est pas compté', !de('intitule').C.length, JSON.stringify(de('intitule').C));
+ok('une formule dans un <code> insécable : la page défile de côté (D, un élément, la rangée de boutons se resserre)', de('deborde').D && de('deborde').D.length === 1 && de('deborde').D[0].quoi === 'code', JSON.stringify(de('deborde').D));
+ok('la même formule coupée après chaque « ; », la rangée qui passe sur deux colonnes : rien (D)', de('deborde_remede').D && !de('deborde_remede').D.length, JSON.stringify(de('deborde_remede').D));
+ok('un listing en cadre défilant (overflow-x:auto) ne fait pas défiler la page : pas de D', !de('codebox').D.length, JSON.stringify(de('codebox').D));
+ok('page propre : pas de D', !de('propre').D.length, JSON.stringify(de('propre').D));
+ok('sans --strict, une page qui défile de côté : sortie 1 (référence vide depuis le 26/11/2026, n°273)', jouer([path.join(D, 'deborde.html')]).code === 1);
 ok('sans --strict, un listing qui défile ou un bloc dessiné : sortie 1 (référence vide, n°273)', tout.code === 1, String(tout.code));
 ok('sans --strict, un listing seul : sortie 1', jouer([path.join(D, 'listing.html')]).code === 1);
-ok('sans --strict, des écarts C seulement : sortie 0 (mesure)', jouer(['propre', 'details', 'repete', 'editeur', 'sans_crochet', 'intitule'].map(n => path.join(D, `${n}.html`))).code === 0);
+ok('sans --strict, des écarts C seulement : sortie 0 (mesure)', jouer(['propre', 'details', 'repete', 'editeur', 'sans_crochet', 'intitule', 'deborde_remede'].map(n => path.join(D, `${n}.html`))).code === 0);
 ok('--strict sur une page à écarts : sortie 1', jouer([path.join(D, 'crochet.html')], ['--strict']).code === 1);
 let sansAxe = false;
 if (trouverAxe()) {
