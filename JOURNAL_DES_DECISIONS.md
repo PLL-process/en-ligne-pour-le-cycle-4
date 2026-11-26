@@ -38122,3 +38122,29 @@ défaut grave ; `controle_page_ouverte.mjs --axe` : 0. Rendu 390 et 1 280 px, fe
 `tests_atelier_C7.1.py` 48 / 48 ; `tests_pont_en_h.mjs` 37 / 37 ; `tests_3e_C9.1.mjs` 89 / 89 ;
 `tests_regle_311_3e_C9.1` 34 / 34 ; `controle_lexique_a_jour.py` à jour ; `banc_lecture.mjs` (lexiques) : 0 refus ;
 `controle_licence.py` : 415 pages.
+
+## 26/11/2026 — Texte hors repère (`region`) : à zéro sur tout le site, il refuse désormais (thème 2, `_outils/`)
+
+Dernière étape du « 1a » de Pascal (26/11/2026) : ce que les PR #944, #945 et #946 ont ramené à zéro ne peut plus
+revenir (n°273 : référence nommée, datée, vide).
+
+**Ce qui change.** `region` entre dans `STRUCTURE_REFUSEE` (`controle_axe.mjs`) : un seul nœud de texte hors repère
+fait sortir à 1, au chargement ; et page ouverte, puisque `controle_page_ouverte.mjs --axe` lit la même liste. Les
+deux `atelier_diagramme_fast` du thème 2 (4e_C4.4, 5e_C4.1), régénérés par le générateur des ateliers (#945) : la
+licence dans un pied.
+
+**Mesuré sur tout le site, `main` après #946 plus ces deux pages.**
+- Au chargement (`controle_axe.mjs`, 410 pages, 1 280 px) : sortie 0, et plus **aucun** défaut d'axe-core, de quelque
+  sorte que ce soit — graves, de structure refusés, ni « autres défauts de structure mesurés » (WCAG 2.0 à 2.2 A/AA et
+  bonnes pratiques). Le 25/11 au matin : 140 pages sans zone principale, 71 titres qui sautaient un niveau, 2 160
+  nœuds hors repère.
+- Page ouverte (`controle_page_ouverte.mjs --axe`, 342 pages, 390 px) : L 0, B 0, C 0, A 0, S 0, sortie 0.
+
+**Bancs.** `tests_controle_axe.mjs` 29 / 29 : le paragraphe resté hors de la zone principale est refusé ; le cas
+« mesuré, jamais refusé » est désormais un titre vide (`empty-heading`). `tests_controle_page_ouverte.mjs` 22 / 22 :
+une correction repliée posée après `</main>`, invisible au chargement, est refusée une fois ouverte. Mutation (`region`
+retiré de la liste) : 2 échecs au premier banc, 1 au second. Le générateur des ateliers et `generer_lexique.py`
+relancés sur le `main` du jour : aucune autre page réécrite, lexiques à jour.
+
+**Reste, hors de ce lot.** Huit synthèses professeur ont des tableaux qui défilent à 390 px sans être atteignables au
+clavier (`scrollable-region-focusable`, page ouverte) — hors du périmètre par défaut de `controle_page_ouverte.mjs`.
