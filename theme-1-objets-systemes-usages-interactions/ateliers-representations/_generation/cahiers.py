@@ -118,6 +118,6 @@ def ecrire(tous, cahier, page_niveau, chemins_fn, ecrire_fn):
         if not ats:
             continue
         chemin, html = page(niv, ats, cahier, page_niveau, chemins_fn)
-        ecrire_fn(chemin, html)
+        ecrire_fn(chemin, html, mission=True)
         n += 1
     return n

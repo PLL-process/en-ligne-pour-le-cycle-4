@@ -52,6 +52,12 @@ CSS = (G / "gabarit_style.css").read_text(encoding="utf-8")
 sys.path.insert(0, str(D.parents[2] / "_outils"))
 from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
 
+# Le mode mission (un écran à la fois) se pose par SA source unique, `_outils/mode_mission/poser.py` : une page engendrée
+# ne se retouche pas à la main (n°283). Décision de Pascal du 25/11/2026 : le mode mission sur tous les documents élèves.
+import importlib.util as _iu_mission
+_spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
+MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
+
 STYLE_TP = """
   .palier{background:var(--panel);border:1px solid var(--border);border-radius:12px;
     padding:14px 18px;margin:16px 0}
@@ -456,6 +462,9 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
                          "dans la page — arrêt avant écriture.")
     page = intituler_codes.poser_texte(page)   # chaque étiquette de code dit sa compétence au survol (17/11/2026)
     page = infobuller(page)   # chaque sigle s'explique : QCM en clair, les autres en infobulle (n°44, 22/11/2026)
+    # le mode mission : un palier par écran. Le modèle de démonstration (« Ne pas distribuer aux élèves ») ne le reçoit pas.
+    if not s.get("sans_mode_mission"):
+        page = MODE_MISSION.poser(page)
     sortie.write_text(page, encoding="utf-8")
     n_etapes = sum(len(p.get("etapes", [])) for p in paliers)
     print("TP écrit : %s (%d paliers, %d étapes, %d o)"

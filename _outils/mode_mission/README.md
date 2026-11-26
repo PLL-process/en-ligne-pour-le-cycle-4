@@ -5,6 +5,42 @@ Décision de Pascal du 11/11/2026 (voir `docs/mode-mission/PLAN.md` et le journa
 Le mode mission est une **seconde vue de la même page**. Il n'invente aucun exercice : il montre ceux de la
 séquence, un écran à la fois, avec une barre d'étapes et trois boutons — Précédent · Vérifier · Suivant.
 
+## Sur tous les documents élève (25/11/2026)
+
+Demande de Pascal : « que le mode mission soit pour tous les documents élèves ». Jusque-là, les 60 séquences le
+portaient, et aucun des autres documents. Le bloc est maintenant posé sur **93 pages** : les 60 séquences, les
+18 ateliers de représentation et leurs 3 cahiers, les 3 ateliers de planification, les 4 TP de CAO, le TP mBot2,
+l'atelier Pix, l'entraînement au brevet (algorigrammes) et 2 activités. `controle_mode_mission.py` l'**exige**
+(M1 : un document élève sans le bloc) ; il compte à part les 30 panneaux (une page courte, sans champ, qui renvoie à
+l'atelier ou au TP réel) et les 5 dispenses, chacune avec sa raison écrite (`SANS_MISSION`).
+
+Les QCM gardent leur propre moteur, une question à la fois. Les synthèses et les lexiques se lisent : ils ont leur
+« mode lecture », une partie par écran (`_outils/mode_lecture/`).
+
+Ce que le moteur a appris pour cela :
+
+- **deux gabarits de plus** : des onglets ARIA dont le panneau fermé porte `hidden` (le kit des ateliers), et une
+  page **sans séances** — ses cartes à la suite dans `<main>`, `.page`, `.wrap` ou `.container` — qu'il découpe
+  carte par carte (voir le tableau « Les séances ») ;
+- **un bouton de vérification de plus** : `[data-exo] button.verifier` (le kit), avec son message `.retour[data-retour]` ;
+- **les réponses lues dans `#donnees-page`** (le JSON du kit : choix, classement, menus, tableau) ;
+- **il ne retient pas plus que la page** : sur une page sans bouton d'effacement (un TP, une activité — elle
+  n'enregistre rien, ses champs se vident au rechargement), les étoiles et les réussites vivent le temps de la page,
+  l'écran en cours le temps de l'onglet, et le navigateur ne garde que le choix d'affichage (mission ou page
+  complète). Rien de ce qu'a fait un élève n'attend le suivant (règle d'or n°322 ; `banc_defaut.mjs` le joue,
+  `controle_sauvegarde_locale.py` lit le bloc à part) ;
+- **« Tout effacer » efface aussi la mission, quelle que soit la clé** : le kit des ateliers garde une clé par
+  exercice, que le moteur ne sait pas lire. Le geste est reconnu à son bouton (`#btnReset`, `#btnEffacer`,
+  `#btn-effacer`, `#clear`) : une clé retirée juste après un appui sur lui (`banc_effacement.mjs` le joue) ;
+- **la navigation du site tient sur une ligne** en mission (elle défile de côté) : à cinq liens, celle des ateliers
+  prenait trois lignes collées en haut d'un téléphone et recouvrait la barre de la mission ; la barre se cale sous
+  elle à sa hauteur mesurée — ou tout en haut quand la navigation ne colle pas (les TP) ;
+- **le bouton d'entrée se cache une fois entré** : sans le cadre « Ma progression », il restait au-dessus de la barre.
+
+Une page **engendrée** reçoit le bloc de son générateur : `ateliers-representations/_generation/build.py` et
+`cahiers.py`, `atelier-planification/_generation/build_atelier.py`, `atelier-cao/_generation/build_tp.py`
+(`"sans_mode_mission": true` dans un scénario l'en dispense : le modèle de démonstration).
+
 ## Ce que le bloc fait
 
 - **Commence par lire** : le premier écran de la séquence s'ouvre en haut de l'ouverture dépliée — « 🎯 Avant de
@@ -84,7 +120,8 @@ après, sur les 5 pages qui portent un éditeur).
 - **Un robot de test ouvre la page complète** (`navigator.webdriver`) : les contrôles et les bancs du dépôt mesurent et
   jouent la page qui défile, comme avant ; ceux du mode (`banc_generique.mjs`, `banc_mission.mjs`) l'allument eux-mêmes,
   et `banc_defaut.mjs` vérifie qu'un navigateur d'élève arrive bien en mission.
-- Une page dont il ne reconnaît pas les séances (Book Train, les pages « station » de `3e_C9.2`) s'ouvre telle quelle.
+- Une page dont il ne reconnaît ni les séances ni au moins trois cartes à la suite s'ouvre telle quelle, sans bouton :
+  `banc_defaut.mjs` le refuse sur une page qui porte le bloc (un bloc qui ne sert à rien).
 - Rien à l'impression : tout ce qui cache est sous `@media screen`. La fiche papier sort entière.
 - Il ne bloque jamais « Suivant », ne chronomètre rien, ne classe personne.
 
@@ -100,7 +137,8 @@ après, sur les 5 pages qui portent un éditeur).
 | `banc_editeur.mjs` | sur chaque page qui porte un éditeur Python (`.editeur-py`) : l'annonce « l'éditeur Python est intégré à l'activité » ne s'affiche que sur un écran qui le montre (E1) ; une fois montré dans une activité, l'éditeur reste sur chacun de ses écrans de question jusqu'à « Je retiens » (E2) |
 | `enrichir.py` | écrit dans une page le pourquoi des erreurs et les réponses leurres, depuis `mission_<lot>.json` |
 | `tests_enrichir.py` | banc de `enrichir.py` : un leurre ajouté, l'outil relancé sans rien changer, une infobulle de sigle posée après coup dans une légende gardée à l'octet près (22/11/2026) |
-| `../controle_mode_mission.py` | le bloc d'une page est celui de la source, une fois |
+| `banc_defaut.mjs` | sur **toute** page qui porte le bloc, en navigateur d'élève : elle s'ouvre en mission, se quitte et s'en souvient, revient en mission une fois la sauvegarde effacée, s'imprime entière ; sans bouton d'effacement, le navigateur ne garde que le choix d'affichage |
+| `../controle_mode_mission.py` | chaque document élève porte le bloc, celui de la source, une fois (M1 à M4) ; `../tests_controle_mode_mission.py` l'éprouve |
 
 ## Poser le mode mission sur une séquence
 
@@ -128,10 +166,13 @@ Ce que le découpage reconnaît. D'abord **les séances**, écrites de trois fa�
 |---|---|---|
 | `.seance-panel`, ouvert par son `.seance-tab[data-panel]` | gabarit commun | suit l'onglet ouvert |
 | `section.panneau[role=tabpanel]`, ouvert par `[role=tab][aria-controls]` | `4e_C4.1_book-train` | suit l'onglet ouvert ; ses cartes sont des `div.carte` |
+| `section.panneau[role=tabpanel]` fermé par `hidden`, ouvert par `[role=tab][aria-controls]` | le kit des ateliers de représentation, les cahiers | suit l'onglet ouvert ; un exercice est une `section.card.exercice[data-exo]` |
+| aucune séance : des cartes à la suite dans `<main>`, `.page`, `.wrap` ou `.container` | les TP, l'atelier Pix, les activités | la page entière est une séance ; ce qui précède une carte l'accompagne ; les cartes posées après le conteneur (un Bonus hors de `<main>`) suivent |
 | des `.seance-bloc` à la suite, tous visibles | une page sans onglets (les quatre pages « station » de `3e_C9.2`) | n'en montre qu'un à la fois, mène de l'un à l'autre ; au dernier écran, le lien « Page suivante » se montre, et la page suivante s'ouvre en mission |
 
 Ensuite **les activités**. Une activité est le bloc qui porte un exercice et son bouton de vérification
-(`button[data-check]`, ou `button.verif[data-exo="x"]` qui désigne sa zone `#x` et son message `#res-x`). Trois formes :
+(`button[data-check]`, ou `button.verif[data-exo="x"]` qui désigne sa zone `#x` et son message `#res-x`, ou le
+`button.verifier` d'un exercice `[data-exo]` du kit des ateliers). Trois formes :
 
 | Forme | Où | Ce que le moteur en fait |
 |---|---|---|
@@ -150,7 +191,7 @@ Ensuite **les activités**. Une activité est le bloc qui porte un exercice et s
   accompagne le premier.
 - Un bloc que la page cache n'a pas d'écran ; un écran qui serait vide est sauté.
 
-Une page qui n'a aucune de ces trois formes de séances reste telle quelle (le bouton n'apparaît pas). Sans réponse lisible, un écran ne se
+Une page qui n'a aucune de ces formes de séances reste telle quelle (le bouton n'apparaît pas). Sans réponse lisible, un écran ne se
 vérifie pas seul : la vérification de la page joue à la dernière question de l'activité.
 
 Pour savoir où en est chaque séquence (écrans, écrans vérifiés par le mode, vérifications de la page) :

@@ -63,6 +63,13 @@ for (const F of liste) {
             if (!x.offsetParent || x.disabled || x.readOnly || x.closest('.ms-cache')) continue;
             x.value = 'essai du banc'; x.dispatchEvent(new Event('input', { bubbles: true })); n++;
           }
+          // une question à cases à cocher (kit des ateliers) n'a pas de bonne réponse unique que la barre trahirait :
+          // en cocher une, c'est y répondre, comme écrire (25/11/2026)
+          for (const f of document.querySelectorAll('fieldset.qcm-groupe')) {
+            if (!f.offsetParent || f.closest('.ms-cache') || f.querySelector('input[type=radio]')) continue;
+            const c = f.querySelector('input[type=checkbox]:not(:disabled)'); if (!c) continue;
+            if (!c.checked) { c.checked = true; c.dispatchEvent(new Event('input', { bubbles: true })); c.dispatchEvent(new Event('change', { bubbles: true })); } n++;
+          }
           return n;
         });
         if (n) ecrits.push(j);

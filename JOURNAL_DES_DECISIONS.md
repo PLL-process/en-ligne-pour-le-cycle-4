@@ -37845,3 +37845,121 @@ sous le cours incrusté) et 4e_C4.1 (intertitres du cours) — `aria-level`, bal
 `<h2>` (S, `heading-order`), une page sans zone principale (S, `landmark-one-main`) : sortie 1 ; sans `--axe` : 0.
 Mutation (liste des règles vidée) : 2 échecs, sortie 1. Sur tout le site, `main` après #938 et #939 plus ces deux
 pages : 342 pages ouvertes, S 0, A 0, L 0, B 0, sortie 0.
+
+## 25/11/2026 — Vérification totale, vague 3 : le mode mission sur tous les documents élève (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Suite de la demande de Pascal du 25/11/2026** : « que le mode mission soit pour tous les documents élèves ». À la
+question « jusqu'où ? », sa réponse : « Tout, synthèses comprises ». Cette entrée couvre ce qui se **joue** (ateliers,
+TP, cahiers, activités, entraînement) ; les synthèses et les lexiques, qui se **lisent**, ont leur entrée (le mode
+lecture). Les QCM gardent leur moteur, une question à la fois.
+
+**Mesuré sur `main`** : 128 documents élève (une page de `theme-*` dont le nom commence par `sequence`, `atelier`,
+`tp_`, `cahier`, `activite` ou `entrainement`). Les 60 séquences portaient le mode mission ; **aucun des 68 autres**.
+
+**Ce qui change** : le bloc est posé sur **33 pages de plus** (93 en tout) — les 18 ateliers de représentation et
+leurs 3 cahiers, les 3 ateliers de planification, les 4 TP de CAO, le TP mBot2, l'atelier Pix du jardin,
+l'entraînement au brevet sur les algorigrammes, l'activité CRCN du freinage et l'activité de cybersécurité (2FA).
+Restent, comptés et nommés par le contrôle : **30 panneaux** (une page courte, sans champ de réponse, qui renvoie à
+l'atelier ou au TP réel depuis le dossier d'un code) et **5 dispenses**, chacune avec sa raison (`SANS_MISSION`) :
+le modèle de démonstration des TP (« ne pas distribuer aux élèves »), `tp_algorigrammes_domotique` (il a déjà son pas
+à pas, six phases, une seule à l'écran) et trois panneaux `atelier_bete_a_cornes` qui rappellent un seul exercice.
+
+**Ce que le moteur a appris** (`_outils/mode_mission/mission.js`, détail dans son `README.md`) :
+- deux gabarits de plus : les onglets du kit des ateliers (un panneau fermé porte `hidden`), et la page **sans
+  séances**, découpée carte par carte ;
+- le bouton de vérification et le message du kit, les réponses lues dans `#donnees-page` — **dans une page du kit
+  seulement** : dans une séquence, un exercice incrusté garde son écran entier, comme avant ;
+- la clôture rangée **après** les panneaux (atelier de planification : Bonus, Bilan, QCM, traces ; entraînement au
+  brevet : « Pour aller plus loin ») restait sous chaque écran : elle forme les derniers écrans du dernier panneau ;
+- **il ne retient pas plus que la page** (règle d'or n°322) : sur une page sans bouton d'effacement (les TP, deux
+  activités — elles n'enregistrent rien), les étoiles vivent le temps de la page, l'écran en cours le temps de
+  l'onglet, et le navigateur ne garde que le choix d'affichage. Rien de ce qu'a fait un élève n'attend le suivant ;
+- **« Tout effacer » efface aussi la mission**, quelle que soit la clé : le kit garde une clé par exercice, que le
+  moteur ne sait pas lire ; le geste est reconnu à son bouton (une clé retirée juste après un appui sur lui) ;
+- une question à **cases à cocher** (le kit : « coche tout ce qui manque ») est répondue dès qu'une case l'est. Lue
+  comme un groupe de boutons radio, elle ne l'était jamais : son écran restait éteint dans la barre d'étapes, écrit et
+  dépassé (vu par `banc_barre`, cinq pages du kit ; aucune séquence n'en porte).
+
+**Ce qui change aussi pour les 60 séquences** (vu à la revue d'écran des nouvelles pages, vrai partout) :
+- la navigation du site tient **sur une ligne** en mission (elle défile de côté) : à cinq liens, celle des ateliers
+  prenait trois lignes collées en haut d'un téléphone et recouvrait la barre de la mission ; la barre se cale sous
+  elle à sa hauteur mesurée, ou tout en haut quand la navigation ne colle pas (les TP) ;
+- le bouton « 🎮 Mode mission » se cache une fois entré : sur les 21 séquences sans cadre « Ma progression », il
+  restait au-dessus de la barre ;
+- « ⭐ 0 / 0 » ne s'affiche plus là où il n'y a rien à gagner (un TP à suivre pas à pas, une séance sans question).
+
+**Les contrôles** :
+- `controle_mode_mission.py` ne vérifiait le bloc que là où il était. Il l'**exige** désormais (M1 : un document élève
+  sans le bloc ; M2 deux blocs ; M3 bloc périmé ; M4 dispense périmée) ; `tests_controle_mode_mission.py`, neuf : 13 / 13.
+- `controle_sauvegarde_locale.py` lisait le `localStorage.setItem(` du bloc comme une sauvegarde de la page : sept
+  pages qui n'enregistrent rien devenaient « sans moyen d'effacer ». Il lit maintenant **le bloc à part** (ce que LA
+  PAGE enregistre), et compte ces sept pages ; le bloc n'excuse pas non plus une page qui enregistre sans bouton ni
+  note. Son banc, qui n'existait pas : `tests_controle_sauvegarde_locale.py`, 11 / 11.
+- `banc_defaut.mjs` jouait les séquences : il joue toute page qui porte le bloc, refuse une page que le moteur ne
+  reconnaît pas, et vérifie que sans bouton d'effacement rien d'autre que le choix d'affichage ne reste.
+- `banc_generique.mjs` compte ce qu'un écran montre hors de son panneau (la clôture rangée après les onglets) ;
+  `banc_barre.mjs` répond aux questions à cases à cocher comme aux questions écrites.
+- Les générateurs posent le bloc (n°283 : une régénération l'effacerait) : `ateliers-representations/_generation/
+  build.py` et `cahiers.py`, `atelier-planification/_generation/build_atelier.py`, `atelier-cao/_generation/
+  build_tp.py` (`"sans_mode_mission": true` dispense le modèle).
+
+**Trouvé par le banc du mode, et corrigé : dans les trois ateliers de planification, le message de vérification ne
+s'affichait jamais.** « Vérifier mon billet », « Vérifier mes tâches »… (six boutons par page) calculaient le score,
+écrivaient « Score : 2 / 3 » et le conseil — dans un paragraphe que la feuille de style garde caché tant qu'il ne
+porte pas le mot `show`, que le script n'ajoutait pas. Sur `main`, l'élève appuyait et ne voyait rien, mode mission
+ou pas. Corrigé dans `atelier-planification/_generation/build_atelier.py`, trois pages reconstruites. Les 65 autres
+pages du site qui cachent ce message par défaut l'écrivent bien avec `show` (relevé du source, 68 pages lues).
+
+**Ce que les bancs ont vu avant la livraison** (les 154 bancs des lots, et ceux du mode, rejoués sur l'arbre final) :
+- **un nom de classe en double** : le moteur appelait `.ms-case` la case où l'on dépose une étiquette ; le kit des
+  ateliers appelle `.ms-case` le menu qu'il pose sur le dessin de la bête à cornes. Posé dans un atelier, le style du
+  moteur élargissait ces menus à 820 px, hors de leur ellipse, avec un cadre pointillé — mode mission ou pas
+  (`banc_ateliers.py`, 6 refus ; 530 / 530 sur `main`). Le moteur dit maintenant `.ms-cible`. Aucune autre classe en
+  commun (relevé du kit et des 93 pages) ;
+- **un commentaire qui citait la page** : le moteur citait « Prêt·e à t'entraîner » dans un commentaire ; le banc de
+  l'atelier de planification, qui cherche ce titre dans le source pour vérifier l'ordre Bonus → Bilan → QCM, le
+  trouvait d'abord dans le bloc. Le commentaire ne cite plus de titre (ni « Bilan — », ni « Bonus (facultatif ») ;
+- **un titre lu par sa balise, pas par son niveau annoncé** : depuis le 25/11 au soir (`main`, PR #938), les exercices
+  du kit incrustés dans les séquences du thème 1 annoncent leurs titres par `aria-level` (« les titres incrustés
+  suivent la séquence »). Le moteur, qui ramène les titres d'un écran à des niveaux sans saut, ne lisait que la balise
+  et laissait ces titres-là : en mission, l'écran passait du niveau 3 au niveau 5 (`banc_generique`, quatre séquences
+  — le même refus sur `main`, joué avec le banc de `main`). Il lit maintenant le niveau annoncé, et le rend en quittant
+  la mission. Les 49 pages qui portent un titre à niveau annoncé sont rejouées ;
+- lire le bouton du kit partout coupait en deux l'écran des exercices incrustés de six séquences du thème 1
+  (`banc_generique`, « le bouton de vérification de la page est visible dans un écran de question »). Corrigé (le kit
+  ne compte que chez lui), puis **le découpage des 60 séquences comparé écran par
+écran, moteur de `main` contre moteur neuf : 2 357 écrans, identiques** (leur nom, et la présence de « Vérifier »).
+
+**Vérifié, sur l'arbre final** :
+- le mode, page par page, dans un navigateur d'élève : `banc_generique` 93 / 93 (chaque écran joué, chaque réponse
+  juste acceptée, chaque correction ouverte ; les 60 séquences, puis les 39 pages touchées par les dernières
+  corrections, puis les 25 pages à étiquettes après le changement de nom) ; `banc_barre` 93 / 93 (B1 0 · B2 0 · B3 0) ;
+  `banc_defaut` 93 / 93, dont 7 pages sans bouton d'effacement où ne reste que le choix d'affichage ;
+  `banc_effacement` 166 pages, aucune qui garde quelque chose ; `banc_mission` 52 / 52 ; `banc_editeur` 5 pages,
+  220 écrans ;
+- les **154 bancs des lots** : 143 passent au premier passage ; les 11 autres, rejoués sur l'arbre final avec la ligne
+  de commande de leur `rapport_tests` (huit prennent leur page en argument), passent — dont `banc_ateliers.py`
+  530 / 530 et `tests_atelier_C7.1.py` ;
+- les 53 `controle_*.py` à 0 ; `tests_controle_mode_mission.py` 13 / 13, `tests_controle_sauvegarde_locale.py` 11 / 11 ;
+- au navigateur, tout le site : `controle_squelette`, `controle_code_colore`, `controle_impression`,
+  `controle_hors_ligne`, `controle_verrous`, `controle_indices_qcm` à 0 ; sur les 33 pages neuves : `controle_schemas`
+  0, `controle_page_ouverte` (390 px) L 0 · B 0 · C 0, `controle_axe` aucun défaut au-dessus de la référence ;
+  `eleve_qui_ne_lit_pas` ne sait lire qu'une des 33 (les autres n'ont pas de `const CHECKS`) : 0 activité validée sans
+  lire ;
+- **après la fusion du `main` du soir** (PR #936 à #940, venues d'autres sessions : 5e_C8.2, 3e_C8.1, titres incrustés
+  du thème 1, `controle_page_ouverte` plus strict) : le bloc et les pages engendrées reconstruits à l'identique ; les
+  54 bancs des lots que ces PR touchent, à 0 ; `banc_generique` sur les 20 pages à mode mission qu'elles changent, puis
+  sur les 49 pages à titre de niveau annoncé, après la correction ci-dessus ; `controle_page_ouverte` (nouvelle
+  version) sur les 33 pages neuves : rien à signaler ; les 53 `controle_*.py` à 0 ; `banc_mission` 52 / 52 ;
+- la revue d'écran à 390 et 1 280 px d'une page de chaque famille (atelier, cahier, atelier de planification, atelier
+  Pix, TP de CAO, TP mBot2), avant et après les corrections de la barre.
+
+**Vu, non traité** : `eleve_qui_ne_lit_pas` ne lit pas les pages du kit (leurs réponses sont dans `#donnees-page`) ;
+`banc_generique` croise leurs réponses à la place.
+
+**Thème par thème** (n°302) : thème 1 — 18 ateliers de représentation, 3 cahiers, leurs générateurs (`build.py`,
+`cahiers.py`), l'activité CRCN de 5e_C1.2, l'activité 2FA de 4e_C1.4 ; thème 2 — l'atelier Pix de 4e_C4.1,
+l'entraînement au brevet de 3e_C6.2 ; thème 3 — 3 ateliers de planification et leur générateur (le message de
+vérification), 4 TP de CAO, leur générateur et le manifeste, le TP mBot2 ; les trois thèmes — le bloc à jour dans les 60 séquences ; `_outils` — `mode_mission/`
+(moteur, feuille de style, `banc_generique`, `banc_defaut`, `banc_barre`, `README`), `controle_mode_mission.py` et son banc,
+`controle_sauvegarde_locale.py` et son banc.
