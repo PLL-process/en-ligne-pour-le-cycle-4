@@ -38680,6 +38680,42 @@ rejoué.
 
 **Thème par thème** (n°302) : aucun thème touché — `SKILLS_AUDIT.md` et ce journal seulement.
 
+## 26/11/2026 — Les dix skills de design joués sur les 413 pages : cinq défauts corrigés, dix proposés (transversal : thèmes 1, 2 et 3, `docs/audits/`)
+
+**D'où ça vient.** Pascal, le 26/11/2026 au soir : « lancer directement tout sur toutes les séquences etc. », puis « si
+quelque chose d'autre ne va pas, tu le corriges […] puisque tu reverras chaque activité élève ».
+
+**Ce qui a été fait, et ce qui ne l'a pas été.** Chaque page vivante a été passée au crible de son code (413 pages) et
+ouverte dans un navigateur à 1 280, 390 et 320 px (410 mesurées, 3 renvois). **Les activités n'ont pas été lues une à
+une** : une seule séquence, `5e_C3.1`, a été regardée à l'écran, sur deux écrans de téléphone. Rapport :
+`docs/audits/AUDIT_SKILLS_DESIGN_2026-11-26.md` ; scripts rejouables dans `docs/audits/skills-design-2026-11-26/`.
+
+**Corrigé dans ce lot** (des attributs et une règle CSS ; rien ne change à l'œil, sauf le lien d'évitement) :
+- 77 champs sans nom sur 16 pages (relevés des C7 et C8, `5e_C1.5`, `tp_mbot2_python.html`) reçoivent `aria-label`,
+  `aria-labelledby` vers leur question, ou `for` sur leur `label` ;
+- 9 boutons « ▶ » de bancs d'essai disent leur action (`5e_C9.1`, `sequence-jardin-connecte-arrosage-automatique.html`) ;
+- 13 croix de fermeture en `<span onclick>` se ferment aussi au clavier (`4e_C1.4`, `tp_mbot2_python.html`) ;
+- le lien « Aller au contenu » passe au-dessus de la barre du haut (38 pages ; il était caché sur 7 synthèses élève) ;
+- `3e_C8.2` : le billet de sortie reçoit son repère (« La situation. ») — `controle_hierarchie.py` était rouge sur
+  `main`, il est vert.
+
+**Proposé, non fait** (cela change l'allure de 40 à 400 pages par des sources communes ; à Pascal de dire) : texte
+centré sur trois lignes et plus au téléphone, bouton « Mode mission » flottant sur le texte, légendes sous 12 px,
+images sans dimensions, `:hover` au doigt, `color-scheme`, cibles de 24 px, « clique ».
+
+**Ce que l'audit a appris sur lui-même** (n°248) : un `details` fermé garde une taille, donc « taille non nulle » ne
+veut pas dire « visible » ; un anneau de focus qui arrive par une transition se mesure après elle. Quatre fausses
+alertes ont été retirées avant le rapport.
+
+**Vérifié.** Bancs des 18 pages corrigées : 36 / 36 ; contrôles du dépôt relancés, verts (liste au rapport).
+**Non vérifié** : le contraste (`controle_axe.mjs` n'a pas tourné, axe-core absent), les contenus repliés,
+l'impression, les 15 bancs de QCM des dossiers touchés (pages inchangées).
+
+**Rectification.** L'adaptation des dix skills disait le site « sans thème sombre » : il a un thème unique, sombre.
+Les dix paquets ont été refaits et remis à Pascal le soir même.
+
+**Thème par thème** (n°302) : thème 1 — `3e_C1.3`, `3e_C1.5`, `3e_C2.1`, `3e_C3.1`, `3e_C3.3`, `4e_C1.2`, `4e_C1.3`, `4e_C1.4`, `4e_C2.1` (2 pages), `4e_C2.2` (2 pages), `4e_C3.1`, `5e_C1.2`, `5e_C1.4`, `5e_C1.5`, `5e_C2.1` (2 pages), `5e_C2.2`, `5e_C3.3`, `ateliers-representations` (14 pages) ; thème 2 — `4e_C4.4`, `4e_C6.2`, `5e_C4.1` ; thème 3 — `3e_C7.2` (2 pages), `3e_C7.3`, `3e_C7.4`, `3e_C7.5`, `3e_C7.7`, `3e_C8.2`, `3e_C9.1`, `4e_C7.2` (2 pages), `4e_C7.3`, `4e_C7.4`, `4e_C7.5`, `4e_C7.7`, `4e_C8.3`, `5e_C7.3`, `5e_C7.4`, `5e_C8.2`, `5e_C9.1`. Aucun outil de `_outils/` n'est modifié.
+
 ## 27/11/2026 — 5e_C7.1 : sept questions sur document, et un billet de sortie (thème 3)
 
 Pascal : « 1 oui » — continuer, lot par lot, les chantiers D1 et P1 du thème 3, en commençant par C7.
