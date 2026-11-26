@@ -10,7 +10,7 @@
 | Thème | Thème 3 — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser |
 | Socle | D1.3 · D4 · D5 |
 | Objet-fil | Le hall du collège — suite directe du **mini-projet d'indicateur de rangement** (5e_C7.1) |
-| Durée | **2 séances de 55 min** (110 min) · **100 min d'activités**, soit 10 min de marge |
+| Durée | **2 séances de 55 min** (110 min) · **85 min d'activités en classe** (5 + 15 + 25, puis 20 + 15 + 5), le réinvestissement (environ 15 min) à la maison |
 | Versions | 🅰 le vrai laboratoire (application à installer) · 🅱 le banc de cette page · 🅲 sans écran |
 | Dépendances | **aucune** — le banc d'essai est dans la page, hors ligne, sans compte |
 
@@ -39,7 +39,7 @@ code C8 encore réellement absent du dépôt.
 
 | # | Activité | Durée | Production | Verrou |
 |---|---|---|---|---|
-| 0 | FAIRE d'abord : casser trois éprouvettes | 10 min | 2 réponses | **3 ruptures au banc** |
+| 0 | FAIRE d'abord : casser deux éprouvettes | 5 min | 2 réponses | **2 ruptures au banc** |
 | 1 | Lire le protocole AVANT d'y toucher | 15 min | 4 réponses + 1 phrase | — |
 | 2 | Mettre en œuvre : les cinq relevés | 25 min | 5 charges relevées | **5 ruptures au banc** |
 | 3 | Décider, et le justifier | 20 min | 3 réponses + recommandation chiffrée | — |
@@ -137,11 +137,15 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
-| 1 — Casser, lire, relever | Que mesure le protocole fourni, et que donne-t-il pour les cinq matériaux ? | Ouverture (situation, problématique et hypothèse, trois façons, billet), activités 0, 1 et 2 | ouverture + 10 + 15 + 25 min |
+| 1 — Casser, lire, relever | Que mesure le protocole fourni, et que donne-t-il pour les cinq matériaux ? | Ouverture (situation, problématique et hypothèse, trois façons, billet), activités 0, 1 et 2 | ouverture + 5 + 15 + 25 min |
 | 2 — Décider, puis refaire | Quel matériau recommander, chiffre à l'appui, et que l'essai n'a-t-il pas vérifié ? | Activités 3 et 4, synthèse, billet de sortie, Bonus (corrigé par défi), bilan ; à la maison : réinvestissement, QCM | 20 + 15 + 5 min + clôture ; 15 min à la maison |
 
-**À trancher par Pascal :** la séance 1 porte l'ouverture et 50 min d'activités (environ 60 min en tout). Deux séances
-ne peuvent pas faire mieux sans couper l'activité 2 (100 min d'activités pour 110).
+**Séance 1 ramenée à 55 min** (26/11/2026, carte blanche de Pascal) : elle portait l'ouverture et 50 min d'activités,
+environ 60 min en tout. L'activité 0 casse maintenant **deux** éprouvettes au lieu de trois (par exemple le bois à 41 kg,
+puis l'aluminium à 194 kg) : les deux questions restent les mêmes, et deux matériaux suffisent à voir qu'ils ne cassent
+pas au même moment. Elle passe de 10 à 5 min ; la séance 1 fait ouverture (environ 10 min) + 5 + 15 + 25 = 55 min.
+Le verrou du banc s'ouvre à deux ruptures (`banc2`) ; une sauvegarde plus ancienne le rouvre d'elle-même, puisque la
+page garde la liste des éprouvettes cassées. Les cinq matériaux restent à casser à l'activité 2.
 
 **Le réinvestissement se fait à la maison** (25/11/2026), comme en 5e_C8.1 sur la décision de Pascal : avec le billet,
 la séance 2 aurait fait 20 + 15 + 15 + 5 = 55 minutes avant la synthèse et le bilan. Elle tient maintenant en

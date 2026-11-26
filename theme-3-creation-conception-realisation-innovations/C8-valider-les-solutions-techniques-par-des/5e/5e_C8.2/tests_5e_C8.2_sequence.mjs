@@ -129,20 +129,20 @@ ok('6 · une éprouvette cassée refuse une charge de plus',
    (await p.textContent('#msg')).includes('Nouvelle éprouvette'),
    (await p.textContent('#msg')).slice(0, 60));
 
-// ── le verrou des trois éprouvettes ─────────────────────────────────────────
+// ── le verrou des deux éprouvettes (26/11/2026 : l'activité 0 passe de 10 à 5 min) ──
 await p.click('[data-check="0"]'); await p.waitForTimeout(120);
-ok('7 · l’activité 0 est refusée tant que trois éprouvettes ne sont pas cassées',
+ok('7 · l’activité 0 est refusée tant que deux éprouvettes ne sont pas cassées',
    (await p.textContent('#fb0')).startsWith('🔒'),
    (await p.textContent('#fb0')).slice(0, 72));
 
-await casser('PLA imprimé en 3D');
-await casser('PVC rigide');
-ok('8 · verrou « 3 éprouvettes » ouvert après trois ruptures',
-   await p.evaluate(() => !!window.__exp.banc3));
-
 const casse4 = await casser('Aluminium');
+ok('8 · verrou « 2 éprouvettes » ouvert après deux ruptures (bois, aluminium)',
+   await p.evaluate(() => !!window.__exp.banc2)
+   && casse4.message.includes('Deux éprouvettes cassées'), casse4.message.slice(0, 70));
 ok('9 · l’aluminium casse à 194 kg', casse4.lecture === ATTENDU['Aluminium'],
    String(casse4.lecture));
+await casser('PLA imprimé en 3D');
+await casser('PVC rigide');
 const casse5 = await casser('Acier doux');
 ok('10 · l’acier casse à 408 kg', casse5.lecture === ATTENDU['Acier doux'],
    String(casse5.lecture));
@@ -215,7 +215,7 @@ ok('21 · les relevés survivent au rechargement',
    (await p.inputValue('#rel4')) === String(ATTENDU['Acier doux']),
    await p.inputValue('#rel4'));
 ok('22 · les verrous survivent au rechargement',
-   await p.evaluate(() => !!window.__exp.banc3 && !!window.__exp.banc5));
+   await p.evaluate(() => !!window.__exp.banc2 && !!window.__exp.banc5));
 ok('23 · l’hypothèse est rappelée après rechargement',
    (await p.textContent('#rappelHyp')).includes('acier'),
    await p.textContent('#rappelHyp'));

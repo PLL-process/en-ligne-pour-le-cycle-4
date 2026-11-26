@@ -146,3 +146,14 @@ réinvestissement et l'écrit « comme au brevet » passent à la maison. Une co
 Regardé à 312 px (les trois documents) et à 390 px (le billet) : lisible, aucun défilement de côté, 0 erreur JavaScript.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 26/11/2026 — Séance 2 ramenée à 55 min
+
+Décision de Pascal (carte blanche) : l'activité 2 (le vent ne pousse pas comme le banc) passe de 35 à 30 min ; la séance 2
+annonce 30 + 25 = 55 min. La fiche pédagogique dit la nouvelle durée (115 min d'activités en classe, 30 à la maison ou en
+classe s'il reste du temps).
+
+Exécuté :
+- `node tests_3e_C8.1_sequence.mjs sequence_3e_C8.1_mat-de-la-station.html attendus_3e.json 3e` : **64 / 64**.
+- `verif_regles_audit.py` sur le lot : n°23 « 145 min annoncés (+10 de service) pour 165 disponibles », sortie 0.
+- `audit_aeration.py --strict`, `controle_squelette.mjs`, `mode_mission/banc_generique.mjs`, `controle_liens.py` : verts.

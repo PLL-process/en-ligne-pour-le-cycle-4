@@ -2167,13 +2167,13 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
 <section class="card seance-tete">
 <h2>🧭 Séance 1 — Casser, lire le protocole, relever</h2>
 <p class="question-directrice">Question directrice : que mesure exactement le protocole fourni, et que donne-t-il, appliqué sans erreur aux cinq matériaux ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① l'ouverture&nbsp;; <br>② casser trois éprouvettes (activité 0, environ 10 min)&nbsp;; <br>③ lire le protocole avant d'y toucher (activité 1, environ 15 min)&nbsp;; <br>④ faire les cinq relevés au banc (activité 2, environ 25 min).</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① l'ouverture&nbsp;; <br>② casser deux éprouvettes (activité 0, environ 5 min)&nbsp;; <br>③ lire le protocole avant d'y toucher (activité 1, environ 15 min)&nbsp;; <br>④ faire les cinq relevés au banc (activité 2, environ 25 min).</p>
 </section>
 
 <section class="card" id="act0">
-  <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois éprouvettes ⏱ ~10 min</h2>
+  <h2>🖐️ Activité 0 — FAIRE d'abord : casser deux éprouvettes ⏱ ~5 min</h2>
   <p>Avant toute explication. Choisis un matériau, augmente la charge, regarde ce qui se passe.
-  <strong>Casse au moins trois éprouvettes différentes</strong> avant de continuer.</p>
+  <strong>Casse au moins deux éprouvettes de matériaux différents</strong> avant de continuer&nbsp;: <br>par exemple le bois (pin), puis l'aluminium.</p>
   <p class="note"><b>Sécurité.</b> Le banc de cette page est un <b>simulateur</b>&nbsp;: rien n'y est suspendu pour de vrai. <br><b>Aucune manipulation électrique dans cette séquence&nbsp;: ni très basse tension, ni secteur.</b><br>Si ton professeur monte un banc réel, la charge se pose et se retire <b>à l'arrêt</b>, personne ne reste sous la masse, et c'est lui qui l'installe.</p>
 
   <div class="banc">
@@ -2225,11 +2225,11 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   </div>
 
   <div class="exo">
-    <h4 aria-level="3">Après avoir cassé trois éprouvettes</h4>
+    <h4 aria-level="3">Après avoir cassé deux éprouvettes</h4>
     <fieldset class="qcm-groupe" id="a0q1" data-melange="1">
   <legend>À charge égale, que font deux matériaux différents ?</legend>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="ne cassent jamais" data-pourquoi="Toutes les éprouvettes ont fini par casser : relis tes trois essais."><label for="a0q1__3">ne cassent jamais</label></div>
-  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="cassent toujours au même moment" data-pourquoi="Relis tes trois relevés : la charge de rupture change d'un matériau à l'autre."><label for="a0q1__1">cassent toujours au même moment</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__3" value="ne cassent jamais" data-pourquoi="Toutes les éprouvettes ont fini par casser : relis tes deux essais."><label for="a0q1__3">ne cassent jamais</label></div>
+  <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__1" value="cassent toujours au même moment" data-pourquoi="Relis tes deux relevés : la charge de rupture change d'un matériau à l'autre."><label for="a0q1__1">cassent toujours au même moment</label></div>
   <div class="qcm-option"><input type="radio" name="a0q1" id="a0q1__2" value="ne cassent pas au même moment"><label for="a0q1__2">ne cassent pas au même moment</label></div>
 </fieldset>
     <fieldset class="qcm-groupe" id="a0q2" data-melange="1">
@@ -2663,7 +2663,7 @@ document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = e.textContent
   .replace(/^([A-Z][A-Z \u2014-]+)$/gm,'<span class="py-kw">$1</span>')
   .replace(/^(\d+\.)/gm,'<span class="py-num">$1</span>'); });
 
-/* ── banc d'essai : verrou = trois éprouvettes réellement cassées ───────── */
+/* ── banc d'essai : verrou = deux éprouvettes réellement cassées ────────── */
 let charge = 0, cassee = false;
 const brisees = new Set();
 function dessine(){
@@ -2689,9 +2689,9 @@ function ajoute(p){
     cassee = true; charge = m.kg;
     brisees.add($("mat").value);
     $("msg").innerHTML = '<span class="casse">✖ Rupture à ' + m.kg + ' kg.</span> ' +
-      (brisees.size < 3 ? "Encore " + (3 - brisees.size) + " matériau(x) à casser." :
-       "Trois éprouvettes cassées : tu peux répondre.");
-    if(brisees.size >= 3) window.__exp.banc3 = true;
+      (brisees.size < 2 ? "Encore " + (2 - brisees.size) + " matériau à casser." :
+       "Deux éprouvettes cassées : tu peux répondre.");
+    if(brisees.size >= 2) window.__exp.banc2 = true;
     if(brisees.size >= 5) window.__exp.banc5 = true;
   } else {
     $("msg").textContent = "Elle tient encore. Continue.";
@@ -2730,8 +2730,8 @@ function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"
 const CHECKS = {
   0(){ let s = sv("a0q1","ne cassent pas au même moment")
              + sv("a0q2","la charge à partir de laquelle l'éprouvette casse");
-       return {score: s, total: 2, exp: !!window.__exp.banc3,
-               expMsg: "Casse d'abord trois éprouvettes différentes au banc — c'est l'expérience qui fait foi."}; },
+       return {score: s, total: 2, exp: !!window.__exp.banc2,
+               expMsg: "Casse d'abord deux éprouvettes de matériaux différents au banc — c'est l'expérience qui fait foi."}; },
   1(){ let s = sv("a1q1","pour que la comparaison porte sur le matériau, et pas sur la taille")
              + sv("a1q2","au moment exact où l'éprouvette casse")
              + sv("a1q3","parce qu'une éprouvette déjà tirée est abîmée, même si ça ne se voit pas")
@@ -2784,6 +2784,7 @@ function restore(){
   Object.entries(o.radios || {}).forEach(([name, v]) => { const r = document.querySelector('.positionnement input[name="' + name + '"][value="' + v + '"]'); if(r) r.checked = true; });
   window.__exp = o.exp || {};
   (o.brisees || []).forEach(b => brisees.add(b));
+  if(brisees.size >= 2) window.__exp.banc2 = true;   // une sauvegarde d'avant le 26/11/2026 disait « banc3 »
   const h = $("hyp"); const r = $("rappelHyp");
   if(h && r && h.value.trim()) r.textContent = h.value;
   // l'onglet en cours : un lien direct vers une ancre l'emporte sur lui
