@@ -492,17 +492,20 @@ function decouperLu(C){
   if (o.length) o[0].ouverture = true;
   return o;
 }
-function gabarit(){
-  if (LIRE){
-    var L = conteneurLu(), parts = L ? decouperLu(L) : [];
-    /* un document sans partie (un lexique en un seul tableau) : tout ce que porte sa zone principale fait un écran */
-    if (!parts.length){
-      L = $("main") || D.body;
-      var tout = enfants(L).filter(function(c){ return !/^(H1|NAV|HEADER|FOOTER)$/.test(c.tagName) && c.id !== "navharm" && !c.classList.contains("evitement") && !c.classList.contains("ms-seul") && !c.classList.contains("ms-invite"); });
-      if (tout.length) parts = [{ t:"carte", n:tout, titre:nomPage() || "La page", ouverture:true }];
-    }
-    if (parts.length){ L.classList.add("ms-page"); if (!L.id) L.id = "ms-page"; return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true, lecture:true, parts:parts }; }
+function gabaritLu(){
+  var L = conteneurLu(), parts = L ? decouperLu(L) : [];
+  /* un document sans partie (un lexique en un seul tableau, une figure) : tout ce que porte sa zone principale fait un écran */
+  if (!parts.length){
+    L = $("main") || D.body;
+    var tout = enfants(L).filter(function(c){ return !/^(H1|NAV|HEADER|FOOTER)$/.test(c.tagName) && c.id !== "navharm" && !c.classList.contains("evitement") && !c.classList.contains("ms-seul") && !c.classList.contains("ms-invite"); });
+    if (tout.length) parts = [{ t:"carte", n:tout, titre:nomPage() || "La page", ouverture:true }];
   }
+  if (!parts.length) return null;
+  L.classList.add("ms-page"); if (!L.id) L.id = "ms-page";
+  return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true, lecture:true, parts:parts };
+}
+function gabarit(){
+  if (LIRE){ var gl = gabaritLu(); if (gl) return gl; }
   if ($(".seance-panel") && $(".seance-tab")) return { panneau:".seance-panel", onglet:".seance-tab", actif:"active", attr:"data-panel", de:function(o){ return o.dataset.panel; } };
   if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:$("section.panneau[role=tabpanel].actif") ? "actif" : null, kit:!$("section.panneau[role=tabpanel].actif") && !!$("#donnees-page"), attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
   if ($(".seance-bloc[id]")) return { panneau:".seance-bloc[id]", onglet:null, actif:"ms-ici" };
@@ -513,7 +516,9 @@ function gabarit(){
   if ($("section.phase[id]") && $(".phase-menu button[aria-controls]")) return { panneau:"section.phase[id]", onglet:".phase-menu button[aria-controls]", actif:null, cache:"hidden", phases:true, attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
   var c = conteneur();
   if (c){ c.classList.add("ms-page"); if (!c.id) c.id = "ms-page"; return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true }; }
-  return null;
+  /* aucun gabarit d'exercices (une figure interactive « pièce par pièce », 26/11/2026 — Pascal : « tout doit être en
+     mode mission ») : la page se lit comme un document, par parties, ou d'un seul écran */
+  return gabaritLu();
 }
 /* le panneau ouvert : celui qui porte la classe du gabarit ; sans classe, celui que la page ne cache pas (`hidden`) */
 function selActif(){ return G.actif ? G.panneau + "." + G.actif : G.cache ? G.panneau + ":not(." + G.cache + ")" : G.panneau + ":not([hidden])"; }
@@ -1397,6 +1402,9 @@ D.documentElement._mission = { cle: cle, gabarit: function(){ return G ? { P:G.p
   /* TP à phases : les cartes hors des phases que montre la phase `id` (« Avant de commencer », le Bonus…) */
   rattaches: function(id){ var P = D.getElementById(id); if (!G || !G.phases || !P) return []; var R = rattaches(P); return R.avant.concat(R.apres); }, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
 function init(){
+  /* une page montrée dans un cadre (la figure « pièce par pièce » dans l'écran de sa séquence) : la séquence est déjà en
+     mission ; une seconde barre dans le cadre ferait doublon. Le mode ne s'allume que sur la page ouverte seule. */
+  try { if (window.self !== window.top) return; } catch (e) { return; }
   G = gabarit(); if (!G) return;                                    // gabarit non reconnu : la page reste telle quelle
   if (G.kit) CHECK = CHECK_BASE + ", [data-exo] button.verifier";
   /* un groupe de boutons radio sans identifiant (ateliers) en reçoit un, tiré du nom de ses boutons : c'est par lui

@@ -55,6 +55,11 @@ def poser(html):
         return _BLOC_RE.sub(lambda _m: b, html, count=1)
     if html.count("</head>") == 1:
         return html.replace("</head>", b + "\n</head>", 1)
+    # une page qui écrit une autre page dans son script (la figure « pièce par pièce » fabrique sa fiche A4 : un second
+    # « </head> » dans une chaîne) : le premier, s'il vient avant le premier <body>, est le sien (26/11/2026)
+    tete, corps0 = html.find("</head>"), re.search(r"<body[\s>]", html)
+    if tete >= 0 and corps0 and tete < corps0.start() and html.count("</head>") > 1:
+        return html[:tete] + b + "\n" + html[tete:]
     corps = re.findall(r"<body[\s>]", html)
     if html.count("</head>") == 0 and len(corps) == 1:        # page engendrée sans </head> : juste avant <body>, comme la fiche papier
         return html.replace(corps[0], b + "\n" + corps[0], 1)
