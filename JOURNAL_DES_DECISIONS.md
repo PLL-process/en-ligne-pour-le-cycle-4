@@ -37826,3 +37826,22 @@ Suite de la PR #938 (« 2a » de Pascal, 26/11/2026). Page ouverte à 390 px, tr
 chargement : sortie 0. `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `tests_regle_311` de 3e_C9.2, 3e_C7.1, 4e_C7.1, 4e_C8.1
 verts ; `verif_chaine.py` sans écart. Rendu : identique au pixel près pour les pages de 3e_C9.2 et les trois pages
 réécrites par le générateur ; la palette de `tp_5e_de_onshape` change exprès (captures avant/après dans la PR).
+
+## 26/11/2026 — Structure page ouverte, thème 2 : la page ouverte refuse aussi les quatre défauts de structure (`_outils/`)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 1 h 45), dernière étape : ce que les PR #938 et #939 ont ramené à zéro
+page ouverte ne peut plus revenir (n°273 : référence nommée, datée, vide).
+
+**Ce qui change.** `controle_page_ouverte.mjs --axe` mesure S : les quatre règles que `controle_axe.mjs` refuse au
+chargement (`STRUCTURE_REFUSEE` : zone principale, ordre des titres, titre de niveau 1, en-tête de tableau), ici page
+ouverte à 390 px — détails, corrections et onglets dépliés. Un titre rangé dans une correction fermée n'existe pas au
+chargement : il ne se lit qu'ici. Un seul nœud fait sortir à 1. La liste des règles vient de `controle_axe.mjs` :
+une seule source pour les deux contrôles.
+
+**Thème 2, deux pages** réécrites par le générateur des ateliers (#938) : 5e_C4.1 (l'exercice du FAST sautait un niveau
+sous le cours incrusté) et 4e_C4.1 (intertitres du cours) — `aria-level`, balise et style inchangés.
+
+**Vérifié.** `tests_controle_page_ouverte.mjs` : 21 / 21 (18 avant) — un `<h4>` dans une correction repliée sous un
+`<h2>` (S, `heading-order`), une page sans zone principale (S, `landmark-one-main`) : sortie 1 ; sans `--axe` : 0.
+Mutation (liste des règles vidée) : 2 échecs, sortie 1. Sur tout le site, `main` après #938 et #939 plus ces deux
+pages : 342 pages ouvertes, S 0, A 0, L 0, B 0, sortie 0.

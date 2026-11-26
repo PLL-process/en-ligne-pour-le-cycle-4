@@ -11,10 +11,14 @@
  *   editeur     le calque coloré d'un éditeur intégré, 150 caractères → rien (il défile avec la saisie) ;
  *   details     trois <details> « Correction » qui répètent une phrase → C ;
  *   intitule    trois corrections qui ouvrent sur le même intitulé tout en gras, et le même titre → rien ;
- *   contraste   une correction repliée écrite en gris clair sur blanc (2,3 : 1) → A, avec --axe seulement.
+ *   contraste   une correction repliée écrite en gris clair sur blanc (2,3 : 1) → A, avec --axe seulement ;
+ *   titres      un h4 dans une correction repliée, sous un h2 : invisible au chargement, il saute un niveau une fois la
+ *               correction ouverte → S (`heading-order`), avec --axe seulement ;
+ *   sans_main   une page sans zone principale → S (`landmark-one-main`), avec --axe seulement.
  * Puis les sorties : sans --strict, un L ou un B sort à 1 (référence vide depuis le 22/11/2026) et C seul sort à 0 ;
  * --strict sort à 1 quand il y a un écart, 0 sur la page propre. Avec --axe, un défaut grave sort à 1 (référence vide
- * depuis le 25/11/2026), la page propre à 0. Sans axe-core, ces deux points ne se jouent pas : le banc sort à 2 (n°299).
+ * depuis le 25/11/2026), la page propre à 0 ; un défaut de structure (S) sort à 1 aussi (référence vide depuis le
+ * 26/11/2026). Sans axe-core, ces points ne se jouent pas : le banc sort à 2 (n°299).
  * Usage : node _outils/tests_controle_page_ouverte.mjs   · Sortie 0 / 1, 2 si le contrôle est en panne.
  */
 import fs from 'node:fs';
@@ -29,7 +33,7 @@ const CONTROLE = path.join(ICI, 'controle_page_ouverte.mjs');
 const D = fs.mkdtempSync(path.join(os.tmpdir(), 'page-ouverte-'));
 const PHRASE = 'Les couleurs ne sont ici qu\'une aide visuelle et ce sont les formes qui portent le sens.';
 const page = (corps, script = '') => `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>t</title>
-<style>body{font:16px sans-serif;margin:16px}pre{white-space:pre;overflow-x:auto}</style></head><body>${corps}<script>${script}</script></body></html>`;
+<style>body{font:16px sans-serif;margin:16px}pre{white-space:pre;overflow-x:auto}</style></head><body><main><h1>Page d'essai</h1>${corps}</main><script>${script}</script></body></html>`;
 const BLOC = '<svg viewBox="0 0 200 80"><rect width="200" height="80" fill="#fb923c"/><text x="5" y="20">si &lt;condition&gt;</text><text x="5" y="45">alors</text><text x="5" y="70">sinon</text></svg>';
 const fab = `function fab(){['corr1','qcorr2','corrB'].forEach((id,i)=>{document.getElementById(id).innerHTML='<p>Réponse '+(i+1)+' : étape '+i+'.</p>'+(i===2?'${BLOC.replace(/'/g, "\\'")}':'')+'<p>${PHRASE.replace(/'/g, "\\'")}</p>'})}`;
 const pages = {
@@ -44,6 +48,8 @@ const pages = {
   editeur: page('<div class="saisie"><textarea>' + 'x'.repeat(150) + '</textarea><pre aria-hidden="true">' + 'x'.repeat(150) + '</pre></div>'),
   details: page([1, 2, 3].map(i => `<details><summary>Correction ${i}</summary><p>Réponse ${i}.</p><p>${PHRASE}</p></details>`).join('')),
   contraste: page('<details><summary>Correction</summary><p style="color:#aaaaaa;background:#ffffff">La réponse est écrite trop pâle pour être lue sur un écran au soleil.</p></details>'),
+  titres: page('<h2>Activité 1</h2><p>Une consigne.</p><details><summary>Correction</summary><h4>Les deux choix</h4><p>La réponse, et pourquoi.</p></details>'),
+  sans_main: `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>t</title></head><body><h1>Sans zone principale</h1><p>Un texte.</p></body></html>`,
   intitule: page([1, 2, 3].map(i => `<details><summary>Correction ${i}</summary><h4>La correction détaillée de cet exercice, question après question</h4><p><b>Question par question — la réponse, et pourquoi pas les autres</b></p><p>Réponse ${i}, propre à cet exercice.</p></details>`).join('')),
 };
 for (const [n, h] of Object.entries(pages)) fs.writeFileSync(path.join(D, `${n}.html`), h);
@@ -76,11 +82,16 @@ if (trouverAxe()) {
   ok('--axe : un texte trop pâle dans une correction repliée est vu (A) et sort à 1, même sans --strict', ax.code === 1 && (ax.res[0] || {}).A && ax.res[0].A.some(a => a.startsWith('color-contrast')), JSON.stringify([ax.code, (ax.res[0] || {}).A]));
   ok('--axe sur la page propre : sortie 0', jouer([path.join(D, 'propre.html')], ['--axe']).code === 0);
   ok('sans --axe, la même page trop pâle sort à 0 (A n\'est pas mesuré)', jouer([path.join(D, 'contraste.html')]).code === 0);
+  const ti = jouer([path.join(D, 'titres.html')], ['--axe']);
+  ok('--axe : un h4 dans une correction repliée, sous un h2, est vu page ouverte (S, heading-order) et sort à 1', ti.code === 1 && (ti.res[0] || {}).S && ti.res[0].S.some(s => s.startsWith('heading-order')), JSON.stringify([ti.code, (ti.res[0] || {}).S]));
+  const sm = jouer([path.join(D, 'sans_main.html')], ['--axe']);
+  ok('--axe : une page sans zone principale est vue (S, landmark-one-main) et sort à 1', sm.code === 1 && (sm.res[0] || {}).S && sm.res[0].S.some(s => s.startsWith('landmark-one-main')), JSON.stringify([sm.code, (sm.res[0] || {}).S]));
+  ok('sans --axe, la page aux titres qui sautent sort à 0 (S n\'est pas mesuré)', jouer([path.join(D, 'titres.html')]).code === 0);
 } else sansAxe = true;
 ok('--strict sur la page propre : sortie 0', jouer([path.join(D, 'propre.html')], ['--strict']).code === 0);
 
 fs.rmSync(D, { recursive: true, force: true });
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.ok ? '' : ' — ' + t.d}`).join('\n') + `\n${n} / ${T.length}`);
-if (sansAxe) { console.log('⛔ axe-core introuvable (AXE_CORE=/chemin/vers/axe.min.js) : 3 points non joués — banc EN PANNE (n°299)'); process.exit(2); }
+if (sansAxe) { console.log('⛔ axe-core introuvable (AXE_CORE=/chemin/vers/axe.min.js) : 6 points non joués — banc EN PANNE (n°299)'); process.exit(2); }
 process.exit(n === T.length ? 0 : 1);

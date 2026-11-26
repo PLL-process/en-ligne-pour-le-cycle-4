@@ -32,12 +32,15 @@
  *      pas les autres », que 4e_C4.7 et 5e_C4.7 posent en tête de chaque correction, 22/11/2026) ;
  *   A  avec --axe : les défauts graves (critical, serious) d'axe-core sur la page ouverte, à 390 px — mêmes règles WCAG
  *      que `controle_axe.mjs` (2.0, 2.1, 2.2 ; A et AA ; `wcag21a` manquait avant le 25/11/2026 : il porte
- *      `label-content-name-mismatch`).
+ *      `label-content-name-mismatch`) ;
+ *   S  avec --axe : les quatre défauts de structure que `controle_axe.mjs` refuse au chargement (`STRUCTURE_REFUSEE` :
+ *      zone principale, ordre des titres, titre de niveau 1, en-tête de tableau), ici page ouverte, à 390 px. Un titre
+ *      rangé dans une correction ou un onglet fermés n'existe pas au chargement : il ne se lit qu'ici (26/11/2026).
  *
  * Usage :
  *   node _outils/controle_page_ouverte.mjs [chemins…] [--axe] [--strict] [--muet] [--json f]
  *   Sans chemin : les trois thèmes et l'index, hors synthèses professeur, fiches et rapports.
- * L, B ET A REFUSENT (règle n°273 : référence nommée, datée, vide)
+ * L, B, A ET S REFUSENT (règle n°273 : référence nommée, datée, vide)
  * ----------------------------------------------------------------
  * Le 22/11/2026, sur les 341 pages, L et B sont à 0 (vague n°364 : PR #854, #856, #862). Une page qui fait défiler un
  * listing ou qui dessine un bloc fait sortir à 1, même sans --strict.
@@ -46,9 +49,11 @@
  * défaut grave d'axe-core, page ouverte à 390 px, fait sortir à 1 lui aussi. `controle_axe.mjs` reste le contrôle de
  * la page à son chargement, à 1 280 px, contre sa référence chiffrée ; celui-ci voit ce qui ne s'affiche qu'au clic
  * (corrections, aides, onglets) et sur un téléphone.
+ * Le 26/11/2026, avec --axe, S est à 0 sur les 342 pages (générateur des ateliers : le niveau des titres incrustés suit
+ * la séquence ; 3e_C1.5, 3e_C9.2 à la main). Un défaut de structure, page ouverte, fait sortir à 1.
  * C reste une mesure (une phrase répétée peut l'être à bon droit) ; --strict la fait refuser aussi.
  *
- * Sortie : 0 aucun L, B ni A (C mesuré) · 1 au moins un L, un B ou, avec --axe, un A ; ou, avec --strict, au moins un
+ * Sortie : 0 aucun L, B, A ni S (C mesuré) · 1 au moins un L, un B ou, avec --axe, un A ou un S ; ou, avec --strict, un
  *          écart · 2 EN PANNE : Playwright absent, axe-core introuvable avec --axe, aucune page mesurée, ou une page qui
  *          ne s'ouvre pas (n°299).
  */
@@ -92,9 +97,13 @@ let chromium;
 try { ({ chromium } = await import('playwright')); }
 catch { console.error('⛔ EN PANNE : Playwright introuvable (n°299).'); process.exit(2); }
 
-let axeSource = null;
+let axeSource = null, STRUCTURE = [];
 if (AXE) {
-  try { const { trouverAxe } = await import('./controle_axe.mjs'); const p = trouverAxe(); if (p) axeSource = fs.readFileSync(p, 'utf8'); } catch { /* signalé ci-dessous */ }
+  try {
+    const { trouverAxe, STRUCTURE_REFUSEE } = await import('./controle_axe.mjs');
+    const p = trouverAxe(); if (p) axeSource = fs.readFileSync(p, 'utf8');
+    STRUCTURE = [...(STRUCTURE_REFUSEE || [])];
+  } catch { /* signalé ci-dessous */ }
   if (!axeSource) { console.error('⛔ EN PANNE : --axe demandé, axe-core introuvable (AXE_CORE=/chemin/vers/axe.min.js).'); process.exit(2); }
 }
 
@@ -177,7 +186,10 @@ async function une(fichier) {
       await p.evaluate(axeSource);
       m.A = await p.evaluate(async () => (await window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] }))
         .violations.filter(v => ['critical', 'serious'].includes(v.impact)).map(v => `${v.id}×${v.nodes.length}`));
-    } else m.A = [];
+      // S : les quatre défauts de structure que `controle_axe.mjs` refuse au chargement, ici page ouverte (26/11/2026)
+      m.S = STRUCTURE.length ? await p.evaluate(async (regles) => (await window.axe.run(document, { runOnly: { type: 'rule', values: regles } }))
+        .violations.map(v => `${v.id}×${v.nodes.length}`), STRUCTURE) : [];
+    } else { m.A = []; m.S = []; }
     resultats.push({ rel, ...m });
   } catch (e) { pannes++; resultats.push({ rel, panne: String(e).slice(0, 160) }); }
   await ctx.close();
@@ -185,7 +197,7 @@ async function une(fichier) {
 for (let i = 0; i < liste.length; i += EN_PARALLELE) await Promise.all(liste.slice(i, i + EN_PARALLELE).map(une));
 await b.close();
 
-const ecarts = resultats.filter(r => !r.panne && (r.L.length || r.B.length || r.C.length || r.A.length));
+const ecarts = resultats.filter(r => !r.panne && (r.L.length || r.B.length || r.C.length || r.A.length || r.S.length));
 if (!MUET) {
   for (const r of resultats) {
     if (r.panne) { console.log(`⛔ ${r.rel} — ne s'ouvre pas : ${r.panne}`); continue; }
@@ -193,17 +205,20 @@ if (!MUET) {
     r.B.forEach(x => console.log(`B ${r.rel} — un SVG dessine un bloc de programmation : ${x}`));
     r.C.forEach(x => console.log(`C ${r.rel} — même phrase dans ${x.fois} corrections : « ${x.phrase}… »`));
     if (r.A.length) console.log(`A ${r.rel} — axe-core, page ouverte : ${r.A.join(', ')}`);
+    if (r.S.length) console.log(`S ${r.rel} — structure, page ouverte : ${r.S.join(', ')}`);
   }
 }
 const n = k => resultats.filter(r => !r.panne && r[k] && r[k].length).length;
-console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390 px · ${pannes} en panne · L ${n('L')} · B ${n('B')} · C ${n('C')}${AXE ? ` · A ${n('A')}` : ''} page(s) concernées`);
+console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390 px · ${pannes} en panne · L ${n('L')} · B ${n('B')} · C ${n('C')}${AXE ? ` · A ${n('A')} · S ${n('S')}` : ''} page(s) concernées`);
 if (JSON_OUT) fs.writeFileSync(JSON_OUT, JSON.stringify(resultats, null, 1));
 if (!resultats.length || pannes) { console.log('⛔ EN PANNE (n°299)'); process.exit(2); }
 const refus = resultats.filter(r => !r.panne && (r.L.length || r.B.length));
 const refusA = resultats.filter(r => !r.panne && r.A && r.A.length);
+const refusS = resultats.filter(r => !r.panne && r.S && r.S.length);
 if (refus.length) console.log(`✘ ${refus.length} page(s) font défiler un listing (n°364) ou dessinent un bloc (n°308), page ouverte — référence vide depuis le 22/11/2026 (n°273)`);
 if (refusA.length) console.log(`✘ ${refusA.length} page(s) portent un défaut grave d'axe-core, page ouverte à 390 px — référence vide depuis le 25/11/2026 (n°273)`);
-if (refus.length || refusA.length) process.exit(1);
+if (refusS.length) console.log(`✘ ${refusS.length} page(s) portent un défaut de structure, page ouverte à 390 px (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau) — référence vide depuis le 26/11/2026 (n°273)`);
+if (refus.length || refusA.length || refusS.length) process.exit(1);
 if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°361)'); process.exit(1); }
 console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°361)` : '✅ rien à signaler, page ouverte');
 process.exit(0);
