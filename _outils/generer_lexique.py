@@ -83,9 +83,17 @@ remplacés. Désormais :
     produit (sans sa signature), ou qui porte un id qu'il ne reposerait pas — et
     le dit, sortie ≠ 0.
 
+UN LEXIQUE PÉRIMÉ SE VOIT (25/11/2026)
+-------------------------------------
+Le 25/11/2026, une notion renommée dans un QCM (`qcm_5e_C7.4`, question 16) a laissé le lexique du lot sur l'ancien
+nom : rien ne le disait, aucun contrôle ne rejouait le générateur. `--verifier` n'écrit rien : il engendre chaque
+lexique et le compare, octet pour octet, à la page du dépôt. Sortie 1 si l'un diffère (« PÉRIMÉ »), 2 si aucun
+lexique n'a pu être comparé (règle d'or n°299).
+
 USAGE
     python3 generer_lexique.py <dossier du lot> [autres…]
     python3 generer_lexique.py --tous theme-1-*      # tous les lots d'un thème
+    python3 generer_lexique.py --verifier --tous theme-1-* theme-2-* theme-3-*   # ne rien écrire : sont-ils à jour ?
 """
 import glob
 import html
@@ -99,6 +107,13 @@ from html.parser import HTMLParser
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from licence_cc import MENTION as MENTION_LICENCE  # règle d'or n°321
 from expliquer_sigles import infobuller  # n°44, décision de Pascal du 22/11/2026
+
+# Le mode lecture — une partie par écran (25/11/2026) : le lexique le reçoit de son générateur, sinon une régénération
+# l'effacerait (règle d'or n°283). Le dossier `mode_lecture` n'est pas un paquet : on charge son `poser.py` par chemin.
+import importlib.util as _iu
+_spec = _iu.spec_from_file_location("poser_lecture", os.path.join(os.path.dirname(os.path.abspath(__file__)), "mode_lecture", "poser.py"))
+MODE_LECTURE = _iu.module_from_spec(_spec)
+_spec.loader.exec_module(MODE_LECTURE)
 
 CHAMP = lambda bloc, nom: (
     m.group(1) if (m := re.search(r'"?\b%s"?\s*:\s*"((?:[^"\\]|\\.)*)"' % nom, bloc)) else ""
@@ -528,7 +543,7 @@ def garde_ecrasement(sortie, page):
                              "l'inscrire dans IDS_POSES." % (nom, ", ".join(perdus)))
 
 
-def ecrire_lexique(dossier, titre, retour, commun=None):
+def ecrire_lexique(dossier, titre, retour, commun=None, verifier=False):
     code = re.sub(r"[^A-Za-z0-9._-]", "_", titre)[:60]
     if code in EXCLUS:
         raise LexiqueProtege(EXCLUS[code], exclu=True)
@@ -578,8 +593,12 @@ def ecrire_lexique(dossier, titre, retour, commun=None):
     # Les sigles des définitions (tirées mot pour mot des QCM) reçoivent leur infobulle, comme dans les pages : un
     # lexique régénéré garde ses explications (n°44, décision de Pascal du 22/11/2026 ; n°283).
     page = infobuller(page)
+    page = MODE_LECTURE.poser(page)
     sortie = os.path.join(dossier, "lexique_%s.html" % code)
     garde_ecrasement(sortie, page)
+    if verifier:                                      # ne rien écrire : la page du dépôt est-elle celle-ci ?
+        a_jour = os.path.isfile(sortie) and open(sortie, encoding="utf-8").read() == page
+        return sortie, total, a_jour
     open(sortie, "w", encoding="utf-8").write(page)
     return sortie, total
 
@@ -612,6 +631,8 @@ def page_de_retour(dossier):
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     tous = "--tous" in sys.argv
+    verifier = "--verifier" in sys.argv
+    perimes = compares = 0
     dossiers = []
     for a in args:
         if tous:
@@ -627,7 +648,7 @@ if __name__ == "__main__":
             print("%-58s  ni séquence ni TP dans ce dossier — NON GÉNÉRÉ" % titre[:56])
             continue
         try:
-            r = ecrire_lexique(d, titre, retour)
+            r = ecrire_lexique(d, titre, retour, verifier=verifier)
         except RefusVocabulaire as e:
             print("%-58s  REFUSÉ — %s" % (titre[:56], e))
             refus += 1
@@ -639,10 +660,24 @@ if __name__ == "__main__":
                 print("%-58s  REFUSÉ — %s" % (titre[:56], e))
                 refus += 1
             continue
-        if r:
+        if r and verifier:
+            compares += 1
+            if not r[2]:
+                perimes += 1
+                print("%-58s  PÉRIMÉ — %s n'est plus ce que le générateur écrit (le relancer sur ce lot)"
+                      % (titre[:56], os.path.basename(r[0])))
+        elif r:
             print("%-58s %3d notions → %s" % (titre[:56], r[1], os.path.basename(r[0])))
         else:
             print("%-58s  aucun QCM lisible dans ce dossier — NON GÉNÉRÉ" % titre[:56])
     if refus:
         print("\n%d lexique(s) refusé(s) : rien n'a été écrit pour eux." % refus)
         sys.exit(1)
+    if verifier:
+        if not compares:
+            print("⛔ aucun lexique comparé : rien n'a été vérifié (règle d'or n°299)")
+            sys.exit(2)
+        print("%d lexique(s) comparé(s) à ce que le générateur écrit · %d périmé(s)" % (compares, perimes))
+        if perimes:
+            sys.exit(1)
+        print("✅ chaque lexique engendré est à jour de ses QCM et de son vocabulaire")

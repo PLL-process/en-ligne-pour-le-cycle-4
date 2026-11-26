@@ -37963,3 +37963,80 @@ l'entraînement au brevet de 3e_C6.2 ; thème 3 — 3 ateliers de planification 
 vérification), 4 TP de CAO, leur générateur et le manifeste, le TP mBot2 ; les trois thèmes — le bloc à jour dans les 60 séquences ; `_outils` — `mode_mission/`
 (moteur, feuille de style, `banc_generique`, `banc_defaut`, `banc_barre`, `README`), `controle_mode_mission.py` et son banc,
 `controle_sauvegarde_locale.py` et son banc.
+
+## 25/11/2026 — Vérification totale, vague 3 (suite) : le mode lecture, une partie par écran, sur les synthèses élève et les lexiques (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Suite de la demande de Pascal du 25/11/2026** (« que le mode mission soit pour tous les documents élèves » ; à la
+question « jusqu'où ? » : « Tout, synthèses comprises »). Une synthèse et un lexique ne se jouent pas, ils se lisent :
+ils reçoivent le pendant du mode mission, sans étoile ni vérification.
+
+**Mesuré sur `main`** : 69 synthèses élève et 60 lexiques, tous d'un seul tenant. La synthèse du lampadaire (5e_C4.1)
+fait 8 165 px de haut sur un téléphone de 390 px : près de dix écrans à faire défiler.
+
+**Ce qui est fait** — `_outils/mode_lecture/` (source unique : `lecture.css`, `lecture.js`, `poser.py`), posé sur les
+**129 pages** :
+- la page se lit **une partie à la fois** : la carte « 🧠 Ce que je dois retenir », puis chaque partie, puis les mots ;
+  dans un lexique, une séance ou une compétence. Une barre dit « Partie 3 sur 8 · … », chaque trait mène à sa partie,
+  deux boutons : Précédent · Suivant ;
+- le titre de la page reste ; sa question et sa barre d'outils se lisent à la première partie, puis s'effacent (elles
+  prenaient un quart d'écran de téléphone à chaque partie) ;
+- les liens de la page suivent : « ↑ La carte », « #partie-3 », et l'adresse `lexique_x.html#seance-s2` par laquelle
+  une séquence renvoie à son lexique ouvrent la bonne partie ;
+- allumé d'emblée pour l'élève ; « 📄 Page complète » ramène à la page qui défile, « 📖 Mode lecture » y retourne ;
+- **rien à l'impression** (tout est sous `@media screen` : les deux pages A4 sortent comme avant) ;
+- **dans le navigateur, le seul choix d'affichage** : sans choix de l'élève, rien n'est écrit ; « 📄 Page complète »
+  laisse une marque, « 📖 Mode lecture » la retire — comme le mode mission. Ni réponse, ni progression (n°322).
+  `controle_sauvegarde_locale.py` lit ce bloc à part, comme celui du mode mission, et compte ces pages ;
+- un robot de test ouvre la page complète : les contrôles du dépôt mesurent la même page qu'avant.
+
+**Mesure** : 121 des 129 pages se lisent en **753 parties** (six en moyenne) ; 8 tiennent en une seule (un lexique d'une
+compétence, un lexique en tableau) et s'ouvrent telles quelles, sans bouton.
+
+**Ce que le banc a appris sur Chromium** : une page rechargée dans les millisecondes qui suivent une écriture dans
+`localStorage` (ou `sessionStorage`) ne la retrouve pas toujours — la page écrit d'abord chez elle, le navigateur
+reçoit ensuite. Mesuré, machine chargée : 3 marques perdues sur 150 rechargements immédiats, et autant d'effacements
+non vus. Aucun élève ne recharge en 5 ms ; un banc, si, et il refusait alors une page sur cent, jamais la même — un second
+onglet « témoin » ne suffisait pas, il lit parfois la même mémoire que la page. `banc_lecture.mjs` juge donc les deux
+moitiés séparément, chacune sans course : le clic écrit la marque (lue dans la page) ; une page qui TROUVE la marque à
+son ouverture (posée avant tout script) s'ouvre complète. **À retenir pour tout banc qui écrit puis recharge.**
+
+**Les générateurs posent le bloc** (n°283) : `_outils/generer_lexique.py` (les lexiques) et
+`ateliers-representations/_generation/build.py` avec `syntheses.py` (les synthèses des ateliers de représentation ;
+régénérées, elles sortent identiques). `console_jardiniere.py` (4e_C8.1) ne réécrit que sa zone de la synthèse : le
+bloc reste. Les autres synthèses élèves sont écrites à la main.
+
+**Les contrôles** : `controle_mode_lecture.py` (L1 un document à lire sans le bloc · L2 deux blocs · L3 bloc périmé ·
+L4 dispense périmée ; banc 13 / 13) ; `mode_lecture/banc_lecture.mjs` joue chaque page dans un navigateur d'élève, à
+390 px, partie par partie, et refuse onze choses (une partie vide, un défilement de côté, du texte perdu, un lien
+d'ancre qui ne mène pas à sa partie, une fiche papier amputée, une trace dans le navigateur…).
+
+**Trouvé en chemin : des lexiques périmés, et rien pour le voir.** Un lexique est tiré mot pour mot des QCM de son
+lot. En rejouant le générateur sur tout le site :
+- **la vague 1 de cette vérification avait renommé deux notions dans des QCM sans régénérer les lexiques** :
+  `lexique_5e_C7.4` disait encore « Ce qu'on manipule reste en 5 V » (devenu « Les sources d'énergie de
+  l'indicateur »), `lexique_5e_C7.2` « D'où vient le 8,5 » (devenu « La hauteur du centre de la bille ») ;
+- trois lexiques de l'atelier CAO (`3e_C7.6`, `5e_C7.2`, `5e_C7.6`) n'avaient jamais été régénérés depuis le 02/09 :
+  `--tous` ne parcourt que les dossiers qui portent une séquence, et ces lots tournent autour d'un TP mutualisé.
+Les quatre sont régénérés. `generer_lexique.py --verifier` n'écrit rien et dit si la page du dépôt est celle que le
+générateur écrit ; **`controle_lexique_a_jour.py`**, neuf, le joue sur chaque dossier qui porte un lexique (58
+comparés, 2 écrits à la main). **À retenir : une notion ou un « à retenir » changé dans un QCM → relancer
+`generer_lexique.py` sur le lot.**
+
+**Vérifié, sur l'arbre final (fusionné avec le `main` qui porte le mode mission)** :
+- `banc_lecture.mjs` : 129 pages jouées dans un navigateur d'élève à 390 px, 753 parties, 0 refus (aucune partie vide,
+  aucun défilement de côté, rien de perdu entre les parties et la page complète, chaque lien d'ancre mène à sa partie,
+  la fiche papier identique, seule la marque d'affichage dans le navigateur, un robot de test arrive en page complète) ;
+- les 55 `controle_*.py` à 0 (dont les deux neufs) ; `tests_controle_mode_lecture.py` 13 / 13,
+  `tests_generer_lexique.py` 34 / 34, `tests_controle_sauvegarde_locale.py` 14 / 14 ;
+- les 11 bancs des lots qui ouvrent une synthèse ou un lexique, à 0, dont `banc_ateliers.py` (530 / 530) ;
+- au navigateur, tout le site : `controle_squelette`, `controle_code_colore`, `controle_impression`,
+  `controle_hors_ligne`, `controle_verrous`, `controle_indices_qcm`, `controle_schemas` à 0 ; sur les 129 pages :
+  `controle_page_ouverte` (390 px) L 0 · B 0 · C 0, `controle_axe` aucun défaut au-dessus de la référence ;
+- la revue d'écran à 390 et 1 280 px d'une synthèse de chaque forme (cartes, page à plat, atelier) et d'un lexique,
+  première partie et suivantes.
+
+**Thème par thème** (n°302) : les trois thèmes — le bloc dans les 69 synthèses élève et les 60 lexiques ; thème 1 —
+`ateliers-representations/_generation/build.py` et `syntheses.py` ; thème 3 — quatre lexiques régénérés (5e_C7.4, 5e_C7.2, 3e_C7.6,
+5e_C7.6) ; `_outils` — `mode_lecture/` (moteur, feuille de style, `poser.py`, `banc_lecture.mjs`, `README.md`),
+`controle_mode_lecture.py` et son banc, `controle_lexique_a_jour.py`, `generer_lexique.py` (`--verifier`, le bloc) et
+son banc, `controle_sauvegarde_locale.py` (le bloc lu à part) et son banc.

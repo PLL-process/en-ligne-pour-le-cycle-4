@@ -76,6 +76,10 @@ mesure : ce contrôle juge ce que LA PAGE enregistre. Ce que le mode garde, lui,
     (`mode_mission/banc_defaut.mjs` le joue : rien d'autre que `v` et `on` sous la clé « mission:… »).
 Ces pages sont comptées (« ne gardent que le choix d'affichage du mode mission »), pas refusées.
 
+Le **mode lecture** (`_outils/mode_lecture/`, une partie par écran, posé sur les synthèses élève et les lexiques le
+même jour) se lit à part de la même façon : son bloc n'écrit qu'une marque, « Page complète », que « Mode lecture »
+retire. Ni réponse ni progression (`mode_lecture/banc_lecture.mjs` le joue, L10).
+
 Usage : python3 _outils/controle_sauvegarde_locale.py [--racine .] [--corriger] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste un écart (effacement ou note manquants sur une
 séquence ou un atelier), 2 si aucune page n'a pu être lue (règle d'or n°299).
@@ -145,12 +149,12 @@ SCRIPT_RESET = '''
 </script>
 '''
 
-#: le bloc du mode mission, tel que `mode_mission/poser.py` le pose (ses deux marqueurs)
-_MISSION_RE = re.compile(r"<!-- mode-mission [^ ]+ : début.*?<!-- mode-mission [^ ]+ : fin -->", re.S)
+#: les blocs du mode mission et du mode lecture, tels que leur `poser.py` les pose (deux marqueurs chacun)
+_MISSION_RE = re.compile(r"<!-- mode-(mission|lecture) [^ ]+ : début.*?<!-- mode-\1 [^ ]+ : fin -->", re.S)
 
 
 def sans_mission(src):
-    """La page sans le bloc du mode mission : ce contrôle juge ce que la page enregistre elle-même."""
+    """La page sans les blocs du mode mission et du mode lecture : ce contrôle juge ce que la page enregistre elle-même."""
     return _MISSION_RE.sub("", src)
 
 
@@ -366,7 +370,7 @@ def main(argv):
                   % len(comptes["qcm_sans_note"]))
         if mission_seule:
             print("ℹ %d page(s) n'enregistrent rien d'elles-mêmes et ne gardent que le choix d'affichage du mode "
-                  "mission (joué par mode_mission/banc_defaut.mjs ; pas de refus)" % len(mission_seule))
+                  "mission ou du mode lecture (joué par banc_defaut.mjs et banc_lecture.mjs ; pas de refus)" % len(mission_seule))
     print("%d page(s) lues qui écrivent dans localStorage · %d refus · %d confirm() · %d QCM sans note"
           % (n, len(refus), len(comptes["modale"]), len(comptes["qcm_sans_note"])))
     if refus:

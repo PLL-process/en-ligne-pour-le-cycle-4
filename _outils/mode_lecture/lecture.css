@@ -1,0 +1,40 @@
+/* Mode lecture v1 — une partie par écran. Source unique : _outils/mode_lecture/ (poser.py).
+   Tout ce qui cache est sous @media screen : la page s'imprime comme avant, entière. Les couleurs de la barre sont
+   les siennes (fond marine, texte clair) : elle se lit sur une page sombre comme sur une page claire. */
+@media screen{
+  body.ml .ml-cache,body:not(.ml) .ml-seul,body.ml .ml-invite{display:none!important}
+  body.ml{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  /* passé la première partie, le haut de la page se fait petit : le titre reste, sa question et sa barre d'outils
+     attendent en première partie (elles prenaient un quart d'écran de téléphone à chaque partie) */
+  body.ml.ml-suite .ml-entete{display:none!important}
+  body.ml.ml-suite h1{font-size:1.05rem!important;margin:6px auto 8px!important}
+  /* la navigation du site tient sur une ligne qui défile de côté : la barre du mode se cale sous elle */
+  body.ml #navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+  body.ml #navharm>*{flex:0 0 auto;white-space:nowrap}
+  .ml-invite{display:flex;justify-content:center;margin:10px 0 14px}
+  .ml-entrer{min-height:48px;padding:10px 20px;border:0;border-radius:12px;background:#ffb454;color:#2a1800;font:inherit;font-weight:700;cursor:pointer}
+  .ml-entrer:focus-visible,.ml-quitter:focus-visible,.ml-btn:focus-visible,.ml-rail button:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+  .ml-ancre{height:0}
+  .ml-tete{max-width:940px;margin:0 auto 14px;position:sticky;top:0;z-index:900;background:#0d2347;color:#e4eaf5;border:1px solid #274a8a;border-radius:16px;
+    padding:10px 14px;box-shadow:0 10px 26px rgba(0,0,0,.28);display:grid;grid-template-columns:minmax(0,1fr);gap:8px;text-align:left}
+  .ml-ligne{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .ml-ou{margin:0;flex:1 1 auto;font-size:.95rem;line-height:1.35;color:#e4eaf5;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ml-ou b{color:#9bbefc;font-weight:700;white-space:nowrap}
+  .ml-quitter{flex:none;min-height:44px;padding:6px 12px;border-radius:10px;background:transparent;color:#9bbefc;border:1px solid #2e5d9f;font:inherit;font-size:.82em;font-weight:700;cursor:pointer}
+  .ml-rail{list-style:none;display:flex;gap:6px;margin:0;padding:0}
+  .ml-rail li{flex:1 1 0;min-width:0;margin:0;padding:0}
+  /* une cible de 24 px de haut au moins (WCAG 2.5.8), le trait dessiné au milieu */
+  .ml-rail button{display:block;width:100%;height:24px;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
+  .ml-rail button::before{content:"";position:absolute;left:0;right:0;top:9px;height:6px;border-radius:3px;background:#1f4380}
+  .ml-rail button.lu::before{background:#9bbefc}
+  .ml-rail button.ici::before{background:#61dafb}
+  .ml-pied{position:fixed;left:0;right:0;bottom:0;z-index:1000;background:#0d2347;border-top:1px solid #274a8a;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+  .ml-pied-in{max-width:940px;margin:0 auto;display:flex;gap:10px}
+  .ml-btn{min-height:52px;padding:10px 18px;border-radius:12px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer}
+  .ml-prec{flex:0 0 auto;background:transparent;color:#e4eaf5;border:2px solid #2e5d9f}
+  .ml-suiv{flex:1 1 auto;background:#1f4f8f;color:#fff;border:0}
+  .ml-btn:disabled{opacity:.45;cursor:default}
+  @media (max-width:640px){.ml-tete{padding:8px 12px;border-radius:14px}.ml-prec span{display:none}.ml-prec{min-width:52px}}
+  @media (prefers-reduced-motion:reduce){.ml-tete *,.ml-pied *{transition:none!important;animation:none!important}}
+}
+@media print{.ml-seul,.ml-invite{display:none!important}}
