@@ -17,6 +17,19 @@ Toutes les images vont dans `Images/`, avec **exactement** le nom indiqué.
 | `tp3e_R6_assemblage_coupe.png` | résultat du palier | palier 7 — L'assemblage — là où les deux pièces se rencontrent | Vue en coupe de l'assemblage : le couvercle posé sur le boîtier, sa nervure engagée dans la gorge, un espace visible entre les deux pour le joint. |
 | `tp3e_R7_boitier_fini.png` | résultat du palier | palier 8 — 🎁 Ton boîtier, dehors pour de bon | Le boîtier terminé, coloré, couvercle légèrement soulevé pour montrer la gorge et l'intérieur. |
 
+## Les deux images qui manquent encore (relevé du 26/11/2026)
+
+`verif_guidage.py` (n°77) le dit : les paliers 1 et 8 n'ont **aucune** image de résultat. Ce sont deux captures
+d'**interface**, pas des rendus de pièce : elles demandent un poste en français, connecté au compte Onshape.
+
+| Nom du fichier | Nature | Palier | Ce qu'il faut voir |
+|---|---|---|---|
+| `tp3e_R0_onglet_boitier.png` | capture d'interface | 1 — Ranger avant de commencer | Le bas de l'écran Onshape : l'onglet renommé **Boitier**, et en haut à gauche le nom du document `Boitier capteur — Camille` (prénom d'exemple, annoncé comme tel). |
+| `tp3e_R8_retrouve.png` | capture d'interface | 8 — Emporter son travail | La page **Documents**, bande **Ouvert en dernier par moi** : le document `Boitier capteur - CD` (initiales d'exemple) y figure, avec sa vignette. C'est la preuve que le travail se retrouve. |
+
+Une fois prises : les déclarer au scénario (`image_resultat` des paliers 1 et 8), relancer le générateur, puis
+`verif_guidage.py` — le n°77 ne doit plus rien refuser.
+
 ## Comment cadrer
 
 Pour une **capture d'interface** : serré sur le panneau et la zone concernée, jamais tout

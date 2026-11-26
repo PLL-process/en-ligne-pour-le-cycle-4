@@ -4,6 +4,7 @@
 //   ANATOMY_DIR=~/.cache/anatomy-1482e84 node build.mjs          → ../../Images/freins_iso.html (+ planche fixe)
 // Le monde est en millimètres : x vers l'avant du vélo, y à travers la roue (vers l'élève), z vers le haut.
 import { writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { homedir, tmpdir } from "node:os";
@@ -563,6 +564,9 @@ function page(theme) {
     + `<body class="iso" data-theme="${theme}">${corps}<script type="module">${(kitScript() + "\n" + live).replace(/<\/(script)/gi, "<\\/$1")}</script></body></html>`;
 }
 writeFileSync(join(IMAGES, "freins_iso.html"), page("dark"));
+// le mode mission (Pascal, 26/11/2026 : « tout doit être en mode mission »), posé par sa source unique ; il ne s'allume
+// que sur la page ouverte seule, jamais dans le cadre de la séquence
+execFileSync("python3", [join(IMAGES, "..", "..", "..", "..", "..", "_outils", "mode_mission", "poser.py"), join(IMAGES, "freins_iso.html")]);
 const CLAIRE = join(process.env.FREINS_TMP || tmpdir(), "freins_iso-clair.html");
 writeFileSync(CLAIRE, page("light"));   // pour la fiche A4 (print.mjs lit la page claire), hors du dépôt
 

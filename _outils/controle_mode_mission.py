@@ -10,7 +10,9 @@ Historique : le 25/11/2026 (« que le mode mission soit pour tous les documents 
 **exiger** le bloc dans les documents qui se jouent (séquences, ateliers, TP, cahiers, activités, entraînement), avec
 des panneaux et cinq dispenses. **Le 26/11/2026, Pascal : « tout doit être en mode mission »** — les panneaux, les
 cinq pages dispensées, les synthèses élève et les lexiques (qui avaient la veille leur « mode lecture », retiré ce
-jour-là), la carte des représentations. Les QCM gardent leur moteur (sa réponse du même jour).
+jour-là), la carte des représentations ; puis, à sa demande, les trois figures interactives « pièce par pièce » (le
+mode ne s'y allume que sur la page ouverte seule, jamais dans le cadre de sa séquence). Les QCM gardent leur moteur
+(sa réponse du même jour).
 
 CE QUI EST LU
 -------------
@@ -18,7 +20,6 @@ Toute page `.html` sous `theme-*`, hors archive et hors `_generation/`. Elle doi
 d'une de ces sortes (`HORS_MISSION`, chacune avec sa raison) :
   · un QCM (`qcm_*`, `miniquiz_*`) — son propre moteur, une question à la fois, score et « Mes erreurs » ;
   · un document pour l'enseignant (`synthese_professeur*`, `fiche_*` de l'atelier CAO pour les collègues) ;
-  · une figure interactive montrée DANS un écran de sa séquence (`*_en_pieces.html`, `freins_iso.html`, en cadre) ;
   · une page de renvoi (`<meta http-equiv="refresh">`) : elle n'est jamais lue, elle mène à la page qui l'a remplacée.
 
 IL REFUSE
@@ -50,7 +51,6 @@ _LECTURE_RE = re.compile(r"<!-- mode-lecture [^ ]+ : début.*?<!-- mode-lecture 
 HORS_MISSION = [
     (re.compile(r"^(qcm|miniquiz)", re.I), "QCM : son propre moteur, une question à la fois (Pascal, 26/11/2026 : « garder leur moteur »)"),
     (re.compile(r"^(synthese_professeur|fiche_)", re.I), "document pour l'enseignant"),
-    (re.compile(r"(_en_pieces|^freins_iso)\.html$", re.I), "figure interactive, montrée dans un écran de sa séquence (cadre)"),
 ]
 
 

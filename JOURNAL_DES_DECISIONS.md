@@ -38372,3 +38372,35 @@ de style, `poser.py`, `banc_lecture.mjs` neuf, `banc_generique.mjs`, `banc_defau
 `mode_lecture/` retiré, `controle_mode_mission.py` et son banc, `controle_mode_lecture.py` et son banc retirés,
 `controle_sauvegarde_locale.py` et son banc, `generer_lexique.py` et son banc, `banc_effacement.mjs` et son banc,
 `make_index.py` (le titre lu dans toute la page).
+
+## 26/11/2026 — Tout en mode mission, suite : les trois figures « pièce par pièce » ; les captures Onshape préparées (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Réponse de Pascal du 26/11/2026** à « les trois figures interactives restent hors mission : d'accord ? » : « Non ».
+Elles y passent : `station_en_pieces` (3e_C4.3), `lampadaire_en_pieces` (5e_C4.1), `freins_iso` (5e_C1.2). Le mode est
+sur **261 pages** ; hors mission ne restent que les QCM (79), les documents pour l'enseignant (71) et une page de renvoi.
+
+**Ce qui change** :
+- ouverte seule (le lien « 📱 Sur un téléphone, la figure s'ouvre en grand »), une figure s'ouvre en mission, d'un écran :
+  la barre, le bouton « 📄 Page complète », le ⏸ qui fige l'animation ;
+- **dans le cadre de sa séquence, le mode ne s'allume pas** : la séquence est déjà en mission, une seconde barre dans
+  le cadre ferait doublon. Le moteur ne s'allume plus dans une page montrée en cadre (`window.self !== window.top`) ;
+  sur le site, seules ces trois figures le sont (relevé des `<iframe>`) ;
+- le moteur lit une page sans gabarit d'exercices comme un document : par parties, ou d'un seul écran ;
+- `poser.py` pose le bloc dans une page dont le script écrit une autre page (la fiche A4 de la figure : un second
+  `</head>` dans une chaîne) — le premier `</head>`, s'il précède le premier `<body>`, est le sien ;
+- les trois générateurs (`build.mjs` des figures) posent le bloc après la mention de licence (n°283) ;
+- `controle_mode_mission.py` ne les dispense plus (banc 16 / 16) ; `banc_lecture.mjs` les joue.
+
+**Vérifié** : les trois figures, ouvertes seules, en mission (`banc_lecture` 3 / 3, `banc_generique`, `banc_defaut`,
+`banc_barre` sans refus) ; dans 5e_C1.2 et 5e_C4.1 ouvertes en mission, le cadre de la figure sans barre ni bouton
+du mode ; les 54 `controle_*.py` à 0 ; `banc_defaut` sur les 261 pages ; revue d'écran à 390 px (le lampadaire).
+
+**Les captures Onshape** (« puis faire les captures », même message) : **pas prises ce jour**. Elles se prennent dans
+Onshape, avec le compte de Pascal, dans son Chrome ; l'extension Claude in Chrome n'était pas connectée (Pascal écrivait
+depuis son téléphone). Préparé pour la séance de prise de vue : `RELEVE_DES_CAPTURES_3e.md` nomme les deux images qui
+manquent (paliers 1 et 8, `tp3e_R0_onglet_boitier.png` et `tp3e_R8_retrouve.png`) ; `RELEVE_DES_CAPTURES_5e-bis.md`
+nommait déjà les cinq du TP « Le dé, en mieux ».
+
+**Thème par thème** (n°302) : thème 1 — `freins_iso` et son générateur ; thème 2 — `station_en_pieces`,
+`lampadaire_en_pieces` et leurs générateurs ; thème 3 — `RELEVE_DES_CAPTURES_3e.md` ; les trois thèmes — le bloc
+reposé ; `_outils` — `mode_mission/mission.js`, `poser.py`, `banc_lecture.mjs`, `controle_mode_mission.py` et son banc.

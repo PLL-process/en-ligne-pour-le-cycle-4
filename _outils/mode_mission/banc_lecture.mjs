@@ -1,5 +1,5 @@
-// Banc des documents à lire en mode mission — joue chaque synthèse élève, chaque lexique et la carte des
-// représentations, écran par écran, dans un navigateur d'élève à 390 px.
+// Banc des documents à lire en mode mission — joue chaque synthèse élève, chaque lexique, la carte des
+// représentations et les figures « pièce par pièce », écran par écran, dans un navigateur d'élève à 390 px.
 //
 //   node _outils/mode_mission/banc_lecture.mjs                    → tous les documents à lire du dépôt
 //   node _outils/mode_mission/banc_lecture.mjs <page.html> […]    → ces pages-là
@@ -35,7 +35,7 @@ const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..', '..');
 const args = process.argv.slice(2), DETAIL = args.includes('--detail');
 const donnees = args.filter((a) => !a.startsWith('--'));
-const A_LIRE = /^(synthese|lexique|carte_des_representations)/i;
+const A_LIRE = /^(synthese|lexique|carte_des_representations|freins_iso)|_en_pieces\.html$/i;   // les figures « pièce par pièce » depuis le 26/11/2026
 function pages(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     if (e.name.startsWith('.') || e.name === 'node_modules' || e.name.startsWith('_archive') || e.name === '_generation') continue;

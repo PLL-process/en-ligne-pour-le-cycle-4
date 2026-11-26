@@ -433,5 +433,8 @@ writeFileSync(sortie, html);
 if (theme === "dark") {
   const outils = join(ICI, "..", "..", "..", "..", "..", "..", "_outils");
   execFileSync("python3", ["-c", "import sys, pathlib; sys.path.insert(0, sys.argv[1]); from licence_cc import injecter; p = pathlib.Path(sys.argv[2]); p.write_text(injecter(p.read_text(encoding='utf-8')), encoding='utf-8')", outils, sortie]);
+  // le mode mission (Pascal, 26/11/2026 : « tout doit être en mode mission »), posé par sa source unique,
+  // _outils/mode_mission/poser.py ; il ne s'allume que sur la page ouverte seule, jamais dans le cadre de la séquence
+  execFileSync("python3", [join(outils, "mode_mission", "poser.py"), sortie]);
 }
 console.log("écrit", sortie);

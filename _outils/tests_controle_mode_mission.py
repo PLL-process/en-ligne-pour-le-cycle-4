@@ -73,9 +73,11 @@ def main():
     cas("ni l'archive, ni un dossier _generation, ni ce qui est hors des thèmes ne sont lus", r == 0 and "1 page(s) élève lue(s)" in t)
     r, t = jouer({"theme-1/x/qcm_a.html": page(QUESTION), "theme-1/x/miniquiz_b.html": page(QUESTION),
                   "theme-1/x/synthese_professeur_a.html": page(LONG), "theme-1/x/fiche_maths.html": page(LONG),
-                  "theme-1/x/station_en_pieces.html": page(LONG), "theme-1/x/sequence_a.html": page(QUESTION, BLOC)})
-    cas("un QCM, un mini-quiz, un document pour l'enseignant, une figure en cadre : hors mission, comptés", r == 0
-        and "1 page(s) élève lue(s)" in t and "2 QCM" in t and "2 document pour l'enseignant" in t and "1 figure interactive" in t)
+                  "theme-1/x/sequence_a.html": page(QUESTION, BLOC)})
+    cas("un QCM, un mini-quiz, un document pour l'enseignant : hors mission, comptés", r == 0
+        and "1 page(s) élève lue(s)" in t and "2 QCM" in t and "2 document pour l'enseignant" in t)
+    r, t = jouer({"theme-1/x/station_en_pieces.html": page(LONG)})
+    cas("une figure « pièce par pièce » sans le bloc : M1 (Pascal, 26/11/2026 : les figures aussi)", r == 1 and "M1" in t)
     r, t = jouer({"theme-1/x/vittascience_x.html": page('<meta http-equiv="refresh" content="0;url=sequence_a.html">'),
                   "theme-1/x/sequence_a.html": page(QUESTION, BLOC)})
     cas("une page de renvoi (meta refresh) : hors mission, comptée", r == 0 and "1 page de renvoi" in t)
