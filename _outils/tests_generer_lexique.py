@@ -46,6 +46,8 @@ import json  # noqa: E402
 from generer_lexique import (page_de_retour, ecrire_lexique, RefusVocabulaire,  # noqa: E402
                              LexiqueProtege, IDS_POSES, EXCLUS, lire_commun)
 from licence_cc import MENTION as MENTION_LICENCE, retirer as retirer_licence  # noqa: E402  (n°321)
+import generer_lexique as _gl  # noqa: E402
+MODE_LECTURE_RE = _gl.MODE_LECTURE._BLOC_RE  # le bloc du mode lecture, entre ses deux marqueurs
 
 CAS = [
     (["sequence_5e_C8.1_patere.html", "qcm_5e_C8.1_patere.html"],
@@ -107,9 +109,13 @@ def cas_vocabulaire():
                         "{color:#1a6af8}\n  }\n"):
             if attendu not in page:
                 echecs.append("sans vocabulaire, la page a changé : %r manque" % attendu[:50])
-        sans_licence = retirer_licence(page)  # « Ressource sous licence » contient « source »
+        # « Ressource sous licence » contient « source », et le bloc du mode lecture dit « source unique » : ni l'un ni
+        # l'autre n'est le contenu du lexique (25/11/2026)
+        sans_licence = MODE_LECTURE_RE.sub("", retirer_licence(page))
         if "seance-s" in sans_licence or "source" in sans_licence:
             echecs.append("sans vocabulaire, la page parle de séances ou de sources")
+        if len(MODE_LECTURE_RE.findall(page)) != 1:
+            echecs.append("le lexique engendré ne porte pas le mode lecture, une fois (n°283 : une régénération l'effacerait)")
     finally:
         shutil.rmtree(d.parent)
     # 2-4. les refus, le mot nommé
@@ -306,6 +312,28 @@ def cas_commun():
     return echecs, 7
 
 
+def cas_verifier():
+    """`--verifier` (25/11/2026) : ne rien écrire, dire si le lexique du dépôt est celui que le générateur écrit."""
+    echecs = []
+    d = lot()
+    try:
+        sortie, _n = ecrire_lexique(str(d), "x", "sequence_x.html")
+        avant = pathlib.Path(sortie).read_text(encoding="utf-8")
+        r = ecrire_lexique(str(d), "x", "sequence_x.html", verifier=True)
+        if not (len(r) == 3 and r[2] is True):
+            echecs.append("vérifier : un lexique qui vient d'être écrit n'est pas dit à jour")
+        # une notion renommée dans le QCM : le lexique du dépôt est périmé, et n'est pas réécrit
+        (d / "qcm_x.html").write_text(QCM.replace('n:"Innovation"', 'n:"Innovation ou invention"'), encoding="utf-8")
+        r = ecrire_lexique(str(d), "x", "sequence_x.html", verifier=True)
+        if r[2] is not False:
+            echecs.append("vérifier : une notion renommée dans le QCM ne rend pas le lexique périmé")
+        if pathlib.Path(sortie).read_text(encoding="utf-8") != avant:
+            echecs.append("vérifier : le lexique a été réécrit, alors que « --verifier » n'écrit rien")
+    finally:
+        shutil.rmtree(d.parent)
+    return echecs, 3
+
+
 def main():
     echecs = []
     for fichiers, attendu, pourquoi in CAS:
@@ -341,8 +369,9 @@ def main():
     e_vocab, n_vocab = cas_vocabulaire()
     e_garde, n_garde = cas_garde()
     e_commun, n_commun = cas_commun()
-    echecs += e_vocab + e_garde + e_commun
-    n = len(CAS) + 1 + 2 + n_vocab + n_garde + n_commun
+    e_verif, n_verif = cas_verifier()
+    echecs += e_vocab + e_garde + e_commun + e_verif
+    n = len(CAS) + 1 + 2 + n_vocab + n_garde + n_commun + n_verif
     if echecs:
         for e in echecs:
             print("❌ " + e)
