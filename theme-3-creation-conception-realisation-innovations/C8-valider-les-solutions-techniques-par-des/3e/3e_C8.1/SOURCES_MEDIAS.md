@@ -18,3 +18,14 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_deux_mats_vent.png` | Sur un toit-terrasse, sous la pluie, deux mâts dressés côte à côte : un tube large et une barre fine. Derrière, des palmiers couchés par le vent. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of two vertical metal masts standing side by side on a flat roof in hurricane-force wind, one a wide tube and one a thin bar, palm trees bent in the background, driving rain streaking along their whole height, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM (26/11/2026, n°345)
+
+Création originale Fable, CC0. Dessinés par `_outils/document_qcm.py` depuis `documents_qcm_3e_C8.1.json`, lui-même
+écrit par `documents_qcm.py` avec le modèle `mat_station.py` (n°233).
+
+| Fichier | Ce qu'il donne à lire | Questions |
+|---|---|---|
+| `Images/doc_moment_banc_vent.svg` | le moment au pied d'un mât de 2 000 mm, sous le banc et sous le vent, pour chaque profilé | 5, 6, 7 |
+| `Images/doc_verdict_vent.svg` | sous le vent, sur la limite élastique : coefficient et flèche de chaque profilé, avec l'exigence | 15, 27 |
+| `Images/doc_retenus_reglage.svg` | combien de profilés passent, selon la hauteur et la limite | 8, 10 |

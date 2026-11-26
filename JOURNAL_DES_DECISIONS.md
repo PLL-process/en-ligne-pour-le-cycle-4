@@ -37744,3 +37744,36 @@ fusionné, PR #934) ; la même situation se présentant ici, le réinvestissemen
 sans écart.
 
 **Reste**, déjà noté dans la fiche : la séance 1 porte l'ouverture et 50 minutes d'activités, environ 60 minutes en tout.
+
+## 26/11/2026 — 3e_C8.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+**La décision.** « Oui » de Pascal (26/11/2026, 1 h 57), à la proposition : enchaîner avec 3e_C8.1 (le mât de la
+station), dont le QCM n'avait aucune question sur document et la séquence pas de billet de sortie. Le même « oui »
+répond à une seconde proposition, raccourcir l'activité 0 de 5e_C8.2 : elle n'est pas appliquée ; une proposition chiffrée
+est soumise d'abord à Pascal.
+
+**Ce qui change** :
+- Trois documents pour le téléphone, calculés par le modèle : `documents_qcm.py` (neuf) écrit
+  `documents_qcm_3e_C8.1.json` avec `mat_station.py` (n°233), `_outils/document_qcm.py` les dessine. Le moment au pied,
+  banc et vent (questions 5, 6, 7) ; le mât sous le vent, coefficient et flèche de chaque profilé (15, 27) ; combien de
+  profilés passent selon la hauteur et la limite (8, 10). Leurs pourquoi renvoient à la ligne ou à la colonne à relire.
+- Question 1 : elle demandait « ce qu'on attend de toi en 3e, après la 5e et la 4e » (n°304, et hors compétence) ;
+  elle demande maintenant ce que « mettre en œuvre une simulation » te fait faire, et sa notion devient « Mettre en œuvre
+  une simulation » (aides reposées). Question 3 : plus de code de séquence. Question 23 : « et il le dit pas » devient
+  « et l'écran ne le dit pas ».
+- Le billet de sortie (n°330) ferme la séance 3, avant le Bonus : le poteau d'un panneau d'affichage à l'entrée d'un
+  collège de Martinique. Question 1 (3e_C8.1) : choisir le réglage du simulateur et justifier chaque choix. Question 2
+  (3e_C3.4) : écrire le protocole qui mesure si le panneau reste lisible au vent. Versions étayées, correction complète,
+  aucun bouton.
+- La séance 3 passe le réinvestissement (le quai du port, environ 20 min) et l'écrit « comme au brevet » (environ
+  10 min) à la maison, ou en classe s'il reste du temps — comme Pascal l'a décidé pour 5e_C8.1 ; les deux portaient déjà
+  la pastille « peut se faire à la maison ». Sans cela, la séance aurait fait 55 minutes avant la synthèse et le bilan.
+- Trouvé en chemin : une correction de l'écrit tenait en 53 mots d'un seul tenant (`audit_aeration.py --strict`) ;
+  coupée en deux lignes.
+
+**Mesuré** : QCM 34 / 34 ; séquence 64 / 64 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : D1 1, P1 1) ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0 écart ;
+`banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens et
+`verif_regles_audit` sans écart.
+
+**Reste**, déjà noté dans la fiche : la séance 2 annonce 35 + 25 = 60 minutes d'activités.

@@ -78,7 +78,10 @@ OVERLAY = {
         anomalies="La vitesse du vent n'est pas réglable dans le simulateur : c'est délibéré, et "
                   "c'est l'objet du réinvestissement (savoir ce qu'un outil ne permet pas). "
                   "Encastrement supposé parfait ; fatigue hors modèle — l'angle mort est nommé "
-                  "dans la séquence, la synthèse et le QCM.",
+                  "dans la séquence, la synthèse et le QCM. Depuis le 26/11/2026 : sept questions du QCM se "
+                  "lisent sur un document dessiné pour le téléphone (n°345), et la séquence se ferme par un "
+                  "billet de sortie, le poteau du panneau d'affichage (n°330) ; le réinvestissement passe à "
+                  "la maison.",
         accessibilite="Vérifiée : labels sur les trois menus, title/desc sur le SVG du mât, "
                       "verdicts écrits en toutes lettres, hors ligne intégral.",
         medias="1 SVG original CC0 écrit pour le lot — le mât qui se courbe et les flèches de "
