@@ -38453,8 +38453,9 @@ avant), puis dire comment mesurer la flèche et quoi faire d'un bras qui casse a
 Bancs : séquence 46 / 46 (deux tests neufs pour le billet ; durée totale 165 min), QCM 34 / 34 (documents du lot,
 décrits, à jour du modèle), n°311 34 / 34. `controle_question_seule.py --strict` 0 refus, D1 0, P1 0 ;
 `balayer_questions_qcm.mjs --apres` 0 écart ; `controle_schemas.mjs` 0 ✘ ; les contrôles des QCM, du lexique, des
-règles d'or, de l'aération, du squelette et du mode mission : verts. **Les six lots C8 ont maintenant leurs six
-questions sur document et leur billet de sortie.**
+règles d'or, de l'aération, du squelette et du mode mission : verts. **Les cinq séquences du dossier C8 (5e_C8.1,
+5e_C8.2, 4e_C8.1, 3e_C8.1, 3e_C8.2) ont maintenant leurs six questions sur document et leur billet de sortie** ; reste
+`3e_C9.2-C8.3`, rangé en C9, qui porte 3e_C8.3 (D1 : 4 questions sur document ; P1 : ses cinq pages).
 
 **Thème par thème** (n°302) : thème 3 seulement — `3e_C8.2` (séquence, synthèses, QCM, aides, lexique, mission,
 étayage, documents, bancs, fiche, README, sources, rapport) et `_outils/build_audit.py` (sa notice du lot).
