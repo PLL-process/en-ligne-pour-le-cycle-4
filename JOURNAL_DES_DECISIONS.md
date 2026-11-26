@@ -38503,3 +38503,62 @@ qui suit.
 
 **Thème par thème** (n°302) : thème 3 seulement — `3e_C9.2` (séquence et page 4 engendrée, QCM, documents, banc,
 manifeste, README, fiche, synthèse professeur, sources, rapport).
+
+## 26/11/2026 — Blender entre dans le dépôt : un skill, et les trois appareils de Chengdu en 3D (transversal : thème 1, `.claude/skills`, `SKILLS_AUDIT.md`)
+
+**Demande de Pascal (26/11).** « Ici il y a des animations qui pourraient être ou auraient pu être faites avec Blender, qu'en
+penses-tu pour un rendu plus didactique et premium ? », puis « Les pièges à poussières aussi… », puis, sur les trois choix
+proposés : « 1c 2 installes les skills etc. et fais la modification après ».
+
+**Ce que Pascal a décidé.**
+- **La 3D pour les objets, le dessin pour les schémas.** Blender sert là où un mécanisme se joue dans l'espace ou quand l'élève
+  ne voit jamais l'objet ; une chaîne d'énergie, un algorigramme, une pieuvre restent des dessins.
+- **Forme : un film court dans le lecteur pas à pas**, le schéma et ses étapes gardés (rien n'est retiré).
+- **Pilote : les trois appareils de Chengdu d'un coup** (5e_C1.1, activité 1) — l'avis du 16/11 (« l'animation dit déjà comment
+  il mesure ») est donc levé pour ce lot.
+- **Les skills d'abord, la modification ensuite.**
+
+**Les skills.** Six dépôts de skills Blender lus (clonés en lecture seule, aucun code exécuté) : aucun n'est installé, quatre
+idées sont réécrites ; détail et motifs dans `SKILLS_AUDIT.md`, « Skills externes ». Le skill prévu depuis le lot 0,
+**`blender-visualisation-pedagogique`**, est créé avec ce lot (`.claude/skills/`), comme le registre le demandait. Le connecteur
+Blender du poste de Pascal (Blender 5.1.1, carte RTX 3070) suffit ; rien n'y est ajouté.
+
+**La modification (5e_C1.1).** Aux étapes 2, 5 et 8 de l'animation des trois principes — la première de chaque principe — un
+film muet de 4,5 s montre l'appareil en 3D, à la place du dessin : P1, le boîtier de la cour dont la façade devient
+transparente, la lampe, le faisceau, les grains qui brillent en le traversant, le capteur sur le côté ; P2, le tuyau, le filtre
+qui se couvre, la pompe ; P3, la source scellée, la bande de papier filtre, le dépôt qui grandit, le compteur. Pastilles
+numérotées dans l'image, légende écrite dessous avec les mots du schéma, bouton « ✏️ Voir le schéma ».
+
+**Quatre choix faits en chemin, à relire par Pascal.**
+1. **Pas d'étape ajoutée.** L'avis disait « trois boucles ajoutées » en tête de chaque chapitre. Trois étapes de plus auraient
+   demandé trois phrases et trois prises de voix, donc une nouvelle écoute de Pascal, et renuméroté les onze étapes. Le film
+   s'accroche à l'étape qui présente déjà l'appareil : sa phrase et sa voix disent ce que le film montre. Onze étapes, onze voix,
+   inchangées.
+2. **Pas de boucle.** Le film se joue une fois, à l'arrivée sur l'étape ou d'un geste, et s'arrête sur l'image complète, qui est
+   aussi son affiche (n°175, n°176). Sous « mouvement réduit », l'affiche seule.
+3. **« En 3D », jamais « en vrai ».** Ce sont des modèles simplifiés : grains grossis, rayonnement dessiné en points, 24 heures en
+   quelques secondes. La page l'écrit sous chaque film.
+4. **Rien à l'impression.** La planche des trois schémas s'imprime comme avant ; les images sur fond clair existent (le script
+   les rend) mais ne sont pas dans le dépôt : les imprimer allongerait la page, c'est à Pascal de le dire.
+
+**Fabrication.** Tout est construit par `_generation/films_trois_appareils/generer.py` (aucun fichier `.blend`, rien qui vienne
+d'ailleurs) ; `assembler.sh` en tire les fichiers de la page. Trois pièges de Blender 5.1 mesurés et écrits dans le skill, dont
+un qui rendait la première image au lieu de la dernière (`render.render(scene=…)` recopie l'image courante de la scène de la
+fenêtre).
+
+**Mesures.** Films : 128 à 297 Ko (H.264 et VP9), affiches : 40 à 49 Ko — 1,34 Mo ajoutés au lot, rien de chargé avant l'étape.
+Rendu : 32 à 48 s par appareil. Banc de l'animation : **67 / 67** (50 d'avant, 17 nouveaux), et 63 / 67 quand on casse la page
+exprès ; `tests_5e_C1.1_chengdu.py` 44 / 44 ; `tests_regle_311_5e_C1.1.mjs` 34 / 34 ; banc commun du lecteur vert ; contrôles
+lecteur, médias, licence, liens, loupe, tactile, débordement, squelette, atteignabilité, rapports de tests verts ; hors ligne,
+page ouverte, impression et mouvement verts sur la page.
+
+**Ce qui n'est pas vérifié.** La lecture des films sur les postes du collège, sous Safari et sur tablette ; leur clarté pour un
+élève de 5e ; `controle_hors_ligne.mjs` sur le site entier (délai de la session dépassé) ; les SKILL.md tiers n'ont été lus qu'en
+partie. `controle_medias.py` ne lit pas les fichiers vidéo : un trou d'outil, proposé à Pascal, pas comblé ici.
+
+**Proposé, pas lancé.** Les autres objets cités dans l'avis — les trois freins (5e_C1.2), la pompe du jardin (4e_C9.1), la
+station et le lampadaire « en pièces », le vélo-cargo — attendent que Pascal ait vu ce pilote en classe.
+
+**Thème par thème** (n°302) : thème 1 seulement — `5e_C1.1` (séquence, banc de l'animation, `Films/`, trois affiches,
+`_generation/films_trois_appareils/`, sources, manifeste, rapport) ; `.claude/skills/blender-visualisation-pedagogique/` ;
+`SKILLS_AUDIT.md` ; `nouveautes.json`. `_outils/` et `.github/` : rien.

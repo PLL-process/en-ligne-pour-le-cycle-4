@@ -15,6 +15,9 @@ synthèse SIWIS, finale avec curseur de poussière et horloge accélérée) :
 À l'écran elle remplace les trois schémas fixes, qui s'impriment toujours. Banc : `tests_animation_trois_principes.py` ;
 voix : `_generation/voix_trois_principes/` et `SOURCES_MEDIAS.md`.
 
+🎥 **Depuis le 26/11/2026**, aux étapes 2, 5 et 8, **l'appareil se montre en 3D** (film muet de 4,5 s, joué une fois ; un bouton
+rend le schéma). Modèles simplifiés, faits avec Blender par script : `_generation/films_trois_appareils/` et `SOURCES_MEDIAS.md`.
+
 ## Un seul objet pour six codes
 
 Le relevé du capteur de la cour est **mesuré** (C1.2), **collecté et trié** (C1.1), **rangé** (C1.4),
