@@ -38041,6 +38041,114 @@ comparés, 2 écrits à la main). **À retenir : une notion ou un « à retenir 
 `controle_mode_lecture.py` et son banc, `controle_lexique_a_jour.py`, `generer_lexique.py` (`--verifier`, le bloc) et
 son banc, `controle_sauvegarde_locale.py` (le bloc lu à part) et son banc.
 
+## 26/11/2026 — Texte hors repère (`region`), thème 2 : la licence dans un pied, le lexique dans un en-tête, l'index
+
+**La décision.** « 1a » de Pascal (26/11/2026, 6 h 44) : réduire `region` (texte hors repère) thème par thème. Pascal
+a aussi accepté (« 2a ») la mise à jour de son skill `ateliers-representations-depot` (niveau des titres incrustés).
+
+**La mesure, sur `main` (96cb28b1).** 122 pages portent du texte hors repère, au chargement (1 280 px) ou page ouverte
+(390 px) : 533 nœuds page ouverte (index 2, thème 1 298, thème 2 39, thème 3 185). Six causes, presque toutes dans un
+générateur :
+- les 58 lexiques : le titre et le sous-titre entre la navigation et `<main>` (`generer_lexique.py`) ;
+- 49 pages : la mention de licence posée après `</main>`, faute de pied (`licence_cc.injecter`, le générateur des
+  ateliers et ses synthèses) ;
+- dix séquences du thème 1 : la zone principale ne s'ouvre qu'après le titre, la barre de progression et les onglets ;
+- l'atelier de planification (3 pages) ; l'index (`make_index.py`) ; quatre pages à la main.
+
+**Ce qui change ici (thème 2 et `_outils/`).**
+- `licence_cc.py` : `PIED` (la mention dans un `<footer>`, repère « informations sur le document ») ; `injecter` le
+  pose quand la page n'a pas de pied ; `ranger` met dans un pied une mention restée hors repère.
+- `generer_lexique.py` : le titre et le sous-titre dans un `<header>` (sans style : rendu inchangé ; dans `<main>`, ils
+  auraient pris sa largeur de 880 px). Le sous-titre porte `ml-entete` lui-même, le mode lecture sautant un `<header>`.
+  Les 16 lexiques du thème 2 et celui de 3e_C6.2 sont régénérés ; ceux des thèmes 1 et 3 suivent dans leurs PR.
+- `make_index.py` : la ligne des domaines du socle et la légende entrent dans l'en-tête de l'index.
+- 4e_C6.2 (TP et page de renvoi) : la licence rangée dans un pied. Book Train : le bouton « ↑ » (position fixe) dans le
+  pied de la page.
+
+**Vérifié.** Thème 2 et index : 21 pages, `region` 0 au chargement et page ouverte ; restent les deux
+`atelier_diagramme_fast` du thème 2, écrits par le générateur des ateliers (PR du thème 1, puis régénération).
+Rendu 390 et 1 280 px identique au pixel près sur les 21 pages. `tests_controle_licence.py` 20 contrôles, verts ;
+mutation (`ranger` sans `hors_repere`) : 3 échecs. `tests_generer_lexique.py` 34 / 34 ; `controle_lexique_a_jour.py`
+à jour (hors 2 lexiques écrits à la main) ; `controle_licence.py` : 415 pages portent la mention ;
+`banc_lecture.mjs` sur les 17 lexiques : 0 refus ; `controle_page_ouverte.mjs --axe` : 0 ; `controle_axe.mjs`
+(thème 2) : aucun défaut grave.
+
+## 26/11/2026 — Texte hors repère (`region`), thème 1 : le pied des ateliers, la zone principale des séquences, les lexiques
+
+Suite de la PR #944 (« 1a » de Pascal, 26/11/2026). Au thème 1, 298 nœuds hors repère page ouverte, 62 pages.
+
+**Ce qui change.**
+- Générateur des ateliers (`build.py`, `syntheses.py`, `moteur.py`) : la mention de licence va dans un pied
+  (`licence_cc.PIED`, PR #944) au lieu de suivre `</main>`. 17 pages d'atelier et 14 synthèses régénérées ; les pages
+  d'atelier des thèmes 2 et 3 suivent dans leurs PR.
+- Dix séquences (3e, 4e, 5e_C1.1 ; 5e_C1.2 ; C2.1 et C3.1 des trois niveaux) : `<main>` s'ouvrait après le titre, la
+  barre de progression et les onglets. Un `<main>` nu s'ouvre désormais juste après la navigation du site ; l'ancien
+  `<main class="page" id="contenu">` devient un `<div>` aux mêmes attributs (style et lien d'évitement inchangés). Dans
+  4e_C1.1 et 5e_C1.2, dont le CSS stylise `footer`, la zone principale s'étend jusqu'à la mention de licence.
+- 3e_C1.5 et 4e_C1.4 (séquences, CSS d'impression sur `footer`) : la zone principale s'étend jusqu'à la mention. Une
+  activité de 5e_C1.2 et quatre synthèses de 4e_C1.4 et 5e_C1.3 : la mention dans un pied (`licence_cc.ranger`).
+- Les 14 lexiques du thème 1, régénérés (`generer_lexique.py`, PR #944).
+
+**Vérifié.** Les 62 pages : `region` 0 au chargement et page ouverte ; plus aucune page du thème 1 en défaut.
+Rendu 390 et 1 280 px, fermé et déplié : identique au pixel près (3e_C1.5, 3e_C1.1 et 4e_C3.1 varient d'un chargement
+à l'autre, chacune a donné un passage identique ; 4e_C1.4 varie même contre elle-même : identique une fois le hasard
+figé). `tests_regle_311` des 12 dossiers de séquence : verts ; `controle_squelette.mjs` sur les dix : en ordre ;
+`banc_barre.mjs` (mode mission, 93 pages) : 0 erreur ; `incrustations.py --verifier` : à jour ;
+`controle_licence.py` : 415 pages ; `controle_page_ouverte.mjs --axe` : S 0 ; `controle_axe.mjs` (thème 1) : aucun
+défaut grave.
+
+**Vu en passant, hors de ce lot.** Les synthèses professeur des ateliers (sept) et celle de 5e_C1.3 ont des tableaux
+qui défilent à 390 px sans être atteignables au clavier (`scrollable-region-focusable`, page ouverte). Elles sont hors
+du périmètre par défaut de `controle_page_ouverte.mjs` (pages professeur) ; c'est déjà le cas sur `main`.
+
+## 26/11/2026 — Texte hors repère (`region`), thème 3 : l'atelier de planification, le TP mBot2, le mini-quiz, les lexiques
+
+Suite des PR #944 et #945 (« 1a » de Pascal, 26/11/2026). Au thème 3, 185 nœuds hors repère page ouverte.
+
+**Ce qui change.**
+- Atelier de planification (`build_atelier.py`, 3 pages, 34 nœuds chacune) : la zone principale s'ouvre dès le titre ;
+  l'ancien `<main class="page">` devient un `<div>`. Elle se ferme après le pied, resté dans le dernier bloc `.page` :
+  fermée avant lui, elle l'en faisait sortir, et il prenait toute la largeur (vu au rendu, corrigé).
+- TP mBot2 (3e_C9.1) : « Prêt·e à t'entraîner ? » et le Bonus, posés après `</main>`, deviennent des régions nommées
+  par leur titre (`aria-labelledby`) — sans bouger : le mode mission en fait des écrans parce qu'ils suivent la zone
+  principale. La licence va dans un pied.
+- Mini-quiz du pont en H (3e_C9.2) : le titre, le sous-titre et les badges dans un `<header>`.
+- 5 pages d'atelier des représentations (3e et 4e_C7.2, 4e_C8.3) : régénérées, licence dans un pied (#945).
+- 27 lexiques régénérés (#944), dont les quatre des dossiers de TP (3e_C7.6, 4e_C7.6, 5e_C7.2, 5e_C7.6).
+
+**Vérifié.** 37 pages : `region` 0 au chargement et page ouverte ; `controle_axe.mjs` (thème 3) : plus de `region`, aucun
+défaut grave ; `controle_page_ouverte.mjs --axe` : 0. Rendu 390 et 1 280 px, fermé et déplié : identique au pixel près
+(TP mBot2 : une colonne de la page varie d'un chargement à l'autre, main contre main ; la même zone, rien d'autre).
+`tests_atelier_C7.1.py` 48 / 48 ; `tests_pont_en_h.mjs` 37 / 37 ; `tests_3e_C9.1.mjs` 89 / 89 ;
+`tests_regle_311_3e_C9.1` 34 / 34 ; `controle_lexique_a_jour.py` à jour ; `banc_lecture.mjs` (lexiques) : 0 refus ;
+`controle_licence.py` : 415 pages.
+
+## 26/11/2026 — Texte hors repère (`region`) : à zéro sur tout le site, il refuse désormais (thème 2, `_outils/`)
+
+Dernière étape du « 1a » de Pascal (26/11/2026) : ce que les PR #944, #945 et #946 ont ramené à zéro ne peut plus
+revenir (n°273 : référence nommée, datée, vide).
+
+**Ce qui change.** `region` entre dans `STRUCTURE_REFUSEE` (`controle_axe.mjs`) : un seul nœud de texte hors repère
+fait sortir à 1, au chargement ; et page ouverte, puisque `controle_page_ouverte.mjs --axe` lit la même liste. Les
+deux `atelier_diagramme_fast` du thème 2 (4e_C4.4, 5e_C4.1), régénérés par le générateur des ateliers (#945) : la
+licence dans un pied.
+
+**Mesuré sur tout le site, `main` après #946 plus ces deux pages.**
+- Au chargement (`controle_axe.mjs`, 410 pages, 1 280 px) : sortie 0, et plus **aucun** défaut d'axe-core, de quelque
+  sorte que ce soit — graves, de structure refusés, ni « autres défauts de structure mesurés » (WCAG 2.0 à 2.2 A/AA et
+  bonnes pratiques). Le 25/11 au matin : 140 pages sans zone principale, 71 titres qui sautaient un niveau, 2 160
+  nœuds hors repère.
+- Page ouverte (`controle_page_ouverte.mjs --axe`, 342 pages, 390 px) : L 0, B 0, C 0, A 0, S 0, sortie 0.
+
+**Bancs.** `tests_controle_axe.mjs` 29 / 29 : le paragraphe resté hors de la zone principale est refusé ; le cas
+« mesuré, jamais refusé » est désormais un titre vide (`empty-heading`). `tests_controle_page_ouverte.mjs` 22 / 22 :
+une correction repliée posée après `</main>`, invisible au chargement, est refusée une fois ouverte. Mutation (`region`
+retiré de la liste) : 2 échecs au premier banc, 1 au second. Le générateur des ateliers et `generer_lexique.py`
+relancés sur le `main` du jour : aucune autre page réécrite, lexiques à jour.
+
+**Reste, hors de ce lot.** Huit synthèses professeur ont des tableaux qui défilent à 390 px sans être atteignables au
+clavier (`scrollable-region-focusable`, page ouverte) — hors du périmètre par défaut de `controle_page_ouverte.mjs`.
+
 ## 26/11/2026 — Vérification totale, suite : une action par ligne, la page qui ne défile plus de côté, l'élève qui ne lit pas sur les pages du kit (transversal : thèmes 1, 2, 3, `_outils`)
 
 **Suite de la demande de Pascal du 25/11/2026** (« assure-toi que l'élève comprenne la question, qu'il y ait la

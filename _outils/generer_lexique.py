@@ -108,6 +108,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from licence_cc import MENTION as MENTION_LICENCE  # règle d'or n°321
 from expliquer_sigles import infobuller  # n°44, décision de Pascal du 22/11/2026
 
+# Le titre et le sous-titre dans un <header> (26/11/2026) : posés entre la navigation et <main>, ils étaient du texte
+# hors repère (axe-core `region`, sur les 54 lexiques). Dans <main>, ils auraient pris sa largeur de 880 px et changé
+# de ligne à 1 280 px ; le <header> n'a pas de style, le rendu ne bouge pas. Le sous-titre porte `ml-entete` lui-même :
+# le mode lecture saute un <header>, et il ne doit se lire qu'au premier écran, comme avant.
 # Le mode lecture — une partie par écran (25/11/2026) : le lexique le reçoit de son générateur, sinon une régénération
 # l'effacerait (règle d'or n°283). Le dossier `mode_lecture` n'est pas un paquet : on charge son `poser.py` par chemin.
 import importlib.util as _iu
@@ -271,8 +275,10 @@ GABARIT = """<!DOCTYPE html>
 </head>
 <body>
 <nav style="padding-top:12px"><a href="{retour}">← Revenir à la séquence</a></nav>
+<header>
 <h1>📖 Lexique — {titre}</h1>
-<p class="sub">{sous_titre} · imprimable · fonctionne hors ligne</p>
+<p class="sub ml-entete">{sous_titre} · imprimable · fonctionne hors ligne</p>
+</header>
 <main>
 {corps}
 </main>

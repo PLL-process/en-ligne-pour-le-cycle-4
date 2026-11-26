@@ -33,8 +33,10 @@
  *     (PR #921 à #929) : `landmark-one-main` (zone principale), `heading-order`
  *     (un titre ne saute pas de niveau), `page-has-heading-one` et
  *     `empty-table-header`. La référence reste vide : un seul nœud refuse (n°273).
+ *     Le 26/11/2026, `region` (texte hors repère) les rejoint, tombé à zéro à son
+ *     tour (PR #944 à #946 : 2 160 nœuds le 25/11 au matin, 0 le 26/11).
  *   · Les autres « moderate » ou « minor » : comptés et rapportés, jamais
- *     refusés. Le premier d'entre eux est `region` (texte hors repère).
+ *     refusés.
  *
  * CE QU'IL NE MESURE PAS, ET LE DIT
  * ---------------------------------
@@ -83,8 +85,9 @@ export const REFERENCE = path.join(ICI, 'axe_reference.json');
 export const ETIQUETTES = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
 export const GRAVES = new Set(['critical', 'serious']);
 /* Défauts de structure qui refusent comme un défaut grave (référence vide, n°273) : tous à zéro sur le dépôt le
-   25/11/2026, après les vagues de structure (PR #921 à #929). `region` reste mesuré seulement. */
-export const STRUCTURE_REFUSEE = new Set(['landmark-one-main', 'heading-order', 'page-has-heading-one', 'empty-table-header']);
+   25/11/2026, après les vagues de structure (PR #921 à #929) ; `region` (texte hors repère) le 26/11/2026 (PR #944 à
+   #946). `controle_page_ouverte.mjs --axe` lit la même liste, page ouverte. */
+export const STRUCTURE_REFUSEE = new Set(['landmark-one-main', 'heading-order', 'page-has-heading-one', 'empty-table-header', 'region']);
 const LARGEUR = 1280;
 const EN_PARALLELE = 4;
 
@@ -245,7 +248,7 @@ export async function main({ muet = false, cible = RACINE, racine = RACINE, json
   const reculs = comparer(graves, connue);
   if (!muet) {
     console.log(`axe-core ${version} · ${mesurees} page(s) · ${LARGEUR} px · ${ETIQUETTES.join(', ')}`);
-    console.log('\nDéfauts graves (critical, serious), et de structure refusés (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau) — comparés à la référence :');
+    console.log('\nDéfauts graves (critical, serious), et de structure refusés (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau, texte hors repère) — comparés à la référence :');
     const tg = totaux(graves);
     if (!tg.length) console.log('    aucun');
     for (const t of tg) console.log(`    ${t.regle} (${impacts[t.regle]}) : ${t.noeuds} nœud(s), ${t.pages} page(s)`);
