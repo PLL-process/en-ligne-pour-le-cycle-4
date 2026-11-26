@@ -347,7 +347,7 @@ R_JARDIN = exercice_mots(
     "<b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, <b>fonction</b>&nbsp;: les mêmes quatre mots pour toutes les "
     "bêtes à cornes. La fonction est la <b>fonction d'usage</b>, pas une fonction technique.",
     "écrire en fonction ce que le système fait (ouvrir l'électrovanne)&nbsp;: c'est une fonction technique.",
-    intro="<p>Les quatre mots de la bête à cornes, vus en 5e, servent dans toute la suite. Deux à trois minutes pour les "
+    intro="<p>Les quatre mots de la bête à cornes servent dans toute la suite. Deux à trois minutes pour les "
           "retrouver&nbsp;; le dessin de référence est dans la correction, et dans le cours.</p>",
     acheteur=" (le collège paie le système d'arrosage&nbsp;; c'est la gardienne qui s'en sert)")
 
@@ -390,7 +390,7 @@ R_ALERTE = exercice_mots(
     "<b>utilisateur</b>, <b>matière d'œuvre</b>, <b>produit</b>, <b>fonction</b>&nbsp;: les mêmes quatre mots partout. La même "
     "personne peut être utilisateur et matière d'œuvre.",
     "croire qu'une personne ne peut pas être une matière d'œuvre, ou écrire une solution dans la fonction.",
-    intro="<p>Les quatre mots de la bête à cornes, vus en 5e et en 4e, servent encore ici. Deux à trois minutes pour les "
+    intro="<p>Les quatre mots de la bête à cornes servent encore ici. Deux à trois minutes pour les "
           "retrouver&nbsp;; le dessin de référence est dans la correction, et dans le cours.</p>",
     acheteur=" (la commune paie l'alerte&nbsp;; ce sont les habitants qu'elle sert)")
 

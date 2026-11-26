@@ -201,8 +201,11 @@ with sync_playwright() as p:
     t("n°42 : l'ambiguïté de « choisis » est dite, dans le référentiel de la synthèse professeur",
       pg.locator(".referentiel-card").count() == 0
       and "sans dire" in bloc and "peut faire autrement" in bloc)
-    t("la marche du C2 sur trois niveaux est écrite à l'élève",
-      "Shenzhen" in contenu and "Hangzhou" in contenu and "compétence C2" in contenu)
+    # 26/11/2026 (n°304, point 1) : la marche se dit avec le programme, au présent, sans le lieu des séquences
+    # d'une année précédente — l'élève ne les a pas forcément faites
+    t("la marche du C2 sur trois niveaux est écrite à l'élève, sans le lieu des séquences d'une autre année",
+      "compétence C2" in contenu and "Ce que le programme demande" in contenu
+      and "Shenzhen" not in contenu and "Hangzhou" not in contenu)
 
     pg.click('[data-check="0"]')
     pg.wait_for_timeout(120)
