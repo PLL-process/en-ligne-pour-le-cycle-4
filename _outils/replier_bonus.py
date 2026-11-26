@@ -15,9 +15,14 @@ sur un titre h2/h3 « Bonus ».
 Un Bonus déjà replié n'est pas touché. Rejouable.
 
 Usage : python3 _outils/replier_bonus.py <page.html>… [--ecrire]       (sans --ecrire : ce qui changerait)
+        python3 _outils/replier_bonus.py --titres <page.html>… [--ecrire]   recompte les défis des Bonus déjà repliés
 """
+import os
 import re
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from controle_bonus_corrige import bonus_etendue, lire as lire_bonus  # noqa: E402
 
 OUVRE = re.compile(r'<section\b[^>]*(?:\bid="bonus"|class="[^"]*\bbonus\b[^"]*")[^>]*>', re.I)
 TITRE = re.compile(r"<h([23])\b[^>]*>.*?</h\1>", re.S | re.I)
@@ -55,6 +60,39 @@ def trouver(s):
     return None, None
 
 
+def compter(corps):
+    """le nombre de défis du Bonus : ceux que la page NOMME (« Défi carte : », « 1. », « Citoyen : », ou les items
+    d'une liste de défis), lus par `controle_bonus_corrige.lire` — la même lecture que le contrôle (B3).
+    Jusqu'au 25/11/2026, l'outil comptait les items de la première liste, sinon les champs : il prenait les quatre
+    phrases de la version étayée pour quatre défis, et un Bonus à un seul champ pour un seul défi (21 titres faux)."""
+    return len(lire_bonus(corps)[0]) or 1
+
+
+def resume(n):
+    return ("🎁 Les %d défis du Bonus — ouvre-les quand tu as fini" % n) if n > 1 else "🎁 Le défi du Bonus — ouvre-le quand tu as fini"
+
+
+TITRE_REPLIE = re.compile(r'(<details class="bonus-replie"><summary>)🎁 (?:Les \d+ défis du Bonus — ouvre-les quand tu as fini'
+                          r'|Le défi du Bonus — ouvre-le quand tu as fini)(</summary>)')
+
+
+def retitrer(chemin, ecrire):
+    """un Bonus déjà replié dont le titre standard annonce un nombre faux reçoit le bon. Un titre écrit à la main
+    (« Le défi du Bonus : faire retenir le bon geste ») n'est pas touché. Rend (ancien, nouveau) ou None."""
+    s = open(chemin, encoding="utf-8").read()
+    e = bonus_etendue(s)
+    m = TITRE_REPLIE.search(s, e[0], e[1]) if e else None
+    if not m:
+        return None
+    neuf = resume(compter(s[e[0]:e[1]]))
+    ancien = s[m.end(1):m.start(2)]
+    if neuf == ancien:
+        return None
+    if ecrire:
+        open(chemin, "w", encoding="utf-8").write(s[:m.end(1)] + neuf + s[m.start(2):])
+    return ancien, neuf
+
+
 def traiter(chemin, ecrire):
     s = open(chemin, encoding="utf-8").read()
     m, t = trouver(s)
@@ -66,13 +104,8 @@ def traiter(chemin, ecrire):
     corps = s[t.end():fin]
     if 'class="bonus-replie"' in corps:
         return 0
-    # les défis : les items de la première liste, sinon les champs à remplir
-    liste = re.search(r"<(ol|ul)\b[^>]*>(.*?)</\1>", corps, re.S)
-    n = len(re.findall(r"<li\b", liste.group(2))) if liste else 0
-    n = n or len(re.findall(r"<textarea\b", corps))
-    nom = ("Les %d défis du Bonus" % n) if n > 1 else "Le défi du Bonus"
-    resume = "🎁 %s — ouvre-les quand tu as fini" % nom if n > 1 else "🎁 %s — ouvre-le quand tu as fini" % nom
-    neuf = (s[:t.end()] + '\n<details class="bonus-replie"><summary>%s</summary>' % resume + corps.rstrip()
+    n = compter(corps)
+    neuf = (s[:t.end()] + '\n<details class="bonus-replie"><summary>%s</summary>' % resume(n) + corps.rstrip()
             + "\n</details>\n" + s[fin:])
     if 'id="css-bonus-replie"' not in neuf:
         k = neuf.lower().rfind("</head>")
@@ -90,6 +123,14 @@ def main():
         print(__doc__)
         return 2
     faits = 0
+    if "--titres" in args:
+        for p in pages:
+            r = retitrer(p, ecrire)
+            if r:
+                faits += 1
+                print("%s %s : « %s » → « %s »" % ("✔" if ecrire else "·", p.split("/")[-1], r[0], r[1]))
+        print("\n%d titre(s) %s" % (faits, "corrigé(s)" if ecrire else "à corriger (relancer avec --ecrire)"))
+        return 0
     for p in pages:
         r = traiter(p, ecrire)
         if r is None:

@@ -25,6 +25,7 @@ But : métadonnées + styles globaux (thème sombre, cartes, tokens, tableaux…
 .py-num{color:var(--orange)}
 .py-kw{color:var(--violet);font-weight:600}
 .py-op{color:var(--gold);font-weight:600}
+details.correction{margin:.8rem 0;padding:.6rem .9rem;border:1px solid var(--green);border-radius:10px}details.correction summary{cursor:pointer;font-weight:700;color:var(--green)}details.correction p{line-height:1.6}
 .py-com{color:var(--muted);font-style:italic}
 .py-lno{color:#5b6ea8}
 *{box-sizing:border-box} html,body{margin:0;height:100%}
@@ -2560,6 +2561,28 @@ makeTokensDraggable(); // ✅ rend les étiquettes réellement déplaçables
     <li><b>Le robot sans robot.</b> Réécris une de tes fonctions pour qu'elle s'exécute sans mBot2, en affichant simplement ce qu'elle aurait commandé. À quoi sert un programme qui ne pilote rien&nbsp;?</li>
     <li><b>Le nom qui explique.</b> Reprends tes noms de variables et remplace-les par des noms qu'un camarade comprendrait sans lire le reste du programme. Combien de commentaires peux-tu supprimer ensuite&nbsp;?</li>
   </ol>
+  <p class="consigne">1. Écris tes réponses sur ta feuille de brouillon. <br>2. Ouvre ensuite le corrigé, et compare.</p>
+  <details class="correction"><summary>📖 Corrigé du Bonus (à ouvrir APRÈS ton essai)</summary>
+    <p><b>1. La variable qui ment.</b></p>
+    <p>Exemple&nbsp;: on met la vitesse entre guillemets, puis on calcule avec.</p>
+<pre>vitesse = "40"
+vitesse = vitesse + 10</pre>
+    <p>Python s'arrête et affiche une erreur de type&nbsp;: <code>TypeError</code>. <br>Le message exact change selon la ligne et selon l'appareil, mais ce mot y est presque toujours.</p>
+    <p><b>En français, pour quelqu'un qui ne programme pas&nbsp;:</b> <br>«&nbsp;Tu me donnes un texte là où j'attends un nombre&nbsp;: je ne sais pas calculer avec un texte.&nbsp;»</p>
+    <p><b>Pourquoi&nbsp;:</b> <code>"40"</code>, entre guillemets, est un texte&nbsp;; <code>40</code> est un nombre. <br>Ils se ressemblent à l'écran&nbsp;; pour Python, ce sont deux types différents.</p>
+    <p><b>2. Le robot sans robot.</b></p>
+    <p>Exemple&nbsp;: la fonction n'envoie plus rien aux moteurs&nbsp;; elle écrit ce qu'elle aurait commandé.</p>
+<pre>def avancer(vitesse, duree):
+    print("AVANCER à", vitesse, "% pendant", duree, "s")
+
+avancer(40, 1)</pre>
+    <p><b>À quoi sert un programme qui ne pilote rien&nbsp;:</b> <br>· à vérifier l'ordre des actions et les valeurs sans robot&nbsp;: à la maison, ou quand il n'y a qu'un robot pour quatre&nbsp;; <br>· à trouver les erreurs avant de risquer le matériel&nbsp;; <br>· à garder une trace écrite de ce que le robot fera.</p>
+    <p>C'est une <b>simulation</b>&nbsp;: elle prouve la logique, pas le mouvement réel (les roues peuvent patiner).</p>
+    <p><b>3. Le nom qui explique.</b></p>
+    <p>Exemples&nbsp;: <br>· <code>v</code> devient <code>vitesse_pourcent</code>&nbsp;; <br>· <code>d</code> devient <code>distance_cm</code>&nbsp;; <br>· <code>t</code> devient <code>duree_s</code>.</p>
+    <p><b>Les commentaires que tu peux supprimer&nbsp;:</b> tous ceux qui disaient seulement ce que contient une variable («&nbsp;v est la vitesse&nbsp;»). <br>Le nom le dit maintenant, avec son unité.</p>
+    <p><b>Ceux que tu gardes&nbsp;:</b> ceux qui disent <b>pourquoi</b> («&nbsp;15 cm&nbsp;: la distance de sécurité devant un mur&nbsp;»).</p>
+  </details>
 </section>
 
 <script>
