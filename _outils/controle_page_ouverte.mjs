@@ -25,6 +25,10 @@
  *   L  un listing qui défile en largeur : ce qui défile est caché (n°364) — `pre`, `.programme`, `.code-box`, et tout
  *      bloc en police à chasse fixe qui garde ses lignes (`div.codebox`, `div.py`, `.terminal`…, depuis le 22/11/2026) ;
  *      (le calque coloré d'un éditeur intégré, posé sur sa zone de saisie, défile avec elle : il n'est pas compté) ;
+ *   D  la page qui défile de côté, page ouverte (26/11/2026) : ce qui dépasse à droite de l'écran, hors d'un cadre qui
+ *      défile lui-même. Trouvé onglet par onglet, volets ouverts, sur les pages élèves : deux formules de tableur et deux
+ *      messages JSON dans un `<code>` insécable (5e_C1.1, 4e_C7.8), une rangée de quatre boutons de mesure (3e_C5.1).
+ *      L ne voyait que les listings ; un élève sur téléphone voit toute la page glisser ;
  *   B  un SVG qui dessine un bloc de programmation (« alors » et « sinon », « répéter… », « quand … cliqué ») : n°308 ;
  *   C  une même phrase (8 mots ou plus) dans 3 corrections ou plus : une correction qui se recopie n'explique pas (n°96) ;
  *      (une ligne d'aide répétée exprès — « 🔍 Touche le schéma pour l'agrandir » — porte `data-repete` et n'est pas lue ;
@@ -40,7 +44,7 @@
  * Usage :
  *   node _outils/controle_page_ouverte.mjs [chemins…] [--axe] [--strict] [--muet] [--json f]
  *   Sans chemin : les trois thèmes et l'index, hors synthèses professeur, fiches et rapports.
- * L, B, A ET S REFUSENT (règle n°273 : référence nommée, datée, vide)
+ * L, D, B, A ET S REFUSENT (règle n°273 : référence nommée, datée, vide)
  * ----------------------------------------------------------------
  * Le 22/11/2026, sur les 341 pages, L et B sont à 0 (vague n°364 : PR #854, #856, #862). Une page qui fait défiler un
  * listing ou qui dessine un bloc fait sortir à 1, même sans --strict.
@@ -167,7 +171,20 @@ function mesurer() {
     });
   });
   const C = [...compte].filter(([, k]) => k >= 3).map(([ph, k]) => ({ phrase: ph.slice(0, 90), fois: k }));
-  return { L, B, C, boites: boites.length };
+  // D : ce qui dépasse à droite de l'écran, hors d'un cadre qui défile lui-même (le plus extérieur seulement)
+  const W = document.documentElement.clientWidth, deb = [];
+  if (document.documentElement.scrollWidth > W + 1) {
+    document.querySelectorAll('body *').forEach(el => {
+      const r = el.getBoundingClientRect(); if (!r.width || r.right <= W + 1 || el.closest('svg')) return;
+      for (let x = el.parentElement; x && x !== document.body; x = x.parentElement) {
+        const ov = getComputedStyle(x).overflowX; if (ov === 'auto' || ov === 'scroll' || ov === 'hidden' || ov === 'clip') return;
+      }
+      deb.push(el);
+    });
+  }
+  const D = deb.filter(el => !deb.some(o => o !== el && o.contains(el)))
+    .map(el => ({ quoi: el.tagName.toLowerCase() + (el.id ? '#' + el.id : ''), debut: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 50), px: Math.round(el.getBoundingClientRect().right - W) }));
+  return { L, B, C, D, boites: boites.length };
 }
 
 const b = await chromium.launch();
@@ -197,11 +214,12 @@ async function une(fichier) {
 for (let i = 0; i < liste.length; i += EN_PARALLELE) await Promise.all(liste.slice(i, i + EN_PARALLELE).map(une));
 await b.close();
 
-const ecarts = resultats.filter(r => !r.panne && (r.L.length || r.B.length || r.C.length || r.A.length || r.S.length));
+const ecarts = resultats.filter(r => !r.panne && (r.L.length || r.D.length || r.B.length || r.C.length || r.A.length || r.S.length));
 if (!MUET) {
   for (const r of resultats) {
     if (r.panne) { console.log(`⛔ ${r.rel} — ne s'ouvre pas : ${r.panne}`); continue; }
     r.L.forEach(x => console.log(`L ${r.rel} — listing qui défile de ${x.px} px à 390 px : « ${x.debut} »`));
+    r.D.forEach(x => console.log(`D ${r.rel} — la page défile de côté de ${x.px} px à 390 px : ${x.quoi} « ${x.debut} »`));
     r.B.forEach(x => console.log(`B ${r.rel} — un SVG dessine un bloc de programmation : ${x}`));
     r.C.forEach(x => console.log(`C ${r.rel} — même phrase dans ${x.fois} corrections : « ${x.phrase}… »`));
     if (r.A.length) console.log(`A ${r.rel} — axe-core, page ouverte : ${r.A.join(', ')}`);
@@ -209,16 +227,18 @@ if (!MUET) {
   }
 }
 const n = k => resultats.filter(r => !r.panne && r[k] && r[k].length).length;
-console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390 px · ${pannes} en panne · L ${n('L')} · B ${n('B')} · C ${n('C')}${AXE ? ` · A ${n('A')} · S ${n('S')}` : ''} page(s) concernées`);
+console.log(`\n${resultats.length - pannes} page(s) ouvertes et mesurées à 390 px · ${pannes} en panne · L ${n('L')} · D ${n('D')} · B ${n('B')} · C ${n('C')}${AXE ? ` · A ${n('A')} · S ${n('S')}` : ''} page(s) concernées`);
 if (JSON_OUT) fs.writeFileSync(JSON_OUT, JSON.stringify(resultats, null, 1));
 if (!resultats.length || pannes) { console.log('⛔ EN PANNE (n°299)'); process.exit(2); }
 const refus = resultats.filter(r => !r.panne && (r.L.length || r.B.length));
+const refusD = resultats.filter(r => !r.panne && r.D && r.D.length);
 const refusA = resultats.filter(r => !r.panne && r.A && r.A.length);
 const refusS = resultats.filter(r => !r.panne && r.S && r.S.length);
 if (refus.length) console.log(`✘ ${refus.length} page(s) font défiler un listing (n°364) ou dessinent un bloc (n°308), page ouverte — référence vide depuis le 22/11/2026 (n°273)`);
+if (refusD.length) console.log(`✘ ${refusD.length} page(s) défilent de côté, page ouverte à 390 px — référence vide depuis le 26/11/2026 (n°273)`);
 if (refusA.length) console.log(`✘ ${refusA.length} page(s) portent un défaut grave d'axe-core, page ouverte à 390 px — référence vide depuis le 25/11/2026 (n°273)`);
 if (refusS.length) console.log(`✘ ${refusS.length} page(s) portent un défaut de structure, page ouverte à 390 px (zone principale, ordre des titres, titre de niveau 1, en-tête de tableau) — référence vide depuis le 26/11/2026 (n°273)`);
-if (refus.length || refusA.length || refusS.length) process.exit(1);
+if (refus.length || refusD.length || refusA.length || refusS.length) process.exit(1);
 if (STRICT && ecarts.length) { console.log('✘ la page ouverte porte des écarts (règle d\'or n°361)'); process.exit(1); }
 console.log(ecarts.length ? `ℹ mesure : ${ecarts.length} page(s) à regarder, page ouverte (n°361)` : '✅ rien à signaler, page ouverte');
 process.exit(0);

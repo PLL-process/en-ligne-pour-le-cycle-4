@@ -21,6 +21,16 @@
   table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9em}
   td,th{border:1px solid var(--border);padding:7px 10px;text-align:left;vertical-align:top}
   th{background:var(--panel2);color:var(--sub)}
+  /* sur un téléphone, chaque ligne devient une carte : quatre colonnes ne tiennent pas dans 390 px (la page défilait
+     de côté de 96 px, controle_page_ouverte D, 26/11/2026) ; la colonne dit son nom devant sa case */
+  @media (max-width:600px){
+    table,tbody,tr,td{display:block;width:auto}
+    table{border:0}
+    tr:first-child{display:none}
+    tr{border:1px solid var(--border);border-radius:10px;margin:0 0 8px;padding:6px 10px}
+    td{border:0;padding:3px 0}
+    td[data-label]::before{content:attr(data-label) " : ";font-weight:600;color:var(--sub)}
+  }
   code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
   a{color:var(--hl)}
   .oui{color:var(--ok);font-weight:600}
@@ -66,6 +76,8 @@
     a,a:visited{color:#00309e!important}
     a.btn,a.button,a.bouton{color:#00309e!important;background:#fff!important;border:1px solid #00309e!important}
   }
+/* téléphone : la navigation du site tient sur une ligne qui défile de côté, comme en mode mission (26/11/2026) */
+@media (max-width:600px){#navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}#navharm>*{flex:0 0 auto;white-space:nowrap}}
 </style><style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
 <body>
@@ -122,28 +134,28 @@ d'exercices</b>, une page par niveau, avec son cours, sa synthèse et son QCM (q
 <table>
 <tr><th>Représentation</th><th>Ce qu'elle montre</th><th>Place</th><th>Dans le dépôt</th></tr>
 <tr><td><b>Le besoin</b><br><span class="metier">(bête à cornes)</span></td>
-    <td>À qui l'objet rend service, sur quoi il agit, dans quel but. Elle produit la <b>fonction d'usage</b>. Ses quatre
+    <td data-label="Ce qu'elle montre">À qui l'objet rend service, sur quoi il agit, dans quel but. Elle produit la <b>fonction d'usage</b>. Ses quatre
     <b>mots de référence</b>, de la méthode APTE (<i>APplication aux Techniques d'Entreprise</i>)&nbsp;: utilisateur,
     matière d'œuvre, produit, fonction — le dessin de référence est sous ce tableau.</td>
-    <td>Entrée dans l'étude, 5e</td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/besoin-bete-a-cornes/atelier_5e_besoin-bete-a-cornes.html">5e</a>, <a href="../ateliers-representations/besoin-bete-a-cornes/atelier_4e_besoin-bete-a-cornes.html">4e</a>, <a href="../ateliers-representations/besoin-bete-a-cornes/atelier_3e_besoin-bete-a-cornes.html">3e</a></td></tr>
+    <td data-label="Place">Entrée dans l'étude, 5e</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/besoin-bete-a-cornes/atelier_5e_besoin-bete-a-cornes.html">5e</a>, <a href="../ateliers-representations/besoin-bete-a-cornes/atelier_4e_besoin-bete-a-cornes.html">4e</a>, <a href="../ateliers-representations/besoin-bete-a-cornes/atelier_3e_besoin-bete-a-cornes.html">3e</a></td></tr>
 <tr><td><b>Les interacteurs extérieurs</b><br><span class="metier">(diagramme pieuvre)</span></td>
-    <td>L'objet au centre, et autour&nbsp;: <b>usagers, données, autres objets, éléments de l'environnement</b>. C'est la formulation exacte du programme.</td>
-    <td><b>C2, surtout 5e</b></td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/interacteurs-pieuvre/atelier_5e_interacteurs-pieuvre.html">5e</a>, <a href="../ateliers-representations/interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html">4e</a>, avec fonctions principales et contraintes&nbsp;; exercices insérés en 5e_C2.1 (Shenzhen) et 4e_C2.1 (Hangzhou)</td></tr>
+    <td data-label="Ce qu'elle montre">L'objet au centre, et autour&nbsp;: <b>usagers, données, autres objets, éléments de l'environnement</b>. C'est la formulation exacte du programme.</td>
+    <td data-label="Place"><b>C2, surtout 5e</b></td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/interacteurs-pieuvre/atelier_5e_interacteurs-pieuvre.html">5e</a>, <a href="../ateliers-representations/interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html">4e</a>, avec fonctions principales et contraintes&nbsp;; exercices insérés en 5e_C2.1 (Shenzhen) et 4e_C2.1 (Hangzhou)</td></tr>
 <tr><td><b>Le tableau des contraintes et exigences</b></td>
-    <td>Ce que l'objet doit respecter, et d'où cela vient&nbsp;: normes, cahier des charges, labels, certifications.</td>
-    <td><b>C2, surtout 4e</b></td><td><span class="oui">produite</span> — 4e_C2.1 (Hangzhou)</td></tr>
+    <td data-label="Ce qu'elle montre">Ce que l'objet doit respecter, et d'où cela vient&nbsp;: normes, cahier des charges, labels, certifications.</td>
+    <td data-label="Place"><b>C2, surtout 4e</b></td><td data-label="Dans le dépôt"><span class="oui">produite</span> — 4e_C2.1 (Hangzhou)</td></tr>
 <tr><td><b>Le cahier des charges</b></td>
-    <td>Le document qui rassemble les exigences, avec critères et niveaux. Sert ensuite à <b>valider</b>.</td>
-    <td>C2, puis Thème 3</td><td><span class="oui">produite</span> — 4e_C2.1, et repris en 3e et 4e_C1&nbsp;; tableau critère · niveau · <b>flexibilité</b> (classes F0 à F3) dans l'atelier pieuvre de <a href="../ateliers-representations/interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html">4e</a> et l'atelier des exigences</td></tr>
+    <td data-label="Ce qu'elle montre">Le document qui rassemble les exigences, avec critères et niveaux. Sert ensuite à <b>valider</b>.</td>
+    <td data-label="Place">C2, puis Thème 3</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — 4e_C2.1, et repris en 3e et 4e_C1&nbsp;; tableau critère · niveau · <b>flexibilité</b> (classes F0 à F3) dans l'atelier pieuvre de <a href="../ateliers-representations/interacteurs-pieuvre/atelier_4e_interacteurs-pieuvre.html">4e</a> et l'atelier des exigences</td></tr>
 <tr><td><b>Le croquis</b></td>
-    <td>Le dessin à main levée de ce que fait réellement l'utilisateur. Point de départ du langage naturel, avec le texte.</td>
-    <td>C2 (4e) et conception</td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/croquis/atelier_4e_croquis.html">4e</a>, <a href="../ateliers-representations/croquis/atelier_3e_croquis.html">3e</a> (dessin à l'écran, avec relecture)</td></tr>
+    <td data-label="Ce qu'elle montre">Le dessin à main levée de ce que fait réellement l'utilisateur. Point de départ du langage naturel, avec le texte.</td>
+    <td data-label="Place">C2 (4e) et conception</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/croquis/atelier_4e_croquis.html">4e</a>, <a href="../ateliers-representations/croquis/atelier_3e_croquis.html">3e</a> (dessin à l'écran, avec relecture)</td></tr>
 <tr><td><b>Le diagramme des exigences</b><br><span class="metier">(SysML)</span></td>
-    <td>Les exigences et leurs liens, sous forme normalisée.</td>
-    <td>4e / 3e, facultatif</td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/exigences-sysml/atelier_4e_exigences-sysml.html">4e</a>, <a href="../ateliers-representations/exigences-sysml/atelier_3e_exigences-sysml.html">3e</a></td></tr>
+    <td data-label="Ce qu'elle montre">Les exigences et leurs liens, sous forme normalisée.</td>
+    <td data-label="Place">4e / 3e, facultatif</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/exigences-sysml/atelier_4e_exigences-sysml.html">4e</a>, <a href="../ateliers-representations/exigences-sysml/atelier_3e_exigences-sysml.html">3e</a></td></tr>
 <tr><td><b>Le diagramme de cas d'utilisation</b><br><span class="metier">(SysML)</span></td>
-    <td>Qui fait quoi avec le système, vu de l'extérieur.</td>
-    <td>C2, facultatif</td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/cas-utilisation-sysml/atelier_5e_cas-utilisation-sysml.html">5e</a>, <a href="../ateliers-representations/cas-utilisation-sysml/atelier_4e_cas-utilisation-sysml.html">4e</a>, <a href="../ateliers-representations/cas-utilisation-sysml/atelier_3e_cas-utilisation-sysml.html">3e</a></td></tr>
+    <td data-label="Ce qu'elle montre">Qui fait quoi avec le système, vu de l'extérieur.</td>
+    <td data-label="Place">C2, facultatif</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/cas-utilisation-sysml/atelier_5e_cas-utilisation-sysml.html">5e</a>, <a href="../ateliers-representations/cas-utilisation-sysml/atelier_4e_cas-utilisation-sysml.html">4e</a>, <a href="../ateliers-representations/cas-utilisation-sysml/atelier_3e_cas-utilisation-sysml.html">3e</a></td></tr>
 </table>
 
 <!-- ateliers-representations:debut bc-ref-carte -->
@@ -153,34 +165,34 @@ d'exercices</b>, une page par niveau, avec son cours, sa synthèse et son QCM (q
 <table>
 <tr><th>Représentation</th><th>Ce qu'elle montre</th><th>Place</th><th>Dans le dépôt</th></tr>
 <tr><td><b>Le diagramme FAST</b></td>
-    <td>Fonction d'usage → fonctions techniques → solutions techniques. La <b>charnière</b> entre le « pourquoi » et le « comment ».</td>
-    <td>Fin du Thème 1 / entrée du Thème 2</td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/fast/atelier_5e_fast.html">5e</a>, <a href="../ateliers-representations/fast/atelier_4e_fast.html">4e</a>, <a href="../ateliers-representations/fast/atelier_3e_fast.html">3e</a></td></tr>
+    <td data-label="Ce qu'elle montre">Fonction d'usage → fonctions techniques → solutions techniques. La <b>charnière</b> entre le « pourquoi » et le « comment ».</td>
+    <td data-label="Place">Fin du Thème 1 / entrée du Thème 2</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/fast/atelier_5e_fast.html">5e</a>, <a href="../ateliers-representations/fast/atelier_4e_fast.html">4e</a>, <a href="../ateliers-representations/fast/atelier_3e_fast.html">3e</a></td></tr>
 <tr><td><b>Le schéma fonctionnel</b><br><span class="metier">(schéma-blocs)</span></td>
-    <td>Les blocs de l'objet et ce qui circule entre eux.</td>
-    <td>Thème 2</td><td><span class="oui">produite</span> — 36 occurrences</td></tr>
+    <td data-label="Ce qu'elle montre">Les blocs de l'objet et ce qui circule entre eux.</td>
+    <td data-label="Place">Thème 2</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — 36 occurrences</td></tr>
 <tr><td><b>La chaîne d'information</b></td>
-    <td>Acquérir → traiter → communiquer. <b>En haut</b> du schéma, par convention, en technologie.</td>
-    <td>Thème 2</td><td><span class="oui">produite</span> — 166 occurrences</td></tr>
+    <td data-label="Ce qu'elle montre">Acquérir → traiter → communiquer. <b>En haut</b> du schéma, par convention, en technologie.</td>
+    <td data-label="Place">Thème 2</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — 166 occurrences</td></tr>
 <tr><td><b>La chaîne d'énergie</b></td>
-    <td>Alimenter → distribuer → convertir → transmettre. <b>En bas</b>, sous la chaîne d'information.</td>
-    <td>Thème 2</td><td><span class="oui">produite</span> — 164 occurrences</td></tr>
+    <td data-label="Ce qu'elle montre">Alimenter → distribuer → convertir → transmettre. <b>En bas</b>, sous la chaîne d'information.</td>
+    <td data-label="Place">Thème 2</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — 164 occurrences</td></tr>
 <tr><td><b>L'algorigramme</b></td>
-    <td>La représentation graphique d'un <b>algorithme</b>&nbsp;: l'ordre des opérations et les tests.</td>
-    <td>Comportement, programme</td><td><span class="oui">produite</span> — 319 occurrences, dans les trois thèmes</td></tr>
+    <td data-label="Ce qu'elle montre">La représentation graphique d'un <b>algorithme</b>&nbsp;: l'ordre des opérations et les tests.</td>
+    <td data-label="Place">Comportement, programme</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — 319 occurrences, dans les trois thèmes</td></tr>
 </table>
 
 <h3>Conception, réalisation, projet — Thème 3</h3>
 <table>
 <tr><th>Représentation</th><th>Ce qu'elle montre</th><th>Place</th><th>Dans le dépôt</th></tr>
 <tr><td><b>La modélisation</b><br><span class="metier">(CAO, modélisation 3D)</span></td>
-    <td>Une forme, simplifiée volontairement&nbsp;: une représentation <b>choisit</b> ce qu'elle retient du réel.</td>
-    <td>Thème 3 — et C2 en 3e, si l'élève la choisit</td><td><span class="oui">produite</span> — <a href="../../theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/tp_5e_de_onshape.html">atelier CAO</a> (travaux pratiques de 5e, 4e et 3e)</td></tr>
+    <td data-label="Ce qu'elle montre">Une forme, simplifiée volontairement&nbsp;: une représentation <b>choisit</b> ce qu'elle retient du réel.</td>
+    <td data-label="Place">Thème 3 — et C2 en 3e, si l'élève la choisit</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — <a href="../../theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-cao/tp_5e_de_onshape.html">atelier CAO</a> (travaux pratiques de 5e, 4e et 3e)</td></tr>
 <tr><td><b>Le diagramme de planification des tâches</b><br><span class="metier">(Gantt)</span></td>
-    <td>Les tâches, leur durée, et les contraintes entre elles. <b>Le programme le nomme explicitement.</b></td>
-    <td>Thème 3 — <b>C7.1</b></td><td><span class="oui">produite</span> — <a href="../../theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/atelier_5e_C7.1_planification_taches.html">atelier de planification</a> (5e, 4e, 3e)</td></tr>
+    <td data-label="Ce qu'elle montre">Les tâches, leur durée, et les contraintes entre elles. <b>Le programme le nomme explicitement.</b></td>
+    <td data-label="Place">Thème 3 — <b>C7.1</b></td><td data-label="Dans le dépôt"><span class="oui">produite</span> — <a href="../../theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/atelier-planification/atelier_5e_C7.1_planification_taches.html">atelier de planification</a> (5e, 4e, 3e)</td></tr>
 <tr><td><b>La carte mentale</b></td>
-    <td>Une idée centrale et ses ramifications. Outil de synthèse, pas de description technique.</td>
-    <td>Synthèse, organisation</td><td><span class="oui">produite</span> — atelier <a href="../ateliers-representations/carte-mentale/atelier_5e_carte-mentale.html">5e</a>, <a href="../ateliers-representations/carte-mentale/atelier_4e_carte-mentale.html">4e</a>, <a href="../ateliers-representations/carte-mentale/atelier_3e_carte-mentale.html">3e</a></td></tr>
+    <td data-label="Ce qu'elle montre">Une idée centrale et ses ramifications. Outil de synthèse, pas de description technique.</td>
+    <td data-label="Place">Synthèse, organisation</td><td data-label="Dans le dépôt"><span class="oui">produite</span> — atelier <a href="../ateliers-representations/carte-mentale/atelier_5e_carte-mentale.html">5e</a>, <a href="../ateliers-representations/carte-mentale/atelier_4e_carte-mentale.html">4e</a>, <a href="../ateliers-representations/carte-mentale/atelier_3e_carte-mentale.html">3e</a></td></tr>
 </table>
 
 <h2>Ce qui est décidé pour l'année 2026-2027</h2>
@@ -188,14 +200,14 @@ d'exercices</b>, une page par niveau, avec son cours, sa synthèse et son QCM (q
 <p><b>Quatre représentations entrent&nbsp;:</b></p>
 <table>
 <tr><th>Représentation</th><th>Où</th><th>Sous quelle forme</th></tr>
-<tr><td>Le diagramme des interacteurs</td><td>5e_C2.1</td>
-    <td>Produit par l'élève, en <b>quatre familles</b>, à partir d'un objet réellement manipulé</td></tr>
-<tr><td>La bête à cornes</td><td>5e, avant le diagramme</td>
-    <td><b>Dix minutes</b>, pour formuler le besoin — pas une séance sur le formalisme, et <b>jamais un objectif évalué</b></td></tr>
-<tr><td>Le FAST</td><td>Charnière Thème 1 / Thème 2</td>
-    <td>Comme passage du « pourquoi » au « comment », pas au cœur du C2</td></tr>
-<tr><td>Le diagramme de Gantt</td><td>Thème 3, C7.1</td>
-    <td>Sur le projet robot&nbsp;: tâches, durées, contraintes entre tâches</td></tr>
+<tr><td>Le diagramme des interacteurs</td><td data-label="Où">5e_C2.1</td>
+    <td data-label="Sous quelle forme">Produit par l'élève, en <b>quatre familles</b>, à partir d'un objet réellement manipulé</td></tr>
+<tr><td>La bête à cornes</td><td data-label="Où">5e, avant le diagramme</td>
+    <td data-label="Sous quelle forme"><b>Dix minutes</b>, pour formuler le besoin — pas une séance sur le formalisme, et <b>jamais un objectif évalué</b></td></tr>
+<tr><td>Le FAST</td><td data-label="Où">Charnière Thème 1 / Thème 2</td>
+    <td data-label="Sous quelle forme">Comme passage du « pourquoi » au « comment », pas au cœur du C2</td></tr>
+<tr><td>Le diagramme de Gantt</td><td data-label="Où">Thème 3, C7.1</td>
+    <td data-label="Sous quelle forme">Sur le projet robot&nbsp;: tâches, durées, contraintes entre tâches</td></tr>
 </table>
 <p class="meta"><b>Mise à jour du 24 octobre 2026&nbsp;:</b> les représentations qui restaient dehors — les
 deux diagrammes SysML, la carte mentale — et celles qui n'étaient que décidées ont maintenant chacune un atelier

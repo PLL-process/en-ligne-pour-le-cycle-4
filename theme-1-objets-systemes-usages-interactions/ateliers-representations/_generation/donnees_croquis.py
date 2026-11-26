@@ -797,8 +797,8 @@ E1 = dict(
               "l'essentiel. Ses <b>légendes</b> sont des mots reliés au dessin par un trait ; une <b>flèche de "
               "mouvement</b> montre un geste et son sens.</p><p>① <b>Choisis le croquis qui montre comment on sort "
               "un vélo de la borne, comme Inès le raconte.</b><br>"
-              "② <b>Dis ce qui ne va pas</b> dans les deux autres, et <b>coche ce qui rend le bon croquis "
-              "réussi</b>.</p>"),
+              "② <b>Dis ce qui ne va pas</b> dans les deux autres.<br>"
+              "③ <b>Coche ce qui rend le bon croquis réussi</b>.</p>"),
     critere="tu choisis le bon croquis, tu donnes la bonne raison pour chacun des deux autres, et tu coches les quatre règles "
             "d'un croquis réussi — et rien d'autre.",
     widgets=[dict(type="choix", name="bon",
@@ -1216,8 +1216,8 @@ E5 = dict(
               "(longueur, hauteur, profondeur), leur <b>unité</b>, le <b>matériau</b>, et chaque <b>perçage</b> — "
               "un trou&nbsp;: son diamètre et sa place —, sur une <b>vue</b> qui le montre.</p><p>① <b>Réponds "
               "d'abord&nbsp;: le boîtier entre-t-il dans le coffret&nbsp;?</b><br>"
-              "② <b>Coche tout ce qui manque</b> pour le fabriquer, et <b>écris le message</b> que tu envoies au "
-              "dessinateur.</p>"),
+              "② <b>Coche tout ce qui manque</b> pour le fabriquer.<br>"
+              "③ <b>Écris le message</b> que tu envoies au dessinateur.</p>"),
     critere="tu vois qu'on ne peut pas savoir si le boîtier entre, tu coches les quatre manques et rien d'autre, et ton message "
             "demande la profondeur et un autre manque, par des questions précises.",
     widgets=[dict(type="choix", name="rentre",
@@ -1334,8 +1334,8 @@ E6 = dict(
               "<b>graphique</b> montre comment une grandeur change. Un <b>algorithme</b> dit l'ordre des actions. "
               "Une <b>modélisation 3D</b> donne la forme exacte, en volume, dans un logiciel.</p><p>① <b>Nomme "
               "chacune des quatre vues de la station.</b><br>"
-              "② <b>Choisis la représentation qui convient à chaque besoin</b>, et <b>explique</b> pourquoi on "
-              "n'envoie pas le croquis directement à l'imprimante 3D.</p>"),
+              "② <b>Choisis la représentation qui convient à chaque besoin</b>.<br>"
+              "③ <b>Explique</b> pourquoi on n'envoie pas le croquis directement à l'imprimante 3D.</p>"),
     critere="neuf réponses justes, et une explication qui parle des dimensions exactes et du fichier dont la machine a besoin.",
     widgets=[dict(type="classer", name="vues", categories=REPRESENTATIONS,
                   items=[("Vue 1", "croquis", "Vue 1 : le trait tremble, il y a des légendes et une flèche — un dessin fait vite, à main levée."),

@@ -145,6 +145,8 @@
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
 #navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
 @media print{#navharm{display:none}}
+/* téléphone : la navigation du site tient sur une ligne qui défile de côté, comme en mode mission (26/11/2026) */
+@media (max-width:600px){#navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}#navharm>*{flex:0 0 auto;white-space:nowrap}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">⌂ Accueil</a><a href="atelier_5e_C7.1_planification_taches.html">← Atelier 5e</a><a href="atelier_4e_C7.1_planification_taches.html">4e</a><a href="atelier_3e_C7.1_planification_taches.html">3e</a>  <a href="../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html">&#8592; Séquence de 5e</a>
   <a href="../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html">&#8592; Séquence de 4e</a>

@@ -98,7 +98,11 @@ def controler(f: pathlib.Path):
       "%d rappel(s) d'enregistrement pour %d paliers" % (rituels, len(paliers)))
 
     # n°81 — aucune question de cours
-    quest = re.findall(r"<textarea|<select|\bQuestion\s*\d|Réponds\b|Justifie\b", src)
+    # lu hors des <script> et des <style> : le bloc du mode mission, posé dans chaque TP depuis le 25/11/2026, porte
+    # dans son code « Réponds d'abord aux questions… » — un message du moteur, pas une question du TP (2 faux refus
+    # par TP, vus le 26/11/2026)
+    sans_code = re.sub(r"<(script|style)\b.*?</\1>", " ", src, flags=re.S)
+    quest = re.findall(r"<textarea|<select|\bQuestion\s*\d|Réponds\b|Justifie\b", sans_code)
     r("n°81", "aucune question de cours", not quest,
       "le TP n'évalue aucune notion" if not quest
       else "%d marque(s) d'évaluation trouvée(s) : un TP d'outil n'évalue pas la notion" % len(quest))

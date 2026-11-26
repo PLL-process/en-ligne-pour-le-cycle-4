@@ -296,6 +296,8 @@ TETE = """<!DOCTYPE html>
  border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
  text-decoration:none;line-height:1.2}
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
+/* téléphone : la navigation du site tient sur une ligne qui défile de côté, comme en mode mission (26/11/2026) */
+@media (max-width:600px){#navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}#navharm>*{flex:0 0 auto;white-space:nowrap}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a><a href="%(retour)s">&#8592; Revenir à la séquence de %(niv)s</a><a href="qcm_C7.1_planification_taches.html">&#129504; Le QCM</a></nav>
 <div class="page">

@@ -473,7 +473,7 @@ function candidats(){
   return cles;
 }
 /* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
-   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   le script JSON d'identifiant « donnees-page », par NOM de champ : `choix` {name, bonne, retours},
    `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
    Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
 var _noms = null;
@@ -534,7 +534,7 @@ function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"
    écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
    six séquences du thème 1 — vu par banc_generique avant la livraison). */
 var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
-/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (le bouton « verifier » des ateliers, seul dans son p) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
 function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
@@ -1321,6 +1321,8 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
  border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
  text-decoration:none;line-height:1.2}
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
+/* téléphone : la navigation du site tient sur une ligne qui défile de côté, comme en mode mission (26/11/2026) */
+@media (max-width:600px){#navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}#navharm>*{flex:0 0 auto;white-space:nowrap}}
 </style>
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a><a href="../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html">&#8592; Revenir à la séquence de 5e</a><a href="qcm_C7.1_planification_taches.html">&#129504; Le <abbr class="sigle" title="questionnaire à choix multiples">QCM</abbr></a></nav>
 <div class="page">

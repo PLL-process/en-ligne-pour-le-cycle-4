@@ -16,12 +16,14 @@ entière. Les règles n°137, 144, 198 et 323 existaient déjà : aucun outil ne
 
 ```bash
 python3 _outils/eleve_qui_ne_lit_pas.py <page.html>       # une page
-python3 _outils/eleve_qui_ne_lit_pas.py --tout            # toutes les pages qui ont `const CHECKS`
-python3 _outils/tests_eleve_qui_ne_lit_pas.py             # le banc de l'outil (trois pages à réponse connue)
+python3 _outils/eleve_qui_ne_lit_pas.py --tout            # toutes les pages qui ont `const CHECKS`, et les 21 pages du kit
+python3 _outils/tests_eleve_qui_ne_lit_pas.py             # le banc de l'outil (pages à réponse connue, dont deux du kit)
 ```
 
 L'outil coche une proposition dans chaque groupe radio placé dans un `<fieldset>`, avec huit stratégies, puis appelle
-chaque `CHECKS[n]()` du gabarit commun. Sortie 0 : aucune validation ; 1 : au moins une ; 2 : rien lu (n°299).
+chaque `CHECKS[n]()` du gabarit commun. Dans une page du kit des ateliers de représentation (`#donnees-page`, depuis
+le 26/11/2026), il appuie sur le bouton « Vérifier » de chaque exercice `[data-exo]` et lit la classe `ok` de son
+retour. Sortie 0 : aucune validation ; 1 : au moins une ; 2 : rien lu (n°299).
 
 Dans un banc de page : `from eleve_qui_ne_lit_pas import mesurer`, puis `mesurer(page)` dans un contexte neuf
 (exemple : `3e_C6.2/tests_entrainement_dnb.py`).

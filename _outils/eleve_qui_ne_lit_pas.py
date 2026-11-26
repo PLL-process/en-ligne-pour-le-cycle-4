@@ -6,13 +6,16 @@ ou au hasard. Aucune de ces stratégies ne doit valider une activité (audit de 
 longue validait la manche 4 entière).
 
     python3 _outils/eleve_qui_ne_lit_pas.py <page.html> [<page.html> …]
-    python3 _outils/eleve_qui_ne_lit_pas.py --tout          (toutes les pages des trois thèmes qui ont `const CHECKS`)
+    python3 _outils/eleve_qui_ne_lit_pas.py --tout          (toutes les pages des trois thèmes qui ont `const CHECKS`,
+                                                             ou les exercices du kit des ateliers)
 
 Ce que l'outil lit : les groupes de boutons radio placés dans un `<fieldset>` (n°300), et les fonctions `CHECKS[n]()`
 du gabarit commun (bouton `[data-check="n"]`, retour `{score, total, valide}`). Pour chaque stratégie, il coche une
 proposition dans chaque groupe, appelle chaque fonction de vérification et compte les activités validées. Quand
 `CHECKS` est enfermé dans une fonction (pages du thème 3), il appuie sur chaque bouton « Vérifier » et lit la classe
 `ok` du retour `#fb<n>` ; une activité fermée par un verrou d'expérience (retour qui commence par 🔒) est dite « non mesurée ».
+Dans une page du kit des ateliers de représentation (`#donnees-page`, exercices `[data-exo]`, depuis le 26/11/2026), il
+appuie sur le bouton « Vérifier » de chaque exercice et lit la classe `ok` de son retour `.retour[data-retour]`.
 
 Une activité validée par les huit stratégies à la fois ne dépend pas de la justesse des réponses (un billet d'entrée
 « fait dès qu'il est répondu ») : elle n'est pas comptée en faute, elle est listée à part.
@@ -40,7 +43,10 @@ JS_MESURER = r"""
 (strategie) => {
   const accessible = (typeof CHECKS !== "undefined");
   const boutons = [...document.querySelectorAll("[data-check]")];
-  if (!accessible && !boutons.length) return {lu: false, raison: "ni CHECKS ni bouton [data-check]"};
+  // le kit des ateliers de représentation : un bouton « Vérifier » par exercice, ses réponses dans #donnees-page
+  const kit = !accessible && !boutons.length && !!document.getElementById("donnees-page")
+              ? [...document.querySelectorAll("[data-exo]")].filter(x => x.querySelector("button.verifier")) : [];
+  if (!accessible && !boutons.length && !kit.length) return {lu: false, raison: "ni CHECKS, ni bouton [data-check], ni exercice du kit"};
   const groupes = {};
   document.querySelectorAll("fieldset input[type=radio]").forEach(r => { (groupes[r.name] = groupes[r.name] || []).push(r); });
   const noms = Object.keys(groupes);
@@ -68,6 +74,16 @@ JS_MESURER = r"""
       catch (e) { res[n] = {erreur: String(e).slice(0, 120)}; }
     }
     return {lu: true, mode: "CHECKS", groupes: noms.length, resultats: res};
+  }
+  if (kit.length) {
+    for (const ex of kit) {
+      const n = ex.getAttribute("data-exo"), z = ex.querySelector(".retour[data-retour]");
+      // un exercice qui demande autre chose que des boutons radio (un mot à écrire, un menu) : dit « mixte »
+      const autres = ex.querySelectorAll("textarea, input[type=text], select").length;
+      try { ex.querySelector("button.verifier").click(); } catch (e) { res[n] = {erreur: String(e).slice(0, 120)}; continue; }
+      res[n] = {valide: !!z && / ok /.test(" " + z.className + " "), lu: !!z, mixte: autres > 0};
+    }
+    return {lu: true, mode: "kit", groupes: noms.length, resultats: res};
   }
   // CHECKS enfermé dans une fonction (thème 3) : on appuie sur « Vérifier » et on lit le retour #fb<n>
   for (const b of boutons) {
@@ -111,7 +127,8 @@ def pages_tout():
     for th in THEMES:
         for p in sorted((RACINE / th).rglob("*.html")):
             try:
-                if "const CHECKS" in p.read_text(encoding="utf-8", errors="ignore"):
+                t = p.read_text(encoding="utf-8", errors="ignore")
+                if "const CHECKS" in t or ('id="donnees-page"' in t and "_archive" not in str(p) and "_generation" not in str(p)):
                     yield p
             except OSError:
                 pass
