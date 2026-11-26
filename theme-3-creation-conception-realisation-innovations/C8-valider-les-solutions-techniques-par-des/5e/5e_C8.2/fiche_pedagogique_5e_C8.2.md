@@ -44,7 +44,8 @@ code C8 encore réellement absent du dépôt.
 | 2 | Mettre en œuvre : les cinq relevés | 25 min | 5 charges relevées | **5 ruptures au banc** |
 | 3 | Décider, et le justifier | 20 min | 3 réponses + recommandation chiffrée | — |
 | 4 | Ce que l'essai ne dit pas | 15 min | 5 associations | — |
-| — | REFAIRE — l'étagère du CDI | 15 min | 3 lignes de protocole | — |
+| — | REFAIRE — l'étagère du CDI, **à la maison** | 15 min | 3 lignes de protocole | — |
+| — | Billet de sortie — le fil du pot de fleurs, seul | 5 min | 2 réponses écrites | — |
 
 **Le vérificateur de l'activité 2 compare les cinq relevés aux vraies valeurs du banc** : un
 chiffre recopié sur le voisin est refusé, et un chiffre inventé aussi. C'est le cœur du code —
@@ -91,6 +92,26 @@ auto-positionnement sur quatre niveaux. QCM : `qcm_5e_C8.2_patere-du-hall.html`,
 questions, donc le bilan par code est lisible (règle n°202).
 **Sommative** à construire par l'enseignant. Aucun corrigé sommatif publié.
 
+**Les questions sur document** (25/11/2026, n°345) : six questions du QCM se lisent sur un document dessiné pour le
+téléphone — le relevé du banc (questions « Une marge trop mince », « Quand l'essai contredit l'intuition », « La
+résistance ne suffit pas »), la fiche d'essai de l'aluminium (« Ce que le nombre ne dit pas », « La sollicitation
+change tout ») et « Ce que l'essai de traction ne voit pas » (« Croiser les contraintes »). Les charges sont calculées
+par `documents_qcm.py` avec le modèle `../5e_C8.1/patere.py` (n°233) ; le banc du QCM vérifie qu'elles sont à jour.
+Deux notions sont renommées : « Le verbe de la compétence » (elle disait « du code de 5e », n°304) et « Croiser les
+contraintes » (« deux contraintes » annonçait une liste que la bonne réponse ne suivait pas, n°344).
+
+**Le billet de sortie** (25/11/2026, n°330) : à la fin de la séance 2, avant le Bonus, environ 5 minutes, seul et sans
+aide, sur un objet que la séquence n'a pas étudié : le fil qui suspend un pot d'anthuriums sous le préau (6 kg, un
+coefficient de 5). Trois fiches d'essai de traction sont données. Deux questions écrites, chacune avec sa version
+étayée :
+- **5e_C8.2** — dire quelle fiche respecte le protocole, si le fil tient, et ce qui cloche dans les deux autres. On
+  regarde : les verrous nommés (éprouvette neuve, paliers, rupture notée au moment exact) et une raison par fiche
+  écartée (B : éprouvette déjà tirée ; C : tout d'un coup, et une plage au lieu d'une mesure).
+- **5e_C3.1** — à la pluie, écarter un fil pour son matériau. On regarde : un matériau nommé et ce que l'eau lui fait
+  (le fer rouille, le coton moisit ; les deux réponses sont justes).
+
+Il ne valide rien : aucun bouton, aucune note (n°333).
+
 ## Traces et preuves (honnêteté du lot)
 
 Suite de tests réels : **14/14** sur la séquence, **17/17** sur le QCM, sous Chromium/Playwright,
@@ -117,10 +138,15 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Casser, lire, relever | Que mesure le protocole fourni, et que donne-t-il pour les cinq matériaux ? | Ouverture (situation, problématique et hypothèse, trois façons, billet), activités 0, 1 et 2 | ouverture + 10 + 15 + 25 min |
-| 2 — Décider, puis refaire | Quel matériau recommander, chiffre à l'appui, et que l'essai n'a-t-il pas vérifié ? | Activités 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 15 + 15 min + clôture |
+| 2 — Décider, puis refaire | Quel matériau recommander, chiffre à l'appui, et que l'essai n'a-t-il pas vérifié ? | Activités 3 et 4, synthèse, billet de sortie, Bonus (corrigé par défi), bilan ; à la maison : réinvestissement, QCM | 20 + 15 + 5 min + clôture ; 15 min à la maison |
 
 **À trancher par Pascal :** la séance 1 porte l'ouverture et 50 min d'activités (environ 60 min en tout). Deux séances
 ne peuvent pas faire mieux sans couper l'activité 2 (100 min d'activités pour 110).
+
+**Le réinvestissement se fait à la maison** (25/11/2026), comme en 5e_C8.1 sur la décision de Pascal : avec le billet,
+la séance 2 aurait fait 20 + 15 + 15 + 5 = 55 minutes avant la synthèse et le bilan. Elle tient maintenant en
+20 + 15 + 5 minutes, puis la synthèse et le bilan ; l'étagère du CDI (environ 15 minutes) se fait après la séance, ou
+en classe s'il reste du temps.
 
 Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel ». Le banc d'essai reste dans l'activité 0 : il ne sert
 qu'à la séance 1 (activités 0 et 2). Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre

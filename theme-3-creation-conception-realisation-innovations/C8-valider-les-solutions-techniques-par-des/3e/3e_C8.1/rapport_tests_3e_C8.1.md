@@ -122,3 +122,27 @@ Revue d'écran à 390 px : le texte d'exemple de la question 1 donnait la répon
 
 **Non vérifié** : la durée réelle (~10 min annoncées) ; un essai en classe.
 
+
+## Reprise du 26/11/2026 — sept questions sur document, et le billet de sortie
+
+Trois documents pour le téléphone (`documents_qcm.py` → `documents_qcm_3e_C8.1.json` → `_outils/document_qcm.py`) :
+le moment au pied, banc et vent (questions 5, 6, 7) ; le mât sous le vent, profilé par profilé (15, 27) ; combien de
+profilés passent selon le réglage (8, 10). Questions 1 (une autre année, n°304), 3 (un code de séquence) et 23 (une
+faute) reprises. Le billet de sortie ferme la séance 3, avant le Bonus : le poteau du panneau d'affichage. Le
+réinvestissement et l'écrit « comme au brevet » passent à la maison. Une correction de l'écrit coupée en deux lignes
+(53 mots d'un seul tenant).
+
+| Commande | Résultat |
+|---|---|
+| `node tests_3e_C8.1_qcm.mjs qcm_3e_C8.1_mat-de-la-station.html 3e_C8.1 3e_C3.4 sequence_3e_C8.1_mat-de-la-station.html` | **34 / 34** — trois tests nouveaux : six questions sur document au moins ; des documents du lot, présents et décrits ; `documents_qcm.py --verifier` |
+| `node tests_3e_C8.1_sequence.mjs sequence_3e_C8.1_mat-de-la-station.html attendus_3e.json 3e` | **64 / 64** — deux tests nouveaux : la forme du billet ; la réponse survit au rechargement |
+| `node tests_regle_311_3e_C8.1.mjs .` | 34 / 34 |
+| `python3 _outils/document_qcm.py documents_qcm_3e_C8.1.json --verifier` · `node _outils/controle_schemas.mjs <lot>` | 0 écart · 0 ✘, 0 ⚠ |
+| `python3 _outils/controle_question_seule.py --chantiers <lot>` | 0 partout (avant : D1 1, P1 1) |
+| `node _outils/balayer_questions_qcm.mjs --apres <lot>` · `banc_aides.mjs` · `poser.py --verifier` | 0 écart · 0 refus · à jour |
+| `controle_squelette`, `banc_generique.mjs` (mode mission), `banc_papier.py`, `audit_aeration.py --strict` | verts (aération : 1 bloc de 53 mots sur `main`, 0 ici) |
+| `controle_unites`, `controle_indices_qcm`, `verif_qcm_coherence`, `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `controle_sigles`, `controle_hierarchie`, `controle_liens`, `verif_regles_audit` | sans écart |
+
+Regardé à 312 px (les trois documents) et à 390 px (le billet) : lisible, aucun défilement de côté, 0 erreur JavaScript.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

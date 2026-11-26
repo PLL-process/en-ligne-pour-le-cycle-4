@@ -37711,3 +37711,137 @@ dans la page élève ; antérieur).
 4e_C6.1, 5e_C6.1 ; thème 3 — atelier CAO (4 scénarios, 4 pages, manifeste), atelier de planification (générateur,
 3 pages), `gabarit_style.css` des TP de CAO, 9 titres de Bonus (C7, C8, C9), `qcm_5e_C7.4`, 4e_C8.1 (générateur et page), 5e_C8.2, 5e_C9.1, TP mBot2 ;
 `_outils` — `controle_bonus_corrige.py` et son banc, `replier_bonus.py`, `controle_verrous.mjs` (deux déclarations).
+
+## 26/11/2026 — 5e_C8.2 : six questions sur document, un billet de sortie, le réinvestissement à la maison (thème 3)
+
+**La décision.** « 2 oui » de Pascal (26/11/2026, 1 h 45), à la proposition : traiter 5e_C8.2 (la patère du hall, le
+banc d'essai) comme 5e_C8.1 — le QCM n'avait aucune question sur document, la séquence pas de billet de sortie, et deux
+questions étaient à reprendre. Le même message décide, pour 5e_C8.1, de faire le réinvestissement à la maison (déjà
+fusionné, PR #934) ; la même situation se présentant ici, le réinvestissement de 5e_C8.2 passe aussi à la maison.
+
+**Ce qui change** :
+- Trois documents pour le téléphone : `documents_qcm.py` (neuf) écrit `documents_qcm_5e_C8.2.json` avec le modèle
+  `../5e_C8.1/patere.py` (n°233), `_outils/document_qcm.py` les dessine. Le relevé du banc (l'exigence de 40 kg et les
+  cinq charges de rupture), la fiche d'essai de l'aluminium (comment l'essai a été fait), « ce que l'essai de traction
+  ne voit pas » (le hall et l'angle mort de chaque matériau). Six questions s'y lisent ; leurs pourquoi renvoient à la
+  ligne ou au cadre à relire.
+- Deux notions renommées, avec leur question : « Le verbe de la compétence » (l'énoncé disait « En 5e », n°304) et
+  « Croiser les contraintes » (« deux contraintes » annonçait une liste que la bonne réponse ne suivait pas, n°344) ; un
+  exemple qui renvoyait à « ce que la 3e exigera » est réécrit. Aides reposées, lexique régénéré.
+- Le billet de sortie (n°330) ferme la séance 2, avant le Bonus : le fil qui suspend un pot d'anthuriums sous le préau
+  (6 kg, coefficient 5). Trois fiches d'essai de traction sont données. Question 1 (5e_C8.2) : quelle fiche respecte le
+  protocole, le fil tient-il, que cloche-t-il dans les deux autres. Question 2 (5e_C3.1) : à la pluie, quel fil écarter
+  pour son matériau. Versions étayées, correction complète avec critères et contre-exemples, aucun bouton.
+- Le réinvestissement (l'étagère du CDI, environ 15 min) se fait à la maison : la séance 2 tient en 20 + 15 + 5 minutes,
+  puis la synthèse et le bilan. Sa correction ne renvoie plus à « la 3e » (n°304). Son titre dit « environ 15 min » : ce temps de la maison ne se
+  compte pas dans les 110 minutes de classe que mesure `verif_regles_audit.py` (n°23 : 90 + 10 de service).
+- Bancs : `tests_5e_C8.2_qcm.mjs` (six questions sur document au moins, documents du lot décrits, données à jour du
+  modèle) ; `tests_5e_C8.2_sequence.mjs` (forme du billet, réponse gardée au rechargement).
+
+**Mesuré** : QCM 34 / 34 ; séquence 26 / 26 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : S3 1, E1 1, D1 1, P1 1) ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0
+écart ; `banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens
+sans écart.
+
+**Reste**, déjà noté dans la fiche : la séance 1 porte l'ouverture et 50 minutes d'activités, environ 60 minutes en tout.
+
+## 26/11/2026 — 3e_C8.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+**La décision.** « Oui » de Pascal (26/11/2026, 1 h 57), à la proposition : enchaîner avec 3e_C8.1 (le mât de la
+station), dont le QCM n'avait aucune question sur document et la séquence pas de billet de sortie. Le même « oui »
+répond à une seconde proposition, raccourcir l'activité 0 de 5e_C8.2 : elle n'est pas appliquée ; une proposition chiffrée
+est soumise d'abord à Pascal.
+
+**Ce qui change** :
+- Trois documents pour le téléphone, calculés par le modèle : `documents_qcm.py` (neuf) écrit
+  `documents_qcm_3e_C8.1.json` avec `mat_station.py` (n°233), `_outils/document_qcm.py` les dessine. Le moment au pied,
+  banc et vent (questions 5, 6, 7) ; le mât sous le vent, coefficient et flèche de chaque profilé (15, 27) ; combien de
+  profilés passent selon la hauteur et la limite (8, 10). Leurs pourquoi renvoient à la ligne ou à la colonne à relire.
+- Question 1 : elle demandait « ce qu'on attend de toi en 3e, après la 5e et la 4e » (n°304, et hors compétence) ;
+  elle demande maintenant ce que « mettre en œuvre une simulation » te fait faire, et sa notion devient « Mettre en œuvre
+  une simulation » (aides reposées). Question 3 : plus de code de séquence. Question 23 : « et il le dit pas » devient
+  « et l'écran ne le dit pas ».
+- Le billet de sortie (n°330) ferme la séance 3, avant le Bonus : le poteau d'un panneau d'affichage à l'entrée d'un
+  collège de Martinique. Question 1 (3e_C8.1) : choisir le réglage du simulateur et justifier chaque choix. Question 2
+  (3e_C3.4) : écrire le protocole qui mesure si le panneau reste lisible au vent. Versions étayées, correction complète,
+  aucun bouton.
+- La séance 3 passe le réinvestissement (le quai du port, environ 20 min) et l'écrit « comme au brevet » (environ
+  10 min) à la maison, ou en classe s'il reste du temps — comme Pascal l'a décidé pour 5e_C8.1 ; les deux portaient déjà
+  la pastille « peut se faire à la maison ». Sans cela, la séance aurait fait 55 minutes avant la synthèse et le bilan.
+- Trouvé en chemin : une correction de l'écrit tenait en 53 mots d'un seul tenant (`audit_aeration.py --strict`) ;
+  coupée en deux lignes.
+
+**Mesuré** : QCM 34 / 34 ; séquence 64 / 64 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : D1 1, P1 1) ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0 écart ;
+`banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens et
+`verif_regles_audit` sans écart.
+
+**Reste**, déjà noté dans la fiche : la séance 2 annonce 35 + 25 = 60 minutes d'activités.
+
+## 26/11/2026 — Structure page ouverte, thème 1 : les titres incrustés suivent la séquence (générateur des ateliers)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 1 h 45) : corriger les niveaux de titres dans le générateur des ateliers,
+puis faire refuser aussi la page ouverte.
+
+**Le constat**, page ouverte à 390 px (détails, corrections et onglets dépliés), avec les quatre règles de structure
+que `controle_axe.mjs` refuse au chargement : 10 pages en défaut, toutes à 0 au chargement parce que le titre fautif
+dort dans un `<details>` ou un onglet fermé.
+- Générateur des ateliers (8 pages, dont 5e_C4.1 au thème 2) : les intertitres du cours incrusté sont des `<h3>`, les
+  exercices qui suivent des `<h5>` ; et dans 3e, 4e et 5e_C3.1, une incrustation posée en `<h4>` sous le `<h2>` de
+  l'activité.
+- 3e_C1.5, à la main : deux `<h4>` dans la correction de l'activité 1 bis, sous son `<h2>`.
+
+**Ce qui change.** `incrustations.py` lit le dernier titre écrit avant le point de pose (balise, ou `aria-level` qui
+la corrige) et pose l'incrustation au plus un niveau plus bas (`niveau_de_pose`). Le moteur écrit ce niveau en
+`aria-level` sur le titre de l'incrustation, sur ses exercices et sur les intertitres de son cours (`niveau_aria`).
+La balise ne change pas, donc le style non plus. Les pages d'atelier ne changent pas (`build.py` relancé : aucune page
+réécrite). 3e_C1.5 : `aria-level="3"` sur les deux `<h4>` de sa correction.
+
+**Thème 1, 10 pages** : 3e_C1.5, 4e_C1.1, 5e_C1.2, 5e_C1.3, 3e_C2.1, 4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1, 5e_C3.1 par le
+générateur (les intertitres de cours passent sous le titre de leur incrustation, même là où rien ne sautait), et la
+correction de 3e_C1.5 à la main. Les pages des thèmes 2 et 3 que le générateur réécrit suivent dans leurs PR.
+
+**Vérifié.** `tests_incrustations_niveaux.py` (nouveau) : 17 / 17 ; mutation (`niveau_de_pose` rendu à la balise) :
+3 échecs, sortie 1. `tests_incrustations_infobulles.py` 5 / 5 ; `incrustations.py --verifier` à jour partout.
+`controle_page_ouverte.mjs --axe` sur les 342 pages, toutes corrections comprises (thèmes 2 et 3 inclus) : S 0, A 0,
+L 0, B 0. `controle_axe.mjs` au chargement, 410 pages : sortie 0. Rendu avant/après, fermé et déplié, à 390 et
+1 280 px : identique au pixel près sur les 17 pages (5e_C4.1 et la page tout-en-un de 3e_C9.2 varient d'un
+chargement à l'autre, main contre main ; chacune a donné un passage identique). `tests_regle_311` des 16 dossiers
+touchés : tous verts ; `controle_mode_mission` 0 refus.
+
+## 26/11/2026 — Structure page ouverte, thème 3 : un en-tête de tableau nommé, une palette qui ne défile plus, les titres incrustés
+
+Suite de la PR #938 (« 2a » de Pascal, 26/11/2026). Page ouverte à 390 px, trois défauts au thème 3 :
+- `3e_C9.2` : la case d'angle du tableau Martinique / New York (« ouverture ») était un `<th>` vide
+  (`empty-table-header`), caché au chargement. Elle porte désormais « Ce qu'on compare », visuellement masqué, dans la
+  page tout-en-un ; `generer_les_quatre_pages.py` a refait la station 1, seule concernée.
+- `tp_5e_de_onshape` : la palette des métaux (palier 9) défilait de 14 px à 390 px (`scrollable-region-focusable`,
+  défaut grave ; déjà le cas sur `main` le 25/11 au soir, mesuré sur 997e6904). Les marges intérieures des cases
+  passent de 0,6 à 0,4 em, dans le scénario : le tableau tient (298 px pour 298), plus rien n'est caché (n°364).
+  `build_tp.py`, puis `verif_chaine.py --empreintes` : chaque page est ce que son scénario produit.
+- 3e_C7.1, 4e_C7.1, 4e_C8.1 : réécrites par le générateur des ateliers (PR #938), intertitres de cours sous le titre
+  de leur incrustation (`aria-level`, balise et style inchangés).
+
+**Vérifié.** `controle_page_ouverte.mjs --axe` sur les 342 pages : S 0, A 0, L 0, B 0. `controle_axe.mjs` au
+chargement : sortie 0. `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `tests_regle_311` de 3e_C9.2, 3e_C7.1, 4e_C7.1, 4e_C8.1
+verts ; `verif_chaine.py` sans écart. Rendu : identique au pixel près pour les pages de 3e_C9.2 et les trois pages
+réécrites par le générateur ; la palette de `tp_5e_de_onshape` change exprès (captures avant/après dans la PR).
+
+## 26/11/2026 — Structure page ouverte, thème 2 : la page ouverte refuse aussi les quatre défauts de structure (`_outils/`)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 1 h 45), dernière étape : ce que les PR #938 et #939 ont ramené à zéro
+page ouverte ne peut plus revenir (n°273 : référence nommée, datée, vide).
+
+**Ce qui change.** `controle_page_ouverte.mjs --axe` mesure S : les quatre règles que `controle_axe.mjs` refuse au
+chargement (`STRUCTURE_REFUSEE` : zone principale, ordre des titres, titre de niveau 1, en-tête de tableau), ici page
+ouverte à 390 px — détails, corrections et onglets dépliés. Un titre rangé dans une correction fermée n'existe pas au
+chargement : il ne se lit qu'ici. Un seul nœud fait sortir à 1. La liste des règles vient de `controle_axe.mjs` :
+une seule source pour les deux contrôles.
+
+**Thème 2, deux pages** réécrites par le générateur des ateliers (#938) : 5e_C4.1 (l'exercice du FAST sautait un niveau
+sous le cours incrusté) et 4e_C4.1 (intertitres du cours) — `aria-level`, balise et style inchangés.
+
+**Vérifié.** `tests_controle_page_ouverte.mjs` : 21 / 21 (18 avant) — un `<h4>` dans une correction repliée sous un
+`<h2>` (S, `heading-order`), une page sans zone principale (S, `landmark-one-main`) : sortie 1 ; sans `--axe` : 0.
+Mutation (liste des règles vidée) : 2 échecs, sortie 1. Sur tout le site, `main` après #938 et #939 plus ces deux
+pages : 342 pages ouvertes, S 0, A 0, L 0, B 0, sortie 0.
