@@ -177,7 +177,8 @@
 
    Ce script n'écrit rien dans la page et n'en retire rien : il montre ses parties une à la fois, avec une barre
    d'étapes et deux boutons — Précédent · Suivant. Tout ce qui cache est sous @media screen : la page s'imprime
-   entière, comme avant. Il ne garde rien dans le navigateur (le choix « Page complète » tient le temps de l'onglet). */
+   entière, comme avant. Il ne garde dans le navigateur que le choix d'affichage de l'élève, et seulement s'il en fait
+   un : « Page complète » y laisse une marque, « Mode lecture » la retire. Ni réponse, ni progression (n°322). */
 (function(){
 "use strict";
 if (document.documentElement.hasAttribute("data-mode-lecture")) return; document.documentElement.setAttribute("data-mode-lecture", "v1");
@@ -285,12 +286,12 @@ function versAncre(nom, defile){
 }
 function entrer(choisi){
   actif = true; D.body.classList.add("ml"); caler();
-  if (choisi){ try { sessionStorage.removeItem(CLE); } catch (e) {} }
+  if (choisi){ try { localStorage.removeItem(CLE); } catch (e) {} }
   montrer(!!choisi);
 }
 function sortir(){
   actif = false; D.body.classList.remove("ml"); D.body.classList.remove("ml-suite");
-  try { sessionStorage.setItem(CLE, "0"); } catch (e) {}
+  try { localStorage.setItem(CLE, "0"); } catch (e) {}
   var b = $("#btnLecture"); b.focus({ preventScroll:true }); b.scrollIntoView({ block:"center" });
 }
 function init(){
@@ -304,7 +305,7 @@ function init(){
     if (versAncre(a.getAttribute("href").slice(1), true)) ev.preventDefault();
   });
   window.addEventListener("hashchange", function(){ if (actif && location.hash.length > 1) versAncre(location.hash.slice(1), true); });
-  var veut = DEFAUT; try { if (sessionStorage.getItem(CLE) === "0") veut = false; } catch (e) {}
+  var veut = DEFAUT; try { if (localStorage.getItem(CLE) === "0") veut = false; } catch (e) {}
   if (veut){ entrer(false); if (location.hash.length > 1) versAncre(location.hash.slice(1), true); }
 }
 /* pour le banc : les écrans, et celui qui est montré */

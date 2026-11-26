@@ -13,10 +13,11 @@
 //   L6  « Suivant » qui n'avance pas, « Précédent » actif à la première partie, « Suivant » actif à la dernière ;
 //   L7  un lien de la page vers une ancre d'une autre partie (« ↑ La carte », « voir la partie 3 ») qui n'y mène pas,
 //       ou une adresse « page.html#ancre » qui n'ouvre pas la partie de l'ancre ;
-//   L8  « 📄 Page complète » qui ne rend pas la page entière, ou que la page oublie au rechargement ;
-//       « 📖 Mode lecture » qui n'y ramène pas ;
+//   L8  « 📄 Page complète » qui ne rend pas la page entière ; une page qui trouve la marque « Page complète » à son
+//       ouverture et s'ouvre quand même en mode lecture ; « 📖 Mode lecture » qui n'y ramène pas ;
 //   L9  une fiche papier qui diffère : imprimée en mode lecture, la page sort entière ;
-//   L10 une trace laissée dans le navigateur (localStorage) : le mode ne garde rien d'une visite à l'autre ;
+//   L10 autre chose dans le navigateur que le choix d'affichage : sans choix, le mode n'écrit rien ; « 📄 Page
+//       complète » laisse une marque (« lecture:<page> » = 0), « 📖 Mode lecture » la retire ;
 //   L11 un robot de test qui arrive en mode lecture : les contrôles ne mesureraient plus la page complète.
 // Une page d'une seule partie n'a rien à découper : elle s'ouvre telle quelle, sans bouton. Elle est comptée, pas refusée.
 //
@@ -48,7 +49,20 @@ const b = await chromium.launch();
 const eleve = await b.newContext({ viewport: { width: 390, height: 844 } });
 await eleve.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false, configurable: true }); });
 const robot = await b.newContext({ viewport: { width: 390, height: 844 } });
-
+/* « La page s'en souvient au rechargement » ne se joue PAS en rechargeant juste après le clic. Chromium écrit
+   `localStorage` en deux temps — la page d'abord, le navigateur ensuite — et une page rechargée dans les millisecondes
+   qui suivent une écriture ne la retrouve pas toujours (mesuré, machine chargée : 3 marques perdues sur 150
+   rechargements immédiats, et autant d'effacements non vus ; un second onglet « témoin » ne suffit pas, il lit parfois
+   la même mémoire que la page). Aucun élève ne recharge en 5 ms ; un banc, si, et il refusait une page sur cent, jamais
+   la même. Le banc juge donc les deux moitiés séparément, chacune sans course : le clic écrit la marque (lue dans la
+   page) ; une page qui TROUVE la marque à son ouverture s'ouvre complète (la marque est posée avant tout script). */
+async function ouvreAvecMarque(url, cle) {
+  const c = await b.newContext({ viewport: { width: 390, height: 844 } });
+  await c.addInitScript((k) => { Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false, configurable: true }); try { localStorage.setItem(k, '0'); } catch (e) {} }, cle);
+  const q = await c.newPage(); await q.goto(url, { waitUntil: 'load' }); await q.waitForTimeout(150);
+  const r = await q.evaluate(() => ({ ml: document.body.classList.contains('ml'), bouton: !!document.getElementById('btnLecture') && document.getElementById('btnLecture').getClientRects().length > 0 }));
+  await c.close(); return r;
+}
 /* le texte que montre la page, hors de la barre et du pied du mode */
 const TEXTE = () => {
   const vu = (e) => { for (let x = e; x && x.nodeType === 1; x = x.parentElement) { const c = getComputedStyle(x); if (c.display === 'none' || c.visibility === 'hidden') return false; } return true; };
@@ -90,6 +104,8 @@ for (const F of liste) {
     await p.goto(url, { waitUntil: 'load' }); await p.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
     await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
     const e0 = await p.evaluate(ETAT);
+    const MARQUES = () => Object.keys(localStorage).filter((c) => /^lecture:/.test(c)).map((c) => c + '=' + localStorage.getItem(c));
+    if ((await p.evaluate(MARQUES)).length) faute('L10', 'le mode écrit dans le navigateur avant tout choix de l\'élève : ' + (await p.evaluate(MARQUES)).join(', '));
     if (e0.n < 2) { seules.push(rel); lues++; if (e0.ml) faute('L2', 'mode lecture allumé sur une page d\'une seule partie'); if (err.length) faute('L1', 'erreur JS : ' + err[0]); await p.close(); continue; }
     lues++; parties += e0.n;
     if (!e0.ml) faute('L2', 'un élève n\'arrive pas en mode lecture');
@@ -102,6 +118,7 @@ for (const F of liste) {
     const pleinePapier = await (async () => { await p.emulateMedia({ media: 'print' }); const t = await p.evaluate(TEXTE); await p.emulateMedia({ media: 'screen' }); return t; })();
     await p.evaluate(() => document.getElementById('btnLecture').click()); await p.waitForTimeout(80);
     if (!(await p.evaluate(ETAT)).ml) faute('L8', '« 📖 Mode lecture » ne ramène pas au mode');
+    if ((await p.evaluate(MARQUES)).length) faute('L10', 'revenu en mode lecture, la marque « Page complète » reste : ' + (await p.evaluate(MARQUES)).join(', '));
     // chaque partie, par « Suivant »
     let somme = 0, tete = null;
     for (let j = 0; j < e0.n; j++) {
@@ -135,19 +152,25 @@ for (const F of liste) {
     const ancre = await p.evaluate(() => { const t = document.querySelector('.ml-tete'); let der = null; for (let x = t.nextElementSibling; x; x = x.nextElementSibling) if (!x.classList.contains('ml-seul') && !/^(SCRIPT|STYLE)$/.test(x.tagName)) der = x;
       const c = der && (der.id ? der : der.querySelector('[id]')); return c ? c.id : null; });
     if (ancre) {
-      const q = await eleve.newPage(); await q.goto(url + '#' + encodeURIComponent(ancre), { waitUntil: 'load' }); await q.waitForTimeout(250);
+      // dans un navigateur neuf : la marque « Page complète » posée puis retirée plus haut n'y est pour rien
+      const c = await b.newContext({ viewport: { width: 390, height: 844 } });
+      await c.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false, configurable: true }); });
+      const q = await c.newPage(); await q.goto(url + '#' + encodeURIComponent(ancre), { waitUntil: 'load' }); await q.waitForTimeout(250);
       const ok = await q.evaluate((id) => { const c = document.getElementById(id); return document.body.classList.contains('ml') && !!c && c.getClientRects().length > 0; }, ancre);
       if (!ok) faute('L7', `« …#${ancre} » n'ouvre pas la partie de cette ancre`);
-      await q.close();
+      await c.close();
     }
-    // « Page complète » : tout revient, et la page s'en souvient le temps de l'onglet
+    // « Page complète » : tout revient, la marque est écrite — elle seule —, et une page qui la trouve s'ouvre complète
     await p.evaluate(() => document.getElementById('mlQuitter').click()); await p.waitForTimeout(80);
     const e9 = await p.evaluate(ETAT), t9 = await p.evaluate(TEXTE);
     if (e9.ml || Math.abs(t9 - pleine) > 5) faute('L8', '« 📄 Page complète » ne rend pas la page entière');
-    await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
-    if ((await p.evaluate(ETAT)).ml) faute('L8', 'après « 📄 Page complète » et un rechargement, la page revient en mode lecture');
-    const traces = await p.evaluate(() => Object.keys(localStorage).filter((c) => /^lecture:/.test(c)));
-    if (traces.length) faute('L10', 'le mode a écrit dans le navigateur : ' + traces.join(', '));
+    // le choix est noté dans le navigateur — lui seul —, et la page s'en souvient au rechargement
+    const nom = decodeURIComponent(path.basename(F)), marques = await p.evaluate(MARQUES);
+    if (marques.length !== 1 || marques[0] !== 'lecture:' + nom + '=0') faute('L10', '« 📄 Page complète » : attendu la seule marque « lecture:' + nom + '=0 », lu « ' + marques.join(', ') + ' »');
+    const rouverte = await ouvreAvecMarque(url, 'lecture:' + nom);
+    if (rouverte.ml) faute('L8', 'la marque « Page complète » trouvée à l\'ouverture, la page s\'ouvre quand même en mode lecture');
+    else if (!rouverte.bouton) faute('L8', 'ouverte en page complète, la page ne montre pas « 📖 Mode lecture »');
+    await p.evaluate(() => localStorage.clear());
     if (err.length) faute('L1', 'erreur JS : ' + err[0]);
   } catch (e) { faute('L1', 'page non jouée : ' + String(e.message || e).slice(0, 160)); }
   await p.close();
@@ -161,4 +184,4 @@ if (DETAIL) for (const s of seules) console.log('   · une seule partie : ' + s)
 console.log(`${lues} page(s) jouée(s) · ${lues - seules.length} en mode lecture, ${parties} parties · ${seules.length} d'une seule partie (ouvertes telles quelles) · ${refus.length} refus`);
 if (!lues) process.exit(2);
 if (refus.length) process.exit(1);
-console.log('✅ chaque page à mode lecture se lit partie par partie, sans rien perdre, se quitte, s\'imprime entière, et ne laisse rien dans le navigateur');
+console.log('✅ chaque page à mode lecture se lit partie par partie, sans rien perdre, se quitte, s\'imprime entière, et ne garde dans le navigateur que le choix d\'affichage');

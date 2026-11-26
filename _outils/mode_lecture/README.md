@@ -28,8 +28,12 @@ ses parties une à la fois, avec une barre d'étapes et deux boutons — Précé
 
 - **Rien à l'impression** : tout ce qui cache est sous `@media screen`. La fiche papier sort entière, en mode lecture
   comme en page complète.
-- **Rien dans le navigateur** : aucun `localStorage`. Le choix « Page complète » tient le temps de l'onglet
-  (`sessionStorage`) ; rien de ce qu'a fait un élève n'attend le suivant (règle d'or n°322).
+- **Rien dans le navigateur, sauf le choix d'affichage** : tant que l'élève ne choisit rien, le mode n'écrit rien ;
+  « 📄 Page complète » laisse une marque (`lecture:<page>` = 0), comme le mode mission garde son choix, et « 📖 Mode
+  lecture » la retire. Ni réponse, ni progression : rien de ce qu'a fait un élève n'attend le suivant (règle d'or
+  n°322 ; `controle_sauvegarde_locale.py` lit le bloc à part). Le premier jet gardait ce choix le temps de l'onglet
+  (`sessionStorage`) : il est gardé comme celui du mode mission — l'élève qui préfère la page complète la retrouve —,
+  et un banc peut le vérifier depuis un second onglet.
 - **Un robot de test ouvre la page complète** (`navigator.webdriver`) : les contrôles et les bancs du dépôt mesurent la
   page qui défile, comme avant ; `banc_lecture.mjs` allume le mode lui-même.
 - **Une page d'une seule partie reste telle quelle**, sans bouton (un lexique d'une seule compétence, un lexique en
@@ -61,8 +65,8 @@ ateliers de représentation). Les autres synthèses élèves sont écrites à la
 Le banc **refuse** : une erreur JavaScript ; une page qui ne s'ouvre pas en mode lecture pour l'élève ; une partie
 vide ; un défilement de côté à 390 px ; du texte perdu (les parties, bout à bout, ne font pas la page) ; « Suivant »
 qui n'avance pas ; un lien d'ancre qui ne mène pas à sa partie ; « Page complète » qui ne rend pas la page entière ou
-que la page oublie au rechargement ; une fiche papier amputée ; une trace dans `localStorage` ; un robot de test qui
-arrive en mode lecture. Avec `--detail`, lire la liste des parties : le découpage doit avoir du sens pour un élève.
+que la page oublie au rechargement ; une fiche papier amputée ; autre chose dans `localStorage` que le choix
+d'affichage ; un robot de test qui arrive en mode lecture. Avec `--detail`, lire la liste des parties : le découpage doit avoir du sens pour un élève.
 
 ## Limites connues
 
