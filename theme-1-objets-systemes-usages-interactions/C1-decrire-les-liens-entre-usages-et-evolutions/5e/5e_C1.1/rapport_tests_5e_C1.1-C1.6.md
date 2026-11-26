@@ -152,3 +152,46 @@ sont des boutons natifs).
 Exécuté : Banc 44 / 44 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 1439 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
 
 Non fait : les questions n'ont pas été essayées en classe.
+
+## 26/11/2026 — Les trois appareils en 3D (activité 1, étapes 2, 5 et 8)
+
+Demande de Pascal du 26/11/2026 : à la première étape de chaque principe, un film court en 3D prend la place du dessin.
+Branche `fable/blender-trois-appareils-chengdu`. Tout ce qui suit a été lancé sur cette branche, le 26/11/2026, avec Chromium.
+
+### Banc de l'animation — `python3 tests_animation_trois_principes.py` : **67 / 67**
+
+Les 50 contrôles du 25/10/2026, inchangés et verts, et 17 nouveaux :
+
+- 3 sur les fichiers : par appareil, le `.mp4`, le `.webm` et l'affiche `.jpg` existent, ont la bonne forme, pèsent moins de
+  400 Ko par film et de 100 Ko par affiche ;
+- à l'ouverture : aucun film ni affiche demandé, rien de joué ; à l'étape 1 : ni film, ni légende, ni bouton ;
+- étapes 2, 5 et 8 (deux contrôles chacune) : le bon film à la place du dessin, son affiche, sa description pour les lecteurs
+  d'écran, 4, 3 et 4 repères en légende, la note « modèle simplifié », le dessin caché aux lecteurs d'écran ; le film se joue ;
+- le film ne tourne pas en boucle et s'arrête sur sa dernière image (4,5 s) ;
+- « ✏️ Voir le schéma » rend le dessin, le bouton propose de revoir l'appareil en 3D, puis ramène le film ;
+- aux étapes 3, 4, 6, 7, 9, 10 et 11 : ni film, ni légende, ni bouton ;
+- aucune ressource distante, aucune erreur JavaScript ;
+- sous « mouvement réduit » : l'affiche est montrée, aucun film ne se joue.
+
+**Le banc sait échouer** : un film retiré du disque et l'étape 5 privée de son film donnent 63 / 67 et la sortie 1 (essai fait,
+puis défait).
+
+### Bancs existants, rejoués
+
+`python3 tests_5e_C1.1_chengdu.py` : 44 / 44 · `node tests_regle_311_5e_C1.1.mjs` : 34 / 34 ·
+`python3 _outils/lecteur_pas_a_pas/banc_lecteur.py` : vert (les six animations, 1280 et 390 px, mouvement réduit, impression, lien).
+
+### Contrôles de `_outils/` (lancés depuis la racine)
+
+Verts : `controle_lecteur_pas_a_pas.py`, `controle_medias.py`, `controle_licence.py`, `controle_liens.py`, `controle_loupe.py`,
+`controle_tactile.py`, `controle_debordement.py`, `controle_squelette.mjs`, `controle_atteignabilite.py`,
+`controle_rapports_tests.py`, `controle_verification_execute.py` ; sur la page seule : `controle_hors_ligne.mjs`,
+`controle_page_ouverte.mjs` (390 px), `controle_impression.mjs`, `controle_mouvement.py` (M1 0, M2 0).
+`controle_hors_ligne.mjs` sur le site entier n'a pas fini dans le délai de cette session (280 s) : non compté.
+
+### Ce qui n'est pas vérifié
+
+- la lecture des films sur les postes du collège, sous Safari et sur tablette ;
+- que les films soient clairs pour un élève de 5e : cela se regarde en classe ;
+- `controle_medias.py` ne lit pas les fichiers vidéo (seules les images) : leur provenance est écrite dans `SOURCES_MEDIAS.md`,
+  mais aucun contrôle ne le vérifie.

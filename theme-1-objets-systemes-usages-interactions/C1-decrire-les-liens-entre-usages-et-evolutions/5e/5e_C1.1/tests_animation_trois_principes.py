@@ -8,9 +8,11 @@ Ce qu'il vérifie : les vingt-deux fichiers audio existent et ont la bonne forme
 boutons ; rien ne se charge ni ne se joue sans geste, rien ne vient du réseau ; « Écouter », « Regarder », « Pause » ; le MP3
 de secours, la voix locale, le message « lis les phrases » ; le compteur d'éclats et la lentille sale ; l'horloge de la
 pesée ; les résultats de la finale (moyennes sur 1 h et 24 h, calculées à la main ci-dessous) ; le mouvement réduit ;
-aucun débordement à 390 px ; le lien direct ; zéro erreur JavaScript.
+aucun débordement à 390 px ; le lien direct ; zéro erreur JavaScript ; les trois appareils en 3D (26/11/2026) : fichiers,
+étapes 2, 5 et 8, légende, bouton « schéma », rien de demandé avant l'étape, aucun film sous « mouvement réduit ».
 Ce qu'il NE vérifie PAS : que la voix soit belle ni qu'elle dise bien la phrase (cela s'écoute) ; que l'animation soit
-claire pour un élève (cela se voit en classe) ; la lecture sous Safari ou sur tablette (seul Chromium tourne ici).
+claire pour un élève (cela se voit en classe) ; la lecture sous Safari ou sur tablette (seul Chromium tourne ici) ;
+que les films soient justes et beaux (cela se regarde), ni leur lecture sur les postes du collège.
 """
 import pathlib
 import subprocess
@@ -35,6 +37,16 @@ for n in range(1, 12):
     ok = ogg.exists() and mp3.exists() and ogg.read_bytes()[:4] == b"OggS" and mp3.stat().st_size > 5000
     t("étape %d : .ogg (Opus) et .mp3 présents, de bonne forme, moins de 100 Ko" % n,
       ok and ogg.stat().st_size < 100_000 and mp3.stat().st_size < 100_000)
+
+# 1 bis · les trois appareils en 3D : un film (.mp4 et .webm) et une affiche par appareil
+for nom in ("p1_lumiere", "p2_pesee", "p3_rayonnement"):
+    mp4 = ICI / "Films" / ("trois-principes_%s.mp4" % nom)
+    webm = ICI / "Films" / ("trois-principes_%s.webm" % nom)
+    jpg = ICI / "Images" / ("trois-principes_%s_3d.jpg" % nom)
+    ok = (mp4.exists() and webm.exists() and jpg.exists() and mp4.read_bytes()[4:8] == b"ftyp"
+          and webm.read_bytes()[:4] == b"\x1a\x45\xdf\xa3" and jpg.read_bytes()[:2] == b"\xff\xd8")
+    t("3D %s : .mp4, .webm et affiche .jpg présents, de bonne forme, moins de 400 Ko par film et 100 Ko par affiche" % nom,
+      ok and mp4.stat().st_size < 400_000 and webm.stat().st_size < 400_000 and jpg.stat().st_size < 100_000)
 
 # 2 · les phrases dites sont celles de la page
 r = subprocess.run([sys.executable, str(ICI / "_generation" / "voix_trois_principes" / "generer.py"), "--verifier"],
@@ -264,6 +276,60 @@ with sync_playwright() as p:
     pg.wait_for_timeout(600)
     t("ni fichier ni voix : « Écouter » disparaît, le message « lis les phrases » s'affiche",
       pg.is_hidden("#tpaEcouter") and pg.is_visible("#tpaSansVoix"))
+    ctx.close()
+
+    # 16 · les trois appareils en 3D : à la première étape de chaque principe, un film prend la place du dessin
+    ETAT_3D = """() => { const v = document.getElementById('tpa3dFilm'), f = document.getElementById('tpa3d'); return {
+      film: !f.hidden && f.getBoundingClientRect().height > 100, legende: [...document.querySelectorAll('#tpa3dListe li')].map(l => l.textContent),
+      legendeVisible: !document.getElementById('tpa3dLegende').hidden, note: document.getElementById('tpa3dNote').textContent,
+      bouton: document.getElementById('tpa3dBouton').hidden ? '' : document.getElementById('tpa3dBouton').textContent,
+      source: v.querySelector('source') ? v.querySelector('source').getAttribute('src') : '', affiche: v.getAttribute('poster') || '',
+      description: (v.getAttribute('aria-label') || '').length, dessinCache: document.getElementById('tpaDessin').getAttribute('aria-hidden'),
+      temps: v.currentTime, enPause: v.paused }; }"""
+    ctx, pg, erreurs, demandes = ouvrir()
+    t("3D, à l'ouverture : aucun film ni affiche demandé, rien de joué",
+      not [u for u in demandes if "/Films/" in u or "_3d.jpg" in u] and pg.evaluate("window.__sons.length") == 0)
+    e1 = pg.evaluate(ETAT_3D)
+    t("3D, étape 1 : ni film, ni légende, ni bouton", not e1["film"] and not e1["legendeVisible"] and e1["bouton"] == "", str(e1))
+    attendu = {2: ("p1_lumiere", 4), 5: ("p2_pesee", 3), 8: ("p3_rayonnement", 4)}
+    for n, (nom, pastilles) in attendu.items():
+        pg.evaluate(ALLER, n)
+        pg.wait_for_timeout(900)
+        e = pg.evaluate(ETAT_3D)
+        t("3D, étape %d : le film %s à la place du dessin, son affiche, sa description, %d repères en légende, la note"
+          % (n, nom, pastilles),
+          e["film"] and e["source"] == "Films/trois-principes_%s.mp4" % nom and e["affiche"] == "Images/trois-principes_%s_3d.jpg" % nom
+          and e["description"] > 80 and len(e["legende"]) == pastilles and e["legendeVisible"] and len(e["note"]) > 20
+          and e["dessinCache"] == "true" and e["bouton"] == "✏️ Voir le schéma", str(e))
+        t("3D, étape %d : le film se joue (sans mouvement réduit)" % n, e["temps"] > 0 or not e["enPause"], str(e["temps"]))
+    pg.evaluate(ALLER, 2)
+    pg.wait_for_timeout(5400)
+    e = pg.evaluate("(() => { const v = document.getElementById('tpa3dFilm'); return [v.ended, v.loop, v.duration]; })()")
+    t("3D : le film ne tourne pas en boucle, il s'arrête sur sa dernière image (4,5 s)", e[0] and not e[1] and abs(e[2] - 4.5) < 0.2, str(e))
+    pg.click("#tpa3dBouton")
+    e = pg.evaluate(ETAT_3D)
+    t("3D : « Voir le schéma » rend le dessin, le bouton propose de revoir l'appareil en 3D",
+      not e["film"] and not e["legendeVisible"] and e["dessinCache"] is None and e["bouton"] == "🎥 Voir l'appareil en 3D" and e["enPause"], str(e))
+    pg.click("#tpa3dBouton")
+    t("3D : le bouton ramène le film", pg.evaluate(ETAT_3D)["film"])
+    for n in (3, 4, 6, 7, 9, 10, 11):
+        pg.evaluate(ALLER, n)
+        e = pg.evaluate(ETAT_3D)
+        if e["film"] or e["bouton"] or e["legendeVisible"] or e["dessinCache"] is not None:
+            break
+    else:
+        n = 0
+    t("3D : aux autres étapes, ni film, ni légende, ni bouton ; le dessin est rendu aux lecteurs d'écran", n == 0, "étape %d" % n)
+    t("3D : aucune ressource distante, aucune erreur JavaScript",
+      not [u for u in demandes if u.startswith(("http://", "https://"))] and not erreurs, str(erreurs)[:300])
+    ctx.close()
+    ctx, pg, erreurs, _ = ouvrir(calme=True)
+    pg.evaluate(ALLER, 5)
+    pg.wait_for_timeout(1200)
+    e = pg.evaluate(ETAT_3D)
+    t("3D, mouvement réduit : l'affiche (l'image complète) est montrée, aucun film ne se joue",
+      e["film"] and e["affiche"].endswith("p2_pesee_3d.jpg") and e["enPause"] and e["temps"] == 0
+      and not [x for x in pg.evaluate("window.__sons") if x == "" or "/Films/" in x] and not erreurs, str(e))
     ctx.close()
     b.close()
 

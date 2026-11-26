@@ -142,6 +142,38 @@ produire si une phrase de la page a changé). Les phrases des étapes ①②③ 
 à 390 px ; `apres-1280-onze-etapes.png` (les onze étapes, à 1280 px, réduites). Captures du navigateur de ce lot (Chromium),
 25/10/2026, quantifiées à 256 couleurs, CC0. Elles ne sont affichées par aucune page élève.
 
+## Les trois appareils en 3D (activité 1, ajoutés le 26/11/2026)
+
+**Créations originales**, engendrées par un script : `_generation/films_trois_appareils/generer.py` construit les trois scènes
+de zéro dans **Blender 5.1.1** (moteur EEVEE), sur le poste de Pascal, par son connecteur. Aucun fichier `.blend`, aucun modèle,
+aucune texture ni image venus d'ailleurs ; aucun son. Auteur : écosystème Pascal/Claude (Fable), licence **CC0 1.0**, comme
+l'animation. `assembler.sh` (ffmpeg) tire des rendus les fichiers légers ci-dessous. Blender (GPL) n'est pas dans le dépôt :
+ses images ne portent pas sa licence.
+
+Ce sont des **modèles simplifiés, pas des photos** : les grains sont grossis, le rayonnement (invisible) est dessiné en points,
+les 24 heures de la pesée passent en quelques secondes. La page l'écrit sous chaque film. Couleurs de la planche reprises
+(n°120) : lumière `#ffd08a`, poussière `#9bbefc`, capteur `#61dafb`, filtre `#f4f6fb`, dépôt `#4b5a78`, rayonnement `#c68ef2`.
+
+| Fichier | Ce que c'est |
+|---|---|
+| `Films/trois-principes_p1_lumiere.mp4` · `.webm` | P1, étape 2 : film muet de 4,5 s, 960 × 676, 24 images/s ; H.264 (296,9 Ko) et VP9 de secours (260,5 Ko) |
+| `Films/trois-principes_p2_pesee.mp4` · `.webm` | P2, étape 5 : film muet de 4,5 s, 960 × 676, 24 images/s ; H.264 (200,3 Ko) et VP9 de secours (139,5 Ko) |
+| `Films/trois-principes_p3_rayonnement.mp4` · `.webm` | P3, étape 8 : film muet de 4,5 s, 960 × 676, 24 images/s ; H.264 (182,6 Ko) et VP9 de secours (128,2 Ko) |
+| `Images/trois-principes_p1_lumiere_3d.jpg` | la dernière image du film (l'image complète), JPEG, 49,5 Ko : son affiche, et ce qui reste sous « mouvement réduit » |
+| `Images/trois-principes_p2_pesee_3d.jpg` | la dernière image du film (l'image complète), JPEG, 39,8 Ko : son affiche, et ce qui reste sous « mouvement réduit » |
+| `Images/trois-principes_p3_rayonnement_3d.jpg` | la dernière image du film (l'image complète), JPEG, 45,1 Ko : son affiche, et ce qui reste sous « mouvement réduit » |
+
+- **À l'écran** : aux étapes 2, 5 et 8, le film prend la place du dessin ; il se joue une fois et s'arrête sur l'image complète
+  (n°175, n°176) ; « ✏️ Voir le schéma » rend le dessin. Rien n'est demandé avant l'étape (`preload="none"`).
+- **À l'impression** : rien ne change, la planche des trois schémas s'imprime. Les mêmes images sur fond clair sortent du script
+  (`assembler.sh` avec `IMPRESSION=oui`) ; elles ne sont pas dans le dépôt tant que Pascal n'a pas décidé de les imprimer.
+- **Non vérifié** : la lecture des films sur les postes du collège, sous Safari et sur tablette (seul Chromium a tourné).
+
+**Les captures de comparaison** de la PR, dans `_generation/films_trois_appareils/captures/` : `avant-390-etape2.png` (l'étape 2
+telle que `main` l'affichait) et `apres-390-etape2.png` (la même, avec le film), à 390 px ; `apres-1280-trois-etapes.png` (les
+étapes 2, 5 et 8 à 1 280 px, réduites). Captures du navigateur de ce lot (Chromium), 26/11/2026, 256 couleurs, CC0. Aucune page
+élève ne les affiche.
+
 ## Image générée par IA (Canva) pour la synthèse élève
 
 Demande de Pascal du 29/10/2026 : « une capture d'écran ou une illustration permet d'avoir une vision plus synthétique
@@ -154,6 +186,7 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 ## Ce que le lot ne contient pas
 
 - aucune photographie (l'image du capteur est générée par IA, ci-dessus) ;
+- aucune photographie ni modèle 3D venu d'ailleurs (les trois films sont construits par script, ci-dessus) ;
 - aucun appel réseau, aucune police distante, aucun script tiers ;
 - aucune voix humaine enregistrée (la voix de l'animation est une synthèse, ci-dessus).
 

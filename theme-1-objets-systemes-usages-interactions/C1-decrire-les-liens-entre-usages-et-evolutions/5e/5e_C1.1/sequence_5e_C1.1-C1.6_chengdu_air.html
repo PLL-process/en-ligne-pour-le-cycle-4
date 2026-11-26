@@ -221,6 +221,16 @@
   .tpa-jauge{fill:#c68ef2}
   .tpa-dessin .tpa-heure-cachee{opacity:0;transition:opacity .4s}
   /* sous le dessin */
+  /* les trois appareils en 3D (26/11/2026) : aux étapes 2, 5 et 8, un film court prend la place du dessin */
+  .tpa-scene{position:relative}
+  .tpa-3d{position:absolute;inset:0;margin:0 auto;max-width:640px}
+  .tpa-3d video{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px;background:#071633;cursor:pointer}
+  .tpa-3d-legende{margin:8px 4px 0;font-size:.92em}
+  .tpa-3d-liste{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0;padding:0;list-style:none;counter-reset:tpa3d}
+  .tpa-3d-liste li{counter-increment:tpa3d;display:flex;align-items:center;gap:.4em}
+  .tpa-3d-liste li::before{content:counter(tpa3d);flex:none;display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;
+    background:#fff;color:#0b1b39;font-weight:700;font-size:.85em}
+  .tpa-3d-note{margin:6px 0 0;color:var(--sub);font-size:.95em}
   .tpa-outils{text-align:center;margin:6px 0 0}
   .tpa-outils .btn[aria-pressed="true"]{border-color:#ffd66b;color:#ffd66b}
   .tpa-note{margin:6px 4px 0;padding:6px 10px;border-left:3px solid #ffd66b;background:rgba(255,214,107,.08);border-radius:0 8px 8px 0;font-size:.9em}
@@ -2632,6 +2642,15 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </g>
 </g>
 <text data-legende-unites="ligne" x="240" y="323.2" text-anchor="middle" font-size="17" fill="#3d4b66" font-family="Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif">Unités : µg/m³ (microgrammes par mètre cube)</text></svg>
+      <!-- trois_appareils_3d : début — aux étapes 2, 5 et 8, l'appareil en 3D prend la place du dessin (demande de
+           Pascal du 26/11/2026). Films et affiches : Films/ et Images/trois-principes_*_3d.jpg, engendrés par
+           _generation/films_trois_appareils/ (Blender). Le film se joue une fois, à l'arrivée sur l'étape ou d'un geste,
+           et s'arrête sur l'image complète (n°175, n°176) ; sous « mouvement réduit », seule cette image est montrée.
+           Aucun son, aucun réseau (n°305) ; rien n'est demandé au serveur avant l'étape. -->
+      <figure class="tpa-3d" id="tpa3d" hidden>
+        <video id="tpa3dFilm" muted playsinline preload="none" width="960" height="676" data-loupe="non"></video>
+      </figure>
+      <!-- trois_appareils_3d : fin -->
       <div class="tpa-final" id="tpaFinal" hidden>
         <p style="font-size:.85em;color:var(--sub)">⚠️ <b>Modèle simplifié</b>&nbsp;: ici, la poussière est la même dans tout l'air aspiré et le capteur ne se trompe jamais. <br>Un vrai capteur a une marge d'erreur : il faut le régler (l'étalonner).</p>
         <div class="tpa-reglage">
@@ -2686,6 +2705,11 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
     </div>
     <div class="tpa-outils">
       <button type="button" class="btn small ghost" id="tpaLentille" aria-pressed="false" hidden>🧽 Salir la lentille</button>
+      <button type="button" class="btn small ghost" id="tpa3dBouton" aria-pressed="true" hidden>✏️ Voir le schéma</button>
+    </div>
+    <div class="tpa-3d-legende" id="tpa3dLegende" hidden>
+      <ol class="tpa-3d-liste" id="tpa3dListe" role="list"></ol>
+      <p class="tpa-3d-note">🔍 <b>Modèle simplifié, en 3D</b>&nbsp;: <span id="tpa3dNote"></span></p>
     </div>
     <p class="tpa-note" id="tpaNoteSale" hidden>🧽 <b>Lentille sale</b>&nbsp;: le capteur compte aussi des éclats qui ne viennent d'aucun grain. <br>L'appareil «&nbsp;voit&nbsp;» de la poussière qui n'existe pas — et rien ne le signale.</p>
     <p class="tpa-titre" id="tpaTitre" data-lpp="titre"></p>
@@ -4332,6 +4356,60 @@ majEssentiel(); majProgress(); majHyp();
   function pose(e, a, v){ e.setAttribute(a, typeof v === "number" ? v.toFixed(1) : v); }
   var dessin = $t("tpaDessin"), final = $t("tpaFinal");
   var bLentille = $t("tpaLentille"), noteSale = $t("tpaNoteSale");
+
+  // ── Les trois appareils en 3D : à la première étape de chaque principe, un film court prend la place du dessin ──
+  // Les adresses sont écrites en entier (pas fabriquées par le script) : les contrôles de liens et de médias les lisent.
+  // « l » : la légende des pastilles numérotées du film, avec les mots du schéma ; « n » : ce que le modèle simplifie ;
+  // « d » : la description du film pour un lecteur d'écran.
+  var TROIS_D = {
+    2: {f: "p1_lumiere", mp4: "Films/trois-principes_p1_lumiere.mp4", webm: "Films/trois-principes_p1_lumiere.webm",
+        affiche: "Images/trois-principes_p1_lumiere_3d.jpg",
+        l: ["la lampe", "le faisceau de lumière", "l'air et ses grains de poussière", "le capteur de lumière"],
+        n: "les grains sont grossis. En vrai, ils sont trop petits pour être vus.",
+        d: "Film en 3D, sans son. Un boîtier blanc est fixé à un poteau ; l'air y entre par le haut avec ses grains de poussière. La façade devient transparente : à l'intérieur, une lampe envoie un faisceau de lumière ; les grains qui traversent le faisceau brillent ; un capteur est posé sur le côté, sous le faisceau."},
+    5: {f: "p2_pesee", mp4: "Films/trois-principes_p2_pesee.mp4", webm: "Films/trois-principes_p2_pesee.webm",
+        affiche: "Images/trois-principes_p2_pesee_3d.jpg",
+        l: ["l'air aspiré, avec ses grains", "le filtre", "la pompe"],
+        n: "les grains sont grossis, et les 24 heures passent en quelques secondes.",
+        d: "Film en 3D, sans son. Un tuyau transparent posé sur un socle ; au bout, une pompe dont l'hélice tourne. L'air entre par l'autre bout avec ses grains de poussière ; les grains s'arrêtent sur un filtre rond placé en travers du tuyau, qui se couvre peu à peu."},
+    8: {f: "p3_rayonnement", mp4: "Films/trois-principes_p3_rayonnement.mp4", webm: "Films/trois-principes_p3_rayonnement.webm",
+        affiche: "Images/trois-principes_p3_rayonnement_3d.jpg",
+        l: ["la source scellée", "la bande de papier filtre", "le dépôt de poussière", "le compteur"],
+        n: "le rayonnement est invisible. Ici, il est dessiné en points violets.",
+        d: "Film en 3D, sans son. Une bande de papier filtre est tendue entre deux rouleaux. Au-dessus, une source dans sa capsule envoie un rayonnement, dessiné en points violets, vers un compteur placé sous la bande. Un tuyau dépose de la poussière sur la bande : la tache grandit, et de moins en moins de points la traversent."}
+  };
+  var vue3d = $t("tpa3d"), film = $t("tpa3dFilm"), b3d = $t("tpa3dBouton");
+  var legende3d = $t("tpa3dLegende"), liste3d = $t("tpa3dListe"), note3d = $t("tpa3dNote");
+  var en3d = false, pose3d = "";
+  function jouer3d(){
+    if (calme.matches) return;                           // sous « mouvement réduit » : l'image complète, sans film
+    try { film.currentTime = 0; } catch (e) {}
+    var essai = film.play();
+    if (essai && essai.catch) essai.catch(function(){}); // film illisible ici : son affiche reste, c'est l'image complète
+  }
+  function montrer3d(oui, jouer){
+    var a = TROIS_D[scene];
+    en3d = !!(a && oui);
+    vue3d.hidden = !en3d; legende3d.hidden = !en3d; b3d.hidden = !a;
+    if (en3d) dessin.setAttribute("aria-hidden", "true"); else dessin.removeAttribute("aria-hidden");
+    if (a) {
+      b3d.setAttribute("aria-pressed", String(en3d));
+      b3d.textContent = en3d ? "✏️ Voir le schéma" : "🎥 Voir l'appareil en 3D";
+    }
+    if (!en3d) { film.pause(); return; }
+    if (pose3d !== a.f) {
+      pose3d = a.f;
+      film.poster = a.affiche;
+      film.innerHTML = '<source src="' + a.mp4 + '" type="video/mp4"><source src="' + a.webm + '" type="video/webm">';
+      film.setAttribute("aria-label", a.d);
+      liste3d.innerHTML = a.l.map(function(x){ return "<li>" + x + "</li>"; }).join("");
+      note3d.textContent = a.n;
+      film.load();
+    }
+    if (jouer) jouer3d();
+  }
+  b3d.addEventListener("click", function(){ if (lpp) lpp.arreter(); montrer3d(!en3d, true); });
+  film.addEventListener("click", jouer3d);               // toucher le film le rejoue
   var chapitres = bloc.querySelectorAll("[data-aller]");
 
   // ── Scène 1 : des grains qui flottent dans le mètre cube ──
@@ -4699,6 +4777,7 @@ majEssentiel(); majProgress(); majHyp();
         if (!fin.lance) { fin.lance = true; zeroFin(); }
         fin.marche = !calme.matches; afficherFin();
       } else fin.marche = false;
+      montrer3d(true, true);                             // étapes 2, 5 et 8 : l'appareil en 3D d'abord, le schéma d'un geste
     }
   });
 })();
