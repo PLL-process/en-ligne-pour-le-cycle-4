@@ -38170,3 +38170,106 @@ devant la valeur) ; l'en-tête reste lu par un lecteur d'écran. Au-delà de 600
 une à une, elles sont hors de son périmètre par défaut) : A 0, S 0. Rendu à 1 280 px identique au pixel près ;
 impression (A4, média `print`) identique, même nombre de pages ; à 390 px, changé exprès (captures envoyées à Pascal).
 `controle_axe.mjs` (thème 1) : aucun défaut grave ; `controle_debordement.py` : sans écart.
+
+## 26/11/2026 — Vérification totale, suite : une action par ligne, la page qui ne défile plus de côté, l'élève qui ne lit pas sur les pages du kit (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Suite de la demande de Pascal du 25/11/2026** (« assure-toi que l'élève comprenne la question, qu'il y ait la
+correction, et que le mode mission soit pour tous les documents élèves »), reprise le 26/11 sur son « continue » :
+ce que les vagues 2, 3 et 3 bis avaient laissé ouvert.
+
+**Les consignes à deux actions jointes par « et »** (`controle_consignes_a_la_ligne.py`, N3, « à juger ») : 48
+relevées sur `main`, lues une par une. **15 consignes réécrites**, une action par ligne, numérotée :
+- 7 dans les données du kit des représentations (`donnees_cas_utilisation.py`, `donnees_croquis.py`,
+  `donnees_fast.py`), qui les portent dans les ateliers, les cahiers et les exercices incrustés de quatre séquences
+  (5e_C1.2, 3e_C2.1, 4e_C2.1, 3e_C7.1) : « ② Choisis le frein du vélo-cargo de Léa. ③ Justifie ton choix en une
+  phrase. », « ② Place les trois acteurs… ③ Explique… », etc. ;
+- 8 écrites à la main : 3e_C1.5 (relever un chiffre, puis les quatre choses à côté), 3e_C4.7 (attribuer les rôles,
+  puis le vrai/faux), 4e_C4.1 Book Train (la consigne draw.io en quatre lignes, l'algorigramme en trois, le losange :
+  une ligne de contexte puis ① Pousse le zoom ② Observe), 3e_C5.1 (« c) Remplace-le. / Relance ensuite le test
+  complet. »), 3e_C9.2 (« a) Choisis les valeurs à tester. / À côté de chacune, écris pourquoi » ; la consigne des
+  paliers : « Premier geste : enregistre et nomme… », puis « à chaque palier » ① à ⑤ — reprise par
+  `generer_les_quatre_pages.py` dans les stations 2, 3 et 4).
+
+**Restent 27 relevés (19 phrases), gardés** : chacun est un seul geste. Lire puis répondre sur le même document
+(« Lis le chronogramme et réponds »), observer puis expliquer ce qu'on vient de voir, faire un essai et noter aussitôt
+son résultat (une boucle, essai par essai : la couper ferait faire tous les essais avant d'en noter un), enregistrer
+et nommer (un seul geste dans le logiciel), ouvrir le corrigé et comparer (bilan des TP de CAO).
+
+**La page qui défile de côté, page ouverte à 390 px.** `controle_page_ouverte.mjs` mesurait les listings qui
+défilent (L), pas la page entière. Un balayage à 390 px (chaque séance ouverte, volets dépliés), puis la mesure
+neuve sur tout le site, ont trouvé quatre pages qui défilaient de côté ; corrigées :
+- 3e_C5.1 : la rangée des quatre boutons de mesure (`#zoneMesures`, quatre colonnes fixes) passe sur deux colonnes
+  sous 600 px (`repeat(auto-fit,minmax(140px,1fr))`) ;
+- 5e_C1.1 : la formule `=MOYENNE.SI.ENS(…)` (deux fois) peut se couper après chaque « ; » (`<wbr>`) ;
+- 4e_C7.8 : les deux messages JSON se coupent après chaque virgule ;
+- `theme-1/_reperes/carte_des_representations.html` : ses quatre tableaux à quatre colonnes deviennent, sur un
+  téléphone, une carte par ligne, chaque case précédée du nom de sa colonne (`data-label`, le motif du banc de
+  3e_C6.1) ; inchangés au-dessus de 600 px et à l'impression.
+**Nouvelle mesure D** dans `controle_page_ouverte.mjs` : un élément qui dépasse la largeur de la page sans cadre
+qui défile autour de lui. Sur les 342 pages : **0**, et D refuse depuis ce jour (référence vide, n°273). Banc
+`tests_controle_page_ouverte.mjs` 27 / 27 (cinq points neufs : la formule insécable vue, la même coupée non vue, un
+listing en cadre défilant non compté, la page propre, la sortie 1). Les deux skills qui citent les lettres
+(`controle-qualite-lot`, `audit-douze-axes`) disent D. Les 78 QCM et les 35 autres pages élève : rien qui défile.
+
+**La navigation du site sur un téléphone.** Vue au même balayage : sur 55 pages, la barre collante
+`#navharm` passait sur deux ou trois lignes à 390 px — 127 px de haut en permanence dans les 18 ateliers de
+représentation et leurs 7 QCM, 62 px dans les trois QCM de C7.5, où « ⌂ » et « Accueil » se séparaient dans leur
+pastille. Le mode mission et le mode lecture la mettaient déjà sur une ligne ; **un QCM n'a ni l'un ni l'autre**, et
+l'élève qui revient à la page complète la retrouvait. La règle des deux modes (une ligne qui défile de côté, sous
+600 px) est posée là où la barre est définie : `kit.css` (ateliers et cahiers), `gabarit_qcm.tpl` (QCM du kit),
+`build_atelier.py` (planification), et à la main sur 24 pages (18 synthèses, les 3 QCM de C7.5, la carte des
+représentations, l'entraînement au brevet, `dnb_gabarit.html`). Remesuré : aucune barre collante au-dessus de 60 px,
+aucune pastille coupée.
+
+**L'élève qui ne lit pas, sur les pages du kit** (vu, non traité, à la vague 3) : `eleve_qui_ne_lit_pas.py` ne
+savait lire que `const CHECKS`. Il joue maintenant aussi les 21 pages du kit : réponses lues dans `#donnees-page`,
+bouton « Vérifier » de chaque exercice, message du kit lu. **Un exercice se validait sans lire** : la bête à cornes de
+5e, exercice 1 — la bonne réponse était la première proposition aux trois questions ; « toujours la 1re » le
+réussissait. Les propositions sont remélangées (`donnees_besoin.py`, la bonne en 3e, 2e, 4e place). Sur les 21 pages :
+0 exercice validé sans lire.
+
+**`verif_guidage.py` de l'atelier CAO (n°81)** comptait deux fausses alertes par TP depuis la vague 3 : il lisait le
+script du bloc du mode mission (« Réponds… ») comme un texte d'élève. Il retire maintenant scripts et styles avant de
+lire. Restent les vraies alertes n°77, qui demandent des captures du logiciel (voir plus bas).
+
+**Le moteur du mode mission** citait dans deux commentaires une balise (`<script … id="donnees-page">`, `<p><button
+class="btn verifier">`) : une recherche par expression régulière de l'identifiant des données du kit tombait d'abord
+sur le commentaire. Les commentaires disent la même chose sans balise ; le bloc est reposé sur les 93 pages, les
+générateurs rejoués (« à jour »).
+
+**Vérifié, sur l'arbre final (fusionné avec `main`)** :
+- les consignes : N1 0 · N2 0 sur 400 consignes de 274 pages, N3 48 → 27 (les 19 phrases gardées ci-dessus) ;
+- `controle_page_ouverte.mjs` : tout le site (342 pages) L 0 · B 0 · C 0 et D 1, la carte des représentations,
+  corrigée ; puis, avec `--axe`, les 123 pages que ce lot change : L 0 · D 0 · B 0 · C 0 · A 0 · S 0 (hors
+  `dnb_gabarit.html`, modèle à trous hors du site : ses quatre remarques d'axe tiennent à ses trous, les mêmes avant
+  et après) ; puis tout le site, sur l'arbre fusionné, avec `--axe` : 342 pages, L 0 · D 0 · B 0 · C 0 · A 0 · S 0,
+  sortie 0 ; banc 27 / 27 ;
+- la barre de navigation remesurée sur les 55 pages : aucune au-dessus de 60 px, aucune pastille coupée ;
+- `eleve_qui_ne_lit_pas.py --tout` : 76 pages, dont les 21 du kit, 0 activité validée sans lire ; banc 9 / 9 (deux
+  pages du kit, neuves : la bonne toujours la première refusée, des bonnes réparties acceptées) ;
+- le mode, dans un navigateur d'élève : `banc_generique` sur les 40 pages à mode mission dont le contenu change, aucun
+  refus ; `banc_barre` 93 / 93 (B1 0 · B2 0 · B3 0) ; `banc_lecture` sur les 18 synthèses touchées, 157 parties,
+  0 refus ;
+- les **154 bancs des lots** des dossiers touchés, à 0 — dont `banc_ateliers.py` 530 / 530, `tests_atelier_C7.1.py`
+  48 / 48, Book Train 43 / 43, 3e_C9.2 167 / 167, l'entraînement au brevet 54 / 54 ;
+- les 55 `controle_*.py` à 0 ; `tests_controle_mode_mission.py` 13 / 13, `tests_controle_mode_lecture.py` 13 / 13,
+  `tests_controle_sauvegarde_locale.py` 14 / 14, `tests_generer_lexique.py` 34 / 34 ;
+- au navigateur, tout le site : `controle_impression` 0, `controle_axe` rien au-dessus de la référence (410 pages) ;
+- les générateurs rejoués : `build.py`, `build_qcm.py --verifier` (7 QCM sur 7 reproduits à l'octet),
+  `incrustations.py --verifier`, `build_atelier.py`, `generer_les_quatre_pages.py`, `verif_chaine.py --empreintes`
+  (manifeste inchangé) ;
+- la revue d'écran à 390 px : la carte des représentations (une carte par ligne), la consigne des paliers de 3e_C9.2,
+  une consigne du kit coupée, le QCM du FAST (la barre sur une ligne).
+
+**Reste à Pascal** : n°77, des captures réelles du logiciel pour les paliers 1 (Ranger) et 8 (Emporter) de
+`tp_3e_boitier_etanche` et les paliers 1, 3, 6, 7 et 8 de `tp_5e_de_calottes` (le modèle de démonstration, qui ne va
+pas aux élèves, n'en a pas besoin).
+
+**Thème par thème** (n°302) : thème 1 — trois fichiers de données du kit et leurs pages (ateliers, cahiers, quatre
+séquences), `donnees_besoin.py`, 3e_C1.5, 5e_C1.1, la carte des représentations, `kit.css` et `gabarit_qcm.tpl` (25
+pages du kit et 3 cahiers reconstruits) ; thème 2 — 3e_C4.7, 4e_C4.1 Book Train, 3e_C5.1, 4e_C6.2 (synthèse),
+l'entraînement au brevet de 3e_C6.2 ; thème 3 — 3e_C9.2 et ses quatre stations, 4e_C7.8, les QCM de C7.5, 17
+synthèses élève de C7 et C8, `build_atelier.py` (trois ateliers de planification), `verif_guidage.py` ; les trois
+thèmes — le bloc du mode mission reposé sur 93 pages ; `_outils` — `controle_page_ouverte.mjs` (D) et son banc,
+`eleve_qui_ne_lit_pas.py` (le kit) et son banc, `mode_mission/mission.js`, `dnb_gabarit.html` ; `.claude/skills` —
+`controle-qualite-lot` et `audit-douze-axes` (la lettre D), `eleve-qui-ne-lit-pas` (le kit).

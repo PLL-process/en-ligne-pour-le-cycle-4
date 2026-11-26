@@ -952,7 +952,7 @@ function candidats(){
   return cles;
 }
 /* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
-   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   le script JSON d'identifiant « donnees-page », par NOM de champ : `choix` {name, bonne, retours},
    `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
    Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
 var _noms = null;
@@ -1013,7 +1013,7 @@ function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"
    écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
    six séquences du thème 1 — vu par banc_generique avant la livraison). */
 var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
-/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (le bouton « verifier » des ateliers, seul dans son p) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
 function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }

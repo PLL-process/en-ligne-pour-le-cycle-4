@@ -961,7 +961,7 @@ function candidats(){
   return cles;
 }
 /* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
-   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   le script JSON d'identifiant « donnees-page », par NOM de champ : `choix` {name, bonne, retours},
    `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
    Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
 var _noms = null;
@@ -1022,7 +1022,7 @@ function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"
    écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
    six séquences du thème 1 — vu par banc_generique avant la livraison). */
 var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
-/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (le bouton « verifier » des ateliers, seul dans son p) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
 function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
@@ -2486,7 +2486,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
     <p><b>Erreurs typiques :</b> oublier la ligne des noms ; <br>mettre les valeurs dans un autre ordre que les noms ; <br>croire qu'en changeant de format on change l'information — c'est la même mesure, écrite autrement ; <br>conclure que le CSV est toujours mieux parce qu'il est plus court.</p>
   </div></details>
   <details class="correction"><summary>✅ Corrigé du défi taille — les noms courts contre les noms entiers</summary><div>
-    <p><b>Les deux comptes.</b><br>Le message complet du banc, <code>{"id":"jardin-cour","h":38,"u":"%","t":"14:07","pompe":false}</code>, fait 61 caractères : le banc l'affiche. <br>Avec les noms en entier — par exemple <code>identifiant</code>, <code>humidite</code>, <code>unite</code> et <code>horodatage</code> ; <code>pompe</code> l'est déjà —, il devient <code>{"identifiant":"jardin-cour","humidite":38,"unite":"%","horodatage":"14:07","pompe":false}</code> : 90 caractères. <br>Écart : <b>29 caractères par message</b>.</p>
+    <p><b>Les deux comptes.</b><br>Le message complet du banc, <code>{"id":"jardin-cour",<wbr>"h":38,<wbr>"u":"%",<wbr>"t":"14:07",<wbr>"pompe":false}</code>, fait 61 caractères : le banc l'affiche. <br>Avec les noms en entier — par exemple <code>identifiant</code>, <code>humidite</code>, <code>unite</code> et <code>horodatage</code> ; <code>pompe</code> l'est déjà —, il devient <code>{"identifiant":"jardin-cour",<wbr>"humidite":38,<wbr>"unite":"%",<wbr>"horodatage":"14:07",<wbr>"pompe":false}</code> : 90 caractères. <br>Écart : <b>29 caractères par message</b>.</p>
     <p><b>Sur une journée :</b> 288 × 29 = <b>8 352 caractères</b> d'écart, environ 8 ko (kilooctets) par jour.</p>
     <p><b>Est-ce que ça vaut la perte de lisibilité ?</b> Sur le réseau du collège, non : 8 ko par jour ne pèsent presque rien, et un message qu'on lit sans dictionnaire évite des erreurs le jour où quelqu'un d'autre reprend le jardin. <br>Les noms courts se défendent quand chaque caractère coûte : un objet sur pile qui émet par radio, ou des milliers d'objets qui parlent au même serveur. <br>Les deux avis se défendent, à condition de dire pour quel objet et sur quel réseau.</p>
     <p><b>Attendus :</b> les deux longueurs, comptées sur le même message ; <br>l'écart par message, puis multiplié par 288 ; <br>un avis argumenté.</p>

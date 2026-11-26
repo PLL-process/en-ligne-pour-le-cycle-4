@@ -253,8 +253,8 @@ E1 = dict(
     consigne=("<p>Dans un diagramme de cas d'utilisation, un <b>acteur</b> est une personne, ou un autre système, "
               "qui se sert de la station <b>avec un but</b> et qui reste <b>en dehors</b> d'elle.<br>"
               "① <b>Range chacun des sept éléments</b>&nbsp;: est-ce un acteur, et sinon, pourquoi&nbsp;?<br>"
-              "② <b>Place les trois acteurs</b> dans le schéma (tes choix s'écrivent sous les bonshommes), et "
-              "<b>explique</b> en une phrase pourquoi l'écran tactile n'est pas un acteur.</p>"),
+              "② <b>Place les trois acteurs</b> dans le schéma (tes choix s'écrivent sous les bonshommes).<br>"
+              "③ <b>Explique</b> en une phrase pourquoi l'écran tactile n'est pas un acteur.</p>"),
     critere="sept classements justes, les trois bonshommes à leur place, et une phrase qui dit que l'écran est une pièce de "
             "la borne, dedans.",
     widgets=[dict(type="classer", name="cl",
@@ -761,8 +761,8 @@ E6 = dict(
               "un algorigramme, une suite d'images, un graphique…<br>"
               "① <b>Pour chaque question, choisis le mode qui y répond le mieux</b>&nbsp;: la raison est écrite à "
               "côté de chaque mode.<br>"
-              "② <b>Coche</b> les deux modes qui montrent dans quel ordre l'usager agit, et <b>explique</b> "
-              "pourquoi le diagramme de cas d'utilisation ne suffit pas pour la question 3.</p>"),
+              "② <b>Coche</b> les deux modes qui montrent dans quel ordre l'usager agit.<br>"
+              "③ <b>Explique</b> pourquoi le diagramme de cas d'utilisation ne suffit pas pour la question 3.</p>"),
     critere="six choix justes, les deux bons modes cochés (et seulement eux), et une explication qui parle de l'ordre et du test.",
     widgets=[dict(type="classer", name="mode",
                   categories=[("cu", "le diagramme de cas d'utilisation — il montre qui fait quoi avec le système"),
@@ -865,8 +865,8 @@ E7 = dict(
               "à l'infinitif.<br>"
               "① <b>Construis le diagramme de cas d'utilisation de la station</b>&nbsp;: place les trois acteurs "
               "et les deux cas qui manquent (les mots en gras du texte t'aident).<br>"
-              "② <b>Explique</b> pourquoi le service météo est un acteur alors que ce n'est pas une personne, et "
-              "<b>dis</b> où va le vent.</p>"),
+              "② <b>Explique</b> pourquoi le service météo est un acteur alors que ce n'est pas une personne.<br>"
+              "③ <b>Dis</b> où va le vent.</p>"),
     critere="les cinq cases justes, une justification qui dit « autre système », « en dehors » et ce qu'il envoie, et la bonne "
             "place pour le vent.",
     widgets=[dict(type="slots", intro='<figure class="figure schema-vivant">' + FIG_CYCLONE +

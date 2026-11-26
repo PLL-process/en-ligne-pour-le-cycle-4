@@ -5,7 +5,9 @@
 
 - une page où la bonne réponse est toujours la plus longue : l'outil doit la refuser (sortie 1) ;
 - une page aux bonnes réponses réparties et de longueurs égales : l'outil doit l'accepter (sortie 0) ;
-- une page sans `CHECKS` : l'outil doit dire qu'il n'a rien lu (sortie 2).
+- une page sans `CHECKS` : l'outil doit dire qu'il n'a rien lu (sortie 2) ;
+- deux pages du kit des ateliers (`#donnees-page`, un bouton « Vérifier » par exercice `[data-exo]`, depuis le
+  26/11/2026) : la bonne réponse toujours la première est refusée ; réparties, elles sont acceptées.
 Sortie du banc : 0 tout passe · 1 un échec · 2 Playwright absent.
 """
 import pathlib
@@ -40,6 +42,29 @@ const CHECKS={{1:function(){{let s=0;B.forEach((b,i)=>{{const r=document.querySe
 </script>"""
 
 
+def page_kit(bonnes):
+    """Le gabarit du kit, réduit : un exercice de trois questions ; « Vérifier » écrit le retour, classe `ok` si tout
+    est juste (comme kit.js) ; les réponses attendues dans le script JSON d'identifiant donnees-page."""
+    props = ["Alpha", "Bravo", "Charl", "Delta"]
+    qs = "".join('<fieldset><legend>Question %d</legend>%s</fieldset>' % (i, "".join(
+        '<label><input type="radio" name="e1_q%d" value="%s"> %s</label>' % (i, v, v) for v in props))
+        for i in range(1, len(bonnes) + 1))
+    attendu = ",".join('"e1_q%d":"%s"' % (i, props[k]) for i, k in enumerate(bonnes, 1))
+    return f"""<!doctype html><meta charset="utf-8"><title>banc kit</title>
+<script type="application/json" id="donnees-page">{{"e1":{{{attendu}}}}}</script>
+<section data-exo="e1">{qs}<p><button class="btn verifier" type="button">Vérifier</button></p>
+<p class="retour" data-retour="e1"></p></section>
+<script>
+document.querySelector("button.verifier").addEventListener("click", () => {{
+  const att = JSON.parse(document.getElementById("donnees-page").textContent).e1;
+  const juste = Object.keys(att).every(n => {{ const r = document.querySelector('input[name="' + n + '"]:checked');
+    return r && r.value === att[n]; }});
+  const z = document.querySelector(".retour[data-retour]"); z.className = "retour " + (juste ? "ok" : "ko");
+  z.textContent = juste ? "Juste." : "Pas encore.";
+}});
+</script>"""
+
+
 LONGUE = [(["Oui", "Non", "Le capteur envoie la mesure au programme qui décide", "Rien"], 2)] * 4
 REPARTIE_PROPS = ["Alpha", "Bravo", "Charl", "Delta"]
 REPARTIE = [(REPARTIE_PROPS, k) for k in (0, 1, 2, 3, 1, 0, 3, 2)]
@@ -55,13 +80,18 @@ with tempfile.TemporaryDirectory() as d:
         .replace("</script>", "document.querySelector('[data-check]').addEventListener('click',()=>{const r=CHECKS[1]();"
                               "document.getElementById('fb1').className='feedback show '+(r.valide?'ok':'ko');});})();</script>")
     (d / "enfermee.html").write_text(enfermee, encoding="utf-8")
+    (d / "kit_premiere.html").write_text(page_kit([0, 0, 0]), encoding="utf-8")
+    (d / "kit_repartie.html").write_text(page_kit([2, 1, 3]), encoding="utf-8")
     (d / "sans_checks.html").write_text("<!doctype html><meta charset='utf-8'><title>x</title><fieldset>"
                                         "<input type=radio name=a value=1></fieldset>", encoding="utf-8")
     for nom, attendu, quoi in [("longue.html", 1, "la bonne réponse toujours la plus longue est refusée"),
                                ("repartie.html", 0, "des bonnes réponses réparties, de même longueur, sont acceptées"),
                                ("enfermee.html", 1, "CHECKS enfermé dans une fonction : lu par le bouton, et refusé"),
                                ("billet.html", 0, "un billet validé quelle que soit la réponse n'est pas une faute"),
-                               ("sans_checks.html", 2, "une page sans CHECKS : « rien lu », jamais vert")]:
+                               ("sans_checks.html", 2, "une page sans CHECKS : « rien lu », jamais vert"),
+                               ("kit_premiere.html", 1, "kit : la bonne réponse toujours la première est refusée "
+                                                        "(la bête à cornes de 5e, exercice 1, avant le 26/11/2026)"),
+                               ("kit_repartie.html", 0, "kit : des bonnes réponses réparties sont acceptées")]:
         r = subprocess.run([sys.executable, str(OUTIL), str(d / nom)], capture_output=True, text=True, timeout=120)
         ok = r.returncode == attendu
         res.append(ok)

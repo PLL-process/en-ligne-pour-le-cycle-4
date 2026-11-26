@@ -1077,7 +1077,7 @@ function candidats(){
   return cles;
 }
 /* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
-   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   le script JSON d'identifiant « donnees-page », par NOM de champ : `choix` {name, bonne, retours},
    `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
    Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
 var _noms = null;
@@ -1138,7 +1138,7 @@ function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"
    écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
    six séquences du thème 1 — vu par banc_generique avant la livraison). */
 var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
-/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (le bouton « verifier » des ateliers, seul dans son p) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
 function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
@@ -2053,7 +2053,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
       <div><b>Ressources :</b> l'anatomie d'un protocole ci-dessous + le courrier de la mairie.</div>
     </div></details>
     <img class="figure" src="Images/protocole_recette_anatomie.svg" alt="Anatomie d'un protocole de test : une droite graduée du vent en kilomètres par heure porte les trois seuils 63, 118 et 178, avec six valeurs de test groupées par paires, 62 et 63, 117 et 118, 177 et 178 ; un tableau de recette à cinq colonnes numéro, condition d'entrée, résultat attendu, résultat observé, verdict avec trois lignes d'exemple ; un chronomètre illustre la mesure du temps de réponse, exigence moins d'une seconde ; une phrase conclut qu'un test non écrit à l'avance n'est pas un test">
-    <div class="consigne"><b>Consigne :</b> c'est TOI l'expert chargé de la recette.<br>a) Choisis les valeurs à tester et justifie-les.<br>b) Écris le résultat attendu de chaque essai <b>avant</b> de toucher au banc.<br>c) Rédige la règle de décision du PV. Ton protocole doit couvrir : les <b>4</b> comportements nominaux, les <b>6</b> frontières (deux par seuil), la performance, et l'acquittement (2 essais).</div>
+    <div class="consigne"><b>Consigne :</b> c'est TOI l'expert chargé de la recette.<br>a) Choisis les valeurs à tester.<br>&emsp;À côté de chacune, écris pourquoi tu la testes.<br>b) Écris le résultat attendu de chaque essai <b>avant</b> de toucher au banc.<br>c) Rédige la règle de décision du PV. Ton protocole doit couvrir : les <b>4</b> comportements nominaux, les <b>6</b> frontières (deux par seuil), la performance, et l'acquittement (2 essais).</div>
     <div class="exo">
       <h4>a) Les valeurs d'essai</h4>
       <div class="assoc"><fieldset class="qcm-groupe" id="a6_v1" data-melange="1">
