@@ -21,9 +21,11 @@ en ligne : séances, activités, durées et questions relues une à une.*
 
 | Code | Formulation du référentiel (recopiée) | Où |
 |---|---|---|
-| **3e_C1.5** | Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des environnements professionnels. | séance 2 · QCM 1 à 10 |
-| **3e_C1.3** | Exprimer dans un argumentaire court l'incidence d'un objet ou système technique sur la société. | séances 1 et 3, **activité 5** · QCM 11 à 20 |
-| **3e_C1.4** | Exprimer dans un argumentaire court l'incidence des contraintes sociétales sur les objets et systèmes techniques. | **activité 1 bis**, séance 3 · QCM 21 à 30 |
+| **3e_C1.5** | Exprimer dans un argumentaire court le rôle du développement stratégique du numérique au sein de la société et des environnements professionnels (ou des métiers). | séance 2 · QCM 1 à 10 |
+| **3e_C1.3** | Exprimer dans un argumentaire court l'incidence d'un OST sur la société. | séances 1 et 3, **activité 5** · QCM 11 à 20 |
+| **3e_C1.4** | Exprimer dans un argumentaire court l'incidence des contraintes sociétales sur les OST. | **activité 1 bis**, séance 3 · QCM 21 à 30 |
+
+OST est le sigle du programme pour « objet ou système technique » : la formulation est recopiée telle quelle.
 
 En 3e, le verbe est **exprimer dans un argumentaire court** : un avis, des raisons, un exemple, une idée contraire
 introduite par un connecteur (mais, cependant, pourtant), une conclusion. La séquence fait écrire **trois

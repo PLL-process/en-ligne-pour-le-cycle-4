@@ -20,7 +20,7 @@ en ligne : séances, activités et questions relues une à une.*
 |---|---|---|
 | **4e_C1.4** | Identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation). | séances 2, 3 et 4 · QCM 11 à 20 |
 | 5e_C1.5 *(rappel, en croisement)* | Identifier des règles permettant de sécuriser un environnement numérique (bases de la cybersécurité) et des règles de respect de la propriété intellectuelle. | séances 1 et 2 · QCM 1 à 10 |
-| 5e_C1.6 *(rappel, en croisement)* | Appréhender la responsabilité de chacun dans les dérives (cyberviolence, e-réputation). | séance 4 · QCM 21 à 30 |
+| 5e_C1.6 *(rappel, en croisement)* | Appréhender la responsabilité de chacun dans les dérives (cyberviolence, atteinte à la vie privée, aux données personnelles, usurpation d'identité). | séance 4 · QCM 21 à 30 |
 
 En 4e, le verbe est **appliquer** : l'élève ne se contente plus de reconnaître une règle, il la met en œuvre sur un cas
 (un compte à protéger, une photo à publier, une trace à limiter).

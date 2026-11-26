@@ -2485,10 +2485,31 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
   <p>🗺 <b>Défi carte :</b> sur le site (public) de cartographie des câbles sous-marins, retrouve les câbles qui desservent la Martinique et note leurs points d'atterrissage.</p>
+  <details class="correction"><summary>✅ Corrigé du défi carte</summary>
+    <p><b>Ce que ta réponse doit contenir&nbsp;:</b> le nom de chaque câble qui touche la Martinique. <br>Et, pour chacun, le lieu où il sort de l'eau (son point d'atterrissage), sur l'île et à l'autre bout.</p>
+    <p><b>Comment lire la carte&nbsp;:</b> <br>① zoome sur la Martinique&nbsp;; <br>② clique sur chaque trait qui touche l'île&nbsp;: la fiche du câble s'ouvre&nbsp;; <br>③ relève son nom, sa longueur et la liste de ses points d'atterrissage.</p>
+    <p><b>Ce que tu dois constater&nbsp;:</b> plusieurs câbles, pas un seul. <br>Certains suivent l'arc des Antilles, d'île en île&nbsp;; l'un d'eux relie la Martinique à la Guyane.</p>
+    <p><b>Pourquoi c'est important&nbsp;:</b> si un câble est coupé, les messages passent par un autre. <br>C'est le maillage, et le re-routage que tu as étudié&nbsp;: la connexion ralentit, mais elle survit.</p>
+    <p><b>Ce corrigé ne donne pas la liste des câbles&nbsp;:</b> elle change dès qu'un câble est posé ou retiré. <br>C'est la carte, tenue à jour, qui fait foi.</p>
+  </details>
   <p>⏱ <b>Défi mesure :</b> avec le professeur, lance <code>tracert</code> (Windows) vers un site français puis japonais : compte les routeurs traversés et compare.</p>
+  <details class="correction"><summary>✅ Corrigé du défi mesure</summary>
+    <p><b>Lire tracert&nbsp;:</b> chaque ligne numérotée est un routeur traversé (un «&nbsp;saut&nbsp;»). <br>Les trois temps, en millisecondes (ms), sont trois mesures de l'aller-retour jusqu'à ce routeur.</p>
+    <p><b>Ce que tu dois observer</b> (les nombres changent d'un jour à l'autre)&nbsp;: <br>· vers le site français&nbsp;: une dizaine à une vingtaine de sauts&nbsp;; <br>· vers le site japonais&nbsp;: souvent davantage de sauts, et des temps plus longs.</p>
+    <p><b>Où regarder&nbsp;:</b> la ligne où le temps bondit d'un coup, par exemple de 20 ms à plus de 100 ms. <br>Entre ces deux routeurs, le message a traversé un océan par un câble sous-marin.</p>
+    <p><b>Trois pièges&nbsp;:</b> <br>· une ligne «&nbsp;* * *&nbsp;» n'est pas une panne&nbsp;: ce routeur ne répond pas aux mesures, mais il transmet le message&nbsp;; <br>· plus de sauts ne veut pas toujours dire plus lent&nbsp;: c'est la longueur des liaisons qui compte&nbsp;; <br>· un site «&nbsp;japonais&nbsp;» peut répondre très vite s'il est servi par une copie installée près de nous.</p>
+  </details>
   <p>🔧 <b>Défi Filius :</b> ajoute un 3e réseau à ton montage Filius et fais communiquer les trois — combien de routes possibles maintenant ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi Filius</summary>
+    <p><b>Le montage&nbsp;:</b> le 3e réseau prend une nouvelle famille d'adresses, par exemple 192.168.3.x, avec son propre routeur. <br>Chaque machine reçoit pour passerelle l'adresse de son routeur.</p>
+    <p><b>Combien de routes&nbsp;?</b> Tout dépend de la façon de relier les trois routeurs.</p>
+    <p>· <b>En ligne</b> (R1 — R2 — R3)&nbsp;: entre deux réseaux, un seul chemin. <br>Si une liaison casse, la communication est coupée. <br>· <b>En triangle</b> (chaque routeur relié aux deux autres)&nbsp;: entre deux réseaux, <b>deux chemins</b>&nbsp;: le direct, et le détour par le troisième routeur.</p>
+    <p>Trois réseaux, cela fait trois paires à faire communiquer&nbsp;: 1–2, 1–3 et 2–3. <br>En ligne&nbsp;: 3 routes possibles. <br>En triangle&nbsp;: 3 × 2 = <b>6 routes possibles</b>.</p>
+    <p><b>Pour que le ping passe&nbsp;:</b> chaque routeur doit connaître les réseaux qu'il ne touche pas (sa table de routage, ou le routage automatique si ta version de Filius le propose). <br>Si un ping échoue, c'est la première chose à vérifier.</p>
+    <p><b>Ce que cela montre&nbsp;:</b> le triangle coûte une liaison de plus, et il offre un chemin de secours. C'est le maillage d'Internet, en tout petit.</p>
+  </details>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 </details>

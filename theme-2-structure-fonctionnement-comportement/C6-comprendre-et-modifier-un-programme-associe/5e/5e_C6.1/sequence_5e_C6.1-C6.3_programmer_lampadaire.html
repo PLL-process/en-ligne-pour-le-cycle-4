@@ -2138,10 +2138,31 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
   <p>🧱 <b>Défi Scratch :</b> reconstruis le comportement du lampadaire dans Scratch (répéter indéfiniment + si / sinon) et ajoute un paramètre de ton invention — que change-t-il ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi Scratch</summary>
+    <p><b>Avant de commencer&nbsp;:</b> Scratch n'a ni capteur de lumière ni détecteur de passage. <br>Crée quatre variables&nbsp;: <b>luminosité</b> (un curseur de 0 à 100), <b>passage</b> (un curseur&nbsp;: 0 ou 1), <b>SEUIL_NUIT</b> (réglée sur 30) et <b>DURÉE</b> (réglée sur 5).</p>
+    <p><b>Le script, bloc par bloc&nbsp;:</b> <br>① «&nbsp;quand le drapeau vert est cliqué&nbsp;»&nbsp;; <br>② «&nbsp;répéter indéfiniment&nbsp;»&nbsp;; <br>③ dedans, «&nbsp;si luminosité &lt; SEUIL_NUIT alors&nbsp;»&nbsp;: <br>&nbsp;&nbsp;&nbsp;— «&nbsp;si passage = 1 alors&nbsp;» → costume «&nbsp;pleine puissance&nbsp;», puis «&nbsp;attendre DURÉE secondes&nbsp;»&nbsp;; <br>&nbsp;&nbsp;&nbsp;— «&nbsp;sinon&nbsp;» → costume «&nbsp;veille&nbsp;»&nbsp;; <br>④ «&nbsp;sinon&nbsp;» (il fait jour) → costume «&nbsp;éteinte&nbsp;».</p>
+    <p><b>Pour vérifier&nbsp;:</b> glisse le curseur de la luminosité. <br>À 29, la lampe passe en veille&nbsp;; à 30 et au-dessus, elle s'éteint (30 n'est pas plus petit que 30). <br>La nuit, mets passage à 1&nbsp;: pleine puissance pendant 5 secondes.</p>
+    <p><b>Un paramètre inventé, par exemple NIVEAU_VEILLE = 20&nbsp;:</b> la force de la lampe en veille, en pourcentage. <br>Ce que cela change&nbsp;: plus la valeur est basse, plus on économise d'énergie… et plus la rue est sombre entre deux passages.</p>
+    <p><b>Ta réponse est juste si</b> ton paramètre a un nom, une valeur, et un effet que l'on voit en changeant cette valeur.</p>
+  </details>
   <p>🔦 <b>Défi citoyen :</b> observe l'éclairage public de ta rue : s'allume-t-il à heure fixe ou selon la luminosité ? Trouve un moyen de le prouver sans ouvrir le coffret.</p>
+  <details class="correction"><summary>✅ Corrigé du défi citoyen</summary>
+    <p><b>La preuve par l'heure&nbsp;:</b> note l'heure d'allumage plusieurs soirs de suite. <br>La même heure à la minute près, quel que soit le temps&nbsp;: c'est une horloge. <br>Une heure qui change avec le ciel&nbsp;: c'est un capteur de luminosité.</p>
+    <p><b>La preuve par le mauvais temps&nbsp;:</b> un après-midi d'orage très sombre, les lampadaires s'allument-ils avant l'heure habituelle&nbsp;? <br>Si oui, ils mesurent la lumière.</p>
+    <p><b>La preuve par l'œil&nbsp;:</b> cherche, en haut du mât ou sur le coffret, un petit capteur tourné vers le ciel.</p>
+    <p><b>Le piège&nbsp;:</b> certaines horloges calculent l'heure du coucher du soleil, jour après jour, sans rien mesurer. <br>L'allumage suit alors les saisons… mais pas l'orage&nbsp;: seule la deuxième preuve les distingue d'un capteur.</p>
+    <p><b>La règle de sécurité&nbsp;:</b> on observe depuis le trottoir. On ne touche ni au mât ni au coffret.</p>
+  </details>
   <p>🏠 <b>Défi maison :</b> trouve 3 objets programmés chez toi et, pour chacun, un paramètre réglable et son effet sur le comportement.</p>
+  <details class="correction"><summary>✅ Corrigé du défi maison</summary>
+    <p><b>Trois exemples</b> (les tiens peuvent être différents)&nbsp;:</p>
+    <p>· <b>le four à micro-ondes</b> — paramètre&nbsp;: la durée (de 30 secondes à plusieurs minutes)&nbsp;; effet&nbsp;: il chauffe plus ou moins longtemps, puis s'arrête seul&nbsp;; <br>· <b>le lave-linge</b> — paramètre&nbsp;: la température (30 °C ou 60 °C, degrés Celsius)&nbsp;; effet&nbsp;: l'eau est plus ou moins chauffée, le cycle dure plus ou moins longtemps&nbsp;; <br>· <b>le réveil</b> — paramètre&nbsp;: l'heure de sonnerie&nbsp;; effet&nbsp;: il sonne quand l'heure courante atteint cette valeur.</p>
+    <p><b>Ce qu'ils ont en commun avec le lampadaire&nbsp;:</b> le programme ne change pas&nbsp;; on règle une <b>valeur</b>, et le comportement suit. <br>C'est le rôle de SEUIL_NUIT.</p>
+    <p><b>Ta réponse est juste si</b> chaque objet a son paramètre (un nom, une valeur que l'on peut changer) et l'effet de ce réglage.</p>
+    <p><b>Le piège&nbsp;:</b> citer un bouton marche/arrêt. Ce n'est pas un paramètre&nbsp;: il ne règle rien, il met en route.</p>
+  </details>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 </details>

@@ -146,7 +146,9 @@ SVG = """<svg viewBox="0 0 660 330" role="img" aria-labelledby="consT consD" cla
 Son poids s'applique au milieu de la jardinière, à 150 millimètres du muret : c'est la longueur L. La console a une
 épaisseur e, vue de côté, et une largeur de 30 millimètres. Les quatre réglages sont le matériau, l'épaisseur,
 la longueur et la charge.</desc>
-<defs><marker id="consFl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+<defs><marker id="consFl" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="22.5" markerHeight="22.5" orient="auto">
+<path d="M0 0 10 5 0 10z" fill="currentColor"/></marker>
+<marker id="consFlG" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="36" markerHeight="36" orient="auto">
 <path d="M0 0 10 5 0 10z" fill="currentColor"/></marker>
 <pattern id="consMur" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#12305e"/>
 <path d="M0 7h22M11 0v7M0 14h22" stroke="#274a8a" stroke-width="1.4"/></pattern></defs>
@@ -158,7 +160,7 @@ la longueur et la charge.</desc>
 <path d="M160 120q22-16 44 0M326 120q22-16 44 0" fill="none" stroke="#81fba1" stroke-width="3"/>
 <text x="265" y="152" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">jardinière</text>
 <text x="265" y="176" text-anchor="middle" fill="#e4eaf5" font-size="16">terre, et neige l'hiver</text>
-<line x1="265" y1="30" x2="265" y2="112" stroke="#ff7b88" stroke-width="4" marker-end="url(#consFl)" color="#ff7b88"/>
+<line x1="265" y1="30" x2="265" y2="112" stroke="#ff7b88" stroke-width="4" marker-end="url(#consFlG)" color="#ff7b88"/>
 <text x="277" y="52" fill="#ff7b88" font-size="20" font-weight="bold">charge (kg)</text>
 <line x1="100" y1="282" x2="263" y2="282" stroke="#61dafb" stroke-width="2.5" marker-end="url(#consFl)" color="#61dafb"/>
 <line x1="100" y1="274" x2="100" y2="290" stroke="#61dafb" stroke-width="2.5"/>
@@ -290,12 +292,12 @@ def fragment():
 <p><b>Q1 — Quelle charge entres-tu dans la simulation, pour UNE console&nbsp;?</b>
 <br>Fais le calcul sur une feuille de brouillon avant de choisir.</p>
 <fieldset class="qcm-groupe" id="a6q1">
-  <legend>Q1 — La charge d'une console, dans le cas le plus lourd</legend>
+  <legend>Q1 — Quelle charge entres-tu dans la simulation, pour UNE console, dans le cas le plus lourd ?</legend>
 %(q1)s
 </fieldset>
 
 <div class="simu" id="simuConsole">
-<h4>🧮 La simulation fournie — règle-la, puis lance-la</h4>
+<h4 aria-level="3">🧮 La simulation fournie — règle-la, puis lance-la</h4>
 <p class="petit">Le schéma ci-dessus nomme les quatre réglages.</p>
 <fieldset class="parametres-mat"><legend>① Le matériau</legend>
 %(puces)s
@@ -317,20 +319,19 @@ def fragment():
 
 <p><b>Q2 — Règle la simulation sur la console du club</b> (PLA imprimé en 3D, %(e0)d mm, %(L)d mm, et ta charge de Q1), lance-la. Que lis-tu&nbsp;?</p>
 <fieldset class="qcm-groupe" id="a6q2">
-  <legend>Q2 — Ce que dit la simulation pour la console du club</legend>
+  <legend>Q2 — Que dit la simulation pour la console du club ?</legend>
 %(q2)s
 </fieldset>
 
 <p><b>Q3 — Le club garde le PLA. Change UN SEUL réglage&nbsp;: l'épaisseur.</b>
 <br>Essaie au moins trois épaisseurs, puis réponds&nbsp;: quelle est la plus petite épaisseur qui respecte le cahier des charges&nbsp;?</p>
 <fieldset class="qcm-groupe" id="a6q3">
-  <legend>Q3 — La plus petite épaisseur de PLA validée</legend>
+  <legend>Q3 — Quelle est la plus petite épaisseur de PLA qui respecte le cahier des charges ?</legend>
 %(q3)s
 </fieldset>
 
-<p><b>Q4 — Pourquoi ne change-t-on qu'un seul réglage à la fois&nbsp;?</b></p>
 <fieldset class="qcm-groupe" id="a6q4">
-  <legend>Q4 — Un seul réglage à la fois</legend>
+  <legend>Q4 — Pourquoi ne change-t-on qu'un seul réglage à la fois ?</legend>
 %(q4)s
 </fieldset>
 
@@ -485,7 +486,7 @@ console avance de 150 millimètres dans le vide. À son bout pend un crochet qui
 5,5 kilogrammes par palier. Sous la charge, la console se courbe un peu (en pointillés) : son bout descend. Une règle
 graduée est fixée debout juste à côté du bout : on y lit de combien le bout descend, la flèche. Un bac attend sous les
 sacs, à 10 centimètres : si la console casse, la charge tombe dedans.</desc>
-<defs><marker id="bancFl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<defs><marker id="bancFl" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="17.5" markerHeight="17.5" orient="auto-start-reverse">
 <path d="M0 0 10 5 0 10z" fill="currentColor"/></marker>
 <pattern id="bancBois" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#5a3d22"/>
 <path d="M0 4q8-3 16 0M0 12q8-3 16 0" stroke="#7a5532" stroke-width="1.5" fill="none"/></pattern></defs>
@@ -565,13 +566,15 @@ def fragment_protocole():
     }
     B = {"a7q1": Q["a7q1"][0], "a7q2": Q["a7q2"][1], "a7q3": Q["a7q3"][3], "a7q4": Q["a7q4"][2],
          "a7q5": Q["a7q5"][2], "a7q6": Q["a7q6"][1], "a7q7": Q["a7q7"][0]}
-    LEG = {"a7q1": "Q1 — Pourquoi un essai réel après la simulation",
-           "a7q2": "Q2 — La charge d'essai, pour une console",
-           "a7q3": "Q3 — Comment poser la charge",
-           "a7q4": "Q4 — Ce qu'on mesure, et avec quoi",
-           "a7q5": "Q5 — La flèche attendue à %s kg" % kg(CHARGE_ESSAI),
-           "a7q6": "Q6 — Le critère qui permet de décider",
-           "a7q7": "Q7 — Combien de consoles essayer"}
+    # Une légende est la question elle-même (n°343, vérification totale du 25/11/2026) : en mode mission, l'élève ne
+    # voit que le groupe de boutons et sa légende ; « La charge d'essai, pour une console » n'était pas une question.
+    LEG = {"a7q1": "Q1 — Pourquoi faire quand même un essai réel après la simulation ?",
+           "a7q2": "Q2 — Jusqu'à quelle charge l'essai va-t-il, pour une console ?",
+           "a7q3": "Q3 — Comment poser la charge ?",
+           "a7q4": "Q4 — Qu'est-ce qu'on mesure à chaque palier, et avec quoi ?",
+           "a7q5": "Q5 — De combien la console doit-elle descendre à %s kg ?" % kg(CHARGE_ESSAI),
+           "a7q6": "Q6 — Quel critère, écrit avant l'essai, permet de décider sans discussion ?",
+           "a7q7": "Q7 — Combien de consoles faut-il essayer ?"}
     groupes = {k: '<fieldset class="qcm-groupe" id="%s">\n  <legend>%s</legend>\n%s\n</fieldset>'
                % (k, LEG[k], options_radio(k, Q[k], B[k])) for k in Q}
     js_bonnes = json.dumps({k: html.unescape(v) for k, v in B.items()}, ensure_ascii=False)
@@ -611,7 +614,6 @@ def fragment_protocole():
 <br>Relis le cahier des charges de l'activité 2 bis.</p>
 %(a7q2)s
 
-<p><b>Q3 — Comment poser la charge&nbsp;?</b></p>
 %(a7q3)s
 
 <p><b>Q4 — Qu'est-ce qu'on mesure à chaque palier, et avec quoi&nbsp;?</b>
@@ -626,7 +628,6 @@ def fragment_protocole():
 <p><b>Q6 — Le critère s'écrit AVANT l'essai. Lequel permet de décider, sans discussion&nbsp;?</b></p>
 %(a7q6)s
 
-<p><b>Q7 — Combien de consoles faut-il essayer&nbsp;?</b></p>
 %(a7q7)s
 
 <p><b>Q8 — Écris ton protocole</b>, en six lignes, une idée par ligne&nbsp;:</p>

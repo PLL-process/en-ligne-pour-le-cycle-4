@@ -2271,7 +2271,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 </fieldset></div>
   <div class="ligne-exo"><fieldset class="qcm-groupe" id="e3_3" data-melange="1">
   <legend>Dans le journal des commandes de R-MQ, quelle ligne prouve que ta route statique est enregistrée&nbsp;?</legend>
-  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__2" value="ip address 10.0.0.1 255.255.255.0"><label for="e3_3__2">ip address 10.0.0.1 255.255.255.0</label></div>
+  <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__2" value="ip address 10.0.0.1 255.255.255.252"><label for="e3_3__2">ip address 10.0.0.1 255.255.255.252</label></div>
   <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__3" value="interface GigabitEthernet0/0"><label for="e3_3__3">interface GigabitEthernet0/0</label></div>
   <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__1" value="ip route 192.168.30.0 255.255.255.0 10.0.0.2"><label for="e3_3__1">ip route 192.168.30.0 255.255.255.0 10.0.0.2</label></div>
   <div class="qcm-option"><input type="radio" name="e3_3" id="e3_3__4" value="%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up"><label for="e3_3__4">%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up</label></div>
@@ -2623,15 +2623,34 @@ Trace complete.</pre>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
   <p>🌍 <b>Défi tracert réel&nbsp;:</b> avec l'accord d'un adulte, lancer <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">tracert</span>
   vers un site d'un autre continent&nbsp;: compter les sauts réels, repérer le moment où les temps « sautent » (souvent le câble
   sous-marin&nbsp;!) — comparer avec nos 3 sauts.</p>
+  <details class="correction"><summary>✅ Corrigé du défi tracert réel</summary>
+    <p><b>Ce que tu dois trouver&nbsp;:</b> bien plus de 3 sauts, souvent entre 10 et 25. <br>Notre maquette n'a que deux routeurs&nbsp;; Internet en enchaîne des dizaines.</p>
+    <p><b>Le moment où les temps sautent&nbsp;:</b> d'une ligne à la suivante, le temps passe d'un coup de quelques dizaines de millisecondes à plus de cent. <br>Entre ces deux routeurs, il y a un océan&nbsp;: le message a pris un câble sous-marin.</p>
+    <p><b>Ce qui ne change pas&nbsp;:</b> chaque ligne est un routeur. <br>Il lit l'adresse de destination, consulte sa table de routage et passe le message au suivant. <br>C'est exactement ce que font R-MQ et R-NY.</p>
+    <p><b>Le piège&nbsp;:</b> une ligne «&nbsp;* * *&nbsp;» ne veut pas dire «&nbsp;en panne&nbsp;». <br>Ce routeur ne répond pas aux mesures, mais il transmet le message.</p>
+  </details>
   <p>🛃 <b>Défi troisième quartier&nbsp;:</b> dans TON fichier .pkt, ajouter un TROISIÈME réseau (192.168.40.0) avec son routeur&nbsp;:
   combien de lignes de table faut-il maintenant ÉCRIRE en tout&nbsp;? Et pour 10 réseaux&nbsp;? La courbe explose — c'est la
   démonstration chiffrée de l'activité 2.</p>
+  <details class="correction"><summary>✅ Corrigé du défi troisième quartier</summary>
+    <p><b>La règle&nbsp;:</b> chaque routeur doit avoir une ligne pour chaque réseau qu'il ne touche pas.</p>
+    <p>· 2 réseaux&nbsp;: chaque routeur en ignore 1 → 2 × 1 = <b>2 lignes</b> (celles que tu as écrites)&nbsp;; <br>· 3 réseaux&nbsp;: chaque routeur en ignore 2 → 3 × 2 = <b>6 lignes</b>&nbsp;; <br>· 10 réseaux&nbsp;: chaque routeur en ignore 9 → 10 × 9 = <b>90 lignes</b>.</p>
+    <p><b>La formule&nbsp;:</b> n × (n − 1). <br>Pour 100 réseaux&nbsp;: 100 × 99 = 9 900 lignes. Et Internet en compte des centaines de milliers.</p>
+    <p><b>Dans ton fichier&nbsp;:</b> le troisième routeur a besoin, lui aussi, d'une liaison vers les autres (un nouveau «&nbsp;pont&nbsp;», avec ses propres adresses). <br>Il reçoit deux routes&nbsp;: vers 192.168.10.0 et vers 192.168.30.0. <br>R-MQ et R-NY reçoivent chacun une ligne de plus, vers 192.168.40.0.</p>
+    <p><b>Ce que cela démontre&nbsp;:</b> écrit à la main, le travail grandit beaucoup plus vite que le nombre de réseaux, et chaque panne oblige à tout réécrire. <br>D'où le protocole de routage&nbsp;: les routeurs remplissent leurs tables eux-mêmes.</p>
+  </details>
   <p>🎓 <b>Défi <abbr class="sigle" title="diplôme national du brevet" tabindex="0">DNB</abbr>&nbsp;:</b> rédiger en 5 lignes la réponse modèle à «&nbsp;Justifier la nécessité d'un protocole de routage&nbsp;»
   en citant ta preuve expérimentale (la route effacée) — exactement le type de question de l'épreuve.</p>
+  <details class="correction"><summary>✅ Corrigé du défi DNB</summary>
+    <p><b>Une réponse modèle, en cinq lignes&nbsp;:</b></p>
+    <p>«&nbsp;Pour passer d'un réseau à un autre, un message traverse des routeurs. <br>Chaque routeur lit l'adresse de destination et cherche dans sa table de routage par où l'envoyer. <br>Preuve&nbsp;: dans notre simulation, quand on efface la ligne «&nbsp;192.168.30.0 via 10.0.0.2&nbsp;» de la table de R-MQ, le message pour New York est détruit à la frontière&nbsp;: sans route, le routeur ne sait pas où l'envoyer. <br>Avec deux réseaux, on écrit ces lignes à la main&nbsp;; sur Internet, des centaines de milliers de réseaux apparaissent, disparaissent ou tombent en panne à chaque instant, et personne ne peut tenir ces tables à jour à la main. <br>Un protocole de routage est donc nécessaire&nbsp;: ce sont les règles par lesquelles les routeurs s'échangent leurs routes et mettent leurs tables à jour tout seuls.&nbsp;»</p>
+    <p><b>Ce que le correcteur cherche&nbsp;:</b> <br>① le rôle de la table de routage&nbsp;; <br>② ta preuve&nbsp;: l'expérience citée, avec ce que tu as observé&nbsp;; <br>③ le changement d'échelle&nbsp;: de 2 réseaux à des centaines de milliers&nbsp;; <br>④ la conclusion, avec le mot «&nbsp;nécessaire&nbsp;».</p>
+    <p><b>L'erreur fréquente&nbsp;:</b> écrire «&nbsp;c'est plus pratique&nbsp;». <br>Ce n'est pas une justification&nbsp;: il faut dire ce qui devient <b>impossible</b> sans protocole.</p>
+  </details>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 </details>
