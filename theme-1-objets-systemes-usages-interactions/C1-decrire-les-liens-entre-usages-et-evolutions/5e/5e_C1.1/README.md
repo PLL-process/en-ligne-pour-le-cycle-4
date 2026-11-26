@@ -17,6 +17,7 @@ voix : `_generation/voix_trois_principes/` et `SOURCES_MEDIAS.md`.
 
 🎥 **Depuis le 26/11/2026**, aux étapes 2, 5 et 8, **l'appareil se montre en 3D** (film muet de 4,5 s, joué une fois ; un bouton
 rend le schéma). Modèles simplifiés, faits avec Blender par script : `_generation/films_trois_appareils/` et `SOURCES_MEDIAS.md`.
+À l'impression, une bande montre les trois appareils en 3D sur fond clair, sous la planche des schémas.
 
 ## Un seul objet pour six codes
 
