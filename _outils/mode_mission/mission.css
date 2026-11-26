@@ -12,6 +12,12 @@
   /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
   body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
   body.ms h1{font-size:1.05rem!important;margin:6px auto 6px!important}
+  /* le bouton d'entrée ne sert plus une fois entré (sans le cadre « Ma progression », il restait au-dessus de la barre) */
+  body.ms .ms-invite{display:none!important}
+  /* la navigation du site tient sur une ligne qui défile de côté : à cinq liens (les ateliers), elle prenait trois
+     lignes collées en haut d'un téléphone, et la barre de la mission passait dessous */
+  body.ms #navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+  body.ms #navharm>*{flex:0 0 auto;white-space:nowrap}
   body.ms .toolbar{gap:6px;margin:6px auto 10px}
   body.ms .toolbar .btn{padding:6px 10px;font-size:.78rem;min-height:40px}
   body.ms #seances{flex-wrap:nowrap;overflow-x:auto;gap:6px;margin-bottom:10px;padding-bottom:2px}
@@ -19,6 +25,7 @@
   body.ms #seances .seance-tab small{display:none}
   .ms-retour,.ms-message{scroll-margin-bottom:110px}
   .ms-ancre{height:0}
+  .ms-gains[hidden]{display:none!important}
   .ms-invite{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px}
   .ms-invite .ms-figer-page{background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f)}
   .ms-figer{min-height:44px;min-width:44px;padding:4px 10px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-weight:700;cursor:pointer;margin-left:auto}

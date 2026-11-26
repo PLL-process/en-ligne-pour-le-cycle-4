@@ -36,10 +36,11 @@ for (const PAGE of pages) {
 
   // les séances : des panneaux ouverts par des onglets (gabarit commun, Book Train), ou des blocs à la suite dans une
   // page sans onglets — là, c'est le mode qui n'en montre qu'un (`.ms-ici`). Le banc reconnaît le gabarit lui-même.
-  const GAB = await p.evaluate(() => document.querySelector('.seance-panel') ? { P: '.seance-panel', T: '.seance-tab', A: 'active', de: 'data-panel' }
-    : document.querySelector('section.panneau[role=tabpanel]') ? { P: 'section.panneau[role=tabpanel]', T: '[role=tablist] [role=tab][aria-controls]', A: 'actif', de: 'aria-controls' }
-    : { P: '.seance-bloc[id]', T: null, A: 'ms-ici', de: null });
-  const ACTIF = `${GAB.P}.${GAB.A}`, CHECK = 'button[data-check], button.verif[data-exo]', MESSAGE = '.feedback, .resultat[id^="res-"]';
+  // le gabarit, tel que le moteur l'a reconnu (sa prise `_mission.gabarit`, 25/11/2026) : séances en onglets (gabarit
+  // commun, Book Train), blocs à la suite, onglets ARIA dont le panneau ouvert n'est pas `hidden` (ateliers et cahiers
+  // des représentations), ou page à cartes — un seul panneau, le conteneur de la page
+  const GAB = await p.evaluate(() => document.documentElement._mission.gabarit());
+  const ACTIF = GAB.actif, CHECK = 'button[data-check], button.verif[data-exo], [data-exo] button.verifier', MESSAGE = '.feedback, .resultat[id^="res-"], .retour[data-retour]';
   // les réponses que le mode retient, groupe par groupe (la prise `_mission` du bloc)
   const cles = await p.evaluate(GAB => { const M = document.documentElement._mission, o = {};
     document.querySelectorAll(GAB.P).forEach(P => P.querySelectorAll('fieldset.qcm-groupe[id], select[id]:not([data-interface])').forEach(f => { const c = M.cle(f); if (c !== undefined) o[f.id] = c; })); return o; }, GAB);
@@ -66,11 +67,13 @@ for (const PAGE of pages) {
         const rail = [...document.querySelectorAll('#msRail [data-k]')], k = rail.findIndex(x => x.getAttribute('aria-current'));
         const verif = !document.getElementById('msVerif').hidden, exo = verif || !document.getElementById('msVide').hidden;
         const champs = [...P.querySelectorAll('fieldset.qcm-groupe, select[id]:not([data-interface])')].filter(f => vu(f) && !f.classList.contains('ms-origine'));
-        const texte = [...P.children].filter(vu).map(c => c.innerText).join(' ').replace(/\s+/g, ' ').trim();
+        // page à cartes : les blocs rangés après le conteneur (« Prêt·e à t'entraîner », Bonus) font partie des écrans
+        const dehors = []; if (document.documentElement._mission.gabarit().page) for (let x = P.nextElementSibling; x; x = x.nextElementSibling) if (x.matches('section, article, .card, .carte')) dehors.push(x);
+        const texte = [...P.children].concat(dehors).filter(vu).map(c => c.innerText).join(' ').replace(/\s+/g, ' ').trim();
         return { k, n: rail.length, titre: document.getElementById('msOu').childNodes[0].textContent, verif, exo,
           etq: [...P.querySelectorAll('.ms-etq, .cac.cac-pret')].filter(vu).length, avecCle: champs.filter(f => cles[f.id] !== undefined && !f.classList.contains('positionnement')).map(f => f.id),
           sansCle: champs.filter(f => cles[f.id] === undefined && !f.classList.contains('positionnement')).map(f => f.id),
-          mots: texte ? texte.split(' ').length : 0, medias: [...P.querySelectorAll('img,svg,canvas,video,iframe,textarea,input,select')].filter(vu).length,
+          mots: texte ? texte.split(' ').length : 0, medias: [...P.querySelectorAll('img,svg,canvas,video,iframe,textarea,input,select')].concat(dehors.flatMap(x => [...x.querySelectorAll('img,svg,canvas,video,iframe,textarea,input,select')])).filter(vu).length,
           large: document.documentElement.scrollWidth > innerWidth + 1,
           // les titres qu'annonce un lecteur d'écran, dans l'ordre : aucun ne descend de deux niveaux d'un coup (19/11/2026)
           // (la zone de la mission : le titre d'écran, puis la séance ; l'ouverture et le reste de la page ont leurs propres titres)

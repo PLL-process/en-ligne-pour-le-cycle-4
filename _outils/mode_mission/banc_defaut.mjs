@@ -1,11 +1,14 @@
-// Banc du mode mission « allumé d'emblée » (décision de Pascal du 14/11/2026) — sur chaque séquence du dépôt.
+// Banc du mode mission « allumé d'emblée » (décision de Pascal du 14/11/2026) — sur chaque page du dépôt qui porte le
+// mode mission : les séquences, et depuis le 25/11/2026 les ateliers, les TP, les cahiers, les activités.
 //   node _outils/mode_mission/banc_defaut.mjs [--filtre <texte>]
 // Un navigateur d'élève (navigator.webdriver faux) :
 //   · arrive en mission à sa première visite, sur toute page dont le mode reconnaît les séances ;
 //   · « 📄 Page complète » le ramène à la page qui défile, et la page s'en souvient au rechargement ;
 //   · « 🎮 Mode mission » l'y renvoie, et la page s'en souvient aussi ;
 //   · une sauvegarde effacée (stockage vidé) le remet en mission ;
-//   · imprimé en mission, il sort la même fiche que la page complète (tout ce qui cache est sous @media screen).
+//   · imprimé en mission, il sort la même fiche que la page complète (tout ce qui cache est sous @media screen) ;
+//   · sur une page sans bouton d'effacement (un TP, une activité : elle n'enregistre rien), le mode ne laisse dans le
+//     navigateur que le choix d'affichage — ni écran, ni étoile, ni réussite n'attend l'élève suivant (n°322).
 // Un robot de test (navigator.webdriver vrai, le défaut de Playwright) ouvre la page complète : c'est ce que les
 // autres bancs et les contrôles du dépôt mesurent.
 // Sortie 0 si tout passe, 1 sinon. Ne dépend d'aucun réseau.
@@ -21,13 +24,14 @@ const pages = [];
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
     const c = path.join(d, e.name);
     if (e.isDirectory()) { if (!/^(\.|node_modules|_archive)/.test(e.name)) lire(c); }
-    else if (/^sequence.*\.html$/.test(e.name) && /^theme-/.test(path.relative(RACINE, c)) && (!FILTRE || c.includes(FILTRE))) pages.push(c);
+    else if (/\.html$/.test(e.name) && /^theme-/.test(path.relative(RACINE, c)) && (!FILTRE || c.includes(FILTRE))
+      && fs.readFileSync(c, 'utf8').includes('<!-- mode-mission v1 : début')) pages.push(c);
   }
 })(RACINE);
 pages.sort();
-if (!pages.length) { console.log('⛔ aucune séquence lue'); process.exit(2); }
+if (!pages.length) { console.log('⛔ aucune page à mode mission lue'); process.exit(2); }
 
-const refus = []; let reconnues = 0, telles = [], effacees = 0; const sansCle = [];
+const refus = []; let reconnues = 0, telles = [], effacees = 0, sansBouton = 0; const sansCle = [];
 const b = await chromium.launch();
 const eleve = await b.newContext({ viewport: { width: 390, height: 844 } });
 await eleve.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false, configurable: true }); });
@@ -44,7 +48,7 @@ for (const page of pages) {
   await p.goto(url, { waitUntil: 'load' }); await p.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(250);
   let e = await etat(p);
-  if (!e.bouton) { telles.push(rel); if (e.ms) faute('mission allumée sans bouton pour la quitter'); await p.close(); continue; }
+  if (!e.bouton) { telles.push(rel); faute(e.ms ? 'mission allumée sans bouton pour la quitter' : 'la page porte le mode mission, et le mode ne reconnaît pas son gabarit : aucun bouton'); await p.close(); continue; }
   reconnues++;
   if (!e.ms) faute('première visite d\'un élève : la page ne s\'ouvre pas en mission');
   // imprimée en mission, la fiche est celle de la page complète
@@ -75,6 +79,15 @@ for (const page of pages) {
   await p.evaluate(() => document.getElementById('msQuitter').click()); await p.waitForTimeout(100);
   await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
   if (!(await etat(p)).ms) faute('stockage vide : la page ne revient pas en mission');
+  // une page sans bouton d'effacement : deux écrans plus loin, le navigateur ne garde que le choix d'affichage
+  if (!(await p.$('#btnReset, #btnEffacer, #btn-effacer, #clear'))) {
+    sansBouton++;
+    for (let j = 0; j < 2; j++) { await p.evaluate(() => { const x = document.getElementById('msSuiv'); if (x && !x.hidden) x.click(); }); await p.waitForTimeout(80); }
+    const reste = await p.evaluate(() => { let m = null; try { m = JSON.parse(localStorage.getItem('mission:' + decodeURIComponent(location.pathname).split('/').pop()) || 'null'); } catch (x) {}
+      return m ? Object.keys(m).filter((c) => c !== 'v' && c !== 'on') : null; });
+    if (reste === null) faute('page sans bouton d\'effacement : le choix d\'affichage n\'est pas gardé');
+    else if (reste.length) faute('page sans bouton d\'effacement : le mode garde dans le navigateur « ' + reste.join(', ') + ' » — rien que l\'élève suivant ne doive trouver');
+  }
   if (err.length) faute('erreur JS : ' + err[0]);
   await p.close();
   const r = await robot.newPage(); await r.goto(url, { waitUntil: 'load' }); await r.evaluate(() => localStorage.clear());
@@ -83,9 +96,10 @@ for (const page of pages) {
   await r.close();
 }
 await b.close();
-console.log(`${pages.length} séquence(s) · ${reconnues} s'ouvrent en mission pour l'élève · ${telles.length} s'ouvrent telles quelles (séances non reconnues)`);
+console.log(`${pages.length} page(s) à mode mission · ${reconnues} s'ouvrent en mission pour l'élève · ${telles.length} s'ouvrent telles quelles (gabarit non reconnu)`);
 for (const t of telles) console.log('   · telle quelle : ' + t);
-console.log(`« Effacer ma sauvegarde » éprouvé sur ${effacees} séquence(s)` + (sansCle.length ? ` · ${sansCle.length} sans clé « seq_… » lue (épreuve sautée)` : ''));
+console.log(`« Effacer ma sauvegarde » éprouvé sur ${effacees} page(s)` + (sansCle.length ? ` · ${sansCle.length} sans clé « seq_… » lue (épreuve sautée)` : ''));
 for (const t of sansCle) console.log('   · sans clé lue : ' + t);
+console.log(`${sansBouton} page(s) sans bouton d'effacement : le mode n'y garde que le choix d'affichage`);
 if (refus.length) { for (const r of refus) console.log('❌ ' + r); process.exit(1); }
-console.log('✅ chaque séquence s\'ouvre en mission pour l\'élève, se quitte et s\'en souvient, revient en mission après une sauvegarde effacée, s\'imprime entière ; un robot de test ouvre la page complète');
+console.log('✅ chaque page à mode mission s\'ouvre en mission pour l\'élève, se quitte et s\'en souvient, revient en mission après une sauvegarde effacée, s\'imprime entière ; un robot de test ouvre la page complète');

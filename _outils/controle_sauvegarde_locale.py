@@ -63,6 +63,19 @@ Aucun nom, aucune réponse : l'élève suivant apprend seulement quel groupe ét
 leur clé et ce qu'elle garde. L'exception est étroite et se vérifie à chaque passage : si la page écrit une AUTRE clé
 que celle déclarée, elle redevient une page ordinaire et le contrôle la refuse comme avant.
 
+LE MODE MISSION SE LIT À PART (25/11/2026)
+------------------------------------------
+Depuis que chaque document élève porte le mode mission (`_outils/mode_mission/`), son bloc — le même dans toutes les
+pages — contient un `localStorage.setItem(` : lu tel quel, il faisait de sept pages qui n'enregistrent rien (quatre TP
+de CAO, le TP mBot2, deux activités) des pages « qui stockent sans moyen d'effacer ». Le bloc est donc retiré avant la
+mesure : ce contrôle juge ce que LA PAGE enregistre. Ce que le mode garde, lui, dépend de la page :
+  · elle a un bouton d'effacement → le mode garde la progression (écran, étoiles) et l'efface avec elle
+    (`banc_effacement.mjs` le joue) ;
+  · elle n'en a pas, donc n'enregistre rien → le mode ne garde que le choix d'affichage (mission ou page complète),
+    une préférence ; la progression vit le temps de la page, l'écran en cours le temps de l'onglet
+    (`mode_mission/banc_defaut.mjs` le joue : rien d'autre que `v` et `on` sous la clé « mission:… »).
+Ces pages sont comptées (« ne gardent que le choix d'affichage du mode mission »), pas refusées.
+
 Usage : python3 _outils/controle_sauvegarde_locale.py [--racine .] [--corriger] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste un écart (effacement ou note manquants sur une
 séquence ou un atelier), 2 si aucune page n'a pu être lue (règle d'or n°299).
@@ -131,6 +144,15 @@ SCRIPT_RESET = '''
 })();
 </script>
 '''
+
+#: le bloc du mode mission, tel que `mode_mission/poser.py` le pose (ses deux marqueurs)
+_MISSION_RE = re.compile(r"<!-- mode-mission [^ ]+ : début.*?<!-- mode-mission [^ ]+ : fin -->", re.S)
+
+
+def sans_mission(src):
+    """La page sans le bloc du mode mission : ce contrôle juge ce que la page enregistre elle-même."""
+    return _MISSION_RE.sub("", src)
+
 
 FAUX = [
     ("rien n'est envoyé, personne d'autre ne les voit", "rien n'est envoyé en ligne"),
@@ -223,9 +245,12 @@ def mesurer(racine):
             src = open(p, encoding="utf-8").read()
         except UnicodeDecodeError:
             src = open(p, encoding="utf-8", errors="replace").read()
-        if "localStorage.setItem(" not in src:
-            continue
+        brut, src = src, sans_mission(src)
         rel = os.path.relpath(p, racine).replace("\\", "/")
+        if "localStorage.setItem(" not in src:
+            if "localStorage.setItem(" in brut:
+                lignes.append({"rel": rel, "genre": genre(rel), "mission_seule": True})
+            continue
         e = mesurer_page(src)
         e["rel"], e["genre"] = rel, genre(rel)
         pref = PREFERENCES_SEULES.get(rel)
@@ -287,12 +312,14 @@ def main(argv):
         else:
             print("argument inconnu :", argv[i]); return 2
     lignes = mesurer(racine)
-    if not lignes:
+    if not [e for e in lignes if not e.get("mission_seule")]:
         print("⛔ aucune page lue sous %s : rien n'a été vérifié (sortie 2)" % racine); return 2
 
     if corrige:
         faits = 0
         for e in lignes:
+            if e.get("mission_seule"):
+                continue
             p = os.path.join(racine, e["rel"])
             src = open(p, encoding="utf-8").read()
             src2, gestes = corriger_page(src)
@@ -305,6 +332,8 @@ def main(argv):
 
     refus = []
     comptes = {"qcm_sans_note": [], "modale": [], "faux": [], "preference": []}
+    mission_seule = [e["rel"] for e in lignes if e.get("mission_seule")]
+    lignes = [e for e in lignes if not e.get("mission_seule")]
     for e in lignes:
         if e.get("preference"):
             comptes["preference"].append((e["rel"], e["preference"]))
@@ -335,6 +364,9 @@ def main(argv):
         if comptes["qcm_sans_note"]:
             print("ℹ %d QCM gardent un score dans le navigateur sans note poste partagé (décision, pas un refus)"
                   % len(comptes["qcm_sans_note"]))
+        if mission_seule:
+            print("ℹ %d page(s) n'enregistrent rien d'elles-mêmes et ne gardent que le choix d'affichage du mode "
+                  "mission (joué par mode_mission/banc_defaut.mjs ; pas de refus)" % len(mission_seule))
     print("%d page(s) lues qui écrivent dans localStorage · %d refus · %d confirm() · %d QCM sans note"
           % (n, len(refus), len(comptes["modale"]), len(comptes["qcm_sans_note"])))
     if refus:

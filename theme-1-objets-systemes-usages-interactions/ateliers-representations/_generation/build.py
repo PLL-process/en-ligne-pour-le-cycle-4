@@ -27,6 +27,12 @@ sys.path.append(str(moteur.DEPOT / "_outils"))   # en dernier : les modules de c
 from expliquer_sigles import infobuller  # noqa: E402  (n°44, décision de Pascal du 22/11/2026)
 import syntheses  # noqa: E402
 
+# Le mode mission (un écran à la fois) se pose par SA source unique, `_outils/mode_mission/poser.py` : une page engendrée
+# ne se retouche pas à la main (n°283). Décision de Pascal du 25/11/2026 : le mode mission sur tous les documents élèves.
+import importlib.util as _iu_mission
+_spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
+MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
+
 RACINE = moteur.RACINE_ATELIERS
 DEPOT = moteur.DEPOT
 CARTE = moteur.THEME1 / "_reperes" / "carte_des_representations.html"
@@ -120,11 +126,13 @@ def preparer(at):
         N["avant"] = [(t, code, resoudre(l, at, niv, depuis), lib) for (t, code, l, lib) in N["avant"]]
 
 
-def ecrire(chemin, contenu):
+def ecrire(chemin, contenu, mission=False):
     if chemin.suffix == ".html":
         # chaque sigle s'explique : QCM en clair, les autres en infobulle (n°44, décision de Pascal du 22/11/2026) ;
         # posé ici, une régénération ne l'efface pas (n°283)
         contenu = infobuller(contenu)
+        if mission:          # les pages d'atelier et les cahiers : un exercice à la fois (25/11/2026)
+            contenu = MODE_MISSION.poser(contenu)
     chemin.parent.mkdir(parents=True, exist_ok=True)
     ancien = chemin.read_text(encoding="utf-8") if chemin.exists() else None
     if ancien != contenu:
@@ -163,7 +171,7 @@ def ecrire_atelier(at):
     for niv in at.NIVEAUX:
         p = page_niveau(at, niv)
         html = moteur.page_atelier(at, niv, chemins(at, niv, p.parent))
-        ecrire(p, html)
+        ecrire(p, html, mission=True)
         faits.append(p)
     return faits
 
