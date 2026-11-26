@@ -101,7 +101,7 @@ def cas_vocabulaire():
     d = lot()
     try:
         page = pathlib.Path(ecrire_lexique(str(d), "x", "sequence_x.html")[0]).read_text(encoding="utf-8")
-        for attendu in ('<p class="sub">1 notions, tirées mot pour mot des QCM (questionnaires à choix multiples) du lot · imprimable',
+        for attendu in ('<p class="sub ml-entete">1 notions, tirées mot pour mot des QCM (questionnaires à choix multiples) du lot · imprimable',
                         "  Chaque ligne provient d'une question de qcm_x.html. Rien n'a été réécrit ici :\n"
                         "  ce lexique rassemble ce que les corrections disaient déjà, une par une.\n"
                         + MENTION_LICENCE + "\n</footer>",  # n°321 : la mention de licence ferme le pied
