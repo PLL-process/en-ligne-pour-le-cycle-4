@@ -2464,6 +2464,60 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
   <p class="tag-zone"><span class="tag">programme = program</span><span class="tag">capteur = sensor</span><span class="tag">seuil = threshold</span><span class="tag">boucle = loop</span><span class="tag">acquitter = to acknowledge</span><span class="tag">événement = event</span><span class="tag">tester = to test</span><span class="tag">protocole de test = test protocol</span><span class="tag">recette = acceptance test</span><span class="tag">téléverser = to upload</span></p>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un objet nouveau&nbsp;: <b>le ventilateur automatique de la salle de technologie</b>.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p>En fin de matinée, la salle de technologie dépasse souvent 30&nbsp;°C (degrés Celsius). Le collège veut un ventilateur qui décide seul&nbsp;:</p>
+  <ul>
+    <li>arrêté en dessous de 28&nbsp;°C&nbsp;;</li>
+    <li>vitesse lente à partir de 28&nbsp;°C&nbsp;;</li>
+    <li>vitesse rapide à partir de 32&nbsp;°C&nbsp;;</li>
+    <li>il réagit à un changement de température en moins de 2&nbsp;secondes.</li>
+  </ul>
+  <p>Au banc, la température se règle au potentiomètre, comme le vent de la station.</p>
+  <p><label for="bs_3e_C9_2_1"><b>1.</b> Écris l'algorithme de décision du ventilateur, en français. Dans quel ordre testes-tu les seuils, et pourquoi&nbsp;?</label></p>
+  <textarea id="bs_3e_C9_2_1" data-save rows="5"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Répéter sans fin&nbsp;: lire ____ .</li>
+      <li>Si ____ alors ____ &nbsp;; sinon, si ____ alors ____ &nbsp;; sinon ____ .</li>
+      <li>Je teste d'abord ____ , parce que ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_3e_C9_2_2"><b>2.</b> Écris le protocole de recette&nbsp;: les essais aux frontières, avec leurs attendus, puis l'essai qui vérifie «&nbsp;moins de 2&nbsp;secondes&nbsp;».</label></p>
+  <textarea id="bs_3e_C9_2_2" data-save rows="5"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Frontière de 28&nbsp;°C&nbsp;: ____ °C → attendu ____ &nbsp;; ____ °C → attendu ____ .</li>
+      <li>Frontière de 32&nbsp;°C&nbsp;: ____ °C → attendu ____ &nbsp;; ____ °C → attendu ____ .</li>
+      <li>Performance&nbsp;: je ____ , puis je compare à ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Répéter sans fin&nbsp;: lire la température.
+    <br>Si température ≥ 32&nbsp;°C, alors vitesse rapide&nbsp;;
+    <br>sinon, si température ≥ 28&nbsp;°C, alors vitesse lente&nbsp;;
+    <br>sinon, arrêt.&nbsp;»
+    <br>Je teste d'abord le seuil le plus haut&nbsp;: sinon, à 35&nbsp;°C, le test «&nbsp;≥ 28&nbsp;» serait vrai le premier, et le ventilateur resterait lent.
+    <br><b>Critère</b>&nbsp;: une boucle sans fin, une lecture, les seuils testés du plus haut au plus bas, «&nbsp;à partir de&nbsp;» écrit ≥, et la raison de l'ordre.</p>
+    <p>✘ «&nbsp;Si ≥ 28 alors lent, sinon si ≥ 32 alors rapide&nbsp;»&nbsp;: à 35&nbsp;°C, le premier test est déjà vrai. La vitesse rapide n'arrive jamais.
+    <br>✘ «&nbsp;Le ventilateur s'allume quand il fait chaud&nbsp;»&nbsp;: ni seuil, ni ordre, ni boucle. Ce n'est pas un algorithme.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;27&nbsp;°C → arrêt&nbsp;; 28&nbsp;°C → lent.
+    <br>31&nbsp;°C → lent&nbsp;; 32&nbsp;°C → rapide.
+    <br>Performance&nbsp;: je passe de 27 à 29&nbsp;°C, je chronomètre jusqu'au démarrage, et je compare à 2&nbsp;secondes.
+    <br>Chaque attendu est écrit avant l'essai.&nbsp;»
+    <br><b>Critère</b>&nbsp;: chaque seuil encadré (juste en dessous, pile dessus), chaque attendu écrit avant, et une mesure chiffrée pour la performance.</p>
+    <p>✘ «&nbsp;On essaie à 20&nbsp;°C et à 40&nbsp;°C&nbsp;»&nbsp;: loin des frontières, une erreur entre &gt; et ≥ passerait inaperçue.
+    <br>✘ «&nbsp;On regarde s'il réagit vite&nbsp;»&nbsp;: «&nbsp;vite&nbsp;» ne se mesure pas. On chronomètre, et on compare à 2&nbsp;secondes.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
@@ -2566,7 +2620,7 @@ details.repli-volet>p{margin:0;padding:0 12px 10px}
 
 <section class="card" style="text-align:center">
   <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
-  <p>30 questions pour vérifier toutes les notions de la séquence — dont 4 questions illustrées (algorigramme, montage, chronogramme, protocole) — avec corrections détaillées, minuteur facultatif et reprise possible.</p>
+  <p>30 questions pour vérifier toutes les notions de la séquence — dont 8 questions illustrées (algorigramme, montage, chronogramme, protocole, trace, courrier, recette) — avec corrections détaillées, minuteur facultatif et reprise possible.</p>
   <a class="btn qcm" href="qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le <abbr class="sigle" title="questionnaire à choix multiples">QCM</abbr> d'entraînement</a>
 </section>
 

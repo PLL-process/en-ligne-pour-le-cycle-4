@@ -192,3 +192,15 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_courrier_mairie.png` | Une enveloppe posée sur le rebord d'une fenêtre. Dehors, la cour d'un collège aux bâtiments clairs, sous un ciel d'orage. PNG 1 536 × 1 024, 2.2 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a sealed official letter envelope on a technology classroom table, through the window behind it a Caribbean school courtyard with an empty concrete base, dark clouds gathering over the sea announcing the hurricane season, morning light, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM (26/11/2026, règle d'or n°345)
+
+Trois documents dessinés pour le téléphone par `_outils/document_qcm.py`, à partir de `documents_qcm_3e_C9.2.json`,
+lui-même écrit par `documents_qcm.py` depuis le programme `station_alerte_cyclonique/station_alerte_cyclonique.ino`
+(seuils, format de la trace, quatre niveaux) : aucun nombre n'est recopié à la main.
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_trace_moniteur.svg` | Trois lignes du moniteur série d'un programme où le test « ≥ 63 » manque, à côté des quatre niveaux du cahier des charges. | SVG original, engendré par script | CC0 | QCM, question 15 |
+| `Images/doc_courrier_exigences.svg` | Les exigences du courrier de la mairie, en trois fiches : afficher le niveau, alerter, réagir. | SVG original, engendré par script | CC0 | QCM, questions 19 et 20 |
+| `Images/doc_recette_groupe.svg` | La recette d'un groupe : treize essais, l'attendu écrit avant et l'observé pendant ; le programme essayé écrit « > 118 ». | SVG original, engendré par script | CC0 | QCM, question 26 |

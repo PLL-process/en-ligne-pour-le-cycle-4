@@ -38480,6 +38480,30 @@ Bancs : `tests_protocole_4e_C8.1.mjs` 18 / 18, `tests_4e_C8.mjs` 56 / 56, `tests
 
 **Thème par thème** (n°302) : thème 3 seulement — `4e_C8.1` (séquence, mission, banc du protocole, rapport).
 
+## 26/11/2026 — 3e_C9.2-C8.3 : quatre questions de plus sur document, et un billet de sortie (thème 3)
+
+Pascal : « Tu as carte blanche ». Le lot de la station programmée (rangé en C9, il porte 3e_C8.3) restait sous les
+chantiers D1 (4 questions illustrées sur 30) et P1 (aucun billet de sortie).
+
+- **QCM** : quatre questions se lisent maintenant sur un document dessiné pour le téléphone — la trace du moniteur série
+  (q15), le courrier de la mairie (q19, q20), la recette d'un groupe (q26). `documents_qcm.py` lit les seuils et le
+  format de la trace dans `station_alerte_cyclonique.ino` ; chaque programme fautif n'a qu'une erreur, écrite dans le
+  script (le test « ≥ 63 » absent ; « > 118 » au lieu de « ≥ 118 »). La lecture a trouvé un pourquoi faux dans la q15
+  (« 103 et 126 sont bien mesurés », pour une trace qui affiche 71, 95 et 131) et un sigle non expliqué (CAN) : corrigés.
+- **Billet de sortie** à la séance 8, avant le Bonus : le ventilateur automatique de la salle de technologie (arrêt sous
+  28 °C, lent dès 28, rapide dès 32, réaction en moins de 2 s) — l'algorithme et l'ordre de ses tests (C9.2), puis le
+  protocole aux frontières et le chronométrage (C8.3). Posé dans la page tout-en-un ; `generer_les_quatre_pages.py` le
+  reporte sur la page 4.
+
+Bancs : `tests_3e_C9.2-C8.3.mjs` 172 / 172 (quatre tests neufs), n°311 34 / 34, pont en H 37 / 37 ; les contrôles des
+QCM, des schémas, des effectifs (le manifeste dit 8 illustrées), des règles d'or, de l'aération, du squelette, du mode
+mission, de la fiche papier et des liens : verts. **Reste** : `controle_question_seule.py` lit chaque page à part, et
+signale P1 sur les pages 1 à 3, qui ne portent pas la dernière séance — corrigé dans l'outil par la PR transversale
+qui suit.
+
+**Thème par thème** (n°302) : thème 3 seulement — `3e_C9.2` (séquence et page 4 engendrée, QCM, documents, banc,
+manifeste, README, fiche, synthèse professeur, sources, rapport).
+
 ## 26/11/2026 — Blender entre dans le dépôt : un skill, et les trois appareils de Chengdu en 3D (transversal : thème 1, `.claude/skills`, `SKILLS_AUDIT.md`)
 
 **Demande de Pascal (26/11).** « Ici il y a des animations qui pourraient être ou auraient pu être faites avec Blender, qu'en
