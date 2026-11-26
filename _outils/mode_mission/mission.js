@@ -364,7 +364,7 @@ function titreSans(noeuds){
 }
 /* un lien seul, sans titre ni question (« 📖 Les mots de cette séance ») */
 function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas,video,iframe,object,button,details,table", C) && !!$("a[href]", C) && net(C.textContent).split(" ").length < 12; }
-/* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (« Prêt·e à t'entraîner » et le Bonus
+/* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (le renvoi au QCM et le Bonus
    du TP mBot2, posés avant </body>) font des écrans comme les autres */
 function suivants(P){ var o = []; for (var x = P.nextElementSibling; x; x = x.nextElementSibling) if (estBloc(x) && rendu(x)) o.push(x); return o; }
 /* Une page à onglets qui range sa clôture APRÈS ses panneaux (l'atelier de planification : Bonus, Bilan, QCM, traces ;
@@ -466,7 +466,7 @@ function peindre(comp){
   var pris = comp._sets.map(lireV), fini = comp._sets.every(function(f){ return f.classList.contains("ms-juste"); });
   var h = '<p class="ms-geste">Fais glisser chaque étiquette vers sa case. Tu peux aussi la toucher, puis toucher sa case.</p><div class="ms-lignes">'
     + comp._sets.map(function(f, i){
-        var v = lireV(f), juste = f.classList.contains("ms-juste"), cl = "ms-case" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
+        var v = lireV(f), juste = f.classList.contains("ms-juste"), cl = "ms-cible" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
         return '<div class="ms-l"><div class="ms-nom">' + $("legend", f).innerHTML + '</div><button type="button" class="' + cl + '" data-i="' + i + '"' + (juste ? " disabled" : "")
           + ' aria-label="' + esc(net($("legend", f).textContent) + " : " + (v || "case vide")) + '">' + (v ? "<span>" + esc(v) + "</span>" : '<span class="ms-vide">pose ici</span>') + (juste ? COCHE : "") + "</button></div>"; }).join("")
     + "</div>";
@@ -894,7 +894,7 @@ function sortir(){
 }
 
 /* ═══ Les gestes sur les étiquettes : toucher, glisser, clavier ═══ */
-function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-case:not(:disabled)"); }
+function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-cible:not(:disabled)"); }
 D.addEventListener("click", function(ev){
   if (!actif) return;
   /* une séquence découpée en pages : qui passe à la page suivante en mission y arrive en mission */
@@ -902,7 +902,7 @@ D.addEventListener("click", function(ev){
   var r = ev.target.closest("[data-ms=ress]"); if (r){ M.ress = !ressVue(); montrer(false); return; }
   if (glisse) return;
   var lab = ev.target.closest(".ms-lab"); if (lab){ var comp = lab.closest(".ms-etq"), j = +lab.dataset.j; sel = (sel && sel.comp === comp && sel.j === j) ? null : { comp:comp, j:j }; peindre(comp); return; }
-  var c = ev.target.closest(".ms-case"); if (c && !c.disabled){ var co = c.closest(".ms-etq"), i = +c.dataset.i;
+  var c = ev.target.closest(".ms-cible"); if (c && !c.disabled){ var co = c.closest(".ms-etq"), i = +c.dataset.i;
     if (sel && sel.comp === co){ poser(co, i, co._libs[sel.j]); sel = null; } else if (lireV(co._sets[i])) poser(co, i, null);
     else { var s = ecrans[k]; if (s.retour) dire(s, "", "Choisis d'abord une étiquette dans la réserve, puis touche cette case."); }
     peindre(co); }
@@ -912,8 +912,8 @@ D.addEventListener("change", function(ev){      // une réponse changée à la m
   if (!actif || !ev.isTrusted) return; var f = ev.target.closest && ev.target.closest(CHAMP);
   if (f && !f.classList.contains("ms-origine")) marquer(f, null); });
 D.addEventListener("pointerdown", function(ev){
-  if (!actif) return; var src = ev.target.closest(".ms-lab, .ms-case.pleine"); if (!src || src.disabled) return;
-  if (ev.pointerType === "touch" && src.classList.contains("ms-case")) return;      // au doigt : toucher la case rend l'étiquette ; glisser fait défiler la page
+  if (!actif) return; var src = ev.target.closest(".ms-lab, .ms-cible.pleine"); if (!src || src.disabled) return;
+  if (ev.pointerType === "touch" && src.classList.contains("ms-cible")) return;      // au doigt : toucher la case rend l'étiquette ; glisser fait défiler la page
   var comp = src.closest(".ms-etq"), depuis = src.dataset.i !== undefined ? +src.dataset.i : null;
   g = { x:ev.clientX, y:ev.clientY, id:ev.pointerId, src:src, comp:comp, depuis:depuis, val: depuis !== null ? lireV(comp._sets[depuis]) : comp._libs[+src.dataset.j], f:null };
 });
@@ -921,7 +921,7 @@ window.addEventListener("pointermove", function(ev){
   if (!g || ev.pointerId !== g.id) return;
   if (!g.f){ if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "ms-fantome"); g.f.textContent = g.val; D.body.appendChild(g.f); g.src.classList.add("part"); }
   g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-65%) rotate(-2deg)";
-  $$(".ms-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+  $$(".ms-cible.vise").forEach(function(x){ x.classList.remove("vise"); });
   var c = sousPointeur(ev); if (c && c.closest(".ms-etq") === g.comp) c.classList.add("vise");
 });
 function lache(ev, annule){

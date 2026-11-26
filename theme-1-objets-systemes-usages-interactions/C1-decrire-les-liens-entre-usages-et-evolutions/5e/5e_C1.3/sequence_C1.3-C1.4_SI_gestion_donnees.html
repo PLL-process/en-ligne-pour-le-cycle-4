@@ -566,17 +566,20 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-l{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:10px;align-items:center}
   @media (max-width:560px){.ms-l{grid-template-columns:1fr;gap:5px}}
   .ms-nom{font-weight:600;min-width:0}
-  .ms-case,.ms-lab{-webkit-user-select:none;user-select:none;font:inherit;color:var(--text,#e4eaf5)}
+  /* « ms-cible », pas « ms-case » : le kit des ateliers de représentation a sa propre `.ms-case` (un menu posé sur le
+     dessin de la bête à cornes, en position absolue). Le même nom élargissait ses menus à 820 px et leur mettait un
+     cadre pointillé, mode mission ou pas (banc_ateliers.py, six refus, 25/11/2026). */
+  .ms-cible,.ms-lab{-webkit-user-select:none;user-select:none;font:inherit;color:var(--text,#e4eaf5)}
   /* une étiquette de la réserve se glisse ; une case laisse défiler la page sous le doigt */
-  .ms-lab{touch-action:none} .ms-case{touch-action:manipulation}
-  .ms-case{min-height:50px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:9px 13px;border-radius:14px;border:2px dashed var(--border,#274a8a);background:var(--panel2,#0a1b3d);cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
-  .ms-case .ms-vide{font-weight:400;color:var(--sub,#9bbefc);font-size:.9em}
-  .ms-case.pleine{border-style:solid;background:var(--panel,#0d2347)}
-  .ms-case.vise{border-color:var(--hl,#61dafb);transform:scale(1.02)}
-  .ms-case.juste{border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10);cursor:default;opacity:1}
-  .ms-case.faux{border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10);animation:ms-secoue .45s}
+  .ms-lab{touch-action:none} .ms-cible{touch-action:manipulation}
+  .ms-cible{min-height:50px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:9px 13px;border-radius:14px;border:2px dashed var(--border,#274a8a);background:var(--panel2,#0a1b3d);cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
+  .ms-cible .ms-vide{font-weight:400;color:var(--sub,#9bbefc);font-size:.9em}
+  .ms-cible.pleine{border-style:solid;background:var(--panel,#0d2347)}
+  .ms-cible.vise{border-color:var(--hl,#61dafb);transform:scale(1.02)}
+  .ms-cible.juste{border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10);cursor:default;opacity:1}
+  .ms-cible.faux{border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10);animation:ms-secoue .45s}
   @keyframes ms-secoue{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
-  .ms-case.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
+  .ms-cible.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
   body.ms details.ms-pousse{outline:2px solid var(--warn,#ffd66b);outline-offset:3px;border-radius:10px}
   .ms-cor-note{margin:.2rem 0 .5rem;font-weight:700;color:var(--ok,#81fba1)}
   .ms-coche{width:22px;height:22px;flex:none;fill:none;stroke:var(--ok,#81fba1);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
@@ -587,7 +590,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-lab:hover{border-color:var(--hl,#61dafb)}
   .ms-lab.choisie{border-color:var(--hl,#61dafb);transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.35)}
   .ms-lab.part{opacity:.35}
-  .ms-case:focus-visible,.ms-lab:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
+  .ms-cible:focus-visible,.ms-lab:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
   .ms-geste{margin:0;font-size:.86em;color:var(--sub,#9bbefc)}
   .ms-fantome{position:fixed;left:0;top:0;z-index:2000;pointer-events:none;border:2px solid var(--hl,#61dafb);background:var(--panel,#0d2347);color:var(--text,#e4eaf5);border-radius:12px;padding:9px 14px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
   /* au téléphone, la réserve tient sur une ligne qui défile de côté : elle ne cache pas les cases */
@@ -984,7 +987,7 @@ function titreSans(noeuds){
 }
 /* un lien seul, sans titre ni question (« 📖 Les mots de cette séance ») */
 function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas,video,iframe,object,button,details,table", C) && !!$("a[href]", C) && net(C.textContent).split(" ").length < 12; }
-/* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (« Prêt·e à t'entraîner » et le Bonus
+/* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (le renvoi au QCM et le Bonus
    du TP mBot2, posés avant </body>) font des écrans comme les autres */
 function suivants(P){ var o = []; for (var x = P.nextElementSibling; x; x = x.nextElementSibling) if (estBloc(x) && rendu(x)) o.push(x); return o; }
 /* Une page à onglets qui range sa clôture APRÈS ses panneaux (l'atelier de planification : Bonus, Bilan, QCM, traces ;
@@ -1086,7 +1089,7 @@ function peindre(comp){
   var pris = comp._sets.map(lireV), fini = comp._sets.every(function(f){ return f.classList.contains("ms-juste"); });
   var h = '<p class="ms-geste">Fais glisser chaque étiquette vers sa case. Tu peux aussi la toucher, puis toucher sa case.</p><div class="ms-lignes">'
     + comp._sets.map(function(f, i){
-        var v = lireV(f), juste = f.classList.contains("ms-juste"), cl = "ms-case" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
+        var v = lireV(f), juste = f.classList.contains("ms-juste"), cl = "ms-cible" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
         return '<div class="ms-l"><div class="ms-nom">' + $("legend", f).innerHTML + '</div><button type="button" class="' + cl + '" data-i="' + i + '"' + (juste ? " disabled" : "")
           + ' aria-label="' + esc(net($("legend", f).textContent) + " : " + (v || "case vide")) + '">' + (v ? "<span>" + esc(v) + "</span>" : '<span class="ms-vide">pose ici</span>') + (juste ? COCHE : "") + "</button></div>"; }).join("")
     + "</div>";
@@ -1514,7 +1517,7 @@ function sortir(){
 }
 
 /* ═══ Les gestes sur les étiquettes : toucher, glisser, clavier ═══ */
-function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-case:not(:disabled)"); }
+function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-cible:not(:disabled)"); }
 D.addEventListener("click", function(ev){
   if (!actif) return;
   /* une séquence découpée en pages : qui passe à la page suivante en mission y arrive en mission */
@@ -1522,7 +1525,7 @@ D.addEventListener("click", function(ev){
   var r = ev.target.closest("[data-ms=ress]"); if (r){ M.ress = !ressVue(); montrer(false); return; }
   if (glisse) return;
   var lab = ev.target.closest(".ms-lab"); if (lab){ var comp = lab.closest(".ms-etq"), j = +lab.dataset.j; sel = (sel && sel.comp === comp && sel.j === j) ? null : { comp:comp, j:j }; peindre(comp); return; }
-  var c = ev.target.closest(".ms-case"); if (c && !c.disabled){ var co = c.closest(".ms-etq"), i = +c.dataset.i;
+  var c = ev.target.closest(".ms-cible"); if (c && !c.disabled){ var co = c.closest(".ms-etq"), i = +c.dataset.i;
     if (sel && sel.comp === co){ poser(co, i, co._libs[sel.j]); sel = null; } else if (lireV(co._sets[i])) poser(co, i, null);
     else { var s = ecrans[k]; if (s.retour) dire(s, "", "Choisis d'abord une étiquette dans la réserve, puis touche cette case."); }
     peindre(co); }
@@ -1532,8 +1535,8 @@ D.addEventListener("change", function(ev){      // une réponse changée à la m
   if (!actif || !ev.isTrusted) return; var f = ev.target.closest && ev.target.closest(CHAMP);
   if (f && !f.classList.contains("ms-origine")) marquer(f, null); });
 D.addEventListener("pointerdown", function(ev){
-  if (!actif) return; var src = ev.target.closest(".ms-lab, .ms-case.pleine"); if (!src || src.disabled) return;
-  if (ev.pointerType === "touch" && src.classList.contains("ms-case")) return;      // au doigt : toucher la case rend l'étiquette ; glisser fait défiler la page
+  if (!actif) return; var src = ev.target.closest(".ms-lab, .ms-cible.pleine"); if (!src || src.disabled) return;
+  if (ev.pointerType === "touch" && src.classList.contains("ms-cible")) return;      // au doigt : toucher la case rend l'étiquette ; glisser fait défiler la page
   var comp = src.closest(".ms-etq"), depuis = src.dataset.i !== undefined ? +src.dataset.i : null;
   g = { x:ev.clientX, y:ev.clientY, id:ev.pointerId, src:src, comp:comp, depuis:depuis, val: depuis !== null ? lireV(comp._sets[depuis]) : comp._libs[+src.dataset.j], f:null };
 });
@@ -1541,7 +1544,7 @@ window.addEventListener("pointermove", function(ev){
   if (!g || ev.pointerId !== g.id) return;
   if (!g.f){ if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "ms-fantome"); g.f.textContent = g.val; D.body.appendChild(g.f); g.src.classList.add("part"); }
   g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-65%) rotate(-2deg)";
-  $$(".ms-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+  $$(".ms-cible.vise").forEach(function(x){ x.classList.remove("vise"); });
   var c = sousPointeur(ev); if (c && c.closest(".ms-etq") === g.comp) c.classList.add("vise");
 });
 function lache(ev, annule){

@@ -120,7 +120,7 @@ for (const PAGE of pages) {
         await p.evaluate(([cles, ACTIF]) => {
           const P = document.querySelector(ACTIF), vu = x => !!x.offsetParent;
           [...P.querySelectorAll('.ms-etq')].filter(vu).forEach(comp => { comp._sets.forEach((f, i) => { const but = cles[f.id]; if (but === undefined) return;
-            const lab = [...comp.querySelectorAll('.ms-lab')].find(l => l.textContent === but); if (!lab) return; lab.click(); comp.querySelector(`.ms-case[data-i="${i}"]`).click(); }); });
+            const lab = [...comp.querySelectorAll('.ms-lab')].find(l => l.textContent === but); if (!lab) return; lab.click(); comp.querySelector(`.ms-cible[data-i="${i}"]`).click(); }); });
           // la chaîne à compléter (_outils/chaine_a_completer/) : l'étiquette touchée, puis sa case dans le schéma
           [...P.querySelectorAll('.cac.cac-pret')].filter(vu).forEach(c => { const A = c._cac; if (!A) return; A.ordre.forEach(k => { const but = cles[A.champs[k].id]; if (but === undefined) return;
             const lab = [...c.querySelectorAll('.cac-lab')].find(l => l.getAttribute('data-v') === but), cas = c.querySelector(`.cac-case[data-cle="${k}"]`); if (!lab || !cas) return; lab.click(); cas.click(); }); });
