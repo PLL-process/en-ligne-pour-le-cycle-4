@@ -2441,11 +2441,46 @@ else:
   <code>montes</code>, <code>descendus</code>, et des papiers pour les valeurs. <br>Fais exécuter le programme
   de l'activité 2 à quelqu'un de ta famille — toi, tu es l'ordinateur qui lit les lignes. <br>L'ancienne
   valeur va à la poubelle : si on te demande pourquoi, tu sauras répondre.</p>
+  <details class="correction"><summary>✅ Corrigé du défi famille</summary>
+    <p><b>Ce qui se passe dans les boîtes, ligne par ligne&nbsp;:</b></p>
+    <p>· ligne 1 — on pose le papier «&nbsp;24&nbsp;» dans la boîte <code>places</code>&nbsp;; <br>· ligne 2 — on pose «&nbsp;5&nbsp;» dans la boîte <code>montes</code>&nbsp;; <br>· ligne 3 — on lit 24 et 5, on calcule 24 − 5 = 19&nbsp;; le papier «&nbsp;24&nbsp;» va à la poubelle, «&nbsp;19&nbsp;» prend sa place dans <code>places</code>&nbsp;; <br>· ligne 4 — on pose «&nbsp;2&nbsp;» dans la boîte <code>descendus</code>&nbsp;; <br>· ligne 5 — on lit 19 et 2, on calcule 19 + 2 = 21&nbsp;; «&nbsp;19&nbsp;» va à la poubelle, «&nbsp;21&nbsp;» prend sa place.</p>
+    <p><b>À la fin&nbsp;:</b> <code>places</code> contient 21, <code>montes</code> 5, <code>descendus</code> 2.</p>
+    <p><b>Pourquoi l'ancienne valeur va à la poubelle&nbsp;:</b> une boîte ne garde qu'<b>une</b> valeur à la fois. <br>Ranger une nouvelle valeur remplace l'ancienne&nbsp;: l'ordinateur ne s'en souvient plus.</p>
+    <p><b>L'erreur fréquente&nbsp;:</b> empiler les papiers dans la boîte. À la ligne 5, on ne saurait plus lequel lire.</p>
+  </details>
   <p><b>🎟 Défi compteur de classe :</b> dans l'éditeur, écris le compteur de TA classe (28 élèves ?
   écris-le pour que le professeur n'ait qu'UNE ligne à changer l'an prochain).</p>
+  <details class="correction"><summary>✅ Corrigé du défi compteur de classe</summary>
+    <p><b>Un programme possible&nbsp;:</b></p>
+    <pre class="code">eleves = 28
+presents = 0
+presents = presents + 1
+presents = presents + 1
+absents = eleves - presents
+print(absents)</pre>
+    <p><b>Ce qu'il fait&nbsp;:</b> deux élèves entrent&nbsp;; la console affiche 26.</p>
+    <p><b>La seule ligne à changer&nbsp;:</b> la première. <br>Le nombre 28 n'est écrit qu'une fois&nbsp;; partout ailleurs, le programme lit la boîte <code>eleves</code>.</p>
+    <p><b>Le piège&nbsp;:</b> écrire <code>absents = 28 - presents</code>. <br>Le professeur aurait alors deux lignes à changer… et il en oublierait une.</p>
+  </details>
   <p><b>🎢 Défi curieux :</b> le vrai Cyclone a ouvert en 1927 et il est toujours en bois. <br>Dans l'éditeur,
   calcule son âge avec une variable <code>annee = 2026</code> — puis écris le programme pour que le calcul
   reste juste TOUTES les années suivantes.</p>
+  <details class="correction"><summary>✅ Corrigé du défi curieux</summary>
+    <p><b>Le calcul, avec une variable&nbsp;:</b></p>
+    <pre class="code">annee = 2026
+ouverture = 1927
+age = annee - ouverture
+print(age)</pre>
+    <p><b>La console affiche 99.</b> Pour une autre année, une seule ligne à changer&nbsp;: la première.</p>
+    <p><b>Pour que le calcul reste juste sans toucher au programme&nbsp;:</b> il demande l'année à la personne qui l'exécute.</p>
+    <pre class="code">texte = input("Année ? ")
+annee = int(texte)
+ouverture = 1927
+age = annee - ouverture
+print(age)</pre>
+    <p><b>Ce qui est nouveau&nbsp;:</b> <code>input</code> pose la question et attend la réponse&nbsp;: c'est un texte. <br><code>int</code> change ce texte en nombre entier, pour pouvoir calculer avec.</p>
+    <p><b>Le piège&nbsp;:</b> écrire <code>print(2026 - 1927)</code>. <br>Le résultat est juste en 2026, et faux toutes les années suivantes.</p>
+  </details>
 <div class="editeur-py" id="vs3" data-fichier="5e-BOITE-bonus-TON NOM">
   <label for="py_bonus">🐍 L'éditeur du Bonus — code tes défis ici</label>
   <p class="editeur-py-note">Ton programme est gardé dans la page ; ⬇ Télécharger mon .py pour l'emporter.</p>

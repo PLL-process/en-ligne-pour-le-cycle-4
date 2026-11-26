@@ -70,6 +70,11 @@ const PAS_DES_OBSERVATIONS = {
   __valid: 'les validations d\'activité : un résultat, pas une expérience',
   __clFs: 'la taille de police de l\'éditeur CodeLab — préférence d\'affichage',
   __clHlRange: 'les lignes surlignées par une consigne — affichage, pas trace',
+  /* 25/11/2026 — 4e_C8.1 (la console de la jardinière, depuis le 22/11) range ses réponses attendues, calculées par le
+     modèle, dans deux variables que ses bancs relisent. Ce sont des clés de correction, posées au chargement comme
+     `const CHECKS` : aucun geste d'élève n'y est noté. Le contrôle sortait à 1 sur `main` depuis trois jours. */
+  __bonnesSimu: 'les réponses attendues des questions sur la simulation — une clé de correction, pas une trace',
+  __bonnesProtocole: 'les réponses attendues des questions sur le protocole — une clé de correction, pas une trace',
 };
 
 /** Toutes les pages susceptibles de porter un verrou expérientiel. */

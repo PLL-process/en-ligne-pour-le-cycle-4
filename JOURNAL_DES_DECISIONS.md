@@ -37637,3 +37637,77 @@ synthèse, le billet de sortie, le Bonus et le bilan ; 🏠 à la maison : le r�
 réinvestissement (l'étagère murale) garde sa place, ses questions et son vérificateur ; son titre et une ligne disent
 « à faire à la maison, après la séance 2 — ou en classe, s'il reste du temps ». La séance 2 tient en 20 + 20 + 5 minutes,
 puis la clôture. Fiche pédagogique et note d'audit à jour.
+
+## 25/11/2026 — Vérification totale, vague 2 : chaque défi, chaque activité a sa correction (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Suite de la demande de Pascal du 25/11/2026** (« assure-toi […] qu'il y ait la correction ») ; préférence tenue : des
+corrections exhaustives, avec le schéma quand il le faut, un texte aéré, les sigles et les unités dits en clair.
+
+**Mesuré sur le `main` du jour**, avec un contrôle neuf, `controle_bonus_corrige.py` (27 / 27 à son banc) — 86 pages
+closes par un Bonus : **14 sans aucun corrigé** (B1), **3 autres où sept défis n'avaient pas le leur** (B2), et
+**25 titres repliés qui annonçaient un nombre de défis faux** (B3 : « Les 4 défis du Bonus » pour trois, « Le défi du
+Bonus » pour quatre). Hors Bonus : 3 activités sans correction (relevé au navigateur, page par page).
+
+**Corrigé** :
+- **49 corrigés de défis écrits**, un par défi, chacun avec sa méthode, un exemple traité, ce qui rend une réponse
+  juste et l'erreur fréquente : thème 1 — 3e_C3.1, 4e_C3.1, 5e_C3.1 (calculs refaits depuis les CSV des lots : sans S6,
+  S1 + S2 + S5 = 3200 € et 3100 kWh sur dix ans ; F4 = 5,6 g/km) ; thème 2 — 3e_C4.1 (2), 3e_C4.7 (3), 3e_C4.8 (3),
+  4e_C4.1 (2), 4e_C5.1 (3, dont le dessin coté du clip-support), 3e_C6.2 (3), 4e_C6.1 (3), 5e_C6.1 (3) ; thème 3 — les
+  quatre TP de CAO (3 chacun, écrits dans `scenarios/tp_*.json`, pages reconstruites par `build_tp.py`), 5e_C9.1 (3),
+  le TP mBot2 (3).
+- **3 corrections d'activité** : le « défi SANS tutoriel » de 4e_C4.7 (les deux preuves, la phrase de technicien, ce
+  qui ne prouve rien) ; l'activité 0 de 5e_C8.2 ; le billet d'entrée de l'atelier de planification (dans
+  `build_atelier.py`, trois pages reconstruites).
+- **25 titres de Bonus recomptés** : `replier_bonus.py` comptait les lignes de la version étayée, ou les champs de
+  réponse, pas les défis. Il lit maintenant les défis nommés (la lecture du contrôle), et `--titres` recompte un Bonus
+  déjà replié.
+- **Une consigne qui demandait l'impossible** (3e_C6.2, défi 2) : « fais-la tourner au banc d'essai » — le banc de la
+  page n'exécute que la version juste. La consigne fait dérouler la version fausse à la main, sur trois pannes nommées.
+- **Un leurre qui se trahissait** (3e_C4.8, e3_3) : il montrait un masque `255.255.255.0` que le journal du routeur
+  n'affiche jamais (le pont est en `255.255.255.252`).
+
+**Ce que la vague 1 avait cassé, et que les contrôles de celle-ci ont vu** (dit pour que cela ne se reproduise pas) :
+- `qcm_5e_C7.4` : `qcm_aides/poser.py` réécrit la carte « Avant de commencer » et y perd l'infobulle d'un sigle ; la
+  notion renommée portait le seul « volts » de la question. Remis (`expliquer_sigles.py --infobulle`, question 16).
+  **À retenir : après `qcm_aides/poser.py`, rejouer `controle_sigles_expliques.py` et `controle_unites.py`.**
+- `4e_C8.1` : les onze légendes réécrites dans la page l'étaient dans une zone que `console_jardiniere.py` engendre ;
+  le générateur les aurait effacées à sa prochaine écriture. Elles sont maintenant dans le générateur.
+  **À retenir : avant de retoucher une page, chercher son générateur (`_generation/`), et le rejouer sans `--ecrire`.**
+- La vague 1 n'avait joué qu'une partie des contrôles. Cette vague joue les 53 `controle_*.py` avant et après
+  (`main` contre l'arbre de travail) : 4 étaient rouges avant, 0 après.
+
+**Ce que les contrôles au navigateur ont vu dans CETTE vague, avant la livraison** :
+- `controle_impression.mjs` : les corrigés des quatre TP de CAO s'imprimaient en texte noirci sur fond marine (22 à
+  29 textes par page). Le gabarit des TP n'avait jamais porté de corrigé : son bloc d'impression ne les blanchissait
+  pas. Corrigé dans `atelier-cao/_generation/gabarit_style.css` (fond blanc, titre ambre foncé) ; quatre pages
+  reconstruites, empreintes recalculées (`verif_chaine.py`).
+- `controle_verrous.mjs` sortait à 1 **sur `main`, depuis le 22/11** : 4e_C8.1 range ses réponses attendues dans
+  `window.__bonnesSimu` et `window.__bonnesProtocole`, que le contrôle lisait comme des gestes d'élève enregistrés au
+  chargement. Ce sont des clés de correction : déclarées dans `PAS_DES_OBSERVATIONS`, avec leur raison (banc 12 / 12).
+
+**Trouvé en chemin, et corrigé** : 3 formulations du programme mal recopiées dans deux fiches pédagogiques (4e_C1.4,
+3e_C1.5 — « OST » y est gardé, et expliqué sous le tableau) ; 2 pointes de flèche mesurées en « traits » dans 4e_C8.1
+(`console_jardiniere.py`, rendu identique) ; le dessin animé de la situation de 4e_C8.1 compté comme un schéma (31 ✘ :
+ses sept étapes superposées) — déclaré `data-illustration`.
+
+**Mesure après** (sur l'arbre fusionné avec le `main` du soir) : `controle_bonus_corrige` B1 0 · B2 0 · B3 0 ; les
+53 `controle_*.py` à 0 ;
+`controle_hierarchie` 0 mur sans repère (11 dans mes premiers corrigés : chaque paragraphe s'ouvre maintenant sur un
+repère en gras) ; `controle_unites` 0 ; `controle_sigles_expliques` 0 ; `controle_formulations` 94 / 94.
+
+**Vérifié** : les **75 bancs** des lots touchés passent (58 lancés tels quels, 17 avec la ligne de commande de leur
+`rapport_tests` — les bancs de C7 et C8 prennent leur page en argument) ; au navigateur, sur tout le site :
+`controle_squelette`, `controle_code_colore` (142 listings), `controle_hors_ligne`, `controle_indices_qcm` (76 banques,
+2301 questions), `controle_impression` et `controle_verrous` à 0 après les deux corrections ci-dessus ; sur les
+38 pages modifiées : `controle_schemas` 0 ✘, `controle_page_ouverte` (390 px) L 0 · B 0 · C 0, `controle_axe` aucun
+défaut au-dessus de la référence, `eleve_qui_ne_lit_pas` 0 page validée sans lire ; chaque corrigé relu à 390 px et à
+1 280 px (aucun défilement de côté, code en couleurs, dessin coté lisible).
+
+**Vu, non traité** : le tableau du référentiel de 3e_C5.1 dépasse de 12 px à 390 px, volet ouvert (page du professeur
+dans la page élève ; antérieur).
+
+**Thème par thème** (n°302) : thème 1 — 3e_C2.1 (titre), 3e/4e/5e_C3.1, deux fiches pédagogiques (C1) ; thème 2 —
+3e_C4.1, 3e_C4.3 (titre), 3e_C4.7, 3e_C4.8, 4e_C4.1, 4e_C4.7, 3e_C5.1 (titre), 4e_C5.1, 3e_C6.1 (titre), 3e_C6.2,
+4e_C6.1, 5e_C6.1 ; thème 3 — atelier CAO (4 scénarios, 4 pages, manifeste), atelier de planification (générateur,
+3 pages), `gabarit_style.css` des TP de CAO, 9 titres de Bonus (C7, C8, C9), `qcm_5e_C7.4`, 4e_C8.1 (générateur et page), 5e_C8.2, 5e_C9.1, TP mBot2 ;
+`_outils` — `controle_bonus_corrige.py` et son banc, `replier_bonus.py`, `controle_verrous.mjs` (deux déclarations).

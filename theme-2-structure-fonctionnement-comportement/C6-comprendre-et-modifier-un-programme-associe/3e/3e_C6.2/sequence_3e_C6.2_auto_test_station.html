@@ -2534,14 +2534,33 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-<details class="bonus-replie"><summary>🎁 Le défi du Bonus — ouvre-le quand tu as fini</summary>
+<details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
   <p><b>Défi 1 — le cinquième organe.</b><br>La mairie ajoute un capteur de pluie. Que faut-il changer dans ton
   programme&nbsp;? Compte les lignes à modifier — et mesure ce que la boucle t'a fait économiser.</p>
+  <details class="correction"><summary>✅ Corrigé du défi 1 — le cinquième organe</summary>
+    <p><b>Avec la boucle&nbsp;: une seule ligne change</b>, celle de la liste. <br>On y ajoute le capteur de pluie, après la radio. <br>La boucle teste alors cinq organes au lieu de quatre, sans une ligne de plus.</p>
+    <p><b>Ce qu'il faut en plus, hors de ton programme&nbsp;:</b> que la fonction de test sache essayer ce nouvel organe.</p>
+    <p><b>Ce que la boucle a fait économiser&nbsp;:</b> sans elle, il faudrait recopier pour chaque organe le même bloc de trois lignes&nbsp;: le test, le compteur, l'ajout à la liste des pannes. <br>Cinq organes&nbsp;: 5 × 3 = 15 lignes, contre 3 dans la boucle.</p>
+    <p><b>Le vrai gain&nbsp;:</b> moins de lignes recopiées, donc moins de risques d'en oublier une ou d'en modifier une seule sur cinq.</p>
+  </details>
   <p><b>Défi 2 — l'auto-test qui ment.</b><br>Écris volontairement la version fausse où le compteur est remis à
-  zéro dans la boucle. <br>Fais-la tourner au banc d'essai avec trois pannes&nbsp;: que répond-elle&nbsp;? Explique
-  pourquoi c'est le genre de bogue le plus dangereux.</p>
+  zéro dans la boucle. <br>Déroule-la à la main, avec un tableau de suivi des variables, pour trois pannes&nbsp;: l'anémomètre, le gyrophare et la sirène (la radio marche). <br>Le banc d'essai de la page, lui, exécute la version juste. <br>Que répond la version fausse&nbsp;? Explique pourquoi c'est le genre de bogue le plus dangereux.</p>
+  <details class="correction"><summary>✅ Corrigé du défi 2 — l'auto-test qui ment</summary>
+    <p><b>La version fausse, déroulée à la main</b> avec trois pannes&nbsp;: l'anémomètre, le gyrophare et la sirène&nbsp;; la radio marche.</p>
+    <p>· tour 1, anémomètre&nbsp;: le compteur repart à 0, le test échoue → compteur = 1&nbsp;; <br>· tour 2, gyrophare&nbsp;: le compteur repart à 0, le test échoue → compteur = 1&nbsp;; <br>· tour 3, sirène&nbsp;: le compteur repart à 0, le test échoue → compteur = 1&nbsp;; <br>· tour 4, radio&nbsp;: le compteur repart à 0, le test réussit → compteur = <b>0</b>.</p>
+    <p><b>Ce qu'elle répond&nbsp;:</b> «&nbsp;Station opérationnelle&nbsp;», alors que trois organes sont en panne. <br>Le compteur ne garde que le résultat du <b>dernier</b> organe testé.</p>
+    <p><b>Pourquoi c'est le bogue le plus dangereux&nbsp;:</b> <br>· le programme ne s'arrête pas, et n'affiche aucune erreur&nbsp;; <br>· sa réponse est fausse, et elle rassure&nbsp;; <br>· un essai avec une seule panne, sur la radio, donne le bon résultat&nbsp;: le bogue passe les tests faciles.</p>
+    <p><b>La leçon&nbsp;:</b> une variable qui cumule se remet à zéro <b>avant</b> la boucle, jamais dedans. <br>Et un plan de tests doit comporter une panne sur un organe qui n'est pas le dernier.</p>
+  </details>
   <p><b>Défi 3 — la fréquence.</b><br>Un auto-test toutes les minutes, est-ce mieux&nbsp;? Réfléchis à la batterie,
   à l'usure de la sirène et à la patience du gardien. <br>Propose une fréquence et justifie-la.</p>
+  <details class="correction"><summary>✅ Corrigé du défi 3 — la fréquence</summary>
+    <p><b>Toutes les minutes, ce n'est pas mieux.</b> Cela ferait 1 440 auto-tests par jour.</p>
+    <p>· <b>La batterie&nbsp;:</b> pour les essayer, chaque test met en route le gyrophare, la sirène et la radio&nbsp;; la station se vide pour se surveiller. <br>· <b>La sirène&nbsp;:</b> elle sonnerait toutes les minutes&nbsp;; elle s'use, et le voisinage n'y croit plus. <br>· <b>Le gardien&nbsp;:</b> 1 440 messages par jour&nbsp;; il cesse de les lire, et rate le seul qui compte.</p>
+    <p><b>Une fréquence défendable&nbsp;:</b> celle de la station, une fois par jour, à 7 h. <br>Une panne est alors connue en moins de 24 heures, et il reste la journée pour réparer.</p>
+    <p><b>Et en plus&nbsp;:</b> un auto-test dès qu'une vigilance cyclonique est annoncée. <br>C'est le moment où la station doit être sûre.</p>
+    <p><b>Ta réponse est juste si</b> elle donne une fréquence, et la défend avec au moins deux des trois arguments&nbsp;: la batterie, l'usure, l'attention du gardien.</p>
+  </details>
   <p><label for="bonusRep"><b>✍ Ma réponse au Bonus</b> (facultatif — enregistrée avec ton travail) :</label></p>
   <textarea id="bonusRep" data-save rows="4" placeholder="Le défi que j'ai choisi, et ce que j'ai trouvé…"></textarea>
 </details>

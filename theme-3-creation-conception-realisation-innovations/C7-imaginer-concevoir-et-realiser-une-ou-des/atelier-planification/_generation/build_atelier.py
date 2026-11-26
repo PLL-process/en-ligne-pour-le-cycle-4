@@ -406,6 +406,19 @@ PM = """
     <p><b>Deux tâches sans contrainte entre elles peuvent avancer en même temps.</b> C'est là, et
     seulement là, qu'un groupe gagne du temps en se répartissant le travail.</p>
   </details>
+  <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
+    <p><b>1. Une tâche&nbsp;: on peut dire, à un instant donné, si elle est terminée ou non.</b><br>
+    « Câbler le capteur sur la carte »&nbsp;: on peut constater que c'est fait.<br>
+    Être importante, être écrite dans le cahier des charges ou être faite par une seule personne
+    ne suffit pas&nbsp;: « travailler sur le capteur » peut être tout cela, et ne jamais finir.</p>
+    <p><b>2. « Le prototype fonctionne »&nbsp;: un jalon, un point de contrôle qui ne dure pas.</b><br>
+    Personne ne « fait » cette ligne&nbsp;: on constate qu'on y est arrivé. Sa durée est zéro.<br>
+    Ce n'est ni une contrainte d'antériorité (elle relie deux tâches), ni une durée (un nombre de séances).</p>
+    <p><b>3. Deux tâches sans contrainte peuvent avancer en même temps&nbsp;: c'est là qu'on gagne du temps.</b><br>
+    Rien n'oblige à attendre la fin de l'une pour commencer l'autre&nbsp;: deux élèves s'y mettent en parallèle.<br>
+    Elles ne sont pas forcément sur le chemin le plus long, et on ne les fusionne pas&nbsp;: ce sont deux travaux différents.</p>
+    <p>Une réponse fausse&nbsp;? Aucune note n'est prise&nbsp;: ces trois mots reviennent dans toute la suite.</p>
+  </details>
 </section>
 
 <section class="card">
