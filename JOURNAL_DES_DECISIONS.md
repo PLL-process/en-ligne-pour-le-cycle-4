@@ -38424,3 +38424,37 @@ pour 110, 145 min pour 165), `audit_aeration.py --strict`, `controle_squelette.m
 
 **Thème par thème** (n°302) : thème 3 seulement — `5e_C8.2` (séquence, mission, synthèse professeur, fiche, banc,
 rapport) et `3e_C8.1` (séquence, fiche, rapport).
+
+## 26/11/2026 — 3e_C8.2 : sept questions sur document, un billet de sortie, et plus « le protocole de 5e » (thème 3)
+
+Dernier lot de la compétence C8 sous les chantiers D1 (0 question sur document sur 30) et P1 (pas de billet de sortie).
+Pascal : « Tu as carte blanche ».
+
+**Ce que la lecture a trouvé, en plus des deux chantiers.** La séquence s'ouvrait sur « Tu as déjà éprouvé des
+matériaux en 5e » et nommait partout « le protocole de 5e » (titre de la séance 1, activité 1, bilan, synthèse élève,
+une proposition « comme en 5e ») : c'est ce que la règle d'or n°304 interdit — Pascal change de collège chaque année, et
+l'élève qui ne l'a pas fait se sent en défaut. `verif_regles_audit.py` ne le voyait pas (il lit le bloc d'ouverture,
+pas toute la page), ni `controle_question_seule.py` pour le QCM (« vu en classe de 5ᵉ » dans une proposition, « Le
+protocole de traction de 5ᵉ » dans un énoncé : S3 ne lit que certaines tournures). La page dit maintenant « l'essai de
+traction », « le protocole de traction » : un protocole tout prêt, juste, que l'élève applique sans l'avoir forcément
+jamais vu. Le tableau des rangs écrivait « 1<sup>e</sup> » : « 1<sup>er</sup> ».
+
+**Le QCM** : sept questions se lisent sur trois documents calculés depuis `profils_3e_C8.2.py` (`documents_qcm.py`,
+puis `_outils/document_qcm.py`) — le relevé du banc en flexion (q11, q26), les deux essais des cinq mêmes mâts (q5, q8,
+q14 ; la q5 compare enfin deux profilés du même acier, la barre Ø20 et le tube Ø33,7), le protocole d'un groupe, dont
+une ligne est laissée vide (q17, q20). La q1 cite la compétence au lieu de « En 3ᵉ, sur ce code ». Trois notions qui
+soufflaient la réponse sont renommées : « Le verbe de la compétence », « Lire les deux critères », « Lire deux
+classements » (pièges reposés, lexique régénéré).
+
+**Le billet de sortie**, avant le Bonus de la séance 4 : le bras de 1 000 mm qui portera la poulie du jardin
+pédagogique (sacs de terreau de 25 kg, coefficient 3) — proposer le protocole (sollicitation, conditions, règle écrite
+avant), puis dire comment mesurer la flèche et quoi faire d'un bras qui casse avant la charge d'essai.
+
+Bancs : séquence 46 / 46 (deux tests neufs pour le billet ; durée totale 165 min), QCM 34 / 34 (documents du lot,
+décrits, à jour du modèle), n°311 34 / 34. `controle_question_seule.py --strict` 0 refus, D1 0, P1 0 ;
+`balayer_questions_qcm.mjs --apres` 0 écart ; `controle_schemas.mjs` 0 ✘ ; les contrôles des QCM, du lexique, des
+règles d'or, de l'aération, du squelette et du mode mission : verts. **Les six lots C8 ont maintenant leurs six
+questions sur document et leur billet de sortie.**
+
+**Thème par thème** (n°302) : thème 3 seulement — `3e_C8.2` (séquence, synthèses, QCM, aides, lexique, mission,
+étayage, documents, bancs, fiche, README, sources, rapport) et `_outils/build_audit.py` (sa notice du lot).

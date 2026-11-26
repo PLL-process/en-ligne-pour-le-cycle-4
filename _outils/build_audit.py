@@ -825,7 +825,7 @@ OVERLAY = {
                 "experientiels. Le pivot du lot est une mesure, pas une affirmation : les cinq "
                 "candidats ne se classent pas dans le meme ordre selon l'essai — la barre "
                 "pleine acier est 1re en traction (125,7 kN) et 4e en flexion (157 N). L'eleve "
-                "applique donc le protocole de 5e, juste et correctement applique, et constate "
+                "applique donc le protocole de traction (celui de 5e_C8.2), juste et correctement applique, et constate "
                 "lui-meme qu'il designe le mauvais mat ; c'est de la qu'il tire la necessite "
                 "d'en proposer un autre. Les dix releves de l'activite 3 sont compares aux "
                 "vraies valeurs du banc a 0,05 pres : 41 au lieu de 41,1 est refuse. "
@@ -838,14 +838,19 @@ OVERLAY = {
                   "trois endroits, dont une question de QCM. Le modele a un domaine : la "
                   "fleche de 723,8 mm du PVC en sort, la page l'ecrit. Le verificateur ne lit "
                   "pas le protocole redige — il compte des lignes — et c'est pour cela qu'une "
-                  "grille de relecture croisee en binome (7 criteres) figure dans la page.",
+                  "grille de relecture croisee en binome (7 criteres) figure dans la page. Depuis le "
+                  "26/11/2026 : sept questions du QCM se lisent sur un document dessine pour le telephone "
+                  "(n°345), la sequence se ferme par un billet de sortie, le bras de la poulie du jardin "
+                  "(n°330), et elle ne dit plus a l'eleve « le protocole de 5e » mais « le protocole de "
+                  "traction » (n°304).",
         accessibilite="Listes deroulantes, corrections depliables, version C entierement sans "
                       "ecran, figure du banc dotee de title et desc detailles. Les trois "
                       "boites alert() du gabarit herite sont remplacees par un bandeau "
                       "aria-live (regle d'or n°188) — mesure au passage, hors archives : le "
                       "meme defaut subsiste dans 46 QCM sur 51 et 35 sequences sur 46, ce qui "
                       "demande une passe dediee et non un balayage glisse dans un lot.",
-        medias="Banc d'essai SVG original (CC0). Aucun media tiers.",
+        medias="Banc d'essai SVG original (CC0) ; trois documents du QCM, SVG originaux engendres "
+               "depuis profils_3e_C8.2.py (CC0). Aucun media tiers.",
     ),
     # ── Lot C7.4 « L'energie des trois objets », 29/08/2026 ─────────────────────
     "5e_C7.4": dict(

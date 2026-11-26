@@ -15,10 +15,10 @@ un bouton « ➡ Séance N+1 » la termine, et une ligne sous le titre mène à 
 
 | Séance | Activités | Minutes annoncées |
 |---|---|---|
-| 1 | la situation, l'hypothèse de départ, puis les activités 0 (casser trois mâts) et 1 (le protocole de 5<sup>e</sup> ne répond pas) | 15 + 25 = 40 |
+| 1 | la situation, l'hypothèse de départ, puis les activités 0 (casser trois mâts) et 1 (le protocole de traction ne répond pas) | 15 + 25 = 40 |
 | 2 | activité 2 (proposer son protocole : six décisions, rédaction, relecture du binôme) | 35 |
 | 3 | activités 3 (exécuter son protocole) et 4 (ce que le protocole ne voit pas) | 30 + 20 = 50 |
-| 4 | activité 5 (décider, signer l'avis) et REFAIRE, puis synthèse, Bonus, bilan et renvoi au QCM | 20 + 15 = 35 |
+| 4 | activité 5 (décider, signer l'avis) et REFAIRE, puis synthèse, billet de sortie (seul, sans aide), Bonus, bilan et renvoi au QCM | 20 + 15 + 5 = 40 |
 
 Découpage du 24/10/2026 (décision de Pascal : une heure de cours par semaine). Aucune activité
 n'est coupée ni raccourcie. Trois séances auraient été possibles en coupant l'activité 2
@@ -33,8 +33,8 @@ vivre dehors, en tête d'un mât de 2 m, avec 180 km/h de vent le jour où elle 
 fait-on ce mât, et comment le prouve-t-on ?** Cette fois, personne ne fournit de protocole.
 
 Le verbe du code est **proposer**. Pour que ce verbe soit évalué et pas seulement récité, le
-lot rend l'erreur **mesurable** : l'élève applique d'abord le protocole de traction de
-5<sup>e</sup> — juste, connu, correctement appliqué — et constate lui-même, banc en main, qu'il
+lot rend l'erreur **mesurable** : l'élève applique d'abord le protocole de traction (celui
+de `5e_C8.2`) — juste, correctement appliqué — et constate lui-même, banc en main, qu'il
 désigne un mât que la flexion élimine.
 
 | Candidat | Traction | Rang | Flexion | Rang |

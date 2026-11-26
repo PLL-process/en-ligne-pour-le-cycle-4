@@ -263,3 +263,36 @@ Exécuté le 08/11/2026 (Chromium Playwright, session cloud) : `tests_3e_C8.2_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_verrous`, `controle_rapports_tests` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_3e_2026-11-08/`. Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 26/11/2026 — Sept questions sur document, un billet de sortie, et plus rien d'une autre année (n°345, n°330, n°304)
+
+**Ce qui a changé.**
+- **QCM** : sept questions se lisent sur trois documents dessinés pour le téléphone (`documents_qcm.py` depuis
+  `profils_3e_C8.2.py`, puis `_outils/document_qcm.py`) : le relevé du banc en flexion (q11, q26), les deux essais
+  traction et flexion des cinq mêmes mâts (q5, q8, q14), le protocole d'un groupe (q17, q20). Bonnes réponses à leur
+  place ; chaque mauvaise proposition renvoie à la ligne ou à la colonne à relire.
+- **n°304** : la page disait « Tu as déjà éprouvé des matériaux en 5e », « le protocole de 5e », « comme en 5e ». Elle
+  dit « l'essai de traction », « le protocole de traction » (séquence, synthèse élève, mission, étayage, QCM q1, q14,
+  q15, q22, q25). La q1 ne dit plus « En 3ᵉ, sur ce code » : elle cite la compétence. Notions renommées : « Le verbe de
+  la compétence », « Lire les deux critères », « Lire deux classements » (pièges reposés par `poser.py`, lexique
+  régénéré). « 1<sup>e</sup> » devient « 1<sup>er</sup> » dans le tableau des rangs.
+- **Billet de sortie** avant le Bonus de la séance 4 : le bras de la poulie du jardin (1 000 mm, sacs de 25 kg,
+  coefficient 3). Deux réponses écrites, deux versions étayées, une correction à deux critères et quatre ✘ ; aucun
+  bouton.
+
+**Exécuté.**
+- `node tests_3e_C8.2_sequence.mjs "$PWD/sequence_3e_C8.2_mat-de-la-station.html"` : **46 / 46** — deux tests neufs
+  (le billet : sa forme, sa place, et sa réponse relue après rechargement) ; le total des durées passe à 165 min
+  (160 d'activités, 5 de billet) et la séance 4 compte « Activité 5 + REFAIRE + Billet de sortie ».
+- `node tests_3e_C8.2_qcm.mjs "$PWD/qcm_3e_C8.2_mat-de-la-station.html"` : **34 / 34** — le test « aucune image
+  héritée du lot voisin » devient : au moins six questions sur document, chacune un `Images/doc_…` du lot, présent et
+  décrit (plus de 80 caractères), et `documents_qcm.py --verifier` à jour.
+- `node tests_regle_311_3e_C8.2.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict` sur le lot : 0 refus ; D1 0, P1 0. `balayer_questions_qcm.mjs --apres` :
+  30 questions jouées à 390 px, 7 illustrées, 90 écrans d'aide, 0 écart. `controle_schemas.mjs` : 0 ✘, 0 ⚠ ; les trois
+  documents regardés à 312 px.
+- `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `controle_indices_qcm`, `controle_unites`,
+  `controle_sigles`, `controle_longueurs` (0 bonne réponse détachée), `mesures_qcm` (8/7/7/8),
+  `verif_qcm_coherence`, `poser.py --verifier`, `poser_entrainement_melange --verifier`, `controle_lexique_a_jour`,
+  `verif_regles_audit.py` (n°23 : 165 min pour 220), `audit_aeration.py --strict`, `controle_squelette.mjs`,
+  `mode_mission/banc_generique.mjs`, `enrichir.py --verifier-tout` : verts.
