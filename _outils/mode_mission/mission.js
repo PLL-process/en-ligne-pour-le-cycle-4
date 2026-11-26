@@ -91,7 +91,7 @@ function conteneur(){
 }
 function gabarit(){
   if ($(".seance-panel") && $(".seance-tab")) return { panneau:".seance-panel", onglet:".seance-tab", actif:"active", attr:"data-panel", de:function(o){ return o.dataset.panel; } };
-  if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:$("section.panneau[role=tabpanel].actif") ? "actif" : null, attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
+  if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:$("section.panneau[role=tabpanel].actif") ? "actif" : null, kit:!$("section.panneau[role=tabpanel].actif") && !!$("#donnees-page"), attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
   if ($(".seance-bloc[id]")) return { panneau:".seance-bloc[id]", onglet:null, actif:"ms-ici" };
   var c = conteneur();
   if (c){ c.classList.add("ms-page"); if (!c.id) c.id = "ms-page"; return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true }; }
@@ -168,7 +168,7 @@ function cle(f){
   if (f._msCle !== undefined) return f._msCle === null ? undefined : f._msCle;
   var c = (candidats()[f.id] || []).slice(), r = null;
   if (f.hasAttribute("data-bonne")) c.push(["=", f.getAttribute("data-bonne")]);
-  var pn = parNom()[nomDe(f)]; if (pn && !c.length) c.push(["=", pn.bonne]);
+  var pn = G.kit ? parNom()[nomDe(f)] : null; if (pn && !c.length) c.push(["=", pn.bonne]);
   if (c.length && estChamp(f) && !f.classList.contains("positionnement")){
     var vals = valeurs(f), bons = [];
     c.forEach(function(x){
@@ -194,11 +194,15 @@ function rendu(c){ return getComputedStyle(c).display !== "none" && !c.hidden; }
 function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"); }
 /* le bouton de vérification de la page, et le message qu'elle écrit : `button[data-check]` et `.feedback` (gabarit
    commun) ; `button.verif[data-exo="x"]` et `#res-x` (Book Train : le bouton désigne sa zone `#x`) */
-var CHECK = "button[data-check], button.verif[data-exo], [data-exo] button.verifier";
+/* Le bouton `button.verifier` et le message `.retour[data-retour]` sont ceux du kit des ateliers. Ils ne comptent que
+   dans une page du kit (un atelier, un cahier — `G.kit`) : dans une séquence, un exercice du kit incrusté garde son
+   écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
+   six séquences du thème 1 — vu par banc_generique avant la livraison). */
+var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
 /* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
 function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
 function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
-function estMessage(c){ return c.classList.contains("feedback") || c.matches(".retour[data-retour]") || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
+function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
 function porteChamp(c){ return estChamp(c) || !!$(CHAMP + ",textarea,input:not([type=radio]):not([type=checkbox]):not([type=hidden])", c); }
 function estActivite(c){
   if (c.matches(".activite, .act")) return true;
@@ -363,9 +367,25 @@ function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas
 /* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (« Prêt·e à t'entraîner » et le Bonus
    du TP mBot2, posés avant </body>) font des écrans comme les autres */
 function suivants(P){ var o = []; for (var x = P.nextElementSibling; x; x = x.nextElementSibling) if (estBloc(x) && rendu(x)) o.push(x); return o; }
+/* Une page à onglets qui range sa clôture APRÈS ses panneaux (l'atelier de planification : Bonus, Bilan, QCM, traces ;
+   l'entraînement au brevet : « Pour aller plus loin ») la montre sous chaque onglet. En mission, ces cartes restaient
+   sous chaque écran. Elles deviennent les derniers écrans du dernier panneau, et se cachent ailleurs (25/11/2026).
+   Aucune des 60 séquences n'en porte : leur clôture vit dans la dernière séance (règle d'or n°306). */
+var _hors = null;
+function horsPanneaux(){
+  if (_hors) return _hors; _hors = [];
+  if (G.page) return _hors;
+  var P = $$(G.panneau), der = P[P.length - 1]; if (!der) return _hors;
+  $$(CARTE).forEach(function(c){
+    if (!(der.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING) || der.contains(c)) return;      // après le dernier panneau, dans l'ordre de la page
+    if (c.closest(G.panneau) || (c.parentElement && c.parentElement.closest(CARTE)) || c.closest(".ms-seul, .ms-invite, footer") || !rendu(c)) return;
+    _hors.push(c);
+  });
+  return _hors;
+}
 function construire(P){
-  var E = [], portes = [], devant = [];
-  enfants(P).concat(G.page ? suivants(P) : []).forEach(function(C){
+  var E = [], portes = [], devant = [], tousP = $$(G.panneau);
+  enfants(P).concat(G.page ? suivants(P) : (P === tousP[tousP.length - 1] ? horsPanneaux() : [])).forEach(function(C){
     if (C.classList.contains("page-suivante") || !rendu(C)) return;          // ce que la page cache d'elle-même (fiche professeur) ne fait pas d'écran
     /* le bouton « Exercice 2 › » du kit des ateliers, seul dans son paragraphe : le mode porte le sien */
     if (C.tagName === "P" && C.children.length === 1 && C.firstElementChild.matches("button.suivant[data-vers]")){ C.classList.add("ms-origine"); return; }
@@ -663,6 +683,7 @@ function montrer(haut){
   s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau && panneau.contains(p); p = p.parentNode) vis.push(p); });
   if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau && panneau.contains(p); p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
+  horsPanneaux().forEach(function(n){ if (ecrans.tous.indexOf(n) < 0) n.classList.add("ms-cache"); });      // la clôture rangée après les panneaux : au dernier seulement
   var ouv = $("#ouverture"); if (ouv) ouv.classList.toggle("ms-cache", !s.ouverture);
   /* « l'éditeur Python est intégré à l'activité » ne se dit que là où on le voit : sur les écrans de prédiction,
      qui viennent avant lui, l'annonce se tait (17/11/2026) */
@@ -741,7 +762,7 @@ function peindreRetour(s){
    pas), sinon `data-indice` sur la question (ce qu'elle demande). Jamais la bonne réponse. */
 function raison(f, seule){
   var r = f.tagName === "SELECT" ? f.selectedOptions[0] : $("input[type=radio]:checked", f), pq = (r && r.getAttribute("data-pourquoi")) || f.getAttribute("data-indice");
-  if (!pq){ var pn = parNom()[nomDe(f)]; pq = pn ? (pn.retours[lireV(f)] || pn.indice) : ""; }          // le pourquoi d'un atelier : dans ses données
+  if (!pq){ var pn = G.kit ? parNom()[nomDe(f)] : null; pq = pn ? (pn.retours[lireV(f)] || pn.indice) : ""; }          // le pourquoi d'un atelier : dans ses données
   if (!pq) return "";
   if (f.classList.contains("ms-origine")) return "<b>« " + esc(lireV(f)) + " »</b> ne va pas avec « " + esc(intitule(f)) + " ». " + esc(pq);
   var t = intitule(f);          // l'intitulé de la question, puis son pourquoi : deux phrases, pas une seule
@@ -911,12 +932,13 @@ window.addEventListener("pointerup", function(ev){ lache(ev, false); });
 window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
 
 /* pour les bancs : la réponse que le mode retient pour un groupe, et l'écran en cours */
-D.documentElement._mission = { cle: cle, gabarit: function(){ return G ? { P:G.panneau, T:G.onglet, A:G.actif || null, de:G.attr || null, actif:selActif(), page:!!G.page } : null; }, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
+D.documentElement._mission = { cle: cle, gabarit: function(){ return G ? { P:G.panneau, T:G.onglet, A:G.actif || null, de:G.attr || null, actif:selActif(), page:!!G.page, kit:!!G.kit } : null; }, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
 function init(){
   G = gabarit(); if (!G) return;                                    // gabarit non reconnu : la page reste telle quelle
+  if (G.kit) CHECK = CHECK_BASE + ", [data-exo] button.verifier";
   /* un groupe de boutons radio sans identifiant (ateliers) en reçoit un, tiré du nom de ses boutons : c'est par lui
      que les bancs désignent une question. Rien d'autre ne le lit. */
-  $$(G.panneau).forEach(function(P){ $$("fieldset.qcm-groupe:not([id])", P).forEach(function(f){ var nm = nomDe(f); if (nm && !D.getElementById("ms-q-" + nm)) f.id = "ms-q-" + nm; }); });
+  if (G.kit) $$(G.panneau).forEach(function(P){ $$("fieldset.qcm-groupe:not([id])", P).forEach(function(f){ var nm = nomDe(f); if (nm && !D.getElementById("ms-q-" + nm)) f.id = "ms-q-" + nm; }); });
   garde = !!$(SIEN);
   lire();
   /* « Effacer ma sauvegarde » efface aussi la mission : sur un poste partagé, l'élève suivant ne trouve ni les

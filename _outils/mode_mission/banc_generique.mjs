@@ -40,7 +40,8 @@ for (const PAGE of pages) {
   // commun, Book Train), blocs à la suite, onglets ARIA dont le panneau ouvert n'est pas `hidden` (ateliers et cahiers
   // des représentations), ou page à cartes — un seul panneau, le conteneur de la page
   const GAB = await p.evaluate(() => document.documentElement._mission.gabarit());
-  const ACTIF = GAB.actif, CHECK = 'button[data-check], button.verif[data-exo], [data-exo] button.verifier', MESSAGE = '.feedback, .resultat[id^="res-"], .retour[data-retour]';
+  // le bouton et le message du kit des ateliers ne comptent que dans une page du kit : dans une séquence, un exercice incrusté garde les siens
+  const ACTIF = GAB.actif, CHECK = 'button[data-check], button.verif[data-exo]' + (GAB.kit ? ', [data-exo] button.verifier' : ''), MESSAGE = '.feedback, .resultat[id^="res-"]' + (GAB.kit ? ', .retour[data-retour]' : '');
   // les réponses que le mode retient, groupe par groupe (la prise `_mission` du bloc)
   const cles = await p.evaluate(GAB => { const M = document.documentElement._mission, o = {};
     document.querySelectorAll(GAB.P).forEach(P => P.querySelectorAll('fieldset.qcm-groupe[id], select[id]:not([data-interface])').forEach(f => { const c = M.cle(f); if (c !== undefined) o[f.id] = c; })); return o; }, GAB);
