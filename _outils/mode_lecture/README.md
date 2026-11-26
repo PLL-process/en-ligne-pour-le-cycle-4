@@ -15,7 +15,8 @@ ses parties une à la fois, avec une barre d'étapes et deux boutons — Précé
   `.container` et `body`. Dans une synthèse : la carte « 🧠 Ce que je dois retenir », puis chaque partie, puis les
   mots de la séquence. Dans un lexique : une séance, ou une compétence.
 - **Garde le haut de la page à la première partie.** Le titre reste ; sa question et sa barre d'outils (« 🖨 Imprimer »)
-  se lisent à la première partie, puis s'effacent : elles prenaient un quart d'écran de téléphone à chaque partie.
+  se lisent à la première partie, puis s'effacent — qu'elles soient dans le conteneur ou juste avant lui (le
+  sous-titre d'un lexique) : elles prenaient un quart d'écran de téléphone à chaque partie.
 - **Dit où l'on est** : « Partie 3 sur 8 · 2. Quelles sont les deux chaînes du lampadaire ? », et une barre d'étapes
   où chaque trait mène à sa partie (cible de 24 px de haut, nom accessible « Partie 3 sur 8 : … »).
 - **Suit les liens de la page.** « ↑ La carte », un lien de la carte vers « #partie-3 », une adresse

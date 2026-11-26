@@ -283,6 +283,12 @@ function decouper(){
     else if (cur) cur.n.push(c);
     else if (c.tagName !== "H1" && c.tagName !== "NAV") c.classList.add("ml-entete");   // sous le titre : la question de la page, sa barre d'outils
   });
+  /* le sous-titre posé avant le conteneur, hors de lui (le lexique : h1, p.sub, puis <main>) se lit aussi à la première
+     partie seulement ; le titre et la navigation restent */
+  if (C !== D.body) for (var x = C.previousElementSibling; x; x = x.previousElementSibling){
+    if (/^(H1|NAV|SCRIPT|STYLE|TEMPLATE|LINK|NOSCRIPT|HEADER)$/.test(x.tagName) || x.id === "navharm" || x.classList.contains("ml-seul") || x.classList.contains("ml-invite")) continue;
+    x.classList.add("ml-entete");
+  }
   o.forEach(function(e, i){ e.titre = titreDe(e.n) || "Partie " + (i + 1); });
   return o;
 }
