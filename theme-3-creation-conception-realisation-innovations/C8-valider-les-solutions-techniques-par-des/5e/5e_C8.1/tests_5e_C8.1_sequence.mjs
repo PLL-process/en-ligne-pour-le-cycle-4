@@ -256,6 +256,31 @@ ok('les verrous survivent au rechargement',
 ok('le tableau du simulateur est reconstruit au rechargement',
   (await p.$$eval('#tab tbody tr', n => n.length)) > 1);
 
+/* ── le billet de sortie (n°330, 25/11/2026) : une preuve faite seul, sur un objet que la séquence n'a pas étudié (le
+ *    crochet du carbet). Deux réponses écrites qui survivent au rechargement, deux versions étayées, deux critères dans la
+ *    correction, dans la dernière séance, juste avant le Bonus, et aucun bouton : il ne valide rien (n°333). ── */
+if (niveau === '5e') {
+  const bs = await p.evaluate(() => {
+    const b = document.getElementById('billetSortie'); if (!b) return null;
+    const c = b.querySelector('details.correction'), n = b.nextElementSibling, pan = b.closest('.seance-panel');
+    const tous = [...document.querySelectorAll('.seance-panel')].filter(x => !/hors/.test(x.id));
+    return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length,
+             criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0,
+             avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))),
+             derniere: !!pan && pan === tous[tous.length - 1], boutons: b.querySelectorAll('button').length };
+  });
+  ok('billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, dernière séance, avant le Bonus, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayees === 2 && bs.criteres === 2 && bs.avantBonus && bs.derniere && bs.boutons === 0,
+     JSON.stringify(bs));
+  await ouvrirSeanceDe('#bs_5e_C8_1_1');
+  await p.fill('#bs_5e_C8_1_1', 'Aluminium et acier : je lis la colonne Plie');
+  await p.waitForTimeout(150);
+  await p.reload({ waitUntil: 'load' });
+  await p.waitForTimeout(400);
+  ok('billet de sortie : la réponse écrite survit au rechargement',
+     /colonne Plie/.test(await p.inputValue('#bs_5e_C8_1_1')), await p.inputValue('#bs_5e_C8_1_1'));
+}
+
 const n0 = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));
 console.log(`\n${n0} / ${T.length}`);

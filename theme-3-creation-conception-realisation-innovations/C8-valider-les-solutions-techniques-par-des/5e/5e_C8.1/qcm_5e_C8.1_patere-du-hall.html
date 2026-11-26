@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 5e_C8.1 + 10 5e_C3.1), 0 illustrée.
+/* Banque : 30 questions (20 5e_C8.1 + 10 5e_C3.1), 7 illustrées (25/11/2026 : sept questions se lisent sur un document, n°345).
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -360,35 +362,40 @@ const QUESTIONS = [
  err:"Inverser le rapport, et annoncer un coefficient de 0,08 au lieu de 11,9.",
  d:["le prix n'a aucun rapport avec la marge mécanique d'une pièce","inversé, on obtient un nombre plus petit que 1 pour toute pièce qui tient","la masse de la pièce n'entre pas dans le coefficient de sécurité",""],
  ret:"k = limite ÷ contrainte de service. Toujours dans ce sens-là."},
-{c:"5e_C8.1",n:"Un coefficient sans sa limite",q:"Un camarade annonce « le bois a un coefficient de 3,4 ». Que manque-t-il à cette phrase ?",
+{c:"5e_C8.1",n:"Un coefficient sans sa limite",q:"Un camarade annonce « le bois a un coefficient de 3,4 ». D'après ce tableau, que manque-t-il à sa phrase ?",
+ img:{src:"Images/doc_deux_coefficients.svg",alt:"Le coefficient de sécurité du crochet, sous 12 kilogrammes ; le gestionnaire exige 3 au moins. Pour chaque matériau, calculé sur la rupture, puis sur la limite élastique. Bois (pin) : sur la rupture 3,4, sur l'élastique 2,1. PLA : sur la rupture 4,2, sur l'élastique 3,8. PVC : sur la rupture 4,4, sur l'élastique 3,8. Aluminium : sur la rupture 16,1, sur l'élastique 11,9. Acier doux : sur la rupture 34,0, sur l'élastique 20,0."},
  o:["le nom du matériau, puisque le bois n'est pas un matériau assez précis","la charge de service utilisée pour le calcul, qui vaut toujours 12 kg","l'unité du coefficient de sécurité, qui doit être donnée en mégapascals","par rapport à quelle limite — sur la rupture 3,4, sur l'élastique 2,1"],r:3,
  expl:"Le même matériau, la même charge, et deux coefficients différents selon la limite choisie. Annoncer le nombre sans la limite, c'est n'avoir rien annoncé.",
  ex:"Bois : 3,4 sur la rupture — retenu ; 2,1 sur la limite élastique — écarté.",
  err:"Comparer deux coefficients calculés sur deux limites différentes.",
- d:["la précision du matériau est un autre sujet ; ici c'est la limite qui manque","la charge de service est bien nécessaire, mais elle est déjà fixée par le cahier des charges","un coefficient est un rapport de deux contraintes : il n'a pas d'unité",""],
+ d:["La précision du matériau est un autre sujet. Relis la ligne du bois : elle porte deux coefficients.","La charge de service est déjà fixée, 12 kg pour tous. Relis la ligne du bois : elle porte deux coefficients.","Un coefficient est un rapport de deux contraintes : il n'a pas d'unité. Relis les deux colonnes de la ligne du bois.",""],
  ret:"Un coefficient de sécurité s'annonce toujours avec la limite qui l'a produit."},
-{c:"5e_C8.1",n:"Le seul matériau qui change de camp",q:"Sur les cinq matériaux testés pour la patère du hall, combien changent de décision selon qu'on prend la rupture ou la limite élastique ?",
+{c:"5e_C8.1",n:"Le seul matériau qui change de camp",q:"D'après ce tableau des matériaux testés pour la patère du hall, combien changent de décision selon qu'on prend la rupture ou la limite élastique ?",
+ img:{src:"Images/doc_deux_coefficients.svg",alt:"Le coefficient de sécurité du crochet, sous 12 kilogrammes ; le gestionnaire exige 3 au moins. Pour chaque matériau, calculé sur la rupture, puis sur la limite élastique. Bois (pin) : sur la rupture 3,4, sur l'élastique 2,1. PLA : sur la rupture 4,2, sur l'élastique 3,8. PVC : sur la rupture 4,4, sur l'élastique 3,8. Aluminium : sur la rupture 16,1, sur l'élastique 11,9. Acier doux : sur la rupture 34,0, sur l'élastique 20,0."},
  o:["un seul : le bois, retenu par le banc et écarté par la simulation","aucun : les deux limites donnent exactement le même classement final","trois : le bois, le PLA et le PVC basculent tous les trois d'un coup","cinq : chaque matériau change de décision quand on change de limite"],r:0,
  expl:"Le PLA, le PVC, l'aluminium et l'acier gardent une marge suffisante sur les deux limites. Seul le bois passe de 3,4 à 2,1 et franchit le seuil de 3.",
  ex:"Bois : retenu sur la rupture, écarté sur l'élastique. Les quatre autres : retenus deux fois.",
  err:"Conclure que le choix de la limite ne change jamais rien parce qu'il ne change souvent rien.",
- d:["","le bois change bien de décision : c'est tout l'objet de la séquence","le PLA et le PVC gardent un coefficient de 3,8 sur la limite élastique : ils tiennent","l'aluminium et l'acier ont des marges bien trop grandes pour basculer"],
+ d:["","Le bois passe de 3,4 à 2,1 : il franchit le seuil de 3. Compare chaque ligne au seuil, colonne par colonne.","Le PLA et le PVC gardent 3,8 sur l'élastique : ils restent au-dessus de 3. Ne compte que ceux qui passent sous le seuil.","L'aluminium et l'acier restent très au-dessus de 3 dans les deux colonnes. Cherche la ligne qui passe sous le seuil."],
  ret:"Un changement de limite ne déclasse pas tout le monde — il suffit qu'il déclasse le bon."},
-{c:"5e_C8.1",n:"PLA contre PVC",q:"Au banc, le PVC a tenu 53 kg et le PLA 51 kg. Que conclure pour le crochet du hall ?",
+{c:"5e_C8.1",n:"PLA contre PVC",q:"D'après ce tableau, le PVC casse à 53 kg (kilogrammes) et le PLA à 51 kg. Que conclure pour le crochet du hall ?",
+ img:{src:"Images/doc_plie_casse.svg",alt:"Pour chaque matériau du crochet, la charge à partir de laquelle il plie pour toujours, calculée par la simulation, et la charge à laquelle il casse, relevée au banc d'essai. Bois (pin) : plie à 25 kilogrammes, casse à 41 kilogrammes. PLA : plie à 46 kilogrammes, casse à 51 kilogrammes. PVC : plie à 46 kilogrammes, casse à 53 kilogrammes. Aluminium : plie à 143 kilogrammes, casse à 194 kilogrammes. Acier doux : plie à 240 kilogrammes, casse à 408 kilogrammes."},
  o:["rien : ils ont la même limite élastique, donc la même marge en service","que le PVC est meilleur, puisqu'il a tenu deux kilogrammes de plus","que le PLA est meilleur, puisque la simulation inverse les classements","que l'un des deux relevés du banc était forcément entaché d'une erreur"],r:0,
  expl:"Les deux plastiques plient à partir de 45 MPa (mégapascals), soit 46 kg. L'écart mesuré au banc porte sur la rupture, qui n'est pas le critère retenu ici.",
  ex:"PLA et PVC : coefficient 3,8 tous les deux. Deux kilos d'écart, zéro conséquence.",
  err:"Classer deux candidats sur un écart qui ne concerne pas le critère de décision.",
- d:["","l'écart de deux kilos porte sur la rupture, pas sur la déformation permanente","la simulation n'inverse rien du tout : elle les met à égalité stricte","les deux relevés sont justes ; c'est leur usage comme critère qui serait faux"],
+ d:["","L'écart de deux kilos porte sur la rupture, pas sur la déformation. Compare leurs lignes dans la colonne « Plie à ».","Ni le tableau ni la simulation n'inversent le classement : les deux plient à 46 kg. Relis la colonne « Plie à ».","Les deux relevés sont justes ; c'est leur usage comme critère qui serait faux. Relis la colonne « Plie à »."],
  ret:"Un écart mesuré ne prouve quelque chose que s'il porte sur le critère de décision."},
-{c:"5e_C8.1",n:"La charge qui déforme le bois",q:"Le crochet en bois plie définitivement à partir de quelle charge, d'après la simulation ?",
- o:["environ 41 kg, ce qui est la valeur relevée au banc lors des essais réels","environ 25 kg, soit à peine deux sacs de cours trempés accrochés ensemble","environ 12 kg, c'est-à-dire exactement la charge de service du cahier","environ 60 kg, une charge qu'aucun élève ne pourra jamais y suspendre"],r:1,
+{c:"5e_C8.1",n:"La charge qui déforme le bois",q:"D'après ce tableau, à partir de quelle charge le crochet en bois plie-t-il pour toujours ?",
+ img:{src:"Images/doc_plie_casse.svg",alt:"Pour chaque matériau du crochet, la charge à partir de laquelle il plie pour toujours, calculée par la simulation, et la charge à laquelle il casse, relevée au banc d'essai. Bois (pin) : plie à 25 kilogrammes, casse à 41 kilogrammes. PLA : plie à 46 kilogrammes, casse à 51 kilogrammes. PVC : plie à 46 kilogrammes, casse à 53 kilogrammes. Aluminium : plie à 143 kilogrammes, casse à 194 kilogrammes. Acier doux : plie à 240 kilogrammes, casse à 408 kilogrammes."},
+ o:["environ 41 kg, ce qui est la valeur relevée au banc lors des essais réels","environ 25 kg, soit à peine deux sacs de cours trempés accrochés ensemble","environ 12 kg, c'est-à-dire exactement la charge de service du cahier","environ 46 kg, la charge à laquelle plient le PLA et le PVC"],r:1,
  expl:"25 MPa (mégapascals) de limite élastique ÷ 0,98 MPa par kilogramme ≈ 25 kg. Deux sacs suffisent, et deux sacs sur un même crochet, cela arrive tous les jours.",
  ex:"Deux élèves pressés, un seul crochet libre : le bois est déjà au-delà de sa limite.",
  err:"Se rassurer avec la charge de rupture alors que la déformation arrive bien avant.",
- d:["41 kg est la charge de RUPTURE relevée au banc, pas celle qui déforme","","12 kg est la charge de service prévue : le bois la supporte sans se déformer","60 kg dépasse même la rupture du bois, relevée à 41 kg au banc"],
+ d:["41 kg est la charge de rupture, relevée au banc. Relis la ligne du bois dans la colonne « Plie à ».","","12 kg est la charge de service : le bois la supporte sans plier. Cherche, dans la ligne du bois, la charge qui le déforme.","46 kg se lit sur les lignes du PLA et du PVC. Relis la ligne du bois."],
  ret:"Le bois plie à 25 kg et casse à 41 kg. La première valeur est celle qui décide."},
-{c:"5e_C8.1",n:"Deux instruments, deux questions",q:"Le banc et la simulation ne classent pas le bois pareil. Qui a tort ?",
+{c:"5e_C8.1",n:"Deux instruments, deux questions",q:"D'après ce tableau, le banc et la simulation ne classent pas le bois pareil. Qui a tort ?",
+ img:{src:"Images/doc_plie_casse.svg",alt:"Pour chaque matériau du crochet, la charge à partir de laquelle il plie pour toujours, calculée par la simulation, et la charge à laquelle il casse, relevée au banc d'essai. Bois (pin) : plie à 25 kilogrammes, casse à 41 kilogrammes. PLA : plie à 46 kilogrammes, casse à 51 kilogrammes. PVC : plie à 46 kilogrammes, casse à 53 kilogrammes. Aluminium : plie à 143 kilogrammes, casse à 194 kilogrammes. Acier doux : plie à 240 kilogrammes, casse à 408 kilogrammes."},
  o:["le banc, dont les cinq relevés étaient trop imprécis pour décider","ni l'un ni l'autre : ils répondent chacun à une question différente","la simulation, qui est théorique et donc plus sévère que la réalité","les deux, puisque deux instruments justes ne peuvent pas se contredire"],r:1,
  expl:"Le banc répond à « quand est-ce que ça casse ? ». La simulation répond à « quand est-ce que ça reste tordu ? ». Deux bonnes réponses, deux questions.",
  ex:"Bois : casse à 41 kg (banc), plie à 25 kg (simulation). Les deux chiffres sont justes.",
@@ -396,9 +403,9 @@ const QUESTIONS = [
  d:["les relevés du banc sont justes : la simulation les retrouve exactement","","la simulation retrouve les mêmes charges de rupture que le banc : elle n'est pas plus sévère","deux instruments justes se contredisent souvent : c'est le signe qu'ils mesurent autre chose"],
  ret:"Quand deux mesures justes se contredisent, ce sont les questions qui diffèrent."},
 {c:"5e_C8.1",n:"Retrouver une réponse connue",q:"Pourquoi la simulation calcule-t-elle aussi les charges de rupture, alors qu'on ne s'en sert pas pour décider ?",
- o:["pour occuper la colonne de droite du tableau, qui serait sinon vide","pour vérifier qu'elle retrouve les relevés du banc, et mériter notre confiance","parce que la rupture est le seul critère que l'ordinateur sait calculer","pour montrer que le banc de l'an dernier avait fait des erreurs de mesure"],r:1,
+ o:["pour occuper la colonne de droite du tableau, qui serait sinon vide","pour vérifier qu'elle retrouve les relevés du banc, et mériter notre confiance","parce que la rupture est le seul critère que l'ordinateur sait calculer","pour montrer que le banc s'était trompé dans ses relevés de rupture"],r:1,
  expl:"Un instrument neuf se contrôle d'abord sur un cas dont on connaît déjà la réponse. Les cinq charges de rupture calculées tombent sur les cinq relevés du banc.",
- ex:"41, 51, 53, 194 et 408 kg : la simulation redonne exactement les relevés de 5e_C8.2.",
+ ex:"41, 51, 53, 194 et 408 kg : la simulation redonne exactement les charges de rupture relevées au banc.",
  err:"Faire confiance à un outil neuf sans l'avoir vu retrouver une réponse déjà connue.",
  d:["une colonne inutile serait retirée : celle-ci sert de contrôle","","la simulation calcule aussi bien la déformation que la rupture","elle confirme au contraire les relevés du banc, au kilogramme près"],
  ret:"On vérifie un instrument neuf sur une réponse connue avant de lui poser une question neuve."},
@@ -480,12 +487,13 @@ const QUESTIONS = [
  err:"Effacer une réserve parce qu'elle ne gêne pas dans le cas du jour.",
  d:["","elle ne s'applique pas dans ce hall couvert, mais elle s'applique ailleurs","un hall couvert de Martinique ne monte pas à 55 °C à l'ombre","le PLA tient très bien à 30 °C : c'est vers 55 °C que le problème commence"],
  ret:"Une réserve suit le matériau. On l'écrit même quand elle ne gêne pas aujourd'hui."},
-{c:"5e_C3.1",n:"Le coût des quarante patères",q:"Le PLA coûte 24 € pour les 40 patères, le PVC 84 €. Pourquoi ne pas prendre le PLA ?",
+{c:"5e_C3.1",n:"Le coût des quarante patères",q:"D'après ce tableau, le PLA est le moins cher des quatre. Pourquoi ne pas le prendre ?",
+ img:{src:"Images/doc_cout_delai.svg",alt:"Les quatre matériaux qui tiennent, pour 40 patères ; l'atelier dispose de 8 heures. PLA : coefficient 3,8, coût 24 euros, 30 heures d'atelier. PVC : coefficient 3,8, coût 84 euros, 6,7 heures d'atelier. Aluminium : coefficient 11,9, coût 192 euros, 10 heures d'atelier. Acier doux : coefficient 20,0, coût 220 euros, 10 heures d'atelier."},
  o:["il demanderait 30 heures d'impression pour 8 heures d'atelier disponibles","il coûte en réalité plus cher que le PVC, une fois la matière comptée","il ne résiste pas à la charge de service exigée par le cahier des charges","il ne se recycle pas, contrairement au PVC qui est entièrement recyclable"],r:0,
  expl:"Un prix qui ne tient pas dans le temps disponible n'est pas un prix : c'est un projet pour l'an prochain. Le délai fait partie du cahier des charges.",
  ex:"45 minutes d'impression × 40 patères = 30 heures. L'atelier en a 8.",
  err:"Classer sur le seul prix, sans regarder si l'atelier peut fabriquer à temps.",
- d:["","24 € restent bien inférieurs à 84 € : le prix n'est pas le problème","le PLA a un coefficient de 3,8 : il tient largement la charge exigée","le PLA est au contraire un plastique d'origine végétale et compostable en filière"],
+ d:["","24 € restent bien inférieurs à 84 € : le prix n'est pas le problème. Relis la colonne « Atelier ».","Le PLA a un coefficient de 3,8 : il tient la charge exigée. Relis la colonne « Atelier », et compare aux 8 heures.","Le tableau ne dit rien du recyclage : ce n'est pas ce qui l'écarte. Relis la colonne « Atelier »."],
  ret:"Le moins cher n'est pas le choix si l'atelier ne peut pas le fabriquer à temps."},
 {c:"5e_C3.1",n:"Une propriété, un usage",q:"Parmi ces phrases, laquelle relie correctement une propriété à un usage ?",
  o:["le bois est naturel, donc il convient mieux aux objets d'extérieur","l'acier est un métal, donc il convient à toutes les utilisations","l'aluminium ne rouille pas, donc il convient à un hall humide","le PVC est un plastique, donc il ne supporte aucune charge utile"],r:2,
@@ -515,10 +523,11 @@ const QUESTIONS = [
  err:"Croire qu'un objet sans alimentation est hors du domaine de l'énergie.",
  d:["aucune électricité n'intervient : ni très basse tension, ni secteur","une charge suspendue a une énergie potentielle, sans aucun moteur","","la fabrication en demande, et l'usage aussi : la charge travaille chaque jour"],
  ret:"Porter une charge, c'est déjà mettre en jeu de l'énergie potentielle."},
-{c:"5e_C3.1",n:"Choisir, c'est renoncer",q:"Le PVC est retenu. Qu'a-t-on accepté de perdre en le choisissant ?",
+{c:"5e_C3.1",n:"Choisir, c'est renoncer",q:"D'après ce tableau, le PVC est retenu. Qu'a-t-on accepté de perdre en le choisissant ?",
+ img:{src:"Images/doc_cout_delai.svg",alt:"Les quatre matériaux qui tiennent, pour 40 patères ; l'atelier dispose de 8 heures. PLA : coefficient 3,8, coût 24 euros, 30 heures d'atelier. PVC : coefficient 3,8, coût 84 euros, 6,7 heures d'atelier. Aluminium : coefficient 11,9, coût 192 euros, 10 heures d'atelier. Acier doux : coefficient 20,0, coût 220 euros, 10 heures d'atelier."},
  o:["rien du tout : le PVC est meilleur que les autres sur tous les critères","la marge énorme de l'aluminium, contre un coût et un délai qui tiennent","la tenue à l'humidité, que seul l'acier galvanisé aurait pu garantir","la possibilité de fabriquer les patères à l'atelier du collège"],r:1,
  expl:"L'aluminium offrait un coefficient de 11,9 contre 3,8. On l'échange contre 108 € et trois heures d'atelier économisés. Un choix technique se paie toujours quelque part.",
- ex:"Aluminium : k = 11,9, 192 €, 10 h. PVC : k = 3,8, 84 €, 6 h 40.",
+ ex:"Aluminium : k = 11,9, 192 €, 10 h. PVC : k = 3,8, 84 €, 6,7 h.",
  err:"Présenter le choix retenu comme supérieur partout, ce qui n'arrive presque jamais.",
  d:["l'aluminium et l'acier ont des coefficients bien supérieurs à celui du PVC","","le PVC est insensible à l'eau : c'est justement un de ses points forts","le PVC se découpe et se perce à l'atelier en dix minutes par pièce"],
  ret:"Un choix technique s'énonce avec ce qu'il fait gagner ET ce qu'il fait perdre."}

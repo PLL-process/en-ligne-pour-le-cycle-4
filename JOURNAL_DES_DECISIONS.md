@@ -37594,3 +37594,120 @@ tronquée) ; C1 0 ; N2 0 (N3 48, « deux actions jointes par et », à juger) ; 
 
 **Thème par thème** (n°302) : thème 1 — 3e_C1.5 (consigne) ; thème 2 — 8 QCM (C4, C5), 4e_C4.1 (consigne) ; thème 3 —
 13 QCM (C7, C8, C9), 2 fichiers d'aides, 4e_C8.1 ; `_outils` — `controle_question_seule.py` et son banc.
+
+## 25/11/2026 — 5e_C8.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+**La décision.** « 1 oui » de Pascal (25/11/2026, 17 h 21), à la proposition : traiter les lots de C8 restés sous six
+questions sur document et sans billet de sortie, un lot à la fois, en commençant par 5e_C8.1 (la patère du hall).
+
+**Ce qui change** :
+- Trois documents pour le téléphone, dont les nombres sont calculés par le modèle : `documents_qcm.py` (neuf) écrit
+  `documents_qcm_5e_C8.1.json` avec `patere.py` (n°233), `_outils/document_qcm.py` les dessine. Le coefficient de
+  sécurité sur la rupture et sur la limite élastique (questions 8 et 9) ; la charge où chaque crochet plie pour toujours
+  et celle où il casse (10, 11, 12) ; coefficient, coût des 40 patères et heures d'atelier des quatre matériaux qui
+  tiennent (25, 30). Plusieurs de ces questions demandaient un chiffre de la séquence sans le montrer (n°343).
+- Question 11 : le leurre « environ 60 kg » (aucune lecture n'y mène) devient une mauvaise lecture du tableau, 46 kg, la
+  ligne du PLA et du PVC. Question 13 : la proposition « le banc de l'an dernier » ne renvoie plus à une autre année
+  (n°304). Les pourquoi des questions sur document renvoient à la colonne ou à la ligne à relire. La question 9
+  garde la précision posée le même jour par la vérification totale (« testés pour la patère du hall ») et se lit
+  maintenant sur le tableau ; « cinq » sort de l'énoncé, que `controle_question_seule.py` lisait comme une liste
+  annoncée (E1) — le tableau montre les cinq.
+- Le billet de sortie (n°330) ferme la séance 2, avant le Bonus, environ 5 minutes : le crochet du carbet d'un club de
+  plage du Diamant, trois crochets donnés par une simulation fournie. Question 1 (5e_C8.1) : lesquels tiennent un
+  coefficient de 3, en lisant la colonne de la limite élastique — le bois casse à 36 kg mais plie à 22 kg. Question 2
+  (5e_C3.1) : au bord de la mer, écarter l'acier non galvanisé, qui rouille. Versions étayées, correction complète avec
+  critères et contre-exemples, aucun bouton.
+- Bancs : `tests_5e_C8.1_qcm.mjs` vérifie six questions sur document au moins, des documents du lot décrits, et que les
+  données sont à jour du modèle ; `tests_5e_C8.1_sequence.mjs` vérifie la forme du billet et qu'une réponse survit au
+  rechargement.
+
+**À savoir** : la séance 2 est pleine — 20 + 20 + 10 + 5 = 55 minutes avant la synthèse et le bilan.
+
+**Mesuré** : QCM 34 / 34 ; séquence 41 / 41 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : S3 1, E1 1, D1 1, P1 1) ; `--strict` sur le dépôt : 10 refus, 11 sur `main` ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0 écart ;
+`banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens sans écart.
+
+## 25/11/2026 — 5e_C8.1 : le réinvestissement se fait à la maison (thème 3)
+
+**La décision.** Pascal (25/11/2026, 17 h 38), à la question « avec le billet de sortie, la séance 2 fait 55 minutes
+avant la synthèse et le bilan » : « propose de faire le réinvestissement (10 min) à la maison ».
+
+**Ce qui change** (`sequence_5e_C8.1_patere-du-hall.html`) : le programme de la séance 2 dit « activités 3 et 4, puis la
+synthèse, le billet de sortie, le Bonus et le bilan ; 🏠 à la maison : le réinvestissement et le QCM ». Le
+réinvestissement (l'étagère murale) garde sa place, ses questions et son vérificateur ; son titre et une ligne disent
+« à faire à la maison, après la séance 2 — ou en classe, s'il reste du temps ». La séance 2 tient en 20 + 20 + 5 minutes,
+puis la clôture. Fiche pédagogique et note d'audit à jour.
+
+## 25/11/2026 — Vérification totale, vague 2 : chaque défi, chaque activité a sa correction (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Suite de la demande de Pascal du 25/11/2026** (« assure-toi […] qu'il y ait la correction ») ; préférence tenue : des
+corrections exhaustives, avec le schéma quand il le faut, un texte aéré, les sigles et les unités dits en clair.
+
+**Mesuré sur le `main` du jour**, avec un contrôle neuf, `controle_bonus_corrige.py` (27 / 27 à son banc) — 86 pages
+closes par un Bonus : **14 sans aucun corrigé** (B1), **3 autres où sept défis n'avaient pas le leur** (B2), et
+**25 titres repliés qui annonçaient un nombre de défis faux** (B3 : « Les 4 défis du Bonus » pour trois, « Le défi du
+Bonus » pour quatre). Hors Bonus : 3 activités sans correction (relevé au navigateur, page par page).
+
+**Corrigé** :
+- **49 corrigés de défis écrits**, un par défi, chacun avec sa méthode, un exemple traité, ce qui rend une réponse
+  juste et l'erreur fréquente : thème 1 — 3e_C3.1, 4e_C3.1, 5e_C3.1 (calculs refaits depuis les CSV des lots : sans S6,
+  S1 + S2 + S5 = 3200 € et 3100 kWh sur dix ans ; F4 = 5,6 g/km) ; thème 2 — 3e_C4.1 (2), 3e_C4.7 (3), 3e_C4.8 (3),
+  4e_C4.1 (2), 4e_C5.1 (3, dont le dessin coté du clip-support), 3e_C6.2 (3), 4e_C6.1 (3), 5e_C6.1 (3) ; thème 3 — les
+  quatre TP de CAO (3 chacun, écrits dans `scenarios/tp_*.json`, pages reconstruites par `build_tp.py`), 5e_C9.1 (3),
+  le TP mBot2 (3).
+- **3 corrections d'activité** : le « défi SANS tutoriel » de 4e_C4.7 (les deux preuves, la phrase de technicien, ce
+  qui ne prouve rien) ; l'activité 0 de 5e_C8.2 ; le billet d'entrée de l'atelier de planification (dans
+  `build_atelier.py`, trois pages reconstruites).
+- **25 titres de Bonus recomptés** : `replier_bonus.py` comptait les lignes de la version étayée, ou les champs de
+  réponse, pas les défis. Il lit maintenant les défis nommés (la lecture du contrôle), et `--titres` recompte un Bonus
+  déjà replié.
+- **Une consigne qui demandait l'impossible** (3e_C6.2, défi 2) : « fais-la tourner au banc d'essai » — le banc de la
+  page n'exécute que la version juste. La consigne fait dérouler la version fausse à la main, sur trois pannes nommées.
+- **Un leurre qui se trahissait** (3e_C4.8, e3_3) : il montrait un masque `255.255.255.0` que le journal du routeur
+  n'affiche jamais (le pont est en `255.255.255.252`).
+
+**Ce que la vague 1 avait cassé, et que les contrôles de celle-ci ont vu** (dit pour que cela ne se reproduise pas) :
+- `qcm_5e_C7.4` : `qcm_aides/poser.py` réécrit la carte « Avant de commencer » et y perd l'infobulle d'un sigle ; la
+  notion renommée portait le seul « volts » de la question. Remis (`expliquer_sigles.py --infobulle`, question 16).
+  **À retenir : après `qcm_aides/poser.py`, rejouer `controle_sigles_expliques.py` et `controle_unites.py`.**
+- `4e_C8.1` : les onze légendes réécrites dans la page l'étaient dans une zone que `console_jardiniere.py` engendre ;
+  le générateur les aurait effacées à sa prochaine écriture. Elles sont maintenant dans le générateur.
+  **À retenir : avant de retoucher une page, chercher son générateur (`_generation/`), et le rejouer sans `--ecrire`.**
+- La vague 1 n'avait joué qu'une partie des contrôles. Cette vague joue les 53 `controle_*.py` avant et après
+  (`main` contre l'arbre de travail) : 4 étaient rouges avant, 0 après.
+
+**Ce que les contrôles au navigateur ont vu dans CETTE vague, avant la livraison** :
+- `controle_impression.mjs` : les corrigés des quatre TP de CAO s'imprimaient en texte noirci sur fond marine (22 à
+  29 textes par page). Le gabarit des TP n'avait jamais porté de corrigé : son bloc d'impression ne les blanchissait
+  pas. Corrigé dans `atelier-cao/_generation/gabarit_style.css` (fond blanc, titre ambre foncé) ; quatre pages
+  reconstruites, empreintes recalculées (`verif_chaine.py`).
+- `controle_verrous.mjs` sortait à 1 **sur `main`, depuis le 22/11** : 4e_C8.1 range ses réponses attendues dans
+  `window.__bonnesSimu` et `window.__bonnesProtocole`, que le contrôle lisait comme des gestes d'élève enregistrés au
+  chargement. Ce sont des clés de correction : déclarées dans `PAS_DES_OBSERVATIONS`, avec leur raison (banc 12 / 12).
+
+**Trouvé en chemin, et corrigé** : 3 formulations du programme mal recopiées dans deux fiches pédagogiques (4e_C1.4,
+3e_C1.5 — « OST » y est gardé, et expliqué sous le tableau) ; 2 pointes de flèche mesurées en « traits » dans 4e_C8.1
+(`console_jardiniere.py`, rendu identique) ; le dessin animé de la situation de 4e_C8.1 compté comme un schéma (31 ✘ :
+ses sept étapes superposées) — déclaré `data-illustration`.
+
+**Mesure après** (sur l'arbre fusionné avec le `main` du soir) : `controle_bonus_corrige` B1 0 · B2 0 · B3 0 ; les
+53 `controle_*.py` à 0 ;
+`controle_hierarchie` 0 mur sans repère (11 dans mes premiers corrigés : chaque paragraphe s'ouvre maintenant sur un
+repère en gras) ; `controle_unites` 0 ; `controle_sigles_expliques` 0 ; `controle_formulations` 94 / 94.
+
+**Vérifié** : les **75 bancs** des lots touchés passent (58 lancés tels quels, 17 avec la ligne de commande de leur
+`rapport_tests` — les bancs de C7 et C8 prennent leur page en argument) ; au navigateur, sur tout le site :
+`controle_squelette`, `controle_code_colore` (142 listings), `controle_hors_ligne`, `controle_indices_qcm` (76 banques,
+2301 questions), `controle_impression` et `controle_verrous` à 0 après les deux corrections ci-dessus ; sur les
+38 pages modifiées : `controle_schemas` 0 ✘, `controle_page_ouverte` (390 px) L 0 · B 0 · C 0, `controle_axe` aucun
+défaut au-dessus de la référence, `eleve_qui_ne_lit_pas` 0 page validée sans lire ; chaque corrigé relu à 390 px et à
+1 280 px (aucun défilement de côté, code en couleurs, dessin coté lisible).
+
+**Vu, non traité** : le tableau du référentiel de 3e_C5.1 dépasse de 12 px à 390 px, volet ouvert (page du professeur
+dans la page élève ; antérieur).
+
+**Thème par thème** (n°302) : thème 1 — 3e_C2.1 (titre), 3e/4e/5e_C3.1, deux fiches pédagogiques (C1) ; thème 2 —
+3e_C4.1, 3e_C4.3 (titre), 3e_C4.7, 3e_C4.8, 4e_C4.1, 4e_C4.7, 3e_C5.1 (titre), 4e_C5.1, 3e_C6.1 (titre), 3e_C6.2,
+4e_C6.1, 5e_C6.1 ; thème 3 — atelier CAO (4 scénarios, 4 pages, manifeste), atelier de planification (générateur,
+3 pages), `gabarit_style.css` des TP de CAO, 9 titres de Bonus (C7, C8, C9), `qcm_5e_C7.4`, 4e_C8.1 (générateur et page), 5e_C8.2, 5e_C9.1, TP mBot2 ;
+`_outils` — `controle_bonus_corrige.py` et son banc, `replier_bonus.py`, `controle_verrous.mjs` (deux déclarations).
