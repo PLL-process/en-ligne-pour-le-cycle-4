@@ -233,3 +233,17 @@ Regardé à 390 px : le billet, ses versions étayées et sa correction ouvertes
 JavaScript.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 26/11/2026 — Plus rien d'une année précédente (n°304)
+
+En traitant `3e_C8.2`, une recherche sur les lots C8 a trouvé trois phrases de cette séquence qui affirmaient la 5e :
+« Rappel de 5e : avec la patère du hall, tu suivais un protocole fourni », la proposition « … comme en 5e » de l'activité
+2 ter (et son pourquoi, page et `mission_4e_C8.1.json`), et la correction « c'est le protocole de 5e ». Elles disent
+maintenant « Ce qui change : un essai de traction suit un protocole fourni… », « comme un essai de traction », « le
+protocole d'un essai de traction ». Le banc de l'activité 2 ter cherchait « 5e » dans le pourquoi : il cherche « essai de
+traction ».
+
+Exécuté, dans le dossier du lot : `tests_protocole_4e_C8.1.mjs` **18 / 18** · `tests_4e_C8.mjs .` **56 / 56** ·
+`tests_simulation_4e_C8.1.mjs` **13 / 13** · `tests_regle_311_4e_C8.1.mjs` **34 / 34**. À la racine :
+`audit_aeration.py --strict`, `enrichir.py --verifier-tout`, `mode_mission/banc_generique.mjs`, `verif_regles_audit.py`,
+`controle_squelette.mjs`, `controle_liens.py` : verts.

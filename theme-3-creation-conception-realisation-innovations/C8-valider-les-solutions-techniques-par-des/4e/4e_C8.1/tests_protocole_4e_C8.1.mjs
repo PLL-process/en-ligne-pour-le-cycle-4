@@ -7,7 +7,7 @@
      d'essai, les paliers et les trois flèches que le calcul prévoit ;
    ② toutes les bonnes réponses ET un protocole écrit : l'activité est validée, la progression la compte ;
    ③ un protocole de deux mots ne valide pas l'activité, même avec les sept bonnes réponses ;
-   ④ « jusqu'à ce qu'elle casse » (le réflexe de 5e) n'est pas validé, et chaque mauvaise proposition a son pourquoi ;
+   ④ « jusqu'à ce qu'elle casse » (le réflexe de l'essai de traction) n'est pas validé, et chaque mauvaise proposition a son pourquoi ;
    ⑤ réponses et protocole reviennent après un rechargement ;
    ⑥ à 390 px, l'activité ne déborde pas, et aucune étiquette du schéma n'en chevauche une autre ;
    ⑦ aucune erreur JavaScript.
@@ -83,7 +83,8 @@ ok("② sept bonnes réponses et un protocole écrit : l'activité est validée"
 const prog = (await page.textContent("#progTxt")).trim();
 ok("② la progression compte l'activité 2 ter", /^1 \/ 8/.test(prog), prog);
 
-// ④ le réflexe de 5e n'est pas validé ; chaque mauvaise proposition a son pourquoi
+// ④ le réflexe de l'essai de traction n'est pas validé ; chaque mauvaise proposition a son pourquoi
+// (26/11/2026, n°304 : il ne dit plus « comme en 5e » — l'élève n'a pas forcément fait cette 5e)
 const casse = (await page.evaluate(() => [...document.querySelectorAll('#a7q2 input[type=radio]')].map(r => r.value)))
   .find(v => v.startsWith("jusqu'à ce qu'elle casse"));
 await coche("a7q2", casse);
@@ -91,7 +92,7 @@ await page.click('.btn.check[data-check="7"]');
 fb = (await page.textContent("#fb7")).trim();
 const pq = await page.evaluate(v => [...document.querySelectorAll('#a7q2 input[type=radio]')].find(r => r.value === v).dataset.pourquoi, casse);
 ok("④ « jusqu'à ce qu'elle casse » n'est pas validé", !fb.startsWith("🎉"), fb.slice(0, 40));
-ok("④ son pourquoi rappelle la 5e et dit quoi faire", !!pq && /5e/.test(pq) && /relis/i.test(pq), pq || "aucun");
+ok("④ son pourquoi nomme l'essai de traction et dit quoi faire", !!pq && /essai de traction/.test(pq) && /relis/i.test(pq), pq || "aucun");
 const sansPourquoi = await page.evaluate(() => Object.keys(window.__bonnesProtocole).map(g => {
   const B = window.__bonnesProtocole[g];
   return [...document.querySelectorAll('#' + g + ' input[type=radio]')].filter(r => r.value !== B && !r.dataset.pourquoi).length;

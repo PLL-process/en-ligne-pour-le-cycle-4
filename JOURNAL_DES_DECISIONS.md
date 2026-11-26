@@ -38453,8 +38453,29 @@ avant), puis dire comment mesurer la flèche et quoi faire d'un bras qui casse a
 Bancs : séquence 46 / 46 (deux tests neufs pour le billet ; durée totale 165 min), QCM 34 / 34 (documents du lot,
 décrits, à jour du modèle), n°311 34 / 34. `controle_question_seule.py --strict` 0 refus, D1 0, P1 0 ;
 `balayer_questions_qcm.mjs --apres` 0 écart ; `controle_schemas.mjs` 0 ✘ ; les contrôles des QCM, du lexique, des
-règles d'or, de l'aération, du squelette et du mode mission : verts. **Les six lots C8 ont maintenant leurs six
-questions sur document et leur billet de sortie.**
+règles d'or, de l'aération, du squelette et du mode mission : verts. **Les cinq séquences du dossier C8 (5e_C8.1,
+5e_C8.2, 4e_C8.1, 3e_C8.1, 3e_C8.2) ont maintenant leurs six questions sur document et leur billet de sortie** ; reste
+`3e_C9.2-C8.3`, rangé en C9, qui porte 3e_C8.3 (D1 : 4 questions sur document ; P1 : ses cinq pages).
 
 **Thème par thème** (n°302) : thème 3 seulement — `3e_C8.2` (séquence, synthèses, QCM, aides, lexique, mission,
 étayage, documents, bancs, fiche, README, sources, rapport) et `_outils/build_audit.py` (sa notice du lot).
+
+## 26/11/2026 — 4e_C8.1 : trois phrases qui affirmaient la 5e (thème 3)
+
+Trouvé en traitant `3e_C8.2` (même défaut, entrée précédente) : une recherche sur les six lots C8 relève, dans la
+séquence du jardin (4e_C8.1), « Rappel de 5e : avec la patère du hall, tu suivais un protocole fourni », la proposition
+« … comme en 5e » de l'activité 2 ter (avec son pourquoi) et la correction « c'est le protocole de 5e ». La règle d'or
+n°304 l'interdit : l'élève n'a pas forcément fait cette 5e. Elles disent « Ce qui change : un essai de traction suit un
+protocole fourni… », « comme un essai de traction », « le protocole d'un essai de traction ». Les quatre autres lots C8
+n'ont plus rien de tel.
+
+**Une limite d'outil, mesurée et non corrigée ici** : `verif_regles_audit.py` (n°304) ne lit que le bloc d'ouverture,
+et `controle_question_seule.py` (S3) ne reconnaît pas « vu en classe de 5ᵉ » ni « le protocole de 5ᵉ ». Une recherche
+grossière (« en 5e », « de 5e », « comme en 4e »…) sur les séquences et QCM de 4e et de 3e de `main` en trouve dans une
+quinzaine de pages ; une partie seulement affirme le passé (le reste nomme des ateliers ou le programme). Ce chantier
+est transversal (`_outils/`) : il est proposé à Pascal, pas lancé.
+
+Bancs : `tests_protocole_4e_C8.1.mjs` 18 / 18, `tests_4e_C8.mjs` 56 / 56, `tests_simulation_4e_C8.1.mjs` 13 / 13,
+`tests_regle_311_4e_C8.1.mjs` 34 / 34 ; aération, mode mission, règles d'or, squelette, liens : verts.
+
+**Thème par thème** (n°302) : thème 3 seulement — `4e_C8.1` (séquence, mission, banc du protocole, rapport).
