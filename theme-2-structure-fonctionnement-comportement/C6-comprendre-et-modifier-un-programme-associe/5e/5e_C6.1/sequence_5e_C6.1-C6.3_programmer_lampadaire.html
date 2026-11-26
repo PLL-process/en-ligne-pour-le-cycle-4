@@ -610,6 +610,12 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
   body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
   body.ms h1{font-size:1.05rem!important;margin:6px auto 6px!important}
+  /* le bouton d'entrée ne sert plus une fois entré (sans le cadre « Ma progression », il restait au-dessus de la barre) */
+  body.ms .ms-invite{display:none!important}
+  /* la navigation du site tient sur une ligne qui défile de côté : à cinq liens (les ateliers), elle prenait trois
+     lignes collées en haut d'un téléphone, et la barre de la mission passait dessous */
+  body.ms #navharm{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+  body.ms #navharm>*{flex:0 0 auto;white-space:nowrap}
   body.ms .toolbar{gap:6px;margin:6px auto 10px}
   body.ms .toolbar .btn{padding:6px 10px;font-size:.78rem;min-height:40px}
   body.ms #seances{flex-wrap:nowrap;overflow-x:auto;gap:6px;margin-bottom:10px;padding-bottom:2px}
@@ -617,6 +623,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   body.ms #seances .seance-tab small{display:none}
   .ms-retour,.ms-message{scroll-margin-bottom:110px}
   .ms-ancre{height:0}
+  .ms-gains[hidden]{display:none!important}
   .ms-invite{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px}
   .ms-invite .ms-figer-page{background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f)}
   .ms-figer{min-height:44px;min-width:44px;padding:4px 10px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-weight:700;cursor:pointer;margin-left:auto}
@@ -690,17 +697,20 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-l{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:10px;align-items:center}
   @media (max-width:560px){.ms-l{grid-template-columns:1fr;gap:5px}}
   .ms-nom{font-weight:600;min-width:0}
-  .ms-case,.ms-lab{-webkit-user-select:none;user-select:none;font:inherit;color:var(--text,#e4eaf5)}
+  /* « ms-cible », pas « ms-case » : le kit des ateliers de représentation a sa propre `.ms-case` (un menu posé sur le
+     dessin de la bête à cornes, en position absolue). Le même nom élargissait ses menus à 820 px et leur mettait un
+     cadre pointillé, mode mission ou pas (banc_ateliers.py, six refus, 25/11/2026). */
+  .ms-cible,.ms-lab{-webkit-user-select:none;user-select:none;font:inherit;color:var(--text,#e4eaf5)}
   /* une étiquette de la réserve se glisse ; une case laisse défiler la page sous le doigt */
-  .ms-lab{touch-action:none} .ms-case{touch-action:manipulation}
-  .ms-case{min-height:50px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:9px 13px;border-radius:14px;border:2px dashed var(--border,#274a8a);background:var(--panel2,#0a1b3d);cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
-  .ms-case .ms-vide{font-weight:400;color:var(--sub,#9bbefc);font-size:.9em}
-  .ms-case.pleine{border-style:solid;background:var(--panel,#0d2347)}
-  .ms-case.vise{border-color:var(--hl,#61dafb);transform:scale(1.02)}
-  .ms-case.juste{border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10);cursor:default;opacity:1}
-  .ms-case.faux{border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10);animation:ms-secoue .45s}
+  .ms-lab{touch-action:none} .ms-cible{touch-action:manipulation}
+  .ms-cible{min-height:50px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:9px 13px;border-radius:14px;border:2px dashed var(--border,#274a8a);background:var(--panel2,#0a1b3d);cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
+  .ms-cible .ms-vide{font-weight:400;color:var(--sub,#9bbefc);font-size:.9em}
+  .ms-cible.pleine{border-style:solid;background:var(--panel,#0d2347)}
+  .ms-cible.vise{border-color:var(--hl,#61dafb);transform:scale(1.02)}
+  .ms-cible.juste{border-color:var(--ok,#81fba1);background:rgba(129,251,161,.10);cursor:default;opacity:1}
+  .ms-cible.faux{border-color:var(--warn,#ffd66b);background:rgba(255,214,107,.10);animation:ms-secoue .45s}
   @keyframes ms-secoue{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
-  .ms-case.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
+  .ms-cible.faux::after{content:"✗ à revoir";font-weight:400;font-size:.85em;color:var(--warn,#ffd66b);flex:none}
   body.ms details.ms-pousse{outline:2px solid var(--warn,#ffd66b);outline-offset:3px;border-radius:10px}
   .ms-cor-note{margin:.2rem 0 .5rem;font-weight:700;color:var(--ok,#81fba1)}
   .ms-coche{width:22px;height:22px;flex:none;fill:none;stroke:var(--ok,#81fba1);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
@@ -711,7 +721,7 @@ details.bonus-replie[open]>summary{margin-bottom:8px}
   .ms-lab:hover{border-color:var(--hl,#61dafb)}
   .ms-lab.choisie{border-color:var(--hl,#61dafb);transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.35)}
   .ms-lab.part{opacity:.35}
-  .ms-case:focus-visible,.ms-lab:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
+  .ms-cible:focus-visible,.ms-lab:focus-visible{outline:3px solid var(--warn,#ffd66b);outline-offset:2px}
   .ms-geste{margin:0;font-size:.86em;color:var(--sub,#9bbefc)}
   .ms-fantome{position:fixed;left:0;top:0;z-index:2000;pointer-events:none;border:2px solid var(--hl,#61dafb);background:var(--panel,#0d2347);color:var(--text,#e4eaf5);border-radius:12px;padding:9px 14px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.45)}
   /* au téléphone, la réserve tient sur une ligne qui défile de côté : elle ne cache pas les cases */
@@ -768,6 +778,17 @@ function net(t){ return String(t || "").replace(/\s+/g, " ").trim(); }
    (`navigator.webdriver`) ouvre la page complète, comme avant : les bancs et les contrôles mesurent la page qui défile,
    et ceux du mode (banc_generique, banc_mission, banc_defaut) l'allument eux-mêmes. */
 var DEFAUT = !(navigator && navigator.webdriver);
+/* Le bouton de la page qui efface TOUTE sa sauvegarde (règle d'or n°322 ; les mêmes identifiants que
+   controle_sauvegarde_locale.py et banc_effacement.mjs). Deux usages :
+   · une page qui n'en a pas n'enregistre rien d'elle-même (un TP, une activité : ses champs se vident au
+     rechargement). Le mode n'y retient pas plus qu'elle — `garde` : les étoiles et les réussites vivent le temps de
+     la page ; l'écran où l'on en est, le temps de l'onglet (un rechargement par mégarde ne renvoie pas au début) ;
+     seul le choix d'affichage (mission ou page complète) reste dans le navigateur, comme une préférence. Rien de ce
+     qu'a fait un élève n'attend le suivant ;
+   · une page qui en a un efface parfois d'autres clés que celle que ce script sait lire (le kit des ateliers : une
+     clé par exercice). Le geste est alors reconnu à son bouton : une clé retirée juste après un appui sur lui. */
+var SIEN = "#btnReset, #btnEffacer, #btn-effacer, #clear", garde = true, appui = 0;
+document.addEventListener("click", function(ev){ if (ev.target && ev.target.closest && ev.target.closest(SIEN)) appui = Date.now(); }, true);
 try {
   var _rm = Storage.prototype.removeItem, _vide = Storage.prototype.clear, marque = function(){ try { sessionStorage.setItem("mission:efface", "1"); } catch (e) {} };
   /* La clé de sauvegarde de la page : un `const KEY` (« seq_… ») au premier niveau d'un script se voit d'ici ; dans près
@@ -783,13 +804,16 @@ try {
     }
     return _cles.indexOf(String(k)) !== -1;
   };
-  Storage.prototype.removeItem = function(k){ if (this === window.localStorage && estCleDeLaPage(k)) marque(); return _rm.apply(this, arguments); };
+  Storage.prototype.removeItem = function(k){ if (this === window.localStorage && String(k) !== CLE && (estCleDeLaPage(k) || Date.now() - appui < 1500)) marque(); return _rm.apply(this, arguments); };
   Storage.prototype.clear = function(){ if (this === window.localStorage) marque(); return _vide.apply(this, arguments); };
 } catch (e) {}
-function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; if (!M.loin) M.loin = {}; }
+function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; if (!M.loin) M.loin = {};
+  if (!garde){ var t = null; try { t = JSON.parse(sessionStorage.getItem(CLE) || "null"); } catch (e) {}
+    M = { v:1, on:M.on, k:(t && t.k) || {}, essais:{}, erreurs:{}, etoiles:{}, fait:{}, loin:(t && t.loin) || {} }; if (t && t.ici) M.ici = t.ici; } }
 /* `vu` : la page a déjà enregistré quelque chose depuis que la mission tient ses comptes. Sa sauvegarde disparue ensuite,
    c'est « Effacer ma sauvegarde » : on le distingue ainsi d'une page où l'élève n'a encore rien enregistré. */
-function ecrire(){ try { if (typeof KEY === "string" && localStorage.getItem(KEY) !== null) M.vu = true; localStorage.setItem(CLE, JSON.stringify(M)); } catch (e) {} }
+function ecrire(){ try { if (typeof KEY === "string" && localStorage.getItem(KEY) !== null) M.vu = true; localStorage.setItem(CLE, JSON.stringify(garde ? M : { v:1, on:M.on }));
+  if (!garde) sessionStorage.setItem(CLE, JSON.stringify({ k:M.k, loin:M.loin, ici:M.ici })); } catch (e) {} }
 function etoiles(n){ var s = ""; for (var i = 1; i <= 3; i++) s += ET.replace("{on}", i <= n ? " on" : ""); return '<span class="ms-etoiles" role="img" aria-label="' + n + " étoile" + (n > 1 ? "s" : "") + ' sur 3">' + s + "</span>"; }
 /* prévenir la page qu'une réponse a changé, comme le ferait un appui : l'événement part du bouton radio coché (c'est
    lui que certaines pages écoutent pour sauvegarder), ou du groupe quand plus rien n'est coché */
@@ -799,18 +823,41 @@ function saisie(f){ var x = (f.tagName === "FIELDSET" && $("input[type=radio]:ch
      gabarit commun   .seance-tab[data-panel]     →  .seance-panel.active      cartes : section.card
      Book Train       [role=tab][aria-controls]   →  section.panneau.actif     cartes : div.carte
      page sans onglets (une grande étape d'une séquence découpée) : des `.seance-bloc` à la suite, tous visibles —
-       ici c'est le mode qui n'en montre qu'un à la fois (`.ms-ici`), et qui mène de l'un à l'autre */
+       ici c'est le mode qui n'en montre qu'un à la fois (`.ms-ici`), et qui mène de l'un à l'autre
+   Depuis le 25/11/2026 (demande de Pascal : « que le mode mission soit pour tous les documents élèves ») :
+     ateliers et cahiers des représentations : les mêmes onglets ARIA que Book Train, mais le panneau ouvert est
+       celui qui n'est pas `hidden` (leur moteur, `kit.js`, ne pose pas de classe) ;
+     page à cartes, sans séances (TP, activité, atelier d'une seule page) : son conteneur est l'unique panneau, et
+       chacun de ses blocs (section, carte, palier) fait un écran ; ce qui précède un bloc l'accompagne. */
 var G = null, CARTE = "section.card, div.carte";
+var BLOC = "section, article, .card, .carte";
+/* un bloc de la page : une section, une carte — ou un <div> qui s'ouvre sur son propre titre (« 📋 Ma trace Pix ») */
+function estBloc(c){ return c.matches(BLOC) || (c.tagName === "DIV" && !!c.firstElementChild && c.firstElementChild.matches("h2, h3")); }
+function conteneur(){
+  /* le bloc qui range les cartes de la page : parmi <main>, .page, .wrap, .container, celui qui en porte le plus
+     en enfants directs ; il en faut au moins trois, sinon la page n'a rien à découper */
+  var meilleur = null, n = 2;
+  $$("main, .page, .wrap, .container, #contenu").forEach(function(c){
+    var k = enfants(c).filter(function(x){ return estBloc(x) && rendu(x); }).length;
+    if (k > n){ meilleur = c; n = k; }
+  });
+  return meilleur;
+}
 function gabarit(){
-  if ($(".seance-panel") && $(".seance-tab")) return { panneau:".seance-panel", onglet:".seance-tab", actif:"active", de:function(o){ return o.dataset.panel; } };
-  if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:"actif", de:function(o){ return o.getAttribute("aria-controls"); } };
+  if ($(".seance-panel") && $(".seance-tab")) return { panneau:".seance-panel", onglet:".seance-tab", actif:"active", attr:"data-panel", de:function(o){ return o.dataset.panel; } };
+  if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:$("section.panneau[role=tabpanel].actif") ? "actif" : null, kit:!$("section.panneau[role=tabpanel].actif") && !!$("#donnees-page"), attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
   if ($(".seance-bloc[id]")) return { panneau:".seance-bloc[id]", onglet:null, actif:"ms-ici" };
+  var c = conteneur();
+  if (c){ c.classList.add("ms-page"); if (!c.id) c.id = "ms-page"; return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true }; }
   return null;
 }
-function panneauActif(){ return $(G.panneau + "." + G.actif); }
+/* le panneau ouvert : celui qui porte la classe du gabarit ; sans classe, celui que la page ne cache pas (`hidden`) */
+function selActif(){ return G.actif ? G.panneau + "." + G.actif : G.panneau + ":not([hidden])"; }
+function panneauActif(){ return $(selActif()); }
 function ongletActif(){ var P = panneauActif(); return P && G.onglet ? $$(G.onglet).filter(function(o){ return G.de(o) === P.id; })[0] || null : null; }
 function nomOnglet(o){ for (var i = 0; i < o.childNodes.length; i++){ var n = o.childNodes[i]; if (n.nodeName !== "SMALL" && net(n.textContent)) return net(n.textContent); } return net(o.textContent); }
 function nomSeance(){ var o = ongletActif(); if (o) return nomOnglet(o); var m = panneau && /^seance-(\d+)$/.exec(panneau.id); return m ? "Séance " + m[1] : ""; }
+function nomPage(){ var h = $("h1"); return h ? net(h.textContent) : ""; }
 /* la séance d'avant (-1) ou d'après (+1) : son identifiant, ou null ; et l'ouvrir */
 function voisine(d){
   if (G.onglet){ var o = $$(G.onglet), i = o.indexOf(ongletActif()); return i < 0 || !o[i + d] ? null : G.de(o[i + d]); }
@@ -844,6 +891,25 @@ function candidats(){
   });
   return cles;
 }
+/* Sixième écriture (25/11/2026) : les ateliers des représentations rangent leurs attendus dans
+   `<script type="application/json" id="donnees-page">`, par NOM de champ : `choix` {name, bonne, retours},
+   `classer` {items:[{name, bonne, indice}]}, `menus` et `tableau` {cases:[{name, bonne, indice, retours}]}.
+   Seules ces réponses uniques sont lues ; un texte, des cases à cocher, un croquis restent vérifiés par la page. */
+var _noms = null;
+function parNom(){
+  if (_noms) return _noms; _noms = {};
+  var sc = D.getElementById("donnees-page"), d = null;
+  try { d = sc ? JSON.parse(sc.textContent) : null; } catch (e) { d = null; }
+  var ex = (d && d.exercices) || {};
+  function note(x){ if (x && x.name && typeof x.bonne === "string") _noms[x.name] = { bonne:x.bonne, retours:x.retours || {}, indice:x.indice || "" }; }
+  Object.keys(ex).forEach(function(id){ (ex[id].widgets || []).forEach(function(w){
+    if (w.type === "choix") note(w);
+    else if (w.type === "classer") (w.items || []).forEach(note);
+    else if (w.type === "menus" || w.type === "tableau") (w.cases || []).forEach(note);
+  }); });
+  return _noms;
+}
+function nomDe(f){ if (f.tagName === "SELECT") return f.name || ""; var r = $("input[type=radio]", f); return r ? r.name : ""; }
 /* Un champ à réponse unique : un groupe de boutons radio, ou une liste déroulante qui pose une question (les pages
    pas encore révisées). Une liste d'interface (`data-interface`) n'est pas une question. */
 var CHAMP = "fieldset.qcm-groupe, select[id]:not([data-interface])";
@@ -856,6 +922,7 @@ function cle(f){
   if (f._msCle !== undefined) return f._msCle === null ? undefined : f._msCle;
   var c = (candidats()[f.id] || []).slice(), r = null;
   if (f.hasAttribute("data-bonne")) c.push(["=", f.getAttribute("data-bonne")]);
+  var pn = G.kit ? parNom()[nomDe(f)] : null; if (pn && !c.length) c.push(["=", pn.bonne]);
   if (c.length && estChamp(f) && !f.classList.contains("positionnement")){
     var vals = valeurs(f), bons = [];
     c.forEach(function(x){
@@ -881,9 +948,15 @@ function rendu(c){ return getComputedStyle(c).display !== "none" && !c.hidden; }
 function estAide(c){ return c.matches("details.aide1,details.aide2,details.aide"); }
 /* le bouton de vérification de la page, et le message qu'elle écrit : `button[data-check]` et `.feedback` (gabarit
    commun) ; `button.verif[data-exo="x"]` et `#res-x` (Book Train : le bouton désigne sa zone `#x`) */
-var CHECK = "button[data-check], button.verif[data-exo]";
-function estCheck(c){ return c.matches(CHECK); }
-function estMessage(c){ return c.classList.contains("feedback") || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
+/* Le bouton `button.verifier` et le message `.retour[data-retour]` sont ceux du kit des ateliers. Ils ne comptent que
+   dans une page du kit (un atelier, un cahier — `G.kit`) : dans une séquence, un exercice du kit incrusté garde son
+   écran entier, avec son bouton à lui, comme avant (le 25/11/2026, les lire partout coupait ces écrans en deux sur
+   six séquences du thème 1 — vu par banc_generique avant la livraison). */
+var CHECK_BASE = "button[data-check], button.verif[data-exo]", CHECK = CHECK_BASE;
+/* le bouton lui-même, ou le paragraphe qui ne porte que lui (`<p><button class="btn verifier">` des ateliers) */
+function estCheck(c){ return c.matches(CHECK) || (c.tagName === "P" && c.children.length === 1 && c.firstElementChild.matches(CHECK) && net(c.textContent) === net(c.firstElementChild.textContent)); }
+function boutonDe(c){ return c.matches(CHECK) ? c : $(CHECK, c); }
+function estMessage(c){ return c.classList.contains("feedback") || (!!G.kit && c.matches(".retour[data-retour]")) || (!!c.id && c.id.indexOf("res-") === 0 && !!$('button.verif[data-exo="' + c.id.slice(4) + '"]')); }
 function porteChamp(c){ return estChamp(c) || !!$(CHAMP + ",textarea,input:not([type=radio]):not([type=checkbox]):not([type=hidden])", c); }
 function estActivite(c){
   if (c.matches(".activite, .act")) return true;
@@ -913,7 +986,7 @@ function zonesDe(nodes, titres){
 function activite(A, E){
   var carte = A.matches(CARTE), kids = enfants(A), nom = titreDe(A) || "Activité";
   /* une zone d'exercice marquée : `.exo`, ou le bloc que le bouton de vérification désigne (`data-exo="x"` → `#x`) */
-  function designee(c){ return !!c.id && kids.some(function(b){ return estCheck(b) && b.getAttribute("data-exo") === c.id; }); }
+  function designee(c){ return !!c.id && kids.some(function(b){ return estCheck(b) && boutonDe(b).getAttribute("data-exo") === c.id; }); }
   var exos = kids.filter(function(c){ return c.classList.contains("exo") || designee(c); });
   var header = kids.filter(function(c){ return c.tagName === "HEADER" || (carte && (c.tagName === "H2" || (c === kids[0] && c.tagName === "H3"))); });
   var marquee = exos.length && (A.matches(".activite") || exos.some(function(x){ return !x.classList.contains("exo") || !!$(CHECK, x); }));
@@ -927,7 +1000,7 @@ function activite(A, E){
   if (i < 0){ E.push({ t:"activite", titre:nom, n:kids }); return; }
   var avant = kids.slice(0, i);
   /* la fiche de l'activité, repliée (details.fiche-activite, 15/11/2026) ou non (meta-grid), va avec le titre */
-  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
+  var tete = avant.filter(function(c){ return header.indexOf(c) >= 0 || c.classList.contains("meta-grid") || c.matches("div.meta") || c.classList.contains("fiche-activite") || c.classList.contains("pastille-maison") || c.classList.contains("competence-visee"); });
   /* un exercice incrusté (atelier, rappel replié du cahier des charges) a son écran, avant le départ de l'activité */
   var ateliers = avant.filter(function(c){ return c.matches(".atelier-incruste, details.incruste-repliee"); });
   var consigne = avant.filter(function(c){ return c.classList.contains("consigne"); });
@@ -939,7 +1012,7 @@ function activite(A, E){
     kids.slice(i).forEach(function(c){
       if (exos.indexOf(c) >= 0){ var zs = zonesDe(enfants(c), titres); zs.forEach(function(z, r){ z.exo = c; if (!r) z.avant = attente; }); attente = []; zones = zones.concat(zs); return; }
       if (estAide(c)){ aides.push(c); return; }
-      if (estCheck(c)){ var de = c.getAttribute("data-exo"), zc = zones.filter(function(z){ return !z.check && (!de || z.exo.id === de); }).pop(); if (zc){ zc.check = c; zc.dehors = true;
+      if (estCheck(c)){ var de = boutonDe(c).getAttribute("data-exo"), zc = zones.filter(function(z){ return !z.check && (!de || z.exo.id === de); }).pop(); if (zc){ zc.check = c; zc.dehors = true;
         /* un outil posé entre la dernière zone et sa vérification (l'éditeur où l'on prouve, un écrit) se joue AVANT de
            vérifier : il a son écran, après la dernière question, et c'est là que la vérification de la page parle */
         if (zc === zones[zones.length - 1] && ecrit(attente)){ zc.preuve = attente; attente = []; }
@@ -1045,10 +1118,44 @@ function titreSans(noeuds){
 }
 /* un lien seul, sans titre ni question (« 📖 Les mots de cette séance ») */
 function lienSeul(C){ return !titreDe(C) && !porteChamp(C) && !$("img,svg,canvas,video,iframe,object,button,details,table", C) && !!$("a[href]", C) && net(C.textContent).split(" ").length < 12; }
+/* page à cartes : les blocs que la page range APRÈS son conteneur, au même niveau (le renvoi au QCM et le Bonus
+   du TP mBot2, posés avant </body>) font des écrans comme les autres */
+function suivants(P){ var o = []; for (var x = P.nextElementSibling; x; x = x.nextElementSibling) if (estBloc(x) && rendu(x)) o.push(x); return o; }
+/* Une page à onglets qui range sa clôture APRÈS ses panneaux (l'atelier de planification : Bonus, Bilan, QCM, traces ;
+   l'entraînement au brevet : « Pour aller plus loin ») la montre sous chaque onglet. En mission, ces cartes restaient
+   sous chaque écran. Elles deviennent les derniers écrans du dernier panneau, et se cachent ailleurs (25/11/2026).
+   Aucune des 60 séquences n'en porte : leur clôture vit dans la dernière séance (règle d'or n°306). */
+var _hors = null;
+function horsPanneaux(){
+  if (_hors) return _hors; _hors = [];
+  if (G.page) return _hors;
+  var P = $$(G.panneau), der = P[P.length - 1]; if (!der) return _hors;
+  $$(CARTE).forEach(function(c){
+    if (!(der.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING) || der.contains(c)) return;      // après le dernier panneau, dans l'ordre de la page
+    if (c.closest(G.panneau) || (c.parentElement && c.parentElement.closest(CARTE)) || c.closest(".ms-seul, .ms-invite, footer") || !rendu(c)) return;
+    _hors.push(c);
+  });
+  return _hors;
+}
 function construire(P){
-  var E = [], portes = [];
-  enfants(P).forEach(function(C){
+  var E = [], portes = [], devant = [], tousP = $$(G.panneau);
+  enfants(P).concat(G.page ? suivants(P) : (P === tousP[tousP.length - 1] ? horsPanneaux() : [])).forEach(function(C){
     if (C.classList.contains("page-suivante") || !rendu(C)) return;          // ce que la page cache d'elle-même (fiche professeur) ne fait pas d'écran
+    /* le bouton « Exercice 2 › » du kit des ateliers, seul dans son paragraphe : le mode porte le sien */
+    if (C.tagName === "P" && C.children.length === 1 && C.firstElementChild.matches("button.suivant[data-vers]")){ C.classList.add("ms-origine"); return; }
+    /* page à cartes : ce qui n'est pas un bloc (le titre de la page, sa mission, une note entre deux cartes) attend
+       le bloc qui suit, et s'affiche avec son premier écran */
+    if (G.page){
+      if (!estBloc(C)){ devant.push(C); return; }
+      var i0 = E.length; un(C);
+      if (devant.length){ if (E.length > i0) E[i0].n = devant.concat(E[i0].n); else E.push({ t:"carte", titre:titreSans(devant) || nomPage() || "Pour commencer", n:devant }); devant = []; }
+      if (E.length > i0 && E[i0].t === "carte" && (!E[i0].titre || E[i0].titre === "Suite" || E[i0].titre === "La séance")) E[i0].titre = nomPage() || "Pour commencer";
+      return;
+    }
+    un(C);
+  });
+  if (devant.length){ if (E.length) E[E.length - 1].n = E[E.length - 1].n.concat(devant); else E.push({ t:"carte", titre:nomPage() || "La page", n:devant }); }
+  function un(C){
     /* en tête de séance, un lien seul n'est pas un écran (il n'ouvrait la séance que sur lui) : il accompagne le premier */
     if (!E.length && lienSeul(C)){ portes.push(C); return; }
     if (estActivite(C)){ activite(C, E); return; }
@@ -1063,7 +1170,7 @@ function construire(P){
       else if (!vu) avant.push(x); else if (rendu(x) && !x.classList.contains("page-suivante")) suite.push(x);
     });
     vider();
-  });
+  }
   if (portes.length){ if (E.length) E[0].n = portes.concat(E[0].n); else E.push({ t:"carte", titre:"La séance", n:portes }); }
   if (E.length && !E.some(function(e){ return e.ouverture; })) E[0].ouverture = true;       // la situation de départ s'ouvre au premier écran
   /* L'éditeur Python reste sous les yeux (Pascal, 17/11/2026 : « on dit que l'éditeur Python est intégré à
@@ -1086,7 +1193,7 @@ function construire(P){
   });
   /* tous les blocs qui se montrent ou se cachent : ceux des écrans, et leurs conteneurs jusqu'au panneau */
   E.tous = [];
-  E.forEach(function(e){ e.n.concat(e.ress || []).forEach(function(n){ for (var p = n; p && p !== P; p = p.parentNode) if (E.tous.indexOf(p) < 0) E.tous.push(p); }); });
+  E.forEach(function(e){ e.n.concat(e.ress || []).forEach(function(n){ for (var p = n; p && p !== P && (p === n || P.contains(p)); p = p.parentNode) if (E.tous.indexOf(p) < 0) E.tous.push(p); }); });
   return E;
 }
 
@@ -1113,7 +1220,7 @@ function peindre(comp){
   var pris = comp._sets.map(lireV), fini = comp._sets.every(function(f){ return f.classList.contains("ms-juste"); });
   var h = '<p class="ms-geste">Fais glisser chaque étiquette vers sa case. Tu peux aussi la toucher, puis toucher sa case.</p><div class="ms-lignes">'
     + comp._sets.map(function(f, i){
-        var v = lireV(f), juste = f.classList.contains("ms-juste"), cl = "ms-case" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
+        var v = lireV(f), juste = f.classList.contains("ms-juste"), cl = "ms-cible" + (v ? " pleine" : "") + (juste ? " juste" : "") + (f.classList.contains("ms-faux") ? " faux" : "");
         return '<div class="ms-l"><div class="ms-nom">' + $("legend", f).innerHTML + '</div><button type="button" class="' + cl + '" data-i="' + i + '"' + (juste ? " disabled" : "")
           + ' aria-label="' + esc(net($("legend", f).textContent) + " : " + (v || "case vide")) + '">' + (v ? "<span>" + esc(v) + "</span>" : '<span class="ms-vide">pose ici</span>') + (juste ? COCHE : "") + "</button></div>"; }).join("")
     + "</div>";
@@ -1147,6 +1254,14 @@ function placer(){
     h = Math.max(h, bo + (x.offsetHeight || parseFloat(s.height) || 48));
   });
   if (h) revenir.style.bottom = "calc(" + Math.ceil(h + 10) + "px + env(safe-area-inset-bottom,0px))";
+}
+/* La barre de la mission colle sous la navigation du site. La feuille de style la pose à 44 px (une navigation collante
+   d'une ligne, le gabarit des séquences) ; une navigation qui ne colle pas (les TP) la laisserait flotter à 44 px du
+   haut, le texte défilant au-dessus d'elle, et une navigation plus haute la recouvrirait : on mesure. */
+function caler(){
+  if (!tete) return; var n = $("#navharm"), h = 44;
+  if (n){ var s = getComputedStyle(n); h = (s.display !== "none" && (s.position === "sticky" || s.position === "fixed")) ? Math.round(n.getBoundingClientRect().height + (parseFloat(s.top) || 0)) : 0; }
+  tete.style.top = Math.abs(h - 44) > 4 ? h + "px" : "";
 }
 function voirRevenir(){ if (!revenir) return; var v = !actif && horsVue; if (v && !place) placer(); revenir.classList.toggle("voir", v); }
 /* ═══ Figer les animations (WCAG 2.2.2 ; veille du 16/11/2026) : une boucle sans fin (un flux, un moteur qui tourne,
@@ -1208,6 +1323,7 @@ function chrome(){
   figer();
   pied = el("div", "ms-pied ms-seul", '<div class="ms-pied-in"><button type="button" class="ms-btn ms-prec" id="msPrec" aria-label="Écran précédent">← <span>Précédent</span></button><button type="button" class="ms-btn ms-verif" id="msVerif">Vérifier</button><span class="ms-vide-f" id="msVide" hidden></span><button type="button" class="ms-btn ms-suiv" id="msSuiv">Suivant →</button></div>');
   D.body.appendChild(pied);
+  var tCale = null; window.addEventListener("resize", function(){ if (!actif) return; clearTimeout(tCale); tCale = setTimeout(caler, 120); });
   $("#msQuitter").addEventListener("click", sortir);
   $("#msPrec").addEventListener("click", function(){ aller(k - 1); });
   $("#msSuiv").addEventListener("click", suivant);
@@ -1234,14 +1350,20 @@ function etatPas(e, j){
   if (avec.length) return avec.every(function(f){ return lireV(f); }) ? "repondu" : "";
   if (e.dernier && e.check) return passe ? "repondu" : "";          // la vérification de la page attend son appui
   var ts = textes(e);
-  if (e.champs.length || ts.length) return e.champs.every(function(f){ return lireV(f); }) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
+  /* une question à cases à cocher (le kit des ateliers : « coche tout ce qui manque ») n'a pas de valeur unique : elle
+     est répondue dès qu'une case l'est. Lue comme un groupe de boutons radio, elle ne l'était jamais, et son écran
+     restait éteint dans la barre, écrit et dépassé (banc_barre, B2, cinq pages du kit — 25/11/2026). */
+  function repondu(f){ return !!lireV(f) || (f.tagName === "FIELDSET" && !$("input[type=radio]", f) && !!$("input[type=checkbox]:checked", f)); }
+  if (e.champs.length || ts.length) return e.champs.every(repondu) && ts.every(function(x){ return net(x.value); }) ? "fait" : "";
   return passe ? "fait" : "";
 }
 function barre(){
   var s = ecrans[k];
-  $("#msOu").innerHTML = esc(s.titre) + "<small>" + esc(nomSeance()) + " · écran " + (k + 1) + " sur " + ecrans.length + "</small>";
+  var ns = nomSeance();
+  $("#msOu").innerHTML = esc(s.titre) + "<small>" + (ns ? esc(ns) + " · " : "") + "écran " + (k + 1) + " sur " + ecrans.length + "</small>";
   var ps = parties(panneau && panneau.id), gagne = ps.reduce(function(a, e){ return a + (M.etoiles[e.id] || 0); }, 0), max = ps.length * 3;
   $("#msCompte").textContent = gagne + " / " + max; $("#msJauge").style.width = (max ? Math.round(100 * gagne / max) : 0) + "%";
+  $("#msGains").hidden = !max;                          // rien à gagner ici (un TP à suivre pas à pas) : pas de « ⭐ 0 / 0 »
   $("#msGains").setAttribute("aria-label", gagne + " étoiles gagnées sur " + max + " dans cette séance. Chaque écran en rapporte jusqu'à 3 : 3 sans erreur, 2 avec une erreur (deux si l'écran a trois réponses ou plus), 1 au-delà");
   $("#msGains").title = "Chaque écran rapporte jusqu'à 3 étoiles : 3 sans erreur, 2 avec une erreur (deux si l'écran a trois réponses ou plus), 1 au-delà. Ouvrir une aide ne retire rien.";
   $("#msRail").innerHTML = ecrans.map(function(e, j){ var et = etatPas(e, j); return '<li><button type="button" class="ms-pas' + (et ? " " + et : "") + (j === k ? " ici" : "") + '" data-k="' + j + '"' + (j === k ? ' aria-current="step"' : "") + ' aria-label="Écran ' + (j + 1) + " sur " + ecrans.length + " : " + esc(e.titre) + (et === "fait" ? (e.t !== "partie" ? ", vu" : (e.champs.some(function(f){ return cle(f) !== undefined; }) || e.check) ? ", vérifié" : ", écrit") : et === "repondu" ? ", répondu, pas encore vérifié" : "") + '"></button></li>'; }).join("");
@@ -1250,7 +1372,7 @@ function barre(){
   $("#msVerif").hidden = !aVerifier; $("#msVide").hidden = aVerifier || !exo;
   var suiv = $("#msSuiv"), fin = k === ecrans.length - 1, apres = voisine(1);
   suiv.classList.toggle("seul", !exo); suiv.hidden = fin && !apres;
-  suiv.textContent = fin ? "Séance suivante →" : s.t === "intro" ? "C'est parti →" : "Suivant →";
+  suiv.textContent = fin ? (G.attr === "aria-controls" && !G.actif ? "Exercice suivant →" : "Séance suivante →") : s.t === "intro" ? "C'est parti →" : "Suivant →";
 }
 
 /* la ressource de l'activité (schéma, tableau) accompagne chaque question : ouverte par défaut, téléphone compris
@@ -1316,9 +1438,10 @@ function vide(s){ return (s.t === "carte" || s.t === "retenir") && s.n.every(fun
 function montrer(haut){
   var s = ecrans[k], vis = [];
   if (s.t === "retenir" && s.act) ouvrirCorrections(s, s.act);
-  s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
-  if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau; p = p.parentNode) vis.push(p); });
+  s.n.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau && panneau.contains(p); p = p.parentNode) vis.push(p); });
+  if (s.t === "partie" && s.ress.length && ressVue()) s.ress.forEach(function(n){ vis.push(n); for (var p = n.parentNode; p && p !== panneau && panneau.contains(p); p = p.parentNode) vis.push(p); });
   ecrans.tous.forEach(function(n){ n.classList.toggle("ms-cache", vis.indexOf(n) < 0); });
+  horsPanneaux().forEach(function(n){ if (ecrans.tous.indexOf(n) < 0) n.classList.add("ms-cache"); });      // la clôture rangée après les panneaux : au dernier seulement
   var ouv = $("#ouverture"); if (ouv) ouv.classList.toggle("ms-cache", !s.ouverture);
   /* « l'éditeur Python est intégré à l'activité » ne se dit que là où on le voit : sur les écrans de prédiction,
      qui viennent avant lui, l'annonce se tait (17/11/2026) */
@@ -1346,14 +1469,18 @@ function montrer(haut){
 /* Les titres d'un écran se lisent sans sauter de niveau (audit du jardin connecté, 19/11/2026) : le titre d'écran est
    de niveau 2 ; un titre de l'écran ne descend que d'un niveau à la fois — « a) » (h4) sous le titre de l'activité (h2)
    s'annonce au niveau 3. Seul le niveau annoncé change (aria-level), pas la balise ; il revient en quittant la mission. */
+/* Un titre peut porter déjà son niveau annoncé (`aria-level`) : les exercices du kit incrustés dans une séquence le
+   reçoivent de leur générateur depuis le 25/11/2026 (« les titres incrustés suivent la séquence »). C'est ce niveau-là
+   qu'on lit, et qu'on rend en quittant la mission (`data-ms-niveau` le garde). Ne lire que la balise laissait passer un
+   saut de 3 à 5 dans l'écran d'un exercice incrusté (banc_generique, quatre séquences du thème 1). */
 function niveaux(){
-  $$("[data-ms-niveau]").forEach(function(h){ h.removeAttribute("aria-level"); h.removeAttribute("data-ms-niveau"); });
+  $$("[data-ms-niveau]").forEach(function(h){ var o = h.getAttribute("data-ms-niveau"); if (o) h.setAttribute("aria-level", o); else h.removeAttribute("aria-level"); h.removeAttribute("data-ms-niveau"); });
   if (!actif || !panneau) return;
   var avant = 2;
   $$("h2,h3,h4,h5,h6", panneau).forEach(function(h){
     if (!h.getClientRects().length) return;
-    var n = +h.tagName.charAt(1), v = Math.min(n, avant + 1);
-    if (v !== n && !h.hasAttribute("aria-level")){ h.setAttribute("aria-level", String(v)); h.setAttribute("data-ms-niveau", ""); }
+    var a = h.getAttribute("aria-level"), n = +(a || h.tagName.charAt(1)), v = Math.min(n, avant + 1);
+    if (v !== n){ h.setAttribute("data-ms-niveau", a || ""); h.setAttribute("aria-level", String(v)); }
     avant = v;
   });
 }
@@ -1396,7 +1523,9 @@ function peindreRetour(s){
 /* Le pourquoi d'une erreur, écrit dans la page : `data-pourquoi` sur la proposition choisie (pourquoi elle ne convient
    pas), sinon `data-indice` sur la question (ce qu'elle demande). Jamais la bonne réponse. */
 function raison(f, seule){
-  var r = f.tagName === "SELECT" ? f.selectedOptions[0] : $("input[type=radio]:checked", f), pq = (r && r.getAttribute("data-pourquoi")) || f.getAttribute("data-indice"); if (!pq) return "";
+  var r = f.tagName === "SELECT" ? f.selectedOptions[0] : $("input[type=radio]:checked", f), pq = (r && r.getAttribute("data-pourquoi")) || f.getAttribute("data-indice");
+  if (!pq){ var pn = G.kit ? parNom()[nomDe(f)] : null; pq = pn ? (pn.retours[lireV(f)] || pn.indice) : ""; }          // le pourquoi d'un atelier : dans ses données
+  if (!pq) return "";
   if (f.classList.contains("ms-origine")) return "<b>« " + esc(lireV(f)) + " »</b> ne va pas avec « " + esc(intitule(f)) + " ». " + esc(pq);
   var t = intitule(f);          // l'intitulé de la question, puis son pourquoi : deux phrases, pas une seule
   return seule ? esc(pq) : "<b>" + esc(t) + (/[?!.»]$/.test(t) ? "" : "\u00a0:") + "</b> " + esc(pq);
@@ -1437,7 +1566,7 @@ function verifier(){
   } else dire(s, "", "C'est noté. Lis le message de la vérification ci-dessous.");
   M.fait[s.id] = true; ecrire();
   if (s.dernier && s.check){          // la vérification de la page : c'est elle qui valide l'activité — son message se lit au-dessus de la barre
-    s.check.click();
+    boutonDe(s.check).click();
     if (s.fb && net(s.fb.textContent) && s.fb.scrollIntoView){ s.fb.classList.add("ms-message"); s.fb.scrollIntoView({ block:"nearest" }); }
   }
   if (s.act) ouvrirCorrections(s, s.act);          // une correction posée sous la question s'ouvre aussi (n°336)
@@ -1511,7 +1640,7 @@ function entrer(){
     var avec = e.champs.filter(function(f){ return cle(f) !== undefined; });
     if (avec.length ? avec.every(function(f){ return lireV(f) === cle(f); }) : (e.dernier && e.fb && /(^|\s)ok(\s|$)/.test(e.fb.className))) M.fait[e.id] = true;
   }); });
-  actif = true; M.on = true; D.body.classList.add("ms"); voirRevenir();
+  actif = true; M.on = true; D.body.classList.add("ms"); voirRevenir(); caler();
   if (!G.onglet && !panneauActif()) ((M.ici && $(G.panneau + '[id="' + M.ici + '"]')) || $(G.panneau)).classList.add(G.actif);
   synchroniser();
 }
@@ -1523,7 +1652,7 @@ function sortir(){
 }
 
 /* ═══ Les gestes sur les étiquettes : toucher, glisser, clavier ═══ */
-function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-case:not(:disabled)"); }
+function sousPointeur(ev){ var x = D.elementFromPoint(ev.clientX, ev.clientY); return x && x.closest(".ms-cible:not(:disabled)"); }
 D.addEventListener("click", function(ev){
   if (!actif) return;
   /* une séquence découpée en pages : qui passe à la page suivante en mission y arrive en mission */
@@ -1531,7 +1660,7 @@ D.addEventListener("click", function(ev){
   var r = ev.target.closest("[data-ms=ress]"); if (r){ M.ress = !ressVue(); montrer(false); return; }
   if (glisse) return;
   var lab = ev.target.closest(".ms-lab"); if (lab){ var comp = lab.closest(".ms-etq"), j = +lab.dataset.j; sel = (sel && sel.comp === comp && sel.j === j) ? null : { comp:comp, j:j }; peindre(comp); return; }
-  var c = ev.target.closest(".ms-case"); if (c && !c.disabled){ var co = c.closest(".ms-etq"), i = +c.dataset.i;
+  var c = ev.target.closest(".ms-cible"); if (c && !c.disabled){ var co = c.closest(".ms-etq"), i = +c.dataset.i;
     if (sel && sel.comp === co){ poser(co, i, co._libs[sel.j]); sel = null; } else if (lireV(co._sets[i])) poser(co, i, null);
     else { var s = ecrans[k]; if (s.retour) dire(s, "", "Choisis d'abord une étiquette dans la réserve, puis touche cette case."); }
     peindre(co); }
@@ -1541,8 +1670,8 @@ D.addEventListener("change", function(ev){      // une réponse changée à la m
   if (!actif || !ev.isTrusted) return; var f = ev.target.closest && ev.target.closest(CHAMP);
   if (f && !f.classList.contains("ms-origine")) marquer(f, null); });
 D.addEventListener("pointerdown", function(ev){
-  if (!actif) return; var src = ev.target.closest(".ms-lab, .ms-case.pleine"); if (!src || src.disabled) return;
-  if (ev.pointerType === "touch" && src.classList.contains("ms-case")) return;      // au doigt : toucher la case rend l'étiquette ; glisser fait défiler la page
+  if (!actif) return; var src = ev.target.closest(".ms-lab, .ms-cible.pleine"); if (!src || src.disabled) return;
+  if (ev.pointerType === "touch" && src.classList.contains("ms-cible")) return;      // au doigt : toucher la case rend l'étiquette ; glisser fait défiler la page
   var comp = src.closest(".ms-etq"), depuis = src.dataset.i !== undefined ? +src.dataset.i : null;
   g = { x:ev.clientX, y:ev.clientY, id:ev.pointerId, src:src, comp:comp, depuis:depuis, val: depuis !== null ? lireV(comp._sets[depuis]) : comp._libs[+src.dataset.j], f:null };
 });
@@ -1550,7 +1679,7 @@ window.addEventListener("pointermove", function(ev){
   if (!g || ev.pointerId !== g.id) return;
   if (!g.f){ if (Math.hypot(ev.clientX - g.x, ev.clientY - g.y) < 8) return; g.f = el("div", "ms-fantome"); g.f.textContent = g.val; D.body.appendChild(g.f); g.src.classList.add("part"); }
   g.f.style.transform = "translate(" + ev.clientX + "px," + ev.clientY + "px) translate(-50%,-65%) rotate(-2deg)";
-  $$(".ms-case.vise").forEach(function(x){ x.classList.remove("vise"); });
+  $$(".ms-cible.vise").forEach(function(x){ x.classList.remove("vise"); });
   var c = sousPointeur(ev); if (c && c.closest(".ms-etq") === g.comp) c.classList.add("vise");
 });
 function lache(ev, annule){
@@ -1565,9 +1694,14 @@ window.addEventListener("pointerup", function(ev){ lache(ev, false); });
 window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
 
 /* pour les bancs : la réponse que le mode retient pour un groupe, et l'écran en cours */
-D.documentElement._mission = { cle: cle, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
+D.documentElement._mission = { cle: cle, gabarit: function(){ return G ? { P:G.panneau, T:G.onglet, A:G.actif || null, de:G.attr || null, actif:selActif(), page:!!G.page, kit:!!G.kit } : null; }, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
 function init(){
   G = gabarit(); if (!G) return;                                    // gabarit non reconnu : la page reste telle quelle
+  if (G.kit) CHECK = CHECK_BASE + ", [data-exo] button.verifier";
+  /* un groupe de boutons radio sans identifiant (ateliers) en reçoit un, tiré du nom de ses boutons : c'est par lui
+     que les bancs désignent une question. Rien d'autre ne le lit. */
+  if (G.kit) $$(G.panneau).forEach(function(P){ $$("fieldset.qcm-groupe:not([id])", P).forEach(function(f){ var nm = nomDe(f); if (nm && !D.getElementById("ms-q-" + nm)) f.id = "ms-q-" + nm; }); });
+  garde = !!$(SIEN);
   lire();
   /* « Effacer ma sauvegarde » efface aussi la mission : sur un poste partagé, l'élève suivant ne trouve ni les
      étoiles ni l'écran du précédent. La page efface sa clé puis se recharge ; on le voit ici à sa clé absente. */
@@ -1579,7 +1713,17 @@ function init(){
   /* la séance change (onglet, bouton « séance suivante », lien vers une ancre) : le mode suit le panneau ouvert */
   function suivre(){ if (actif && panneauActif() !== panneau) synchroniser(); }
   if (G.onglet) $$(G.onglet).forEach(function(o){ o.addEventListener("click", function(){ setTimeout(suivre, 0); }); });
-  if (window.MutationObserver){ var obs = new MutationObserver(suivre); $$(G.panneau).forEach(function(P){ obs.observe(P, { attributes:true, attributeFilter:["class"] }); }); }
+  if (window.MutationObserver){ var obs = new MutationObserver(suivre); $$(G.panneau).forEach(function(P){ obs.observe(P, { attributes:true, attributeFilter:["class", "hidden"] }); }); }
+  /* un lien de la page vers une ancre que le mode cache (un sommaire, « voir l'étape 3 ») mène à son écran */
+  D.addEventListener("click", function(ev){
+    if (!actif || !ev.target.closest) return;
+    var a = ev.target.closest('a[href^="#"]'); if (!a || a.getAttribute("href").length < 2) return;
+    var but = null; try { but = D.getElementById(decodeURIComponent(a.getAttribute("href").slice(1))); } catch (e) {}
+    if (!but || !panneau || !panneau.contains(but) || but.getClientRects().length) return;
+    for (var j = 0; j < ecrans.length; j++){
+      if (ecrans[j].n.some(function(n){ return n === but || (n.contains && n.contains(but)) || (but.contains && but.contains(n)); })){ ev.preventDefault(); aller(j); try { but.scrollIntoView({ block:"start" }); } catch (e) {} return; }
+    }
+  });
   var suite = false; try { suite = sessionStorage.getItem("mission:suite") === "1"; sessionStorage.removeItem("mission:suite"); } catch (e) {}
   if (M.on || suite) entrer();
 }

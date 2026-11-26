@@ -36,23 +36,23 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
   await jusqua('a) Fonctions');
   const vu = await p.evaluate(() => ({ etq: [...document.querySelectorAll('.ms-etq')].filter(e => e.offsetParent).length, grilles: [...document.querySelectorAll('#e1_1,#e1_2,.qcm-cles')].filter(e => e.offsetParent).length,
     labs: [...document.querySelectorAll('.ms-lab')].filter(e => e.offsetParent).map(e => e.textContent), large: document.documentElement.scrollWidth > innerWidth,
-    cases: [...document.querySelectorAll('.ms-case')].filter(e => e.offsetParent).length, titre: document.querySelector('.ms-reserve-t').textContent }));
+    cases: [...document.querySelectorAll('.ms-cible')].filter(e => e.offsetParent).length, titre: document.querySelector('.ms-reserve-t').textContent }));
   ok(T('3 · la grille de boutons radio se joue en étiquettes : 4 cases, 6 étiquettes dont 2 leurres annoncés, la grille d\'origine cachée, pas de défilement de côté'),
      vu.etq === 1 && vu.grilles === 0 && vu.cases === 4 && vu.labs.length === 6 && /2 en trop/.test(vu.titre) && !vu.large, vu.titre + ' · ' + JSON.stringify(vu.labs));
-  const cibles = await p.evaluate(() => Math.min(...[...document.querySelectorAll('.ms-lab,.ms-case,.ms-btn')].filter(e => e.offsetParent).map(e => e.getBoundingClientRect().height)));
+  const cibles = await p.evaluate(() => Math.min(...[...document.querySelectorAll('.ms-lab,.ms-cible,.ms-btn')].filter(e => e.offsetParent).map(e => e.getBoundingClientRect().height)));
   ok(T('4 · étiquettes, cases et boutons de navigation : 44 px de haut au moins'), cibles >= 44, Math.round(cibles) + ' px');
 
-  const poser = async (i, t) => { await p.locator(`.ms-etq:visible .ms-lab:has-text("${t}")`).click(); await p.locator(`.ms-etq:visible .ms-case[data-i="${i}"]`).click(); };
+  const poser = async (i, t) => { await p.locator(`.ms-etq:visible .ms-lab:has-text("${t}")`).click(); await p.locator(`.ms-etq:visible .ms-cible[data-i="${i}"]`).click(); };
   await poser(0, 'le panneau solaire'); await poser(1, 'le bloc de LED'); await poser(2, 'la batterie');
   // la quatrième au clavier : Entrée sur l'étiquette, Entrée sur la case
-  await p.locator('.ms-etq:visible .ms-lab:has-text("la carte électronique")').focus(); await p.keyboard.press('Enter'); await p.locator('.ms-etq:visible .ms-case[data-i="3"]').focus(); await p.keyboard.press('Enter');
+  await p.locator('.ms-etq:visible .ms-lab:has-text("la carte électronique")').focus(); await p.keyboard.press('Enter'); await p.locator('.ms-etq:visible .ms-cible[data-i="3"]').focus(); await p.keyboard.press('Enter');
   const plein = await p.evaluate(() => ({ titre: document.querySelector('.ms-reserve-t').textContent, restent: [...document.querySelectorAll('.ms-lab')].filter(e => e.offsetParent).map(e => e.textContent) }));
   ok(T('5b · toutes les cases remplies : la réserve le dit, et les deux leurres y restent'), /appuie sur « Vérifier »/.test(plein.titre) && plein.restent.join('|') === 'le capteur de luminosité|le mât', plein.restent.join(' · '));
   const pose = await p.evaluate(() => ['e1_1', 'e1_2', 'e1_3', 'e1_4'].map(i => document.getElementById(i).value));
   ok(T('5 · poser une étiquette (au doigt comme au clavier) coche le bouton radio de la page'),
      pose.join('|') === 'le panneau solaire|le bloc de LED|la batterie|la carte électronique', pose.join(' · '));
   await p.click('#msVerif'); await p.waitForTimeout(250);
-  const faux = await p.evaluate(() => ({ justes: document.querySelectorAll('.ms-case.juste').length, faux: document.querySelectorAll('.ms-case.faux').length }));
+  const faux = await p.evaluate(() => ({ justes: document.querySelectorAll('.ms-cible.juste').length, faux: document.querySelectorAll('.ms-cible.faux').length }));
   await p.waitForTimeout(1000);
   const apres = await p.evaluate(() => ['e1_1', 'e1_2', 'e1_3', 'e1_4'].map(i => document.getElementById(i).value));
   ok(T('6 · vérifier : 2 justes restent en place, 2 fausses retournent dans la réserve, et la page le sait'),
@@ -68,7 +68,7 @@ for (const [nom, vp] of [['390 px', { width: 390, height: 844 }], ['1 180 px', {
      bouton.bloque === 'true' && /Relis/.test(bouton.texte) && m1.essais['act1#0.0'] === 1 && m1.erreurs['act1#0.0'] === 2, JSON.stringify([bouton.texte, m1.essais, m1.erreurs]));
 
   // glisser-déposer : « la batterie » vers la case 2
-  const src = await p.locator('.ms-etq:visible .ms-lab:has-text("la batterie")').boundingBox(), dst = await p.locator('.ms-etq:visible .ms-case[data-i="1"]').boundingBox();
+  const src = await p.locator('.ms-etq:visible .ms-lab:has-text("la batterie")').boundingBox(), dst = await p.locator('.ms-etq:visible .ms-cible[data-i="1"]').boundingBox();
   await p.mouse.move(src.x + src.width / 2, src.y + src.height / 2); await p.mouse.down(); await p.mouse.move(src.x + 20, src.y - 20, { steps: 4 }); await p.mouse.move(dst.x + dst.width / 2, dst.y + dst.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(150);
   const glisse = await p.evaluate(() => document.getElementById('e1_2').value);
   if (glisse !== 'la batterie') await poser(1, 'la batterie');

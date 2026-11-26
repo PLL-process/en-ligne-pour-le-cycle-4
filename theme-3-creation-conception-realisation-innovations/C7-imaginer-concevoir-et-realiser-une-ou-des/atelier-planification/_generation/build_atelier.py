@@ -22,6 +22,12 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[4] / "_outils"))
 from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
 from expliquer_sigles import infobuller  # noqa: E402  chaque sigle s'explique (n°44, 22/11/2026)
 
+# Le mode mission (un écran à la fois) se pose par SA source unique, `_outils/mode_mission/poser.py` : une page engendrée
+# ne se retouche pas à la main (n°283). Décision de Pascal du 25/11/2026 : le mode mission sur tous les documents élèves.
+import importlib.util as _iu_mission
+_spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
+MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
+
 G = pathlib.Path(__file__).resolve().parent
 D = G.parent
 C = json.loads((D / "_corrige_calcule.json").read_text(encoding="utf-8"))
@@ -1296,7 +1302,10 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
     const res=CHECKS[n]();
     const zone=$("fb"+n);
     zone.textContent = "Score : "+res.score+" / "+res.total+"."+(res.extra||"");
-    zone.className = "feedback " + (res.valide ? "ok" : (res.score>0 ? "mixte" : "err"));
+    /* « show » : la feuille de style cache `.feedback` tant qu'il n'a rien à dire. Sans ce mot, le score et le conseil
+       étaient écrits mais jamais affichés — sur les six vérifications de la page (vu le 25/11/2026 par le banc du
+       mode mission : « le message de la vérification de la page ne s'affiche pas »). */
+    zone.className = "feedback show " + (res.valide ? "ok" : (res.score>0 ? "mixte" : "err"));
     window.__valid[n] = !!res.valide;
     save(); majProgres();
   });
@@ -1656,5 +1665,5 @@ def page(niv):
 
 for _niv in ("5e", "4e", "3e"):
     _s = D / ("atelier_%s_C7.1_planification_taches.html" % _niv)
-    _s.write_text(infobuller(page(_niv)), encoding="utf-8")   # infobulles des sigles, n°283
+    _s.write_text(MODE_MISSION.poser(infobuller(page(_niv))), encoding="utf-8")   # infobulles des sigles (n°283), puis le mode mission
     print("écrit : %s (%d o)" % (_s.name, _s.stat().st_size))

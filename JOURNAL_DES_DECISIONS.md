@@ -37711,3 +37711,255 @@ dans la page élève ; antérieur).
 4e_C6.1, 5e_C6.1 ; thème 3 — atelier CAO (4 scénarios, 4 pages, manifeste), atelier de planification (générateur,
 3 pages), `gabarit_style.css` des TP de CAO, 9 titres de Bonus (C7, C8, C9), `qcm_5e_C7.4`, 4e_C8.1 (générateur et page), 5e_C8.2, 5e_C9.1, TP mBot2 ;
 `_outils` — `controle_bonus_corrige.py` et son banc, `replier_bonus.py`, `controle_verrous.mjs` (deux déclarations).
+
+## 26/11/2026 — 5e_C8.2 : six questions sur document, un billet de sortie, le réinvestissement à la maison (thème 3)
+
+**La décision.** « 2 oui » de Pascal (26/11/2026, 1 h 45), à la proposition : traiter 5e_C8.2 (la patère du hall, le
+banc d'essai) comme 5e_C8.1 — le QCM n'avait aucune question sur document, la séquence pas de billet de sortie, et deux
+questions étaient à reprendre. Le même message décide, pour 5e_C8.1, de faire le réinvestissement à la maison (déjà
+fusionné, PR #934) ; la même situation se présentant ici, le réinvestissement de 5e_C8.2 passe aussi à la maison.
+
+**Ce qui change** :
+- Trois documents pour le téléphone : `documents_qcm.py` (neuf) écrit `documents_qcm_5e_C8.2.json` avec le modèle
+  `../5e_C8.1/patere.py` (n°233), `_outils/document_qcm.py` les dessine. Le relevé du banc (l'exigence de 40 kg et les
+  cinq charges de rupture), la fiche d'essai de l'aluminium (comment l'essai a été fait), « ce que l'essai de traction
+  ne voit pas » (le hall et l'angle mort de chaque matériau). Six questions s'y lisent ; leurs pourquoi renvoient à la
+  ligne ou au cadre à relire.
+- Deux notions renommées, avec leur question : « Le verbe de la compétence » (l'énoncé disait « En 5e », n°304) et
+  « Croiser les contraintes » (« deux contraintes » annonçait une liste que la bonne réponse ne suivait pas, n°344) ; un
+  exemple qui renvoyait à « ce que la 3e exigera » est réécrit. Aides reposées, lexique régénéré.
+- Le billet de sortie (n°330) ferme la séance 2, avant le Bonus : le fil qui suspend un pot d'anthuriums sous le préau
+  (6 kg, coefficient 5). Trois fiches d'essai de traction sont données. Question 1 (5e_C8.2) : quelle fiche respecte le
+  protocole, le fil tient-il, que cloche-t-il dans les deux autres. Question 2 (5e_C3.1) : à la pluie, quel fil écarter
+  pour son matériau. Versions étayées, correction complète avec critères et contre-exemples, aucun bouton.
+- Le réinvestissement (l'étagère du CDI, environ 15 min) se fait à la maison : la séance 2 tient en 20 + 15 + 5 minutes,
+  puis la synthèse et le bilan. Sa correction ne renvoie plus à « la 3e » (n°304). Son titre dit « environ 15 min » : ce temps de la maison ne se
+  compte pas dans les 110 minutes de classe que mesure `verif_regles_audit.py` (n°23 : 90 + 10 de service).
+- Bancs : `tests_5e_C8.2_qcm.mjs` (six questions sur document au moins, documents du lot décrits, données à jour du
+  modèle) ; `tests_5e_C8.2_sequence.mjs` (forme du billet, réponse gardée au rechargement).
+
+**Mesuré** : QCM 34 / 34 ; séquence 26 / 26 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : S3 1, E1 1, D1 1, P1 1) ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0
+écart ; `banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens
+sans écart.
+
+**Reste**, déjà noté dans la fiche : la séance 1 porte l'ouverture et 50 minutes d'activités, environ 60 minutes en tout.
+
+## 26/11/2026 — 3e_C8.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+**La décision.** « Oui » de Pascal (26/11/2026, 1 h 57), à la proposition : enchaîner avec 3e_C8.1 (le mât de la
+station), dont le QCM n'avait aucune question sur document et la séquence pas de billet de sortie. Le même « oui »
+répond à une seconde proposition, raccourcir l'activité 0 de 5e_C8.2 : elle n'est pas appliquée ; une proposition chiffrée
+est soumise d'abord à Pascal.
+
+**Ce qui change** :
+- Trois documents pour le téléphone, calculés par le modèle : `documents_qcm.py` (neuf) écrit
+  `documents_qcm_3e_C8.1.json` avec `mat_station.py` (n°233), `_outils/document_qcm.py` les dessine. Le moment au pied,
+  banc et vent (questions 5, 6, 7) ; le mât sous le vent, coefficient et flèche de chaque profilé (15, 27) ; combien de
+  profilés passent selon la hauteur et la limite (8, 10). Leurs pourquoi renvoient à la ligne ou à la colonne à relire.
+- Question 1 : elle demandait « ce qu'on attend de toi en 3e, après la 5e et la 4e » (n°304, et hors compétence) ;
+  elle demande maintenant ce que « mettre en œuvre une simulation » te fait faire, et sa notion devient « Mettre en œuvre
+  une simulation » (aides reposées). Question 3 : plus de code de séquence. Question 23 : « et il le dit pas » devient
+  « et l'écran ne le dit pas ».
+- Le billet de sortie (n°330) ferme la séance 3, avant le Bonus : le poteau d'un panneau d'affichage à l'entrée d'un
+  collège de Martinique. Question 1 (3e_C8.1) : choisir le réglage du simulateur et justifier chaque choix. Question 2
+  (3e_C3.4) : écrire le protocole qui mesure si le panneau reste lisible au vent. Versions étayées, correction complète,
+  aucun bouton.
+- La séance 3 passe le réinvestissement (le quai du port, environ 20 min) et l'écrit « comme au brevet » (environ
+  10 min) à la maison, ou en classe s'il reste du temps — comme Pascal l'a décidé pour 5e_C8.1 ; les deux portaient déjà
+  la pastille « peut se faire à la maison ». Sans cela, la séance aurait fait 55 minutes avant la synthèse et le bilan.
+- Trouvé en chemin : une correction de l'écrit tenait en 53 mots d'un seul tenant (`audit_aeration.py --strict`) ;
+  coupée en deux lignes.
+
+**Mesuré** : QCM 34 / 34 ; séquence 64 / 64 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : D1 1, P1 1) ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0 écart ;
+`banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens et
+`verif_regles_audit` sans écart.
+
+**Reste**, déjà noté dans la fiche : la séance 2 annonce 35 + 25 = 60 minutes d'activités.
+
+## 26/11/2026 — Structure page ouverte, thème 1 : les titres incrustés suivent la séquence (générateur des ateliers)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 1 h 45) : corriger les niveaux de titres dans le générateur des ateliers,
+puis faire refuser aussi la page ouverte.
+
+**Le constat**, page ouverte à 390 px (détails, corrections et onglets dépliés), avec les quatre règles de structure
+que `controle_axe.mjs` refuse au chargement : 10 pages en défaut, toutes à 0 au chargement parce que le titre fautif
+dort dans un `<details>` ou un onglet fermé.
+- Générateur des ateliers (8 pages, dont 5e_C4.1 au thème 2) : les intertitres du cours incrusté sont des `<h3>`, les
+  exercices qui suivent des `<h5>` ; et dans 3e, 4e et 5e_C3.1, une incrustation posée en `<h4>` sous le `<h2>` de
+  l'activité.
+- 3e_C1.5, à la main : deux `<h4>` dans la correction de l'activité 1 bis, sous son `<h2>`.
+
+**Ce qui change.** `incrustations.py` lit le dernier titre écrit avant le point de pose (balise, ou `aria-level` qui
+la corrige) et pose l'incrustation au plus un niveau plus bas (`niveau_de_pose`). Le moteur écrit ce niveau en
+`aria-level` sur le titre de l'incrustation, sur ses exercices et sur les intertitres de son cours (`niveau_aria`).
+La balise ne change pas, donc le style non plus. Les pages d'atelier ne changent pas (`build.py` relancé : aucune page
+réécrite). 3e_C1.5 : `aria-level="3"` sur les deux `<h4>` de sa correction.
+
+**Thème 1, 10 pages** : 3e_C1.5, 4e_C1.1, 5e_C1.2, 5e_C1.3, 3e_C2.1, 4e_C2.1, 5e_C2.1, 3e_C3.1, 4e_C3.1, 5e_C3.1 par le
+générateur (les intertitres de cours passent sous le titre de leur incrustation, même là où rien ne sautait), et la
+correction de 3e_C1.5 à la main. Les pages des thèmes 2 et 3 que le générateur réécrit suivent dans leurs PR.
+
+**Vérifié.** `tests_incrustations_niveaux.py` (nouveau) : 17 / 17 ; mutation (`niveau_de_pose` rendu à la balise) :
+3 échecs, sortie 1. `tests_incrustations_infobulles.py` 5 / 5 ; `incrustations.py --verifier` à jour partout.
+`controle_page_ouverte.mjs --axe` sur les 342 pages, toutes corrections comprises (thèmes 2 et 3 inclus) : S 0, A 0,
+L 0, B 0. `controle_axe.mjs` au chargement, 410 pages : sortie 0. Rendu avant/après, fermé et déplié, à 390 et
+1 280 px : identique au pixel près sur les 17 pages (5e_C4.1 et la page tout-en-un de 3e_C9.2 varient d'un
+chargement à l'autre, main contre main ; chacune a donné un passage identique). `tests_regle_311` des 16 dossiers
+touchés : tous verts ; `controle_mode_mission` 0 refus.
+
+## 26/11/2026 — Structure page ouverte, thème 3 : un en-tête de tableau nommé, une palette qui ne défile plus, les titres incrustés
+
+Suite de la PR #938 (« 2a » de Pascal, 26/11/2026). Page ouverte à 390 px, trois défauts au thème 3 :
+- `3e_C9.2` : la case d'angle du tableau Martinique / New York (« ouverture ») était un `<th>` vide
+  (`empty-table-header`), caché au chargement. Elle porte désormais « Ce qu'on compare », visuellement masqué, dans la
+  page tout-en-un ; `generer_les_quatre_pages.py` a refait la station 1, seule concernée.
+- `tp_5e_de_onshape` : la palette des métaux (palier 9) défilait de 14 px à 390 px (`scrollable-region-focusable`,
+  défaut grave ; déjà le cas sur `main` le 25/11 au soir, mesuré sur 997e6904). Les marges intérieures des cases
+  passent de 0,6 à 0,4 em, dans le scénario : le tableau tient (298 px pour 298), plus rien n'est caché (n°364).
+  `build_tp.py`, puis `verif_chaine.py --empreintes` : chaque page est ce que son scénario produit.
+- 3e_C7.1, 4e_C7.1, 4e_C8.1 : réécrites par le générateur des ateliers (PR #938), intertitres de cours sous le titre
+  de leur incrustation (`aria-level`, balise et style inchangés).
+
+**Vérifié.** `controle_page_ouverte.mjs --axe` sur les 342 pages : S 0, A 0, L 0, B 0. `controle_axe.mjs` au
+chargement : sortie 0. `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `tests_regle_311` de 3e_C9.2, 3e_C7.1, 4e_C7.1, 4e_C8.1
+verts ; `verif_chaine.py` sans écart. Rendu : identique au pixel près pour les pages de 3e_C9.2 et les trois pages
+réécrites par le générateur ; la palette de `tp_5e_de_onshape` change exprès (captures avant/après dans la PR).
+
+## 26/11/2026 — Structure page ouverte, thème 2 : la page ouverte refuse aussi les quatre défauts de structure (`_outils/`)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 1 h 45), dernière étape : ce que les PR #938 et #939 ont ramené à zéro
+page ouverte ne peut plus revenir (n°273 : référence nommée, datée, vide).
+
+**Ce qui change.** `controle_page_ouverte.mjs --axe` mesure S : les quatre règles que `controle_axe.mjs` refuse au
+chargement (`STRUCTURE_REFUSEE` : zone principale, ordre des titres, titre de niveau 1, en-tête de tableau), ici page
+ouverte à 390 px — détails, corrections et onglets dépliés. Un titre rangé dans une correction fermée n'existe pas au
+chargement : il ne se lit qu'ici. Un seul nœud fait sortir à 1. La liste des règles vient de `controle_axe.mjs` :
+une seule source pour les deux contrôles.
+
+**Thème 2, deux pages** réécrites par le générateur des ateliers (#938) : 5e_C4.1 (l'exercice du FAST sautait un niveau
+sous le cours incrusté) et 4e_C4.1 (intertitres du cours) — `aria-level`, balise et style inchangés.
+
+**Vérifié.** `tests_controle_page_ouverte.mjs` : 21 / 21 (18 avant) — un `<h4>` dans une correction repliée sous un
+`<h2>` (S, `heading-order`), une page sans zone principale (S, `landmark-one-main`) : sortie 1 ; sans `--axe` : 0.
+Mutation (liste des règles vidée) : 2 échecs, sortie 1. Sur tout le site, `main` après #938 et #939 plus ces deux
+pages : 342 pages ouvertes, S 0, A 0, L 0, B 0, sortie 0.
+
+## 25/11/2026 — Vérification totale, vague 3 : le mode mission sur tous les documents élève (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Suite de la demande de Pascal du 25/11/2026** : « que le mode mission soit pour tous les documents élèves ». À la
+question « jusqu'où ? », sa réponse : « Tout, synthèses comprises ». Cette entrée couvre ce qui se **joue** (ateliers,
+TP, cahiers, activités, entraînement) ; les synthèses et les lexiques, qui se **lisent**, ont leur entrée (le mode
+lecture). Les QCM gardent leur moteur, une question à la fois.
+
+**Mesuré sur `main`** : 128 documents élève (une page de `theme-*` dont le nom commence par `sequence`, `atelier`,
+`tp_`, `cahier`, `activite` ou `entrainement`). Les 60 séquences portaient le mode mission ; **aucun des 68 autres**.
+
+**Ce qui change** : le bloc est posé sur **33 pages de plus** (93 en tout) — les 18 ateliers de représentation et
+leurs 3 cahiers, les 3 ateliers de planification, les 4 TP de CAO, le TP mBot2, l'atelier Pix du jardin,
+l'entraînement au brevet sur les algorigrammes, l'activité CRCN du freinage et l'activité de cybersécurité (2FA).
+Restent, comptés et nommés par le contrôle : **30 panneaux** (une page courte, sans champ de réponse, qui renvoie à
+l'atelier ou au TP réel depuis le dossier d'un code) et **5 dispenses**, chacune avec sa raison (`SANS_MISSION`) :
+le modèle de démonstration des TP (« ne pas distribuer aux élèves »), `tp_algorigrammes_domotique` (il a déjà son pas
+à pas, six phases, une seule à l'écran) et trois panneaux `atelier_bete_a_cornes` qui rappellent un seul exercice.
+
+**Ce que le moteur a appris** (`_outils/mode_mission/mission.js`, détail dans son `README.md`) :
+- deux gabarits de plus : les onglets du kit des ateliers (un panneau fermé porte `hidden`), et la page **sans
+  séances**, découpée carte par carte ;
+- le bouton de vérification et le message du kit, les réponses lues dans `#donnees-page` — **dans une page du kit
+  seulement** : dans une séquence, un exercice incrusté garde son écran entier, comme avant ;
+- la clôture rangée **après** les panneaux (atelier de planification : Bonus, Bilan, QCM, traces ; entraînement au
+  brevet : « Pour aller plus loin ») restait sous chaque écran : elle forme les derniers écrans du dernier panneau ;
+- **il ne retient pas plus que la page** (règle d'or n°322) : sur une page sans bouton d'effacement (les TP, deux
+  activités — elles n'enregistrent rien), les étoiles vivent le temps de la page, l'écran en cours le temps de
+  l'onglet, et le navigateur ne garde que le choix d'affichage. Rien de ce qu'a fait un élève n'attend le suivant ;
+- **« Tout effacer » efface aussi la mission**, quelle que soit la clé : le kit garde une clé par exercice, que le
+  moteur ne sait pas lire ; le geste est reconnu à son bouton (une clé retirée juste après un appui sur lui) ;
+- une question à **cases à cocher** (le kit : « coche tout ce qui manque ») est répondue dès qu'une case l'est. Lue
+  comme un groupe de boutons radio, elle ne l'était jamais : son écran restait éteint dans la barre d'étapes, écrit et
+  dépassé (vu par `banc_barre`, cinq pages du kit ; aucune séquence n'en porte).
+
+**Ce qui change aussi pour les 60 séquences** (vu à la revue d'écran des nouvelles pages, vrai partout) :
+- la navigation du site tient **sur une ligne** en mission (elle défile de côté) : à cinq liens, celle des ateliers
+  prenait trois lignes collées en haut d'un téléphone et recouvrait la barre de la mission ; la barre se cale sous
+  elle à sa hauteur mesurée, ou tout en haut quand la navigation ne colle pas (les TP) ;
+- le bouton « 🎮 Mode mission » se cache une fois entré : sur les 21 séquences sans cadre « Ma progression », il
+  restait au-dessus de la barre ;
+- « ⭐ 0 / 0 » ne s'affiche plus là où il n'y a rien à gagner (un TP à suivre pas à pas, une séance sans question).
+
+**Les contrôles** :
+- `controle_mode_mission.py` ne vérifiait le bloc que là où il était. Il l'**exige** désormais (M1 : un document élève
+  sans le bloc ; M2 deux blocs ; M3 bloc périmé ; M4 dispense périmée) ; `tests_controle_mode_mission.py`, neuf : 13 / 13.
+- `controle_sauvegarde_locale.py` lisait le `localStorage.setItem(` du bloc comme une sauvegarde de la page : sept
+  pages qui n'enregistrent rien devenaient « sans moyen d'effacer ». Il lit maintenant **le bloc à part** (ce que LA
+  PAGE enregistre), et compte ces sept pages ; le bloc n'excuse pas non plus une page qui enregistre sans bouton ni
+  note. Son banc, qui n'existait pas : `tests_controle_sauvegarde_locale.py`, 11 / 11.
+- `banc_defaut.mjs` jouait les séquences : il joue toute page qui porte le bloc, refuse une page que le moteur ne
+  reconnaît pas, et vérifie que sans bouton d'effacement rien d'autre que le choix d'affichage ne reste.
+- `banc_generique.mjs` compte ce qu'un écran montre hors de son panneau (la clôture rangée après les onglets) ;
+  `banc_barre.mjs` répond aux questions à cases à cocher comme aux questions écrites.
+- Les générateurs posent le bloc (n°283 : une régénération l'effacerait) : `ateliers-representations/_generation/
+  build.py` et `cahiers.py`, `atelier-planification/_generation/build_atelier.py`, `atelier-cao/_generation/
+  build_tp.py` (`"sans_mode_mission": true` dispense le modèle).
+
+**Trouvé par le banc du mode, et corrigé : dans les trois ateliers de planification, le message de vérification ne
+s'affichait jamais.** « Vérifier mon billet », « Vérifier mes tâches »… (six boutons par page) calculaient le score,
+écrivaient « Score : 2 / 3 » et le conseil — dans un paragraphe que la feuille de style garde caché tant qu'il ne
+porte pas le mot `show`, que le script n'ajoutait pas. Sur `main`, l'élève appuyait et ne voyait rien, mode mission
+ou pas. Corrigé dans `atelier-planification/_generation/build_atelier.py`, trois pages reconstruites. Les 65 autres
+pages du site qui cachent ce message par défaut l'écrivent bien avec `show` (relevé du source, 68 pages lues).
+
+**Ce que les bancs ont vu avant la livraison** (les 154 bancs des lots, et ceux du mode, rejoués sur l'arbre final) :
+- **un nom de classe en double** : le moteur appelait `.ms-case` la case où l'on dépose une étiquette ; le kit des
+  ateliers appelle `.ms-case` le menu qu'il pose sur le dessin de la bête à cornes. Posé dans un atelier, le style du
+  moteur élargissait ces menus à 820 px, hors de leur ellipse, avec un cadre pointillé — mode mission ou pas
+  (`banc_ateliers.py`, 6 refus ; 530 / 530 sur `main`). Le moteur dit maintenant `.ms-cible`. Aucune autre classe en
+  commun (relevé du kit et des 93 pages) ;
+- **un commentaire qui citait la page** : le moteur citait « Prêt·e à t'entraîner » dans un commentaire ; le banc de
+  l'atelier de planification, qui cherche ce titre dans le source pour vérifier l'ordre Bonus → Bilan → QCM, le
+  trouvait d'abord dans le bloc. Le commentaire ne cite plus de titre (ni « Bilan — », ni « Bonus (facultatif ») ;
+- **un titre lu par sa balise, pas par son niveau annoncé** : depuis le 25/11 au soir (`main`, PR #938), les exercices
+  du kit incrustés dans les séquences du thème 1 annoncent leurs titres par `aria-level` (« les titres incrustés
+  suivent la séquence »). Le moteur, qui ramène les titres d'un écran à des niveaux sans saut, ne lisait que la balise
+  et laissait ces titres-là : en mission, l'écran passait du niveau 3 au niveau 5 (`banc_generique`, quatre séquences
+  — le même refus sur `main`, joué avec le banc de `main`). Il lit maintenant le niveau annoncé, et le rend en quittant
+  la mission. Les 49 pages qui portent un titre à niveau annoncé sont rejouées ;
+- lire le bouton du kit partout coupait en deux l'écran des exercices incrustés de six séquences du thème 1
+  (`banc_generique`, « le bouton de vérification de la page est visible dans un écran de question »). Corrigé (le kit
+  ne compte que chez lui), puis **le découpage des 60 séquences comparé écran par
+écran, moteur de `main` contre moteur neuf : 2 357 écrans, identiques** (leur nom, et la présence de « Vérifier »).
+
+**Vérifié, sur l'arbre final** :
+- le mode, page par page, dans un navigateur d'élève : `banc_generique` 93 / 93 (chaque écran joué, chaque réponse
+  juste acceptée, chaque correction ouverte ; les 60 séquences, puis les 39 pages touchées par les dernières
+  corrections, puis les 25 pages à étiquettes après le changement de nom) ; `banc_barre` 93 / 93 (B1 0 · B2 0 · B3 0) ;
+  `banc_defaut` 93 / 93, dont 7 pages sans bouton d'effacement où ne reste que le choix d'affichage ;
+  `banc_effacement` 166 pages, aucune qui garde quelque chose ; `banc_mission` 52 / 52 ; `banc_editeur` 5 pages,
+  220 écrans ;
+- les **154 bancs des lots** : 143 passent au premier passage ; les 11 autres, rejoués sur l'arbre final avec la ligne
+  de commande de leur `rapport_tests` (huit prennent leur page en argument), passent — dont `banc_ateliers.py`
+  530 / 530 et `tests_atelier_C7.1.py` ;
+- les 53 `controle_*.py` à 0 ; `tests_controle_mode_mission.py` 13 / 13, `tests_controle_sauvegarde_locale.py` 11 / 11 ;
+- au navigateur, tout le site : `controle_squelette`, `controle_code_colore`, `controle_impression`,
+  `controle_hors_ligne`, `controle_verrous`, `controle_indices_qcm` à 0 ; sur les 33 pages neuves : `controle_schemas`
+  0, `controle_page_ouverte` (390 px) L 0 · B 0 · C 0, `controle_axe` aucun défaut au-dessus de la référence ;
+  `eleve_qui_ne_lit_pas` ne sait lire qu'une des 33 (les autres n'ont pas de `const CHECKS`) : 0 activité validée sans
+  lire ;
+- **après la fusion du `main` du soir** (PR #936 à #940, venues d'autres sessions : 5e_C8.2, 3e_C8.1, titres incrustés
+  du thème 1, `controle_page_ouverte` plus strict) : le bloc et les pages engendrées reconstruits à l'identique ; les
+  54 bancs des lots que ces PR touchent, à 0 ; `banc_generique` sur les 20 pages à mode mission qu'elles changent, puis
+  sur les 49 pages à titre de niveau annoncé, après la correction ci-dessus ; `controle_page_ouverte` (nouvelle
+  version) sur les 33 pages neuves : rien à signaler ; les 53 `controle_*.py` à 0 ; `banc_mission` 52 / 52 ;
+- la revue d'écran à 390 et 1 280 px d'une page de chaque famille (atelier, cahier, atelier de planification, atelier
+  Pix, TP de CAO, TP mBot2), avant et après les corrections de la barre.
+
+**Vu, non traité** : `eleve_qui_ne_lit_pas` ne lit pas les pages du kit (leurs réponses sont dans `#donnees-page`) ;
+`banc_generique` croise leurs réponses à la place.
+
+**Thème par thème** (n°302) : thème 1 — 18 ateliers de représentation, 3 cahiers, leurs générateurs (`build.py`,
+`cahiers.py`), l'activité CRCN de 5e_C1.2, l'activité 2FA de 4e_C1.4 ; thème 2 — l'atelier Pix de 4e_C4.1,
+l'entraînement au brevet de 3e_C6.2 ; thème 3 — 3 ateliers de planification et leur générateur (le message de
+vérification), 4 TP de CAO, leur générateur et le manifeste, le TP mBot2 ; les trois thèmes — le bloc à jour dans les 60 séquences ; `_outils` — `mode_mission/`
+(moteur, feuille de style, `banc_generique`, `banc_defaut`, `banc_barre`, `README`), `controle_mode_mission.py` et son banc,
+`controle_sauvegarde_locale.py` et son banc.

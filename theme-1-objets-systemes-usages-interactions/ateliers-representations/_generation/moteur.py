@@ -473,10 +473,19 @@ def libelles(exercices, premier=1):
     return out
 
 
-def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True, fiche_repliee=False):
+def niveau_aria(balise, niveau):
+    """` aria-level="N"` quand le niveau du titre dans la page n'est pas celui de sa balise, sinon rien.
+    Une incrustation se pose sous le titre qui la précède dans la séquence : son titre ne peut descendre que d'un
+    niveau (axe-core `heading-order`, refusé page ouverte depuis le 26/11/2026). La balise, donc le style, ne change
+    pas : seul le niveau lu par un lecteur d'écran est corrigé, comme dans les pages (PR #925, #927, #929)."""
+    return ' aria-level="%d"' % niveau if niveau and niveau != int(balise[1]) else ""
+
+
+def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True, fiche_repliee=False, niveau=None):
     """Rend la carte d'un exercice ; renvoie (html, def_json).
     `balise` : le niveau du titre (h2 dans une page d'atelier, plus bas quand l'exercice est
-    incrusté dans une activité de séquence).
+    incrusté dans une activité de séquence). `niveau` (facultatif) : le niveau que le titre a dans la page, quand il
+    n'est pas celui de la balise (`niveau_aria`).
     `fiche_repliee` : dans une séquence (incrustations.py), la fiche de l'exercice (objectif, compétence, ce que tu
     produis, durée) se range dans un dépliant fermé, comme la fiche de chaque activité (décision de Pascal du
     15/11/2026, _outils/replier_fiches_activite.py, qui écrit la même chose) ; la page d'atelier la garde ouverte."""
@@ -504,8 +513,9 @@ def exercice(ex, numero, uid, cle, base_img="", balise="h2", duree_au_titre=True
         fiche = ('<details class="fiche-activite"><summary>🗂 La fiche de l\'exercice : objectif, compétence, ce que tu produis%s'
                  '</summary>%s</details>' % ("" if duree_au_titre else ", durée", fiche))
     h = ['<section class="card exercice" id="%s" data-exo="%s" data-cle="%s" aria-labelledby="%s-titre">' % (uid, uid, cle, uid),
-         ('<%s id="%s-titre">%s <span class="note">(≈ %d min)</span></%s>' % (balise, uid, titre_ex, ex["duree"], balise))
-         if duree_au_titre else ('<%s id="%s-titre">%s</%s>' % (balise, uid, titre_ex, balise)),
+         ('<%s id="%s-titre"%s>%s <span class="note">(≈ %d min)</span></%s>'
+          % (balise, uid, niveau_aria(balise, niveau), titre_ex, ex["duree"], balise))
+         if duree_au_titre else ('<%s id="%s-titre"%s>%s</%s>' % (balise, uid, niveau_aria(balise, niveau), titre_ex, balise)),
          fiche,
          mots(ex.get("mots"))]
     for doc in ex.get("documents", []):
@@ -616,11 +626,15 @@ def avant_de_commencer(liste, cle):
     return "".join(h)
 
 
-def bloc_cours(at, niv, lien=None, ouvert=False):
-    """L'encadré « 📘 Le cours » d'un niveau : COURS[niv] dans le module de données (facultatif)."""
+def bloc_cours(at, niv, lien=None, ouvert=False, niveau=None):
+    """L'encadré « 📘 Le cours » d'un niveau : COURS[niv] dans le module de données (facultatif).
+    Ses intertitres sont des <h3> (style `.cours-corps h3`) ; `niveau` (facultatif) : le niveau qu'ils ont dans la
+    page, quand le cours est incrusté sous un titre plus bas qu'un h2 (`niveau_aria`)."""
     cours = getattr(at, "COURS", {}).get(niv)
     if not cours:
         return ""
+    if niveau_aria("h3", niveau):
+        cours = cours.replace("<h3>", "<h3%s>" % niveau_aria("h3", niveau))
     suite = ('<p class="note">Le cours complet, avec les schémas et les mots&nbsp;: <a href="%s">la synthèse</a>.</p>' % lien) if lien else ""
     return ('<details class="cours"%s><summary>📘 Le cours — ce qu\'il faut savoir</summary><div class="cours-corps">%s</div>%s</details>'
             % (" open" if ouvert else "", cours, suite))
@@ -632,7 +646,7 @@ def rappel_de_l_atelier(slug, niv):
     return next((r for r in rc.RAPPELS if r.get("atelier") == (slug, niv)), None)
 
 
-def rappel_cdc(r, depuis_dossier, balise="h3", balise_exo="h4", fiche_repliee=False):
+def rappel_cdc(r, depuis_dossier, balise="h3", balise_exo="h4", fiche_repliee=False, niveau=None):
     """La piqûre de rappel du cahier des charges (règle n°317 : le tableau se complète par menus) : une section
     `.atelier-incruste`, avec ses propres données, que le kit lance comme un exercice incrusté — dans une séquence
     (incrustations.py) comme dans une page d'atelier. Les textes sont dans donnees_rappel_cdc.py."""
@@ -641,10 +655,12 @@ def rappel_cdc(r, depuis_dossier, balise="h3", balise_exo="h4", fiche_repliee=Fa
     uid = "%s_%s" % (rc.COURT, r["id"].replace("-", "_"))
     cle = "rep_%s_%s" % (rc.SLUG, r["id"])
     sid = "incruste-%s-%s" % (rc.COURT, r["id"])
-    carte, df = exercice(ex, None, uid, cle, balise=balise_exo, duree_au_titre=False, fiche_repliee=fiche_repliee)
+    # `niveau` (facultatif) : le niveau du titre du rappel dans la page ; l'exercice est un niveau plus bas
+    carte, df = exercice(ex, None, uid, cle, balise=balise_exo, duree_au_titre=False, fiche_repliee=fiche_repliee,
+                         niveau=niveau + int(balise_exo[1]) - int(balise[1]) if niveau else None)
     lecon = rel(depuis_dossier, RACINE_ATELIERS / rc.LECON[0]) + rc.LECON[1]
     h = ['<section class="card atelier-incruste rappel-cdc" id="%s" aria-labelledby="%s-titre">' % (sid, sid),
-         '<%s id="%s-titre">%s %s</%s>' % (balise, sid, rc.EMOJI, rc.TITRE, balise),
+         '<%s id="%s-titre"%s>%s %s</%s>' % (balise, sid, niveau_aria(balise, niveau), rc.EMOJI, rc.TITRE, balise),
          '<p>%s</p>' % r["pourquoi"],
          '<p><b>Ce que dit un cahier des charges, en trois mots&nbsp;:</b> pour chaque fonction, un <b>critère</b>, un '
          '<b>niveau</b> et une <b>flexibilité</b>. Les mots de référence&nbsp;:</p>',

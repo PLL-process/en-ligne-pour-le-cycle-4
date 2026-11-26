@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,20 +306,20 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 3e_C8.1 + 10 3e_C3.4), 0 illustrée.
+/* Banque : 30 questions (20 3e_C8.1 + 10 3e_C3.4), 7 illustrées (26/11/2026 : sept questions se lisent sur un document, n°345).
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
    pas à ce fichier. */
 const QUESTIONS = [
 /* ═══ 3e_C8.1 ═══ */
-{c:"3e_C8.1",n:"Le verbe de la 3e",q:"En 5e on UTILISE une simulation fournie, en 4e on la PARAMÈTRE. Qu'attend-on de toi en 3e ?",
- o:["que tu la remplaces par un essai réel, plus fiable qu'un calcul théorique","que tu la programmes entièrement, à partir des équations de la mécanique","que tu la mettes en œuvre : le cas de charge et la limite sont tes choix","que tu vérifies les calculs du logiciel un par un, à la main et au crayon"],r:2,
- expl:"Utiliser, paramétrer, mettre en œuvre : le geste monte d'un cran chaque année. En 3e, c'est la QUESTION posée à la simulation qui devient ton travail.",
+{c:"3e_C8.1",n:"Mettre en œuvre une simulation",q:"Ta compétence : « mettre en œuvre une simulation pour valider la tenue mécanique d'un matériau ». Qu'est-ce que cela te demande ?",
+ o:["la remplacer par un essai réel, plus fiable qu'un calcul théorique","la programmer entièrement, à partir des équations de la mécanique","la régler toi-même : le cas de charge et la limite sont tes choix","vérifier les calculs du logiciel un par un, à la main et au crayon"],r:2,
+ expl:"Mettre en œuvre, c'est choisir la question qu'on pose à la simulation : le cas de charge et la limite. Le logiciel calcule ; le réglage, et donc la valeur du verdict, c'est ton travail.",
  ex:"Poussée du banc ou vent de cyclone ? Rupture ou limite élastique ? À toi de trancher.",
  err:"Croire que « mettre en œuvre » veut dire « écrire le logiciel ».",
- d:["la simulation ne remplace pas l'essai : elle le prépare et l'éclaire","écrire le modèle est un travail de lycée et d'ingénieur, pas de troisième","","refaire les calculs à la main n'apprend rien de plus que de bien les régler"],
- ret:"Suivre (5e) → paramétrer (4e) → mettre en œuvre (3e). Le geste change, la question aussi."},
+ d:["La simulation ne remplace pas l'essai : elle le prépare et l'éclaire. Cherche ce que tu choisis, toi, avant le calcul.","Écrire le modèle est un travail d'ingénieur ; ici, le logiciel est fourni. Cherche ce que tu choisis, toi, avant le calcul.","","Refaire les calculs à la main n'apprend rien de plus que de bien les régler. Cherche ce que tu choisis avant le calcul."],
+ ret:"Mettre en œuvre une simulation, c'est choisir son réglage : le cas de charge et la limite."},
 {c:"3e_C8.1",n:"Régler sur une réponse connue",q:"Avant de poser une question nouvelle à la simulation, on la règle comme le banc. Pourquoi ?",
  o:["pour vérifier qu'elle retrouve un verdict déjà connu, et mériter confiance","pour gagner du temps, car ce réglage est le plus rapide à saisir au clavier","parce que le logiciel refuse de démarrer sur un autre cas de charge","parce que le banc est le seul cas de charge scientifiquement valable"],r:0,
  expl:"Un instrument neuf se contrôle sur une réponse déjà établie. S'il ne la retrouve pas, on s'arrête et on cherche pourquoi — avant de lui confier une question difficile.",
@@ -325,7 +327,7 @@ const QUESTIONS = [
  err:"Faire confiance à un calcul neuf parce qu'il est neuf, sans l'avoir jamais vérifié.",
  d:["","les trois réglages se saisissent aussi vite les uns que les autres","tous les cas de charge du simulateur fonctionnent dès l'ouverture","le cas du vent est bien plus proche de la réalité que la poussée du banc"],
  ret:"On vérifie un instrument sur une réponse connue avant de lui poser une question neuve."},
-{c:"3e_C8.1",n:"Ce que le banc appliquait",q:"Le banc de 3e_C8.2 poussait 100 N (newtons) en tête. Quel moment cela produisait-il au pied d'un mât de 2 m ?",
+{c:"3e_C8.1",n:"Ce que le banc appliquait",q:"Le banc d'essai poussait 100 N (newtons) en tête du mât. Quel moment cela produisait-il au pied d'un mât de 2 m (mètres) ?",
  o:["un moment différent pour chacun, calculé à partir de sa largeur","200 N·m (newtons-mètres) pour les tubes ronds, et bien moins pour la poutre carrée","200 N·m (newtons-mètres) pour chacun des cinq profilés, quelle que soit sa forme","un moment nul, puisque le mât est solidement encastré à son pied"],r:2,
  expl:"Moment = force × bras de levier = 100 × 2 000 mm. Ni la forme ni la matière n'y entrent : c'est la même valeur pour les cinq.",
  ex:"Tube Ø50, barre Ø20, poutre carrée : 200 N·m pour tout le monde.",
@@ -339,33 +341,37 @@ const QUESTIONS = [
  err:"Traiter la charge du vent comme une donnée fixe, indépendante de la pièce.",
  d:["","la résistance décide si le mât tient, pas de la charge qu'il reçoit","la largeur intervient directement : c'est la surface offerte au vent","la masse ne s'oppose pas à la flexion d'un mât encastré"],
  ret:"La charge du vent dépend de la pièce elle-même. Celle du banc, non."},
-{c:"3e_C8.1",n:"La barre que le banc désavantageait",q:"La barre pleine Ø20 recevait 200 N·m (newtons-mètres) au banc et 128 N·m sous le vent. Que faut-il en conclure ?",
+{c:"3e_C8.1",n:"La barre que le banc désavantageait",q:"D'après ce tableau, la barre acier Ø20 reçoit 200 N·m (newtons-mètres) au banc et 128 N·m sous le vent. Que faut-il en conclure ?",
+ img:{src:"Images/doc_moment_banc_vent.svg",alt:"Le moment au pied d'un mât de 2 000 millimètres, pour chaque profilé : sous la poussée du banc, 100 newtons en tête, puis sous le vent de 150 kilomètres par heure. Tube alu diamètre 50 : banc 200 newtons-mètres, vent 204 newtons-mètres. Barre acier diamètre 20 : banc 200 newtons-mètres, vent 128 newtons-mètres. Tube PVC diamètre 50 : banc 200 newtons-mètres, vent 204 newtons-mètres. Poutre bois 40sur40 : banc 200 newtons-mètres, vent 298 newtons-mètres. Tube acier diamètre 33,7 : banc 200 newtons-mètres, vent 163 newtons-mètres."},
  o:["le vent est plus doux que le banc pour tous les profilés sans exception","le banc lui infligeait une charge qu'elle ne subira jamais dans la réalité","la barre est plus solide qu'on ne le croyait quand on l'a essayée","les deux chiffres se contredisent : l'un des deux calculs est faux"],r:1,
  expl:"Elle ne fait que 20 mm de large : elle offre au vent deux fois et demie moins de surface qu'un tube de 50. Le banc, lui, poussait pareil sur tout le monde.",
  ex:"Elle était éliminée au banc. Sous le vent réel, elle reçoit 36 % de charge en moins.",
  err:"Prendre le verdict d'un banc pour un verdict sur l'objet réel.",
- d:["la poutre bois reçoit 298 N·m sous le vent, contre 200 au banc : c'est l'inverse","","sa résistance n'a pas changé : c'est la charge qu'on lui applique qui change","les deux calculs sont justes ; ils décrivent deux chargements différents"],
+ d:["La poutre bois reçoit 298 N·m sous le vent, contre 200 au banc : pour elle, c'est l'inverse. Relis la ligne de la barre.","","Sa résistance n'a pas changé : c'est la charge qu'on lui applique qui change. Compare ses deux colonnes.","Les deux calculs sont justes ; ils décrivent deux chargements différents. Relis le sous-titre du tableau."],
  ret:"Un banc peut être injuste sans être faux : il applique une charge qui n'est pas la vraie."},
-{c:"3e_C8.1",n:"La poutre que le banc avantageait",q:"La poutre bois 40 × 40 reçoit 298 N·m (newtons-mètres) sous le vent, contre 200 N·m au banc. Pourquoi autant ?",
+{c:"3e_C8.1",n:"La poutre que le banc avantageait",q:"D'après ce tableau, la poutre bois 40×40 reçoit 298 N·m (newtons-mètres) sous le vent, contre 200 N·m au banc. Pourquoi autant ?",
+ img:{src:"Images/doc_moment_banc_vent.svg",alt:"Le moment au pied d'un mât de 2 000 millimètres, pour chaque profilé : sous la poussée du banc, 100 newtons en tête, puis sous le vent de 150 kilomètres par heure. Tube alu diamètre 50 : banc 200 newtons-mètres, vent 204 newtons-mètres. Barre acier diamètre 20 : banc 200 newtons-mètres, vent 128 newtons-mètres. Tube PVC diamètre 50 : banc 200 newtons-mètres, vent 204 newtons-mètres. Poutre bois 40sur40 : banc 200 newtons-mètres, vent 298 newtons-mètres. Tube acier diamètre 33,7 : banc 200 newtons-mètres, vent 163 newtons-mètres."},
  o:["le bois est rugueux, et la rugosité accroche fortement le vent","sa section carrée freine le vent presque deux fois plus qu'un tube rond","le bois est léger, donc il se déplace bien davantage sous la même charge","elle est plus large que tous les autres profilés de la comparaison"],r:1,
  expl:"Un profil carré a un coefficient de forme de 2,0 contre 1,2 pour un tube rond. À largeur égale, il reçoit près du double — et le banc ne le voyait pas.",
  ex:"40 mm de large seulement, et pourtant la charge la plus élevée des cinq.",
  err:"Croire que la largeur seule décide. La forme de la section compte autant.",
- d:["la rugosité joue à la marge ; c'est la forme de la section qui décide","","la légèreté ne change pas la force que le vent exerce sur la surface","elle est la plus étroite des trois profilés larges : 40 mm contre 50"],
+ d:["La rugosité joue à la marge ; c'est la forme de la section qui décide. Compare-la aux tubes ronds du tableau.","","La légèreté ne change pas la force que le vent exerce sur la surface. Regarde la forme de sa section.","Elle ne fait que 40 mm de large, moins que les tubes de 50 mm. Compare sa ligne à celle des tubes Ø50."],
  ret:"À largeur égale, un carré prend presque deux fois plus de vent qu'un tube rond."},
-{c:"3e_C8.1",n:"Le tube Ø50 et le banc",q:"Les tubes Ø50 reçoivent 204 N·m sous le vent, contre 200 N·m au banc. Que dire du choix de 100 N (newtons) ?",
+{c:"3e_C8.1",n:"Le tube Ø50 et le banc",q:"D'après ce tableau, les tubes Ø50 reçoivent 204 N·m (newtons-mètres) sous le vent, contre 200 N·m au banc. Que dire du choix de 100 N (newtons) ?",
+ img:{src:"Images/doc_moment_banc_vent.svg",alt:"Le moment au pied d'un mât de 2 000 millimètres, pour chaque profilé : sous la poussée du banc, 100 newtons en tête, puis sous le vent de 150 kilomètres par heure. Tube alu diamètre 50 : banc 200 newtons-mètres, vent 204 newtons-mètres. Barre acier diamètre 20 : banc 200 newtons-mètres, vent 128 newtons-mètres. Tube PVC diamètre 50 : banc 200 newtons-mètres, vent 204 newtons-mètres. Poutre bois 40sur40 : banc 200 newtons-mètres, vent 298 newtons-mètres. Tube acier diamètre 33,7 : banc 200 newtons-mètres, vent 163 newtons-mètres."},
  o:["cela prouve que le banc était réglé sur le vent depuis le début","c'était un mauvais choix, puisque les deux valeurs ne sont pas égales","c'était un hasard heureux, sans aucun rapport avec le vent réel","pour ces tubes-là, c'était un très bon substitut du vent de référence"],r:3,
  expl:"Quatre newtons-mètres d'écart sur deux cents, c'est deux pour cent. Pour un tube de cinquante millimètres, la poussée de 100 N représentait bien le cyclone.",
  ex:"204 contre 200 : la charge du banc tombait juste, pour cette largeur-là.",
  err:"Rejeter un essai parce qu'il n'est pas exact, alors qu'il était représentatif.",
- d:["le banc appliquait une force unique en tête, ce que le vent ne fait pas","deux pour cent d'écart, c'est une excellente représentativité pour un essai","le rapprochement s'explique par le calcul : ce n'est pas un hasard",""],
+ d:["Le banc appliquait une force unique en tête, ce que le vent ne fait pas. Compare plutôt les deux colonnes des tubes Ø50.","Deux pour cent d'écart, c'est une très bonne représentativité pour un essai. Calcule l'écart : 4 sur 200.","Le rapprochement s'explique par le calcul : ce n'est pas un hasard. Regarde les autres lignes : l'écart y est bien plus grand.",""],
  ret:"Une charge d'essai bien choisie représente la charge réelle — pour la pièce visée."},
-{c:"3e_C8.1",n:"La limite qu'on choisit",q:"À 2 000 mm sous le vent, la simulation retient 2 profilés sur la rupture et 1 sur la limite élastique. Pourquoi cet écart ?",
+{c:"3e_C8.1",n:"La limite qu'on choisit",q:"D'après ce tableau, à 2 000 mm (millimètres) sous le vent, 2 profilés passent sur la rupture et 1 sur la limite élastique. Pourquoi cet écart ?",
+ img:{src:"Images/doc_retenus_reglage.svg",alt:"Le nombre de profilés qui passent, sur 5, sous le vent de 150 kilomètres par heure, selon la hauteur du mât et la limite choisie ; un profilé passe avec un coefficient d'au moins 3 et une flèche d'au plus 40 millimètres. Mât de 1 200 millimètres : 4 sur la rupture, 2 sur la limite élastique. Mât de 1 500 millimètres : 3 sur la rupture, 2 sur la limite élastique. Mât de 2 000 millimètres : 2 sur la rupture, 1 sur la limite élastique."},
  o:["la limite élastique est plus haute : elle avantage les profilés résistants","la limite élastique est plus basse : la marge exigée est plus dure à tenir","le calcul de la rupture est approximatif, donc plus permissif par nature","les deux limites sont équivalentes, et l'écart vient d'un arrondi d'affichage"],r:1,
  expl:"Un même coefficient exigé, deux limites différentes : sur l'élastique, il faut une contrainte trois fois plus faible qu'une valeur elle-même plus basse.",
  ex:"Tube galvanisé : coefficient 4,5 sur la rupture, 2,7 sur la limite élastique.",
  err:"Choisir la limite qui donne le résultat souhaité plutôt que celle qui décrit la panne.",
- d:["la limite élastique est toujours plus basse que la résistance à la rupture","","les deux calculs sont aussi précis l'un que l'autre","l'écart est de 4,5 contre 2,7 : ce n'est pas un arrondi"],
+ d:["La limite élastique est toujours plus basse que la résistance à la rupture. Relis la note sous le tableau.","","Les deux calculs sont aussi précis l'un que l'autre. Cherche ce qui change d'une colonne à l'autre : la limite.","L'écart se retrouve à chaque hauteur du tableau : ce n'est pas un arrondi. Compare les trois lignes."],
  ret:"Sur la limite élastique, la même pièce a une marge plus faible. C'est voulu."},
 {c:"3e_C8.1",n:"Un mât tordu",q:"Pourquoi refuser un mât qui plierait sans casser, alors qu'il resterait debout ?",
  o:["un mât penché ne peut plus être démonté pour son entretien annuel","un mât penché finit toujours par tomber dans les jours qui suivent","un mât penché n'est plus conforme aux règles d'urbanisme fixées par la commune","penché, l'anémomètre ne vise plus juste : la station mesure un vent faux"],r:3,
@@ -374,12 +380,13 @@ const QUESTIONS = [
  err:"Juger une panne sur ce qui se voit plutôt que sur la fonction perdue.",
  d:["le démontage reste possible ; c'est la mesure qui est perdue","un mât plié peut rester debout des années : ce n'est pas le problème","l'urbanisme n'a rien à voir avec la validité d'une mesure de vent",""],
  ret:"Pour un instrument de mesure, se déformer est une panne complète et silencieuse."},
-{c:"3e_C8.1",n:"La hauteur n'est pas un réglage libre",q:"Descendre le mât à 1 500 mm ferait passer un profilé de plus. Pourquoi refuser ?",
+{c:"3e_C8.1",n:"La hauteur n'est pas un réglage libre",q:"D'après ce tableau, descendre le mât à 1 500 mm (millimètres) ferait passer un profilé de plus sur la limite élastique. Pourquoi refuser ?",
+ img:{src:"Images/doc_retenus_reglage.svg",alt:"Le nombre de profilés qui passent, sur 5, sous le vent de 150 kilomètres par heure, selon la hauteur du mât et la limite choisie ; un profilé passe avec un coefficient d'au moins 3 et une flèche d'au plus 40 millimètres. Mât de 1 200 millimètres : 4 sur la rupture, 2 sur la limite élastique. Mât de 1 500 millimètres : 3 sur la rupture, 2 sur la limite élastique. Mât de 2 000 millimètres : 2 sur la rupture, 1 sur la limite élastique."},
  o:["sous 2 000 mm le mât deviendrait trop court pour porter le boîtier","sous 2 000 mm l'anémomètre lit les turbulences du toit, pas le vent réel","sous 2 000 mm la mairie n'accorderait pas l'autorisation de faire les travaux","sous 2 000 mm le moment au pied augmenterait au lieu de diminuer"],r:1,
  expl:"La hauteur est une exigence de MESURE, pas une variable d'ajustement mécanique. Gagner un candidat en descendant le mât, c'est gagner sur la tenue et perdre la fonction.",
  ex:"1 500 mm : deux profilés passent — et la station ne mesure plus le bon vent.",
  err:"Ajuster une contrainte du cahier des charges pour faire passer une solution.",
- d:["un mât de 1 500 mm porterait très bien le boîtier de la station","","aucune autorisation n'est en jeu : c'est la qualité de la mesure","le moment diminue avec la hauteur : c'est bien pour cela qu'un profilé passe"],
+ d:["Un mât de 1 500 mm porterait très bien le boîtier de la station. Demande-toi ce que l'anémomètre mesure à cette hauteur.","","Aucune autorisation n'est en jeu : c'est la qualité de la mesure. Demande-toi ce que l'anémomètre lit près du toit.","Le moment diminue avec la hauteur : c'est pour cela qu'un profilé de plus passe. Cherche à quoi sert la hauteur."],
  ret:"On ne fait pas passer une solution en abaissant une exigence du cahier des charges."},
 {c:"3e_C8.1",n:"La pression du vent",q:"La pression dynamique d'un vent de 150 km/h vaut environ 1 060 Pa (pascals). D'où vient ce nombre ?",
  o:["de q = ½ × masse volumique de l'air × vitesse au carré, en m/s","d'une mesure faite par la station météo de la commune l'an dernier","d'un tableau réglementaire qui donne la pression pour chaque région","de la force du vent divisée par la surface du boîtier de la station"],r:0,
@@ -409,12 +416,13 @@ const QUESTIONS = [
  err:"Ne retenir qu'un seul critère quand le cahier des charges en pose deux.",
  d:["le banc mesurait aussi la charge de rupture, en plus de la flèche","une flèche de 40 mm reste élastique : elle n'annonce aucune rupture","les tolérances de fabrication sont de l'ordre du dixième de millimètre",""],
  ret:"Un cahier des charges peut poser deux critères. Il faut les tenir tous les deux."},
-{c:"3e_C8.1",n:"Le profilé retenu",q:"Avec le réglage qui répond au cahier des charges — 2 000 mm, vent, limite élastique — que retient la simulation ?",
+{c:"3e_C8.1",n:"Le profilé retenu",q:"D'après ce tableau, avec le réglage du cahier des charges (2 000 mm, vent, limite élastique), que retient la simulation ?",
+ img:{src:"Images/doc_verdict_vent.svg",alt:"Le mât de 2 000 millimètres sous le vent de 150 kilomètres par heure, calculé sur la limite élastique ; il faut un coefficient de sécurité d'au moins 3 et une flèche en tête d'au plus 40 millimètres. Tube alu diamètre 50 : coefficient 3,4, flèche 27 millimètres. Barre acier diamètre 20 : coefficient 1,4, flèche 93 millimètres. Tube PVC diamètre 50 : coefficient 1,1, flèche 623 millimètres. Poutre bois 40sur40 : coefficient 0,9, flèche 145 millimètres. Tube acier diamètre 33,7 : coefficient 2,7, flèche 29 millimètres."},
  o:["aucun profilé : le cahier des charges est impossible à tenir","le tube aluminium et le tube acier galvanisé, tous les deux","la barre pleine acier Ø20, la mieux placée sous le vent réel","le tube aluminium Ø50 × 3, seul, avec un coefficient de 3,4"],r:3,
  expl:"Coefficient 3,4 et flèche de 27 mm : les deux critères sont tenus. Le tube galvanisé tombe à 2,7 sur la limite élastique.",
- ex:"Le même verdict que le banc de 3e_C8.2 — obtenu pour de meilleures raisons.",
+ ex:"Le même verdict que le banc d'essai, obtenu pour de meilleures raisons.",
  err:"Croire qu'un raisonnement plus juste doit forcément donner un résultat différent.",
- d:["un profilé le tient : l'aluminium, avec 3,4","le tube galvanisé n'atteint que 2,7 sur la limite élastique","la barre pleine reçoit moins de vent, mais sa section est trop faible : 1,4",""],
+ d:["Un profilé tient les deux exigences. Relis la ligne du tube alu.","Le tube acier n'atteint que 2,7 : moins que 3. Relis sa colonne k.","La barre reçoit moins de vent, mais son coefficient n'est que de 1,4. Relis sa ligne.",""],
  ret:"La bonne méthode confirme parfois le résultat connu. Elle en change la valeur de preuve."},
 {c:"3e_C8.1",n:"Bon résultat, mauvais raisonnement",q:"Le banc et la simulation retiennent le même profilé. La simulation a-t-elle servi à quelque chose ?",
  o:["oui : elle prouve que les relevés du banc étaient entachés d'erreurs","non : le résultat étant le même, tout ce travail de simulation était donc inutile","non : elle n'a fait que confirmer ce que l'essai réel avait déjà prouvé","oui : elle montre que deux concurrents avaient été jugés sur une charge fausse"],r:3,
@@ -467,7 +475,7 @@ const QUESTIONS = [
  d:["la visibilité depuis la cour n'a aucun effet sur la qualité de la mesure","","la sécurité d'accès est un autre sujet, réglé par l'accès au toit lui-même","l'ensoleillement dépend de l'orientation, pas de deux mètres de hauteur"],
  ret:"La position d'un capteur fait partie du protocole : mal placé, il mesure autre chose."},
 {c:"3e_C3.4",n:"Une mesure qui n'a pas de sens",q:"La station affiche une vitesse de vent alors que le mât est tordu de 20°. Que vaut cette mesure ?",
- o:["elle est fausse mais sans importance, car seules les rafales comptent","elle reste juste : un anémomètre mesure une vitesse, pas une direction","elle est juste à 20 % près, ce qui reste acceptable pour une alerte","rien : l'anémomètre ne vise plus la bonne direction, et il le dit pas"],r:3,
+ o:["elle est fausse mais sans importance, car seules les rafales comptent","elle reste juste : un anémomètre mesure une vitesse, pas une direction","elle est juste à 20 % près, ce qui reste acceptable pour une alerte","rien : l'anémomètre ne vise plus la bonne direction, et l'écran ne le dit pas"],r:3,
  expl:"Le pire défaut d'un instrument n'est pas de s'arrêter : c'est de continuer à afficher un nombre plausible alors qu'il ne mesure plus ce qu'il devrait.",
  ex:"Le chiffre s'affiche, la courbe est belle, et personne ne se doute de rien.",
  err:"Faire confiance à une mesure parce qu'elle est affichée.",
@@ -494,10 +502,11 @@ const QUESTIONS = [
  err:"Laisser le cas d'égalité à l'appréciation du jour où il se présente.",
  d:["","refuser par prudence sans l'avoir écrit, c'est changer la règle en cours de route","la mesure est juste : c'est la règle de décision qu'il fallait préciser","la flèche est un second critère, il ne modifie pas le seuil du premier"],
  ret:"Un seuil s'écrit avec son sens de comparaison. Le cas d'égalité se tranche d'avance."},
-{c:"3e_C3.4",n:"Deux critères, une décision",q:"Le cahier des charges pose un coefficient minimal ET une flèche maximale. Comment décide-t-on ?",
+{c:"3e_C3.4",n:"Deux critères, une décision",q:"D'après ce tableau, le tube acier Ø33,7 fléchit de 29 mm (millimètres), mais son coefficient n'est que de 2,7. Comment décide-t-on ?",
+ img:{src:"Images/doc_verdict_vent.svg",alt:"Le mât de 2 000 millimètres sous le vent de 150 kilomètres par heure, calculé sur la limite élastique ; il faut un coefficient de sécurité d'au moins 3 et une flèche en tête d'au plus 40 millimètres. Tube alu diamètre 50 : coefficient 3,4, flèche 27 millimètres. Barre acier diamètre 20 : coefficient 1,4, flèche 93 millimètres. Tube PVC diamètre 50 : coefficient 1,1, flèche 623 millimètres. Poutre bois 40sur40 : coefficient 0,9, flèche 145 millimètres. Tube acier diamètre 33,7 : coefficient 2,7, flèche 29 millimètres."},
  o:["on fait la moyenne des deux critères et on compare à un seuil unique","il suffit qu'un des deux soit tenu, l'autre pouvant être négocié après","les deux doivent être tenus : un seul échec suffit à écarter le profilé","on retient le critère le plus sévère et on oublie l'autre pour simplifier"],r:2,
  expl:"Des exigences se cumulent, elles ne se compensent pas. Une excellente marge de charge ne rachète pas une flèche excessive : ce sont deux pannes différentes.",
- ex:"Tube galvanisé au banc : charge tenue, flèche à 41 mm. Écarté.",
+ ex:"Tube acier sous le vent : flèche tenue, 29 mm ; coefficient raté, 2,7. Écarté.",
  err:"Compenser un critère raté par un autre critère largement tenu.",
  d:["faire une moyenne mélange des grandeurs qui n'ont rien à voir","négocier après coup revient à réécrire le cahier des charges","","abandonner un critère, c'est accepter la panne qu'il devait éviter"],
  ret:"Des exigences se cumulent. Elles ne se compensent jamais entre elles."},
@@ -586,7 +595,7 @@ const PIEGES={
   decision:"Décider sur la mesure : l'attendu d'avance, le cas frontière, deux critères, la trace"
 };
 const PIEGE_DE_NOTION={
-  "Le verbe de la 3e":"regler",
+  "Mettre en œuvre une simulation":"regler",
   "Régler sur une réponse connue":"regler",
   "Un modèle et ses hypothèses":"regler",
   "Ce que le banc appliquait":"banc",

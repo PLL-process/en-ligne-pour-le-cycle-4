@@ -82,6 +82,27 @@ Aucune manipulation électrique : ni très basse tension, ni secteur.
 Les 20 questions `3e_C8.1` et les 10 questions `3e_C3.4` sont toutes au-dessus du seuil
 d'évaluabilité. Le bilan propose un auto-positionnement sur `3e_C8.1` et `3e_C3.4`, aux quatre niveaux du livret scolaire.
 
+**Les questions sur document** (26/11/2026, n°345) : sept questions du QCM se lisent sur un document dessiné pour le
+téléphone — le moment au pied, banc et vent (questions 5, 6, 7) ; le mât sous le vent, profilé par profilé (15, 27) ;
+combien de profilés passent selon la hauteur et la limite (8, 10). Leurs nombres sont calculés par `documents_qcm.py`
+avec le modèle `mat_station.py` (n°233) ; le banc du QCM vérifie qu'ils sont à jour. La question 1 ne demande plus
+« ce qu'on attend de toi en 3e, après la 5e et la 4e » (n°304) : elle demande ce que la compétence fait faire. La
+question 3 ne renvoie plus à un code de séquence ; la 23 est corrigée (« et l'écran ne le dit pas »).
+
+**Le billet de sortie** (26/11/2026, n°330) : à la fin de la séance 3, avant le Bonus, environ 5 minutes, seul et sans
+aide, sur un objet que la séquence n'a pas étudié : le poteau d'un panneau d'affichage à l'entrée d'un collège de
+Martinique. Deux questions écrites, chacune avec sa version étayée :
+- **3e_C8.1** — choisir le réglage du simulateur (cas de charge, limite, hauteur) et justifier chaque choix. On
+  regarde : « vent », « élastique », la hauteur réelle, chacun justifié par ce que vit l'objet réel. Qui note que le
+  simulateur ne connaît, en tête, que le petit boîtier de la station va plus loin.
+- **3e_C3.4** — écrire le protocole qui mesure si le panneau reste lisible au vent. On regarde : ce qu'on mesure, avec
+  quoi, dans quelles conditions, et un attendu chiffré écrit avant.
+
+Il ne valide rien : aucun bouton, aucune note (n°333). **La séance 3 passe le réinvestissement et l'écrit « comme au
+brevet » à la maison**, comme Pascal l'a décidé pour 5e_C8.1 (25/11/2026) : avec le billet, elle aurait fait
+30 + 20 + 5 = 55 minutes avant la synthèse et le bilan. Les deux portaient déjà la pastille « peut se faire à la
+maison ».
+
 ## 8. Découpage en séances à onglets (04/11/2026, vague de la règle d'or n°311)
 
 La page était d'un seul tenant ; elle a maintenant trois séances à onglets, sur le modèle du pilote 4e_C8.1. Le déroulé
@@ -92,7 +113,7 @@ l'ouverture et 60 min d'activités.
 |---|---|---|---|
 | 1 — Vérifier l'instrument | Réglée comme le banc, la simulation retrouve-t-elle son verdict ? | Ouverture (situation, problématique, hypothèse, cahier des charges, billet), activité 1 | ouverture + 25 min |
 | 2 — Un réglage à la fois | Que change au verdict le cas de charge, puis la limite ? | Activités 2 et 3 | 35 + 25 = 60 min |
-| 3 — Décider, refaire, conclure | Quel réglage répond au cahier des charges, et que ne voit-il pas ? | Activité 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 30 + 20 min + clôture |
+| 3 — Décider, refaire, conclure | Quel réglage répond au cahier des charges, et que ne voit-il pas ? | Activité 4, synthèse, billet de sortie, Bonus (corrigé par défi), bilan ; à la maison, ou en classe s'il reste du temps : réinvestissement, écrit « comme au brevet », QCM | 30 + 5 min + clôture ; 20 + 10 min à la maison |
 
 **À trancher par Pascal :** la séance 2 annonce 60 min d'activités pour 55. Trois séances ne peuvent pas faire mieux sans
 couper une activité (135 min d'activités, plus l'ouverture et la clôture, pour 165) ; si la séance déborde, l'activité 3

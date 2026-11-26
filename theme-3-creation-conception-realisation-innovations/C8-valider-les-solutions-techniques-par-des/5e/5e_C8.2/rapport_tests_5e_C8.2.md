@@ -163,3 +163,26 @@ trop. 12 groupes mélangés, 12 propositions fausses remplacées ou allongées. 
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 25-26/11/2026 — six questions sur document, et le billet de sortie
+
+Trois documents pour le téléphone (`documents_qcm.py` → `documents_qcm_5e_C8.2.json` → `_outils/document_qcm.py`) :
+le relevé du banc, la fiche d'essai de l'aluminium, « ce que l'essai de traction ne voit pas ». Six questions s'y lisent.
+Deux notions renommées : « Le verbe de la compétence » (n°304) et « Croiser les contraintes » (n°344). Le billet de
+sortie ferme la séance 2, avant le Bonus : le fil du pot de fleurs, deux questions écrites, deux versions étayées, une
+correction complète. Le réinvestissement passe à la maison, comme en 5e_C8.1.
+
+| Commande | Résultat |
+|---|---|
+| `node tests_5e_C8.2_qcm.mjs qcm_5e_C8.2_patere-du-hall.html C8.2 C3.1 sequence_5e_C8.2_patere-du-hall.html` | **34 / 34** — dont : six questions sur document au moins ; des documents du lot, présents et décrits ; `documents_qcm.py --verifier` |
+| `node tests_5e_C8.2_sequence.mjs sequence_5e_C8.2_patere-du-hall.html` | **26 / 26** — deux tests nouveaux : la forme du billet ; la réponse survit au rechargement |
+| `node tests_regle_311_5e_C8.2.mjs .` | 34 / 34 |
+| `python3 _outils/document_qcm.py documents_qcm_5e_C8.2.json --verifier` · `node _outils/controle_schemas.mjs <lot>` | 0 écart · 0 ✘, 0 ⚠ |
+| `python3 _outils/controle_question_seule.py --chantiers <lot>` | 0 partout (avant : S3 1, E1 1, D1 1, P1 1) |
+| `node _outils/balayer_questions_qcm.mjs --apres <lot>` · `banc_aides.mjs` · `poser.py --verifier` | 0 écart · 0 refus · à jour |
+| `controle_squelette`, `banc_generique.mjs` (mode mission), `banc_papier.py`, `audit_aeration.py --strict` | verts |
+| `controle_unites`, `controle_indices_qcm`, `verif_qcm_coherence`, `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `controle_sigles`, `controle_hierarchie`, `controle_liens` | sans écart |
+
+Regardé à 312 px (les trois documents) et à 390 px (le billet) : lisible, aucun défilement de côté, 0 erreur JavaScript.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
