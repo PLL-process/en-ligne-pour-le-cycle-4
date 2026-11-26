@@ -92,3 +92,27 @@ mission reçoit 47 pourquoi (`mission_5e_C8.1.json`). Bonus replié ; aération 
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 25/11/2026 — sept questions sur document, et le billet de sortie
+
+Trois documents pour le téléphone (`documents_qcm.py` → `documents_qcm_5e_C8.1.json` → `_outils/document_qcm.py`) :
+les deux coefficients (questions 8 et 9), « quand le crochet plie, quand il casse » (10, 11, 12), « marge, coût, délai »
+(25, 30). La question 11 perd un leurre sans lecture possible (« environ 60 kg ») pour une mauvaise lecture du tableau
+(46 kg, la ligne du PLA et du PVC) ; la question 13 ne renvoie plus à « l'an dernier ». Le billet de sortie ferme la
+séance 2, avant le Bonus : le crochet du carbet, deux questions écrites, deux versions étayées, une correction complète.
+
+| Commande | Résultat |
+|---|---|
+| `node tests_5e_C8.1_qcm.mjs qcm_5e_C8.1_patere-du-hall.html 5e_C8.1 5e_C3.1 sequence_5e_C8.1_patere-du-hall.html` | **34 / 34** — trois tests nouveaux : six questions sur document au moins ; chaque image est un document du lot, présent et décrit ; `documents_qcm.py --verifier` (les nombres sont ceux de `patere.py`) |
+| `node tests_5e_C8.1_sequence.mjs sequence_5e_C8.1_patere-du-hall.html attendus_5e.json 5e` | **41 / 41** — deux tests nouveaux : la forme du billet ; la réponse survit au rechargement |
+| `node tests_regle_311_5e_C8.1.mjs .` | 34 / 34 |
+| `python3 _outils/document_qcm.py documents_qcm_5e_C8.1.json --verifier` · `node _outils/controle_schemas.mjs <lot>` | 0 écart · 0 ✘, 0 ⚠ |
+| `python3 _outils/controle_question_seule.py --chantiers <lot>` | S1 à S4, E1 : 0 ; D1 : 0 (7 questions sur document) ; P1 : 0 |
+| `node _outils/balayer_questions_qcm.mjs --apres <lot>` · `banc_aides.mjs` | 30 questions, 7 illustrées, 0 écart · 0 refus |
+| `controle_squelette`, `banc_generique.mjs` (mode mission), `banc_papier.py`, `audit_aeration.py --strict` | verts |
+| `controle_unites`, `controle_indices_qcm`, `verif_qcm_coherence`, `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm`, `controle_hierarchie`, `controle_sigles`, `controle_liens`, `poser.py --verifier` | sans écart |
+
+Regardé à 312 px (les trois documents seuls) et à 390 px (les questions 11 et 25, le billet) : lisible, aucun
+défilement de côté, 0 erreur JavaScript.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

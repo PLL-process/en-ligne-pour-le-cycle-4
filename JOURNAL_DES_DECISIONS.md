@@ -37594,3 +37594,46 @@ tronquée) ; C1 0 ; N2 0 (N3 48, « deux actions jointes par et », à juger) ; 
 
 **Thème par thème** (n°302) : thème 1 — 3e_C1.5 (consigne) ; thème 2 — 8 QCM (C4, C5), 4e_C4.1 (consigne) ; thème 3 —
 13 QCM (C7, C8, C9), 2 fichiers d'aides, 4e_C8.1 ; `_outils` — `controle_question_seule.py` et son banc.
+
+## 25/11/2026 — 5e_C8.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+**La décision.** « 1 oui » de Pascal (25/11/2026, 17 h 21), à la proposition : traiter les lots de C8 restés sous six
+questions sur document et sans billet de sortie, un lot à la fois, en commençant par 5e_C8.1 (la patère du hall).
+
+**Ce qui change** :
+- Trois documents pour le téléphone, dont les nombres sont calculés par le modèle : `documents_qcm.py` (neuf) écrit
+  `documents_qcm_5e_C8.1.json` avec `patere.py` (n°233), `_outils/document_qcm.py` les dessine. Le coefficient de
+  sécurité sur la rupture et sur la limite élastique (questions 8 et 9) ; la charge où chaque crochet plie pour toujours
+  et celle où il casse (10, 11, 12) ; coefficient, coût des 40 patères et heures d'atelier des quatre matériaux qui
+  tiennent (25, 30). Plusieurs de ces questions demandaient un chiffre de la séquence sans le montrer (n°343).
+- Question 11 : le leurre « environ 60 kg » (aucune lecture n'y mène) devient une mauvaise lecture du tableau, 46 kg, la
+  ligne du PLA et du PVC. Question 13 : la proposition « le banc de l'an dernier » ne renvoie plus à une autre année
+  (n°304). Les pourquoi des questions sur document renvoient à la colonne ou à la ligne à relire. La question 9
+  garde la précision posée le même jour par la vérification totale (« testés pour la patère du hall ») et se lit
+  maintenant sur le tableau ; « cinq » sort de l'énoncé, que `controle_question_seule.py` lisait comme une liste
+  annoncée (E1) — le tableau montre les cinq.
+- Le billet de sortie (n°330) ferme la séance 2, avant le Bonus, environ 5 minutes : le crochet du carbet d'un club de
+  plage du Diamant, trois crochets donnés par une simulation fournie. Question 1 (5e_C8.1) : lesquels tiennent un
+  coefficient de 3, en lisant la colonne de la limite élastique — le bois casse à 36 kg mais plie à 22 kg. Question 2
+  (5e_C3.1) : au bord de la mer, écarter l'acier non galvanisé, qui rouille. Versions étayées, correction complète avec
+  critères et contre-exemples, aucun bouton.
+- Bancs : `tests_5e_C8.1_qcm.mjs` vérifie six questions sur document au moins, des documents du lot décrits, et que les
+  données sont à jour du modèle ; `tests_5e_C8.1_sequence.mjs` vérifie la forme du billet et qu'une réponse survit au
+  rechargement.
+
+**À savoir** : la séance 2 est pleine — 20 + 20 + 10 + 5 = 55 minutes avant la synthèse et le bilan.
+
+**Mesuré** : QCM 34 / 34 ; séquence 41 / 41 ; règle 311 34 / 34 ; `controle_question_seule.py --chantiers` sur le lot :
+0 partout (avant : S3 1, E1 1, D1 1, P1 1) ; `--strict` sur le dépôt : 10 refus, 11 sur `main` ; `controle_schemas.mjs` 0 ✘ 0 ⚠ ; `balayer_questions_qcm.mjs --apres` 0 écart ;
+`banc_aides.mjs` 0 refus ; squelette, mode mission, fiche papier, aération, unités, sigles, hiérarchie, liens sans écart.
+
+## 25/11/2026 — 5e_C8.1 : le réinvestissement se fait à la maison (thème 3)
+
+**La décision.** Pascal (25/11/2026, 17 h 38), à la question « avec le billet de sortie, la séance 2 fait 55 minutes
+avant la synthèse et le bilan » : « propose de faire le réinvestissement (10 min) à la maison ».
+
+**Ce qui change** (`sequence_5e_C8.1_patere-du-hall.html`) : le programme de la séance 2 dit « activités 3 et 4, puis la
+synthèse, le billet de sortie, le Bonus et le bilan ; 🏠 à la maison : le réinvestissement et le QCM ». Le
+réinvestissement (l'étagère murale) garde sa place, ses questions et son vérificateur ; son titre et une ligne disent
+« à faire à la maison, après la séance 2 — ou en classe, s'il reste du temps ». La séance 2 tient en 20 + 20 + 5 minutes,
+puis la clôture. Fiche pédagogique et note d'audit à jour.
