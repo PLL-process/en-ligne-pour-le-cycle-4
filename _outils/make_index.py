@@ -636,7 +636,6 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var
 <p class="note"><b>Référence normative</b> : programme de technologie du cycle 4, <b>BO n°9 du 29 février 2024</b> —
 il fixe les trois thèmes, les neuf compétences de fin de cycle, les connaissances, les capacités et les repères de progressivité 5e → 4e → 3e.<br>
 <b>Codification opérationnelle</b> : les identifiants du type <code>5e_C4.1</code> servent à ranger les séquences ; <b>ils ne viennent pas du programme officiel.</b></p>
-</header>
 <div class="socle-cle"><b>Domaines du socle commun</b> — D1 : les langages pour penser et communiquer · D2 : les méthodes et outils pour apprendre ·
 D3 : la formation de la personne et du citoyen · D4 : les systèmes naturels et les systèmes techniques ·
 D5 : les représentations du monde et l'activité humaine.</div>
@@ -648,6 +647,7 @@ D5 : les représentations du monde et l'activité humaine.</div>
   <span>🔧 à actualiser</span><span>🔍 à vérifier</span><span>⚠️ à corriger</span>
   <span style="color:#7f9bd0">⬜ à créer</span>
 </div>
+</header>
 <main id="contenu">
 """)
 

@@ -38040,3 +38040,35 @@ comparés, 2 écrits à la main). **À retenir : une notion ou un « à retenir 
 5e_C7.6) ; `_outils` — `mode_lecture/` (moteur, feuille de style, `poser.py`, `banc_lecture.mjs`, `README.md`),
 `controle_mode_lecture.py` et son banc, `controle_lexique_a_jour.py`, `generer_lexique.py` (`--verifier`, le bloc) et
 son banc, `controle_sauvegarde_locale.py` (le bloc lu à part) et son banc.
+
+## 26/11/2026 — Texte hors repère (`region`), thème 2 : la licence dans un pied, le lexique dans un en-tête, l'index
+
+**La décision.** « 1a » de Pascal (26/11/2026, 6 h 44) : réduire `region` (texte hors repère) thème par thème. Pascal
+a aussi accepté (« 2a ») la mise à jour de son skill `ateliers-representations-depot` (niveau des titres incrustés).
+
+**La mesure, sur `main` (96cb28b1).** 122 pages portent du texte hors repère, au chargement (1 280 px) ou page ouverte
+(390 px) : 533 nœuds page ouverte (index 2, thème 1 298, thème 2 39, thème 3 185). Six causes, presque toutes dans un
+générateur :
+- les 58 lexiques : le titre et le sous-titre entre la navigation et `<main>` (`generer_lexique.py`) ;
+- 49 pages : la mention de licence posée après `</main>`, faute de pied (`licence_cc.injecter`, le générateur des
+  ateliers et ses synthèses) ;
+- dix séquences du thème 1 : la zone principale ne s'ouvre qu'après le titre, la barre de progression et les onglets ;
+- l'atelier de planification (3 pages) ; l'index (`make_index.py`) ; quatre pages à la main.
+
+**Ce qui change ici (thème 2 et `_outils/`).**
+- `licence_cc.py` : `PIED` (la mention dans un `<footer>`, repère « informations sur le document ») ; `injecter` le
+  pose quand la page n'a pas de pied ; `ranger` met dans un pied une mention restée hors repère.
+- `generer_lexique.py` : le titre et le sous-titre dans un `<header>` (sans style : rendu inchangé ; dans `<main>`, ils
+  auraient pris sa largeur de 880 px). Le sous-titre porte `ml-entete` lui-même, le mode lecture sautant un `<header>`.
+  Les 16 lexiques du thème 2 et celui de 3e_C6.2 sont régénérés ; ceux des thèmes 1 et 3 suivent dans leurs PR.
+- `make_index.py` : la ligne des domaines du socle et la légende entrent dans l'en-tête de l'index.
+- 4e_C6.2 (TP et page de renvoi) : la licence rangée dans un pied. Book Train : le bouton « ↑ » (position fixe) dans le
+  pied de la page.
+
+**Vérifié.** Thème 2 et index : 21 pages, `region` 0 au chargement et page ouverte ; restent les deux
+`atelier_diagramme_fast` du thème 2, écrits par le générateur des ateliers (PR du thème 1, puis régénération).
+Rendu 390 et 1 280 px identique au pixel près sur les 21 pages. `tests_controle_licence.py` 20 contrôles, verts ;
+mutation (`ranger` sans `hors_repere`) : 3 échecs. `tests_generer_lexique.py` 34 / 34 ; `controle_lexique_a_jour.py`
+à jour (hors 2 lexiques écrits à la main) ; `controle_licence.py` : 415 pages portent la mention ;
+`banc_lecture.mjs` sur les 17 lexiques : 0 refus ; `controle_page_ouverte.mjs --axe` : 0 ; `controle_axe.mjs`
+(thème 2) : aucun défaut grave.

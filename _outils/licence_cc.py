@@ -37,20 +37,53 @@ MENTION_MD = (
 )
 
 
+# Hors de tout repère, la mention est du « texte hors repère » (axe-core `region`, mesuré le 26/11/2026 : 49 pages
+# où elle suivait `</main>`). Quand la page n'a pas de pied, elle en reçoit un : `<footer>` au premier niveau est le
+# repère « informations sur le document ». Sans style propre, il ne change rien au rendu.
+PIED = "<footer>" + MENTION + "</footer>"
+
+_MASQUE = re.compile(r"<!--.*?-->|<script\b.*?</script>|<style\b.*?</style>", re.S | re.I)
+_REPERES = ("main", "footer", "header", "nav", "aside")
+
+
 def porte_mention(html: str) -> bool:
     return MARQUEUR in html
 
 
 def injecter(html: str) -> str:
-    """Pose la mention une seule fois : avant le dernier `</footer>` s'il y en a un, sinon
-    avant `</body>`, sinon à la fin du fichier. Retourne le texte inchangé s'il la porte déjà."""
+    """Pose la mention une seule fois : avant le dernier `</footer>` s'il y en a un, sinon dans
+    un pied neuf (`PIED`) avant `</body>`, sinon à la fin du fichier. Retourne le texte inchangé
+    s'il la porte déjà."""
     if porte_mention(html):
         return html
-    for balise in ("</footer>", "</body>"):
-        pos = html.lower().rfind(balise)
-        if pos >= 0:
-            return html[:pos] + MENTION + "\n" + html[pos:]
+    pos = html.lower().rfind("</footer>")
+    if pos >= 0:
+        return html[:pos] + MENTION + "\n" + html[pos:]
+    pos = html.lower().rfind("</body>")
+    if pos >= 0:
+        return html[:pos] + PIED + "\n" + html[pos:]
     return html.rstrip("\n") + "\n" + MENTION + "\n"
+
+
+def hors_repere(html: str, pos: int) -> bool:
+    """Vrai si la position tombe hors de tout repère (main, footer, header, nav, aside), en ne
+    comptant ni les commentaires, ni les scripts, ni les styles."""
+    avant = _MASQUE.sub(lambda m: " " * len(m.group(0)), html[:pos]).lower()
+    for r in _REPERES:
+        if len(re.findall(r"<%s\b" % r, avant)) > len(re.findall(r"</%s\s*>" % r, avant)):
+            return False
+    return True
+
+
+def ranger(html: str) -> str:
+    """Range dans un pied (`<footer>`) la mention posée hors de tout repère, avec la feuille qui
+    la précède ; ne touche à rien d'autre. Pour une page dont le CSS stylise `footer`, le pied
+    changerait son allure : la ranger dans `<main>` à la main, et vérifier le rendu."""
+    m = re.search(r'(<style>\.licence-cc a[^<]*</style>\s*)?<p class="licence-cc" data-licence="cc-by-nc-sa"[^>]*>.*?</p>',
+                  html, re.S)
+    if not m or not hors_repere(html, m.start()):
+        return html
+    return html[:m.start()] + "<footer>" + m.group(0) + "</footer>" + html[m.end():]
 
 
 def retirer(html: str) -> str:

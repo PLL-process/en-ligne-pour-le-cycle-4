@@ -16,7 +16,7 @@ import tempfile
 ICI = os.path.dirname(os.path.abspath(__file__))
 SCRIPT = os.path.join(ICI, "controle_licence.py")
 sys.path.insert(0, ICI)
-from licence_cc import MENTION, injecter, retirer, porte_mention  # noqa: E402
+from licence_cc import MENTION, PIED, injecter, retirer, porte_mention, ranger, hors_repere  # noqa: E402
 
 AVEC_FOOTER = "<html><body><main>x</main><footer><p>pied</p></footer></body></html>\n"
 SANS_FOOTER = "<html><body><main>y</main></body></html>\n"
@@ -49,7 +49,16 @@ def verifier(nom, ok, detail=""):
 
 # unité : l'injection
 verifier("injecter pose la mention avant </footer>", injecter(AVEC_FOOTER).index(MENTION) < injecter(AVEC_FOOTER).index("</footer>"))
-verifier("injecter pose la mention avant </body> faute de footer", injecter(SANS_FOOTER).index(MENTION) < injecter(SANS_FOOTER).index("</body>"))
+verifier("injecter pose un pied neuf avant </body> faute de footer (texte hors repère, 26/11/2026)",
+         injecter(SANS_FOOTER).index(PIED) < injecter(SANS_FOOTER).index("</body>") and "</main><footer>" in injecter(SANS_FOOTER).replace("\n", ""))
+verifier("ranger met dans un pied la mention posée après </main>",
+         ranger(SANS_FOOTER.replace("</body>", MENTION + "</body>")).count("<footer>" + MENTION + "</footer>") == 1)
+verifier("ranger ne touche pas une mention déjà dans un pied", ranger(injecter(AVEC_FOOTER)) == injecter(AVEC_FOOTER))
+verifier("ranger ne touche pas une mention dans un <main> resté ouvert",
+         ranger("<body><main>x" + MENTION + "</body>") == "<body><main>x" + MENTION + "</body>")
+verifier("hors_repere ne compte pas un <main> écrit dans un commentaire ou un script",
+         hors_repere("<!-- <main> --><script>'<main>'</script><p>", 40))
+verifier("ranger est idempotent", ranger(ranger(SANS_FOOTER.replace("</body>", MENTION + "</body>"))) == ranger(SANS_FOOTER.replace("</body>", MENTION + "</body>")))
 verifier("injecter ajoute en fin de fichier faute de body", injecter(SANS_BODY).endswith(MENTION + "\n"))
 verifier("injecter est idempotent", injecter(injecter(AVEC_FOOTER)) == injecter(AVEC_FOOTER))
 verifier("retirer défait injecter", not porte_mention(retirer(injecter(AVEC_FOOTER))))
