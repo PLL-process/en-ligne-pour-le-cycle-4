@@ -309,3 +309,28 @@ l'ordre d'origine (`ORIGINE`) suit les nouveaux libellés.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## 26/11/2026 — Quatre questions de plus sur document, et un billet de sortie (n°345, n°330)
+
+**Ce qui a changé.** Le QCM avait 4 questions illustrées sur 30 (chantier D1) : les questions 15 (la trace du moniteur
+série), 19 et 20 (le courrier de la mairie) et 26 (la recette d'un groupe) se lisent maintenant sur un document dessiné
+pour le téléphone, calculé depuis `station_alerte_cyclonique.ino` par `documents_qcm.py`. La q15 avait un pourquoi faux
+(« 103 et 126 sont bien mesurés », pour une trace qui affiche 71, 95 et 131) : il dit « 71, 95 et 131 ». Le sigle CAN de
+son explication est écrit en clair. La séquence n'avait pas de billet de sortie (chantier P1) : il est posé dans la page
+tout-en-un, à la séance 8, juste avant le Bonus — le ventilateur automatique de la salle de technologie — et
+`generer_les_quatre_pages.py` le reporte sur la page 4 (les pages 1 à 3 n'ont pas changé).
+
+**Exécuté.**
+- `node tests_3e_C9.2-C8.3.mjs .` : **172 / 172** (167 avant ; le test « 4 illustrées » passe à 8 ; quatre tests neufs :
+  les documents du lot, présents et décrits ; `documents_qcm.py --verifier` ; la forme et la place du billet, sur la page
+  4 seulement ; la réponse écrite page 4 relue dans le tout-en-un).
+- `node tests_regle_311_3e_C9.2.mjs` : **34 / 34** · `node tests_pont_en_h.mjs` : **37 / 37**.
+- `controle_question_seule.py --strict` : 0 refus, D1 0 ; P1 reste signalé sur les pages 1 à 3, qui ne portent pas la
+  dernière séance (l'outil lit chaque page à part : corrigé dans `_outils/` par une PR transversale).
+- `balayer_questions_qcm.mjs --apres` : 30 questions à 390 px, 0 écart ; `controle_schemas.mjs` : 0 ✘, aucun ⚠ sur un
+  `doc_…` ; les trois documents regardés à 312 px.
+- `controle_entete_qcm`, `controle_banque_qcm`, `controle_effectifs_qcm` (le manifeste dit 8 illustrées),
+  `controle_unites`, `controle_sigles`, `controle_indices_qcm`, `controle_longueurs` (comme `main`), `verif_qcm_coherence`,
+  `poser.py --verifier`, `poser_entrainement_melange --verifier`, `verif_regles_audit.py`, `audit_aeration.py --strict`,
+  `controle_squelette.mjs`, `mode_mission/banc_generique.mjs`, `enrichir.py --verifier-tout`,
+  `controle_impression_papier.py`, `controle_liens.py` : verts.

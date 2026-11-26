@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -411,12 +413,13 @@ const QUESTIONS = [
  err:"Tout écrire dans la boucle : au 3e ajout, plus personne ne s'y retrouve — même pas son auteur.",
  d:["","L'effet mémoire est négligeable : l'enjeu est la lisibilité et la mise au point.","Un programme compile très bien sans fonction — il devient juste illisible en grossissant.","La structuration aide au contraire à RELIRE le code, y compris par d'autres."],
  ret:"Un sous-programme par tâche : lisible, testable, corrigeable — la structuration exigée en 3e."},
-{c:"C9.2",n:"Mise au point à la trace",q:"La trace affiche : vent=71 niveau=0, vent=95 niveau=0, vent=131 niveau=2. Qu'en déduire ?",
+{c:"C9.2",n:"Mise au point à la trace",q:"Sur cette trace du moniteur série, comparée au cahier des charges, qu'en déduire ?",
+ img:{src:"Images/doc_trace_moniteur.svg",alt:"La trace du moniteur série, trois lignes écrites par la station pendant que le potentiomètre tourne : vent 71 kilomètres par heure, niveau 0 ; vent 95 kilomètres par heure, niveau 0 ; vent 131 kilomètres par heure, niveau 2. Le cahier des charges : niveau 0 veille en dessous de 63 kilomètres par heure, niveau 1 tempête tropicale à partir de 63, niveau 2 ouragan à partir de 118, niveau 3 ouragan majeur à partir de 178."},
  o:["le moniteur série affiche des valeurs incohérentes","le capteur est cassé, il faut le remplacer d'urgence","le convertisseur sature et bloque la mesure à 63","capteur et conversion sont bons : le test du seuil 63 échoue"],r:3,
- expl:"On lit la trace colonne par colonne : la vitesse évolue normalement (71 → 95 → 131), donc capteur + CAN + conversion fonctionnent. Le niveau reste à 0 entre 63 et 118 alors qu'il devrait valoir 1 : la DÉCISION rate. Et comme 131 donne bien 2, le test ≥ 118 existe : c'est le test ≥ 63 qui est faux ou absent.",
+ expl:"On lit la trace colonne par colonne : la vitesse évolue normalement (71 → 95 → 131), donc le capteur, le convertisseur analogique-numérique et la conversion en km/h (kilomètres par heure) fonctionnent. Le niveau reste à 0 entre 63 et 118, alors qu'il devrait valoir 1 : la DÉCISION rate. Et comme 131 donne bien 2, le test ≥ 118 existe : c'est le test ≥ 63 qui est faux ou absent.",
  ex:"Erreur typique trouvée ensuite dans les blocs : le SINON SI « ≥ 63 » a été remplacé par « ≥ 118 » lors d'un copier-coller.",
  err:"Accuser le matériel dès qu'un affichage est faux : la trace permet d'innocenter la chaîne tronçon par tronçon AVANT d'ouvrir le capot.",
- d:["Le moniteur affiche ce que le programme lui envoie : c'est le témoin, pas le coupable.","La trace prouve le contraire : les vitesses affichées suivent le potentiomètre.","103 et 126 sont bien mesurés et affichés : rien ne sature.",""],
+ d:["Le moniteur affiche ce que le programme lui envoie : c'est le témoin, pas le coupable. Relis la colonne « niveau ».","La trace prouve le contraire : les vitesses affichées suivent le potentiomètre (71, 95, 131).","71, 95 et 131 sont bien mesurés et affichés : rien ne bloque à 63. Compare plutôt chaque niveau au cahier des charges.",""],
  ret:"Mise au point : lire la trace, chercher le PREMIER endroit où les valeurs deviennent fausses — l'amont est innocenté."},
 /* ═══ C8.3 ═══ */
 {c:"C8.3",n:"Définition du protocole",q:"Qu'est-ce qu'un protocole de test ?",
@@ -441,14 +444,16 @@ const QUESTIONS = [
  err:"Tester une seule valeur : on prouve un seul côté de la frontière — l'autre reste une supposition.",
  d:["Un seul essai ne prouve qu'un côté : la bascule pourrait se faire à 112 sans qu'on le voie.","","90 et 150 sont trop loin : la bascule pourrait être n'importe où entre les deux — et il existe deux AUTRES seuils, 63 et 178 !","Répéter le même essai ne teste toujours qu'un côté de la frontière."],
  ret:"Un seuil se vérifie par un COUPLE d'essais : juste en dessous + pile dessus."},
-{c:"C8.3",n:"La frontière comprise ou non",q:"Le courrier exige « l'ouragan majeur à partir de 178 km/h ». À 178 pile, le protocole doit donc attendre…",
+{c:"C8.3",n:"La frontière comprise ou non",q:"D'après ce courrier, à 178 km/h (kilomètres par heure) pile, le protocole doit attendre…",
+ img:{src:"Images/doc_courrier_exigences.svg",alt:"Le courrier de la mairie, exigence par exigence. Afficher en permanence le niveau et la vitesse : veille en dessous de 63 kilomètres par heure, tempête tropicale à partir de 63, ouragan à partir de 118, ouragan majeur à partir de 178. Un seul voyant allumé à la fois. Une alarme sonore en ouragan majeur seulement. Acquitter l'alarme d'un appui sur un bouton, sans éteindre l'affichage ni le voyant. Réagir à un changement de vent en moins d'une seconde."},
  o:["au choix : ≥ ou >, c'est une préférence d'écriture","la tempête : 178 n'est pas encore « au-dessus de 178 »","l'ouragan majeur : « à partir de » inclut la valeur","un écran éteint, par sécurité, tant qu'on est à la limite"],r:2,
  expl:"« À partir de 178 » signifie 178 COMPRIS : le programme doit écrire ≥. Ce n'est pas le programmeur qui décide entre ≥ et > : c'est la lecture attentive du cahier des charges. Et l'essai « 178 pile » du protocole vérifie exactement ce choix.",
  ex:"Si le cahier des charges disait « au-delà de 178 », alors 178 pile resterait en ouragan et le programme écrirait >.",
  err:"Trancher ≥ ou > « au feeling » : les deux programmes marchent… mais un seul respecte la commande.",
  d:["Ce n'est jamais une préférence de style : c'est une exigence à lire dans le document de commande.","« À partir de » inclut la borne : 178 est déjà en ouragan majeur.","","Rien n'autorise à éteindre l'affichage : le cahier des charges impose l'affichage permanent."],
  ret:"≥ ou > : la réponse est DANS le cahier des charges — et l'essai à la valeur pile la vérifie."},
-{c:"C8.3",n:"Tester une performance",q:"Comment le protocole vérifie-t-il l'exigence « réagir en moins d'une seconde » ?",
+{c:"C8.3",n:"Tester une performance",q:"Sur ce courrier, comment le protocole vérifie-t-il l'exigence « réagir en moins d'une seconde » ?",
+ img:{src:"Images/doc_courrier_exigences.svg",alt:"Le courrier de la mairie, exigence par exigence. Afficher en permanence le niveau et la vitesse : veille en dessous de 63 kilomètres par heure, tempête tropicale à partir de 63, ouragan à partir de 118, ouragan majeur à partir de 178. Un seul voyant allumé à la fois. Une alarme sonore en ouragan majeur seulement. Acquitter l'alarme d'un appui sur un bouton, sans éteindre l'affichage ni le voyant. Réagir à un changement de vent en moins d'une seconde."},
  o:["en regardant si la station « a l'air rapide » à réagir","par une MESURE : chronométrer, puis comparer à 1 s","en comptant le nombre de blocs du programme généré","en lisant la fiche technique du microcontrôleur utilisé"],r:1,
  expl:"Une exigence chiffrée se vérifie par une mesure chiffrée : on déclenche le franchissement du seuil, on chronomètre jusqu'au changement d'affichage, on compare au 1 s exigé. Le verdict est un nombre, pas une impression.",
  ex:"Au banc d'essai : passage de 170 à 185 km/h — on franchit le seuil de 178 — → affichage « OURAGAN MAJEUR » mesuré à 0,3 s → conforme.",
@@ -490,12 +495,13 @@ const QUESTIONS = [
  err:"Ne revérifier que l'essai corrigé : le bug de régression — le plus sournois — passe entre les mailles.",
  d:["","L'essai corrigé peut réussir pendant qu'un autre, à côté, vient de casser.","Signer sans re-tester, c'est signer un document faux.","Supprimer l'essai, c'est maquiller la preuve : le défaut reste dans la station livrée."],
  ret:"Après CHAQUE correction : on rejoue TOUT le protocole. C'est la non-régression."},
-{c:"C8.3",n:"Le verdict honnête",q:"12 essais sur 13 sont conformes ; l'essai « 118 km/h pile » donne « tempête tropicale » au lieu d'« ouragan ». Que conclut le PV ?",
+{c:"C8.3",n:"Le verdict honnête",q:"D'après ce tableau de recette, que conclut le procès-verbal ?",
+ img:{src:"Images/doc_recette_groupe.svg",alt:"La recette d'un groupe, treize essais au banc, avec pour chacun l'attendu écrit avant et l'observé pendant l'essai. Niveaux : 0 : veille · 1 : tempête tropicale · 2 : ouragan · 3 : ouragan majeur. Essai 1, 40 kilomètres par heure : attendu niveau 0, observé niveau 0. Essai 2, 90 kilomètres par heure : attendu niveau 1, observé niveau 1. Essai 3, 150 kilomètres par heure : attendu niveau 2, observé niveau 2. Essai 4, 200 kilomètres par heure : attendu niveau 3, observé niveau 3. Essai 5, 62 kilomètres par heure : attendu niveau 0, observé niveau 0. Essai 6, 63 kilomètres par heure : attendu niveau 1, observé niveau 1. Essai 7, 117 kilomètres par heure : attendu niveau 1, observé niveau 1. Essai 8, 118 kilomètres par heure : attendu niveau 2, observé niveau 1. Essai 9, 177 kilomètres par heure : attendu niveau 2, observé niveau 2. Essai 10, 178 kilomètres par heure : attendu niveau 3, observé niveau 3. Essai 11, chrono : attendu moins d'une seconde, observé 0,4 seconde. Essai 12, appui en alarme : attendu son coupé, observé son coupé. Essai 13, nouvelle alerte : attendu son repart, observé son repart."},
  o:["recette prononcée, si l'on promet de corriger plus tard","recette prononcée : 92 % de réussite, c'est excellent","recette AJOURNÉE : une exigence n'est pas respectée","on refait l'essai jusqu'à ce qu'il passe, puis on prononce"],r:2,
  expl:"La recette n'est pas une moyenne : chaque exigence du cahier des charges doit être tenue. Un seuil décalé d'un km/h est précisément le genre de défaut que la mairie paie la recette pour détecter. On consigne l'échec, on corrige, on REJOUE tout.",
  ex:"PV honnête : « Essai 8 non conforme (bascule à 119 au lieu de 118). Recette ajournée. Nouvelle session après correction. »",
  err:"Raisonner en pourcentage comme pour un contrôle : 12/13 à une recette, c'est une station qui alerte en retard.",
- d:["Une promesse ne protège personne pendant un cyclone : seule la correction VÉRIFIÉE compte.","92 % d'exigences tenues = une exigence trahie : le système n'est pas conforme.","","Refaire l'essai sans corriger, c'est espérer une erreur de mesure — et maquiller un défaut reproductible."],
+ d:["Une promesse ne protège personne pendant un cyclone : seule la correction VÉRIFIÉE compte. Relis la ligne 8.","12 essais sur 13, c'est une exigence trahie : à la ligne 8, l'attendu et l'observé diffèrent.","","Refaire l'essai sans corriger, c'est espérer une erreur de mesure — et maquiller un défaut reproductible."],
  ret:"Une recette ne se moyenne pas : toute non-conformité → ajournement ou réserve, correction, re-test complet."},
 {c:"C8.3",n:"Prouver vs croire",q:"Quelle est la différence entre « le programme a marché quand je l'ai essayé » et « le programme a passé la recette » ?",
  o:["aucune : dans les deux cas, la station fonctionne","la recette suit un protocole écrit et reproductible","la recette est simplement plus longue à mener","la recette se fait obligatoirement sans le programmeur"],r:1,
