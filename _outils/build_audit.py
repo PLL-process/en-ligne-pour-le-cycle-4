@@ -801,7 +801,10 @@ OVERLAY = {
         anomalies="Aucun essai physique : le banc est une simulation, et la page le dit a l'eleve "
                   "(une question du QCM porte precisement la-dessus). La version A renvoie au "
                   "« laboratoire des materiaux » du Reseau National Technologie College "
-                  "(eduscol STI, gratuit, sans compte, CC BY-NC-SA 3.0) sans en faire un prerequis.",
+                  "(eduscol STI, gratuit, sans compte, CC BY-NC-SA 3.0) sans en faire un prerequis. "
+                  "Depuis le 25/11/2026 : six questions du QCM se lisent sur un document dessiné pour le "
+                  "téléphone (n°345), la séquence se ferme par un billet de sortie, le fil du pot de fleurs "
+                  "(n°330), et le réinvestissement se fait à la maison.",
         accessibilite="Listes deroulantes, corrections depliables, version C entierement sans "
                       "ecran, figure du banc dotee de title et desc.",
         medias="Banc d'essai SVG original (CC0). Aucun media tiers.",
