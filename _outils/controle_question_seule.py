@@ -194,6 +194,24 @@ def fichiers(chemins):
                     yield os.path.join(d, f)
 
 
+def billet_dans_la_suite(p, s) -> bool:
+    """(26/11/2026) Une séquence découpée en pages engendrées (`<meta name="sequence-sans-onglets">`, n°116) porte son
+    billet de sortie sur la page de la DERNIÈRE séance, pas sur chacune : les pages sœurs du même dossier qui portent la
+    même déclaration comptent ensemble. Mesuré sur 3e_C9.2 : P1 était signalé sur les pages 1 à 3, qui ne contiennent
+    pas la séance 8."""
+    if 'name="sequence-sans-onglets"' not in s:
+        return False
+    d = os.path.dirname(p)
+    for f in os.listdir(d):
+        q = os.path.join(d, f)
+        if q == p or not (f.startswith("sequence") and f.endswith(".html")):
+            continue
+        t = open(q, encoding="utf-8").read()
+        if 'name="sequence-sans-onglets"' in t and 'id="billetSortie"' in t:
+            return True
+    return False
+
+
 def main(argv) -> int:
     strict, muet, chantiers = "--strict" in argv, "--muet" in argv, "--chantiers" in argv
     chemins = [a for a in argv if not a.startswith("--")]
@@ -222,7 +240,7 @@ def main(argv) -> int:
             if "<!-- mode-mission v1 : début" not in s:
                 continue
             nseq += 1
-            if not re.search(r'id="billetSortie"|[Bb]illet de sortie', s):
+            if not re.search(r'id="billetSortie"|[Bb]illet de sortie', s) and not billet_dans_la_suite(p, s):
                 travaux.append(("P1", rel, "aucun billet de sortie : la preuve faite seul manque (n°330)"))
     if not nqcm and not nseq:
         print("✘ rien n'a été lu : aucun QCM du gabarit maison, aucune séquence qui porte le mode mission")

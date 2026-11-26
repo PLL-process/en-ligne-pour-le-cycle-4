@@ -150,6 +150,22 @@ def main():
               '<html><!-- mode-mission v1 : début --><body><section class="card" id="billetSortie">…</section></body></html>')
         sortie("P1 : la même séquence, son billet de sortie posé", 0, ["--strict", lot], "P1 séquence sans billet de sortie : 0")
 
+        # (26/11/2026) une séquence découpée en pages engendrées porte son billet sur la page de la dernière séance
+        meta = '<meta name="sequence-sans-onglets" content="engendrée">'
+        decoupe = poser("decoupe", "sequence_x_1_debut.html", "<html>%s<!-- mode-mission v1 : début --><body>p1</body></html>" % meta)
+        poser("decoupe", "sequence_x_2_fin.html", "<html>%s<!-- mode-mission v1 : début --><body>p2</body></html>" % meta)
+        sortie("P1 : deux pages découpées, aucune n'a de billet : les deux sont comptées", 0,
+               ["--strict", decoupe], "P1 séquence sans billet de sortie : 2")
+        poser("decoupe", "sequence_x_2_fin.html",
+              '<html>%s<!-- mode-mission v1 : début --><body><section class="card" id="billetSortie">…</section></body></html>' % meta)
+        sortie("P1 : le billet sur la dernière page découpée vaut pour ses pages sœurs", 0,
+               ["--strict", decoupe], "P1 séquence sans billet de sortie : 0")
+        isolee = poser("isolee", "sequence_y.html", "<html><!-- mode-mission v1 : début --><body>p</body></html>")
+        poser("isolee", "sequence_z.html",
+              '<html><!-- mode-mission v1 : début --><body><section class="card" id="billetSortie">…</section></body></html>')
+        sortie("P1 : sans la déclaration de découpe, le billet d'une autre séquence du dossier ne compte pas", 0,
+               ["--strict", isolee], "P1 séquence sans billet de sortie : 1")
+
     print("%d / %d tests passés" % (controles - len(echecs), controles))
     for e in echecs:
         print("  ✘ " + e)

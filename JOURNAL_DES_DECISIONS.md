@@ -38562,3 +38562,53 @@ station et le lampadaire « en pièces », le vélo-cargo — attendent que Pasc
 **Thème par thème** (n°302) : thème 1 seulement — `5e_C1.1` (séquence, banc de l'animation, `Films/`, trois affiches,
 `_generation/films_trois_appareils/`, sources, manifeste, rapport) ; `.claude/skills/blender-visualisation-pedagogique/` ;
 `SKILLS_AUDIT.md` ; `nouveautes.json`. `_outils/` et `.github/` : rien.
+
+## 26/11/2026 — Règle d'or n°304 sur toute la page : un contrôle, et 34 pages corrigées (thèmes 1, 2, 3, _outils)
+
+Pascal : « Tu as carte blanche » — pour renforcer le contrôle de la n°304, puis corriger les vraies occurrences.
+
+**Pourquoi.** En traitant `3e_C8.2` puis `4e_C8.1` (entrées précédentes), des phrases affirmaient encore la 5e à
+l'élève (« Tu as déjà éprouvé des matériaux en 5e », « comme en 5e », « Rappel de 5e »). Aucun outil ne les voyait :
+`verif_regles_audit.py` (n°304) ne lit que le bloc d'ouverture, et `controle_question_seule.py` (S3) que l'énoncé et
+la bonne réponse d'un QCM. Or Pascal change de collège chaque année : « tu as vu en 5e » est faux pour presque tous
+ses élèves, et met en défaut celui qui ne l'a pas fait.
+
+**L'outil** : `_outils/controle_annee_precedente.py` lit tout ce que l'élève lit (texte visible, pourquoi des
+propositions, banque d'un QCM ; séquences, QCM, synthèses élève, ateliers, cahiers, TP) et refuse une phrase qui
+nomme une année antérieure au niveau de la page et qui **A** s'adresse à l'élève au passé (« tu as vu »,
+« souviens-toi »), **B** en fait un souvenir commun (« comme en 5e », « Rappel de 5e », « l'an dernier tu… »), ou
+**C** donne un objet de cette année comme connu (« le lampadaire de 5e », « la serre de 4e »). Il laisse passer la
+forme prudente (« Tu as peut-être déjà vu… ; sinon, le voici », point 3 de la règle), la progression du programme au
+présent (« En 5e on suit, en 4e on organise »), un lien de rattrapage (« l'atelier de 4e »), l'histoire d'un objet
+(« la station que le club a réparée l'an dernier »), un code (« 5e_C8.2 »), la 5e Avenue et un camarade de 6e. Une
+ligne de tableau se lit d'un trait. Banc : `tests_controle_annee_precedente.py`, 31 cas, et quatre mutations de
+l'outil (forme prudente, « l'an dernier » sans l'élève, mots permis, lignes de tableau) le font tomber.
+
+**Mesuré sur `main`** : 61 phrases dans 34 pages. Toutes lues ; toutes corrigées, sans rien retirer du fond :
+- les **billets d'entrée** (« Cette séquence s'appuie sur ce que tu as fait en 5e ») disent « s'appuie sur des
+  compétences de 5e, qui devraient être en place » (huit séquences, des trois thèmes) ; leurs questions ne commencent
+  plus par « En 5e, tu as suivi… » ;
+- les **progressions** (`3e_C2.1`, `4e_C2.1`) parlent du programme au présent (« En 5e, on recense… ») et ne nomment
+  plus Shenzhen ni Hangzhou (point 1 : jamais le sujet ni le lieu d'une séquence d'une année précédente) ;
+- les **objets d'une autre année** (le lampadaire, la serre, la passerelle, l'étoile, le jardin, le dé) deviennent
+  des objets génériques (« un lampadaire automatique », « la passerelle notée dans Default Gateway », « le montage en
+  étoile ») ;
+- `3e_C8.1` appelait « l'an dernier » le banc d'essai de `3e_C8.2`, qui est de la même année, et disait « votre avis
+  de l'an dernier » : la situation dit « l'avis rendu après le banc d'essai des cinq mâts » ;
+- deux blocs « 🔄 Ce que tu as déjà fait » (`tp_mbot2_python`, `atelier_pix_crcn_jardin`) deviennent « Ce qui
+  devrait être en place », au conditionnel pour la séquence de la même année.
+Les pages engendrées le sont par leur source : `ateliers-representations/_generation/donnees_besoin.py` (puis
+`build.py`, qui réécrit aussi les deux cahiers) et `atelier-planification/_generation/build_atelier.py`.
+
+**Au passage**, P1 de `controle_question_seule.py` lit ensemble les pages engendrées d'une même séquence découpée
+(`<meta name="sequence-sans-onglets">`) : le billet de sortie vit sur la page de la dernière séance (`3e_C9.2`).
+Banc `tests_controle_question_seule.py` : 41 / 41 (trois cas neufs).
+
+**Ce que l'outil ne voit pas** : une affirmation sans année ni « tu » ; une séquence de la même année donnée comme
+faite ; la pertinence du moyen de rattrapage. Les exports Moodle (`_exports/`) gardent l'ancien texte jusqu'au
+prochain export.
+
+**Thème par thème** (n°302) : thème 1 — `3e_C1.5`, `4e_C1.4`, `3e_C2.1`, `4e_C2.1`, l'atelier « bête à cornes » et
+les cahiers ; thème 2 — `4e_C6.1`, `4e_C6.2`, `3e_C4.1`, `3e_C4.8`, `4e_C4.1` (jardin et Book Train), `4e_C4.7` ;
+thème 3 — `3e_C7.1`, `3e_C7.6`, `3e_C7.8`, `4e_C7.1`, `5e_C7.1`, l'atelier de planification, `3e_C8.1`, `3e_C9.1`,
+`5e_C9.1` ; `_outils/` — le contrôle neuf, son banc, P1 ; `.claude/skills/controle-qualite-lot` — sa ligne.
