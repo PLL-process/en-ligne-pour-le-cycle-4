@@ -25,7 +25,9 @@ THEME1 = RACINE_ATELIERS.parent                    # …/theme-1-…
 # 10/11/2026 : 52 pages d'ateliers en dérive, la mention ayant été posée à la main par PR #616).
 import sys as _sys
 _sys.path.insert(0, str(THEME1.parent / "_outils"))
-from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
+from licence_cc import MENTION as MENTION_LICENCE, PIED as PIED_LICENCE  # noqa: E402
+# PIED_LICENCE : la mention dans un <footer>, là où la page n'a pas d'autre pied — hors de tout repère, elle était du
+# texte hors repère (axe-core `region`, 26/11/2026).
 DEPOT = THEME1.parent
 
 KIT_CSS = (ICI / "kit.css").read_text(encoding="utf-8")

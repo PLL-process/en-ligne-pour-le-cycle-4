@@ -38072,3 +38072,31 @@ mutation (`ranger` sans `hors_repere`) : 3 échecs. `tests_generer_lexique.py` 3
 à jour (hors 2 lexiques écrits à la main) ; `controle_licence.py` : 415 pages portent la mention ;
 `banc_lecture.mjs` sur les 17 lexiques : 0 refus ; `controle_page_ouverte.mjs --axe` : 0 ; `controle_axe.mjs`
 (thème 2) : aucun défaut grave.
+
+## 26/11/2026 — Texte hors repère (`region`), thème 1 : le pied des ateliers, la zone principale des séquences, les lexiques
+
+Suite de la PR #944 (« 1a » de Pascal, 26/11/2026). Au thème 1, 298 nœuds hors repère page ouverte, 62 pages.
+
+**Ce qui change.**
+- Générateur des ateliers (`build.py`, `syntheses.py`, `moteur.py`) : la mention de licence va dans un pied
+  (`licence_cc.PIED`, PR #944) au lieu de suivre `</main>`. 17 pages d'atelier et 14 synthèses régénérées ; les pages
+  d'atelier des thèmes 2 et 3 suivent dans leurs PR.
+- Dix séquences (3e, 4e, 5e_C1.1 ; 5e_C1.2 ; C2.1 et C3.1 des trois niveaux) : `<main>` s'ouvrait après le titre, la
+  barre de progression et les onglets. Un `<main>` nu s'ouvre désormais juste après la navigation du site ; l'ancien
+  `<main class="page" id="contenu">` devient un `<div>` aux mêmes attributs (style et lien d'évitement inchangés). Dans
+  4e_C1.1 et 5e_C1.2, dont le CSS stylise `footer`, la zone principale s'étend jusqu'à la mention de licence.
+- 3e_C1.5 et 4e_C1.4 (séquences, CSS d'impression sur `footer`) : la zone principale s'étend jusqu'à la mention. Une
+  activité de 5e_C1.2 et quatre synthèses de 4e_C1.4 et 5e_C1.3 : la mention dans un pied (`licence_cc.ranger`).
+- Les 14 lexiques du thème 1, régénérés (`generer_lexique.py`, PR #944).
+
+**Vérifié.** Les 62 pages : `region` 0 au chargement et page ouverte ; plus aucune page du thème 1 en défaut.
+Rendu 390 et 1 280 px, fermé et déplié : identique au pixel près (3e_C1.5, 3e_C1.1 et 4e_C3.1 varient d'un chargement
+à l'autre, chacune a donné un passage identique ; 4e_C1.4 varie même contre elle-même : identique une fois le hasard
+figé). `tests_regle_311` des 12 dossiers de séquence : verts ; `controle_squelette.mjs` sur les dix : en ordre ;
+`banc_barre.mjs` (mode mission, 93 pages) : 0 erreur ; `incrustations.py --verifier` : à jour ;
+`controle_licence.py` : 415 pages ; `controle_page_ouverte.mjs --axe` : S 0 ; `controle_axe.mjs` (thème 1) : aucun
+défaut grave.
+
+**Vu en passant, hors de ce lot.** Les synthèses professeur des ateliers (sept) et celle de 5e_C1.3 ont des tableaux
+qui défilent à 390 px sans être atteignables au clavier (`scrollable-region-focusable`, page ouverte). Elles sont hors
+du périmètre par défaut de `controle_page_ouverte.mjs` (pages professeur) ; c'est déjà le cas sur `main`.

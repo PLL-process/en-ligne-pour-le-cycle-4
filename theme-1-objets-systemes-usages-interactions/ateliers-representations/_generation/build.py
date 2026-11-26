@@ -292,8 +292,8 @@ def ecrire_panneaux(at):
                              'ton niveau.</p></div>' % (moteur.rel(d, qcm(at)) + "?codes=" + code, n[0], n[1]))
             corps.append('<div class="card"><p>Les autres façons de représenter une idée technique&nbsp;: '
                          '<a href="%s">🧭 la carte des représentations</a>.</p></div>' % moteur.rel(d, CARTE))
-            # Règle d'or n°321 : la mention de licence, posée par le générateur, là où injecter() la mettait.
-            corps.append("</main>%s%s\n</body></html>\n" % (("\n" + kit) if rappel else "", moteur.MENTION_LICENCE))
+            # Règle d'or n°321 : la mention de licence, posée par le générateur, là où injecter() la met — dans un pied.
+            corps.append("</main>%s%s\n</body></html>\n" % (("\n" + kit) if rappel else "", moteur.PIED_LICENCE))
             ecrire(p, "\n".join(corps))
             faits.append(p)
     return faits
