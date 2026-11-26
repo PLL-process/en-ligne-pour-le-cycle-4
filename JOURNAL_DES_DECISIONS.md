@@ -37808,3 +37808,21 @@ L 0, B 0. `controle_axe.mjs` au chargement, 410 pages : sortie 0. Rendu avant/ap
 1 280 px : identique au pixel près sur les 17 pages (5e_C4.1 et la page tout-en-un de 3e_C9.2 varient d'un
 chargement à l'autre, main contre main ; chacune a donné un passage identique). `tests_regle_311` des 16 dossiers
 touchés : tous verts ; `controle_mode_mission` 0 refus.
+
+## 26/11/2026 — Structure page ouverte, thème 3 : un en-tête de tableau nommé, une palette qui ne défile plus, les titres incrustés
+
+Suite de la PR #938 (« 2a » de Pascal, 26/11/2026). Page ouverte à 390 px, trois défauts au thème 3 :
+- `3e_C9.2` : la case d'angle du tableau Martinique / New York (« ouverture ») était un `<th>` vide
+  (`empty-table-header`), caché au chargement. Elle porte désormais « Ce qu'on compare », visuellement masqué, dans la
+  page tout-en-un ; `generer_les_quatre_pages.py` a refait la station 1, seule concernée.
+- `tp_5e_de_onshape` : la palette des métaux (palier 9) défilait de 14 px à 390 px (`scrollable-region-focusable`,
+  défaut grave ; déjà le cas sur `main` le 25/11 au soir, mesuré sur 997e6904). Les marges intérieures des cases
+  passent de 0,6 à 0,4 em, dans le scénario : le tableau tient (298 px pour 298), plus rien n'est caché (n°364).
+  `build_tp.py`, puis `verif_chaine.py --empreintes` : chaque page est ce que son scénario produit.
+- 3e_C7.1, 4e_C7.1, 4e_C8.1 : réécrites par le générateur des ateliers (PR #938), intertitres de cours sous le titre
+  de leur incrustation (`aria-level`, balise et style inchangés).
+
+**Vérifié.** `controle_page_ouverte.mjs --axe` sur les 342 pages : S 0, A 0, L 0, B 0. `controle_axe.mjs` au
+chargement : sortie 0. `tests_3e_C9.2-C8.3.mjs` 167 / 167 ; `tests_regle_311` de 3e_C9.2, 3e_C7.1, 4e_C7.1, 4e_C8.1
+verts ; `verif_chaine.py` sans écart. Rendu : identique au pixel près pour les pages de 3e_C9.2 et les trois pages
+réécrites par le générateur ; la palette de `tp_5e_de_onshape` change exprès (captures avant/après dans la PR).
