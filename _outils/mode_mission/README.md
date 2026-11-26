@@ -5,6 +5,35 @@ Décision de Pascal du 11/11/2026 (voir `docs/mode-mission/PLAN.md` et le journa
 Le mode mission est une **seconde vue de la même page**. Il n'invente aucun exercice : il montre ceux de la
 séquence, un écran à la fois, avec une barre d'étapes et trois boutons — Précédent · Vérifier · Suivant.
 
+## Tout en mode mission (26/11/2026)
+
+Pascal, le 26/11/2026 : « Tout doit être en mode mission ». À la question « et les QCM ? », sa réponse : garder leur
+moteur ; à « et les synthèses et les lexiques ? » : le vrai mode mission, pas un mode à part. Le bloc est posé sur
+**258 pages** — tout ce qui est sous `theme-*`, sauf les QCM (79, dont un mini-quiz), les documents pour l'enseignant
+(69 synthèses professeur, 2 fiches de l'atelier CAO), trois figures interactives montrées dans un écran de leur
+séquence (`*_en_pieces.html`, `freins_iso.html`, en cadre) et une page de renvoi (`meta refresh`). `controle_mode_mission.py` l'exige partout ailleurs.
+
+Nouveau depuis la veille : les 69 synthèses élève, les 60 lexiques, la carte des représentations, les 30 panneaux,
+les cinq pages qui étaient dispensées (le modèle de démonstration des TP, `tp_algorigrammes_domotique`, trois
+panneaux de la bête à cornes).
+
+Ce que le moteur a appris pour cela :
+
+- **les documents à lire** (une page dont le nom commence par `synthese`, `lexique` ou `carte_des_representations`) :
+  un écran par PARTIE — une carte (`section`, `article`, `.card`, `.carte`, `.bloc`, `.box`), un bloc qui s'ouvre sur
+  son titre, ou, dans une page écrite à plat, un titre `h2` et ce qui le suit. Ce qui précède la première partie (la
+  question de la page, sa barre d'outils, le sous-titre posé juste avant le conteneur) porte `ms-entete` et se lit au
+  premier écran seulement ; une adresse `lexique_x.html#seance-s2` ouvre l'écran de l'ancre ; un document sans partie
+  (un lexique en un tableau) fait un écran. C'est le découpage du « mode lecture » (25/11/2026), retiré : sur les 121
+  pages qu'il découpait, les écrans sont les mêmes, un pour un. `poser.py` remplace un bloc du mode lecture resté
+  dans une page, à la même place ; `banc_lecture.mjs` joue ces pages (onze refus, de L1 à L11) ;
+- **une page courte** (un panneau, une ou deux cartes) se joue aussi, une carte par écran ; une page de trois cartes
+  ou plus est découpée comme avant ;
+- **la mémoire du mode porte le dossier et le nom de la page** (`mission:<dossier>/<page>`) : quatre
+  `atelier_bete_a_cornes.html`, trois `tp_3e_boitier_etanche.html` (deux panneaux et le vrai TP) partageaient une clé —
+  l'un effaçait les étoiles de l'autre. L'ancienne clé (le nom seul) est reprise une fois : l'élève garde ses étoiles.
+  Une mémoire réduite au choix d'affichage se complète à la lecture (lue telle quelle, elle arrêtait le mode).
+
 ## Sur tous les documents élève (25/11/2026)
 
 Demande de Pascal : « que le mode mission soit pour tous les documents élèves ». Jusque-là, les 60 séquences le
@@ -14,8 +43,8 @@ l'atelier Pix, l'entraînement au brevet (algorigrammes) et 2 activités. `contr
 (M1 : un document élève sans le bloc) ; il compte à part les 30 panneaux (une page courte, sans champ, qui renvoie à
 l'atelier ou au TP réel) et les 5 dispenses, chacune avec sa raison écrite (`SANS_MISSION`).
 
-Les QCM gardent leur propre moteur, une question à la fois. Les synthèses et les lexiques se lisent : ils ont leur
-« mode lecture », une partie par écran (`_outils/mode_lecture/`).
+Les QCM gardent leur propre moteur, une question à la fois. Les synthèses et les lexiques eurent, ce jour-là, leur
+« mode lecture », une partie par écran — remplacé le lendemain par le mode mission lui-même (voir plus haut).
 
 Ce que le moteur a appris pour cela :
 
@@ -39,7 +68,8 @@ Ce que le moteur a appris pour cela :
 
 Une page **engendrée** reçoit le bloc de son générateur : `ateliers-representations/_generation/build.py` et
 `cahiers.py`, `atelier-planification/_generation/build_atelier.py`, `atelier-cao/_generation/build_tp.py`
-(`"sans_mode_mission": true` dans un scénario l'en dispense : le modèle de démonstration).
+(la dispense `"sans_mode_mission"` du modèle de démonstration est retirée le 26/11/2026), et, depuis le 26/11/2026,
+`_outils/generer_lexique.py` (les lexiques), `syntheses.py` et les panneaux de `build.py`.
 
 ## Ce que le bloc fait
 

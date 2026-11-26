@@ -607,7 +607,9 @@ section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizi
   body.ms .seance-bloc[id]:not(.ms-ici){display:none!important}
   body.ms{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
-  body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
+  body.ms .subtitle:not(.ms-entete),body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
+  /* un document à lire (synthèse, lexique) : sa question et sa barre d'outils se lisent au premier écran, puis s'effacent */
+  body.ms.ms-suite .ms-entete{display:none!important}
   body.ms h1{font-size:1.05rem!important;margin:6px auto 6px!important}
   /* le bouton d'entrée ne sert plus une fois entré (sans le cadre « Ma progression », il restait au-dessus de la barre) */
   body.ms .ms-invite{display:none!important}
@@ -628,7 +630,9 @@ section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizi
   .ms-figer{min-height:44px;min-width:44px;padding:4px 10px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-weight:700;cursor:pointer;margin-left:auto}
   .ms-figer+.ms-quitter{margin-left:0}
   .ms-figer:focus-visible,.ms-invite .ms-figer-page:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
-  .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
+  /* le texte sombre sur l'orange, même là où la page impose un texte blanc à ses boutons (`.btn{color:#fff!important}`
+     des panneaux : contraste 1,76 — axe-core, page ouverte, 26/11/2026) */
+  .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800!important;font-size:1em}
   .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
   .ms-quitter{min-height:44px;padding:6px 12px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-size:.82em;font-weight:700;cursor:pointer;margin-left:auto}
 
@@ -762,7 +766,12 @@ html.anim-figee *,html.anim-figee *::before,html.anim-figee *::after{animation-p
 /* posé une seule fois. Un attribut, pas une variable `window.__…` : le contrôle des verrous (n°226) lit ces
    variables comme des expériences enregistrées, et le mode mission n'en est pas une. */
 if (document.documentElement.hasAttribute("data-mode-mission")) return; document.documentElement.setAttribute("data-mode-mission", "v1");
-var D = document, CLE = "mission:" + (decodeURIComponent(location.pathname).split("/").pop() || "page");
+/* La clé de la mission : le dossier ET le nom de la page (26/11/2026). Le nom seul ne suffit plus depuis que les panneaux
+   portent le mode : quatre « atelier_bete_a_cornes.html », trois « tp_3e_boitier_etanche.html » (deux panneaux et le
+   vrai TP) partageaient une clé — l'un effaçait les étoiles de l'autre, ou l'ouvrait sur son dernier écran. L'ancienne
+   clé (le nom seul) est reprise une fois, à la première ouverture : l'élève garde ses étoiles. */
+var _chemin = decodeURIComponent(location.pathname).split("/"), FICHIER = _chemin.pop() || "page", DOSSIER = _chemin.pop() || "";
+var D = document, CLE = "mission:" + (DOSSIER ? DOSSIER + "/" : "") + FICHIER, CLE_AVANT = "mission:" + FICHIER;
 var M, actif = false, parPanneau = {}, panneau = null, ecrans = [], k = 0, sel = null, glisse = false, cles = null, g = null, construit = false;
 var ET = '<svg class="ms-et{on}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5 6.1 20.6l1.2-6.5L2.5 9.5l6.6-.9z"/></svg>';
 var COCHE = '<svg class="ms-coche" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
@@ -806,7 +815,13 @@ try {
   Storage.prototype.removeItem = function(k){ if (this === window.localStorage && String(k) !== CLE && (estCleDeLaPage(k) || Date.now() - appui < 1500)) marque(); return _rm.apply(this, arguments); };
   Storage.prototype.clear = function(){ if (this === window.localStorage) marque(); return _vide.apply(this, arguments); };
 } catch (e) {}
-function lire(){ try { M = JSON.parse(localStorage.getItem(CLE) || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} }; if (!M.erreurs) M.erreurs = {}; if (!M.loin) M.loin = {};
+function lire(){
+  var brut = null;
+  try { brut = localStorage.getItem(CLE); if (brut === null && CLE_AVANT !== CLE && (brut = localStorage.getItem(CLE_AVANT)) !== null){ localStorage.setItem(CLE, brut); localStorage.removeItem(CLE_AVANT); } } catch (e) {}
+  try { M = JSON.parse(brut || "null"); } catch (e) { M = null; } if (!M || M.v !== 1) M = { v:1, on:DEFAUT, k:{}, essais:{}, etoiles:{}, fait:{} };
+  /* une mémoire réduite au choix d'affichage (celle d'une page sans bouton d'effacement) se complète : lue telle quelle,
+     elle arrêtait le mode au premier écran (« M.k » absent) */
+  ["k", "essais", "etoiles", "fait", "erreurs", "loin"].forEach(function(c){ if (!M[c] || typeof M[c] !== "object") M[c] = {}; });
   if (!garde){ var t = null; try { t = JSON.parse(sessionStorage.getItem(CLE) || "null"); } catch (e) {}
     M = { v:1, on:M.on, k:(t && t.k) || {}, essais:{}, erreurs:{}, etoiles:{}, fait:{}, loin:(t && t.loin) || {} }; if (t && t.ici) M.ici = t.ici; } }
 /* `vu` : la page a déjà enregistré quelque chose depuis que la mission tient ses comptes. Sa sauvegarde disparue ensuite,
@@ -840,18 +855,82 @@ function conteneur(){
     var k = enfants(c).filter(function(x){ return estBloc(x) && rendu(x); }).length;
     if (k > n){ meilleur = c; n = k; }
   });
+  /* Depuis le 26/11/2026 (Pascal : « tout doit être en mode mission ») : une page courte — un panneau qui renvoie à
+     l'atelier ou au TP, une page d'une ou deux cartes — se joue aussi, une carte par écran. Les pages qui en ont trois
+     ou plus sont découpées comme avant. */
+  if (!meilleur){ var m = 0; $$("main, .page, .wrap, .container, #contenu").forEach(function(c){
+    var k = enfants(c).filter(function(x){ return estBloc(x) && rendu(x); }).length;
+    if (k > m){ meilleur = c; m = k; }
+  }); }
   return meilleur;
 }
+/* ═══ Les documents à lire : synthèses élève et lexiques (demande de Pascal du 26/11/2026 : « tout doit être en mode
+       mission » ; ils avaient, depuis le 25/11, leur propre « mode lecture », retiré ce jour-là) ═══
+   Une page qui se lit se découpe en PARTIES, comme le faisait le mode lecture : une carte de la page (section,
+   article, .card, .carte, .bloc, .box), un bloc qui s'ouvre sur son titre, ou — dans une page écrite à plat — un titre
+   h2 et ce qui le suit jusqu'au titre suivant. Ce qui précède la première partie (la question de la page, sa barre
+   d'outils, le sous-titre posé avant le conteneur) se lit au premier écran seulement (`ms-entete`) ; le titre et la
+   navigation restent. Ce qui suit une partie sans en être une (une note, le pied de page) l'accompagne. Une adresse
+   « lexique.html#seance-s2 » (le renvoi d'une séquence à son lexique) ouvre l'écran de l'ancre. */
+var LIRE = /^(synthese|lexique|carte_des_representations)/i.test(FICHIER);
+var PARTIE_LUE = "section, article, .card, .carte, .bloc, .box";
+function estPartieLue(c){ return c.matches(PARTIE_LUE) || (c.tagName === "DIV" && !!c.firstElementChild && c.firstElementChild.matches("h2, h3")); }
+function ouvreLue(c){ return estPartieLue(c) || c.tagName === "H2"; }
+function conteneurLu(){
+  var meilleur = null, n = 0;
+  $$("main, .page, .wrap, .container, body").forEach(function(c){ var k = enfants(c).filter(ouvreLue).length; if (k > n){ n = k; meilleur = c; } });
+  return meilleur;
+}
+function titreLu(noeuds){
+  for (var i = 0; i < noeuds.length; i++){
+    var n = noeuds[i], h = n.matches("h2, h3") ? n : $("h2, h3", n);
+    if (h){ var c = h.cloneNode(true); /* sans le compte de notions, « ↑ La carte », la pastille du niveau */ $$(".compte, .retour-carte, .niv, small", c).forEach(function(x){ x.remove(); }); if (net(c.textContent)) return net(c.textContent); }
+    if (n.getAttribute("aria-label")) return net(n.getAttribute("aria-label"));
+  }
+  return "";
+}
+function decouperLu(C){
+  var cur = null, o = [], sousTitre = false;
+  enfants(C).forEach(function(c){
+    if (c.classList.contains("ms-seul") || c.classList.contains("ms-invite")) return;
+    if (c.tagName === "H2"){ cur = { t:"carte", n:[c] }; o.push(cur); sousTitre = true; }
+    else if (estPartieLue(c) && !sousTitre){ cur = { t:"carte", n:[c] }; o.push(cur); }
+    else if (cur) cur.n.push(c);
+    else if (c.tagName !== "H1" && c.tagName !== "NAV") c.classList.add("ms-entete");
+  });
+  if (C !== D.body) for (var x = C.previousElementSibling; x; x = x.previousElementSibling){
+    if (/^(H1|NAV|SCRIPT|STYLE|TEMPLATE|LINK|NOSCRIPT|HEADER)$/.test(x.tagName) || x.id === "navharm" || x.classList.contains("ms-seul") || x.classList.contains("ms-invite")) continue;
+    x.classList.add("ms-entete");
+  }
+  o.forEach(function(e, i){ e.titre = titreLu(e.n) || "Partie " + (i + 1); });
+  if (o.length) o[0].ouverture = true;
+  return o;
+}
 function gabarit(){
+  if (LIRE){
+    var L = conteneurLu(), parts = L ? decouperLu(L) : [];
+    /* un document sans partie (un lexique en un seul tableau) : tout ce que porte sa zone principale fait un écran */
+    if (!parts.length){
+      L = $("main") || D.body;
+      var tout = enfants(L).filter(function(c){ return !/^(H1|NAV|HEADER|FOOTER)$/.test(c.tagName) && c.id !== "navharm" && !c.classList.contains("evitement") && !c.classList.contains("ms-seul") && !c.classList.contains("ms-invite"); });
+      if (tout.length) parts = [{ t:"carte", n:tout, titre:nomPage() || "La page", ouverture:true }];
+    }
+    if (parts.length){ L.classList.add("ms-page"); if (!L.id) L.id = "ms-page"; return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true, lecture:true, parts:parts }; }
+  }
   if ($(".seance-panel") && $(".seance-tab")) return { panneau:".seance-panel", onglet:".seance-tab", actif:"active", attr:"data-panel", de:function(o){ return o.dataset.panel; } };
   if ($("section.panneau[role=tabpanel]") && $("[role=tablist] [role=tab][aria-controls]")) return { panneau:"section.panneau[role=tabpanel]", onglet:"[role=tablist] [role=tab][aria-controls]", actif:$("section.panneau[role=tabpanel].actif") ? "actif" : null, kit:!$("section.panneau[role=tabpanel].actif") && !!$("#donnees-page"), attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
   if ($(".seance-bloc[id]")) return { panneau:".seance-bloc[id]", onglet:null, actif:"ms-ici" };
+  /* un TP à phases (`tp_algorigrammes_domotique`, dispensé jusqu'au 26/11/2026 — Pascal : « tout doit être en mode
+     mission ») : ses phases `section.phase` sont ses séances, ses boutons « 0 · Symboles »… (`aria-controls`) ses onglets ; la phase
+     cachée porte la classe `hidden`. Ses cartes hors des phases (« Avant de commencer », l'identification, le Bonus)
+     vont à la phase qui les précède, ou à la première. */
+  if ($("section.phase[id]") && $(".phase-menu button[aria-controls]")) return { panneau:"section.phase[id]", onglet:".phase-menu button[aria-controls]", actif:null, cache:"hidden", phases:true, attr:"aria-controls", de:function(o){ return o.getAttribute("aria-controls"); } };
   var c = conteneur();
   if (c){ c.classList.add("ms-page"); if (!c.id) c.id = "ms-page"; return { panneau:".ms-page", onglet:null, actif:"ms-ici", page:true }; }
   return null;
 }
 /* le panneau ouvert : celui qui porte la classe du gabarit ; sans classe, celui que la page ne cache pas (`hidden`) */
-function selActif(){ return G.actif ? G.panneau + "." + G.actif : G.panneau + ":not([hidden])"; }
+function selActif(){ return G.actif ? G.panneau + "." + G.actif : G.cache ? G.panneau + ":not(." + G.cache + ")" : G.panneau + ":not([hidden])"; }
 function panneauActif(){ return $(selActif()); }
 function ongletActif(){ var P = panneauActif(); return P && G.onglet ? $$(G.onglet).filter(function(o){ return G.de(o) === P.id; })[0] || null : null; }
 function nomOnglet(o){ for (var i = 0; i < o.childNodes.length; i++){ var n = o.childNodes[i]; if (n.nodeName !== "SMALL" && net(n.textContent)) return net(n.textContent); } return net(o.textContent); }
@@ -1129,6 +1208,7 @@ function horsPanneaux(){
   if (_hors) return _hors; _hors = [];
   if (G.page) return _hors;
   var P = $$(G.panneau), der = P[P.length - 1]; if (!der) return _hors;
+  if (G.phases){ enfants(P[0].parentNode).forEach(function(c){ if (P.indexOf(c) < 0 && estBloc(c) && rendu(c)) _hors.push(c); }); return _hors; }
   $$(CARTE).forEach(function(c){
     if (!(der.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING) || der.contains(c)) return;      // après le dernier panneau, dans l'ordre de la page
     if (c.closest(G.panneau) || (c.parentElement && c.parentElement.closest(CARTE)) || c.closest(".ms-seul, .ms-invite, footer") || !rendu(c)) return;
@@ -1136,19 +1216,38 @@ function horsPanneaux(){
   });
   return _hors;
 }
+/* TP à phases : les cartes hors des phases qui reviennent à la phase P — celles d'avant la première phase, si P est la
+   première ; celles qui suivent P jusqu'à la phase suivante */
+function rattaches(P){
+  var tous = $$(G.panneau), i = tous.indexOf(P), avant = [], apres = [];
+  horsPanneaux().forEach(function(c){
+    var j = tous.filter(function(x){ return !!(x.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING); }).length - 1;
+    if (j === i) apres.push(c); else if (j < 0 && i === 0) avant.push(c);
+  });
+  return { avant:avant, apres:apres };
+}
 function construire(P){
+  if (G.lecture){
+    var EL = G.parts.slice(); EL.tous = [];
+    EL.forEach(function(e){ e.n.forEach(function(n){ for (var p = n; p && p !== P && (p === n || P.contains(p)); p = p.parentNode) if (EL.tous.indexOf(p) < 0) EL.tous.push(p); }); });
+    return EL;
+  }
   var E = [], portes = [], devant = [], tousP = $$(G.panneau);
-  enfants(P).concat(G.page ? suivants(P) : (P === tousP[tousP.length - 1] ? horsPanneaux() : [])).forEach(function(C){
+  var R = G.phases ? rattaches(P) : null;
+  (R ? R.avant.concat(enfants(P), R.apres) : enfants(P).concat(G.page ? suivants(P) : (P === tousP[tousP.length - 1] ? horsPanneaux() : []))).forEach(function(C){
     if (C.classList.contains("page-suivante") || !rendu(C)) return;          // ce que la page cache d'elle-même (fiche professeur) ne fait pas d'écran
     /* le bouton « Exercice 2 › » du kit des ateliers, seul dans son paragraphe : le mode porte le sien */
     if (C.tagName === "P" && C.children.length === 1 && C.firstElementChild.matches("button.suivant[data-vers]")){ C.classList.add("ms-origine"); return; }
     /* page à cartes : ce qui n'est pas un bloc (le titre de la page, sa mission, une note entre deux cartes) attend
        le bloc qui suit, et s'affiche avec son premier écran */
-    if (G.page){
-      if (!estBloc(C)){ devant.push(C); return; }
-      var i0 = E.length; un(C);
-      if (devant.length){ if (E.length > i0) E[i0].n = devant.concat(E[i0].n); else E.push({ t:"carte", titre:titreSans(devant) || nomPage() || "Pour commencer", n:devant }); devant = []; }
-      if (E.length > i0 && E[i0].t === "carte" && (!E[i0].titre || E[i0].titre === "Suite" || E[i0].titre === "La séance")) E[i0].titre = nomPage() || "Pour commencer";
+    /* une phase de TP se groupe comme une page à cartes : son titre, son paragraphe d'accroche, une ligne de boutons
+       attendent la carte (ou la grille de cartes) qui suit ; ce qui reste à la fin rejoint le dernier écran. Lu un à un,
+       ces morceaux faisaient des écrans d'un titre seul, d'un score seul, d'un bouton seul (26/11/2026). */
+    if (G.page || G.phases){
+      if (!(estBloc(C) || (G.phases && C.matches(".grid")))){ devant.push(C); return; }
+      var i0 = E.length, tDevant = titreSans(devant); un(C);
+      if (devant.length){ if (E.length > i0) E[i0].n = devant.concat(E[i0].n); else E.push({ t:"carte", titre:tDevant || nomPage() || "Pour commencer", n:devant }); devant = []; }
+      if (E.length > i0 && E[i0].t === "carte" && (!E[i0].titre || E[i0].titre === "Suite" || E[i0].titre === "La séance")) E[i0].titre = (G.phases && tDevant) || nomPage() || "Pour commencer";
       return;
     }
     un(C);
@@ -1250,6 +1349,9 @@ function placer(){
     if (x === revenir || x.closest(".ms-pied, .ms-tete")) return;
     var s = getComputedStyle(x); if (s.position !== "fixed") return;
     var r = parseFloat(s.right), bo = parseFloat(s.bottom); if (isNaN(r) || isNaN(bo) || r > 120 || bo > 120) return;
+    /* un panneau rangé hors de l'écran (le lexique replié du TP à phases, à droite, de toute la hauteur) n'est pas un
+       bouton : compté, il envoyait le nôtre au-dessus du haut de l'écran (banc_barre, B3, 26/11/2026) */
+    var q = x.getBoundingClientRect(); if (q.left >= innerWidth || q.right <= 0 || q.height > 160) return;
     h = Math.max(h, bo + (x.offsetHeight || parseFloat(s.height) || 48));
   });
   if (h) revenir.style.bottom = "calc(" + Math.ceil(h + 10) + "px + env(safe-area-inset-bottom,0px))";
@@ -1305,7 +1407,8 @@ function chrome(){
   bMission = el("button", "btn"); bMission.id = "btnMission"; bMission.type = "button";
   bMission.textContent = "🎮 Mode mission : un exercice à la fois";
   invite.appendChild(bMission);
-  if (cadre) cadre.appendChild(invite); else { var b0 = $("#seances") || $(G.panneau); b0.parentNode.insertBefore(invite, b0); }
+  if (G.lecture){ var p0 = G.parts[0].n[0]; p0.parentNode.insertBefore(invite, p0); }          // un document à lire : juste avant sa première partie
+  else if (cadre) cadre.appendChild(invite); else { var b0 = $("#seances") || (G.phases && rattaches($(G.panneau)).avant[0]) || $(G.panneau); b0.parentNode.insertBefore(invite, b0); }
   bMission.addEventListener("click", entrer);
   /* Revenir en mission (Pascal, 16/11/2026 : « quand l'élève quitte ce mode, il a du mal à revenir : aucun bouton
      apparent ») : en page complète, dès que le bouton du haut sort de l'écran, un petit bouton reste en bas à droite. */
@@ -1318,7 +1421,7 @@ function chrome(){
   else horsVue = true;
   tete = el("div", "ms-tete ms-seul", '<div class="ms-ligne1"><p class="ms-ou" id="msOu" role="heading" aria-level="2"></p><button type="button" class="ms-figer" id="msFiger" hidden data-pause-animations aria-pressed="false" aria-label="Figer les animations">⏸️</button><button type="button" class="ms-quitter" id="msQuitter">📄 Page complète</button><div class="ms-gains" id="msGains"><span class="ms-jauge" aria-hidden="true"><i id="msJauge"></i></span>' + ET.replace("{on}", " on") + '<span id="msCompte"></span></div></div><nav aria-label="Écrans de la séance"><ol class="ms-rail" id="msRail"></ol></nav>');
   /* un repère sans hauteur juste avant la barre : collée en haut de l'écran, la barre ne dit plus où elle commence */
-  var premier = $(G.panneau); ancre = el("div", "ms-ancre ms-seul"); premier.parentNode.insertBefore(ancre, premier); premier.parentNode.insertBefore(tete, premier);
+  var premier = G.lecture ? G.parts[0].n[0] : G.phases ? (rattaches($(G.panneau)).avant[0] || $(G.panneau)) : $(G.panneau); ancre = el("div", "ms-ancre ms-seul"); premier.parentNode.insertBefore(ancre, premier); premier.parentNode.insertBefore(tete, premier);
   figer();
   pied = el("div", "ms-pied ms-seul", '<div class="ms-pied-in"><button type="button" class="ms-btn ms-prec" id="msPrec" aria-label="Écran précédent">← <span>Précédent</span></button><button type="button" class="ms-btn ms-verif" id="msVerif">Vérifier</button><span class="ms-vide-f" id="msVide" hidden></span><button type="button" class="ms-btn ms-suiv" id="msSuiv">Suivant →</button></div>');
   D.body.appendChild(pied);
@@ -1453,6 +1556,9 @@ function montrer(haut){
   $$(".ms-etq", panneau).forEach(peindre); peindreRetour(s); bilan(s); marquerTrou(s);
   if (ecrans.length > 1 && vide(s)){ ecrans.splice(k, 1); k = Math.min(k, ecrans.length - 1); return montrer(haut); }
   if (!G.onglet){ var bout = k === ecrans.length - 1 && !voisine(1); $$(".page-suivante").forEach(function(x){ x.classList.toggle("ms-montre", bout && !x.closest(G.panneau)); }); }
+  if (G.lecture) D.body.classList.toggle("ms-suite", k > 0);
+  /* TP à phases : un écran fait des cartes rattachées (hors de la phase) ne montre pas la phase vide autour */
+  if (G.phases) panneau.classList.toggle("ms-cache", !s.n.some(function(n){ return panneau.contains(n); }));          // passé le premier écran, la question de la page et sa barre d'outils attendent
   M.loin[panneau.id] = Math.max(M.loin[panneau.id] || 0, k);
   barre(); M.k[panneau.id] = k; ecrire(); niveaux();
   /* l'écran qui ouvre la séquence commence par son ouverture dépliée — « 🎯 Avant de commencer : trois choses à lire »
@@ -1462,6 +1568,9 @@ function montrer(haut){
      Une page sans volet d'ouverture (les pages engendrées de 3e_C9.2) : la carte seule, à la première séance de la page. */
   var ouvr = $("#ouverture"), carte = $("#trois-lignes"), premier = panneau === $(G.panneau);
   var debut = (ouvr && ouvr.open && ouvr.offsetParent) ? ouvr : (!ouvr && premier && carte && carte.offsetParent) ? carte : null;
+  /* l'ouverture n'est un début que si elle est AVANT la barre : rangée après elle (la carte « Avant de commencer » d'un
+     TP à phases, posée sous la barre), elle passerait sous la barre collée en haut — on part de la barre (26/11/2026) */
+  if (debut && tete && !(debut.compareDocumentPosition(tete) & Node.DOCUMENT_POSITION_FOLLOWING)) debut = null;
   var cible = (s.ouverture && debut) ? debut : ancre;
   if (haut){ var y = Math.max(0, cible.getBoundingClientRect().top + window.scrollY - 52); try { window.scrollTo({ top:y, behavior:"instant" }); } catch (e) { window.scrollTo(0, y); } }
 }
@@ -1594,13 +1703,17 @@ function bilanParTitre(){
   if (_bilanParTitre !== undefined) return _bilanParTitre;
   var marque = false, c = null;
   Object.keys(parPanneau).forEach(function(id){ parPanneau[id].forEach(function(e){
-    var n = e.t === "carte" ? e.n[0] : null; if (!n || n.nodeType !== 1 || n.matches("h2,h3,h4")) return;
+    var n = e.t === "carte" ? e.n[0] : null;
+    /* TP à phases : la phase dont le titre dit « bilan » porte le bilan de la mission */
+    if (G.phases && n && n.nodeType === 1 && n.matches("h2") && /\bbilan\b/i.test(n.textContent) && n.parentNode.matches(G.panneau)){ c = n.parentNode; return; }
+    if (!n || n.nodeType !== 1 || n.matches("h2,h3,h4")) return;
     if (n.id === "bilan" || $("#je-me-positionne, fieldset.positionnement", n)) marque = true;
     else if (/\bbilan\b/i.test(e.titre || "") && $("h2,h3", n)) c = n;
   }); });
   return (_bilanParTitre = marque ? null : c);
 }
 function bilan(s){
+  if (G.lecture) return;                                    // un document à lire n'a pas de mission à faire le bilan
   if ((s.t !== "carte" && s.t !== "intro") || !s.n[0] || s.n[0].nodeType !== 1) return;
   /* la carte que montre l'écran : le nœud lui-même ; ou, quand la carte du bilan porte une activité (« Où en es-tu ? » de
      4e_C6.2), le parent de son titre — l'écran n'en montre alors que le début, et il est de type « intro » */
@@ -1644,7 +1757,8 @@ function entrer(){
   synchroniser();
 }
 function sortir(){
-  actif = false; M.on = false; ecrire(); D.body.classList.remove("ms"); voirRevenir();
+  if (G.phases) $$(G.panneau).forEach(function(P){ P.classList.remove("ms-cache"); });
+  actif = false; M.on = false; ecrire(); D.body.classList.remove("ms"); D.body.classList.remove("ms-suite"); voirRevenir();
   niveaux();
   var ouv = $("#ouverture"); if (ouv) ouv.classList.remove("ms-cache");
   bMission.focus({ preventScroll:true }); bMission.scrollIntoView({ block:"center" });
@@ -1693,7 +1807,9 @@ window.addEventListener("pointerup", function(ev){ lache(ev, false); });
 window.addEventListener("pointercancel", function(ev){ lache(ev, true); });
 
 /* pour les bancs : la réponse que le mode retient pour un groupe, et l'écran en cours */
-D.documentElement._mission = { cle: cle, gabarit: function(){ return G ? { P:G.panneau, T:G.onglet, A:G.actif || null, de:G.attr || null, actif:selActif(), page:!!G.page, kit:!!G.kit } : null; }, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
+D.documentElement._mission = { cle: cle, gabarit: function(){ return G ? { P:G.panneau, T:G.onglet, A:G.actif || null, de:G.attr || null, actif:selActif(), page:!!G.page, kit:!!G.kit, phases:!!G.phases, lecture:!!G.lecture } : null; },
+  /* TP à phases : les cartes hors des phases que montre la phase `id` (« Avant de commencer », le Bonus…) */
+  rattaches: function(id){ var P = D.getElementById(id); if (!G || !G.phases || !P) return []; var R = rattaches(P); return R.avant.concat(R.apres); }, ecran: function(){ var s = ecrans[k]; return s ? { t:s.t, id:s.id || "", dernier:!!s.dernier, check:!!s.check, fb:s.fb ? s.fb.id || "" : null } : null; } };
 function init(){
   G = gabarit(); if (!G) return;                                    // gabarit non reconnu : la page reste telle quelle
   if (G.kit) CHECK = CHECK_BASE + ", [data-exo] button.verifier";
@@ -1725,6 +1841,18 @@ function init(){
   });
   var suite = false; try { suite = sessionStorage.getItem("mission:suite") === "1"; sessionStorage.removeItem("mission:suite"); } catch (e) {}
   if (M.on || suite) entrer();
+  /* un document à lire ouvert par « page.html#ancre » (la séquence renvoie au lexique par « #seance-s2 ») : l'écran de
+     l'ancre, et l'ancre en haut, sous la barre */
+  if (G.lecture){
+    var versAncre = function(nom){
+      var but = null; try { but = D.getElementById(decodeURIComponent(nom)); } catch (e) {}
+      if (!actif || !but || !panneau || !panneau.contains(but)) return;
+      for (var j = 0; j < ecrans.length; j++) if (ecrans[j].n.some(function(n){ return n === but || (n.contains && n.contains(but)); })){
+        aller(j); try { but.scrollIntoView({ block:"start" }); window.scrollBy(0, -((parseFloat(tete.style.top) || 44) + tete.offsetHeight + 10)); } catch (e) {} return; }
+    };
+    if (location.hash.length > 1) versAncre(location.hash.slice(1));
+    window.addEventListener("hashchange", function(){ if (location.hash.length > 1) versAncre(location.hash.slice(1)); });
+  }
 }
 if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
 })();

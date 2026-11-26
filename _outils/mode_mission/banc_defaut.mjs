@@ -58,6 +58,13 @@ for (const page of pages) {
   if (Math.abs(enMission - pleine) > Math.max(40, pleine * 0.02)) faute(`imprimée en mission, la fiche diffère de la page complète (${enMission} contre ${pleine} caractères)`);
   if ((await etat(p)).ms) faute('« 📄 Page complète » ne quitte pas la mission');
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
+  /* Chromium écrit `localStorage` en deux temps : rechargée dans les millisecondes qui suivent l'écriture, une page ne la
+     retrouve pas toujours (mesuré le 25/11/2026, machine chargée : 3 sur 150 ; banc_lecture.mjs le dit). Aucun élève ne
+     recharge si vite : avant de refuser, on rejoue le geste une fois, en laissant au navigateur le temps d'écrire. */
+  if ((await etat(p)).ms) {
+    await p.evaluate(() => document.getElementById('msQuitter').click()); await p.waitForTimeout(900);
+    await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
+  }
   if ((await etat(p)).ms) faute('après « 📄 Page complète » et un rechargement, la page revient en mission');
   await p.evaluate(() => document.getElementById('btnMission').click()); await p.waitForTimeout(150); await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(200);
   if (!(await etat(p)).ms) faute('après « 🎮 Mode mission » et un rechargement, la page ne revient pas en mission');
@@ -83,7 +90,7 @@ for (const page of pages) {
   if (!(await p.$('#btnReset, #btnEffacer, #btn-effacer, #clear'))) {
     sansBouton++;
     for (let j = 0; j < 2; j++) { await p.evaluate(() => { const x = document.getElementById('msSuiv'); if (x && !x.hidden) x.click(); }); await p.waitForTimeout(80); }
-    const reste = await p.evaluate(() => { let m = null; try { m = JSON.parse(localStorage.getItem('mission:' + decodeURIComponent(location.pathname).split('/').pop()) || 'null'); } catch (x) {}
+    const reste = await p.evaluate(() => { let m = null; try { const c = decodeURIComponent(location.pathname).split('/'), f = c.pop(), d = c.pop(); m = JSON.parse(localStorage.getItem('mission:' + (d ? d + '/' : '') + f) || 'null'); } catch (x) {}
       return m ? Object.keys(m).filter((c) => c !== 'v' && c !== 'on') : null; });
     if (reste === null) faute('page sans bouton d\'effacement : le choix d\'affichage n\'est pas gardé');
     else if (reste.length) faute('page sans bouton d\'effacement : le mode garde dans le navigateur « ' + reste.join(', ') + ' » — rien que l\'élève suivant ne doive trouver');

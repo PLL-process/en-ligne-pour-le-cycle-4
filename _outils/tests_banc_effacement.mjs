@@ -50,7 +50,7 @@ ${bouton ? '<button type="button" id="btnReset">🗑 Effacer ma sauvegarde</butt
   });
   var b = document.getElementById("btnReset"), arme = 0; if (!b) return;
   b.addEventListener("click", function(){
-    if (arme && Date.now() - arme < 6000){ EFFACE.forEach(function(k){ try { localStorage.removeItem(k === "MISSION" ? "mission:" + location.pathname.split("/").pop() : k); } catch (x) {} }); location.reload(); return; }
+    if (arme && Date.now() - arme < 6000){ EFFACE.forEach(function(k){ try { localStorage.removeItem(k === "MISSION" ? "mission:" + location.pathname.split("/").slice(-2).join("/") : k); } catch (x) {} }); location.reload(); return; }
     arme = Date.now(); b.textContent = "Clique encore pour effacer";
   });
 })();
@@ -74,7 +74,7 @@ verifier('… en nommant le menu', /menu encore changé : #m/.test(r.sortie) && 
 
 r = jouer(ecrire('mission-gardee', page({ efface: ['seq_essai', 'rep_voisin', 'rep_menu'], mission: true })));
 verifier('une page qui efface ses réponses et garde les étoiles du mode mission est refusée (sortie 1)', r.code === 1, r.sortie);
-verifier('… en nommant la mémoire du mode mission', /le témoin reste dans localStorage « mission:page\.html »/.test(r.sortie), r.sortie);
+verifier('… en nommant la mémoire du mode mission', /le témoin reste dans localStorage « mission:mission-gardee\/page\.html »/.test(r.sortie), r.sortie);
 
 r = jouer(ecrire('mission-effacee', page({ efface: ['seq_essai', 'rep_voisin', 'rep_menu', 'MISSION'], mission: true })));
 verifier('une page qui efface aussi le mode mission est acceptée (sortie 0)', r.code === 0, r.sortie);

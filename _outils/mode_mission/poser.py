@@ -9,6 +9,10 @@ marqueurs « mode-mission … : début / fin » — comme la fiche papier (`_out
 qui le porte déjà le reçoit à jour, à la même place. Rien d'autre dans la page n'est touché, et le bloc ne porte
 aucune donnée propre à la page : les réponses attendues sont lues dans la page elle-même.
 
+Depuis le 26/11/2026 (Pascal : « tout doit être en mode mission »), les synthèses élève et les lexiques le portent aussi,
+à la place du « mode lecture » (`_outils/mode_lecture/`, 25/11/2026, retiré) : une page qui porte encore ce bloc-là le
+voit remplacé, à la même place, par celui du mode mission.
+
 Le mode mission est allumé d'emblée pour l'élève (14/11/2026) ; un robot de test (`navigator.webdriver`) ouvre la page
 complète, qui se mesure, se teste et s'imprime comme avant.
 """
@@ -22,6 +26,8 @@ DEBUT = "<!-- mode-mission %s : début — un exercice à la fois ; source uniqu
         "_outils/mode_mission/ (poser.py). Ne pas le modifier dans la page. -->" % VERSION
 FIN = "<!-- mode-mission %s : fin -->" % VERSION
 _BLOC_RE = re.compile(r"<!-- mode-mission [^ ]+ : début.*?<!-- mode-mission [^ ]+ : fin -->", re.S)
+#: le bloc du mode lecture (25/11/2026, retiré le 26/11/2026) : le mode mission prend sa place
+LECTURE_RE = re.compile(r"<!-- mode-lecture [^ ]+ : début.*?<!-- mode-lecture [^ ]+ : fin -->", re.S)
 
 
 def bloc():
@@ -38,6 +44,11 @@ def poser(html):
     """Rend la page avec le bloc à jour, ou lève ValueError (deux blocs, ou aucune place unique où le poser)."""
     b = bloc()
     trouves = blocs_de(html)
+    anciens = LECTURE_RE.findall(html)
+    if len(anciens) > 1 or (anciens and trouves):
+        raise ValueError("un bloc du mode lecture en trop dans la page")
+    if anciens:
+        return LECTURE_RE.sub(lambda _m: b, html, count=1)
     if len(trouves) > 1:
         raise ValueError("%d blocs du mode mission dans la page" % len(trouves))
     if trouves:
@@ -67,7 +78,10 @@ def main(args):
             code = 1
             continue
         if verifier:
-            if not blocs_de(html):
+            if LECTURE_RE.search(html):
+                print("✘ %s : porte encore le mode lecture (relancer poser.py)" % chemin)
+                code = 1
+            elif not blocs_de(html):
                 print("· %s : sans mode mission" % chemin)
             elif neuf != html:
                 print("✘ %s : bloc différent de la source (relancer poser.py)" % chemin)
@@ -76,7 +90,8 @@ def main(args):
                 print("✅ %s : à jour" % chemin)
         elif neuf != html:
             p.write_text(neuf, encoding="utf-8")
-            print("✎ %s : mode mission %s" % (chemin, "mis à jour" if blocs_de(html) else "posé"))
+            print("✎ %s : mode mission %s" % (chemin, "mis à jour" if blocs_de(html) else
+                                                 "posé, à la place du mode lecture" if LECTURE_RE.search(html) else "posé"))
         else:
             print("· %s : déjà à jour" % chemin)
     return code

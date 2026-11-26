@@ -24,10 +24,11 @@ _spec = importlib.util.spec_from_file_location("poser_mission", ICI / "mode_miss
 _poser = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_poser)
 BLOC = _poser.bloc()
-_spec_l = importlib.util.spec_from_file_location("poser_lecture", ICI / "mode_lecture" / "poser.py")
-_poser_l = importlib.util.module_from_spec(_spec_l)
-_spec_l.loader.exec_module(_poser_l)
-BLOC_LECTURE = _poser_l.bloc()
+#: l'ancien bloc du mode lecture (25/11/2026, retiré le 26/11/2026 : `controle_mode_mission.py` le refuse, M5) — tel
+#: qu'il écrivait sa marque ; une page qui l'aurait gardé se lit encore à part
+BLOC_LECTURE = ("<!-- mode-lecture v1 : début — une partie par écran ; source unique : _outils/mode_lecture/ (poser.py). "
+                "Ne pas le modifier dans la page. -->\n<script>try { localStorage.setItem(\"lecture:x\", \"0\"); } catch (e) {}</script>\n"
+                "<!-- mode-lecture v1 : fin -->")
 #: un bloc qui porterait la note et un bouton : même ainsi, il ne remplit pas l'obligation de la page
 BLOC_BAVARD = BLOC.replace("</script>", '/* data-note="poste-partage" <button id="btnReset">Effacer ma sauvegarde</button> */</script>', 1)
 
@@ -85,12 +86,12 @@ def main():
     cas("une séquence conforme qui porte aussi le mode : conforme, comptée une fois",
         r == 0 and "1 page(s) lues" in t and "n'enregistrent rien" not in t)
     cas("sans_mission : retire le bloc et rien d'autre", c.sans_mission(page("<p>a</p>", BLOC)) == page("<p>a</p>"))
-    r, t = jouer({"t/sequence_a.html": conforme, "t/Synthèses/synthese_eleve_a.html": page("<p>une synthèse</p>", BLOC_LECTURE)})
-    cas("une synthèse qui ne porte que le mode lecture : comptée à part, pas refusée",
+    r, t = jouer({"t/sequence_a.html": conforme, "t/Synthèses/synthese_eleve_a.html": page("<p>une synthèse</p>", BLOC)})
+    cas("une synthèse qui ne porte que le mode mission (26/11/2026) : comptée à part, pas refusée",
         r == 0 and "1 page(s) lues" in t and "1 page(s) n'enregistrent rien" in t)
     r, t = jouer({"t/sequence_a.html": page(ENREGISTRE, BLOC_LECTURE)})
-    cas("le bloc du mode lecture n'excuse pas une page qui enregistre sans bouton ni note : deux refus", r == 1 and "2 refus" in t)
-    cas("sans_mission : retire aussi le bloc du mode lecture, et les deux ensemble",
+    cas("l'ancien bloc du mode lecture n'excuse pas une page qui enregistre sans bouton ni note : deux refus", r == 1 and "2 refus" in t)
+    cas("sans_mission : retire aussi l'ancien bloc du mode lecture, et les deux ensemble",
         c.sans_mission(page("<p>a</p>", BLOC + BLOC_LECTURE)) == page("<p>a</p>"))
     tampon = io.StringIO()
     with contextlib.redirect_stdout(tampon):

@@ -76,9 +76,10 @@ mesure : ce contrôle juge ce que LA PAGE enregistre. Ce que le mode garde, lui,
     (`mode_mission/banc_defaut.mjs` le joue : rien d'autre que `v` et `on` sous la clé « mission:… »).
 Ces pages sont comptées (« ne gardent que le choix d'affichage du mode mission »), pas refusées.
 
-Le **mode lecture** (`_outils/mode_lecture/`, une partie par écran, posé sur les synthèses élève et les lexiques le
-même jour) se lit à part de la même façon : son bloc n'écrit qu'une marque, « Page complète », que « Mode lecture »
-retire. Ni réponse ni progression (`mode_lecture/banc_lecture.mjs` le joue, L10).
+Depuis le 26/11/2026 (Pascal : « tout doit être en mode mission »), les synthèses élève, les lexiques, les panneaux
+et la carte des représentations portent eux aussi le mode mission, à la place du « mode lecture » de la veille, retiré ;
+`mode_mission/banc_lecture.mjs` joue les documents à lire (L10 : rien que `v` et `on`). Un bloc du mode lecture resté
+dans une page est encore lu à part — `controle_mode_mission.py` le refuse (M5).
 
 Usage : python3 _outils/controle_sauvegarde_locale.py [--racine .] [--corriger] [--muet]
 Sortie 0 si rien à refuser, 1 s'il reste un écart (effacement ou note manquants sur une
@@ -370,7 +371,7 @@ def main(argv):
                   % len(comptes["qcm_sans_note"]))
         if mission_seule:
             print("ℹ %d page(s) n'enregistrent rien d'elles-mêmes et ne gardent que le choix d'affichage du mode "
-                  "mission ou du mode lecture (joué par banc_defaut.mjs et banc_lecture.mjs ; pas de refus)" % len(mission_seule))
+                  "mission (joué par banc_defaut.mjs et banc_lecture.mjs ; pas de refus)" % len(mission_seule))
     print("%d page(s) lues qui écrivent dans localStorage · %d refus · %d confirm() · %d QCM sans note"
           % (n, len(refus), len(comptes["modale"]), len(comptes["qcm_sans_note"])))
     if refus:
