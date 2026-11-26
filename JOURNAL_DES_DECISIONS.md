@@ -38149,6 +38149,28 @@ relancés sur le `main` du jour : aucune autre page réécrite, lexiques à jour
 **Reste, hors de ce lot.** Huit synthèses professeur ont des tableaux qui défilent à 390 px sans être atteignables au
 clavier (`scrollable-region-focusable`, page ouverte) — hors du périmètre par défaut de `controle_page_ouverte.mjs`.
 
+## 26/11/2026 — Synthèses professeur : les tableaux s'empilent sur téléphone (thème 1)
+
+**La décision.** « 2a » de Pascal (26/11/2026, 8 h) : traiter les huit synthèses professeur vues en passant le matin
+même (journal du 26/11, thème 1).
+
+**Le constat.** À 390 px, page ouverte, leurs tableaux défilaient sans être atteignables au clavier (axe-core
+`scrollable-region-focusable`, défaut grave) : le déroulé à cinq colonnes des sept synthèses professeur des ateliers
+(120 à 200 px de trop), le référentiel à trois colonnes (15 px), et les deux tableaux de 760 px de 5e_C1.3. Ce qui
+défile est caché (n°364) : plutôt que de rendre le défilement atteignable, on le supprime.
+
+**Ce qui change.** Sous 600 px, chaque ligne devient une carte, et chaque case dit sa colonne (`data-label`, affiché
+devant la valeur) ; l'en-tête reste lu par un lecteur d'écran. Au-delà de 600 px et sur papier, rien ne change.
+- Générateur des ateliers : `moteur.EMPILE_CSS` et `moteur.ligne_empilee` ; `syntheses.py` les emploie pour le déroulé
+  et pour le référentiel (`tableau_referentiel(at, empile=True)`). Les pages élève gardent leur tableau (paramètre par
+  défaut) : `build.py` relancé, aucune page d'atelier réécrite, seules les 7 synthèses professeur.
+- 5e_C1.3 (à la main) : la même règle, aux couleurs de la page, sur ses deux tableaux.
+
+**Vérifié.** Les 8 pages : plus aucun tableau qui défile à 390 px ; `controle_page_ouverte.mjs --axe` (pages données
+une à une, elles sont hors de son périmètre par défaut) : A 0, S 0. Rendu à 1 280 px identique au pixel près ;
+impression (A4, média `print`) identique, même nombre de pages ; à 390 px, changé exprès (captures envoyées à Pascal).
+`controle_axe.mjs` (thème 1) : aucun défaut grave ; `controle_debordement.py` : sans écart.
+
 ## 26/11/2026 — Vérification totale, suite : une action par ligne, la page qui ne défile plus de côté, l'élève qui ne lit pas sur les pages du kit (transversal : thèmes 1, 2, 3, `_outils`)
 
 **Suite de la demande de Pascal du 25/11/2026** (« assure-toi que l'élève comprenne la question, qu'il y ait la

@@ -574,15 +574,34 @@ def _replier_outil():
     return ns
 
 
-def tableau_referentiel(at):
+EMPILE_CSS = ("@media (max-width:600px){table.empile thead{position:absolute;width:1px;height:1px;overflow:hidden;"
+              "clip:rect(0 0 0 0);white-space:nowrap}table.empile,table.empile tbody,table.empile tr,table.empile td{display:block;"
+              "width:100%}table.empile tr{border:1px solid #2f5695;border-radius:8px;margin:0 0 10px}table.empile td{border:none;"
+              "border-top:1px solid rgba(47,86,149,.45);padding:5px 10px}table.empile tr>td:first-child{border-top:none}"
+              "table.empile td::before{content:attr(data-label) \" : \";font-weight:700;color:var(--sub)}}")
+"""Un tableau qui s'empile sur téléphone (26/11/2026) : à 390 px, les tableaux à cinq colonnes des synthèses professeur
+défilaient de 120 à 200 px, sans clavier (axe-core `scrollable-region-focusable`) — et ce qui défile est caché
+(n°364). Sous 600 px, chaque ligne devient une carte ; chaque case dit sa colonne (`data-label`). L'en-tête reste
+lu par un lecteur d'écran. Au-delà de 600 px, et sur papier, rien ne change."""
+
+
+def ligne_empilee(entetes, cases):
+    """Une ligne de tableau dont chaque case porte le nom de sa colonne (`data-label`, voir EMPILE_CSS)."""
+    return "<tr>%s</tr>" % "".join('<td data-label="%s">%s</td>' % (e(t), c) for t, c in zip(entetes, cases))
+
+
+def tableau_referentiel(at, empile=False):
     """Le référentiel de l'atelier, mot pour mot : la même table pour la synthèse professeur et,
-    repliée, pour la page élève (n°298 amendée, 07/11/2026)."""
-    h = ['<div class="defile"><table><thead><tr><th scope="col">Code</th><th scope="col">Formulation</th>'
-         '<th scope="col">Domaines du socle</th></tr></thead><tbody>']
+    repliée, pour la page élève (n°298 amendée, 07/11/2026). `empile` : la table s'empile sur téléphone (synthèse
+    professeur, qui porte EMPILE_CSS) ; la page élève garde la sienne, que `kit.js` rend atteignable au clavier."""
+    entetes = ("Code", "Formulation", "Domaines du socle")
+    h = ['<div class="defile"><table%s><thead><tr><th scope="col">Code</th><th scope="col">Formulation</th>'
+         '<th scope="col">Domaines du socle</th></tr></thead><tbody>' % (' class="empile"' if empile else "")]
     for niv, N in at.NIVEAUX.items():
         for c in N["codes"]:
             texte, socle = REFERENTIEL[c]
-            h.append("<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (e(c), e(texte), e(socle)))
+            h.append(ligne_empilee(entetes, (e(c), e(texte), e(socle))) if empile
+                     else "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (e(c), e(texte), e(socle)))
     h.append("</tbody></table></div>")
     return "".join(h)
 
