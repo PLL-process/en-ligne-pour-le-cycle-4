@@ -162,17 +162,22 @@ les 24 heures de la pesée passent en quelques secondes. La page l'écrit sous c
 | `Images/trois-principes_p1_lumiere_3d.jpg` | la dernière image du film (l'image complète), JPEG, 49,5 Ko : son affiche, et ce qui reste sous « mouvement réduit » |
 | `Images/trois-principes_p2_pesee_3d.jpg` | la dernière image du film (l'image complète), JPEG, 39,8 Ko : son affiche, et ce qui reste sous « mouvement réduit » |
 | `Images/trois-principes_p3_rayonnement_3d.jpg` | la dernière image du film (l'image complète), JPEG, 45,1 Ko : son affiche, et ce qui reste sous « mouvement réduit » |
+| `Images/trois-principes_p1_lumiere_3d_impression.jpg` | la même image sur fond clair, JPEG, 50,2 Ko : la bande imprimée sous la planche (n°102) |
+| `Images/trois-principes_p2_pesee_3d_impression.jpg` | la même image sur fond clair, JPEG, 44,5 Ko : la bande imprimée sous la planche (n°102) |
+| `Images/trois-principes_p3_rayonnement_3d_impression.jpg` | la même image sur fond clair, JPEG, 46,5 Ko : la bande imprimée sous la planche (n°102) |
 
 - **À l'écran** : aux étapes 2, 5 et 8, le film prend la place du dessin ; il se joue une fois et s'arrête sur l'image complète
   (n°175, n°176) ; « ✏️ Voir le schéma » rend le dessin. Rien n'est demandé avant l'étape (`preload="none"`).
-- **À l'impression** : rien ne change, la planche des trois schémas s'imprime. Les mêmes images sur fond clair sortent du script
-  (`assembler.sh` avec `IMPRESSION=oui`) ; elles ne sont pas dans le dépôt tant que Pascal n'a pas décidé de les imprimer.
+- **À l'impression** (décision de Pascal du 26/11/2026) : sous la planche des trois schémas, une bande montre les trois appareils
+  en 3D sur fond clair, environ 6 cm de large chacun, avec leur légende. La séance 1 s'imprime toujours sur 4 pages A4. Ces trois images
+  se chargent avec la page (141 Ko à trois) : retardées, elles pourraient manquer sur le papier.
 - **Non vérifié** : la lecture des films sur les postes du collège, sous Safari et sur tablette (seul Chromium a tourné).
 
 **Les captures de comparaison** de la PR, dans `_generation/films_trois_appareils/captures/` : `avant-390-etape2.png` (l'étape 2
 telle que `main` l'affichait) et `apres-390-etape2.png` (la même, avec le film), à 390 px ; `apres-1280-trois-etapes.png` (les
 étapes 2, 5 et 8 à 1 280 px, réduites). Captures du navigateur de ce lot (Chromium), 26/11/2026, 256 couleurs, CC0. Aucune page
 élève ne les affiche.
+S'y ajoute `impression-bande-des-trois-appareils.png` : la bande telle qu'elle s'imprime (même jour, même navigateur).
 
 ## Image générée par IA (Canva) pour la synthèse élève
 

@@ -133,6 +133,14 @@
   .p3calc{font-size:1.05em;color:#ffd08a}
   .p3lex dl{margin:4px 0;font-size:.9em}.p3lex dt{font-weight:600;color:var(--hl);margin-top:6px}.p3lex dd{margin:0 0 0 1em}
   @media(max-width:760px){.p3body{grid-template-columns:1fr}}
+  /* Les trois appareils en 3D sur fond clair : une bande pour le papier seulement (à l'écran, ce sont les films). */
+  .p3-3d-bande{display:none}
+  @media print{.p3-3d-bande{display:block;break-inside:avoid;margin:3mm 0 2mm;color:#111}
+    .p3-3d-titre{margin:0 0 1.5mm;font-size:9.5pt}
+    .p3-3d-trois{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4mm;align-items:start}
+    .p3-3d-vue{min-width:0}                              /* pas de <figure> : la règle d'impression des photos la mettrait en ligne */
+    .p3-3d-vue img{display:block;width:100%;height:auto;border:1px solid #999;border-radius:4px}
+    .p3-3d-legende{margin:1mm 0 0;font-size:8.5pt;line-height:1.3;color:#111}}
   @media print{.p3card,.p3unite{background:#fff!important;border-color:#999!important}
     .schema3{background:#fff!important;border-color:#999!important}
     .p3comme,.p3savoir,.p3card h5 small{color:#333!important}.p3calc{color:#8a5a00!important}
@@ -2809,6 +2817,29 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
       </div>
     </article>
   </div>
+
+  <!-- trois_appareils_3d (impression) : début — les trois appareils en 3D sur fond clair, pour le papier seulement
+       (décision de Pascal du 26/11/2026). À l'écran, les films de l'animation les montrent. Images engendrées par
+       _generation/films_trois_appareils/ (Blender). Elles se chargent avec la page (141 Ko à trois) : une image
+       retardée peut manquer sur le papier, et le papier est le seul endroit où elles servent. -->
+  <div class="p3-3d-bande" id="p3Bande3d">
+    <p class="p3-3d-titre"><b>Les trois appareils, en 3D.</b> Ce sont des modèles simplifiés&nbsp;: les grains sont grossis, le rayonnement est dessiné en points.</p>
+    <div class="p3-3d-trois">
+      <div class="p3-3d-vue">
+        <img src="Images/trois-principes_p1_lumiere_3d_impression.jpg" width="960" height="676" data-loupe="non" alt="Appareil P1 en 3D, vu en coupe : dans un boîtier fixé à un poteau, une lampe (1) envoie un faisceau de lumière (2) ; l'air et ses grains de poussière (3) le traversent de haut en bas ; un capteur de lumière (4) est posé sur le côté, sous le faisceau.">
+        <p class="p3-3d-legende"><b>P1 · lumière</b><br>① la lampe ② le faisceau de lumière<br>③ l'air et ses grains de poussière<br>④ le capteur de lumière</p>
+      </div>
+      <div class="p3-3d-vue">
+        <img src="Images/trois-principes_p2_pesee_3d_impression.jpg" width="960" height="676" data-loupe="non" alt="Appareil P2 en 3D : l'air aspiré, avec ses grains (1), entre dans un tuyau transparent ; les grains s'arrêtent sur le filtre (2) ; au bout du tuyau, la pompe (3) et son hélice.">
+        <p class="p3-3d-legende"><b>P2 · pesée</b><br>① l'air aspiré, avec ses grains<br>② le filtre ③ la pompe</p>
+      </div>
+      <div class="p3-3d-vue">
+        <img src="Images/trois-principes_p3_rayonnement_3d_impression.jpg" width="960" height="676" data-loupe="non" alt="Appareil P3 en 3D : la source scellée (1) est au-dessus de la bande de papier filtre (2), tendue entre deux rouleaux ; le dépôt de poussière (3) se forme sur la bande ; le compteur (4) est dessous.">
+        <p class="p3-3d-legende"><b>P3 · rayonnement</b><br>① la source scellée ② la bande de papier filtre<br>③ le dépôt de poussière ④ le compteur</p>
+      </div>
+    </div>
+  </div>
+  <!-- trois_appareils_3d (impression) : fin -->
 
   <h4>Les chiffres pour choisir</h4>
   <p class="meta">Lis d'abord la <b>dernière ligne</b>&nbsp;: ce qu'un appareil <b>exige</b> élimine plus

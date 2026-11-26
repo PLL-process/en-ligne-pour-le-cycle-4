@@ -38562,3 +38562,24 @@ station et le lampadaire « en pièces », le vélo-cargo — attendent que Pasc
 **Thème par thème** (n°302) : thème 1 seulement — `5e_C1.1` (séquence, banc de l'animation, `Films/`, trois affiches,
 `_generation/films_trois_appareils/`, sources, manifeste, rapport) ; `.claude/skills/blender-visualisation-pedagogique/` ;
 `SKILLS_AUDIT.md` ; `nouveautes.json`. `_outils/` et `.github/` : rien.
+
+## 26/11/2026 — Les trois appareils de Chengdu en 3D : fusionné, et imprimés (thème 1)
+
+**Décisions de Pascal (26/11, 17 h 51).** « 1a 2b 3b fusionne et donne moi l'URL » : fusionner la PR #956, **imprimer les trois
+images en 3D**, et lancer les trois freins (5e_C1.2, lot à part). Après avoir ouvert la page publiée : « C'est parfait cela
+fonctionne ».
+
+- **PR #956 fusionnée** (`d42ebc4`), après fusion de `main` dans la branche (conflit sur le journal seulement, les deux entrées
+  gardées). Publication vérifiée depuis le poste de Pascal : la page en ligne porte les films, et les trois se téléchargent.
+- **À l'impression** : une **bande** sous la planche des trois schémas — les trois appareils en 3D sur fond clair, trois de front,
+  environ 6 cm de large, légende dessous. Une image par carte aurait ajouté environ 440 px de hauteur ; la bande en prend 265, et la
+  séance 1 s'imprime **en 4 pages comme avant** (compté sur le PDF). À l'écran, la bande est cachée : les films montrent les appareils.
+- **Un piège, écrit dans le rapport** : une `<figure>` qui contient une image `.jpg` est mise en ligne (image à gauche, légende à
+  droite) par la règle d'impression des photos ; la bande emploie donc de simples blocs.
+
+Banc de l'animation : 72 / 72 ; `tests_5e_C1.1_chengdu.py` 44 / 44 ; `tests_regle_311_5e_C1.1.mjs` 34 / 34 ; médias, liens,
+impression, page ouverte, hors ligne : verts. **Non vérifié** : l'impression depuis un autre navigateur que Chromium.
+**Vu en passant, non corrigé** : le titre de la carte P3 reste en bas de la page 2 à l'impression (déjà le cas sur `main`).
+
+**Thème par thème** (n°302) : thème 1 seulement — `5e_C1.1` (séquence, banc, trois images, assembleur, sources, manifeste,
+rapport, README).
