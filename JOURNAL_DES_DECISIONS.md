@@ -38185,7 +38185,7 @@ neuve sur tout le site, ont trouvé quatre pages qui défilaient de côté ; cor
   3e_C6.1) ; inchangés au-dessus de 600 px et à l'impression.
 **Nouvelle mesure D** dans `controle_page_ouverte.mjs` : un élément qui dépasse la largeur de la page sans cadre
 qui défile autour de lui. Sur les 342 pages : **0**, et D refuse depuis ce jour (référence vide, n°273). Banc
-`tests_controle_page_ouverte.mjs` 26 / 26 (cinq points neufs : la formule insécable vue, la même coupée non vue, un
+`tests_controle_page_ouverte.mjs` 27 / 27 (cinq points neufs : la formule insécable vue, la même coupée non vue, un
 listing en cadre défilant non compté, la page propre, la sortie 1). Les deux skills qui citent les lettres
 (`controle-qualite-lot`, `audit-douze-axes`) disent D. Les 78 QCM et les 35 autres pages élève : rien qui défile.
 
@@ -38220,7 +38220,8 @@ générateurs rejoués (« à jour »).
 - `controle_page_ouverte.mjs` : tout le site (342 pages) L 0 · B 0 · C 0 et D 1, la carte des représentations,
   corrigée ; puis, avec `--axe`, les 123 pages que ce lot change : L 0 · D 0 · B 0 · C 0 · A 0 · S 0 (hors
   `dnb_gabarit.html`, modèle à trous hors du site : ses quatre remarques d'axe tiennent à ses trous, les mêmes avant
-  et après) ; banc 26 / 26 ;
+  et après) ; puis tout le site, sur l'arbre fusionné, avec `--axe` : 342 pages, L 0 · D 0 · B 0 · C 0 · A 0 · S 0,
+  sortie 0 ; banc 27 / 27 ;
 - la barre de navigation remesurée sur les 55 pages : aucune au-dessus de 60 px, aucune pastille coupée ;
 - `eleve_qui_ne_lit_pas.py --tout` : 76 pages, dont les 21 du kit, 0 activité validée sans lire ; banc 9 / 9 (deux
   pages du kit, neuves : la bonne toujours la première refusée, des bonnes réparties acceptées) ;
