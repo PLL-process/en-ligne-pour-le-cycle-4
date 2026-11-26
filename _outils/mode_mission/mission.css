@@ -10,7 +10,9 @@
   body.ms .seance-bloc[id]:not(.ms-ici){display:none!important}
   body.ms{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   /* en mission, le haut de la page se fait petit : la barre de la mission dit où l'on est */
-  body.ms .subtitle,body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
+  body.ms .subtitle:not(.ms-entete),body.ms .saved-note[data-note],body.ms .progress-wrap{display:none!important}
+  /* un document à lire (synthèse, lexique) : sa question et sa barre d'outils se lisent au premier écran, puis s'effacent */
+  body.ms.ms-suite .ms-entete{display:none!important}
   body.ms h1{font-size:1.05rem!important;margin:6px auto 6px!important}
   /* le bouton d'entrée ne sert plus une fois entré (sans le cadre « Ma progression », il restait au-dessus de la barre) */
   body.ms .ms-invite{display:none!important}
@@ -31,7 +33,9 @@
   .ms-figer{min-height:44px;min-width:44px;padding:4px 10px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-weight:700;cursor:pointer;margin-left:auto}
   .ms-figer+.ms-quitter{margin-left:0}
   .ms-figer:focus-visible,.ms-invite .ms-figer-page:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
-  .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800;font-size:1em}
+  /* le texte sombre sur l'orange, même là où la page impose un texte blanc à ses boutons (`.btn{color:#fff!important}`
+     des panneaux : contraste 1,76 — axe-core, page ouverte, 26/11/2026) */
+  .ms-invite .btn{min-height:48px;padding:10px 20px;background:var(--energie,#ffb454);color:#2a1800!important;font-size:1em}
   .ms-invite .btn:focus-visible,.ms-quitter:focus-visible{outline:3px solid var(--hl,#61dafb);outline-offset:2px}
   .ms-quitter{min-height:44px;padding:6px 12px;border-radius:10px;background:transparent;color:var(--sub,#9bbefc);border:1px solid var(--input-bd,#2e5d9f);font:inherit;font-size:.82em;font-weight:700;cursor:pointer;margin-left:auto}
 

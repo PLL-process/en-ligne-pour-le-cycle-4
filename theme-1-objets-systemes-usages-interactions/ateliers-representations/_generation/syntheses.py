@@ -291,7 +291,7 @@ def eleve(at, page_niveau, chemins_fn, chemin):
 def ecrire(at, page_niveau, synthese_eleve, synthese_prof, chemins_fn, ecrire_fn):
     n = 0
     p = synthese_eleve(at)
-    ecrire_fn(p, eleve(at, page_niveau, chemins_fn, p), lecture=True)       # le mode lecture (25/11/2026)
+    ecrire_fn(p, eleve(at, page_niveau, chemins_fn, p), mission=True)       # le mode mission, une partie par écran (26/11/2026)
     n += 1
     p = synthese_prof(at)
     ecrire_fn(p, professeur(at, page_niveau, chemins_fn, p))

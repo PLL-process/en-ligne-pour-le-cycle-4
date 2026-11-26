@@ -38273,3 +38273,102 @@ synthèses élève de C7 et C8, `build_atelier.py` (trois ateliers de planificat
 thèmes — le bloc du mode mission reposé sur 93 pages ; `_outils` — `controle_page_ouverte.mjs` (D) et son banc,
 `eleve_qui_ne_lit_pas.py` (le kit) et son banc, `mode_mission/mission.js`, `dnb_gabarit.html` ; `.claude/skills` —
 `controle-qualite-lot` et `audit-douze-axes` (la lettre D), `eleve-qui-ne-lit-pas` (le kit).
+
+## 26/11/2026 — Tout en mode mission : synthèses, lexiques, panneaux, pages dispensées (transversal : thèmes 1, 2, 3, `_outils`)
+
+**Demande de Pascal du 26/11/2026** : « Tout doit être en mode mission ». Deux questions posées avant de construire ;
+ses réponses : **les QCM gardent leur moteur** (une question à la fois, score, « Mes erreurs ») ; **les synthèses et
+les lexiques passent au vrai mode mission** — même bouton, même barre, mêmes étoiles —, et non plus au « mode
+lecture » posé la veille.
+
+**Mesuré sur `main`** : 93 pages portaient le mode mission ; 129 le mode lecture (69 synthèses élève, 60 lexiques) ;
+35 documents élève n'avaient ni l'un ni l'autre — 30 panneaux et 5 pages dispensées (trois panneaux de la bête à
+cornes, le modèle de démonstration des TP de CAO, `tp_algorigrammes_domotique`) —, et une page élève que le contrôle
+ne lisait pas : la carte des représentations. `controle_mode_mission.py` ne lisait que six sortes de noms de fichiers.
+93 + 129 + 35 + 1 = 258.
+
+**Ce qui change** : le mode mission est sur **258 pages** — tout ce qui est sous `theme-*`, sauf les 79 QCM (dont le
+mini-quiz du pont en H), les 71 documents pour l'enseignant (synthèses professeur, deux fiches de l'atelier CAO pour
+les collègues) et trois figures interactives montrées DANS un écran de leur séquence, en cadre (`station_en_pieces`,
+`lampadaire_en_pieces`, `freins_iso`) : une barre de mission dans le cadre doublerait celle de la séquence ; et une
+page de renvoi (`vittascience_variables.html`, qui mène à sa séquence : posé un instant, le bloc l'a montré —
+`banc_defaut` s'arrêtait sur une page qui se quitte d'elle-même).
+
+**Ce que le moteur a appris** (`_outils/mode_mission/mission.js`, détail dans son `README.md`) :
+- **les documents à lire** (synthèse, lexique, carte des représentations) : un écran par partie — la carte « 🧠 Ce que
+  je dois retenir », chaque partie, les mots ; dans un lexique, une séance ou une compétence. C'est le découpage du
+  mode lecture, repris tel quel : **sur les 121 pages qu'il découpait, les écrans sont les mêmes, titre pour titre**
+  (comparés page par page). La question de la page et sa barre d'outils se lisent au premier écran ; une adresse
+  `lexique_x.html#seance-s2` (le renvoi d'une séquence à son lexique) ouvre l'écran de l'ancre ; un lexique en un seul
+  tableau fait un écran ;
+- **une page courte** (un panneau, une ou deux cartes) se joue aussi : une carte par écran ;
+- **un TP à phases** (`tp_algorigrammes_domotique`) : ses six phases sont ses séances, ses boutons « 0 · Symboles »…
+  ses onglets (ils reçoivent `aria-controls`, qui dit aussi au lecteur d'écran quelle phase ils ouvrent) ; ses cartes
+  hors des phases (« Avant de commencer », l'identification, le Bonus) vont à la phase qui les précède ; le titre d'une
+  phase et ses boutons rejoignent la carte qui suit — lus un à un, ils faisaient 34 écrans, dont un titre seul, un
+  score seul, un bouton seul ; ils en font 15 ; la phase « Bilan » porte le bilan de la mission ;
+- **la mémoire du mode porte le dossier et le nom de la page** (`mission:<dossier>/<page>`). Le nom seul ne suffisait
+  plus : quatre `atelier_bete_a_cornes.html`, trois `tp_3e_boitier_etanche.html` (deux panneaux et le vrai TP)
+  partageaient une clé — un panneau sans bouton d'effacement réécrivait la mémoire d'un autre, ses étoiles comprises,
+  et la page suivante s'arrêtait au premier écran (« M.k » absent : vu par le relevé des écrans). L'ancienne clé est
+  reprise une fois, à la première ouverture : l'élève garde ses étoiles. Une mémoire réduite au choix d'affichage se
+  complète à la lecture. Les trois pages qui effacent la clé du mode elles-mêmes effacent les deux.
+
+**Le mode lecture est retiré** (`_outils/mode_lecture/`, `controle_mode_lecture.py` et son banc) : `poser.py` du mode
+mission remplace son bloc, à la même place ; `controle_mode_mission.py` refuse un bloc resté (M5) ; son banc devient
+`mode_mission/banc_lecture.mjs`, avec les mêmes onze refus (écran vide, texte perdu, ancre qui ne mène pas à son
+écran, fiche papier amputée, trace dans le navigateur…), sa mesure du texte rendue additive d'un écran à l'autre
+(compter les caractères de chaque bloc par `innerText` et la page par nœuds de texte faisait perdre 7 % du texte de la
+carte des représentations, qui n'était pas perdu).
+
+**Les générateurs posent le bloc** (n°283) : `generer_lexique.py` (le sous-titre porte `ms-entete`), `syntheses.py`
+et les panneaux de `build.py` (ateliers de représentation), `build_tp.py` (la dispense `"sans_mode_mission"` du modèle
+retirée de `_MODELE.json`). Rejoués : les pages sortent identiques à celles du dépôt.
+
+**`make_index.py`** lisait le titre d'une page dans ses 20 000 premiers caractères : le bloc du mode (60 Ko, posé
+avant `</head>`) l'en écartait — l'index nommait « carte_des_representations.html » et « Travaux pratiques — Socle
+assemblage » ce qu'il nommait « La carte des représentations » et « TP n°2 · 4e — Le dé sur sa pointe ». Il lit la
+page entière pour le titre ; l'index sort identique à celui de `main`.
+
+**`controle_mode_mission.py`** lit désormais **toute page sous `theme-*`** : elle porte le bloc, ou elle est d'une
+sorte nommée hors mission, avec sa raison (`HORS_MISSION` : QCM, document pour l'enseignant, figure en cadre). Plus de
+panneau ni de dispense. Banc 14 / 14.
+
+**Vérifié** :
+- **rien ne change sur les 93 pages qui portaient déjà le mode** : jouées écran par écran avec le moteur de `main`
+  puis avec le nouveau (`banc_generique --detail`), **3 350 écrans, les mêmes, nommés pareil**, aucun refus ;
+- les 121 documents que le mode lecture découpait : les mêmes écrans, titre pour titre ; les 8 autres font un écran ;
+- `banc_lecture.mjs` (neuf) : 130 documents à lire, 766 écrans, aucun refus ; `banc_generique` sur les 165 pages
+  nouvellement en mission : aucun refus (après avoir appris à mesurer le haut d'un écran de document à lire au repère
+  de la barre, rangée dans le conteneur sous le titre h1 : il lisait le haut du conteneur, à −4 px) ;
+- `banc_defaut` : 258 pages s'ouvrent en mission pour l'élève, se quittent et s'en souviennent, s'impriment entières ;
+  il rejoue désormais une fois « 📄 Page complète » avant de refuser (deux pages refusées une fois, machine chargée, et
+  jamais seules : la course d'écriture de `localStorage` déjà décrite le 25/11) ; `banc_barre` 258 / 258 (B1 0 · B2 0 ·
+  B3 0) — il avait vu, sur le TP à phases, le bouton « 🎮 Mode mission » flottant envoyé au-dessus de l'écran par un
+  panneau replié hors de l'écran, corrigé dans le moteur ; `banc_effacement` 166 pages, rien ne reste, mode éprouvé
+  sur 90 ; `banc_mission` 52 / 52 ; `banc_editeur` 5 pages, 220 écrans ;
+- les **154 bancs des lots**, à 0 (dont `banc_ateliers.py` 530 / 530), joués avant la dernière retouche du moteur (la
+  couleur du bouton d'entrée, qu'aucun d'eux ne lit) ; les 54 `controle_*.py` à 0 ;
+  `tests_controle_mode_mission.py` 15 / 15, `tests_controle_sauvegarde_locale.py` 14 / 14, `tests_generer_lexique.py`
+  34 / 34 ; `controle_lexique_a_jour` : les 58 lexiques engendrés à jour ; `verif_chaine.py` (CAO) : chaque page est
+  ce que son scénario produit ;
+- au navigateur, tout le site : `controle_page_ouverte --axe` 342 pages, L 0 · D 0 · B 0 · C 0 · S 0, et A 0 après
+  correction — le bouton « 🎮 Mode mission » des 24 panneaux du kit était blanc sur orange (contraste 1,76 : leur
+  feuille de style impose `color:#fff!important` à ses boutons ; le moteur impose le sien) ; `controle_axe` rien
+  au-dessus de la référence (410 pages) ; `controle_impression`, `controle_squelette`, `controle_hors_ligne`,
+  `controle_verrous` à 0 ;
+- la revue d'écran à 390 px : une synthèse (premier et troisième écrans), un panneau de TP, le TP à phases.
+
+**Vu, non corrigé** : `tests_banc_effacement.mjs` échoue une fois sur trois **sur `main` comme ici** (deux points sur
+douze, la page dont la mission garde ses étoiles) : Chromium y rend, après un rechargement, des clés écrites avant lui
+ou en efface d'autres (six passages : un sans le témoin, un sans aucune clé). Le banc du site, lui, passe.
+
+**Thème par thème** (n°302) : thème 1 — ses synthèses élève (celles du kit régénérées), ses lexiques, 24 panneaux du kit
+(dont les quatre de la bête à cornes ; régénérés), la carte des représentations, `build.py` et `syntheses.py`, deux séquences qui
+effacent la clé du mode (3e_C1.5, 4e_C1.4) ; thème 2 — synthèses, lexiques, `tp_algorigrammes_domotique` (le mode,
+`aria-controls`), l'atelier Pix de 4e_C4.1 (sa clé du mode) ; thème 3 — synthèses, lexiques, 6 panneaux des TP de
+CAO, 3 panneaux de planification, le modèle de démonstration et `_MODELE.json`, `build_tp.py`, ; les trois thèmes — le bloc reposé sur les 258 pages ; `_outils` — `mode_mission/` (moteur, feuille
+de style, `poser.py`, `banc_lecture.mjs` neuf, `banc_generique.mjs`, `banc_defaut.mjs`, `README.md`),
+`mode_lecture/` retiré, `controle_mode_mission.py` et son banc, `controle_mode_lecture.py` et son banc retirés,
+`controle_sauvegarde_locale.py` et son banc, `generer_lexique.py` et son banc, `banc_effacement.mjs` et son banc,
+`make_index.py` (le titre lu dans toute la page).

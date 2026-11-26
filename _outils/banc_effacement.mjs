@@ -104,7 +104,7 @@ export async function jouer(page, fichier) {
      Une mission qui ne garde pas le témoin au rechargement (elle se croit déjà effacée) n'est pas éprouvée : on le dit. */
   let mission = 'absente';
   if (await page.evaluate(() => !!document.getElementById('btnMission'))) {
-    await page.evaluate((T) => { const k = 'mission:' + (decodeURIComponent(location.pathname).split('/').pop() || 'page');
+    await page.evaluate((T) => { const c = decodeURIComponent(location.pathname).split('/'), f = c.pop() || 'page', d = c.pop() || '', k = 'mission:' + (d ? d + '/' : '') + f;   // le dossier et la page (26/11/2026)
       let m = null; try { m = JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) {}
       if (!m || m.v !== 1) m = { v: 1, on: false, k: {}, essais: {}, erreurs: {}, etoiles: {}, fait: {}, loin: {} };
       m.etoiles = m.etoiles || {}; m.fait = m.fait || {}; m.etoiles[T] = 3; m.fait[T] = 1; m.vu = true;

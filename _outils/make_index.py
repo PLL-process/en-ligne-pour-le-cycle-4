@@ -246,7 +246,7 @@ def titre_depuis_h1(chemin_relatif, nom, racine):
         return None
     try:
         with open(os.path.join(racine, chemin_relatif, nom), encoding="utf-8") as f:
-            src = f.read(20000)
+            src = f.read()   # toute la page : le bloc du mode mission (60 Ko, avant </head>) repoussait le titre au-delà des 20 000 premiers caractères (26/11/2026)
     except OSError:
         return None
     m = TITRE_H1.search(src)
@@ -458,7 +458,7 @@ def reperes(racine):
             rel = f"{theme}/_reperes/{fn}"
             titre = fn
             try:
-                src = open(os.path.join(dossier, fn), encoding="utf-8").read(20000)
+                src = open(os.path.join(dossier, fn), encoding="utf-8").read()   # toute la page (le bloc du mode mission, 26/11/2026)
                 m = TITRE_H1.search(src)
                 if m:
                     titre = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip()

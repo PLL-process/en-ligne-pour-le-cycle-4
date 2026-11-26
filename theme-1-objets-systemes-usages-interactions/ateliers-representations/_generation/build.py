@@ -32,9 +32,8 @@ import syntheses  # noqa: E402
 import importlib.util as _iu_mission
 _spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
 MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
-# le mode lecture — une partie par écran (25/11/2026) — sur la synthèse élève de chaque atelier, posé ici (n°283)
-_spec_lecture = _iu_mission.spec_from_file_location("poser_lecture", moteur.DEPOT / "_outils" / "mode_lecture" / "poser.py")
-MODE_LECTURE = _iu_mission.module_from_spec(_spec_lecture); _spec_lecture.loader.exec_module(MODE_LECTURE)
+# la synthèse élève de chaque atelier le porte aussi, une partie par écran (26/11/2026, Pascal : « tout doit être en
+# mode mission » ; du 25 au 26/11, c'était le « mode lecture »)
 
 RACINE = moteur.RACINE_ATELIERS
 DEPOT = moteur.DEPOT
@@ -129,15 +128,13 @@ def preparer(at):
         N["avant"] = [(t, code, resoudre(l, at, niv, depuis), lib) for (t, code, l, lib) in N["avant"]]
 
 
-def ecrire(chemin, contenu, mission=False, lecture=False):
+def ecrire(chemin, contenu, mission=False):
     if chemin.suffix == ".html":
         # chaque sigle s'explique : QCM en clair, les autres en infobulle (n°44, décision de Pascal du 22/11/2026) ;
         # posé ici, une régénération ne l'efface pas (n°283)
         contenu = infobuller(contenu)
-        if mission:          # les pages d'atelier et les cahiers : un exercice à la fois (25/11/2026)
+        if mission:          # les pages d'atelier, les cahiers (25/11/2026), les synthèses élève (26/11/2026)
             contenu = MODE_MISSION.poser(contenu)
-        if lecture:
-            contenu = MODE_LECTURE.poser(contenu)
     chemin.parent.mkdir(parents=True, exist_ok=True)
     ancien = chemin.read_text(encoding="utf-8") if chemin.exists() else None
     if ancien != contenu:
@@ -294,7 +291,7 @@ def ecrire_panneaux(at):
                          '<a href="%s">🧭 la carte des représentations</a>.</p></div>' % moteur.rel(d, CARTE))
             # Règle d'or n°321 : la mention de licence, posée par le générateur, là où injecter() la met — dans un pied.
             corps.append("</main>%s%s\n</body></html>\n" % (("\n" + kit) if rappel else "", moteur.PIED_LICENCE))
-            ecrire(p, "\n".join(corps))
+            ecrire(p, "\n".join(corps), mission=True)          # le panneau aussi, une carte par écran (26/11/2026)
             faits.append(p)
     return faits
 

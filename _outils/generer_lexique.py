@@ -110,14 +110,15 @@ from expliquer_sigles import infobuller  # n°44, décision de Pascal du 22/11/2
 
 # Le titre et le sous-titre dans un <header> (26/11/2026) : posés entre la navigation et <main>, ils étaient du texte
 # hors repère (axe-core `region`, sur les 54 lexiques). Dans <main>, ils auraient pris sa largeur de 880 px et changé
-# de ligne à 1 280 px ; le <header> n'a pas de style, le rendu ne bouge pas. Le sous-titre porte `ml-entete` lui-même :
-# le mode lecture saute un <header>, et il ne doit se lire qu'au premier écran, comme avant.
-# Le mode lecture — une partie par écran (25/11/2026) : le lexique le reçoit de son générateur, sinon une régénération
-# l'effacerait (règle d'or n°283). Le dossier `mode_lecture` n'est pas un paquet : on charge son `poser.py` par chemin.
+# de ligne à 1 280 px ; le <header> n'a pas de style, le rendu ne bouge pas. Le sous-titre porte `ms-entete` lui-même :
+# le mode mission saute un <header>, et il ne doit se lire qu'au premier écran, comme avant.
+# Le mode mission — une séance par écran (26/11/2026, Pascal : « tout doit être en mode mission » ; avant, du 25 au
+# 26/11, le « mode lecture ») : le lexique le reçoit de son générateur, sinon une régénération l'effacerait (règle d'or
+# n°283). Le dossier `mode_mission` n'est pas un paquet : on charge son `poser.py` par chemin.
 import importlib.util as _iu
-_spec = _iu.spec_from_file_location("poser_lecture", os.path.join(os.path.dirname(os.path.abspath(__file__)), "mode_lecture", "poser.py"))
-MODE_LECTURE = _iu.module_from_spec(_spec)
-_spec.loader.exec_module(MODE_LECTURE)
+_spec = _iu.spec_from_file_location("poser_mission", os.path.join(os.path.dirname(os.path.abspath(__file__)), "mode_mission", "poser.py"))
+MODE_MISSION = _iu.module_from_spec(_spec)
+_spec.loader.exec_module(MODE_MISSION)
 
 CHAMP = lambda bloc, nom: (
     m.group(1) if (m := re.search(r'"?\b%s"?\s*:\s*"((?:[^"\\]|\\.)*)"' % nom, bloc)) else ""
@@ -277,7 +278,7 @@ GABARIT = """<!DOCTYPE html>
 <nav style="padding-top:12px"><a href="{retour}">← Revenir à la séquence</a></nav>
 <header>
 <h1>📖 Lexique — {titre}</h1>
-<p class="sub ml-entete">{sous_titre} · imprimable · fonctionne hors ligne</p>
+<p class="sub ms-entete">{sous_titre} · imprimable · fonctionne hors ligne</p>
 </header>
 <main>
 {corps}
@@ -599,7 +600,7 @@ def ecrire_lexique(dossier, titre, retour, commun=None, verifier=False):
     # Les sigles des définitions (tirées mot pour mot des QCM) reçoivent leur infobulle, comme dans les pages : un
     # lexique régénéré garde ses explications (n°44, décision de Pascal du 22/11/2026 ; n°283).
     page = infobuller(page)
-    page = MODE_LECTURE.poser(page)
+    page = MODE_MISSION.poser(page)
     sortie = os.path.join(dossier, "lexique_%s.html" % code)
     garde_ecrasement(sortie, page)
     if verifier:                                      # ne rien écrire : la page du dépôt est-elle celle-ci ?

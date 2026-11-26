@@ -73,6 +73,7 @@ for (const PAGE of pages) {
         // rangée après les panneaux d'une page à onglets — elle forme les derniers écrans du dernier panneau
         const G0 = document.documentElement._mission.gabarit(), dehors = [];
         if (G0.page) { for (let x = P.nextElementSibling; x; x = x.nextElementSibling) if (x.matches('section, article, .card, .carte')) dehors.push(x); }
+        else if (G0.phases) dehors.push(...document.documentElement._mission.rattaches(P.id));          // TP à phases (26/11/2026)
         else { const tous = [...document.querySelectorAll(G0.P)], der = tous[tous.length - 1];
           if (der === P) document.querySelectorAll('section.card, div.carte').forEach((c) => { if ((der.compareDocumentPosition(c) & Node.DOCUMENT_POSITION_FOLLOWING) && !der.contains(c) && !c.closest(G0.P) && !(c.parentElement && c.parentElement.closest('section.card, div.carte')) && !c.closest('.ms-seul, .ms-invite, footer')) dehors.push(c); }); }
         const texte = [...P.children].concat(dehors).filter(vu).map(c => c.innerText).join(' ').replace(/\s+/g, ' ').trim();
@@ -144,7 +145,9 @@ for (const PAGE of pages) {
       if (e.k >= e.n - 1) break;
       await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));          // l'élève a lu l'écran jusqu'en bas
       await p.click('#msSuiv'); await p.waitForTimeout(130);
-      const haut = await p.evaluate(ACTIF => Math.round(document.querySelector(ACTIF).getBoundingClientRect().top), ACTIF);
+      /* le haut de l'écran : celui du panneau ; dans un document à lire, la barre est DANS le conteneur, sous son titre
+         h1 — c'est le repère posé juste avant elle qui dit où l'écran commence (26/11/2026) */
+      const haut = await p.evaluate(ACTIF => { const G0 = document.documentElement._mission.gabarit(); return Math.round((G0 && G0.lecture ? document.querySelector('.ms-ancre') : document.querySelector(ACTIF)).getBoundingClientRect().top); }, ACTIF);
       if (haut < 0 && !refus.some(m => m.includes('depuis son début'))) refus.push(`${ou} : après « Suivant », l'écran suivant n'est pas montré depuis son début (son haut est à ${haut} px)`);
     }
   }

@@ -47,7 +47,7 @@ from generer_lexique import (page_de_retour, ecrire_lexique, RefusVocabulaire,  
                              LexiqueProtege, IDS_POSES, EXCLUS, lire_commun)
 from licence_cc import MENTION as MENTION_LICENCE, retirer as retirer_licence  # noqa: E402  (n°321)
 import generer_lexique as _gl  # noqa: E402
-MODE_LECTURE_RE = _gl.MODE_LECTURE._BLOC_RE  # le bloc du mode lecture, entre ses deux marqueurs
+MODE_MISSION_RE = _gl.MODE_MISSION._BLOC_RE  # le bloc du mode mission, entre ses deux marqueurs (26/11/2026)
 
 CAS = [
     (["sequence_5e_C8.1_patere.html", "qcm_5e_C8.1_patere.html"],
@@ -101,7 +101,7 @@ def cas_vocabulaire():
     d = lot()
     try:
         page = pathlib.Path(ecrire_lexique(str(d), "x", "sequence_x.html")[0]).read_text(encoding="utf-8")
-        for attendu in ('<p class="sub ml-entete">1 notions, tirées mot pour mot des QCM (questionnaires à choix multiples) du lot · imprimable',
+        for attendu in ('<p class="sub ms-entete">1 notions, tirées mot pour mot des QCM (questionnaires à choix multiples) du lot · imprimable',
                         "  Chaque ligne provient d'une question de qcm_x.html. Rien n'a été réécrit ici :\n"
                         "  ce lexique rassemble ce que les corrections disaient déjà, une par une.\n"
                         + MENTION_LICENCE + "\n</footer>",  # n°321 : la mention de licence ferme le pied
@@ -109,13 +109,13 @@ def cas_vocabulaire():
                         "{color:#1a6af8}\n  }\n"):
             if attendu not in page:
                 echecs.append("sans vocabulaire, la page a changé : %r manque" % attendu[:50])
-        # « Ressource sous licence » contient « source », et le bloc du mode lecture dit « source unique » : ni l'un ni
-        # l'autre n'est le contenu du lexique (25/11/2026)
-        sans_licence = MODE_LECTURE_RE.sub("", retirer_licence(page))
+        # « Ressource sous licence » contient « source », et le bloc du mode mission dit « source unique » (et cite
+        # « #seance-s2 ») : ni l'un ni l'autre n'est le contenu du lexique (25/11/2026, mode mission le 26/11/2026)
+        sans_licence = MODE_MISSION_RE.sub("", retirer_licence(page))
         if "seance-s" in sans_licence or "source" in sans_licence:
             echecs.append("sans vocabulaire, la page parle de séances ou de sources")
-        if len(MODE_LECTURE_RE.findall(page)) != 1:
-            echecs.append("le lexique engendré ne porte pas le mode lecture, une fois (n°283 : une régénération l'effacerait)")
+        if len(MODE_MISSION_RE.findall(page)) != 1:
+            echecs.append("le lexique engendré ne porte pas le mode mission, une fois (n°283 : une régénération l'effacerait)")
     finally:
         shutil.rmtree(d.parent)
     # 2-4. les refus, le mot nommé
