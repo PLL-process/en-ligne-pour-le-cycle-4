@@ -190,7 +190,7 @@ const parSeance = await p.evaluate(() => {
       const s = t.textContent;
       if (/bonus|facultatif/i.test(s)) return;
       const m = s.match(/~\s*(\d+)\s*min/);
-      if (m) { min += parseInt(m[1], 10); act.push((s.match(/Activité \d+[ab]?|REFAIRE/) || ['?'])[0]); }
+      if (m) { min += parseInt(m[1], 10); act.push((s.match(/Activité \d+[ab]?|REFAIRE|Billet de sortie/) || ['?'])[0]); }
     });
     return { id: h.id, min, act };
   });
@@ -201,11 +201,12 @@ ok(SEANCES + ' en-têtes de séance, dans l’ordre',
 ok('chaque séance tient dans ses 55 min d’activités annoncées',
    parSeance.length === SEANCES && parSeance.every(s => s.min > 0 && s.min <= 55),
    parSeance.map(s => s.id + ' = ' + s.min + ' min').join(' · '));
-ok('le temps total des activités est conservé (160 min)',
-   parSeance.reduce((a, s) => a + s.min, 0) === 160, String(parSeance.reduce((a, s) => a + s.min, 0)));
-ok('chaque activité est dans sa séance (0, 1 | 2 | 3, 4 | 5, REFAIRE)',
+// 26/11/2026 : le billet de sortie (n°330, environ 5 min) s'ajoute à la séance 4 : 160 + 5 = 165 min
+ok('le temps total des activités est conservé (160 min, et 5 min de billet de sortie)',
+   parSeance.reduce((a, s) => a + s.min, 0) === 165, String(parSeance.reduce((a, s) => a + s.min, 0)));
+ok('chaque activité est dans sa séance (0, 1 | 2 | 3, 4 | 5, REFAIRE, billet de sortie)',
    parSeance.map(s => s.act.join('+')).join(' | ') ===
-   'Activité 0+Activité 1 | Activité 2 | Activité 3+Activité 4 | Activité 5+REFAIRE',
+   'Activité 0+Activité 1 | Activité 2 | Activité 3+Activité 4 | Activité 5+REFAIRE+Billet de sortie',
    parSeance.map(s => s.act.join('+')).join(' | '));
 const ordre = await p.evaluate(() => {
   const pos = el => el ? [...document.querySelectorAll('*')].indexOf(el) : -1;
@@ -299,6 +300,29 @@ ok('une sauvegarde de l’ancien découpage se relit sans erreur',
    && (await p.inputValue('#a2q4')) === '300' && (await p.textContent('#rappelHyp')).includes('traction suffit')
    && await p.evaluate(() => !!window.__exp.flex3),
    err.slice(err0).join(' | ') || (await p.inputValue('#a2q4')));
+
+/* ── le billet de sortie (n°330, 26/11/2026) : une preuve faite seul, sur un objet que la séquence n'a pas étudié (le
+ * bras de la poulie du jardin) ; deux réponses écrites, deux versions étayées, une correction à deux critères ; aucun
+ * bouton (il ne valide rien, n°333) ; à la dernière séance, juste avant le Bonus. */
+const bs = await p.evaluate(() => {
+  const b = document.getElementById('billetSortie'); if (!b) return null;
+  const c = b.querySelector('details.correction'), n = b.nextElementSibling, pan = b.closest('.seance-panel');
+  const tous = [...document.querySelectorAll('.seance-panel')].filter(x => !/hors/.test(x.id));
+  return { zones: b.querySelectorAll('textarea[data-save]').length, etayees: b.querySelectorAll('details.etayage').length,
+           criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0,
+           contre: c ? (c.textContent.match(/✘/g) || []).length : 0,
+           avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))),
+           derniere: !!pan && pan === tous[tous.length - 1], boutons: b.querySelectorAll('button').length };
+});
+ok('billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, des contre-exemples, dernière séance, avant le Bonus, aucun bouton',
+   !!bs && bs.zones === 2 && bs.etayees === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.avantBonus && bs.derniere
+   && bs.boutons === 0, JSON.stringify(bs));
+await seance('s4');
+await p.fill('#bs_3e_C8_2_1', 'Flexion ; même longueur, même fixation ; rupture au-delà de 750 N');
+await p.waitForTimeout(150);
+await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
+ok('billet de sortie : la réponse écrite survit au rechargement',
+   /750 N/.test(await p.inputValue('#bs_3e_C8_2_1')), await p.inputValue('#bs_3e_C8_2_1'));
 
 const r = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));

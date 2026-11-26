@@ -1,5 +1,8 @@
 import { chromium } from 'playwright';
 import { pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 const f = process.argv[2];
 const b = await chromium.launch();
 const p = await b.newPage();
@@ -17,7 +20,7 @@ ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '))
 // ── la banque ──────────────────────────────────────────────────────────────
 const banque = await p.evaluate(() => QUESTIONS.map(q => ({
   c: q.c, n: q.n, r: q.r, no: q.o.length, nd: q.d.filter(x => x).length,
-  vide: q.d[q.r] === '', img: !!q.img,
+  vide: q.d[q.r] === '', img: q.img ? q.img.src : '', alt: q.img ? (q.img.alt || '') : '',
   champs: ['q', 'expl', 'ex', 'err', 'ret'].every(k => (q[k] || '').trim().length > 0),
 })));
 ok('30 questions', banque.length === 30, String(banque.length));
@@ -25,7 +28,17 @@ ok('4 options par question', banque.every(q => q.no === 4));
 ok('3 réfutations par question', banque.every(q => q.nd === 3));
 ok('la bonne réponse n’a pas de réfutation', banque.every(q => q.vide));
 ok('tous les champs du gabarit sont remplis', banque.every(q => q.champs));
-ok('aucune image héritée du lot voisin', banque.every(q => !q.img));
+/* 26/11/2026 (n°345) : sept questions se lisent sur un document dessiné pour le téléphone. Chaque image est un
+   document de CE lot (`Images/doc_…`, présent), décrit pour qui ne le voit pas ; aucune image d'un lot voisin. */
+const docs = banque.filter(q => q.img);
+ok('au moins six questions sur document (n°345)', docs.length >= 6, String(docs.length));
+ok('chaque image est un document du lot, présent et décrit (aucune image héritée du lot voisin)',
+   docs.every(q => /^Images\/doc_[a-z_]+\.svg$/.test(q.img) && fs.existsSync(path.join(path.dirname(f), q.img)) && q.alt.length > 80),
+   docs.filter(q => !/^Images\/doc_/.test(q.img)).map(q => q.img).join(' | '));
+/* les nombres des documents viennent du modèle des profilés (n°233) : le fichier de données est à jour */
+let aJour = true;
+try { execFileSync('python3', ['documents_qcm.py', '--verifier'], { cwd: path.dirname(f), stdio: 'pipe' }); } catch (e) { aJour = false; }
+ok('les documents disent ce que calcule profils_3e_C8.2.py (documents_qcm.py --verifier)', aJour);
 const notions = new Set(banque.map(q => q.n));
 ok('30 notions distinctes', notions.size === 30, String(notions.size));
 

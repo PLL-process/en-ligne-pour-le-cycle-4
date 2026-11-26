@@ -9,7 +9,7 @@
 | **Code principal** | 3e_C8.2 — 20 questions de QCM |
 | **Code d'appui** | 3e_C3.4 — *définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d'un OST* — 10 questions |
 | **Socle** | D1.3 · D2 · D3 · D4 |
-| **Durée** | 4 séances de 55 min — 160 min d'activités obligatoires, marge +60 min |
+| **Durée** | 4 séances de 55 min — 165 min d'activités obligatoires (dont 5 de billet de sortie), marge +55 min |
 | **Matériel** | un navigateur, hors ligne. Aucune installation, aucun compte. |
 | **Contexte de projet** | la station d'alerte cyclonique de `3e_C9.2`, une fois sa recette signée, doit être installée dehors |
 
@@ -37,7 +37,7 @@ Les cinq candidats-mâts **ne se classent pas dans le même ordre** selon la sol
 * en **traction**, la barre pleine acier gagne largement (125,7 kN) ;
 * en **flexion**, cette même barre est **quatrième sur cinq** (157 N).
 
-L'élève applique d'abord le protocole de 5<sup>e</sup> — juste, connu, correctement appliqué —
+L'élève applique d'abord le protocole de traction (celui de `5e_C8.2`) — juste, correctement appliqué —
 et constate **lui-même**, banc en main, qu'il désigne un mât que la flexion élimine. La
 nécessité d'en proposer un autre n'est pas affirmée par la page : elle est établie par une
 mesure que l'élève a faite.
@@ -51,17 +51,18 @@ fois moins résistant — parce que sa matière est au centre, là où elle ne t
 | Séance | # | Activité | Durée | Production attendue | Verrou |
 |---|---|---|---|---|---|
 | 1 | 0 | **FAIRE** — casser trois mâts au banc | ~15 min | 2 réponses | `flex3` |
-| 1 | 1 | **Le protocole de 5<sup>e</sup> ne répond pas** | ~25 min | 5 relevés de traction + 3 réponses + 1 phrase | `trac5` |
+| 1 | 1 | **Le protocole de traction ne répond pas** | ~25 min | 5 relevés de traction + 3 réponses + 1 phrase | `trac5` |
 | 2 | 2 | **PROPOSER ton protocole** | ~35 min | 6 décisions + 6 lignes rédigées | — |
 | 3 | 3 | **Exécuter TON protocole** | ~30 min | 10 relevés (flèche + rupture) | `flex5` |
 | 3 | 4 | **Ce que ton protocole ne voit pas** | ~20 min | 5 associations | — |
 | 4 | 5 | **Décider, et signer l'avis** | ~20 min | 3 réponses + avis rédigé | — |
 | 4 | — | **REFAIRE** — le panneau solaire | ~15 min | 4 lignes | — |
+| 4 | — | **Billet de sortie** — le bras de la poulie du jardin, seul et sans aide | ~5 min | 2 réponses écrites | — |
 
 **Quatre séances de 55 min** (une heure de cours par semaine, décision du 24/10/2026) :
-40, 35, 50 et 35 min d'activités annoncées. La séance 1 porte aussi la situation, la
+40, 35, 50 et 40 min d'activités annoncées (la séance 4 avec ses 5 min de billet de sortie). La séance 1 porte aussi la situation, la
 problématique, l'hypothèse de départ et le cahier des charges ; la séance 4 se termine par la
-synthèse, le Bonus facultatif, le bilan (retour à l'hypothèse, positionnement) et le renvoi au
+synthèse, le billet de sortie, le Bonus facultatif, le bilan (retour à l'hypothèse, positionnement) et le renvoi au
 QCM. Aucune activité n'est coupée. Trois séances auraient demandé de couper l'activité 2 entre
 les six décisions et la rédaction (50 · 55 · 55) : il ne restait alors que 5 min de service pour
 160 min d'activités, en deçà des 10 min que la règle de durée (n°23) réserve au lancement, aux
@@ -71,6 +72,25 @@ transitions et au bilan — d'où la quatrième séance.
 (c'est le protocole qui le dit) ; à la séance 4, l'avis s'appuie sur les dix relevés de la
 séance 3 — si la sauvegarde a été perdue (autre ordinateur), l'en-tête de séance renvoie à la
 correction de l'activité 3.
+
+**Le billet de sortie** (26/11/2026, règle d'or n°330) ferme la séance 4, juste avant le Bonus : environ 5 minutes,
+seul et sans aide, sur un objet que la séquence n'a pas étudié — le bras de 1 000 mm qui portera la poulie du jardin
+pédagogique (sacs de terreau de 25 kg, soit environ 250 N, coefficient de sécurité 3). Deux réponses écrites, une par
+compétence, chacune avec sa version étayée ; aucun bouton, il ne valide rien (n°333). Ce qu'on y regarde :
+- **question 1 (`3e_C8.2`)** : la sollicitation que le bras subit vraiment (la flexion, pas la traction), au moins trois
+  conditions gardées pareilles, un seuil calculé avec le coefficient (750 N) et une flèche admise chiffrée, écrits
+  avant l'essai ;
+- **question 2 (`3e_C3.4`)** : l'instrument, la charge d'essai commune et le point de mesure, la précision (le
+  millimètre), et le bras qui casse avant la charge d'essai — éliminé, sa case vide, jamais « 0 mm ».
+La correction donne une réponse possible, le critère de chaque question et deux contre-exemples (✘).
+
+**Le QCM se lit sur des documents** (26/11/2026, n°345) : sept questions sur trente s'appuient sur trois documents
+dessinés pour le téléphone — le relevé du banc en flexion, les deux essais (traction et flexion) des cinq mêmes mâts,
+et le protocole d'un groupe. Leurs nombres sont calculés par `documents_qcm.py` depuis `profils_3e_C8.2.py`.
+
+**Rien d'une année précédente n'est affirmé à l'élève** (26/11/2026, n°304) : la page disait « Tu as déjà éprouvé des
+matériaux en 5e » et « le protocole de 5e ». Elle dit maintenant « l'essai de traction », « le protocole de traction » :
+un protocole tout prêt, juste, que l'élève applique sans l'avoir forcément jamais vu.
 
 ## 4. Les valeurs du banc
 
