@@ -38635,6 +38635,51 @@ les cahiers ; thème 2 — `4e_C6.1`, `4e_C6.2`, `3e_C4.1`, `3e_C4.8`, `4e_C4.1`
 thème 3 — `3e_C7.1`, `3e_C7.6`, `3e_C7.8`, `4e_C7.1`, `5e_C7.1`, l'atelier de planification, `3e_C8.1`, `3e_C9.1`,
 `5e_C9.1` ; `_outils/` — le contrôle neuf, son banc, P1 ; `.claude/skills/controle-qualite-lot` — sa ligne.
 
+## 26/11/2026 — Dix skills externes de design remis à Pascal pour son compte : audités, épinglés, adaptés aux pages élèves (transversal : `SKILLS_AUDIT.md` ; aucune page, aucun outil)
+
+**D'où ça vient.** Pascal, le 26/11/2026, colle une liste de huit « design skills » (`frontend-design`, Impeccable, Taste
+Skill, UI/UX Pro Max, Emil Kowalski, Web Design Guidelines de Vercel, Better UI de Jakub Krehel, Refero) : « lesquelles
+installer ? ». Réponse : deux à installer (Jakub Krehel, Vercel), un en option (Emil Kowalski), un déjà là, quatre à
+laisser. Puis : « Installe les principaux et les optionnels. Cherche en quatre autres et installe-les aussi. »
+
+**Ce qui est fait.** Dix skills sont remis à Pascal sous forme de paquets `.skill` pour son compte claude.ai :
+- demandés : `better-typography`, `better-layout`, `better-accessibility`, `better-writing` (Jakub Krehel),
+  `web-design-guidelines` (Vercel), `review-animations` (Emil Kowalski) ;
+- les quatre autres : `better-interface`, `better-colors`, `better-ui` (Jakub Krehel) et `ux-heuristics` (Wondel.ai).
+
+Trois des quatre viennent du même auteur, et c'est voulu : `better-accessibility` confie la mesure du contraste à
+`better-colors`, et `better-interface` rend un seul rapport classé en appelant les autres. Les candidats cherchés
+ailleurs sont écartés pour une raison écrite au registre (GSAP officiel : le lecteur pas à pas ne l'utilise pas ;
+accessibilité cognitive : liée à son paquet et faite pour l'anglais ; Hallmark : pages vitrine ; performance : réglages
+de serveur hors de portée de GitHub Pages).
+
+**Rien n'entre dans le dépôt.** Comme `motion-design`, `anatomy` et `anatomy-reveal` le 16/11/2026, ces textes de tiers
+(licence MIT) vivent sur le compte de Pascal, pas sous `.claude/skills/` : le dépôt reste sous CC BY-NC-SA 4.0 (n°321)
+et ses skills restent ceux écrits pour lui. L'installation est le geste de Pascal sur chaque carte ; cette entrée ne
+dit pas qu'il l'a fait.
+
+**L'audit.** Neuf dépôts clonés en lecture seule, épinglés sur un commit ; aucun code exécuté. Les dix `SKILL.md` lus en
+entier ; les 39 fichiers de référence passés au crible (liens, commandes, caractères cachés, formules d'injection :
+0 signalement) et lus par leurs titres, pas ligne à ligne. Chaque paquet porte la licence de sa source et un
+`PROVENANCE.md` (commit, empreinte SHA-256 de chaque fichier, ce qui a changé). Vérifié sur les dix paquets : un seul
+`SKILL.md`, en-tête valide, références identiques à la source (39 / 39). Trois retouches hors de l'en-tête et du bloc
+d'adaptation : la section de mise à jour par `curl` de `web-design-guidelines` retirée, le code d'affiliation de deux
+liens Amazon de `ux-heuristics` retiré, la clé `disable-model-invocation` de `review-animations` retirée (refusée à
+l'import).
+
+**L'adaptation, en tête de chacun.** Le journal fait foi et le skill relit sans redessiner ; le site est en HTML, CSS et
+JavaScript à la main, en français, pour des élèves qui lisent difficilement ; rien ne se charge du réseau (n°305) ; un
+contrôle qui n'a pas tourné se dit « non vérifié » (n°299). Puis, skill par skill : ce qui est voulu ici (squelette
+n°306, séance seule n°311, schéma sous les yeux n°331, jamais la couleur seule n°119, schémas premium n°315, zoom à
+200 % n°370, emoji repères, « tu » de la n°302) et ce qui est sans objet (React, Tailwind, thème sombre, comptes,
+traduction).
+
+**Limites.** Aucun des dix n'a encore été joué sur une page : statut « À EXERCER » au registre. Les fichiers de
+référence n'ont pas été lus ligne à ligne. Le verdict du 07/11 sur Impeccable, Taste Skill et UI/UX Pro Max n'a pas été
+rejoué.
+
+**Thème par thème** (n°302) : aucun thème touché — `SKILLS_AUDIT.md` et ce journal seulement.
+
 ## 27/11/2026 — 5e_C7.1 : sept questions sur document, et un billet de sortie (thème 3)
 
 Pascal : « 1 oui » — continuer, lot par lot, les chantiers D1 et P1 du thème 3, en commençant par C7.
