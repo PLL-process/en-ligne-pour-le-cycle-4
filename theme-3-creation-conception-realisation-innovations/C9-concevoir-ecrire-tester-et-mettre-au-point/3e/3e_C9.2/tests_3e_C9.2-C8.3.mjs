@@ -10,7 +10,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
-import { execSync } from "node:child_process";
+import { execSync, execFileSync } from "node:child_process";
 import { pathToFileURL } from 'node:url';
 
 
@@ -539,7 +539,14 @@ const run = async () => {
   const nQ = await page.evaluate("QUESTIONS.length");
   ok("QCM : 30 questions, grille complète", nQ === 30 && await page.locator("#grille button").count() === 30);
   const parts = await page.evaluate("[QUESTIONS.filter(q=>q.c==='C9.2').length, QUESTIONS.filter(q=>q.c==='C8.3').length, QUESTIONS.filter(q=>q.img).length]");
-  ok("QCM : répartition 15 C9.2 / 15 C8.3, 4 illustrées", parts[0] === 15 && parts[1] === 15 && parts[2] === 4, parts.join("/"));
+  /* 26/11/2026 (n°345) : quatre questions de plus se lisent sur un document du lot (la trace, le courrier, la recette) */
+  ok("QCM : répartition 15 C9.2 / 15 C8.3, 8 illustrées", parts[0] === 15 && parts[1] === 15 && parts[2] === 8, parts.join("/"));
+  const docsQcm = await page.evaluate("QUESTIONS.filter(q=>q.img && /doc_/.test(q.img.src)).map(q=>[q.img.src,(q.img.alt||'').length])");
+  ok("QCM : les documents dessinés pour le téléphone sont ceux du lot, présents et décrits",
+     docsQcm.length === 4 && docsQcm.every(([src, n]) => fs.existsSync(path.join(LOT, src)) && n > 80), JSON.stringify(docsQcm));
+  let docsAJour = true;
+  try { execFileSync("python3", ["documents_qcm.py", "--verifier"], { cwd: LOT, stdio: "pipe" }); } catch (e) { docsAJour = false; }
+  ok("QCM : les documents disent ce que calcule le programme de la station (documents_qcm.py --verifier)", docsAJour);
   const repartition = await page.evaluate("[0,1,2,3].map(k=>QUESTIONS.filter(q=>q.r===k).length)");
   ok("QCM : bonnes réponses réparties A/B/C/D", JSON.stringify(repartition) === "[8,7,7,8]", repartition.join("/"));
   ok("QCM : chaque question a 4 réfutations cohérentes (d[r] vide, 3 non vides)",
@@ -690,6 +697,32 @@ const run = async () => {
   ok("4 pages : AUCUNE question perdue par rapport au tout-en-un",
      perdus.length === 0, perdus.join(", ") || (refChamps.length + " champs couverts"));
   ok("4 pages : zéro erreur JS au chargement des quatre", erreursJS.length === 0, erreursJS.join(" | "));
+
+  /* le billet de sortie (n°330, 26/11/2026) : à la dernière séance de la page tout-en-un, juste avant le Bonus, et sur
+     la page 4 seulement (séances 7 et 8) ; deux réponses écrites, deux versions étayées, deux critères, aucun bouton. */
+  const billet = () => page.evaluate(() => {
+    const b = document.getElementById("billetSortie"); if (!b) return null;
+    const c = b.querySelector("details.correction"), n = b.nextElementSibling, pan = b.closest(".seance-panel");
+    return { zones: b.querySelectorAll("textarea[data-save]").length, etayees: b.querySelectorAll("details.etayage").length,
+             criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0, contre: c ? (c.textContent.match(/✘/g) || []).length : 0,
+             avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))), panneau: pan ? pan.id : "",
+             boutons: b.querySelectorAll("button").length };
+  });
+  await page.goto(url(SEQ)); await page.waitForTimeout(300);
+  const bs = await billet();
+  ok("billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, des contre-exemples, séance 8, avant le Bonus, aucun bouton",
+     !!bs && bs.zones === 2 && bs.etayees === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.avantBonus && bs.panneau === "s8" && bs.boutons === 0,
+     JSON.stringify(bs));
+  const surPages = [];
+  for (const f of P4) { await page.goto(url(f)); await page.waitForTimeout(250); surPages.push(!!(await billet())); }
+  ok("billet de sortie : sur la page 4 seulement, celle des séances 7 et 8", JSON.stringify(surPages) === "[false,false,false,true]",
+     JSON.stringify(surPages));
+  await page.goto(url(P4[3])); await page.waitForTimeout(300);
+  await page.fill("#bs_3e_C9_2_1", "Répéter : lire ; si ≥ 32 alors rapide ; sinon si ≥ 28 alors lent ; sinon arrêt");
+  await page.waitForTimeout(900);   /* sauvegarde différée */
+  await page.goto(url(SEQ)); await page.waitForTimeout(400);
+  ok("billet de sortie : la réponse écrite sur la page 4 se retrouve dans la page tout-en-un",
+     /≥ 32 alors rapide/.test(await page.inputValue("#bs_3e_C9_2_1")), await page.inputValue("#bs_3e_C9_2_1"));
 
   /* liens : chaque page renvoie au tout-en-un et porte les 4 onglets-liens */
   for (let i = 0; i < P4.length; i++) {

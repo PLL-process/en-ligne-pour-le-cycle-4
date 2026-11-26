@@ -49,7 +49,7 @@ programme désormais — et se prouve.
   sous-programmes de mode) et le simulateur **aux six valeurs frontières**, à lire
   par paires (62/63, 117/118, 177/178). C'est la preuve exécutée du « ≥ ».
 * **`qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html`** — QCM 30 questions
-  (15 par code, 4 illustrées), corrections détaillées avec réfutation de chaque
+  (15 par code, 8 illustrées), corrections détaillées avec réfutation de chaque
   distracteur, bilan par compétence.
 * **`Synthèses/`** — synthèse élève (imprimable A4) et synthèse professeur
   (attendus, remédiations, organisation matérielle, CRCN).

@@ -105,8 +105,8 @@ performance chronométrée, 2 essais d'interaction, règle de décision.
 ### S8 — Prouver (2) : la recette (C8.3)
 Act. 7 (35 min) : **exécuter** au banc (frontières et chrono tracés), tableau
 essai/attendu/observé/verdict rempli PENDANT, **PV de recette** rédigé et signé.
-Puis la clôture : synthèse, Bonus facultatif, bilan (retour à l'hypothèse,
-positionnement), renvoi au QCM.
+Puis la clôture : synthèse, billet de sortie (environ 5 min, seul et sans aide), Bonus facultatif, bilan (retour à
+l'hypothèse, positionnement), renvoi au QCM.
 
 ## Versions 🅰🅱🅲
 
@@ -165,9 +165,19 @@ Compilation déjà vérifiée hors Docker le 19/08/2026 : 6 764 o flash / 569 o 
 
 - **Formative** : vérificateurs par activité, progression visible, bilan avec
   auto-positionnement par code.
-- **Entraînement** : QCM séparé 30 questions (15 par code, 4 illustrées),
+- **Entraînement** : QCM séparé 30 questions (15 par code, 8 illustrées, dont 4 sur un document dessiné pour le téléphone),
   corrections exhaustives (réfutation de chaque distracteur), bilan par
   compétence, /20 indicatif.
+- **Billet de sortie** (26/11/2026, règle d'or n°330) : à la séance 8, juste avant le Bonus (page tout-en-un et
+  page 4), environ 5 minutes, seul et sans aide, sur un objet nouveau — le ventilateur automatique de la salle de
+  technologie (arrêt sous 28 °C, lent dès 28 °C, rapide dès 32 °C, réaction en moins de 2 s). Deux réponses écrites,
+  chacune avec sa version étayée, aucun bouton. On y regarde : **question 1 (C9.2)**, une boucle, une lecture, les
+  seuils testés du plus haut au plus bas, « à partir de » écrit ≥, et la raison de l'ordre ; **question 2 (C8.3)**,
+  chaque seuil encadré (27/28, 31/32 °C), chaque attendu écrit avant, et un chronométrage comparé à 2 s.
+- **Le QCM se lit sur des documents** (26/11/2026, n°345) : quatre questions de plus s'appuient sur un document
+  dessiné pour le téléphone — la trace du moniteur série (q15), le courrier de la mairie (q19, q20), la recette d'un
+  groupe (q26). Les seuils viennent du programme `station_alerte_cyclonique.ino` (`documents_qcm.py`), et chaque
+  programme fautif n'a qu'une erreur : le test « ≥ 63 » absent (la trace), « > 118 » au lieu de « ≥ 118 » (la recette).
 - **Sommative** : à construire par l'enseignant depuis la matrice de couverture —
   aucune évaluation sommative ni corrigé publiés dans le dépôt public.
 - **LSU** (indicatif) : ≥ 75 % des items du code = maîtrisé · 50-74 % = en cours ·
