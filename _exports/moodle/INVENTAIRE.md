@@ -1,6 +1,6 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 321 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 328 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
@@ -75,7 +75,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 321 ima
 | 5e | 5e_C7.1 | L'indicateur de rangement du hall | 30 | 7 |
 | 5e | 5e_C7.2 | Le dé, en mieux : améliorer un objet qui existe | 30 | 0 |
 | 5e | 5e_C7.3 | Le banc de la cour : choisir un matériau parmi plusieurs | 30 | 7 |
-| 5e | 5e_C7.4 | L'indicateur du hall : choisir une source d'énergie | 30 | 0 |
+| 5e | 5e_C7.4 | L'indicateur du hall : choisir une source d'énergie | 30 | 7 |
 | 5e | 5e_C7.5 | L'éclairage du préau : assembler un prototype | 30 | 0 |
 | 5e | 5e_C7.6 | Le dé : mettre en œuvre une procédure fournie | 30 | 0 |
 | ateliers | atelier-planification | le diagramme de planification des tâches | 30 | 5 |

@@ -38662,9 +38662,26 @@ Bancs : séquence 47 / 47 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`5e_C7.3`).
 
+## 27/11/2026 — 5e_C7.4 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `energie.py`) — « Ce que consomme l'indicateur du hall » (courant, durée et énergie de chaque composant,
+  total 2,78 Wh ; q4, q8) et « Cinq sources pour l'indicateur » (énergie stockée, rendement, énergie utile ; le secteur
+  et le panneau ; q5, q7, q9, q11, q12). Sept questions illustrées sur trente. La q4 perd un leurre que personne ne
+  choisit (« sa couleur et sa taille ») pour une vraie lecture fausse du relevé (« sa tension seule, puisque tout est
+  sous 5 V »).
+- **Billet de sortie** avant le Bonus de la séance 2 : l'afficheur des scores du plateau sportif (les piles ou le
+  panneau, calcul à l'appui ; la chaîne d'énergie avec la forme chimique dans l'accumulateur). La séance 2 annonçait
+  60 minutes : le réinvestissement (10 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`,
+  et la séance tient en 55.
+Bancs : séquence 40 / 40 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`5e_C7.4`).
+
 ## 27/11/2026 — Exports Moodle régénérés (transversal : `_exports/` seulement)
 
 Pascal : « 2 oui ». Les exports Moodle gardaient le texte d'avant les lots de la semaine (questions sur document, règle
 d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les réécrit depuis les 76 QCM : 2 301
-questions, 321 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux de `5e_C7.1` et de `5e_C7.3` compris). Aucune phrase
+questions, 328 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux de `5e_C7.1`, `5e_C7.3` et `5e_C7.4` compris). Aucune phrase
 « comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.
