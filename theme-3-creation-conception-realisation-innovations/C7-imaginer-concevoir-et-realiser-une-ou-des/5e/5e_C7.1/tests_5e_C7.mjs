@@ -549,6 +549,41 @@ await ctx.close();
   await ctxq.close();
 }
 
+/* ── 27/11/2026 : les questions sur document (n°345) et le billet de sortie (n°330) ── */
+{
+  const src = fs.readFileSync(path.join(LOT, CFG.qcm), "utf8");
+  const srcs = [...src.matchAll(/img:\{src:"(Images\/[^"]+)",alt:"([^"]*)"/g)].map(m => [m[1], m[2].length]);
+  ok("QCM : au moins six questions sur document (n°345), chacune une image du lot, présente et décrite",
+     srcs.length >= 6 && srcs.every(([f, n]) => fs.existsSync(path.join(LOT, f)) && n > 80), JSON.stringify(srcs));
+  let aJour = true;
+  try { execSync("python3 documents_qcm.py --verifier", { cwd: LOT, stdio: "pipe" }); } catch (e) { aJour = false; }
+  ok("QCM : les documents disent ce que dit la séquence (documents_qcm.py --verifier)", aJour);
+  const ctxb = await nav.newContext({ viewport: { width: 390, height: 844 } });
+  const pb = await ctxb.newPage();
+  await pb.goto(pathToFileURL(path.join(LOT, CFG.seq)).href); await pb.waitForTimeout(400);
+  const bs = await pb.evaluate(() => {
+    const b = document.getElementById("billetSortie"); if (!b) return null;
+    const c = b.querySelector("details.correction"), n = b.nextElementSibling, pan = b.closest(".seance-panel");
+    const tous = [...document.querySelectorAll(".seance-panel")].filter(x => !/hors/.test(x.id));
+    return { zones: b.querySelectorAll("textarea[data-save]").length, etayees: b.querySelectorAll("details.etayage").length,
+             criteres: c ? (c.textContent.match(/Critère/g) || []).length : 0, contre: c ? (c.textContent.match(/✘/g) || []).length : 0,
+             avantBonus: !!(n && /Bonus/.test(n.textContent.slice(0, 300))), derniere: !!pan && pan === tous[tous.length - 1],
+             boutons: b.querySelectorAll("button").length };
+  });
+  ok("billet de sortie (n°330) : deux réponses écrites, deux versions étayées, deux critères, des contre-exemples, dernière séance, avant le Bonus, aucun bouton",
+     !!bs && bs.zones === 2 && bs.etayees === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.avantBonus && bs.derniere && bs.boutons === 0,
+     JSON.stringify(bs));
+  await pb.evaluate(() => { const p = document.getElementById("billetSortie").closest(".seance-panel");
+    document.querySelectorAll(".seance-panel").forEach(x => x.classList.toggle("active", x === p)); });
+  await pb.fill("#bs_5e_C7_1_2", "SI une place est libre ALORS vert SINON rouge");
+  await pb.locator("#bs_5e_C7_1_2").blur();   /* la page sauve à l'événement « change » */
+  await pb.waitForTimeout(300);
+  await pb.reload({ waitUntil: "load" }); await pb.waitForTimeout(500);
+  ok("billet de sortie : la réponse écrite survit au rechargement",
+     /SINON rouge/.test(await pb.inputValue("#bs_5e_C7_1_2")), await pb.inputValue("#bs_5e_C7_1_2"));
+  await ctxb.close();
+}
+
 verifLiens();
 await nav.close();
 
