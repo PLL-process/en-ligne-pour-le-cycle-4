@@ -38645,3 +38645,19 @@ Pascal : « 1 oui » — continuer, lot par lot, les chantiers D1 et P1 du thèm
   règle SI et un test à l'attendu écrit avant).
 Bancs : `tests_5e_C7.mjs` 65 / 65 (quatre tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
 de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`5e_C7.1`).
+
+## 27/11/2026 — 5e_C7.3 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `materiaux.py` : aucun nombre recopié) — « Six matériaux pour l'assise du banc » (les cinq exigences, puis
+  résistance, soleil, sel, chaleur et masse des six matériaux ; q8, q9, q11, q19) et « Le prix de l'assise » (prix au
+  kilogramme, masse, prix ; q7, q10, q14). Sept questions illustrées sur trente. La q9 fait lire le tableau : chaque
+  leurre est une ligne mal lue (le béton, l'acier), et chaque pourquoi renvoie à la ligne à relire. La q13 nomme ses
+  deux matériaux (le pin traité et le teck) : E1 la lisait comme une liste tronquée.
+- **Billet de sortie** avant le Bonus de la séance 2 : le panneau d'affichage de la vie scolaire (choisir entre
+  l'aluminium et le contreplaqué peint, exigence par exigence ; reconnaître le métal du cadre par le toucher, l'aimant
+  et la masse). Le réinvestissement passe de 15 à 10 minutes : la séance tient en 55.
+Bancs : séquence 47 / 47 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`5e_C7.3`).

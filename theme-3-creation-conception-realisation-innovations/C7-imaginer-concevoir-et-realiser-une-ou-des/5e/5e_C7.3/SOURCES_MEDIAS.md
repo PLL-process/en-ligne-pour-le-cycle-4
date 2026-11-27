@@ -18,3 +18,10 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_cour_trois_bancs.png` | Une grande cour en béton sous le soleil, entourée de bâtiments bas et de palmiers. Deux bancs en bois à l'ombre d'un arbre. PNG 1 536 × 1 024, 3.1 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a large empty Caribbean school courtyard at noon: only three old weathered benches in the shade of a single tree, a wide sunny concrete area with nowhere to sit, palm trees, harsh sun, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_criteres_banc.svg` | Les cinq exigences de l'assise du banc, puis, pour les six matériaux, la résistance, la tenue au soleil et au sel, la température au soleil et la masse. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_5e_C7.3.json`, lui-même calculé par `documents_qcm.py` depuis `materiaux.py` (aucun nombre recopié). | CC0, comme les images du dépôt | QCM, q8, q9, q11, q19 |
+| `Images/doc_prix_banc.svg` | Pour les six matériaux : le prix au kilogramme, la masse de l'assise et son prix. | Même chaîne : `materiaux.py` → `documents_qcm.py` → `document_qcm.py`. | CC0 | QCM, q7, q10, q14 |
