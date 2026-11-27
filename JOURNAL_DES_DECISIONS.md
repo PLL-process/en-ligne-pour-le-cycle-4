@@ -38862,3 +38862,15 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 73 / 73 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`3e_C7.3`).
+
+## 27/11/2026 — 3e_C7.4 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `energie.py`) — « Ce que consomme la station, un jour d'alerte » (q2, q3, q18) et « Les sources de la
+  station » (q4, q5, q8, q26). Sept questions illustrées sur trente. Deux pourquoi écrivaient « watts-heures ».
+- **Billet de sortie** avant le Bonus de la séance 3 : la balise lumineuse du ponton de pêche (le nombre d'accus, marge
+  comprise ; piles ou accus, argumentés avec le cycle de vie). La séance 3 passe de 50 à 55 minutes d'activités.
+Bancs : séquence 59 / 59 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.4`).

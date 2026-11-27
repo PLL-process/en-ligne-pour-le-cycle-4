@@ -47,6 +47,7 @@ mènent à chacune. Aucune activité n'est coupée ni raccourcie : on coupe entr
 | | 3 | Le cycle de vie, pas seulement l'autonomie | ~30 min | 6 | — |
 | **3 — L'avis à signer, puis l'îlet** (50 min) | 4 | L'avis à la mairie | ~30 min | 4 | — |
 | | — | REFAIRE | ~20 min | 1 | — |
+| | — | Billet de sortie, seul et sans aide | ~5 min | 2 | — |
 | | | puis synthèse, Bonus facultatif, bilan, renvoi au QCM | | | |
 
 **Pourquoi ce découpage.** C'est le seul en trois séances qui ne coupe aucune activité (la
@@ -183,3 +184,18 @@ Clôture : un corrigé par défi du Bonus (bascule secteur/accu, chaleur et accu
   courants pour les accus Li-ion, pas les valeurs d'une fiche constructeur précise ; le corrigé les écrit comme tels.
 
 Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 2, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — le 5 V côté élève et les accus Li-ion — avec un lien qui ouvre le volet sur l'encadré.
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en séance 3, juste avant le Bonus (environ 5 min, seul et sans aide ; la séance 3 annonçait
+50 minutes d'activités : elle en compte 55). Un objet que la séquence n'a pas étudié : **la balise lumineuse du ponton de
+pêche** (3 Wh par jour, 3 jours de tempête à tenir, 20 % de marge).
+- Question 1 (3e_C7.4) : le nombre d'accus 18650. On regarde le besoin calculé sur la durée à tenir, la marge ajoutée,
+  puis le nombre d'accus arrondi au-dessus (2, pour 10,8 Wh).
+- Question 2 (3e_C3.2) : piles jetables ou accus rechargés, argumentés avec le cycle de vie. On regarde au moins deux
+  étapes nommées, et un chiffre qui compare les deux solutions sur une même durée.
+Les 9,4 Wh d'un accu et les 2,8 Wh d'une pile 9 V sont ceux de `energie.py`.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone, calculé par
+`documents_qcm.py` depuis `energie.py` — « Ce que consomme la station, un jour d'alerte » (q2, q3, q18) et « Les
+sources de la station » (q4, q5, q8, q26). Deux pourquoi écrivaient « watts-heures » : « wattheures ».
