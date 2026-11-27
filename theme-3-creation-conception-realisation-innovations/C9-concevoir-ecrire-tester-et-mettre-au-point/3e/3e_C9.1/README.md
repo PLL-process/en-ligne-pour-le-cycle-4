@@ -10,7 +10,8 @@
   intégré à la page** (hors ligne ; Vittascience en lien facultatif, depuis le 04/11/2026), chasse aux bugs du panneau du métro new-yorkais, banc de mise au point
   (cas limite compris). Sauvegarde locale, DYS, verrous expérientiels.
 * **`qcm_3e_C9.1_variables_types_systemes.html`** — QCM 30 q (variables / types / lecture de
-  programme / mise au point), corrections détaillées, 3 illustrées.
+  programme / mise au point), corrections détaillées, 6 illustrées, dont trois sur le document « Le banc de la
+  ventilation » (`documents_qcm.py`, n°345).
 * **`Synthèses/`** — synthèse élève (imprimable A4) et synthèse professeur (réponses, remédiations, CRCN).
 * **`fiche_pedagogique_3e_C9.1.md`**, **`matrice_couverture_3e_C9.1.csv`**, **`SOURCES_MEDIAS.md`**.
 * **`tests_3e_C9.1.mjs`** — la suite Playwright du lot, **rejouable** : `node tests_3e_C9.1.mjs .`
@@ -29,6 +30,8 @@
 * `qcm_python_variables.html` — QCM complémentaire, « Python : variables, types et programmes » : 30 questions au
   gabarit commun depuis le 19/11/2026 (aides progressives, pièges : `qcm_aides_3e_C9.1_python.json`). Il élargit
   l'atelier : conditions, boucles, fonctions, message d'erreur, mBot2. L'ancien (24 q) est archivé.
+  Six questions s'y lisent sur document (n°345, 27/11/2026) : « Les quatre familles de valeurs » et « Six commandes
+  du robot mBot2 », lues dans le vocabulaire du lot et dans l'aide-mémoire du TP par `documents_qcm.py`.
 
 ## Histoire (règle d'or n°12)
 

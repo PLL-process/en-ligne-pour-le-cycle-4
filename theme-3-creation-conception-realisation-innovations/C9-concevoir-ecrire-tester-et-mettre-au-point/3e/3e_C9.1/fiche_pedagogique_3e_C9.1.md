@@ -28,6 +28,11 @@ lecture de programme → mise au point, sur un fil narratif New York (le panneau
 
 ## Évaluation
 Formative : vérificateurs + QCM 30 q (VAR/TYP/PRG/MAP → positionnement par famille).
+Depuis le 27/11/2026, six questions de chaque QCM se lisent sur un document dessiné pour le téléphone (n°345) : au
+QCM de la séquence, « Le banc de la ventilation » (q26 à q28 : pourquoi un test T4, ce qu'il renvoie, la
+non-régression) ; au QCM du TP, « Les quatre familles de valeurs » (q8 à q11) et « Six commandes du robot mBot2 »
+(q29, q30 : reconnaître le capteur et l'actionneur dans les commandes). Regarder si l'élève relit le document avant de
+répondre, ou répond de mémoire.
 Sommative : à construire par l'enseignant, corrigé jamais publié dans le dépôt.
 
 ## Différenciation
