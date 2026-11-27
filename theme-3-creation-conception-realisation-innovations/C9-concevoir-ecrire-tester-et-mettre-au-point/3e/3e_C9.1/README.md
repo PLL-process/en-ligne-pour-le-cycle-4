@@ -15,7 +15,17 @@
 * **`fiche_pedagogique_3e_C9.1.md`**, **`matrice_couverture_3e_C9.1.csv`**, **`SOURCES_MEDIAS.md`**.
 * **`tests_3e_C9.1.mjs`** — la suite Playwright du lot, **rejouable** : `node tests_3e_C9.1.mjs .`
   (53 tests ; le détail et ce qui n'est PAS testé sont dans `rapport_tests_3e_C9.1.md`).
-* **`tp_mbot2_python.html`** — TP robot réel (au collège, très basse tension), prolongement de l'atelier — depuis le 20/10/2026, ce n'est plus une « version 🅰 » de l'atelier.
+* **`tp_mbot2_python.html`** — TP « Programmer le robot mBot2 en Python » (3e_C9.2 et 3e_C9.1), **refondu les 26 et 27/11/2026** :
+  3 séances de 55 min, 35 exercices sur 55 points — sept programmes à reconstruire par étiquettes (A1 à A7), huit
+  exercices (E1 à E8), vingt programmes à une ligne manquante (B1 à B20) : l'élève écrit la ligne, la page EXÉCUTE le
+  programme avec elle et montre ce qu'il fait (une autre écriture qui fait le même travail est acceptée ; quatre
+  exercices ont un second essai, où la page change un nombre du programme). Chaque exercice a deux aides puis sa
+  correction complète. Une barre mène à chaque séance et dit où l'élève en est. Sous chaque activité A1 à A7,
+  « Envoyer ton programme au vrai robot » : l'éditeur Python de la page ouvert sur le programme de l'élève, « Copier »,
+  et le lien vers l'interface mBot2 de Vittascience (l'autre chemin que mBlock, décrit dans l'échauffement). 🅰 robot réel (mBlock, très basse tension) · 🅱 **robot simulé dans la page** (l'éditeur Python commun et un
+  module `cyberpi` simulé) · le travail est gardé dans le navigateur, la fiche de suivi s'imprime en deux pages.
+  Banc : `node tests_tp_mbot2_3e_C9.1.mjs`. Son QCM est `qcm_python_variables.html` (boucles et mBot2 compris).
+  La version précédente (v4.5) est archivée : `_archive-anciennes-versions/C7_C9_Creation-conception-realisation-innovations/3e_C9.1/tp_mbot2_python_v4.5_avant-refonte.html`.
 * `qcm_python_variables.html` — QCM complémentaire, « Python : variables, types et programmes » : 30 questions au
   gabarit commun depuis le 19/11/2026 (aides progressives, pièges : `qcm_aides_3e_C9.1_python.json`). Il élargit
   l'atelier : conditions, boucles, fonctions, message d'erreur, mBot2. L'ancien (24 q) est archivé.
