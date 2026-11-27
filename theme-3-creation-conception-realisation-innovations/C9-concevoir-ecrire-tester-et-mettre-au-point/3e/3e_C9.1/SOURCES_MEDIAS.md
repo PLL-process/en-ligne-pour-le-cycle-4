@@ -64,3 +64,11 @@ Les captures de l'Explorateur de fichiers (`geste_vitta_4b`, `4c`, `4d`, `4e`) s
 | `corriges_py/3e-VARIABLES-act5-correction.py` | Programme Python corrigé, écrit pour le lot | Création pour ce projet | CC BY-NC-SA 4.0 | téléchargé depuis la correction, ouvert dans l'éditeur avec 📂 (~1 Ko) |
 | `Images/correction_editeur_bonus.png` | **Capture d'écran réelle** (règle n°94) | La page elle-même, son éditeur Python après ▶ Exécuter, Chromium piloté par Playwright, 1 280 px, échelle 1 — `_ressources-communes/editeur-python/captures_corrections.mjs`, 15/11/2026 | CC BY-NC-SA 4.0, comme la page | correction : les deux défis de programmation du Bonus, corrigés et exécutés (~174 Ko) |
 | `corriges_py/3e-VARIABLES-bonus-correction.py` | Programme Python corrigé, écrit pour le lot | Création pour ce projet | CC BY-NC-SA 4.0 | téléchargé depuis la correction, ouvert dans l'éditeur avec 📂 (~1 Ko) |
+
+## Documents des QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_banc_ventilation.svg` | La fonction `vitesse_ventilation` en trois branches et le banc de quatre tests (air, train_arrive, attendu) — sans ce que la fonction renvoie. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C9.1.json`, lui-même LU dans la séquence (banc de démonstration et document 3 de l'activité 5) par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM de la séquence, q26, q27, q28 |
+| `Images/doc_familles_valeurs.svg` | Les quatre types de Python (int, float, str, bool) : comment leur valeur s'écrit — sans aucune valeur rangée. | Même chaîne, lu dans `vocabulaire_3e_C9.1.json` (la définition, sans l'exemple de la séance). | CC0 | QCM du TP, q8 à q11 |
+| `Images/doc_commandes_mbot2.svg` | Six lignes de l'aide-mémoire du robot mBot2 : ce que fait le robot, et la commande Python. | Même chaîne, lu dans le tableau `#apiTable` de `tp_mbot2_python.html`. | CC0 | QCM du TP, q29, q30 |

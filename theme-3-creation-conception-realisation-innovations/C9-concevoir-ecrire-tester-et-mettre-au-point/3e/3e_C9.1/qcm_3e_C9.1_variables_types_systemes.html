@@ -144,6 +144,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -308,7 +310,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (15 C6.1 + 15 C6.3), 6 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ VAR ═══ */
 {c:"VAR",n:"La boîte étiquetée",q:"En programmation, une variable est le mieux décrite comme :",
@@ -485,32 +487,32 @@ const QUESTIONS = [
  
  d:["La vitesse d'exécution n'est pas l'enjeu au collège.","La première écriture est parfois plus LONGUE — c'est la réutilisation qui paie.","Python n'exige rien de tel.",""],
  ret:"Fonction = machine réutilisable et testable : reçoit des paramètres, renvoie un résultat."},
-{c:"MAP",n:"Élaborer avant de taper",q:"Dans la démarche de 3e_C9.1, que fait-on AVANT d'écrire la moindre ligne de Python ?",
+{c:"MAP",n:"Élaborer avant de taper",q:"Avant d'écrire la moindre ligne de Python pour piloter la ventilation, que fait-on d'abord ?",
  o:["chercher un programme tout fait à recopier","ouvrir l'éditeur et taper au fil de l'eau","écrire l'ALGORITHME en français, dans l'ordre","choisir la couleur et la police de l'interface"],r:2,
  expl:"L'algorithme est le plan de l'architecte : SI air > 100 ventiler à fond, SINON SI train arrive… Une fois le plan juste, la traduction en Python est presque mécanique.",
- ex:"Le document 3 de l'atelier : algorithme en français → fonction Python → banc de tests.",
- 
+ ex:"Pour la ventilation de la station : l'algorithme en français, puis la fonction Python, puis le banc de tests.",
  d:["Recopier sans comprendre interdit la mise au point.","Taper sans plan produit du code qu'on ne sait plus relire — ni corriger.","","L'interface n'est pas l'algorithme."],
  ret:"Élaborer (français) → traduire (Python) → tester. Le plan d'abord."},
-{c:"MAP",n:"Le banc de tests",q:"Qu'est-ce qu'un BON banc de tests pour <code>vitesse_ventilation</code> ?",
- o:["aucun test si le code a l'air correct à la lecture","un seul test, avec des valeurs prises au hasard","beaucoup de tests, avec des valeurs très variées","un test par cas du besoin, plus un par FRONTIÈRE"],r:3,
- expl:"Chaque règle du besoin mérite son test (pollué / train / calme), et chaque FRONTIÈRE son test dédié : c'est là que les bugs se cachent (> ou >= ?).",
- ex:"T1 150, T2 60+train, T3 40, T4 100 pile — le T4 a démasqué le bug de l'atelier.",
- 
- d:["« Avoir l'air correct » n'est pas une preuve — le banc, si.","Le hasard rate justement les frontières : elles sont étroites.","C'est déjà bien mieux, et cela reste du hasard organisé. Vingt valeurs entre 0 et 200 peuvent toutes manquer le 100 exact — et c'est LÀ que le bug se cache. Ce n'est pas le nombre de tests qui compte, c'est leur placement.",""],
+{c:"MAP",n:"Le banc de tests",q:"Ce banc teste <code>vitesse_ventilation</code>. Le besoin a trois cas : pourquoi un test T4 en plus ?",
+ img:{src:"Images/doc_banc_ventilation.svg",alt:"La fonction vitesse_ventilation : si air > 100, elle renvoie 3 ; sinon, si un train arrive, elle renvoie 2 ; sinon, elle renvoie 1. Le banc de quatre tests, écrit avant d'exécuter : T1, heure de pointe polluée : air 150, train_arrive False, attendu 3. T2, un train approche : air 60, train_arrive True, attendu 2. T3, nuit calme : air 40, train_arrive False, attendu 1. T4, le cas limite : air 100, train_arrive False, attendu ?. Le banc ne dit pas ce que la fonction renvoie."},
+ o:["pour vérifier le code une fois de plus, au cas où","pour essayer une valeur prise au hasard","pour avoir plus de tests, donc plus de chances","pour tester la FRONTIÈRE du besoin, à 100 pile"],r:3,
+ expl:"T1, T2 et T3 testent chacun un cas du besoin (pollué, train, calme). T4 se place pile sur la FRONTIÈRE, air = 100 : c'est là que les bugs se cachent (> ou >= ?).",
+ ex:"Dans le banc : T1 à 150, T2 à 60 avec un train, T3 à 40, et T4 à 100 pile.",
+ d:["Relis la valeur de T4 : elle n'est pas choisie au hasard, elle tombe sur le seuil de la première ligne de la fonction.","100 n'est pas pris au hasard : compare-le au seuil de la première ligne de la fonction.","Ce n'est pas le nombre de tests qui compte, c'est leur place : regarde où tombe la valeur de T4 par rapport à la fonction.",""],
  ret:"Un test par cas + un test par frontière. Les bugs vivent aux frontières."},
-{c:"MAP",n:"Le cas limite",q:"Le besoin dit « à partir de 100, ventiler à fond ». La fonction teste <code>air > 100</code>. Quel est le problème ?",
- o:["aucun : 100 exactement est un cas bien trop rare","à 100 exactement, air > 100 est FAUX : rien ne se passe","le problème vient du capteur, pas du programme","Python compare mal les nombres proches de 100"],r:1,
- expl:"« À partir de 100 » inclut 100 : la condition juste est >= 100. L'écart entre > et >= est invisible à l'œil… et flagrant au banc de tests.",
- ex:"Le test T4 (air=100) renvoyait 1 au lieu de 3 : bug prouvé, corrigé, retesté.",
- 
- d:["La rareté n'excuse rien : un jour de pic à 100 pile, la ventilation dort.","","Le capteur mesure juste ; c'est la RÈGLE qui est fausse.","Python compare parfaitement — il exécute la règle qu'on lui a donnée."],
+{c:"MAP",n:"Le cas limite",q:"Le besoin dit « à partir de 100, ventiler à fond ». Avec cette fonction, que renvoie le test T4 ?",
+ img:{src:"Images/doc_banc_ventilation.svg",alt:"La fonction vitesse_ventilation : si air > 100, elle renvoie 3 ; sinon, si un train arrive, elle renvoie 2 ; sinon, elle renvoie 1. Le banc de quatre tests, écrit avant d'exécuter : T1, heure de pointe polluée : air 150, train_arrive False, attendu 3. T2, un train approche : air 60, train_arrive True, attendu 2. T3, nuit calme : air 40, train_arrive False, attendu 1. T4, le cas limite : air 100, train_arrive False, attendu ?. Le banc ne dit pas ce que la fonction renvoie."},
+ o:["3 : air vaut 100, c'est pollué","1 : à 100 pile, air > 100 est faux","2 : la deuxième branche prend le relais","une erreur : 100 n'est ni plus ni moins"],r:1,
+ expl:"À 100 pile, air > 100 est faux, et aucun train n'arrive : la fonction tombe dans le « sinon » et renvoie 1. Le besoin attendait 3 : « à partir de 100 » inclut 100, la condition juste est air >= 100.",
+ ex:"Le test T4 (air = 100) renvoie 1 au lieu de 3 : bug prouvé, corrigé, retesté.",
+ d:["C'est ce que le besoin attend ; la fonction, elle, teste air > 100 : relis sa première ligne avec air = 100.","","La deuxième branche demande un train qui arrive : relis train_arrive dans la ligne T4.","Python compare sans erreur : 100 > 100 est simplement faux. Relis la dernière ligne de la fonction."],
  ret:"> ou >= : c'est le CAHIER DES CHARGES qui tranche, et un test frontière qui vérifie."},
-{c:"MAP",n:"La non-régression",q:"Le besoin dit « à partir de 100, ventiler à fond ». Tu corriges la condition air &gt; 100 en air &gt;= 100 : le test T4, celui de la valeur limite (air = 100), passe enfin. As-tu fini ?",
+{c:"MAP",n:"La non-régression",q:"Le besoin dit « à partir de 100, ventiler à fond ». Tu corriges air &gt; 100 en air &gt;= 100 : le test T4 du banc passe enfin. As-tu fini ?",
+ img:{src:"Images/doc_banc_ventilation.svg",alt:"La fonction vitesse_ventilation : si air > 100, elle renvoie 3 ; sinon, si un train arrive, elle renvoie 2 ; sinon, elle renvoie 1. Le banc de quatre tests, écrit avant d'exécuter : T1, heure de pointe polluée : air 150, train_arrive False, attendu 3. T2, un train approche : air 60, train_arrive True, attendu 2. T3, nuit calme : air 40, train_arrive False, attendu 1. T4, le cas limite : air 100, train_arrive False, attendu ?. Le banc ne dit pas ce que la fonction renvoie."},
  o:["oui : le bug visé est corrigé, le test le prouve","non : on REJOUE aussi T1, T2 et T3","oui, si le code obtenu est plus court qu'avant","non : il faut réécrire entièrement la fonction"],r:1,
  expl:"C'est la NON-RÉGRESSION : après toute modification, on rejoue TOUT le banc. Ici T1-T3 repassent (ouf) — mais on ne le SAIT qu'après les avoir rejoués.",
- ex:"Le même principe que la méthode de validation du jardin connecté en 4e : sauvegarde, test, non-régression.",
- d:["« Le bug visé est corrigé » ne dit rien des dégâts collatéraux.","","La longueur du code n'est pas un critère de validité.","On ne réécrit pas ce qui est prouvé : on RETESTE."],
+ ex:"Après la correction, on rejoue T1, T2 et T3 : ils doivent encore donner 3, 2 et 1.",
+ d:["« Le bug visé est corrigé » ne dit rien des autres tests : relis le banc, trois tests passaient avant la correction.","","La longueur du code n'est pas un critère de validité : relis la colonne « attendu » du banc.","On ne réécrit pas ce qui est prouvé : on rejoue les tests du banc."],
  ret:"Toute correction → rejouer TOUS les tests. C'est la non-régression."},
 {c:"MAP",n:"Fini, vraiment fini ?",q:"Quand peut-on déclarer le programme de ventilation « au point » ?",
  o:["quand il passe TOUS les tests, limites comprises","dès qu'il s'exécute sans le moindre message d'erreur","quand il est bien indenté et facile à relire","quand il a donné le bon résultat plusieurs fois"],r:0,
