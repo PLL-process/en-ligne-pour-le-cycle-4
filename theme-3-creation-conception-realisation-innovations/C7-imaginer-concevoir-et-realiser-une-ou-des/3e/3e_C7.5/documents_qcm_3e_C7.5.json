@@ -1,0 +1,102 @@
+{
+  "qcm": [
+    "qcm_3e_C7.5_station-a-equiper.html"
+  ],
+  "documents": {
+    "doc_catalogue_station": {
+      "titre": "Le carton de la station",
+      "sous_titre": "Les constituants proposés, et le courant que demande chacun.",
+      "desc": "Le catalogue des constituants proposés pour la station d'alerte, avec le courant que demande chacun. Carte UNO : 45 milliampères. Base Shield : 0 milliampères. Anémomètre : 15 milliampères. Capteur de pluie : 8 milliampères. Écran LCD : 20 milliampères. Bandeau de 8 DEL : 480 milliampères. Buzzer : 30 milliampères. Module carte SD : 40 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; la batterie 5 volts et son panneau solaire, jusqu'à 2 000 milliampères.",
+      "blocs": [
+        {
+          "tableau": {
+            "colonnes": [
+              "Constituant",
+              "Demande"
+            ],
+            "largeurs": [
+              218,
+              104
+            ],
+            "lignes": [
+              [
+                "Carte UNO",
+                "45 mA"
+              ],
+              [
+                "Base Shield",
+                "0 mA"
+              ],
+              [
+                "Anémomètre",
+                "15 mA"
+              ],
+              [
+                "Capteur de pluie",
+                "8 mA"
+              ],
+              [
+                "Écran LCD",
+                "20 mA"
+              ],
+              [
+                "Bandeau de 8 DEL",
+                "480 mA"
+              ],
+              [
+                "Buzzer",
+                "30 mA"
+              ],
+              [
+                "Module carte SD",
+                "40 mA"
+              ]
+            ]
+          }
+        },
+        {
+          "fiches": [
+            {
+              "titre": "Ce que fournissent les sources",
+              "accent": true,
+              "paires": [
+                [
+                  "Câble USB",
+                  "jusqu'à 500 mA"
+                ],
+                [
+                  "Batterie + panneau",
+                  "jusqu'à 2 000 mA"
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "mA : milliampère · la batterie est une très basse tension, 5 V (volts) · SD : la carte mémoire · DEL : diode électroluminescente."
+    },
+    "doc_programme_station": {
+      "titre": "Le programme de la station",
+      "sous_titre": "Celui qui est téléversé dans la carte.",
+      "desc": "Le programme téléversé dans la carte de la station, ligne par ligne : vent = analogRead(A0) ; enregistrer(vent, heure) ; si vent > 90 alors ; digitalWrite(6, HAUT) ; sinon ; digitalWrite(6, BAS).",
+      "blocs": [
+        {
+          "fiches": [
+            {
+              "titre": "Programme",
+              "lignes": [
+                "vent = analogRead(A0)",
+                "enregistrer(vent, heure)",
+                "si vent > 90 alors",
+                "→ digitalWrite(6, HAUT)",
+                "sinon",
+                "→ digitalWrite(6, BAS)"
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "→ : ligne qui dépend du « si » ou du « sinon » au-dessus · analogRead(A0) : lire le port analogique A0 · enregistrer : écrire sur la carte SD · digitalWrite(6, HAUT) : mettre la sortie D6 à l'état haut, le bandeau passe au rouge."
+    }
+  }
+}
