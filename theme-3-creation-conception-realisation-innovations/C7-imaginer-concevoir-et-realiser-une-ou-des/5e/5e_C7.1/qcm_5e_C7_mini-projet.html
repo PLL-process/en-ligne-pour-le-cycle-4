@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 5e_C7.1 + 10 5e_C8.3 + 10 5e_C9.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (10 5e_C7.1 + 10 5e_C8.3 + 10 5e_C9.3), 7 illustrees (regle images v2 ; 2 documents dessines pour le telephone, 27/11/2026) */
 const QUESTIONS = [
 /* ═══ CON ═══ */
 {c:"CON",n:"Le besoin de M. Alvarez",q:"M. Alvarez ne veut ni porte ni serrure. Que demande-t-il exactement ?",
@@ -314,14 +316,14 @@ const QUESTIONS = [
  err:"Confondre le problème (on ne voit pas) avec une solution qu'on a en tête (mettre des portes).",
  d:["","Il a justement demandé des casiers fermés : c'était trop cher, et ce n'est plus la demande.","Le hall doit rester utilisable : on ne supprime pas l'usage, on l'améliore.","Le problème n'est pas le manque de places — il y en a vingt — mais le fait de ne pas voir lesquelles sont libres."],
  ret:"Un objet technique répond à un BESOIN exprimé, pas à l'idée qu'on se fait de la solution."},
-{c:"CON",n:"La preuve du problème",q:"Deux nombres ont été comptés dans le hall. Lequel MESURE LE DÉGÂT que le problème provoque ?",
- nuance:"« Deux cents élèves en huit minutes, c'est aussi un nombre : pourquoi ce n'est pas la bonne réponse ? » Tu as raison sur un point, et c'est important : c'est bien un fait compté, pas une impression. Les deux propositions sont des mesures sérieuses. Simplement, elles ne mesurent pas la même chose. L'affluence est la CAUSE : beaucoup de monde en peu de temps. Les chutes sont la CONSÉQUENCE : quelqu'un s'est fait mal. Quand on défend un projet devant le principal, c'est la conséquence qui décide, parce que c'est elle qui coûte. La cause vient ensuite, pour expliquer.",
+{c:"CON",n:"La preuve du problème",q:"D'après ce relevé, lequel de ces faits MESURE LE DÉGÂT que le problème provoque ?",
+ img:{src:"Images/doc_releve_hall.svg",alt:"Ce que M. Alvarez, qui s'occupe du bâtiment, a relevé dans le hall : deux cents élèves entrent en huit minutes ; vingt casiers ouverts, sans porte, contre le mur ; trois chutes en un mois, sur des sacs posés par terre ; le hall est un grand espace ouvert."},
  o:["M. Alvarez a compté trois chutes en un mois","le hall est un grand espace ouvert","il y a vingt casiers dans ce hall","deux cents élèves entrent en huit minutes"],r:0,
  expl:"Un besoin se défend avec un fait compté. Mais tous les faits comptés ne disent pas la même chose : « trois chutes en un mois » mesure le dégât — ce qui va mal. « Deux cents élèves en huit minutes » mesure l'affluence — ce qui explique pourquoi ça va mal. Les deux sont vrais ; la question demande le dégât.",
  ex:"« M. Alvarez, qui s'occupe du bâtiment, a compté : trois chutes en un mois. »",
- 
  d:["","La taille du hall décrit le lieu. Elle ne compte rien du tout.","Le nombre de casiers dit ce qui existe, pas ce qui va mal.","Ce nombre est bien un fait compté, et il est utile : il explique la cause de l'encombrement. Mais il ne mesure aucun dégât — deux cents élèves peuvent entrer en huit minutes sans que personne ne tombe."],
- ret:"Un problème se prouve par un fait compté — et, parmi les faits comptés, c'est celui qui mesure le dégât qui emporte la décision."},
+ ret:"Un problème se prouve par un fait compté — et, parmi les faits comptés, c'est celui qui mesure le dégât qui emporte la décision.",
+ nuance:"« Deux cents élèves en huit minutes, c'est aussi un nombre : pourquoi ce n'est pas la bonne réponse ? » Tu as raison sur un point, et c'est important : c'est bien un fait compté, pas une impression. Les deux propositions sont des mesures sérieuses. Simplement, elles ne mesurent pas la même chose. L'affluence est la CAUSE : beaucoup de monde en peu de temps. Les chutes sont la CONSÉQUENCE : quelqu'un s'est fait mal. Quand on défend un projet devant le principal, c'est la conséquence qui décide, parce que c'est elle qui coûte. La cause vient ensuite, pour expliquer."},
 {c:"CON",n:"Le nom du métier",q:"Comment appelle-t-on, dans le métier, un objet qui dit « libre » ou « occupé » sans qu'on s'approche ?",
  o:["un détecteur de mouvement","un indicateur d'occupation","un compteur de passage","un afficheur de température"],r:1,
  expl:"C'est le nom exact de la famille d'objets à laquelle appartient le voyant du hall. On le retrouve dans les gares, les parkings, les toilettes d'avion.",
@@ -351,12 +353,13 @@ const QUESTIONS = [
  
  d:["Concevoir un planning complet n'est pas attendu à ce niveau : on apprend d'abord à le lire et à s'y tenir.","","Un planning rempli après coup est un compte rendu, pas un outil de conduite.","Il sert d'abord à celui qui fabrique : c'est lui qui doit savoir où il en est."],
  ret:"Suivre un planning, c'est savoir à tout moment où l'on en est par rapport à ce qui était prévu."},
-{c:"CON",n:"Un retard, et après",q:"Une tâche prend une séance de plus que prévu. Que fait un planning bien tenu ?",
- o:["il ne change rien : les dates de départ font foi","il supprime la tâche qui a pris du retard","il annule le projet et on repart de zéro","il montre quelles tâches suivantes sont décalées"],r:3,
- expl:"L'intérêt d'un planning n'est pas d'avoir raison, c'est de rendre visibles les conséquences d'un imprévu.",
+{c:"CON",n:"Un retard, et après",q:"Sur ce planning, la tâche 2 prend 10 minutes de plus que prévu. Que montre un planning bien tenu ?",
+ img:{src:"Images/doc_planning_equipe.svg",alt:"Le planning de l'équipe, quatre tâches dans l'ordre, chacune avec sa durée prévue et ses minutes de début et de fin, comptées depuis le début du projet. Tâche 1, le besoin : 20 minutes, de la minute 0 à la minute 20. Tâche 2, deux solutions : 25 minutes, de la minute 20 à la minute 45. Tâche 3, le matériau : 20 minutes, de la minute 45 à la minute 65. Tâche 4, le prototype : 40 minutes, de la minute 65 à la minute 105."},
+ o:["rien : les minutes écrites au départ font foi","la tâche 2 disparaît, puisqu'elle est en retard","seule la tâche 4, la dernière, est décalée","les tâches 3 et 4 commencent 10 minutes plus tard"],r:3,
+ expl:"L'intérêt d'un planning n'est pas d'avoir raison, c'est de rendre visibles les conséquences d'un imprévu. La tâche 2 finit à la minute 55 au lieu de 45 : la tâche 3 commence donc à 55, la tâche 4 à 75, et le prototype finit à 115 au lieu de 105.",
  ex:"Si le câblage glisse d'une séance, l'essai et la mise au point glissent aussi.",
  err:"Croire qu'un planning sert à prévoir juste. Il sert à voir vite ce que le retard entraîne.",
- d:["Des dates que la réalité a démenties n'aident plus personne.","Une tâche nécessaire ne disparaît pas parce qu'elle est en retard.","Un retard d'une séance n'est pas un échec : c'est une information.",""],
+ d:["Des minutes que la réalité a démenties n'aident plus personne : relis la colonne « Minutes », la tâche 3 ne peut pas commencer avant que la 2 soit finie.","Une tâche nécessaire ne disparaît pas parce qu'elle est en retard : sans les deux solutions, pas de choix de matériau.","La tâche 3 attend la fin de la tâche 2, et la 4 celle de la 3 : relis l'ordre des lignes, le retard se propage à toutes les suivantes.",""],
  ret:"Un planning ne prédit pas l'avenir : il rend le retard lisible."},
 {c:"CON",n:"L'ordre du mini-projet",q:"Quel est l'ordre des trois grandes étapes de ce mini-projet ?",
  nuance:"« En vrai, on fait tout en même temps, non ? » Tu as raison, et c'est même le cœur du métier. Un vrai projet ne va pas tout droit : on imagine, on teste, le test rate, on revient imaginer autrement, on reteste. On appelle ça une BOUCLE, et tu la verras dessinée en 4e. Ce que la question fixe, c'est l'ordre du premier tour : il faut bien une première idée avant d'avoir quelque chose à tester, et un objet qui marche avant d'écrire la règle définitive. Une fois ce premier tour bouclé, l'ordre devient beaucoup plus souple — mais on ne peut pas commencer par la fin.",
@@ -435,11 +438,11 @@ const QUESTIONS = [
  err:"Prendre la LED pour le capteur parce qu'elle est ce que l'on regarde.",
  d:["La LED est l'ACTIONNEUR : elle montre la décision, elle ne détecte rien.","","La carte REÇOIT l'information et décide : c'est le maillon du milieu, celui qui traite. Elle ne constate rien du monde par elle-même — débranche le bouton, elle ne saura plus rien du sac.","L'écran affiche l'ensemble ; il ne mesure aucun état du monde."],
  ret:"Capteur : il constate tout seul. Actionneur : il agit. Et c'est la place dans la chaîne qui décide, pas la pièce elle-même."},
-{c:"VAL",n:"Qui joue l'actionneur",q:"Et l'ACTIONNEUR, dans cet objet, c'est…",
+{c:"VAL",n:"Qui joue l'actionneur",q:"D'après ce schéma de la chaîne, l'ACTIONNEUR de cet objet, c'est…",
+ img:{src:"Images/chaine_indicateur_hall.svg",alt:"La chaîne de l'indicateur : le bouton sous la tablette détecte, la carte décide selon la règle SI, la LED affiche en rouge ou en vert, et tout recommence."},
  o:["le bouton placé sous la tablette","la LED, qui affiche la décision","la carte programmable, qui décide","le sac que l'élève pose dans la case"],r:1,
  expl:"L'actionneur est la partie qui AGIT sur le monde à la suite de la décision. Ici, l'action consiste à émettre une lumière visible de loin.",
  ex:"Ailleurs, un actionneur peut être un moteur, une sonnerie, un vérin.",
- 
  d:["Le bouton est en entrée de chaîne : il informe, il n'agit pas.","","La carte DÉCIDE ; elle est entre le capteur et l'actionneur, elle n'agit pas sur le monde.","Le sac est l'objet détecté, il ne fait pas partie du système."],
  ret:"La chaîne : capteur → décision → actionneur."},
 {c:"VAL",n:"L'ordre de la chaîne",q:"Remets la chaîne dans l'ordre.",
@@ -479,14 +482,14 @@ const QUESTIONS = [
  
  d:["Un rectangle est une action ; il faut d'abord être entré dans le programme.","Une décision suppose une information déjà lue : elle ne peut pas être la première.","","Une flèche relie deux symboles, elle n'en remplace aucun."],
  ret:"Terminal au départ, terminal à l'arrivée."},
-{c:"PRG",n:"Lire le capteur",q:"« Lire le capteur (sac posé ou non) » se dessine par…",
- nuance:"« Dans un livre, j'ai vu que LIRE un capteur se dessinait par un parallélogramme penché. » C'est exact, et ce n'est pas une erreur de ta part. Le vocabulaire complet des algorigrammes possède un symbole spécial pour les entrées et les sorties : le parallélogramme. Nous ne l'utilisons pas ici, volontairement. Nous travaillons avec trois symboles seulement — terminal, rectangle, losange — parce que trois symboles suffisent à écrire tous les algorigrammes de cette séquence, et parce qu'un vocabulaire réduit s'apprend et se relit sans hésiter. Si tu croises un parallélogramme ailleurs, tu sauras le lire : c'est une lecture ou un affichage. Dans nos algorigrammes, il est rangé dans le rectangle.",
+{c:"PRG",n:"Lire le capteur",q:"Sur cet algorigramme, « Lire le capteur (sac posé ou non) » se dessine par…",
+ img:{src:"Images/algorigramme_indicateur.svg",alt:"L'algorigramme de l'indicateur : terminal DÉBUT, rectangle « lire le capteur », losange « place occupée ? » avec deux sorties OUI et NON vers LED rouge et LED verte, puis une flèche qui remonte. À droite, la légende des symboles et la même règle en Python."},
  o:["un triangle","un losange","un terminal","un rectangle"],r:3,
  expl:"Lire le capteur, c'est FAIRE quelque chose : on va chercher l'information. Ce n'est pas trancher. Cette étape n'a qu'une suite possible, donc une seule flèche en sortie — et dans notre vocabulaire à trois symboles, une action à une seule sortie se dessine par un rectangle.",
  ex:"Après la lecture, on ne sait toujours pas quoi afficher : c'est le losange suivant qui décidera.",
- 
  d:["Le triangle n'appartient pas au vocabulaire que nous utilisons dans cette séquence.","Le losange pose une question et ouvre deux chemins. Ici on ne pose encore aucune question : on récupère seulement l'information.","Le terminal marque le début et la fin de l'algorigramme, rien d'autre.",""],
- ret:"Dans notre vocabulaire à trois symboles : rectangle = une action, une seule sortie."},
+ ret:"Dans notre vocabulaire à trois symboles : rectangle = une action, une seule sortie.",
+ nuance:"« Dans un livre, j'ai vu que LIRE un capteur se dessinait par un parallélogramme penché. » C'est exact, et ce n'est pas une erreur de ta part. Le vocabulaire complet des algorigrammes possède un symbole spécial pour les entrées et les sorties : le parallélogramme. Nous ne l'utilisons pas ici, volontairement. Nous travaillons avec trois symboles seulement — terminal, rectangle, losange — parce que trois symboles suffisent à écrire tous les algorigrammes de cette séquence, et parce qu'un vocabulaire réduit s'apprend et se relit sans hésiter. Si tu croises un parallélogramme ailleurs, tu sauras le lire : c'est une lecture ou un affichage. Dans nos algorigrammes, il est rangé dans le rectangle."},
 {c:"PRG",n:"La flèche qui remonte",q:"À la fin de l'algorigramme, une flèche remonte vers la lecture du capteur. Que signifie-t-elle ?",
  o:["il y a une erreur dans le schéma","le programme est terminé là","l'indicateur surveille en continu","on revient en arrière corriger une faute"],r:2,
  expl:"Cette boucle est ce qui distingue un objet vivant d'un objet qui n'agit qu'une fois. Le voyant doit changer dès qu'on retire le sac.",
@@ -509,10 +512,9 @@ const QUESTIONS = [
  d:["","Un seul signe = range une valeur ; pour comparer, il faudrait ==. Et le cas « libre » manque.","<code>else</code> ne peut pas suivre <code>if</code> sans condition ni bloc.","La flèche n'existe pas en Python : c'est une notation de brouillon."],
  ret:"if … : / else … : avec les deux points et l'indentation."},
 {c:"PRG",n:"Sans LED",q:"L'éditeur n'a pas de LED. Comment vérifier quand même que la règle est juste ?",
- o:["en dessinant sur le cahier ce que la LED devrait faire","en lisant le programme ligne par ligne, sans l'exécuter","en affichant le mot attendu à l'écran avec <code>print()</code>","en attendant d'avoir le matériel au prochain cours"],r:2,
+ o:["en dessinant sur une feuille de brouillon ce que la LED devrait faire","en lisant le programme ligne par ligne, sans l'exécuter","en affichant le mot attendu à l'écran avec <code>print()</code>","en attendant d'avoir le matériel au prochain cours"],r:2,
  expl:"Remplacer l'actionneur par un affichage est une technique de mise au point ordinaire : on rend visible une décision qu'on ne peut pas encore montrer autrement.",
  ex:"Si le programme écrit ROUGE quand <code>occupee = True</code>, la logique est bonne.",
- 
  d:["Le dessin dit ce que tu ATTENDS. Il ne dit pas ce que le programme FAIT : ce sont justement les deux choses qu'un test doit confronter.","C'est utile, et il faut savoir le faire — mais on relit ce qu'on croit avoir écrit. Une relecture ne détecte pas l'erreur qu'on n'imagine pas ; l'exécution, si.","","Attendre, c'est ne pas tester. Le mot affiché tient parfaitement lieu de LED pour vérifier la règle."],
  ret:"Quand l'actionneur manque, on affiche la décision."},
 {c:"PRG",n:"Mettre au point",q:"« Mettre au point » un programme, c'est…",

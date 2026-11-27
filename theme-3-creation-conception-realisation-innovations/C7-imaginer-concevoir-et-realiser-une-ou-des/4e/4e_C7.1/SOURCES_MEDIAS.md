@@ -49,3 +49,10 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_bacs_brooklyn.png` | Des bacs de jardin en bois contre un mur de briques : la terre est sèche et craquelée, les plantes sont mortes. PNG 1 536 × 1 024, 3.7 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a school courtyard in Brooklyn, New York, at the end of August: six large wooden raised garden beds against a brick wall, the soil dry, cracked and pale, dead tomato plants and withered mint and strawberry plants, harsh late-summer sun, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_taches_jardin.svg` | Les quatre tâches du projet du jardin, dans le désordre, avec leur durée. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C7.1.json`, lui-même LU dans la séquence par `documents_qcm.py` (le planning de l'activité 1b). | CC0, comme les images du dépôt | QCM, q1, q8 |
+| `Images/doc_tableau_materiaux.svg` | Les trois matériaux du boîtier : tenue à la pluie et au gel, découpe, impact environnemental. | Même chaîne, lu dans le tableau de l'activité 3 (la réponse attendue de chaque case). | CC0 | QCM, q24, q26, q27, q29 |
