@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 4e_C7.3 + 10 4e_C3.2), 0 illustrée.
+/* Banque : 30 questions (20 4e_C7.3 + 10 4e_C3.2), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -339,14 +341,16 @@ const QUESTIONS = [
  err:"Diviser sans arrondir vers le haut, et sous-estimer le coût réel.",
  d:["","il manquerait trois années de service : le jardin resterait sans bac pendant ce temps","un demi-bac ne s'achète pas ; le troisième est acheté entier même s'il sert peu","le calcul est juste, mais un nombre de bacs est un entier : il faut arrondir au-dessus"],
  ret:"Le nombre d'exemplaires s'arrondit toujours à l'entier supérieur."},
-{c:"4e_C7.3",n:"Inversion à quinze ans",q:"À l'achat, PVC 167 € et teck 309 €. Sur quinze ans, PVC 333 € et teck 309 €. Pourquoi ?",
+{c:"4e_C7.3",n:"Inversion à quinze ans",q:"Sur ce tableau, le PVC est moins cher que le teck à l'achat, et plus cher sur quinze ans. Pourquoi ?",
+ img:{src:"Images/doc_cout_bac.svg",alt:"Les trois matériaux retenus pour le bac, leur durée de vie, le prix d'un bac et le coût sur 15 ans, remplacements compris. Le PVC : il dure 8 ans, un bac coûte 166,60 euros, et 333,20 euros sur 15 ans. Le polypropylène recyclé : il dure 6 ans, un bac coûte 90,44 euros, et 271,32 euros sur 15 ans. Le teck : il dure 15 ans, un bac coûte 309,40 euros, et 309,40 euros sur 15 ans."},
  o:["le teck bénéficie d'une remise dès lors qu'on l'achète pour une longue durée","le prix au kilogramme du PVC augmente régulièrement au fil des années","le PVC dure 8 ans : il faut deux bacs, là où un seul teck couvre les quinze","le banc ajoute au PVC un coût d'entretien annuel que le teck ne supporte pas"],r:2,
  expl:"Rien n'a changé dans les matériaux : c'est la question posée qui a changé. « Combien coûte l'achat ? » et « combien coûte quinze ans ? » n'ont pas le même classement.",
  ex:"2 × 166,60 = 333,20 € contre 1 × 309,40 € : vingt-quatre euros séparent les deux.",
  err:"Croire qu'un classement obtenu à l'achat vaut pour toutes les durées.",
  d:["aucune remise n'existe dans ce calcul : c'est la durée de vie qui fait tout l'écart","les prix employés sont les mêmes dans les deux calculs : seule la durée a changé","","le banc ne compte aucun entretien : il compte des achats, et rien d'autre"],
  ret:"Un classement de coûts appartient à la durée pour laquelle il a été calculé."},
-{c:"4e_C7.3",n:"Second retournement",q:"Sur vingt ans, le teck redevient le plus cher des trois. Comment est-ce possible ?",
+{c:"4e_C7.3",n:"Second retournement",q:"D'après ce tableau, sur vingt ans, le teck redevient le plus cher des trois. Comment est-ce possible ?",
+ img:{src:"Images/doc_cout_bac.svg",alt:"Les trois matériaux retenus pour le bac, leur durée de vie, le prix d'un bac et le coût sur 15 ans, remplacements compris. Le PVC : il dure 8 ans, un bac coûte 166,60 euros, et 333,20 euros sur 15 ans. Le polypropylène recyclé : il dure 6 ans, un bac coûte 90,44 euros, et 271,32 euros sur 15 ans. Le teck : il dure 15 ans, un bac coûte 309,40 euros, et 309,40 euros sur 15 ans."},
  o:["au-delà de quinze ans, le banc cesse de compter les remplacements du teck","le teck se dégrade brutalement à partir de sa quinzième année dehors","le PVC devient moins cher que le teck grâce à l'usure de sa concurrence","il dure 15 ans : pour couvrir 20 ans, il en faut deux, soit 619 €"],r:3,
  expl:"Le classement bouge deux fois entre quatre et vingt ans. Il n'appartient pas aux matériaux : il appartient à la durée qu'on a choisie — et qu'il faut écrire.",
  ex:"À 20 ans : PP 362 €, PVC 500 € (3×), teck 619 € (2×).",
@@ -374,7 +378,8 @@ const QUESTIONS = [
  err:"Noter chaque critère pour pouvoir les additionner, ce qui invente une grandeur.",
  d:["une note sur dix est arbitraire : elle fabrique une grandeur qui n'a pas été mesurée","","croiser deux classements ne dit rien quand ils se contredisent, ce qui est le cas ici","renoncer à comparer revient à décider d'avance, avant tout calcul"],
  ret:"On compare deux grandeurs différentes en les ramenant à une même troisième."},
-{c:"4e_C7.3",n:"Recalé sur la recyclabilité",q:"Le pin traité autoclave tient l'eau, le sel et le soleil. Pourquoi est-il écarté ?",
+{c:"4e_C7.3",n:"Recalé sur la recyclabilité",q:"Sur ce tableau, le pin traité autoclave tient l'eau, le sel et le soleil. Pourquoi est-il écarté ?",
+ img:{src:"Images/doc_criteres_bac.svg",alt:"Le cahier des charges du bac du jardin : résistance d'au moins 20 mégapascals, au moins 5 ans au soleil, au moins 3 sur 5 au sel, au moins 4 sur 5 à l'eau, au moins 40 pour cent recyclable, au plus 60 kilogrammes. Puis les six matériaux. Le pin non traité : 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 1 sur 5 à l'eau, 90 pour cent recyclable, 17,7 kilogrammes. Le pin traité autoclave : 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 4 sur 5 à l'eau, 20 pour cent recyclable, 18,7 kilogrammes. Le PVC : 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 45 pour cent recyclable, 47,6 kilogrammes. Le polypropylène recyclé : 30 mégapascals, 6 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 95 pour cent recyclable, 32,3 kilogrammes. L'acier galvanisé : 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 3 sur 5 à l'eau, 95 pour cent recyclable, 266,9 kilogrammes. Le teck : 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 85 pour cent recyclable, 22,1 kilogrammes."},
  o:["sa recyclabilité tombe à 20 %, quand le collège en exige au moins 40 %","sa résistance de 38 mégapascals reste inférieure aux 20 MPa demandés par le bac","sa masse de 18,7 kg dépasse les 60 kg admis pour un bac déplaçable","sa tenue à l'eau de 4 sur 5 est insuffisante pour une terre humide"],r:0,
  expl:"Le traitement qui rend ce bois résistant à la terre humide est justement ce qui ferme sa filière de recyclage : on ne le broie plus avec les autres bois.",
  ex:"90 % de recyclabilité pour le pin nu, 20 % une fois traité classe 4.",
@@ -388,21 +393,24 @@ const QUESTIONS = [
  err:"Croire qu'une exigence qui ne casse rien est une exigence secondaire.",
  d:["aucune loi ne fixe ce seuil : c'est le conseil d'administration qui l'a écrit","la part recyclable dépend surtout des filières existantes, pas seulement du matériau","un engagement voté n'est pas une préférence : il oblige celui qui l'a pris",""],
  ret:"Une exigence peut venir d'un engagement. Elle tient exactement tant qu'on la fait tenir."},
-{c:"4e_C7.3",n:"Deux motifs pour l'acier",q:"L'acier galvanisé est écarté du bac pour deux motifs. Lesquels ?",
+{c:"4e_C7.3",n:"Ce qui écarte l'acier",q:"D'après ce tableau, pourquoi l'acier galvanisé est-il écarté du bac ?",
+ img:{src:"Images/doc_criteres_bac.svg",alt:"Le cahier des charges du bac du jardin : résistance d'au moins 20 mégapascals, au moins 5 ans au soleil, au moins 3 sur 5 au sel, au moins 4 sur 5 à l'eau, au moins 40 pour cent recyclable, au plus 60 kilogrammes. Puis les six matériaux. Le pin non traité : 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 1 sur 5 à l'eau, 90 pour cent recyclable, 17,7 kilogrammes. Le pin traité autoclave : 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 4 sur 5 à l'eau, 20 pour cent recyclable, 18,7 kilogrammes. Le PVC : 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 45 pour cent recyclable, 47,6 kilogrammes. Le polypropylène recyclé : 30 mégapascals, 6 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 95 pour cent recyclable, 32,3 kilogrammes. L'acier galvanisé : 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 3 sur 5 à l'eau, 95 pour cent recyclable, 266,9 kilogrammes. Le teck : 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 85 pour cent recyclable, 22,1 kilogrammes."},
  o:["la résistance, insuffisante en flexion, et le prix, le plus élevé des six","la tenue à l'eau, à 3 sur 5, et la masse du bac, qui atteindrait 267 kg","la tenue au soleil, trop courte, et la recyclabilité, la plus faible des six","la tenue au sel, à 3 sur 5, et la température atteinte par le métal au soleil"],r:1,
  expl:"La terre humide en permanence attaque l'acier galvanisé, et un bac de 267 kg ne se déplace pas à cinq. Deux seuils manqués, deux motifs différents.",
  ex:"7 850 kg/m³ × 34 L de matière = 267 kg pour le même bac que 22 kg de teck.",
  err:"Ne retenir qu'un motif d'élimination quand il y en a plusieurs.",
  d:["l'acier est le plus résistant des six, à 235 MPa (mégapascals), et il n'est pas le plus cher à l'achat","","sa tenue au soleil est de 25 ans et sa recyclabilité de 95 % : deux de ses points forts","sa tenue au sel de 3 sur 5 atteint exactement le seuil, et la température n'est pas exigée ici"],
  ret:"Un matériau peut manquer plusieurs seuils. On les nomme tous, pas seulement le premier."},
-{c:"4e_C7.3",n:"Exigence de l'objet, pas du site",q:"Le bac serait installé à 200 km de la mer, sous les arbres. Quelle exigence ne bouge pas ?",
- o:["la recyclabilité : elle dépend de la commune où le bac sera mis au rebut","la tenue au sel : le sel voyage dans l'air bien au-delà de douze kilomètres","la tenue au soleil : les arbres perdent leurs feuilles une partie de l'année","la tenue à l'eau : la terre du bac reste humide, où qu'il soit installé"],r:3,
+{c:"4e_C7.3",n:"Exigence de l'objet, pas du site",q:"Le bac serait installé à 200 km de la mer, sous les arbres. Sur ce cahier des charges, quelle exigence ne bouge pas ?",
+ img:{src:"Images/doc_criteres_bac.svg",alt:"Le cahier des charges du bac du jardin : résistance d'au moins 20 mégapascals, au moins 5 ans au soleil, au moins 3 sur 5 au sel, au moins 4 sur 5 à l'eau, au moins 40 pour cent recyclable, au plus 60 kilogrammes. Puis les six matériaux. Le pin non traité : 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 1 sur 5 à l'eau, 90 pour cent recyclable, 17,7 kilogrammes. Le pin traité autoclave : 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 4 sur 5 à l'eau, 20 pour cent recyclable, 18,7 kilogrammes. Le PVC : 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 45 pour cent recyclable, 47,6 kilogrammes. Le polypropylène recyclé : 30 mégapascals, 6 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 95 pour cent recyclable, 32,3 kilogrammes. L'acier galvanisé : 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 3 sur 5 à l'eau, 95 pour cent recyclable, 266,9 kilogrammes. Le teck : 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 5 sur 5 à l'eau, 85 pour cent recyclable, 22,1 kilogrammes."},
+ o:["la recyclabilité : elle dépend de la commune où le bac sera mis au rebut","la tenue au sel : le sel voyage dans l'air bien au-delà de deux cents kilomètres","la tenue au soleil : les arbres perdent leurs feuilles une partie de l'année","la tenue à l'eau : la terre du bac reste humide, où qu'il soit installé"],r:3,
  expl:"Certaines exigences viennent du site, d'autres de l'objet lui-même. Déplacer l'objet ne change que les premières — et il faut savoir les distinguer.",
  ex:"Un jardin arrosé garde une terre humide à Albany comme au bord de mer.",
  err:"Croire qu'un site plus clément assouplit toutes les exigences à la fois.",
- d:["la recyclabilité vient d'un engagement du collège, pas du lieu d'installation","à douze kilomètres et sous couvert, le brouillard salin ne se fait plus sentir","le soleil frappe moins sous les arbres : cette exigence-là s'assouplit vraiment",""],
+ d:["la recyclabilité vient d'un engagement du collège, pas du lieu d'installation","à deux cents kilomètres et sous couvert, le brouillard salin ne se fait plus sentir","le soleil frappe moins sous les arbres : cette exigence-là s'assouplit vraiment",""],
  ret:"Une exigence vient du site ou de l'objet. Déplacer l'objet ne change que les premières."},
-{c:"4e_C7.3",n:"Trois fabrications",q:"Le polypropylène recyclé est le moins cher sur toutes les durées. Que son prix ne dit-il pas ?",
+{c:"4e_C7.3",n:"Trois fabrications",q:"D'après ce tableau, le polypropylène recyclé est le moins cher. Que son prix ne dit-il pas ?",
+ img:{src:"Images/doc_cout_bac.svg",alt:"Les trois matériaux retenus pour le bac, leur durée de vie, le prix d'un bac et le coût sur 15 ans, remplacements compris. Le PVC : il dure 8 ans, un bac coûte 166,60 euros, et 333,20 euros sur 15 ans. Le polypropylène recyclé : il dure 6 ans, un bac coûte 90,44 euros, et 271,32 euros sur 15 ans. Le teck : il dure 15 ans, un bac coûte 309,40 euros, et 309,40 euros sur 15 ans."},
  o:["que sa résistance de 30 mégapascals atteint tout juste le seuil de 20 exigé","qu'il est fabriqué à partir de déchets plastiques déjà collectés et triés avec soin","qu'il faudra fabriquer et transporter trois bacs au lieu d'un seul en quinze ans","qu'il se travaille au collège par sciage, perçage, moulage et impression"],r:2,
  expl:"Le prix ne compte que la matière achetée. Ni l'énergie de fabrication, ni les kilomètres, ni les trois mises au rebut n'y figurent.",
  ex:"Trois bacs sur quinze ans, ce sont trois fabrications et trois transports.",
@@ -430,7 +438,8 @@ const QUESTIONS = [
  err:"Partir du budget et chercher ce qui rentre dedans.",
  d:["un budget a été voté : il existe, mais il intervient après le tri par exigences","un cahier des charges peut parfaitement porter un plafond de dépense, mis à jour","","la recyclabilité mesure une part de matière valorisable, elle ne contient aucun prix"],
  ret:"Les exigences éliminent. Le prix départage ceux qui restent. Jamais l'inverse."},
-{c:"4e_C7.3",n:"Comparer sur quatre ans",q:"Le collège compare sur quatre ans, le temps d'une génération de collégiens. Que se passe-t-il ?",
+{c:"4e_C7.3",n:"Comparer sur quatre ans",q:"Le collège compare sur quatre ans, le temps d'une génération de collégiens. D'après ce tableau, que se passe-t-il ?",
+ img:{src:"Images/doc_cout_bac.svg",alt:"Les trois matériaux retenus pour le bac, leur durée de vie, le prix d'un bac et le coût sur 15 ans, remplacements compris. Le PVC : il dure 8 ans, un bac coûte 166,60 euros, et 333,20 euros sur 15 ans. Le polypropylène recyclé : il dure 6 ans, un bac coûte 90,44 euros, et 271,32 euros sur 15 ans. Le teck : il dure 15 ans, un bac coûte 309,40 euros, et 309,40 euros sur 15 ans."},
  o:["les trois coûts deviennent égaux, puisque aucun bac n'est remplacé sur toute la durée","le teck l'emporte, puisqu'il est le seul à tenir bien au-delà de quatre ans","chacun des trois retenus n'est acheté qu'une fois : le classement d'achat revient","le classement reste celui de quinze ans, car les durées de vie ne changent pas"],r:2,
  expl:"Sur quatre ans, aucun des trois n'atteint sa fin de vie : chacun est acheté une fois, et l'ordre est celui des prix d'achat. C'est encore un choix de durée.",
  ex:"4 ans : PP 90 €, PVC 167 €, teck 309 € — l'ordre de l'achat, tout simplement.",
@@ -603,7 +612,7 @@ const PIEGE_DE_NOTION={
   "Écrire la durée retenue":"duree",
   "Recalé sur la recyclabilité":"exigences",
   "Engagement et contrainte physique":"exigences",
-  "Deux motifs pour l'acier":"exigences",
+  "Ce qui écarte l'acier":"exigences",
   "Exigence de l'objet, pas du site":"exigences",
   "Trois fabrications":"impact",
   "Recyclable et impact":"impact",

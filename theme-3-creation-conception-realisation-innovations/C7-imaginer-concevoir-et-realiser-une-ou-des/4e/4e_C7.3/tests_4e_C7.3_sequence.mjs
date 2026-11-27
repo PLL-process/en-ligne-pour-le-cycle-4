@@ -191,6 +191,30 @@ if (REP.refus) {
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
 }
 
+// ── le billet de sortie (n°330, 27/11/2026) : avant le Bonus, deux zones gardées, deux aides, deux critères ──
+const TXT_BILLET = 'Sur 10 ans : 1 bac en acier, 120 € ; 2 bacs en polypropylène, 80 €.';
+const billet = await p.evaluate(() => {
+  const s = document.getElementById('billetSortie'); if (!s) return null;
+  const cartes = [...document.querySelectorAll('section.card')], bonus = document.querySelector('section.card.bonus');
+  const c = s.querySelector('details.correction')?.textContent || '';
+  return { zones: s.querySelectorAll('textarea[data-save]').length, aides: s.querySelectorAll('details.etayage').length,
+    criteres: (c.match(/Critère/g) || []).length, contre: (c.match(/✘/g) || []).length,
+    boutons: s.querySelectorAll('button').length, avantBonus: !!bonus && cartes.indexOf(s) === cartes.indexOf(bonus) - 1 };
+});
+if (niveau === '4e') {
+  ok('un billet de sortie existe', !!billet);
+  if (billet) {
+    ok('billet : deux zones sauvegardées, deux versions étayées', billet.zones === 2 && billet.aides === 2,
+      billet.zones + ' zones, ' + billet.aides + ' aides');
+    ok('billet : deux critères et des contre-exemples, aucun bouton', billet.criteres === 2 && billet.contre >= 2 && billet.boutons === 0,
+      billet.criteres + ' critères, ' + billet.contre + ' ✘, ' + billet.boutons + ' bouton(s)');
+    ok('billet : juste avant le Bonus', billet.avantBonus);
+    await p.evaluate(() => { const t = document.querySelector('.seance-tab[data-panel="s2"]'); if (t) t.click(); });
+    await p.fill('#bs_4e_C7_3_1', TXT_BILLET);
+    await p.evaluate(() => document.getElementById('bs_4e_C7_3_1').blur());
+  }
+}
+
 // ── la mémoire ───────────────────────────────────────────────────────────
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
 const [idT, valT] = Object.entries(REP.persistance)[0];
@@ -201,6 +225,8 @@ ok('les seuils du banc survivent au rechargement',
   await p.inputValue('#sv_' + REP.seuilTemoin[0]));
 ok('les verrous survivent au rechargement',
   await p.evaluate(v => !!window.__exp[v], B.essais[0].exp || 'evalue'));
+if (niveau === '4e' && billet) ok('billet : la réponse survit au rechargement',
+  (await p.inputValue('#bs_4e_C7_3_1')) === TXT_BILLET);
 ok('le tableau est reconstruit au rechargement',
   (await p.$$eval('#tab tr', n => n.length)) > 1);
 
