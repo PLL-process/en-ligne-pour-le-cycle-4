@@ -38834,3 +38834,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 51 / 51 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`4e_C7.8`). La famille C7 de 4e est complète.
+
+## 27/11/2026 — 3e_C7.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et LU dans la séquence (`documents_qcm.py` lit le tableau des
+  quatre scénarios de l'activité 2 et la règle « strictement supérieure à 28 °C ») — « Le protocole d'essai du
+  capteur » (q13, q14, q15, q16). Sept questions illustrées sur trente (trois avant). La q1 demandait « En 5e on suit,
+  en 4e on organise. Qu'attend-on de toi en 3e ? » : elle évaluait la connaissance du programme et supposait deux années
+  faites avec nous (n°304) ; elle demande maintenant ce qu'on attend quand personne ne donne la liste des tâches (notion
+  « Élaborer un processus », piège reposé). La q14 disait « le tableau de l'activité 2 » : elle le montre.
+- **Billet de sortie** avant le Bonus de la séance 4 : le détecteur de bruit de la cantine (élaborer quatre tâches avec
+  leur durée ; un protocole de trois essais, cas frontière à 80 dB compris).
+Bancs : `tests_3e_C7.mjs` 102 / 102 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`3e_C7.1`).
