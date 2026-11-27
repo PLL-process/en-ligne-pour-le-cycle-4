@@ -13,3 +13,9 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 
 *Le 30/10/2026, cette image remplace `synthese_jardin_connecte.png` (même demande, « in Martinique », avec des palmiers) : le jardin de 4e est à New York, et Pascal a demandé « tout à NY ». L'ancien fichier est retiré du lot.*
 
+
+## Document du QCM, dessiné pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_champs_message.svg` | Les sept champs qu'un message du jardin pourrait porter, avec une valeur d'exemple et ce que dit chacun — sans dire lesquels envoyer. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C7.8.json`, lui-même LU dans la séquence par `documents_qcm.py` (`const CHAMPS` du banc). | CC0, comme les images du dépôt | QCM, q3, q5, q6, q7, q16, q21 |

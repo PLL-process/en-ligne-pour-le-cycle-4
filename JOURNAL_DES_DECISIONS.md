@@ -38821,3 +38821,16 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 43 / 43 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`4e_C7.7`).
+
+## 27/11/2026 — 4e_C7.8 : six questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et LU dans la séquence (`documents_qcm.py` lit `const CHAMPS`
+  du banc) — « Ce que le jardin pourrait envoyer » : les sept champs possibles d'un message, une valeur d'exemple, ce
+  que dit chacun, sans dire lesquels envoyer (q3, q5, q6, q7, q16, q21).
+- **Billet de sortie** avant le Bonus de la séance 2 : le compteur d'entrées du CDI (le message, sa règle d'émission
+  et son comportement sans lien ; la photo des élèves, donnée personnelle qu'on n'envoie pas). La séance 2 était pleine :
+  le réinvestissement (10 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`.
+Bancs : séquence 51 / 51 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.8`). La famille C7 de 4e est complète.
