@@ -38781,3 +38781,16 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 49 / 49 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`4e_C7.3`).
+
+## 27/11/2026 — 4e_C7.4 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `energie.py`) — « Ce que consomme le jardin connecté » (q3, q4, q5, q14) et « Cinq sources pour le jardin »
+  (q7, q9, q11). Sept questions illustrées sur trente. La q3 disait de la pompe qu'elle est « le plus petit poste du
+  montage » : le relais consomme moins qu'elle ; ses pourquoi renvoient aux colonnes à relire.
+- **Billet de sortie** avant le Bonus de la séance 2 : le capteur de niveau de la cuve d'eau de pluie (deux critères
+  écrits avant de comparer ; la source choisie au pire mois, décembre). La séance passe de 45 à 50 minutes.
+Bancs : séquence 40 / 40 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.4`).
