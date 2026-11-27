@@ -174,3 +174,23 @@ STOCKER de trop ; AGIR sert deux fois. Le mode mission reçoit 30 pourquoi, case
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 27/11/2026 — huit questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C7.5_sequence.mjs "$PWD/sequence_4e_C7.5_jardin-incomplet.html" 4e reponses_4e_C7.5.json` : **46 / 46**
+  (cinq tests neufs : le billet existe ; deux zones gardées et deux versions étayées ; deux critères, des contre-exemples,
+  aucun bouton ; juste avant le Bonus ; la réponse survit au rechargement).
+- `node tests_4e_C7.5_qcm.mjs "$PWD/qcm_4e_C7.5_jardin-incomplet.html" 4e_C7.5 4e_C4.4 sequence_4e_C7.5_jardin-incomplet.html` :
+  **35 / 35** (« aucune image héritée » remplacé par quatre tests : au moins six questions sur document, chaque
+  document un `doc_` du lot présent dans `Images/`, une description qui dit ses nombres, `documents_qcm.py --verifier`
+  à jour de la séquence).
+- `node tests_regle_311_4e_C7.5.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `controle_annee_precedente.py` : 0.
+- `controle_unites.py` : 0 (un pourquoi disait « 700 mA » sans le nom ; corrigé). `controle_schemas.mjs` : 0 ✘, 0 ⚠ (une
+  ligne trop près du bord au premier jet, « Symptôme : … » ; réécrite « On observe : … »).
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 0 écart.
+- Contrôles des QCM (banque, en-tête, effectifs, sigles, indices, cohérence, aides) : verts ; `verif_regles_audit.py`
+  (n°23 : 95 minutes pour 110), `audit_aeration.py --strict`, `controle_squelette.mjs`, mode mission, `controle_liens.py`,
+  `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
