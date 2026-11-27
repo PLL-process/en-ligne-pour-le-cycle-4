@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 4e_C7.7 + 10 4e_C4.3), 0 illustrée.
+/* Banque : 30 questions (20 4e_C7.7 + 10 4e_C4.3), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -318,7 +320,8 @@ const QUESTIONS = [
  err:"Classer les machines du meilleur au pire, indépendamment de la pièce à produire.",
  d:["c'est vrai, et cela ne rend pas le laser meilleur : il ne fait aucun trou borgne","la vitesse ne compte qu'une fois la forme réalisable : c'est le second critère","","usiner le métal est un point fort, et il ne sert à rien pour une pièce en PMMA"],
  ret:"Un moyen n'a pas de qualité : il a un domaine. C'est la pièce qui désigne le moyen."},
-{c:"4e_C7.7",n:"La matière d'abord",q:"L'impression 3D est le moyen le plus polyvalent de l'atelier. Pourquoi est-elle écartée ?",
+{c:"4e_C7.7",n:"La matière d'abord",q:"L'impression 3D est le moyen le plus polyvalent de l'atelier. D'après ce document, pourquoi est-elle écartée ?",
+ img:{src:"Images/doc_moyens_support.svg",alt:"Le support du capteur d'humidité exige : du PMMA, une fente à 0,3 millimètre près, une paroi de 3 millimètres, deux perçages traversants. Les cinq moyens de l'atelier. Découpe laser : tolérance 0,2 millimètre, angle interne vif, il perce de part en part, matières : PMMA, contreplaqué, carton. Fraiseuse : tolérance 0,05 millimètre, angle interne arrondi à 1,5 millimètre, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Impression 3D : tolérance 0,3 millimètre, angle interne vif, il perce de part en part, matières : PLA, PETG, PP recyclé. Sciage à la main : tolérance 1 millimètre, angle interne vif, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Thermoformage : tolérance 1 millimètre, angle interne arrondi à 3 millimètre, il ne perce pas, matières : PMMA, PVC, PETG."},
  o:["elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP","sa tolérance de 0,3 mm est trop grande pour la fente du support","elle ne sait pas percer des trous traversants de 4 mm de diamètre","sa paroi minimale de 0,8 mm est trop épaisse pour une plaque de 3 mm"],r:0,
  expl:"La matière se lit avant toutes les performances. Un moyen qui ne l'accepte pas est écarté sans qu'on ait besoin de regarder quoi que ce soit d'autre.",
  ex:"Il suffit qu'une seule condition du domaine manque : le domaine n'est pas une moyenne.",
@@ -339,7 +342,8 @@ const QUESTIONS = [
  err:"Croire qu'une machine numérique rend forcément le dessin exactement.",
  d:["la commande suit le contour demandé : c'est la forme de l'outil qui limite, pas elle","","un angle vif est parfois fragile, et ce n'est pas la raison ici : c'est l'outil","une fraise plus fine réduirait le rayon sans jamais l'annuler : il resterait rond"],
  ret:"Une fraise est ronde. Elle laisse un rayon dans chaque angle interne — c'est l'outil."},
-{c:"4e_C7.7",n:"La fente qui rétrécit",q:"Une fente de 20 × 3 mm est usinée à la fraise Ø 3. Quelle longueur droite reste-t-il ?",
+{c:"4e_C7.7",n:"La fente qui rétrécit",q:"Sur ce document, une fente de 20 × 3 mm (millimètres) est usinée à la fraiseuse. Quelle longueur droite reste-t-il ?",
+ img:{src:"Images/doc_moyens_support.svg",alt:"Le support du capteur d'humidité exige : du PMMA, une fente à 0,3 millimètre près, une paroi de 3 millimètres, deux perçages traversants. Les cinq moyens de l'atelier. Découpe laser : tolérance 0,2 millimètre, angle interne vif, il perce de part en part, matières : PMMA, contreplaqué, carton. Fraiseuse : tolérance 0,05 millimètre, angle interne arrondi à 1,5 millimètre, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Impression 3D : tolérance 0,3 millimètre, angle interne vif, il perce de part en part, matières : PLA, PETG, PP recyclé. Sciage à la main : tolérance 1 millimètre, angle interne vif, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Thermoformage : tolérance 1 millimètre, angle interne arrondi à 3 millimètre, il ne perce pas, matières : PMMA, PVC, PETG."},
  o:["23 mm : la fraise déborde de 1,5 mm à chaque extrémité de la fente","20 mm : la fente garde sa longueur, seuls ses coins sont adoucis","18,5 mm : une seule extrémité est arrondie, celle où la fraise entre","17 mm : chaque extrémité perd le rayon de la fraise, soit 1,5 mm"],r:3,
  expl:"Les deux extrémités deviennent des demi-cercles de 1,5 mm de rayon. La partie rectiligne utile mesure 20 − 2 × 1,5 = 17 mm, et le méplat de 20 mm n'entre plus.",
  ex:"Le méplat de la sonde bute sur les arrondis : la pièce est fabriquée et inutilisable.",
@@ -374,7 +378,8 @@ const QUESTIONS = [
  err:"Partir de la machine libre et espérer qu'elle conviendra.",
  d:["la précision ne sert à rien si le moyen ne sait pas faire la forme demandée","on risque alors de retenir un moyen rapide qui ne sait pas produire la pièce","","un atelier disponible n'est pas un atelier capable : c'est deux questions différentes"],
  ret:"Le domaine élimine, le temps départage ceux qui restent. Jamais l'inverse."},
-{c:"4e_C7.7",n:"La tolérance du sciage",q:"Pourquoi le sciage à la main est-il écarté pour ce support ?",
+{c:"4e_C7.7",n:"La tolérance du sciage",q:"D'après ce document, pourquoi le sciage à la main est-il écarté pour ce support ?",
+ img:{src:"Images/doc_moyens_support.svg",alt:"Le support du capteur d'humidité exige : du PMMA, une fente à 0,3 millimètre près, une paroi de 3 millimètres, deux perçages traversants. Les cinq moyens de l'atelier. Découpe laser : tolérance 0,2 millimètre, angle interne vif, il perce de part en part, matières : PMMA, contreplaqué, carton. Fraiseuse : tolérance 0,05 millimètre, angle interne arrondi à 1,5 millimètre, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Impression 3D : tolérance 0,3 millimètre, angle interne vif, il perce de part en part, matières : PLA, PETG, PP recyclé. Sciage à la main : tolérance 1 millimètre, angle interne vif, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Thermoformage : tolérance 1 millimètre, angle interne arrondi à 3 millimètre, il ne perce pas, matières : PMMA, PVC, PETG."},
  o:["il demande trop de temps de préparation avant de commencer à couper","il ne sait pas percer proprement des trous traversants de 4 mm","sa tolérance courante est de 1 mm, quand la fente en demande 0,3","il n'accepte pas le PMMA, qui se fend sous la lame d'une scie à main"],r:2,
  expl:"La sonde a besoin d'une fente juste : trop large elle bouge, trop étroite elle n'entre pas. Un millimètre d'écart, c'est trois fois la tolérance admise.",
  ex:"Il est écarté sur la tolérance, avant même qu'on ait parlé de temps.",
@@ -388,21 +393,24 @@ const QUESTIONS = [
  err:"Comparer deux moyens sur le temps d'une seule pièce, et croire le résultat général.",
  d:["le dessin est fait une fois pour toutes, avant : il ne dépend pas du moyen choisi","la chauffe et le refroidissement existent, et ils sont compris dans la préparation","","réservation et nettoyage font partie de la préparation, ils n'en sont pas la structure"],
  ret:"Préparation payée une fois + temps payé par pièce. C'est ce qui fait bouger le classement."},
-{c:"4e_C7.7",n:"Quatre supports",q:"Pour les 4 bacs du jardin, quels moyens tiennent dans les 3 h de machine disponibles ?",
+{c:"4e_C7.7",n:"Quatre supports",q:"Avec ce tableau, pour les 4 supports des bacs, quels moyens tiennent dans les 3 h (heures) disponibles ?",
+ img:{src:"Images/doc_temps_support.svg",alt:"Le temps de chaque moyen pour le support du capteur. Découpe laser : 10 minutes de préparation, puis 2 minutes par pièce. Fraiseuse : 25 minutes de préparation, puis 12 minutes par pièce. Impression 3D : 15 minutes de préparation, puis 40 minutes par pièce. Sciage à la main : aucune préparation, puis 18 minutes par pièce. Thermoformage : 1 heure de préparation, puis 4 minutes par pièce. Temps de machine disponible avant la date : 3 heures."},
  o:["la découpe laser seule : la fraiseuse dépasse déjà les trois heures","les deux : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique","aucun des deux : il faudrait étaler la production sur deux semaines","la fraiseuse seule, car le laser doit être réservé plusieurs jours avant"],r:1,
  expl:"10 + 4 × 2 = 18 min au laser ; 25 + 4 × 12 = 73 min à la fraiseuse. Pour quatre pièces, la quantité ne décide rien : on peut choisir sur la géométrie de la fente.",
  ex:"C'est le cas confortable : les deux moyens sont capables ET dans les temps.",
  err:"Croire que la quantité départage toujours, quelle que soit la série.",
  d:["1 h 13 est bien en dessous de 3 h : la fraiseuse tient largement pour quatre pièces","","18 min et 1 h 13 tiennent tous deux dans les trois heures disponibles","la réservation n'entre pas dans le calcul : seul le temps machine est compté"],
  ret:"Pour une petite série, les deux moyens tiennent. Le choix se fait alors sur la forme."},
-{c:"4e_C7.7",n:"Trente supports",q:"Pour 30 supports, un par élève, que se passe-t-il dans les 3 h disponibles ?",
+{c:"4e_C7.7",n:"Trente supports",q:"Avec ce tableau, pour 30 supports, un par élève, que se passe-t-il dans les 3 h (heures) disponibles ?",
+ img:{src:"Images/doc_temps_support.svg",alt:"Le temps de chaque moyen pour le support du capteur. Découpe laser : 10 minutes de préparation, puis 2 minutes par pièce. Fraiseuse : 25 minutes de préparation, puis 12 minutes par pièce. Impression 3D : 15 minutes de préparation, puis 40 minutes par pièce. Sciage à la main : aucune préparation, puis 18 minutes par pièce. Thermoformage : 1 heure de préparation, puis 4 minutes par pièce. Temps de machine disponible avant la date : 3 heures."},
  o:["rien ne change : les deux moyens restent capables de produire la pièce","les deux sortent du délai, et il faut renoncer à équiper toute la classe","la fraiseuse sort du délai : 6 h 25, contre 1 h 10 à la découpe laser","le laser sort du délai, car sa préparation se répète à chaque plaque"],r:2,
  expl:"25 + 30 × 12 = 385 min contre 10 + 30 × 2 = 70 min. La fraiseuse reste parfaitement capable de produire la pièce — elle ne le fera pas à temps.",
  ex:"Ce sont deux questions différentes, et l'atelier les affiche sur deux jauges séparées.",
  err:"Confondre « la machine ne sait pas faire » et « la machine n'a pas le temps ».",
  d:["la capacité ne change pas, et le respect du délai, lui, change du tout au tout","1 h 10 au laser tient très largement : la classe entière peut être équipée","","la préparation du laser est payée une fois pour le lot, pas à chaque plaque"],
  ret:"« Capable » et « à temps » sont deux questions. Une machine peut savoir et ne pas pouvoir."},
-{c:"4e_C7.7",n:"Le temps machine, une contrainte",q:"Comment faut-il traiter les 3 h de machine disponibles avant la date ?",
+{c:"4e_C7.7",n:"Le temps machine, une contrainte",q:"Sur ce tableau, comment faut-il traiter les 3 h (heures) de machine disponibles avant la date ?",
+ img:{src:"Images/doc_temps_support.svg",alt:"Le temps de chaque moyen pour le support du capteur. Découpe laser : 10 minutes de préparation, puis 2 minutes par pièce. Fraiseuse : 25 minutes de préparation, puis 12 minutes par pièce. Impression 3D : 15 minutes de préparation, puis 40 minutes par pièce. Sciage à la main : aucune préparation, puis 18 minutes par pièce. Thermoformage : 1 heure de préparation, puis 4 minutes par pièce. Temps de machine disponible avant la date : 3 heures."},
  o:["comme une contrainte de fabrication, au même titre que l'épaisseur minimale","comme une indication d'organisation, qui ne concerne pas la conception","comme une limite indicative, qu'on peut dépasser en prévenant l'atelier","comme une donnée sans rapport avec le choix du moyen de fabrication"],r:0,
  expl:"Un moyen qui ne peut pas produire la série à temps ne convient pas, exactement comme un moyen dont la tolérance est trop grande. Les deux se lisent avant de lancer.",
  ex:"La fraiseuse est capable et hors délai : la conclusion est la même, on ne la retient pas.",
@@ -444,7 +452,8 @@ const QUESTIONS = [
  err:"Fusionner deux critères indépendants en un seul voyant.",
  d:["les deux calculs sont immédiats : la raison est de lecture, pas de performance","","les deux dépendent du dessin ET de la machine : ce n'est pas ce qui les sépare","un moyen hors délai reste parfaitement capable — c'est justement tout le problème"],
  ret:"Quand deux critères sont indépendants, l'instrument doit les afficher séparément."},
-{c:"4e_C7.7",n:"Le collège sans laser",q:"Un collège n'a que fraiseuse et imprimante. Quel est le chemin le plus économe ?",
+{c:"4e_C7.7",n:"Le collège sans laser",q:"Un collège n'a que la fraiseuse et l'imprimante 3D. D'après ce document, quel est le chemin le plus économe ?",
+ img:{src:"Images/doc_moyens_support.svg",alt:"Le support du capteur d'humidité exige : du PMMA, une fente à 0,3 millimètre près, une paroi de 3 millimètres, deux perçages traversants. Les cinq moyens de l'atelier. Découpe laser : tolérance 0,2 millimètre, angle interne vif, il perce de part en part, matières : PMMA, contreplaqué, carton. Fraiseuse : tolérance 0,05 millimètre, angle interne arrondi à 1,5 millimètre, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Impression 3D : tolérance 0,3 millimètre, angle interne vif, il perce de part en part, matières : PLA, PETG, PP recyclé. Sciage à la main : tolérance 1 millimètre, angle interne vif, il perce de part en part, matières : PMMA, PVC, contreplaqué, aluminium. Thermoformage : tolérance 1 millimètre, angle interne arrondi à 3 millimètre, il ne perce pas, matières : PMMA, PVC, PETG."},
  o:["renoncer au support et fixer la sonde autrement, sans pièce fabriquée","changer pour du PETG et imprimer les supports en trois dimensions","garder le PMMA et ajouter les dégagements d'angle au dessin","commander les supports découpés au laser chez un prestataire extérieur"],r:2,
  expl:"C'est le chemin court : rien ne bouge — ni matière, ni cotes extérieures, ni perçages. Le coût est un temps de dessin, et il est faible.",
  ex:"Imprimer coûterait 40 min par pièce, contre 12 à la fraiseuse.",
