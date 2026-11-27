@@ -38874,3 +38874,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 59 / 59 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`3e_C7.4`).
+
+## 27/11/2026 — 3e_C7.5 : huit questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit l'établi :
+  le carton, le courant de chaque constituant, ce que fournissent les sources, le programme téléversé) — « Le carton de
+  la station » (q6, q12, q17) et « Le programme de la station » (q8, q9, q10, q11, q20). Huit questions illustrées sur
+  trente. La q25 perd la notion « Deux chaînes qui se rencontrent », que E1 lisait comme une liste annoncée (piège
+  reposé).
+- **Billet de sortie** avant le Bonus de la séance 4 : le témoin de crue de la ravine (les constituants d'un carton trop
+  fourni, chacun rattaché à une exigence, le courant et la source ; la chaîne d'information caractérisée).
+Bancs : séquence 59 / 59 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`3e_C7.5`).

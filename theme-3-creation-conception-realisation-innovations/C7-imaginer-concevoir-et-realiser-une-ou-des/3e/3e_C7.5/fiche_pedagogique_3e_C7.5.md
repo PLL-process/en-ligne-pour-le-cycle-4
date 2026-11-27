@@ -23,6 +23,7 @@
 | 3 | 3 | Ce que coûte chaque retrait | 25 min | verrou : `retire` |
 | 4 | 4 | Le choix qui coûte | 20 min | verrou : `diag_budget` |
 | 4 | 5 | REFAIRE — réinvestissement | 15 min | — |
+| 4 | — | Billet de sortie, seul et sans aide | 5 min | — |
 
 **Quatre séances de 55 min** (une heure de cours par semaine, décision du 24/10/2026) :
 25, 35, 55 et 35 min d'activités annoncées. La séance 1 porte aussi la lecture de la situation,
@@ -89,3 +90,18 @@ Restent visibles à chaque séance : le titre, la mission, la barre d'outils et 
 Clôture : un corrigé du Bonus (le collège voisin : un seul constituant change, l'écran LCD remplace le bandeau, 580 → 120 mA lus à l'établi, et l'établi refuse parce qu'il juge avec le cahier des charges du collège), « Comment j'ai travaillé », « Je me positionne » sur 3e_C7.5 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens (« si on m'aide », « si on me rappelle » : fragile ; « seul » : satisfaisante), une phrase neuve dit la très bonne maîtrise (l'expliquer à un camarade ou le refaire ailleurs), et une réponse donnée avant se relit avec sa phrase et sur 3e_C4.3.
 
 Sécurité visible (retouche du 04/11/2026) : l'en-tête de la séance 4 (retirer la batterie, re-tester) reçoit la même ligne que la séance 3 — « relis l'encadré Sécurité », très basse tension, bandeau qui chauffe, mât au sol —, dont le lien ouvre le volet.
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en séance 4, juste avant le Bonus (environ 5 min, seul et sans aide ; la séance 4 compte 40
+minutes d'activités avec lui). Un objet que la séquence n'a pas étudié : **le témoin de crue de la ravine**, loin de
+toute prise.
+- Question 1 (3e_C7.5) : les constituants retenus dans un carton trop fourni, le courant, la source. On regarde chaque
+  constituant rattaché à une exigence, aucun en trop, le courant calculé (400 mA) et la source choisie pour ce lieu.
+- Question 2 (3e_C4.3) : la chaîne d'information caractérisée. On regarde chaque maillon nommé avec la forme de ce
+  qu'il transmet (une mesure, puis un ordre tout ou rien).
+
+**QCM** : huit questions sur trente se lisent sur un document dessiné pour le téléphone, LU dans la séquence par
+`documents_qcm.py` — « Le carton de la station » (le courant de chaque constituant et ce que fournissent les sources ;
+q6, q12, q17) et « Le programme de la station » (q8, q9, q10, q11, q20). La q25 perd la notion « Deux chaînes qui se
+rencontrent », que E1 lisait comme une liste annoncée.
