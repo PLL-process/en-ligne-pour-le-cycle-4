@@ -38901,3 +38901,16 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 82 / 82 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`3e_C7.7`).
+
+## 27/11/2026 — 3e_C7.8 : huit questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit `const
+  CHAMPS` du banc et les six essais de l'activité 4) — « Ce qu'une station pourrait envoyer » (q2, q3, q4, q6, q7) et
+  « Les six essais de la recette » (q24, q25, q26). La q25 disait « parmi les six essais » sans les montrer. La q20 perd
+  la notion « Interfacer deux objets », que E1 lisait comme une liste annoncée (piège reposé).
+- **Billet de sortie** avant le Bonus de la séance 3 : les deux pluviomètres de la rivière (le message et le
+  comportement quand l'autre se tait ; deux essais de panne). La séance 3 passe de 50 à 55 minutes d'activités.
+Bancs : séquence 63 / 63 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.8`). La famille C7 est complète sur les trois niveaux.
