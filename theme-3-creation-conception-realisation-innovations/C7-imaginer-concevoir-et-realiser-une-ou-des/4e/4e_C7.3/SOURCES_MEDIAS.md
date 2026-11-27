@@ -18,3 +18,10 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_emplacement_bacs.png` | Un terrain de terre noire et humide, partagé en carrés par des ficelles tendues, un tas de terre dans chacun. Un tuyau d'arrosage enroulé, un mur de briques. PNG 1 536 × 1 024, 3.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of an empty corner of a school garden prepared for eight planter boxes: rectangles marked on the ground with string and wooden pegs, heaps of dark moist soil, a coiled watering pipe, no planter boxes yet, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_criteres_bac.svg` | Les six exigences du bac, puis, pour les six matériaux, la résistance, la tenue au soleil, au sel et à l'eau, la recyclabilité et la masse. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C7.3.json`, lui-même calculé par `documents_qcm.py` depuis `materiaux.py` (aucun nombre recopié). | CC0, comme les images du dépôt | QCM, q10, q12, q13 |
+| `Images/doc_cout_bac.svg` | Les trois matériaux retenus : durée de vie, prix d'un bac, coût sur quinze ans. | Même chaîne : `materiaux.py` → `documents_qcm.py` → `document_qcm.py`. | CC0 | QCM, q5, q6, q14, q18 |
