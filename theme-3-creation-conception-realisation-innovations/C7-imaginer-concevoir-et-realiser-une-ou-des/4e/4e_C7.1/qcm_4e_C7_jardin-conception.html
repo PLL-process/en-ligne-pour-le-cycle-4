@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -305,17 +307,17 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 4e_C7.1 + 10 4e_C7.2 + 10 4e_C7.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (10 4e_C7.1 + 10 4e_C7.2 + 10 4e_C7.3), 9 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ ORG ═══ */
-{c:"ORG",n:"Le verbe de la 4e",q:"En 5e on SUIT un planning fourni. Qu'attend-on de toi en 4e ?",
- nuance:"« Si j'ai une idée de tâche qu'on a oubliée, je n'ai pas le droit de l'ajouter ? » Bien sûr que si, et c'est même très bien. Cette progression — suivre en 5e, organiser en 4e, élaborer en 3e — n'est pas une interdiction : c'est ce qu'on est SÛR de te demander à chaque niveau, et donc ce sur quoi tu seras évalué. Personne ne te reprochera d'aller plus loin. Elle sert surtout à savoir où porter ton effort : cette année, la difficulté n'est pas de trouver les tâches, elle est de décider dans quel ordre les mener et lesquelles peuvent avancer en même temps.",
- o:["l'INVENTER entièrement, les tâches comprises","le SUIVRE tel qu'on le donne, mais sur un projet bien plus long","l'ORGANISER : établir l'ordre des tâches qu'on te donne","le remplir à la fin du projet, pour rendre compte"],r:2,
- expl:"Le programme écrit « organiser un processus de conception et de réalisation dans une durée, avec des tâches identifiées ». Les tâches sont données ; leur agencement, non.",
- ex:"Découper le bois et imprimer le support peuvent avancer en parallèle ; le montage attend les deux.",
- err:"Sauter cette étape pour « passer aux choses sérieuses ». C'est l'étape sérieuse.",
- d:["Inventer les tâches à partir de rien, c'est ce qui est attendu en 3e. En 4e, elles te sont fournies pour que tu puisses te concentrer sur leur agencement.","Le projet est effectivement plus long — mais ce n'est pas la différence attendue. Ce qui change, c'est le verbe : en 5e tu appliques un ordre décidé pour toi, en 4e tu le décides.","","Un planning rempli après coup est un compte rendu : il ne t'a servi à rien pendant le projet."],
- ret:"Suivre (5e) → organiser (4e) → élaborer (3e). C'est ce qu'on attend au minimum, pas une limite."},
+{c:"ORG",n:"Organiser des tâches données",q:"Voici les tâches du projet du jardin, dans le désordre. Qu'est-ce qu'organiser ce planning ?",
+ img:{src:"Images/doc_taches_jardin.svg",alt:"Les quatre tâches du projet du jardin, données dans le désordre, avec leur durée. Fabriquer le prototype : 40 minutes. Formuler le besoin du jardinier : 15 minutes. Comparer les matériaux : 20 minutes. Dessiner deux supports : 25 minutes."},
+ o:["inventer d'autres tâches, avant de lire celles-ci","les recopier dans l'ordre où elles sont écrites","décider leur ordre, et ce qui peut avancer en même temps","les remplir à la fin du projet, pour rendre compte"],r:2,
+ expl:"Organiser un processus, c'est agencer des tâches identifiées dans une durée : décider leur ordre, et repérer celles qui peuvent avancer en parallèle.",
+ ex:"Le besoin d'abord (15 min) : sans lui, rien ne se compare. Le prototype en dernier (40 min) : il attend le support dessiné et le matériau choisi.",
+ err:"Recopier les tâches dans l'ordre où on les lit, sans se demander ce que chacune attend.",
+ d:["Les tâches sont données : le travail porte sur leur ordre. Relis la liste : rien ne manque pour commencer.","Elles sont dans le désordre : fabriquer le prototype ne peut pas venir avant le besoin. Relis chaque tâche et demande-toi ce qu'elle attend.","","Un planning rempli après coup est un compte rendu : il ne sert à rien pendant le projet."],
+ ret:"Organiser, c'est décider l'ordre des tâches — et ce qui peut avancer en même temps."},
 {c:"ORG",n:"Ce que Ortiz refuse",q:"Mme Ortiz, qui a monté le projet du jardin avec les élèves, accepte de replanter, mais pose une condition. Laquelle ?",
  o:["que les bacs soient déplacés à l'intérieur du bâtiment","que les élèves viennent arroser pendant les vacances de juillet","que ça s'arrose tout seul, et que l'électronique tienne dehors","que le projet coûte moins cher que celui de l'an dernier"],r:2,
  expl:"« Je ne replante pas si personne ne peut arroser en juillet. » Le besoin est double : l'automatisme ET la tenue en extérieur.",
@@ -361,7 +363,8 @@ const QUESTIONS = [
  
  d:["« Réussir » est le résultat qu'on espère, pas l'action qui y mène. On ne peut pas la commencer un mardi à 14 h.","C'est une ÉCHÉANCE, pas une tâche : elle dit quand, jamais quoi. On ne peut pas la commencer, seulement la rater.","","Il y a bien une durée, mais l'action ne dit rien : que fait-on, exactement ? Et à quoi verra-t-on que c'est fini ?"],
  ret:"Une tâche de planning : une action concrète, une durée, une fin repérable."},
-{c:"ORG",n:"Ce qui avance en même temps",q:"Deux tâches peuvent-elles avancer en même temps ?",
+{c:"ORG",n:"Ce qui avance en même temps",q:"Sur cette liste, deux tâches peuvent-elles avancer en même temps ?",
+ img:{src:"Images/doc_taches_jardin.svg",alt:"Les quatre tâches du projet du jardin, données dans le désordre, avec leur durée. Fabriquer le prototype : 40 minutes. Formuler le besoin du jardinier : 15 minutes. Comparer les matériaux : 20 minutes. Dessiner deux supports : 25 minutes."},
  o:["oui, toujours : deux tâches à la fois vont plus vite","non, jamais : un planning est une file d'attente","oui, si aucune n'a besoin du résultat de l'autre","seulement si deux élèves différents travaillent dessus"],r:2,
  expl:"C'est le cœur du travail d'organisation en 4e : repérer les dépendances réelles, et ne pas en inventer.",
  ex:"Découper le bois et imprimer le support : indépendants. Le montage, lui, attend les deux.",
@@ -491,7 +494,8 @@ const QUESTIONS = [
  
  d:["Il noircit en effet — les taches sont un signe, pas le problème. Ce qui compte pour l'objet, c'est qu'il GONFLE : une pièce qui gonfle coince, fend, et écarte ses assemblages.","","Le carton se défait, ses fibres se séparent ; le bois se déforme en restant d'un seul tenant. Ce n'est pas la même chose.","Il bouge : un bois non traité gonfle en absorbant et se rétracte en séchant. C'est ce qu'on appelle le travail du bois."],
  ret:"Le bois de palette travaille avec l'humidité : traité, il tient. D'autres bois se protègent tout seuls."},
-{c:"MAT",n:"Le meilleur matériau",q:"Quel est le meilleur matériau pour le boîtier ?",
+{c:"MAT",n:"Le meilleur matériau",q:"D'après ce tableau, quel est le meilleur matériau pour le boîtier ?",
+ img:{src:"Images/doc_tableau_materiaux.svg",alt:"Le tableau des trois matériaux pour le boîtier du jardin, rempli après le banc météo. Le bois de palette : tenue à la pluie et au gel moyenne, découpe facile, impact environnemental faible. Le plastique récupéré : tenue à la pluie et au gel bonne, découpe moyenne, impact environnemental faible. Le carton renforcé : tenue à la pluie et au gel faible, découpe facile, impact environnemental faible."},
  o:["il n'y en a pas dans l'absolu : cela dépend du lieu","le plus solide des trois, dans tous les cas","le moins cher des trois, dans tous les cas","le plus écologique des trois, dans tous les cas"],r:0,
  expl:"C'est la leçon centrale de la compétence C7.3. Le tableau ne classe pas les matériaux : il les confronte à une situation.",
  ex:"Le carton est excellent pour une maquette d'intérieur, désastreux dans une cour sous la pluie.",
@@ -506,15 +510,16 @@ const QUESTIONS = [
  
  d:["Trois fois le même critère ne compare rien de plus qu'une fois — et donne l'illusion d'un examen approfondi.","Ce sont trois critères sérieux, et on les rencontre souvent. Mais ce ne sont pas ceux de NOTRE tableau — et ici ils ne trancheraient rien : les trois matériaux sont récupérés, donc comparables en prix, en poids et en disponibilité.","La marque et la couleur ne disent rien du comportement du matériau.",""],
  ret:"Croiser des critères de familles différentes — et n'en garder que ceux qui peuvent changer la décision."},
-{c:"MAT",n:"La facilité de découpe",q:"Pourquoi la facilité de découpe compte-t-elle autant que la tenue à la pluie ?",
- nuance:"« Une découpe propre, ça n'abîme rien ? » En vérité, une découpe abîme toujours un peu, et c'est utile à savoir. Une scie chauffe et arrache des fibres ; un cutter écrase les bords du carton ; une découpe laser laisse une tranche brûlée. C'est justement pour cela que la tranche est l'endroit fragile d'une pièce, et l'endroit par où l'eau entre. Mais ce n'est pas la question posée ici : on ne compare pas les dégâts de la découpe, on compare la difficulté à découper avec les outils dont on dispose. Un matériau qu'on ne sait pas couper en classe ne peut pas devenir notre boîtier, même s'il est parfait par ailleurs.",
+{c:"MAT",n:"La facilité de découpe",q:"Sur ce tableau, pourquoi la facilité de découpe compte-t-elle autant que la tenue à la pluie ?",
+ img:{src:"Images/doc_tableau_materiaux.svg",alt:"Le tableau des trois matériaux pour le boîtier du jardin, rempli après le banc météo. Le bois de palette : tenue à la pluie et au gel moyenne, découpe facile, impact environnemental faible. Le plastique récupéré : tenue à la pluie et au gel bonne, découpe moyenne, impact environnemental faible. Le carton renforcé : tenue à la pluie et au gel faible, découpe facile, impact environnemental faible."},
  o:["parce que le programme impose de la mettre au tableau","parce qu'elle est plus importante que la tenue à la pluie et au gel","parce que la découpe abîme toujours un peu le matériau","parce qu'un matériau qu'on ne sait pas travailler est hors jeu"],r:3,
  expl:"La faisabilité est une contrainte au même titre que la météo. Un matériau parfait mais inutilisable en classe ne résout rien.",
  ex:"Le plastique récupéré demande de l'outillage : c'est ce qui le classe « moyenne » en découpe.",
- 
  d:["Le programme demande de comparer sur des critères ; il ne te dit pas lequel doit peser le plus.","Elle ne l'est pas davantage : elle est d'une autre nature, et les deux peuvent éliminer un matériau.","La découpe modifie toujours un peu la matière — mais ce n'est pas la raison pour laquelle on regarde ce critère.",""],
- ret:"Ce qu'on ne peut pas fabriquer avec les moyens dont on dispose n'est pas une solution."},
-{c:"MAT",n:"Le réemploi",q:"Bois de palette et plastique récupéré ont tous deux un impact environnemental faible. Pourquoi ?",
+ ret:"Ce qu'on ne peut pas fabriquer avec les moyens dont on dispose n'est pas une solution.",
+ nuance:"« Une découpe propre, ça n'abîme rien ? » En vérité, une découpe abîme toujours un peu, et c'est utile à savoir. Une scie chauffe et arrache des fibres ; un cutter écrase les bords du carton ; une découpe laser laisse une tranche brûlée. C'est justement pour cela que la tranche est l'endroit fragile d'une pièce, et l'endroit par où l'eau entre. Mais ce n'est pas la question posée ici : on ne compare pas les dégâts de la découpe, on compare la difficulté à découper avec les outils dont on dispose. Un matériau qu'on ne sait pas couper en classe ne peut pas devenir notre boîtier, même s'il est parfait par ailleurs."},
+{c:"MAT",n:"Le réemploi",q:"Sur ce tableau, le bois de palette et le plastique récupéré ont un impact faible. Pourquoi ?",
+ img:{src:"Images/doc_tableau_materiaux.svg",alt:"Le tableau des trois matériaux pour le boîtier du jardin, rempli après le banc météo. Le bois de palette : tenue à la pluie et au gel moyenne, découpe facile, impact environnemental faible. Le plastique récupéré : tenue à la pluie et au gel bonne, découpe moyenne, impact environnemental faible. Le carton renforcé : tenue à la pluie et au gel faible, découpe facile, impact environnemental faible."},
  o:["parce qu'ils sont naturels et se dégradent tout seuls dans la terre","parce qu'ils sont réemployés : leur fabrication a déjà eu lieu","parce qu'ils sont recyclables en fin de vie","parce qu'ils sont légers à transporter"],r:1,
  expl:"Le réemploi évite une production neuve. C'est ce qui met sur la même ligne un matériau végétal et un matériau pétrolier.",
  ex:"Attention tout de même : la fin de vie du plastique reste délicate, même réemployé.",
@@ -529,14 +534,14 @@ const QUESTIONS = [
  
  d:["Le soin n'a rien à voir : on peut remplir proprement un tableau qu'on n'a pas compris. C'est le moment qui compte, pas la présentation.","","Le banc montre des comportements ; c'est toi qui en tires le classement. Sans toi, il n'y a pas de tableau.","L'ordre est ce que fixe le contrat de la séquence : faire, puis comprendre, puis refaire."],
  ret:"Quand l'expérience peut se vivre, elle vient avant le mot qui la nomme."},
-{c:"MAT",n:"Une contrainte fatale",q:"Dans notre tableau, qu'appelle-t-on une contrainte « fatale » pour un matériau ?",
- nuance:"« Est-ce que “fatale” est le vrai mot du métier ? » Non, et autant te le dire : dans les entreprises et sur les fiches techniques, on écrit « critère éliminatoire », ou « rédhibitoire », ou encore « exigence bloquante ». « Fatale » est notre raccourci de classe, choisi parce qu'il est parlant. L'important n'est pas le mot mais l'idée, et elle est capitale : dans un tableau de comparaison, certaines colonnes se font la moyenne et d'autres non. Une colonne éliminatoire ne se compense jamais — même une excellente note partout ailleurs ne rattrape pas un matériau qui ne survit pas à la pluie.",
+{c:"MAT",n:"Une contrainte fatale",q:"Dans ce tableau, qu'appelle-t-on une contrainte « fatale » pour un matériau ?",
+ img:{src:"Images/doc_tableau_materiaux.svg",alt:"Le tableau des trois matériaux pour le boîtier du jardin, rempli après le banc météo. Le bois de palette : tenue à la pluie et au gel moyenne, découpe facile, impact environnemental faible. Le plastique récupéré : tenue à la pluie et au gel bonne, découpe moyenne, impact environnemental faible. Le carton renforcé : tenue à la pluie et au gel faible, découpe facile, impact environnemental faible."},
  o:["la contrainte du milieu la plus fréquente dans l'année","une contrainte à laquelle le matériau ne résiste pas","une contrainte qui casse tous les matériaux du tableau","une contrainte que le professeur impose au projet"],r:1,
  expl:"Un seul point où le matériau ne tient pas suffit à l'écarter, même s'il gagne sur tous les autres critères. On ne fait pas la moyenne des colonnes : une colonne peut à elle seule éliminer.",
  ex:"Le carton est facile à découper et peu coûteux — et la pluie l'élimine.",
- 
  d:["La fréquence n'est pas ce qui élimine : une contrainte rare mais destructrice élimine tout autant.","","Si elle cassait tous les matériaux, elle n'aiderait pas à choisir : elle ne séparerait personne.","Elle vient du lieu et de l'usage — de la pluie de Brooklyn, pas d'une consigne de classe."],
- ret:"Un seul point éliminatoire suffit à écarter un matériau : cette colonne-là ne se compense pas."},
+ ret:"Un seul point éliminatoire suffit à écarter un matériau : cette colonne-là ne se compense pas.",
+ nuance:"« Est-ce que “fatale” est le vrai mot du métier ? » Non, et autant te le dire : dans les entreprises et sur les fiches techniques, on écrit « critère éliminatoire », ou « rédhibitoire », ou encore « exigence bloquante ». « Fatale » est notre raccourci de classe, choisi parce qu'il est parlant. L'important n'est pas le mot mais l'idée, et elle est capitale : dans un tableau de comparaison, certaines colonnes se font la moyenne et d'autres non. Une colonne éliminatoire ne se compense jamais — même une excellente note partout ailleurs ne rattrape pas un matériau qui ne survit pas à la pluie."},
 {c:"MAT",n:"Le banc et l'intuition",q:"Que fait le banc météo que l'intuition ne fait pas ?",
  o:["il choisit le matériau à ta place","il donne le classement final des trois matériaux","il remplace le tableau de comparaison","il croise chaque matériau avec chaque météo"],r:3,
  expl:"L'intuition teste ce qu'elle imagine ; un banc teste ce qu'on lui donne à tester, y compris ce qui contredit l'intuition.",
@@ -597,7 +602,7 @@ const N=QUESTIONS.length;
 /* Les pièges : les confusions fréquentes de la séquence, et les questions qui les travaillent (règle d'or n°339).
    Une question appartient à un piège par sa notion. Données : qcm_aides_<lot>.json — on modifie le JSON, pas ce bloc. */
 const PIEGES={
-  organiser:"Organiser un projet : le verbe de la 4e, une vraie tâche, ce qui avance en même temps",
+  organiser:"Organiser un projet : décider l'ordre, une vraie tâche, ce qui avance en même temps",
   probleme:"Partir du problème, pas de l'objet : la condition, le vrai problème, l'indice de protection",
   demarche:"Le diagramme de la démarche : par quoi commencer, la flèche qui remonte",
   cao:"En CAO : la révolution, la contrainte d'assemblage, le croquis coté",
@@ -607,7 +612,7 @@ const PIEGES={
   tableau:"Le tableau des matériaux : trois critères, pas de meilleur absolu, la contrainte fatale"
 };
 const PIEGE_DE_NOTION={
-  "Le verbe de la 4e":"organiser",
+  "Organiser des tâches données":"organiser",
   "Une tâche de planning":"organiser",
   "Ce qui avance en même temps":"organiser",
   "Ce qu'on évalue":"organiser",
