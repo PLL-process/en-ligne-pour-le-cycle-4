@@ -1,5 +1,8 @@
 import { chromium } from 'playwright';
 import { pathToFileURL } from 'node:url';
+import { existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { dirname, join } from 'node:path';
 const f = process.argv[2], c1 = process.argv[3], c2 = process.argv[4], seq = process.argv[5];
 const b = await chromium.launch();
 const p = await b.newPage();
@@ -16,7 +19,7 @@ ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '))
 
 const banque = await p.evaluate(() => QUESTIONS.map(q => ({
   c: q.c, n: q.n, r: q.r, no: q.o.length, nd: q.d.filter(x => x).length,
-  vide: q.d[q.r] === '', img: !!q.img,
+  vide: q.d[q.r] === '', img: q.img ? q.img.src : '', alt: q.img ? (q.img.alt || '') : '',
   champs: ['q', 'expl', 'ex', 'err', 'ret'].every(k => (q[k] || '').trim().length > 0),
 })));
 ok('30 questions', banque.length === 30, String(banque.length));
@@ -24,7 +27,15 @@ ok('4 options par question', banque.every(q => q.no === 4));
 ok('3 réfutations par question', banque.every(q => q.nd === 3));
 ok('la bonne réponse n’a pas de réfutation', banque.every(q => q.vide));
 ok('tous les champs du gabarit remplis', banque.every(q => q.champs));
-ok('aucune image héritée du lot voisin', banque.every(q => !q.img));
+// n°345 (27/11/2026) : au moins six questions se lisent sur un document du lot, calculé par son modèle
+const docs = banque.filter(q => q.img);
+ok('au moins six questions sur document', docs.length >= 6, String(docs.length));
+ok('chaque document est un doc_ du lot, présent dans Images/',
+   docs.every(q => /^Images\/doc_[a-z_]+\.svg$/.test(q.img) && existsSync(join(dirname(f), q.img))),
+   docs.map(q => q.img).join(' '));
+ok('chaque document a une description qui dit ses nombres', docs.every(q => q.alt.length > 200 && /\d/.test(q.alt)));
+let aJour = true; try { execSync('python3 documents_qcm.py --verifier', { cwd: dirname(f), stdio: 'pipe' }); } catch (e) { aJour = false; }
+ok('le document est à jour du modèle (moyens.py)', aJour);
 ok('30 notions distinctes', new Set(banque.map(q => q.n)).size === 30,
    String(new Set(banque.map(q => q.n)).size));
 

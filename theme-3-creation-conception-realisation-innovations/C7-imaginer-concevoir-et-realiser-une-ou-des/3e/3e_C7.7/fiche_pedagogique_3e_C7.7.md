@@ -23,6 +23,7 @@
 | 2 | 2 | Corriger le dessin, et rien d'autre | 40 min | verrou : `unSeul` |
 | 3 · 35 min | 3 | Une seule fournée | 35 min | — |
 | 4 · 25 min | 4 | REFAIRE — réinvestissement, puis synthèse, Bonus, bilan et QCM | 25 min | — |
+| 4 · 5 min | — | Billet de sortie, seul et sans aide | 5 min | — |
 
 **Quatre séances de 55 min, et pourquoi pas trois.** Une heure par semaine : aucune paire d'activités
 voisines ne tient dans une séance (25 + 35, 35 + 40, 40 + 35, 35 + 25). Trois séances (165 min)
@@ -85,3 +86,18 @@ Restent visibles à chaque séance : le titre, la mission, la barre d'outils et 
 Clôture : un corrigé du Bonus (0 moyen capable après une ou deux cotes corrigées, 1 après les trois, vérifié sur l'atelier de la page ; un dessin de fabrication passe en entier ou pas), « Comment j'ai travaillé », « Je me positionne » sur 3e_C7.7 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens (« si on m'aide », « si on me rappelle » : fragile ; « seul » : satisfaisante), une phrase neuve dit la très bonne maîtrise (l'expliquer à un camarade ou le refaire ailleurs), et une réponse donnée avant se relit avec sa phrase et sur 3e_C8.1.
 
 Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 2, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — l'impression ventilée, capot fermé, la pièce décollée plateau refroidi, les lunettes — avec un lien qui ouvre le volet sur l'encadré.
+
+## Le billet de sortie et le document du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en séance 4, juste avant le Bonus (environ 5 min, seul et sans aide). Un objet que la séquence n'a
+pas étudié : **le support du panneau solaire de la station**, imprimé en PETG (un bras à 60°, un trou de vis dessiné
+juste).
+- Question 1 (3e_C7.7) : les cotes à corriger pour l'imprimante, sans rien changer à la fonction. On regarde chaque cote
+  comparée à ce que tient la machine (45° au plus, ± 0,3 mm), et la fonction gardée.
+- Question 2 (3e_C8.1) : ce que dit, et ce que tait, la simulation (18 MPa pour 50). On regarde la conclusion tirée du
+  calcul, l'hypothèse qu'il fait (la matière isotrope), et l'essai réel qui reste à faire.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone, calculé par
+`documents_qcm.py` depuis `moyens.py` — « Le dessin du boîtier, face à l'imprimante » (cinq cotes du dessin, et ce que
+tient l'imprimante ; q3, q5, q6, q7, q8, q10, q12). Les q9 et q11 renvoyaient par son code à une autre séquence
+(« 3e_C7.3 », « 3e_C7.6 ») : elles disent ce qui s'y est passé, sans le code.
