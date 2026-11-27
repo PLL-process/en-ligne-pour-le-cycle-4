@@ -181,3 +181,21 @@ réponse de trop dans la grille (`mission_4e_C7.8.json`).
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 27/11/2026 — six questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C7.8_sequence.mjs "$PWD/sequence_4e_C7.8_le-jardin-publie.html" 4e reponses_4e_C7.8.json` : **51 / 51**
+  (cinq tests neufs : le billet existe ; deux zones gardées et deux versions étayées ; deux critères, des contre-exemples,
+  aucun bouton ; juste avant le Bonus ; la réponse survit au rechargement).
+- `node tests_4e_C7.8_qcm.mjs "$PWD/qcm_4e_C7.8_le-jardin-publie.html" 4e_C7.8 4e_C1.4 sequence_4e_C7.8_le-jardin-publie.html` :
+  **35 / 35** (« aucune image héritée » remplacé par quatre tests : au moins six questions sur document, le document
+  présent dans `Images/`, une description qui dit ses valeurs, `documents_qcm.py --verifier` à jour de la séquence).
+- `node tests_regle_311_4e_C7.8.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `controle_annee_precedente.py` : 0.
+- `audit_aeration.py --strict` : 0 (un critère du billet cousait trois idées par « ; » au premier jet ; réécrit en deux
+  phrases). `controle_schemas.mjs` : 0 ✘, 0 ⚠ (une ligne trop près du bord au premier jet ; raccourcie).
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 0 écart.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides) : verts ;
+  `verif_regles_audit.py`, `controle_squelette.mjs`, mode mission, `controle_liens.py`, `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
