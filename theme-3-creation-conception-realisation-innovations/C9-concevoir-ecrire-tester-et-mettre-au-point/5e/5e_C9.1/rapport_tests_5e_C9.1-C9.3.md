@@ -182,3 +182,20 @@ mission reçoit 55 pourquoi (`mission_5e_C9.1.json`). Aération 5 → 0.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 27/11/2026 — cinq questions sur document de plus, et un billet de sortie (n°345, n°330)
+
+- `node tests_5e_C9.1-C9.3.mjs .` : **75 / 75** (neuf tests neufs : le billet existe à la séance 3 ; deux zones
+  gardées et deux versions étayées ; deux critères, des contre-exemples, aucun bouton ; juste avant le Bonus ; la
+  réponse survit au rechargement ; au QCM, au moins six questions sur document, chaque `doc_` présent, décrit, et
+  `documents_qcm.py --verifier` à jour de la séquence).
+- `node tests_regle_311_5e_C9.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). La q11 renvoyait à
+  « l'atelier » : réécrite. `controle_annee_precedente.py` : 0.
+- `audit_aeration.py --strict` : 0 (une ligne de la correction du Bonus cousait deux idées par « ; » : coupée).
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 8 illustrées, 0 écart.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides) : verts ;
+  `controle_schemas.mjs` : 0 ✘ ; `verif_regles_audit.py`, `controle_squelette.mjs`, mode mission, `controle_liens.py`,
+  `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

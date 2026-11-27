@@ -38929,3 +38929,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 - La séquence avait déjà son billet de sortie : pas de P1 sur ce lot.
 Bancs : séquence 96 / 96 (sept tests neufs), TP 104 / 104, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles
 d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`3e_C9.1`).
+
+## 27/11/2026 — 5e_C9.1 : cinq questions sur document de plus, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** (3 questions sur document) : deux documents neufs, LUS dans la séquence par `documents_qcm.py` — « Le
+  programme du compteur » (les six lignes et le banc T1 à T3 de l'activité 4, sans ce que le programme affiche ; q14,
+  q18, q21) et « Le banc de la barrière » (la règle et le banc B1 à B3 de l'activité 5, sans dire lequel compte le plus ;
+  q25, q28). La q18 demandait « la ligne du programme du compteur » sans le montrer ; la q11 renvoyait à « l'atelier ».
+- **Billet de sortie** avant le Bonus de la séance 3 : le compteur de places du car scolaire de Rivière-Salée (un test
+  qui montre si le programme répond au besoin ; la règle du voyant « COMPLET » et son test frontière). La séance 3 passe
+  de 45 à 50 minutes d'activités.
+- Une ligne de la correction du Bonus cousait deux idées par « ; » (audit d'aération) : coupée.
+Bancs : séquence 75 / 75 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`5e_C9.1`).

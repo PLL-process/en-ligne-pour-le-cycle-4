@@ -29,6 +29,13 @@ ne pilote aucune carte (voir `JOURNAL_DES_DECISIONS.md`).
 
 ## Évaluation
 Formative : vérificateurs + QCM 30 q (BOI/LIR/MOD 10-10-10 → positionnement par famille).
+**Billet de sortie** (27/11/2026, n°330), en fin de séance 3, environ 5 minutes, seul et sans aide : le compteur de
+places du car scolaire de Rivière-Salée, un objet neuf. Question 1 (5e_C9.1) : un test qui montre si le programme
+répond au besoin — on regarde que l'attendu est écrit avant, comparé à l'obtenu, et que le verdict nomme la ligne
+fausse (la ligne 3 ajoute ceux qui montent). Question 2 (5e_C9.2, 5e_C9.3) : la règle du voyant « COMPLET » et son
+test frontière — on regarde que le test tombe à zéro place pile. La séance 3 passe de 45 à 50 minutes d'activités.
+Huit questions du QCM se lisent sur un document dessiné pour le téléphone (n°345) : « Le programme du compteur »
+(q14, q18, q21) et « Le banc de la barrière » (q25, q28), lus dans la séquence par `documents_qcm.py`.
 Sommative : à construire, corrigé jamais publié.
 
 ## Dispositifs de classe (harmonisation du 26 août 2026)

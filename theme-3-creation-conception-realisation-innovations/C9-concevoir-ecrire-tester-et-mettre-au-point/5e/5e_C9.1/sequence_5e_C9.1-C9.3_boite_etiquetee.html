@@ -2712,6 +2712,54 @@ else:
   </div>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un objet nouveau&nbsp;: <b>le compteur de places du car scolaire</b>, qui ramène les élèves du collège à Rivière-Salée.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p>Le besoin du chauffeur&nbsp;: «&nbsp;après chaque arrêt, afficher le bon nombre de places libres&nbsp;». Le car a 50 places. Son programme&nbsp;:</p>
+  <pre class="code">places = 50
+montes = 4
+places = places + montes
+print("Places libres :", places)</pre>
+  <p><label for="bs_5e_C9_1_1"><b>1.</b> Écris UN test qui montre si ce programme répond au besoin&nbsp;: la valeur de <code>montes</code>, le résultat attendu, le résultat obtenu. Puis donne ton verdict, et la ligne en cause s'il y en a une.</label></p>
+  <textarea id="bs_5e_C9_1_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Je prends <code>montes</code> = ____ . J'attends ____ places libres.</li>
+      <li>En suivant les boîtes avec le doigt, le programme affiche ____ .</li>
+      <li>Verdict&nbsp;: il ____ au besoin, parce que la ligne ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_5e_C9_1_2"><b>2.</b> Le chauffeur veut un voyant «&nbsp;COMPLET&nbsp;» quand il ne reste aucune place. Écris la règle (SI … → … SINON → …), puis le test le plus important pour la régler, avec son résultat attendu.</label></p>
+  <textarea id="bs_5e_C9_1_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>SI <code>places</code> ____ → pas de voyant, SINON → COMPLET.</li>
+      <li>Le test le plus important est <code>places</code> = ____ , parce que c'est ____ .</li>
+      <li>À ce test, j'attends ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Je prends montes = 4. J'attends 46 places libres.
+    <br>Le programme range 50 + 4 = 54 dans la boîte places, et affiche 54.
+    <br>Verdict&nbsp;: il ne répond pas au besoin. La ligne 3 ajoute ceux qui montent, alors qu'ils prennent une place&nbsp;: elle doit devenir places = places - montes.&nbsp;»
+    <br><b>Critère</b>&nbsp;: un test avec son attendu écrit avant d'exécuter, l'obtenu comparé à l'attendu, et un verdict qui nomme la ligne fausse.</p>
+    <p>✘ «&nbsp;montes = 0&nbsp;: j'attends 50, j'obtiens 50, ça marche&nbsp;»&nbsp;: ce test ne fait passer personne par la ligne 3, il ne montre rien du bug.
+    <br>✘ «&nbsp;Le programme est faux&nbsp;»&nbsp;: sans test ni ligne nommée, c'est une impression, pas un verdict de technicien.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;SI places &gt; 0 → pas de voyant, SINON → COMPLET.
+    <br>Le test le plus important est places = 0, parce que c'est la frontière entre «&nbsp;il reste une place&nbsp;» et «&nbsp;c'est complet&nbsp;».
+    <br>À places = 0, j'attends COMPLET.&nbsp;»
+    <br><b>Critère</b>&nbsp;: la règle sépare zéro de tout le reste, et le test choisi tombe pile sur cette frontière, avec son résultat attendu.</p>
+    <p>✘ «&nbsp;SI places &gt;= 0 → pas de voyant&nbsp;»&nbsp;: à zéro place, le voyant ne s'allumerait jamais.
+    <br>✘ «&nbsp;Je teste places = 20 et places = 50&nbsp;»&nbsp;: deux cas loin de la frontière, ils passent même avec une règle fausse.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
@@ -2723,7 +2771,7 @@ else:
   valeur va à la poubelle : si on te demande pourquoi, tu sauras répondre.</p>
   <details class="correction"><summary>✅ Corrigé du défi famille</summary>
     <p><b>Ce qui se passe dans les boîtes, ligne par ligne&nbsp;:</b></p>
-    <p>· ligne 1 — on pose le papier «&nbsp;24&nbsp;» dans la boîte <code>places</code>&nbsp;; <br>· ligne 2 — on pose «&nbsp;5&nbsp;» dans la boîte <code>montes</code>&nbsp;; <br>· ligne 3 — on lit 24 et 5, on calcule 24 − 5 = 19&nbsp;; le papier «&nbsp;24&nbsp;» va à la poubelle, «&nbsp;19&nbsp;» prend sa place dans <code>places</code>&nbsp;; <br>· ligne 4 — on pose «&nbsp;2&nbsp;» dans la boîte <code>descendus</code>&nbsp;; <br>· ligne 5 — on lit 19 et 2, on calcule 19 + 2 = 21&nbsp;; «&nbsp;19&nbsp;» va à la poubelle, «&nbsp;21&nbsp;» prend sa place.</p>
+    <p>· ligne 1 — on pose le papier «&nbsp;24&nbsp;» dans la boîte <code>places</code>&nbsp;; <br>· ligne 2 — on pose «&nbsp;5&nbsp;» dans la boîte <code>montes</code>&nbsp;; <br>· ligne 3 — on lit 24 et 5, on calcule 24 − 5 = 19. <br>Le papier «&nbsp;24&nbsp;» va à la poubelle, «&nbsp;19&nbsp;» prend sa place dans <code>places</code>&nbsp;; <br>· ligne 4 — on pose «&nbsp;2&nbsp;» dans la boîte <code>descendus</code>&nbsp;; <br>· ligne 5 — on lit 19 et 2, on calcule 19 + 2 = 21&nbsp;; «&nbsp;19&nbsp;» va à la poubelle, «&nbsp;21&nbsp;» prend sa place.</p>
     <p><b>À la fin&nbsp;:</b> <code>places</code> contient 21, <code>montes</code> 5, <code>descendus</code> 2.</p>
     <p><b>Pourquoi l'ancienne valeur va à la poubelle&nbsp;:</b> une boîte ne garde qu'<b>une</b> valeur à la fois. <br>Ranger une nouvelle valeur remplace l'ancienne&nbsp;: l'ordinateur ne s'en souvient plus.</p>
     <p><b>L'erreur fréquente&nbsp;:</b> empiler les papiers dans la boîte. À la ligne 5, on ne saurait plus lequel lire.</p>
