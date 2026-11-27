@@ -66,3 +66,13 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_casiers_hall.png` | Un meuble de casiers ouverts en bois clair, dans un hall : des sacs dans quelques cases, d'autres posés par terre, devant. PNG 1 536 × 1 024, 2.4 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a school entrance hall in Brooklyn early in the morning: a wall of twenty open square wooden cubbies without doors, some holding backpacks and some empty, hard to tell apart from a distance, several schoolbags dropped on the floor in front of them, morning light, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM (27/11/2026, règle d'or n°345)
+
+Dessinés par `_outils/document_qcm.py` depuis `documents_qcm_5e_C7.1.json`, que `documents_qcm.py` écrit en LISANT la
+séquence (la situation, le planning de l'activité 1a) : aucun nombre n'est recopié à la main.
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_releve_hall.svg` | Les quatre faits relevés par M. Alvarez dans le hall : les élèves, les casiers, les sacs, le hall. | SVG original, engendré par script | CC0 | QCM, question 2 |
+| `Images/doc_planning_equipe.svg` | Le planning de l'équipe : quatre tâches, leur durée, leurs minutes de début et de fin. | SVG original, engendré par script | CC0 | QCM, question 7 |

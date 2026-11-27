@@ -44,3 +44,17 @@ Dès la séance 2, l'ouverture est repliée dans le volet « 📖 Rappel » (rè
 chaque séance : la mission, l'identité, la barre d'outils, le sélecteur de parcours et ses deux notes, la progression et
 « 🗺 Où j'en suis ». Le simulateur de place sert aux séances 1 et 2 (activités 0 et 2) : un seul exemplaire, que la page range
 dans la séance ouverte, sous son en-tête. Sans JavaScript, les trois séances s'affichent à la suite.
+
+## Le billet de sortie et les questions sur document (27/11/2026, n°330 et n°345)
+
+**Le billet de sortie** ferme la séance 3, juste avant le Bonus : environ 5 minutes, seul et sans aide, sur un objet
+que la séquence n'a pas étudié — le range-vélos du collège, dix places, qu'on voudrait voir libres de loin. Deux
+réponses écrites, chacune avec sa version étayée ; aucun bouton. Ce qu'on y regarde :
+- **question 1 (5e_C7.1)** : deux solutions qui détectent autrement (pas deux couleurs de la même), et un choix
+  justifié par un critère nommé — solidité, prix, simplicité, entretien — et non par un goût ;
+- **question 2 (5e_C9.3 et 5e_C8.3)** : une condition et ses deux chemins (ALORS, SINON), puis un test dont l'attendu
+  est écrit avant d'essayer (dix places occupées → rouge ; une place libérée → vert).
+
+**Le QCM se lit sur des documents** : sept questions sur trente s'appuient sur une image. Deux documents neufs, dessinés
+pour le téléphone et LUS dans la séquence par `documents_qcm.py` — le relevé de M. Alvarez (q2) et le planning de
+l'équipe (q7, qui fait maintenant calculer le décalage) ; la chaîne et l'algorigramme servent aussi aux q18 et q24.
