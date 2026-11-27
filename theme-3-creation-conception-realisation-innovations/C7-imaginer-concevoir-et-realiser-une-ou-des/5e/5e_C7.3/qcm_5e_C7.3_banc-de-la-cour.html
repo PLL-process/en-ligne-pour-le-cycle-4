@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 5e_C7.3 + 10 5e_C4.4), 0 illustrée.
+/* Banque : 30 questions (20 5e_C7.3 + 10 5e_C4.4), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -353,35 +355,40 @@ const QUESTIONS = [
  err:"Croire qu'un seuil ne protège jamais que la solidité de la pièce.",
  d:["le PVC rigide ne fond pas à 58 °C : il devient inconfortable bien avant de se ramollir","","l'aspect n'est pas en cause ; c'est le contact avec la peau qui devient impossible","aucune fixation ne cède à 58 °C : c'est l'usager, pas la pièce, que le seuil protège"],
  ret:"Certaines exigences protègent l'usage de l'objet, pas sa solidité. Elles comptent autant."},
-{c:"5e_C7.3",n:"Prix au kilogramme et prix de la pièce",q:"L'acier coûte 1,90 €/kg et le teck 14 €/kg. L'assise en acier est-elle moins chère ?",
+{c:"5e_C7.3",n:"Prix au kilogramme et prix de la pièce",q:"L'acier coûte 1,90 €/kg (euros par kilogramme), le teck 14 €/kg. D'après ce tableau, l'assise en acier est-elle moins chère ?",
+ img:{src:"Images/doc_prix_banc.svg",alt:"Pour chacun des six matériaux, le prix au kilogramme, la masse de l'assise et son prix. Le pin non traité : 2,20 euros le kilogramme, 11,6 kilogrammes, 25,63 euros l'assise. Le pin traité autoclave : 3,80 euros le kilogramme, 12,3 kilogrammes, 46,82 euros l'assise. Le teck : 14,00 euros le kilogramme, 14,6 kilogrammes, 203,84 euros l'assise. Le PVC : 3,50 euros le kilogramme, 31,4 kilogrammes, 109,76 euros l'assise. L'acier galvanisé : 1,90 euros le kilogramme, 175,8 kilogrammes, 334,10 euros l'assise. Le béton : 0,35 euros le kilogramme, 53,8 kilogrammes, 18,82 euros l'assise."},
  o:["non : elle revient à 334 € contre 204 €, parce qu'il en faut 176 kg","oui : à volume égal, le prix au kilogramme suffit à comparer deux matériaux","oui : sept fois moins cher au kilo donne forcément une pièce moins chère","on ne peut pas savoir : le prix d'une pièce ne se calcule jamais à l'avance"],r:0,
  expl:"Un prix au kilogramme ne devient un prix qu'une fois multiplié par la masse de la pièce. L'acier est quinze fois plus dense que le bois : la même assise pèse 176 kg.",
  ex:"1,90 €/kg × 175,8 kg = 334 € ; 14 €/kg × 14,6 kg = 204 €.",
  err:"Comparer deux matériaux sur leur prix au kilo sans calculer la masse de la pièce.",
  d:["","à volume égal les masses diffèrent : c'est justement ce que change la masse volumique","l'acier est près de douze fois plus dense que le teck : le rapport de prix s'inverse","il se calcule très bien : masse volumique × volume de la pièce × prix au kilogramme"],
  ret:"Un prix au kilo n'est pas un prix. Le prix de la pièce se calcule, il ne se lit pas."},
-{c:"5e_C7.3",n:"Un seuil n'est pas une note",q:"L'acier galvanisé est premier sur la résistance et deuxième sur la durée. Pourquoi est-il écarté ?",
+{c:"5e_C7.3",n:"Un seuil n'est pas une note",q:"Sur ce tableau, l'acier galvanisé est premier en résistance et deuxième au soleil. Pourquoi est-il écarté ?",
+ img:{src:"Images/doc_criteres_banc.svg",alt:"Le cahier des charges de l'assise du banc de la cour : résistance d'au moins 25 mégapascals, au moins 8 ans au soleil, au moins 3 sur 5 au sel, au plus 55 degrés au soleil, au plus 35 kilogrammes. Puis les six matériaux. Le pin non traité : résistance 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 42 degrés au soleil, 11,6 kilogrammes. Le pin traité autoclave : résistance 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 43 degrés au soleil, 12,3 kilogrammes. Le teck : résistance 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 44 degrés au soleil, 14,6 kilogrammes. Le PVC : résistance 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 58 degrés au soleil, 31,4 kilogrammes. L'acier galvanisé : résistance 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 68 degrés au soleil, 175,8 kilogrammes. Le béton : résistance 5 mégapascals, 30 ans au soleil, 4 sur 5 au sel, 61 degrés au soleil, 53,8 kilogrammes."},
  o:["parce que le fournisseur ne le propose pas dans les dimensions du banc","parce que sa moyenne sur les cinq critères reste inférieure à celle du teck","parce que sa résistance est bien trop élevée pour l'usage qu'on en attend","parce qu'être excellent quelque part ne rattrape pas d'échouer ailleurs"],r:3,
  expl:"Chaque exigence est un seuil, pas une note : on passe ou on ne passe pas. Le banc ne fait aucune moyenne, et trois réussites ne compensent pas deux échecs.",
  ex:"68 °C au soleil et 176 kg d'assise : deux seuils manqués, et le dossier s'arrête là.",
  err:"Faire la moyenne des critères, comme on ferait la moyenne de notes scolaires.",
- d:["les six matériaux proposés sont tous disponibles aux dimensions demandées","aucune moyenne n'est calculée : des degrés et des kilos ne s'additionnent pas","une résistance supérieure au besoin n'est jamais un motif d'élimination",""],
+ d:["les six matériaux proposés sont tous disponibles aux dimensions demandées","aucune moyenne n'est calculée : des degrés et des kilos ne s'additionnent pas","une résistance supérieure au besoin n'est jamais un motif d'élimination : relis plutôt ses lignes « Chaleur » et « Masse »",""],
  ret:"On ne compense pas un seuil manqué par de bons résultats ailleurs. C'est vrai hors technologie aussi."},
-{c:"5e_C7.3",n:"Retirer une exigence",q:"Sur le banc, on décoche « température au soleil ». Que se passe-t-il ?",
- o:["le banc refuse d'évaluer tant que les cinq exigences ne sont pas cochées","rien ne change : le PVC reste écarté pour une autre raison du cahier des charges","tous les matériaux deviennent retenus, puisqu'une exigence a été supprimée","un matériau de plus est retenu : le PVC, à cent euros de moins que le teck"],r:3,
+{c:"5e_C7.3",n:"Retirer une exigence",q:"Avec ce tableau, on retire l'exigence « au plus 55 °C (degrés Celsius) ». Que se passe-t-il ?",
+ img:{src:"Images/doc_criteres_banc.svg",alt:"Le cahier des charges de l'assise du banc de la cour : résistance d'au moins 25 mégapascals, au moins 8 ans au soleil, au moins 3 sur 5 au sel, au plus 55 degrés au soleil, au plus 35 kilogrammes. Puis les six matériaux. Le pin non traité : résistance 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 42 degrés au soleil, 11,6 kilogrammes. Le pin traité autoclave : résistance 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 43 degrés au soleil, 12,3 kilogrammes. Le teck : résistance 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 44 degrés au soleil, 14,6 kilogrammes. Le PVC : résistance 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 58 degrés au soleil, 31,4 kilogrammes. L'acier galvanisé : résistance 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 68 degrés au soleil, 175,8 kilogrammes. Le béton : résistance 5 mégapascals, 30 ans au soleil, 4 sur 5 au sel, 61 degrés au soleil, 53,8 kilogrammes."},
+ o:["rien ne change : le PVC reste écarté par une autre exigence du tableau","le béton entre aussi : ses 61 °C ne comptent plus, et il passe le reste","l'acier galvanisé entre : seuls ses 68 °C le tenaient hors des retenus","un seul matériau de plus entre : le PVC, qui ne manquait que ce seuil-là"],r:3,
  expl:"Retirer une exigence, c'est toujours faire entrer quelqu'un. C'est pour cela que c'est tentant — et c'est pour cela qu'il faut se demander ce que l'exigence protégeait.",
- ex:"Sans le seuil de 55 °C, les retenus passent de deux à trois, et le PVC est le moins cher.",
+ ex:"Sans le seuil de 55 °C, les retenus passent de deux à trois : le pin traité, le teck et le PVC.",
  err:"Retirer une exigence gênante sans se demander ce qu'elle empêchait d'arriver.",
- d:["le banc évalue avec les exigences cochées : en retirer une est justement prévu","le PVC ne manquait que ce seuil-là : retiré, il entre immédiatement dans les retenus","les autres exigences continuent de s'appliquer, et trois matériaux restent écartés",""],
+ d:["relis la ligne du PVC : 45 MPa, 8 ans, 5 / 5 et 31,4 kg passent tous ; seuls ses 58 °C le retenaient","relis la ligne du béton : 5 MPa, sous les 25 exigés, et 53,8 kg, au-dessus des 35 kg","relis la masse de l'acier : 175,8 kg, cinq fois les 35 kg exigés",""],
  ret:"Retirer une exigence fait toujours entrer quelqu'un. La question est ce qu'elle protégeait."},
-{c:"5e_C7.3",n:"Une entrée qui ne fait rien baisser",q:"Retirer « température au soleil » fait entrer le PVC à 109,76 €. Le collège économise-t-il ?",
+{c:"5e_C7.3",n:"Une entrée qui ne fait rien baisser",q:"Retirer « température au soleil » fait entrer le PVC. D'après ce tableau, le collège économise-t-il ?",
+ img:{src:"Images/doc_prix_banc.svg",alt:"Pour chacun des six matériaux, le prix au kilogramme, la masse de l'assise et son prix. Le pin non traité : 2,20 euros le kilogramme, 11,6 kilogrammes, 25,63 euros l'assise. Le pin traité autoclave : 3,80 euros le kilogramme, 12,3 kilogrammes, 46,82 euros l'assise. Le teck : 14,00 euros le kilogramme, 14,6 kilogrammes, 203,84 euros l'assise. Le PVC : 3,50 euros le kilogramme, 31,4 kilogrammes, 109,76 euros l'assise. L'acier galvanisé : 1,90 euros le kilogramme, 175,8 kilogrammes, 334,10 euros l'assise. Le béton : 0,35 euros le kilogramme, 53,8 kilogrammes, 18,82 euros l'assise."},
  o:["non : le pin traité, déjà retenu, coûte 46,82 € — le PVC n'apporte rien","oui : cent euros de moins que le teck, sur quatre bancs, cela compte","oui, à condition de poser les bancs à l'ombre des arbres de la cour","non : le PVC entre exactement au même prix que le pin traité retenu"],r:0,
  expl:"Retirer une exigence fait toujours entrer quelqu'un ; cela ne fait pas toujours baisser le prix. On compare l'entrant au <b>moins cher de ceux qui passaient déjà</b>, jamais au plus cher.",
  ex:"La jauge « le moins cher des retenus » affiche 47 € avant le retrait, et 47 € après.",
  err:"Comparer l'entrant au candidat le plus cher, et croire à une économie qui n'existe pas.",
  d:["","cent euros de moins que le teck, oui — mais soixante-trois de plus que le pin traité","l'endroit ne change rien ici : le PVC reste plus cher que le pin traité déjà retenu","l'écart est de 62,94 € : 109,76 € contre 46,82 €, ce n'est pas une égalité"],
  ret:"Retirer une exigence fait entrer quelqu'un. Cela ne fait pas forcément baisser le prix."},
-{c:"5e_C7.3",n:"Moins cher à l'achat",q:"Sans « tenue au soleil » ni « tenue au sel », le pin nu entre à 25,63 € : le meilleur choix ?",
+{c:"5e_C7.3",n:"Moins cher à l'achat",q:"Sans les exigences de soleil et de sel, le pin nu entre, à 25,63 €. D'après ce tableau, est-ce le meilleur choix ?",
+ img:{src:"Images/doc_criteres_banc.svg",alt:"Le cahier des charges de l'assise du banc de la cour : résistance d'au moins 25 mégapascals, au moins 8 ans au soleil, au moins 3 sur 5 au sel, au plus 55 degrés au soleil, au plus 35 kilogrammes. Puis les six matériaux. Le pin non traité : résistance 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 42 degrés au soleil, 11,6 kilogrammes. Le pin traité autoclave : résistance 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 43 degrés au soleil, 12,3 kilogrammes. Le teck : résistance 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 44 degrés au soleil, 14,6 kilogrammes. Le PVC : résistance 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 58 degrés au soleil, 31,4 kilogrammes. L'acier galvanisé : résistance 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 68 degrés au soleil, 175,8 kilogrammes. Le béton : résistance 5 mégapascals, 30 ans au soleil, 4 sur 5 au sel, 61 degrés au soleil, 53,8 kilogrammes."},
  o:["oui : c'est le moins cher des six candidats, l'économie est immédiate","non : il grise en un an et il est pourri en trois, il faudra tout refaire","oui : le bois brut est le matériau le plus écologique des six proposés","non : c'est le pin traité qui est le moins cher une fois toutes taxes comprises"],r:1,
  expl:"Le prix d'achat ne devient un coût qu'une fois la durée de vie connue. Un banc à refaire tous les deux ans coûte plus cher qu'un banc qui tient huit ans.",
  ex:"Quatre bancs en pin nu, remplacés trois fois en six ans : l'économie a disparu.",
@@ -395,14 +402,15 @@ const QUESTIONS = [
  err:"Lire une durée de catalogue comme une donnée valable sous tous les ciels.",
  d:["","c'est une estimation d'usage, pas un engagement, et elle dépend du lieu d'installation","elle vaut bien pour l'extérieur : c'est l'intensité du climat qui change, pas l'abri","le climat tropical raccourcit la durée de vie ; il ne l'allonge en aucun cas"],
  ret:"Une durée annoncée « en usage extérieur » suppose un climat. Il faut savoir lequel."},
-{c:"5e_C7.3",n:"Départager les derniers",q:"Deux matériaux passent toutes les exigences. Sur quoi tranche-t-on ?",
+{c:"5e_C7.3",n:"Départager les derniers",q:"Le pin traité et le teck passent toutes les exigences. Sur quoi tranche-t-on ?",
  o:["sur un critère qu'on ajoute, et qu'on écrit : prix, durée, provenance","sur la meilleure moyenne obtenue sur l'ensemble des caractéristiques","sur la recommandation que le fournisseur porte dans son catalogue","on ne tranche pas : les deux conviennent, on choisit au hasard"],r:0,
  expl:"Quand plusieurs candidats passent, on ajoute une exigence — et on la dit. Un choix qui ne s'explique pas ne se défend pas devant celui qui paie.",
  ex:"« Nous retenons le pin traité, parce que le critère ajouté est le coût sur seize ans. »",
  err:"Fabriquer une moyenne pour se donner l'air d'avoir tranché objectivement.",
  d:["","on ne fait pas la moyenne d'une durée et d'un prix : ces grandeurs ne s'additionnent pas","un fournisseur recommande ce qu'il vend : ce n'est pas un critère de conception","tirer au sort, c'est renoncer à pouvoir justifier le choix devant qui le finance"],
  ret:"Quand plusieurs candidats passent, on ajoute un critère — et on l'écrit."},
-{c:"5e_C7.3",n:"Coût sur seize ans",q:"Le teck tient 15 ans (203,84 €), le pin traité 8 ans (46,82 €). Sur 16 ans ?",
+{c:"5e_C7.3",n:"Coût sur seize ans",q:"Le teck tient 15 ans, le pin traité 8 ans. D'après ce tableau, lequel coûte le moins sur 16 ans ?",
+ img:{src:"Images/doc_prix_banc.svg",alt:"Pour chacun des six matériaux, le prix au kilogramme, la masse de l'assise et son prix. Le pin non traité : 2,20 euros le kilogramme, 11,6 kilogrammes, 25,63 euros l'assise. Le pin traité autoclave : 3,80 euros le kilogramme, 12,3 kilogrammes, 46,82 euros l'assise. Le teck : 14,00 euros le kilogramme, 14,6 kilogrammes, 203,84 euros l'assise. Le PVC : 3,50 euros le kilogramme, 31,4 kilogrammes, 109,76 euros l'assise. L'acier galvanisé : 1,90 euros le kilogramme, 175,8 kilogrammes, 334,10 euros l'assise. Le béton : 0,35 euros le kilogramme, 53,8 kilogrammes, 18,82 euros l'assise."},
  o:["les deux reviennent au même une fois le remplacement pris en compte","le teck : une seule assise achetée là où le pin en demanderait deux","le pin traité : deux assises, soit 93,64 €, contre 203,84 € pour le teck","on ne peut rien dire sans connaître le prix de la pose de chaque assise"],r:2,
  expl:"Sur seize ans, le pin traité est acheté deux fois et le teck deux fois aussi — mais deux pins coûtent 93,64 €, et deux tecks bien davantage. Le calcul tranche.",
  ex:"2 × 46,82 = 93,64 € : moins de la moitié d'un seul teck.",
@@ -437,7 +445,8 @@ const QUESTIONS = [
  err:"Partir du budget disponible et chercher ce qui rentre dedans.",
  d:["commencer par le prix, c'est risquer de valider un objet qui ne tiendra pas l'usage","","un classement général suppose une moyenne, et les critères ne s'additionnent pas","un fournisseur propose ce qu'il vend ; les exigences viennent de l'usage, pas de lui"],
  ret:"Exigences d'abord, élimination ensuite, prix en dernier — jamais l'inverse."},
-{c:"5e_C7.3",n:"Deux bois qui ne se valent pas",q:"Le pin nu et le pin traité autoclave sont deux pins. Pourquoi l'un passe-t-il et pas l'autre ?",
+{c:"5e_C7.3",n:"Deux bois qui ne se valent pas",q:"Sur ce tableau, le pin nu et le pin traité autoclave sont deux pins. Pourquoi l'un passe-t-il et pas l'autre ?",
+ img:{src:"Images/doc_criteres_banc.svg",alt:"Le cahier des charges de l'assise du banc de la cour : résistance d'au moins 25 mégapascals, au moins 8 ans au soleil, au moins 3 sur 5 au sel, au plus 55 degrés au soleil, au plus 35 kilogrammes. Puis les six matériaux. Le pin non traité : résistance 40 mégapascals, 2 ans au soleil, 2 sur 5 au sel, 42 degrés au soleil, 11,6 kilogrammes. Le pin traité autoclave : résistance 38 mégapascals, 8 ans au soleil, 3 sur 5 au sel, 43 degrés au soleil, 12,3 kilogrammes. Le teck : résistance 75 mégapascals, 15 ans au soleil, 5 sur 5 au sel, 44 degrés au soleil, 14,6 kilogrammes. Le PVC : résistance 45 mégapascals, 8 ans au soleil, 5 sur 5 au sel, 58 degrés au soleil, 31,4 kilogrammes. L'acier galvanisé : résistance 235 mégapascals, 25 ans au soleil, 3 sur 5 au sel, 68 degrés au soleil, 175,8 kilogrammes. Le béton : résistance 5 mégapascals, 30 ans au soleil, 4 sur 5 au sel, 61 degrés au soleil, 53,8 kilogrammes."},
  o:["le pin traité vient d'arbres plus âgés, coupés à maturité complète","le pin traité est un bois plus dense, donc plus résistant en flexion","le traitement en profondeur porte sa tenue au soleil de 2 à 8 ans","le pin traité reçoit une peinture de surface qui le protège du sel"],r:2,
  expl:"Un traitement change les caractéristiques du matériau, pas son nom. Le même bois devient un autre candidat une fois traité classe 4.",
  ex:"2 ans de tenue au soleil deviennent 8 ; la tenue au sel passe de 2 à 3 sur 5.",
