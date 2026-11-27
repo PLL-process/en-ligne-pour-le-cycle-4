@@ -21,7 +21,8 @@
 | 1 | Cas 1 : la pompe ne part jamais | 20 min | verrou : `diag_exige_relais` |
 | 2 | Cas 2 : la carte redémarre | 20 min | verrou : `diag_budget` |
 | 3 | Cas 3 : la pompe ne s'arrête plus | 20 min | verrou : `diag_requis_hum` |
-| 4 | REFAIRE — réinvestissement | 20 min | — |
+| 4 | REFAIRE — réinvestissement, à la maison (ou en classe s'il reste du temps) | 20 min | — |
+| 5 | Billet de sortie, seul et sans aide | 5 min | — |
 
 ## Les trois versions
 
@@ -73,10 +74,25 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Chaque fonction, puis le cas 1 | Que devrait-il y avoir dans le prototype, et que manque-t-il au premier ? | Ouverture, activités 0 et 1 | ouverture + 15 + 20 min |
-| 2 — Les cas 2 et 3, refaire, conclure | Quand les quatre fonctions semblent tenues, où se cache ce qui manque ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé), bilan, QCM | 20 + 20 + 20 min + clôture |
+| 2 — Les cas 2 et 3, refaire, conclure | Quand les quatre fonctions semblent tenues, où se cache ce qui manque ? | Activités 2 et 3, billet de sortie, synthèse, Bonus (corrigé), bilan ; réinvestissement et QCM à la maison | 20 + 20 + 5 min + clôture |
 
 **À trancher par Pascal :** la séance 2 porte 60 min d'activités pour 55 (l'autre coupe chargeait la séance 1 de l'ouverture et de 55 min). **L'établi, corrigé le 04/11/2026 :** il donnait ✔ à un montage sans pompe et écrivait alors « la pompe tourne six secondes ». La pompe entre dans les constituants sans lesquels le cahier des charges n'est pas tenu (`REQUIS`) : un montage sans pompe est refusé, et l'établi dit ce qui manque (« la pompe immergée manque »), comme pour les autres manques. Le gabarit `etabli.py` n'est pas touché : il reçoit `REQUIS` comme une donnée.
 
 Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, sécurité de la pompe, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **l'établi**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 1 (au-dessus de l'activité 0, il en donnerait les réponses : il dit ce que fait chaque constituant) ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
 
 La clôture reçoit un corrigé replié du défi (le quatrième cas : il manque la pompe ; le symptôme au téléphone) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.5` et `4e_C4.4` (appui) (le menu existant passe aux quatre niveaux ; une réponse sur l'ancienne échelle se relit au niveau voisin).
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide). La séance 2 annonçait
+60 minutes : le réinvestissement (20 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`.
+Un objet que la séquence n'a pas étudié : **l'aération automatique de la serre du jardin**, livrée sans son relais.
+- Question 1 (4e_C7.5) : le constituant manquant, justifié par le symptôme. On regarde le relais nommé, et le symptôme
+  utilisé pour écarter les autres (la mesure et la carte marchent, l'ordre n'est pas écouté).
+- Question 2 (4e_C4.4) : la chaîne d'information de la serre réparée. On regarde trois maillons, chacun avec ce qu'il
+  reçoit et ce qu'il produit, et la décision écrite comme une comparaison à un seuil.
+
+**QCM** : huit questions sur trente se lisent sur un document dessiné pour le téléphone, LU dans la séquence par
+`documents_qcm.py` — « Trois prototypes livrés » (les trois cas de l'établi : symptôme et constituants montés ; q6, q8,
+q10), « Le courant du jardin connecté » (q7, q11) et « Le programme de la carte » (q9, q12, q18). Les questions qui
+disaient « le cas 2 », « le cas 3 » sans le montrer le montrent.
