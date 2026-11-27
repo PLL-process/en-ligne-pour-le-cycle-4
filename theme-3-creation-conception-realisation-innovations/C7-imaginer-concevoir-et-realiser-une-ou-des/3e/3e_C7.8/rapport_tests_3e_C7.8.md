@@ -186,3 +186,21 @@ Exécuté le 08/11/2026 (Chromium Playwright, session cloud) : `tests_3e_C7.8_se
 `controle_impression --muet`, `controle_regles_visibles`, `controle_liens`, `controle_tactile`, `controle_mode_essentiel`,
 `controle_navigation_seances`, `controle_verrous`, `controle_rapports_tests` : 0 refus. Captures 390 px avant/après/essentiel
 dans `_outils/captures_v2_3e_2026-11-08/`. Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## Reprise du 27/11/2026 — huit questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_3e_C7.8_sequence.mjs "$PWD/sequence_3e_C7.8_deux-stations.html" 3e reponses_3e_C7.8.json` : **63 / 63**
+  (cinq tests neufs : le billet existe ; deux zones gardées et deux versions étayées ; deux critères, des contre-exemples,
+  aucun bouton ; juste avant le Bonus ; la réponse survit au rechargement).
+- `node tests_3e_C7.8_qcm.mjs "$PWD/qcm_3e_C7.8_deux-stations.html" 3e_C7.8 3e_C8.3 sequence_3e_C7.8_deux-stations.html` :
+  **35 / 35** (« aucune image héritée » remplacé par quatre tests : au moins six questions sur document, chaque
+  document un `doc_` du lot présent dans `Images/`, une description, `documents_qcm.py --verifier` à jour de la séquence).
+- `node tests_regle_311_3e_C7.8.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (E1, D1 et P1 étaient à 1). `controle_annee_precedente.py` : 0.
+- `audit_aeration.py --strict` : 0 (un critère du billet cousait trois idées par « ; » au premier jet ; réécrit en deux
+  phrases). `controle_schemas.mjs` : 0 ✘, 0 ⚠.
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 0 écart.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides) : verts ;
+  `verif_regles_audit.py`, `controle_squelette.mjs`, mode mission, `controle_liens.py`, `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

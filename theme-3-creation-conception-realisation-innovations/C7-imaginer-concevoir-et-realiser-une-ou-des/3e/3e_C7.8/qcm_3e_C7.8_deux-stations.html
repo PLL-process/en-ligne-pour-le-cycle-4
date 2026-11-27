@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 3e_C7.8 + 10 3e_C8.3), 0 illustrée.
+/* Banque : 30 questions (20 3e_C7.8 + 10 3e_C8.3), 8 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -318,21 +320,24 @@ const QUESTIONS = [
  err:"Reprendre tel quel le message conçu pour un écran. Il manquera tout ce que l'œil apportait sans le dire.",
  d:["La vitesse n'est pas la question : c'est l'interprétation qui manque.","","La longueur compte, mais ce n'est pas ce qui distingue une machine d'un humain.","Une machine ne corrige que ce qu'on lui a appris à corriger, et rien d'autre."],
  ret:"Une machine ne devine rien : ce qu'un humain compensait doit devenir un champ."},
-{c:"3e_C7.8",n:"Envoyer le niveau calculé",q:"Chaque station envoie le niveau d'alerte qu'elle a calculé, parce que sinon…",
+{c:"3e_C7.8",n:"Envoyer le niveau calculé",q:"Sur ce document, chaque station envoie le champ niv, le niveau qu'elle a calculé, parce que sinon…",
+ img:{src:"Images/doc_message_station.svg",alt:"Les 8 champs qu'un message d'une station d'alerte pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id, exemple robert : l'identifiant de la station qui parle. v, exemple 124 : la vitesse du vent mesurée. u, exemple km/h : l'unité de cette vitesse. t, exemple 14:07 : l'heure de la mesure. niv, exemple 2 : le niveau d'alerte que CETTE station a calculé. seq, exemple 417 : le numéro d'ordre du message. hist, exemple …2 000 valeurs… : les 2 000 mesures des dernières 24 heures. cle, exemple Cle-Wifi-Mairie : la clé du réseau, « pour que l'autre se connecte »."},
  o:["l'autre devrait refaire ses seuils, et diverger","le message deviendrait beaucoup trop long à envoyer","la vitesse ne passerait pas sur le réseau","le récepteur ne saurait pas qui a parlé"],r:0,
  expl:"Si chaque station recalcule les seuils de l'autre, un réglage modifié d'un seul côté fait diverger les deux décisions sans que rien ne le signale.",
  ex:"Le jour où quelqu'un règle le seuil du Robert à 120 et pas celui de Sainte-Anne, les deux ne parlent plus de la même chose.",
  err:"Croire qu'envoyer la mesure brute suffit toujours. Elle suffit si les deux calculent pareil — ce que rien ne garantit dans le temps.",
  d:["","Un entier de plus ne change rien à la taille du message.","Une vitesse passe très bien : c'est un nombre comme un autre.","L'identité du parleur est portée par un autre champ, l'identifiant."],
  ret:"Envoyer sa conclusion évite que l'autre refasse un calcul qui pourrait diverger."},
-{c:"3e_C7.8",n:"Envoyer aussi la mesure",q:"En plus du niveau, chaque station envoie la vitesse mesurée pour…",
+{c:"3e_C7.8",n:"Envoyer aussi la mesure",q:"Sur ce document, en plus du niveau, chaque station envoie le champ v, la vitesse mesurée, pour…",
+ img:{src:"Images/doc_message_station.svg",alt:"Les 8 champs qu'un message d'une station d'alerte pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id, exemple robert : l'identifiant de la station qui parle. v, exemple 124 : la vitesse du vent mesurée. u, exemple km/h : l'unité de cette vitesse. t, exemple 14:07 : l'heure de la mesure. niv, exemple 2 : le niveau d'alerte que CETTE station a calculé. seq, exemple 417 : le numéro d'ordre du message. hist, exemple …2 000 valeurs… : les 2 000 mesures des dernières 24 heures. cle, exemple Cle-Wifi-Mairie : la clé du réseau, « pour que l'autre se connecte »."},
  o:["permettre de vérifier que le niveau correspond","que l'autre puisse recalculer son propre niveau","remplir le message et le rendre plus solide","prouver que l'anémomètre est bien branché"],r:0,
  expl:"Le niveau dit ce que l'émetteur a conclu ; la vitesse permet de contrôler cette conclusion. Sans elle, on croit l'autre sur parole.",
  ex:"124 km/h annoncés avec un niveau 0 : quelque chose ne va pas, et on peut le voir.",
  err:"N'envoyer que la conclusion. C'est plus court, et cela rend toute vérification impossible.",
  d:["","Recalculer est justement ce qu'on veut éviter : c'est la source des divergences.","Un message ne devient pas plus solide parce qu'il est plus rempli.","Un anémomètre débranché renverrait aussi une valeur, souvent nulle ou absurde."],
  ret:"Le niveau dit la conclusion ; la mesure permet de la contrôler. Les deux."},
-{c:"3e_C7.8",n:"Le numéro d'ordre",q:"Le numéro d'ordre dans chaque message permet de…",
+{c:"3e_C7.8",n:"Le numéro d'ordre",q:"Sur ce document, le champ seq, le numéro d'ordre du message, permet de…",
+ img:{src:"Images/doc_message_station.svg",alt:"Les 8 champs qu'un message d'une station d'alerte pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id, exemple robert : l'identifiant de la station qui parle. v, exemple 124 : la vitesse du vent mesurée. u, exemple km/h : l'unité de cette vitesse. t, exemple 14:07 : l'heure de la mesure. niv, exemple 2 : le niveau d'alerte que CETTE station a calculé. seq, exemple 417 : le numéro d'ordre du message. hist, exemple …2 000 valeurs… : les 2 000 mesures des dernières 24 heures. cle, exemple Cle-Wifi-Mairie : la clé du réseau, « pour que l'autre se connecte »."},
  o:["classer les alertes par gravité","savoir laquelle des deux stations a émis le message","repérer un message perdu ou reçu deux fois","mesurer la vitesse du réseau"],r:2,
  expl:"415, 416 puis 418 : il en manque un. Sans numérotation, un message perdu ne laisse aucune trace, et un doublon compte deux fois.",
  ex:"Un message qui arrive deux fois par deux chemins ne doit pas faire croire à deux mesures.",
@@ -346,14 +351,16 @@ const QUESTIONS = [
  err:"Attendre du réseau qu'il prévienne. Le réseau ne sait pas qu'un message aurait dû exister.",
  d:["Certains protocoles réémettent, mais pas tous, et jamais indéfiniment.","Une erreur suppose que quelque chose soit arrivé : ici, rien n'arrive.","","L'émetteur ne sait pas non plus, sauf mécanisme prévu pour cela."],
  ret:"Rien n'arrive, et rien ne dit que rien n'est arrivé."},
-{c:"3e_C7.8",n:"Un secret ne circule pas",q:"Mettre la clé du réseau dans le message pour appairer les stations, c'est…",
+{c:"3e_C7.8",n:"Un secret ne circule pas",q:"Sur ce document, mettre le champ cle, la clé du réseau, dans le message pour appairer les stations, c'est…",
+ img:{src:"Images/doc_message_station.svg",alt:"Les 8 champs qu'un message d'une station d'alerte pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id, exemple robert : l'identifiant de la station qui parle. v, exemple 124 : la vitesse du vent mesurée. u, exemple km/h : l'unité de cette vitesse. t, exemple 14:07 : l'heure de la mesure. niv, exemple 2 : le niveau d'alerte que CETTE station a calculé. seq, exemple 417 : le numéro d'ordre du message. hist, exemple …2 000 valeurs… : les 2 000 mesures des dernières 24 heures. cle, exemple Cle-Wifi-Mairie : la clé du réseau, « pour que l'autre se connecte »."},
  o:["acceptable si le réseau est privé","acceptable au premier message seulement, pour appairer","à ne jamais faire : ce qui circule est lisible","la méthode habituelle d'appairage"],r:2,
  expl:"Tout ce qui traverse un réseau peut être lu sur le chemin. Un secret transmis est un secret perdu, et il ne se reprend pas.",
  ex:"L'appairage se fait à l'installation, par le technicien, hors du flux de données.",
  err:"Résoudre un problème de configuration par une facilité dans le protocole.",
  d:["Un réseau privé n'est pas un réseau sûr — il suffit d'un poste compromis.","Une seule lecture suffit : le secret est perdu pour toujours.","","L'appairage réel se fait hors du flux, à la mise en service."],
  ret:"Un secret transmis dans un message est un secret perdu."},
-{c:"3e_C7.8",n:"L'historique n'a pas sa place ici",q:"Joindre les 2 000 dernières mesures à chaque message d'alerte, c'est…",
+{c:"3e_C7.8",n:"L'historique n'a pas sa place ici",q:"Sur ce document, joindre le champ hist, les 2 000 dernières mesures, à chaque message d'alerte, c'est…",
+ img:{src:"Images/doc_message_station.svg",alt:"Les 8 champs qu'un message d'une station d'alerte pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id, exemple robert : l'identifiant de la station qui parle. v, exemple 124 : la vitesse du vent mesurée. u, exemple km/h : l'unité de cette vitesse. t, exemple 14:07 : l'heure de la mesure. niv, exemple 2 : le niveau d'alerte que CETTE station a calculé. seq, exemple 417 : le numéro d'ordre du message. hist, exemple …2 000 valeurs… : les 2 000 mesures des dernières 24 heures. cle, exemple Cle-Wifi-Mairie : la clé du réseau, « pour que l'autre se connecte »."},
  o:["utile seulement en cas de désaccord","indispensable pour justifier la décision d'alerte","inutile : la décision se prend sur l'instant","obligatoire dans tout système d'alerte"],r:2,
  expl:"Une alerte doit partir vite et léger. L'historique a sa place — dans un enregistrement envoyé une fois par jour, pas collé à chaque message.",
  ex:"Un message d'alerte de 64 caractères passe là où un message de 40 000 n'arrive jamais.",
@@ -444,7 +451,7 @@ const QUESTIONS = [
  err:"Découvrir au troisième objet ce qu'il fallait prévoir au premier.",
  d:["","Il y était dès la première station, précisément pour cela.","Chaque station numérote ses propres messages : il n'y a pas d'ambiguïté.","L'unité était déjà commune, et elle voyage dans chaque message."],
  ret:"Un message bien conçu survit à l'ajout d'un objet sans être modifié."},
-{c:"3e_C7.8",n:"Interfacer deux objets",q:"Interfacer deux objets communicants, c'est décider…",
+{c:"3e_C7.8",n:"Interfacer des objets communicants",q:"Interfacer des objets communicants, c'est décider…",
  o:["quelle antenne et quelle portée choisir","quelle adresse IP donner à chacun des deux","quel protocole de routage employer entre eux","le message, la règle d'accord, le silence"],r:3,
  expl:"Les trois décisions sont du côté des objets. L'adressage et le routage sont travaillés par les lots 3e_C4.7 et 3e_C4.8, et ne sont pas la question ici.",
  ex:"Six champs, « au moins le niveau 2 sur des messages de moins de 15 minutes », et « déclencher seule en le signalant ».",
@@ -473,21 +480,24 @@ const QUESTIONS = [
  err:"Traiter les pannes comme un cas rare. Sur une chaîne d'alerte, elles arrivent précisément au mauvais moment.",
  d:["Le service après-vente découvre les pannes ; la recette doit les avoir prévues.","","Couper une liaison n'abîme rien : c'est le geste de test le plus banal.","Une simulation prépare l'essai ; elle ne remplace pas le fait de couper vraiment."],
  ret:"Sur une liaison, les essais de panne sont le cœur de la recette."},
-{c:"3e_C8.3",n:"L'essai du silence",q:"L'essai « Sainte-Anne cesse d'émettre pendant vingt minutes » prouve…",
+{c:"3e_C8.3",n:"L'essai du silence",q:"Sur ce document, l'essai 4, « Sainte-Anne cesse d'émettre pendant vingt minutes », prouve…",
+ img:{src:"Images/doc_essais_station.svg",alt:"Les six essais de la recette de la liaison entre les stations du Robert et de Sainte-Anne. Essai 1 : Les deux stations annoncent le niveau 2, à l'instant. Essai 2 : Le Robert annonce 2, Sainte-Anne annonce 1. Essai 3 : Les deux annoncent 2, mais le message du Robert a trois heures. Essai 4 : Sainte-Anne cesse d'émettre pendant vingt minutes. Essai 5 : Sainte-Anne se tait ET Le Robert mesure 124 km/h. Essai 6 : Le message 417 arrive deux fois, puis le 419 arrive sans le 418."},
  o:["que le délai et le mode dégradé fonctionnent","que le réseau supporte les coupures longues","que la station de Sainte-Anne est réparable","que la règle d'accord est bien écrite"],r:0,
  expl:"Vingt minutes dépassent les quinze du délai : c'est exactement ce qu'il faut pour voir l'autre déclarée muette et le mode dégradé s'enclencher.",
  ex:"Un essai de dix minutes ne prouverait rien : le délai ne serait pas atteint.",
  err:"Choisir une durée d'essai au hasard. Elle se déduit du délai qu'on veut éprouver.",
  d:["","Le réseau n'est pas le sujet : c'est le comportement de la station qui est éprouvé.","La réparation est un autre sujet, et un autre essai.","La règle d'accord s'éprouve par les essais de désaccord et de fraîcheur."],
  ret:"La durée d'un essai se déduit du délai qu'on veut éprouver."},
-{c:"3e_C8.3",n:"L'essai qui décide de tout",q:"Parmi les six essais, celui qui décide de la conception est…",
+{c:"3e_C8.3",n:"L'essai qui décide de tout",q:"Parmi les six essais de ce document, celui qui décide de la conception est…",
+ img:{src:"Images/doc_essais_station.svg",alt:"Les six essais de la recette de la liaison entre les stations du Robert et de Sainte-Anne. Essai 1 : Les deux stations annoncent le niveau 2, à l'instant. Essai 2 : Le Robert annonce 2, Sainte-Anne annonce 1. Essai 3 : Les deux annoncent 2, mais le message du Robert a trois heures. Essai 4 : Sainte-Anne cesse d'émettre pendant vingt minutes. Essai 5 : Sainte-Anne se tait ET Le Robert mesure 124 km/h. Essai 6 : Le message 417 arrive deux fois, puis le 419 arrive sans le 418."},
  o:["les deux stations sont hors tension","les deux annoncent le même niveau","le message arrive deux fois de suite","l'autre se tait ET le vent est dangereux"],r:3,
  expl:"C'est le seul qui met en jeu le choix entre se taire et déclencher seul — donc le seul qui valide le comportement dégradé.",
  ex:"L'alerte part, marquée « non corroborée ». Si elle ne part pas, toute la conception est à revoir.",
  err:"Considérer tous les essais comme équivalents. Certains vérifient un détail, un seul valide une décision de conception.",
  d:["Deux stations éteintes : il n'y a plus de système à essayer.","Le cas nominal ne met aucune décision difficile en jeu.","Le doublon vérifie la numérotation, ce qui est utile mais secondaire.",""],
  ret:"Tous les essais ne se valent pas : certains valident une décision de conception."},
-{c:"3e_C8.3",n:"L'essai du doublon et du manque",q:"L'essai « le 417 arrive deux fois, puis le 419 sans le 418 » vérifie…",
+{c:"3e_C8.3",n:"L'essai du doublon et du manque",q:"Sur ce document, l'essai 6, « le 417 arrive deux fois, puis le 419 sans le 418 », vérifie…",
+ img:{src:"Images/doc_essais_station.svg",alt:"Les six essais de la recette de la liaison entre les stations du Robert et de Sainte-Anne. Essai 1 : Les deux stations annoncent le niveau 2, à l'instant. Essai 2 : Le Robert annonce 2, Sainte-Anne annonce 1. Essai 3 : Les deux annoncent 2, mais le message du Robert a trois heures. Essai 4 : Sainte-Anne cesse d'émettre pendant vingt minutes. Essai 5 : Sainte-Anne se tait ET Le Robert mesure 124 km/h. Essai 6 : Le message 417 arrive deux fois, puis le 419 arrive sans le 418."},
  o:["que la sirène fonctionne correctement","que le réseau ne perd pas de messages","que les deux horloges des stations sont synchronisées","que le numéro d'ordre est réellement exploité"],r:3,
  expl:"Le champ existe depuis l'activité 1 ; cet essai prouve qu'il est <em>utilisé</em>, et pas seulement transmis.",
  ex:"Un champ présent dans le message mais ignoré par le programme ne sert à rien.",
@@ -588,7 +598,7 @@ const PIEGE_DE_NOTION={
   "Trois valent mieux que deux":"trois",
   "La station discordante":"trois",
   "Un message qui survit à l'ajout":"trois",
-  "Interfacer deux objets":"trois",
+  "Interfacer des objets communicants":"trois",
   "Proposer les essais avant":"essais",
   "Le cas nominal ne prouve presque rien":"essais",
   "Essayer les pannes":"essais",
