@@ -143,9 +143,26 @@ sujet.
 | Séance | Question directrice | Contenu | Temps |
 |---|---|---|---|
 | 1 — Brancher, puis nommer | Que donne chacune des cinq sources à l'indicateur, et sous quelle forme l'énergie y entre-t-elle ? | Ouverture (avant de commencer, situation, problématique et idée de départ, sécurité, trois façons, billet), activités 0 et 1 | ouverture + 15 + 20 min |
-| 2 — Relever, choisir, refaire | Quelle source choisir pour le hall, chiffre à l'appui, et qu'est-ce que le banc ne compte pas ? | Activités 2, 3 et 4, réinvestissement, synthèse, Bonus (un corrigé replié par défi), bilan (« Je me positionne » sur 5e_C7.4 et 5e_C3.1), renvoi au QCM | 20 + 20 + 10 + 10 min + clôture |
+| 2 — Relever, choisir, refaire | Quelle source choisir pour le hall, chiffre à l'appui, et qu'est-ce que le banc ne compte pas ? | Activités 2, 3 et 4, billet de sortie, synthèse, Bonus (un corrigé replié par défi), bilan (« Je me positionne » sur 5e_C7.4 et 5e_C3.1), renvoi au QCM | 20 + 20 + 10 + 5 min + clôture ; réinvestissement (10 min) à la maison |
 
-La séance 2 est la plus chargée (60 min d'activités annoncées, plus la clôture) : c'est le découpage que donnent les durées
+La séance 2 est la plus chargée : depuis le 27/11/2026, le réinvestissement (10 min) passe à la maison — ou en classe
+s'il reste du temps — et le billet de sortie (5 min) ferme la séance, qui tient en 55 min. C'est le découpage que donnent les durées
 écrites sur les activités ; l'activité 2 ne tient pas dans la séance 1 avec l'ouverture. Dès la séance 2, l'ouverture — dont
 l'encadré Sécurité — est repliée dans le volet « 📖 Rappel » ; l'en-tête de la séance 2 rappelle la très basse tension et renvoie
 au volet. Le banc d'énergie sert aux deux séances : un seul exemplaire, rangé dans la séance ouverte, sous son en-tête.
+
+## 12. Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide). Un objet que la
+séquence n'a pas étudié : **l'afficheur des scores du plateau sportif**, dehors, loin de toute prise (3 Wh par jour).
+- Question 1 (5e_C7.4) : les 4 piles AA ou le panneau et son accumulateur. On regarde l'autonomie des piles calculée
+  (12,5 ÷ 3, environ 4 jours), la récolte du panneau comparée à la consommation (3,7 pour 3), et le lieu.
+- Question 2 (5e_C3.1) : la chaîne d'énergie, rayonnement → électrique → chimique dans l'accumulateur → lumineuse. On
+  regarde trois formes nommées, dans l'ordre, et la forme chimique dans l'accumulateur.
+Les 12,5 Wh et les 3,7 Wh sont ceux de `energie.py` (4 piles AA ; panneau 1 W crête en Martinique).
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone (q4, q5, q7, q8, q9, q11,
+q12), calculé par `documents_qcm.py` depuis `energie.py` — « Ce que consomme l'indicateur du hall » (courant, durée,
+énergie de chaque composant ; total 2,78 Wh) et « Cinq sources pour l'indicateur » (énergie stockée, rendement,
+énergie utile ; le secteur et le panneau). La q4 avait un leurre que personne ne choisit (« sa couleur et sa taille ») :
+il devient « sa tension seule, puisque tout est sous 5 V », une vraie lecture fausse du relevé.
