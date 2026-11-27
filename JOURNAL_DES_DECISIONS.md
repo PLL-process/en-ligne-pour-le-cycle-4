@@ -38914,3 +38914,18 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 63 / 63 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`3e_C7.8`). La famille C7 est complète sur les trois niveaux.
+
+## 27/11/2026 — 3e_C9.1 : six questions sur document dans chacun des deux QCM (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot, C9 après C7.
+- **QCM de la séquence** : un document neuf, « Le banc de la ventilation », LU dans la séquence (`documents_qcm.py` lit
+  le banc de démonstration de l'activité 5 et les trois branches de la fonction du document 3) ; il montre la fonction et
+  ses quatre tests, sans ce qu'elle renvoie. Trois questions s'y lisent (q26 : pourquoi un test T4 ; q27 : ce que renvoie
+  T4 ; q28 : la non-régression). La q25 citait le code `3e_C9.1` dans son énoncé, l'exemple de la q28 renvoyait « en
+  4e » : réécrits.
+- **QCM du TP mBot2** (`qcm_python_variables.html`, 0 question sur document) : « Les quatre familles de valeurs », lu
+  dans `vocabulaire_3e_C9.1.json` sans l'exemple de la séance (q8 à q11), et « Six commandes du robot mBot2 », lu dans
+  l'aide-mémoire du TP sans les mots capteur et actionneur (q29, q30).
+- La séquence avait déjà son billet de sortie : pas de P1 sur ce lot.
+Bancs : séquence 96 / 96 (sept tests neufs), TP 104 / 104, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles
+d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`3e_C9.1`).
