@@ -38678,3 +38678,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 40 / 40 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
 seulement (`5e_C7.4`).
+
+## 27/11/2026 — 5e_C7.5 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit l'établi :
+  ses constituants, leurs ports, leur courant, et le programme téléversé) — « Le prototype de l'éclairage du préau »
+  (q8, q14) et « Le programme de la carte » (q3, q10, q11, q12, q20). Sept questions illustrées sur trente : les
+  questions « on retire… » se lisent maintenant sur le programme que la carte exécute.
+- **Billet de sortie** avant le Bonus de la séance 2 : le ventilateur automatique de la salle de classe (les quatre
+  fonctions et le type de port de chaque module ; la chaîne d'information, la décision écrite comme une comparaison à
+  un seuil). Le réinvestissement passe de 15 à 10 minutes : la séance tient en 55.
+Bancs : séquence 45 / 45 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`5e_C7.5`).
