@@ -38943,3 +38943,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 - Une ligne de la correction du Bonus cousait deux idées par « ; » (audit d'aération) : coupée.
 Bancs : séquence 75 / 75 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`5e_C9.1`).
+
+## 27/11/2026 — 4e_C9.1 : deux questions sur document de plus, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** (4 questions sur document) : « La règle et ses six essais », LU dans la séquence par `documents_qcm.py` (le
+  pseudo-code de la correction de l'activité 2 et le tableau d'essais de l'activité 4, sans ce que fait la pompe) ; la q9
+  (le chemin de l'essai 3) et la q21 (ce que prouvent les essais 1 et 2) s'y lisent. La q1 citait « le programme officiel
+  de 4e » (n°304), la q26 annonçait « deux chronogrammes » au-dessus d'une réponse à trois éléments (E1) : réécrites.
+- **Billet de sortie** avant le Bonus de la séance 3 : le ventilateur de la salle informatique (ajouter la plage des
+  heures de cours ; corriger l'affolement par deux seuils, et deux essais qui le prouvent). La séance 3 passe de 50 à 55
+  minutes d'activités.
+Bancs : séquence 169 / 169, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de l'aération, du
+squelette, du mode mission et des liens : verts. Thème 3 seulement (`4e_C9.1`). Les chantiers D1 et P1 du thème 3 sont
+tous fermés.
