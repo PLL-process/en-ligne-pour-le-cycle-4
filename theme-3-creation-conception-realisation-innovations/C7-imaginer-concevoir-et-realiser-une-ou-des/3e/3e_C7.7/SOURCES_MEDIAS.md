@@ -18,3 +18,9 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_impression_ratee.png` | Un boîtier gris imprimé en 3D, encore sous la buse de l'imprimante : le dessus est gondolé, les flancs couverts de fils de plastique, comme une toile d'araignée. PNG 1 536 × 1 024, 2.4 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic close-up photo of a failed 3D-printed grey plastic box just removed from a 3D printer bed: stringy hairy surfaces where support material was torn off, a lid fused to the base, a wavy rim, the printer nozzle visible in the blurred background, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Document du QCM, dessiné pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_dessin_boitier.svg` | Cinq cotes du dessin du boîtier (paroi, casquette, rainure, jeu du couvercle, angles internes), et ce que tient l'imprimante 3D pour chacune. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C7.7.json`, lui-même calculé par `documents_qcm.py` depuis `moyens.py` (aucun nombre recopié). | CC0, comme les images du dépôt | QCM, q3, q5, q6, q7, q8, q10, q12 |

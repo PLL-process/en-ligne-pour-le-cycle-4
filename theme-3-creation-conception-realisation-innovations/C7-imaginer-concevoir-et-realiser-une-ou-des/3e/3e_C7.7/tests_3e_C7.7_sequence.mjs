@@ -197,6 +197,28 @@ if (REP.refus) {
   await p.evaluate(n => document.querySelector('[data-check="' + n + '"]').click(), REP.refus.act);
 }
 
+// ── le billet de sortie (n°330, 27/11/2026) : avant le Bonus, deux zones gardées, deux aides, deux critères ──
+const TXT_BILLET = "Le bras à 60° : je le ramène à 45°.";
+const billet = await p.evaluate(() => {
+  const s = document.getElementById('billetSortie'); if (!s) return null;
+  const cartes = [...document.querySelectorAll('section.card')], bonus = document.querySelector('section.card.bonus');
+  const c = s.querySelector('details.correction')?.textContent || '';
+  return { zones: s.querySelectorAll('textarea[data-save]').length, aides: s.querySelectorAll('details.etayage').length,
+    criteres: (c.match(/Critère/g) || []).length, contre: (c.match(/✘/g) || []).length,
+    boutons: s.querySelectorAll('button').length, avantBonus: !!bonus && cartes.indexOf(s) === cartes.indexOf(bonus) - 1 };
+});
+ok('un billet de sortie existe', !!billet);
+if (billet) {
+  ok('billet : deux zones sauvegardées, deux versions étayées', billet.zones === 2 && billet.aides === 2,
+    billet.zones + ' zones, ' + billet.aides + ' aides');
+  ok('billet : deux critères et des contre-exemples, aucun bouton', billet.criteres === 2 && billet.contre >= 2 && billet.boutons === 0,
+    billet.criteres + ' critères, ' + billet.contre + ' ✘, ' + billet.boutons + ' bouton(s)');
+  ok('billet : juste avant le Bonus', billet.avantBonus);
+  await p.evaluate(() => { const t = document.querySelector('.seance-tab[data-panel="s4"]'); if (t) t.click(); });
+  await p.fill('#bs_3e_C7_7_1', TXT_BILLET);
+  await p.evaluate(() => document.getElementById('bs_3e_C7_7_1').blur());
+}
+
 // ── la mémoire ───────────────────────────────────────────────────────────
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
 const [idT, valT] = Object.entries(REP.persistance)[0];
@@ -205,6 +227,7 @@ ok('les réponses survivent au rechargement', (await p.inputValue('#' + idT)) ==
 ok('l’état de l’atelier survit au rechargement',
   (await p.inputValue('#' + REP.temoin[0])) === REP.temoin[1],
   REP.temoin[0] + ' = ' + (await p.inputValue('#' + REP.temoin[0])));
+if (billet) ok('billet : la réponse survit au rechargement', (await p.inputValue('#bs_3e_C7_7_1')) === TXT_BILLET);
 ok('les verrous survivent au rechargement',
   await p.evaluate(v => !!window.__exp[v], REP.atelier.essais[0].exp || 'evalue'));
 ok('le tableau est reconstruit au rechargement',

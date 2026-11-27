@@ -38888,3 +38888,16 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 59 / 59 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
 seulement (`3e_C7.5`).
+
+## 27/11/2026 — 3e_C7.7 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et CALCULÉ par le modèle du lot (`documents_qcm.py` importe
+  `moyens.py`) — « Le dessin du boîtier, face à l'imprimante » : cinq cotes du dessin et ce que tient l'imprimante (q3,
+  q5, q6, q7, q8, q10, q12). Les q9 et q11 renvoyaient par son code à une autre séquence (« 3e_C7.3 », « 3e_C7.6 ») :
+  elles disent ce qui s'y est passé, sans le code.
+- **Billet de sortie** avant le Bonus de la séance 4 : le support du panneau solaire (les cotes à corriger pour
+  l'imprimante, la fonction gardée ; ce que dit et ce que tait la simulation).
+Bancs : séquence 82 / 82 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.7`).
