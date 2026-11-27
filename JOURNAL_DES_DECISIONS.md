@@ -38634,9 +38634,21 @@ les cahiers ; thème 2 — `4e_C6.1`, `4e_C6.2`, `3e_C4.1`, `3e_C4.8`, `4e_C4.1`
 thème 3 — `3e_C7.1`, `3e_C7.6`, `3e_C7.8`, `4e_C7.1`, `5e_C7.1`, l'atelier de planification, `3e_C8.1`, `3e_C9.1`,
 `5e_C9.1` ; `_outils/` — le contrôle neuf, son banc, P1 ; `.claude/skills/controle-qualite-lot` — sa ligne.
 
+## 27/11/2026 — 5e_C7.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — continuer, lot par lot, les chantiers D1 et P1 du thème 3, en commençant par C7.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` : la
+  situation et le planning de l'activité 1a ; ce lot n'a pas de modèle) — le relevé de M. Alvarez (q2), le planning de
+  l'équipe (q7, qui fait maintenant calculer le décalage d'un retard) ; la chaîne et l'algorigramme servent aussi aux
+  q18 et q24. Sept questions illustrées sur trente. La q28 disait « sur le cahier » : « sur une feuille de brouillon ».
+- **Billet de sortie** avant le Bonus de la séance 3 : le range-vélos du collège (deux solutions et un critère ; la
+  règle SI et un test à l'attendu écrit avant).
+Bancs : `tests_5e_C7.mjs` 65 / 65 (quatre tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`5e_C7.1`).
+
 ## 27/11/2026 — Exports Moodle régénérés (transversal : `_exports/` seulement)
 
 Pascal : « 2 oui ». Les exports Moodle gardaient le texte d'avant les lots de la semaine (questions sur document, règle
 d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les réécrit depuis les 76 QCM : 2 301
-questions, 310 images embarquées (231 avant : les documents dessinés pour le téléphone entrent). Aucune phrase
+questions, 314 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux de `5e_C7.1` compris). Aucune phrase
 « comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.

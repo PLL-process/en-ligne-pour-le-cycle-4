@@ -1,6 +1,6 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 310 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 314 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
@@ -72,7 +72,7 @@ Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 310 ima
 | 4e | 4e_C7.6 | Le socle : modifier une forme par la modélisation | 30 | 0 |
 | 4e | 4e_C7.7 | Le support du capteur : choisir les moyens | 30 | 0 |
 | 4e | 4e_C7.8 | Le jardin publie sa mesure : interfacer un objet | 30 | 0 |
-| 5e | 5e_C7.1 | L'indicateur de rangement du hall | 30 | 3 |
+| 5e | 5e_C7.1 | L'indicateur de rangement du hall | 30 | 7 |
 | 5e | 5e_C7.2 | Le dé, en mieux : améliorer un objet qui existe | 30 | 0 |
 | 5e | 5e_C7.3 | Le banc de la cour : choisir un matériau parmi plusieurs | 30 | 0 |
 | 5e | 5e_C7.4 | L'indicateur du hall : choisir une source d'énergie | 30 | 0 |
