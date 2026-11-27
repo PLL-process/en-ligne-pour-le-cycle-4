@@ -38709,3 +38709,60 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
   « (40 min) » comme une activité.
 Bancs : `tests_4e_C7.mjs` 56 / 56 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
 de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`4e_C7.1`).
+
+## 27/11/2026 — Le TP mBot2 refondu : trois séances, un robot simulé, des lignes de boucle jugées en exécutant le programme (thème 3)
+
+Pascal : « Revoir et améliorer la ou les séquences avec le mBot2, et me redonner les compétences et l'URL. »
+
+**Ce qui existe.** Une seule ressource du site s'appuie sur le mBot2 : `3e_C9.1/tp_mbot2_python.html` (3e_C9.2 et
+3e_C9.1, socle D1.3, D2, D4, CRCN 3.4 niveau 3). Ailleurs, le robot n'est qu'un Bonus (`3e_C6.1`) ou une question de
+QCM. Le TP était une ressource héritée (badge 🛠, « TP mBot2 & Python — v4.5 ») : il est refondu à la même adresse,
+l'ancienne version archivée (`_archive-anciennes-versions/C7_C9_…/3e_C9.1/tp_mbot2_python_v4.5_avant-refonte.html`,
+liens réparés, bandeau vers la version en service), et retiré de `_outils/heritees.json` (n°12).
+
+**La refonte** (commencée le 26/11, finie le 27/11) : trois séances de 55 min, avec une barre qui mène à chacune et
+dit où l'élève en est ; les six gestes de mBlock en échauffement ; sept programmes à reconstruire par étiquettes
+(A1 à A7), qui se glissent au doigt, à la souris et au clavier ; huit exercices (E1 à E8) ; vingt lignes de boucle
+(B1 à B20) ; deux aides puis une correction complète par exercice ; un suivi « réussi / à reprendre / pas encore
+fait », 55 points ramenés sur 20 ; une fiche imprimée de deux pages. Versions : 🅰 robot réel (mBlock, très basse
+tension, robot au sol), 🅱 robot simulé dans la page (l'éditeur Python commun et un module `cyberpi` simulé, qui dit
+ses hypothèses), 🅲 à la maison sur téléphone.
+
+**B1 à B20, réécrits le 27/11.** Les vingt consignes héritées étaient des pavés (jusqu'à 25 lignes) qui donnaient
+souvent la réponse dans l'exemple, et la ligne se jugeait à son seul texte. Chaque exercice est maintenant un petit
+programme auquel il manque une ligne : « À savoir » (une règle, un exemple), le programme troué, ce qu'il doit
+afficher (ou faire, sur le robot simulé). La page **exécute** le programme avec la ligne de l'élève (n°333) : la ligne
+du corrigé est reconnue aux espaces et guillemets près ; toute autre ligne est juste si le programme fait le même
+travail (`while d > 14:`, `s = i + s`, `while 1:`) ; sinon l'élève voit côte à côte ce que son programme affiche et
+ce qu'il doit afficher. B1, B8, B12 et B15 jouent un second cas (la page change un nombre du programme) : une ligne
+qui ne convient qu'aux nombres montrés est refusée. B9 et B16 se jouent sur le robot simulé, touche par touche. Sans
+moteur Python, la page le dit et ne compte pas l'essai (n°374 : une limite de l'outil n'est pas une erreur de
+l'élève). Le mot « essai » garde un seul sens (l'essai de l'élève) ; les situations jouées par la page sont des
+« cas ».
+
+**Vérifié** : banc `3e_C9.1/tests_tp_mbot2_3e_C9.1.mjs` 97 / 97 (dont 49 lignes justes ou fausses jouées, les
+32 lignes du corrigé exécutées, le cas « sans moteur ») ; `controle_page_ouverte --axe`, `controle_axe`,
+`controle_code_colore`, `banc_effacement`, `mode_mission/banc_generique`, `audit_aeration --strict`,
+`controle_consignes_a_la_ligne --strict`, `controle_annee_precedente`, `controle_sigles_expliques`,
+`controle_competences`, `controle_liens`, `controle_licence`, `controle_tactile`, `controle_boutons_vivants`,
+`controle_sauvegarde_locale`, `controle_porte_sequence`, `controle_unites`, `controle_hors_ligne --source` : verts.
+Revue d'écran à 390 et 1 280 px, deux tours (« essai » à double sens, touche poussée non dite par le robot simulé,
+exemple de code coupé au milieu d'un mot sur téléphone : corrigés).
+
+**Non vérifiable d'ici, à faire sur un vrai mBot2** : le mot-clé `run_time` de `forward` / `backward` en mode
+Téléverser (manuel Python du mBot2 de Makeblock ; l'aide en ligne écrit `t` — `forward(50, 1)` convient aux deux), et
+les libellés des boutons de mBlock et de Vittascience ; les gestes de Vittascience en captures (n° des gestes en
+captures), après un premier essai de Pascal sur un robot.
+
+**Vittascience et l'éditeur, le même jour.** Pascal : « Il y aurait pu avoir un éditeur Python intégré, celui de
+Vittascience » ; puis, après avis : « J'ajoute dès maintenant un lien « Envoyer au vrai robot avec Vittascience ». À
+certains moments, peut-être qu'une interface Python serait nécessaire. » L'éditeur de Vittascience ne s'affiche pas
+dans une autre page, ne peut pas être lu par elle (ni vérification, ni points) et demande Internet (n°305) : l'éditeur
+de la page reste celui qui exécute et corrige, Vittascience devient le chemin vers le vrai robot (son interface
+CyberPi / mBot2, `fr.vittascience.com/cyberpi/`, téléverse du Python sans rien installer). Posés : sous chaque
+activité A1 à A7, « 🚀 Envoyer ton programme au vrai robot » — 🐍 l'éditeur de la page ouvert sur le programme de
+l'élève (▶ sur le robot simulé, ⬇ son .py, gardé comme tout champ), 📋 copier le programme (repli : le texte
+sélectionné pour Ctrl + C), 🌐 Vittascience mBot2 ; dans l'échauffement, « l'autre chemin » en cinq gestes, à côté
+des six de mBlock ; dans le Bonus, un éditeur pour les trois défis, qui en demandaient un. Au passage, la console du
+robot simulé se lit sans code interne (« 📟 écran : « Y », puis passe à la ligne » au lieu de « Y ⏎oui » ;
+« lumières » au lieu de « DEL »). Banc : 104 / 104.
