@@ -1,0 +1,78 @@
+{
+  "qcm": [
+    "qcm_5e_C7.5_eclairage-du-preau.html"
+  ],
+  "documents": {
+    "doc_montage_preau": {
+      "titre": "Le prototype de l'éclairage du préau",
+      "sous_titre": "Les cinq constituants montés, et le courant que chacun demande.",
+      "desc": "Le prototype de l'éclairage du préau, cinq constituants. Carte Arduino UNO : sur l'établi, 45 milliampères. Base Shield V2 : sur la carte, 0 milliampères. Capteur de luminosité Grove : port A0, 3 milliampères. Module DEL Grove : port D5, 20 milliampères. Câble USB : sur la carte, il fournit jusqu'à 500 milliampères.",
+      "blocs": [
+        {
+          "tableau": {
+            "colonnes": [
+              "Constituant",
+              "Branché sur",
+              "Courant"
+            ],
+            "largeurs": [
+              150,
+              100,
+              72
+            ],
+            "lignes": [
+              [
+                "Carte UNO",
+                "sur l'établi",
+                "45 mA"
+              ],
+              [
+                "Base Shield",
+                "sur la carte",
+                "0 mA"
+              ],
+              [
+                "Capteur de lumière",
+                "A0",
+                "3 mA"
+              ],
+              [
+                "Module DEL",
+                "D5",
+                "20 mA"
+              ],
+              [
+                "Câble USB",
+                "sur la carte",
+                "—"
+              ]
+            ]
+          }
+        }
+      ],
+      "note": "mA : milliampère · le câble USB fournit jusqu'à 500 mA à tout le montage."
+    },
+    "doc_programme_preau": {
+      "titre": "Le programme de la carte",
+      "sous_titre": "Celui qui est téléversé dans la carte du préau.",
+      "desc": "Le programme téléversé dans la carte, ligne par ligne : lumiere = analogRead(A0) ; si lumiere < 300 alors ; digitalWrite(5, HAUT) ; sinon ; digitalWrite(5, BAS).",
+      "blocs": [
+        {
+          "fiches": [
+            {
+              "titre": "Programme",
+              "lignes": [
+                "lumiere = analogRead(A0)",
+                "si lumiere < 300 alors",
+                "→ digitalWrite(5, HAUT)",
+                "sinon",
+                "→ digitalWrite(5, BAS)"
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "→ : ligne qui dépend de la ligne « si » ou « sinon » au-dessus · analogRead(A0) : lire le port analogique A0 · digitalWrite(5, HAUT) : mettre la sortie D5 à l'état haut, la DEL s'allume · BAS : à l'état bas, elle s'éteint."
+    }
+  }
+}
