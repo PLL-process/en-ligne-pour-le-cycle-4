@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 5e_C7.5 + 10 5e_C4.5), 0 illustrée.
+/* Banque : 30 questions (20 5e_C7.5 + 10 5e_C4.5), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -327,7 +329,8 @@ const QUESTIONS = [
  err:"Croire que la carte « acquiert » parce que c'est elle qui lit la valeur : elle la reçoit, elle ne la prend pas.",
  d:["elle reçoit la mesure et la compare au seuil : c'est traiter, pas acquérir.","","il produit de la lumière au lieu d'en mesurer : c'est un actionneur, pas un capteur.","il apporte l'énergie et ne mesure rien du tout."],
  ret:"Acquérir, c'est le rôle du capteur : il transforme une grandeur du monde en une valeur lisible."},
-{c:"5e_C7.5",n:"La fonction traiter",q:"Qu'est-ce que la carte Arduino fait exactement dans le prototype ?",
+{c:"5e_C7.5",n:"La fonction traiter",q:"Sur ce programme, que fait exactement la carte Arduino du prototype ?",
+ img:{src:"Images/doc_programme_preau.svg",alt:"Le programme téléversé dans la carte, ligne par ligne : lumiere = analogRead(A0) ; si lumiere < 300 alors ; digitalWrite(5, HAUT) ; sinon ; digitalWrite(5, BAS)."},
  o:["elle augmente la puissance de la DEL quand il fait sombre","elle transforme la lumière du préau en électricité","elle compare la mesure à un seuil et décide de la suite","elle enregistre toutes les mesures pour les relire plus tard"],r:2,
  expl:"Traiter, c'est décider. La carte exécute un programme qui compare la valeur reçue à un seuil et en déduit l'ordre à envoyer.",
  ex:"Si la valeur lue est inférieure à 300, la carte écrit HAUT sur D5 ; sinon elle écrit BAS.",
@@ -362,7 +365,8 @@ const QUESTIONS = [
  err:"Croire que « analogique » veut dire « ancien » ou « moins précis ».",
  d:["les deux types supportent le même courant de signal, très faible dans les deux cas.","la vitesse de lecture ne fait pas la différence entre les deux types d'entrée.","","un capteur de mouvement est numérique et un actionneur peut être analogique : ce n'est pas le critère."],
  ret:"Analogique : un nombre. Numérique : deux états. C'est la grandeur mesurée qui décide."},
-{c:"5e_C7.5",n:"Choisir le port d'un capteur de luminosité",q:"Pourquoi le capteur de luminosité ne peut-il pas fonctionner sur le port D4 ?",
+{c:"5e_C7.5",n:"Choisir le port d'un capteur de luminosité",q:"Sur ce montage, le capteur de lumière est sur A0. Pourquoi ne fonctionnerait-il pas sur le port D4 ?",
+ img:{src:"Images/doc_montage_preau.svg",alt:"Le prototype de l'éclairage du préau, cinq constituants. Carte Arduino UNO : sur l'établi, 45 milliampères. Base Shield V2 : sur la carte, 0 milliampères. Capteur de luminosité Grove : port A0, 3 milliampères. Module DEL Grove : port D5, 20 milliampères. Câble USB : sur la carte, il fournit jusqu'à 500 milliampères."},
  o:["D4 est toujours occupé par l'actionneur du montage","D4 est réservé aux modules qui consomment moins de 5 milliampères","D4 se trouve trop loin du capteur sur le Base Shield","D4 ne distinguerait que « clair » et « sombre », sans nuance"],r:3,
  expl:"Une entrée numérique ne rend que 0 ou 1. Le capteur rendrait bien une tension, mais la carte ne lirait qu'un seuil arbitraire, et non la valeur.",
  ex:"À la tombée du jour, la valeur passe progressivement de 820 à 180 : c'est cette progression qu'une entrée numérique perd.",
@@ -376,21 +380,24 @@ const QUESTIONS = [
  err:"Croire qu'un port analogique serait « meilleur » : il serait simplement inutile ici.",
  d:["les ports A0 à A3 peuvent aussi servir en numérique : rien n'est réservé par construction.","la consommation ne détermine pas le type de port, mais le budget de l'alimentation.","","elle pourrait l'être électriquement ; c'est le programme qui écrit sur D5."],
  ret:"Deux états demandés, une sortie numérique suffit."},
-{c:"5e_C7.5",n:"L'accord entre le branchement et le programme",q:"Le capteur de lumière est branché sur le port analogique A1, mais le programme lit le port A0. Que se passe-t-il ?",
+{c:"5e_C7.5",n:"L'accord entre le branchement et le programme",q:"Le capteur de lumière est branché sur le port analogique A1. D'après ce programme, que se passe-t-il ?",
+ img:{src:"Images/doc_programme_preau.svg",alt:"Le programme téléversé dans la carte, ligne par ligne : lumiere = analogRead(A0) ; si lumiere < 300 alors ; digitalWrite(5, HAUT) ; sinon ; digitalWrite(5, BAS)."},
  o:["la DEL clignote vite pour signaler le mauvais branchement","la carte affiche un message d'erreur au démarrage","le programme cherche automatiquement le bon port","rien ne se produit, et aucun message d'erreur n'apparaît"],r:3,
  expl:"La carte lit consciencieusement A0, où il n'y a rien. Elle obtient une valeur qui ne veut rien dire et décide en conséquence. Tout fonctionne, et rien ne marche.",
  ex:"C'est la panne la plus traître : rien ne chauffe, rien ne fume, le montage a l'air parfait.",
  err:"Attendre un message d'erreur d'un montage électronique : il n'y en a pas.",
  d:["aucun clignotement n'est prévu : ce comportement devrait être programmé pour exister.","une carte Arduino n'affiche aucun message : elle n'a ni écran ni système de diagnostic.","aucun programme ne cherche un capteur ailleurs : il lit l'adresse qu'on lui a écrite.",""],
  ret:"Le branchement et le programme doivent dire la même chose : personne ne le vérifie à ta place."},
-{c:"5e_C7.5",n:"Retirer le capteur",q:"On retire le capteur de luminosité d'un montage qui fonctionnait. Que se passe-t-il ?",
+{c:"5e_C7.5",n:"Retirer le capteur",q:"On retire le capteur de lumière d'un montage qui fonctionnait. D'après ce programme, que se passe-t-il ?",
+ img:{src:"Images/doc_programme_preau.svg",alt:"Le programme téléversé dans la carte, ligne par ligne : lumiere = analogRead(A0) ; si lumiere < 300 alors ; digitalWrite(5, HAUT) ; sinon ; digitalWrite(5, BAS)."},
  o:["la carte décide toujours la même chose, quoi qu'il arrive dehors","la carte s'arrête net et la DEL s'éteint définitivement","la DEL se met à clignoter pour signaler l'absence de mesure","le montage continue de fonctionner exactement comme avant, sans capteur"],r:0,
  expl:"Sans mesure, l'entrée A0 rend une valeur qui ne dépend plus du monde. Le programme continue de tourner et prend toujours la même décision.",
  ex:"La DEL peut rester allumée en plein jour, ou éteinte en pleine nuit : elle n'a plus de raison de changer.",
  err:"Croire qu'un capteur absent provoque un arrêt : il provoque une décision figée, ce qui est plus difficile à voir.",
  d:["","la carte continue de tourner : rien dans le programme ne l'arrête si une valeur manque.","aucun clignotement n'est prévu : il faudrait l'avoir programmé.","il ne réagit plus à la lumière : c'est justement ce que le capteur apportait."],
  ret:"Sans acquérir, la décision existe encore — elle est simplement toujours la même."},
-{c:"5e_C7.5",n:"Retirer l'actionneur",q:"On retire le module DEL. Que devient la décision prise par la carte ?",
+{c:"5e_C7.5",n:"Retirer l'actionneur",q:"On retire le module DEL. D'après ce programme, que devient la décision prise par la carte ?",
+ img:{src:"Images/doc_programme_preau.svg",alt:"Le programme téléversé dans la carte, ligne par ligne : lumiere = analogRead(A0) ; si lumiere < 300 alors ; digitalWrite(5, HAUT) ; sinon ; digitalWrite(5, BAS)."},
  o:["elle est prise correctement et ne produit plus aucun effet","elle n'est plus prise du tout, car le programme s'arrête net","elle est envoyée au capteur, qui l'exécute à la place","elle est mise en mémoire jusqu'au remontage de la DEL"],r:0,
  expl:"La carte continue d'écrire HAUT ou BAS sur D5. Simplement, plus rien n'est branché là pour transformer cet ordre en lumière.",
  ex:"Un multimètre posé sur D5 verrait la tension changer : la décision est bien là, invisible.",
@@ -404,7 +411,8 @@ const QUESTIONS = [
  err:"Chercher une panne fine alors qu'un constituant central manque : le diagnostic va du grossier au fin.",
  d:["le shield ne contient aucun processeur : il ne fait que relier.","un capteur ne parle qu'à une carte : il n'a aucun moyen de commander un actionneur.","aucun comportement de sécurité n'existe s'il n'a pas été programmé, et rien ne tourne.",""],
  ret:"Le diagnostic commence par ce qui empêche tout, avant ce qui empêche quelque chose."},
-{c:"5e_C7.5",n:"Retirer l'alimentation",q:"Le câble USB est débranché. Combien de fonctions restent utilisables ?",
+{c:"5e_C7.5",n:"Retirer l'alimentation",q:"Sur ce montage, on débranche le câble USB. Combien de fonctions restent utilisables ?",
+ img:{src:"Images/doc_montage_preau.svg",alt:"Le prototype de l'éclairage du préau, cinq constituants. Carte Arduino UNO : sur l'établi, 45 milliampères. Base Shield V2 : sur la carte, 0 milliampères. Capteur de luminosité Grove : port A0, 3 milliampères. Module DEL Grove : port D5, 20 milliampères. Câble USB : sur la carte, il fournit jusqu'à 500 milliampères."},
  o:["aucune, alors que trois constituants sont pourtant en place","trois : seule la fonction alimenter se trouve perdue","deux : le capteur et la carte gardent leur énergie interne","une : la carte fonctionne encore grâce à sa mémoire"],r:0,
  expl:"L'énergie n'est pas une fonction parmi d'autres : c'est la condition des trois autres. Sans elle, tout est présent et rien ne fonctionne.",
  ex:"Un montage complet et débranché ressemble en tout point à un montage complet et branché.",
@@ -446,7 +454,8 @@ const QUESTIONS = [
  err:"Croire qu'une fonction n'admet qu'un seul constituant.",
  d:["ce n'est pas une erreur : la plupart des objets réels portent plusieurs capteurs.","","l'ancienneté d'un module ne joue aucun rôle dans la fonction qu'il tient.","deux capteurs sur deux ports différents ne se gênent en aucune façon."],
  ret:"Une même fonction peut être tenue par plusieurs constituants qui mesurent des choses différentes."},
-{c:"5e_C7.5",n:"Un constituant qu'aucun programme ne lit",q:"On ajoute un capteur de mouvement, mais le programme n'est pas modifié. Que fait ce capteur ?",
+{c:"5e_C7.5",n:"Un constituant qu'aucun programme ne lit",q:"On ajoute un capteur de mouvement, sans changer ce programme. Que fait ce capteur ?",
+ img:{src:"Images/doc_programme_preau.svg",alt:"Le programme téléversé dans la carte, ligne par ligne : lumiere = analogRead(A0) ; si lumiere < 300 alors ; digitalWrite(5, HAUT) ; sinon ; digitalWrite(5, BAS)."},
  o:["il remplace automatiquement le capteur de luminosité","il fonctionne, consomme du courant, et ne sert à rien","il empêche le programme de démarrer correctement","il déclenche l'éclairage dès qu'un mouvement est détecté"],r:1,
  expl:"Un module branché et alimenté fait son travail. Mais si aucune ligne du programme ne lit son port, sa mesure n'atteint jamais la décision.",
  ex:"Le capteur rend bien 0 ou 1 sur son port ; personne ne vient le lire.",
