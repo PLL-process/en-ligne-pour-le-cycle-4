@@ -48,7 +48,7 @@ Les blocs sont déplacés, pas réécrits ; la durée annoncée sur la page (2 �
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Éprouver, dessiner la démarche, choisir | Qu'est-ce qui a tué les bacs, et comment passe-t-on d'un problème à une solution choisie avec des critères ? | Ouverture, activités 0, 1 (diagramme et planning) et 2 | ouverture + 10 + 15 + 25 min |
-| 2 — Comparer les matériaux, refaire, conclure | Quel matériau, et la même démarche marche-t-elle ailleurs ? | Activité 3, réinvestissement (FAST incrusté, jardinière), synthèse, Bonus (corrigé par défi), bilan, TP et atelier liés, QCM | 20 + 30 min + clôture |
+| 2 — Comparer les matériaux, refaire, conclure | Quel matériau, et la même démarche marche-t-elle ailleurs ? | Activité 3, réinvestissement (FAST incrusté, jardinière), billet de sortie, synthèse, Bonus (corrigé par défi), bilan, TP et atelier liés, QCM | 20 + 30 + 5 min + clôture |
 
 **La durée, rendue cohérente (04/11/2026).** Les trois mentions ne parlaient pas de la même chose : l'étiquette de la page (« 2 séances de 55 min ») désigne la page seule — sa bulle disait déjà « + 3 séances sur le TP et 1 sur l'atelier, soit 6 au total » ; la fiche (« 4 × 55 min ») et l'activité 1 (« pendant 4 séances ») dataient du temps où le TP et l'atelier comptaient une séance chacun (entrée du journal d'août 2026) ; le TP annonce aujourd'hui trois séances et l'atelier une. La page garde ses deux onglets ; l'activité 1 parle des « six séances du projet », l'en-tête de la séance 2 dit que les séances 3 à 6 se font sur l'atelier et le TP, et cette fiche annonce 6 × 55 min. **À vérifier par Pascal :** l'ordre de l'atelier et du TP n'est écrit nulle part (l'atelier « se place au lancement du projet », le TP vient « avant de dessiner le boîtier »). Et la séance 1 porte l'ouverture et 50 min d'activités.
 
@@ -63,3 +63,19 @@ avec le réinvestissement, ses marques d'incrustation intactes.
 La clôture reçoit un corrigé replié par défi du Bonus (réemploi de quartier, critère de test chiffré, lieux de New York) ;
 au bilan, le retour à l'hypothèse (le texte écrit au début se relit), « Comment j'ai travaillé » et « Je me positionne »
 sur 4e_C7.1, C7.2 et C7.3 aux quatre niveaux du livret scolaire.
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide ; la séance tient en
+55 minutes). Un objet que la séquence n'a pas étudié : **l'abri à outils du jardin partagé**, à Brooklyn.
+- Question 1 (4e_C7.1) : ranger quatre tâches données dans le désordre et repérer celles qui avancent en même temps.
+  On regarde un ordre justifié par ce que chaque tâche attend, et au moins une paire de tâches indépendantes.
+- Question 2 (4e_C7.3) : choisir le matériau du toit et nommer le critère qui élimine l'autre. On regarde le critère
+  éliminatoire nommé et rattaché au lieu (la pluie, le gel).
+
+**QCM** : neuf questions sur trente se lisent sur un document (trois l'étaient déjà). Deux documents neufs, dessinés
+pour le téléphone et LUS dans la séquence par `documents_qcm.py` : « Les tâches du projet du jardin » (les quatre
+tâches de l'activité 1b, dans le désordre, avec leur durée ; q1, q8) et « Trois matériaux pour le boîtier » (le
+tableau de l'activité 3, rempli avec ses réponses attendues ; q24, q26, q27, q29). La q1 demandait « En 5e on suit…
+qu'attend-on de toi en 4e ? » : elle évaluait la connaissance du programme, et supposait une 5e faite avec nous
+(n°304). Elle fait maintenant organiser la liste. La q29 disait « notre tableau » : elle montre le tableau.

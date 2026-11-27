@@ -1,6 +1,6 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 335 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 433 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
@@ -58,20 +58,20 @@ Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 335 ima
 | 4e | 4e_C6.2 | Le jardin connecté : arrosage automatique | 30 | 0 |
 | 4e | 4e_C6.2 | l'éclairage automatique | 30 | 0 |
 | 5e | 5e_C6.1 | Programmer le lampadaire | 30 | 3 |
-| 3e | 3e_C7.1 | Le capteur de confort de la salle 214 | 30 | 3 |
-| 3e | 3e_C7.3 | Le boîtier de la station : quand personne ne passe | 30 | 0 |
-| 3e | 3e_C7.4 | La station doit tenir 72 heures : choisir une source | 30 | 0 |
-| 3e | 3e_C7.5 | La station qu'il faut équiper : choisir les constituants | 30 | 0 |
+| 3e | 3e_C7.1 | Le capteur de confort de la salle 214 | 30 | 7 |
+| 3e | 3e_C7.3 | Le boîtier de la station : quand personne ne passe | 30 | 7 |
+| 3e | 3e_C7.4 | La station doit tenir 72 heures : choisir une source | 30 | 7 |
+| 3e | 3e_C7.5 | La station qu'il faut équiper : choisir les constituants | 30 | 8 |
 | 3e | 3e_C7.6 | Le boîtier : modéliser la forme voulue | 30 | 0 |
-| 3e | 3e_C7.7 | Produire le boîtier : le moyen rétroagit sur la forme | 30 | 0 |
-| 3e | 3e_C7.8 | Deux stations qui se parlent : interfacer deux objets | 30 | 0 |
-| 4e | 4e_C7.1 | Le boîtier du jardin connecté | 30 | 3 |
-| 4e | 4e_C7.3 | Le bac du jardin : comparer, et sur quelle durée | 30 | 0 |
-| 4e | 4e_C7.4 | De quoi vit le jardin connecté : comparer des sources | 30 | 0 |
-| 4e | 4e_C7.5 | Le jardin qui n'arrose pas encore : trouver ce qui manque | 30 | 0 |
+| 3e | 3e_C7.7 | Produire le boîtier : le moyen rétroagit sur la forme | 30 | 7 |
+| 3e | 3e_C7.8 | Deux stations qui se parlent : interfacer deux objets | 30 | 8 |
+| 4e | 4e_C7.1 | Le boîtier du jardin connecté | 30 | 9 |
+| 4e | 4e_C7.3 | Le bac du jardin : comparer, et sur quelle durée | 30 | 7 |
+| 4e | 4e_C7.4 | De quoi vit le jardin connecté : comparer des sources | 30 | 7 |
+| 4e | 4e_C7.5 | Le jardin qui n'arrose pas encore : trouver ce qui manque | 30 | 8 |
 | 4e | 4e_C7.6 | Le socle : modifier une forme par la modélisation | 30 | 0 |
-| 4e | 4e_C7.7 | Le support du capteur : choisir les moyens | 30 | 0 |
-| 4e | 4e_C7.8 | Le jardin publie sa mesure : interfacer un objet | 30 | 0 |
+| 4e | 4e_C7.7 | Le support du capteur : choisir les moyens | 30 | 7 |
+| 4e | 4e_C7.8 | Le jardin publie sa mesure : interfacer un objet | 30 | 6 |
 | 5e | 5e_C7.1 | L'indicateur de rangement du hall | 30 | 7 |
 | 5e | 5e_C7.2 | Le dé, en mieux : améliorer un objet qui existe | 30 | 0 |
 | 5e | 5e_C7.3 | Le banc de la cour : choisir un matériau parmi plusieurs | 30 | 7 |
@@ -84,11 +84,11 @@ Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 335 ima
 | 4e | 4e_C8.1 | Valider le support par des tests | 30 | 6 |
 | 5e | 5e_C8.1 | La patère du hall : ce que la simulation voyait | 30 | 7 |
 | 5e | 5e_C8.2 | La patère du hall : éprouver un matériau | 30 | 6 |
-| 3e | 3e_C9.1 | Variables, types et systèmes | 30 | 3 |
-| 3e | 3e_C9.1 | Python : variables, types et programmes | 30 | 0 |
+| 3e | 3e_C9.1 | Variables, types et systèmes | 30 | 6 |
+| 3e | 3e_C9.1 | Python : variables, types et programmes | 30 | 6 |
 | 3e | 3e_C9.2 | La station d'alerte cyclonique se programme | 30 | 8 |
-| 4e | 4e_C9.1 | Le jardin connecté se programme | 30 | 4 |
-| 5e | 5e_C9.1 | La boîte étiquetée | 30 | 3 |
+| 4e | 4e_C9.1 | Le jardin connecté se programme | 30 | 6 |
+| 5e | 5e_C9.1 | La boîte étiquetée | 30 | 8 |
 
 ## Pages QCM non exportées (2)
 

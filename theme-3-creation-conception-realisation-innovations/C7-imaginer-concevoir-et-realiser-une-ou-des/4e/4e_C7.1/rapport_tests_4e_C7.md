@@ -138,3 +138,21 @@ suit l'ordre d'origine des propositions (`ORIGINE`), puisque le mélange change 
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 27/11/2026 — neuf questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C7.mjs .` : **56 / 56** (47 avant ; neuf tests neufs : six questions sur document au moins, chaque
+  image présente, chaque description, `documents_qcm.py --verifier` à jour de la séquence ; le billet présent, deux zones
+  gardées et deux versions étayées, deux critères et des contre-exemples sans bouton, juste avant le Bonus, la réponse
+  qui survit au rechargement). Les durées du billet s'écrivent sans parenthèses : le banc et `verif_regles_audit.py`
+  (n°23) comptent « (40 min) » comme une activité, et le premier jet faisait monter la séquence à 200 minutes.
+- `node tests_regle_311_4e_C7.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `controle_annee_precedente.py` : 0.
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 9 illustrées, 90 écrans d'aide, 0 écart.
+- `controle_schemas.mjs` : 0 ✘ ; les deux ⚠ « minuscule » sont ceux des deux planches d'avant (`contrainte_assemblage.svg`,
+  `demarche_projet_boucle.svg`), inchangés ; les deux documents neufs regardés à 312 px de large.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides, entraînement mélangé) : verts ;
+  `verif_regles_audit.py` : 0 ✘ ; `audit_aeration.py --strict`, `controle_squelette.mjs`, mode mission, `controle_liens.py`,
+  `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

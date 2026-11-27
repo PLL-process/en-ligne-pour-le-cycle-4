@@ -44,7 +44,8 @@ le programme qui décide d'arroser — et qu'il faudra mettre au point.
   son Python écrit dans `prog3` ; `CHECKS[5]` juge le programme **par son exécution** sur les deux essais. Les verrous
   « pompe affolée » et « pompe calmée » se cochent dans l'atelier. Sans JavaScript et à l'impression : une fiche.
 * **`qcm_4e_C9_jardin-programme.html`** — QCM 30 questions (10 par code,
-  4 illustrées), corrections détaillées avec **réfutation de chaque distracteur**,
+  6 illustrées, dont deux sur le document « La règle et ses six essais », lu dans la séquence par
+  `documents_qcm.py`, n°345), corrections détaillées avec **réfutation de chaque distracteur**,
   bilan par compétence.
 * **`Synthèses/`** — synthèse élève (imprimable) et synthèse professeur (attendus,
   obstacles, remédiations, sécurité, évaluation).

@@ -18,3 +18,10 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_carton_fournisseur.png` | Un carton ouvert, plein de sachets gris : des cartes électroniques, des modules, des câbles noirs enroulés. PNG 1 536 × 1 024, 2.8 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo, top-down view of an opened cardboard supplier box on a workshop table, containing about ten assorted unassembled electronic modules in anti-static bags, coiled cables and a small circuit board, all loose and unsorted, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_catalogue_station.svg` | Les constituants du carton et le courant que demande chacun ; ce que fournissent le câble USB et la batterie. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C7.5.json`, lui-même LU dans la séquence par `documents_qcm.py` (l'établi : `const CONST`, `const BUDGET`). | CC0, comme les images du dépôt | QCM, q6, q12, q17 |
+| `Images/doc_programme_station.svg` | Le programme téléversé dans la carte de la station, ligne par ligne. | Même chaîne, lu dans le bloc « programme » de l'établi. | CC0 | QCM, q8, q9, q10, q11, q20 |

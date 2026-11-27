@@ -144,6 +144,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 4e_C7.8 + 10 4e_C1.4), 0 illustrée.
+/* Banque : 30 questions (20 4e_C7.8 + 10 4e_C1.4), 6 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -327,7 +329,8 @@ const QUESTIONS = [
  err:"Ajouter des champs par prudence. Un champ inutile coûte de l'énergie et encombre l'historique pour toujours.",
  d:["","Le plus d'informations possible coûte cher et n'aide personne.","Le plus court possible finit par retirer l'unité ou la date, et le message ne vaut plus rien.","Le destinataire se moque des composants : il veut une mesure exploitable."],
  ret:"Un message n'a pas à être long ni court : il a à être suffisant."},
-{c:"4e_C7.8",n:"L'identifiant",q:"L'identifiant de l'objet dans le message sert à…",
+{c:"4e_C7.8",n:"L'identifiant",q:"Sur ce document, le champ id du message sert à…",
+ img:{src:"Images/doc_champs_message.svg",alt:"Les 7 champs qu'un message du jardin connecté pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id : jardin-cour — l'identifiant de l'objet qui parle. h : 38 — la valeur lue par le capteur d'humidité. u : % — l'unité de cette valeur. t : 14:07 — l'heure à laquelle la mesure a été prise. pompe : false — l'état de la pompe au moment de la mesure. etat : …127 valeurs… — les 127 variables internes de la carte. eleve : Maëlys — le prénom de l'élève qui a programmé la carte."},
  o:["savoir lequel des objets du réseau a parlé","acheminer le message jusqu'au serveur","protéger le message pendant son transport","compresser le message pour qu'il passe mieux"],r:0,
  expl:"L'acheminement, c'est le rôle de l'adresse. L'identifiant est <em>dans</em> le message, et il sert au destinataire, pas au réseau.",
  ex:"L'an prochain, trois jardins enverront la même sorte de message.",
@@ -341,21 +344,24 @@ const QUESTIONS = [
  err:"Attendre le besoin. Sur un format de message, l'anticipation coûte un champ ; le rattrapage coûte une migration.",
  d:["Le modèle n'y change rien : deux objets identiques doivent aussi se distinguer.","Au deuxième objet, l'historique du premier est déjà écrit sans identifiant.","","L'adresse peut changer, et elle n'apparaît pas dans l'historique enregistré."],
  ret:"Un champ d'identité s'écrit dès le premier objet : le rattraper coûte bien plus cher."},
-{c:"4e_C7.8",n:"L'unité dans le message",q:"Envoyer <code>38</code> sans unité, c'est…",
+{c:"4e_C7.8",n:"L'unité dans le message",q:"Sur ce document, envoyer le champ h, <code>38</code>, sans le champ u, c'est…",
+ img:{src:"Images/doc_champs_message.svg",alt:"Les 7 champs qu'un message du jardin connecté pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id : jardin-cour — l'identifiant de l'objet qui parle. h : 38 — la valeur lue par le capteur d'humidité. u : % — l'unité de cette valeur. t : 14:07 — l'heure à laquelle la mesure a été prise. pompe : false — l'état de la pompe au moment de la mesure. etat : …127 valeurs… — les 127 variables internes de la carte. eleve : Maëlys — le prénom de l'élève qui a programmé la carte."},
  o:["obligatoire pour raccourcir le message","acceptable si les deux côtés se sont mis d'accord","envoyer un nombre, pas une grandeur","sans importance : le récepteur convertit"],r:2,
  expl:"Un nombre sans unité n'est pas une grandeur. Le récepteur ne doit pas deviner : le jour où quelqu'un changera le capteur, la devinette deviendra fausse en silence.",
  ex:"38 % d'humidité, 38 °C, 38 mL : trois lectures possibles du même nombre.",
  err:"Se dire que « tout le monde sait bien ». Un accord non écrit disparaît avec la personne qui l'avait en tête.",
  d:["Trois caractères de plus ne justifient pas de rendre la mesure ininterprétable.","Un accord implicite tient jusqu'au premier changement de capteur ou de personne.","","Le récepteur ne peut convertir que s'il sait de quoi il part — donc s'il a l'unité."],
  ret:"Un nombre sans unité n'est pas une mesure, c'est un chiffre."},
-{c:"4e_C7.8",n:"L'heure de la mesure",q:"Le message porte l'heure de la mesure, et pas seulement celle de la réception, parce que…",
+{c:"4e_C7.8",n:"L'heure de la mesure",q:"Sur ce document, le champ t donne l'heure de la mesure, et pas celle de la réception, parce que…",
+ img:{src:"Images/doc_champs_message.svg",alt:"Les 7 champs qu'un message du jardin connecté pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id : jardin-cour — l'identifiant de l'objet qui parle. h : 38 — la valeur lue par le capteur d'humidité. u : % — l'unité de cette valeur. t : 14:07 — l'heure à laquelle la mesure a été prise. pompe : false — l'état de la pompe au moment de la mesure. etat : …127 valeurs… — les 127 variables internes de la carte. eleve : Maëlys — le prénom de l'élève qui a programmé la carte."},
  o:["le réseau met des heures à transporter un message","le récepteur ne dispose d'aucune horloge","une mesure mise en file arrive bien après sa prise","il faut prouver que l'objet fonctionne"],r:2,
  expl:"Dès qu'un objet peut mettre ses mesures en attente, l'heure d'émission et l'heure de réception divergent — parfois de plusieurs heures.",
  ex:"Douze mesures libérées d'un coup au retour du lien seraient toutes datées de la même minute si l'objet ne datait pas les siennes.",
  err:"Se fier à l'heure de réception. Elle est juste tant qu'il n'y a jamais de coupure — c'est-à-dire jamais.",
  d:["Le transport prend des millisecondes ; c'est la file d'attente qui crée le décalage.","Le récepteur a une horloge : c'est justement pour cela qu'on croit pouvoir s'en contenter.","","Prouver le fonctionnement est le rôle du message périodique, pas de l'horodatage."],
  ret:"On date la mesure, pas sa réception : entre les deux, il y a peut-être eu une panne."},
-{c:"4e_C7.8",n:"Ce qu'on n'envoie pas : le volume",q:"Joindre les 127 variables internes de la carte à chaque message…",
+{c:"4e_C7.8",n:"Ce qu'on n'envoie pas : le volume",q:"Sur ce document, joindre le champ etat, les 127 variables internes de la carte, à chaque message…",
+ img:{src:"Images/doc_champs_message.svg",alt:"Les 7 champs qu'un message du jardin connecté pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id : jardin-cour — l'identifiant de l'objet qui parle. h : 38 — la valeur lue par le capteur d'humidité. u : % — l'unité de cette valeur. t : 14:07 — l'heure à laquelle la mesure a été prise. pompe : false — l'état de la pompe au moment de la mesure. etat : …127 valeurs… — les 127 variables internes de la carte. eleve : Maëlys — le prénom de l'élève qui a programmé la carte."},
  o:["est nécessaire pour diagnostiquer les pannes","est une bonne précaution, au cas où","coûte de l'énergie et de la place, pour rien","ne change rien : un message n'a pas de coût"],r:2,
  expl:"Chaque caractère émis consomme de l'énergie, occupe le réseau et remplit une colonne d'historique que personne ne lira.",
  ex:"Sur 288 messages par jour, un champ inutile devient des milliers de valeurs stockées pour rien.",
@@ -418,7 +424,8 @@ const QUESTIONS = [
  err:"Attendre que l'objet signale sa propre panne. Un objet mort ne signale rien.",
  d:["","Un objet qui tombe n'a plus les moyens de prévenir : c'est le principe même d'une panne.","Interroger en permanence coûte cher et ne dit toujours rien de plus qu'un silence.","Sans règle d'émission, une panne ressemble exactement à une valeur stable."],
  ret:"Une panne se détecte par l'absence de ce qui était obligatoire."},
-{c:"4e_C7.8",n:"Deux champs pour une décision",q:"Pour distinguer « le jardin est en panne » de « il n'y avait rien à arroser », il faut…",
+{c:"4e_C7.8",n:"Deux champs pour une décision",q:"Avec ces champs, pour distinguer « le jardin est en panne » de « il n'y avait rien à arroser », il faut…",
+ img:{src:"Images/doc_champs_message.svg",alt:"Les 7 champs qu'un message du jardin connecté pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id : jardin-cour — l'identifiant de l'objet qui parle. h : 38 — la valeur lue par le capteur d'humidité. u : % — l'unité de cette valeur. t : 14:07 — l'heure à laquelle la mesure a été prise. pompe : false — l'état de la pompe au moment de la mesure. etat : …127 valeurs… — les 127 variables internes de la carte. eleve : Maëlys — le prénom de l'élève qui a programmé la carte."},
  o:["l'identifiant du jardin, et lui seul","l'état de la pompe seul","l'humidité mesurée seule","l'humidité ET l'état de la pompe"],r:3,
  expl:"Pompe à l'arrêt et terre humide : normal. Pompe à l'arrêt et terre sèche : anormal. Un seul des deux champs ne permet pas de trancher.",
  ex:"S'il a plu, la pompe n'avait rien à faire — et « n'a pas arrosé depuis deux jours » n'est pas une panne.",
@@ -454,7 +461,8 @@ const QUESTIONS = [
  d:["La vitesse du réseau ne dépend pas de l'objet qu'on y raccorde.","L'adressage relève du réseau, et il est travaillé par l'atelier SOS serre.","Le support physique est un choix d'installation, pas de contenu.",""],
  ret:"Interfacer : quoi, quand, à qui, et quoi faire sans lien."},
 /* ═══ 4e_C1.4 ═══ */
-{c:"4e_C1.4",n:"Une donnée personnelle dans une mesure",q:"Le prénom de l'élève qui a programmé la carte, dans un message d'humidité, c'est…",
+{c:"4e_C1.4",n:"Une donnée personnelle dans une mesure",q:"Sur ce document, le champ eleve, le prénom de l'élève qui a programmé la carte, c'est…",
+ img:{src:"Images/doc_champs_message.svg",alt:"Les 7 champs qu'un message du jardin connecté pourrait porter, chacun avec une valeur d'exemple et ce qu'il dit. id : jardin-cour — l'identifiant de l'objet qui parle. h : 38 — la valeur lue par le capteur d'humidité. u : % — l'unité de cette valeur. t : 14:07 — l'heure à laquelle la mesure a été prise. pompe : false — l'état de la pompe au moment de la mesure. etat : …127 valeurs… — les 127 variables internes de la carte. eleve : Maëlys — le prénom de l'élève qui a programmé la carte."},
  o:["une obligation pour identifier l'objet","une information utile pour la maintenance","une donnée personnelle qui n'a rien à y faire","sans importance : un prénom n'identifie personne"],r:2,
  expl:"Un prénom se rapporte à une personne. Il n'a aucun rôle dans une mesure, il traverse le réseau et s'entasse dans un historique que personne ne relira avant des années.",
  ex:"Un an d'historique, 288 messages par jour : plus de cent mille lignes portant ce prénom.",

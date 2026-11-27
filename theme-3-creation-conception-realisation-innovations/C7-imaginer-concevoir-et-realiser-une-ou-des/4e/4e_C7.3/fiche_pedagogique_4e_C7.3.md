@@ -21,7 +21,8 @@
 | 1 | Trois recalés, trois motifs qui n'ont rien à voir | 25 min | verrou : `evalue` |
 | 2 | Le classement se retourne | 25 min | verrou : `duree` |
 | 3 | Choisir la durée avant de choisir le matériau | 15 min | — |
-| 4 | REFAIRE — réinvestissement | 15 min | — |
+| 4 | REFAIRE — réinvestissement | 10 min | — |
+| 5 | Billet de sortie, seul et sans aide | 5 min | — |
 
 ## Les trois versions
 
@@ -68,10 +69,26 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Adapté à quoi ? Le banc trie | « Le plus adapté », c'est adapté à quoi — et pourquoi trois matériaux sur six tombent-ils ? | Ouverture, activités 0 et 1 | ouverture + 15 + 25 min |
-| 2 — Comparer sur une durée, puis conclure | Sur combien d'années compare-t-on, et lequel retenir ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé), bilan, QCM | 25 + 15 + 15 min + clôture |
+| 2 — Comparer sur une durée, puis conclure | Sur combien d'années compare-t-on, et lequel retenir ? | Activités 2 et 3, réinvestissement, billet de sortie, synthèse, Bonus (corrigé), bilan, QCM | 25 + 15 + 10 + 5 min + clôture |
 
 **À trancher par Pascal :** la séance 2 porte 55 min d'activités, plus la clôture.
 
 Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, ce que les matériaux imposent à l'atelier, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **le banc des matériaux**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 1 (au-dessus de l'activité 0, sa colonne « Pourquoi ce seuil » en donnerait les réponses) ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
 
 La clôture reçoit un corrigé replié du défi (les bascules à 9 et 16 ans, calcul à l'appui ; d'où viennent les durées de vie) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.3` et `4e_C3.2` (appui) (le menu existant passe aux quatre niveaux ; une réponse sur l'ancienne échelle se relit au niveau voisin).
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide ; le réinvestissement
+passe de 15 à 10 min pour que la séance tienne en 55). Un objet que la séquence n'a pas étudié : **le bac de tri des
+déchets du jardin**, en acier galvanisé (20 ans, 120 €) ou en polypropylène recyclé (5 ans, 40 €).
+- Question 1 (4e_C7.3) : le coût sur 10 ans, puis sur 20 ans — le classement se retourne. On regarde le nombre de bacs
+  calculé pour chaque durée, puis multiplié par le prix.
+- Question 2 (4e_C3.2) : ce qu'il faut encore examiner pour l'environnement. On regarde au moins deux étapes du cycle de
+  vie nommées, et le nombre de bacs à fabriquer sur la durée.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone, calculé par
+`documents_qcm.py` depuis `materiaux.py` — « Six matériaux pour le bac du jardin » (les six exigences, puis ce que tient
+chaque matériau ; q10, q12, q13) et « Les trois retenus, sur 15 ans » (durée, prix d'un bac, coût sur quinze ans ; q5,
+q6, q14, q18). La q12 perd sa notion « Deux motifs pour l'acier », qui soufflait le nombre de motifs. La q13 parlait
+de « douze kilomètres » sous un énoncé à deux cents : ses propositions disent deux cents.

@@ -18,7 +18,8 @@ Première marche de l'**arc variables** du cycle (5e → 4e → 3e).
   le **programme de la barrière écrit par l'élève** (`if` / `else`, partie ③ de l'activité 5).
   Sauvegarde locale, DYS, verrous expérientiels.
 * **`qcm_5e_C9.1-C9.3_boite_etiquetee.html`** — QCM 30 questions (boîte / lire / modifier),
-  réfutation de chaque distracteur, 3 illustrées.
+  réfutation de chaque distracteur, 8 illustrées, dont cinq sur deux documents lus dans la séquence
+  (« Le programme du compteur », « Le banc de la barrière » : `documents_qcm.py`, n°345).
 * **`Synthèses/`** — synthèse élève (imprimable A4) et synthèse professeur.
 * **`tests_5e_C9.1-C9.3.mjs`** — la suite Playwright du lot, **rejouable** :
   `node tests_5e_C9.1-C9.3.mjs .` (54 tests ; ce qui n'est PAS testé est écrit dans le rapport).

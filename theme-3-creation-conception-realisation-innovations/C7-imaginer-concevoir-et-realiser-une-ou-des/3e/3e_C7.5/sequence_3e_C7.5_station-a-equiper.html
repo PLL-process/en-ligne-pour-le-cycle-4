@@ -2614,7 +2614,7 @@ sinon
 <div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
 <section class="card seance-entete" id="seance-4" aria-labelledby="seance-4-titre">
   <h2 id="seance-4-titre">🗓 Séance 4 — Le choix qui coûte</h2>
-  <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 4 et REFAIRE, puis le bilan de la séquence.</p>
+  <p class="seance-duree">Durée&nbsp;: 55 minutes · activité 4, REFAIRE et le billet de sortie (environ 5 min, seul et sans aide), puis le bilan de la séquence.</p>
   <p><b>La question de la séance&nbsp;:</b> le seul afficheur qui tienne l'exigence 2 a-t-il créé un problème ailleurs dans le montage&nbsp;?</p>
   <p>⚡ <b>Avant de démonter et de re-tester&nbsp;:</b> <a href="#securite">relis l'encadré Sécurité</a> — très basse tension uniquement, le bandeau de <abbr class="sigle" title="diode électroluminescente" tabindex="0">DEL</abbr> chauffe, et le mât reste au sol.</p>
   <p>L'établi de l'activité 2 te suit, <a href="#etabli">avec ton montage</a>. S'il est vide (autre ordinateur, sauvegarde effacée), remonte d'abord la station complète&nbsp;: la correction de l'activité 2 donne le port de chaque constituant.</p>
@@ -2719,6 +2719,51 @@ sinon
       donne 500 ne produisent pas une panne franche, mais des redémarrages en boucle.</li>
   </ul>
 
+</section>
+
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(environ 5 min)</span></h2>
+  <p>Un objet nouveau&nbsp;: <b>le témoin de crue de la ravine</b>, au bord de la route, loin de toute prise.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p>Le cahier des charges&nbsp;: alerter quand l'eau dépasse 1 m (mètre)&nbsp;; être vu depuis la route, de nuit, à 100 m&nbsp;; garder l'historique des crues.
+  <br>Le carton&nbsp;: carte UNO (45 mA, milliampères), capteur de niveau d'eau (15 mA), capteur de pluie (8 mA), écran LCD (20 mA), gyrophare à DEL (300 mA), module carte SD (40 mA), câble USB (500 mA au plus), batterie 5 V (volts) et panneau solaire (2&nbsp;000 mA au plus).</p>
+  <p><label for="bs_3e_C7_5_1"><b>1.</b> Quels constituants retiens-tu&nbsp;? Pour chacun, l'exigence qu'il tient. Puis calcule le courant et choisis la source.</label></p>
+  <textarea id="bs_3e_C7_5_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Pour « 1 m d'eau »&nbsp;: ____ . Pour « vu de nuit à 100 m »&nbsp;: ____ . Pour « l'historique »&nbsp;: ____ .</li>
+      <li>Courant&nbsp;: 45 + ____ + ____ + ____ = ____ mA.</li>
+      <li>La source est ____ , parce que ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_3e_C7_5_2"><b>2.</b> Caractérise la chaîne d'information du témoin&nbsp;: pour chaque maillon, la forme de l'information qu'il transmet au suivant.</label></p>
+  <textarea id="bs_3e_C7_5_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Le capteur de niveau transmet ____ .</li>
+      <li>La carte compare ____ et transmet ____ .</li>
+      <li>Le gyrophare reçoit ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Pour « 1 m d'eau »&nbsp;: le capteur de niveau. Pour « vu de nuit à 100 m »&nbsp;: le gyrophare. Pour « l'historique »&nbsp;: la carte SD. Et la carte, qui décide.
+    <br>Courant&nbsp;: 45 + 15 + 300 + 40 = 400 mA.
+    <br>La source est la batterie et son panneau&nbsp;: 400 mA tiendraient sur l'USB, mais il n'y a ni prise ni ordinateur au bord de la ravine.&nbsp;»
+    <br><b>Critère</b>&nbsp;: chaque constituant retenu rattaché à une exigence, aucun en trop, le courant calculé, et la source choisie en dernier, pour ce lieu.</p>
+    <p>✘ «&nbsp;Le capteur de pluie, pour savoir s'il y a une crue&nbsp;»&nbsp;: la pluie n'est pas le niveau de l'eau&nbsp;; le seuil porte sur le niveau.
+    <br>✘ «&nbsp;L'écran LCD pour l'alerte&nbsp;»&nbsp;: il se lit à trente centimètres, pas à cent mètres de nuit.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Le capteur de niveau transmet un signal électrique, image de la hauteur d'eau.
+    <br>La carte compare cette hauteur à 1 m et transmet un ordre tout ou rien.
+    <br>Le gyrophare reçoit cet ordre&nbsp;: allumé ou éteint.&nbsp;»
+    <br><b>Critère</b>&nbsp;: chaque maillon nommé, avec la forme de ce qu'il transmet (une mesure, puis un ordre tout ou rien).</p>
+    <p>✘ «&nbsp;Capteur → carte → gyrophare&nbsp;»&nbsp;: les maillons sont là, mais pas ce qui passe de l'un à l'autre.
+    <br>✘ «&nbsp;Le capteur envoie "crue" à la carte&nbsp;»&nbsp;: le capteur mesure&nbsp;; c'est la carte qui décide qu'il y a crue.</p>
+    </div>
+  </details>
 </section>
 
 <section class="card bonus">

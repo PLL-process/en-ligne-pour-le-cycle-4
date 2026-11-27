@@ -117,9 +117,17 @@ Aucun matériel n'est monté dans cette séquence : le relais s'étudie sur le s
 - **Act. 6** : le lampadaire **sans squelette** et la justification chiffrée de
   l'écart entre les seuils — c'est elle qui distingue la copie du transfert.
 
-Le **QCM** (30 questions, 10 par code, 4 illustrées, réfutation de chaque
+Le **QCM** (30 questions, 10 par code, 6 illustrées, réfutation de chaque
 distracteur) donne un bilan par compétence ; il sert d'entraînement autonome, pas
 d'évaluation sommative.
+Deux questions (q9, q21) se lisent sur « La règle et ses six essais », un document dessiné pour le téléphone et lu
+dans la séquence par `documents_qcm.py` (n°345, 27/11/2026) ; la q1 ne parle plus du « programme officiel de 4e ».
+
+Le **billet de sortie** (27/11/2026, n°330), en fin de séance 3, environ 5 minutes, seul et sans aide : le ventilateur
+de la salle informatique, un objet neuf. Question 1 (4e_C9.1) : ajouter la plage des heures de cours — on regarde que
+l'heure entre dans le SI existant, avec un ET et les deux bornes comprises. Question 2 (4e_C9.3) : corriger le
+ventilateur qui s'affole, et deux essais qui le prouvent — on regarde les deux seuils et la bande morte, et des essais
+choisis dedans et au-delà, l'attendu écrit avant. La séance 3 passe de 50 à 55 minutes d'activités.
 
 ---
 

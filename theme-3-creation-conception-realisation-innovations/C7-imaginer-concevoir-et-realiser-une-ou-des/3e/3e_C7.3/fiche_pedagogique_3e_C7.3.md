@@ -23,6 +23,7 @@
 | 2 | 2 | Trois sorties, une seule à la fois | 40 min | verrou : `unSeul` |
 | 3 · 35 min | 3 | Justifier le matériau ET son procédé | 35 min | — |
 | 4 · 25 min | 4 | REFAIRE — réinvestissement, puis synthèse, Bonus, bilan et QCM | 25 min | — |
+| 4 · 5 min | — | Billet de sortie, seul et sans aide | 5 min | — |
 
 **Quatre séances de 55 min, et pourquoi pas trois.** Une heure par semaine : aucune paire d'activités
 voisines ne tient dans une séance (25 + 35, 35 + 40, 40 + 35, 35 + 25). Trois séances (165 min)
@@ -80,3 +81,20 @@ Restent visibles à chaque séance : le titre, la mission (elle remplace le sous
 Clôture : un corrigé du Bonus (d'où vient « 10 ans » : durée de vie ou bon fonctionnement le jour du cyclone, et la question au commanditaire), « Comment j'ai travaillé », « Je me positionne » sur 3e_C7.3 aux niveaux du livret : chaque phrase d'origine est rangée au niveau de son sens (« si on m'aide », « si on me rappelle » : fragile ; « seul » : satisfaisante), une phrase neuve dit la très bonne maîtrise (l'expliquer à un camarade ou le refaire ailleurs), et une réponse donnée avant se relit avec sa phrase et sur 3e_C4.2.
 
 Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 3, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — les consignes de l'atelier (PVC, impression ventilée, perçage avec lunettes) — avec un lien qui ouvre le volet sur l'encadré.
+
+## Le billet de sortie et le document du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en séance 4, juste avant le Bonus (environ 5 min, seul et sans aide ; la séance 4 annonçait le
+REFAIRE, 25 min, et la clôture : elle tient en 55). Un objet que la séquence n'a pas étudié : **le capot du pluviomètre
+de la station**, que ni le PETG ni l'aluminium ne satisfont.
+- Question 1 (3e_C7.3) : un seul relâchement d'exigence. On regarde un seul seuil nommé, sa nouvelle valeur chiffrée,
+  et la personne qui porte le coût.
+- Question 2 (3e_C4.2) : le procédé du collège pour le matériau qui entre. On regarde un procédé réellement disponible,
+  et son lien avec le choix (le remplacement, la forme, le coût).
+Les valeurs du PETG et de l'aluminium (soleil, sel) sont celles de `materiaux.py`.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone, calculé par
+`documents_qcm.py` depuis `materiaux.py` — « Six matériaux pour le boîtier » (les cinq exigences ; résistance, soleil,
+sel ; l'épaisseur de paroi, la chaleur et la masse que donne chaque matériau ; q5, q6, q8, q11, q12, q13, q15). La q15
+perd une notion fausse (« L'exigence qui élimine tout le monde » : elle en élimine quatre sur six) et l'énoncé que E1
+lisait comme une liste tronquée.

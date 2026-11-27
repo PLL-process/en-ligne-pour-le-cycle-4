@@ -18,3 +18,9 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_carte_sans_abri.png` | Une carte électronique nue, fixée avec du ruban adhésif en haut d'un tube métallique, sur un toit-terrasse face à la mer et aux palmiers. PNG 1 536 × 1 024, 2.0 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a small bare electronic circuit board with a few wires, temporarily taped to the top of a two-metre aluminium tube on a flat school roof by the Caribbean sea, harsh tropical sun, sea spray blowing in the wind, the board fully exposed with nothing around it, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Document du QCM, dessiné pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_criteres_boitier.svg` | Les cinq exigences du boîtier, puis, pour les six matériaux, la résistance, la tenue au soleil et au sel, l'épaisseur de paroi calculée, la température au soleil et la masse du boîtier. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C7.3.json`, lui-même calculé par `documents_qcm.py` depuis `materiaux.py` (aucun nombre recopié). | CC0, comme les images du dépôt | QCM, q5, q6, q8, q11, q12, q13, q15 |

@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 3e_C7.5 + 10 3e_C4.3), 0 illustrée.
+/* Banque : 30 questions (20 3e_C7.5 + 10 3e_C4.3), 8 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -348,7 +350,8 @@ const QUESTIONS = [
  err:"Traiter les exigences comme une liste de cases indépendantes à cocher.",
  d:["elle porte sur la sécurité des élèves : ce n'est pas une question de goût.","le bandeau se pilote par un seul fil : un port numérique suffit.","la carte SD répond à l'exigence d'historique, pas à celle de visibilité.",""],
  ret:"Les exigences ne s'additionnent pas : elles se propagent."},
-{c:"3e_C7.5",n:"Le budget de courant de la station",q:"Carte 45 mA (milliampères), anémomètre 15, bandeau 480, carte SD 40. Quel courant le montage demande-t-il ?",
+{c:"3e_C7.5",n:"Le budget de courant de la station",q:"Sur ce carton, on monte la carte, l'anémomètre, le bandeau et la carte SD. Quel courant, en mA (milliampères), le montage demande-t-il ?",
+ img:{src:"Images/doc_catalogue_station.svg",alt:"Le catalogue des constituants proposés pour la station d'alerte, avec le courant que demande chacun. Carte UNO : 45 milliampères. Base Shield : 0 milliampères. Anémomètre : 15 milliampères. Capteur de pluie : 8 milliampères. Écran LCD : 20 milliampères. Bandeau de 8 DEL : 480 milliampères. Buzzer : 30 milliampères. Module carte SD : 40 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; la batterie 5 volts et son panneau solaire, jusqu'à 2 000 milliampères."},
  o:["45 mA, seule la carte étant alimentée en permanence","480 mA, le bandeau imposant sa valeur aux autres","140 mA, le bandeau ne consommant qu'à l'allumage","580 mA, soit davantage que les 500 mA de l'USB"],r:3,
  expl:"Les courants s'additionnent : 45 + 15 + 480 + 40 = 580 mA. Chaque module tire sa part sur la même source.",
  ex:"Sur l'USB, il manque 80 mA — et la carte redémarre en boucle.",
@@ -362,35 +365,40 @@ const QUESTIONS = [
  err:"Choisir la source en premier, puis se retrouver contraint dans tous les autres choix.",
  d:["l'ordre de branchement est une consigne de sécurité, sans rapport avec le choix.","sans elle rien ne fonctionne : elle est aussi importante que les autres.","","le prix n'entre en jeu qu'à besoin égal, jamais pour décider de l'ordre du travail."],
  ret:"On dimensionne la source une fois qu'on sait ce qu'elle doit alimenter."},
-{c:"3e_C7.5",n:"Le port imposé par le programme",q:"Pourquoi le bandeau de DEL doit-il être branché sur le port numérique D6 du Base Shield ?",
+{c:"3e_C7.5",n:"Le port imposé par le programme",q:"D'après ce programme, pourquoi le bandeau de DEL doit-il être branché sur le port numérique D6 ?",
+ img:{src:"Images/doc_programme_station.svg",alt:"Le programme téléversé dans la carte de la station, ligne par ligne : vent = analogRead(A0) ; enregistrer(vent, heure) ; si vent > 90 alors ; digitalWrite(6, HAUT) ; sinon ; digitalWrite(6, BAS)."},
  o:["parce que le port D2 ne supporte pas les 480 milliampères du bandeau","parce que le programme écrit sur D6, et qu'on ne le modifie pas","parce que D6 est le seul port numérique encore libre du shield","parce que les ports au-delà de D5 sont ceux qui pilotent les DEL"],r:1,
  expl:"Aucun port numérique n'est meilleur qu'un autre. Le seul argument valable est que le programme, qu'on ne modifie pas dans cette séquence, écrit sur D6.",
  ex:"Sur D2, le bandeau serait branché, alimenté, fonctionnel — et n'aurait jamais d'ordre.",
  err:"Chercher une raison électrique là où il n'y a qu'une raison d'accord avec le programme.",
  d:["le courant du bandeau ne passe pas par le port de données mais par l'alimentation.","","plusieurs ports numériques sont libres dans ce montage : ce n'est pas le critère.","aucun port n'est spécialisé dans les DEL : tous les ports numériques se valent."],
  ret:"Le port se choisit d'après le programme, quand on ne modifie pas le programme."},
-{c:"3e_C7.5",n:"Retirer l'anémomètre",q:"On retire l'anémomètre d'une station qui fonctionnait. Que refuse l'établi ?",
+{c:"3e_C7.5",n:"Retirer l'anémomètre",q:"On retire l'anémomètre d'une station qui fonctionnait. D'après ce programme, que manque-t-il ?",
+ img:{src:"Images/doc_programme_station.svg",alt:"Le programme téléversé dans la carte de la station, ligne par ligne : vent = analogRead(A0) ; enregistrer(vent, heure) ; si vent > 90 alors ; digitalWrite(6, HAUT) ; sinon ; digitalWrite(6, BAS)."},
  o:["que l'alerte ne soit plus visible depuis la cour","que la station consomme trop pour son alimentation","que la grandeur du seuil ne soit plus mesurée du tout","que l'historique ne soit plus enregistré sur la carte SD"],r:2,
  expl:"Le seuil du cahier des charges porte sur le vent. Sans l'instrument qui le mesure, aucune décision fondée n'est possible.",
  ex:"Les trois autres exigences restent tenues : c'est celle du seuil qui tombe.",
  err:"Croire qu'un refus est toujours le même : chaque retrait produit un refus de nature différente.",
  d:["le bandeau est toujours là : l'alerte serait visible s'il y en avait une.","retirer un module fait baisser la consommation, il ne l'augmente pas.","","la carte SD est toujours là et continue d'enregistrer ce qu'on lui donne."],
  ret:"Quatre exigences produisent quatre refus de quatre natures différentes."},
-{c:"3e_C7.5",n:"Retirer le bandeau",q:"On retire le bandeau de DEL. Quelle exigence tombe ?",
+{c:"3e_C7.5",n:"Retirer le bandeau",q:"On retire le bandeau de DEL. D'après ce programme, quelle exigence tombe ?",
+ img:{src:"Images/doc_programme_station.svg",alt:"Le programme téléversé dans la carte de la station, ligne par ligne : vent = analogRead(A0) ; enregistrer(vent, heure) ; si vent > 90 alors ; digitalWrite(6, HAUT) ; sinon ; digitalWrite(6, BAS)."},
  o:["l'historique des mesures cesse d'être enregistré","la station ne mesure plus la vitesse du vent","l'alerte existe dans la carte et personne ne la voit","la station ne tient plus ses 72 heures d'autonomie"],r:2,
  expl:"La décision est prise correctement. Ce qui manque, c'est le maillon qui la rend perceptible depuis la cour.",
  ex:"Un multimètre sur D6 verrait l'ordre partir : l'alerte est là, invisible.",
  err:"Penser qu'une alerte non visible est une alerte non déclenchée.",
  d:["la carte SD continue d'enregistrer : elle ne dépend pas de l'afficheur.","l'anémomètre est toujours en place et continue de mesurer.","","retirer le bandeau améliore l'autonomie au lieu de la dégrader."],
  ret:"Une alerte que personne ne perçoit ne tient pas l'exigence, même si elle est prise."},
-{c:"3e_C7.5",n:"Retirer la carte SD",q:"On retire le module carte SD. Que perd la station ?",
+{c:"3e_C7.5",n:"Retirer la carte SD",q:"On retire le module carte SD. D'après ce programme, que perd la station ?",
+ img:{src:"Images/doc_programme_station.svg",alt:"Le programme téléversé dans la carte de la station, ligne par ligne : vent = analogRead(A0) ; enregistrer(vent, heure) ; si vent > 90 alors ; digitalWrite(6, HAUT) ; sinon ; digitalWrite(6, BAS)."},
  o:["la capacité de déclencher son alerte au bon seuil de vent","la capacité de prouver ce qui s'est passé ensuite","la capacité de rendre son alerte visible depuis la cour","la capacité de fonctionner sans aucune intervention humaine"],r:1,
  expl:"La station continue d'alerter parfaitement. Elle devient seulement incapable de rendre compte, ce que la commission exige.",
  ex:"Après un cyclone, personne ne peut dire quelles vitesses ont été relevées ni quand.",
  err:"Considérer comme accessoire ce qui ne sert qu'après l'événement.",
  d:["le seuil et l'anémomètre sont inchangés : l'alerte se déclenche toujours.","","le bandeau est inchangé : l'alerte reste parfaitement visible.","la station continue de fonctionner seule : elle ne garde simplement rien."],
  ret:"Alerter et pouvoir en rendre compte sont deux exigences distinctes."},
-{c:"3e_C7.5",n:"Retirer la batterie",q:"On retire la batterie, le câble USB restant branché. Que se passe-t-il ?",
+{c:"3e_C7.5",n:"Retirer la batterie",q:"Sur ce carton, on retire la batterie, le câble USB restant branché. Que se passe-t-il ?",
+ img:{src:"Images/doc_catalogue_station.svg",alt:"Le catalogue des constituants proposés pour la station d'alerte, avec le courant que demande chacun. Carte UNO : 45 milliampères. Base Shield : 0 milliampères. Anémomètre : 15 milliampères. Capteur de pluie : 8 milliampères. Écran LCD : 20 milliampères. Bandeau de 8 DEL : 480 milliampères. Buzzer : 30 milliampères. Module carte SD : 40 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; la batterie 5 volts et son panneau solaire, jusqu'à 2 000 milliampères."},
  o:["rien : l'USB et la batterie fournissent la même chose","la station passe automatiquement en mode économie","seul le bandeau s'éteint, le reste continue de tourner","580 milliampères sont demandés à une source qui en fournit 500"],r:3,
  expl:"La demande dépasse l'offre. La tension s'effondre et la carte redémarre en boucle : le symptôme ne ressemble pas à une panne d'alimentation.",
  ex:"Un montage qui redémarre sans arrêt fait chercher un défaut de programme là où il n'y en a pas.",
@@ -425,7 +433,8 @@ const QUESTIONS = [
  err:"Traiter l'accessibilité comme une option qu'on ajouterait après coup.",
  d:["plusieurs constituants peuvent tenir la même fonction sans que ce soit une erreur.","le bandeau reste nécessaire : il répond à l'exigence de visibilité.","ils occupent deux ports numériques différents et ne se gênent pas.",""],
  ret:"Une alerte accessible ajoute un canal, elle n'en remplace aucun."},
-{c:"3e_C7.5",n:"Ce que coûte une exigence ajoutée",q:"Le buzzer ajoute 30 mA (milliampères) au montage. Quelle exigence déjà tenue devient plus difficile ?",
+{c:"3e_C7.5",n:"Ce que coûte une exigence ajoutée",q:"Sur ce carton, le buzzer ajoute 30 mA (milliampères) au montage. Quelle exigence déjà tenue devient plus difficile ?",
+ img:{src:"Images/doc_catalogue_station.svg",alt:"Le catalogue des constituants proposés pour la station d'alerte, avec le courant que demande chacun. Carte UNO : 45 milliampères. Base Shield : 0 milliampères. Anémomètre : 15 milliampères. Capteur de pluie : 8 milliampères. Écran LCD : 20 milliampères. Bandeau de 8 DEL : 480 milliampères. Buzzer : 30 milliampères. Module carte SD : 40 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; la batterie 5 volts et son panneau solaire, jusqu'à 2 000 milliampères."},
  o:["tenir 72 heures sans intervention","déclencher au-delà de 90 km/h","rendre l'alerte visible de la cour","conserver l'historique des mesures"],r:0,
  expl:"30 mA permanents s'ajoutent à un budget déjà tendu par le bandeau. La bonne réponse n'est pas « ça passe » mais « ça passe, et il faut refaire le calcul ».",
  ex:"610 mA au lieu de 580 : sous les 2000 mA de la batterie, et au-dessus de ce qu'un petit panneau recharge.",
@@ -446,7 +455,8 @@ const QUESTIONS = [
  err:"Traiter tous les modules comme équivalents parce qu'ils sont tous en très basse tension.",
  d:["l'ordre de branchement ne change rien à l'échauffement.","le bandeau est prévu pour 5 V : l'alimenter en 12 V le détruirait.","aucun gant n'est nécessaire en très basse tension : le risque est thermique.",""],
  ret:"Très basse tension ne veut pas dire sans risque : un actionneur de puissance chauffe."},
-{c:"3e_C7.5",n:"Le prototype et l'objet réel",q:"Sur l'établi, le bandeau est allumé en permanence. Qu'en est-il de la station réelle ?",
+{c:"3e_C7.5",n:"Le prototype et l'objet réel",q:"Sur l'établi, le bandeau est allumé en permanence. D'après ce programme, qu'en est-il de la station réelle ?",
+ img:{src:"Images/doc_programme_station.svg",alt:"Le programme téléversé dans la carte de la station, ligne par ligne : vent = analogRead(A0) ; enregistrer(vent, heure) ; si vent > 90 alors ; digitalWrite(6, HAUT) ; sinon ; digitalWrite(6, BAS)."},
  o:["il reste allumé en permanence pour signaler que la station veille","il ne s'allume qu'au-dessus du seuil, sur ordre du programme","il s'allume à intervalles réguliers pour économiser l'énergie","il ne s'allume jamais : le bandeau est un simple témoin d'essai"],r:1,
  expl:"L'établi montre le montage sous sa charge maximale. La station réelle n'allume le bandeau qu'au-dessus de 90 km/h, ce qui change tout pour l'autonomie.",
  ex:"Le programme écrit HAUT sur D6 seulement si la mesure dépasse le seuil.",
@@ -482,7 +492,7 @@ const QUESTIONS = [
  err:"Faire de la mémoire un maillon de la chaîne parce qu'elle contient de l'information.",
  d:["elle ne transmet rien à la carte : l'échange va dans l'autre sens.","elle écrit ce qu'on lui donne : la mise en forme est faite par le programme.","","c'est le programme qui décide de ce qui est écrit, pas le module."],
  ret:"Conserver n'est pas transformer : la mémoire est en marge de la chaîne."},
-{c:"3e_C4.3",n:"Deux chaînes qui se rencontrent",q:"Où la chaîne d'information et la chaîne d'énergie se rencontrent-elles dans la station ?",
+{c:"3e_C4.3",n:"Où l'information devient énergie",q:"Où la chaîne d'information et la chaîne d'énergie se rencontrent-elles dans la station ?",
  o:["nulle part : les deux chaînes restent toujours séparées","à l'anémomètre, qui mesure et consomme très peu","à la carte SD, qui écrit et consomme 40 mA","au bandeau, qui reçoit un ordre et consomme 480 mA"],r:3,
  expl:"Le point de rencontre est l'actionneur : un ordre de quelques milliampères y devient une consommation de puissance.",
  ex:"Le fil de données porte l'ordre ; le fil d'alimentation porte les 480 mA.",
@@ -613,7 +623,7 @@ const PIEGE_DE_NOTION={
   "Le seuil, propriété du traitement":"caracteriser",
   "Un maillon qui ne transforme rien":"caracteriser",
   "La grandeur et son unité":"caracteriser",
-  "Deux chaînes qui se rencontrent":"decrire",
+  "Où l'information devient énergie":"decrire",
   "Décrire pour pouvoir diagnostiquer":"decrire",
   "Le même objet, deux niveaux de description":"decrire",
   "Ce qu'un schéma bloc ne montre pas":"decrire",

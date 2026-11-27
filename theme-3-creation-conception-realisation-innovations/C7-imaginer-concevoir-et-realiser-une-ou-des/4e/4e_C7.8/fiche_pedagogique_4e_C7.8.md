@@ -39,7 +39,8 @@ seraient toutes datées de la même minute.
 | 2 | Qui prend l'initiative, et à quel rythme | ~15 min | 3 | — |
 | 3 | Couper le lien, et voir ce que l'objet devient | ~20 min | 4 | coupe |
 | 4 | Ce qu'on n'envoie pas, et pourquoi | ~10 min | 4 | — |
-| — | REFAIRE | ~10 min | 1 | — |
+| — | REFAIRE, à la maison (ou en classe s'il reste du temps) | ~10 min | 1 | — |
+| — | Billet de sortie, seul et sans aide | ~5 min | 2 | — |
 
 ## 3. Le message du lot
 
@@ -116,10 +117,24 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Composer le message qui suffit | Qu'est-ce que le jardin doit envoyer pour qu'on en fasse quelque chose, à l'autre bout ? | Ouverture, activités 0 et 1 | ouverture + 20 + 20 min |
-| 2 — Rythme, coupure, ce qu'on n'envoie pas | Qui prend l'initiative, à quel rythme — et que fait l'objet quand le lien tombe ? | Activités 2, 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 15 + 20 + 10 + 10 min + clôture |
+| 2 — Rythme, coupure, ce qu'on n'envoie pas | Qui prend l'initiative, à quel rythme — et que fait l'objet quand le lien tombe ? | Activités 2, 3 et 4, billet de sortie, synthèse, Bonus (corrigé par défi), bilan ; réinvestissement et QCM à la maison | 15 + 20 + 10 + 5 min + clôture |
 
 **À trancher par Pascal :** la séance 2 porte 55 min d'activités, plus la clôture.
 
 Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, ce qui ne sort pas du collège, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **le banc de liaison**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 0 ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
 
 La clôture reçoit un corrigé replié par défi (format : le CSV en 28 caractères, ce qu'on gagne et perd ; taille : 61 contre 90 caractères, 8 352 d'écart sur 288 envois ; défi réel) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.8` et `4e_C1.4` (appui).
+
+## Le billet de sortie et le document du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide). La séance 2 était
+pleine (55 minutes d'activités) : le réinvestissement (10 min) passe à la maison — ou en classe s'il reste du temps —,
+comme en `5e_C8.1`. Un objet que la séquence n'a pas étudié : **le compteur d'entrées du CDI**.
+- Question 1 (4e_C7.8) : le message, sa règle d'émission, son comportement sans lien. On regarde l'identifiant, la
+  valeur, son unité et l'heure de la mesure ; une règle d'émission ; un comportement qui ne perd rien.
+- Question 2 (4e_C1.4) : envoyer ou non la photo de chaque élève. On regarde la donnée personnelle reconnue, et le
+  refus justifié par ce dont l'usage a vraiment besoin.
+
+**QCM** : six questions sur trente se lisent sur un document dessiné pour le téléphone, LU dans la séquence par
+`documents_qcm.py` (`const CHAMPS` du banc) — « Ce que le jardin pourrait envoyer » : les sept champs possibles, une
+valeur d'exemple, ce que dit chacun, sans dire lesquels envoyer (q3, q5, q6, q7, q16, q21).

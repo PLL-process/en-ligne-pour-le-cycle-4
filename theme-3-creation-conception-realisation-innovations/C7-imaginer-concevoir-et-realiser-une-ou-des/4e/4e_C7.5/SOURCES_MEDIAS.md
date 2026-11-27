@@ -20,3 +20,11 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_trois_kits.png` | Trois boîtes en carton ouvertes sur une table, chacune avec une carte, une sonde, une petite pompe et un tuyau. Devant, trois verres d'eau. PNG 1 536 × 1 024, 2.6 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of three identical opened cardboard kits side by side on a school workshop table, each assembled with a small microcontroller board, a small water pump, plastic tubing and a soil moisture probe, the pumps dry and still, a glass of water nearby, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_cas_jardin.svg` | Les trois prototypes livrés : ce qu'on observe, et les constituants montés. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C7.5.json`, lui-même LU dans la séquence par `documents_qcm.py` (l'établi : `const CAS`, `const CONST`). | CC0, comme les images du dépôt | QCM, q6, q8, q10 |
+| `Images/doc_courant_jardin.svg` | Le courant que demande chaque constituant, et ce que fournissent le câble USB et l'alimentation externe. | Même chaîne, lu dans l'établi (`const CONST`, `const BUDGET`). | CC0 | QCM, q7, q11 |
+| `Images/doc_programme_jardin.svg` | Le programme téléversé dans la carte, ligne par ligne. | Même chaîne, lu dans le bloc « programme » de l'établi. | CC0 | QCM, q9, q12, q18 |

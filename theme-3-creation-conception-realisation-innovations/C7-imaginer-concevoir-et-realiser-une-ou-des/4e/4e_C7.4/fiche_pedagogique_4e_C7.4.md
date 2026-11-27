@@ -162,10 +162,26 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Mesurer, écrire les critères, comparer | Qu'est-ce qui vide vraiment la source, et comment comparer cinq sources avec les mêmes critères ? | Ouverture, activités 0, 1 et 2 | ouverture + 15 + 20 + 20 min |
-| 2 — Trancher, changer la charge, conclure | Laquelle choisir — et faut-il changer la source, ou la charge ? | Activités 3 et 4, réinvestissement, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 15 + 10 min + clôture |
+| 2 — Trancher, changer la charge, conclure | Laquelle choisir — et faut-il changer la source, ou la charge ? | Activités 3 et 4, réinvestissement, billet de sortie, synthèse, Bonus (corrigé par défi), bilan, QCM | 20 + 15 + 10 + 5 min + clôture |
 
 **À trancher par Pascal :** la séance 1 porte l'ouverture et 55 min d'activités (l'autre coupe, après l'activité 1, laissait 65 min à la séance 2).
 
 Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, sécurité, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **le banc d'énergie**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 0 ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
 
 La clôture reçoit un corrigé replié par défi (coût réel sur quatre ans : 2 784 € de piles contre 31 €, le panneau moins cher dès le onzième jour ; défi mesure ; défi hiver : 2,4 h en décembre, 17,6 Wh manquants sur une semaine, deux accus ou un panneau de 3,5 W) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.4` et `4e_C3.1` (appui).
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide). Un objet que la
+séquence n'a pas étudié : **le capteur de niveau de la cuve d'eau de pluie**, au fond du jardin, loin de toute prise
+(1,5 Wh par jour, toute l'année).
+- Question 1 (4e_C3.1) : écrire deux critères avant de comparer. On regarde deux critères déduits du besoin et du lieu.
+- Question 2 (4e_C7.4) : choisir la source, chiffre à l'appui. On regarde l'autonomie des piles calculée (12,5 ÷ 1,5),
+  la récolte du panneau comparée au besoin au pire mois (environ 1,7 Wh en décembre), et ce que le choix impose.
+Les 12,5 Wh et les 3,2 Wh sont ceux de `energie.py` ; les 1,7 Wh de décembre viennent des 2,4 heures de plein soleil
+que son en-tête cite (NREL), à 70 %.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone, calculé par
+`documents_qcm.py` depuis `energie.py` — « Ce que consomme le jardin connecté » (q3, q4, q5, q14) et « Cinq sources pour
+le jardin » (q7, q9, q11). La q3 disait de la pompe qu'elle est « le plus petit poste du montage » : le relais consomme
+moins qu'elle (0,006 Wh contre 0,025) ; ses pourquoi renvoient maintenant aux colonnes à relire.

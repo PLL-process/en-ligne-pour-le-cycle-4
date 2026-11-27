@@ -413,6 +413,27 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
        s1 && !s2.open && s2.ligne && s2.txt.split(" ")[0] === prog.split(" ")[0] && s2.txt.split(" ")[2] === prog.split(" ")[2], s2.txt + " · " + prog);
     await page.click("#tab-" + avant); await page.waitForTimeout(80);
   }
+  /* le billet de sortie (règle d'or n°330, 27/11/2026) : seul, sans aide, sur un objet neuf, en fin de séance 3 */
+  {
+    const avant = await page.evaluate(() => document.querySelector(".seance-panel.active").id);
+    await page.click("#tab-s3"); await page.waitForTimeout(100);
+    const b = await page.evaluate(() => {
+      const s = document.getElementById("billetSortie"); if (!s) return null;
+      const corr = s.querySelector("details.correction"), bonus = document.getElementById("bonus");
+      return { visible: s.checkVisibility(), zones: s.querySelectorAll("textarea[data-save]").length,
+        etayages: s.querySelectorAll("details.etayage").length, boutons: s.querySelectorAll("button").length,
+        criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+        avantBonus: !!bonus && !!(s.compareDocumentPosition(bonus) & Node.DOCUMENT_POSITION_FOLLOWING),
+        panneau: s.closest(".seance-panel") && s.closest(".seance-panel").id };
+    });
+    ok("billet de sortie : il existe, visible à la séance 3", !!b && b.visible && b.panneau === "s3", JSON.stringify(b));
+    ok("billet de sortie : deux zones gardées, deux versions étayées", !!b && b.zones === 2 && b.etayages === 2);
+    ok("billet de sortie : une correction à deux critères, avec des contre-exemples, et aucun bouton",
+       !!b && b.criteres === 2 && b.contre >= 2 && b.boutons === 0, JSON.stringify(b));
+    ok("billet de sortie : juste avant le Bonus", !!b && b.avantBonus);
+    await page.fill("#bs_5e_C9_1_1", "montes = 4 : attendu 46, obtenu 54");
+    await page.click("#tab-" + avant); await page.waitForTimeout(80);
+  }
   await page.click("#btnSave");
   await page.waitForTimeout(150);
   const cle = await page.evaluate(() => localStorage.getItem("seq_5e_C9.1-C9.3_boite_etiquetee"));
@@ -423,6 +444,22 @@ ok("séquence : chargement file:// sans erreur JS", erreurs.length === 0, erreur
      /^1 \/ 5/.test((await page.locator("#progTxt").textContent()).trim()));
   ok("restauration : les réponses saisies sont restituées",
      (await page.inputValue("#a1q1")) === "21");   // le groupe de boutons radio porte sa valeur (n°300)
+  ok("billet de sortie : la réponse écrite survit au rechargement",
+     (await page.inputValue("#bs_5e_C9_1_1")) === "montes = 4 : attendu 46, obtenu 54");
+}
+
+/* — les questions sur document du QCM (règle d'or n°345, 27/11/2026) — */
+{
+  const src = fs.readFileSync(path.join(LOT, QCM), "utf8"), Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+  const avec = Q.filter(q => q.img), docs = avec.filter(q => /\/doc_/.test(q.img.src));
+  ok("QCM · au moins six questions sur document", avec.length >= 6, String(avec.length));
+  ok("QCM · chaque document « doc_ » est un fichier du lot",
+     docs.length >= 2 && docs.every(q => fs.existsSync(path.join(LOT, q.img.src))), docs.map(q => q.img.src).join(", "));
+  ok("QCM · chaque document est décrit en entier (alt de plus de 120 signes)",
+     docs.every(q => (q.img.alt || "").length > 120), docs.map(q => (q.img.alt || "").length).join(" · "));
+  let aJour = true;
+  try { execSync("python3 documents_qcm.py --verifier", { cwd: LOT, stdio: "pipe" }); } catch { aJour = false; }
+  ok("QCM · documents_qcm_5e_C9.1.json est à jour de la séquence (programme, bancs)", aJour);
 }
 
 /* — 5e_C9.3 : l'activité 5 exige le programme de la barrière écrit par l'élève — */
