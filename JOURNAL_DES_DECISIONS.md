@@ -38794,3 +38794,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 40 / 40 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
 (`4e_C7.4`).
+
+## 27/11/2026 — 4e_C7.5 : huit questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : trois documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit l'établi :
+  les trois prototypes livrés, le courant des constituants, le programme téléversé) — « Trois prototypes livrés »
+  (q6, q8, q10), « Le courant du jardin connecté » (q7, q11), « Le programme de la carte » (q9, q12, q18). Huit
+  questions illustrées sur trente ; celles qui disaient « le cas 2 », « le cas 3 » sans le montrer le montrent.
+- **Billet de sortie** avant le Bonus de la séance 2 : l'aération automatique de la serre, livrée sans son relais (le
+  constituant manquant justifié par le symptôme ; la chaîne d'information réparée). La séance 2 annonçait 60 minutes :
+  le réinvestissement (20 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`.
+Bancs : séquence 46 / 46 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`4e_C7.5`).
