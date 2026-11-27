@@ -21,7 +21,8 @@
 | 1 | Monter le prototype | 25 min | verrou : `ok` |
 | 2 | Retirer, pour voir | 20 min | verrou : `retire` |
 | 3 | L'ordre du montage | 20 min | — |
-| 4 | REFAIRE — réinvestissement | 15 min | — |
+| 4 | REFAIRE — réinvestissement | 10 min | — |
+| 5 | Billet de sortie, seul et sans aide | 5 min | — |
 
 ## Les trois versions
 
@@ -71,8 +72,22 @@ apprend. La grille LSU de la synthèse professeur est là pour observer, pas pou
 | Séance | Question directrice | Contenu | Temps |
 |---|---|---|---|
 | 1 — Nommer, puis monter | Quelle fonction tient chaque constituant, et sur quel port le brancher pour que le prototype marche ? | Ouverture (avant de commencer, situation, problématique et idée de départ, sécurité, trois façons, billet), activités 0 et 1 | ouverture + 15 + 25 min |
-| 2 — Retirer, ordonner, refaire | Que casse chaque constituant quand on le retire, et dans quel ordre monter le prototype réel ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé replié), bilan (idée de départ, « Comment j'ai travaillé », « Je me positionne » sur 5e_C7.5 et 5e_C4.5 aux quatre niveaux du livret), renvoi au QCM | 20 + 20 + 15 min + clôture |
+| 2 — Retirer, ordonner, refaire | Que casse chaque constituant quand on le retire, et dans quel ordre monter le prototype réel ? | Activités 2 et 3, réinvestissement, billet de sortie, synthèse, Bonus (corrigé replié), bilan (idée de départ, « Comment j'ai travaillé », « Je me positionne » sur 5e_C7.5 et 5e_C4.5 aux quatre niveaux du livret), renvoi au QCM | 20 + 20 + 10 + 5 min + clôture |
 
 Dès la séance 2, l'ouverture — dont l'encadré Sécurité — est repliée dans le volet « 📖 Rappel » ; l'en-tête de la séance 2
 rappelle qu'en 🅰 on retire et on rebranche un module hors tension. L'établi sert aux deux séances : un seul exemplaire, rangé
 dans la séance ouverte, sous son en-tête.
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide ; le réinvestissement
+passe de 15 à 10 min pour que la séance tienne en 55). Un objet que la séquence n'a pas étudié : **le ventilateur
+automatique de la salle de classe**, qui se met en marche au-dessus de 28 °C.
+- Question 1 (5e_C7.5) : ranger les constituants dans les quatre fonctions, et choisir le type de port du capteur et
+  du ventilateur. On regarde les quatre fonctions tenues, et chaque type de port justifié par ce qu'on demande au module.
+- Question 2 (5e_C4.5) : la chaîne d'information, dans l'ordre. On regarde trois maillons ordonnés, et la décision
+  écrite comme une comparaison à un seuil.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone (q3, q8, q10, q11, q12, q14,
+q20), LU dans la séquence par `documents_qcm.py` (les constituants de l'établi, leurs ports, leur courant, et le
+programme téléversé) — « Le prototype de l'éclairage du préau » et « Le programme de la carte ».

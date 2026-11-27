@@ -2810,7 +2810,7 @@ sinon
 <section class="card seance-tete">
 <h2>🧭 Séance 2 — Retirer, ordonner, refaire</h2>
 <p class="question-directrice">Question directrice : que casse chaque constituant quand on le retire, et dans quel ordre monter le prototype réel ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① retirer, pour voir (activité 2, environ 20 min)&nbsp;; <br>② l'ordre du montage (activité 3, environ 20 min)&nbsp;; <br>③ le réinvestissement (environ 15 min). <br>Puis la synthèse, le Bonus, le bilan et le QCM (questionnaire à choix multiples). <br>Avec le matériel (🅰), on retire et on rebranche un module hors tension, le câble <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> débranché : l'encadré Sécurité est dans le rappel, en haut de page.</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① retirer, pour voir (activité 2, environ 20 min)&nbsp;; <br>② l'ordre du montage (activité 3, environ 20 min)&nbsp;; <br>③ le réinvestissement (environ 10 min)&nbsp;; <br>④ le billet de sortie (environ 5 min, seul et sans aide). <br>Puis la synthèse, le Bonus, le bilan et le QCM (questionnaire à choix multiples). <br>Avec le matériel (🅰), on retire et on rebranche un module hors tension, le câble <abbr class="sigle" title="Universal Serial Bus, la prise et le câble universels" tabindex="0">USB</abbr> débranché : l'encadré Sécurité est dans le rappel, en haut de page.</p>
 </section>
 
 <section class="card" id="act2">
@@ -2951,7 +2951,7 @@ sinon
 </section>
 
 <section class="card" id="reinvestissement">
-  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
 <p>Le principal est content, et il en veut plus : <b>l'éclairage doit aussi
   s'allumer la nuit quand quelqu'un passe</b>, même si le capteur de luminosité n'y suffit pas. <br>On te fournit un capteur de mouvement Grove : sortie numérique, 12 mA (milliampères).</p>
   <p>Écris, en quelques lignes : <b>quel type de port</b> tu lui donnes et pourquoi, <b>quelle
@@ -2992,6 +2992,51 @@ sinon
       basse tension. Le dernier geste du montage est une vérification, pas un branchement.</li>
   </ul>
 
+</section>
+
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un objet nouveau&nbsp;: <b>le ventilateur automatique de la salle de classe</b>.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p>Le ventilateur doit se mettre en marche quand la salle dépasse 28 °C (degrés Celsius), et s'arrêter en dessous.
+  <br>Sur la table&nbsp;: une carte Arduino UNO avec son Base Shield, un capteur de température Grove, un petit ventilateur 5 V (volts) commandé en marche ou arrêt, et un câble USB.</p>
+  <p><label for="bs_5e_C7_5_1"><b>1.</b> Range chaque constituant dans sa fonction (acquérir, traiter, agir, alimenter). Puis dis sur quel type de port tu branches le capteur, et sur quel type le ventilateur, avec la raison.</label></p>
+  <textarea id="bs_5e_C7_5_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Acquérir&nbsp;: ____ · Traiter&nbsp;: ____ · Agir&nbsp;: ____ · Alimenter&nbsp;: ____ .</li>
+      <li>Le capteur va sur un port ____ , parce que la température ____ .</li>
+      <li>Le ventilateur va sur un port ____ , parce qu'on ne lui demande que ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_5e_C7_5_2"><b>2.</b> Décris la chaîne d'information du ventilateur, dans l'ordre&nbsp;: ce qui est mesuré, ce qui est décidé, l'ordre envoyé.</label></p>
+  <textarea id="bs_5e_C7_5_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Le capteur mesure ____ et envoie à la carte ____ .</li>
+      <li>La carte compare ____ à ____ .</li>
+      <li>Elle envoie au ventilateur l'ordre ____ ou ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Acquérir&nbsp;: le capteur de température. Traiter&nbsp;: la carte UNO. Agir&nbsp;: le ventilateur. Alimenter&nbsp;: le câble USB.
+    <br>Le capteur va sur un port analogique (A0), parce que la température varie peu à peu&nbsp;: il faut un nombre, pas un oui ou un non.
+    <br>Le ventilateur va sur un port numérique (D2 à D8), parce qu'on ne lui demande que deux états&nbsp;: marche ou arrêt.&nbsp;»
+    <br><b>Critère</b>&nbsp;: les quatre fonctions tenues, chacune par son constituant, et chaque type de port justifié par ce qu'on demande au module.</p>
+    <p>✘ «&nbsp;Le Base Shield tient la fonction traiter&nbsp;»&nbsp;: il ne décide rien, il donne des ports à la carte.
+    <br>✘ «&nbsp;Le capteur sur D4&nbsp;»&nbsp;: un port numérique ne dirait que «&nbsp;chaud&nbsp;» ou «&nbsp;pas chaud&nbsp;», sans la valeur à comparer à 28 °C.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Le capteur mesure la température de la salle et envoie à la carte un signal électrique, image de cette température.
+    <br>La carte compare la valeur lue à 28 °C, comme le dit son programme.
+    <br>Elle envoie au ventilateur l'ordre marche si c'est plus, arrêt sinon.&nbsp;»
+    <br><b>Critère</b>&nbsp;: trois maillons dans l'ordre (acquérir, traiter, agir), et la décision écrite comme une comparaison à un seuil.</p>
+    <p>✘ «&nbsp;Capteur, carte, ventilateur&nbsp;»&nbsp;: c'est une liste de composants, pas le trajet de l'information.
+    <br>✘ «&nbsp;Le capteur allume le ventilateur quand il fait chaud&nbsp;»&nbsp;: le capteur ne décide rien, c'est la carte qui compare.</p>
+    </div>
+  </details>
 </section>
 
 <section class="card bonus">
