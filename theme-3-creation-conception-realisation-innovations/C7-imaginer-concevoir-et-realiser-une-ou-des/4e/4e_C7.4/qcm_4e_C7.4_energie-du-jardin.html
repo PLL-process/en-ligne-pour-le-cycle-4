@@ -144,6 +144,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 4e_C7.4 + 10 4e_C3.1), 0 illustrée.
+/* Banque : 30 questions (20 4e_C7.4 + 10 4e_C3.1), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -327,21 +329,24 @@ const QUESTIONS = [
  err:"Ajouter un critère en cours de route parce qu'il arrange un candidat. La grille cesse alors d'être une grille.",
  d:["Une grille sert à décider, pas à confirmer une décision déjà prise.","","Le prix est un critère parmi d'autres, et il ne suffit jamais à éliminer.","L'ordre d'examen n'a aucune importance : c'est le contenu des cases qui compte."],
  ret:"Une grille pose les mêmes questions à tous, ou elle ne sert à rien."},
-{c:"4e_C7.4",n:"La pompe et la carte",q:"Dans le jardin, la pompe tire 300 mA (milliampères) et la carte 45 mA. Sur une journée…",
+{c:"4e_C7.4",n:"La pompe et la carte",q:"Sur ce relevé, la pompe tire 300 mA (milliampères) et la carte 45 mA. Sur une journée…",
+ img:{src:"Images/doc_conso_jardin.svg",alt:"Ce que consomme le jardin connecté en une journée, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Capteur d'humidité du sol : 2 milliampères pendant 24 heures, 0,24 wattheures. Écran LCD RGB : 40 milliampères pendant 1 heure, 0,20 wattheures. Pompe immergée 5 volts : 300 milliampères pendant 1 minute, 0,025 wattheures. Module relais : 70 milliampères pendant 1 minute, 0,006 wattheures. Total : 5,87 wattheures par jour."},
  o:["la pompe consomme un peu plus","la pompe consomme six fois plus","les deux consomment à peu près autant","la carte consomme deux cents fois plus"],r:3,
  expl:"La pompe tourne 60 secondes ; la carte, 24 heures. Le produit courant × durée écrase le rapport des courants.",
  ex:"5,400 Wh (wattheures) pour la carte, 0,025 Wh pour la pompe : un rapport de 216.",
  err:"Classer d'après le courant. C'est l'erreur que la séquence est faite pour provoquer, puis pour corriger au banc.",
- d:["La pompe est le plus petit poste du montage, loin derrière l'écran lui-même.","Six fois plus de courant, oui — mais pendant 1 440 fois moins longtemps.","L'écart est énorme : 92 % contre 0,4 % de la consommation journalière.",""],
+ d:["Relis la colonne Énergie : la pompe donne 0,025 Wh, la carte 5,40 Wh.","Six fois plus de courant, oui — mais pendant 1 440 fois moins longtemps : relis la colonne Durée.","L'écart est énorme : relis la colonne Énergie, 5,40 Wh contre 0,025 Wh.",""],
  ret:"Un petit courant permanent bat un gros courant qui dure une minute."},
-{c:"4e_C7.4",n:"La part de la carte",q:"Dans le jardin connecté, la carte représente…",
+{c:"4e_C7.4",n:"La part de la carte",q:"D'après ce relevé, la carte du jardin connecté représente…",
+ img:{src:"Images/doc_conso_jardin.svg",alt:"Ce que consomme le jardin connecté en une journée, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Capteur d'humidité du sol : 2 milliampères pendant 24 heures, 0,24 wattheures. Écran LCD RGB : 40 milliampères pendant 1 heure, 0,20 wattheures. Pompe immergée 5 volts : 300 milliampères pendant 1 minute, 0,025 wattheures. Module relais : 70 milliampères pendant 1 minute, 0,006 wattheures. Total : 5,87 wattheures par jour."},
  o:["92 % de la consommation quotidienne","50 % de la consommation quotidienne","25 % de la consommation quotidienne","4 % de la consommation quotidienne"],r:0,
  expl:"5,400 Wh (wattheures) sur 5,87 : la carte, qui attend la plupart du temps, mange presque tout.",
  ex:"Éteins-la au banc : le total tombe de 5,87 à 0,47 Wh.",
  err:"Chercher le coupable du côté de ce qui bouge. Ce qui bouge est bref ; ce qui attend ne s'arrête jamais.",
  d:["","La moitié serait déjà énorme ; la réalité est bien pire.","Un quart correspondrait à peu près à la somme de tous les autres postes.","4 %, c'est la part du capteur d'humidité, pas celle de la carte."],
  ret:"Dans un montage qui veille en permanence, la carte est presque toujours le premier poste."},
-{c:"4e_C7.4",n:"La part de la pompe",q:"La pompe du jardin représente…",
+{c:"4e_C7.4",n:"La part de la pompe",q:"D'après ce relevé, la pompe du jardin représente…",
+ img:{src:"Images/doc_conso_jardin.svg",alt:"Ce que consomme le jardin connecté en une journée, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Capteur d'humidité du sol : 2 milliampères pendant 24 heures, 0,24 wattheures. Écran LCD RGB : 40 milliampères pendant 1 heure, 0,20 wattheures. Pompe immergée 5 volts : 300 milliampères pendant 1 minute, 0,025 wattheures. Module relais : 70 milliampères pendant 1 minute, 0,006 wattheures. Total : 5,87 wattheures par jour."},
  o:["60 % de la consommation quotidienne","40 % de la consommation quotidienne","14 % de la consommation quotidienne","0,4 % de la consommation quotidienne"],r:3,
  expl:"0,025 Wh (wattheures) sur 5,87. Deux arrosages de trente secondes ne pèsent rien face à une veille de vingt-quatre heures.",
  ex:"Éteindre la pompe au banc fait passer le total de 5,87 à 5,85 Wh.",
@@ -355,7 +360,8 @@ const QUESTIONS = [
  err:"Regarder la fiche technique et comparer les courants. Il faut aussi lire le temps de fonctionnement.",
  d:["Le plus gros courant peut ne durer qu'un instant et ne rien peser.","","Le nombre de composants ne dit rien : cinq veilleuses valent moins qu'un moteur.","La tension est la même pour tous ici : 5 V (volts). Elle ne distingue rien."],
  ret:"Énergie = courant × tension × durée. Le facteur oublié est presque toujours la durée."},
-{c:"4e_C7.4",n:"Compter sur la durée du besoin",q:"La pile 9 V (volts) tient 11 heures. Pour couvrir les 60 jours d'été, il en faut…",
+{c:"4e_C7.4",n:"Compter sur la durée du besoin",q:"Avec ce tableau, la pile 9 V (volts) tient 11 heures sur le jardin. Pour couvrir les 60 jours d'été, il en faut…",
+ img:{src:"Images/doc_sources_jardin.svg",alt:"Cinq sources d'énergie pour le jardin connecté. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,2 wattheures par jour à New York."},
  o:["131","60","11","5"],r:0,
  expl:"60 jours font 1 440 heures ; 1 440 ÷ 11 = 131. Le nombre ne vient d'aucune opinion : d'une autonomie relevée et d'une durée donnée par le besoin.",
  ex:"131 piles à 3,50 € font 459 € — et 131 piles au bac de collecte.",
@@ -369,7 +375,8 @@ const QUESTIONS = [
  err:"S'arrêter à l'étiquette. Le coût d'un objet technique se compte sur sa durée d'emploi.",
  d:["","Les écarts de magasin sont marginaux devant un facteur trente.","Un prix se compare très bien : encore faut-il le rapporter à une durée.","Des prix différents sont justement ce qui rend la comparaison nécessaire."],
  ret:"Le prix d'achat n'est pas le coût : il faut le rapporter à la durée du besoin."},
-{c:"4e_C7.4",n:"Lire une autonomie",q:"Sur le jardin, la meilleure autonomie parmi les sources qui stockent est…",
+{c:"4e_C7.4",n:"Lire une autonomie",q:"Le jardin consomme 5,87 Wh (wattheures) par jour. D'après ce tableau, la meilleure autonomie parmi les sources qui stockent est…",
+ img:{src:"Images/doc_sources_jardin.svg",alt:"Cinq sources d'énergie pour le jardin connecté. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,2 wattheures par jour à New York."},
  o:["la pile 9 volts, un peu moins d'un jour","les quatre piles AA, un peu plus de deux jours","l'accu 18650, un peu moins de deux jours","aucune : elles tiennent toutes moins d'un jour"],r:1,
  expl:"12,5 Wh (wattheures) utiles ÷ 5,87 = 2,1 jours. L'accu suit à 1,6 jour, la pile 9 V ferme la marche à 11 heures.",
  ex:"Aucune des trois ne couvre une semaine, et le besoin est de soixante jours.",
@@ -383,7 +390,8 @@ const QUESTIONS = [
  err:"Traiter la disponibilité comme un détail d'installation. C'est un critère à part entière.",
  d:["Un adaptateur à 6 €, acheté une fois, est la source la moins chère du tableau.","Un adaptateur USB fournit largement de quoi alimenter ce montage.","Une alimentation extérieure existe, à condition d'être prévue pour ; ce n'est pas une interdiction.",""],
  ret:"La disponibilité au bon endroit est un critère, pas un détail."},
-{c:"4e_C7.4",n:"Le manque quotidien",q:"Le panneau 1 W (watts) récolte 3,2 Wh (wattheures) et le jardin en consomme 5,87. Il manque…",
+{c:"4e_C7.4",n:"Le manque quotidien",q:"Sur ce tableau, le panneau 1 W (watt) récolte 3,2 Wh (wattheures) par jour, et le jardin en consomme 5,87. Il manque…",
+ img:{src:"Images/doc_sources_jardin.svg",alt:"Cinq sources d'énergie pour le jardin connecté. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,2 wattheures par jour à New York."},
  o:["1,59 Wh chaque jour","9,07 Wh chaque jour","2,67 Wh chaque jour","rien : le panneau suffit"],r:2,
  expl:"5,87 − 3,20. Ce n'est pas un petit écart : c'est 45 % du besoin, tous les jours.",
  ex:"Le banc l'écrit noir sur blanc : « il NE SUFFIT PAS. Il en manque 2,67 Wh chaque jour ».",
@@ -404,7 +412,8 @@ const QUESTIONS = [
  err:"Dimensionner la source sur une consommation qu'on n'a jamais interrogée.",
  d:["Une source deux fois plus grosse coûte deux fois plus, pour le même service.","","Réduire la durée d'un service qu'on a promis, c'est réduire le service.","Deux sources compliquent l'installation sans répondre à la question posée."],
  ret:"Devant un manque, on regarde la charge avant d'agrandir la source."},
-{c:"4e_C7.4",n:"Ce que change une carte sobre",q:"Avec une carte consommant 5 mA (milliampères) au lieu de 45, le jardin passe à…",
+{c:"4e_C7.4",n:"Ce que change une carte sobre",q:"Sur ce relevé, la carte passe de 45 mA (milliampères) à 5 mA. Le jardin passe à…",
+ img:{src:"Images/doc_conso_jardin.svg",alt:"Ce que consomme le jardin connecté en une journée, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Capteur d'humidité du sol : 2 milliampères pendant 24 heures, 0,24 wattheures. Écran LCD RGB : 40 milliampères pendant 1 heure, 0,20 wattheures. Pompe immergée 5 volts : 300 milliampères pendant 1 minute, 0,025 wattheures. Module relais : 70 milliampères pendant 1 minute, 0,006 wattheures. Total : 5,87 wattheures par jour."},
  o:["1,07 Wh (wattheures) par jour","5,47 Wh (wattheures) par jour","0,47 Wh (wattheures) par jour","0,60 Wh (wattheures) par jour"],r:0,
  expl:"Sans la carte, il reste 0,47 Wh ; la carte sobre en ajoute 0,60. Total 1,07 Wh, contre 5,87 : divisé par 5,5.",
  ex:"Le panneau 1 W (watts), qui manquait 2,67 Wh, récolte alors près du triple du besoin.",
