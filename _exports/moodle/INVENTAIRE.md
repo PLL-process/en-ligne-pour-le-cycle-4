@@ -1,6 +1,6 @@
 # Export Moodle XML des QCM — inventaire
 
-Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 231 images embarquées.
+Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 310 images embarquées.
 
 ## Fichiers à importer dans Éléa (Banque de questions → Importer → Format XML Moodle)
 
@@ -14,27 +14,27 @@ Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 231 ima
 | Niveau | Code | QCM | Questions | Images |
 |---|---|---|---:|---:|
 | 3e | 3e_C1.1 | Tsinghua, robots, drones et IA face aux feux | 34 | 11 |
-| 3e | 3e_C1.5 | Numérique, société et métiers | 30 | 0 |
+| 3e | 3e_C1.5 | Numérique, société et métiers | 30 | 6 |
 | 4e | 4e_C1.1 | Tsinghua, concevoir avant de connecter | 33 | 6 |
-| 4e | 4e_C1.4 | Cybersécurité et usage raisonné | 30 | 0 |
+| 4e | 4e_C1.4 | Cybersécurité et usage raisonné | 30 | 7 |
 | 5e | 5e_C1.1 | Chengdu, le collège qui mesure son air | 30 | 13 |
-| 5e | 5e_C1.2 | Sainte-Luce, quel frein pour les vélos du collège ? | 30 | 8 |
-| 5e | 5e_C1.3 | Hangzhou : du fichier brut à la décision | 30 | 3 |
-| 5e | 5e_C1.5 | Le compte du club : ce qu'une publication révèle et ce qu'elle engage | 30 | 1 |
-| 3e | 3e_C2.1 | Pékin, trois destinataires, trois représentations | 30 | 5 |
-| 4e | 4e_C2.1 | Hangzhou, ce que vit l'usager devant la borne | 30 | 5 |
+| 5e | 5e_C1.2 | Sainte-Luce, quel frein pour les vélos du collège ? | 30 | 9 |
+| 5e | 5e_C1.3 | Hangzhou : du fichier brut à la décision | 30 | 6 |
+| 5e | 5e_C1.5 | Le compte du club : ce qu'une publication révèle et ce qu'elle engage | 30 | 6 |
+| 3e | 3e_C2.1 | Pékin, trois destinataires, trois représentations | 30 | 7 |
+| 4e | 4e_C2.1 | Hangzhou, ce que vit l'usager devant la borne | 30 | 7 |
 | 4e | 4e_C2.1 | Comment expliquer le fonctionnement d’un objet ? | 30 | 6 |
 | 5e | 5e_C2.1 | Shenzhen, la station de vélos et tout ce qui l'entoure | 34 | 8 |
-| 3e | 3e_C3.1 | Shenzhen, comment refroidir un local qui surchauffe ? | 30 | 1 |
-| 4e | 4e_C3.1 | Hangzhou, quelle flotte de vélos pour la ville ? | 30 | 2 |
-| 5e | 5e_C3.1 | Shanghai, quel véhicule pour le dernier kilomètre ? | 30 | 3 |
+| 3e | 3e_C3.1 | Shenzhen, comment refroidir un local qui surchauffe ? | 30 | 6 |
+| 4e | 4e_C3.1 | Hangzhou, quelle flotte de vélos pour la ville ? | 30 | 6 |
+| 5e | 5e_C3.1 | Shanghai, quel véhicule pour le dernier kilomètre ? | 30 | 7 |
 | ateliers | besoin-bete-a-cornes | Le besoin | 30 | 6 |
 | ateliers | carte-mentale | La carte mentale | 30 | 6 |
-| ateliers | cas-utilisation-sysml | Le diagramme de cas d'utilisation | 30 | 8 |
-| ateliers | croquis | Le croquis | 30 | 5 |
-| ateliers | exigences-sysml | Le diagramme des exigences | 30 | 5 |
-| ateliers | fast | Des fonctions aux solutions techniques | 30 | 7 |
-| ateliers | interacteurs-pieuvre | Le diagramme des interacteurs extérieurs | 30 | 4 |
+| ateliers | cas-utilisation-sysml | Le diagramme de cas d'utilisation | 30 | 9 |
+| ateliers | croquis | Le croquis | 30 | 6 |
+| ateliers | exigences-sysml | Le diagramme des exigences | 30 | 6 |
+| ateliers | fast | Des fonctions aux solutions techniques | 30 | 8 |
+| ateliers | interacteurs-pieuvre | Le diagramme des interacteurs extérieurs | 30 | 6 |
 | 3e | 3e_C4.1 | L'énergie de la station | 30 | 3 |
 | 3e | 3e_C4.3 | La station d'alerte cyclonique | 32 | 0 |
 | 3e | 3e_C4.7 | Internet jusqu'à Sainte-Luce | 30 | 0 |
@@ -79,14 +79,14 @@ Produit par `_outils/export_moodle_xml.mjs`. 76 QCM, **2301 questions**, 231 ima
 | 5e | 5e_C7.5 | L'éclairage du préau : assembler un prototype | 30 | 0 |
 | 5e | 5e_C7.6 | Le dé : mettre en œuvre une procédure fournie | 30 | 0 |
 | ateliers | atelier-planification | le diagramme de planification des tâches | 30 | 5 |
-| 3e | 3e_C8.1 | Le mât de la station : la simulation avant le banc | 30 | 0 |
-| 3e | 3e_C8.2 | Le mât de la station : proposer un protocole | 30 | 0 |
-| 4e | 4e_C8.1 | Valider le support par des tests | 30 | 3 |
-| 5e | 5e_C8.1 | La patère du hall : ce que la simulation voyait | 30 | 0 |
-| 5e | 5e_C8.2 | La patère du hall : éprouver un matériau | 30 | 0 |
+| 3e | 3e_C8.1 | Le mât de la station : la simulation avant le banc | 30 | 7 |
+| 3e | 3e_C8.2 | Le mât de la station : proposer un protocole | 30 | 7 |
+| 4e | 4e_C8.1 | Valider le support par des tests | 30 | 6 |
+| 5e | 5e_C8.1 | La patère du hall : ce que la simulation voyait | 30 | 7 |
+| 5e | 5e_C8.2 | La patère du hall : éprouver un matériau | 30 | 6 |
 | 3e | 3e_C9.1 | Variables, types et systèmes | 30 | 3 |
 | 3e | 3e_C9.1 | Python : variables, types et programmes | 30 | 0 |
-| 3e | 3e_C9.2 | La station d'alerte cyclonique se programme | 30 | 4 |
+| 3e | 3e_C9.2 | La station d'alerte cyclonique se programme | 30 | 8 |
 | 4e | 4e_C9.1 | Le jardin connecté se programme | 30 | 4 |
 | 5e | 5e_C9.1 | La boîte étiquetée | 30 | 3 |
 

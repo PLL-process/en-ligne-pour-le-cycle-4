@@ -38633,3 +38633,10 @@ prochain export.
 les cahiers ; thème 2 — `4e_C6.1`, `4e_C6.2`, `3e_C4.1`, `3e_C4.8`, `4e_C4.1` (jardin et Book Train), `4e_C4.7` ;
 thème 3 — `3e_C7.1`, `3e_C7.6`, `3e_C7.8`, `4e_C7.1`, `5e_C7.1`, l'atelier de planification, `3e_C8.1`, `3e_C9.1`,
 `5e_C9.1` ; `_outils/` — le contrôle neuf, son banc, P1 ; `.claude/skills/controle-qualite-lot` — sa ligne.
+
+## 27/11/2026 — Exports Moodle régénérés (transversal : `_exports/` seulement)
+
+Pascal : « 2 oui ». Les exports Moodle gardaient le texte d'avant les lots de la semaine (questions sur document, règle
+d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les réécrit depuis les 76 QCM : 2 301
+questions, 310 images embarquées (231 avant : les documents dessinés pour le téléphone entrent). Aucune phrase
+« comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.
