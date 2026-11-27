@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 3e_C7.7 + 10 3e_C8.1), 0 illustrée.
+/* Banque : 30 questions (20 3e_C7.7 + 10 3e_C8.1), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -325,7 +327,8 @@ const QUESTIONS = [
  err:"Prendre l'empreinte d'un procédé pour un défaut de réglage.",
  d:["l'encombrement d'une machine ne dit rien de la pièce qu'elle produit","","les chutes sont un coût de matière : elles ne se lisent pas sur la pièce finie","un réglage se note en effet, et l'empreinte est ce qu'on voit sur la pièce"],
  ret:"L'empreinte d'un moyen est ce qu'il laisse toujours, et qui ne vient pas du dessin."},
-{c:"3e_C7.7",n:"Le surplomb à 45 degrés",q:"Pourquoi une buse ne tient-elle pas un surplomb au-delà de 45° sans support ?",
+{c:"3e_C7.7",n:"Le surplomb à 45 degrés",q:"Sur ce document, l'imprimante tient un surplomb de 45° au plus. Pourquoi une buse ne tient-elle pas davantage sans support ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["au-delà de 45° la matière refroidit trop vite et se décolle du plateau","chaque couche s'appuie de moins en moins sur celle du dessous et finit par tomber","la buse ne peut pas se déplacer selon un angle supérieur à quarante-cinq degrés","le logiciel de découpe en couches refuse de traiter les pentes trop fortes"],r:1,
  expl:"Une couche est déposée sur la précédente. Plus la pente s'écarte de la verticale, moins la couche nouvelle repose sur quelque chose — et le fil pend dans le vide.",
  ex:"À 45°, chaque couche déborde d'une demi-largeur de fil : c'est encore tenable.",
@@ -339,42 +342,47 @@ const QUESTIONS = [
  err:"Accepter un support partout, comme si le retirer était sans conséquence.",
  d:["","ils augmentent le temps, sans le doubler, et ce n'est pas la raison principale ici","ils s'impriment dans la même matière : c'est justement ce qui rend l'arrachage rugueux","les supports se retirent avant l'assemblage : ils ne gênent pas la fermeture"],
  ret:"Un support laisse une trace là où on l'arrache. Il faut savoir où elle tombera."},
-{c:"3e_C7.7",n:"La couche et la rainure",q:"Une couche fait 0,2 mm. Pourquoi une rainure de 0,3 mm de profondeur est-elle un problème ?",
+{c:"3e_C7.7",n:"La couche et la rainure",q:"Sur ce document, la rainure est dessinée à 0,3 mm (millimètre), et une couche fait 0,2 mm. Pourquoi est-ce un problème ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["la buse de 0,4 mm est deux fois trop large pour creuser 0,3 mm de profond","cela fait une couche et demie, et la matière déborde alors sur les côtés","une rainure de moins de 1 mm ne peut jamais recevoir de joint torique","cela fait une couche et demie, et une machine n'en dépose pas une et demie"],r:3,
  expl:"La résolution en hauteur est un pas, pas une précision continue. Un détail plus fin qu'une couche n'existe pas ; un détail d'une couche et demie donne une ou deux.",
  ex:"À 0,6 mm, c'est trois couches franches, et le joint se loge mieux qu'avant.",
  err:"Coter une profondeur sans la rapporter à l'épaisseur de couche de la machine.",
  d:["la largeur de buse joue sur la largeur du trait, pas sur la profondeur d'un creux","il n'y a pas de débordement : la couche est déposée entière, ou elle ne l'est pas","des rainures de joint bien plus fines existent, obtenues par d'autres procédés",""],
  ret:"Un détail dans l'épaisseur se compte en couches entières. Jamais en couches et demie."},
-{c:"3e_C7.7",n:"Le jeu du couvercle",q:"Le couvercle est dessiné à 0,1 mm du fond. Que produit une tolérance d'impression de 0,3 mm ?",
+{c:"3e_C7.7",n:"Le jeu du couvercle",q:"Sur ce document, le couvercle est dessiné à 0,1 mm (millimètre) du fond. Que produit la tolérance de l'imprimante ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["les deux pièces se touchent et le plastique chaud les soude entre elles","le couvercle prend un jeu de 0,3 mm et ferme mal en laissant passer l'eau","le couvercle se déforme au refroidissement et gondole sur son pourtour","rien de particulier : 0,1 mm est un jeu suffisant pour toute pièce imprimée"],r:0,
  expl:"Une tolérance de 0,3 mm signifie que la cote réelle peut s'écarter d'autant. Deux surfaces dessinées à 0,1 mm l'une de l'autre se rencontrent, et fusionnent.",
  ex:"Le boîtier est sorti avec son couvercle soudé au fond sur trois centimètres.",
  err:"Dessiner un jeu plus petit que la tolérance de la machine qui produira la pièce.",
  d:["","le jeu obtenu ne serait pas 0,3 mm : les surfaces se touchent avant, et se soudent","le gondolage est un autre défaut, lié au refroidissement, pas au jeu dessiné","0,1 mm est en dessous de la tolérance de la machine : c'est précisément le problème"],
  ret:"Un jeu dessiné plus petit que la tolérance de la machine n'est pas un jeu."},
-{c:"3e_C7.7",n:"Le jeu et l'étanchéité",q:"Porter le jeu du couvercle de 0,1 à 0,4 mm nuit-il à l'étanchéité du boîtier ?",
+{c:"3e_C7.7",n:"Le jeu et l'étanchéité",q:"D'après ce document, porter le jeu du couvercle de 0,1 à 0,4 mm (millimètre) nuit-il à l'étanchéité du boîtier ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["non : l'étanchéité est faite par le joint torique, c'est son travail","oui : quatre dixièmes de jeu laissent entrer l'eau par capillarité","oui : il faudrait alors ajouter un second joint sur le pourtour","non : l'eau ne peut pas remonter, car le couvercle est en position haute"],r:0,
  expl:"C'est pour cela qu'il y a un joint. Le jeu sert à ce que les deux pièces s'assemblent ; l'étanchéité est assurée par la compression du joint dans sa rainure.",
  ex:"La rainure passe même de 0,3 à 0,6 mm : le joint se loge mieux qu'avant.",
  err:"Demander au jeu mécanique de faire le travail d'un joint.",
  d:["","la capillarité est arrêtée par le joint comprimé, quel que soit le jeu des pièces","un seul joint suffit s'il est correctement logé et correctement comprimé","l'eau de pluie et les embruns arrivent de toutes les directions, y compris par-dessous"],
  ret:"Le jeu assemble, le joint étanche. Chaque élément fait son travail."},
-{c:"3e_C7.7",n:"Corriger le dessin",q:"Ramener la casquette de 70° à 45°, est-ce relâcher une exigence du cahier des charges ?",
+{c:"3e_C7.7",n:"Corriger le dessin",q:"Sur ce document, ramener la casquette de 70° à 45°, est-ce relâcher une exigence du cahier des charges ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["non : le cahier des charges ne dit rien de la forme, seulement de la matière","oui : la casquette écarte moins bien l'eau, on accepte donc moins de protection","oui : toute modification d'une cote dessinée modifie le cahier des charges","non : c'est la pente qui écarte l'eau, et la fonction reste entière"],r:3,
  expl:"Un cahier des charges dit ce que l'objet doit faire. Écarter l'eau du joint reste assuré à 45° — le nombre de degrés n'était pas la fonction, la pente l'était.",
  ex:"Ni la matière, ni l'encombrement, ni l'étanchéité, ni la masse admise ne bougent.",
  err:"Croire qu'on a concédé quelque chose dès qu'on modifie un trait du dessin.",
  d:["un cahier des charges porte sur des exigences, dont beaucoup concernent la forme","une pente à 45° écarte parfaitement l'eau : la protection reste la même","un dessin est un moyen d'obtenir la fonction ; il se corrige sans toucher à la fonction",""],
  ret:"Corriger le dessin n'est pas rouvrir le cahier des charges. Personne ne paie."},
-{c:"3e_C7.7",n:"Deux gestes différents",q:"En quoi ce travail diffère-t-il de celui de 3e_C7.3, où aucun matériau ne passait ?",
- o:["il ne diffère pas : dans les deux cas on assouplit une contrainte trop sévère","là on changeait ce que l'objet doit faire ; ici on change comment on le dessine","là on changeait le dessin ; ici on change le matériau et son procédé de mise en forme","là le relâchement ne coûtait rien ; ici chaque correction coûte du temps de machine"],r:1,
- expl:"En C7.3, relâcher la tenue au sel ou la masse changeait les exigences, et il fallait nommer qui porterait le coût. Ici, rien n'est relâché : seules des cotes bougent.",
+{c:"3e_C7.7",n:"Deux gestes différents",q:"Pour choisir le matériau du boîtier, il avait fallu relâcher une exigence. Ici, on corrige le dessin. Quelle différence ?",
+ o:["aucune : dans les deux cas, on assouplit une contrainte trop sévère","relâcher change ce que l'objet doit faire ; corriger change comment on le dessine","relâcher change le dessin ; corriger change le matériau et son procédé","relâcher ne coûte rien ; chaque correction de dessin coûte du temps de machine"],r:1,
+ expl:"Relâcher la tenue au sel ou la masse change les exigences, et il faut nommer qui portera le coût. Corriger le dessin ne relâche rien : seules des cotes bougent.",
  ex:"C'est pour cela qu'on cherche d'abord la correction de dessin : personne ne la paie.",
  err:"Confondre « rendre fabricable » et « abaisser une exigence ».",
- d:["en C7.3 une exigence était réellement abandonnée ; ici aucune ne l'est","","c'est l'inverse : la matière et le procédé étaient déjà fixés par C7.3","les corrections de dessin ne coûtent que du temps de dessin, et il est faible"],
+ d:["relâcher abandonne vraiment une exigence ; corriger le dessin n'en abandonne aucune","","c'est l'inverse : la matière et le procédé sont déjà fixés quand on corrige le dessin","les corrections de dessin ne coûtent que du temps de dessin, et il est faible"],
  ret:"Rouvrir le cahier des charges a un porteur. Corriger le dessin n'en a pas."},
-{c:"3e_C7.7",n:"Ne pas toucher ce qui va",q:"Deux cotes ne bloquent rien : la paroi de 2,9 mm et les angles internes vifs. Que faire ?",
+{c:"3e_C7.7",n:"Ne pas toucher ce qui va",q:"Sur ce document, la paroi et les angles internes passent déjà. Que faut-il en faire ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["les arrondir un peu, car un angle vif fragilise toujours une pièce imprimée","les corriger aussi, pour que tout le dessin soit adapté à l'impression","rien : elles passent déjà, et les modifier ajouterait un risque pour rien","les supprimer du dessin, puisque la machine ne les contraint pas du tout"],r:2,
  expl:"Un dossier de fabrication se juge aussi à ce qu'il n'a pas touché. Corriger une cote qui passe, c'est ajouter un risque sans résoudre un problème.",
  ex:"L'atelier compte ces corrections-là sur une jauge séparée, et il a raison.",
@@ -382,13 +390,14 @@ const QUESTIONS = [
  d:["l'impression fait très bien les angles internes vifs : c'est la fraiseuse qui ne sait pas","un dessin est adapté quand ce qui bloquait ne bloque plus, pas quand tout a changé","","ces deux cotes portent des fonctions : la tenue au vent et le calage de l'électronique"],
  ret:"Le plus difficile est de ne pas toucher à ce qui va. Un dossier se juge aussi là-dessus."},
 {c:"3e_C7.7",n:"D'où vient la paroi",q:"D'où vient l'épaisseur de paroi de 2,9 mm du boîtier ?",
- o:["d'un réglage par défaut du logiciel de modélisation employé en 3e_C7.6","d'un calcul de 3e_C7.3 : c'est ce qui tient le vent en tête de mât","d'une norme d'étanchéité imposant 2,9 mm à tout boîtier d'extérieur","du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm"],r:1,
+ o:["d'un réglage par défaut du logiciel de modélisation employé","d'un calcul de résistance : c'est ce qui tient le vent en tête de mât","d'une norme d'étanchéité imposant 2,9 mm à tout boîtier d'extérieur","du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm"],r:1,
  expl:"e = 3,00 × racine(50 ÷ 53) pour le PETG. L'impression demande au moins 1,6 mm pour une paroi étanche : on en a sept passes, et la cote passe pour une autre raison qu'elle.",
  ex:"Une cote qui passe peut passer pour une raison sans rapport avec la machine.",
  err:"Modifier une cote sans savoir d'où elle vient.",
  d:["aucun logiciel ne propose 2,9 mm par défaut : c'est le résultat d'un calcul","","aucune norme ne fixe cette valeur : elle dépend du matériau et de l'effort","sept passes de 0,4 mm font 2,8 mm : la coïncidence est fortuite, pas la cause"],
  ret:"Avant de modifier une cote, savoir d'où elle vient. Sinon, on efface un calcul."},
-{c:"3e_C7.7",n:"Les trois corrections ensemble",q:"On corrige la seule casquette et on relance. Combien de moyens deviennent capables ?",
+{c:"3e_C7.7",n:"Les trois corrections ensemble",q:"Sur ce document, on corrige la seule casquette et on relance. Combien de moyens deviennent capables ?",
+ img:{src:"Images/doc_dessin_boitier.svg",alt:"Le dessin du boîtier de la station, en PETG, face à ce que tient l'imprimante 3D (buse de 0,4 millimètre, couches de 0,2 millimètre). Paroi étanche : dessin, 2,9 millimètres ; l'imprimante tient au moins 1,6 millimètre. Casquette : dessin, 70 degrés ; l'imprimante tient au plus 45 degrés. Rainure du joint : dessin, 0,3 millimètre ; l'imprimante tient au moins 0,4 millimètre. Jeu couvercle : dessin, 0,1 millimètre ; l'imprimante tient à 0,3 millimètre près. Angles internes : dessin, des angles vifs ; l'imprimante tient des angles vifs."},
  o:["aucun : les deux autres cotes bloquent toujours l'impression","un : l'impression 3D redevient capable dès que le surplomb passe","deux : l'impression et le thermoformage acceptent tous deux le PETG","un, mais hors délai : l'impression demande alors plus de temps que prévu"],r:0,
  expl:"Un domaine est une liste de conditions, et il suffit qu'une seule manque. Corriger « le plus gros défaut » ne sert à rien tant que les autres restent.",
  ex:"Il faut les trois corrections ensemble pour qu'un moyen devienne capable.",
