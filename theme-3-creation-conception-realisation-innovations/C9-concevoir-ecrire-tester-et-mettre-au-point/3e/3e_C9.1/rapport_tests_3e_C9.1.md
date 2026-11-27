@@ -150,3 +150,19 @@ qui mémorise le parcours « a », retombe sur « tous ». Les choix de l'activi
 
 Le TP mBot2 n'est plus la « version 🅰 » de l'atelier, mais le prolongement sur robot réel, au collège : il reste
 **non testé** ici, comme le disait la section 4.
+
+## Reprise du 27/11/2026 — six questions sur document dans chaque QCM (n°345)
+
+- `node tests_3e_C9.1.mjs .` : **96 / 96** (sept tests neufs : pour chaque QCM, au moins six questions sur document,
+  chaque document un `doc_` du lot présent dans `Images/`, une description complète ; et `documents_qcm.py --verifier`
+  à jour des pages du lot).
+- `node tests_tp_mbot2_3e_C9.1.mjs` : **104 / 104** ; `node tests_regle_311_3e_C9.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 était à 3 et 0 questions sur document ; la q25
+  citait le code `3e_C9.1` dans son énoncé, et l'exemple de la q28 renvoyait à « en 4e » : réécrits).
+- `balayer_questions_qcm.mjs --apres` : 60 questions jouées à 390 px, 12 illustrées, 0 écart.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides) : verts ;
+  `controle_schemas.mjs` : 0 ✘ (les 4 ⚠ sont sur des schémas anciens du lot, à 800 px, inchangés) ;
+  `audit_aeration.py --strict`, `verif_regles_audit.py`, `controle_squelette.mjs`, mode mission, `controle_liens.py`,
+  `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

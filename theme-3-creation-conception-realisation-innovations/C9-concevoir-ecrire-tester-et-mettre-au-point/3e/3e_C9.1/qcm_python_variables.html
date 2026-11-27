@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (7 VAR + 8 TYP + 8 CTL + 7 FON), 0 illustrées.
+/* Banque : 30 questions (7 VAR + 8 TYP + 8 CTL + 7 FON), 6 illustrées.
    Réécrite le 19/11/2026 au gabarit maison : l'ancienne banque de 24 questions (cartes HTML, distracteurs
    fantaisistes) est archivée dans _archive-anciennes-versions/ (règle d'or n°12). */
 const QUESTIONS = [
@@ -361,33 +363,37 @@ const QUESTIONS = [
  d:["", "Le # est prévu par Python : il ne provoque aucune erreur.", "Un commentaire n'est jamais affiché : il est écrit pour les humains.", "Un commentaire ne range aucune valeur."],
  ret:"# = commentaire : pour les humains, pas pour la machine."},
 /* ═══ TYP ═══ */
-{c:"TYP",n:"Le type float",q:"Quel est le type de la valeur <code>3.14</code> ?",
- o:["float (nombre à virgule)", "int (nombre entier)", "str (texte)", "bool (vrai ou faux)"],r:0,
+{c:"TYP",n:"Le type float",q:"D'après le document, quel est le type de la valeur <code>3.14</code> ?",
+ img:{src:"Images/doc_familles_valeurs.svg",alt:"Les quatre types de valeurs de Python. int : le type des nombres entiers, sans virgule. float : le type des nombres à virgule, qu'on écrit avec un point. str : le type des textes. Un texte s'écrit entre guillemets, même s'il ne contient que des chiffres. bool : le type « vrai ou faux » : il n'a que deux valeurs, True (vrai) et False (faux)."},
+ o:["float (nombre à virgule)","int (nombre entier)","str (texte)","bool (vrai ou faux)"],r:0,
  expl:"int : entier ; float : nombre à virgule (écrit avec un point en Python) ; str : texte ; bool : True ou False.",
  ex:"21.5 (une température) est un float.",
  err:"Écrire la virgule française : 3,14 n'est pas un nombre en Python.",
- d:["", "Un entier n'a pas de partie après la virgule ; 3.14 en a une.", "Sans guillemets, ce n'est pas un texte.", "Un booléen ne vaut que True ou False."],
+ d:["","Un entier n'a pas de partie après la virgule ; 3.14 en a une : relis la carte int.","Sans guillemets, ce n'est pas un texte : relis la carte str.","Un booléen ne vaut que True ou False : relis la carte bool."],
  ret:"Nombre à virgule = float, écrit avec un point."},
-{c:"TYP",n:"Le type str",q:"Quel est le type de la valeur <code>\"bonjour\"</code> ?",
- o:["int (nombre entier)", "float (nombre à virgule)", "bool (vrai ou faux)", "str (chaîne de caractères)"],r:3,
+{c:"TYP",n:"Le type str",q:"D'après le document, quel est le type de la valeur <code>\"bonjour\"</code> ?",
+ img:{src:"Images/doc_familles_valeurs.svg",alt:"Les quatre types de valeurs de Python. int : le type des nombres entiers, sans virgule. float : le type des nombres à virgule, qu'on écrit avec un point. str : le type des textes. Un texte s'écrit entre guillemets, même s'il ne contient que des chiffres. bool : le type « vrai ou faux » : il n'a que deux valeurs, True (vrai) et False (faux)."},
+ o:["int (nombre entier)","float (nombre à virgule)","bool (vrai ou faux)","str (chaîne de caractères)"],r:3,
  expl:"Tout ce qui est entre guillemets est un texte, de type str (chaîne de caractères).",
  ex:"\"Quai 3\", \"14\" : deux textes.",
  err:"Oublier que les guillemets font le type.",
- d:["Ce n'est pas un nombre : ce sont des lettres entre guillemets.", "Ce n'est pas un nombre : ce sont des lettres entre guillemets.", "Un booléen ne vaut que True ou False, sans guillemets.", ""],
+ d:["Ce n'est pas un nombre : ce sont des lettres entre guillemets. Relis la carte str.","Ce n'est pas un nombre à virgule : regarde les guillemets, et relis la carte str.","Un booléen ne vaut que True ou False, sans guillemets : relis la carte bool.",""],
  ret:"Entre guillemets = str."},
-{c:"TYP",n:"Le type bool",q:"Quel est le type de la valeur <code>True</code> ?",
- o:["bool (booléen)", "str (chaîne de caractères)", "int (nombre entier)", "float (nombre à virgule)"],r:0,
+{c:"TYP",n:"Le type bool",q:"D'après le document, quel est le type de la valeur <code>True</code> ?",
+ img:{src:"Images/doc_familles_valeurs.svg",alt:"Les quatre types de valeurs de Python. int : le type des nombres entiers, sans virgule. float : le type des nombres à virgule, qu'on écrit avec un point. str : le type des textes. Un texte s'écrit entre guillemets, même s'il ne contient que des chiffres. bool : le type « vrai ou faux » : il n'a que deux valeurs, True (vrai) et False (faux)."},
+ o:["bool (booléen)","str (chaîne de caractères)","int (nombre entier)","float (nombre à virgule)"],r:0,
  expl:"Le type bool n'a que deux valeurs : True (vrai) et False (faux), avec une majuscule.",
  ex:"<code>sec = True</code> ; une comparaison comme <code>4 > 3</code> donne True.",
  err:"Écrire true sans majuscule.",
- d:["", "Sans guillemets, True n'est pas un texte : c'est une valeur logique.", "True n'est pas un nombre, mais une valeur vraie ou fausse.", "True n'est pas un nombre, mais une valeur vraie ou fausse."],
+ d:["","Sans guillemets, True n'est pas un texte : relis la carte str.","True n'est pas un nombre : relis la carte bool.","True n'est pas un nombre à virgule : relis la carte bool."],
  ret:"bool : True ou False."},
-{c:"TYP",n:"14 ou \"14\"",q:"Quelle est la différence entre <code>\"14\"</code> et <code>14</code> ?",
- o:["Aucune : Python les traite de la même façon", "Le premier est un nombre plus grand que le second", "Le premier est un texte, le second un nombre", "Le premier est un nombre, le second un texte"],r:2,
+{c:"TYP",n:"14 ou \"14\"",q:"D'après le document, quelle est la différence entre <code>\"14\"</code> et <code>14</code> ?",
+ img:{src:"Images/doc_familles_valeurs.svg",alt:"Les quatre types de valeurs de Python. int : le type des nombres entiers, sans virgule. float : le type des nombres à virgule, qu'on écrit avec un point. str : le type des textes. Un texte s'écrit entre guillemets, même s'il ne contient que des chiffres. bool : le type « vrai ou faux » : il n'a que deux valeurs, True (vrai) et False (faux)."},
+ o:["Aucune : Python les traite de la même façon","Le premier est un nombre plus grand que le second","Le premier est un texte, le second un nombre","Le premier est un nombre, le second un texte"],r:2,
  expl:"Les guillemets font le type : \"14\" est un str, 14 est un int. <code>\"14\" + 1</code> provoque une erreur ; <code>14 + 1</code> vaut 15.",
  ex:"Un code postal reste un texte ; un âge est un nombre.",
  err:"Croire que \"14\" se calcule comme 14.",
- d:["Python les distingue : on peut calculer avec 14, pas avec \"14\".", "\"14\" n'est pas un nombre du tout : c'est du texte.", "", "C'est l'inverse : les guillemets font le texte."],
+ d:["Python les distingue : on peut calculer avec 14, pas avec \"14\". Relis la carte str.","\"14\" n'est pas un nombre du tout : relis la carte str, « même s'il ne contient que des chiffres ».","","C'est l'inverse : les guillemets font le texte. Relis la carte str."],
  ret:"Avec guillemets : texte ; sans : nombre."},
 {c:"TYP",n:"Ce que renvoie input()",q:"Que renvoie toujours la fonction <code>input()</code> ?",
  o:["un nombre entier (int), toujours", "un booléen (bool), vrai ou faux", "un texte (str), même pour un nombre", "un nombre à virgule (float), toujours"],r:2,
@@ -510,19 +516,21 @@ const QUESTIONS = [
  err:"Ignorer le message d'erreur au lieu de le lire.",
  d:["Python fonctionne : il signale un nom qu'il ne connaît pas.", "Des guillemets partout transformeraient les variables en textes.", "Supprimer la ligne retire peut-être une instruction utile, sans régler la faute.", ""],
  ret:"Lire le message d'erreur : il dit souvent où chercher."},
-{c:"FON",n:"Le capteur du robot",q:"Sur le robot mBot2, quel capteur détecte un obstacle devant lui ?",
- o:["Le capteur de lumière", "L'écran couleur", "Le capteur à ultrasons", "Le moteur à encodeur"],r:2,
+{c:"FON",n:"Le capteur du robot",q:"D'après cet extrait de l'aide-mémoire, quel élément du mBot2 détecte un obstacle devant lui ?",
+ img:{src:"Images/doc_commandes_mbot2.svg",alt:"Six commandes du robot mBot2, dont le boîtier à écran s'appelle CyberPi. Écrire, puis passer à la ligne : cyberpi.console.println(x). Allumer ses lumières : cyberpi.led.on(r, v, b, \"all\"). Avancer : cyberpi.mbot2.forward(speed=V, run_time=T). Tourner sur place : cyberpi.mbot2.turn(angle, speed=V). Arrêter les moteurs : cyberpi.mbot2.EM_stop(port=\"all\"). Mesurer la distance devant lui : cyberpi.ultrasonic2.get(index=1)."},
+ o:["Le capteur de lumière","L'écran couleur","Le capteur à ultrasons","Le moteur à encodeur"],r:2,
  expl:"Le capteur à ultrasons envoie un son très aigu et mesure le temps de l'écho : il en déduit la distance de l'obstacle.",
- ex:"<code>if distance &lt; 10:</code> le robot s'arrête.",
+ ex:"<code>d = cyberpi.ultrasonic2.get(index=1)</code> donne la distance en centimètres ; avec <code>if d &lt; 10:</code>, le robot s'arrête.",
  err:"Confondre un capteur et un actionneur.",
- d:["Le capteur de lumière mesure l'éclairage, pas la distance.", "L'écran affiche ; il ne mesure rien.", "", "Le moteur fait avancer le robot ; il ne détecte pas d'obstacle."],
+ d:["Aucune commande de l'extrait ne lit la lumière : relis la ligne qui mesure une distance.","L'écran affiche (console.println) ; il ne mesure rien. Relis la dernière ligne de l'extrait.","","Les moteurs font avancer, tourner et s'arrêter le robot : relis la ligne qui mesure une distance."],
  ret:"Ultrasons : mesurer une distance par l'écho."},
-{c:"FON",n:"Ce que commande le programme",q:"Pour faire avancer le mBot2, que commande le programme ?",
- o:["Le capteur à ultrasons, pour qu'il roule", "L'écran de l'ordinateur du professeur", "La batterie, qu'il allume et éteint", "Les moteurs, qui sont des actionneurs"],r:3,
+{c:"FON",n:"Ce que commande le programme",q:"D'après cet extrait, quand le programme fait avancer le mBot2, que commande-t-il ?",
+ img:{src:"Images/doc_commandes_mbot2.svg",alt:"Six commandes du robot mBot2, dont le boîtier à écran s'appelle CyberPi. Écrire, puis passer à la ligne : cyberpi.console.println(x). Allumer ses lumières : cyberpi.led.on(r, v, b, \"all\"). Avancer : cyberpi.mbot2.forward(speed=V, run_time=T). Tourner sur place : cyberpi.mbot2.turn(angle, speed=V). Arrêter les moteurs : cyberpi.mbot2.EM_stop(port=\"all\"). Mesurer la distance devant lui : cyberpi.ultrasonic2.get(index=1)."},
+ o:["Le capteur à ultrasons, pour qu'il roule","L'écran de l'ordinateur du professeur","La batterie, qu'il allume et éteint","Les moteurs, qui sont des actionneurs"],r:3,
  expl:"Le programme lit les capteurs puis commande les actionneurs : ici, les moteurs, qui transforment l'énergie électrique en mouvement.",
  ex:"Avancer, tourner, s'arrêter : trois ordres donnés aux moteurs.",
  err:"Croire que le capteur fait bouger le robot.",
- d:["Le capteur mesure ; il ne fait pas avancer le robot.", "Le programme tourne sur le robot : l'ordinateur ne le fait pas avancer.", "La batterie fournit l'énergie ; ce sont les moteurs qui transforment cette énergie en mouvement.", ""],
+ d:["La commande ultrasonic2 mesure une distance ; c'est forward qui fait avancer. Relis la ligne « Arrêter les moteurs ».","Le programme tourne sur le robot : aucune commande de l'extrait ne parle de l'ordinateur du professeur.","Aucune commande de l'extrait n'allume la batterie : elle fournit l'énergie. Relis la ligne « Arrêter les moteurs ».",""],
  ret:"Lire les capteurs, commander les actionneurs."}
 ];
 </script>
