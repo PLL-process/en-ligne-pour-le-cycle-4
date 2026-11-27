@@ -1,0 +1,127 @@
+{
+  "qcm": [
+    "qcm_4e_C7.5_jardin-incomplet.html"
+  ],
+  "documents": {
+    "doc_cas_jardin": {
+      "titre": "Trois prototypes livrés",
+      "sous_titre": "Pour chacun : ce qu'on observe, et ce qui est monté.",
+      "desc": "Trois prototypes du jardin connecté, livrés incomplets ou mal montés. Cas 1. Symptôme : l'écran affiche 42 %, la pompe ne part jamais. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, pompe, alimentation externe. Cas 2. Symptôme : dès que la pompe démarre, la carte redémarre et l'écran s'éteint. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, module relais sur D4, pompe. Cas 3. Symptôme : la pompe tourne en permanence, même quand le sol est détrempé. Monté, en plus de la carte, du Base Shield et du câble USB : capteur de température sur A0, écran LCD sur I2C, module relais sur D4, pompe, alimentation externe.",
+      "blocs": [
+        {
+          "fiches": [
+            {
+              "titre": "Cas 1",
+              "lignes": [
+                "On observe : l'écran affiche 42 %, la pompe ne part jamais.",
+                "Monté : capteur d'humidité sur A0, écran LCD sur I2C, pompe, alimentation externe."
+              ]
+            },
+            {
+              "titre": "Cas 2",
+              "lignes": [
+                "On observe : dès que la pompe démarre, la carte redémarre et l'écran s'éteint.",
+                "Monté : capteur d'humidité sur A0, écran LCD sur I2C, module relais sur D4, pompe."
+              ]
+            },
+            {
+              "titre": "Cas 3",
+              "lignes": [
+                "On observe : la pompe tourne en permanence, même quand le sol est détrempé.",
+                "Monté : capteur de température sur A0, écran LCD sur I2C, module relais sur D4, pompe, alimentation externe."
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "Dans les trois cas, la carte, le Base Shield et le câble USB sont montés · I2C : le port de l'écran · A0 : un port analogique · D4 : un port numérique."
+    },
+    "doc_courant_jardin": {
+      "titre": "Le courant du jardin connecté",
+      "sous_titre": "Ce que demande chaque constituant, et ce que fournit chaque source.",
+      "desc": "Ce que demande chaque constituant du jardin connecté. Pompe : 700 milliampères. Carte UNO : 45 milliampères. Module relais : 30 milliampères. Écran LCD : 20 milliampères. Capteur d'humidité : 5 milliampères. Capteur de température : 5 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; l'alimentation externe 5 volts, jusqu'à 2000 milliampères.",
+      "blocs": [
+        {
+          "tableau": {
+            "colonnes": [
+              "Constituant",
+              "Demande"
+            ],
+            "largeurs": [
+              218,
+              104
+            ],
+            "lignes": [
+              [
+                "Pompe",
+                "700 mA"
+              ],
+              [
+                "Carte UNO",
+                "45 mA"
+              ],
+              [
+                "Module relais",
+                "30 mA"
+              ],
+              [
+                "Écran LCD",
+                "20 mA"
+              ],
+              [
+                "Capteur d'humidité",
+                "5 mA"
+              ],
+              [
+                "Capteur de température",
+                "5 mA"
+              ]
+            ]
+          }
+        },
+        {
+          "fiches": [
+            {
+              "titre": "Ce que fournissent les sources",
+              "accent": true,
+              "paires": [
+                [
+                  "Câble USB",
+                  "jusqu'à 500 mA"
+                ],
+                [
+                  "Alimentation externe",
+                  "jusqu'à 2 000 mA"
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "mA : milliampère · l'alimentation externe est une très basse tension, 5 V (volts)."
+    },
+    "doc_programme_jardin": {
+      "titre": "Le programme de la carte",
+      "sous_titre": "Celui qui est téléversé dans la carte du jardin.",
+      "desc": "Le programme téléversé dans la carte du jardin, ligne par ligne : humidite = analogRead(A0) ; afficher(humidite, \"%\") ; si humidite < 35 alors ; digitalWrite(4, HAUT) ; attendre(6 secondes) ; digitalWrite(4, BAS).",
+      "blocs": [
+        {
+          "fiches": [
+            {
+              "titre": "Programme",
+              "lignes": [
+                "humidite = analogRead(A0)",
+                "afficher(humidite, \"%\")",
+                "si humidite < 35 alors",
+                "→ digitalWrite(4, HAUT)",
+                "→ attendre(6 secondes)",
+                "→ digitalWrite(4, BAS)"
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "→ : ligne qui dépend du « si » au-dessus · analogRead(A0) : lire le port analogique A0 · digitalWrite(4, HAUT) : mettre la sortie D4 à l'état haut, le relais se ferme · BAS : il s'ouvre."
+    }
+  }
+}
