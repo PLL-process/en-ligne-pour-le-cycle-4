@@ -38848,3 +38848,17 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
   leur durée ; un protocole de trois essais, cas frontière à 80 dB compris).
 Bancs : `tests_3e_C7.mjs` 102 / 102 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
 de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`3e_C7.1`).
+
+## 27/11/2026 — 3e_C7.3 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et CALCULÉ par le modèle du lot (`documents_qcm.py` importe
+  `materiaux.py`) — « Six matériaux pour le boîtier » : les cinq exigences, puis résistance, soleil, sel, épaisseur de
+  paroi, chaleur et masse de chaque matériau (q5, q6, q8, q11, q12, q13, q15). La q15 perd une notion fausse
+  (« L'exigence qui élimine tout le monde » : elle en élimine quatre sur six ; piège reposé) et l'énoncé que E1 lisait
+  comme une liste tronquée.
+- **Billet de sortie** avant le Bonus de la séance 4 : le capot du pluviomètre (un seul relâchement, chiffré, avec qui
+  en porte le coût ; le procédé du collège qui va avec).
+Bancs : séquence 73 / 73 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.3`).
