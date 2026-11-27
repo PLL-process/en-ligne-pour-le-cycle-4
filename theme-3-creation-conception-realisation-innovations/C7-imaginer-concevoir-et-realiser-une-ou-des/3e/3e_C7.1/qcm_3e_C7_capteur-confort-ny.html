@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -305,15 +307,15 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 3e_C7.1 + 10 3e_C8.1 + 10 CRCN 3.4/1.3/5.1), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (10 3e_C7.1 + 10 3e_C8.1 + 10 CRCN 3.4/1.3/5.1), 7 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ ELA ═══ */
-{c:"ELA",n:"Le verbe de la 3e",q:"En 5e on SUIT un processus, en 4e on l'ORGANISE. Qu'attend-on de toi en 3e ?",
- o:["le recopier depuis un projet déjà fait","le SUIVRE tel qu'on te le donne, mais plus vite","le faire vérifier par le professeur avant de commencer","l'ÉLABORER : écrire toi-même les tâches et leur durée"],r:3,
- expl:"Le programme 2024 écrit « élaborer un processus de conception et de réalisation dans une durée, avec des tâches identifiées ». Personne ne te donne la liste : la page blanche est le sujet.",
+{c:"ELA",n:"Élaborer un processus",q:"Pour concevoir un objet, personne ne te donne de liste de tâches. Qu'attend-on de toi ?",
+ o:["la recopier depuis un projet déjà fait","attendre qu'on te la donne, puis la suivre plus vite","la faire écrire par le professeur avant de commencer","l'ÉLABORER : écrire toi-même les tâches et leur durée"],r:3,
+ expl:"Élaborer un processus, c'est écrire soi-même les tâches, leur durée et leur ordre, à partir du besoin — sans planning fourni.",
  ex:"Découper le projet en tâches, estimer chaque durée, poser les contraintes d'enchaînement, en déduire une date de fin.",
- d:["Un processus recopié ne correspond pas au projet du jour.","Suivre est la compétence de 5e ; la vitesse n'y ajoute rien.","Faire valider n'est pas élaborer : la décision doit venir de toi.",""],
- ret:"Suivre (5e) → organiser (4e) → élaborer (3e). Le verbe change, le travail change."},
+ d:["Un processus recopié ne correspond pas au projet du jour : ses tâches et ses durées sont celles d'un autre objet.","Personne ne te la donnera : c'est justement le travail demandé ici.","Faire écrire n'est pas élaborer : la décision doit venir de toi.",""],
+ ret:"Élaborer, c'est écrire soi-même les tâches et leur durée : la page blanche est le sujet."},
 {c:"ELA",n:"Le problème de Mme Reyes",q:"Pourquoi l'infirmière ne peut-elle rien obtenir de l'administration ?",
  nuance:"« Mme Reyes voit bien que des élèves ont chaud : ce n'est pas une preuve, ça ? » C'est une observation sérieuse, et elle mérite qu'on s'en occupe — c'est d'ailleurs elle qui déclenche tout le projet. Mais elle ne permet pas de DÉCIDER. Pour déplacer des cours, l'administration a besoin de savoir quelles salles, à quelle heure, et de combien on dépasse. « Il fait trop chaud » ne dit rien de tout cela. Attention à un piège de lecture : quand la suite de la séquence parle de salles à 30 ou 32 °C, ce ne sont pas des chiffres qu'on avait au départ — ce sont les RÉSULTATS de tes relevés. Le projet ne remplace pas la parole de l'infirmière : il la transforme en quelque chose qu'on peut opposer à un emploi du temps.",
  o:["parce qu'elle ne s'adresse pas aux bonnes personnes","parce qu'elle n'a aucun chiffre à opposer","parce que le règlement du collège l'interdit","parce que les élèves exagèrent leur inconfort"],r:1,
@@ -400,36 +402,38 @@ const QUESTIONS = [
  
  d:["Le seuil est franchi bien avant 30 °C.","À 26 °C la LED est encore éteinte.","","32 °C est la température du couloir le 12 juin, pas le seuil."],
  ret:"Un seuil est la valeur qui sépare deux comportements."},
-{c:"SIM",n:"Le cas frontière",q:"La règle est « alerte si T est STRICTEMENT supérieure à 28 ». Que se passe-t-il à T = 28 exactement ?",
+{c:"SIM",n:"Le cas frontière",q:"Sur ce protocole, que se passe-t-il au scénario « seuil exact », à T = 28 °C (degrés Celsius) ?",
+ img:{src:"Images/doc_protocole_seuil.svg",alt:"Le protocole d'essai du capteur de confort. La règle : alerte si la température est strictement supérieure à 28 degrés Celsius. Quatre scénarios, dans l'ordre, avec leur température : Salle fraîche : 22 degrés. Seuil exact : 28 degrés. Surchauffe : 32 degrés. Retour au frais : 24 degrés. Le tableau a quatre colonnes, dans cet ordre : scénario, température, prédiction, observé ; les deux dernières sont vides."},
  o:["le programme plante, faute de savoir quoi faire","alerte, parce qu'on a atteint la valeur du seuil","pas d'alerte : 28 n'est pas strictement supérieur à 28","la LED clignote, car les deux cas sont vrais"],r:2,
  expl:"C'est le scénario le plus précieux du banc d'essai : celui où une erreur d'un caractère (> au lieu de ≥) change le comportement.",
  ex:"22 °C → éteint · 28 °C → éteint · 32 °C → allumé · 24 °C → éteint.",
  err:"Tester seulement « bien en dessous » et « bien au-dessus », et ne jamais essayer la valeur exacte du seuil.",
  d:["Une comparaison ne fait pas planter un programme.","Atteindre n'est pas dépasser : c'est toute la différence entre > et ≥.","","Rien ne fait clignoter à cette valeur, sauf bruit de mesure — c'est un autre problème."],
  ret:"Toujours tester la valeur exacte du seuil."},
-{c:"SIM",n:"Prédire, puis observer",q:"Dans le tableau de l'activité 2, l'ordre des colonnes est : scénario, prédiction, observé. Pourquoi cet ordre ?",
- nuance:"« Et si je change ma prédiction juste avant de regarder ? » Personne ne le verra, et c'est justement pourquoi cette règle ne tient que par honnêteté. Voilà comment les chercheurs s'y prennent quand l'enjeu est sérieux : ils déposent leurs prédictions à l'avance, dans un endroit daté que plus personne ne peut modifier — cela s'appelle un pré-enregistrement. Ce n'est pas de la méfiance envers eux-mêmes, c'est de la lucidité : notre mémoire réécrit spontanément ce qu'on pensait, et nous fait croire qu'on avait prévu ce qui est arrivé. Le tableau rempli au stylo, dans l'ordre des colonnes, est ta version à toi du pré-enregistrement.",
+{c:"SIM",n:"Prédire, puis observer",q:"Dans ce tableau, l'ordre des colonnes est : scénario, prédiction, observé. Pourquoi cet ordre ?",
+ img:{src:"Images/doc_protocole_seuil.svg",alt:"Le protocole d'essai du capteur de confort. La règle : alerte si la température est strictement supérieure à 28 degrés Celsius. Quatre scénarios, dans l'ordre, avec leur température : Salle fraîche : 22 degrés. Seuil exact : 28 degrés. Surchauffe : 32 degrés. Retour au frais : 24 degrés. Le tableau a quatre colonnes, dans cet ordre : scénario, température, prédiction, observé ; les deux dernières sont vides."},
  o:["parce que le simulateur impose de remplir dans cet ordre","parce qu'il faut connaître le scénario avant de prédire","parce qu'une prédiction écrite après ne risque plus rien","parce que la prédiction est notée par le professeur"],r:2,
  expl:"Un essai n'a de valeur que si le résultat attendu a été écrit AVANT. Sinon, on ne teste rien : on constate.",
  ex:"Tu prédis « alerte OFF » à 28 °C, et le simulateur confirme : la règle du strictement supérieur est prouvée.",
- 
  d:["Le simulateur n'exige aucun remplissage : le tableau est pour toi, pas pour lui.","C'est vrai, et c'est même pour cela que le scénario est en première colonne. Mais cela n'explique pas l'ordre des deux SUIVANTES : rien n'empêcherait, matériellement, d'observer d'abord et de prédire ensuite. Rien, sauf que la prédiction n'aurait plus aucune valeur.","","Dans cette activité elle n'est pas notée, précisément pour qu'on ose se tromper."],
- ret:"Sans attendu écrit avant, on ne valide rien — et la mémoire réécrit ce qu'on pensait."},
-{c:"SIM",n:"Quatre scénarios",q:"Le protocole retient quatre scénarios : salle fraîche, seuil exact, surchauffe, retour au frais. Que vérifie le dernier ?",
+ ret:"Sans attendu écrit avant, on ne valide rien — et la mémoire réécrit ce qu'on pensait.",
+ nuance:"« Et si je change ma prédiction juste avant de regarder ? » Personne ne le verra, et c'est justement pourquoi cette règle ne tient que par honnêteté. Voilà comment les chercheurs s'y prennent quand l'enjeu est sérieux : ils déposent leurs prédictions à l'avance, dans un endroit daté que plus personne ne peut modifier — cela s'appelle un pré-enregistrement. Ce n'est pas de la méfiance envers eux-mêmes, c'est de la lucidité : notre mémoire réécrit spontanément ce qu'on pensait, et nous fait croire qu'on avait prévu ce qui est arrivé. Le tableau rempli au stylo, dans l'ordre des colonnes, est ta version à toi du pré-enregistrement."},
+{c:"SIM",n:"Quatre scénarios",q:"Sur ce protocole, que vérifie le dernier scénario, « retour au frais » ?",
+ img:{src:"Images/doc_protocole_seuil.svg",alt:"Le protocole d'essai du capteur de confort. La règle : alerte si la température est strictement supérieure à 28 degrés Celsius. Quatre scénarios, dans l'ordre, avec leur température : Salle fraîche : 22 degrés. Seuil exact : 28 degrés. Surchauffe : 32 degrés. Retour au frais : 24 degrés. Le tableau a quatre colonnes, dans cet ordre : scénario, température, prédiction, observé ; les deux dernières sont vides."},
  o:["que le programme démarre bien à chaque fois","que le capteur résiste au froid de la nuit","que la LED est assez brillante en plein jour","que l'alerte s'ÉTEINT quand la salle redevient bonne"],r:3,
  expl:"Une alerte qui ne s'éteint jamais est aussi inutile qu'une alerte qui ne s'allume pas : on cesse de la regarder.",
  ex:"32 °C → allumé, puis 24 °C → éteint. Le retour est un comportement à part entière.",
  err:"Ne tester que la montée. Beaucoup de défauts ne se voient qu'à la descente.",
  d:["Le démarrage est vérifié dès le premier scénario.","Aucune résistance au froid n'est en jeu à 24 °C.","La luminosité serait un test de performance, pas ce scénario.",""],
  ret:"Tester la montée ET la descente."},
-{c:"SIM",n:"La décision",q:"Les quatre scénarios sont conformes. Quelle décision globale ?",
- nuance:"« Quatre essais, c'est peu pour dire qu'un objet marche… » Tu as entièrement raison, et la question suivante va te donner raison de façon spectaculaire : près de 28 °C, la LED se met à clignoter sans arrêt — un défaut bien réel, que ces quatre scénarios n'ont pas vu. Alors pourquoi valider ? Parce que « validé » ne veut pas dire « parfait » : cela veut dire « conforme à tout ce qui a été testé ». C'est une phrase qui contient sa propre limite, et il faut toujours la lire en entier. Quand un défaut apparaît ensuite, ce n'est pas la validation qui était malhonnête : c'est le protocole qui était incomplet. On l'enrichit d'un cinquième scénario — une température qui oscille autour du seuil — et on rejoue tout.",
+{c:"SIM",n:"La décision",q:"Les quatre scénarios de ce protocole sont conformes. Quelle décision globale ?",
+ img:{src:"Images/doc_protocole_seuil.svg",alt:"Le protocole d'essai du capteur de confort. La règle : alerte si la température est strictement supérieure à 28 degrés Celsius. Quatre scénarios, dans l'ordre, avec leur température : Salle fraîche : 22 degrés. Seuil exact : 28 degrés. Surchauffe : 32 degrés. Retour au frais : 24 degrés. Le tableau a quatre colonnes, dans cet ordre : scénario, température, prédiction, observé ; les deux dernières sont vides."},
  o:["À améliorer","Validée","Rejetée","Aucune : il faudrait douze scénarios"],r:1,
  expl:"Sur les quatre cas prévus par le protocole, cas frontière compris, le comportement est celui qu'on attendait. On valide — en sachant que cette validation ne vaut que pour ces quatre cas.",
  ex:"22 → OFF, 28 → OFF, 32 → ON, 24 → OFF : conforme partout.",
- 
  d:["« À améliorer » suppose au moins un écart constaté ; il n'y en a aucun dans les cas testés.","","Rejeter un objet qui a passé tous ses essais reviendrait à ignorer ses propres tests.","Douze scénarios ne seraient pas absurdes ; mais la décision se prend sur le protocole qu'on a exécuté. Si l'on veut d'autres cas, on récrit le protocole et on rejoue — on ne refuse pas de conclure."],
- ret:"On valide par rapport au protocole exécuté, et à rien d'autre. Un défaut découvert après enrichit le protocole."},
+ ret:"On valide par rapport au protocole exécuté, et à rien d'autre. Un défaut découvert après enrichit le protocole.",
+ nuance:"« Quatre essais, c'est peu pour dire qu'un objet marche… » Tu as entièrement raison, et la question suivante va te donner raison de façon spectaculaire : près de 28 °C, la LED se met à clignoter sans arrêt — un défaut bien réel, que ces quatre scénarios n'ont pas vu. Alors pourquoi valider ? Parce que « validé » ne veut pas dire « parfait » : cela veut dire « conforme à tout ce qui a été testé ». C'est une phrase qui contient sa propre limite, et il faut toujours la lire en entier. Quand un défaut apparaît ensuite, ce n'est pas la validation qui était malhonnête : c'est le protocole qui était incomplet. On l'enrichit d'un cinquième scénario — une température qui oscille autour du seuil — et on rejoue tout."},
 {c:"SIM",n:"Le clignotement",q:"Près de 28 °C, la LED clignote sans arrêt. Pourquoi ?",
  nuance:"« Comment être sûr que c'est le bruit et pas le capteur ? » On ne l'est pas d'avance — et c'est exactement pour cela qu'on affiche la valeur mesurée, comme au test discriminant de la question 19. Ce qu'on regarde alors : si les valeurs restent plausibles et serrées autour du seuil (27,9 · 28,1 · 27,9), c'est le bruit normal de la mesure. Si elles sautent d'un extrême à l'autre (5 · 60 · −127), le capteur ou son branchement est en cause. Un même symptôme — la LED qui clignote — peut avoir deux causes : on ne devine pas, on affiche et on regarde.",
  o:["le capteur est cassé et donne n'importe quoi","la mesure oscille légèrement autour du seuil","le programme contient une boucle infinie","la LED est trop puissante pour la carte"],r:1,
@@ -600,7 +604,7 @@ const PIEGES={
   python:"Écrire et vérifier la condition : Python, sans capteur, la pré-alerte, la mise au point"
 };
 const PIEGE_DE_NOTION={
-  "Le verbe de la 3e":"projet",
+  "Élaborer un processus":"projet",
   "Le problème de Mme Reyes":"projet",
   "Le nom du métier":"projet",
   "Deux solutions, deux critères":"projet",
