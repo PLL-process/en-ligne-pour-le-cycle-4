@@ -157,3 +157,20 @@ légende ; plus aucun groupe dans un paragraphe.
 - `node tests_3e_C7.mjs .` : **82 / 82**. `node tests_regle_311_3e_C7.1.mjs` : **34 / 34**.
 - `node _outils/mode_mission/banc_generique.mjs` : la page jouée écran par écran, aucun refus.
 - `verif_regles_audit.py` : 0 ✘. `audit_aeration.py --strict` : 0.
+
+## Reprise du 27/11/2026 — sept questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_3e_C7.mjs .` : **102 / 102** (93 avant ; neuf tests neufs : six questions sur document au moins, chaque
+  image présente, chaque description, `documents_qcm.py --verifier` à jour de la séquence ; le billet présent, deux zones
+  gardées et deux versions étayées, deux critères et des contre-exemples sans bouton, juste avant le Bonus, la réponse
+  qui survit au rechargement).
+- `node tests_regle_311_3e_C7.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1 ; la q1 réécrite disait d'abord
+  « Dans ce projet », que S2 lit comme un renvoi : elle dit « Pour concevoir un objet »). `controle_annee_precedente.py` : 0.
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 0 écart. `controle_schemas.mjs` : 0 ✘ ; les trois ⚠
+  « minuscule » sont ceux des trois planches d'avant, inchangés ; le document neuf regardé à 312 px de large.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides, entraînement mélangé) : verts ;
+  `verif_regles_audit.py` (n°23 : 145 minutes pour 220), `audit_aeration.py --strict`, `controle_squelette.mjs`, mode
+  mission, `controle_liens.py`, `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
