@@ -144,3 +144,9 @@ Les captures de l'Explorateur de fichiers (`geste_vitta_4b`, `4c`, `4d`, `4e`) s
 | `Images/correction_editeur_act6.png` | **Capture d'écran réelle** (règle n°94) | La page elle-même, son éditeur Python après ▶ Exécuter, Chromium piloté par Playwright, 1 280 px, échelle 1 — `_ressources-communes/editeur-python/captures_corrections.mjs`, 15/11/2026 | CC BY-NC-SA 4.0, comme la page | correction : le programme du lampadaire exécuté sur la nuit simulée (activité 6) (~133 Ko) |
 | `corriges_py/4e-LAMPADAIRE-correction.py` | Programme Python corrigé, écrit pour le lot | Création pour ce projet | CC BY-NC-SA 4.0 | téléchargé depuis la correction, ouvert dans l'éditeur avec 📂 (~1 Ko) |
 | `corriges_py/4e-POMPE-correction.py` | Programme Python corrigé, écrit pour le lot | Création pour ce projet | CC BY-NC-SA 4.0 | le programme à deux seuils de l'activité 5, téléchargé depuis la correction (~1 Ko) |
+
+## Document du QCM, dessiné pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_regle_essais_arrosage.svg` | La règle d'arrosage avec sa plage horaire, et le tableau des six essais (H, heure, ce que vise chacun) — sans ce que fait la pompe. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C9.1.json`, lui-même LU dans la séquence (pseudo-code de la correction de l'activité 2, tableau d'essais de l'activité 4) par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM, q9, q21 |

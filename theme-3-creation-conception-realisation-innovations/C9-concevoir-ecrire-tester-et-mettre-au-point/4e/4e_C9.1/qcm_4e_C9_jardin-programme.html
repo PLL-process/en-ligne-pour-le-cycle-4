@@ -144,6 +144,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <link rel="stylesheet" href="../../../../_ressources-communes/code-colore/code-colore.css">
 <script src="../../../../_ressources-communes/code-colore/code-colore.js"></script>
@@ -168,7 +170,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span title="Programme 2024 — 4e_C9.1 : Modifier un algorithme permettant de répondre au besoin ou au problème posé." class="badge code">4e_C9.1</span><span title="Programme 2024 — 4e_C9.2 : Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme." class="badge code">4e_C9.2</span><span title="Programme 2024 — 4e_C9.3 : Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine." class="badge code">4e_C9.3</span>
-  <span class="badge theme">30 questions · corrections détaillées · 4 illustrées</span>
+  <span class="badge theme">30 questions · corrections détaillées · 6 illustrées</span>
 </div>
 <p style="text-align:center"><a href="sequence_4e_C9_jardin-programme.html">⬅ Revenir à la séquence</a></p>
 
@@ -315,13 +317,13 @@
  d: pourquoi chaque distracteur est faux ("" pour la bonne réponse) · ret: à retenir */
 const QUESTIONS = [
 /* ═══════════════ 4e_C9.1 — Modifier un algorithme ═══════════════ */
-{c:"C9.1",n:"Ce que veut dire « modifier »",q:"Le programme officiel de 4e demande de <b>modifier</b> un algorithme, pas de l'écrire de zéro. Qu'est-ce que cela change concrètement pour toi ?",
+{c:"C9.1",n:"Ce que veut dire « modifier »",q:"On te demande de <b>modifier</b> l'algorithme d'arrosage, pas de l'écrire de zéro. Qu'est-ce que cela change concrètement pour toi ?",
  o:["tu pars d'un algorithme qui marche et tu le complètes","tu recopies l'algorithme du professeur sans y toucher","tu inventes tout, mais en beaucoup moins de temps","tu ne travailles que sur papier, jamais sur machine"],r:0,
- expl:"En 4e, on ne part pas de la page blanche : un algorithme existe, il répond déjà à une partie du besoin, et une exigence nouvelle arrive. Modifier, c'est trouver le bon endroit où intervenir — et n'intervenir que là.",
+ expl:"On ne part pas de la page blanche : un algorithme existe, il répond déjà à une partie du besoin, et une exigence nouvelle arrive. Modifier, c'est trouver le bon endroit où intervenir — et n'intervenir que là.",
  ex:"L'algorithme d'arrosage décidait sur la seule humidité. La mairie ajoute une plage horaire : on ajoute deux conditions dans le SI existant. Le reste ne bouge pas.",
  err:"Tout réécrire « pour être sûr ». C'est le signe qu'on n'a pas cherché où était le bon endroit — et cela fait perdre les corrections déjà faites.",
- d:["","Recopier n'est pas modifier : rien ne répond à l'exigence nouvelle.","La 3e demandera d'écrire depuis le besoin ; en 4e, on part d'un existant.","Modifier un algorithme se fait aussi bien sur papier qu'à l'écran, et les deux comptent."],
- ret:"En 4e : partir d'un algorithme existant, trouver le bon endroit, n'y toucher que là."},
+ d:["","Recopier n'est pas modifier : rien ne répond à l'exigence nouvelle.","Tout inventer, c'est écrire de zéro : ici, un algorithme existe déjà et répond à une partie du besoin.","Modifier un algorithme se fait aussi bien sur papier qu'à l'écran, et les deux comptent."],
+ ret:"Modifier : partir d'un algorithme existant, trouver le bon endroit, n'y toucher que là."},
 
 {c:"C9.1",n:"Où ajouter une exigence",q:"On veut ajouter « et seulement entre 6 h et 10 h » à un algorithme qui teste déjà l'humidité. Où intervient-on ?",
  o:["on crée un second algorithme, exécuté après le premier","dans la condition du SI existant, avec un ET","dans le bloc DÉBUT, avant toute mesure d'humidité","dans le bloc « allumer la pompe », en fin de programme"],r:1,
@@ -380,12 +382,13 @@ const QUESTIONS = [
  d:["","Ce n'est pas un oubli toléré, c'est une intention.","Ce n'est pas un cas particulier : tous les systèmes de surveillance bouclent.","Un algorigramme de calcul se termine ; un algorigramme de surveillance boucle."],
  ret:"Un système qui surveille boucle. La flèche de retour EST une instruction."},
 
-{c:"C9.1",n:"Suivre un chemin",q:"Humidité = 25 %, heure = 23 h. Quel chemin la mesure suit-elle dans l'algorigramme ?",
- o:["la sortie OUI : la terre est sèche, cela suffit","aucune : le programme s'arrête faute de réponse","la sortie NON : le ET exige les DEUX conditions","les deux successivement, l'une après l'autre"],r:2,
- expl:"25 &lt; 40 est vrai, mais 23 ≤ 10 est faux. Avec un ET, il suffit d'une condition fausse pour que tout soit faux.",
- ex:"C'est exactement le scénario « sol sec, mais la nuit » du jeu d'essais — et c'est celui que les élèves prédisent le plus souvent à l'envers.",
+{c:"C9.1",n:"Suivre un chemin",q:"Avec cette règle, l'essai 3 donne H = 25 % et 23 h. Quelle branche suit-il ?",
+ img:{src:"Images/doc_regle_essais_arrosage.svg",alt:"La règle d'arrosage, ligne par ligne : SEUIL = 40 ; lire humidité → H ; lire heure → heure ; SI H < SEUIL ET heure >= 6 ET heure <= 10 ALORS ; allumer pompe ; SINON ; éteindre pompe ; FIN SI. Le tableau de six essais : Essai 1, sol sec, le matin : H = 25, 8 h. Essai 2, sol humide, le matin : H = 55, 8 h. Essai 3, sol sec, mais la nuit : H = 25, 23 h. Essai 4, frontière — juste sous le seuil : H = 39, 7 h. Essai 5, frontière — sur le seuil pile : H = 40, 7 h. Essai 6, absurde — capteur débranché : H = 250, 8 h. Le document ne dit pas ce que fait la pompe."},
+ o:["la branche ALORS : la terre est sèche, cela suffit","aucune : le programme s'arrête faute de réponse","la branche SINON : le ET exige toutes les conditions","les deux branches, l'une après l'autre"],r:2,
+ expl:"25 &lt; 40 est vrai, mais 23 &lt;= 10 est faux. Avec un ET, il suffit d'une condition fausse pour que tout soit faux : la pompe reste éteinte.",
+ ex:"C'est le scénario « sol sec, mais la nuit » du tableau d'essais — celui que les élèves prédisent le plus souvent à l'envers.",
  err:"Ne regarder que la condition qui saute aux yeux (le sol est sec) et oublier l'autre.",
- d:["La terre sèche ne suffit pas : la seconde condition bloque.","Un losange a toujours une réponse : OUI ou NON.","","Un chemin exclut l'autre : c'est tout l'intérêt du losange."],
+ d:["La terre sèche ne suffit pas : relis la dernière ligne du SI, avec 23 h.","Un SI a toujours une suite, ALORS ou SINON : relis la règle.","","Une branche exclut l'autre : c'est tout l'intérêt du SI … SINON."],
  ret:"Avec un ET, une seule condition fausse suffit à tout rendre faux."},
 
 {c:"C9.1",n:"Modifier sans casser",q:"Après avoir ajouté la plage horaire, faut-il retester les scénarios qui marchaient déjà ?",
@@ -479,12 +482,13 @@ const QUESTIONS = [
  ret:"Un bon nom rend l'erreur visible. C'est sa vraie fonction."},
 
 /* ═══════════════ 4e_C9.3 — Réaliser et mettre au point ═══════════════ */
-{c:"C9.3",n:"Ce que prouve un essai",q:"Le programme d'arrosage donne le bon résultat pour H = 25 et H = 55. Qu'a-t-on prouvé ?",
+{c:"C9.3",n:"Ce que prouve un essai",q:"Avec cette règle, les essais 1 et 2 donnent le bon résultat. Qu'a-t-on prouvé ?",
+ img:{src:"Images/doc_regle_essais_arrosage.svg",alt:"La règle d'arrosage, ligne par ligne : SEUIL = 40 ; lire humidité → H ; lire heure → heure ; SI H < SEUIL ET heure >= 6 ET heure <= 10 ALORS ; allumer pompe ; SINON ; éteindre pompe ; FIN SI. Le tableau de six essais : Essai 1, sol sec, le matin : H = 25, 8 h. Essai 2, sol humide, le matin : H = 55, 8 h. Essai 3, sol sec, mais la nuit : H = 25, 23 h. Essai 4, frontière — juste sous le seuil : H = 39, 7 h. Essai 5, frontière — sur le seuil pile : H = 40, 7 h. Essai 6, absurde — capteur débranché : H = 250, 8 h. Le document ne dit pas ce que fait la pompe."},
  o:["que le programme est correct : deux essais réussis suffisent","qu'il se comporte bien LOIN du seuil, et rien de plus","qu'il n'y a plus besoin de tester d'autres valeurs","que le capteur d'humidité fonctionne correctement"],r:1,
  expl:"25 et 55 sont des <b>cas nominaux</b> : ils rassurent, mais ils ne testent pas l'endroit où les programmes se trompent. Le seuil reste entièrement non vérifié.",
  ex:"Un programme qui teste <code>H &lt; 30</code> au lieu de <code>H &lt; 40</code> passerait ces deux essais sans broncher.",
  err:"Conclure « ça marche » après deux essais bien choisis pour réussir.",
- d:["Deux essais nominaux ne disent rien du seuil.","","Ce sont justement les autres valeurs qui restent à tester.","Les essais portent sur la logique, pas sur le capteur."],
+ d:["Deux essais nominaux ne disent rien du seuil : regarde les essais 4 et 5.","","Ce sont justement les essais 4, 5 et 6 qui restent à jouer : relis ce que vise chacun.","Les essais portent sur la logique de la règle, pas sur le capteur."],
  ret:"Les cas nominaux rassurent ; ce sont les frontières qui démontrent."},
 
 {c:"C9.3",n:"La valeur frontière",q:"Sur cette droite, deux essais sont serrés contre le seuil : 39 % et 40 %. Pourquoi le second est-il indispensable ?",
@@ -520,7 +524,7 @@ const QUESTIONS = [
  d:["Chaque test est juste : relis-les, aucun n'est faux.","Un capteur réel tremble toujours un peu : ce n'est pas une panne.","","Ralentir la boucle espacerait les basculements sans les supprimer."],
  ret:"Un programme peut être juste et inutilisable. Tout n'est pas un bug de code."},
 
-{c:"C9.3",n:"L'hystérésis",q:"Ces deux chronogrammes montrent la MÊME mesure d'humidité, traitée de deux façons. En quoi consiste l'hystérésis, et que corrige-t-elle ?",
+{c:"C9.3",n:"L'hystérésis",q:"Les chronogrammes montrent la MÊME mesure d'humidité, sans puis avec hystérésis. En quoi consiste l'hystérésis, et que corrige-t-elle ?",
  img:{src:"Images/hysteresis_chronogramme.svg",alt:"Deux chronogrammes superposés : en haut, avec un seul seuil à 40 %, la courbe d'humidité oscille légèrement autour de la ligne et la pompe bascule six fois, puis s'allume quand le sol sèche vraiment ; en bas, la même courbe avec deux seuils, 35 pour allumer et 45 pour éteindre, traverse une bande grisée appelée bande morte dans laquelle la pompe ne change pas d'état, et la pompe ne bascule plus qu'une seule fois, en passant sous 35"},
  o:["à mesurer plus souvent, pour gagner en précision","à utiliser DEUX seuils, un pour allumer, un pour éteindre","à ralentir le programme jusqu'à ce que le défaut disparaisse","à arrondir la mesure au multiple de dix le plus proche"],r:1,
  expl:"La valeur qui fait ALLUMER n'est plus celle qui fait ÉTEINDRE. Entre les deux s'étend une <b>bande morte</b> : pour changer d'avis, le système doit la traverser entièrement.",
