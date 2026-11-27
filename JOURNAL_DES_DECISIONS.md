@@ -38692,3 +38692,20 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 45 / 45 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
 seulement (`5e_C7.5`).
+
+## 27/11/2026 — 4e_C7.1 : neuf questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit le
+  planning de l'activité 1b et le tableau des matériaux de l'activité 3, réponses attendues comprises) — « Les tâches
+  du projet du jardin », données dans le désordre (q1, q8), et « Trois matériaux pour le boîtier » (q24, q26, q27,
+  q29). Neuf questions illustrées sur trente (trois avant). La q1 demandait « En 5e on suit… qu'attend-on de toi en
+  4e ? » : elle évaluait la connaissance du programme et supposait une 5e faite avec nous (n°304) ; elle fait
+  maintenant organiser la liste, et sa notion devient « Organiser des tâches données » (piège reposé). La q29 disait
+  « notre tableau » : elle le montre.
+- **Billet de sortie** avant le Bonus de la séance 2 : l'abri à outils du jardin partagé (ranger quatre tâches et
+  repérer celles qui avancent en même temps ; le matériau du toit et son critère éliminatoire). La séance passe de 50 à
+  55 minutes. Les durées des tâches du billet s'écrivent « : 40 min », sans parenthèses : le banc et n°23 comptent
+  « (40 min) » comme une activité.
+Bancs : `tests_4e_C7.mjs` 56 / 56 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`4e_C7.1`).
