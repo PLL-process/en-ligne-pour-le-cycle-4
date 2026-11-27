@@ -21,7 +21,8 @@
 | 1 | L'atelier trie, et il dit pourquoi | 25 min | verrou : `evalue` |
 | 2 | Le même dessin, deux pièces différentes | 25 min | — |
 | 3 | Quatre pièces, ou trente | 15 min | verrou : `quantite` |
-| 4 | REFAIRE — réinvestissement | 15 min | — |
+| 4 | REFAIRE — réinvestissement | 10 min | — |
+| 5 | Billet de sortie, seul et sans aide | 5 min | — |
 
 ## Les trois versions
 
@@ -73,10 +74,26 @@ La page était d'un seul tenant ; elle a maintenant deux séances à onglets, su
 | Séance | Question directrice | Contenu | Temps annoncé |
 |---|---|---|---|
 | 1 — Le domaine de chaque moyen | Avant de lancer une machine, comment savoir si elle sait produire la pièce dessinée ? | Ouverture, activités 0 et 1 | ouverture + 15 + 25 min |
-| 2 — Deux pièces, deux quantités, puis conclure | Rendent-ils la même pièce, et à temps ? | Activités 2 et 3, réinvestissement, synthèse, Bonus (corrigé), bilan, QCM | 25 + 15 + 15 min + clôture |
+| 2 — Deux pièces, deux quantités, puis conclure | Rendent-ils la même pièce, et à temps ? | Activités 2 et 3, réinvestissement, billet de sortie, synthèse, Bonus (corrigé), bilan, QCM | 25 + 15 + 10 + 5 min + clôture |
 
 **À trancher par Pascal :** la séance 2 porte 55 min d'activités, plus la clôture.
 
 Dès la séance 2, l'ouverture (étiquettes, « Avant de commencer », situation, problématique et idée de départ, ce que l'atelier impose, trois façons, billet d'entrée) est repliée dans le volet « 📖 Rappel » ; elle est complète à la séance 1. L'en-tête de la séance 2 rappelle en une ligne la consigne de sécurité de la carte, et renvoie au volet. Restent visibles à chaque séance : le titre, la mission (elle remplace le sous-titre « Thème 3 · 4e — … », comme au pilote), la barre d'outils (🖨 Imprimer / PDF, que la page n'avait pas) et **l'atelier des moyens**, qui sert aux deux séances : un seul bloc ; à la séance 1, il reste à sa place, dans l'activité 1 (au-dessus de l'activité 0, sa colonne « Ce qu'il fera de ton dessin » en donnerait les réponses) ; dès la séance 2, le script des onglets le place juste après l'en-tête de la séance ouverte. Sans JavaScript, toutes les séances s'affichent à la suite, l'outil à sa place.
 
 La clôture reçoit un corrigé replié du défi (13 supports : 25 + 12 × 13 = 181 min ; d'où viennent les 3 h) ; au bilan, « Comment j'ai travaillé » et « Je me positionne » aux quatre niveaux du livret scolaire, sur `4e_C7.7` et `4e_C4.3` (appui) (le menu existant passe aux quatre niveaux ; une réponse sur l'ancienne échelle se relit au niveau voisin).
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en fin de séance 2, juste avant le Bonus (environ 5 min, seul et sans aide ; le réinvestissement
+passe de 15 à 10 min pour que la séance tienne en 55). Un objet que la séquence n'a pas étudié : **les étiquettes des
+plantes du jardin**, 60 plaques de contreplaqué percées, 3 heures de machine.
+- Question 1 (4e_C7.7) : la découpe laser ou le sciage à la main. On regarde le temps total calculé pour chaque moyen
+  (préparation payée une fois, plus chaque pièce), comparé au temps disponible.
+- Question 2 (4e_C4.3) : le procédé d'une étiquette du commerce. On regarde le procédé nommé, appuyé sur une trace
+  laissée dans la pièce (le chant bruni, les angles internes vifs).
+Les temps du billet sont ceux de `moyens.py` pour la découpe laser et le sciage.
+
+**QCM** : sept questions sur trente se lisent sur un document dessiné pour le téléphone, calculé par
+`documents_qcm.py` depuis `moyens.py` — « Cinq moyens pour le support » (ce que le support exige, ce que sait faire
+chaque moyen, les matières qu'il accepte ; q2, q5, q10, q20) et « Le temps de chaque moyen » (préparation, temps par
+pièce, temps disponible ; q12, q13, q14).

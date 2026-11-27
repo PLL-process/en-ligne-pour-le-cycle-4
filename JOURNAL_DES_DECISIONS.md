@@ -38808,3 +38808,16 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 46 / 46 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
 unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
 seulement (`4e_C7.5`).
+
+## 27/11/2026 — 4e_C7.7 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `moyens.py`) — « Cinq moyens pour le support » (q2, q5, q10, q20) et « Le temps de chaque moyen » (q12, q13,
+  q14). Sept questions illustrées sur trente : les temps des questions 12 et 13 se calculent maintenant sur le tableau.
+- **Billet de sortie** avant le Bonus de la séance 2 : les étiquettes des plantes du jardin (le moyen qui tient dans
+  les 3 heures, calcul à l'appui ; le procédé reconnu à ses traces). Le réinvestissement passe de 15 à 10 minutes : la
+  séance tient en 55.
+Bancs : séquence 43 / 43 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.7`).
