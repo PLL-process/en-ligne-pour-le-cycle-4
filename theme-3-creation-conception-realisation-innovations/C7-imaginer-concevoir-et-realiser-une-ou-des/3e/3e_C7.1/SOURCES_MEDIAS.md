@@ -67,3 +67,9 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_salle_chaude.png` | Une salle de classe vide, baignée de soleil : de grandes baies vitrées donnent sur des immeubles, des sacs et une bouteille d'eau sont restés sur les tables. PNG 1 536 × 1 024, 2.1 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of an empty secondary-school classroom on the top floor on a hot June afternoon: blinding sunlight through large closed south-facing windows, a busy city avenue visible outside, schoolbags and water bottles on the desks, warm hazy air, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Document du QCM, dessiné pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_protocole_seuil.svg` | La règle du capteur (alerte si T est strictement supérieure à 28 °C) et les quatre scénarios du protocole d'essai, avec leur température ; les colonnes prédiction et observé sont vides. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C7.1.json`, lui-même LU dans la séquence par `documents_qcm.py` (le tableau de l'activité 2). | CC0, comme les images du dépôt | QCM, q13, q14, q15, q16 |

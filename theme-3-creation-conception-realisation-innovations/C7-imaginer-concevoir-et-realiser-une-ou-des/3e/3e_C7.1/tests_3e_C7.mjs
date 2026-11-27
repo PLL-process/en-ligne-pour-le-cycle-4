@@ -742,6 +742,44 @@ await ctx.close();
   await ctxq.close();
 }
 
+/* — n°345 et n°330 (27/11/2026) : six questions sur document, et un billet de sortie — */
+{
+  const src = fs.readFileSync(path.join(LOT, CFG.qcm), "utf8");
+  const imgs = [...src.matchAll(/img:\{src:"(Images\/[^"]+)",alt:"([^"]*)"/g)].map(m => ({ src: m[1], alt: m[2] }));
+  ok("QCM : au moins six questions sur document", imgs.length >= 6, imgs.length + " question(s) illustrée(s)");
+  ok("QCM : chaque image existe dans Images/", imgs.every(i => fs.existsSync(path.join(LOT, i.src))));
+  ok("QCM : chaque document a une description qui dit ce qu'il montre", imgs.every(i => i.alt.length > 60));
+  let aJour = true; try { execSync("python3 documents_qcm.py --verifier", { cwd: LOT, stdio: "pipe" }); } catch (e) { aJour = false; }
+  ok("QCM : le document neuf est à jour de la séquence (documents_qcm.py --verifier)", aJour);
+
+  const cb = await nav.newContext({ viewport: { width: 1280, height: 900 } });
+  const pb = await cb.newPage();
+  await pb.goto(url(CFG.seq)); await pb.waitForTimeout(400);
+  const b = await pb.evaluate(() => {
+    const s = document.getElementById("billetSortie"); if (!s) return null;
+    const cartes = [...document.querySelectorAll("section.card")];
+    const bonus = cartes.find(c => /🎁 Bonus/.test(c.querySelector("h2")?.textContent || ""));
+    const c = s.querySelector("details.correction")?.textContent || "";
+    return { zones: s.querySelectorAll("textarea[data-save]").length, aides: s.querySelectorAll("details.etayage").length,
+      criteres: (c.match(/Critère/g) || []).length, contre: (c.match(/✘/g) || []).length,
+      boutons: s.querySelectorAll("button").length, avantBonus: !!bonus && cartes.indexOf(s) === cartes.indexOf(bonus) - 1 };
+  });
+  ok("billet de sortie : présent", !!b);
+  if (b) {
+    ok("billet de sortie : deux zones sauvegardées, deux versions étayées", b.zones === 2 && b.aides === 2, b.zones + " zones, " + b.aides + " aides");
+    ok("billet de sortie : deux critères, des contre-exemples, aucun bouton", b.criteres === 2 && b.contre >= 2 && b.boutons === 0,
+       b.criteres + " critères, " + b.contre + " ✘, " + b.boutons + " bouton(s)");
+    ok("billet de sortie : juste avant le Bonus", b.avantBonus);
+    const TXT = "Essai 2, le cas frontière : 80 dB, voyant éteint.";
+    await pb.evaluate(() => { const t = document.querySelector('.seance-tab[data-panel="s4"]'); if (t) t.click(); });
+    await pb.fill("#bs_3e_C7_1_2", TXT);
+    await pb.evaluate(() => document.getElementById("bs_3e_C7_1_2").blur());
+    await pb.waitForTimeout(200); await pb.reload(); await pb.waitForTimeout(400);
+    ok("billet de sortie : la réponse survit au rechargement", (await pb.inputValue("#bs_3e_C7_1_2")) === TXT);
+  }
+  await cb.close();
+}
+
 verifLiens();
 await nav.close();
 

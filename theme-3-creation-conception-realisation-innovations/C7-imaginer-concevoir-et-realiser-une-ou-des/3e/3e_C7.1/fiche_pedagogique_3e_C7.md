@@ -73,3 +73,20 @@ Le découpage en séances de 55 min ne change pas (activités 0, 1 et 2 | gestes
 Restent visibles à chaque séance : le titre, la mission (le sous-titre devient « 🎯 Ta mission : … », comme au pilote), l'identité, la barre d'outils, le sélecteur de parcours et ses deux notes, la progression et « 🗺 Où j'en suis ». Celui-ci est ouvert à la séance 1 et replié dès la séance 2 derrière une ligne qui garde le compte (« 2 / 8 activités validées ») ; un clic le rouvre. Le simulateur thermique ne sert qu'à la séance 1 : il reste dans son activité. L'enveloppe de carte qui réunissait barre d'outils, billet et tableau de bord est dissoute ; le billet, le contrat et « Deux façons » suivent l'hypothèse, dans l'ordre du squelette.
 
 Clôture : rien à rédiger (Bonus corrigé, bilan complet) ; le bilan relit désormais l'hypothèse écrite au début, comme au pilote. « Je me positionne » garde son échelle (« Je ne sais pas encore le faire » … « Je sais l'expliquer à quelqu'un »), qui n'est pas celle du livret.
+
+## Le billet de sortie et le document neuf du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en séance 4, juste avant le Bonus (environ 5 min, seul et sans aide ; la séance annonçait déjà
+l'activité 7, la synthèse et le bilan en 55 minutes). Un objet que la séquence n'a pas étudié : **le détecteur de bruit
+de la cantine**, voyant allumé au-delà de 80 dB.
+- Question 1 (3e_C7.1) : élaborer le processus — au moins quatre tâches, dans l'ordre, avec une durée. On regarde des
+  tâches écrites par l'élève, dans un ordre où chacune a ce qu'elle attend, chacune avec sa durée.
+- Question 2 (3e_C8.1) : un protocole de trois essais au simulateur. On regarde chaque attendu écrit avant l'essai, et
+  le cas frontière à 80 dB.
+
+**QCM** : sept questions sur trente se lisent sur un document (trois l'étaient déjà). Le document neuf, « Le protocole
+d'essai du capteur », est LU dans la séquence par `documents_qcm.py` (le tableau des quatre scénarios de l'activité 2 et
+la règle « strictement supérieure à 28 °C ») ; il sert aux q13, q14, q15 et q16. La q1 demandait « En 5e on suit, en 4e
+on organise. Qu'attend-on de toi en 3e ? » : elle évaluait la connaissance du programme et supposait les deux années
+précédentes faites avec nous (n°304) ; elle demande maintenant ce qu'on attend quand personne ne donne la liste des
+tâches. La q14 disait « le tableau de l'activité 2 » : elle le montre.
