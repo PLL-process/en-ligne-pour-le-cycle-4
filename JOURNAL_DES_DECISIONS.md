@@ -38766,3 +38766,18 @@ sélectionné pour Ctrl + C), 🌐 Vittascience mBot2 ; dans l'échauffement, «
 des six de mBlock ; dans le Bonus, un éditeur pour les trois défis, qui en demandaient un. Au passage, la console du
 robot simulé se lit sans code interne (« 📟 écran : « Y », puis passe à la ligne » au lieu de « Y ⏎oui » ;
 « lumières » au lieu de « DEL »). Banc : 104 / 104.
+
+## 27/11/2026 — 4e_C7.3 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `materiaux.py`) — « Six matériaux pour le bac du jardin » (q10, q12, q13) et « Les trois retenus, sur
+  15 ans » (q5, q6, q14, q18). Sept questions illustrées sur trente. La q12 perd sa notion « Deux motifs pour
+  l'acier », qui soufflait la réponse (E1 la lisait aussi comme une liste tronquée) ; la q13 parlait de « douze
+  kilomètres » sous un énoncé à deux cents.
+- **Billet de sortie** avant le Bonus de la séance 2 : le bac de tri des déchets du jardin (le coût sur 10 puis 20 ans,
+  qui se retourne ; ce qu'il reste à examiner du cycle de vie). Le réinvestissement passe de 15 à 10 minutes : la
+  séance tient en 55.
+Bancs : séquence 49 / 49 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.3`).
