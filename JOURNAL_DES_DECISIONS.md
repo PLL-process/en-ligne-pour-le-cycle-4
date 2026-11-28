@@ -39055,3 +39055,19 @@ l'usager… », 1 450 px sous le titre de son exercice, le diagramme loin au-des
 
 **Vérifié.** Le TP : mesure 0 candidate (9 avant) ; aucune erreur JavaScript, phases 0 à 5 jouées ;
 `tests_tp_algorigrammes_4e_C6.2.mjs` 31 / 31 ; `tests_4e_C6.2.mjs` 67 / 67 ; `tests_regle_311_4e_C6.2` 34 / 34.
+
+## 28/11/2026 — 4e_C4.7 : neuf questions sur document, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM d'adressage** (aucune question sur document) : « Le plan d'adressage de la serre », LU dans la séquence par
+  `documents_qcm.py` ; six questions s'y lisent (partie commune, masque, doublon, adresse fixe, vérifier avant de
+  saisir, tenir le plan à jour).
+- **QCM Zigbee** (3) : « Quatre liaisons sans fil », portée, débit et énergie en ordres de grandeur, ceux que ses
+  corrections donnaient déjà (le script refuse si l'une change) ; trois questions de choix s'y lisent (casque, capteurs
+  sur pile, vidéo). La q28 annonçait « ces quatre liaisons » au-dessus d'une réponse à trois critères (E1) : réécrite,
+  notion renommée « Le tableau des liaisons », piège reposé.
+- **Billet de sortie** avant le Bonus de la séance 4 : le réseau de la salle de sciences (un capteur dans la mauvaise
+  rue ; deux essais dans la simulation, dont un de non-régression). La séance 4 passe de 45 à 50 minutes.
+- Une phrase de technicien de l'activité 5 cousait trois idées par « ; » (audit d'aération) : coupée.
+Bancs : séquence 28 / 28 (huit tests neufs), n°311 34 / 34 ; contrôles des QCM, des unités, des schémas, des règles
+d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.7`).

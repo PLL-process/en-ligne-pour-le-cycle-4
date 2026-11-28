@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -164,7 +166,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span title="Programme 2024 — 4e_C4.7 : Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local." class="badge code">4e_C4.7</span>
-  <span class="badge theme">30 questions · dont 3 illustrées par un schéma à lire · 3e des trois QCM du lot</span>
+  <span class="badge theme">30 questions · dont 6 illustrées par un schéma à lire · 3e des trois QCM du lot</span>
 </div>
 
 <div class="identite">
@@ -305,7 +307,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (4e_C4.7), 3 illustrée(s) — chaque image est un DOCUMENT
+/* Banque : 30 questions (4e_C4.7), 6 illustrée(s) — chaque image est un DOCUMENT
    à lire pour répondre, pas une décoration (règle images v2).
    Le commentaire précédent annonçait « 15 C6.1 + 15 C6.3, 3 illustrees » : il venait
    d'un autre lot par copie, et il a survécu à la scission du « XXL 40 » en trois. */
@@ -479,12 +481,13 @@ const QUESTIONS = [
  err:"Croire qu'un objet sans pile n'a pas besoin d'énergie.",
  d:["Une étiquette passive n'en contient aucune.","","Certaines étiquettes existent avec une cellule, mais ce n'est pas le principe.","Toute électronique a besoin d'énergie : la question est d'où elle vient."],
  ret:"Le lecteur fournit l'énergie ; l'étiquette la reçoit."},
-{c:"COM",n:"Bluetooth ou Zigbee",q:"Pour relier un casque à un téléphone, on utilise…",
+{c:"COM",n:"Bluetooth ou Zigbee",q:"D'après ce tableau, pour relier un casque audio à un téléphone, on utilise…",
+ img:{src:"Images/doc_quatre_liaisons.svg",alt:"Quatre liaisons sans fil, en ordres de grandeur. Wi-Fi : portée 50 m, débit 100 Mbit/s (mégabits par seconde), consommation forte. Bluetooth : portée 10 m, débit 2 Mbit/s, consommation moyenne. Zigbee : portée 10 à 100 m, débit 250 kbit/s (kilobits par seconde), consommation faible. NFC : portée 5 cm, débit 400 kbit/s, consommation faible. Le document ne dit pas quelle liaison choisir."},
  o:["Zigbee","le Bluetooth","le NFC","le RFID"],r:1,
  expl:"Le Bluetooth relie deux appareils proches, avec un débit suffisant pour l'audio. Zigbee, trop lent, n'a jamais été conçu pour cela.",
  ex:"Casque, enceinte, clavier, manette : du Bluetooth.",
  err:"Croire que toutes les liaisons sans fil sont interchangeables.",
- d:["250 kbit/s (kilobits par seconde) ne suffisent pas pour de l'audio de qualité.","","Le NFC sert à l'appairage, pas au transport du son.","Le RFID ne transporte pas de flux."],
+ d:["250 kbit/s (kilobits par seconde) ne suffisent pas pour de l'audio de qualité : relis la colonne débit.","","5 cm de portée : il faudrait coller le casque au téléphone. Relis la colonne portée.","Le RFID n'est pas dans le tableau : il ne transporte pas de flux."],
  ret:"Bluetooth : deux appareils, un flux continu."},
 {c:"COM",n:"Wi-Fi ou Zigbee",q:"Comparé au Wi-Fi, Zigbee est…",
  o:["plus rapide que le Wi-Fi","moins rapide, plus économe","identique au Wi-Fi en tout","réservé aux professionnels"],r:1,
@@ -493,21 +496,23 @@ const QUESTIONS = [
  err:"Classer les technologies sur une seule échelle, du plus lent au plus rapide.",
  d:["Il est très largement plus lent.","","Ils diffèrent sur tout : débit, portée, consommation, nombre d'appareils.","Il est très présent chez les particuliers."],
  ret:"Le Wi-Fi porte des flux, Zigbee porte des états."},
-{c:"COM",n:"Choisir pour un capteur",q:"Pour cinquante capteurs sur pile dans un bâtiment, la liaison la plus adaptée est…",
+{c:"COM",n:"Choisir pour un capteur",q:"D'après ce tableau, pour cinquante capteurs sur pile dans un bâtiment, la liaison la plus adaptée est…",
+ img:{src:"Images/doc_quatre_liaisons.svg",alt:"Quatre liaisons sans fil, en ordres de grandeur. Wi-Fi : portée 50 m, débit 100 Mbit/s (mégabits par seconde), consommation forte. Bluetooth : portée 10 m, débit 2 Mbit/s, consommation moyenne. Zigbee : portée 10 à 100 m, débit 250 kbit/s (kilobits par seconde), consommation faible. NFC : portée 5 cm, débit 400 kbit/s, consommation faible. Le document ne dit pas quelle liaison choisir."},
  o:["Zigbee","le Wi-Fi","le NFC","le câble Ethernet"],r:0,
  expl:"Peu de données, beaucoup d'appareils, autonomie longue, portée étendue par relais : chaque critère désigne Zigbee.",
  ex:"Cinquante capteurs Wi-Fi videraient leurs piles en quelques jours.",
  err:"Choisir la liaison la plus performante plutôt que la plus adaptée.",
- d:["","Il consomme trop pour des appareils sur pile.","Il faudrait aller toucher chaque capteur.","Cinquante câbles pour trois octets par heure."],
+ d:["","Relis la colonne énergie : il consomme trop pour des appareils sur pile.","Relis la colonne portée : il faudrait aller toucher chaque capteur.","Cinquante câbles pour trois octets par heure : le câble n'est même pas dans le tableau."],
  ret:"On choisit une liaison sur le besoin, jamais sur la performance."},
-{c:"COM",n:"Choisir pour une vidéo",q:"Pour envoyer une vidéo depuis une tablette vers un écran, on choisit…",
+{c:"COM",n:"Choisir pour une vidéo",q:"D'après ce tableau, pour envoyer une vidéo d'une tablette vers un écran, on choisit…",
+ img:{src:"Images/doc_quatre_liaisons.svg",alt:"Quatre liaisons sans fil, en ordres de grandeur. Wi-Fi : portée 50 m, débit 100 Mbit/s (mégabits par seconde), consommation forte. Bluetooth : portée 10 m, débit 2 Mbit/s, consommation moyenne. Zigbee : portée 10 à 100 m, débit 250 kbit/s (kilobits par seconde), consommation faible. NFC : portée 5 cm, débit 400 kbit/s, consommation faible. Le document ne dit pas quelle liaison choisir."},
  o:["Zigbee","le RFID","le Wi-Fi","le NFC seul"],r:2,
  expl:"Un flux vidéo demande un débit que seules les liaisons rapides fournissent. C'est exactement le domaine du Wi-Fi.",
  ex:"Diffuser une vidéo sur le vidéoprojecteur de la salle.",
  err:"Oublier de commencer par la question du DÉBIT nécessaire.",
- d:["250 kbit/s (kilobits par seconde) : il faudrait des heures.","Le RFID ne transporte pas de flux.","","Le NFC peut lancer la connexion, mais pas transporter la vidéo."],
+ d:["250 kbit/s (kilobits par seconde) : il faudrait des heures. Relis la colonne débit.","Le RFID n'est pas dans le tableau : il ne transporte pas de flux.","","Relis le NFC : 5 cm de portée. Il peut lancer la connexion, pas transporter la vidéo."],
  ret:"Gros flux → Wi-Fi. Petits états → Zigbee."},
-{c:"COM",n:"Le tableau des quatre",q:"Wi-Fi, Bluetooth, Zigbee, NFC : quel critère distingue le mieux ces quatre liaisons sans fil entre elles ?",
+{c:"COM",n:"Le tableau des liaisons",q:"Quel critère distingue le mieux le Wi-Fi, le Bluetooth, Zigbee et le NFC entre eux ?",
  o:["leur couleur dans les schémas","leur date d'invention","portée, débit, consommation","leur prix d'achat"],r:2,
  expl:"Chacune occupe une place dans ce triangle : le NFC très près et très peu, Zigbee loin et peu, le Bluetooth près et moyen, le Wi-Fi loin et beaucoup.",
  ex:"NFC : 5 cm. Bluetooth : 10 m. Zigbee : 30 m relayables. Wi-Fi : 50 m.",
@@ -617,7 +622,7 @@ const PIEGE_DE_NOTION={
   "Wi-Fi ou Zigbee":"choisir",
   "Choisir pour un capteur":"choisir",
   "Choisir pour une vidéo":"choisir",
-  "Le tableau des quatre":"choisir",
+  "Le tableau des liaisons":"choisir",
   "Le raisonnement final":"choisir"
 };
 function piege(i){ return PIEGE_DE_NOTION[QUESTIONS[i].n]||null; }

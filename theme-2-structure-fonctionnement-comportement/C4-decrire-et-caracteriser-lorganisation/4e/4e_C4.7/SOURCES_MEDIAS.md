@@ -161,3 +161,10 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_serre_capteur_muet.png` | Une serre aux parois grillagées : des plateaux de jeunes plants, un petit appareil blanc posé sur une table, et un boîtier blanc fixé au mur. PNG 1 536 × 1 024, 2.7 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo inside a small school greenhouse in the Caribbean at early morning: seedlings in trays, a new small white wall-mounted temperature and humidity sensor box with a dark status light, a small label printer on a potting bench with nothing coming out, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents des QCM, dessinés pour le téléphone (28/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_plan_adressage_serre.svg` | Le plan d'adressage de la serre : quatre appareils et leur adresse IP, le masque et la passerelle prévue. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C4.7.json`, lui-même LU dans la séquence par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM d'adressage, q4, q5, q7, q13, q27, q29 |
+| `Images/doc_quatre_liaisons.svg` | Wi-Fi, Bluetooth, Zigbee, NFC : portée, débit, énergie, en ordres de grandeur — sans dire laquelle choisir. | Même chaîne ; les valeurs sont celles des corrections du QCM Zigbee (vérifiées par le script), le débit du Bluetooth et du NFC en ordre de grandeur des normes. | CC0 | QCM Zigbee, q24, q26, q27 |
