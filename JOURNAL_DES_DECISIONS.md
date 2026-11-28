@@ -39192,3 +39192,14 @@ collège, sous Safari et sur tablette ; l'impression hors Chromium.
 sources, manifeste, rapport, README). Commun : `_ressources-communes/blender-atelier/` et son README,
 `.claude/skills/blender-visualisation-pedagogique/`, `SKILLS_AUDIT.md`, ce journal, `nouveautes.json`, l'index et l'audit régénérés. Thèmes 2 et 3 :
 rien.
+
+## 28/11/2026 — 3e_C5.1 : un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- Le QCM avait déjà dix questions sur document : pas de D1 sur ce lot.
+- **Billet de sortie** avant le Bonus de la séance 4 : le portail motorisé du parking (deux hypothèses appuyées sur des
+  faits et un protocole qui les départage ; la cote d'un trou avec son jeu et le procédé d'une pièce unique). Le
+  réinvestissement de la séance 4 se fait à la maison, comme sa pastille le dit : la séance tient en 55 minutes.
+Bancs : séquence 37 / 37 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C5.1`). La famille C5 du
+thème 2 est complète.
