@@ -63,9 +63,31 @@ for (const n of ['0', '1', '2', '3', '4', '5']) {
   if (['0', '1', '2', '3', '4'].includes(n)) ok(`vérification ${n} : tout juste → ${total} / ${total}, validée`, juste && valide, await fb(n));
   else ok(`vérification ${n} : tout juste → ${total} / ${total}, plus rien « à revoir » (la validation demande aussi la manipulation et l'écrit)`, juste, await fb(n));
 }
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un réseau neuf */
+{
+  await ouvrir('seance3');
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à la séance 3', !!bs && bs.visible && bs.panneau === 'seance3', JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées', !!bs && bs.zones === 2 && bs.etayages === 2);
+  ok('billet de sortie · une correction à deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  ok('billet de sortie · juste avant le Bonus', !!bs && bs.avantBonus);
+  await p.fill('#bs_5e_C4_7_1', 'terminaux : les ordinateurs');
+  await p.waitForTimeout(800);   // la page garde 600 ms après la dernière frappe
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
 const rest = await p.evaluate((A) => Object.entries(A).every(([id, v]) => { const c = document.querySelector(`#${id} input[type=radio]:checked`); return c && c.value === v; }), toutes);
 ok('après rechargement, les 32 réponses reviennent (sauvegarde de la page)', rest);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_5e_C4_7_1')) === 'terminaux : les ordinateurs');
 const pos = await p.evaluate(() => ['pos_c47', 'pos_c48'].every((id) => { const f = document.getElementById(id);
   return f && f.matches('fieldset.qcm-groupe.positionnement') && f.querySelectorAll('input[type=radio]').length === 4 && /5e_C4\.\d/.test(f.querySelector('legend').textContent); }));
 ok('le positionnement : deux groupes de quatre boutons, chacun légendé par son code', pos);
