@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -480,26 +482,29 @@ const QUESTIONS = [
  err:"Dessiner une flèche d'ordre qui remonte de l'énergie vers l'information. Ce qui remonte, ce sont des informations, pas des ordres.",
  d:["","Le moteur n'envoie aucun ordre : il obéit. Ce sont les capteurs qui informent, dans l'autre sens.","L'information reçoit des retours (les capteurs), mais l'ORDRE, lui, descend toujours de l'information vers l'énergie.","Sans ordre, le moteur ne démarrerait jamais. C'est précisément le lien entre les deux chaînes qui fait un système automatisé."],
  ret:"L'ORDRE descend de l'information vers l'énergie. L'INFORMATION des capteurs remonte."},
-{c:"C4.4",n:"Le losange de l'algorigramme",q:"Dans l'algorigramme du Book Train, quel symbole représente « Un wagonnet vacant est-il disponible ? » ?",
+{c:"C4.4",n:"Le losange de l'algorigramme",q:"Quand on dessine ce trajet en algorigramme, quel symbole prend l'étape 4, « Wagonnet vacant disponible ? » ?",
+ img:{src:"Images/doc_trajet_book_train.svg",alt:"Les dix étapes du trajet du livre dans le Book Train, dans l'ordre : 1. Début. 2. Le lecteur commande un livre. 3. Chercher le livre au sous-sol (magasinier). 4. Wagonnet vacant disponible ? 5. Déposer le livre et programmer la destination. 6. Rouler : tunnel puis montée verticale. 7. Arrivé à la station du 3ᵉ étage ? 8. Le livre est remis au lecteur. 9. Repartir à vide au sous-sol. 10. Fin. Le document ne dit ni le symbole de chaque étape, ni où mène une réponse NON."},
  o:["un ovale, parce que c'est le début du programme","un rectangle, parce que c'est une action à réaliser","un losange, parce que c'est un test à deux issues","un parallélogramme, parce que c'est une donnée"],r:2,
  expl:"Une phrase qui se termine par un point d'interrogation et qui n'a que deux réponses possibles prend toujours un losange. Selon la réponse, le programme part dans une branche ou dans l'autre.",
  ex:"« Un wagonnet vacant est-il disponible ? » — si NON, on attend (boucle) ; si OUI, on charge le livre.",
  err:"Mettre une question dans un rectangle. Le repère : un « ? » à la fin de la phrase impose le losange.",
- d:["L'ovale borne le programme : Début et Fin, rien d'autre.","Le rectangle porte un verbe d'action. Ici, on ne fait rien : on pose une question.","","Le parallélogramme sert aux entrées et sorties, comme une saisie ou un affichage."],
+ d:["L'ovale borne le programme : relis les étapes 1 et 10, Début et Fin.","Le rectangle porte un verbe d'action : relis l'étape 5. L'étape 4, elle, pose une question.","","Le parallélogramme sert aux entrées et sorties : relis les étapes 2 et 8."],
  ret:"Question à deux issues → losange. Verbe d'action → rectangle."},
-{c:"C4.4",n:"La saisie n'est pas un traitement",q:"« Le lecteur saisit sa commande au terminal » : quel symbole utiliser dans l'algorigramme ?",
+{c:"C4.4",n:"La saisie n'est pas un traitement",q:"Quand on dessine ce trajet en algorigramme, quel symbole prend l'étape 2, « Le lecteur commande un livre » ?",
+ img:{src:"Images/doc_trajet_book_train.svg",alt:"Les dix étapes du trajet du livre dans le Book Train, dans l'ordre : 1. Début. 2. Le lecteur commande un livre. 3. Chercher le livre au sous-sol (magasinier). 4. Wagonnet vacant disponible ? 5. Déposer le livre et programmer la destination. 6. Rouler : tunnel puis montée verticale. 7. Arrivé à la station du 3ᵉ étage ? 8. Le livre est remis au lecteur. 9. Repartir à vide au sous-sol. 10. Fin. Le document ne dit ni le symbole de chaque étape, ni où mène une réponse NON."},
  o:["un parallélogramme : c'est une donnée qui entre","un rectangle, car c'est une action du lecteur","un losange, car le système attend la commande","un ovale, car c'est le tout début du système"],r:0,
  expl:"Le parallélogramme représente les entrées et les sorties : ce qui franchit la frontière du système. Une saisie au clavier, un affichage à l'écran, une impression : tous les trois sont des parallélogrammes.",
  ex:"Dans un programme scolaire : « demander l'âge de l'utilisateur » → parallélogramme ; « calculer l'année de naissance » → rectangle.",
  err:"L'erreur classique : mettre la saisie en rectangle. « Saisir une donnée » n'est pas un traitement interne.",
- d:["","L'action est humaine, mais du point de vue du système c'est une ENTRÉE de donnée : le parallélogramme est fait pour cela.","L'attente pourrait se représenter par un test, mais la saisie elle-même est bien une entrée de donnée.","L'ovale marque le Début du programme ; la saisie est l'étape suivante."],
+ d:["","L'action est humaine, mais pour le système c'est une donnée qui ENTRE : le parallélogramme est fait pour cela.","Relis l'étape 2 : elle ne pose aucune question, elle fait entrer la commande.","L'ovale, c'est l'étape 1 : la commande est l'étape suivante."],
  ret:"Entrée ou sortie de donnée → parallélogramme. Traitement interne → rectangle."},
-{c:"C4.4",n:"La boucle d'attente",q:"Que se passe-t-il, dans l'algorigramme, si la réponse au test « le wagonnet est-il arrivé au 3ᵉ étage ? » est NON ?",
+{c:"C4.4",n:"La boucle d'attente",q:"Dans ce trajet, si la réponse à l'étape 7, « Arrivé à la station du 3ᵉ étage ? », est NON, que se passe-t-il ?",
+ img:{src:"Images/doc_trajet_book_train.svg",alt:"Les dix étapes du trajet du livre dans le Book Train, dans l'ordre : 1. Début. 2. Le lecteur commande un livre. 3. Chercher le livre au sous-sol (magasinier). 4. Wagonnet vacant disponible ? 5. Déposer le livre et programmer la destination. 6. Rouler : tunnel puis montée verticale. 7. Arrivé à la station du 3ᵉ étage ? 8. Le livre est remis au lecteur. 9. Repartir à vide au sous-sol. 10. Fin. Le document ne dit ni le symbole de chaque étape, ni où mène une réponse NON."},
  o:["on passe directement à la remise du livre au lecteur","le programme s'arrête sur une erreur","on revient en arrière : le test est posé à nouveau","le wagonnet repart au sous-sol"],r:2,
  expl:"Une flèche qui revient en arrière crée une BOUCLE : tant que la condition n'est pas remplie, on refait le tour. C'est ce qui permet à un système d'attendre sans rien casser.",
  ex:"Le micro-ondes : « le temps est-il écoulé ? » NON → il continue de chauffer et repose la question. OUI → il s'arrête et sonne.",
  err:"Oublier la flèche de retour et laisser la branche NON dans le vide. Un algorigramme dont une branche ne mène nulle part est faux.",
- d:["Ce serait livrer un livre qui n'est pas arrivé : la branche OUI et la branche NON ne mènent pas au même endroit.","Un NON n'est pas une panne : c'est simplement « pas encore ». Le système continue.","","Le retour au sous-sol n'a lieu qu'APRÈS la livraison, à la fin du cycle."],
+ d:["Ce serait livrer un livre qui n'est pas arrivé : l'étape 8 ne suit que la réponse OUI.","Un NON n'est pas une panne : c'est simplement « pas encore ». Le système continue.","","Le retour au sous-sol, c'est l'étape 9 : elle n'a lieu qu'après la livraison."],
  ret:"Une flèche qui revient en arrière = une boucle d'attente. Aucune branche ne reste dans le vide."},
 {c:"C4.4",n:"Les bornes du programme",q:"Pourquoi un algorigramme doit-il toujours comporter un Début et une Fin ?",
  o:["sans bornes, on ne sait pas où le programme commence ni finit","parce que c'est plus joli et plus symétrique","parce que l'ordinateur refuse d'exécuter un programme sans ovale","parce que le losange l'exige"],r:0,

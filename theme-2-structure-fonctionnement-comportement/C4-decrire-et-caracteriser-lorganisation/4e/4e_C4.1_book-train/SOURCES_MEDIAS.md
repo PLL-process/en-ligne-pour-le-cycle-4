@@ -91,3 +91,9 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 |---|---|---|---|---|
 | `Images/synthese_book_train.png` | Un wagonnet rouge sur un rail vertical, dans la réserve souterraine d'une bibliothèque ; sa nacelle reste à plat. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small red electric book cart running on a narrow steel monorail track that climbs vertically up a wall inside a library's underground book stacks; the cart's basket hangs on a pivot and stays level, holding a few books; rows of shelves in the background, warm light, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » |
 
+
+## Document du QCM, dessiné pour le téléphone (28/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_trajet_book_train.svg` | Les dix étapes du trajet du livre, dans l'ordre, en texte — sans les symboles, sans « Entrée » ni « Sortie », sans les flèches OUI / NON. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C4.1_book-train.json`, lui-même LU par `documents_qcm.py` dans `Images/algorigramme_book-train_correction.svg`. | CC0, comme les images du dépôt | QCM, q25, q26, q27 |
