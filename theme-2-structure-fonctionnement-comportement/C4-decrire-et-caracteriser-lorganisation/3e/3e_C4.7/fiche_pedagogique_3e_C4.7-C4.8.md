@@ -41,7 +41,7 @@ Accroche + hypothèses (10 min) · Activité 1 : le réseau local du collège (2
 Activité 3 : simulateur de découpage/réassemblage (30 min) · Activité 4 : jeu du routeur — en ligne ou débranché par équipes avec enveloppes (25 min).
 
 ### Séance 3 — Résilience + réinvestissement (C4.8)
-Activité 5 : simulateur de panne, coupures successives jusqu'à l'isolement (25 min) · Réinvestissement « Un mail pour Tokyo » (25 min, achevable à la maison) · bilan personnel + annonce du QCM (5 min).
+Activité 5 : simulateur de panne, coupures successives jusqu'à l'isolement (25 min) · Réinvestissement « Un mail pour Tokyo » (20 min, achevable à la maison) · bilan personnel + annonce du QCM (5 min) · **billet de sortie** (5 min, seul et sans aide, 28/11/2026, n°330) : la photo envoyée à une école de Montréal — son voyage en paquets ; la table d'un routeur et la panne contournée. Le réinvestissement passe de 25 à 20 minutes : la séance tient en 55.
 
 ## Organisation, matériel, logiciels
 
@@ -58,7 +58,7 @@ Aides graduées ×2 par activité ; corrections exhaustives repliables ; trois v
 ## Évaluation
 
 - **Formative** : vérificateurs intégrés (score + feedback + verrous d'expérience : le simulateur doit avoir été réellement utilisé) ; bilan personnel guidé.
-- **Entraînement** : QCM séparé 30 questions (15 par code), bilan par compétence, note indicative /20.
+- **Entraînement** : QCM séparé 30 questions (15 par code), bilan par compétence, note indicative /20. Six questions s'y lisent sur un document dessiné pour le téléphone (n°345, 28/11/2026) : « La table de routage de R2 » (q16, q17, q18, q26) et « Trois paquets, à l'arrivée » (q8, q10), lus dans la séquence.
 - **Sommative éventuelle** : à construire par l'enseignant à partir de la matrice de couverture ; **aucun corrigé sommatif publié**.
 - **LSU** : maîtrise ≥ 75 % · en cours 50-74 % · fragile < 50 %, à croiser avec l'observation (jeu débranché = excellent moment d'observation).
 

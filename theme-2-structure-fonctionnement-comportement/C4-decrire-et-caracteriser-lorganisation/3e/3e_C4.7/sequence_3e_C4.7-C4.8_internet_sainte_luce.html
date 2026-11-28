@@ -2673,7 +2673,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   </div>
 
   <div class="activite" id="act6">
-    <header><span class="num">Réinvestissement</span><h3>🗼 Un mail pour Tokyo</h3><span class="duree">⏱ 25 min</span></header>
+    <header><span class="num">Réinvestissement</span><h3>🗼 Un mail pour Tokyo</h3><span class="duree">⏱ 20 min</span></header>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> réutiliser toutes les notions dans une situation entièrement nouvelle, sans modèle.</div>
       <div><b>Compétences :</b> 3e_C4.7 + C4.8 (bilan).</div>
@@ -2761,6 +2761,49 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p>Chaque routeur aiguille les paquets grâce à sa <b>table de routage</b>, mise à jour automatiquement. <br>Le <b>protocole de routage commun</b> est indispensable : sans règles partagées par tous les réseaux, pas de communication possible entre eux. <br>Le <b>maillage</b> + les mises à jour rendent Internet <b>résilient</b> aux pannes — dans la limite du physique : un réseau isolé reste injoignable.</p>
   <h4 aria-level="3">🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">réseau = network</span><span class="tag">routeur = router</span><span class="tag">commutateur = switch</span><span class="tag">paquet = packet</span><span class="tag">table de routage = routing table</span><span class="tag">câble sous-marin = submarine cable</span><span class="tag">protocole = protocol</span><span class="tag">pare-feu = firewall</span></p>
+</section>
+
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Une situation nouvelle&nbsp;: <b>la classe envoie une photo du jardin du collège à une école de Montréal</b>, au Canada.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p><label for="bs_3e_C4_7_1"><b>1.</b> Décris le voyage de la photo, du poste de la classe jusqu'à l'école de Montréal, en quatre étapes au moins. Puis dis ce qui arrive à la photo avant de partir, et ce qui se passe à l'arrivée.</label></p>
+  <textarea id="bs_3e_C4_7_1" data-save rows="5"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Le poste envoie la photo au ____ du collège, qui la passe au ____ .</li>
+      <li>Elle traverse le réseau de ____ , puis ____ , puis les routeurs canadiens jusqu'à ____ .</li>
+      <li>Avant de partir, la photo est ____ . À l'arrivée, ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_3e_C4_7_2"><b>2.</b> Sur le trajet, le routeur R5 a cette table&nbsp;: réseau 192.0.2.x → R6&nbsp;; réseau 198.51.100.x → R7&nbsp;; tout le reste → R8. Vers quel routeur envoie-t-il un paquet destiné à 198.51.100.9&nbsp;? Et un paquet destiné à 10.4.4.4&nbsp;? Puis la liaison vers R7 tombe&nbsp;: comment le paquet vers 198.51.100.9 peut-il arriver quand même&nbsp;?</label></p>
+  <textarea id="bs_3e_C4_7_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>198.51.100.9 part vers ____ , parce que ____ .</li>
+      <li>10.4.4.4 part vers ____ , parce que ____ .</li>
+      <li>Si la liaison vers R7 tombe, le protocole de routage ____ , et le paquet ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Le poste envoie la photo au commutateur du collège, qui la passe au routeur, la porte de sortie du réseau local.
+    <br>Elle traverse le réseau de l'opérateur martiniquais, puis un câble sous-marin, puis les routeurs canadiens jusqu'à la box de l'école.
+    <br>Avant de partir, la photo est découpée en paquets numérotés, chacun avec l'adresse IP de l'expéditeur et du destinataire. À l'arrivée, l'ordinateur de l'école remet les paquets dans l'ordre grâce à leur numéro.&nbsp;»
+    <br><b>Critère</b>&nbsp;: une suite de réseaux dans l'ordre, du réseau local au destinataire, et les paquets numérotés, découpés au départ et réassemblés à l'arrivée.</p>
+    <p>✘ «&nbsp;La photo part par le Wi-Fi jusqu'à Montréal&nbsp;»&nbsp;: le Wi-Fi ne relie que les appareils de la salle à la borne&nbsp;; la suite passe par des câbles et des routeurs.
+    <br>✘ «&nbsp;La photo part d'un seul bloc&nbsp;»&nbsp;: elle est découpée en paquets, qui peuvent prendre des routes différentes.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;198.51.100.9 part vers R7, parce qu'il appartient au réseau 198.51.100.x.
+    <br>10.4.4.4 part vers R8, parce qu'aucune règle précise ne le concerne&nbsp;: c'est la ligne «&nbsp;tout le reste&nbsp;».
+    <br>Si la liaison vers R7 tombe, le protocole de routage met les tables à jour, et le paquet passe par un autre chemin du maillage.&nbsp;»
+    <br><b>Critère</b>&nbsp;: chaque paquet est aiguillé par la règle qui correspond au début de son adresse, et la panne est contournée grâce au protocole commun et au maillage.</p>
+    <p>✘ «&nbsp;10.4.4.4 est détruit, il n'a pas de règle&nbsp;»&nbsp;: c'est justement le rôle de «&nbsp;tout le reste&nbsp;».
+    <br>✘ «&nbsp;Le paquet attend que la liaison soit réparée&nbsp;»&nbsp;: Internet est maillé, d'autres routes existent.</p>
+    </div>
+  </details>
 </section>
 
 <section class="card">

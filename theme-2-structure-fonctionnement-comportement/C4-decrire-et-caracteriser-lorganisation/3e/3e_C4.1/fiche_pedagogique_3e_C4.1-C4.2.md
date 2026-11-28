@@ -43,7 +43,13 @@ Aides ×2 par activité ; corrections exhaustives ; listes déroulantes majorita
 
 ## Évaluation
 
-Formative : vérificateurs intégrés + verrou expérientiel. QCM 30 q (15/15, 3 illustrées, réponses réparties A/B/C/D) → bilan par code → LSU. Sommative à construire par l'enseignant (corrigé non publié) ; la justification rédigée (act. 4) évalue l'argumentation écrite.
+Formative : vérificateurs intégrés + verrou expérientiel. QCM 30 q (15/15, 7 illustrées, dont quatre sur « Dimensionner la batterie », n°345, réponses réparties A/B/C/D) → bilan par code → LSU. Sommative à construire par l'enseignant (corrigé non publié) ; la justification rédigée (act. 4) évalue l'argumentation écrite.
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3, environ 5 minutes, seul et sans aide : la borne lumineuse
+de l'arrêt de bus, un objet neuf. Question 1 (3e_C4.1) : dimensionner sa batterie — on regarde les deux calculs avec
+leurs unités, et un choix au-dessus du minimum. Question 2 (3e_C4.2) : le matériau et le procédé de son boîtier — on
+regarde deux contraintes du site croisées, et le procédé tiré du nombre de pièces. La séance 3 passe de 45 à 50
+minutes d'activités.
 
 ## Bilan et prolongements
 

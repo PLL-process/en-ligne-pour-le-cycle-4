@@ -27,3 +27,5 @@ sous-compétence.
 [Matrice de couverture](../3e_C4.7/matrice_couverture_3e_C4.7-C4.8.csv)
 
 *Atelier routage 3e — Thème 2 · du réseau du collège (4e) à la frontière entre réseaux (3e).*
+
+Banc du billet de sortie (28/11/2026) : `node tests_3e_C4.8_billet.mjs`.

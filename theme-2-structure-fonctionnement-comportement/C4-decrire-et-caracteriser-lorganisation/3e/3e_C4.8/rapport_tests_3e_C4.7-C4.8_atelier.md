@@ -94,3 +94,14 @@ ligne, « Request timed / out ») : lignes raccourcies, plus aucune ligne coupé
 
 **Non vérifié** : la durée réelle (~10 min annoncées) ; un essai en classe.
 
+
+## Reprise du 28/11/2026 — un billet de sortie (n°330)
+
+- `node tests_3e_C4.8_billet.mjs` (banc neuf) : **5 / 5** — le billet existe à la séance 3, juste avant le Bonus ; deux
+  zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; il tient à 390 px ; la
+  réponse survit au rechargement ; aucune erreur JS. `node tests_regle_311_3e_C4.8.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (P1 était à 1). `balayer_questions_qcm.mjs --apres` :
+  30 questions, 0 écart. Contrôles des QCM, des schémas (0 ✘), de l'aération, des règles d'or, du squelette, du mode
+  mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle, Packet Tracer.

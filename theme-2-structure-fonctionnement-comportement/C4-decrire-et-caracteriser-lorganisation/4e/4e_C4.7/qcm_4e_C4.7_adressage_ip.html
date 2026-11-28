@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -186,7 +188,7 @@
     <br>Lire une adresse et dire si elle est privée ou publique.
     <br>Diagnostiquer avec un ping, et éviter un doublon.</li>
     <li><b>✅ Comment réussir</b>
-    <br>Le <abbr class="sigle" title="Dynamic Host Configuration Protocol" tabindex="0">DHCP</abbr> prête les adresses&nbsp;; le <abbr class="sigle" title="Domain Name System, l&#x27;annuaire qui traduit un nom en adresse" tabindex="0">DNS</abbr> traduit les noms&nbsp;: ne les confonds pas.
+    <br>Le DHCP prête les adresses&nbsp;; le DNS traduit les noms&nbsp;: ne les confonds pas.
     <br>Si tu te trompes, lis l'indice et réessaie avant d'ouvrir la correction.
     <br>Commence par «&nbsp;10 questions&nbsp;»&nbsp;; finis par «&nbsp;Uniquement mes erreurs&nbsp;».</li>
   </ul>
@@ -305,7 +307,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (4e_C4.7), 0 illustrée(s) — chaque image est un DOCUMENT
+/* Banque : 30 questions (4e_C4.7), 6 illustrée(s) — chaque image est un DOCUMENT
    à lire pour répondre, pas une décoration (règle images v2).
    Le commentaire précédent annonçait « 15 C6.1 + 15 C6.3, 3 illustrees » : il venait
    d'un autre lot par copie, et il a survécu à la scission du « XXL 40 » en trois. */
@@ -333,14 +335,16 @@ const QUESTIONS = [
  d:["Ce serait le contraire du problème à résoudre.","Elles n'ont ni la même longueur ni la même écriture.","N'importe quel appareil peut en recevoir une.",""],
  nuance:"« Pourquoi ne pas simplement recycler les anciennes ? » — on le fait déjà, c'est le rôle des adresses privées et de la box. Mais recycler ne crée pas d'adresses : cela repousse le moment où il en manque.",
  ret:"IPv6 : plus longues, donc bien plus nombreuses."},
-{c:"ADR",n:"La partie commune",q:"Dans un réseau local, que partagent les adresses IP de tous les appareils ?",
+{c:"ADR",n:"La partie commune",q:"Dans ce plan, que partagent les adresses IP de tous les appareils ?",
+ img:{src:"Images/doc_plan_adressage_serre.svg",alt:"Le plan d'adressage du réseau de la serre. PC-Prof : adresse IP 192.168.20.10, masque 255.255.255.0, passerelle 192.168.20.1. Imprimante : adresse IP 192.168.20.30, masque 255.255.255.0, passerelle 192.168.20.1. Capteur-Serre : adresse IP 192.168.20.50, masque 255.255.255.0, passerelle 192.168.20.1. Serveur-Serre : adresse IP 192.168.20.100, masque 255.255.255.0, passerelle 192.168.20.1. La passerelle 192.168.20.1 est prévue au plan, mais pas encore installée."},
  o:["leur dernier nombre","une partie commune","rien du tout","leur adresse MAC"],r:1,
  expl:"L'adresse se lit comme une adresse postale : une partie désigne la « rue » — le réseau — et l'autre le numéro de l'appareil dans cette rue.",
  ex:"192.168.1.20 et 192.168.1.35 : même rue, deux numéros.",
  err:"Croire que les adresses d'un même réseau sont tirées au hasard.",
- d:["C'est justement la partie qui les DISTINGUE.","","Sans partie commune, ils ne seraient pas dans le même réseau.","Les adresses MAC sont toutes différentes."],
+ d:["C'est justement la partie qui les DISTINGUE : relis la fin de chaque adresse, .10, .30, .50, .100.","","Relis le début des adresses : sans partie commune, ils ne seraient pas dans le même réseau.","Le plan ne donne pas d'adresse MAC, et elles sont toutes différentes."],
  ret:"Une IP = la rue (le réseau) + le numéro (l'appareil)."},
-{c:"ADR",n:"Le rôle du masque",q:"À quoi sert le masque de sous-réseau ?",
+{c:"ADR",n:"Le rôle du masque",q:"Dans ce plan, chaque appareil a le masque 255.255.255.0. À quoi sert-il ?",
+ img:{src:"Images/doc_plan_adressage_serre.svg",alt:"Le plan d'adressage du réseau de la serre. PC-Prof : adresse IP 192.168.20.10, masque 255.255.255.0, passerelle 192.168.20.1. Imprimante : adresse IP 192.168.20.30, masque 255.255.255.0, passerelle 192.168.20.1. Capteur-Serre : adresse IP 192.168.20.50, masque 255.255.255.0, passerelle 192.168.20.1. Serveur-Serre : adresse IP 192.168.20.100, masque 255.255.255.0, passerelle 192.168.20.1. La passerelle 192.168.20.1 est prévue au plan, mais pas encore installée."},
  o:["à cacher l'adresse aux autres","à dire où s'arrête la partie « réseau »","à chiffrer les données","à choisir le mot de passe du Wi-Fi"],r:1,
  expl:"Le masque trace la frontière : jusqu'ici, c'est le réseau ; au-delà, c'est l'appareil. Sans lui, on ne saurait pas lire l'adresse.",
  ex:"255.255.255.0 : les trois premiers nombres sont la rue.",
@@ -354,12 +358,13 @@ const QUESTIONS = [
  err:"Lire le nombre après la barre comme un nombre d'appareils.",
  d:["","Un réseau se note avec un préfixe plus court, comme /24.","Le nombre après la barre compte des BITS, pas des appareils.","Elle est parfaitement valide."],
  ret:"Le nombre après la barre compte des bits fixés, pas des machines."},
-{c:"ADR",n:"Le même numéro deux fois",q:"Deux appareils d'un même réseau local peuvent-ils partager la même adresse IPv4 ?",
- o:["oui, sans conséquence","non, le réseau ne saurait plus livrer","oui, s'ils sont de marques différentes","oui, si l'un est en Wi-Fi"],r:1,
+{c:"ADR",n:"Le même numéro deux fois",q:"Une tablette reçoit par erreur l'adresse de l'imprimante de ce plan. Les deux peuvent-elles la garder ?",
+ img:{src:"Images/doc_plan_adressage_serre.svg",alt:"Le plan d'adressage du réseau de la serre. PC-Prof : adresse IP 192.168.20.10, masque 255.255.255.0, passerelle 192.168.20.1. Imprimante : adresse IP 192.168.20.30, masque 255.255.255.0, passerelle 192.168.20.1. Capteur-Serre : adresse IP 192.168.20.50, masque 255.255.255.0, passerelle 192.168.20.1. Serveur-Serre : adresse IP 192.168.20.100, masque 255.255.255.0, passerelle 192.168.20.1. La passerelle 192.168.20.1 est prévue au plan, mais pas encore installée."},
+ o:["oui, sans conséquence","non, le réseau ne saurait plus livrer","oui, si leurs marques diffèrent","oui, si l'une est en Wi-Fi"],r:1,
  expl:"L'unicité est la condition même du fonctionnement : deux destinataires identiques, et les messages partent au mauvais endroit ou se perdent.",
  ex:"Deux maisons portant le même numéro dans la même rue.",
  err:"Croire que le réseau devine le bon destinataire.",
- d:["Les conséquences sont immédiates et bien visibles.","","La marque n'entre pas en ligne de compte.","Le mode de liaison non plus."],
+ d:["Les conséquences sont immédiates : un message pour 192.168.20.30 a deux destinataires.","","La marque n'entre pas en ligne de compte.","Le mode de liaison non plus."],
  ret:"Une adresse, un appareil. Toujours."},
 {c:"ADR",n:"Privée ou publique",q:"Une adresse commençant par 192.168 est…",
  o:["une adresse publique, visible depuis Internet","une adresse privée, valable dans le réseau local","une adresse interdite","l'adresse d'un site connu"],r:1,
@@ -397,7 +402,8 @@ const QUESTIONS = [
  err:"Voir le DHCP comme un confort alors qu'il évite surtout des pannes.",
  d:["Le DHCP ne change rien au débit : il donne une adresse à chaque poste, sans saisie à la main.","Le DHCP ne protège pas les échanges : il distribue des adresses.","","Sauvegarder les fichiers n'est pas son rôle : il distribue les adresses des postes."],
  ret:"Le DHCP supprime la saisie manuelle — et les fautes de frappe."},
-{c:"ATT",n:"L'adresse fixe",q:"Dans quel cas préfère-t-on une adresse IP FIXE ?",
+{c:"ATT",n:"L'adresse fixe",q:"Dans ce plan, chaque appareil a reçu son adresse à la main. Pour quel appareil une adresse FIXE est-elle surtout indispensable ?",
+ img:{src:"Images/doc_plan_adressage_serre.svg",alt:"Le plan d'adressage du réseau de la serre. PC-Prof : adresse IP 192.168.20.10, masque 255.255.255.0, passerelle 192.168.20.1. Imprimante : adresse IP 192.168.20.30, masque 255.255.255.0, passerelle 192.168.20.1. Capteur-Serre : adresse IP 192.168.20.50, masque 255.255.255.0, passerelle 192.168.20.1. Serveur-Serre : adresse IP 192.168.20.100, masque 255.255.255.0, passerelle 192.168.20.1. La passerelle 192.168.20.1 est prévue au plan, mais pas encore installée."},
  o:["pour une tablette d'élève","pour l'imprimante ou le serveur","pour économiser des adresses","pour aller plus vite"],r:1,
  expl:"Ce que l'on doit joindre par son adresse ne doit pas en changer. Une imprimante qui change d'adresse devient introuvable pour tous les postes.",
  ex:"L'imprimante du CDI garde la même adresse depuis trois ans.",
@@ -498,12 +504,13 @@ const QUESTIONS = [
  err:"Basculer d'un excès à l'autre : « ça ne dit rien » ou « ça dit tout ».",
  d:["Elle en dit assez pour être protégée par la loi.","Elle désigne un accès partagé, pas un individu.","La version du protocole ne change pas ce raisonnement.",""],
  ret:"Une IP désigne un accès. Recoupée, elle mène à quelqu'un."},
-{c:"PRO",n:"Le bon réflexe en salle",q:"Avant de saisir une adresse fixe sur un poste de la salle, il faut…",
+{c:"PRO",n:"Le bon réflexe en salle",q:"On ajoute un poste à la serre, en adresse fixe. Avant de saisir son adresse, que faut-il faire ?",
+ img:{src:"Images/doc_plan_adressage_serre.svg",alt:"Le plan d'adressage du réseau de la serre. PC-Prof : adresse IP 192.168.20.10, masque 255.255.255.0, passerelle 192.168.20.1. Imprimante : adresse IP 192.168.20.30, masque 255.255.255.0, passerelle 192.168.20.1. Capteur-Serre : adresse IP 192.168.20.50, masque 255.255.255.0, passerelle 192.168.20.1. Serveur-Serre : adresse IP 192.168.20.100, masque 255.255.255.0, passerelle 192.168.20.1. La passerelle 192.168.20.1 est prévue au plan, mais pas encore installée."},
  o:["couper le Wi-Fi de la salle","vérifier qu'elle est libre","redémarrer la box du collège","prévenir le fabricant du poste"],r:1,
  expl:"Deux dangers : tomber sur une adresse déjà prise, ou sur une adresse que le DHCP prêtera plus tard à quelqu'un d'autre. Le conflit arrive alors des jours après.",
  ex:"DHCP de .100 à .200 : les adresses fixes se placent en dehors.",
  err:"Prendre « une adresse qui a l'air libre » sans vérifier la plage réservée.",
- d:["Couper le Wi-Fi n'empêche pas un doublon : il faut vérifier que l'adresse n'est pas déjà prise.","","Redémarrer ne réserve rien.","Le fabricant ne connaît pas ton réseau."],
+ d:["Couper le Wi-Fi n'empêche pas un doublon : il faut vérifier que l'adresse n'est pas déjà dans le plan.","","Redémarrer ne réserve rien.","Le fabricant ne connaît pas ton réseau : c'est le plan qui le connaît."],
  ret:"Une adresse fixe se choisit HORS de la plage du DHCP."},
 {c:"PRO",n:"Ce que le conflit produit",q:"Quand deux appareils portent la même adresse, le symptôme le plus fréquent est…",
  o:["une panne franche et immédiate","un message d'erreur clair à l'écran","une perte de fichiers","une connexion par intermittence"],r:3,
@@ -512,7 +519,8 @@ const QUESTIONS = [
  err:"Chercher une cause matérielle devant une panne intermittente.",
  d:["Une panne franche serait plus facile à diagnostiquer.","Le plus souvent, aucun message clair : les deux appareils se disputent l'adresse, et la connexion va et vient.","Les fichiers ne sont pas touchés : c'est la liaison réseau qui se coupe et revient.",""],
  ret:"Panne intermittente : pense d'abord au doublon."},
-{c:"PRO",n:"Noter ce qu'on fait",q:"Pourquoi consigner par écrit les adresses fixes attribuées ?",
+{c:"PRO",n:"Noter ce qu'on fait",q:"Pourquoi tenir à jour par écrit un plan d'adressage comme celui-ci ?",
+ img:{src:"Images/doc_plan_adressage_serre.svg",alt:"Le plan d'adressage du réseau de la serre. PC-Prof : adresse IP 192.168.20.10, masque 255.255.255.0, passerelle 192.168.20.1. Imprimante : adresse IP 192.168.20.30, masque 255.255.255.0, passerelle 192.168.20.1. Capteur-Serre : adresse IP 192.168.20.50, masque 255.255.255.0, passerelle 192.168.20.1. Serveur-Serre : adresse IP 192.168.20.100, masque 255.255.255.0, passerelle 192.168.20.1. La passerelle 192.168.20.1 est prévue au plan, mais pas encore installée."},
  o:["pour que le suivant sache","c'est une obligation légale","pour accélérer le réseau","pour économiser des adresses"],r:0,
  expl:"Une adresse fixe non écrite est une bombe à retardement : le jour où quelqu'un la réutilise, le conflit apparaît et personne ne sait pourquoi.",
  ex:"Un simple tableau : appareil, adresse, date, personne.",
