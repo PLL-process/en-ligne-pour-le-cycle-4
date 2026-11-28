@@ -103,3 +103,18 @@ Chargement sans erreur JS des deux synthèses ; les schémas embarqués (`<objec
   champ ; le doublon est donc traité à l'oral et en bonus, pas en fichier. La panne
   « adressage (masque) » l'a remplacée.
 - Script de test : suite Playwright du lot (54 vérifications), rejouable.
+
+## Reprise du 28/11/2026 — neuf questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C4.7_questions.mjs` : **28 / 28** (huit tests neufs : le billet existe à la séance 4, juste avant le
+  Bonus ; deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse
+  survit au rechargement ; pour chacun des QCM d'adressage et de Zigbee, au moins six questions sur document, chaque
+  document décrit ; `documents_qcm.py --verifier` à jour). `node tests_regle_311_4e_C4.7.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 à 2, P1 et E1 à 1). La q28 du QCM Zigbee annonçait
+  « ces quatre liaisons » au-dessus d'une réponse à trois critères : réécrite, et sa notion renommée (piège reposé).
+- `controle_unites.py` : 0 (les unités de débit nommées dans le sous-titre du document et dans sa description).
+- `audit_aeration.py --strict` : 0 (une phrase de technicien de l'activité 5 cousait trois idées par « ; » : coupée).
+- `balayer_questions_qcm.mjs --apres` : 120 questions des quatre QCM, 0 écart. Contrôles des QCM (aides comprises),
+  des schémas (0 ✘), des règles d'or, du squelette, du mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle, Packet Tracer.

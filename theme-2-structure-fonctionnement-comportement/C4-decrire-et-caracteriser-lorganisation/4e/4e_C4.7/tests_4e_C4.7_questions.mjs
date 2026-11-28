@@ -61,7 +61,27 @@ for (const n of ['0', '1', '2', '3', '4', '5']) {
   if (['0', '1', '2', '3'].includes(n)) ok(`vérification ${n} : tout juste → ${total} / ${total}, validée`, juste && valide, await fb(n));
   else ok(`vérification ${n} : tout juste → ${total} / ${total}, plus rien « à revoir » (la validation demande aussi la manipulation et l'écrit)`, juste, await fb(n));
 }
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un réseau neuf */
+{
+  await ouvrir('seance4');
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à la séance 4, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 'seance4' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_4e_C4_7_1', 'mauvaise rue : 192.168.3');
+  await p.waitForTimeout(800);   // la page garde 600 ms après la dernière frappe
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_4e_C4_7_1')) === 'mauvaise rue : 192.168.3');
 const rest = await p.evaluate((A) => Object.entries(A).every(([id, v]) => { const c = document.querySelector(`#${id} input[type=radio]:checked`); return c && c.value === v; }), toutes);
 ok('après rechargement, les 35 réponses reviennent (sauvegarde de la page)', rest);
 const pos = await p.evaluate(() => ['pos_c47', 'pos_c48', 'pos_c49'].every((id) => { const f = document.getElementById(id);
@@ -69,6 +89,21 @@ const pos = await p.evaluate(() => ['pos_c47', 'pos_c48', 'pos_c49'].every((id) 
 ok('le positionnement : trois groupes de quatre boutons, chacun légendé par son code', pos);
 ok('aucune erreur JS', err.length === 0, err.slice(0, 2).join(' | '));
 
+/* les QCM d'adressage et de Zigbee : au moins six questions sur document (n°345, 28/11/2026) */
+{
+  const fs = await import('fs'), cp = await import('child_process');
+  const LOT = path.dirname(new URL(import.meta.url).pathname);
+  for (const f of ['qcm_4e_C4.7_adressage_ip.html', 'qcm_4e_C4.7_zigbee_domotique.html']) {
+    const src = fs.readFileSync(path.join(LOT, f), 'utf8');
+    const Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+    const avec = Q.filter((q) => q.img), docs = avec.filter((q) => /\/doc_/.test(q.img.src));
+    ok(`${f} : au moins six questions sur document, chaque image présente`, avec.length >= 6 && avec.every((q) => fs.existsSync(path.join(LOT, q.img.src))), String(avec.length));
+    ok(`${f} : chaque document « doc_ » est décrit en entier`, docs.length >= 3 && docs.every((q) => (q.img.alt || '').length > 120));
+  }
+  let aJour = true;
+  try { cp.execSync('python3 documents_qcm.py --verifier', { cwd: LOT, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('documents_qcm_4e_C4.7.json est à jour du lot (plan d\'adressage, corrections du QCM Zigbee)', aJour);
+}
 const n0 = T.filter((x) => x.ok).length;
 console.log(T.map((x) => `${x.ok ? '✅' : '❌'} ${x.n}${x.d ? ' — ' + x.d : ''}`).join('\n'));
 console.log(`\n${n0} / ${T.length}`);
