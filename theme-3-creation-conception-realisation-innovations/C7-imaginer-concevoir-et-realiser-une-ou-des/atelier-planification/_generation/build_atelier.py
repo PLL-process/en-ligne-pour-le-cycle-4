@@ -27,6 +27,9 @@ from expliquer_sigles import infobuller  # noqa: E402  chaque sigle s'explique (
 import importlib.util as _iu_mission
 _spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
 MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
+import importlib.util as _iu_lis  # la lisibilité à l'écran, source unique `_outils/lisibilite_ecran/` : posée ici,
+_spec_lis = _iu_lis.spec_from_file_location("poser_lisibilite", next(d / "_outils" / "lisibilite_ecran" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "lisibilite_ecran" / "poser.py").is_file()))
+LISIBILITE = _iu_lis.module_from_spec(_spec_lis); _spec_lis.loader.exec_module(LISIBILITE)  # une régénération ne l'efface pas (n°283)
 
 G = pathlib.Path(__file__).resolve().parent
 D = G.parent
@@ -1672,5 +1675,5 @@ def page(niv):
 
 for _niv in ("5e", "4e", "3e"):
     _s = D / ("atelier_%s_C7.1_planification_taches.html" % _niv)
-    _s.write_text(MODE_MISSION.poser(infobuller(page(_niv))), encoding="utf-8")   # infobulles des sigles (n°283), puis le mode mission
+    _s.write_text(LISIBILITE.poser_page(MODE_MISSION.poser(infobuller(page(_niv))), _s), encoding="utf-8")   # infobulles des sigles (n°283), puis le mode mission
     print("écrit : %s (%d o)" % (_s.name, _s.stat().st_size))

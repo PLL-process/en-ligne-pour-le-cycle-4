@@ -436,5 +436,7 @@ if (theme === "dark") {
   // le mode mission (Pascal, 26/11/2026 : « tout doit être en mode mission »), posé par sa source unique,
   // _outils/mode_mission/poser.py ; il ne s'allume que sur la page ouverte seule, jamais dans le cadre de la séquence
   execFileSync("python3", [join(outils, "mode_mission", "poser.py"), sortie]);
+  // la lisibilité à l'écran, source unique _outils/lisibilite_ecran/ : en dernier, une régénération ne l'efface pas (n°283)
+  execFileSync("python3", [join(outils, "lisibilite_ecran", "poser.py"), sortie]);
 }
 console.log("écrit", sortie);

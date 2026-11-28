@@ -567,6 +567,8 @@ writeFileSync(join(IMAGES, "freins_iso.html"), page("dark"));
 // le mode mission (Pascal, 26/11/2026 : « tout doit être en mode mission »), posé par sa source unique ; il ne s'allume
 // que sur la page ouverte seule, jamais dans le cadre de la séquence
 execFileSync("python3", [join(IMAGES, "..", "..", "..", "..", "..", "_outils", "mode_mission", "poser.py"), join(IMAGES, "freins_iso.html")]);
+// la lisibilité à l'écran, source unique _outils/lisibilite_ecran/ : en dernier, une régénération ne l'efface pas (n°283)
+execFileSync("python3", [join(IMAGES, "..", "..", "..", "..", "..", "_outils", "lisibilite_ecran", "poser.py"), join(IMAGES, "freins_iso.html")]);
 const CLAIRE = join(process.env.FREINS_TMP || tmpdir(), "freins_iso-clair.html");
 writeFileSync(CLAIRE, page("light"));   // pour la fiche A4 (print.mjs lit la page claire), hors du dépôt
 

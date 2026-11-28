@@ -35,6 +35,9 @@ import q as banque
 _sys_qa = __import__("sys")
 _sys_qa.path.insert(0, next(str(d / "_outils" / "qcm_aides") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "qcm_aides" / "poser.py").is_file()))
 from poser import poser_si_donnees as _poser_aides  # noqa: E402  aides et pièges du lot (n°339)
+import importlib.util as _iu_lis  # la lisibilité à l'écran, source unique `_outils/lisibilite_ecran/` : posée ici,
+_spec_lis = _iu_lis.spec_from_file_location("poser_lisibilite", next(d / "_outils" / "lisibilite_ecran" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "lisibilite_ecran" / "poser.py").is_file()))
+LISIBILITE = _iu_lis.module_from_spec(_spec_lis); _spec_lis.loader.exec_module(LISIBILITE)  # une régénération ne l'efface pas (n°283)
 
 GRAINE = 512
 
@@ -249,6 +252,7 @@ def construire(gabarit: str, sortie: str) -> None:
     # immédiatement, et une erreur survenue après ce point détruirait le fichier.
     s = intituler_codes.poser_texte(s)   # chaque étiquette de code dit sa compétence au survol
     s = _poser_aides(s, sortie)   # les aides et les pièges du lot (n°339) : sans cela, régénérer les effacerait
+    s = LISIBILITE.poser_page(s, sortie)   # la lisibilité à l'écran, en dernier (n°283)
     open(sortie, "w", encoding="utf-8").write(s)
     print("QCM écrit : %s (%d questions, %d illustrées)"
           % (sortie, len(banque.Q), sum(1 for x in banque.Q if "img" in x)))

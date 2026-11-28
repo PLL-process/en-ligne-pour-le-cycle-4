@@ -13,7 +13,8 @@ défauts sur toutes les pages, au chargement (ce qui est replié n'est pas mesur
   · page sombre sans `color-scheme: dark` (Web Interface Guidelines : barres de défilement et listes natives restent claires) ;
   · boutons à bascule dont le libellé porte l'état (« … : OFF ») et leur attribut `aria-pressed`.
 
-Usage : python3 mesures_telephone.py <racine du dépôt> --json sortie.json [--filtre motif] [--procs 2]
+Usage : python3 mesures_telephone.py <racine du dépôt> --json sortie.json [--filtre motif] [--procs 2] [--eleve]
+--eleve : la page s'ouvre comme pour un élève, mode mission allumé. Sans lui, elle s'ouvre comme pour un robot : la page complète.
 Code de sortie (n°299) : 0 mesures faites · 2 aucune page mesurée.
 """
 import argparse, json, sys, time
@@ -54,12 +55,14 @@ JS = r"""
 
 
 def lot(args):
-    racine, chemins = args
+    racine, chemins, eleve = args
     from playwright.sync_api import sync_playwright
     res = []
     with sync_playwright() as p:
         nav = p.chromium.launch()
         ctx = nav.new_context(viewport={"width": 390, "height": 844}, has_touch=True, is_mobile=True, device_scale_factor=1, locale="fr-FR")
+        if eleve:  # mission.js ouvre la page complète à un robot (navigator.webdriver) : on se présente comme un élève
+            ctx.add_init_script("Object.defineProperty(Navigator.prototype, 'webdriver', {get: () => false})")
         for c in chemins:
             rel = str(Path(c).relative_to(racine))
             page = ctx.new_page()
@@ -82,6 +85,7 @@ def lot(args):
 def principal():
     ap = argparse.ArgumentParser()
     ap.add_argument("racine"); ap.add_argument("--json", required=True); ap.add_argument("--filtre", default=""); ap.add_argument("--procs", type=int, default=2)
+    ap.add_argument("--eleve", action="store_true", help="ouvrir la page comme un élève (mode mission allumé), pas comme un robot")
     a = ap.parse_args()
     racine = Path(a.racine).resolve()
     pages = sorted(str(f) for f in racine.rglob("*.html")
@@ -90,7 +94,7 @@ def principal():
         print("PANNE — aucune page (code 2)"); return 2
     t0 = time.time()
     with Pool(a.procs) as pool:
-        res = [x for m in pool.map(lot, [(str(racine), pages[i::a.procs]) for i in range(a.procs)]) for x in m]
+        res = [x for m in pool.map(lot, [(str(racine), pages[i::a.procs], a.eleve) for i in range(a.procs)]) for x in m]
     res.sort(key=lambda x: x["page"])
     Path(a.json).write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
     mes = [x for x in res if "centre" in x]

@@ -119,6 +119,9 @@ import importlib.util as _iu
 _spec = _iu.spec_from_file_location("poser_mission", os.path.join(os.path.dirname(os.path.abspath(__file__)), "mode_mission", "poser.py"))
 MODE_MISSION = _iu.module_from_spec(_spec)
 _spec.loader.exec_module(MODE_MISSION)
+import importlib.util as _iu_lis  # la lisibilité à l'écran, source unique `_outils/lisibilite_ecran/` : posée ici,
+_spec_lis = _iu_lis.spec_from_file_location("poser_lisibilite", next(d / "_outils" / "lisibilite_ecran" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "lisibilite_ecran" / "poser.py").is_file()))
+LISIBILITE = _iu_lis.module_from_spec(_spec_lis); _spec_lis.loader.exec_module(LISIBILITE)  # une régénération ne l'efface pas (n°283)
 
 CHAMP = lambda bloc, nom: (
     m.group(1) if (m := re.search(r'"?\b%s"?\s*:\s*"((?:[^"\\]|\\.)*)"' % nom, bloc)) else ""
@@ -602,6 +605,7 @@ def ecrire_lexique(dossier, titre, retour, commun=None, verifier=False):
     page = infobuller(page)
     page = MODE_MISSION.poser(page)
     sortie = os.path.join(dossier, "lexique_%s.html" % code)
+    page = LISIBILITE.poser_page(page, sortie)   # la lisibilité à l'écran, en dernier (n°283)
     garde_ecrasement(sortie, page)
     if verifier:                                      # ne rien écrire : la page du dépôt est-elle celle-ci ?
         a_jour = os.path.isfile(sortie) and open(sortie, encoding="utf-8").read() == page

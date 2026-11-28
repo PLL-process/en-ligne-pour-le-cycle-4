@@ -34,7 +34,7 @@ th{background:#0a1b3d;color:var(--sub)}.defile{overflow-x:auto}
 #navharm{display:flex;flex-wrap:wrap;gap:8px;max-width:900px;margin:12px auto 0;padding:0 16px}
 #navharm a{padding:6px 12px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.88em;text-decoration:none}
 .btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;font-family:inherit}
-.evitement{position:absolute;left:-9999px}.evitement:focus{left:10px;top:10px;background:#fff;color:#000;padding:8px}
+.evitement{position:absolute;left:-9999px}.evitement:focus{left:10px;top:10px;background:#fff;color:#000;padding:8px;z-index:2000}
 @media print{body{background:#fff;color:#111;font-size:11.5pt}#navharm,.btn{display:none}.card{background:#fff;border-color:#999;break-inside:avoid-page}
 h1,h2,h3{color:#111}a,a:visited{color:#00309e!important}.sous{color:#1a3a7a}th{background:#eee;color:#111}.bloc{background:#fff}}
 """
@@ -231,7 +231,7 @@ CSS_ELEVE = """  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#2
 .niv{display:inline-block;font-size:.72em;font-weight:700;color:#050f24;background:var(--sub);border-radius:999px;
      padding:1px 8px;margin-left:6px;vertical-align:middle;white-space:nowrap}
 .programme .niv{margin:0 6px 0 0}
-.evitement{position:absolute;left:-9999px}.evitement:focus{left:10px;top:10px;background:#fff;color:#000;padding:8px}
+.evitement{position:absolute;left:-9999px}.evitement:focus{left:10px;top:10px;background:#fff;color:#000;padding:8px;z-index:2000}
 #navharm{flex-wrap:wrap}
 @media(max-width:600px){#navharm{position:static}}
 @media print{.niv{background:#fff;color:#111;border:1px solid #999}.evitement{display:none}}

@@ -32,6 +32,9 @@ import q as banque
 _sys_qa = __import__("sys")
 _sys_qa.path.insert(0, next(str(d / "_outils" / "qcm_aides") for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "qcm_aides" / "poser.py").is_file()))
 from poser import poser_si_donnees as _poser_aides  # noqa: E402  aides et pièges du lot (n°339)
+import importlib.util as _iu_lis  # la lisibilité à l'écran, source unique `_outils/lisibilite_ecran/` : posée ici,
+_spec_lis = _iu_lis.spec_from_file_location("poser_lisibilite", next(d / "_outils" / "lisibilite_ecran" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "lisibilite_ecran" / "poser.py").is_file()))
+LISIBILITE = _iu_lis.module_from_spec(_spec_lis); _spec_lis.loader.exec_module(LISIBILITE)  # une régénération ne l'efface pas (n°283)
 
 GRAINE = 617
 ORDRE = ("expl", "ex", "err")
@@ -188,6 +191,7 @@ def construire(gabarit: str, sortie: str) -> None:
     # Les aides et les pièges de l'atelier (n°339), avant les contrôles : ils remplacent la carte et les pièges que le
     # gabarit porterait ; sans cela, régénérer les effacerait.
     s = _poser_aides(s, sortie)
+    s = LISIBILITE.poser_page(s, sortie)   # la lisibilité à l'écran, en dernier (n°283)
 
     # ── Contrôles avant écriture ────────────────────────────────────────────
     for reste in ("Shenzhen", "SOS serre", "Packet Tracer", "surchauffe ?", "Martinique — 4e"):

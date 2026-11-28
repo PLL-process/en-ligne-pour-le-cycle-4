@@ -39136,3 +39136,55 @@ l'usager… », 1 450 px sous le titre de son exercice, le diagramme loin au-des
 
 **Vérifié.** Le TP : mesure 0 candidate (9 avant) ; aucune erreur JavaScript, phases 0 à 5 jouées ;
 `tests_tp_algorigrammes_4e_C6.2.mjs` 31 / 31 ; `tests_4e_C6.2.mjs` 67 / 67 ; `tests_regle_311_4e_C6.2` 34 / 34.
+
+## 28/11/2026 — Lisibilité au téléphone et au clavier : un bloc commun posé par outil sur 412 pages, mesuré dans la vue de l'élève (transversal : thèmes 1, 2 et 3, `_outils/`, `docs/audits/`)
+
+**D'où ça vient.** Le 26/11 au soir, l'audit des dix skills de design (`docs/audits/AUDIT_SKILLS_DESIGN_2026-11-26.md`)
+propose une vague « lisibilité au téléphone » ; Pascal répond « Tu as carte blanche » (26/11, 27/11 et 28/11).
+
+**Une erreur de méthode, rectifiée.** Les mesures de rendu du 26/11 ont été prises par un navigateur piloté
+(`navigator.webdriver`) : le site lui donne la page complète, alors que l'élève arrive en mode mission (14/11/2026). Le
+constat « bouton Mode mission flottant sur le texte, 85 séquences » décrivait donc une page que l'élève ne voit pas
+d'abord : ce bouton n'apparaît qu'une fois l'élève sorti du mode mission, comme Pascal l'a demandé le 16/11. **Constat
+retiré, bouton laissé tel quel.** Les deux scripts de mesure prennent `--eleve` ; le rapport dit les deux vues.
+
+**Ce que pose `_outils/lisibilite_ecran/poser.py`** (nouvel outil, source unique, `README.md` à côté ; un bloc entre
+marqueurs avant `</head>`, sous `@media screen` seulement — onze pages capturées en A4, `main` contre la branche :
+identiques au pixel) :
+1. la note de sauvegarde et la problématique alignées à gauche sous 700 px ;
+2. le chapeau d'un QCM, d'un lexique ou d'un atelier centré s'il tient sur une ligne, aligné à gauche s'il est long ;
+3. les légendes des synthèses élève à 13 px au moins, jamais plus petites qu'avant ;
+4. la barre du haut opaque là où elle était translucide sans flou (le texte qui défile se lisait à travers) ;
+5. une marge de défilement sous la barre du haut (64 px) et au-dessus du pied « Suivant » du mode mission (104 px) :
+   le champ atteint au clavier, ou le lien vers une ancre, ne finit plus caché dessous (WCAG 2.4.11).
+Une page ne reçoit que ce qui la concerne ; une page qui règle déjà sa marge de défilement garde la sienne.
+
+**Mesuré en vue élève, `main` contre la branche** : focus caché 144 → 27 pages, dont 23 tiennent au défilement doux
+de la page (rejouées en attendant 0,4 s : aucun) — restent quatre cas isolés, nommés au rapport ; texte centré de trois
+lignes et plus, pour les cinq textes visés, 199 → 0 page ; texte sous 12 px en synthèse élève 58 → 1 ; barre
+translucide sans flou 129 → 0. Laissés : `p.question` des synthèses (titre-question en gras), les mentions de licence.
+
+**Règle d'or n°283, appliquée à ce lot.** Un bloc posé dans des pages engendrées doit l'être par leur générateur :
+sinon une régénération l'efface. L'outil expose `poser_page(html, chemin)`, appelée en dernier par les quinze
+générateurs qui écrivent ces pages : `_outils/generer_lexique.py`, `ateliers-representations/_generation/build.py`,
+l'atelier de planification (`build_atelier.py`, `build_qcm.py`), l'atelier CAO (`build_tp.py`), la station de `3e_C9.2`
+(`generer_les_quatre_pages.py`), six `build_qcm.py` de lots du thème 1, et trois générateurs Node (lampadaire et
+station en pièces, freins de `5e_C1.2`). Le même relevé a trouvé une faute du lot du 26/11 : le `z-index` du lien
+« Aller au contenu » avait été posé dans 38 pages engendrées seulement ; il est maintenant dans `build.py` et
+`syntheses.py` des ateliers. Rejoués : les générateurs des ateliers, de la planification, de la CAO (quatre scénarios)
+et de la station réécrivent leurs pages à l'identique ; `controle_lexique_a_jour` retrouve les 7 lexiques périmés de
+`main` (58 avant que le générateur des lexiques ne pose le bloc).
+
+**Vérifié.** `poser.py --verifier --site` : 412 pages à jour, code 0. Les 56 contrôles Python de `_outils/`, sur `main`
+et sur la branche : mêmes codes de sortie ; trois rouges des deux côtés, venus des lots du 27/11 (`controle_hierarchie`,
+`controle_lexique_a_jour`, `controle_sigles_expliques`). Bancs du mode mission : `banc_mission.mjs` 52 / 52 ; `banc_defaut.mjs`
+vert sur toutes les pages à mode mission ; `banc_barre.mjs` 112 / 112 sur le thème 3 et 47 / 47 au début du thème 1
+(le reste du thème 1 et le thème 2 n'ont pas tourné, faute de temps). **Non vérifié** : les trois générateurs Node (le kit `anatomy` qu'ils importent n'est pas dans la
+session : syntaxe seulement) et les `build_qcm.py` (il leur faut un gabarit : leur import charge) ; un vrai téléphone.
+
+**Thème par thème** (n°302) : thème 1 — 134 pages reçoivent le bloc ; six `build_qcm.py` (`3e_C1.1`, `4e_C1.1`,
+`5e_C1.1`, `5e_C1.2`, `3e_C2.1`, `4e_C2.1`), `freins_iso/build.mjs` (`5e_C1.2`), `build.py` et `syntheses.py` des
+ateliers ; thème 2 — 100 pages ; `lampadaire_en_pieces/build.mjs` (`5e_C4.1`), `station_en_pieces/build.mjs`
+(`3e_C4.3`) ; thème 3 — 178 pages ; l'atelier de planification, l'atelier CAO, `3e_C9.2` ; `_outils/` — le dossier
+neuf `lisibilite_ecran/`, `generer_lexique.py` ; `docs/audits/` — le rapport rectifié, `--eleve` dans les deux scripts
+de mesure.

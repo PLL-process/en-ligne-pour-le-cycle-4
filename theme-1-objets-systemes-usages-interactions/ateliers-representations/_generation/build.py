@@ -32,6 +32,9 @@ import syntheses  # noqa: E402
 import importlib.util as _iu_mission
 _spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
 MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
+import importlib.util as _iu_lis  # la lisibilité à l'écran, source unique `_outils/lisibilite_ecran/` : posée ici,
+_spec_lis = _iu_lis.spec_from_file_location("poser_lisibilite", next(d / "_outils" / "lisibilite_ecran" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "lisibilite_ecran" / "poser.py").is_file()))
+LISIBILITE = _iu_lis.module_from_spec(_spec_lis); _spec_lis.loader.exec_module(LISIBILITE)  # une régénération ne l'efface pas (n°283)
 # la synthèse élève de chaque atelier le porte aussi, une partie par écran (26/11/2026, Pascal : « tout doit être en
 # mode mission » ; du 25 au 26/11, c'était le « mode lecture »)
 
@@ -135,6 +138,7 @@ def ecrire(chemin, contenu, mission=False):
         contenu = infobuller(contenu)
         if mission:          # les pages d'atelier, les cahiers (25/11/2026), les synthèses élève (26/11/2026)
             contenu = MODE_MISSION.poser(contenu)
+        contenu = LISIBILITE.poser_page(contenu, chemin)   # la lisibilité à l'écran, en dernier (n°283)
     chemin.parent.mkdir(parents=True, exist_ok=True)
     ancien = chemin.read_text(encoding="utf-8") if chemin.exists() else None
     if ancien != contenu:
@@ -189,7 +193,7 @@ a,a:where(:visited){color:#61dafb}.btn{display:inline-block;background:#1d4e89;c
 .note{color:#9bbefc;font-size:.92em}b{color:#c68ef2}
 #navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:760px;margin:14px auto 0;padding:0 18px}
 #navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
-.evitement{position:absolute;left:-9999px}.evitement:focus{left:10px;top:10px;background:#fff;color:#000;padding:8px}
+.evitement{position:absolute;left:-9999px}.evitement:focus{left:10px;top:10px;background:#fff;color:#000;padding:8px;z-index:2000}
 @media print{body{background:#fff;color:#111}.card{background:#fff;border-color:#999}h1{color:#111}#navharm{display:none}
 a,a:visited{color:#00309e!important}.btn{background:#fff!important;color:#00309e!important;border:1px solid #00309e}b{color:#5a1a9a}.note,.sous{color:#1a3a7a}}
 """

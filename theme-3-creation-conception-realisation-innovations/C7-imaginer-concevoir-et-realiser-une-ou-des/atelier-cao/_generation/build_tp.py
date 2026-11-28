@@ -57,6 +57,9 @@ from licence_cc import MENTION as MENTION_LICENCE  # noqa: E402
 import importlib.util as _iu_mission
 _spec_mission = _iu_mission.spec_from_file_location("poser_mission", next(d / "_outils" / "mode_mission" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "mode_mission" / "poser.py").is_file()))
 MODE_MISSION = _iu_mission.module_from_spec(_spec_mission); _spec_mission.loader.exec_module(MODE_MISSION)
+import importlib.util as _iu_lis  # la lisibilité à l'écran, source unique `_outils/lisibilite_ecran/` : posée ici,
+_spec_lis = _iu_lis.spec_from_file_location("poser_lisibilite", next(d / "_outils" / "lisibilite_ecran" / "poser.py" for d in __import__("pathlib").Path(__file__).resolve().parents if (d / "_outils" / "lisibilite_ecran" / "poser.py").is_file()))
+LISIBILITE = _iu_lis.module_from_spec(_spec_lis); _spec_lis.loader.exec_module(LISIBILITE)  # une régénération ne l'efface pas (n°283)
 
 STYLE_TP = """
   .palier{background:var(--panel);border:1px solid var(--border);border-radius:12px;
@@ -465,6 +468,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
     # le mode mission : un palier par écran — le modèle de démonstration aussi, depuis le 26/11/2026 (Pascal : « tout
     # doit être en mode mission ») ; la dispense `"sans_mode_mission"` du scénario est retirée
     page = MODE_MISSION.poser(page)
+    page = LISIBILITE.poser_page(page, sortie)   # la lisibilité à l'écran, en dernier (n°283)
     sortie.write_text(page, encoding="utf-8")
     n_etapes = sum(len(p.get("etapes", [])) for p in paliers)
     print("TP écrit : %s (%d paliers, %d étapes, %d o)"

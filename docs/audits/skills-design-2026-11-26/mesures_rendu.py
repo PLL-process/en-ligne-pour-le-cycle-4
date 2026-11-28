@@ -13,7 +13,8 @@ chargement : ce qui est replié ou dans un autre onglet n'est PAS mesuré, et le
 À 390 px puis 320 px, écran tactile :
   · défilement horizontal de la page ; cibles sous 24 × 24 px (critère 2.5.8) ; hauteur de la page en écrans.
 
-Rien n'est modifié. Usage : python3 mesures_rendu.py <racine du dépôt> --json sortie.json [--filtre motif] [--procs 2]
+Rien n'est modifié. Usage : python3 mesures_rendu.py <racine du dépôt> --json sortie.json [--filtre motif] [--procs 2] [--eleve]
+--eleve : la page s'ouvre comme pour un élève, mode mission allumé. Sans lui, elle s'ouvre comme pour un robot : la page complète.
 Code de sortie (n°299) : 0 mesures faites · 2 aucune page mesurée.
 """
 import argparse, json, statistics, sys, time
@@ -174,13 +175,16 @@ def mesurer_page(page_ctx, ctx_mobile, chemin, racine):
 
 
 def lot(args):
-    racine, chemins = args
+    racine, chemins, eleve = args
     from playwright.sync_api import sync_playwright
     res = []
     with sync_playwright() as p:
         nav = p.chromium.launch()
         ctx = nav.new_context(viewport={"width": 1280, "height": 800}, locale="fr-FR")
         mob = nav.new_context(viewport={"width": 390, "height": 844}, has_touch=True, is_mobile=True, device_scale_factor=2, locale="fr-FR")
+        if eleve:  # mission.js ouvre la page complète à un robot (navigator.webdriver) : on se présente comme un élève
+            for c_ in (ctx, mob):
+                c_.add_init_script("Object.defineProperty(Navigator.prototype, 'webdriver', {get: () => false})")
         for c in chemins:
             try:
                 res.append(mesurer_page(ctx, mob, Path(c), Path(racine)))
@@ -193,6 +197,7 @@ def lot(args):
 def principal():
     ap = argparse.ArgumentParser()
     ap.add_argument("racine"); ap.add_argument("--json", required=True); ap.add_argument("--filtre", default=""); ap.add_argument("--procs", type=int, default=2)
+    ap.add_argument("--eleve", action="store_true", help="ouvrir la page comme un élève (mode mission allumé), pas comme un robot")
     a = ap.parse_args()
     racine = Path(a.racine).resolve()
     pages = sorted(str(f) for f in racine.rglob("*.html")
@@ -201,7 +206,7 @@ def principal():
     if not pages:
         print("PANNE — aucune page (code 2)"); return 2
     t0 = time.time()
-    morceaux = [(str(racine), pages[i::a.procs]) for i in range(a.procs)]
+    morceaux = [(str(racine), pages[i::a.procs], a.eleve) for i in range(a.procs)]
     with Pool(a.procs) as pool:
         res = [x for m in pool.map(lot, morceaux) for x in m]
     res.sort(key=lambda x: x["page"])
