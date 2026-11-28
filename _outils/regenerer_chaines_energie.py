@@ -154,6 +154,8 @@ def incruster(html, svg, marqueur):
     return re.subn(motif, remp, html, flags=re.S)
 
 
+# 28/11/2026 : une flèche part 12 px SOUS le texte du composant, jamais à travers (« entités qui ne se touchent pas »,
+# Pascal) — mesuré par getBBox sur les SVG produits : lampadaire, jardin, Book Train et chaîne à élaborer corrigés.
 def lampadaire():
     d=Diagram('Lampadaire solaire : l’information (en haut) commande l’énergie (en bas)',
         CONVENTION + ' Les capteurs de luminosité et de mouvement acquièrent les informations. La carte traite et communique un ordre à l’interrupteur électronique. Le panneau convertit l’énergie lumineuse en énergie électrique. Le régulateur de charge relie panneau, batterie et alimentation des LED. La batterie stocke de l’énergie chimique ; ses échanges avec le régulateur sont électriques, dans les deux sens. L’interrupteur distribue l’énergie électrique au bloc LED qui la convertit en lumière pour éclairer la zone.',935)
@@ -163,7 +165,7 @@ def lampadaire():
     d.block(1060,125,'COMMUNIQUER','Sortie de commande\nde la carte',GREEN,w=240)
     d.arrow([(370,163),(580,163)],CYAN,'Mesures',475,143)
     d.arrow([(840,163),(1050,163)],CYAN,'Décision',945,143)
-    d.arrow([(1180,262),(1180,315),(945,315),(945,390)],GREEN,'Ordre d’allumage : l’ordre descend',1195,300,dashed=True,lanchor='start')
+    d.arrow([(1180,276),(1180,315),(945,315),(945,390)],GREEN,'Ordre d’allumage : l’ordre descend',1195,300,dashed=True,lanchor='start')
     d.section(352,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
     for args in [(155,'CONVERTIR','Panneau solaire',VIOLET),(510,'ALIMENTER','Régulateur de charge',YELLOW),(840,'DISTRIBUER','Interrupteur électronique\n(ou pilote de LED)',CYAN),(1195,'CONVERTIR','Bloc LED',VIOLET)]:
         d.block(args[0],410,*args[1:])
@@ -187,7 +189,7 @@ def jardin():
     d.block(1160,120,'COMMUNIQUER','Module Wi-Fi et application\nMesures et courbes',GREEN,w=290)
     d.arrow([(310,158),(570,158)],CYAN,'Mesures',440,138)
     d.arrow([(830,158),(1150,158)],CYAN,'Données à afficher',990,138)
-    d.arrow([(705,258),(705,304),(940,304),(940,380)],GREEN,'Ordres d’arrosage : l’ordre descend',960,288,dashed=True,lanchor='start')
+    d.arrow([(705,274),(705,304),(940,304),(940,380)],GREEN,'Ordres d’arrosage : l’ordre descend',960,288,dashed=True,lanchor='start')
     d.section(350,"CHAÎNE D’ÉNERGIE — en bas (elle obéit)",ORANGE)
     d.block(150,400,'CONVERTIR','Panneau solaire',VIOLET)
     d.block(495,400,'ALIMENTER','Régulateur de charge',YELLOW)
@@ -239,7 +241,7 @@ def _gabarit(muet=False, corrige=False):
     d.text(955,390,'Sélectionner la source',BLUE,18)
     d.text(1305,390,'12 V continu → 5 V continu',BLUE,18)
     d.block(850,650,'ALIMENTER','Alimentation secteur\nisolée : sortie 12 V continu',CYAN)
-    d.arrow([(955,640),(955,390)],CYAN,'Énergie électrique\nSecteur disponible',1200,525)
+    d.arrow([(955,640),(955,406)],CYAN,'Énergie électrique\nSecteur disponible',1200,525)
     d.text(315,712,'Entrée secteur',BLUE,21)
     d.arrow([(440,704),(840,704)],CYAN,'Énergie électrique',635,744)
     d.section(820,'LES CINQ COMPOSANTS SONT PLACÉS — deux restent hors du périmètre' if corrige
@@ -385,7 +387,7 @@ def book():
         CONVENTION + ' Modèle fonctionnel simplifié du Book Train. Le réseau électrique alimente une alimentation adaptée. La commande de puissance distribue l’énergie électrique au moteur sur ordre de l’automate. Le moteur convertit l’énergie électrique en énergie cinétique de rotation. Le réducteur et les organes d’entraînement transmettent le mouvement pour déplacer le wagonnet et sa nacelle. Les capteurs fournissent des comptes rendus à la chaîne d’information. Les détails de tensions, de stockage et d’entraînement doivent être établis à partir de la documentation technique.',765)
     d.section(100,"CHAÎNE D’INFORMATION — en haut (rappel)",CYAN)
     d.block(600,130,'TRAITER','Automate et programme\nDonnées issues des capteurs',VIOLET,w=300)
-    d.arrow([(650,270),(650,325),(585,325),(585,430)],GREEN,'Ordres : démarrer, ralentir, arrêter — l’ordre descend',700,309,dashed=True,lanchor='start')
+    d.arrow([(650,284),(650,325),(585,325),(585,430)],GREEN,'Ordres : démarrer, ralentir, arrêter — l’ordre descend',700,309,dashed=True,lanchor='start')
     d.arrow([(1265,415),(1265,170),(910,170)],CYAN,'Comptes rendus des capteurs',1220,130,dashed=True)
     d.section(385,"CHAÎNE D’ÉNERGIE — en bas",ORANGE)
     d.block(135,450,'ALIMENTER','Alimentation électrique\nadaptée',YELLOW,w=200)
