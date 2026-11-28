@@ -42,6 +42,13 @@ vérificateur.
 L'élève voit que la surface qui frotte, sur un frein à patins, est **la roue elle-même** — celle qui
 roule dans les flaques. Il en déduit seul la faiblesse sous la pluie **avant** d'ouvrir le tableau.
 
+## 🎥 Les trois freins en 3D, même sans Internet
+
+Depuis le 28/11/2026, l'activité 1 montre la même roue avec ses trois freins, en **films courts** (4,5 s, muets) : la roue
+entière, et le frein de près en coupe. L'élève choisit le frein et lance le film ; il s'arrête sur l'image complète, qui
+porte ses numéros. Ce sont des **modèles simplifiés** (Blender, par script : `_generation/films_trois_freins/`), placés
+après les trois vidéos d'Alain Le Berre : ils servent quand YouTube ne s'ouvre pas. Banc : `tests_trois_freins_3d.py`.
+
 ## Deux routes vers le code 5e_C1.2
 
 Le lot **[Chengdu](../5e_C1.1/)** couvre aussi ce code par son activité 1. Les deux coexistent et ne

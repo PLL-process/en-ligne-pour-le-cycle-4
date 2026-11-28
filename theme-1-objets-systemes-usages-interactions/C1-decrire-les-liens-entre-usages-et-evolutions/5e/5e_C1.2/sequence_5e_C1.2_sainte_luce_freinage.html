@@ -212,6 +212,43 @@ section.trois-lignes{max-width:960px;margin-left:auto;margin-right:auto;box-sizi
   .ressource-repli{border-top-color:#666}
 }
 </style>
+<style id="f3d-css">
+/* Les trois freins en 3D (27/11/2026) : films du lot, engendrés par _generation/films_trois_freins/ (Blender).
+   Ils se jouent une fois, quand l'élève le demande (n°175) ; l'affiche est leur dernière image (n°176). */
+.f3d{background:#0a1b3d;border:1px solid #274a8a;border-left:4px solid #61dafb;border-radius:12px;
+  padding:14px 18px;margin:18px 0}
+.f3d-quel{margin:12px 0 0}
+.f3d-choix{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 10px;max-width:720px}
+.f3d-choix button{background:#0b1b39;color:#e4eaf5;border:1px solid #2f5695;border-radius:9px;
+  padding:9px 4px;min-height:44px;font:inherit;font-weight:600;cursor:pointer}
+.f3d-choix button[aria-pressed="true"]{background:#1d4e89;border-color:#9bbefc;color:#fff}
+.f3d-choix button[aria-pressed="true"]::before{content:"✓ "}
+.f3d-choix button:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.f3d-ecran{margin:0;max-width:720px;background:#071633;border:1px solid #274a8a;border-radius:10px;overflow:hidden}
+.f3d-ecran video{display:block;width:100%;height:auto;aspect-ratio:960/676;cursor:pointer}
+.f3d-outils{margin:10px 0 0}
+.f3d-outils .btn{min-height:44px}
+.f3d-legende{margin-top:12px}
+.f3d-liste{margin:4px 0 0;padding-left:1.7em}
+.f3d-liste li{margin:3px 0}
+.f3d-coupe{margin:8px 0 0}
+.f3d-note{margin:8px 0 0;font-size:.9em;color:#9bbefc}
+.f3d-regarder{margin-top:4px}
+.f3d-regarder ul{margin:4px 0 0;padding-left:1.3em}
+.f3d-regarder li{margin:4px 0}
+.f3d-papier{display:none}
+@media (max-width:520px){.f3d{padding:12px 10px}.f3d-choix button{font-size:.94em}}
+@media print{
+  .f3d{background:#fff;border:1px solid #666;border-left:4px solid #111;color:#111;break-inside:avoid;padding:2mm 3mm}
+  .f3d-quel,.f3d-choix,.f3d-ecran,.f3d-outils,.f3d-legende,.f3d-regarder,.f3d .ressource-tete,.f3d .ressource-source{display:none!important}
+  .f3d .ressource-titre{color:#111;margin:0 0 1.5mm}
+  .f3d .ressource-titre::after{content:" — en 3D (modèles simplifiés : l'écart entre les pièces est grossi)";font-weight:400}
+  .f3d-papier{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3mm}
+  .f3d-papier img{display:block;width:100%;height:auto;border:.3mm solid #999}
+  .f3d-papier p{margin:1mm 0 0;font-size:8pt;line-height:1.3;color:#111}
+  .f3d-mini{margin:0;padding-left:4.5mm;font-size:8pt;line-height:1.25;color:#111;columns:2;column-gap:2mm}
+}
+</style>
 <!-- fiche-papier v1 : début — la séquence imprimée en fiche d'élève ; source unique : _outils/impression_papier/ (poser.py). Ne pas le modifier dans la page. -->
 <style>
 /* Fiche papier — source unique : _outils/impression_papier/papier.css (posée par poser.py ; ne pas modifier dans la page).
@@ -2206,6 +2243,119 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
   </div>
 </section>
 <!-- /ressource: res-5e-C1-2-tambour -->
+<!-- trois freins en 3D : films du lot (_generation/films_trois_freins/), lisibles sans Internet (n°305) -->
+<section class="f3d" id="freins-3d" aria-labelledby="f3dTitre">
+  <header class="ressource-tete">
+    <span class="ressource-genre">🎥 Film en 3D</span>
+    <span class="ressource-chip">sans Internet</span>
+  </header>
+  <h4 aria-level="3" class="ressource-titre" id="f3dTitre">Les trois freins, sur la même roue</h4>
+  <p class="ressource-source">Un modèle en 3D, écrit pour cette séquence. <br>Il montre la même chose que les trois vidéos, même quand Internet manque.</p>
+  <div class="f3d-regarder">
+    <p class="ressource-etiq">Ce qu'il faut regarder</p>
+    <ul>
+      <li><b>Dans le rond</b> : cherche <strong>les deux surfaces qui viennent se toucher</strong>.</li>
+      <li><b>Sur la roue entière</b> : à quelle distance de l'axe de la roue le frottement a-t-il lieu&nbsp;?</li>
+      <li>Regarde les trois films. <br>Puis range les trois freins, du plus loin de l'axe au plus près.</li>
+    </ul>
+  </div>
+  <p class="ressource-etiq f3d-quel" id="f3dQuel">Choisis le frein</p>
+  <div class="f3d-choix" role="group" aria-labelledby="f3dQuel">
+    <button type="button" data-frein="patins" aria-pressed="true">à patins</button>
+    <button type="button" data-frein="disque" aria-pressed="false">à disque</button>
+    <button type="button" data-frein="tambour" aria-pressed="false">à tambour</button>
+  </div>
+  <figure class="f3d-ecran">
+    <video id="f3dFilm" muted playsinline preload="none" width="960" height="676"
+      poster="Images/trois-freins_patins_3d.jpg"
+      aria-label="Film muet de 5 secondes, en 3D : le frein à patins. La roue avant tourne dans sa fourche. On serre le levier : le câble tire les deux bras du frein, et les deux patins pincent la jante. La roue ralentit, puis s'arrête. La jante devient orange là où les patins ont frotté : tout au bord de la roue, loin de l'axe.">
+      <source src="Films/trois-freins_patins.mp4" type="video/mp4">
+      <source src="Films/trois-freins_patins.webm" type="video/webm">
+    </video>
+  </figure>
+  <p class="f3d-outils"><button type="button" class="btn" id="f3dJouer">▶ Lancer le film (5 secondes)</button></p>
+  <div class="f3d-legende">
+    <p class="ressource-etiq" id="f3dNom">Frein à patins — les numéros de l'image</p>
+    <ol class="f3d-liste" id="f3dListe">
+      <li>le levier de frein</li>
+      <li>le câble, dans sa gaine (le tube qui le guide)</li>
+      <li>les deux bras du frein</li>
+      <li>les patins (deux blocs de caoutchouc)</li>
+      <li>la jante (le bord de la roue, en métal)</li>
+    </ol>
+    <p class="f3d-coupe">🔎 <b>Dans le rond</b>, le frein est vu de près. <br><span id="f3dCoupe">La roue est coupée juste devant les patins, comme une tranche.</span></p>
+    <p class="f3d-note">🔍 <b>Modèle simplifié, en 3D</b> : l'écart entre les pièces est grossi pour qu'on le voie. <br>La roue a moins de rayons qu'une vraie. <br>L'orange montre l'endroit qui chauffe.</p>
+  </div>
+  <div class="f3d-papier">
+    <div><img src="Images/trois-freins_patins_3d_impression.jpg" width="720" height="507" data-loupe="non" alt="Le frein à patins en 3D : la roue entière dans sa fourche, et dans un rond le frein vu de près. Les deux patins pincent la jante, tout au bord de la roue."><p><b>Frein à patins</b></p><ol class="f3d-mini"><li>levier</li><li>câble dans sa gaine</li><li>bras du frein</li><li>patins</li><li>jante</li></ol></div>
+    <div><img src="Images/trois-freins_disque_3d_impression.jpg" width="720" height="507" data-loupe="non" alt="Le frein à disque en 3D : la roue entière dans sa fourche, et dans un rond le frein vu de près. Les deux plaquettes de l'étrier pincent le disque, près du centre de la roue."><p><b>Frein à disque</b></p><ol class="f3d-mini"><li>levier</li><li>durite</li><li>étrier</li><li>plaquettes</li><li>disque</li></ol></div>
+    <div><img src="Images/trois-freins_tambour_3d_impression.jpg" width="720" height="507" data-loupe="non" alt="Le frein à tambour en 3D : la roue entière dans sa fourche, et dans un rond le tambour ouvert. Les deux mâchoires s'écartent et frottent dans le tambour, tout près de l'axe de la roue."><p><b>Frein à tambour</b></p><ol class="f3d-mini"><li>levier</li><li>câble dans sa gaine</li><li>came</li><li>mâchoires</li><li>tambour</li></ol></div>
+  </div>
+  <script>
+  /* Les trois freins en 3D : un seul lecteur, trois films. Rien n'est demandé au réseau avant le premier « Lancer »
+     (preload="none") ; le film se joue une fois, quand l'élève le demande, et s'arrête sur son image complète. */
+  (function () {
+    var FREINS_3D = {
+      patins: {nom: "Frein à patins",
+        mp4: "Films/trois-freins_patins.mp4", webm: "Films/trois-freins_patins.webm",
+        affiche: "Images/trois-freins_patins_3d.jpg",
+        l: ["le levier de frein", "le câble, dans sa gaine (le tube qui le guide)", "les deux bras du frein",
+            "les patins (deux blocs de caoutchouc)", "la jante (le bord de la roue, en métal)"],
+        coupe: "La roue est coupée juste devant les patins, comme une tranche.",
+        d: "La roue avant tourne dans sa fourche. On serre le levier : le câble tire les deux bras du frein, et les deux patins pincent la jante. La roue ralentit, puis s'arrête. La jante devient orange là où les patins ont frotté : tout au bord de la roue, loin de l'axe."},
+      disque: {nom: "Frein à disque",
+        mp4: "Films/trois-freins_disque.mp4", webm: "Films/trois-freins_disque.webm",
+        affiche: "Images/trois-freins_disque_3d.jpg",
+        l: ["le levier de frein", "la durite (un tuyau rempli de liquide de frein)", "l'étrier (une pince fixée à la fourche)",
+            "les plaquettes (deux pastilles qui frottent), dans l'étrier", "le disque, fixé au moyeu (le centre de la roue)"],
+        coupe: "L'étrier est vu du dessus, ouvert : le disque passe au milieu.",
+        d: "La roue avant tourne dans sa fourche. On serre le levier : le liquide de la durite pousse les deux plaquettes de l'étrier, et elles pincent le disque. La roue ralentit, puis s'arrête. Le disque devient orange : le frottement a lieu près du centre de la roue."},
+      tambour: {nom: "Frein à tambour",
+        mp4: "Films/trois-freins_tambour.mp4", webm: "Films/trois-freins_tambour.webm",
+        affiche: "Images/trois-freins_tambour_3d.jpg",
+        l: ["le levier de frein", "le câble, dans sa gaine (le tube qui le guide)", "la came (une pièce qui tourne et écarte les mâchoires)",
+            "les mâchoires (deux pièces en arc, garnies)", "le tambour, dans le moyeu (le centre de la roue)"],
+        coupe: "Le tambour est ouvert : son couvercle est ôté.",
+        d: "La roue avant tourne dans sa fourche. On serre le levier : le câble tire le levier de came, la came tourne et écarte les deux mâchoires. Elles frottent à l'intérieur du tambour. La roue ralentit, puis s'arrête. Le tambour devient orange : le frottement a lieu tout près de l'axe de la roue."}
+    };
+    var bloc = document.getElementById("freins-3d");
+    if (!bloc) return;
+    var film = document.getElementById("f3dFilm"), bouton = document.getElementById("f3dJouer"),
+        liste = document.getElementById("f3dListe"), nom = document.getElementById("f3dNom"),
+        coupe = document.getElementById("f3dCoupe"), choix = bloc.querySelectorAll(".f3d-choix button");
+    function brancher(v) {
+      v.addEventListener("click", lancer);
+      v.addEventListener("ended", function () { bouton.textContent = "↻ Revoir le film"; });
+    }
+    function montrer(cle) {
+      var f = FREINS_3D[cle];
+      if (!f) return;
+      [].forEach.call(choix, function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-frein") === cle ? "true" : "false"); });
+      /* Un lecteur neuf plutôt que load() : Chromium télécharge le film dès load(), même avec preload="none". */
+      film.pause();
+      var neuf = film.cloneNode(false);
+      neuf.setAttribute("poster", f.affiche);
+      neuf.innerHTML = '<source src="' + f.mp4 + '" type="video/mp4"><source src="' + f.webm + '" type="video/webm">';
+      neuf.setAttribute("aria-label", "Film muet de 5 secondes, en 3D : le " + f.nom.toLowerCase() + ". " + f.d);
+      film.parentNode.replaceChild(neuf, film);
+      film = neuf;
+      brancher(film);
+      nom.textContent = f.nom + " — les numéros de l'image";
+      liste.innerHTML = f.l.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+      coupe.textContent = f.coupe;
+      bouton.textContent = "▶ Lancer le film (5 secondes)";
+    }
+    function lancer() {
+      try { film.currentTime = 0; } catch (e) {}
+      var essai = film.play();
+      if (essai && essai.catch) essai.catch(function () {});
+    }
+    [].forEach.call(choix, function (b) { b.addEventListener("click", function () { montrer(b.getAttribute("data-frein")); }); });
+    bouton.addEventListener("click", lancer);
+    brancher(film);
+  })();
+  </script>
+</section>
   <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta"><b>Objectif</b> distinguer la fonction, le principe et la solution — et voir de
   ses yeux ce qui serre quoi. · <b>Compétence</b> 5e_C1.2 · <b>Production</b> un relevé
   d'observation en trois lignes · <b>Ressources</b> un vélo (version 🅰), la figure à manipuler
