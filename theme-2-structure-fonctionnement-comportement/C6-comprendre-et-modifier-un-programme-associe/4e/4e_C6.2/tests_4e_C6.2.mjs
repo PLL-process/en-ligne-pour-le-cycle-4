@@ -366,7 +366,29 @@ ok(`22 · les ${editeurs.length} éditeurs Python sont DANS la page (04/11/2026)
    editeurs.join(','));
 
 /* ── persistance ─────────────────────────────────────────────────────────── */
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf */
+{
+  const _avant = await p.evaluate(() => (document.querySelector('.seance-panel.active') || {}).id);
+  await p.click('.seance-tab[data-panel="s3"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à sa séance, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 's3' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_4e_C6_2_1', 'ma réponse au billet');
+  await p.waitForTimeout(800);
+  if (_avant) { await p.click(`.seance-tab[data-panel="${_avant}"]`); await p.waitForTimeout(80); }
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(360);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_4e_C6_2_1')) === 'ma réponse au billet');
 ok('23 · rechargement : réponses, progression 8 / 8 et les trois verrous sont restaurés',
    (await p.inputValue('#a1q1')) === PLAN[1].a1q1.v
    && (await p.textContent('#progTxt')).includes('8 / 8')
@@ -599,5 +621,21 @@ await ctx.close();
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));
 console.log(`\n${n} / ${T.length}`);
+/* ── les QCM : au moins six questions sur document (n°345, 28/11/2026) ── */
+{
+  const _fs = await import('node:fs'), _cp = await import('node:child_process');
+  for (const f of ['qcm_4e_C6.2_arrosage_automatique.html', 'qcm_eclairage_automatique.html']) {
+    const src = _fs.readFileSync(path.join(ICI, f), 'utf8');
+    const Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+    const avec = Q.filter(q => q.img), docs = avec.filter(q => /\/doc_/.test(q.img.src));
+    ok(`QCM · ${f} : au moins six questions sur document, chaque image présente`,
+       avec.length >= 6 && avec.every(q => _fs.existsSync(path.join(ICI, q.img.src))), String(avec.length));
+    ok(`QCM · ${f} : chaque document « doc_ » est décrit en entier`, docs.length >= 3 && docs.every(q => (q.img.alt || '').length > 120));
+  }
+  let aJour = true;
+  try { _cp.execSync('python3 documents_qcm.py --verifier', { cwd: ICI, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('QCM · documents_qcm_4e_C6.2.json est à jour du lot', aJour);
+}
+
 await b.close();
 process.exit(n === T.length ? 0 : 1);

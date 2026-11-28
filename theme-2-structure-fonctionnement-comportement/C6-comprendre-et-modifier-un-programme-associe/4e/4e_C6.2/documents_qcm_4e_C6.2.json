@@ -1,0 +1,106 @@
+{
+  "qcm": [
+    "qcm_4e_C6.2_arrosage_automatique.html",
+    "qcm_eclairage_automatique.html"
+  ],
+  "documents": {
+    "doc_programme_arrosage": {
+      "titre": "Le programme de l'arrosage",
+      "sous_titre": "Le programme Python du jardin, complété. L'humidité du sol est lue en % (pour cent).",
+      "desc": "Le programme Python de l'arrosage, ligne par ligne : seuil = 30 / while True: / humidite = lire_capteur_pourcent(A0) / if humidite < seuil: / demarrer_pompe() / else: / arreter_pompe() / attendre(1). Le document ne dit pas ce que fait la pompe pour une mesure donnée.",
+      "blocs": [
+        {
+          "fiches": [
+            {
+              "titre": "Le programme, dans l'ordre",
+              "lignes": [
+                "seuil = 30",
+                "while True:",
+                "    humidite = lire_capteur_pourcent(A0)",
+                "    if humidite < seuil:",
+                "        demarrer_pompe()",
+                "    else:",
+                "        arreter_pompe()",
+                "    attendre(1)"
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "Les lignes décalées appartiennent à la ligne qui les précède · attendre(1) : attendre une seconde."
+    },
+    "doc_banc_tests_arrosage": {
+      "titre": "Le banc de tests de l'arrosage",
+      "sous_titre": "Trois tests du programme, l'humidité et le seuil en % (pour cent), et ce que le besoin attend.",
+      "desc": "Le banc de tests de l'arrosage : T1 — sol sec, humidité 10 %, seuil 30 %, attendu : POMPE EN MARCHE ; T2 — sol humide, humidité 80 %, seuil 30 %, attendu : pompe à l'arrêt ; T3 — FRONTIÈRE, humidité 30 %, seuil 30 %, attendu : pompe à l'arrêt. Le document ne dit pas ce que le programme a obtenu.",
+      "blocs": [
+        {
+          "tableau": {
+            "colonnes": [
+              "Test",
+              "Humidité",
+              "Seuil",
+              "Pompe"
+            ],
+            "lignes": [
+              [
+                "T1 sol sec",
+                "10 %",
+                "30 %",
+                "en marche"
+              ],
+              [
+                "T2 sol humide",
+                "80 %",
+                "30 %",
+                "à l'arrêt"
+              ],
+              [
+                "T3 frontière",
+                "30 %",
+                "30 %",
+                "à l'arrêt"
+              ]
+            ],
+            "largeurs": [
+              116,
+              62,
+              52,
+              92
+            ]
+          }
+        }
+      ],
+      "note": "La colonne « Pompe » dit ce que le besoin attend. Chaque test compare la pompe à cette attente."
+    },
+    "doc_programme_eclairage": {
+      "titre": "Le programme de l'éclairage",
+      "sous_titre": "Le programme d'une carte de type Arduino : une LDR, la cellule sensible à la lumière, sur A0, et une LED.",
+      "desc": "Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction.",
+      "blocs": [
+        {
+          "fiches": [
+            {
+              "titre": "Le programme, dans l'ordre",
+              "lignes": [
+                "int seuil = 400;",
+                "void setup() {",
+                "    pinMode(LED, OUTPUT);",
+                "}",
+                "void loop() {",
+                "    int lumiere = analogRead(A0);",
+                "    if (lumiere < seuil) {",
+                "        digitalWrite(LED, HIGH);",
+                "    } else {",
+                "        digitalWrite(LED, LOW);",
+                "    }",
+                "}"
+              ]
+            }
+          ]
+        }
+      ],
+      "note": "analogRead rend un nombre de 0 à 1023 · HIGH : allumée · LOW : éteinte."
+    }
+  }
+}

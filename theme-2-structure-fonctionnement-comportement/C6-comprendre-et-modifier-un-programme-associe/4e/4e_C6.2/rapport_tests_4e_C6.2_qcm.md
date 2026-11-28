@@ -154,3 +154,19 @@ question — et, pour la séquence, qu'elle tient sans réseau.
 
 Il ne dit rien non plus du **contenu** des éditeurs Vittascience : ce qui se passe dans une
 iframe d'un autre domaine est hors d'atteinte d'une suite locale, et le restera.
+
+## Reprise du 28/11/2026 — douze questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C6.2.mjs` : **70 / 70** (six tests neufs : le billet existe à la séance 3, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement ; aux deux QCM, au moins six questions sur document, chaque document décrit, `documents_qcm.py
+  --verifier` à jour). `node tests_regle_311_4e_C6.2.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 était à 2, P1 à 1). `balayer_questions_qcm.mjs
+  --apres` : 90 questions jouées, 18 illustrées, 0 écart (`qcm_algorigrammes_domotique.html`, autre gabarit, non lu,
+  comme sur `main`). Aides : `poser.py --verifier` à jour pour les deux QCM (celui de l'éclairage était « à reposer »
+  sur `main` : ses sigles sont passés dans `qcm_aides_4e_C6.2_eclairage.json`, puis reposés). Contrôles des QCM, des
+  schémas (0 ✘ ; un ⚠ ancien sur `schema_eclairage_automatique.svg`), de l'aération, des règles d'or, du squelette, du
+  mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

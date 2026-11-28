@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -305,7 +307,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (5 C4.4 + 3 C4.1 + 4 C4.5 + 16 C6.2 + 2 C1.4), 0 illustrée.
+/* Banque : 30 questions (5 C4.4 + 3 C4.1 + 4 C4.5 + 16 C6.2 + 2 C1.4), 6 illustrées, toutes sur document (n°345, 28/11/2026).
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle
    images v2) » : elle venait d'un gabarit, par copie, et ne correspondait pas à ce fichier. */
@@ -405,12 +407,13 @@ const QUESTIONS = [
  err:"Inverser le sens de la comparaison — l'erreur la plus fréquente, et la plus coûteuse : le système arrose exactement quand il ne faut pas.",
  d:["Avec >, la pompe démarrerait quand la terre est DÉJÀ humide : on noierait la plante.","","Avec =, la pompe ne démarrerait qu'à la valeur exacte du seuil, soit presque jamais.","Avec ≠, la pompe tournerait tout le temps sauf à une seule valeur."],
  ret:"On arrose quand l'humidité est INFÉRIEURE au seuil."},
-{c:"C6.2",n:"Le comportement au-dessus du seuil",q:"Si l'humidité mesurée est AU-DESSUS du seuil, le programme…",
+{c:"C6.2",n:"Le comportement au-dessus du seuil",q:"Avec ce programme, le capteur mesure 45 %. Que fait le programme ?",
+ img:{src:"Images/doc_programme_arrosage.svg",alt:"Le programme Python de l'arrosage, ligne par ligne : seuil = 30 / while True: / humidite = lire_capteur_pourcent(A0) / if humidite < seuil: / demarrer_pompe() / else: / arreter_pompe() / attendre(1). Le document ne dit pas ce que fait la pompe pour une mesure donnée."},
  o:["active la pompe","coupe la pompe","redémarre la carte","efface la valeur du seuil"],r:1,
  expl:"C'est l'autre branche de la condition. Un programme complet dit ce qu'il fait dans les DEUX cas ; sans le SINON, la pompe resterait dans son dernier état.",
  ex:"Au banc de tests de l'activité 6, c'est précisément ce cas qu'on vérifie en deuxième.",
  err:"N'écrire que le cas « il faut arroser » et oublier le cas « il ne faut pas ».",
- d:["Activer la pompe sur un sol déjà humide, c'est le contraire de la fonction demandée.","","Redémarrer la carte n'est pas une décision d'arrosage : c'est une panne.","Effacer le seuil détruirait la règle elle-même."],
+ d:["« 45 < 30 » est faux : relis la ligne du if, la pompe ne démarre que si la mesure est sous le seuil.","","Aucune ligne ne redémarre la carte : relis le programme, il ne commande que la pompe.","La ligne « seuil = 30 » n'est jamais réécrite : relis le programme, aucune ligne n'efface le seuil."],
  ret:"Une condition dit ce qu'elle fait dans les deux cas : ALORS et SINON."},
 {c:"C6.2",n:"Le nom de la structure",q:"La structure « SI … ALORS … SINON … » s'appelle…",
  o:["une boucle qui tourne indéfiniment","une instruction conditionnelle","une variable qui retient une valeur","un commentaire ignoré par la machine"],r:1,
@@ -419,12 +422,13 @@ const QUESTIONS = [
  err:"Appeler « boucle » tout ce qui se répète — la boucle répète, la condition choisit.",
  d:["Une boucle RÉPÈTE ; ici on ne répète pas, on choisit entre deux chemins.","","Une variable STOCKE une valeur ; elle ne décide de rien.","Un commentaire est ignoré par la machine : il s'adresse aux humains."],
  ret:"Instruction conditionnelle : la machine choisit selon que la condition est vraie ou fausse."},
-{c:"C6.2",n:"Ce qu'est un seuil",q:"Dans le programme, « seuil » est…",
+{c:"C6.2",n:"Ce qu'est un seuil",q:"Dans ce programme, « seuil » est…",
+ img:{src:"Images/doc_programme_arrosage.svg",alt:"Le programme Python de l'arrosage, ligne par ligne : seuil = 30 / while True: / humidite = lire_capteur_pourcent(A0) / if humidite < seuil: / demarrer_pompe() / else: / arreter_pompe() / attendre(1). Le document ne dit pas ce que fait la pompe pour une mesure donnée."},
  o:["l'actionneur qui déclenche la pompe","le capteur qui mesure l'humidité","une variable qu'on peut régler","une marque de pompe pour le jardinage"],r:2,
  expl:"C'est le bouton dans le code : une valeur qu'on change SANS réécrire le programme. Régler un paramètre, c'est adapter le comportement sans toucher à la logique.",
  ex:"Au banc de tests, tu règles ce seuil et tu observes ce que ça change — la logique, elle, ne bouge pas.",
  err:"Confondre le paramètre (une valeur) et l'organe (une pièce).",
- d:["Un actionneur agit sur le monde ; un seuil n'est qu'un nombre.","Le capteur MESURE ; le seuil est ce à quoi on compare la mesure.","","Ce n'est pas un objet du commerce : c'est une valeur choisie par celui qui règle."],
+ d:["L'actionneur, c'est la pompe, commandée par demarrer_pompe() : relis la première ligne, seuil n'est qu'un nombre.","Le capteur est lu par lire_capteur_pourcent(A0) : relis la première ligne, seuil reçoit une valeur fixée.","","Relis la première ligne : « seuil = 30 » range une valeur dans un nom, ce n'est pas un objet du commerce."],
  ret:"Un paramètre = une valeur réglable sans réécrire le programme."},
 {c:"C6.2",n:"Le seuil réglé trop bas",q:"Régler un seuil TROP BAS risque de…",
  o:["laisser la plante manquer d'eau","noyer la plante en arrosant sans arrêt","abîmer l'écran à force d'affichages","vider la pile en quelques heures"],r:0,
@@ -440,12 +444,13 @@ const QUESTIONS = [
  err:"Croire qu'un mauvais réglage casse la machine — il fait surtout mal son travail.",
  d:["Un réglage ne modifie pas le programme : c'est précisément l'intérêt d'un paramètre.","Assécher est le risque du seuil trop BAS : on arrose trop tard.","L'écran affiche ce qu'on lui donne, quel que soit le seuil.",""],
  ret:"Un mauvais seuil ne casse rien : il fait mal le travail. C'est plus difficile à voir."},
-{c:"C6.2",n:"Relire la mesure sans arrêt",q:"Le programme relit la mesure du capteur régulièrement grâce à…",
+{c:"C6.2",n:"Relire la mesure sans arrêt",q:"Dans ce programme, qu'est-ce qui fait relire la mesure régulièrement ?",
+ img:{src:"Images/doc_programme_arrosage.svg",alt:"Le programme Python de l'arrosage, ligne par ligne : seuil = 30 / while True: / humidite = lire_capteur_pourcent(A0) / if humidite < seuil: / demarrer_pompe() / else: / arreter_pompe() / attendre(1). Le document ne dit pas ce que fait la pompe pour une mesure donnée."},
  o:["une deuxième carte programmable","un fichier de mesures déjà prises","une boucle qui répète la lecture","un second capteur d'humidité"],r:2,
  expl:"Sans boucle, le programme mesurerait une fois, déciderait une fois, puis s'arrêterait. La boucle est ce qui rend un objet technique SURVEILLANT.",
  ex:"C'est ce qui distingue un système automatique d'un simple bouton.",
  err:"Confondre boucle (répéter) et condition (choisir) — les deux briques du programme.",
- d:["Une seule carte suffit : elle répète, elle ne se dédouble pas.","Un fichier conserve des mesures déjà prises ; il n'en déclenche aucune.","","Un second capteur donnerait une autre mesure, pas une répétition de la même."],
+ d:["Relis le programme : il tourne sur une seule carte, et la ligne « while True: » le fait recommencer.","Relis la ligne de lecture : elle interroge le capteur à chaque passage, elle ne lit aucun fichier.","","Relis le programme : il n'y a qu'un capteur, A0, lu encore et encore par « while True: »."],
  ret:"La boucle répète. La condition choisit. Un système qui surveille a besoin des deux."},
 {c:"C6.2",n:"Prédire avant d'exécuter",q:"Aux activités 5 et 6, on te demande d'écrire ta prédiction AVANT de cliquer sur ▶. Pourquoi ?",
  o:["Parce que le programme refuse de démarrer sans prédiction saisie","Parce qu'un écart n'existe que si on attendait autre chose","Pour occuper les élèves rapides pendant que les autres terminent","Parce que c'est la prédiction, et non le résultat, qui est notée"],r:1,
@@ -454,19 +459,21 @@ const QUESTIONS = [
  err:"Prendre la prédiction pour une formalité et l'écrire après avoir vu le résultat.",
  d:["Techniquement, le programme s'exécute très bien sans prédiction : c'est un choix pédagogique, pas une contrainte de la machine.","","Elle est demandée à tous, précisément parce qu'elle est le cœur de l'activité.","C'est bien la comparaison prédit/observé qui compte, pas la prédiction seule."],
  ret:"Prédire → exécuter → comparer. C'est l'écart qui enseigne, pas le résultat."},
-{c:"C6.2",n:"Le cas frontière",q:"Le seuil est fixé à 30 %. Le banc de tests demande d'essayer une humidité de 30 % exactement. Pourquoi ce cas-là ?",
+{c:"C6.2",n:"Le cas frontière",q:"Sur ce banc de tests, pourquoi le test T3 met-il l'humidité à 30 %, pile sur le seuil ?",
+ img:{src:"Images/doc_banc_tests_arrosage.svg",alt:"Le banc de tests de l'arrosage : T1 — sol sec, humidité 10 %, seuil 30 %, attendu : POMPE EN MARCHE ; T2 — sol humide, humidité 80 %, seuil 30 %, attendu : pompe à l'arrêt ; T3 — FRONTIÈRE, humidité 30 %, seuil 30 %, attendu : pompe à l'arrêt. Le document ne dit pas ce que le programme a obtenu."},
  o:["Parce que la pompe consomme moins de courant à cette humidité-là","Parce que 30 est un nombre rond, plus rapide à saisir au clavier","Parce que le capteur d'humidité est plus précis autour de cette valeur","Parce que c'est là que « < » et « ≤ » cessent de donner le même résultat"],r:3,
  expl:"La valeur limite est le seul endroit où deux écritures presque identiques se séparent. Un programme peut réussir tous les autres tests et se tromper exactement là.",
  ex:"Même logique qu'une limite de vitesse : rouler à 50 exactement, est-ce dépasser ?",
  err:"Ne tester que des cas confortables, loin de la frontière — et croire le programme validé.",
- d:["La consommation de la pompe ne dépend pas de la valeur mesurée, mais de son état.","La commodité de saisie n'a rien à voir : c'est la LIMITE qui est intéressante.","La précision du capteur ne dépend pas du seuil qu'on a choisi dans le programme.",""],
+ d:["La pompe consomme selon qu'elle tourne ou non : relis la ligne T3, ce qui compte est l'humidité égale au seuil.","La commodité de saisie n'a rien à voir : relis la ligne T3, c'est la LIMITE qui est testée.","La précision du capteur ne dépend pas du seuil choisi : relis la ligne T3, humidité et seuil sont égaux.",""],
  ret:"Un banc de tests sans cas frontière ne prouve pas grand-chose."},
-{c:"C6.2",n:"Ce que prouve un test au vert",q:"Tes trois tests passent au vert. Qu'as-tu prouvé ?",
+{c:"C6.2",n:"Ce que prouve un test au vert",q:"Ces trois tests passent au vert. Qu'as-tu prouvé ?",
+ img:{src:"Images/doc_banc_tests_arrosage.svg",alt:"Le banc de tests de l'arrosage : T1 — sol sec, humidité 10 %, seuil 30 %, attendu : POMPE EN MARCHE ; T2 — sol humide, humidité 80 %, seuil 30 %, attendu : pompe à l'arrêt ; T3 — FRONTIÈRE, humidité 30 %, seuil 30 %, attendu : pompe à l'arrêt. Le document ne dit pas ce que le programme a obtenu."},
  o:["Que le capteur d'humidité est en bon état de marche","Que le programme est correct dans toutes les situations","Que le programme se comporte comme prévu dans ces trois cas","Que le seuil choisi est le meilleur pour cette plante"],r:2,
  expl:"Un test montre la présence d'un comportement, jamais l'absence de tous les défauts. Trois cas au vert, c'est trois cas au vert — précieux, et limité.",
  ex:"C'est pour cela qu'on choisit les cas : un sec, un humide, un à la frontière.",
  err:"Passer de « mes tests passent » à « mon programme est juste ».",
- d:["Le banc simule les valeurs : il ne dit rien de l'état physique du capteur.","Aucun jeu de tests fini ne couvre toutes les situations possibles.","","Le banc vérifie le comportement, pas la pertinence agronomique du seuil."],
+ d:["Le banc donne lui-même les humidités : relis la colonne « Humidité », aucun capteur réel n'est mesuré.","Relis le tableau : trois lignes, trois cas. Aucun jeu de tests fini ne couvre toutes les situations.","","Relis la colonne « Seuil » : 30 % y est fixé, le banc ne le compare à aucun autre réglage."],
  ret:"Un test prouve un comportement dans un cas. Il ne prouve jamais l'absence de défaut."},
 {c:"C6.2",n:"Compléter n'est pas programmer",q:"Dans cet atelier, le verbe du programme officiel est « COMPLÉTER un programme ». Cela veut dire que…",
  o:["tu décris le programme en français sans jamais l'exécuter","tu écris le programme entier en partant d'une page blanche","tu recopies le programme fourni sans y changer une ligne","le programme est fourni, et tu écris la partie qui manque"],r:3,
@@ -496,12 +503,13 @@ const QUESTIONS = [
  err:"Croire qu'un programme qui tourne à l'écran prouve que le montage physique fonctionne.",
  d:["","Aucune pompe n'est reliée à l'éditeur : rien ne bouge dans le jardin.","L'éditeur n'envoie rien à personne ; c'est toi qui rends ton travail.","L'éditeur exécute réellement : c'est même tout son intérêt ici."],
  ret:"Une exécution simulée prouve la logique. Elle ne prouve pas le montage."},
-{c:"C6.2",n:"Lire l'ordre des instructions",q:"Dans le programme de mesure, pourquoi la lecture du capteur doit-elle venir AVANT la comparaison au seuil ?",
+{c:"C6.2",n:"Lire l'ordre des instructions",q:"Dans ce programme, pourquoi la ligne « humidite = lire_capteur_pourcent(A0) » vient-elle AVANT le if ?",
+ img:{src:"Images/doc_programme_arrosage.svg",alt:"Le programme Python de l'arrosage, ligne par ligne : seuil = 30 / while True: / humidite = lire_capteur_pourcent(A0) / if humidite < seuil: / demarrer_pompe() / else: / arreter_pompe() / attendre(1). Le document ne dit pas ce que fait la pompe pour une mesure donnée."},
  o:["Parce que le capteur est câblé avant le relais dans le boîtier","Parce qu'on ne peut pas comparer une valeur pas encore lue","Parce que les instructions se rangent par ordre alphabétique","Parce que la comparaison s'exécute plus lentement que la lecture"],r:1,
  expl:"Un programme s'exécute dans l'ordre. Comparer avant de lire, c'est décider sur une valeur vide — l'erreur classique quand on remet des blocs en ordre au hasard.",
  ex:"C'est l'activité 3 : les cinq lignes ne sont pas interchangeables.",
  err:"Ranger les instructions par habitude visuelle plutôt que par dépendance logique.",
- d:["L'ordre des fils dans le boîtier n'impose rien à l'ordre des instructions.","","L'ordre alphabétique n'a aucun rôle dans un programme.","La vitesse d'exécution ne dicte pas l'ordre : c'est la dépendance des données qui le dicte."],
+ d:["Le câblage n'impose rien à l'ordre des lignes : relis le if, il a besoin de la valeur de humidite.","","Les lignes ne sont pas rangées par ordre alphabétique : relis le if, il compare humidite au seuil.","La vitesse ne dicte pas l'ordre : relis le if, il utilise humidite, qui doit déjà avoir une valeur."],
  ret:"Une instruction qui utilise une valeur vient après celle qui la produit."},
 {c:"C6.2",n:"Ce que change une deuxième condition",q:"Défi bonus : « la pompe ne démarre que si le sol est sec ET s'il fait jour ». Que devient la règle ?",
  o:["Les deux conditions doivent être vraies en même temps","Il suffit que l'une des deux conditions soit vraie","La pompe arrose deux fois plus longtemps à chaque fois","Le seuil d'humidité ne sert plus dans la nouvelle règle"],r:0,
