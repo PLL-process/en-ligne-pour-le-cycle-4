@@ -78,6 +78,15 @@ switch dédié non relié au réseau pédagogique, un TP à 2 PC + switch (192.1
 192.168.51.20) ; 🅱 Packet Tracer (cœur de l'atelier) ; 🅲 sans
 matériel — plan papier + schémas + clinique intégrée. Aucune manipulation électrique : tout est logiciel.
 
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 4, environ 5 minutes, seul et sans aide : le réseau de la
+salle de sciences, où un capteur a reçu la mauvaise rue (192.168.3.50). Question 1 : la cause lue dans les adresses,
+et une adresse libre dans la rue 192.168.30. Question 2 : deux essais dans la simulation, dont un qui vérifie que rien
+d'autre n'est cassé. La séance 4 passe de 45 à 50 minutes d'activités.
+
+Les QCM d'adressage et de Zigbee ont chacun six questions sur document (n°345) : « Le plan d'adressage de la serre »,
+lu dans la séquence, et « Quatre liaisons sans fil », dont les ordres de grandeur sont ceux des corrections du QCM
+Zigbee (`documents_qcm.py` refuse si une correction change).
+
 ## Différenciation, inclusion, accessibilité
 
 Règle « concevoir guidé, comme une recette » : l'élève conçoit SON plan avant de voir la référence, chaque

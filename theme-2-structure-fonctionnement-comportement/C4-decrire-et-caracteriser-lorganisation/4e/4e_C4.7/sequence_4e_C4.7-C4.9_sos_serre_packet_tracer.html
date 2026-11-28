@@ -3056,7 +3056,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
     <p><b>Deux preuves sont justes, au choix.</b> Une seule réponse est fausse&nbsp;: «&nbsp;aucun test&nbsp;».</p>
     <p><b>Preuve 1 — le ping.</b> <br>① Clique sur Capteur-Serre, puis ouvre son terminal (Command Prompt). <br>② Tape <b>ping 192.168.20.100</b>&nbsp;: c'est l'adresse de Serveur-Serre. <br>③ Lis le résultat&nbsp;: quatre lignes «&nbsp;Reply from 192.168.20.100&nbsp;», et «&nbsp;0% loss&nbsp;» (aucune perte). <br>Le message est allé jusqu'au serveur, et la réponse est revenue.</p>
     <p><b>Preuve 2 — l'enveloppe.</b> <br>① Choisis l'enveloppe fermée (Add Simple PDU). <br>② Clique sur Capteur-Serre, puis sur Serveur-Serre. <br>③ Lis le verdict, en bas à droite&nbsp;: «&nbsp;Successful&nbsp;». <br>En mode Simulation, tu vois en plus l'enveloppe passer par le commutateur.</p>
-    <p><b>Une phrase de technicien, par exemple&nbsp;:</b> <br>«&nbsp;J'ai lancé un ping depuis Capteur-Serre vers 192.168.20.100&nbsp;; le résultat affiche quatre "Reply from" et 0&nbsp;% de perte&nbsp;; donc la communication capteur → serveur est prouvée, aller et retour.&nbsp;»</p>
+    <p><b>Une phrase de technicien, par exemple&nbsp;:</b> <br>«&nbsp;J'ai lancé un ping depuis Capteur-Serre vers 192.168.20.100. <br>Le résultat affiche quatre "Reply from" et 0&nbsp;% de perte. <br>Donc la communication du capteur vers le serveur est prouvée, aller et retour.&nbsp;»</p>
     <p><b>Ce qui ne prouve rien&nbsp;:</b> des câbles aux triangles verts. <br>Ils disent que la liaison est branchée, pas que l'adresse est la bonne. <br>Avec la mauvaise rue 192.168.<b>21</b>.50, les liens étaient verts… et le ping échouait.</p>
     <p><b>Ta preuve est complète si</b> elle dit trois choses&nbsp;: le test lancé, le résultat affiché à l'écran, la conclusion.</p>
   </details>
@@ -3084,6 +3084,48 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   enveloppe, trajet par le commutateur, verdict «&nbsp;Successful&nbsp;».</p>
   <h4 aria-level="3">🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">adresse fixe = static address</span><span class="tag">passerelle = gateway</span><span class="tag">masque = subnet mask</span><span class="tag">dépanner = to troubleshoot</span><span class="tag">panne = failure</span><span class="tag">délai dépassé = timed out</span><span class="tag">simulation = simulation</span></p>
+</section>
+
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un réseau nouveau&nbsp;: <b>celui de la salle de sciences</b>.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p>Son plan&nbsp;: PC-1 en 192.168.30.11, PC-2 en 192.168.30.12, l'imprimante en 192.168.30.40, tous avec le masque 255.255.255.0. Un technicien vient d'ajouter un capteur de température, à qui il a donné l'adresse 192.168.3.50. Depuis PC-1, le ping vers le capteur échoue.</p>
+  <p><label for="bs_4e_C4_7_1"><b>1.</b> Donne la cause de la panne, en citant ce que tu lis dans les adresses. Puis donne au capteur une adresse qui marche, et dis pourquoi celle-là.</label></p>
+  <textarea id="bs_4e_C4_7_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>La rue du réseau est ____ ; celle du capteur est ____ .</li>
+      <li>La panne vient de ____ .</li>
+      <li>Je lui donne ____ , parce qu'elle est ____ et ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_4e_C4_7_2"><b>2.</b> Avant de toucher au vrai capteur, tu testes ta correction dans la simulation. Écris deux essais, avec le résultat que tu attends pour chacun&nbsp;: l'un qui prouve que la panne est réparée, l'autre qui prouve que tu n'as rien cassé.</label></p>
+  <textarea id="bs_4e_C4_7_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Essai A&nbsp;: depuis ____ , ping vers ____ . J'attends ____ .</li>
+      <li>Essai B&nbsp;: depuis ____ , ping vers ____ . J'attends ____ , parce que ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;La rue du réseau est 192.168.30&nbsp;; celle du capteur est 192.168.3.
+    <br>La panne vient d'une mauvaise rue&nbsp;: avec le masque 255.255.255.0, le capteur n'est pas dans le réseau de la salle.
+    <br>Je lui donne 192.168.30.50, parce qu'elle est dans la bonne rue et qu'aucun autre appareil du plan ne la porte.&nbsp;»
+    <br><b>Critère</b>&nbsp;: la cause est lue dans les trois premiers nombres, et l'adresse proposée est à la fois dans la rue 192.168.30 et libre.</p>
+    <p>✘ «&nbsp;Le câble du capteur est coupé&nbsp;»&nbsp;: rien dans le plan ne le dit, alors que l'adresse, elle, est fausse.
+    <br>✘ «&nbsp;192.168.30.40&nbsp;»&nbsp;: la bonne rue, mais c'est l'adresse de l'imprimante&nbsp;: une nouvelle panne.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Essai A&nbsp;: depuis PC-1, ping vers 192.168.30.50. J'attends quatre réponses du capteur.
+    <br>Essai B&nbsp;: depuis PC-1, ping vers l'imprimante, 192.168.30.40. J'attends qu'elle réponde encore, parce qu'une correction ne doit rien casser de ce qui marchait.&nbsp;»
+    <br><b>Critère</b>&nbsp;: deux essais nommés, chacun avec son résultat attendu écrit avant, dont un qui vérifie le reste du réseau.</p>
+    <p>✘ «&nbsp;Je regarde si le voyant du capteur s'allume&nbsp;»&nbsp;: un voyant allumé ne dit pas qu'un message arrive.
+    <br>✘ «&nbsp;Deux pings vers le capteur&nbsp;»&nbsp;: le même essai deux fois ne prouve rien sur le reste du réseau.</p>
+    </div>
+  </details>
 </section>
 
 <section class="card">
