@@ -35,3 +35,9 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_station_reseau_coupe.png` | Sur un toit-terrasse, sous une pluie battante, un mât porte un boîtier gris et un capteur ; un câble descend vers le bâtiment. Autour, des palmiers pliés par le vent. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a small grey weather alert station box on a metal mast on the flat roof of a Caribbean school during a tropical storm, heavy rain and bending palm trees, a fallen electric power line in the street below and dark unlit houses, the station fed only by a single grey cable coming from the building, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Document du QCM, dessiné pour le téléphone (28/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_dimensionner_batterie.svg` | Le besoin en énergie de la station (6 W, 72 h, 12 V), les deux relations et les batteries du catalogue — sans aucun résultat de calcul. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C4.1.json`, lui-même LU dans l'activité 2 de la séquence par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM, q8 à q11 |
