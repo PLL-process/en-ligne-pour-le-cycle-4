@@ -38957,3 +38957,10 @@ Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lo
 Bancs : séquence 169 / 169, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de l'aération, du
 squelette, du mode mission et des liens : verts. Thème 3 seulement (`4e_C9.1`). Les chantiers D1 et P1 du thème 3 sont
 tous fermés.
+
+## 27/11/2026 — Exports Moodle régénérés (transversal : `_exports/` seulement)
+
+Pascal : « 2 oui ». Les exports Moodle gardaient le texte d'avant les lots de la semaine (questions sur document, règle
+d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les réécrit depuis les 76 QCM : 2 301
+questions, 433 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux des lots C7 et C9
+du thème 3 du 27/11/2026 compris). Aucune phrase « comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.
