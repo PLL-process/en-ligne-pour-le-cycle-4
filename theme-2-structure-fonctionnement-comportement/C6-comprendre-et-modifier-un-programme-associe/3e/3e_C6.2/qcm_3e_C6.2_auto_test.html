@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -162,7 +164,7 @@
 <div class="badges">
   <span class="badge niveau">3e</span>
   <span title="Programme 2024 — 3e_C6.2 : Programmer un algorithme lié à une nouvelle fonctionnalité." class="badge code">3e_C6.2</span>
-  <span class="badge theme">30 questions · 3 illustrées · corrections détaillées</span>
+  <span class="badge theme">30 questions · 7 illustrées · corrections détaillées</span>
 </div>
 <p style="text-align:center"><a href="sequence_3e_C6.2_auto_test_station.html">⬅ Revenir à la séquence</a></p>
 
@@ -347,12 +349,13 @@ const QUESTIONS = [
  err:"Initialiser dans la boucle. Le programme tourne sans erreur — il ment, ce qui est pire.",
  d:["La place d'une initialisation change tout le résultat.","C'est l'erreur classique : on efface le comptage à chaque organe et il ne reste que le dernier.","Il serait remis à zéro juste avant d'être lu : le message annoncerait toujours zéro défaut.",""],
  ret:"Le compteur : initialisé AVANT la boucle, lu APRÈS."},
-{c:"C6.2",n:"Le bogue silencieux",q:"Que produit un auto-test dont le compteur est remis à zéro à chaque tour ?",
+{c:"C6.2",n:"Le bogue silencieux",q:"Dans ce programme, on déplace « defauts = 0 » à l'intérieur de la boucle, juste sous POUR CHAQUE. Que produit l'auto-test ?",
+ img:{src:"Images/doc_programme_auto_test.svg",alt:"Le programme de l'auto-test, dans l'ordre : organes = [anemometre, gyrophare, sirene, radio] / defauts = 0 / pannes = liste vide / POUR CHAQUE organe DANS organes : / (décalée 1 fois) SI tester(organe) est FAUX ALORS / (décalée 2 fois) defauts = defauts + 1 / (décalée 2 fois) ajouter organe à pannes / SI defauts > 0 ALORS / (décalée 1 fois) envoyer(\"Station : …\") / SINON / (décalée 1 fois) envoyer(\"Station operationnelle\"). Le document ne dit pas ce que produit le programme dans un cas donné."},
  o:["un plantage immédiat du programme, dès le départ","un résultat faux, mais tout à fait crédible","un compteur qui double à chaque tour","le même résultat, mais bien plus lentement"],r:1,
  expl:"Les bogues les plus dangereux ne font pas planter le programme : ils produisent un résultat plausible. Ici, trois pannes sur quatre organes pourraient passer inaperçues.",
  ex:"Une balance mal tarée : elle affiche un poids, il est simplement faux.",
  err:"Juger un programme sur « il tourne sans erreur ». Tourner n'est pas avoir raison.",
- d:["Aucune erreur technique : la syntaxe est correcte, seul le sens est faux.","","Rien ne double : le compteur est simplement écrasé.","Le résultat n'est pas le même : c'est justement le problème."],
+ d:["Relis la ligne déplacée : elle est correcte, le programme tourne. Seul son sens change, sans aucune erreur affichée.","","Relis la ligne déplacée : elle ÉCRASE le compteur à chaque tour, elle ne le multiplie pas.","Relis la ligne déplacée : à chaque organe, le compte repart de zéro. Le résultat change, c'est justement le problème."],
  ret:"Un programme peut tourner parfaitement et se tromper complètement."},
 {c:"C6.2",n:"Pourquoi une boucle",q:"Pourquoi une boucle plutôt que quatre tests écrits à la suite ?",
  o:["pour économiser la mémoire de la carte","parce que les boucles s'exécutent plus vite","parce qu'un programme doit avoir une boucle","pour ajouter un organe sans réécrire"],r:3,
@@ -419,26 +422,29 @@ const QUESTIONS = [
  err:"Changer la condition sans échanger les branches.",
  d:["","Le test d'égalité est parfaitement licite.","La différence de vitesse est inexistante à cette échelle.","Il vaut 0 chaque fois que la station est en bon état — cas le plus fréquent."],
  ret:"Une condition et ses branches se pensent ensemble."},
-{c:"C6.2",n:"Un seul message",q:"Avec deux organes en panne, combien de messages part-il ?",
+{c:"C6.2",n:"Un seul message",q:"Avec ce programme, deux organes sur quatre sont en panne. Combien de messages part-il ?",
+ img:{src:"Images/doc_programme_auto_test.svg",alt:"Le programme de l'auto-test, dans l'ordre : organes = [anemometre, gyrophare, sirene, radio] / defauts = 0 / pannes = liste vide / POUR CHAQUE organe DANS organes : / (décalée 1 fois) SI tester(organe) est FAUX ALORS / (décalée 2 fois) defauts = defauts + 1 / (décalée 2 fois) ajouter organe à pannes / SI defauts > 0 ALORS / (décalée 1 fois) envoyer(\"Station : …\") / SINON / (décalée 1 fois) envoyer(\"Station operationnelle\"). Le document ne dit pas ce que produit le programme dans un cas donné."},
  o:["deux, un par organe en panne","un seul, qui cite les deux organes","quatre, un par organe testé","aucun, le programme s'arrête à la première panne"],r:1,
  expl:"La décision est prise après la boucle : le nombre de messages ne dépend donc pas du nombre de pannes. Un bilan, un message.",
  ex:"Au banc d'essai : décoche deux cases, une seule ligne « envoyer » apparaît dans le journal.",
  err:"Croire qu'une panne de plus produit un message de plus.",
- d:["Ce serait le cas si la décision était dans la boucle — ce n'est pas ce qu'on veut.","","Les organes en état ne déclenchent rien.","Rien n'arrête la boucle : c'est justement ce qui permet de tout découvrir."],
+ d:["Relis où est envoyer() : sous « SI defauts > 0 », APRÈS la boucle, pas dans la boucle.","","Relis le SI de la boucle : un organe qui marche ne déclenche rien, et envoyer() est hors de la boucle.","Relis la boucle : aucune ligne ne l'arrête à la première panne ; elle passe les quatre organes."],
  ret:"Décision après la boucle = un seul message, quel que soit le nombre de pannes."},
-{c:"C6.2",n:"La panne n'arrête pas",q:"Pourquoi l'auto-test continue-t-il après avoir trouvé une panne ?",
+{c:"C6.2",n:"La panne n'arrête pas",q:"Dans ce programme, la boucle continue après une panne trouvée. Pourquoi est-ce voulu ?",
+ img:{src:"Images/doc_programme_auto_test.svg",alt:"Le programme de l'auto-test, dans l'ordre : organes = [anemometre, gyrophare, sirene, radio] / defauts = 0 / pannes = liste vide / POUR CHAQUE organe DANS organes : / (décalée 1 fois) SI tester(organe) est FAUX ALORS / (décalée 2 fois) defauts = defauts + 1 / (décalée 2 fois) ajouter organe à pannes / SI defauts > 0 ALORS / (décalée 1 fois) envoyer(\"Station : …\") / SINON / (décalée 1 fois) envoyer(\"Station operationnelle\"). Le document ne dit pas ce que produit le programme dans un cas donné."},
  o:["pour tout découvrir en une seule fois","pour économiser la batterie de la station","parce qu'on ne peut pas arrêter une boucle","pour que le programme dure plus longtemps"],r:0,
  expl:"S'arrêter à la première panne obligerait à revenir autant de fois qu'il y a de pannes. La boucle complète donne un diagnostic complet.",
  ex:"Un contrôle technique ne s'arrête pas au premier défaut trouvé.",
  err:"Ajouter un « arrêter » dès le premier défaut, par réflexe.",
- d:["","Continuer consomme un peu plus, pas moins.","On peut, techniquement — mais ici ce serait une mauvaise idée.","La durée n'est pas un objectif."],
+ d:["","Relis la boucle : tester un organe de plus consomme un peu plus, pas moins.","Relis la boucle : on pourrait l'arrêter, mais on raterait les pannes des organes suivants.","Relis le message envoyé : ce qui compte est la liste des pannes, pas la durée du programme."],
  ret:"On teste tout, puis on décide : un seul déplacement, un seul message."},
-{c:"C6.2",n:"Ajouter un organe",q:"La mairie ajoute un capteur de pluie. Que faut-il changer ?",
+{c:"C6.2",n:"Ajouter un organe",q:"Avec ce programme, la mairie ajoute un capteur de pluie. Que faut-il changer ?",
+ img:{src:"Images/doc_programme_auto_test.svg",alt:"Le programme de l'auto-test, dans l'ordre : organes = [anemometre, gyrophare, sirene, radio] / defauts = 0 / pannes = liste vide / POUR CHAQUE organe DANS organes : / (décalée 1 fois) SI tester(organe) est FAUX ALORS / (décalée 2 fois) defauts = defauts + 1 / (décalée 2 fois) ajouter organe à pannes / SI defauts > 0 ALORS / (décalée 1 fois) envoyer(\"Station : …\") / SINON / (décalée 1 fois) envoyer(\"Station operationnelle\"). Le document ne dit pas ce que produit le programme dans un cas donné."},
  o:["une seule : l'ajouter à la liste parcourue","recopier tout le bloc de test, rien que pour lui","ajouter un second compteur de défauts","réécrire le message pour chaque cas"],r:0,
  expl:"C'est le bénéfice concret de la boucle et de la liste : le programme s'adapte sans être réécrit. On appelle cela l'évolutivité.",
  ex:"C'est le défi bonus n°1 de l'atelier : compte les lignes à modifier, tu verras.",
  err:"Recopier du code au lieu d'étendre la liste.",
- d:["","C'est exactement ce que la boucle permet d'éviter.","Le même compteur convient : il compte les défauts, quel qu'en soit l'organe.","Le message se construit à partir de la liste des pannes, quelle qu'elle soit."],
+ d:["","Relis POUR CHAQUE : la boucle passe déjà chaque organe de la liste ; recopier le bloc est ce qu'elle évite.","Relis « defauts = defauts + 1 » : le même compteur compte les défauts de tous les organes.","Relis le message : il se construit à partir de pannes, quelle que soit la liste des organes."],
  ret:"Bien conçu, un programme s'étend sans se réécrire."},
 {c:"C6.2",n:"Deux essais minimum",q:"Pourquoi tester l'auto-test avec ET sans panne ?",
  o:["pour user la sirène de façon régulière","parce que le professeur l'exige ainsi","un test qui crie au loup ne sert à rien","parce qu'un seul essai ferait planter"],r:2,

@@ -11,7 +11,7 @@ encore : chaque matin à 7 h, la station teste ses quatre organes, compte les d�
 seul** message. L'élève conçoit l'algorigramme **avant** toute référence, écrit l'algorithme, puis
 l'éprouve au banc d'essai intégré.
 
-➡ **[QCM d'entraînement](qcm_3e_C6.2_auto_test.html)** — 30 questions, 3 illustrées, chaque
+➡ **[QCM d'entraînement](qcm_3e_C6.2_auto_test.html)** — 30 questions, 7 illustrées, chaque
 distracteur réfuté.
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_3e_C6.2.html) ·
