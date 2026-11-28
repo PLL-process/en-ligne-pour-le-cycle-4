@@ -13,7 +13,7 @@ Au départ, une **courte vidéo du vrai Book Train** (1 min 44 s, sans voix ; li
 ses phrases anglaises traduites et minutées sous le lien) et deux questions d'observation ; en fin de parcours, **six défis bonus** avec cases de réponse et corrigé, dont un calcul
 « 5 minutes : tout le circuit ? ».
 
-➡ **[QCM d'entraînement](qcm_book-train.html)** — 30 questions (10 par code), 4 illustrées, chaque
+➡ **[QCM d'entraînement](qcm_book-train.html)** — 30 questions (10 par code), 7 illustrées (dont trois sur « Le trajet du livre », n°345), chaque
 distracteur réfuté.
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_4e_C4.1-C4.2-C4.4.html) · [professeur](Synthèses/synthese_professeur_4e_C4.1-C4.2-C4.4.html)

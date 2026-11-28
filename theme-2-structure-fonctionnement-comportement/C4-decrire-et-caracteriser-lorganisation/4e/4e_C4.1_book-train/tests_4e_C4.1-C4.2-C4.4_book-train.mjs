@@ -160,6 +160,24 @@ await p.fill('#bonus_d6a', '22,86 m/min');
 await p.fill('#bonus_d6c', 'Le trajet fait 114 m sur 290 m, parce que le rail a une voie de retour.');
 await p.dispatchEvent('#bonus_d6a', 'change');
 
+/* ── 5 bis. Billet de sortie (n°330, 28/11/2026) : seul, sans aide, sur un objet neuf ── */
+await ongletDe(p, '#billetSortie');
+const bs = await p.evaluate(() => {
+  const s = document.getElementById('billetSortie'); if (!s) return null;
+  const corr = s.querySelector('details.correction');
+  return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+    etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+    criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+    avantBonus: s.nextElementSibling && s.nextElementSibling.matches('.bloc-bonus'),
+    panneau: (s.closest('.panneau') || {}).id };
+});
+ok('15 bis · billet de sortie : il existe, visible à la séance 4, juste avant le Bonus',
+   !!bs && bs.visible && bs.panneau === 's4' && bs.avantBonus, JSON.stringify(bs));
+ok('15 ter · billet de sortie : deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+   !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+await p.fill('#bs_4e_C4_1bt_1', 'ALIMENTER : la prise de 230 V');
+await p.dispatchEvent('#bs_4e_C4_1bt_1', 'change');
+
 /* ── 6. Sauvegarde : tout revient après rechargement ──────────────────────── */
 await p.click('#tab-s0');   // n°311 : la case d'ouverture se coche depuis le Départ (depuis une séance ≥ 2, elle est repliée dans le volet)
 await p.check('#ouv_1');
@@ -172,10 +190,12 @@ const repris = await p.evaluate(() => ({
   d6a: document.getElementById('bonus_d6a').value,
   d6c: document.getElementById('bonus_d6c').value,
   ouv1: document.getElementById('ouv_1').checked,
+  bs1: document.getElementById('bs_4e_C4_1bt_1').value,
 }));
 ok('16 · les boutons radio, les cases du Bonus et la coche d\'ouverture reviennent après rechargement',
    repris.q1 === groupes[0].bonne && repris.q2 === groupes[1].bonne && repris.d6a === '22,86 m/min'
    && /114 m/.test(repris.d6c) && repris.ouv1, JSON.stringify(repris));
+ok('16 bis · billet de sortie : la réponse écrite revient après rechargement', repris.bs1 === 'ALIMENTER : la prise de 230 V', repris.bs1);
 ok('17 · rechargement sans erreur JS', err.length === 0, err.join(' | '));
 
 /* ── 7. Une activité d'avant : le vérificateur marche toujours, en boutons radio ─ */
@@ -430,6 +450,20 @@ async function parAdresse(ancre) {
 }
 
 await b.close();
+/* ── Le QCM : au moins six questions sur document (n°345, 28/11/2026) ── */
+{
+  const src = fs.readFileSync(path.join(ICI, 'qcm_book-train.html'), 'utf8');
+  const Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+  const avec = Q.filter(q => q.img), docs = avec.filter(q => /\/doc_/.test(q.img.src));
+  ok('QCM · au moins six questions sur document, chaque image présente', avec.length >= 6
+     && avec.every(q => fs.existsSync(path.join(ICI, q.img.src))), String(avec.length));
+  ok('QCM · le document « doc_ » porte trois questions, chacune décrite en entier',
+     docs.length === 3 && docs.every(q => (q.img.alt || '').length > 120), docs.map(q => q.n).join(' · '));
+  let aJour = true;
+  try { (await import('node:child_process')).execSync('python3 documents_qcm.py --verifier', { cwd: ICI, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('QCM · documents_qcm_4e_C4.1_book-train.json est à jour de l\'algorigramme du lot', aJour);
+}
+
 const n = T.filter(t => t.ok).length;
 for (const t of T) console.log(`${t.ok ? '✅' : '❌'} ${t.n}${!t.ok && t.d ? '  — ' + t.d : ''}`);
 console.log(`\n${n} / ${T.length}`);
