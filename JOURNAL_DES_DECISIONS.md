@@ -39130,3 +39130,15 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   minutes : la séance tient en 55.
 Bancs : séquence 36 / 36 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C5.1`).
+
+## 28/11/2026 — 4e_C5.1 : trois questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Le clip-support à refaire », LU par `documents_qcm.py` dans le schéma de
+  l'activité 3, sans les ✔ / ✘ du tableau de choix ; les q22, q25 et q29 s'y lisent.
+- **Billet de sortie** avant le Bonus de la séance 3 : le distributeur automatique de gel de l'entrée (un protocole de
+  quatre tests et la purge qui innocente la pompe ; le procédé pour trente fenêtres plates, piles retirées d'abord). La
+  séance 3 passe de 45 à 50 minutes d'activités.
+- Une ligne d'erreurs fréquentes cousait trois idées par « ; » (audit d'aération) : une par ligne.
+Bancs : séquence 32 / 32 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C5.1`).

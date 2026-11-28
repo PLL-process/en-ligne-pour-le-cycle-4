@@ -37,7 +37,7 @@ et comment le remettre en service par nous-mêmes, preuves à l'appui ?
 ## Évaluation
 
 - **Formative** : vérificateurs intégrés (verrous expérientiels : diagnostic 6/6, remplacement 6/6) + auto-positionnement par code.
-- **Entraînement** : QCM 30 questions (10 par code, 3 illustrées, corrections exhaustives, réponses réparties 8/7/7/8).
+- **Entraînement** : QCM 30 questions (10 par code, 7 illustrées, dont trois sur « Le clip-support à refaire », n°345, corrections exhaustives, réponses réparties 8/7/7/8).
 - **Sommative** : à construire par l'enseignant (corrigé non publié dans le dépôt public). Items suggérés : protocole pour une panne inédite (écran figé à 0 %) ; justification d'un choix de procédé.
 - **LSU** : saisie par code (C5.1 / C5.2 / C5.3) via les critères de réussite affichés.
 
@@ -52,3 +52,9 @@ et comment le remettre en service par nous-mêmes, preuves à l'appui ?
 Maquette jardin connecté des lots précédents (carte, capteur d'humidité, pompe 12 V, réservoir),
 un capteur de rechange, un pied à coulisse, un verre d'eau (test final). Mise en panne par
 l'enseignant : sonde enrobée d'argile séchée ou glissée dans un doigt de gant plastique.
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3, environ 5 minutes, seul et sans aide : le distributeur
+automatique de gel de l'entrée, un objet neuf. Question 1 (4e_C5.1) : un protocole de quatre tests, du plus rapide au
+plus engageant, et ce que prouve le bouton de purge. Question 2 (4e_C5.2, 4e_C5.3) : le procédé pour trente fenêtres
+plates, et les deux premiers gestes du remplacement, piles retirées d'abord. La séance 3 passe de 45 à 50 minutes
+d'activités.
