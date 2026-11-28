@@ -95,6 +95,15 @@ la page (`value="v0"`). Correspondance notion → numéro de question dans
 > dans l'objet, ils ne se reportent pas au LSU. Deux questions ne valident pas une compétence.
 > Mesure : `_outils/controle_echantillonnage.py`.
 
+**Questions sur document** (28/11/2026, n°345) : six par QCM. Au QCM de l'arrosage, quatre se lisent sur
+« Le programme de l'arrosage » (q14, q16, q19, q27) et deux sur « Le banc de tests de l'arrosage » (q21, q22) ; au QCM
+de l'éclairage, six sur « Le programme de l'éclairage » (q11 à q14, q18, q19).
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3 : le brumisateur du préau, un programme neuf à trous.
+Question 1 : compléter le symbole et l'action — on regarde que `>` traduit « dépasse » et que l'action du SI est
+l'inverse de celle du SINON. Question 2 : trois tests chiffrés, un de chaque côté et un pile sur le seuil — on regarde
+que la frontière départage `>` et `>=`. La séance 3 passe de 40 à 45 minutes d'activités.
+
 **Sommative** : à construire par l'enseignant. Aucun corrigé sommatif publié.
 
 ## Dépendances — à lire avant de réserver la salle

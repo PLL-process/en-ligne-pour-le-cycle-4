@@ -73,7 +73,7 @@ def couper(texte: str, taille: float, place: float, gras: bool = False):
             mots.append(mot)
     lignes, cours = [], ""
     for mot in mots:
-        essai = (cours + " " + mot).strip()
+        essai = (cours + " " + mot).strip(" ")   # une espace insécable en tête (l'indentation d'un programme) reste
         if cours and large(essai, taille, gras) > place:
             lignes.append(cours)
             cours = mot

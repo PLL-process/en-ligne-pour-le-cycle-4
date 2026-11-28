@@ -144,6 +144,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 CAP + 10 PRG + 10 SYS), 0 illustrée.
+/* Banque : 30 questions (10 CAP + 10 PRG + 10 SYS), 6 illustrées, toutes sur document (n°345, 28/11/2026).
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle
    images v2) » : elle venait d'un gabarit, par copie, et ne correspondait pas à ce fichier. */
@@ -384,33 +386,37 @@ const QUESTIONS = [
  nuance:"« 1023, ça ne fait pas un compte rond ! » — non, et c'est normal : il y a 1024 paliers, et on compte à partir de 0. Comme les 24 places d'un manège numérotées de 0 à 23.",
  ret:"Lecture analogique → un entier de 0 à 1023."},
 /* ═══ PRG ═══ */
-{c:"PRG",n:"Le mot qui teste",q:"Que fait l'instruction <code>if</code> dans le programme ?",
+{c:"PRG",n:"Le mot qui teste",q:"Dans ce programme, que fait la ligne <code>if (lumiere &lt; seuil)</code> ?",
+ img:{src:"Images/doc_programme_eclairage.svg",alt:"Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction."},
  o:["elle répète une action","elle vérifie une condition","elle mesure la luminosité","elle allume toutes les broches"],r:1,
  expl:"<code>if</code> pose une question à laquelle on ne peut répondre que par vrai ou faux, et n'exécute la suite que si la réponse est vraie.",
  ex:"<code>if (lumiere &lt; seuil)</code> : est-ce que la mesure est sous le seuil ?",
  err:"Croire que <code>if</code> agit par lui-même — il ne fait que trier.",
- d:["Répéter, c'est le travail de <code>loop</code> ou d'une boucle.","","Mesurer, c'est le travail de la LDR et de la lecture analogique : <code>if</code> compare une valeur déjà lue.","<code>if</code> n'allume rien du tout : il décide seulement si la suite s'exécute."],
+ d:["Ce qui recommence, c'est <code>loop()</code> : relis la ligne du <code>if</code>, elle pose une question.","","La mesure est faite la ligne d'avant, par <code>analogRead(A0)</code> : le <code>if</code> compare une valeur déjà lue.","Ce sont les lignes <code>digitalWrite</code> qui commandent la LED : relis le <code>if</code>, il n'allume rien."],
  ret:"<code>if</code> pose une question, il n'agit pas."},
-{c:"PRG",n:"L'autre chemin",q:"À quoi sert <code>else</code> ?",
+{c:"PRG",n:"L'autre chemin",q:"Dans ce programme, à quoi sert <code>else</code> ?",
+ img:{src:"Images/doc_programme_eclairage.svg",alt:"Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction."},
  o:["à répéter le test une seconde fois de suite","à agir quand la condition est FAUSSE","à arrêter le programme en cours","à corriger une erreur de frappe"],r:1,
  expl:"<code>else</code> couvre tous les cas que <code>if</code> a laissés de côté. Avec les deux, aucune situation ne reste sans réponse.",
  ex:"S'il fait sombre, on allume ; SINON, on éteint. Rien n'est oublié.",
  err:"Écrire un <code>if</code> sans <code>else</code> et s'étonner que la lampe ne s'éteigne jamais.",
- d:["Le test n'est pas rejoué : c'est le même, vu de l'autre côté.","","Le programme continue de tourner.","Aucun mot-clé ne corrige les fautes de frappe."],
+ d:["Relis le <code>else</code> : il ne refait aucun test, il prend le cas où le test était faux.","","Relis la fin du programme : rien ne l'arrête, <code>loop()</code> recommence.","Relis la ligne sous le <code>else</code> : elle éteint la LED, elle ne corrige aucune faute."],
  ret:"<code>if</code> … <code>else</code> : les deux chemins, et aucun cas oublié."},
-{c:"PRG",n:"Ce qui tourne en rond",q:"Quelle partie du programme s'exécute en continu ?",
+{c:"PRG",n:"Ce qui tourne en rond",q:"Dans ce programme, quelle partie s'exécute en continu ?",
+ img:{src:"Images/doc_programme_eclairage.svg",alt:"Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction."},
  o:["<code>loop()</code>","<code>setup()</code>","<code>stop()</code>","<code>function()</code>"],r:0,
  expl:"<code>loop</code> est repris indéfiniment, des dizaines de milliers de fois par seconde. C'est ce qui permet au système de réagir sans qu'on lui demande rien.",
  ex:"Mesurer, comparer, décider — et recommencer, sans fin.",
  err:"Mettre la mesure dans <code>setup</code> : le système ne lirait la lumière qu'une seule fois, au démarrage.",
- d:["","<code>setup</code> ne passe qu'une fois, au démarrage.","Ce mot n'existe pas dans ce langage.","<code>function</code> sert à déclarer un sous-programme, pas à le répéter."],
+ d:["","Relis <code>setup()</code> : il ne contient qu'un réglage de départ, fait une fois à l'allumage.","Relis le programme : aucune partie ne s'appelle <code>stop()</code>.","Relis le programme : aucune partie ne s'appelle <code>function()</code> ; le mot sert à déclarer un sous-programme."],
  ret:"<code>setup</code> : une fois. <code>loop</code> : sans arrêt."},
-{c:"PRG",n:"Ce qui ne passe qu'une fois",q:"Que met-on dans <code>setup()</code> ?",
+{c:"PRG",n:"Ce qui ne passe qu'une fois",q:"Dans ce programme, que contient <code>setup()</code> ?",
+ img:{src:"Images/doc_programme_eclairage.svg",alt:"Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction."},
  o:["la mesure de la LDR","ce qu'il faut préparer une seule fois","la décision d'allumer","le calcul du seuil à chaque tour de boucle"],r:1,
  expl:"<code>setup</code> sert aux réglages de départ : indiquer quelles broches sont des sorties, ouvrir la liaison série. Ce qui doit se répéter n'a rien à y faire.",
  ex:"<code>pinMode(LED, OUTPUT);</code> — on le dit une fois, la carte s'en souvient.",
  err:"Y placer quelque chose qui devrait être surveillé en permanence.",
- d:["Elle doit être refaite sans cesse : sa place est dans <code>loop</code>.","","Elle dépend de la mesure, donc elle se reprend à chaque tour.","Le seuil est une valeur fixe : le recalculer à chaque tour n'apporte rien."],
+ d:["Relis <code>loop()</code> : c'est là que <code>analogRead(A0)</code> lit la LDR, à chaque tour.","","Relis <code>loop()</code> : le <code>if</code> qui décide d'allumer y est, il dépend de chaque mesure.","Relis la première ligne : le seuil vaut 400, une fois pour toutes ; rien ne le recalcule."],
  ret:"Dans <code>setup</code> : ce qui ne change jamais."},
 {c:"PRG",n:"Le rôle du seuil",q:"À quoi sert le « seuil » dans le programme ?",
  o:["à changer la couleur de la LED","à fixer la limite jour / nuit","à mesurer une distance en cm","à régler la luminosité de la LED"],r:1,
@@ -434,19 +440,21 @@ const QUESTIONS = [
  d:["","Un nombre rond dont personne ne sait rien est le seul à refuser : il ne se règle pas, il se subit.","Le constructeur ne connaît pas ta salle.","512 est le milieu de l'échelle, pas le milieu de TA lumière."],
  nuance:"« Alors il n'y a pas de bonne valeur ? » — il n'y en a pas UNE, mais il y en a des mauvaises : toutes celles qu'on ne peut pas justifier. Un seuil se mesure, ou s'assume par écrit.",
  ret:"Tout chiffre d'un programme dit d'où il vient : un texte, une mesure, ou une décision assumée."},
-{c:"PRG",n:"Quand le réglage dérape",q:"Le seuil est réglé BEAUCOUP TROP HAUT. Que se passe-t-il ?",
+{c:"PRG",n:"Quand le réglage dérape",q:"Dans ce programme, on remplace 400 par 1000 : un seuil beaucoup trop haut. Que se passe-t-il ?",
+ img:{src:"Images/doc_programme_eclairage.svg",alt:"Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction."},
  o:["la lampe ne s'allume jamais","la lampe reste allumée même en plein jour","la carte chauffe","le programme s'arrête sur une erreur de seuil"],r:1,
  expl:"Un seuil très haut est franchi tout le temps : la mesure est presque toujours en dessous, donc la condition est presque toujours vraie.",
  ex:"Seuil à 1000 : même à midi, la mesure reste sous 1000. La lampe ne s'éteint plus.",
  err:"Chercher la panne dans le câblage alors qu'elle est dans un seul nombre.",
- d:["C'est le symptôme du réglage inverse : un seuil trop bas.","","Rien ne chauffe : le courant d'une LED est minuscule.","Le programme fait exactement ce qu'on lui a écrit — c'est bien le problème."],
+ d:["Relis le <code>if</code> : avec 1000, la mesure est presque toujours plus petite. Une lampe qui ne s'allume jamais vient d'un seuil trop BAS.","","Relis le programme : changer un nombre ne change pas le courant de la LED, qui est minuscule.","Relis le programme : 1000 est un nombre comme un autre, il n'y a aucune erreur, il fait ce qu'on a écrit."],
  ret:"Seuil trop haut → toujours allumé. Trop bas → jamais allumé."},
-{c:"PRG",n:"L'ordre à la LED",q:"Quelle instruction allume la LED ?",
+{c:"PRG",n:"L'ordre à la LED",q:"Dans ce programme, quelle instruction allume la LED ?",
+ img:{src:"Images/doc_programme_eclairage.svg",alt:"Le programme de l'éclairage automatique, ligne par ligne : int seuil = 400; / void setup() { / pinMode(LED, OUTPUT); / } / void loop() { / int lumiere = analogRead(A0); / if (lumiere < seuil) { / digitalWrite(LED, HIGH); / } else { / digitalWrite(LED, LOW); / } / }. Le document ne dit pas ce que fait chaque instruction."},
  o:["<code>analogRead(LED)</code>","<code>pinMode(LED, HIGH)</code>","<code>Serial.print(LED)</code>","<code>digitalWrite(LED, HIGH)</code>"],r:3,
  expl:"<code>digitalWrite</code> impose un état à une broche de sortie : HIGH pour allumer, LOW pour éteindre.",
  ex:"<code>digitalWrite(LED, HIGH);</code> dans la branche « il fait sombre ».",
  err:"Confondre lire (<code>read</code>) et écrire (<code>write</code>).",
- d:["<code>analogRead</code> LIT une entrée : elle ne commande rien.","<code>pinMode</code> déclare le rôle de la broche, une fois pour toutes — il ne l'allume pas.","<code>Serial.print</code> affiche une valeur sur l'ordinateur. C'est très utile pour comprendre ce qui se passe — et ça n'allume aucune LED.",""],
+ d:["Relis la ligne de <code>analogRead</code> : elle LIT la LDR sur A0, elle ne commande rien.","Relis <code>setup()</code> : <code>pinMode</code> y déclare la broche en sortie, une fois, sans l'allumer.","Relis le programme : <code>Serial.print</code> n'y figure pas, et il n'allumerait rien, il affiche.",""],
  ret:"<code>digitalWrite(broche, HIGH)</code> : l'ordre d'allumer."},
 {c:"PRG",n:"Le branchement de la LED",q:"La LED est reliée à…",
  o:["une broche numérique","une broche analogique de mesure","le port série de la carte","la masse du montage seulement"],r:0,
