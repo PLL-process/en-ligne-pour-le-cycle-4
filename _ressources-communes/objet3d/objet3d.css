@@ -1,0 +1,17 @@
+/* objet3d.css — la vue 3D que l'élève fait tourner (voir LISEZMOI.md). */
+.o3d{position:relative;margin:0 0 10px;aspect-ratio:4/3;max-height:70vh;width:100%;background:var(--panel,#0d2347);border:1px solid var(--border,#274a8a);border-radius:14px;overflow:hidden}
+.o3d>picture{display:contents}           /* deux affiches (étroite, large) : l'image se règle comme une seule */
+.o3d img{width:100%;height:100%;object-fit:contain;display:block}
+.o3d img[hidden]{display:none}          /* sinon display:block l'emporte sur l'attribut hidden : l'image resterait derrière */
+.o3d canvas{position:absolute;inset:0;display:block;touch-action:none}   /* par-dessus l'image : rien ne bouge dans la page */
+.o3d-etiquettes{position:absolute;inset:0;pointer-events:none}
+.o3d-ancre{width:0;height:0;position:relative}
+.o3d-pastille{position:absolute;left:10px;bottom:10px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#e4eaf5;color:#0d2347;font-weight:800;font-size:15px;box-shadow:0 0 0 2px #0d2347}
+.o3d-cachee .o3d-pastille{opacity:.35}
+.o3d-btn{display:block;margin:0 auto 10px;min-height:44px;max-width:100%;padding:8px 18px;border-radius:999px;border:1px solid var(--accent,#61dafb);background:var(--panel,#0d2347);color:var(--text,#e4eaf5);font:inherit;font-weight:700;cursor:pointer}
+.o3d:focus{outline:none}
+.o3d:focus-visible{outline:3px solid var(--accent,#61dafb);outline-offset:2px}
+.o3d-btn[hidden]{display:none}            /* même piège que l'image : display:block l'emporte sur hidden */
+.o3d-btn:focus-visible{outline:3px solid var(--accent,#61dafb);outline-offset:2px}
+.o3d-aide{font-size:.92em;color:var(--sub,#a9b8d6);margin:0 0 8px}
+@media print{.o3d canvas,.o3d-etiquettes,.o3d-btn{display:none!important}.o3d img{display:block!important}.o3d{aspect-ratio:auto;max-height:none;border:0;background:none}}

@@ -2192,6 +2192,10 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
 </script>
 <!-- mode-mission v1 : fin -->
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
+<!-- Objet 3D (28/11/2026) : la vue commune de _ressources-communes/objet3d/ (LISEZMOI.md). L'amorce est petite ; la vue
+     (three.js) et le modèle ne se chargent qu'au clic sur « Tourner le vélo-cargo en 3D ». -->
+<link rel="stylesheet" href="../../../../_ressources-communes/objet3d/objet3d.css">
+<script src="../../../../_ressources-communes/objet3d/objet3d-amorce.js" defer></script>
 <!-- lisibilite-ecran v7 : début — engendré par _outils/lisibilite_ecran/ (poser.py). Ne pas le modifier dans la page. -->
 <style>@media screen and (max-width:700px){.saved-note{text-align:start!important}.problematique{text-align:start}}@media screen{nav#navharm{background:rgb(5,15,36)}}@media screen{html{scroll-padding-top:64px}html:has(body.ms){scroll-padding-bottom:104px}}</style>
 <!-- lisibilite-ecran : fin -->
@@ -2553,6 +2557,35 @@ corrections et les compléments si la page te paraît chargée.</p>
       <p>Un vélo-cargo dessiné en trois dimensions, posé sur une route, avec un colis dans le bac avant. <br>Sous le porte-bagages arrière, la batterie, allumée. <br>Un câble, surligné, la relie au moteur placé au centre de la roue arrière. <br>Une flèche courbe autour de la roue arrière indique qu'elle tourne. Sous le dessin, la chaîne d'énergie en quatre cases reliées par des flèches : batterie, énergie électrique, moteur, énergie cinétique.</p>
       <p style="font-size:.85em;color:var(--sub)">Voix de synthèse&nbsp;: SIWIS (CC BY 4.0)</p>
     </details>
+  </details>
+  <!-- Objet 3D (28/11/2026, skill threejs-objet-3d-pedagogique) : le vélo-cargo S1 que l'élève fait tourner. Modèle
+       simplifié écrit par _generation/objet_3d_velo_cargo/generer.py (Blender), fichiers de la page écrits par
+       assembler.py (modèle en base64, deux affiches) ; vue commune _ressources-communes/objet3d/ (three.js, MIT).
+       Placé APRÈS le dessin animé : la légende dit ce que convertit le moteur, la prédiction de la scène 5 est faite.
+       Rien ne se charge avant le clic ; l'affiche reste à l'impression et sans WebGL. -->
+  <details class="o3d-volet" id="vc3dVolet">
+    <summary>🔄 Le vélo-cargo S1 en 3D — retrouve les pièces sur l'objet</summary>
+    <p>Fais tourner le vélo-cargo S1. Retrouve sur l'objet les quatre pièces numérotées, puis suis le câble
+    orange, de la batterie jusqu'au moteur.</p>
+    <figure class="o3d" id="vc3d" data-o3d-moteur="../../../../_ressources-communes/objet3d/objet3d.js"
+     data-o3d-modele="Images/velo_cargo_3d_modele.js" data-o3d-global="MODELE_VELO_CARGO" data-o3d-aide="vc3dAide"
+     data-o3d-options='{"direction":[-0.7,0.5,-1.3],"etiquettes":[{"piece":"batterie","numero":1},{"piece":"controleur","numero":2},{"piece":"moteur","numero":3},{"piece":"cadre","numero":4}]}'>
+      <picture>
+        <source media="(max-width: 600px)" srcset="Images/velo_cargo_3d_affiche_etroite.png">
+        <img src="Images/velo_cargo_3d_affiche.png" width="800" height="600" loading="lazy" alt="Le vélo-cargo S1 en modèle simplifié, vu de trois quarts arrière, avec quatre pastilles : 1 sur la batterie jaune, sous le porte-bagages ; 2 sur le contrôleur bleu clair, contre le tube de selle ; 3 sur le moteur violet, au centre de la roue arrière ; 4 sur le cadre. Des câbles orange relient la batterie, le contrôleur et le moteur.">
+      </picture>
+    </figure>
+    <button type="button" class="o3d-btn" aria-controls="vc3d" hidden>🔄 Tourner le vélo-cargo en 3D</button>
+    <p class="o3d-aide" id="vc3dAide">Fais glisser pour tourner&nbsp;; molette ou deux doigts pour zoomer. Au clavier&nbsp;:
+    flèches pour tourner, + et − pour zoomer, 0 pour revenir au départ.</p>
+    <ol class="o3d-legende">
+      <li><b>La batterie</b>, sous le porte-bagages arrière. Fonction ALIMENTER&nbsp;: elle stocke de l'énergie chimique et fournit de l'énergie électrique.</li>
+      <li><b>Le contrôleur de puissance</b>, contre le tube de selle. Fonction DISTRIBUER&nbsp;: il envoie l'énergie électrique au moteur.</li>
+      <li><b>Le moteur dans le moyeu arrière</b>. Fonction CONVERTIR&nbsp;: il convertit l'énergie électrique en énergie mécanique.</li>
+      <li><b>Le cadre en aluminium</b>, léger et résistant&nbsp;: il porte toutes les pièces.</li>
+    </ol>
+    <p style="font-size:.85em;color:var(--sub)">Les câbles orange portent l'énergie électrique. C'est un modèle simplifié,
+    dessiné pour la séquence&nbsp;: ce n'est ni une photo, ni un vélo du commerce.</p>
   </details>
   <fieldset class="qcm-groupe" id="a1_5">
   <legend>S2 consomme 165 Wh/km contre 18 pour S1. Quelle est la raison principale&nbsp;?</legend>

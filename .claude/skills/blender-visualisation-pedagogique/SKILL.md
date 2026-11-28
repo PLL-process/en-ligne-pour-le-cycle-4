@@ -20,6 +20,21 @@ Créé le 26/11/2026 avec son premier lot : les trois appareils de mesure de Che
 La 3D montre l'objet, le schéma compare et explique (n°182). **On ajoute, on ne retire pas** : le schéma et ses étapes
 restent, le film s'y accroche.
 
+## Quel outil pour quoi (skills frères, 28/11/2026)
+
+Pascal (28/11/2026) : « il faudrait un skill pour chaque application ». Un essai comparé (la chaîne du lampadaire de
+5e_C4.1 faite avec chaque outil) a tranché ainsi :
+
+| Besoin | Outil | Skill |
+|---|---|---|
+| un objet **en volume**, en film court dans le lecteur pas à pas | Blender | **ce skill** |
+| un objet en volume que l'élève **fait tourner** dans la page | three.js, modèle exporté de Blender en .glb | `threejs-objet-3d-pedagogique` |
+| un film **2D** (schéma qui se construit) à projeter ou à déposer sur l'ENT | Remotion (par défaut), Motion Canvas (second choix) | `remotion-film-pedagogique`, `motion-canvas-film-pedagogique` |
+| une chaîne, un algorigramme **lus dans une page** | le lecteur pas à pas du site (`chaine_pas_a_pas`, `lecteur_pas_a_pas`) | — pas de film |
+
+Un même objet peut servir au film Blender et à la vue three.js : le script `generer.py` écrit aussi le `.glb`
+(export glTF binaire, une pièce = un objet nommé, matières non métalliques).
+
 ## La forme retenue (décision de Pascal, 26/11/2026)
 
 Un **film court, muet, dans le lecteur pas à pas** : il prend la place du dessin à l'étape qui présente l'objet, et un

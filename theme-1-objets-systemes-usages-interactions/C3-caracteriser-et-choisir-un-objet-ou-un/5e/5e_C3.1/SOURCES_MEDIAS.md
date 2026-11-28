@@ -185,3 +185,19 @@ Pour les redessiner : `python3 _outils/document_qcm.py documents_qcm_5e_C3.1.jso
 | `Images/doc_cahier_des_charges_centre.svg` | Quatre fiches. Le centre exige, au moins : charge utile 80 kg, autonomie 35 km, adaptation aux ruelles 4 sur 5, adaptation à la pluie 3 sur 5. Vélo-cargo électrique, S1 : 120 kg, 55 km, ruelles 5 sur 5, pluie 3 sur 5. Fourgonnette électrique, S2 : 650 kg, 210 km, ruelles 2 sur 5, pluie 5 sur 5. Robot de livraison, S3 : 80 kg, 38 km, ruelles 5 sur 5, pluie 2 sur 5. | SVG original, dessiné par `_outils/document_qcm.py` à partir de `documents_qcm_5e_C3.1.json` — Claude (Fable 5.2), pour ce dépôt, 21/11/2026. Les nombres sont ceux du fichier de données simulées du lot. | CC0 1.0 | QCM, questions 25 et 28 |
 | `Images/doc_capture_formule_tapee.png` | Deux extraits d'une capture du tableur : la zone de nom « U4 » et la barre de formule qui affiche 9,5 sans signe = ; la colonne U, « indicateur », avec 12, 10,5 et 9,5. PNG 372 × 144. | **Capture réelle recadrée** : deux extraits de `Images/geste_activite4_formule_4_erreur_tape.png` (LibreOffice Calc sur le poste de Pascal, déjà au dépôt), posés l'un sous l'autre, sans aucune retouche des pixels — 21/11/2026. | Capture d'écran d'un logiciel libre (LibreOffice, MPL 2.0), données simulées du lot | QCM, question 26 |
 | `Images/trois_solutions_shanghai.svg` | (modifiée le 21/11/2026) Les trois cartes passent de 376 à 390 unités de haut : la dernière ligne du robot touchait le bord de sa carte. | SVG original écrit à la main (inchangé pour le reste) | CC0 1.0 | Séquence, séance 1 ; QCM, question 8 |
+
+## Le vélo-cargo en 3D (28/11/2026, séance 1, après le dessin animé)
+
+Le vélo-cargo S1 que l'élève fait tourner (volet `#vc3dVolet`). Un **modèle simplifié**, dessiné pour la séquence : aucune
+marque, aucun vélo du commerce (n°1). Couleurs et mots de la chaîne d'énergie du schéma (n°120, n°310). Skill du dépôt
+`threejs-objet-3d-pedagogique` ; vue commune `_ressources-communes/objet3d/` (voir son `LISEZMOI.md`).
+
+| Fichier | Ce qu'il est | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `_generation/objet_3d_velo_cargo/velo_cargo.glb` | Le modèle 3D, glTF binaire, 203 Ko : treize pièces nommées (batterie, contrôleur, moteur, cadre, câbles…) et quatre repères de pastilles, matières non métalliques, sans texture. | **Engendré** par `_generation/objet_3d_velo_cargo/generer.py`, lancé dans Blender 5.1.1 sur le poste de Pascal (connecteur Blender, 28/11/2026) | CC0 1.0 | source |
+| `Images/velo_cargo_3d_modele.js` | Le même modèle en base64 dans un script classique (`window.MODELE_VELO_CARGO`) : une page ouverte en `file://` ne lit pas un `.glb`. 271 Ko, chargé au clic seulement. | `assembler.py`, octet pour octet (vérifié par `tests_objet3d_velo_cargo.py`) | CC0 1.0 | volet 3D |
+| `Images/velo_cargo_3d_affiche.png` · `Images/velo_cargo_3d_affiche_etroite.png` | L'image fixe montrée avant le clic, à l'impression et sans WebGL : la vue de départ elle-même, pastilles 1 à 4 comprises, fond transparent. 1600 × 1200 (écrans larges) et 720 × 540 (600 px et moins), 256 couleurs. | Rendue par `objet3d.js` dans Chromium, par `assembler.py` | CC0 1.0 | volet 3D |
+
+**Le moteur de la vue** : three.js 0.187.0 (licence MIT, notice en fin de `objet3d.js`), assemblé par esbuild 0.24.2 en un
+seul script ; aucun fichier ne vient du réseau. Pour refaire : le modèle dans Blender (`generer.py`, voir son en-tête), puis
+`python3 _generation/objet_3d_velo_cargo/assembler.py`, puis `python3 tests_objet3d_velo_cargo.py`.

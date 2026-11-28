@@ -39188,3 +39188,72 @@ ateliers ; thème 2 — 100 pages ; `lampadaire_en_pieces/build.mjs` (`5e_C4.1`)
 (`3e_C4.3`) ; thème 3 — 178 pages ; l'atelier de planification, l'atelier CAO, `3e_C9.2` ; `_outils/` — le dossier
 neuf `lisibilite_ecran/`, `generer_lexique.py` ; `docs/audits/` — le rapport rectifié, `--eleve` dans les deux scripts
 de mesure.
+
+## 28/11/2026 — Outils d'animation : trois skills, et un premier objet en 3D, le vélo-cargo de 5e_C3.1 ; les trois rouges de `main` (transversal : thèmes 1, 2 et 3, `_outils/`, `_ressources-communes/`, `.claude/skills/`)
+
+**D'où ça vient.** Pascal, 28/11 : un fil qui liste dix-huit outils d'animation (« Qu'en penses-tu ») ; puis « Teste
+Motion Canvas sur une animation (par exemple une chaîne d'énergie de 5e) pour comparer avec ce que donne Blender » ;
+puis « Le skill Blender réserve Blender aux objets en volume, il faudrait un pour chaque application » ; enfin « Ok pour
+tout », qui accepte les quatre propositions : le tableau « quel outil pour quoi », les skills dans le dépôt, un premier
+objet en 3D (le vélo-cargo de 5e_C3.1, modèle fait dans Blender sur son poste), et la réparation des rouges de `main`.
+
+**L'essai comparé** (rien n'en entre au dépôt). La chaîne d'énergie du lampadaire (5e_C4.1), même minutage, faite avec
+Motion Canvas 3.17.2 et avec Remotion 4.0.547 : images identiques à l'œil. **Remotion par défaut** : rendu en une
+commande, outil entretenu ; Motion Canvas (licence MIT) n'a rien publié depuis le 16/02/2025 et ne rend que depuis son
+éditeur. Pour une chaîne **lue dans une page**, le lecteur pas à pas du site reste meilleur qu'un film : voix, questions,
+deux dispositions ; un film ne se réarrange pas (à 358 px, des mots de 20 px y tombent à 4-5 px).
+
+**Trois skills frères**, copiés du compte de Pascal dans `.claude/skills/` : `remotion-film-pedagogique`,
+`motion-canvas-film-pedagogique`, `threejs-objet-3d-pedagogique` ; `blender-visualisation-pedagogique` reçoit le
+tableau « Quel outil pour quoi ». `SKILLS_AUDIT.md` : trois lignes, statut **À EXERCER**.
+
+**Le vélo-cargo S1 en 3D (thème 1, 5e_C3.1).** Volet `#vc3dVolet`, juste **après** le dessin animé et son schéma fixe :
+la légende dit ce que convertit le moteur ; placée avant, elle donnait la réponse de la prédiction de la scène 5. En mode
+mission, il est sur l'écran du dessin animé (« b) L'énergie : source et forme »). L'élève fait tourner un modèle
+simplifié (aucune marque, n°1) et retrouve quatre pièces numérotées ; la légende, écrite dans la page, prend les mots du
+schéma de la chaîne (ALIMENTER, DISTRIBUER, CONVERTIR ; énergie chimique, électrique, mécanique ; n°120, n°310).
+1. **Le modèle** : `_generation/objet_3d_velo_cargo/generer.py`, lancé dans Blender 5.1.1 sur le poste de Pascal par le
+   connecteur (une scène à soi, `tp_velo_cargo_3d`, ménage à la fin : sa scène rendue intacte, aucun orphelin) ;
+   treize pièces nommées, quatre repères de pastilles, matières non métalliques, 203 Ko.
+2. **La page** : une affiche (la vue de départ elle-même, pastilles comprises, en deux tailles) et, sous la figure, le
+   bouton « 🔄 Tourner le vélo-cargo en 3D ». **Rien ne se charge avant le clic** ; la vue ne tourne jamais seule ; elle
+   se tourne au doigt, à la souris et au clavier ; le bouton devient « ↺ Revenir à la vue de départ ». À l'impression
+   et sans WebGL, l'affiche.
+3. **La vue commune** `_ressources-communes/objet3d/` (`LISEZMOI.md`) : three.js 0.187.0 (MIT) et la vue en **un seul
+   script classique**, construit par esbuild, parce qu'une page ouverte en `file://` (clé USB, réseau du collège)
+   refuse les modules ES et `fetch()` ; le modèle y entre en base64. 650 Ko, chargés au clic seulement.
+4. **Pièges trouvés en regardant les captures** : la pastille du cadre tombait sur le bac (d'où les repères posés dans
+   Blender) ; un cadrage par la sphère englobante laissait le vélo au milieu d'un grand vide (la distance se calcule
+   maintenant sur tous les points) ; posé sur l'image, le bouton en cachait le bas à 390 px ; une affiche unique,
+   réduite au téléphone, ramenait les pastilles à 8 px ; « revenir » laissait l'inertie tourner ; un fichier écrit
+   dans la session puis aussitôt déposé sur le poste de Pascal est parti dans son ancienne version (vérifier sur le
+   poste avant de lancer Blender).
+
+**Une flèche à travers un texte (thème 2).** Dans `_outils/regenerer_chaines_energie.py`, quatre flèches d'ordre ou
+d'énergie partaient à travers le texte du composant au-dessus (lampadaire de 5e_C4.1, jardin connecté de 4e_C4.1,
+Book Train, chaîne à élaborer de 3e_C4.1) : elles partent maintenant 12 px dessous (« des entités qui ne se touchent
+pas », Pascal), mesuré par `getBBox` sur les SVG produits ; quinze fichiers régénérés (SVG, `.drawio`, la page du Book
+Train).
+
+**Les trois rouges de `main`, venus des lots du 27/11 (thème 3).** `controle_lexique_a_jour` : les sept lexiques
+périmés régénérés (3e_C7.1, 3e_C7.3, 3e_C7.5, 3e_C7.8, 4e_C7.1, 4e_C7.3, 4e_C9.1). `controle_sigles_expliques` : PLA
+(3e_C7.7) et DEL (5e_C7.4) expliqués à leur première apparition (`_outils/expliquer_sigles.py`). `controle_hierarchie` :
+deux murs de texte reçoivent un repère en gras (billet de sortie de 3e_C7.5, situation déclenchante de 3e_C8.1). **Reste**
+l'énumération en ligne ①②③ de 5e_C1.1 (« Pour aller plus loin »), laissée hors de ce lot comme convenu le 28/11.
+
+**Vérifié.** `tests_objet3d_velo_cargo.py` (neuf) : 35 / 35 — en `file://`, réseau coupé, à 1 280 et 390 px : rien de
+la 3D chargé avant le clic, aucune requête vers le réseau, quatre pastilles, glisser, flèches, « 0 » et bouton de retour,
+impression, sans WebGL, pas de défilement de côté, zéro erreur JavaScript. Bancs du lot : `tests_5e_C3.1-C3.4_shanghai.py`
+36 / 36, `tests_regle_311_5e_C3.1.mjs` 27 / 27, `tests_voix_velo_cargo.py` 24 / 24. En mode mission (vue élève, 390 px) :
+la vue s'ouvre sur son écran, quatre pastilles, aucune erreur. `controle_hors_ligne.mjs` et `controle_axe.mjs` sur la
+séquence : verts. Revue d'écran en deux tours (390 et 1 280 px). Les 56 contrôles Python de `_outils/`, après
+rebasage sur `main` (7dc8f259) : quatre rouges sur `main`, deux sur la branche, rouges aussi sur `main` —
+`controle_hierarchie` (5e_C1.1, ci-dessus) et `controle_bonus_corrige` (le Bonus du Book Train, lot #986 du thème 2,
+sans corrigé : laissé à ce lot). **Non vérifié** : la fluidité sur les vieux postes du
+collège (ici, rendu logiciel) et sur tablette ; qu'un élève retrouve les pièces (se regarde en classe).
+
+**Thème par thème** (n°302) : thème 1 — 5e_C3.1 (séquence, `SOURCES_MEDIAS.md`, `Images/` : modèle et deux affiches,
+`_generation/objet_3d_velo_cargo/`, banc neuf) ; thème 2 — quatre chaînes d'énergie régénérées (5e_C4.1, 4e_C4.1, Book
+Train, 3e_C4.1) ; thème 3 — sept lexiques, 3e_C7.5, 3e_C7.7, 3e_C8.1, 5e_C7.4 ; `_outils/` —
+`regenerer_chaines_energie.py` ; `_ressources-communes/` — le dossier neuf `objet3d/` ; `.claude/skills/` et
+`SKILLS_AUDIT.md` — trois skills neufs, un tableau ajouté.
