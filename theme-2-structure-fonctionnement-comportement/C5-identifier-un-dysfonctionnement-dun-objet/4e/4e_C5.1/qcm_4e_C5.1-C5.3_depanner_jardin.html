@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -303,7 +305,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 C5.1 + 10 C5.2 + 10 C5.3), 4 illustrées.
+/* Banque : 30 questions (10 C5.1 + 10 C5.2 + 10 C5.3), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 C5.1 + 10 C5.2 + 10 C5.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -462,7 +464,8 @@ const QUESTIONS = [
  err:"Choisir « au feeling » ou par habitude — un procédé se choisit pour LA pièce, pas en général.",
  d:["Couleur et marque n'influencent ni la forme réalisable ni la tenue dehors.","","La préférence n'est pas un critère technique : le tableau existe justement pour objectiver.","Le coût est UN critère parmi d'autres — seul, il ferait choisir une pièce qui casse au premier soleil."],
  ret:"Choisir un procédé = croiser forme de la pièce × environnement × temps × matériel."},
-{c:"C5.3",n:"La forme qui élimine",q:"La découpe-pliage de plaque PVC est écartée pour le clip parce que…",
+{c:"C5.3",n:"La forme qui élimine",q:"D'après ce document, pourquoi la découpe-pliage de plaque est-elle écartée pour ce clip ?",
+ img:{src:"Images/doc_clip_a_refaire.svg",alt:"Le clip-support du capteur d'humidité, à refaire. La pièce : diamètre du capteur qu'elle tient 10,0 mm (millimètres) ; forme en VOLUME + 2 ergots élastiques ; cassé — introuvable en magasin. Son environnement, le jardin : soleil + UV, arrosage, 30 °C+ chaleur, la pièce vivra DEHORS, des années. Les procédés de l'atelier : Impression 3D (PETG), Découpe-pliage (PVC), Taille du bois. Le document ne dit pas lequel choisir."},
  o:["le PVC n'existe qu'en couleur grise","la plieuse du laboratoire est en panne","elle plie une plaque : pas de volume à ergots","le pliage est réservé aux élèves de 3e"],r:2,
  expl:"Chaque procédé a son DOMAINE de formes : la découpe-pliage excelle pour les boîtiers et supports issus de plaques ; un clip en volume, avec ses ergots qui fléchissent, sort de son domaine.",
  ex:"Un capot plat plié : parfait pour la plieuse. Un clip rond à ergots : territoire de l'impression 3D.",
@@ -483,7 +486,8 @@ const QUESTIONS = [
  err:"Modéliser « à l'œil » : la pièce imprimée ne s'enclenchera pas — une heure d'impression perdue.",
  d:["","Imprimer quoi ? Sans mesures, il n'existe encore aucun modèle à envoyer à la machine.","On ne ponce pas une pièce qui n'existe pas : l'ébavurage vient APRÈS l'impression.","La couleur est le dernier des soucis : les COTES font la pièce fonctionnelle."],
  ret:"La gamme commence par MESURER : l'ancienne pièce est le plan de la nouvelle."},
-{c:"C5.3",n:"Le jeu fonctionnel",q:"Le capteur fait 10,0 mm de diamètre. Dans le modèle 3D du clip, on dessine le trou à…",
+{c:"C5.3",n:"Le jeu fonctionnel",q:"D'après ce document, le capteur fait 10,0 mm (millimètres) de diamètre. Dans le modèle 3D du clip, on dessine le trou à…",
+ img:{src:"Images/doc_clip_a_refaire.svg",alt:"Le clip-support du capteur d'humidité, à refaire. La pièce : diamètre du capteur qu'elle tient 10,0 mm (millimètres) ; forme en VOLUME + 2 ergots élastiques ; cassé — introuvable en magasin. Son environnement, le jardin : soleil + UV, arrosage, 30 °C+ chaleur, la pièce vivra DEHORS, des années. Les procédés de l'atelier : Impression 3D (PETG), Découpe-pliage (PVC), Taille du bois. Le document ne dit pas lequel choisir."},
  o:["15 mm, pour être vraiment tranquille","10,0 mm : les cotes ne se discutent pas","9,8 mm, pour que cela tienne bien serré","environ 10,2 mm : c'est le jeu fonctionnel"],r:3,
  expl:"Deux pièces de MÊME cote ne s'assemblent pas : il faut un léger jeu (ici ~0,2 mm) qui absorbe les petites imprécisions de l'impression et autorise le montage — sans ballotter.",
  ex:"Une clé USB entre dans son port grâce au jeu prévu par les concepteurs — invisible, mais indispensable.",
@@ -511,7 +515,8 @@ const QUESTIONS = [
  err:"Considérer l'imprimante 3D comme « sans danger » parce qu'elle travaille seule : la buse et le plateau brûlent.",
  d:["Souffler des copeaux les envoie dans les yeux — l'aspirateur et la balayette existent pour cela.","La vitesse est l'ennemie de l'atelier : c'est la précipitation qui blesse.","Les protections existent parce que des accidents ont eu lieu : les retirer, c'est réinviter l'accident.",""],
  ret:"Atelier = lunettes, cheveux attachés, adulte présent. Pour TOUTES les machines, imprimante comprise."},
-{c:"C5.3",n:"La force de l'unité",q:"Le fabricant ne vend plus le clip. L'impression 3D est idéale dans ce cas car…",
+{c:"C5.3",n:"La force de l'unité",q:"D'après ce document, le clip est introuvable en magasin. Pourquoi l'impression 3D est-elle idéale ici ?",
+ img:{src:"Images/doc_clip_a_refaire.svg",alt:"Le clip-support du capteur d'humidité, à refaire. La pièce : diamètre du capteur qu'elle tient 10,0 mm (millimètres) ; forme en VOLUME + 2 ergots élastiques ; cassé — introuvable en magasin. Son environnement, le jardin : soleil + UV, arrosage, 30 °C+ chaleur, la pièce vivra DEHORS, des années. Les procédés de l'atelier : Impression 3D (PETG), Découpe-pliage (PVC), Taille du bois. Le document ne dit pas lequel choisir."},
  o:["elle revient toujours moins cher qu'en magasin","elle fabrique à l'unité, et sur mesure","elle fabrique plus vite que toutes les usines","elle ne demande aucune compétence particulière"],r:1,
  expl:"L'industrie produit en série ; l'impression 3D produit à la demande. Pour une pièce disparue du commerce, elle est souvent la SEULE voie — et elle redonne des années de vie à l'objet entier.",
  ex:"Un clip introuvable refabriqué en 40 minutes : l'objet complet échappe à la poubelle.",

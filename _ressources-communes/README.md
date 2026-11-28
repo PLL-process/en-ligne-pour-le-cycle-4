@@ -47,6 +47,12 @@ les outils d'évaluation et les images mutualisés dans le dépôt.
 - [Relais animé](relais-anime/LISEZMOI.md) : la figure du relais vu en coupe, animée (la bobine, la lame, le ressort,
   « clac »). Depuis le 05/11/2026.
 
+### L'atelier Blender
+
+- [Atelier Blender](blender-atelier/LISEZMOI.md) : l'outillage commun (un module Python pour Blender) des films en 3D
+  engendrés par script : formes, matières, caméras, vue en coupe, pastilles, rendu. Depuis le 28/11/2026 (les trois
+  freins de 5e_C1.2).
+
 ### Images
 
 - [Ressources transversales](Images/Ressources%20transversales/) :

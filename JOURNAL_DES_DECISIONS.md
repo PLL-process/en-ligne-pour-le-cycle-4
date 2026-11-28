@@ -39130,3 +39130,65 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   minutes : la séance tient en 55.
 Bancs : séquence 36 / 36 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C5.1`).
+
+## 28/11/2026 — 4e_C5.1 : trois questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Le clip-support à refaire », LU par `documents_qcm.py` dans le schéma de
+  l'activité 3, sans les ✔ / ✘ du tableau de choix ; les q22, q25 et q29 s'y lisent.
+- **Billet de sortie** avant le Bonus de la séance 3 : le distributeur automatique de gel de l'entrée (un protocole de
+  quatre tests et la purge qui innocente la pompe ; le procédé pour trente fenêtres plates, piles retirées d'abord). La
+  séance 3 passe de 45 à 50 minutes d'activités.
+- Une ligne d'erreurs fréquentes cousait trois idées par « ; » (audit d'aération) : une par ligne.
+Bancs : séquence 32 / 32 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C5.1`).
+
+## 28/11/2026 — Les trois freins de Sainte-Luce en 3D, et un atelier Blender commun (transversal : thème 1, `_ressources-communes`, `.claude/skills`, `SKILLS_AUDIT.md`)
+
+**Demande de Pascal (26/11).** « 1a 2b 3b fusionne et donne moi l'URL », puis « Continue » : 3b, c'était « lancer les trois
+freins » (5e_C1.2), le deuxième lot Blender après les appareils de Chengdu.
+
+**La modification (5e_C1.2, activité 1).** Un bloc « Les trois freins, sur la même roue », posé juste après les trois vidéos
+d'Alain Le Berre et avant « a) La manipulation » ; les trois blocs « ressource » ne sont pas touchés. D'abord ce qu'il faut
+regarder (les deux surfaces qui se touchent ; la distance à l'axe ; ranger les trois freins), puis le choix du frein (trois
+boutons), un film muet de 4,5 s lancé par l'élève, la légende numérotée et la note « modèle simplifié ». Chaque film montre
+la roue entière dans sa fourche avec son guidon, et, dans un rond, le frein de près **en coupe** : les patins pincent la
+jante, les plaquettes pincent le disque, les mâchoires s'écartent dans le tambour ; la roue ralentit et s'arrête ; l'orange
+montre où ça chauffe. Mêmes numéros pour les trois : ① le levier, ② ce qui transmet, ③ ce qui pousse, ④ ce qui frotte sans
+tourner, ⑤ ce qui tourne et frotte. À l'impression, la bande des trois images sur fond clair, légendée.
+
+**Quatre choix faits en chemin, à relire par Pascal.**
+1. **Un bloc à part, pas une animation pas à pas.** La séquence n'a pas de lecteur pas à pas à l'activité 1 ; les films
+   doublent les trois vidéos YouTube, pour quand elles ne s'ouvrent pas (n°305).
+2. **Deux vues par film.** La roue entière seule montrait mal ce qui se touche (le disque fait 16 cm, le tambour 9) ; la
+   loupe seule ne montrait pas la distance à l'axe, qui est la question de l'activité.
+3. **Joué à la demande, jamais seul.** Un clic sur « Lancer le film » ; il s'arrête sur l'image complète (n°175, n°176).
+   Sous « mouvement réduit », rien ne part seul : l'affiche suffit ; un film que l'élève lance lui-même se joue. Le skill
+   l'écrit désormais ainsi.
+4. **Les écarts sont grossis, et la page le dit** (6 mm pour les patins, 4 mm pour les plaquettes), comme les seize rayons
+   de la roue (une roue à 32 rayons semble reculer à 24 images/s).
+
+**L'atelier commun.** Les fonctions du premier lot (formes, matières, caméras, lumières, pastilles, rendu, ménage) sont
+tirées dans `_ressources-communes/blender-atelier/atelier.py`, avec ce que les freins ont demandé en plus (anneaux, arcs,
+tubes, fil tendu, vue en coupe, projection d'un point dans l'image). Le script de Chengdu garde sa copie : il a été vérifié
+tel quel.
+
+**Fabrication.** `_generation/films_trois_freins/generer.py` (Blender 5.1.1, sur le poste de Pascal, par son connecteur),
+`habiller.py` (la loupe et les pastilles, en 2D), `assembler.sh` (ffmpeg). Films de 378 à 510 Ko (un seul est téléchargé,
+au clic), affiches de 80 Ko, images d'impression de 45 Ko.
+
+**Ce qui a tourné.** `tests_trois_freins_3d.py` 47 / 47, et il voit quatre défauts posés exprès ;
+`tests_5e_C1.2_sainte_luce.py` 51 / 51 ; `tests_regle_311_5e_C1.2.mjs` 34 / 34 ; vingt contrôles de `_outils/`, même verdict
+qu'avant le bloc (détail dans `rapport_tests_5e_C1.2.md`). Trois défauts trouvés et corrigés en chemin : Chromium
+téléchargeait le film au changement de frein (`load()` ignore `preload="none"`) ; les légendes imprimées étaient des
+énumérations en ligne ; une image d'impression faisait un pixel de trop. Le skill `blender-visualisation-pedagogique` est
+complété (deux vues, coupe, pastilles après coup, empreinte du script avant de l'exécuter, pièges mesurés, impression en
+bande).
+
+**Non vérifié** : que les films soient clairs pour un élève (cela se regarde en classe) ; leur lecture sur les postes du
+collège, sous Safari et sur tablette ; l'impression hors Chromium.
+
+**Ce qui a été touché, par périmètre (n°302, n°307).** Thème 1 : `5e_C1.2` (séquence, films, images, génération, banc,
+sources, manifeste, rapport, README). Commun : `_ressources-communes/blender-atelier/` et son README,
+`.claude/skills/blender-visualisation-pedagogique/`, `SKILLS_AUDIT.md`, ce journal, `nouveautes.json`, l'index et l'audit régénérés. Thèmes 2 et 3 :
+rien.

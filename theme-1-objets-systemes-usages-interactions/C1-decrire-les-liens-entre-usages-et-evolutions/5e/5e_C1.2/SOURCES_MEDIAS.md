@@ -152,3 +152,42 @@ quand on serre le levier, ce qui vient toucher quoi, à quelle distance de l'axe
 
 Aucune modification d'une image tierce : tout est dessiné. Pour la refaire : `node _generation/freins_iso/build.mjs`
 (le kit Anatomy, épinglé sur son commit audité, n'est pas versé dans le dépôt ; voir l'en-tête du générateur).
+
+## Les trois freins en 3D (activité 1, ajoutés le 28/11/2026)
+
+Demande de Pascal du 26/11/2026 (« lancer les trois freins ») : après les appareils de Chengdu (5e_C1.1), la même roue
+avec ses trois freins, en film. **Créations originales**, engendrées par script : `_generation/films_trois_freins/generer.py`
+construit les trois scènes de zéro dans **Blender 5.1.1** (moteur EEVEE), sur le poste de Pascal, par son connecteur, avec
+l'outillage commun `_ressources-communes/blender-atelier/atelier.py`. Aucun fichier `.blend`, aucun modèle, aucune texture
+ni image venus d'ailleurs ; aucun son. `habiller.py` (Pillow, ffmpeg) pose la loupe et les pastilles numérotées ;
+`assembler.sh` (ffmpeg) tire les fichiers légers ci-dessous. Auteur : écosystème Pascal/Claude (Fable), licence du dépôt
+**CC BY-NC-SA 4.0** (règle d'or n°321). Blender (GPL) n'est pas dans le dépôt : ses images ne portent pas sa licence.
+
+Chaque frein est rendu **deux fois** dans la même scène : la roue entière (pour voir à quelle distance de l'axe ça frotte) et,
+dans un rond, le frein de près, **en coupe** (pour voir quelles deux surfaces se touchent). Ce sont des **modèles simplifiés,
+pas des photos** : l'écart entre les pièces au repos est grossi (6 mm pour les patins, 4 mm pour les plaquettes), la roue a
+seize rayons, l'orange montre l'endroit qui chauffe. La page l'écrit sous le film. Les mots de la légende sont ceux de la
+figure « Trois freins, la même roue » (16/11/2026), plus « la came », que le film montre (la figure ne nomme que son
+levier) ; mêmes numéros pour les trois freins : ① le levier, ② ce qui transmet,
+③ ce qui pousse, ④ ce qui frotte sans tourner, ⑤ ce qui tourne et frotte.
+
+| Fichier | Ce que c'est |
+|---|---|
+| `Films/trois-freins_patins.mp4` · `.webm` | frein à patins : film muet de 4,5 s, 960 × 676, 24 images/s ; H.264 (377,8 Ko) et VP9 de secours (380,7 Ko) |
+| `Films/trois-freins_disque.mp4` · `.webm` | frein à disque : film muet de 4,5 s, 960 × 676, 24 images/s ; H.264 (404,9 Ko) et VP9 de secours (439,4 Ko) |
+| `Films/trois-freins_tambour.mp4` · `.webm` | frein à tambour : film muet de 4,5 s, 960 × 676, 24 images/s ; H.264 (466,1 Ko) et VP9 de secours (510,1 Ko) |
+| `Images/trois-freins_patins_3d.jpg` | la dernière image du film (l'image complète, n°176), JPEG, 82,2 Ko : son affiche |
+| `Images/trois-freins_disque_3d.jpg` | la dernière image du film (l'image complète, n°176), JPEG, 79,5 Ko : son affiche |
+| `Images/trois-freins_tambour_3d.jpg` | la dernière image du film (l'image complète, n°176), JPEG, 80,5 Ko : son affiche |
+| `Images/trois-freins_patins_3d_impression.jpg` | la même image sur fond clair, 720 × 507, JPEG, 45,6 Ko : la bande imprimée (n°102) |
+| `Images/trois-freins_disque_3d_impression.jpg` | la même image sur fond clair, 720 × 507, JPEG, 44,0 Ko : la bande imprimée (n°102) |
+| `Images/trois-freins_tambour_3d_impression.jpg` | la même image sur fond clair, 720 × 507, JPEG, 44,4 Ko : la bande imprimée (n°102) |
+
+- **À l'écran** : un bloc « Les trois freins, sur la même roue », juste après les trois vidéos d'Alain Le Berre et avant la
+  manipulation ; les blocs « ressource » ne sont pas touchés. L'élève choisit le frein, puis lance le film : il se joue une
+  fois et s'arrête sur l'image complète (n°175, n°176). Rien n'est demandé avant le premier « Lancer » (`preload="none"`) ;
+  seul le film choisi se télécharge.
+- **À l'impression** : la bande des trois images sur fond clair, avec leur légende ; la séance 1 s'imprime toujours sur 5 pages A4.
+  Ces trois images (134 Ko à trois) se chargent avec la page : retardées, elles pourraient manquer sur le papier.
+- **Non vérifié** : la lecture des films sur les postes du collège, sous Safari et sur tablette (seul Chromium a tourné) ;
+  la clarté pour un élève.
