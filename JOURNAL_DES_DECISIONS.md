@@ -39214,3 +39214,14 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
 - Le corrigé du défi maison cousait trois exemples sur une ligne : un exemple par paragraphe.
 Bancs : séquence 38 / 38 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C6.1`).
+
+## 28/11/2026 — 4e_C6.1 : un document au QCM et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **Document** `doc_programme_corrige_jardin` : les deux lignes du programme corrigé et le cas « sinon », lus dans la
+  correction de l'activité 2. Quatre questions de scénario s'y lisent (q9, q19, q20, q22) ; chaque pourquoi renvoie à
+  la ligne à relire. Sept questions illustrées, dont six sur document.
+- **Billet de sortie** avant le Bonus de la séance 2 : le brasseur d'air de la salle informatique (analyser des relevés
+  et modifier une ligne ; deux scénarios et une validation limitée). Le réinvestissement passe de 15 à 10 minutes.
+Bancs : séquence 32 / 32 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C6.1`).
