@@ -26,3 +26,8 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 
 *Le 30/10/2026, cette image remplace `synthese_jardin_connecte.png` (même demande, « in Martinique », avec des palmiers) : le jardin de 4e est à New York, et Pascal a demandé de « le passer à New York ». L'ancien fichier est retiré du lot.*
 
+## Document du QCM (28/11/2026, n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_programme_corrige_jardin.svg` | Les deux lignes du programme corrigé du jardin et le cas « sinon », sans verdict de scénario. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C6.1.json`, lui-même LU dans la séquence (correction de l'activité 2, « LIGNE 1 », « LIGNE 2 ») par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM, q9, q19, q20, q22 |

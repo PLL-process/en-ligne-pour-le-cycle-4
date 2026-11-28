@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -302,7 +304,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (15 C6.1 + 15 C6.3), 7 illustrees (regle images v2), dont 4 sur « Le programme corrigé du jardin » (n°345) */
 const QUESTIONS = [
 /* ═══ C6.1 ═══ */
 {c:"C6.1",n:"Ce que crient les relevés",q:"Les relevés du mardi montrent 47 démarrages de pompe entre 6 h et 9 h, par à-coups d'une minute. Que révèlent ces données ?",
@@ -363,12 +365,13 @@ const QUESTIONS = [
  err:"Symétriser les conditions « par logique » : chaque règle a SA bonne place, dictée par le comportement voulu.",
  d:["L'esthétique du code n'arrose rien : seul le comportement compte.","L'arrêt a bien une condition : humidité > 45 % — elle suffit.","Le programme teste l'heure autant de fois que nécessaire, à chaque tour de boucle.",""],
  ret:"Plage horaire = un ET sur le démarrage. L'arrêt reste à l'humidité : un arrosage commencé peut finir."},
-{c:"C6.1",n:"Sécheresse à midi",q:"Programme corrigé, sol à 30 % à 13 h. Que se passe-t-il ?",
+{c:"C6.1",n:"Sécheresse à midi",q:"Avec ce programme corrigé, le sol est à 30 % à 13 h, pompe éteinte. Que se passe-t-il ?",
+ img:{src:"Images/doc_programme_corrige_jardin.svg",alt:"Le programme corrigé du jardin, relu à chaque mesure. Ligne 1 : SI humidité < 35 % ET (heure < 8 h OU heure > 17 h) ALORS pompe ON. Ligne 2 : SI humidité > 45 % ALORS pompe OFF. SINON : la pompe garde l'état qu'elle avait. Le document ne dit pas ce que fait la pompe dans un cas donné."},
  o:["le capteur s'éteint pour économiser la pile","arrosage immédiat : 30 %, c'est une vraie urgence","le programme envoie une alerte à la mairie","rien pour l'instant : l'arrosage attendra 17 h"],r:3,
  expl:"Le programme corrigé arbitre : arroser à 13 h donnerait l'ILLUSION d'agir en gaspillant l'eau. Attendre 17 h sert mieux la plante — la condition horaire encode ce raisonnement d'agronome.",
  ex:"À 17 h 01, humidité toujours < 35 % et heure redevenue valide : la pompe démarre — l'eau de la citerne va aux racines, pas au soleil.",
  err:"Confondre « réagir vite » et « agir utilement » : quelques heures d'attente font gagner la moitié de l'eau.",
- d:["Le capteur continue de mesurer : c'est justement lui qui déclenchera l'arrosage à 17 h.","L'urgence apparente mène au gaspillage : l'évaporation confisquerait l'essentiel de l'arrosage.","Aucune règle d'alerte n'existe dans ce programme — et 30 % à midi n'est pas une catastrophe pour quelques heures.",""],
+ d:["Le capteur continue de mesurer : relis la ligne 1, c'est lui qui déclenchera l'arrosage après 17 h.","30 % est bien sous 35 %, mais relis la deuxième condition de la ligne 1 : 13 h n'est ni avant 8 h ni après 17 h.","Aucune ligne du programme n'envoie d'alerte : relis les trois cases, la pompe seule est commandée.",""],
  ret:"Le programme corrigé n'ignore pas la sécheresse : il la traite au BON moment."},
 {c:"C6.1",n:"Valeur isolée ou tendance",q:"Pour repérer le battement, il fallait regarder…",
  o:["la couleur choisie pour tracer la courbe des relevés","une seule mesure, prise à 7 h du matin","la TENDANCE sur plusieurs heures de relevés","le prix d'achat de la pompe d'arrosage"],r:2,
@@ -435,19 +438,21 @@ const QUESTIONS = [
  err:"« On verra bien en vrai » : le réel est un très mauvais endroit pour découvrir ses erreurs.",
  d:["","L'agrément est un bonus ; la fonction de la simulation est la sécurité de l'essai.","La distance n'est pas l'argument : même un jardin à deux mètres mérite la simulation d'abord.","La simulation n'est pas une commodité de confort : c'est une étape de MÉTHODE, où qu'on soit."],
  ret:"La simulation est le terrain d'essai où les erreurs sont gratuites."},
-{c:"C6.3",n:"Le scénario de l'hystérésis",q:"Le scénario « 38 % à 6 h 30, pompe DÉJÀ allumée » teste spécifiquement…",
+{c:"C6.3",n:"Le scénario de l'hystérésis",q:"Avec ce programme, le scénario « 38 % à 6 h 30, pompe DÉJÀ allumée » teste spécifiquement…",
+ img:{src:"Images/doc_programme_corrige_jardin.svg",alt:"Le programme corrigé du jardin, relu à chaque mesure. Ligne 1 : SI humidité < 35 % ET (heure < 8 h OU heure > 17 h) ALORS pompe ON. Ligne 2 : SI humidité > 45 % ALORS pompe OFF. SINON : la pompe garde l'état qu'elle avait. Le document ne dit pas ce que fait la pompe dans un cas donné."},
  o:["la couleur d'affichage de l'écran","le démarrage de la pompe en sol sec","la plage horaire d'interdiction d'arroser l'après-midi","l'hystérésis : garder l'état entre 35 et 45 %"],r:3,
  expl:"38 % est le cœur de la zone calme : le nouveau programme doit y conserver l'état (pompe allumée reste allumée). C'est LE point où l'ancien programme battait — donc LE scénario qui prouve la guérison.",
  ex:"Verdict attendu : RESTE ALLUMÉE. Si la pompe s'arrêtait à 38 %, l'hystérésis serait mal codée.",
  err:"Tester seulement les cas « faciles » (très sec, très humide) et rater la zone intermédiaire — là où vivait le bug.",
- d:["Aucun scénario ne teste l'écran : les scénarios visent les RÈGLES modifiées.","Le démarrage se teste à 33 % pompe ÉTEINTE (scénario 1) : conditions franchement sous le seuil bas.","La plage horaire se teste à 13 h (scénario 4) : ici, 6 h 30 est une heure autorisée.",""],
+ d:["Aucune ligne du programme ne parle d'écran : relis les trois cases, elles ne commandent que la pompe.","Le démarrage se teste pompe ÉTEINTE et sol sous 35 % : ici, 38 % n'est pas sous 35 %. Relis la ligne 1.","La plage horaire retient les départs aux heures chaudes : 6 h 30 est avant 8 h, heure autorisée. Relis la ligne 1.",""],
  ret:"Le scénario de l'hystérésis vise la zone ENTRE les seuils, pompe dans chaque état."},
-{c:"C6.3",n:"Le scénario de 13 h",q:"Le scénario « 33 % à 13 h, pompe éteinte » vérifie que…",
+{c:"C6.3",n:"Le scénario de 13 h",q:"Avec ce programme, le scénario « 33 % à 13 h, pompe éteinte » vérifie que…",
+ img:{src:"Images/doc_programme_corrige_jardin.svg",alt:"Le programme corrigé du jardin, relu à chaque mesure. Ligne 1 : SI humidité < 35 % ET (heure < 8 h OU heure > 17 h) ALORS pompe ON. Ligne 2 : SI humidité > 45 % ALORS pompe OFF. SINON : la pompe garde l'état qu'elle avait. Le document ne dit pas ce que fait la pompe dans un cas donné."},
  o:["que le capteur fonctionne bien à midi","que la pompe démarre dès que le sol est sec","que la plage horaire retient l'arrosage","que le programme connaît bien la date"],r:2,
  expl:"C'est le test de la règle ajoutée : 33 % réclamerait un arrosage… que 13 h doit interdire. Si la pompe démarrait, la condition horaire serait absente ou mal placée.",
  ex:"Verdict attendu : RESTE ÉTEINTE — rendez-vous à 17 h. Exactement l'anomalie du mercredi, rejouée pour prouver sa disparition.",
  err:"Écrire des scénarios qui ne peuvent que réussir : un bon scénario attaque précisément la règle qu'il teste.",
- d:["Le capteur mesure à toute heure : ce n'est pas lui qu'on teste, c'est la RÈGLE.","« Démarrer dès que sec » est l'ANCIEN comportement — celui que la modification supprime.","","La date n'intervient pas : seule l'HEURE est testée par la plage."],
+ d:["Le capteur mesure à toute heure : ce n'est pas lui qu'on teste, c'est une règle du programme. Relis la ligne 1.","« Démarrer dès que le sol est sec » est l'ANCIEN comportement : relis la deuxième condition de la ligne 1.","","La date n'apparaît dans aucune ligne : seule l'HEURE compte. Relis la ligne 1."],
  ret:"Chaque scénario rejoue une anomalie d'origine pour prouver qu'elle a disparu."},
 {c:"C6.3",n:"Couvrir toutes les règles",q:"Pourquoi QUATRE scénarios, et pas un seul ?",
  o:["pour faire durer la séance jusqu'au bout","chaque scénario teste UNE règle du programme","parce que quatre élèves voulaient jouer","un seul suffirait : les autres sont décoratifs"],r:1,
@@ -456,12 +461,13 @@ const QUESTIONS = [
  err:"Conclure « ça marche » après un unique essai réussi — l'illusion de validation la plus répandue.",
  d:["La durée n'est pas l'objectif : la COUVERTURE l'est. Quatre scénarios bien choisis suffisent ici.","","Le nombre vient des règles à prouver, pas des volontaires.","Retirer un scénario, c'est accepter une règle sur parole."],
  ret:"Autant de scénarios que de règles modifiées : la couverture fait la validation."},
-{c:"C6.3",n:"Verdict du scénario 3",q:"Scénario « 46 % à 7 h, pompe allumée » : le verdict attendu du programme corrigé est…",
+{c:"C6.3",n:"Verdict du scénario 3",q:"Avec ce programme, scénario « 46 % à 7 h, pompe allumée » : que fait la pompe ?",
+ img:{src:"Images/doc_programme_corrige_jardin.svg",alt:"Le programme corrigé du jardin, relu à chaque mesure. Ligne 1 : SI humidité < 35 % ET (heure < 8 h OU heure > 17 h) ALORS pompe ON. Ligne 2 : SI humidité > 45 % ALORS pompe OFF. SINON : la pompe garde l'état qu'elle avait. Le document ne dit pas ce que fait la pompe dans un cas donné."},
  o:["la pompe continue à tourner jusqu'à 8 h","la pompe s'ARRÊTE : 46 % dépasse le seuil","la pompe accélère pour finir plus vite","la pompe attend 17 h pour s'arrêter"],r:1,
  expl:"L'arrêt n'écoute que l'humidité : 46 > 45 → OFF, immédiatement. Ni l'heure ni l'état précédent n'ont voix au chapitre au-dessus du seuil haut.",
  ex:"Si la pompe continuait, le banc révélerait une condition d'arrêt mal codée — à corriger AVANT le réel.",
  err:"Appliquer la plage horaire à l'arrêt : elle ne concerne que le démarrage.",
- d:["Continuer jusqu'à 8 h noierait le sol : l'heure ne pilote pas la fin d'arrosage.","","« Accélérer » n'existe pas dans ce programme : la pompe est allumée ou éteinte.","Attendre 17 h pour s'arrêter inonderait le jardin : la plage retient les DÉPARTS, jamais les arrêts."],
+ d:["La ligne 2 ne regarde pas l'heure : relis-la, seule l'humidité décide de l'arrêt.","","Aucune ligne ne règle une vitesse : relis les cases, la pompe est ON ou OFF.","La plage horaire n'est que dans la ligne 1, celle du démarrage : relis la ligne 2."],
  ret:"Au-dessus de 45 % : arrêt franc, quelle que soit l'heure."},
 {c:"C6.3",n:"Le plant témoin",q:"La validation en réel commence « sur le plant témoin ». Pourquoi ce périmètre limité ?",
  o:["parce que ce plant est le préféré du club","une erreur qui resterait ne coûterait qu'UN plant","pour économiser quelques mètres de câble","le réel complet est interdit aux classes de 4e du collège"],r:1,
