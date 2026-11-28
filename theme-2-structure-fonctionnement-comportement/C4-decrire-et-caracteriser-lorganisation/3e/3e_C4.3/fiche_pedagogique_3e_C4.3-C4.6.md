@@ -59,7 +59,7 @@
 ### Séance 5 — Réinvestir et conclure (bilan) — ajoutée le 11/11/2026
 1. Réinvestissement (30 min) : bouée houlographe — transfert intégral sans modèle.
 2. Synthèse de la séquence (10 min), Bonus pour les rapides.
-3. Bilan personnel (10 min) + QCM d'entraînement (5 min pour le lancer ; à finir à la maison ou en AP).
+3. Bilan personnel (10 min). Le QCM d'entraînement se fait à la maison ou en AP (accompagnement personnalisé) : ses 5 minutes de lancement laissent la place au billet de sortie, et la séance tient en 55 minutes.
 4. Billet de sortie (5 min, seul et sans aide, 28/11/2026, n°330) : le thermomètre connecté de la cantine — sa chaîne d'information et le N de son CAN 8 bits à 25 °C ; le type de ses trois données et le format du fichier de la journée.
 
 ## Organisation de la classe
