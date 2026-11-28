@@ -202,3 +202,14 @@ la ruche dessinées. Il ne valide rien et ne compte pas dans les cinq activités
 
 Non exécuté : un vrai téléphone, un lecteur d'écran, une impression réelle, une passation en classe (la durée de
 5 min est une estimation).
+
+## Reprise du 28/11/2026 — trois questions sur document de plus (n°345)
+
+- `node tests_4e_C4.1-C4.9.mjs` : **75 / 75** (trois tests neufs : au moins six questions sur document ;
+  `documents_qcm.py --verifier` à jour du lot ; le document porte trois questions, chacune décrite en entier).
+  `node tests_regle_311_4e_C4.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 était à 1 : quatre questions sur document).
+  `balayer_questions_qcm.mjs --apres` : 60 questions des deux QCM, 0 écart. Contrôles des QCM (aides comprises), des
+  schémas (0 ✘), de l'aération, des règles d'or, du squelette, du mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

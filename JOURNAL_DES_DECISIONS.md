@@ -38966,6 +38966,47 @@ d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les
 questions, 433 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux des lots C7 et C9
 du thème 3 du 27/11/2026 compris). Aucune phrase « comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.
 
+## 28/11/2026 — 5e_C4.1 : un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot, comme le thème 3.
+- Le QCM avait déjà six questions sur document : pas de D1 sur ce lot.
+- **Billet de sortie** avant le Bonus de la séance 6 : la fontaine à eau de la cour (la chaîne d'information ; la chaîne
+  d'énergie, électrique puis cinétique). La séance 6 passe de 40 à 45 minutes d'activités.
+Bancs : séquence 71 / 71 (cinq tests neufs), QCM 25 / 25, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles
+d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C4.1`).
+
+## 28/11/2026 — 5e_C4.7 : un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- Le QCM avait déjà six questions sur document : pas de D1 sur ce lot.
+- **Billet de sortie** avant le Bonus de la séance 3 : le réseau du CDI (terminaux et appareils qui relient, liaisons
+  filaires et sans fil ; un doublon d'adresse, et l'adresse libre de la même « rue »). La séance 3 passe de 45 à 50
+  minutes d'activités.
+Bancs : séquence 25 / 25 (cinq tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C4.7`).
+
+## 28/11/2026 — 4e_C4.1 : trois questions sur document de plus (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Un extrait de la table du jardin », LU dans le lot par `documents_qcm.py` (les
+  lignes de la table « mesures_jardin » du schéma de la séquence, et le seuil de 40 %) ; il montre les arrosages sans la
+  raison écrite à côté, que le schéma de la séquence donnait. Les q11, q12 et q13 s'y lisent (q13 citait « la ligne
+  356 » sans la montrer). Le manifeste annonçait 3 questions illustrées : 7.
+- La séquence avait déjà son billet de sortie.
+Bancs : séquence et QCM 75 / 75 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.1`).
+
+## 28/11/2026 — 4e_C4.1 (Book Train) : trois questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Le trajet du livre, dans l'ordre », LU dans l'algorigramme corrigé du lot par
+  `documents_qcm.py`, sans les symboles ni les flèches OUI / NON ; les q25 (le test), q26 (la saisie) et q27 (la boucle
+  d'attente) s'y lisent. Le badge du QCM annonçait déjà 7 questions illustrées pour 4 : il dit vrai maintenant.
+- **Billet de sortie** avant le Bonus de la séance 4 : le monte-plats de la cantine (sa chaîne d'énergie ; son
+  algorigramme, symboles et branches NON). La séance était pleine : l'activité 4.3 passe de 35 à 30 minutes.
+Bancs : séquence 49 / 49 (six tests neufs), n°311 38 / 38 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.1_book-train`).
+
 ## 28/11/2026 — Règle d'or n°375 : une question se lit avec son contexte, dans la même fenêtre (thème 2, `_outils/`)
 
 **Le constat de Pascal** (28/11/2026, capture du Bonus du TP « Algorigrammes de domotique », `4e_C6.2`) : « Après quelques

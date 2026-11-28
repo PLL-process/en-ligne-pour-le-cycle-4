@@ -81,3 +81,14 @@ Chargement sans erreur JS des deux synthèses ; le schéma embarqué (`<object>`
   (24 vérifications v1.2), toutes deux rejouables.
 - Le rétrofit v1.2 ne touche NI le fichier `.pkt`, NI les figures, NI le QCM : ce sont des ajouts de
   texte, un bouton et un billet d'entrée. Les preuves de la v1.0 restent valables telles quelles.
+
+## Reprise du 28/11/2026 — un billet de sortie (n°330)
+
+- `node tests_5e_C4.7_questions.mjs` : **25 / 25** (cinq tests neufs : le billet existe à la séance 3 ; deux zones
+  gardées et deux versions étayées ; deux critères, des contre-exemples, aucun bouton ; juste avant le Bonus ; la
+  réponse survit au rechargement). `node tests_regle_311_5e_C4.7.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (P1 était à 1). `balayer_questions_qcm.mjs --apres` :
+  30 questions, 0 écart. Contrôles des QCM, des schémas (0 ✘), de l'aération, des règles d'or, du squelette, du mode
+  mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle, Packet Tracer.

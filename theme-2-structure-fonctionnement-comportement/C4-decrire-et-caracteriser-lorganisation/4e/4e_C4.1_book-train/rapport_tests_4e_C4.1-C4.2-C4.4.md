@@ -280,3 +280,16 @@ internes de la page, eux, ouvraient déjà le bon onglet).
   `banc_effacement.mjs` sur la page : rien de gardé · `controle_axe.mjs` : pas de défaut grave de plus que la référence.
 
 Non exécuté : un vrai téléphone, Firefox, Safari.
+
+## Reprise du 28/11/2026 — trois questions sur document de plus, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C4.1-C4.2-C4.4_book-train.mjs` : **49 / 49** (six tests neufs : le billet existe à la séance 4, juste
+  avant le Bonus ; deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la
+  réponse revient après rechargement ; au QCM, au moins six questions sur document, le document décrit en entier, et
+  `documents_qcm.py --verifier` à jour de l'algorigramme du lot). `node tests_regle_311_4e_C4.1_book-train.mjs` :
+  **38 / 38**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `balayer_questions_qcm.mjs
+  --apres` : 30 questions, 7 illustrées, 0 écart. Contrôles des QCM (aides comprises), des schémas (0 ✘), de
+  l'aération, des règles d'or, du squelette, du mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle, draw.io.

@@ -61,6 +61,13 @@ guide pas à pas inclus.
 écrite** du choix (act. 4.2), puis export et construction d'un diaporama de 6 diapositives sous Impress
 (act. 4.3). Bilan, confrontation à l'hypothèse de départ, auto-positionnement par code, QCM 30 questions.
 
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 4, environ 5 minutes, seul et sans aide : le monte-plats de
+la cantine, un objet neuf. Question 1 (4e_C4.2) : sa chaîne d'énergie — on regarde le moteur qui convertit, et le
+treuil qui change la rotation en translation. Question 2 (4e_C4.4) : son algorigramme — on regarde les symboles, et
+chaque NON qui revient avant son test. L'activité 4.3 passe de 35 à 30 minutes : le total annoncé reste de 189 minutes.
+Au QCM, sept questions illustrées, dont trois (q25 à q27) sur « Le trajet du livre, dans l'ordre », lu dans
+l'algorigramme corrigé du lot par `documents_qcm.py` (n°345).
+
 Chaque séance se termine par un bouton qui ouvre la suivante (règle d'or n°101).
 
 **Bonus (avant le bilan).** Six défis, chacun avec sa case de réponse, un début de phrase pour chacun (version étayée) et un
