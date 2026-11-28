@@ -2363,7 +2363,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   </div>
 
   <div class="activite" id="act4">
-    <header><span class="num">Activité 4</span><h3>Réinvestissement — l'arrosage du jardin pédagogique</h3><span class="duree">⏱ 15 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
+    <header><span class="num">Activité 4</span><h3>Réinvestissement — l'arrosage du jardin pédagogique</h3><span class="duree">⏱ 10 min</span></header><p class="pastille-maison" style="display:inline-block;margin:.35rem 0 .2rem;padding:.15rem .7rem;border:1px solid currentColor;border-radius:10px;font-size:.9rem;font-weight:600;line-height:1.4">🏠 Peut se faire à la maison (sans matériel, sur téléphone)</p>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer la lecture de programme et le réglage de paramètre à un autre objet.</div>
       <div><b>Compétences :</b> 5e_C6.1 → C6.3 (transfert).</div>
@@ -2416,6 +2416,57 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   </div>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un programme nouveau&nbsp;: <b>celui de la sonnerie de récréation</b> du collège.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <pre class="code" style="white-space:pre-wrap;overflow-wrap:anywhere">répéter indéfiniment :
+  lire l'heure
+  si heure = HEURE_RECRE
+     et jour = « école » :
+    sonner pendant DURÉE
+  sinon :
+    rester silencieux</pre>
+  <p>Les paramètres valent HEURE_RECRE = 10 h 05 et DURÉE = 3 secondes.</p>
+  <p><label for="bs_5e_C6_1_1"><b>1.</b> Range les données de ce programme&nbsp;: celles qu'il utilise, celles qu'il produit, et ses paramètres. Puis traduis la ligne qui commence par «&nbsp;si&nbsp;» en une phrase en français.</label></p>
+  <textarea id="bs_5e_C6_1_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Données utilisées&nbsp;: ____ . Donnée produite&nbsp;: ____ .</li>
+      <li>Paramètres&nbsp;: ____ .</li>
+      <li>En français&nbsp;: «&nbsp;S'il est ____ ET que ____ , alors ____ .&nbsp;»</li>
+    </ul>
+  </details>
+  <p><label for="bs_5e_C6_1_2"><b>2.</b> Les élèves du fond de la cour n'entendent pas la sonnerie à temps. Quel paramètre modifies-tu, et quelle valeur lui donnes-tu&nbsp;? Prédis l'effet, puis donne un inconvénient de ton réglage.</label></p>
+  <textarea id="bs_5e_C6_1_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Je modifie ____ : il passe de ____ à ____ .</li>
+      <li>Effet prévu&nbsp;: ____ .</li>
+      <li>Inconvénient&nbsp;: ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Données utilisées&nbsp;: l'heure de l'horloge et le jour. Donnée produite&nbsp;: l'état de la sonnerie, qui sonne ou reste silencieuse.
+    <br>Paramètres&nbsp;: HEURE_RECRE et DURÉE.
+    <br>En français&nbsp;: «&nbsp;S'il est 10 h 05 ET que c'est un jour d'école, alors la sonnerie sonne pendant 3 secondes.&nbsp;»&nbsp;»
+    <br><b>Critère</b>&nbsp;: les entrées, la sortie et les paramètres sont bien séparés, et la phrase garde le ET, les deux conditions à la fois.</p>
+    <p>✘ «&nbsp;DURÉE est une donnée produite&nbsp;»&nbsp;: c'est un réglage que le programme lit&nbsp;; ce qu'il produit, c'est la sonnerie.
+    <br>✘ «&nbsp;S'il est 10 h 05 OU que c'est un jour d'école&nbsp;»&nbsp;: avec un OU, la sonnerie sonnerait aussi un dimanche à 10 h 05.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Je modifie DURÉE&nbsp;: il passe de 3 à 6 secondes.
+    <br>Effet prévu&nbsp;: la sonnerie dure deux fois plus longtemps&nbsp;; les élèves du fond de la cour ont le temps de l'entendre.
+    <br>Inconvénient&nbsp;: elle gêne plus longtemps les classes qui travaillent encore, et l'appareil consomme un peu plus.&nbsp;»
+    <br><b>Critère</b>&nbsp;: le bon paramètre, une valeur chiffrée, un effet prédit sur le fonctionnement, et une contrepartie.</p>
+    <p>✘ «&nbsp;Je change HEURE_RECRE&nbsp;»&nbsp;: la sonnerie arriverait à une autre heure, pas plus fort ni plus longtemps.
+    <br>✘ «&nbsp;Je mets DURÉE à 60 secondes&nbsp;»&nbsp;: une minute de sonnerie, c'est un excès qui gêne tout le collège.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
@@ -2438,7 +2489,9 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   <p>🏠 <b>Défi maison :</b> trouve 3 objets programmés chez toi et, pour chacun, un paramètre réglable et son effet sur le comportement.</p>
   <details class="correction"><summary>✅ Corrigé du défi maison</summary>
     <p><b>Trois exemples</b> (les tiens peuvent être différents)&nbsp;:</p>
-    <p>· <b>le four à micro-ondes</b> — paramètre&nbsp;: la durée (de 30 secondes à plusieurs minutes)&nbsp;; effet&nbsp;: il chauffe plus ou moins longtemps, puis s'arrête seul&nbsp;; <br>· <b>le lave-linge</b> — paramètre&nbsp;: la température (30 °C ou 60 °C, degrés Celsius)&nbsp;; effet&nbsp;: l'eau est plus ou moins chauffée, le cycle dure plus ou moins longtemps&nbsp;; <br>· <b>le réveil</b> — paramètre&nbsp;: l'heure de sonnerie&nbsp;; effet&nbsp;: il sonne quand l'heure courante atteint cette valeur.</p>
+    <p>· <b>le four à micro-ondes</b>.<br>Paramètre&nbsp;: la durée (de 30 secondes à plusieurs minutes).<br>Effet&nbsp;: il chauffe plus ou moins longtemps, puis s'arrête seul.</p>
+    <p>· <b>le lave-linge</b>.<br>Paramètre&nbsp;: la température (30 °C ou 60 °C, degrés Celsius).<br>Effet&nbsp;: l'eau est plus ou moins chauffée, le cycle dure plus ou moins longtemps.</p>
+    <p>· <b>le réveil</b>.<br>Paramètre&nbsp;: l'heure de sonnerie.<br>Effet&nbsp;: il sonne quand l'heure courante atteint cette valeur.</p>
     <p><b>Ce qu'ils ont en commun avec le lampadaire&nbsp;:</b> le programme ne change pas&nbsp;; on règle une <b>valeur</b>, et le comportement suit. <br>C'est le rôle de SEUIL_NUIT.</p>
     <p><b>Ta réponse est juste si</b> chaque objet a son paramètre (un nom, une valeur que l'on peut changer) et l'effet de ce réglage.</p>
     <p><b>Le piège&nbsp;:</b> citer un bouton marche/arrêt. Ce n'est pas un paramètre&nbsp;: il ne règle rien, il met en route.</p>

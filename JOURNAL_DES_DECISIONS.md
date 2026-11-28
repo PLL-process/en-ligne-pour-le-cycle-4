@@ -39203,3 +39203,14 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
 Bancs : séquence 37 / 37 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C5.1`). La famille C5 du
 thème 2 est complète.
+
+## 28/11/2026 — 5e_C6.1 : un document au QCM et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **Document** `doc_algorithme_lampadaire` : les six étapes de l'algorithme, lues dans la correction de l'activité 2.
+  Quatre questions s'y lisent (q5, q6, q14, q15) : sept questions illustrées, dont six sur document.
+- **Billet de sortie** avant le Bonus de la séance 3 : la sonnerie de récréation (ranger les données et traduire la
+  condition ; modifier un paramètre et prédire). Le réinvestissement de l'activité 4 passe de 15 à 10 minutes.
+- Le corrigé du défi maison cousait trois exemples sur une ligne : un exemple par paragraphe.
+Bancs : séquence 38 / 38 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C6.1`).
