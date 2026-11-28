@@ -22,3 +22,9 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_lampadaire_solaire.png` | Un lampadaire solaire de parking au crépuscule : panneau solaire en haut du mât, tête à LED allumée, boîtier gris. PNG 1 536 × 1 024, 2.3 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a solar-powered LED street lamp in a small school car park in Martinique at dusk, seen from a few meters away so the lamp head and its solar panel are large and clearly visible in the frame: a small solar panel mounted on top of the pole, an LED lamp head glowing softly, a small light sensor and a small motion detector on the lamp head, a grey technical box on the pole, tropical vegetation behind, no people, no text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Synthèse élève, carte « Ce que je dois retenir » ; et la situation déclenchante de la séquence (05/11/2026) |
+
+## Document du QCM (28/11/2026, n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_algorithme_lampadaire.svg` | Les six étapes de l'algorithme du lampadaire, dans l'ordre, sans verdict. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_5e_C6.1.json`, lui-même LU dans la séquence (correction de l'activité 2, « L'ordre des étapes ») par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM, q5, q6, q14, q15 |

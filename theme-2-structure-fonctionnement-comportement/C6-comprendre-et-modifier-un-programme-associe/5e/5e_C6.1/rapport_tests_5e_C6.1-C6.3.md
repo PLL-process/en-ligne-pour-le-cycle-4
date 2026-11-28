@@ -120,3 +120,17 @@ dépôt (`_outils/build_audit.py`, `_outils/make_index.py`, `_outils/controle_ve
   ne compte pas ces requêtes comme des ressources distantes de la page (règle n°40).
 - Version 🅰 (maquette + VittaScience) non testable en sandbox : annoncée comme option,
   **très basse tension uniquement**.
+
+## Reprise du 28/11/2026 — quatre questions sur document de plus, et un billet de sortie (n°345, n°330)
+
+- `node tests_5e_C6.1-C6.3.mjs` : **38 / 38** (six tests neufs : le billet existe à la séance 3, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement ; au QCM, au moins six questions sur document, chaque document décrit, `documents_qcm.py --verifier` à
+  jour). `node tests_regle_311_5e_C6.1.mjs` : **34 / 34** (le programme du billet passe à la ligne à 390 px).
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `balayer_questions_qcm.mjs
+  --apres` : 30 questions, 7 illustrées, 0 écart. Contrôles des QCM (aides comprises), des schémas (0 ✘), de
+  l'aération (deux lignes cousues du défi maison séparées), des règles d'or, du squelette, du mode mission, des liens
+  et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
