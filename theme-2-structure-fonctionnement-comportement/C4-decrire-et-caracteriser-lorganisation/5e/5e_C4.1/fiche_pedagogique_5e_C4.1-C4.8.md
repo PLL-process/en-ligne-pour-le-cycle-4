@@ -55,6 +55,8 @@ Aides ×2 par activité ; corrections exhaustives ; listes déroulantes (limite 
 
 Formative : vérificateurs intégrés à chaque activité, verrou expérientiel au simulateur (les 3 situations doivent être réellement observées). QCM 36 q (4 par code, et 5 pour C4.1, C4.2, C4.3 et C4.6 — les quatre que nulle autre banque ne renforce ; 6 illustrées). Sommative à construire par l'enseignant, corrigé non publié.
 
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 6, environ 5 minutes, seul et sans aide : la fontaine à eau de la cour, un objet neuf. Question 1 : la chaîne d'information (détecteur, carte, voyant) — on regarde les trois fonctions dans l'ordre, et que c'est la carte qui décide. Question 2 : la chaîne d'énergie (prise et bloc, relais, pompe, tuyau) — on regarde les quatre fonctions, et les formes électrique puis cinétique. La séance 6 passe de 40 à 45 minutes d'activités.
+
 > **Réserve sur le report au LSU — mesurée le 29/08/2026.** Le QCM porte **quatre questions par
 > code**, sur les huit codes du lot (`_outils/controle_echantillonnage.py`). Quatre questions ne
 > font pas une mesure : un élève qui maîtrise la moitié d'une notion obtient 2/4 ou 4/4 selon
