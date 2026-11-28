@@ -2981,7 +2981,7 @@ message = "Vigilance " + vigilance</pre>
   </div>
 
   <div class="activite" id="act6">
-    <header><span class="num">Réinvestissement</span><h3>🌊 Le programme de la bouée</h3><span class="duree">⏱ 25 min, dont 10 min d'écrit</span></header>
+    <header><span class="num">Réinvestissement</span><h3>🌊 Le programme de la bouée</h3><span class="duree">⏱ 20 min, dont 10 min d'écrit</span></header>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> réutiliser toute la démarche C6.1 → C6.3 sur un programme jamais vu.</div>
       <div><b>Compétences :</b> 3e_C6.1 + C6.3 (bilan).</div>
@@ -3040,7 +3040,7 @@ message = "Vigilance " + vigilance</pre>
       <br>Pour 4,0&nbsp;m&nbsp;: <b>"vert"</b> — 4.0 et 4 sont le même nombre pour Python, et 4.0 &gt; 4 est faux&nbsp;: c'est la frontière.
       <br>La ligne à modifier&nbsp;: la ligne <b>1</b> (<code>SEUIL_HOULE = 3</code>).
       <br>Les trois valeurs à tester&nbsp;: <b>2,9</b>, <b>3,0</b> et <b>3,1</b> (au dixième de mètre, ce sont les voisins du seuil).
-      <br>Le drapeau orange&nbsp;: <b>un elif intermédiaire</b> (<code>elif hauteur_m &gt; 2:</code>), testé après le cas le plus fort&nbsp;; on l'essaie à 2,0 et 3,0, et juste à côté (1,9 ; 2,1 ; 2,9 ; 3,1).</p>
+      <br>Le drapeau orange&nbsp;: <b>un elif intermédiaire</b> (<code>elif hauteur_m &gt; 2:</code>), testé après le cas le plus fort.<br>On l'essaie à 2,0 et 3,0, et juste à côté&nbsp;: 1,9, 2,1, 2,9 et 3,1.</p>
       <p><b>🔁 Le concept invariant&nbsp;:</b> ce que tu viens de refaire sur ce programme inconnu, tu l'avais déjà fait sur l'alerte graduée. <br>Le concept commun s'appelle la <b>structure conditionnelle paramétrée</b> (SI/SINON + seuils). <br>Elle se dessine en algorigramme comme elle s'écrit en blocs ou en texte.</p>
       <p><b>Bilan :</b> tu viens de dérouler seul·e la démarche complète — carte d'identité, trace, modification de paramètre, plan de tests aux frontières, extension de structure. C'est exactement C6.1 + C6.3, transférées à un programme inconnu.</p>
     </details>
@@ -3135,6 +3135,53 @@ message = "Vigilance " + vigilance</pre>
   <p class="tag-zone"><span class="tag">donnée d'entrée = input</span><span class="tag">donnée de sortie = output</span><span class="tag">constante = constant</span><span class="tag">seuil = threshold</span><span class="tag">jeu d'essai = test case</span><span class="tag">bogue = bug</span><span class="tag">tracer = to trace</span><span class="tag">indentation = indentation</span></p>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un programme nouveau&nbsp;: <b>le voyant de bruit de la cantine</b>. Un micro mesure le bruit en décibels (dB), et un voyant le montre à tous.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <pre class="code" style="white-space:pre-wrap;overflow-wrap:anywhere">1  SEUIL_BRUIT = 70
+2  niveau_db = lire_capteur("micro")
+3  voyant = "vert"
+4  if niveau_db &gt; SEUIL_BRUIT:
+5      voyant = "rouge"
+6  afficher(voyant)</pre>
+  <p><label for="bs_3e_C6_1_1"><b>1.</b> Range les données de ce programme&nbsp;: celle qu'il utilise, celle qu'il produit, et son paramètre. Puis trace&nbsp;: le micro mesure 70 dB exactement. Que montre le voyant&nbsp;?</label></p>
+  <textarea id="bs_3e_C6_1_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Donnée utilisée&nbsp;: ____ (ligne ____). Donnée produite&nbsp;: ____ (ligne ____).</li>
+      <li>Paramètre&nbsp;: ____ (ligne ____).</li>
+      <li>Trace pour 70 dB&nbsp;: «&nbsp;70 &gt; 70&nbsp;» est ____ , donc le voyant montre ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_3e_C6_1_2"><b>2.</b> La principale veut que le voyant passe au rouge au-dessus de 65 dB. Quelle ligne modifies-tu, et comment&nbsp;? Puis donne trois jeux d'essai, avec ce que doit montrer le voyant pour chacun.</label></p>
+  <textarea id="bs_3e_C6_1_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Je modifie la ligne ____ : elle devient ____ .</li>
+      <li>Jeux d'essai&nbsp;: ____ dB → ____ ; ____ dB → ____ ; ____ dB → ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Donnée utilisée&nbsp;: niveau_db, le bruit mesuré par le micro (ligne 2). Donnée produite&nbsp;: voyant, ce que montre la lampe (ligne 6).
+    <br>Paramètre&nbsp;: SEUIL_BRUIT (ligne 1).
+    <br>Trace pour 70 dB&nbsp;: «&nbsp;70 &gt; 70&nbsp;» est faux, donc le voyant reste vert.&nbsp;»
+    <br><b>Critère</b>&nbsp;: l'entrée, la sortie et le paramètre sont rangés avec leur ligne, et la trace respecte la frontière.</p>
+    <p>✘ «&nbsp;À 70 dB, le voyant est rouge&nbsp;»&nbsp;: c'est le piège de la frontière&nbsp;; le symbole <code>&gt;</code> exclut l'égalité.
+    <br>✘ «&nbsp;SEUIL_BRUIT est une donnée utilisée, lue par le micro&nbsp;»&nbsp;: il est écrit dans le programme&nbsp;; c'est un réglage, pas une mesure.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Je modifie la ligne 1&nbsp;: SEUIL_BRUIT = 65. Le reste ne bouge pas.
+    <br>Jeux d'essai&nbsp;: à 64 dB, vert.<br>À 65 dB, vert.<br>À 66 dB, rouge.&nbsp;»
+    <br><b>Critère</b>&nbsp;: une seule ligne change, le paramètre&nbsp;; les essais encadrent le NOUVEAU seuil, frontière comprise, chacun avec son résultat attendu.</p>
+    <p>✘ «&nbsp;J'écris <code>if niveau_db &gt; 65</code> à la ligne 4&nbsp;»&nbsp;: le programme marche, mais le nombre est maintenant à deux endroits, et SEUIL_BRUIT ne sert plus à rien.
+    <br>✘ «&nbsp;Essais&nbsp;: 69, 70, 71 dB&nbsp;»&nbsp;: ils encadrent l'ANCIEN seuil&nbsp;; aucun ne vérifie le passage à 65.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 4 défis du Bonus — ouvre-les quand tu as fini</summary>
@@ -3152,7 +3199,7 @@ def activer_gyrophare():
     print("GYROPHARE ACTIVÉ")</pre>
   <p>📊 <b>Défi pression&nbsp;:</b> le programme lit <code>pression_hpa</code> mais ne s'en sert pas.
   <br>Propose une condition qui croise vent ET pression pour fiabiliser l'alerte — souviens-toi de la séquence C4.3.
-  <br>Puis essaie-la sur quatre couples inventés&nbsp;: (130&nbsp;km/h&nbsp;; 1010&nbsp;hPa, c'est-à-dire hectopascals), (130&nbsp;; 960), (70&nbsp;; 960), (70&nbsp;; 1010).
+  <br>Puis essaie-la sur quatre couples inventés&nbsp;: (130&nbsp;km/h, 1010&nbsp;hPa, c'est-à-dire hectopascals), (130&nbsp;km/h, 960&nbsp;hPa), (70&nbsp;km/h, 960&nbsp;hPa), (70&nbsp;km/h, 1010&nbsp;hPa).
   <br>Pour chacun, dis si l'alerte part. Ta règle en rate-t-elle une qui partait avant&nbsp;? Ajouter un ET peut faire manquer un vent fort.</p>
   <p>🤖 <b>Défi mBot2&nbsp;:</b> transpose l'alerte graduée sur le mBot2&nbsp;: LED orange, rouge ou violette selon la distance mesurée par l'ultrason.
   <br>Attention&nbsp;: ici, le danger monte quand la distance <b>diminue</b> (un obstacle proche). Les comparaisons changent de sens (<code>&lt;</code>), et les seuils sont en centimètres.</p>
@@ -3180,9 +3227,9 @@ SIRÈNE ACTIVÉE</pre>
   <p><b>📊 Défi pression.</b> Les seuils de pression ci-dessous sont des valeurs choisies pour le défi, pas des réglages officiels.
   <br><b>Une règle qui rate une alerte&nbsp;:</b> remplacer le test violet par <code>vent_kmh &gt; SEUIL_OURAGAN and pression_hpa &lt; 1000</code>.</p>
   <ul>
-    <li>(130&nbsp;; 1010)&nbsp;: plus violette, seulement rouge — le gyrophare ne s'allume plus. <b>Régression</b>&nbsp;: ce couple déclenchait la violette avant.</li>
-    <li>(130&nbsp;; 960)&nbsp;: violette, inchangé.</li>
-    <li>(70&nbsp;; 960) et (70&nbsp;; 1010)&nbsp;: orange, inchangé.</li>
+    <li>(130&nbsp;km/h, 1010&nbsp;hPa)&nbsp;: plus violette, seulement rouge — le gyrophare ne s'allume plus. <b>Régression</b>&nbsp;: ce couple déclenchait la violette avant.</li>
+    <li>(130&nbsp;km/h, 960&nbsp;hPa)&nbsp;: violette, inchangé.</li>
+    <li>(70&nbsp;km/h, 960&nbsp;hPa) et (70&nbsp;km/h, 1010&nbsp;hPa)&nbsp;: orange, inchangé.</li>
   </ul>
   <p><b>Une règle qui ajoute sans rien retirer&nbsp;:</b> une nouvelle branche, placée entre la rouge et l'orange, qui passe au rouge plus tôt quand la pression est très basse.</p>
   <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.8em;overflow:auto;color:#d7e6ff" data-code-colore="python">elif vent_kmh &gt; SEUIL_ROUGE:
@@ -3196,9 +3243,9 @@ elif vent_kmh &gt; SEUIL_ORANGE:
     vigilance = "orange"
     gyrophare_actif = True</pre>
   <ul>
-    <li>(130&nbsp;; 1010) et (130&nbsp;; 960)&nbsp;: violette, inchangé (le vent seul suffit toujours).</li>
-    <li>(70&nbsp;; 960)&nbsp;: <b>rouge</b> au lieu d'orange — l'alerte est renforcée.</li>
-    <li>(70&nbsp;; 1010)&nbsp;: orange, inchangé.</li>
+    <li>(130&nbsp;km/h, 1010&nbsp;hPa) et (130&nbsp;km/h, 960&nbsp;hPa)&nbsp;: violette, inchangé (le vent seul suffit toujours).</li>
+    <li>(70&nbsp;km/h, 960&nbsp;hPa)&nbsp;: <b>rouge</b> au lieu d'orange — l'alerte est renforcée.</li>
+    <li>(70&nbsp;km/h, 1010&nbsp;hPa)&nbsp;: orange, inchangé.</li>
   </ul>
   <p>Aucun couple ne perd son alerte&nbsp;: c'est le test de non-régression.
   <br>Retiens-le&nbsp;: un <code>and</code> ajouté à une condition qui déclenche une alerte la rend plus difficile à déclencher.</p>
@@ -3225,7 +3272,7 @@ else:
   <br>En rouge, le signal est seulement sonore&nbsp;: une personne sourde ou malentendante, quelqu'un qui porte un casque ou qui est loin dans le bruit du vent peut le manquer.
   <br>En orange, le signal est seulement lumineux&nbsp;: une personne aveugle ou malvoyante peut le manquer.
   <br><b>Une sortie complémentaire possible&nbsp;:</b> un flash lumineux ou une notification envoyée au téléphone en rouge&nbsp;; un bip court en orange.
-  <br><b>L'essai qui le prouve&nbsp;:</b> à 91&nbsp;km/h, la nouvelle sortie se déclenche&nbsp;; à 90&nbsp;km/h, elle reste éteinte&nbsp;; puis on rejoue tout le plan de tests (55, 60, 61, 90, 118, 119) pour vérifier qu'on n'a rien cassé.
+  <br><b>L'essai qui le prouve&nbsp;:</b> à 91&nbsp;km/h, la nouvelle sortie se déclenche.<br>À 90&nbsp;km/h, elle reste éteinte.<br>Puis on rejoue tout le plan de tests (55, 60, 61, 90, 118, 119) pour vérifier qu'on n'a rien cassé.
   <br><b>Attention&nbsp;:</b> le cahier des charges dit «&nbsp;rouge = sirène seule&nbsp;». Ajouter une sortie, c'est changer ce cahier des charges&nbsp;: on le propose au club, et cela devient une version&nbsp;3, avec son propre plan de tests.</p>
   </details>
 </details>
