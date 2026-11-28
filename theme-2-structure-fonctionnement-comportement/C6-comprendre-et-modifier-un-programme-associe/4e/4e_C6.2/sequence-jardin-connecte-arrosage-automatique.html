@@ -2917,6 +2917,56 @@ condition.</span></td></tr></tbody></table></div></div><p><button type="button" 
   <p><strong>Élèves rapides :</strong> le bloc 🎁 Bonus les attend (deuxième condition, seuil réglable). <br><strong>Approfondissement 3e :</strong> la version multi-conditions t'attend dans l'atelier <em>« Variables, types et systèmes » (3e_C9.1)</em> — mêmes boîtes, mêmes bancs de tests.</p>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un système nouveau&nbsp;: <b>le brumisateur du préau</b>, qui souffle une fine brume d'eau quand il fait trop chaud.
+  <br>Le besoin&nbsp;: «&nbsp;brumiser quand la température dépasse 32 °C (degrés Celsius)&nbsp;; sinon, rien&nbsp;».
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <pre class="code" style="white-space:pre-wrap;overflow-wrap:anywhere">seuil = 32
+while True:
+    temperature = lire_temperature()
+    if temperature ① ___ seuil:
+        ② ___
+    else:
+        arreter_brume()
+    attendre(60)</pre>
+  <p><label for="bs_4e_C6_2_1"><b>1.</b> Complète les trous ① et ② pour que le programme réponde au besoin. Explique ton choix pour chaque trou.</label></p>
+  <textarea id="bs_4e_C6_2_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Trou ①&nbsp;: j'écris ____ , parce que le besoin dit «&nbsp;____&nbsp;».</li>
+      <li>Trou ②&nbsp;: j'écris ____ , parce que dans le SI, il fait ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_4e_C6_2_2"><b>2.</b> Propose trois tests pour PROUVER que ton programme répond au besoin&nbsp;: pour chacun, la température donnée et ce que doit faire le brumisateur. L'un des trois doit être le cas frontière.</label></p>
+  <textarea id="bs_4e_C6_2_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Test 1&nbsp;: ____ °C → le brumisateur doit ____ .</li>
+      <li>Test 2&nbsp;: ____ °C → le brumisateur doit ____ .</li>
+      <li>Test 3, la frontière&nbsp;: ____ °C → le brumisateur doit ____ , parce que ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Trou ①&nbsp;: j'écris <code>&gt;</code>, parce que le besoin dit «&nbsp;dépasse 32 °C&nbsp;».
+    <br>Trou ②&nbsp;: j'écris <code>demarrer_brume()</code>, parce que dans le SI, il fait trop chaud.&nbsp;»
+    <br><b>Critère</b>&nbsp;: le symbole traduit le besoin mot à mot, et l'action du SI est l'inverse de celle du SINON.</p>
+    <p>✘ «&nbsp;① <code>&lt;</code>&nbsp;»&nbsp;: le préau serait brumisé quand il fait frais, et jamais aux heures chaudes.
+    <br>✘ «&nbsp;② <code>attendre(60)</code>&nbsp;»&nbsp;: le programme attendrait sans rien commander&nbsp;; la brume ne partirait jamais.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Test 1&nbsp;: 35 °C → le brumisateur doit souffler.
+    <br>Test 2&nbsp;: 25 °C → le brumisateur doit rester arrêté.
+    <br>Test 3, la frontière&nbsp;: 32 °C → le brumisateur doit rester arrêté, parce que 32 ne dépasse pas 32.&nbsp;»
+    <br><b>Critère</b>&nbsp;: chaque test donne une valeur et un résultat attendu, un cas de chaque côté, et le test pile sur le seuil départage <code>&gt;</code> et <code>&gt;=</code>.</p>
+    <p>✘ «&nbsp;Test&nbsp;: il fait chaud → ça marche&nbsp;»&nbsp;: sans valeur ni résultat attendu, on ne peut rien comparer.
+    <br>✘ «&nbsp;Trois tests à 35, 36 et 40 °C&nbsp;»&nbsp;: ils passent aussi avec un mauvais symbole&nbsp;; aucun ne touche la frontière.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card" id="bonus">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
