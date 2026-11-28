@@ -144,9 +144,10 @@ Formatif : vérificateurs par activité avec critères chiffrés (9/9 · 4/4 · 
 + 4/4 · 6/6), verrous expérientiels sur l'explorateur (`__exp.table`) et le simulateur
 (`__exp.reseau`) — un mauvais diagnostic est explicitement refusé —, hypothèse reprise au bilan,
 auto-positionnement par famille.
-QCM d'entraînement : `qcm_4e_C4.1-C4.9_jardin_connecte.html`, **30 questions dont 4 portent
+QCM d'entraînement : `qcm_4e_C4.1-C4.9_jardin_connecte.html`, **30 questions dont 7 portent
 une image** (`chaines_jardin_connecte`, `energie_stockage_transformation`, `table_donnees_jardin`,
-`reseau_jardin_ip`). *La séquence en annonce 3 : elle a une image de retard sur son propre QCM.*
+`reseau_jardin_ip`, et depuis le 28/11/2026 `doc_table_mesures_jardin`, n°345 : un extrait de la table et la règle
+du seuil, sans la raison des arrosages, sous les q11, q12 et q13, lu dans le lot par `documents_qcm.py`).
 > **Ce que le bilan du QCM permet de conclure.** Ses 30 questions se répartissent en quatre
 > familles — Énergie (7 q., C4.1·C4.2), Information et données (10 q., C4.4·C4.5·C4.6), Réseau
 > (10 q., C4.7·C4.8·C4.9) et **Forme et procédé (3 q., C4.3)**. Les trois premières familles
