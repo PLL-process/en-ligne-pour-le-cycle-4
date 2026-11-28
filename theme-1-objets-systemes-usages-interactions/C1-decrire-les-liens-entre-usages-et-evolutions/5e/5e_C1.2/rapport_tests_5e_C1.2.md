@@ -169,3 +169,34 @@ HTML ; le parcours au clavier seul, à la main (la figure se commande au clavier
 Exécuté : Banc 51 / 51 ; n°311 34 / 34. `node _outils/balayer_questions_qcm.mjs --apres` sur les huit QCM de C1 : 247 questions jouées à 390 px, 741 écrans d'aide après une réponse fausse, 0 écart. `controle_question_seule.py --strict` : 0 refus ; le thème 1 n'a plus de chantier D1 ni P1. Mode mission joué (`banc_generique.mjs`) : aucun refus. La dernière séance compte maintenant 2039 mots visibles (repère : 1 200 ; `mesurer_charge.mjs`).
 
 Non fait : les questions n'ont pas été essayées en classe.
+
+## 28/11/2026 — Les trois freins en 3D (`tests_trois_freins_3d.py`, 47 contrôles)
+
+Demande de Pascal du 26/11/2026. Ce qui a tourné, dans cette session (Chromium de Playwright 1.63, ffmpeg 6.1.1, Pillow 12.3) :
+
+| Banc ou contrôle | Résultat |
+|---|---|
+| `tests_trois_freins_3d.py` (nouveau) | **47 / 47** |
+| le même banc, sur quatre défauts posés exprès puis retirés (`preload="auto"`, `loop`, adresse du tambour faussée, un mot de légende ôté) | 41, 45, 38 et 46 / 47 : les quatre sont vus |
+| `tests_5e_C1.2_sainte_luce.py` | 51 / 51 (34 séquence, 17 QCM) |
+| `tests_regle_311_5e_C1.2.mjs` | 34 / 34 |
+| `_outils/` : `controle_hors_ligne.mjs`, `controle_page_ouverte.mjs`, `controle_squelette.mjs`, `controle_axe.mjs` (axe-core 4.10.2), `controle_contraste_liens.mjs`, `controle_zoom_espacement.mjs`, `controle_impression.mjs`, `controle_medias.py`, `controle_liens.py`, `controle_mouvement.py`, `controle_tactile.py`, `controle_loupe.py`, `controle_boutons_vivants.py`, `controle_sigles.py`, `controle_sigles_expliques.py`, `controle_consignes_a_la_ligne.py`, `controle_hierarchie.py`, `controle_debordement.py`, `controle_impression_papier.py`, `audit_aeration.py` | même verdict qu'avant le bloc, page par page (`main` du 28/11 et branche, côte à côte) |
+
+Ce que le banc vérifie : les douze fichiers (forme, poids, 960 × 676, 24 images/s, 108 images, sans son), la dernière image
+de chaque film égale à son affiche (n°176), les scripts de fabrication ; le bloc posé après les trois vidéos et avant la
+manipulation, les trois blocs « ressource » intacts ; le lecteur muet, sans boucle ni lecture automatique,
+`preload="none"` ; les douze adresses écrites en entier ; à l'ouverture, aucun film demandé ; le choix du frein (bouton,
+affiche, description, légende, coupe) sans téléchargement ; un film joué une fois jusqu'à l'image complète, seul le film
+choisi demandé ; 390 et 1 280 px sans débordement ; « mouvement réduit » ; le mode mission ; aucune ressource distante,
+aucune erreur JavaScript ; à l'impression, la bande des trois images (720 px, 50 mm au moins) et cinq pages A4.
+
+Trois défauts trouvés en chemin, et corrigés : le changement de frein téléchargeait le film (Chromium télécharge dès
+`load()`, même avec `preload="none"` : on pose un lecteur neuf) ; les légendes imprimées étaient des énumérations en ligne
+(`controle_hierarchie.py`, H1 : ce sont des listes) ; les images d'impression faisaient 720 × 508 au lieu de 507.
+
+Captures : `_generation/films_trois_freins/captures/` (avant et après à 390 px, à la même place ; le bloc à 1 280 px ;
+six instants de chaque film ; les pages 4 et 5 de l'impression).
+
+**Non vérifié** : que les films soient justes et clairs pour un élève (cela se regarde en classe) ; leur lecture sur les
+postes du collège, sous Safari et sur tablette ; l'impression hors Chromium ; `controle_mode_mission.py` ne lit pas cette
+page, ni avant ni après (« aucune page élève lue ») : le mode mission n'est vu que par le banc.
