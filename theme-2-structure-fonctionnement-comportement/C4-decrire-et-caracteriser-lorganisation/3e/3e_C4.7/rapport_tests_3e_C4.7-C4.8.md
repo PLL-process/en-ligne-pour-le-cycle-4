@@ -104,3 +104,17 @@ Appareils réels iOS/Android · séance Filius version 🅰 au labo · comptes P
 - Tests exécutés uniquement en Chromium/Playwright — aucune compatibilité non testée n'est
   revendiquée.
 - Google Fonts inaccessible en sandbox : polices de repli, sans incidence (règle n°40).
+
+## Reprise du 28/11/2026 — six questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_3e_C4.7-C4.8.mjs` : **41 / 41** (six tests neufs : le billet existe à la séance 3, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement ; au QCM, au moins six questions sur document, chaque document décrit, `documents_qcm.py --verifier` à
+  jour). `node tests_regle_311_3e_C4.7.mjs` : **34 / 34**.
+- Le moteur du QCM n'affichait aucune image : il reçoit la figure du gabarit maison (`#qFigure`).
+  `balayer_questions_qcm.mjs --apres` : 30 questions, 6 illustrées, 0 écart.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). Contrôles des QCM (aides
+  comprises), des schémas (0 ✘), de l'aération, des règles d'or, du squelette, du mode mission, des liens et des
+  statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

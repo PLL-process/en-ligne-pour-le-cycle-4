@@ -31,3 +31,10 @@ Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C4-de
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_station_alerte.png` | La station d'alerte cyclonique sur le toit d'un collège : mât, anémomètre, girouette, panneau solaire, sirène, gyrophare, boîtier ; la mer au loin. PNG 1 536 × 1 024, 2.0 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small autonomous cyclone warning station on a galvanized steel mast on the flat roof of a school in Martinique: cup anemometer and wind vane at the top, a small solar panel on a side arm, a white weatherproof electronics box, a horn siren and a small orange beacon light mounted on the mast, a short radio antenna, the sea in the distance, cloudy sky, no people, no text, no logos, the whole mast visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (28/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_table_routage_r2.svg` | Les trois règles de la table de routage de R2 — sans aucun paquet aiguillé. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C4.7.json`, lui-même LU dans la consigne de l'activité 4 par `documents_qcm.py`. | CC0, comme les images du dépôt | QCM, q16, q17, q18, q26 |
+| `Images/doc_paquets_arrivee.svg` | Trois paquets d'un message d'alerte, dans leur ordre d'arrivée — sans le message reconstitué. | Même chaîne, lu dans `Images/decoupage_en_paquets.svg`. | CC0 | QCM, q8, q10 |
