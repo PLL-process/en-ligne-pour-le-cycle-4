@@ -38964,3 +38964,12 @@ Pascal : « 2 oui ». Les exports Moodle gardaient le texte d'avant les lots de 
 d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les réécrit depuis les 76 QCM : 2 301
 questions, 433 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux des lots C7 et C9
 du thème 3 du 27/11/2026 compris). Aucune phrase « comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.
+
+## 28/11/2026 — 5e_C4.1 : un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot, comme le thème 3.
+- Le QCM avait déjà six questions sur document : pas de D1 sur ce lot.
+- **Billet de sortie** avant le Bonus de la séance 6 : la fontaine à eau de la cour (la chaîne d'information ; la chaîne
+  d'énergie, électrique puis cinétique). La séance 6 passe de 40 à 45 minutes d'activités.
+Bancs : séquence 71 / 71 (cinq tests neufs), QCM 25 / 25, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles
+d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C4.1`).

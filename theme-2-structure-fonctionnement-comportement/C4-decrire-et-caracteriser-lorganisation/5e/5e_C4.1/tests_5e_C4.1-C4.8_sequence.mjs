@@ -317,10 +317,36 @@ ok('23 · l\'hypothèse est rappelée dès la saisie',
    (await p.textContent('#hypRappelTxt')).includes('nuit'),
    await p.textContent('#hypRappelTxt'));
 
+/* ── billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf ── */
+{
+  const avant = await p.evaluate(() => document.querySelector('.seance-panel.active').id);
+  await p.click('.seance-tab[data-panel="s6"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à la séance 6', !!bs && bs.visible && bs.panneau === 's6', JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées', !!bs && bs.zones === 2 && bs.etayages === 2);
+  ok('billet de sortie · une correction à deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  ok('billet de sortie · juste avant le Bonus', !!bs && bs.avantBonus);
+  await p.fill('#bs_5e_C4_1_1', 'ACQUÉRIR : le détecteur de présence');
+  await p.click(`.seance-tab[data-panel="${avant}"]`); await p.waitForTimeout(80);
+  await p.click('#btnSave'); await p.waitForTimeout(150);
+}
+
 await p.reload({ waitUntil: 'load' });  await _ouvrirVolets(p);
 await p.waitForTimeout(350);
 ok('24 · les réponses survivent au rechargement',
    (await p.inputValue('#e5_1')) === ATT[5].e5_1, await p.inputValue('#e5_1'));
+ok('billet de sortie · la réponse écrite survit au rechargement',
+   (await p.inputValue('#bs_5e_C4_1_1')) === 'ACQUÉRIR : le détecteur de présence', await p.inputValue('#bs_5e_C4_1_1'));
 ok('25 · les validations survivent au rechargement',
    (await p.textContent('#progTxt')).includes('9 / 9'), await p.textContent('#progTxt'));
 ok('26 · les traces d\'expériences survivent au rechargement',

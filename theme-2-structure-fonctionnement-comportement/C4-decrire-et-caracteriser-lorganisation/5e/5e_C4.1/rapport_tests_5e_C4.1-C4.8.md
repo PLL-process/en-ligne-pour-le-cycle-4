@@ -126,3 +126,15 @@ l'autre ; un échauffement de mémoire ouvre la séance 6 (clé 9 de la progress
   remplir au stylo, étiquettes écrites dessous.
 
 Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari.
+
+## Reprise du 28/11/2026 — un billet de sortie (n°330)
+
+- `node tests_5e_C4.1-C4.8_sequence.mjs` : **71 / 71** (cinq tests neufs : le billet existe à la séance 6 ; deux zones
+  gardées et deux versions étayées ; deux critères, des contre-exemples, aucun bouton ; juste avant le Bonus ; la
+  réponse survit au rechargement).
+- `node tests_5e_C4.1-C4.8_qcm.mjs` : **25 / 25** ; `node tests_regle_311_5e_C4.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (P1 était à 1). `balayer_questions_qcm.mjs --apres` :
+  36 questions, 0 écart. Contrôles des QCM, des schémas (0 ✘), de l'aération, des règles d'or, du squelette, du mode
+  mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
