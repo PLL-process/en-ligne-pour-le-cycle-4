@@ -63,6 +63,9 @@
   /* question */
   .q-comp{font-size:.78em;color:var(--head);font-weight:600}
   .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
   .options{display:grid;gap:9px}
   .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
   .option:hover:not(:disabled){border-color:var(--hl)}
@@ -137,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -263,6 +268,7 @@
     <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
   </div>
   <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
   <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
   <div class="q-actions">
     <button class="btn" id="btnValider">✔ Valider ma réponse</button>
@@ -389,7 +395,8 @@ const QUESTIONS = [
  err:"Répondre 1023 en oubliant le palier 0, ou 10 en confondant bits et valeurs.",
  d:["1023 est la valeur MAXIMALE (on part de 0) : il y a bien 1024 valeurs en tout.","","2048 = 2¹¹ : ce serait un CAN 11 bits.","10 est le nombre de BITS, pas le nombre de valeurs codables."],
  ret:"n bits → 2ⁿ valeurs, numérotées de 0 à 2ⁿ − 1."},
-{c:"C4.4",n:"Valeur maximale",q:"Le baromètre (868 à 1018 hPa, en hectopascals) est à sa valeur maximale. Que sort le CAN 10 bits ?",
+{c:"C4.4",n:"Valeur maximale",q:"D'après ce document, le baromètre est à sa plus haute pression. Que sort le CAN ?",
+ img:{src:"Images/doc_can_barometre.svg",alt:"Le baromètre de la station mesure de 868 hPa (hectopascals) à 1018 hPa. Son CAN, convertisseur analogique-numérique, travaille sur 10 bits : il change la tension du capteur en un nombre entier N. Le document ne dit ni le plus grand N possible, ni ce que vaut un palier."},
  o:["1023","1018","100 %","1024"],r:0,
  expl:"La sortie maximale d'un CAN 10 bits est 2¹⁰ − 1 = 1023, car la numérotation commence à 0. Le CAN ignore les unités physiques : il ne connaît que des entiers de 0 à 1023.",
  ex:"Au simulateur de la séquence, curseur à fond → N = 1023, jamais 1024.",
@@ -403,14 +410,16 @@ const QUESTIONS = [
  err:"Croire que « numérique » veut dire « exact » : c'est une approximation, d'autant meilleure qu'il y a de bits.",
  d:["Tout signal peut être analogique : température, pression, lumière…","C'est l'inverse historiquement, et surtout ce n'est pas une différence de nature.","","Le numérique APPROCHE la réalité ; sa précision dépend du nombre de bits."],
  ret:"Analogique = continu (infinité de valeurs) · Numérique = discret (paliers en nombre limité)."},
-{c:"C4.4",n:"Précision du convertisseur",q:"Le baromètre mesure une étendue de 150 hPa (hectopascals) avec un CAN 10 bits. Quelle est environ la précision d'un palier ?",
+{c:"C4.4",n:"Précision du convertisseur",q:"D'après ce document, quelle est environ la précision d'un palier du CAN, en hPa (hectopascals) ?",
+ img:{src:"Images/doc_can_barometre.svg",alt:"Le baromètre de la station mesure de 868 hPa (hectopascals) à 1018 hPa. Son CAN, convertisseur analogique-numérique, travaille sur 10 bits : il change la tension du capteur en un nombre entier N. Le document ne dit ni le plus grand N possible, ni ce que vaut un palier."},
  o:["1,5 hPa","0,15 hPa","15 hPa","150 hPa"],r:1,
  expl:"Précision = étendue ÷ (2ⁿ − 1) = 150 ÷ 1023 ≈ 0,15 hPa par palier. Deux pressions plus proches que 0,15 hPa seront confondues — largement suffisant pour détecter la chute de plusieurs dizaines de hPa d'un cyclone.",
  ex:"Passer de 1012 à 967 hPa (chute cyclonique) = environ 300 paliers : le CAN « voit » très bien le phénomène.",
  err:"Diviser par 1024 au lieu de 1023 (erreur minime), ou par le nombre de bits (150 ÷ 10 = 15 : faux !).",
  d:["Erreur de facteur 10 : 150 ÷ 1023 ne fait pas 1,5.","","15 = 150 ÷ 10 : on ne divise pas par le nombre de bits mais par le nombre d'intervalles (1023).","150 hPa est l'étendue totale, pas la taille d'un palier."],
  ret:"Précision d'un CAN = étendue de mesure ÷ (2ⁿ − 1)."},
-{c:"C4.4",n:"Calcul de conversion",q:"Le CAN 10 bits du baromètre (min 868 hPa (hectopascals), étendue 150 hPa) sort N = 512. Quelle est la pression mesurée ?",
+{c:"C4.4",n:"Calcul de conversion",q:"D'après ce document, le CAN sort N = 512. Quelle est la pression mesurée, en hPa (hectopascals) ?",
+ img:{src:"Images/doc_can_barometre.svg",alt:"Le baromètre de la station mesure de 868 hPa (hectopascals) à 1018 hPa. Son CAN, convertisseur analogique-numérique, travaille sur 10 bits : il change la tension du capteur en un nombre entier N. Le document ne dit ni le plus grand N possible, ni ce que vaut un palier."},
  o:["≈ 868 hPa","≈ 1018 hPa","≈ 943 hPa","≈ 512 hPa"],r:2,
  expl:"valeur = min + N × (étendue ÷ 1023) = 868 + 512 × 0,1466 ≈ 868 + 75 ≈ 943 hPa. N = 512 est à peu près la moitié de 1023, donc la pression est à mi-chemin de l'étendue : 868 + 75.",
  ex:"Vérification au simulateur de la séquence : curseur sur 943 hPa → N affiche 512.",
@@ -432,7 +441,8 @@ const QUESTIONS = [
  d:["170 est le numéro de palier : une vague de 170 m n'existe pas.","1,7 m viendrait d'une division par 100 sans logique.","6 m serait la moitié de l'étendue (N = 127 ou 128), pas N = 170.",""],
  ret:"La formule de conversion s'adapte à chaque CAN : identifier d'abord n (bits), le min et l'étendue."},
 /* ═══ C4.5 — représenter en données (8 q) ═══ */
-{c:"C4.5",n:"Types de données",q:"Quel type de donnée convient à la pression « 987.4 » ?",
+{c:"C4.5",n:"Types de données",q:"Dans cet extrait, quel type de donnée convient à la pression, comme 989.0 ?",
+ img:{src:"Images/doc_extrait_mesures_station.svg",alt:"Un extrait du fichier de mesures de la station de Sainte-Luce, données simulées, une ligne toutes les huit heures. Le 28/08 00:00 : vent 37 km/h (kilomètres par heure), pression 1011.5 hPa (hectopascals), vigilance verte. Le 28/08 08:00 : vent 38 km/h, pression 1009.9 hPa, vigilance jaune. Le 28/08 16:00 : vent 51 km/h, pression 1004.9 hPa, vigilance orange. Le 29/08 00:00 : vent 71 km/h, pression 999.7 hPa, vigilance orange. Le 29/08 08:00 : vent 95 km/h, pression 989.0 hPa, vigilance rouge. Le 29/08 16:00 : vent 121 km/h, pression 977.7 hPa, vigilance violette."},
  o:["Booléen","Nombre entier","Nombre décimal","Texte"],r:2,
  expl:"987.4 comporte une partie décimale : c'est un nombre décimal (type « flottant » en programmation). Un entier perdrait le .4, une précision qui compte en météo.",
  ex:"En Python : pression = 987.4 crée un float ; vent = 132 crée un int.",
@@ -449,14 +459,15 @@ const QUESTIONS = [
 {c:"C4.5",n:"Choisir un descripteur",q:"Quel est le MEILLEUR descripteur (nom de colonne) pour « la vitesse du vent en km/h » ?",
  o:["vitesse du vent","vent_kmh","donnees2","v"],r:1,
  expl:"Un bon descripteur est explicite (on comprend la grandeur ET l'unité), sans espace ni accent (compatible avec tous les logiciels et langages), et assez court. vent_kmh coche toutes les cases.",
- ex:"Dans le CSV de la station : horodatage;commune;vent_kmh;rafale_kmh;pression_hpa…",
+ ex:"Dans le CSV de la station : horodatage; commune; vent_kmh; rafale_kmh; pression_hpa…",
  err:"Les espaces et accents dans les noms de colonnes provoquent des erreurs dans les tableurs, bases de données et programmes.",
  d:["Explicite mais avec des espaces : source d'erreurs dans les outils informatiques.","","Ne décrit rien du tout : que contient « donnees2 » ?","Trop court : dans six mois, personne ne saura ce que « v » désigne."],
  ret:"Descripteur : explicite + unité + sans espace ni accent (ex. vent_kmh, pression_hpa)."},
-{c:"C4.5",n:"Notion d'enregistrement",q:"Dans la table de mesures de la station, que représente UNE LIGNE ?",
+{c:"C4.5",n:"Notion d'enregistrement",q:"Dans cet extrait des mesures, que représente UNE LIGNE ?",
+ img:{src:"Images/doc_extrait_mesures_station.svg",alt:"Un extrait du fichier de mesures de la station de Sainte-Luce, données simulées, une ligne toutes les huit heures. Le 28/08 00:00 : vent 37 km/h (kilomètres par heure), pression 1011.5 hPa (hectopascals), vigilance verte. Le 28/08 08:00 : vent 38 km/h, pression 1009.9 hPa, vigilance jaune. Le 28/08 16:00 : vent 51 km/h, pression 1004.9 hPa, vigilance orange. Le 29/08 00:00 : vent 71 km/h, pression 999.7 hPa, vigilance orange. Le 29/08 08:00 : vent 95 km/h, pression 989.0 hPa, vigilance rouge. Le 29/08 16:00 : vent 121 km/h, pression 977.7 hPa, vigilance violette."},
  o:["Un enregistrement d'un même instant","Le nom des descripteurs de la table","La moyenne des mesures de la journée","Une colonne de données de la table"],r:0,
  expl:"Une ligne = un enregistrement : l'ensemble des valeurs (vent, pression, pluie, vigilance…) mesurées au même instant, identifié par l'horodatage. Les colonnes sont les descripteurs.",
- ex:"« 2026-08-29 08:00 ; Sainte-Luce ; 96 ; 137 ; 991,3 ; 5,1 ; rouge » : un enregistrement complet.",
+ ex:"« 29/08 08:00 ; vent 95 ; pression 989.0 ; rouge » : un enregistrement complet, celui de 8 h le 29 août.",
  err:"Inverser lignes et colonnes : les descripteurs sont en haut (une fois), les enregistrements s'empilent (un par mesure).",
  d:["","Les descripteurs occupent uniquement la ligne d'en-tête.","La moyenne serait un calcul FAIT SUR plusieurs enregistrements.","Les colonnes sont verticales : une ligne les traverse toutes."],
  ret:"Table structurée = descripteurs en colonnes + enregistrements en lignes, horodatés."},
@@ -489,7 +500,8 @@ const QUESTIONS = [
  d:["Le nom de la commune ou l'état de l'alerte ne sont pas des nombres et sont pourtant indispensables.","","\"Sainte-Luce\" est une donnée de plein droit, de type texte.","Ils sont visiblement de types différents : c'est tout l'intérêt du typage."],
  ret:"Toute information (mesure, lieu, état, instant) peut être représentée par une donnée du type adapté."},
 /* ═══ C4.6 — fichiers (8 q) ═══ */
-{c:"C4.6",n:"Format tableau",q:"Quel format est le plus adapté pour le fichier des 48 h de mesures de la station ?",
+{c:"C4.6",n:"Format tableau",q:"Cet extrait vient du fichier des 48 h de mesures de la station. Quel format convient le mieux à ce fichier ?",
+ img:{src:"Images/doc_extrait_mesures_station.svg",alt:"Un extrait du fichier de mesures de la station de Sainte-Luce, données simulées, une ligne toutes les huit heures. Le 28/08 00:00 : vent 37 km/h (kilomètres par heure), pression 1011.5 hPa (hectopascals), vigilance verte. Le 28/08 08:00 : vent 38 km/h, pression 1009.9 hPa, vigilance jaune. Le 28/08 16:00 : vent 51 km/h, pression 1004.9 hPa, vigilance orange. Le 29/08 00:00 : vent 71 km/h, pression 999.7 hPa, vigilance orange. Le 29/08 08:00 : vent 95 km/h, pression 989.0 hPa, vigilance rouge. Le 29/08 16:00 : vent 121 km/h, pression 977.7 hPa, vigilance violette."},
  o:[".png",".csv",".mp3",".pdf"],r:1,
  expl:"Le .csv (Comma/Character Separated Values) est un texte tabulé : chaque ligne un enregistrement, chaque colonne un descripteur. Léger, universel, il s'ouvre dans tous les tableurs et se traite par programme.",
  ex:"Le fichier mesures_station_48h_simulees.csv de la séquence s'ouvre dans LibreOffice Calc, Excel ou en Python.",
@@ -811,6 +823,8 @@ function rendreQuestion(){
   $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
   $("qNum").textContent=i+1; $("qTot").textContent=N;
   $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
   $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
   const zone=$("qOptions"); zone.innerHTML="";
   const lettres=["A","B","C","D"];

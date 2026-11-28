@@ -59,7 +59,8 @@
 ### Séance 5 — Réinvestir et conclure (bilan) — ajoutée le 11/11/2026
 1. Réinvestissement (30 min) : bouée houlographe — transfert intégral sans modèle.
 2. Synthèse de la séquence (10 min), Bonus pour les rapides.
-3. Bilan personnel (10 min) + QCM d'entraînement (5 min pour le lancer ; à finir à la maison ou en AP).
+3. Bilan personnel (10 min). Le QCM d'entraînement se fait à la maison ou en AP (accompagnement personnalisé) : ses 5 minutes de lancement laissent la place au billet de sortie, et la séance tient en 55 minutes.
+4. Billet de sortie (5 min, seul et sans aide, 28/11/2026, n°330) : le thermomètre connecté de la cantine — sa chaîne d'information et le N de son CAN 8 bits à 25 °C ; le type de ses trois données et le format du fichier de la journée.
 
 ## Organisation de la classe
 
@@ -90,7 +91,7 @@
 ## Évaluation
 
 - **Formative** : vérificateurs intégrés à chaque activité (score + feedback), progression visible, bilan personnel guidé.
-- **Entraînement** : QCM séparé de 32 questions (8 par code) avec bilan par compétence et note indicative /20.
+- **Entraînement** : QCM séparé de 32 questions (8 par code) avec bilan par compétence et note indicative /20. Six questions s'y lisent sur un document dessiné pour le téléphone (n°345, 28/11/2026) : « Un extrait des mesures de la station » (q17, q20, q25, lu dans le fichier de données du lot) et « Le baromètre et son CAN » (q11, q13, q14, lu dans la séquence).
 - **Sommative éventuelle** : à construire par l'enseignant à partir de la matrice de couverture ; **aucune correction sommative publiée dans le dépôt public**.
 - **Critères LSU** (par code) : maîtrise ≥ 75 % des items du code au QCM = « maîtrisé » ; 50-74 % = « en cours » ; < 50 % = « fragile » — à croiser avec l'observation en classe.
 
