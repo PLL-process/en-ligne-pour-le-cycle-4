@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -182,7 +184,7 @@
   <ul class="trois-lignes-liste">
     <li><b>📚 Ce que tu vas revoir</b>
     <br>Choisir la <b>source d'énergie</b> de l'indicateur du hall parmi cinq.
-    <br>Et la forme d'énergie qu'elle donne, jusqu'à la lumière de la <abbr class="sigle" title="diode électroluminescente" tabindex="0">DEL</abbr>.</li>
+    <br>Et la forme d'énergie qu'elle donne, jusqu'à la lumière de la DEL.</li>
     <li><b>🛠 Ce que tu dois savoir faire</b>
     <br>Calculer une autonomie avec des wattheures.
     <br>Comparer l'énergie stockée et l'énergie vraiment utile.</li>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 5e_C7.4 + 10 5e_C3.1), 0 illustrée.
+/* Banque : 30 questions (20 5e_C7.4 + 10 5e_C3.1), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -332,14 +334,16 @@ const QUESTIONS = [
  err:"Confondre l'énergie et le courant. Le courant se mesure en ampères, et il ne dit rien tout seul.",
  d:["Une vitesse de chauffe est un débit d'énergie, donc des watts, pas des watts-heures.","Le courant se mesure en ampères ou en milliampères, pas en watts-heures.","La tension se mesure en volts : 9 V pour la pile, 5 V pour le montage.",""],
  ret:"Le watt-heure mesure une quantité d'énergie : une puissance × une durée."},
-{c:"5e_C7.4",n:"Un courant seul ne dit rien",q:"Pour savoir ce qu'un composant consomme dans la journée, il faut connaître…",
- o:["son courant et sa durée de fonctionnement","seulement son courant en milliampères","seulement sa durée de fonctionnement","sa couleur et sa taille"],r:0,
+{c:"5e_C7.4",n:"Un courant seul ne dit rien",q:"Sur ce relevé, pour savoir ce qu'un composant consomme dans la journée, il faut connaître…",
+ img:{src:"Images/doc_conso_hall.svg",alt:"Ce que consomme l'indicateur du hall en une journée, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 10 heures, 2,25 wattheures. DEL indicatrice : 10 milliampères pendant 10 heures, 0,50 wattheures. Capteur de présence du sac : 0,5 milliampères pendant 10 heures, 0,025 wattheures. Total : 2,78 wattheures par jour."},
+ o:["son courant et sa durée de fonctionnement","seulement son courant en milliampères","seulement sa durée de fonctionnement","sa tension seule, puisque tout est sous 5 V"],r:0,
  expl:"L'énergie vaut courant × tension × durée. Un gros courant très bref pèse moins qu'un petit courant permanent.",
  ex:"La DEL de l'indicateur tire 10 mA — mais pendant 10 heures par jour, ce qui fait 0,5 Wh (wattheures).",
  err:"Classer les composants d'après leur courant seul. C'est le piège que la séquence de 4<sup>e</sup> exploite entièrement.",
- d:["","Le courant seul ne suffit pas : deux composants de même courant peuvent tout changer.","La durée seule ne suffit pas non plus : encore faut-il savoir combien il tire.","Ni la couleur ni la taille n'entrent dans le calcul d'une énergie."],
+ d:["","Le courant seul ne suffit pas : la DEL tire 10 mA, mais c'est pendant 10 heures. Relis la colonne Durée.","La durée seule ne suffit pas : les trois composants tournent 10 heures, et ne consomment pas pareil. Relis la colonne Courant.","La tension est la même, 5 V, pour les trois composants : elle ne les distingue pas. Relis les colonnes Courant et Durée."],
  ret:"Énergie = courant × tension × durée. Les trois, jamais un seul."},
-{c:"5e_C7.4",n:"Énergie stockée et énergie utile",q:"Une pile 9 V (volts) contient 4,95 Wh (wattheures) et n'en délivre que 2,8. La différence…",
+{c:"5e_C7.4",n:"Énergie stockée et énergie utile",q:"Sur ce tableau, la pile 9 V (volts) stocke 4,95 Wh (wattheures) et n'en délivre que 2,8. La différence…",
+ img:{src:"Images/doc_sources_hall.svg",alt:"Cinq sources d'énergie pour l'indicateur du hall. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique."},
  o:["sert à faire fonctionner l'interrupteur","reste dans la pile pour plus tard","est une erreur de mesure du banc","part en chaleur dans le régulateur"],r:3,
  expl:"Il faut ramener les 9 V de la pile aux 5 V du montage. Un régulateur linéaire y parvient en dissipant la différence sous forme de chaleur.",
  ex:"9 V → 5 V : il jette 4 V sur 9, soit 44 % de l'énergie, avant que le montage n'en voie rien.",
@@ -353,24 +357,27 @@ const QUESTIONS = [
  err:"Prendre le rendement pour un réglage ou une qualité de fabrication. C'est un rapport de tensions, et rien d'autre.",
  d:["Aucun composant qui fait tomber une tension ainsi ne perd rien : la chaleur est visible.","","17 %, c'est justement la part perdue ; le rendement est ce qui passe, pas ce qui part.","Il dépend des deux tensions : 56 % depuis 9 V, 83 % depuis 6 V, sur le même composant."],
  ret:"Rendement d'un régulateur linéaire = tension de sortie ÷ tension d'entrée."},
-{c:"5e_C7.4",n:"Pourquoi la grosse pile perd",q:"Quatre piles AA (6 V) délivrent plus d'énergie utile qu'une pile 9 V parce que…",
+{c:"5e_C7.4",n:"Pourquoi la grosse pile perd",q:"D'après ce tableau, quatre piles AA (6 V) délivrent plus d'énergie utile qu'une pile 9 V parce que…",
+ img:{src:"Images/doc_sources_hall.svg",alt:"Cinq sources d'énergie pour l'indicateur du hall. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique."},
  o:["elles stockent plus et perdent moins en route","elles sont plus récentes que la pile 9 V","elles fournissent une tension plus élevée","elles sont quatre, donc quatre fois plus rapides"],r:0,
  expl:"Deux raisons se cumulent : 15 Wh (wattheures) stockés contre 4,95, et un régulateur qui ne jette qu'un volt sur six au lieu de quatre sur neuf.",
  ex:"12,5 Wh utiles contre 2,8 : plus de quatre fois mieux, pour à peine plus cher.",
  err:"Se fier au nombre écrit sur la pile. 9 V n'est pas « plus » que 6 V pour un montage qui en veut 5 : c'est plus de perte.",
  d:["","Leur fraîcheur n'y est pour rien : c'est vrai avec des piles du même âge.","Leur tension est plus BASSE (6 V contre 9), et c'est justement ce qui les avantage ici.","Le nombre de piles ne change pas la vitesse : il change la quantité stockée."],
  ret:"Une tension d'entrée plus proche des 5 V utiles, c'est moins de perte."},
-{c:"5e_C7.4",n:"Calculer une autonomie",q:"L'autonomie d'une source se calcule en…",
+{c:"5e_C7.4",n:"Calculer une autonomie",q:"Avec ce relevé de la journée, l'autonomie d'une source se calcule en…",
+ img:{src:"Images/doc_conso_hall.svg",alt:"Ce que consomme l'indicateur du hall en une journée, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 10 heures, 2,25 wattheures. DEL indicatrice : 10 milliampères pendant 10 heures, 0,50 wattheures. Capteur de présence du sac : 0,5 milliampères pendant 10 heures, 0,025 wattheures. Total : 2,78 wattheures par jour."},
  o:["divisant l'énergie utile par la consommation d'un jour","multipliant l'énergie utile par la consommation","additionnant l'énergie utile et la consommation","divisant la consommation par l'énergie utile"],r:0,
  expl:"Combien de jours de consommation tiennent dans la réserve ? C'est une division, dans ce sens-là : la réserve au numérateur.",
  ex:"12,5 Wh utiles ÷ 2,78 Wh par jour = 4,5 jours pour les quatre piles AA.",
  err:"Inverser la division. Le résultat vient alors en « jours par watt-heure », ce qui ne veut rien dire.",
  d:["","Multiplier donne des Wh² par jour : une unité qui n'existe pas.","On n'additionne pas une réserve et un débit, pas plus qu'un litre et un litre par heure.","Dans ce sens, on obtient l'inverse de l'autonomie — et un nombre incompréhensible."],
  ret:"Autonomie = énergie utile ÷ consommation par jour."},
-{c:"5e_C7.4",n:"Ce que tient la pile 9 V (volts)",q:"Sur l'indicateur du hall (2,78 Wh (wattheures) par jour), une pile 9 V tient…",
+{c:"5e_C7.4",n:"Ce que tient la pile 9 V (volts)",q:"L'indicateur consomme 2,78 Wh (wattheures) par jour. D'après ce tableau, une pile 9 V tient…",
+ img:{src:"Images/doc_sources_hall.svg",alt:"Cinq sources d'énergie pour l'indicateur du hall. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique."},
  o:["environ une semaine","environ 24 heures","environ un mois","toute l'année scolaire"],r:1,
  expl:"2,8 Wh utiles pour 2,78 consommés chaque jour : elle est vide en une journée, tout juste.",
- ex:"Le banc l'affiche : « Autonomie : 24 heures ».",
+ ex:"2,8 Wh utiles ÷ 2,78 Wh par jour : à peine plus d'une journée, environ 24 heures.",
  err:"Se fier à la taille de la pile. Une 9 V est grosse, chère, et contient moins d'énergie que quatre piles bâton.",
  d:["Une semaine demanderait près de 20 Wh utiles : c'est sept fois ce qu'elle donne.","","Un mois demanderait 83 Wh : trente fois trop.","Une année scolaire demanderait près de 500 Wh, soit cent quatre-vingts piles."],
  ret:"Une pile 9 V ne tient qu'un jour sur un montage allumé dix heures."},
@@ -381,15 +388,17 @@ const QUESTIONS = [
  err:"Traiter le secteur comme toujours disponible. Il l'est dans une salle de classe, pas au fond d'une cour ni sur un îlet.",
  d:["Un adaptateur dure des années ; ce n'est pas lui qu'on remplace.","Un adaptateur USB fournit largement de quoi alimenter ce montage, quelle que soit sa consommation.","La durée d'utilisation ne change rien : le secteur ne s'épuise pas.",""],
  ret:"Le secteur est illimité — encore faut-il qu'une prise existe là où l'objet vit."},
-{c:"5e_C7.4",n:"Ce que donne un panneau",q:"Le banc annonce « 3,7 Wh PAR JOUR » pour le panneau. Cela veut dire…",
+{c:"5e_C7.4",n:"Ce que donne un panneau",q:"Sur ce tableau, le panneau donne « 3,7 Wh par jour ». Cela veut dire…",
+ img:{src:"Images/doc_sources_hall.svg",alt:"Cinq sources d'énergie pour l'indicateur du hall. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique."},
  o:["qu'il consomme cette énergie pour fonctionner","qu'il contient cette énergie en réserve","qu'il récolte cette énergie chaque journée","qu'il faut 3,7 jours pour le recharger"],r:2,
  expl:"Un panneau ne stocke rien. Le nombre est un débit quotidien, à comparer à la consommation d'une journée — pas à une réserve.",
  ex:"3,7 récoltés pour 2,78 consommés : il suffit, avec un tiers de marge. S'il manquait ne serait-ce qu'un dixième de watt-heure, il ne suffirait plus, tous les jours.",
  err:"Chercher une « autonomie en jours » pour un panneau. La question n'a pas de sens : il faut demander s'il couvre la journée.",
  d:["Il produit, il ne consomme pas ; sa propre consommation est nulle.","Un panneau ne contient rien : c'est l'accu derrière lui qui stocke.","","Le panneau n'a rien à recharger : il recharge, éventuellement, un accumulateur."],
  ret:"Pour un panneau, la question n'est pas « combien de jours » mais « couvre-t-il la journée »."},
-{c:"5e_C7.4",n:"Un calcul juste, une réponse inutile",q:"Le panneau récolte 3,7 Wh (wattheures) pour 2,78 consommés, et pourtant on l'écarte pour le hall parce que…",
- o:["les panneaux sont interdits à l'intérieur","le calcul du banc est faux","il ne récolte pas assez d'énergie","il n'y a pas de soleil dans un hall"],r:3,
+{c:"5e_C7.4",n:"Un calcul juste, une réponse inutile",q:"Le panneau récolte 3,7 Wh (wattheures) par jour pour 2,78 consommés. Pourquoi l'écarte-t-on pour le hall ?",
+ img:{src:"Images/doc_sources_hall.svg",alt:"Cinq sources d'énergie pour l'indicateur du hall. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le secteur, par un adaptateur USB : pas de réserve, rendement 100 pour cent. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique."},
+ o:["parce que les panneaux sont interdits à l'intérieur","parce que le calcul du tableau est faux","parce qu'il ne récolte pas assez d'énergie","parce qu'il n'y a pas de soleil dans un hall"],r:3,
  expl:"Le banc compte l'ensoleillement de la Martinique en extérieur. Sous un éclairage intérieur, un panneau récolte quelques pour cent de cela.",
  ex:"Le même panneau, sur le portail à vélos, devient le meilleur choix — sans qu'un seul chiffre change.",
  err:"Prendre un nombre exact pour une réponse. Un calcul juste peut répondre à une question qu'on ne s'est pas posée.",

@@ -18,3 +18,10 @@ Elle montre le problème de la séquence, jamais sa solution. Demande de Pascal 
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/situation_preau_noir.png` | Le soir, sous un préau sombre : au-delà, la rue est éclairée par des lampadaires orangés ; l'abri, lui, reste dans le noir. PNG 1 536 × 1 024, 1.7 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 05/11/2026. Demande : « Realistic photo of a covered school shelter at dusk, the sky still deep blue, the shelter itself completely unlit and in shadow, empty benches under the roof barely visible, a bus stop pole lit by an orange street light outside, a strong contrast between the dark shelter and the lit street, no people, no readable text, no logos » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (27/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_montage_preau.svg` | Les cinq constituants du prototype, où chacun est branché, et le courant qu'il demande. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_5e_C7.5.json`, lui-même LU dans la séquence par `documents_qcm.py` (l'établi : `const CONST`, `const ATTENDU`, `const BUDGET`). | CC0, comme les images du dépôt | QCM, q8, q14 |
+| `Images/doc_programme_preau.svg` | Le programme téléversé dans la carte, ligne par ligne. | Même chaîne, lu dans le bloc « programme » de l'établi de la séquence. | CC0 | QCM, q3, q10, q11, q12, q20 |

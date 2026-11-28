@@ -144,6 +144,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -307,7 +309,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (15 C6.1 + 15 C6.3), 8 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ BOI ═══ */
 {c:"BOI",n:"La boîte",q:"Une variable, c'est le mieux décrit comme :",
@@ -383,11 +385,10 @@ const QUESTIONS = [
  d:["","= n'affiche rien du tout : la mémoire est silencieuse.","C'est l'inverse : = range la valeur dans la boîte, print() l'affiche à l'écran.","print() LIT la boîte sans la toucher."],
  ret:"= remplit la mémoire ; print() montre à l'écran."},
 /* ═══ LIR ═══ */
-{c:"LIR",n:"Prédire d'abord",q:"Pourquoi l'atelier demande-t-il de PRÉDIRE le résultat avant de tester dans l'éditeur ?",
- o:["parce que l'écart entre ma prédiction et la console apprend","pour aller plus vite ensuite, en tapant moins de code","pour vérifier que l'éditeur donne la bonne réponse","parce que la prédiction est notée dans l'atelier"],r:0,
+{c:"LIR",n:"Prédire d'abord",q:"Pourquoi PRÉDIRE le résultat avant de tester un programme dans l'éditeur ?",
+ o:["parce que l'écart entre ma prédiction et la console apprend","pour aller plus vite ensuite, en tapant moins de code","pour vérifier que l'éditeur donne la bonne réponse","parce que la prédiction est notée par le professeur"],r:0,
  expl:"Prédire force à réfléchir AVANT. Si la console dit autre chose, la surprise montre exactement ce que je croyais à tort.",
  ex:"Prédire 24 pour « 20 » + « 4 »… et voir 204 : inoubliable.",
- 
  d:["","Prédire prend quelques secondes de plus, et fait souvent gagner du temps après. Mais ce n'est pas la raison : on ne prédit pas pour taper moins.","Attention au sens : ce n'est pas ta prédiction qui contrôle l'éditeur, c'est l'éditeur qui met ta prédiction à l'épreuve.","Elle n'est pas notée, précisément pour qu'on ose se tromper. Une prédiction qu'on aurait peur de rater ne servirait plus à rien."],
  ret:"Prédire → tester → reporter : l'écart est ton meilleur professeur."},
 {c:"LIR",n:"Le piège des guillemets",q:"Que donne <code>print(\"20\" + \"4\")</code> ?",
@@ -404,12 +405,12 @@ const QUESTIONS = [
  
  d:["C'est utile, et il faut savoir le faire — mais on relit ce qu'on croit avoir écrit. Une relecture ne trouve pas l'erreur qu'on n'imagine pas.","","C'est une vraie vérification, et elle est insuffisante : un programme peut tourner sans la moindre erreur ET donner un résultat faux. C'est même le cas le plus fréquent.","Afficher quelque chose ne dit pas si c'est le BON quelque chose. Sans attendu écrit, il n'y a rien à comparer."],
  ret:"Tester = comparer attendu et obtenu."},
-{c:"LIR",n:"Un seul écart suffit",q:"Le programme réussit les tests T1 et T2, mais rate T3. Conclusion :",
+{c:"LIR",n:"Un seul écart suffit",q:"Avec ce programme, T1 et T2 donnent l'attendu, mais T3 non. Conclusion :",
+ img:{src:"Images/doc_programme_compteur.svg",alt:"Le programme du compteur, ligne par ligne : ligne 1, places = 24 ; ligne 2, montes = 3 ; ligne 3, descendus = 2 ; ligne 4, places = places - montes ; ligne 5, places = places - descendus ; ligne 6, print(\"Places libres :\", places). Son banc de trois tests, où montes et descendus remplacent les lignes 2 et 3 : T1, personne ne bouge : montes 0, descendus 0, attendu 24. T2, 3 montent, 0 descend : montes 3, descendus 0, attendu 21. T3, 3 montent, 2 descendent : montes 3, descendus 2, attendu 23. Le document ne dit pas ce que le programme affiche."},
  o:["on relance T3 jusqu'à ce qu'il finisse par passer","il répond au besoin aux deux tiers, cela suffit","T3 est un mauvais test, il faut l'écarter","il ne répond pas au besoin : un test raté suffit"],r:3,
  expl:"Le besoin doit être respecté dans TOUS les cas. Un seul écart signifie qu'un jour réel, le compteur affichera faux.",
  ex:"Le bug du Cyclone dormait tranquillement… jusqu'au premier visiteur qui descend.",
- 
- d:["Relancer le même test donne le même résultat : un programme n'a pas de chance.","Il n'y a pas de « moyenne » : un manège avec un compteur faux un jour sur trois reste dangereux.","T3 teste un cas RÉEL (des gens descendent !) : c'est un excellent test.",""],
+ d:["Relancer le même test donne le même résultat : un programme n'a pas de chance. Relis la ligne T3 du banc.","Il n'y a pas de « moyenne » : un compteur faux dès que quelqu'un descend reste faux. Relis le besoin, en haut du document.","T3 teste un cas réel : des gens descendent. Relis sa ligne dans le banc.",""],
  ret:"Un test raté = le programme ne répond pas au besoin. Point."},
 {c:"LIR",n:"Pourquoi plusieurs cas",q:"Pourquoi tester avec PLUSIEURS cas différents, et pas un seul ?",
  img:{src:"Images/barriere_cyclone_condition.svg",alt:"La barrière du Cyclone : en haut, la chaîne d'information décide avec la variable places ; en bas, la chaîne d'énergie ouvre ou ferme la barrière. À droite, le banc de trois tests : places égale 10, ouverte ; places égale 32, ouverte ; places égale 0, fermée, c'est le cas limite"},
@@ -433,12 +434,12 @@ const QUESTIONS = [
  
  d:["Peut-être, mais rien ne le dit encore : une ligne peut être parfaitement écrite et faire exactement le contraire de ce qu'il faut. L'écart signale un problème, pas sa nature.","","L'ordinateur dit ce que LE PROGRAMME calcule — pas ce que le BESOIN demande. Il obéit, il ne juge pas.","Un écart entre l'attendu et l'obtenu est l'information la plus précieuse du métier."],
  ret:"L'ordinateur obéit au programme, pas au besoin : l'écart accuse une ligne."},
-{c:"LIR",n:"La ligne du crime",q:"Dans le programme du compteur, quelle ligne trahissait le besoin ?",
- o:["montes = 3 : trois est un mauvais nombre","places = 24 : le manège n'a pas 24 places","print(...) : il ne faudrait rien afficher","places = places - descendus : elle soustrait"],r:3,
+{c:"LIR",n:"La ligne du crime",q:"Avec ce programme, le test T3 échoue. Quelle ligne trahit le besoin ?",
+ img:{src:"Images/doc_programme_compteur.svg",alt:"Le programme du compteur, ligne par ligne : ligne 1, places = 24 ; ligne 2, montes = 3 ; ligne 3, descendus = 2 ; ligne 4, places = places - montes ; ligne 5, places = places - descendus ; ligne 6, print(\"Places libres :\", places). Son banc de trois tests, où montes et descendus remplacent les lignes 2 et 3 : T1, personne ne bouge : montes 0, descendus 0, attendu 24. T2, 3 montent, 0 descend : montes 3, descendus 0, attendu 21. T3, 3 montent, 2 descendent : montes 3, descendus 2, attendu 23. Le document ne dit pas ce que le programme affiche."},
+ o:["ligne 2, montes = 3 : trois est un mauvais nombre","ligne 1, places = 24 : le manège n'a pas 24 places","ligne 6, print(...) : il ne faudrait rien afficher","ligne 5, places = places - descendus"],r:3,
  expl:"Ceux qui descendent libèrent des sièges : il faut AJOUTER. Le − était une erreur de raisonnement, pas de frappe.",
  ex:"La correction : places = places + descendus.",
- 
- d:["3 n'était qu'un exemple de test.","Le Cyclone a bien 24 places : la ligne 1 était juste.","Afficher est nécessaire — c'est le métier du panneau.",""],
+ d:["Au banc, montes remplace la ligne 2 : sa valeur n'est qu'un exemple. Relis plutôt les lignes 4 et 5.","T1, où personne ne bouge, attend bien 24 : la ligne 1 est juste. Relis la ligne 5.","Afficher, c'est le besoin lui-même : la ligne 6 n'est pas en cause. Relis la ligne 5 avec T3.",""],
  ret:"Traduire le monde réel en + ou en − : c'est là que se cachent les vrais bugs."},
 {c:"LIR",n:"Répond au besoin ?",q:"« Le programme répond au besoin » signifie :",
  o:["qu'il est court et facile à relire","qu'il s'exécute sans message d'erreur","qu'il est écrit proprement et bien indenté","qu'il donne le résultat attendu dans TOUS les cas"],r:3,
@@ -455,12 +456,12 @@ const QUESTIONS = [
  d:["« C'est cassé » n'aide personne à réparer : ni où, ni quoi.","","C'est honnête, et c'est ce qu'on dit AVANT d'avoir trouvé. Ici tu as trouvé : la ligne est identifiée et le test le prouve. S'arrêter à « quelque part » gaspille ton diagnostic.","Cacher un bug, c'est laisser entrer le visiteur de trop."],
  ret:"Un diagnostic = comportement + ligne + preuve par le test."},
 /* ═══ MOD ═══ */
-{c:"MOD",n:"La bonne ligne",q:"Le Cyclone reçoit un train de 32 places. Quelle modification faire au programme ?",
- o:["changer toutes les lignes contenant un nombre","réécrire tout le programme avec le bon total","changer la seule ligne places = 24 en 32","ajouter huit lignes qui font chacune +1"],r:2,
+{c:"MOD",n:"La bonne ligne",q:"Le Cyclone reçoit un train de 32 places. Que faut-il modifier dans ce programme ?",
+ img:{src:"Images/doc_programme_compteur.svg",alt:"Le programme du compteur, ligne par ligne : ligne 1, places = 24 ; ligne 2, montes = 3 ; ligne 3, descendus = 2 ; ligne 4, places = places - montes ; ligne 5, places = places - descendus ; ligne 6, print(\"Places libres :\", places). Son banc de trois tests, où montes et descendus remplacent les lignes 2 et 3 : T1, personne ne bouge : montes 0, descendus 0, attendu 24. T2, 3 montent, 0 descend : montes 3, descendus 0, attendu 21. T3, 3 montent, 2 descendent : montes 3, descendus 2, attendu 23. Le document ne dit pas ce que le programme affiche."},
+ o:["toutes les lignes qui contiennent un nombre","tout le programme, réécrit avec le bon total","la seule ligne 1 : places = 24 devient 32","huit lignes de plus, qui font chacune +1"],r:2,
  expl:"Le nombre de sièges n'est écrit qu'à UN endroit : le remplissage initial de la boîte. C'est la force des variables.",
  ex:"Une seule ligne à changer chaque fois que le train change : c'est du programme bien conçu.",
- 
- d:["Les autres nombres (montes, descendus) ne parlent pas des sièges.","Réécrire, c'est risquer de casser ce qui marchait.","","Huit +1, c'est huit occasions de se tromper."],
+ d:["Les nombres des lignes 2 et 3 comptent ceux qui montent et descendent, pas les sièges : relis la ligne 1.","Réécrire, c'est risquer de casser ce qui marchait : cherche la ligne où le nombre de sièges est écrit.","","Huit +1, c'est huit occasions de se tromper : le nombre de sièges n'est écrit qu'à la ligne 1."],
  ret:"Modifier = changer LA bonne ligne, pas toutes les lignes."},
 {c:"MOD",n:"Après la modification",q:"Tu as corrigé la ligne des descendus. Que fais-tu JUSTE après ?",
  o:["je rends le programme corrigé immédiatement","je REJOUE TOUS les tests, pas seulement celui-là","je supprime les tests devenus inutiles","je change une autre ligne, au cas où"],r:1,
@@ -483,12 +484,12 @@ const QUESTIONS = [
  
  d:["Aucun plantage : juste une réponse fausse ou vraie.","0 n'est PAS supérieur à 0 : compte sur tes doigts !","Si : la règle est écrite, on peut toujours la dérouler.",""],
  ret:"Aux frontières (zéro pile), on déroule la condition À LA MAIN pour vérifier."},
-{c:"MOD",n:"Le test frontière",q:"Pourquoi le test <code>places = 0</code> est-il LE plus important pour la barrière ?",
+{c:"MOD",n:"Le test frontière",q:"Pourquoi le test B3, à <code>places = 0</code>, est-il LE plus important pour la barrière ?",
+ img:{src:"Images/doc_banc_barriere.svg",alt:"La barrière du Cyclone obéit à la règle : SI places > 0 → OUVRIR, SINON → FERMER. Son banc de trois tests : B1, il reste 10 places : places 10, attendu OUVERTE. B2, train tout neuf : places 32, attendu OUVERTE. B3, complet : places 0, attendu FERMÉE. Le document ne dit pas quel test est le plus important."},
  o:["parce que zéro est un nombre facile à taper","c'est la FRONTIÈRE entre ouvrir et fermer","il ne l'est pas : tester 10 et 32 suffit","parce qu'il est le dernier du tableau de tests"],r:1,
  expl:"Les bugs adorent les frontières : un signe mal choisi (> ou >=) ne se voit QUE là. Tester la frontière, c'est tester le danger.",
  ex:"Avec >= 0, la barrière resterait ouverte manège COMPLET — et B3 l'aurait montré.",
- 
- d:["La facilité de frappe n'a jamais protégé un manège.","","10 et 32 sont loin de la frontière : ils ne réveillent pas le bug.","L'ordre dans le tableau ne change rien à son importance."],
+ d:["La facilité de frappe n'a jamais protégé un manège : compare la valeur de B3 au seuil de la règle.","","B1 et B2, à 10 et 32, sont loin du seuil de la règle : ils ne réveillent pas le bug.","B3 est le dernier du banc par hasard : compare sa valeur au seuil de la règle."],
  ret:"Toujours UN test sur la frontière : c'est là que vivent les bugs."},
 {c:"MOD",n:"> ou >= ?",q:"Un camarade écrit <code>SI places &gt;= 0 → OUVRIR</code> « pour être sûr ». Quel est le problème ?",
  o:["à zéro place, la barrière resterait ouverte","aucun problème : c'est simplement plus prudent","Python n'accepte pas l'écriture >= ici","la barrière s'ouvrirait avec un temps de retard"],r:0,
@@ -504,12 +505,12 @@ const QUESTIONS = [
  
  d:["Aucune image : un moteur qui bouge.","Les objets programmés qui t'entourent prouvent le contraire chaque jour.","Pas de klaxon ici — mais c'est aussi un actionneur possible !",""],
  ret:"La variable devient commande : l'information en haut, l'énergie en bas, l'ordre qui descend."},
-{c:"MOD",n:"Réglé, vraiment ?",q:"Quand peux-tu dire que la barrière est RÉGLÉE ?",
+{c:"MOD",n:"Réglé, vraiment ?",q:"Avec ce banc, quand peux-tu dire que la barrière est RÉGLÉE ?",
+ img:{src:"Images/doc_banc_barriere.svg",alt:"La barrière du Cyclone obéit à la règle : SI places > 0 → OUVRIR, SINON → FERMER. Son banc de trois tests : B1, il reste 10 places : places 10, attendu OUVERTE. B2, train tout neuf : places 32, attendu OUVERTE. B3, complet : places 0, attendu FERMÉE. Le document ne dit pas quel test est le plus important."},
  o:["quand elle s'ouvre et se ferme sans bloquer","dès qu'elle s'ouvre correctement une fois","quand le programme est propre et bien écrit","quand les 3 tests passent, cas frontière compris"],r:3,
  expl:"« Marcher une fois » ne prouve qu'une exécution. Le banc complet prouve le COMPORTEMENT — c'est ça, la mise au point.",
  ex:"B1 ✔, B2 ✔, B3 ✔ → réglée. Un seul ✘ → retour au programme.",
- 
- d:["Elle bouge, et c'est déjà ça — mais bouger n'est pas décider au bon moment. Une barrière qui s'ouvre parfaitement à zéro place est mécaniquement irréprochable et dangereuse.","Une fois n'est pas coutume — surtout pas en technique.","La propreté du code ne ferme pas la barrière à zéro place.",""],
+ d:["Bouger n'est pas décider au bon moment : relis B3, à zéro place la barrière doit rester fermée.","Une fois ne prouve qu'une exécution : le banc a trois lignes, relis-les.","La propreté du code ne ferme pas la barrière à zéro place : relis B3.",""],
  ret:"Réglé = tous les tests verts, frontière comprise."},
 {c:"MOD",n:"Une ligne = un réglage",q:"Pour que le professeur n'ait qu'UNE ligne à changer chaque année dans le compteur de classe, il faut :",
  o:["compter les élèves à la main chaque septembre","écrire le nombre d'élèves dans chaque ligne","refaire tout le programme au début de l'année","mettre le nombre dans UNE variable, au début"],r:3,

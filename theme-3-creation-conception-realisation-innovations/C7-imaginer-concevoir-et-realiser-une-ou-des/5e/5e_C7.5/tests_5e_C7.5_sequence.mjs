@@ -136,6 +136,27 @@ if (REP.refus) {
   await p.selectOption('#' + REP.refus.id, REP.activites[REP.refus.act][REP.refus.id]);
 }
 
+// ── le billet de sortie (n°330, 27/11/2026) : avant le Bonus, deux zones gardées, deux aides, deux critères ──
+const TXT = 'Acquérir : le capteur de température, sur un port analogique.';
+const billet = await p.evaluate(() => {
+  const s = document.getElementById('billetSortie'); if (!s) return null;
+  const cartes = [...document.querySelectorAll('section.card')], bonus = document.querySelector('section.card.bonus');
+  const c = s.querySelector('details.correction')?.textContent || '';
+  return { zones: s.querySelectorAll('textarea[data-save]').length, aides: s.querySelectorAll('details.etayage').length,
+    criteres: (c.match(/Critère/g) || []).length, contre: (c.match(/✘/g) || []).length,
+    boutons: s.querySelectorAll('button').length, avantBonus: !!bonus && cartes.indexOf(s) === cartes.indexOf(bonus) - 1 };
+});
+ok('un billet de sortie existe', !!billet);
+if (billet) {
+  ok('billet : deux zones sauvegardées, deux versions étayées', billet.zones === 2 && billet.aides === 2,
+    billet.zones + ' zones, ' + billet.aides + ' aides');
+  ok('billet : deux critères et des contre-exemples, aucun bouton', billet.criteres === 2 && billet.contre >= 2 && billet.boutons === 0,
+    billet.criteres + ' critères, ' + billet.contre + ' ✘, ' + billet.boutons + ' bouton(s)');
+  ok('billet : juste avant le Bonus', billet.avantBonus);
+  await p.evaluate(() => { const t = document.querySelector('.seance-tab[data-panel="s2"]'); if (t) t.click(); });
+  await p.fill('#bs_5e_C7_5_1', TXT);
+  await p.evaluate(() => document.getElementById('bs_5e_C7_5_1').blur());
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(400);
 const [idT, valT] = Object.entries(REP.persistance)[0];
 ok('les réponses survivent au rechargement', (await p.inputValue('#' + idT)) === valT,
@@ -143,6 +164,7 @@ ok('les réponses survivent au rechargement', (await p.inputValue('#' + idT)) ==
 ok('le montage survit au rechargement',
    (await p.inputValue('#pt_carte')) === 'SOCLE', await p.inputValue('#pt_carte'));
 ok('les verrous survivent au rechargement', await p.evaluate(() => !!window.__exp.ok));
+if (billet) ok('billet : la réponse survit au rechargement', (await p.inputValue('#bs_5e_C7_5_1')) === TXT);
 
 const n0 = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));

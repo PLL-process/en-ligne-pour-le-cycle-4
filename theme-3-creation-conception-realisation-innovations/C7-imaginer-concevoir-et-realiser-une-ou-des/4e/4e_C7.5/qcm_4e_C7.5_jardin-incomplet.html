@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -306,7 +308,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 4e_C7.5 + 10 4e_C4.4), 0 illustrée.
+/* Banque : 30 questions (20 4e_C7.5 + 10 4e_C4.4), 8 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -348,49 +350,56 @@ const QUESTIONS = [
  err:"Voir le relais comme une pièce de rechange ou un amplificateur.",
  d:["il ne modifie aucune tension : il ouvre ou ferme un contact, c'est tout.","","il ne protège de rien : ce n'est ni un fusible ni un filtre.","il ne convertit aucun signal : son contact est ouvert ou fermé."],
  ret:"Le relais sépare la décision de la puissance : il ferme un circuit sur un ordre."},
-{c:"4e_C7.5",n:"Cas 1 — la pompe ne part jamais",q:"L'écran affiche la mesure, la pompe est raccordée à l'alimentation, et rien ne s'arrose. Que manque-t-il ?",
+{c:"4e_C7.5",n:"Cas 1 — la pompe ne part jamais",q:"D'après ces fiches, dans le cas 1, l'écran affiche la mesure et rien ne s'arrose. Que manque-t-il ?",
+ img:{src:"Images/doc_cas_jardin.svg",alt:"Trois prototypes du jardin connecté, livrés incomplets ou mal montés. Cas 1. Symptôme : l'écran affiche 42 %, la pompe ne part jamais. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, pompe, alimentation externe. Cas 2. Symptôme : dès que la pompe démarre, la carte redémarre et l'écran s'éteint. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, module relais sur D4, pompe. Cas 3. Symptôme : la pompe tourne en permanence, même quand le sol est détrempé. Monté, en plus de la carte, du Base Shield et du câble USB : capteur de température sur A0, écran LCD sur I2C, module relais sur D4, pompe, alimentation externe."},
  o:["le module relais, seul organe capable de commander la pompe","le capteur d'humidité, sans lequel aucune décision n'est prise","l'alimentation externe, insuffisante pour la pompe","le Base Shield, sans lequel rien ne peut se brancher"],r:0,
  expl:"La mesure arrive, la carte décide, la pompe a son énergie — mais rien ne relie la décision au circuit de puissance.",
  ex:"La carte écrit bien HAUT sur D4 : personne n'écoute cet ordre.",
  err:"Conclure que la fonction « agir » est tenue parce que l'écran affiche : l'écran agit, la pompe non.",
  d:["","l'écran affiche une valeur qui change : le capteur est bien présent et fonctionne.","l'alimentation externe est présente dans ce cas, et la pompe ne démarre pas même une seconde.","sans shield, l'écran ne pourrait pas être branché et n'afficherait rien du tout."],
  ret:"Une fonction peut sembler tenue par un constituant et ne pas l'être pour l'usage visé."},
-{c:"4e_C7.5",n:"Cas 2 — la carte redémarre",q:"Au moment précis où la pompe démarre, la carte redémarre et l'écran s'éteint. Pourquoi ?",
+{c:"4e_C7.5",n:"Cas 2 — la carte redémarre",q:"Sur ce relevé, au moment où la pompe démarre, la carte redémarre et l'écran s'éteint. Pourquoi ?",
+ img:{src:"Images/doc_courant_jardin.svg",alt:"Ce que demande chaque constituant du jardin connecté. Pompe : 700 milliampères. Carte UNO : 45 milliampères. Module relais : 30 milliampères. Écran LCD : 20 milliampères. Capteur d'humidité : 5 milliampères. Capteur de température : 5 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; l'alimentation externe 5 volts, jusqu'à 2000 milliampères."},
  o:["la demande de courant dépasse ce que la source peut fournir","l'eau projetée par la pompe court-circuite la carte","le programme redémarre volontairement après chaque arrosage","le relais coupe l'alimentation de la carte en se fermant"],r:0,
  expl:"Tant que la pompe est à l'arrêt, le montage demande 100 mA (milliampères). À la fermeture du relais, la demande saute à 800 mA : la tension s'effondre sous le seuil de fonctionnement de la carte.",
  ex:"Et comme le programme repart de zéro, il referme le relais : le cycle recommence sans fin.",
  err:"Chercher un défaut dans la chaîne d'information alors que le manque est dans la chaîne d'énergie.",
  d:["","rien ne projette d'eau sur la carte dans un montage correctement disposé.","aucune ligne du programme ne demande un redémarrage de la carte.","le relais ferme un circuit de puissance ; il ne touche pas à l'alimentation de la carte."],
  ret:"Un manque d'énergie ne produit pas une panne franche, mais des redémarrages en boucle."},
-{c:"4e_C7.5",n:"Le manque intermittent",q:"Pourquoi le manque du cas 2 est-il le plus difficile à repérer ?",
+{c:"4e_C7.5",n:"Le manque intermittent",q:"Sur ces fiches, pourquoi le manque du cas 2 est-il le plus difficile à repérer ?",
+ img:{src:"Images/doc_cas_jardin.svg",alt:"Trois prototypes du jardin connecté, livrés incomplets ou mal montés. Cas 1. Symptôme : l'écran affiche 42 %, la pompe ne part jamais. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, pompe, alimentation externe. Cas 2. Symptôme : dès que la pompe démarre, la carte redémarre et l'écran s'éteint. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, module relais sur D4, pompe. Cas 3. Symptôme : la pompe tourne en permanence, même quand le sol est détrempé. Monté, en plus de la carte, du Base Shield et du câble USB : capteur de température sur A0, écran LCD sur I2C, module relais sur D4, pompe, alimentation externe."},
  o:["il nécessite un oscilloscope pour être mis en évidence","il touche un constituant que l'on ne voit jamais à l'œil nu","il ne se manifeste qu'aux instants où la pompe démarre","il ne produit strictement aucun symptôme observable"],r:2,
  expl:"Un manque permanent se voit tout de suite. Ici tout fonctionne parfaitement tant qu'on ne déclenche pas l'arrosage.",
  ex:"Le prototype réussit tous les essais à sec, et échoue dès qu'on met de l'eau.",
  err:"Valider un prototype sur un essai qui ne sollicite jamais son constituant le plus gourmand.",
- d:["la ligne « courant demandé » de l'établi suffit à le montrer, sans aucun instrument.","l'alimentation est parfaitement visible : c'est un bloc posé à côté de la carte.","","le symptôme est très visible : la carte redémarre et l'écran s'éteint."],
+ d:["le relevé des courants suffit à le montrer, sans instrument : 700 milliampères pour la pompe, 500 par le câble USB.","l'alimentation est parfaitement visible : c'est un bloc posé à côté de la carte. Relis la ligne « Monté » du cas 2.","","le symptôme est très visible : relis la fiche, la carte redémarre et l'écran s'éteint."],
  ret:"Un défaut d'énergie ne se voit que sous la charge qui le provoque."},
-{c:"4e_C7.5",n:"Cas 3 — la pompe ne s'arrête plus",q:"Un capteur de température est branché sur le port A0, à la place du capteur d'humidité. Que se passe-t-il ?",
+{c:"4e_C7.5",n:"Cas 3 — la pompe ne s'arrête plus",q:"Un capteur de température est branché sur A0, à la place du capteur d'humidité. D'après ce programme, que se passe-t-il ?",
+ img:{src:"Images/doc_programme_jardin.svg",alt:"Le programme téléversé dans la carte du jardin, ligne par ligne : humidite = analogRead(A0) ; afficher(humidite, \"%\") ; si humidite < 35 alors ; digitalWrite(4, HAUT) ; attendre(6 secondes) ; digitalWrite(4, BAS)."},
  o:["la carte convertit automatiquement la température en humidité","le programme détecte l'erreur et refuse alors de démarrer","le capteur de température ne peut pas fonctionner sur le port A0","le programme compare une température au seuil des 35 % d'humidité"],r:3,
  expl:"Le programme lit A0 et compare ce qu'il y trouve à 35. Il y trouve 27 : c'est inférieur, donc il arrose. Toujours.",
  ex:"Le sol peut être détrempé : la valeur lue ne dépend pas de lui et ne repassera pas au-dessus du seuil.",
  err:"Croire qu'une carte « sait » quelle grandeur elle lit : elle ne lit qu'une tension.",
  d:["aucune conversion n'existe entre deux grandeurs physiques différentes.","aucun programme ne détecte cela : rien ne distingue 27 °C de 27 % à l'entrée de la carte.","il fonctionne parfaitement sur A0 : c'est un capteur analogique comme l'autre.",""],
  ret:"Une carte ne lit pas une grandeur : elle lit une tension, et le sens vient du montage."},
-{c:"4e_C7.5",n:"Fonction tenue, besoin non satisfait",q:"Dans le cas 3, la fonction « acquérir » est bien tenue. Que faut-il en conclure ?",
+{c:"4e_C7.5",n:"Fonction tenue, besoin non satisfait",q:"Sur ces fiches, le cas 3 tient bien la fonction « acquérir ». Que faut-il en conclure ?",
+ img:{src:"Images/doc_cas_jardin.svg",alt:"Trois prototypes du jardin connecté, livrés incomplets ou mal montés. Cas 1. Symptôme : l'écran affiche 42 %, la pompe ne part jamais. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, pompe, alimentation externe. Cas 2. Symptôme : dès que la pompe démarre, la carte redémarre et l'écran s'éteint. Monté, en plus de la carte, du Base Shield et du câble USB : capteur d'humidité sur A0, écran LCD sur I2C, module relais sur D4, pompe. Cas 3. Symptôme : la pompe tourne en permanence, même quand le sol est détrempé. Monté, en plus de la carte, du Base Shield et du câble USB : capteur de température sur A0, écran LCD sur I2C, module relais sur D4, pompe, alimentation externe."},
  o:["les quatre fonctions ne suffisent pas à décrire un objet","une fonction tenue ne garantit pas que le besoin le soit","le capteur de température est défectueux malgré les apparences","il faut ajouter une cinquième fonction, « mesurer juste »"],r:1,
  expl:"La chaîne d'information est complète. Ce qui manque n'est pas une fonction, c'est la bonne grandeur — et ça, seul le cahier des charges le dit.",
  ex:"Un capteur qui mesure parfaitement ce dont personne n'a besoin ne rend aucun service.",
  err:"Cocher les quatre fonctions et déclarer le prototype conforme.",
  d:["les quatre fonctions décrivent bien la chaîne : c'est le besoin qu'elles ne décrivent pas.","","il fonctionne parfaitement et rend une valeur stable : rien n'est défectueux.","il n'existe pas de cinquième fonction : c'est le cahier des charges qui juge la pertinence."],
  ret:"Les fonctions décrivent la chaîne ; le cahier des charges juge la pertinence."},
-{c:"4e_C7.5",n:"Compter le courant avant de brancher",q:"Un montage demande 800 mA (milliampères) et sa source en fournit 500. Que faut-il faire ?",
+{c:"4e_C7.5",n:"Compter le courant avant de brancher",q:"Sur ce relevé, le montage demande environ 800 mA (milliampères), et le câble USB en fournit 500. Que faut-il faire ?",
+ img:{src:"Images/doc_courant_jardin.svg",alt:"Ce que demande chaque constituant du jardin connecté. Pompe : 700 milliampères. Carte UNO : 45 milliampères. Module relais : 30 milliampères. Écran LCD : 20 milliampères. Capteur d'humidité : 5 milliampères. Capteur de température : 5 milliampères. Le câble USB fournit jusqu'à 500 milliampères ; l'alimentation externe 5 volts, jusqu'à 2000 milliampères."},
  o:["ajouter une alimentation externe en très basse tension","diminuer la durée d'arrosage pour rester dans le budget","brancher deux câbles USB pour additionner les courants","accepter les redémarrages, sans conséquence pour la carte"],r:0,
  expl:"Le besoin est fixé par les constituants choisis. Si la source ne suffit pas, on change de source, pas de programme.",
  ex:"Une alimentation 5 V (volts) / 2 A (ampères) couvre les 800 mA avec de la marge.",
  err:"Chercher à réduire l'usage plutôt qu'à dimensionner la source, alors que le besoin de pointe reste le même.",
  d:["","la durée ne change rien : c'est le courant à l'instant du démarrage qui manque.","deux câbles USB sur deux ports d'un même ordinateur ne s'additionnent pas ainsi.","des redémarrages permanents usent la carte et rendent le comportement imprévisible."],
  ret:"Le courant de pointe se compte avant de brancher, pas après."},
-{c:"4e_C7.5",n:"Le port de l'actionneur commandé",q:"Le relais est monté sur D3 alors que le programme écrit sur D4. Que se passe-t-il ?",
+{c:"4e_C7.5",n:"Le port de l'actionneur commandé",q:"Le relais est monté sur D3. D'après ce programme, que se passe-t-il ?",
+ img:{src:"Images/doc_programme_jardin.svg",alt:"Le programme téléversé dans la carte du jardin, ligne par ligne : humidite = analogRead(A0) ; afficher(humidite, \"%\") ; si humidite < 35 alors ; digitalWrite(4, HAUT) ; attendre(6 secondes) ; digitalWrite(4, BAS)."},
  o:["la carte affiche un message d'erreur au téléversement","la pompe ne démarre jamais, et rien ne signale l'erreur","le relais claque à intervalles réguliers sans logique","le programme trouve tout seul le relais sur son nouveau port"],r:1,
  expl:"Le relais est branché, alimenté, fonctionnel — et personne ne lui parle. L'ordre part sur D4, où rien n'est branché.",
  ex:"Le module est parfait, le montage a l'air complet, et la pompe reste muette.",
@@ -432,7 +441,8 @@ const QUESTIONS = [
  err:"Commencer par la cause la plus intéressante plutôt que par la plus englobante.",
  d:["toutes les causes ne se valent pas : certaines rendent les autres indécidables.","l'ordre du catalogue est arbitraire et ne suit aucune logique de diagnostic.","le prix d'un module ne dit rien sur sa probabilité d'être en cause.",""],
  ret:"On élimine d'abord ce qui empêche tout, ensuite ce qui empêche quelque chose."},
-{c:"4e_C7.5",n:"Un constituant présent et inutile",q:"Le capteur de température reste branché sur le port A1, et aucune ligne du programme ne le lit. Que fait-il ?",
+{c:"4e_C7.5",n:"Un constituant présent et inutile",q:"Le capteur de température reste branché sur A1. D'après ce programme, que fait-il ?",
+ img:{src:"Images/doc_programme_jardin.svg",alt:"Le programme téléversé dans la carte du jardin, ligne par ligne : humidite = analogRead(A0) ; afficher(humidite, \"%\") ; si humidite < 35 alors ; digitalWrite(4, HAUT) ; attendre(6 secondes) ; digitalWrite(4, BAS)."},
  o:["il empêche la carte de démarrer correctement","il perturbe la lecture du capteur d'humidité voisin","il consomme du courant sans rendre le moindre service","il sert de secours si l'autre capteur venait à lâcher"],r:2,
  expl:"Un module branché fonctionne. Mais si aucune ligne du programme ne lit son port, sa mesure n'atteint jamais la décision.",
  ex:"5 mA (milliampères) prélevés en permanence sur un budget qu'on a calculé au plus juste.",

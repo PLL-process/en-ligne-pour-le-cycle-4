@@ -3001,7 +3001,7 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 <section class="card seance-tete">
 <h2>🧭 Séance 2 — Les cas 2 et 3, refaire, conclure</h2>
 <p class="question-directrice">Question directrice : quand les quatre fonctions semblent tenues, où se cache ce qui manque ?</p>
-<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① le cas 2, la carte qui redémarre (activité 2, environ 20 min)&nbsp;; <br>② le cas 3, la pompe qui ne s'arrête plus (activité 3, environ 20 min)&nbsp;; <br>③ le quatrième collège (réinvestissement, environ 20 min)&nbsp;; <br>④ la synthèse, le Bonus, le bilan et le renvoi vers le QCM (questionnaire à choix multiples).</p>
+<p style="font-size:.92em;color:var(--sub)">Au programme&nbsp;: <br>① le cas 2, la carte qui redémarre (activité 2, environ 20 min)&nbsp;; <br>② le cas 3, la pompe qui ne s'arrête plus (activité 3, environ 20 min)&nbsp;; <br>③ le billet de sortie (environ 5 min, seul et sans aide)&nbsp;; <br>④ la synthèse, le Bonus et le bilan. <br>🏠 À la maison&nbsp;: le quatrième collège (réinvestissement, environ 20 min) et le QCM (questionnaire à choix multiples).</p>
 <p class="rappel-securite">⚠️ Avec le matériel : très basse tension uniquement, 5 V (volts) ; on câble hors tension, l'alimentation se raccorde en dernier, et la pompe s'essaie à sec avant de plonger quoi que ce soit. <br><i>L'encadré complet est dans le rappel, en haut de page.</i></p>
 </section>
 
@@ -3090,7 +3090,8 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
 </section>
 
 <section class="card" id="refaire">
-  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~20 min</h2>
+  <h2>🔄 REFAIRE — Réinvestissement, à la maison ⏱ ~20 min</h2>
+  <p class="note">🏠 <b>À faire à la maison</b>, après la séance 2 — ou en classe, s'il reste du temps.</p>
 <p>Un quatrième collège appelle. <br>Son prototype affiche bien l'humidité, la pompe
   démarre bien quand le sol est sec — mais <b>elle ne s'arrête jamais au bout de six
   secondes</b> : elle tourne jusqu'à ce qu'on débranche tout. <br>Aucun des trois cas précédents ne
@@ -3135,6 +3136,51 @@ si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
       à tout autre chose.</li>
   </ul>
 
+</section>
+
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(environ 5 min)</span></h2>
+  <p>Un objet nouveau&nbsp;: <b>l'aération automatique de la serre du jardin</b>. Un ventilateur doit tourner quand la serre dépasse 30 °C (degrés Celsius).
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p>Le prototype livré&nbsp;: une carte Arduino UNO avec son Base Shield, un capteur de température sur A0, un écran LCD, un ventilateur 5 V (volts) qui demande 600 mA (milliampères), une alimentation externe 5 V et un câble USB. Le programme lit A0 et écrit sur D4.
+  <br>Le symptôme&nbsp;: <b>l'écran affiche 33 °C, et le ventilateur ne tourne jamais.</b></p>
+  <p><label for="bs_4e_C7_5_1"><b>1.</b> Quel constituant manque&nbsp;? Justifie à partir du symptôme et de la liste.</label></p>
+  <textarea id="bs_4e_C7_5_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>L'écran affiche 33 °C&nbsp;: la mesure ____ et la carte ____ .</li>
+      <li>Le programme écrit sur ____ , mais rien n'y est ____ .</li>
+      <li>Il manque ____ , parce que ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_4e_C7_5_2"><b>2.</b> Décris la chaîne d'information de la serre réparée&nbsp;: pour chaque maillon, ce qu'il reçoit et ce qu'il produit.</label></p>
+  <textarea id="bs_4e_C7_5_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Le capteur reçoit ____ et produit ____ .</li>
+      <li>La carte reçoit ____ , la compare à ____ et produit ____ .</li>
+      <li>Le ____ reçoit cet ordre et ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;L'écran affiche 33 °C&nbsp;: la mesure arrive et la carte tourne.
+    <br>Le programme écrit sur D4, mais rien n'y est branché.
+    <br>Il manque le module relais, parce qu'une sortie de la carte ne fournit qu'une vingtaine de milliampères, et le ventilateur en demande 600.&nbsp;»
+    <br><b>Critère</b>&nbsp;: le constituant manquant nommé, et le symptôme utilisé pour écarter les autres (la mesure et la carte marchent, l'ordre n'est pas écouté).</p>
+    <p>✘ «&nbsp;Il manque l'alimentation&nbsp;»&nbsp;: elle est dans la liste, et l'écran prouve que la carte est alimentée.
+    <br>✘ «&nbsp;Le capteur est en panne&nbsp;»&nbsp;: il ne l'est pas, puisque l'écran affiche une température qui a du sens.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Le capteur reçoit la température de la serre et produit un signal électrique sur A0.
+    <br>La carte reçoit ce signal, le compare à 30 °C et produit un ordre sur D4.
+    <br>Le relais reçoit cet ordre et ferme le circuit de puissance du ventilateur.&nbsp;»
+    <br><b>Critère</b>&nbsp;: trois maillons dans l'ordre, chacun avec ce qu'il reçoit et ce qu'il produit, et la décision écrite comme une comparaison à un seuil.</p>
+    <p>✘ «&nbsp;Capteur, carte, relais, ventilateur&nbsp;»&nbsp;: une liste de constituants n'est pas une chaîne, il manque ce qui passe de l'un à l'autre.
+    <br>✘ «&nbsp;Le capteur allume le ventilateur&nbsp;»&nbsp;: le capteur ne décide rien, c'est la carte qui compare.</p>
+    </div>
+  </details>
 </section>
 
 <section class="card bonus">

@@ -160,3 +160,16 @@ reçoit 31 pourquoi (`mission_5e_C7.1.json`).
 - `mesurer_charge.mjs` : 268 · 1 239 · 658 mots (séance 2 : 109 mots de légendes pour le lecteur d'écran, 1 130 vus).
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+
+## 27/11/2026 — Sept questions sur document, et un billet de sortie (n°345, n°330)
+
+- QCM : q2 (le relevé de M. Alvarez) et q7 (le planning de l'équipe ; elle fait maintenant calculer le décalage) sur
+  deux documents dessinés pour le téléphone, lus dans la séquence par `documents_qcm.py` ; la chaîne et l'algorigramme
+  servent aussi aux q18 et q24. La q28 disait « sur le cahier » : « sur une feuille de brouillon ».
+- Billet de sortie avant le Bonus de la séance 3 : le range-vélos du collège.
+
+Exécuté : `node tests_5e_C7.mjs .` **65 / 65** (quatre tests neufs : six questions sur document au moins, présentes et
+décrites ; `documents_qcm.py --verifier` ; la forme et la place du billet ; sa réponse relue après rechargement) ·
+`tests_regle_311_5e_C7.1.mjs` **34 / 34** · `controle_question_seule.py --strict` 0 refus, D1 0, P1 0 ·
+`balayer_questions_qcm.mjs --apres` 0 écart · `controle_schemas.mjs` 0 ✘ · contrôles des QCM, `verif_regles_audit.py`,
+`audit_aeration.py --strict`, `controle_squelette.mjs`, mode mission, `controle_liens.py` : verts.

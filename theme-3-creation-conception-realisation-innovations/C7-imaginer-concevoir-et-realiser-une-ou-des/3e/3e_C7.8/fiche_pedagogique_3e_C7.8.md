@@ -46,6 +46,7 @@ mènent à chacune. Aucune activité n'est coupée ni raccourcie : on coupe entr
 | | 3 | Et quand l'autre se tait | ~30 min | 5 | coupe |
 | **3 — Prouver que la liaison tient, puis passer à trois** (50 min) | 4 | Écrire les essais qui le prouvent | ~30 min | 6 | — |
 | | — | REFAIRE | ~20 min | 1 | — |
+| | — | Billet de sortie, seul et sans aide | ~5 min | 2 | — |
 | | | puis synthèse, Bonus facultatif, bilan, renvoi au QCM | | | |
 
 **Pourquoi ce découpage.** C'est le seul en trois séances qui ne coupe aucune activité (la
@@ -139,3 +140,18 @@ Restent visibles à chaque séance : le titre, la mission, la barre d'outils et 
 Clôture : un corrigé par défi du Bonus (horloges et règle de fraîcheur, accusé de réception numéroté, vote à trois et la station du Marin), « Comment j'ai travaillé », la ligne des quatre niveaux du livret, « Je me positionne » sur 3e_C8.3.
 
 Sécurité visible (retouche du 04/11/2026) : l'encadré reste dans le volet, mais l'en-tête de la séance 2, où l'on manipule (voie 🅰), en rappelle la consigne en une ligne — aucun secret ni donnée personnelle dans un message, très basse tension — avec un lien qui ouvre le volet sur l'encadré.
+
+## Le billet de sortie et les documents du QCM (27/11/2026, règles d'or n°330 et n°345)
+
+**Billet de sortie**, en séance 3, juste avant le Bonus (environ 5 min, seul et sans aide ; la séance 3 annonçait 50
+minutes d'activités : elle en compte 55). Un objet que la séquence n'a pas étudié : **les deux pluviomètres de la
+rivière**, en amont et en aval du bourg.
+- Question 1 (3e_C7.8) : le message, et ce que fait un pluviomètre quand l'autre se tait. On regarde l'identifiant, la
+  mesure, son unité, son heure et le numéro d'ordre ; un délai de silence ; un comportement qui alerte quand même, et
+  le dit.
+- Question 2 (3e_C8.3) : deux essais de panne. On regarde deux pannes provoquées, chacune avec son attendu écrit avant.
+
+**QCM** : huit questions sur trente se lisent sur un document dessiné pour le téléphone, LU dans la séquence par
+`documents_qcm.py` — « Ce qu'une station pourrait envoyer » (`const CHAMPS` du banc ; q2, q3, q4, q6, q7) et « Les six
+essais de la recette » (les essais de l'activité 4 ; q24, q25, q26). La q25 disait « parmi les six essais » sans les
+montrer : elle les montre. La q20 perd la notion « Interfacer deux objets », que E1 lisait comme une liste annoncée.

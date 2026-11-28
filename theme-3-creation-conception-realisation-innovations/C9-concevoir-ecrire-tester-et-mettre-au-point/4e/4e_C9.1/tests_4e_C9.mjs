@@ -523,6 +523,29 @@ const run = async () => {
   await page.click('[data-check="6"]');
   await shot(page, "act6_validee");
 
+  /* ════════ le billet de sortie (règle d'or n°330, 27/11/2026) : seul, sans aide, sur un objet neuf ════════ */
+  {
+    const avant = await page.evaluate(() => document.querySelector(".seance-panel.active").id);
+    await page.click('.seance-tab[data-panel="s3"]'); await page.waitForTimeout(100);
+    const b = await page.evaluate(() => {
+      const s = document.getElementById("billetSortie"); if (!s) return null;
+      const corr = s.querySelector("details.correction");
+      const bonus = [...document.querySelectorAll("section.card h2")].find(h => /🎁 Bonus/.test(h.textContent));
+      return { visible: s.checkVisibility(), zones: s.querySelectorAll("textarea[data-save]").length,
+        etayages: s.querySelectorAll("details.etayage").length, boutons: s.querySelectorAll("button").length,
+        criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+        avantBonus: !!bonus && s.nextElementSibling === bonus.closest("section"),
+        panneau: s.closest(".seance-panel") && s.closest(".seance-panel").id };
+    });
+    ok("billet de sortie : il existe, visible à la séance 3", !!b && b.visible && b.panneau === "s3", JSON.stringify(b));
+    ok("billet de sortie : deux zones gardées, deux versions étayées", !!b && b.zones === 2 && b.etayages === 2);
+    ok("billet de sortie : une correction à deux critères, avec des contre-exemples, et aucun bouton",
+       !!b && b.criteres === 2 && b.contre >= 2 && b.boutons === 0, JSON.stringify(b));
+    ok("billet de sortie : juste avant le Bonus", !!b && b.avantBonus);
+    await page.fill("#bs_4e_C9_1_1", "SI T > 28 ET heure >= 7 ET heure <= 17");
+    await page.click('.seance-tab[data-panel="' + avant + '"]'); await page.waitForTimeout(80);
+  }
+
   /* ════════ progression, persistance ════════ */
   ok("progression : 6 / 6 activités validées, et l'enquête facultative à part", /6 \/ 6 activités validées · enquête facultative ✔/.test(await page.textContent("#progTxt")), await page.textContent("#progTxt"));
   const coches = await page.evaluate(() => ["s1","s2","s3"].map(s => document.getElementById("done-" + s).textContent.trim()).join(""));
@@ -544,6 +567,8 @@ const run = async () => {
      (await page.inputValue("#prog3")).includes("35") && (await page.inputValue("#prog3")).includes("45"));
   ok("persistance : verrous du banc restaurés (frontières cochées)",
      (await page.textContent("#v-front")).startsWith("✔"));
+  ok("billet de sortie : la réponse écrite survit au rechargement",
+     (await page.inputValue("#bs_4e_C9_1_1")) === "SI T > 28 ET heure >= 7 ET heure <= 17");
   ok("atelier · persistance : le programme revient tel quel après rechargement (blocs, Python, verrous de l'atelier)",
      (await page.inputValue("#prog3")) === pyBon && (await page.inputValue("#at_n")) === "2" && (await page.inputValue("#at_sb")) === "35" &&
      (await page.inputValue("#at_b2_ref")) === "SEUIL_HAUT" && (await page.inputValue("#at_sinon_act")) === "rien" &&
@@ -922,7 +947,17 @@ const run = async () => {
      await page.evaluate("QUESTIONS.length") === 30 && await page.locator("#grille button").count() === 30);
   const parts = await page.evaluate("['C9.1','C9.2','C9.3'].map(c=>QUESTIONS.filter(q=>q.c===c).length)");
   ok("QCM : 10 questions par code (C9.1 / C9.2 / C9.3)", parts.join("/") === "10/10/10", parts.join("/"));
-  ok("QCM : 4 questions illustrées", await page.evaluate("QUESTIONS.filter(q=>q.img).length") === 4);
+  ok("QCM : 6 questions illustrées, au moins six sur document (n°345)", await page.evaluate("QUESTIONS.filter(q=>q.img).length") === 6);
+  {
+    const docs = await page.evaluate("QUESTIONS.filter(q=>q.img && /\\/doc_/.test(q.img.src)).map(q=>({src:q.img.src, alt:q.img.alt}))");
+    ok("QCM · chaque document « doc_ » est un fichier du lot", docs.length >= 2 && docs.every(d => fs.existsSync(path.join(LOT, d.src))),
+       docs.map(d => d.src).join(", "));
+    ok("QCM · chaque document est décrit en entier (alt de plus de 120 signes)", docs.every(d => (d.alt || "").length > 120),
+       docs.map(d => (d.alt || "").length).join(" · "));
+    let aJour = true;
+    try { execSync("python3 documents_qcm.py --verifier", { cwd: LOT, stdio: "pipe" }); } catch { aJour = false; }
+    ok("QCM · documents_qcm_4e_C9.1.json est à jour de la séquence (règle, tableau d'essais)", aJour);
+  }
   const rep = await page.evaluate("[0,1,2,3].map(k=>QUESTIONS.filter(q=>q.r===k).length)");
   ok("QCM : bonnes réponses réparties A/B/C/D", JSON.stringify(rep) === "[8,7,7,8]", rep.join("/"));
   ok("QCM : chaque question a 4 réfutations cohérentes (d[r] vide, 3 non vides)",

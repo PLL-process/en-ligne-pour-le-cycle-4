@@ -38633,3 +38633,327 @@ prochain export.
 les cahiers ; thème 2 — `4e_C6.1`, `4e_C6.2`, `3e_C4.1`, `3e_C4.8`, `4e_C4.1` (jardin et Book Train), `4e_C4.7` ;
 thème 3 — `3e_C7.1`, `3e_C7.6`, `3e_C7.8`, `4e_C7.1`, `5e_C7.1`, l'atelier de planification, `3e_C8.1`, `3e_C9.1`,
 `5e_C9.1` ; `_outils/` — le contrôle neuf, son banc, P1 ; `.claude/skills/controle-qualite-lot` — sa ligne.
+
+## 27/11/2026 — 5e_C7.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — continuer, lot par lot, les chantiers D1 et P1 du thème 3, en commençant par C7.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` : la
+  situation et le planning de l'activité 1a ; ce lot n'a pas de modèle) — le relevé de M. Alvarez (q2), le planning de
+  l'équipe (q7, qui fait maintenant calculer le décalage d'un retard) ; la chaîne et l'algorigramme servent aussi aux
+  q18 et q24. Sept questions illustrées sur trente. La q28 disait « sur le cahier » : « sur une feuille de brouillon ».
+- **Billet de sortie** avant le Bonus de la séance 3 : le range-vélos du collège (deux solutions et un critère ; la
+  règle SI et un test à l'attendu écrit avant).
+Bancs : `tests_5e_C7.mjs` 65 / 65 (quatre tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`5e_C7.1`).
+
+## 27/11/2026 — 5e_C7.3 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `materiaux.py` : aucun nombre recopié) — « Six matériaux pour l'assise du banc » (les cinq exigences, puis
+  résistance, soleil, sel, chaleur et masse des six matériaux ; q8, q9, q11, q19) et « Le prix de l'assise » (prix au
+  kilogramme, masse, prix ; q7, q10, q14). Sept questions illustrées sur trente. La q9 fait lire le tableau : chaque
+  leurre est une ligne mal lue (le béton, l'acier), et chaque pourquoi renvoie à la ligne à relire. La q13 nomme ses
+  deux matériaux (le pin traité et le teck) : E1 la lisait comme une liste tronquée.
+- **Billet de sortie** avant le Bonus de la séance 2 : le panneau d'affichage de la vie scolaire (choisir entre
+  l'aluminium et le contreplaqué peint, exigence par exigence ; reconnaître le métal du cadre par le toucher, l'aimant
+  et la masse). Le réinvestissement passe de 15 à 10 minutes : la séance tient en 55.
+Bancs : séquence 47 / 47 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`5e_C7.3`).
+
+## 27/11/2026 — 5e_C7.4 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `energie.py`) — « Ce que consomme l'indicateur du hall » (courant, durée et énergie de chaque composant,
+  total 2,78 Wh ; q4, q8) et « Cinq sources pour l'indicateur » (énergie stockée, rendement, énergie utile ; le secteur
+  et le panneau ; q5, q7, q9, q11, q12). Sept questions illustrées sur trente. La q4 perd un leurre que personne ne
+  choisit (« sa couleur et sa taille ») pour une vraie lecture fausse du relevé (« sa tension seule, puisque tout est
+  sous 5 V »).
+- **Billet de sortie** avant le Bonus de la séance 2 : l'afficheur des scores du plateau sportif (les piles ou le
+  panneau, calcul à l'appui ; la chaîne d'énergie avec la forme chimique dans l'accumulateur). La séance 2 annonçait
+  60 minutes : le réinvestissement (10 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`,
+  et la séance tient en 55.
+Bancs : séquence 40 / 40 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`5e_C7.4`).
+
+## 27/11/2026 — 5e_C7.5 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit l'établi :
+  ses constituants, leurs ports, leur courant, et le programme téléversé) — « Le prototype de l'éclairage du préau »
+  (q8, q14) et « Le programme de la carte » (q3, q10, q11, q12, q20). Sept questions illustrées sur trente : les
+  questions « on retire… » se lisent maintenant sur le programme que la carte exécute.
+- **Billet de sortie** avant le Bonus de la séance 2 : le ventilateur automatique de la salle de classe (les quatre
+  fonctions et le type de port de chaque module ; la chaîne d'information, la décision écrite comme une comparaison à
+  un seuil). Le réinvestissement passe de 15 à 10 minutes : la séance tient en 55.
+Bancs : séquence 45 / 45 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`5e_C7.5`).
+
+## 27/11/2026 — 4e_C7.1 : neuf questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit le
+  planning de l'activité 1b et le tableau des matériaux de l'activité 3, réponses attendues comprises) — « Les tâches
+  du projet du jardin », données dans le désordre (q1, q8), et « Trois matériaux pour le boîtier » (q24, q26, q27,
+  q29). Neuf questions illustrées sur trente (trois avant). La q1 demandait « En 5e on suit… qu'attend-on de toi en
+  4e ? » : elle évaluait la connaissance du programme et supposait une 5e faite avec nous (n°304) ; elle fait
+  maintenant organiser la liste, et sa notion devient « Organiser des tâches données » (piège reposé). La q29 disait
+  « notre tableau » : elle le montre.
+- **Billet de sortie** avant le Bonus de la séance 2 : l'abri à outils du jardin partagé (ranger quatre tâches et
+  repérer celles qui avancent en même temps ; le matériau du toit et son critère éliminatoire). La séance passe de 50 à
+  55 minutes. Les durées des tâches du billet s'écrivent « : 40 min », sans parenthèses : le banc et n°23 comptent
+  « (40 min) » comme une activité.
+Bancs : `tests_4e_C7.mjs` 56 / 56 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`4e_C7.1`).
+
+## 27/11/2026 — Le TP mBot2 refondu : trois séances, un robot simulé, des lignes de boucle jugées en exécutant le programme (thème 3)
+
+Pascal : « Revoir et améliorer la ou les séquences avec le mBot2, et me redonner les compétences et l'URL. »
+
+**Ce qui existe.** Une seule ressource du site s'appuie sur le mBot2 : `3e_C9.1/tp_mbot2_python.html` (3e_C9.2 et
+3e_C9.1, socle D1.3, D2, D4, CRCN 3.4 niveau 3). Ailleurs, le robot n'est qu'un Bonus (`3e_C6.1`) ou une question de
+QCM. Le TP était une ressource héritée (badge 🛠, « TP mBot2 & Python — v4.5 ») : il est refondu à la même adresse,
+l'ancienne version archivée (`_archive-anciennes-versions/C7_C9_…/3e_C9.1/tp_mbot2_python_v4.5_avant-refonte.html`,
+liens réparés, bandeau vers la version en service), et retiré de `_outils/heritees.json` (n°12).
+
+**La refonte** (commencée le 26/11, finie le 27/11) : trois séances de 55 min, avec une barre qui mène à chacune et
+dit où l'élève en est ; les six gestes de mBlock en échauffement ; sept programmes à reconstruire par étiquettes
+(A1 à A7), qui se glissent au doigt, à la souris et au clavier ; huit exercices (E1 à E8) ; vingt lignes de boucle
+(B1 à B20) ; deux aides puis une correction complète par exercice ; un suivi « réussi / à reprendre / pas encore
+fait », 55 points ramenés sur 20 ; une fiche imprimée de deux pages. Versions : 🅰 robot réel (mBlock, très basse
+tension, robot au sol), 🅱 robot simulé dans la page (l'éditeur Python commun et un module `cyberpi` simulé, qui dit
+ses hypothèses), 🅲 à la maison sur téléphone.
+
+**B1 à B20, réécrits le 27/11.** Les vingt consignes héritées étaient des pavés (jusqu'à 25 lignes) qui donnaient
+souvent la réponse dans l'exemple, et la ligne se jugeait à son seul texte. Chaque exercice est maintenant un petit
+programme auquel il manque une ligne : « À savoir » (une règle, un exemple), le programme troué, ce qu'il doit
+afficher (ou faire, sur le robot simulé). La page **exécute** le programme avec la ligne de l'élève (n°333) : la ligne
+du corrigé est reconnue aux espaces et guillemets près ; toute autre ligne est juste si le programme fait le même
+travail (`while d > 14:`, `s = i + s`, `while 1:`) ; sinon l'élève voit côte à côte ce que son programme affiche et
+ce qu'il doit afficher. B1, B8, B12 et B15 jouent un second cas (la page change un nombre du programme) : une ligne
+qui ne convient qu'aux nombres montrés est refusée. B9 et B16 se jouent sur le robot simulé, touche par touche. Sans
+moteur Python, la page le dit et ne compte pas l'essai (n°374 : une limite de l'outil n'est pas une erreur de
+l'élève). Le mot « essai » garde un seul sens (l'essai de l'élève) ; les situations jouées par la page sont des
+« cas ».
+
+**Vérifié** : banc `3e_C9.1/tests_tp_mbot2_3e_C9.1.mjs` 97 / 97 (dont 49 lignes justes ou fausses jouées, les
+32 lignes du corrigé exécutées, le cas « sans moteur ») ; `controle_page_ouverte --axe`, `controle_axe`,
+`controle_code_colore`, `banc_effacement`, `mode_mission/banc_generique`, `audit_aeration --strict`,
+`controle_consignes_a_la_ligne --strict`, `controle_annee_precedente`, `controle_sigles_expliques`,
+`controle_competences`, `controle_liens`, `controle_licence`, `controle_tactile`, `controle_boutons_vivants`,
+`controle_sauvegarde_locale`, `controle_porte_sequence`, `controle_unites`, `controle_hors_ligne --source` : verts.
+Revue d'écran à 390 et 1 280 px, deux tours (« essai » à double sens, touche poussée non dite par le robot simulé,
+exemple de code coupé au milieu d'un mot sur téléphone : corrigés).
+
+**Non vérifiable d'ici, à faire sur un vrai mBot2** : le mot-clé `run_time` de `forward` / `backward` en mode
+Téléverser (manuel Python du mBot2 de Makeblock ; l'aide en ligne écrit `t` — `forward(50, 1)` convient aux deux), et
+les libellés des boutons de mBlock et de Vittascience ; les gestes de Vittascience en captures (n° des gestes en
+captures), après un premier essai de Pascal sur un robot.
+
+**Vittascience et l'éditeur, le même jour.** Pascal : « Il y aurait pu avoir un éditeur Python intégré, celui de
+Vittascience » ; puis, après avis : « J'ajoute dès maintenant un lien « Envoyer au vrai robot avec Vittascience ». À
+certains moments, peut-être qu'une interface Python serait nécessaire. » L'éditeur de Vittascience ne s'affiche pas
+dans une autre page, ne peut pas être lu par elle (ni vérification, ni points) et demande Internet (n°305) : l'éditeur
+de la page reste celui qui exécute et corrige, Vittascience devient le chemin vers le vrai robot (son interface
+CyberPi / mBot2, `fr.vittascience.com/cyberpi/`, téléverse du Python sans rien installer). Posés : sous chaque
+activité A1 à A7, « 🚀 Envoyer ton programme au vrai robot » — 🐍 l'éditeur de la page ouvert sur le programme de
+l'élève (▶ sur le robot simulé, ⬇ son .py, gardé comme tout champ), 📋 copier le programme (repli : le texte
+sélectionné pour Ctrl + C), 🌐 Vittascience mBot2 ; dans l'échauffement, « l'autre chemin » en cinq gestes, à côté
+des six de mBlock ; dans le Bonus, un éditeur pour les trois défis, qui en demandaient un. Au passage, la console du
+robot simulé se lit sans code interne (« 📟 écran : « Y », puis passe à la ligne » au lieu de « Y ⏎oui » ;
+« lumières » au lieu de « DEL »). Banc : 104 / 104.
+
+## 27/11/2026 — 4e_C7.3 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `materiaux.py`) — « Six matériaux pour le bac du jardin » (q10, q12, q13) et « Les trois retenus, sur
+  15 ans » (q5, q6, q14, q18). Sept questions illustrées sur trente. La q12 perd sa notion « Deux motifs pour
+  l'acier », qui soufflait la réponse (E1 la lisait aussi comme une liste tronquée) ; la q13 parlait de « douze
+  kilomètres » sous un énoncé à deux cents.
+- **Billet de sortie** avant le Bonus de la séance 2 : le bac de tri des déchets du jardin (le coût sur 10 puis 20 ans,
+  qui se retourne ; ce qu'il reste à examiner du cycle de vie). Le réinvestissement passe de 15 à 10 minutes : la
+  séance tient en 55.
+Bancs : séquence 49 / 49 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.3`).
+
+## 27/11/2026 — 4e_C7.4 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `energie.py`) — « Ce que consomme le jardin connecté » (q3, q4, q5, q14) et « Cinq sources pour le jardin »
+  (q7, q9, q11). Sept questions illustrées sur trente. La q3 disait de la pompe qu'elle est « le plus petit poste du
+  montage » : le relais consomme moins qu'elle ; ses pourquoi renvoient aux colonnes à relire.
+- **Billet de sortie** avant le Bonus de la séance 2 : le capteur de niveau de la cuve d'eau de pluie (deux critères
+  écrits avant de comparer ; la source choisie au pire mois, décembre). La séance passe de 45 à 50 minutes.
+Bancs : séquence 40 / 40 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.4`).
+
+## 27/11/2026 — 4e_C7.5 : huit questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : trois documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit l'établi :
+  les trois prototypes livrés, le courant des constituants, le programme téléversé) — « Trois prototypes livrés »
+  (q6, q8, q10), « Le courant du jardin connecté » (q7, q11), « Le programme de la carte » (q9, q12, q18). Huit
+  questions illustrées sur trente ; celles qui disaient « le cas 2 », « le cas 3 » sans le montrer le montrent.
+- **Billet de sortie** avant le Bonus de la séance 2 : l'aération automatique de la serre, livrée sans son relais (le
+  constituant manquant justifié par le symptôme ; la chaîne d'information réparée). La séance 2 annonçait 60 minutes :
+  le réinvestissement (20 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`.
+Bancs : séquence 46 / 46 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`4e_C7.5`).
+
+## 27/11/2026 — 4e_C7.7 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `moyens.py`) — « Cinq moyens pour le support » (q2, q5, q10, q20) et « Le temps de chaque moyen » (q12, q13,
+  q14). Sept questions illustrées sur trente : les temps des questions 12 et 13 se calculent maintenant sur le tableau.
+- **Billet de sortie** avant le Bonus de la séance 2 : les étiquettes des plantes du jardin (le moyen qui tient dans
+  les 3 heures, calcul à l'appui ; le procédé reconnu à ses traces). Le réinvestissement passe de 15 à 10 minutes : la
+  séance tient en 55.
+Bancs : séquence 43 / 43 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.7`).
+
+## 27/11/2026 — 4e_C7.8 : six questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et LU dans la séquence (`documents_qcm.py` lit `const CHAMPS`
+  du banc) — « Ce que le jardin pourrait envoyer » : les sept champs possibles d'un message, une valeur d'exemple, ce
+  que dit chacun, sans dire lesquels envoyer (q3, q5, q6, q7, q16, q21).
+- **Billet de sortie** avant le Bonus de la séance 2 : le compteur d'entrées du CDI (le message, sa règle d'émission
+  et son comportement sans lien ; la photo des élèves, donnée personnelle qu'on n'envoie pas). La séance 2 était pleine :
+  le réinvestissement (10 min) passe à la maison — ou en classe s'il reste du temps —, comme en `5e_C8.1`.
+Bancs : séquence 51 / 51 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`4e_C7.8`). La famille C7 de 4e est complète.
+
+## 27/11/2026 — 3e_C7.1 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et LU dans la séquence (`documents_qcm.py` lit le tableau des
+  quatre scénarios de l'activité 2 et la règle « strictement supérieure à 28 °C ») — « Le protocole d'essai du
+  capteur » (q13, q14, q15, q16). Sept questions illustrées sur trente (trois avant). La q1 demandait « En 5e on suit,
+  en 4e on organise. Qu'attend-on de toi en 3e ? » : elle évaluait la connaissance du programme et supposait deux années
+  faites avec nous (n°304) ; elle demande maintenant ce qu'on attend quand personne ne donne la liste des tâches (notion
+  « Élaborer un processus », piège reposé). La q14 disait « le tableau de l'activité 2 » : elle le montre.
+- **Billet de sortie** avant le Bonus de la séance 4 : le détecteur de bruit de la cantine (élaborer quatre tâches avec
+  leur durée ; un protocole de trois essais, cas frontière à 80 dB compris).
+Bancs : `tests_3e_C7.mjs` 102 / 102 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`3e_C7.1`).
+
+## 27/11/2026 — 3e_C7.3 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et CALCULÉ par le modèle du lot (`documents_qcm.py` importe
+  `materiaux.py`) — « Six matériaux pour le boîtier » : les cinq exigences, puis résistance, soleil, sel, épaisseur de
+  paroi, chaleur et masse de chaque matériau (q5, q6, q8, q11, q12, q13, q15). La q15 perd une notion fausse
+  (« L'exigence qui élimine tout le monde » : elle en élimine quatre sur six ; piège reposé) et l'énoncé que E1 lisait
+  comme une liste tronquée.
+- **Billet de sortie** avant le Bonus de la séance 4 : le capot du pluviomètre (un seul relâchement, chiffré, avec qui
+  en porte le coût ; le procédé du collège qui va avec).
+Bancs : séquence 73 / 73 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.3`).
+
+## 27/11/2026 — 3e_C7.4 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et CALCULÉS par le modèle du lot (`documents_qcm.py`
+  importe `energie.py`) — « Ce que consomme la station, un jour d'alerte » (q2, q3, q18) et « Les sources de la
+  station » (q4, q5, q8, q26). Sept questions illustrées sur trente. Deux pourquoi écrivaient « watts-heures ».
+- **Billet de sortie** avant le Bonus de la séance 3 : la balise lumineuse du ponton de pêche (le nombre d'accus, marge
+  comprise ; piles ou accus, argumentés avec le cycle de vie). La séance 3 passe de 50 à 55 minutes d'activités.
+Bancs : séquence 59 / 59 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.4`).
+
+## 27/11/2026 — 3e_C7.5 : huit questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit l'établi :
+  le carton, le courant de chaque constituant, ce que fournissent les sources, le programme téléversé) — « Le carton de
+  la station » (q6, q12, q17) et « Le programme de la station » (q8, q9, q10, q11, q20). Huit questions illustrées sur
+  trente. La q25 perd la notion « Deux chaînes qui se rencontrent », que E1 lisait comme une liste annoncée (piège
+  reposé).
+- **Billet de sortie** avant le Bonus de la séance 4 : le témoin de crue de la ravine (les constituants d'un carton trop
+  fourni, chacun rattaché à une exigence, le courant et la source ; la chaîne d'information caractérisée).
+Bancs : séquence 59 / 59 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+unités, des schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3
+seulement (`3e_C7.5`).
+
+## 27/11/2026 — 3e_C7.7 : sept questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : un document neuf, dessiné pour le téléphone et CALCULÉ par le modèle du lot (`documents_qcm.py` importe
+  `moyens.py`) — « Le dessin du boîtier, face à l'imprimante » : cinq cotes du dessin et ce que tient l'imprimante (q3,
+  q5, q6, q7, q8, q10, q12). Les q9 et q11 renvoyaient par son code à une autre séquence (« 3e_C7.3 », « 3e_C7.6 ») :
+  elles disent ce qui s'y est passé, sans le code.
+- **Billet de sortie** avant le Bonus de la séance 4 : le support du panneau solaire (les cotes à corriger pour
+  l'imprimante, la fonction gardée ; ce que dit et ce que tait la simulation).
+Bancs : séquence 82 / 82 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.7`).
+
+## 27/11/2026 — 3e_C7.8 : huit questions sur document, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** : deux documents neufs, dessinés pour le téléphone et LUS dans la séquence (`documents_qcm.py` lit `const
+  CHAMPS` du banc et les six essais de l'activité 4) — « Ce qu'une station pourrait envoyer » (q2, q3, q4, q6, q7) et
+  « Les six essais de la recette » (q24, q25, q26). La q25 disait « parmi les six essais » sans les montrer. La q20 perd
+  la notion « Interfacer deux objets », que E1 lisait comme une liste annoncée (piège reposé).
+- **Billet de sortie** avant le Bonus de la séance 3 : les deux pluviomètres de la rivière (le message et le
+  comportement quand l'autre se tait ; deux essais de panne). La séance 3 passe de 50 à 55 minutes d'activités.
+Bancs : séquence 63 / 63 (cinq tests neufs), QCM 35 / 35 (quatre neufs), n°311 34 / 34 ; contrôles des QCM, des
+schémas, des règles d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement
+(`3e_C7.8`). La famille C7 est complète sur les trois niveaux.
+
+## 27/11/2026 — 3e_C9.1 : six questions sur document dans chacun des deux QCM (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot, C9 après C7.
+- **QCM de la séquence** : un document neuf, « Le banc de la ventilation », LU dans la séquence (`documents_qcm.py` lit
+  le banc de démonstration de l'activité 5 et les trois branches de la fonction du document 3) ; il montre la fonction et
+  ses quatre tests, sans ce qu'elle renvoie. Trois questions s'y lisent (q26 : pourquoi un test T4 ; q27 : ce que renvoie
+  T4 ; q28 : la non-régression). La q25 citait le code `3e_C9.1` dans son énoncé, l'exemple de la q28 renvoyait « en
+  4e » : réécrits.
+- **QCM du TP mBot2** (`qcm_python_variables.html`, 0 question sur document) : « Les quatre familles de valeurs », lu
+  dans `vocabulaire_3e_C9.1.json` sans l'exemple de la séance (q8 à q11), et « Six commandes du robot mBot2 », lu dans
+  l'aide-mémoire du TP sans les mots capteur et actionneur (q29, q30).
+- La séquence avait déjà son billet de sortie : pas de P1 sur ce lot.
+Bancs : séquence 96 / 96 (sept tests neufs), TP 104 / 104, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles
+d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`3e_C9.1`).
+
+## 27/11/2026 — 5e_C9.1 : cinq questions sur document de plus, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** (3 questions sur document) : deux documents neufs, LUS dans la séquence par `documents_qcm.py` — « Le
+  programme du compteur » (les six lignes et le banc T1 à T3 de l'activité 4, sans ce que le programme affiche ; q14,
+  q18, q21) et « Le banc de la barrière » (la règle et le banc B1 à B3 de l'activité 5, sans dire lequel compte le plus ;
+  q25, q28). La q18 demandait « la ligne du programme du compteur » sans le montrer ; la q11 renvoyait à « l'atelier ».
+- **Billet de sortie** avant le Bonus de la séance 3 : le compteur de places du car scolaire de Rivière-Salée (un test
+  qui montre si le programme répond au besoin ; la règle du voyant « COMPLET » et son test frontière). La séance 3 passe
+  de 45 à 50 minutes d'activités.
+- Une ligne de la correction du Bonus cousait deux idées par « ; » (audit d'aération) : coupée.
+Bancs : séquence 75 / 75 (neuf tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 3 seulement (`5e_C9.1`).
+
+## 27/11/2026 — 4e_C9.1 : deux questions sur document de plus, et un billet de sortie (thème 3)
+
+Pascal : « 1 oui » — la suite des chantiers D1 et P1 du thème 3, lot par lot.
+- **QCM** (4 questions sur document) : « La règle et ses six essais », LU dans la séquence par `documents_qcm.py` (le
+  pseudo-code de la correction de l'activité 2 et le tableau d'essais de l'activité 4, sans ce que fait la pompe) ; la q9
+  (le chemin de l'essai 3) et la q21 (ce que prouvent les essais 1 et 2) s'y lisent. La q1 citait « le programme officiel
+  de 4e » (n°304), la q26 annonçait « deux chronogrammes » au-dessus d'une réponse à trois éléments (E1) : réécrites.
+- **Billet de sortie** avant le Bonus de la séance 3 : le ventilateur de la salle informatique (ajouter la plage des
+  heures de cours ; corriger l'affolement par deux seuils, et deux essais qui le prouvent). La séance 3 passe de 50 à 55
+  minutes d'activités.
+Bancs : séquence 169 / 169, n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de l'aération, du
+squelette, du mode mission et des liens : verts. Thème 3 seulement (`4e_C9.1`). Les chantiers D1 et P1 du thème 3 sont
+tous fermés.

@@ -29,3 +29,16 @@ devinaient (« un virus », « une imprimante », « une boussole en bois »). I
 adresse : 30 questions, dont les notions justes de l'ancien (affectation, ==, types, input() et int(), //, %, range,
 while, #, f-string, def, bug, mBot2) et des neuves (la valeur copiée, la boucle sans fin, le cas limite de if,
 l'appel d'une fonction, le message NameError). `build_qcms.py` ne réécrit plus une page passée au gabarit maison.
+
+## 27/11/2026 — `tp_mbot2_python_v4.5_avant-refonte.html`
+
+Le TP « mBot2 & Python — Séquence complète v4.5 », ressource héritée (badge 🛠 de l'index), telle qu'elle était en
+ligne jusqu'au 27/11/2026. Elle est remplacée, **à la même adresse**, par la refonte :
+
+➡ `theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.1/tp_mbot2_python.html`
+
+Ce qui change : 3 séances de 55 min ; étiquettes qui se glissent au doigt, à la souris et au clavier ; un robot simulé
+dans la page (l'éditeur Python commun et un module `cyberpi` simulé) ; deux aides puis une correction complète par
+exercice ; les vingt lignes de boucle (B1 à B20) deviennent vingt programmes à une ligne manquante, jugés en
+EXÉCUTANT le programme (une autre écriture qui fait le même travail est acceptée) ; un suivi « réussi / à reprendre /
+pas encore fait ». L'archive garde ses liens (index, séquence, QCM) et porte un bandeau qui mène à la version en service.

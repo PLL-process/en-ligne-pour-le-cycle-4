@@ -175,3 +175,23 @@ technique du banc repliés ; aération 16 → 0.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 27/11/2026 — sept questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_5e_C7.4_sequence.mjs "$PWD/sequence_5e_C7.4_indicateur-du-hall.html" 5e "$PWD/reponses_5e_C7.4.json"` :
+  **40 / 40** (cinq tests neufs : le billet existe ; deux zones gardées et deux versions étayées ; deux critères, des
+  contre-exemples, aucun bouton ; juste avant le Bonus ; la réponse survit au rechargement).
+- `node tests_5e_C7.4_qcm.mjs "$PWD/qcm_5e_C7.4_indicateur-du-hall.html" 5e_C7.4 5e_C3.1 sequence_5e_C7.4_indicateur-du-hall.html` :
+  **35 / 35** (« aucune image héritée » remplacé par quatre tests : au moins six questions sur document, chaque
+  document un `doc_` du lot présent dans `Images/`, une description qui dit ses nombres, `documents_qcm.py --verifier`
+  à jour de `energie.py`).
+- `node tests_regle_311_5e_C7.4.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `controle_annee_precedente.py` : 0.
+- `controle_unites.py` : 0 (les deux documents nommaient « V » sans « volts » au premier passage ; corrigé).
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 7 illustrées, 90 écrans d'aide, 0 écart.
+- `controle_schemas.mjs` : 0 ✘, 0 ⚠ ; les deux documents regardés à 312 px de large (une colonne trop étroite,
+  « Capteur du sac » contre « 0,5 mA », a été élargie).
+- Contrôles des QCM (banque, en-tête, effectifs, sigles, indices, cohérence, aides) : verts ; `verif_regles_audit.py`,
+  `audit_aeration.py --strict`, `controle_squelette.mjs`, mode mission, `controle_liens.py`, `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

@@ -142,6 +142,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (20 3e_C7.4 + 10 3e_C3.2), 0 illustrée.
+/* Banque : 30 questions (20 3e_C7.4 + 10 3e_C3.2), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3
    illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne correspondait
@@ -318,33 +320,37 @@ const QUESTIONS = [
  err:"Prendre la valeur courante parce qu'elle est plus représentative. Elle l'est — et c'est justement pourquoi elle ne protège de rien.",
  d:["Une moyenne décrit l'année ordinaire, pas l'événement pour lequel l'objet existe.","","Le jour fréquent est le jour calme : la station n'a alors rien à faire.","Dimensionner au minimum garantit la panne au moment le plus mauvais."],
  ret:"On dimensionne sur le pire cas, jamais sur le cas courant."},
-{c:"3e_C7.4",n:"Le jour d'alerte",q:"Entre un jour calme et un jour d'alerte, la station consomme…",
+{c:"3e_C7.4",n:"Le jour d'alerte",q:"D'après ce relevé, entre un jour calme et un jour d'alerte, la station consomme…",
+ img:{src:"Images/doc_conso_station.svg",alt:"Ce que consomme la station d'alerte un jour d'alerte, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Buzzer d'alerte : 30 milliampères pendant 2 heures, 0,30 wattheures. Anémomètre à impulsions : 1 milliampères pendant 24 heures, 0,12 wattheures. Girouette : 1 milliampères pendant 24 heures, 0,12 wattheures. DEL indicatrice : 10 milliampères pendant 2 heures, 0,10 wattheures. Total : 6,04 wattheures par jour. Le buzzer et la DEL ne fonctionnent qu'un jour d'alerte."},
  o:["5,64 Wh contre 11,3 Wh","5,64 Wh contre 6,04 Wh","3,02 Wh contre 6,04 Wh","6,04 Wh contre 6,04 Wh"],r:1,
  expl:"Le buzzer et le voyant n'ajoutent que 0,40 Wh, soit 7 %. Ils font beaucoup de bruit et peu de watts-heures.",
  ex:"Éteins les deux au banc : le total passe de 6,04 à 5,64.",
  err:"Croire qu'une alerte double la consommation. L'écart est réel mais faible — et c'est quand même lui qu'on retient.",
  d:["Le doublement supposerait un buzzer allumé en permanence à pleine puissance.","","Le jour calme ne consomme pas la moitié : la carte veille dans les deux cas.","Il y a bien un écart de 0,40 Wh entre les deux journées."],
  ret:"Le jour d'alerte ne coûte que 7 % de plus — et c'est lui qui dimensionne."},
-{c:"3e_C7.4",n:"Le besoin sur 72 heures",q:"À 6,04 Wh (wattheures) par jour, tenir 72 heures demande…",
+{c:"3e_C7.4",n:"Le besoin sur 72 heures",q:"Sur ce relevé, la station consomme 6,04 Wh (wattheures) par jour d'alerte. Tenir 72 heures demande…",
+ img:{src:"Images/doc_conso_station.svg",alt:"Ce que consomme la station d'alerte un jour d'alerte, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Buzzer d'alerte : 30 milliampères pendant 2 heures, 0,30 wattheures. Anémomètre à impulsions : 1 milliampères pendant 24 heures, 0,12 wattheures. Girouette : 1 milliampères pendant 24 heures, 0,12 wattheures. DEL indicatrice : 10 milliampères pendant 2 heures, 0,10 wattheures. Total : 6,04 wattheures par jour. Le buzzer et la DEL ne fonctionnent qu'un jour d'alerte."},
  o:["434 Wh","6,04 Wh","72 Wh","18,12 Wh"],r:3,
  expl:"72 heures font trois jours pleins : 6,04 × 3. Une autonomie ne s'exprime jamais sans la durée exigée.",
  ex:"C'est ce nombre qui départage un accu (9,4 Wh) de trois accus (28,2 Wh).",
  err:"Oublier de convertir les heures en jours, ou multiplier par 72 au lieu de 3.",
  d:["434 Wh viendrait de 6,04 × 72 : on aurait multiplié des jours par des heures.","6,04 Wh est la consommation d'une seule journée.","72 est la durée en heures, pas une énergie.",""],
  ret:"Besoin = consommation d'un jour × nombre de jours à tenir."},
-{c:"3e_C7.4",n:"Ce que donnent deux accus",q:"Deux accus 18650 délivrent, sous 5 V (volts)…",
+{c:"3e_C7.4",n:"Ce que donnent deux accus",q:"D'après ce tableau, deux accus 18650 délivrent, sous 5 V (volts)…",
+ img:{src:"Images/doc_sources_station.svg",alt:"Les sources d'énergie de la station d'alerte. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique, en moyenne."},
  o:["18,8 Wh (wattheures)","9,4 Wh (wattheures)","22,2 Wh (wattheures)","37,6 Wh (wattheures)"],r:0,
  expl:"Un accu donne 9,4 Wh utiles après le convertisseur élévateur. Deux en donnent le double.",
  ex:"18,8 Wh pour 18,12 exigés : ça passe — de très peu.",
  err:"Confondre l'énergie brute (11,1 Wh par accu) et l'énergie utile après conversion (9,4).",
  d:["","9,4 Wh est ce que donne un seul accu.","22,2 Wh est l'énergie brute de deux accus, avant le convertisseur.","37,6 Wh correspondrait à quatre accus."],
  ret:"L'énergie utile se compte après conversion, pas avant."},
-{c:"3e_C7.4",n:"Lire une marge",q:"18,8 Wh disponibles pour 18,12 nécessaires, cela fait une marge de…",
+{c:"3e_C7.4",n:"Lire une marge",q:"Avec ce tableau, deux accus donnent 18,8 Wh (wattheures) pour 18,12 nécessaires. La marge est de…",
+ img:{src:"Images/doc_sources_station.svg",alt:"Les sources d'énergie de la station d'alerte. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique, en moyenne."},
  o:["environ 96 %","environ 0,7 %","environ 20 %","environ 4 %"],r:3,
  expl:"(18,8 − 18,12) ÷ 18,12 = 3,8 %. Une marge se calcule en rapportant l'écart au besoin, pas en le lisant brut.",
  ex:"0,68 Wh d'écart, c'est deux heures et demie de fonctionnement.",
  err:"Prendre l'écart brut pour la marge. 0,68 ne veut rien dire sans référence.",
- d:["96 % est le rapport inverse : la part du besoin déjà couverte par le besoin lui-même.","0,7 est l'écart en watts-heures, pas la marge en pourcentage.","20 % demanderait 21,7 Wh, soit presque trois accus.",""],
+ d:["96 % est le rapport inverse : la part du besoin déjà couverte par le besoin lui-même.","0,7 est l'écart en wattheures, pas la marge en pourcentage.","20 % demanderait 21,7 Wh, soit presque trois accus.",""],
  ret:"Une marge, c'est l'écart rapporté au besoin — en pourcentage."},
 {c:"3e_C7.4",n:"Tout juste n'est pas assez",q:"Une marge de 3,8 % sur une réserve d'énergie est…",
  o:["confortable : 18,8 dépasse bien 18,12","trop faible : le vieillissement la mange","excessive : c'est du gaspillage","sans importance : une batterie ne vieillit pas"],r:1,
@@ -360,7 +366,8 @@ const QUESTIONS = [
  err:"Dimensionner sur un accu neuf. L'installation doit tenir jusqu'au dernier jour de vie de sa batterie, pas jusqu'au premier.",
  d:["","Une capacité constante n'existe pas : chaque cycle en retire un peu.","Aucun accumulateur ne gagne de capacité à l'usage.","Il fonctionne encore très bien : il stocke simplement moins."],
  ret:"Une installation doit tenir avec une batterie usée, pas seulement avec une neuve."},
-{c:"3e_C7.4",n:"Trois accus",q:"Trois accus (28,2 Wh, en wattheures) font tenir la station…",
+{c:"3e_C7.4",n:"Trois accus",q:"D'après ce tableau, trois accus (28,2 Wh, en wattheures) font tenir la station, à 6,04 Wh par jour…",
+ img:{src:"Images/doc_sources_station.svg",alt:"Les sources d'énergie de la station d'alerte. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique, en moyenne."},
  o:["112 heures, soit 4,7 jours","72 heures tout juste","90 heures environ","plus de deux semaines"],r:0,
  expl:"28,2 ÷ 6,04 = 4,67 jours. On couvre les 72 heures demandées et 40 heures d'imprévu.",
  ex:"C'est le dimensionnement retenu dans l'avis à la mairie.",
@@ -430,7 +437,8 @@ const QUESTIONS = [
  err:"Ne présenter qu'une solution parfaite. Le commanditaire découvre l'entretien après avoir signé.",
  d:["Le fournisseur relève de l'achat, pas de la décision technique.","Le temps passé n'engage que ceux qui l'ont passé.","Citer les solutions écartées est utile, mais ce n'est pas ce qui manque ici.",""],
  ret:"Un avis complet annonce l'entretien : c'est une ligne de budget, pas un détail."},
-{c:"3e_C7.4",n:"La carte, encore",q:"Dans la station, la carte représente…",
+{c:"3e_C7.4",n:"La carte, encore",q:"D'après ce relevé, la carte de la station représente…",
+ img:{src:"Images/doc_conso_station.svg",alt:"Ce que consomme la station d'alerte un jour d'alerte, sous 5 volts. Carte Arduino UNO : 45 milliampères pendant 24 heures, 5,40 wattheures. Buzzer d'alerte : 30 milliampères pendant 2 heures, 0,30 wattheures. Anémomètre à impulsions : 1 milliampères pendant 24 heures, 0,12 wattheures. Girouette : 1 milliampères pendant 24 heures, 0,12 wattheures. DEL indicatrice : 10 milliampères pendant 2 heures, 0,10 wattheures. Total : 6,04 wattheures par jour. Le buzzer et la DEL ne fonctionnent qu'un jour d'alerte."},
  o:["89 % de la consommation quotidienne","50 % de la consommation quotidienne","5 % de la consommation quotidienne","2 % de la consommation quotidienne"],r:0,
  expl:"5,40 Wh (wattheures) sur 6,04 : ce qui veille en permanence l'emporte sur ce qui agit brièvement. C'est aussi la leçon du jardin connecté, en 4<sup>e</sup>.",
  ex:"Le buzzer, qu'on entend à cent mètres, ne pèse que 5 %.",
@@ -487,12 +495,13 @@ const QUESTIONS = [
  err:"Réduire le bilan environnemental à la batterie. C'est le poste le plus visible, pas le seul.",
  d:["Le programme demande le cycle de vie de l'OST, pas seulement celui de sa source.","","Un boîtier exposé au sel et aux UV se dégrade en quelques années.","Un recyclage possible n'est pas un recyclage gratuit ni total."],
  ret:"Le cycle de vie porte sur l'objet entier, pas sur sa seule source."},
-{c:"3e_C3.2",n:"Le chiffre qui tranche",q:"À 6,04 Wh par jour et 2,8 Wh par pile 9 V (volts), il faudrait par an…",
+{c:"3e_C3.2",n:"Le chiffre qui tranche",q:"D'après ce tableau, à 6,04 Wh (wattheures) par jour, combien faudrait-il de piles 9 V (volts) par an ?",
+ img:{src:"Images/doc_sources_station.svg",alt:"Les sources d'énergie de la station d'alerte. Pile 9 volts alcaline : 4,95 wattheures stockés, rendement 56 pour cent, 2,8 wattheures utiles. 4 piles AA alcalines : 15,00 wattheures stockés, rendement 83 pour cent, 12,5 wattheures utiles. Accu Li-ion 18650 rechargeable : 11,10 wattheures stockés, rendement 85 pour cent, 9,4 wattheures utiles. Le panneau solaire de 1 watt crête, avec son accumulateur : 3,7 wattheures par jour en Martinique, en moyenne."},
  o:["216 piles","365 piles","787 piles","2 205 piles"],r:2,
  expl:"6,04 × 365 = 2 205 Wh par an ; 2 205 ÷ 2,8 = 787. Le nombre sort d'une consommation mesurée et d'une capacité connue.",
  ex:"787 extractions, 787 transports et 787 collectes pour une seule station.",
  err:"Diviser par la capacité brute (4,95 Wh) au lieu de la capacité utile (2,8).",
- d:["216 correspondrait à une pile tenant près de deux jours.","365 supposerait une pile par jour, donc une pile de 6 Wh utiles.","","2 205 est l'énergie annuelle en watts-heures, pas un nombre de piles."],
+ d:["216 correspondrait à une pile tenant près de deux jours.","365 supposerait une pile par jour, donc une pile de 6 Wh utiles.","","2 205 est l'énergie annuelle en wattheures, pas un nombre de piles."],
  ret:"Un cycle de vie s'argumente avec un nombre, pas avec une impression."},
 {c:"3e_C3.2",n:"Raisonner par usage",q:"Pour comparer l'impact d'une pile et d'un accu, il faut raisonner…",
  o:["par matériau contenu dans chacun","par service rendu sur une durée","par masse de l'objet fini","par prix d'achat à l'unité"],r:1,

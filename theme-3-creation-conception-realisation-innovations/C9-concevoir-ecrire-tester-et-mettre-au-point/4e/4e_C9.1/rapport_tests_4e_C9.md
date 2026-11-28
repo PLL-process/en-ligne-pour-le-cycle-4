@@ -326,3 +326,20 @@ les boutons.
 
 Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
 
+
+## Reprise du 27/11/2026 — deux questions sur document de plus, et un billet de sortie (n°345, n°330)
+
+- `node tests_4e_C9.mjs .` : **169 / 169** (neuf tests neufs ou mis à jour : le billet existe à la séance 3 ; deux zones
+  gardées et deux versions étayées ; deux critères, des contre-exemples, aucun bouton ; juste avant le Bonus ; la
+  réponse survit au rechargement ; au QCM, six questions illustrées, chaque `doc_` présent et décrit, et
+  `documents_qcm.py --verifier` à jour de la séquence).
+- `node tests_regle_311_4e_C9.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1, P1 et E1 étaient à 1 ; la q26 annonçait « deux
+  chronogrammes » au-dessus d'une réponse à trois éléments). La q1 citait « le programme officiel de 4e » et sa
+  réfutation « la 3e » : réécrites. `controle_annee_precedente.py` : 0.
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 6 illustrées, 0 écart.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides) : verts ;
+  `controle_schemas.mjs` : 0 ✘ ; `audit_aeration.py --strict`, `verif_regles_audit.py`, `controle_squelette.mjs`, mode
+  mission, `controle_liens.py`, `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

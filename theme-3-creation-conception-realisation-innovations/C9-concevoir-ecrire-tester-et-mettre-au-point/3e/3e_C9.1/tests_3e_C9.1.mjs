@@ -649,6 +649,20 @@ await ctx.close();
      !/même type/.test(qcm) && !/même type/.test(lex) && /3 \+ 4\.5<\/code> donne <code>7\.5/.test(seq));
   ok("audit · plus de chiffre sans source (« 9 collégiens sur 10 »)", !/collégiens sur 10/.test(seq));
 
+  /* les questions sur document des deux QCM (règle d'or n°345, 27/11/2026) */
+  for (const f of ["qcm_3e_C9.1_variables_types_systemes.html", "qcm_python_variables.html"]) {
+    const src = lire(f), Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+    const avec = Q.filter(q => q.img), docs = avec.filter(q => /\/doc_/.test(q.img.src));
+    ok(`documents · ${f} : au moins six questions sur document`, avec.length >= 6, String(avec.length));
+    ok(`documents · ${f} : chaque document « doc_ » est un fichier du lot`,
+       docs.length >= 2 && docs.every(q => fs.existsSync(path.join(LOT, q.img.src))), docs.map(q => q.img.src).join(", "));
+    ok(`documents · ${f} : chaque document est décrit en entier (alt de plus de 120 signes)`,
+       docs.every(q => (q.img.alt || "").length > 120), docs.map(q => (q.img.alt || "").length).join(" · "));
+  }
+  let aJour = true;
+  try { execSync("python3 documents_qcm.py --verifier", { cwd: LOT, stdio: "pipe" }); } catch { aJour = false; }
+  ok("documents · documents_qcm_3e_C9.1.json est à jour des pages du lot (banc, vocabulaire, aide-mémoire)", aJour);
+
   /* en mission, à 390 px : l'éditeur ET le banc de la fonction de l'élève sont sur l'écran « Avant de vérifier » */
   const ctxM5 = await nav.newContext({ viewport: { width: 390, height: 844 } });
   const pm5 = await ctxM5.newPage();

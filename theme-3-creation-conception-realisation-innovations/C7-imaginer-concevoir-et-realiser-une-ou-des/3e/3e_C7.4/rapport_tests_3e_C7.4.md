@@ -199,3 +199,22 @@ node tests_3e_C7.4_qcm.mjs "$PWD/qcm_3e_C7.4_energie-de-la-station.html" 3e_C7.4
 node tests_regle_311_3e_C7.4.mjs   →  34 / 34
 ```
 
+
+## Reprise du 27/11/2026 — sept questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_3e_C7.4_sequence.mjs "$PWD/sequence_3e_C7.4_energie-de-la-station.html" 3e reponses_3e_C7.4.json` : **59 / 59**
+  (cinq tests neufs : le billet existe ; deux zones gardées et deux versions étayées ; deux critères, des contre-exemples,
+  aucun bouton ; juste avant le Bonus ; la réponse survit au rechargement).
+- `node tests_3e_C7.4_qcm.mjs "$PWD/qcm_3e_C7.4_energie-de-la-station.html" 3e_C7.4 3e_C3.2 sequence_3e_C7.4_energie-de-la-station.html` :
+  **35 / 35** (« aucune image héritée » remplacé par quatre tests : au moins six questions sur document, chaque
+  document un `doc_` du lot présent dans `Images/`, une description qui dit ses nombres, `documents_qcm.py --verifier`
+  à jour de `energie.py`).
+- `node tests_regle_311_3e_C7.4.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `controle_annee_precedente.py` : 0.
+- `balayer_questions_qcm.mjs --apres` : 30 questions jouées à 390 px, 0 écart. `controle_schemas.mjs` : 0 ✘, 0 ⚠ ; les
+  deux documents regardés à 312 px de large.
+- Contrôles des QCM (banque, en-tête, effectifs, unités, sigles, indices, cohérence, aides) : verts ;
+  `verif_regles_audit.py`, `audit_aeration.py --strict`, `controle_squelette.mjs`, mode mission, `controle_liens.py`,
+  `controle_statut.py` : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
