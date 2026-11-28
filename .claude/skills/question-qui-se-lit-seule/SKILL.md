@@ -133,6 +133,34 @@ que la séquence n'a pas étudié. Modèle : `5e_C2.1` (l'abribus), puis les cin
 - Aucun bouton : il ne valide rien (n°333). Le banc du lot le vérifie (deux zones sauvegardées, deux versions
   étayées, deux critères, avant le Bonus) ; la fiche pédagogique dit ce qu'on y regarde.
 
+## 4 bis. Dans une page d'activité : le contexte dans la même fenêtre (n°375, en essai)
+
+**Règle d'or n°375 — Une question se lit avec son contexte, dans la même fenêtre** (Pascal, 28/11/2026, sur le Bonus
+du TP « Algorigrammes de domotique » : « quand je regarde les questions, je ne me souviens plus du contexte… parce que
+ce n'est pas dans la même fenêtre »). La n°343 vaut pour le QCM, ouvert seul ; la n°375 vaut pour la séquence, le TP,
+l'atelier : ce dont dépend la réponse se voit sur le même écran que la question — l'élève ne remonte pas, ne change
+pas d'onglet, ne compte pas sur sa mémoire. Un bandeau collant (titre, onglets) mange le haut de l'écran : on le déduit.
+
+1. **Mesurer** : `node _outils/controle_contexte_fenetre.mjs <dossier>` — chaque question dont le contexte (le rappel
+   du cas le plus proche, sinon le titre sous lequel elle est posée) sort de la fenêtre d'un téléphone (390 × 664) ou
+   d'un portable zoomé (1 024 × 576), bandeau déduit. Ce sont des candidates : la mesure ne sait pas si une question se
+   suffit.
+2. **Lire chaque candidate** : a-t-elle besoin de ce qui est plus haut (le cas, un nombre, le schéma, le programme) ?
+   - Non, elle nomme tout ce dont elle dépend (« Losange : quel rôle ? ») : `data-cas="dans-la-question"` sur sa
+     légende, son étiquette ou son groupe.
+   - Oui : un « 📌 Le cas, sous tes yeux » de deux ou trois lignes, juste au-dessus des questions —
+     `<p class="rappel-cas"><strong>📌 Le cas, sous tes yeux</strong><br>…</p>`, avec un style de la page (filet à
+     gauche, fond léger). Il **redit** la consigne ou la mission, mot pour mot si possible ; il n'ajoute rien qui
+     souffle une réponse (n°341) — ni une sortie, ni un ordre, ni un résultat. Une série longue reçoit un second rappel
+     avant ses dernières questions.
+   - Le contexte est un schéma ou un programme : le rapprocher (n°331) — la question juste dessous, ou le document
+     redit en petit à côté d'elle.
+3. **Revérifier** : la mesure à 0 pour la page, aucune erreur JavaScript, les bancs du lot ; une capture au téléphone
+   de la question et de son rappel, dans la même fenêtre.
+
+Pilote : `4e_C6.2/tp_algorigrammes_domotique.html` (PR #983). Départ sur le site, le 28/11/2026 : 916 questions
+candidates sur 1 203, dans 86 pages.
+
 ## 5. Vérifier, livrer
 
 - `controle_question_seule.py` : zéro refus sur le lot ; D1 et P1 dits dans le journal s'ils restent.
