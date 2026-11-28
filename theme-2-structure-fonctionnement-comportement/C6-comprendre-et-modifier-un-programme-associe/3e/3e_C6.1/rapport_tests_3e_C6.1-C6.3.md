@@ -249,3 +249,16 @@ s'exécute, le signe qui inclut ou non l'égalité), puis la démarche en trois 
   a des propositions crédibles (mesure, paramètre, produite, envoyée).
 - Rejoués : banc du lot 57 / 57, mode mission (générique, éditeur, barre, défaut), effacement, loupe, cohérence et
   indices du QCM, longueurs, ordre des propositions, question seule, lexique régénéré.
+
+## Reprise du 28/11/2026 — un billet de sortie (n°330)
+
+- `node tests_3e_C6.1-C6.3.mjs` : **60 / 60** (trois tests neufs : le billet existe à la séance 3, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement). `node tests_regle_311_3e_C6.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (P1 était à 1 ; le QCM avait déjà six questions sur
+  document). `audit_aeration.py --strict` : quatre corrections cousues de `main` décousues, plus celle du billet
+  (C2 : 0). `balayer_questions_qcm.mjs --apres` : 0 écart. Contrôles des QCM, des schémas (0 ✘), des règles d'or, du
+  squelette, du mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
+

@@ -39240,3 +39240,15 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   programme. Les documents des autres lots, redessinés, sont identiques à l'octet.
 Bancs : séquence 70 / 70 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C6.2`, `_outils/document_qcm.py`).
+
+## 28/11/2026 — 3e_C6.1 : un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- Le QCM avait déjà six questions sur document : pas de D1 sur ce lot.
+- **Billet de sortie** avant le Bonus de la séance 3 : le voyant de bruit de la cantine (ranger les données et tracer
+  à la frontière ; changer le paramètre et encadrer le nouveau seuil). Le réinvestissement de la bouée passe de 25 à
+  20 minutes.
+- Quatre corrections cousues de « ; » (les couples vent et pression, l'essai à 91 km/h, le drapeau orange) sont
+  décousues : une idée par ligne, les couples écrits avec leurs unités.
+Bancs : séquence 60 / 60 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C6.1`).

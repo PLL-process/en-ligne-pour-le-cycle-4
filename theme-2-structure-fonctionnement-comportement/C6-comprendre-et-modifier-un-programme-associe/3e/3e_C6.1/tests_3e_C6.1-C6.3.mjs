@@ -432,7 +432,29 @@ ok('19 septies · reprise en tête des séances 2 et 3 : une erreur renvoie au r
    [enTete, enTete3, lienRappel, rJuste.slice(0, 80)].join(' | '));
 
 /* ── persistance : le CODE de l'élève doit revenir, pas la version d'origine ── */
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf */
+{
+  const _avant = await p.evaluate(() => (document.querySelector('.seance-panel.active') || {}).id);
+  await p.click('.seance-tab[data-panel="s3"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à sa séance, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 's3' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_3e_C6_1_1', 'ma réponse au billet');
+  await p.waitForTimeout(800);
+  if (_avant) { await p.click(`.seance-tab[data-panel="${_avant}"]`); await p.waitForTimeout(80); }
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(360);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_3e_C6_1_1')) === 'ma réponse au billet');
 ok('20 · rechargement : le programme v2 de l\'élève est restauré, pas la version d\'origine',
    (await p.inputValue('#clTa')).includes('gyrophare_actif')
    && (await p.inputValue('#clTa')) !== v1,

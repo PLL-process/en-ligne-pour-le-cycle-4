@@ -45,6 +45,12 @@ Aides ×2 ; corrections exhaustives dont correction commentée ligne par ligne (
 
 Formative : vérificateurs intégrés qui **exécutent le programme réellement écrit par l'élève** (règle d'or n°333) — act. 3 : la valeur de SEUIL_ORANGE et son effet ; act. 4 : 10 vents comparés au cahier des charges, le premier écart nommé ; act. 5 : « mes prévisions » et « essais de ma version » séparés, un essai périmé dès que la version change (n°333), la version toujours dite (n°373), la prévision écrite avant l'essai (n°374). La justification d'act. 2 est écrite et relue par l'enseignant, jamais jugée par mots-clés. QCM 30 q (15/15, 6 illustrées) → bilan par compétence → LSU. Sommative à construire par l'enseignant, corrigé non publié.
 
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3 : le voyant de bruit de la cantine, un programme neuf.
+Question 1 (3e_C6.1) : ranger la donnée utilisée, la donnée produite et le paramètre, puis tracer à 70 dB pile — on
+regarde la ligne de chacun et la frontière (« 70 > 70 » est faux). Question 2 (3e_C6.3) : passer le seuil à 65 dB et
+donner trois jeux d'essai — on regarde qu'une seule ligne change et que les essais encadrent le NOUVEAU seuil. Le
+réinvestissement de la bouée passe de 25 à 20 minutes : la séance tient en 55 (3 + 25 + 20 + 5).
+
 ## Bilan et prolongements
 
 Vers 3e_C9.x (écrire un programme complet — Thème 3) ; défi pression (validation croisée, lien C4.3) ; transposition mBot2 ; EPI mathématiques (inéquations, encadrements).
