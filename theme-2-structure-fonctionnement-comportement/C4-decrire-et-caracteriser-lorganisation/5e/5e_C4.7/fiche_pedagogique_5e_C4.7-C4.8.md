@@ -57,6 +57,11 @@ table .10→.50 (act. 4) ; preuves — ping filaire vs WiFi, enveloppe du mode S
 doublon d'adresse, mini-simulateur intégré à verrou expérientiel (act. 5) ; bilan, auto-positionnement par
 code, QCM 30 q.
 
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3, environ 5 minutes, seul et sans aide : le réseau du CDI,
+un réseau neuf. Question 1 (5e_C4.7) : terminaux et appareils qui relient, liaisons filaires et sans fil — on regarde
+l'imprimante rangée parmi les terminaux, et le câble de la borne. Question 2 (5e_C4.8) : un doublon d'adresse — on
+regarde une adresse libre, dans la même « rue » 192.168.20. La séance 3 passe de 45 à 50 minutes d'activités.
+
 ## Outils, versions, sécurité
 
 Packet Tracer 8.2 (compte Cisco de classe à préparer AVANT la séance : la fenêtre de connexion est
