@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -303,7 +305,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 C6.1 + 10 C6.2 + 10 C6.3), 3 illustrées.
+/* Banque : 30 questions (10 C6.1 + 10 C6.2 + 10 C6.3), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque de questions LOT 07 - 30 questions (10 C6.1 + 10 C6.2 +
    10 C6.3), 2 illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et ne
@@ -339,14 +341,16 @@ const QUESTIONS = [
  err:"Inverser le sens de la comparaison.",
  d:["C'est l'inverse : beaucoup de lumière = jour.","Aucune horloge dans ce programme !","Le passage déclenche la pleine puissance, pas la « nuit ».",""],
  ret:"nuit = (luminosité < seuil) — le programme décide avec la lumière, pas l'heure."},
-{c:"C6.1",n:"Deux entrées capteurs",q:"Quelles sont les DEUX données utilisées venant de capteurs ?",
+{c:"C6.1",n:"Deux entrées capteurs",q:"Dans cet algorithme, quelles sont les DEUX données utilisées qui viennent de capteurs ?",
+ img:{src:"Images/doc_algorithme_lampadaire.svg",alt:"L'algorithme du lampadaire, en six étapes : 1. Mesurer la luminosité ambiante. 2. Si la luminosité est inférieure au seuil de nuit (30 lux), considérer qu'il fait nuit. 3. Si nuit ET passage détecté : pleine puissance pendant 5 secondes. 4. Sinon, s'il fait nuit : mettre en veille à 30 %. 5. Sinon : éteindre la lampe. 6. Recommencer sans fin. Le document ne dit pas quelles données viennent des capteurs."},
  o:["le seuil de nuit et la durée","l'état de la lampe et le voyant","la tension et le courant mesurés par la carte","la luminosité et le passage détecté"],r:3,
  expl:"Deux capteurs alimentent le programme : le capteur de luminosité et le détecteur de mouvement (PIR). Les paramètres viennent de l'humain, les sorties du programme.",
  ex:"C'est la partie ACQUÉRIR de la chaîne d'information vue dans la séquence lampadaire.",
  err:"Mélanger capteurs, paramètres et sorties.",
  d:["Seuil et durée sont des réglages humains.","Ce sont les sorties du programme.","Le programme de 5e ne mesure ni tension ni courant.",""],
  ret:"Entrées capteurs du lampadaire : luminosité + passage."},
-{c:"C6.1",n:"Trois états",q:"Combien d'états différents la lampe peut-elle prendre, et lesquels ?",
+{c:"C6.1",n:"Trois états",q:"D'après cet algorithme, combien d'états différents la lampe peut-elle prendre, et lesquels ?",
+ img:{src:"Images/doc_algorithme_lampadaire.svg",alt:"L'algorithme du lampadaire, en six étapes : 1. Mesurer la luminosité ambiante. 2. Si la luminosité est inférieure au seuil de nuit (30 lux), considérer qu'il fait nuit. 3. Si nuit ET passage détecté : pleine puissance pendant 5 secondes. 4. Sinon, s'il fait nuit : mettre en veille à 30 %. 5. Sinon : éteindre la lampe. 6. Recommencer sans fin. Le document ne dit pas quelles données viennent des capteurs."},
  o:["3 : éteinte, veille, pleine puissance","2 : allumée, ou bien éteinte","4 : dont un mode disco coloré","1 : toujours en veille, de jour comme de nuit"],r:0,
  expl:"Le programme produit trois sorties possibles : éteindre (jour), veille (nuit calme), pleine puissance (nuit + passage). Trois branches de décision = trois états.",
  ex:"Tu les as observés au simulateur de la séquence précédente.",
@@ -403,14 +407,16 @@ const QUESTIONS = [
  err:"Lire ET comme OU.",
  d:["","Ça, c'est OU — le lampadaire s'allumerait en plein jour au moindre passant !","Elle s'applique chaque nuit fréquentée.","Heureusement que non : bonjour la batterie."],
  ret:"ET = les deux conditions vraies simultanément."},
-{c:"C6.2",n:"Le mot SINON",q:"À quoi sert le « SINON : éteindre la lampe » à la fin des décisions ?",
+{c:"C6.2",n:"Le mot SINON",q:"Dans cet algorithme, à quoi sert l'étape 5, « Sinon : éteindre la lampe » ?",
+ img:{src:"Images/doc_algorithme_lampadaire.svg",alt:"L'algorithme du lampadaire, en six étapes : 1. Mesurer la luminosité ambiante. 2. Si la luminosité est inférieure au seuil de nuit (30 lux), considérer qu'il fait nuit. 3. Si nuit ET passage détecté : pleine puissance pendant 5 secondes. 4. Sinon, s'il fait nuit : mettre en veille à 30 %. 5. Sinon : éteindre la lampe. 6. Recommencer sans fin. Le document ne dit pas quelles données viennent des capteurs."},
  o:["à éteindre la lampe pendant la nuit","à faire une pause dans le programme","à rien du tout : on pourrait le supprimer","à couvrir tous les cas restants"],r:3,
  expl:"SINON attrape tout ce que les SI n'ont pas capturé : ici, le jour. Sans lui, la lampe garderait son dernier état au lever du soleil — allumée en plein jour !",
  ex:"Un bon algorithme ne laisse aucun cas sans réponse.",
  err:"Croire qu'un cas non prévu « se débrouille tout seul ».",
  d:["La nuit, ce sont les SI précédents qui décident.","Aucune pause : une décision.","Supprime-le et la lampe restera allumée au matin.",""],
  ret:"SINON = le filet qui couvre tous les cas restants."},
-{c:"C6.2",n:"Ordre des cas",q:"Pourquoi tester « nuit ET passage » AVANT « nuit toute seule » ?",
+{c:"C6.2",n:"Ordre des cas",q:"Dans cet algorithme, pourquoi l'étape 3 (« nuit ET passage ») vient-elle AVANT l'étape 4 (« nuit » seule) ?",
+ img:{src:"Images/doc_algorithme_lampadaire.svg",alt:"L'algorithme du lampadaire, en six étapes : 1. Mesurer la luminosité ambiante. 2. Si la luminosité est inférieure au seuil de nuit (30 lux), considérer qu'il fait nuit. 3. Si nuit ET passage détecté : pleine puissance pendant 5 secondes. 4. Sinon, s'il fait nuit : mettre en veille à 30 %. 5. Sinon : éteindre la lampe. 6. Recommencer sans fin. Le document ne dit pas quelles données viennent des capteurs."},
  o:["par ordre alphabétique des conditions","parce que c'est plus joli à relire","le cas le plus précis en premier","l'ordre n'a aucune importance ici"],r:2,
  expl:"Les conditions se testent dans l'ordre : si « nuit » passait en premier, chaque nuit déclencherait la veille et le cas « passage » ne serait jamais atteint. Du plus spécifique au plus général.",
  ex:"Même logique qu'en 3e avec les seuils d'alerte : du plus fort au plus faible.",

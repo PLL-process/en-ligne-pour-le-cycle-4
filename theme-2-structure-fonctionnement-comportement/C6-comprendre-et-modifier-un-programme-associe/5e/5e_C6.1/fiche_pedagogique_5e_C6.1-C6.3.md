@@ -44,7 +44,14 @@ Aides ×2 ; corrections exhaustives ; listes déroulantes exclusivement (aucune 
 
 ## Évaluation
 
-Formative : vérificateurs + verrou expérientiel (mission mairie réellement effectuée). QCM 30 q (10 par code, 2 illustrées, réponses réparties) → bilan par code → LSU. Sommative à construire (corrigé non publié).
+Formative : vérificateurs + verrou expérientiel (mission mairie réellement effectuée). QCM 30 q (10 par code, 7 illustrées, dont quatre sur « L'algorithme du lampadaire », n°345, réponses réparties) → bilan par code → LSU. Sommative à construire (corrigé non publié).
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3 : la sonnerie de récréation du collège, un programme neuf.
+Question 1 (5e_C6.1) : ranger les données (utilisées, produites, paramètres) et traduire la ligne « si » — on regarde
+que l'heure et le jour sont lus, que HEURE_RECRE et DURÉE sont des paramètres, et que les deux conditions sont dites.
+Question 2 (5e_C6.2, 5e_C6.3) : modifier un paramètre, prédire l'effet, dire un inconvénient — on regarde que le
+programme ne change pas, seule une valeur. Le réinvestissement de l'activité 4 passe de 15 à 10 minutes : la séance
+tient en 55.
 
 ## Bilan et prolongements
 
