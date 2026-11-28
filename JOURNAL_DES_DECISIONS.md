@@ -38994,3 +38994,14 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
 - La séquence avait déjà son billet de sortie.
 Bancs : séquence et QCM 75 / 75 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
 de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.1`).
+
+## 28/11/2026 — 4e_C4.1 (Book Train) : trois questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Le trajet du livre, dans l'ordre », LU dans l'algorigramme corrigé du lot par
+  `documents_qcm.py`, sans les symboles ni les flèches OUI / NON ; les q25 (le test), q26 (la saisie) et q27 (la boucle
+  d'attente) s'y lisent. Le badge du QCM annonçait déjà 7 questions illustrées pour 4 : il dit vrai maintenant.
+- **Billet de sortie** avant le Bonus de la séance 4 : le monte-plats de la cantine (sa chaîne d'énergie ; son
+  algorigramme, symboles et branches NON). La séance était pleine : l'activité 4.3 passe de 35 à 30 minutes.
+Bancs : séquence 49 / 49 (six tests neufs), n°311 38 / 38 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.1_book-train`).
