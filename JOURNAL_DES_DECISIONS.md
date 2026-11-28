@@ -39095,3 +39095,15 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   d'un CAN 8 bits ; types de données et format du fichier).
 Bancs : séquence 29 / 29 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.3`).
+
+## 28/11/2026 — 3e_C4.7 : six questions sur document, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (aucune question sur document) : « La table de routage de R2 » (q16, q17, q18, q26) et « Trois paquets, à
+  l'arrivée » (q8, q10), LUS dans la séquence par `documents_qcm.py`, sans paquet aiguillé ni message reconstitué. Le
+  moteur du QCM n'affichait aucune image : il reçoit la figure du gabarit maison.
+- **Billet de sortie** avant le Bonus de la séance 3 : la photo envoyée à une école de Montréal (son voyage en paquets ;
+  la table d'un routeur et la panne contournée). La séance 3 annonçait déjà 55 minutes : le réinvestissement « Un mail
+  pour Tokyo », achevable à la maison, passe de 25 à 20 minutes.
+Bancs : séquence 41 / 41 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.7`).
