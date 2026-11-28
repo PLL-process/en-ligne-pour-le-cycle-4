@@ -237,8 +237,28 @@ const coches = await p.$$eval('[id^="done-s"]', l => l.map(e => e.textContent.tr
 ok('12 bis · les deux séances portent leur coche',
    coches.length > 0 && coches.every(c => c === '✔'), coches.join('|'));
 
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf */
+{
+  await p.click('.seance-tab[data-panel="s3"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à la séance 3, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 's3' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_3e_C4_1_1', '3 W × 48 h = 144 Wh');
+  await p.waitForTimeout(800);   // la page garde 600 ms après la dernière frappe
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(320);
 const premier = Object.keys(PLAN[1].valeurs)[0];
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_3e_C4_1_1')) === '3 W × 48 h = 144 Wh');
 ok('13 · rechargement : réponses, validations ET les deux essais restaurés',
    (await p.inputValue('#' + premier)) === PLAN[1].valeurs[premier]
    && (await p.textContent('#progTxt')).includes('5 / 5')
@@ -284,6 +304,12 @@ const illustrees = Q.filter(q => q.img);
 const absentes = illustrees.filter(q => !fs.existsSync(path.join(ICI, q.img)));
 ok(`16 · ${illustrees.length} questions illustrées, SVG présents sur le disque`,
    illustrees.length > 0 && absentes.length === 0, absentes.map(q => q.img).join(' · '));
+ok('16 bis · au moins six questions sur document (n°345, 28/11/2026)', illustrees.length >= 6, String(illustrees.length));
+{
+  let aJour = true;
+  try { (await import('node:child_process')).execSync('python3 documents_qcm.py --verifier', { cwd: ICI, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('16 ter · documents_qcm_3e_C4.1.json est à jour de la séquence (besoin, relations, catalogue)', aJour);
+}
 
 for (let i = 0; i < Q.length; i++) {
   const r = await p.evaluate(

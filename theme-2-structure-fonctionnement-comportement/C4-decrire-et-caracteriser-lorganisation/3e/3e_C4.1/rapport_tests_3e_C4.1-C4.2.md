@@ -122,3 +122,16 @@ mode mission : aucun refus (3 séances) ; `banc_mission.mjs` 50 / 50 ; `controle
 `controle_chaine_a_completer.py`, `controle_schema_sous_les_yeux.py`, `controle_navigation_seances.py`,
 `controle_correction_complete.py`, `controle_mode_essentiel.py`, `controle_hors_ligne.mjs`, `controle_axe.mjs` : verts ;
 `mesurer_charge.mjs` : aucune séance au-delà de 1 200 mots ; `banc_papier.py` : chaque séance imprimée, sans champ d'écran.
+
+## Reprise du 28/11/2026 — quatre questions sur document de plus, et un billet de sortie (n°345, n°330)
+
+- `node tests_3e_C4.1-C4.2.mjs` : **30 / 30** (cinq tests neufs : le billet existe à la séance 3, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement ; au moins six questions sur document ; `documents_qcm.py --verifier` à jour de la séquence).
+  `node tests_regle_311_3e_C4.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). La q30 citait le code du lot,
+  la q11 renvoyait « au simulateur » : réécrites. `balayer_questions_qcm.mjs --apres` : 30 questions, 7 illustrées,
+  0 écart. Contrôles des QCM (aides comprises), des schémas (0 ✘), de l'aération, des règles d'or, du squelette, du
+  mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.

@@ -39071,3 +39071,14 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
 - Une phrase de technicien de l'activité 5 cousait trois idées par « ; » (audit d'aération) : coupée.
 Bancs : séquence 28 / 28 (huit tests neufs), n°311 34 / 34 ; contrôles des QCM, des unités, des schémas, des règles
 d'or, de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.7`).
+
+## 28/11/2026 — 3e_C4.1 : quatre questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (3 questions sur document) : « Dimensionner la batterie », LU dans l'activité 2 de la séquence par
+  `documents_qcm.py` (la consommation, l'autonomie exigée, la tension, les deux relations, le catalogue), sans aucun
+  résultat ; les q8 à q11 s'y calculent. La q11 renvoyait « au simulateur », la q30 citait le code `3e_C4.2` : réécrites.
+- **Billet de sortie** avant le Bonus de la séance 3 : la borne lumineuse de l'arrêt de bus (dimensionner sa batterie ;
+  le matériau et le procédé de son boîtier en 500 exemplaires). La séance 3 passe de 45 à 50 minutes.
+Bancs : séquence 30 / 30 (cinq tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.1`).

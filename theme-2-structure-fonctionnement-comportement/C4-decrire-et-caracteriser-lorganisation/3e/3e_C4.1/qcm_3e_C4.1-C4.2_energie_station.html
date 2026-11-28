@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -302,7 +304,7 @@
 
 <script>
 "use strict";
-/* Banque de questions LOT 06 - 30 questions (15 C4.1 + 15 C4.2), 3 illustrees (regle images v2) */
+/* Banque de questions LOT 06 - 30 questions (15 C4.1 + 15 C4.2), 7 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ C4.1 — élaborer la chaîne d'énergie (15 q) ═══ */
 {c:"C4.1",n:"Élaborer vs identifier",q:"En 3e, « élaborer » la chaîne d'énergie signifie…",
@@ -355,33 +357,37 @@ const QUESTIONS = [
  err:"Confondre débit et quantité — comme confondre litres/minute et litres.",
  d:["","S'ils étaient pareils, on n'aurait pas deux unités.","Ce n'est pas une question de taille mais de nature.","La tension se mesure en volts."],
  ret:"Énergie (Wh) = puissance (W) × durée (h)."},
-{c:"C4.1",n:"Calcul d'énergie",q:"La station consomme 6 W (watts) en continu. Quelle énergie faut-il pour tenir 72 h ?",
+{c:"C4.1",n:"Calcul d'énergie",q:"D'après ce document, quelle énergie faut-il pour que la station tienne son autonomie exigée ?",
+ img:{src:"Images/doc_dimensionner_batterie.svg",alt:"Les données pour dimensionner la batterie de la station. Le besoin : la station consomme 6 W (watts) en continu ; elle doit tenir 72 h (heures) sans réseau, pendant un cyclone ; sa batterie est sous 12 V (volts). Les deux relations : énergie (Wh, wattheures) = puissance (W) × durée (h) ; capacité (Ah, ampères-heures) = énergie (Wh) ÷ tension (V). Le catalogue propose des batteries de 20, 40 et 100 Ah. Le document ne donne aucun résultat de calcul."},
  o:["78 Wh (wattheures)","12 Wh (wattheures)","432 Wh (wattheures)","4 320 Wh (wattheures)"],r:2,
  expl:"E = P × t = 6 W × 72 h = 432 Wh. C'est LE calcul de dimensionnement de l'activité 2.",
  ex:"Ensuite : 432 Wh ÷ 12 V (volts) = 36 Ah (ampères-heures) de capacité minimale.",
  err:"Additionner (6+72) au lieu de multiplier.",
- d:["6+72=78 : c'est une addition, pas une énergie.","12 serait 2 heures de fonctionnement.","","4320 serait 720 h — un mois !"],
+ d:["6 + 72 = 78 : c'est une addition. Relis la première relation : puissance × durée.","12 serait 2 heures de fonctionnement : relis l'autonomie exigée.","","4 320 serait 720 h, un mois : relis l'autonomie exigée."],
  ret:"6 W × 72 h = 432 Wh."},
-{c:"C4.1",n:"Capacité de batterie",q:"Il faut 432 Wh (wattheures) sous 12 V (volts). Quelle capacité minimale pour la batterie ?",
+{c:"C4.1",n:"Capacité de batterie",q:"Il faut 432 Wh (wattheures). D'après ce document, quelle capacité minimale pour la batterie ?",
+ img:{src:"Images/doc_dimensionner_batterie.svg",alt:"Les données pour dimensionner la batterie de la station. Le besoin : la station consomme 6 W (watts) en continu ; elle doit tenir 72 h (heures) sans réseau, pendant un cyclone ; sa batterie est sous 12 V (volts). Les deux relations : énergie (Wh, wattheures) = puissance (W) × durée (h) ; capacité (Ah, ampères-heures) = énergie (Wh) ÷ tension (V). Le catalogue propose des batteries de 20, 40 et 100 Ah. Le document ne donne aucun résultat de calcul."},
  o:["432 Ah (ampères-heures)","12 Ah (ampères-heures)","5 184 Ah (ampères-heures)","36 Ah (ampères-heures)"],r:3,
  expl:"Capacité (Ah) = énergie (Wh) ÷ tension (V) = 432 ÷ 12 = 36 Ah.",
  ex:"D'où le choix d'une 40 Ah du commerce : 36 + une marge.",
  err:"Oublier de diviser par la tension.",
- d:["432 est l'énergie en Wh, pas la capacité.","12 V est la tension de la batterie, pas sa capacité : la capacité s'obtient en divisant l'énergie par la tension.","5184 = 432 × 12 : multiplication au lieu de division.",""],
+ d:["432 est l'énergie en Wh, pas la capacité : relis la seconde relation.","12 V est la tension de la batterie : relis la seconde relation, on divise par elle.","5 184 = 432 × 12 : une multiplication au lieu de la division de la seconde relation.",""],
  ret:"Ah = Wh ÷ V."},
-{c:"C4.1",n:"La marge de sécurité",q:"Le calcul donne 36 Ah (ampères-heures). Pourquoi choisir une batterie de 40 Ah plutôt que 36 Ah pile ?",
+{c:"C4.1",n:"La marge de sécurité",q:"Le calcul donne 36 Ah (ampères-heures). Dans ce catalogue, pourquoi choisir la batterie de 40 Ah, plutôt qu'une de 36 Ah pile ?",
+ img:{src:"Images/doc_dimensionner_batterie.svg",alt:"Les données pour dimensionner la batterie de la station. Le besoin : la station consomme 6 W (watts) en continu ; elle doit tenir 72 h (heures) sans réseau, pendant un cyclone ; sa batterie est sous 12 V (volts). Les deux relations : énergie (Wh, wattheures) = puissance (W) × durée (h) ; capacité (Ah, ampères-heures) = énergie (Wh) ÷ tension (V). Le catalogue propose des batteries de 20, 40 et 100 Ah. Le document ne donne aucun résultat de calcul."},
  o:["la batterie vieillit, et le cyclone dure","parce que 40 est un chiffre bien rond","pour dépenser un peu plus d'argent","36 Ah n'existe pas physiquement"],r:0,
  expl:"Un dimensionnement de concepteur inclut une marge : vieillissement (une batterie perd de la capacité), imprévus (72 h peuvent devenir 80). Mais pas de surdimensionnement absurde (100 Ah : coût, poids, impact).",
  ex:"36 → 40 Ah : ~10 % de marge, le bon ordre de grandeur.",
  err:"Choisir « pile-poil » ou, à l'inverse, « énorme pour être tranquille ».",
  d:["","Le rond ne protège de rien.","La marge a une raison technique, pas commerciale.","Des batteries de toutes capacités existent."],
  ret:"Dimensionner = calcul + marge RAISONNÉE (ni trop juste, ni démesurée)."},
-{c:"C4.1",n:"Lecture du simulateur",q:"Au simulateur, avec 20 Ah (ampères-heures) et 6 W (watts) : 20 × 12 ÷ 6 = 40 h. Que se passe-t-il ?",
+{c:"C4.1",n:"Lecture du simulateur",q:"Avec la batterie de 20 Ah (ampères-heures) de ce catalogue : 20 × 12 ÷ 6 = 40 h. Que se passe-t-il ?",
+ img:{src:"Images/doc_dimensionner_batterie.svg",alt:"Les données pour dimensionner la batterie de la station. Le besoin : la station consomme 6 W (watts) en continu ; elle doit tenir 72 h (heures) sans réseau, pendant un cyclone ; sa batterie est sous 12 V (volts). Les deux relations : énergie (Wh, wattheures) = puissance (W) × durée (h) ; capacité (Ah, ampères-heures) = énergie (Wh) ÷ tension (V). Le catalogue propose des batteries de 20, 40 et 100 Ah. Le document ne donne aucun résultat de calcul."},
  o:["elle tient les 72 h sans aucun problème","la station s'éteint après 40 h","elle fonctionne simplement plus vite","le panneau compense forcément le manque"],r:1,
  expl:"40 h < 72 h : la batterie se vide avant la fin du scénario. Sous cyclone, ciel couvert : le panneau ne compense presque pas. C'est exactement l'essai « insuffisant » du verrou.",
  ex:"Voilà pourquoi le calcul AVANT l'achat évite la catastrophe APRÈS.",
  err:"Compter sur le panneau en plein cyclone.",
- d:["40 < 72 : le compte n'y est pas.","","Une station ne « fonctionne pas plus vite » — elle fonctionne ou pas.","Ciel de cyclone = recharge quasi nulle."],
+ d:["40 < 72 : relis l'autonomie exigée, le compte n'y est pas.","","Une station ne « fonctionne pas plus vite » : elle fonctionne ou pas.","Ciel de cyclone : recharge quasi nulle. Le document ne compte aucun panneau dans l'autonomie."],
  ret:"Autonomie (h) = capacité (Ah) × tension (V) ÷ consommation (W) — à comparer au besoin."},
 {c:"C4.1",n:"Le basculement",q:"Le bloc « basculement secteur / batterie » sert à…",
  o:["recharger la batterie avec le réseau EDF seulement","couper la station pendant la nuit","utiliser EDF, puis basculer sans coupure","recharger le réseau EDF avec le panneau"],r:2,
@@ -512,7 +518,7 @@ const QUESTIONS = [
  err:"Appliquer le procédé de la pièce unique à la série (ou l'inverse).",
  d:["200 impressions 3D : des semaines de machine.","","L'artisanat ne garantit pas 200 pièces identiques.","On ne plie pas une tôle en plastique !"],
  ret:"La taille de série peut inverser le choix du procédé : unique → 3D, série → injection."},
-{c:"C4.2",n:"Démarche complète",q:"Quelle est la démarche COMPLÈTE de 3e_C4.2 pour chaque pièce ?",
+{c:"C4.2",n:"Démarche complète",q:"Pour chaque pièce à fabriquer, quelle est la démarche COMPLÈTE de choix ?",
  o:["contraintes → matériau → procédé → justification","choisir le moins cher, et espérer que ça tienne","copier l'objet du collège voisin","prendre le matériau le plus moderne"],r:0,
  expl:"C'est la synthèse de la séquence : les contraintes d'abord, les choix ensuite, la justification croisée toujours — technique ET environnement.",
  ex:"Mât, coffret, support, carénage : quatre pièces, une seule démarche.",
