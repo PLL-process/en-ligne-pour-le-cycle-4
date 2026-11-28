@@ -303,7 +303,29 @@ ok('20 · progression 6 / 6 activités, et les quatre onglets portent leur coche
    await p.textContent('#progTxt'));
 
 /* ── persistance ─────────────────────────────────────────────────────────── */
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf */
+{
+  const _avant = await p.evaluate(() => (document.querySelector('.seance-panel.active') || {}).id);
+  await p.click('.seance-tab[data-panel="s4"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à sa séance, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 's4' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_3e_C5_1_1', 'ma réponse au billet');
+  await p.waitForTimeout(800);
+  if (_avant) { await p.click(`.seance-tab[data-panel="${_avant}"]`); await p.waitForTimeout(80); }
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(340);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_3e_C5_1_1')) === 'ma réponse au billet');
 ok('21 · rechargement : réponses, validations ET l\'état du simulateur sont restaurés',
    (await p.inputValue('#c1_1')).startsWith(PLAN[1].c1_1.v)
    && (await p.textContent('#progTxt')).includes('6 / 6')

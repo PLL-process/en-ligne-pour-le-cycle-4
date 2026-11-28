@@ -56,3 +56,9 @@ Formative intégrée (vérificateurs + verrous d'expérience : les 2 pannes du s
 ## Bilan et prolongements
 
 Vers 3e_C3.3 (indice de réparabilité, Thème 1 — signalé à l'agent du Thème 1) ; vers le Thème 3 (modélisation/fabrication) ; EDD : déchets électroniques, repair cafés ; EPI possible avec Physique-Chimie (tension, sécurité électrique).
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 4, environ 5 minutes, seul et sans aide : le portail motorisé
+du parking, un objet neuf. Question 1 : deux hypothèses appuyées sur des faits, et un protocole de trois tests qui les
+départage, alimentation coupée avant de toucher. Question 2 : la cote du trou avec son jeu, et le procédé d'une pièce
+unique. Le réinvestissement « Le ventilateur du CDI » se fait à la maison, comme sa pastille le dit : la séance 4 tient
+en 55 minutes avec le billet.
