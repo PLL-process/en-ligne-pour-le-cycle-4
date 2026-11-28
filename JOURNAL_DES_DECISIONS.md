@@ -64,6 +64,7 @@
 | 372 | Le bilan dit ce qui reste flou et quand on le reprend | idem | 🧪 En essai — `controle_reprise_espacee.py` (R4) ; départ : 57 bilans sur 60 sans ce champ |
 | 373 | Un programme qui change dit sa version | Fable, sur les audits de « Programmer l'alerte » (`3e_C6.1`) — audit externe du 21/11/2026 transmis par Pascal (« fabriquer des […] règles d'or ») et audit Fable du 22/11 | 🧪 En essai (n°147) — pilote `3e_C6.1` (banc du lot, tests 6, 12, 20 quater) ; skill `banc-essai-programme` |
 | 374 | On prévoit avant d'essayer, et une prévision juste ne vaut pas un essai | idem | 🧪 En essai (n°147) — pilote `3e_C6.1` (banc du lot, tests 17 à 17 quinquies) ; complète n°333 et n°349 ; skill `banc-essai-programme` |
+| 375 | Une question se lit avec son contexte, dans la même fenêtre | Pascal (28/11/2026), sur le Bonus du TP « Algorigrammes de domotique » (`4e_C6.2`) ; écrite par Fable | 🧪 En essai (n°147) — pilote `tp_algorigrammes_domotique` ; `_outils/controle_contexte_fenetre.mjs` (mesure) ; départ : 916 questions candidates sur 1 203, dans 86 pages ; étend n°343 et n°331 |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 **Depuis le 15/11/2026 (#721)** : les n°22 à n°332 ont été numérotés dans leurs entrées, sans passer par ce tableau — d'où le doublon n°322/n°323. Leur liste complète est **engendrée** : `docs/REGISTRE_DES_REGLES_OR.md` (`python3 _outils/registre_regles.py --ecrire`). Avant de numéroter : `python3 _outils/registre_regles.py --prochain` donne le prochain numéro libre ; on le réserve ici. Sans option, le script refuse un numéro défini deux fois (il tourne dans l'audit hebdomadaire).
@@ -38964,3 +38965,52 @@ Pascal : « 2 oui ». Les exports Moodle gardaient le texte d'avant les lots de 
 d'or n°304, propositions réécrites). `node _outils/export_moodle_xml.mjs` les réécrit depuis les 76 QCM : 2 301
 questions, 433 images embarquées (231 avant : les documents dessinés pour le téléphone entrent, ceux des lots C7 et C9
 du thème 3 du 27/11/2026 compris). Aucune phrase « comme en 5e » ni « le lampadaire de 5e » n'y reste. Banc `tests_export_moodle_xml.mjs` : vert. Aucune page touchée.
+
+## 28/11/2026 — Règle d'or n°375 : une question se lit avec son contexte, dans la même fenêtre (thème 2, `_outils/`)
+
+**Le constat de Pascal** (28/11/2026, capture du Bonus du TP « Algorigrammes de domotique », `4e_C6.2`) : « Après quelques
+jours, quand je regarde les questions, je ne me souviens plus du contexte. Pourquoi ? Parce que ce n'est pas dans la même
+fenêtre. Il faudrait aussi en faire une règle d'or. »
+
+**Pourquoi c'était ainsi.** Le cas (le store, 800 lux, 50 km/h, la priorité au vent) ouvrait la carte du Bonus ; les
+questions ①, ② et ③ venaient huit lignes plus bas. Le bandeau du TP reste collé en haut de l'écran (titre, mission, barre
+de progression, sept boutons : 129 px à 1 280 × 720, davantage avec le zoom). Une fois la page descendue jusqu'aux
+questions, le cas passe sous le bandeau : dans la fenêtre, la question reste sans ce dont dépend sa réponse. Ce que le
+professeur oublie en quelques jours, l'élève l'oublie entre deux séances — et il lit au téléphone.
+
+> **Règle d'or n°375 — Une question se lit avec son contexte, dans la même fenêtre.**
+> Ce dont dépend la réponse — l'objet, la situation, les nombres, le document — se voit sur le même écran que la
+> question : l'élève ne remonte pas la page, ne change pas d'onglet, ne compte pas sur sa mémoire. Quand le cas est écrit
+> plus haut (en tête de carte, d'activité ou de phase), un « 📌 Le cas, sous tes yeux » de deux ou trois lignes le redit
+> juste au-dessus des questions (`class="rappel-cas"`) ; il redit, il n'ajoute rien qui souffle une réponse (n°341).
+> Une question qui nomme elle-même tout ce dont elle dépend le dit : `data-cas="dans-la-question"`. Fenêtres de
+> référence : un téléphone (390 × 664, barres du navigateur déduites) et un portable zoomé à 125 % (1 024 × 576), bandeau
+> collant déduit.
+> *Pourquoi* : le constat ci-dessus. Elle étend la n°343 (une question se lit seule, pour le QCM) et la n°331 (le schéma
+> sous les yeux) aux pages d'activité, et complète la n°350 (l'énoncé donne tout ce dont dépend la réponse) : la n°350
+> dit *quoi* donner, la n°375 dit *où* le voir.
+
+**Le pilote : `tp_algorigrammes_domotique.html`.**
+- Bonus : « 📌 Le cas, sous tes yeux » juste au-dessus de ① (le store, ses deux capteurs, 800 lux, 50 km/h).
+- Phase 3, « Les sorties des deux losanges » : la mission (nuit **et** présence) redite en tête de la carte, et de nouveau
+  avant les sorties du second losange, qui arrivent 800 px plus bas au téléphone.
+- Phase 3, « Débogage » : ce que le programme doit faire, redit au-dessus du programme à corriger.
+- Phase 0, mini-activité « associer » : les quatre questions nomment leur symbole (« Losange : quel rôle ? ») et se
+  suffisent — `data-cas="dans-la-question"`.
+Les rappels redisent la mission de la phase, mot pour mot ; aucun ne dit une sortie ni un ordre de losanges.
+
+**La mesure : `_outils/controle_contexte_fenetre.mjs`** (en essai, elle ne refuse rien). Pour chaque question visible
+(légende d'un groupe de choix, étiquette d'un champ ; onglets et phases montrés, `<details>` fermés laissés fermés), la
+hauteur entre le début de son contexte — le rappel du cas le plus proche, sinon le titre sous lequel elle est posée — et
+le bas de la question, comparée à la place que laisse la fenêtre, bandeau collant déduit. Identifiants (nom, classe,
+date) et questions marquées `data-cas="dans-la-question"` sautés. Banc `tests_controle_contexte_fenetre.mjs` : 11 / 11 ;
+mutation (rappels ignorés) : 1 échec.
+
+**Départ, sur tout le site** (341 pages élève) : 916 questions candidates sur 1 203, dans 86 pages — thème 1 : 539,
+thème 2 : 148, thème 3 : 229 ; séquences 414, cahiers d'exercices des ateliers 235, ateliers 232. Ce sont des
+CANDIDATES : la mesure ne sait pas si une question se suffit (« Pourquoi donne-t-on une adresse IP fixe à la station
+d'alerte ? » n'a besoin de rien d'autre) ; un échantillon en montre de vraies (« L'ellipse vide du bas — reliée à
+l'usager… », 1 450 px sous le titre de son exercice, le diagramme loin au-dessus).
+
+**Vérifié.** Le TP : mesure 0 candidate (9 avant) ; aucune erreur JavaScript, phases 0 à 5 jouées ;
+`tests_tp_algorigrammes_4e_C6.2.mjs` 31 / 31 ; `tests_4e_C6.2.mjs` 67 / 67 ; `tests_regle_311_4e_C6.2` 34 / 34.
