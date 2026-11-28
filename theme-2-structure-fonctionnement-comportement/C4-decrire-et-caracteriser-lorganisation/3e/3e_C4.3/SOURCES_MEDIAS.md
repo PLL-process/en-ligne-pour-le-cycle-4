@@ -54,3 +54,10 @@ Copie, octet pour octet, de `theme-2-structure-fonctionnement-comportement/C5-id
 | Fichier | Ce qu'elle montre | Provenance | Droits | Où |
 |---|---|---|---|---|
 | `Images/synthese_station_alerte.png` | La station d'alerte cyclonique sur le toit d'un collège : mât, anémomètre, girouette, panneau solaire, sirène, gyrophare, boîtier ; la mer au loin. PNG 1 536 × 1 024, 2.0 Mo. | **Image générée par IA** avec Canva (génération d'image), compte de Pascal, 29/10/2026. Demande : « Realistic photo of a small autonomous cyclone warning station on a galvanized steel mast on the flat roof of a school in Martinique: cup anemometer and wind vane at the top, a small solar panel on a side arm, a white weatherproof electronics box, a horn siren and a small orange beacon light mounted on the mast, a short radio antenna, the sea in the distance, cloudy sky, no people, no text, no logos, the whole mast visible » | Conditions Canva AI Product Terms : l'image appartient à Pascal, sans attribution exigée ; interdit de la présenter comme faite par un humain (légende « Image générée par IA (Canva) ») et d'en retirer les métadonnées de provenance (manifeste C2PA et XMP Canva gardés : **fichier non modifié**, d'où son poids). | Séquence, situation déclenchante (05/11/2026) |
+
+## Documents du QCM, dessinés pour le téléphone (28/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_extrait_mesures_station.svg` | Six lignes des mesures simulées de la station (heure, vent, pression, vigilance), une toutes les huit heures. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_3e_C4.3.json`, lui-même LU par `documents_qcm.py` dans `donnees/mesures_station_48h_simulees.csv` (données simulées, aucune mesure réelle). | CC0, comme les images du dépôt | QCM, q17, q20, q25 |
+| `Images/doc_can_barometre.svg` | L'étendue du baromètre et le nombre de bits de son CAN — sans le plus grand N ni la valeur d'un palier. | Même chaîne, lu dans la consigne de l'activité 3 de la séquence. | CC0 | QCM, q11, q13, q14 |

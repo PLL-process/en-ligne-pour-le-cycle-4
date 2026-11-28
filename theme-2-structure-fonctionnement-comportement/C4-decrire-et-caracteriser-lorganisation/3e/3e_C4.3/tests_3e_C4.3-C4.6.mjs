@@ -232,8 +232,29 @@ await p.click('.seance-tab[data-panel="s3"]'); await p.waitForTimeout(110);
 ok('9 · onglets de séances fonctionnels',
    await p.$eval('#s3', e => e.classList.contains('active')));
 
+/* ── billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf ── */
+{
+  await p.click('.seance-tab[data-panel="s5"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à la séance 5, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 's5' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_3e_C4_3_1', 'N ≈ 128');
+  await p.waitForTimeout(800);   // la page garde 600 ms après la dernière frappe
+}
+
 /* ── rechargement ────────────────────────────────────────────────────────── */
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(350);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_3e_C4_3_1')) === 'N ≈ 128');
 ok('10 · progression restaurée après rechargement (localStorage)',
    (await p.textContent('#progTxt')).includes('7 / 7'), await p.textContent('#progTxt'));
 const premier = Object.keys(PLAN[1].selects)[0];
@@ -316,6 +337,22 @@ const s3 = await partie(8, 8);
 ok('20 · scénario S3 — 8 + 8 + 16 non répondues → 8 pts · 5,0/20 · 25 % · 16 NR',
    s3.ok === 8 && s3.err === 8 && s3.non === 16 && /5[.,]0?\/20/.test(s3.note)
    && /25/.test(s3.pct), `${s3.ok}/${s3.err}/${s3.non} · ${s3.note} · ${s3.pct}`);
+
+/* ── les QCM : au moins six questions sur document (n°345, 28/11/2026) ── */
+{
+  const _fs = await import('node:fs'), _cp = await import('node:child_process');
+  for (const f of ['qcm_3e_C4.3-C4.6_station_alerte_cyclonique.html']) {
+    const src = _fs.readFileSync(path.join(ICI, f), 'utf8');
+    const Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+    const avec = Q.filter(q => q.img), docs = avec.filter(q => /\/doc_/.test(q.img.src));
+    ok(`QCM · ${f} : au moins six questions sur document, chaque image présente`,
+       avec.length >= 6 && avec.every(q => _fs.existsSync(path.join(ICI, q.img.src))), String(avec.length));
+    ok(`QCM · ${f} : chaque document « doc_ » est décrit en entier`, docs.length >= 3 && docs.every(q => (q.img.alt || '').length > 120));
+  }
+  let aJour = true;
+  try { _cp.execSync('python3 documents_qcm.py --verifier', { cwd: ICI, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('QCM · documents_qcm_3e_C4.3.json est à jour du lot', aJour);
+}
 
 const n = T.filter(t => t.ok).length;
 console.log(T.map(t => `${t.ok ? '✅' : '❌'} ${t.n}${t.d ? ' — ' + t.d : ''}`).join('\n'));

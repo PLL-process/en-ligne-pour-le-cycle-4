@@ -150,3 +150,19 @@ Fiche A4 : `station_fiche_A4.pdf`, une page.
 
 Non exécuté : un vrai téléphone, une vraie tablette, Firefox, Safari ; la validation HTML ; le parcours au clavier à la
 main (le bouton et la figure s'ouvrent à Espace et à Entrée, vérifié par script seulement).
+
+## Reprise du 28/11/2026 — six questions sur document, et un billet de sortie (n°345, n°330)
+
+- `node tests_3e_C4.3-C4.6.mjs` : **29 / 29** (six tests neufs : le billet existe à la séance 5, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement ; au QCM, au moins six questions sur document, chaque document décrit, `documents_qcm.py --verifier` à
+  jour). `node tests_regle_311_3e_C4.3.mjs` : **34 / 34**.
+- Le moteur du QCM n'affichait pas d'image (aucune question n'en avait) : il reçoit la figure du gabarit maison
+  (`#qFigure`, comme `3e_C4.1`). `balayer_questions_qcm.mjs --apres` : 32 questions, 6 illustrées, 0 écart (la q19
+  débordait de 84 px sur sa correction, une ligne de CSV sans espace : des espaces après les « ; »).
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). Contrôles des QCM (aides
+  comprises), des schémas (0 ✘), de l'aération de la séquence et du QCM, des règles d'or, du squelette, du mode
+  mission, des liens et des statuts : verts. (`station_en_pieces.html` garde un signalement d'aération L1 ancien,
+  hors de ce lot de travail.)
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
