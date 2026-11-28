@@ -2812,6 +2812,54 @@ et les compléments&nbsp;: il ne reste que les consignes et les exercices. À ac
   panne le jour où on en a besoin. <br>C'est vrai d'une station d'alerte, d'un ascenseur, d'un détecteur de fumée.</p>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un besoin nouveau&nbsp;: <b>les fenêtres de la salle informatique</b>. Chacune a un capteur qui dit si elle est fermée.
+  <br>Le besoin de la gardienne&nbsp;: «&nbsp;chaque soir à 18 h, vérifier les cinq fenêtres, puis m'envoyer UN message qui dit combien sont restées ouvertes, et lesquelles&nbsp;; ou "Salle fermée" si tout va bien&nbsp;».
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p><label for="bs_3e_C6_2_1"><b>1.</b> Écris l'algorithme, en français structuré ou en algorigramme décrit ligne par ligne. Utilise une boucle, un compteur et une liste.</label></p>
+  <textarea id="bs_3e_C6_2_1" data-save rows="6"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des lignes à compléter</summary>
+    <ul>
+      <li>ouvertes = ____ et liste_ouvertes = liste vide</li>
+      <li>POUR CHAQUE fenetre DANS ____ :</li>
+      <li>&nbsp;&nbsp;&nbsp;SI ____ ALORS ouvertes = ____ , et ajouter ____ à liste_ouvertes</li>
+      <li>SI ____ ALORS envoyer(____) SINON envoyer("Salle fermée")</li>
+    </ul>
+  </details>
+  <p><label for="bs_3e_C6_2_2"><b>2.</b> Ce soir, les fenêtres 2 et 5 sont ouvertes. Déroule ton algorithme à la main&nbsp;: la valeur du compteur après chaque fenêtre, puis le message envoyé. Quel second essai fais-tu pour prouver qu'il ne crie pas au loup&nbsp;?</label></p>
+  <textarea id="bs_3e_C6_2_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Après la fenêtre 1&nbsp;: ____ . Après la 2&nbsp;: ____ . Après la 3&nbsp;: ____ . Après la 4&nbsp;: ____ . Après la 5&nbsp;: ____ .</li>
+      <li>Message envoyé&nbsp;: «&nbsp;____&nbsp;».</li>
+      <li>Second essai&nbsp;: ____ , et j'attends le message «&nbsp;____&nbsp;».</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br><code>ouvertes = 0</code> et <code>liste_ouvertes = liste vide</code>
+    <br><code>POUR CHAQUE fenetre DANS [f1, f2, f3, f4, f5] :</code>
+    <br>&nbsp;&nbsp;&nbsp;<code>SI fermee(fenetre) est FAUX ALORS</code>
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>ouvertes = ouvertes + 1</code>, et ajouter fenetre à <code>liste_ouvertes</code>
+    <br><code>SI ouvertes &gt; 0 ALORS</code> envoyer(ouvertes, " fenêtre(s) ouverte(s) : ", liste_ouvertes)
+    <br><code>SINON</code> envoyer("Salle fermée")
+    <br><b>Critère</b>&nbsp;: le compteur et la liste naissent AVANT la boucle, le test est DANS la boucle, et la décision du message vient APRÈS, pour un seul message.</p>
+    <p>✘ Le compteur remis à 0 dans la boucle&nbsp;: à la fin, il ne compte que la dernière fenêtre.
+    <br>✘ Le message envoyé dans la boucle&nbsp;: la gardienne reçoit cinq messages au lieu d'un.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Après la fenêtre 1&nbsp;: 0. Après la 2&nbsp;: 1. Après la 3&nbsp;: 1. Après la 4&nbsp;: 1. Après la 5&nbsp;: 2.
+    <br>Message envoyé&nbsp;: «&nbsp;2 fenêtre(s) ouverte(s)&nbsp;: f2, f5&nbsp;».
+    <br>Second essai&nbsp;: les cinq fenêtres fermées, et j'attends «&nbsp;Salle fermée&nbsp;».&nbsp;»
+    <br><b>Critère</b>&nbsp;: le compteur ne redescend jamais, le message cite les deux fenêtres, et le second essai est sans panne.</p>
+    <p>✘ «&nbsp;Après la fenêtre 3&nbsp;: 0&nbsp;»&nbsp;: une fenêtre fermée ne fait pas redescendre le compteur&nbsp;; il garde sa valeur.
+    <br>✘ Un second essai avec une autre fenêtre ouverte&nbsp;: il ne prouve pas que l'algorithme se tait quand tout va bien.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>

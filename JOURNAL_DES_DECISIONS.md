@@ -39252,3 +39252,14 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   décousues : une idée par ligne, les couples écrits avec leurs unités.
 Bancs : séquence 60 / 60 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C6.1`).
+
+## 28/11/2026 — 3e_C6.2 : un document au QCM et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot. Dernier lot du thème 2.
+- **Document** `doc_programme_auto_test` : le programme de l'auto-test, indenté, lu dans la correction de
+  l'activité 3. Quatre questions s'y lisent (q7, q17, q18, q19) : sept questions illustrées.
+- **Billet de sortie** avant le Bonus de la séance 3 : les cinq fenêtres de la salle informatique (écrire
+  l'algorithme avec boucle, compteur et liste ; le dérouler à la main, puis un essai sans panne).
+Bancs : séquence 27 / 27 (cinq tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C6.2`). Avec ce lot,
+`controle_question_seule.py --chantiers` ne signale plus aucun D1 ni P1 sur le thème 2.

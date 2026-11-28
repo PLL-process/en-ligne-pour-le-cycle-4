@@ -75,12 +75,33 @@ with sync_playwright() as p:
       pg.evaluate("""() => { const e=[...document.querySelectorAll('button')].find(b=>b.checkVisibility()); e.focus();   /* le premier bouton VISIBLE (le « ⚙️ » des réglages ne se montre qu'au téléphone) */
         const s=getComputedStyle(e,':focus-visible'); return document.activeElement===e; }"""), "")
 
+    # billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf
+    pg.click("#tab-s3"); pg.wait_for_timeout(200)
+    bs = pg.evaluate("""() => { const s = document.getElementById('billetSortie'); if (!s) return null;
+      const corr = s.querySelector('details.correction');
+      const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+      return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+        etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+        criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+        avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+        panneau: (s.closest('.seance-panel') || {}).id }; }""")
+    t("billet de sortie : il existe, visible à sa séance, juste avant le Bonus",
+      bool(bs) and bs["visible"] and bs["panneau"] == "seance3" and bs["avantBonus"], json.dumps(bs))
+    t("billet de sortie : deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton",
+      bool(bs) and bs["zones"] == 2 and bs["etayages"] == 2 and bs["criteres"] == 2 and bs["contre"] >= 2
+      and bs["boutons"] == 0, json.dumps(bs))
+    pg.fill("#bs_3e_C6_2_1", "ma réponse au billet"); pg.wait_for_timeout(800)
+    pg.reload(); pg.wait_for_timeout(500); pg.click("#tab-s3"); pg.wait_for_timeout(200)
+    t("billet de sortie : la réponse écrite survit au rechargement",
+      pg.input_value("#bs_3e_C6_2_1") == "ma réponse au billet", "")
+    pg.evaluate("localStorage.clear()")
+
     # ── QCM ──
     errs.clear(); pg.goto(QCM); pg.wait_for_timeout(600)
     t("QCM : aucune erreur JS au chargement", not errs, str(errs))
     t("QCM : 30 questions", pg.evaluate("QUESTIONS.length")==30, "")
-    t("QCM : 3 questions illustrées, alt renseigné",
-      pg.evaluate("QUESTIONS.filter(q=>q.img).length")==3 and
+    t("QCM : 7 questions illustrées, alt renseigné",
+      pg.evaluate("QUESTIONS.filter(q=>q.img).length")==7 and
       pg.evaluate("QUESTIONS.filter(q=>q.img).every(q=>q.img.alt.length>40)"), "")
     rep = pg.evaluate("QUESTIONS.reduce((a,q)=>(a[q.r]=(a[q.r]||0)+1,a),{})")
     t("QCM : bonnes réponses réparties sur A/B/C/D", min(rep.values())>=7, json.dumps(rep))
@@ -90,7 +111,13 @@ with sync_playwright() as p:
       pg.evaluate("QUESTIONS.every(q=>q.d.filter((x,i)=>i!==q.r).every(x=>x&&x.length>20))"), "")
     t("QCM : les 5 champs obligatoires sont remplis partout",
       pg.evaluate("QUESTIONS.every(q=>q.expl&&q.ex&&q.err&&q.ret&&q.n)"), "")
+    docs = pg.evaluate("QUESTIONS.filter(q=>q.img).map(q=>q.img.alt.length)")
+    t("QCM : au moins six questions sur document (n°345), chaque document décrit",
+      len(docs) >= 6 and all(n > 120 for n in docs), str(len(docs)))
     b.close()
+import subprocess
+_v = subprocess.run(["python3", "documents_qcm.py", "--verifier"], capture_output=True, text=True)
+t("QCM : documents_qcm.py --verifier, le document est à jour de la séquence", _v.returncode == 0, _v.stdout.strip())
 
 print(f"\n{sum(1 for _,ok,_ in res if ok)} / {len(res)} tests passés")
 pathlib.Path("/tmp/res_c62.json").write_text(json.dumps(res, ensure_ascii=False, indent=1))

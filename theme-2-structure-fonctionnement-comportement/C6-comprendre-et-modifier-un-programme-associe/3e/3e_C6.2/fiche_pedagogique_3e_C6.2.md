@@ -55,7 +55,7 @@ compteur, une boucle et une décision — exactement les notions du code.
 | Temps | Activité | Production |
 |---|---|---|
 | ~35 min | **Activité 5** — cas limites et message utile à un humain | Tableau de suivi déroulé, analyse du cas radio, message rédigé |
-| reste | Synthèse, bilan avec auto-positionnement, QCM d'entraînement | 30 questions, 3 illustrées |
+| reste | Synthèse, bilan avec auto-positionnement, QCM d'entraînement | 30 questions, 7 illustrées, dont quatre sur « Le programme de l'auto-test » (n°345) |
 
 ## Les trois obstacles, dans l'ordre où ils tombent
 
@@ -86,6 +86,15 @@ Indicateurs de réussite :
 - la décision est **unique** et postérieure à la boucle ;
 - le message nomme les organes en défaut ;
 - l'élève sait dire ce que son test **ne prouve pas**.
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3 : les cinq fenêtres de la salle informatique, un
+besoin neuf. Question 1 : écrire l'algorithme (boucle, compteur, liste) — on regarde que le compteur et la liste
+naissent avant la boucle, que le test est dedans et que la décision du message vient après. Question 2 : dérouler à
+la main pour deux fenêtres ouvertes, puis un second essai sans panne — on regarde que le compteur ne redescend pas.
+La séance 3 tient en 55 minutes : l'activité 5 dure 35 minutes.
+
+**Questions sur document** (28/11/2026, n°345) : quatre questions de plus se lisent sur « Le programme de
+l'auto-test » (q7, q17, q18, q19) ; le QCM en a sept illustrées.
 
 ## Socle et CRCN
 
