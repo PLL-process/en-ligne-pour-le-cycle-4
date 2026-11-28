@@ -152,7 +152,29 @@ ok('9 · activités 3 et 4 validées (7/7 et 4/4)',
 ok('10 · barre de progression : 4 / 4 activités validées',
    (await p.textContent('#progTxt')).includes('4 / 4'), await p.textContent('#progTxt'));
 
+/* billet de sortie (règle d'or n°330, 28/11/2026) : seul, sans aide, sur un objet neuf */
+{
+  const _avant = await p.evaluate(() => (document.querySelector('.seance-panel.active') || {}).id);
+  await p.click('.seance-tab[data-panel="s3"]'); await p.waitForTimeout(100);
+  const bs = await p.evaluate(() => {
+    const s = document.getElementById('billetSortie'); if (!s) return null;
+    const corr = s.querySelector('details.correction');
+    const bonus = [...document.querySelectorAll('section.card h2')].find(h => /🎁 Bonus/.test(h.textContent));
+    return { visible: s.checkVisibility(), zones: s.querySelectorAll('textarea[data-save]').length,
+      etayages: s.querySelectorAll('details.etayage').length, boutons: s.querySelectorAll('button').length,
+      criteres: (corr.textContent.match(/Critère/g) || []).length, contre: (corr.textContent.match(/✘/g) || []).length,
+      avantBonus: !!bonus && s.nextElementSibling === bonus.closest('section'),
+      panneau: (s.closest('.seance-panel') || {}).id };
+  });
+  ok('billet de sortie · il existe, visible à sa séance, juste avant le Bonus', !!bs && bs.visible && bs.panneau === 's3' && bs.avantBonus, JSON.stringify(bs));
+  ok('billet de sortie · deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton',
+     !!bs && bs.zones === 2 && bs.etayages === 2 && bs.criteres === 2 && bs.contre >= 2 && bs.boutons === 0, JSON.stringify(bs));
+  await p.fill('#bs_5e_C5_1_1', 'ma réponse au billet');
+  await p.waitForTimeout(800);
+  if (_avant) { await p.click(`.seance-tab[data-panel="${_avant}"]`); await p.waitForTimeout(80); }
+}
 await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(320);
+ok('billet de sortie · la réponse écrite survit au rechargement', (await p.inputValue('#bs_5e_C5_1_1')) === 'ma réponse au billet');
 const premierId = Object.keys(ATT[1])[0];
 ok('11 · rechargement : réponses, validations ET verrous restaurés',
    (await coche(premierId)) === ATT[1][premierId]
@@ -239,6 +261,22 @@ ok('22 · le lien de retour vers la séquence existe et pointe sur un fichier r�
 
 ok('22 bis · aucune erreur JS sur le QCM', err.length === 0, err.slice(0, 2).join(' | '));
 await ctx.close();
+}
+
+/* ── les QCM : au moins six questions sur document (n°345, 28/11/2026) ── */
+{
+  const _fs = await import('node:fs'), _cp = await import('node:child_process');
+  for (const f of ['qcm_5e_C5.1-C5.3_depanner_lampadaire.html']) {
+    const src = _fs.readFileSync(path.join(ICI, f), 'utf8');
+    const Q = eval(src.match(/const QUESTIONS\s*=\s*(\[[\s\S]*?\n\]);/)[1]);
+    const avec = Q.filter(q => q.img), docs = avec.filter(q => /\/doc_/.test(q.img.src));
+    ok(`QCM · ${f} : au moins six questions sur document, chaque image présente`,
+       avec.length >= 6 && avec.every(q => _fs.existsSync(path.join(ICI, q.img.src))), String(avec.length));
+    ok(`QCM · ${f} : chaque document « doc_ » est décrit en entier`, docs.length >= 3 && docs.every(q => (q.img.alt || '').length > 120));
+  }
+  let aJour = true;
+  try { _cp.execSync('python3 documents_qcm.py --verifier', { cwd: ICI, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('QCM · documents_qcm_5e_C5.1.json est à jour du lot', aJour);
 }
 
 const n = T.filter(t => t.ok).length;

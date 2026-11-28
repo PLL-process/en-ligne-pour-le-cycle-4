@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -302,7 +304,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (10 C5.1 + 10 C5.2 + 10 C5.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (10 C5.1 + 10 C5.2 + 10 C5.3), 7 illustrees (regle images v2) */
 const QUESTIONS = [
 /* ═══ C5.1 — repérer visuellement une pièce défectueuse (10 q) ═══ */
 {c:"C5.1",n:"Inspection visuelle",q:"L'inspection visuelle d'un objet en panne consiste à…",
@@ -320,7 +322,8 @@ const QUESTIONS = [
  err:"S'arrêter au symptôme et « réparer » au hasard.",
  d:["La lampe éteinte ne dit pas POURQUOI elle est éteinte : dix causes différentes sont possibles.","","Aucune pièce n'est encore désignée : il faut inspecter d'abord.","Rien n'a encore été réparé : on n'en est qu'au constat."],
  ret:"Symptôme = ce qu'on constate · cause = ce qui le provoque."},
-{c:"C5.1",n:"Capot fissuré",q:"Le capot du capteur est fissuré après l'orage. Pourquoi est-ce une anomalie GRAVE ?",
+{c:"C5.1",n:"Capot fissuré",q:"D'après ce carnet, pourquoi le capot fissuré de la zone 3 est-il une anomalie GRAVE ?",
+ img:{src:"Images/doc_carnet_inspection.svg",alt:"Le carnet d'inspection du lampadaire n°3, lundi matin après l'orage. Zone 1, panneau solaire : une couche de poussière et deux feuilles collées après l'orage. Les lampes n°1 et n°2, juste à côté, sont aussi sales… et fonctionnent. Zone 2, lanterne LED : vitre propre, aucune trace noire, aucun impact. Rien d'anormal à l'œil. Zone 3, capot du capteur de luminosité : une FISSURE nette traverse le capot. À l'intérieur, des gouttelettes de condensation. Zone 4, détecteur de passage : lentille propre, boîtier intact, bien fixé. Rien d'anormal à l'œil. Zone 5, coffret : le voyant d'état est ÉTEINT. D'habitude, il est vert fixe. Le coffret signale un problème. Zone 6, câble du capteur : le câble PEND sous le coffret, connecteur sorti de la borne « CAPTEUR ». Le connecteur est humide. Le carnet ne classe aucune observation."},
  o:["l'eau peut entrer et abîmer le capteur","une fissure, c'est seulement inesthétique","le capot ne sert que de décoration","la lumière n'arrive plus jusqu'au capteur"],r:0,
  expl:"Le capot protège le capteur de la pluie. Fissuré, il laisse entrer l'eau : condensation, contacts oxydés, connecteur qui lâche — c'est probablement la racine de toute la panne.",
  ex:"Sur le lampadaire n°3, des gouttelettes sont visibles À L'INTÉRIEUR du capot : l'eau est bel et bien entrée.",
@@ -334,14 +337,16 @@ const QUESTIONS = [
  err:"Ignorer les voyants — alors qu'ils sont là exprès.",
  d:["S'il était décoratif, il ne changerait jamais d'état.","Le voyant d'état fonctionne jour et nuit : éteint n'est pas « normal ».","","L'inspection montre le voyant en place — il est éteint, pas absent."],
  ret:"Les voyants d'état parlent : toujours les lire pendant l'inspection."},
-{c:"C5.1",n:"Panneau sale",q:"Le panneau solaire est sale… mais les lampes n°1 et n°2, aussi sales, fonctionnent. Conclusion ?",
+{c:"C5.1",n:"Panneau sale",q:"D'après ce carnet, le panneau solaire de la zone 1 est sale. Que peut-on en conclure ?",
+ img:{src:"Images/doc_carnet_inspection.svg",alt:"Le carnet d'inspection du lampadaire n°3, lundi matin après l'orage. Zone 1, panneau solaire : une couche de poussière et deux feuilles collées après l'orage. Les lampes n°1 et n°2, juste à côté, sont aussi sales… et fonctionnent. Zone 2, lanterne LED : vitre propre, aucune trace noire, aucun impact. Rien d'anormal à l'œil. Zone 3, capot du capteur de luminosité : une FISSURE nette traverse le capot. À l'intérieur, des gouttelettes de condensation. Zone 4, détecteur de passage : lentille propre, boîtier intact, bien fixé. Rien d'anormal à l'œil. Zone 5, coffret : le voyant d'état est ÉTEINT. D'habitude, il est vert fixe. Le coffret signale un problème. Zone 6, câble du capteur : le câble PEND sous le coffret, connecteur sorti de la borne « CAPTEUR ». Le connecteur est humide. Le carnet ne classe aucune observation."},
  o:["la saleté est forcément la cause de la panne","la saleté est une anomalie, sans doute pas la cause","les lampes 1 et 2 vont tomber en panne","il faut remplacer le panneau immédiatement"],r:1,
  expl:"Comparer avec des objets identiques qui fonctionnent est un raisonnement puissant : si la saleté éteignait les lampes, les trois seraient éteintes. On note l'anomalie (à nettoyer) mais on cherche ailleurs.",
  ex:"C'est l'enquête du détective : un suspect présent sur les trois scènes… dont deux sans crime, n'est pas le coupable.",
  err:"Accuser la première anomalie venue sans comparer.",
  d:["Les lampes voisines, aussi sales, fonctionnent : la saleté seule n'explique pas la panne.","","Rien ne l'indique : elles fonctionnent normalement.","Nettoyer suffit — remplacer serait du gaspillage."],
  ret:"Comparer avec l'état normal (ou les objets voisins) évite les fausses pistes."},
-{c:"C5.1",n:"Câble débranché",q:"Le câble du capteur PEND sous le coffret, connecteur sorti de sa borne. C'est…",
+{c:"C5.1",n:"Câble débranché",q:"D'après ce carnet, que montre la zone 6, le câble du capteur ?",
+ img:{src:"Images/doc_carnet_inspection.svg",alt:"Le carnet d'inspection du lampadaire n°3, lundi matin après l'orage. Zone 1, panneau solaire : une couche de poussière et deux feuilles collées après l'orage. Les lampes n°1 et n°2, juste à côté, sont aussi sales… et fonctionnent. Zone 2, lanterne LED : vitre propre, aucune trace noire, aucun impact. Rien d'anormal à l'œil. Zone 3, capot du capteur de luminosité : une FISSURE nette traverse le capot. À l'intérieur, des gouttelettes de condensation. Zone 4, détecteur de passage : lentille propre, boîtier intact, bien fixé. Rien d'anormal à l'œil. Zone 5, coffret : le voyant d'état est ÉTEINT. D'habitude, il est vert fixe. Le coffret signale un problème. Zone 6, câble du capteur : le câble PEND sous le coffret, connecteur sorti de la borne « CAPTEUR ». Le connecteur est humide. Le carnet ne classe aucune observation."},
  o:["une anomalie franche : ce câble est débranché","normal : un câble pend toujours un peu","une simple salissure sur le connecteur","la preuve que le capteur est mort"],r:0,
  expl:"Un câble a une place précise : branché sur sa borne. Un connecteur qui pend est une anomalie évidente — et elle explique très bien que le programme ne reçoive plus la luminosité.",
  ex:"Sans capteur branché, le lampadaire « croit » ce que dit son programme par défaut : il ne sait plus s'il fait nuit.",
@@ -369,7 +374,8 @@ const QUESTIONS = [
  err:"Inspecter sans savoir à quoi l'objet doit ressembler en bon état.",
  d:["Les goûts du gardien ne définissent pas l'état technique de l'objet.","Le prix ne dit pas si un câble doit pendre ou non.","","La météo explique peut-être la panne (l'orage !) mais ne définit pas l'état normal."],
  ret:"Anomalie = écart par rapport à l'état normal de référence."},
-{c:"C5.1",n:"Des faits, pas des avis",q:"Dans son carnet d'inspection, le dépanneur note « capot fissuré, gouttelettes à l'intérieur » plutôt que « le capteur est mort ». Pourquoi ?",
+{c:"C5.1",n:"Des faits, pas des avis",q:"Ce carnet note ce que l'inspecteur VOIT, comme « une FISSURE nette traverse le capot », et non « le capteur est mort ». Pourquoi ?",
+ img:{src:"Images/doc_carnet_inspection.svg",alt:"Le carnet d'inspection du lampadaire n°3, lundi matin après l'orage. Zone 1, panneau solaire : une couche de poussière et deux feuilles collées après l'orage. Les lampes n°1 et n°2, juste à côté, sont aussi sales… et fonctionnent. Zone 2, lanterne LED : vitre propre, aucune trace noire, aucun impact. Rien d'anormal à l'œil. Zone 3, capot du capteur de luminosité : une FISSURE nette traverse le capot. À l'intérieur, des gouttelettes de condensation. Zone 4, détecteur de passage : lentille propre, boîtier intact, bien fixé. Rien d'anormal à l'œil. Zone 5, coffret : le voyant d'état est ÉTEINT. D'habitude, il est vert fixe. Le coffret signale un problème. Zone 6, câble du capteur : le câble PEND sous le coffret, connecteur sorti de la borne « CAPTEUR ». Le connecteur est humide. Le carnet ne classe aucune observation."},
  o:["c'est plus long, donc plus professionnel","pour embêter le technicien qui dépanne","parce qu'il n'a pas le droit d'avoir un avis","il note des FAITS : « mort » est une conclusion"],r:3,
  expl:"L'inspection recueille des observations vérifiables. Les conclusions viennent APRÈS, quand les faits convergent — le capteur est peut-être intact, seul son câble étant débranché.",
  ex:"« Le voyant est éteint » est un fait ; « la batterie est morte » est une hypothèse à tester.",

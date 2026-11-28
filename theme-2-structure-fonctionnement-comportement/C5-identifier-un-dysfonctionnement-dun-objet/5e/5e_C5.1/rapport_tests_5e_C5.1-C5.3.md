@@ -72,3 +72,15 @@ attendu). Suite : `tests_lot08.js` — 22 tests, **tous réellement exécutés**
 Tests exécutés uniquement dans l'environnement ci-dessus (Chromium/Playwright).
 Aucune compatibilité non testée n'est revendiquée (autres navigateurs : non testés).
 La version 🅰 (maquette réelle) relève de l'enseignant et n'est pas testable ici.
+
+## Reprise du 28/11/2026 — quatre questions sur document de plus, et un billet de sortie (n°345, n°330)
+
+- `node tests_5e_C5.1-C5.3.mjs` : **36 / 36** (six tests neufs : le billet existe à la séance 3, juste avant le Bonus ;
+  deux zones gardées, deux versions étayées, deux critères, des contre-exemples, aucun bouton ; la réponse survit au
+  rechargement ; au QCM, au moins six questions sur document, chaque document décrit, `documents_qcm.py --verifier` à
+  jour). `node tests_regle_311_5e_C5.1.mjs` : **34 / 34**.
+- `controle_question_seule.py --strict --chantiers` : tout à 0 (D1 et P1 étaient à 1). `balayer_questions_qcm.mjs
+  --apres` : 30 questions, 7 illustrées, 0 écart. Contrôles des QCM (aides comprises), des schémas (0 ✘), de
+  l'aération, des règles d'or, du squelette, du mode mission, des liens et des statuts : verts.
+
+Non exécuté : un vrai téléphone, Firefox, Safari, une impression réelle.
