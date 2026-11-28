@@ -57,3 +57,9 @@ de l'objet » ; Canva autorisé « pour des images réalistes et autres ». Règ
 | Fichier | Type | Usage pédagogique | Licence | Poids |
 |---|---|---|---|---|
 | `4e_jardin_TECHNO-C4.pkt` | Fichier Packet Tracer 8.2.0 (Fable, sur le poste de Pascal) | le réseau du plan `Images/reseau_jardin_ip.svg`, construit dans le simulateur : Home Router « Box-Collège » 192.168.1.1 (DHCP de .23 à .72, son Wi-Fi coupé), Server-PT « Serveur-Collège » 192.168.1.10 sur GigabitEthernet 1, AccessPoint-PT « Borne-Cour » sur GigabitEthernet 2 (SSID « Default »), SBC-PT « Carte-Jardin » 192.168.1.50 fixe en Wi-Fi, Tablet PC-PT « Tablette-Classe » en DHCP (192.168.1.23). Pings vérifiés depuis la tablette : vers la carte et vers le serveur, 4 / 4. Activité 4, séance 3. | CC0 (montage original) ; Packet Tracer est un logiciel et une marque de Cisco | ~60 Ko |
+
+## Document du QCM, dessiné pour le téléphone (28/11/2026, règle d'or n°345)
+
+| Fichier | Ce qu'il montre | Provenance | Droits | Où |
+|---|---|---|---|---|
+| `Images/doc_table_mesures_jardin.svg` | Six lignes de la table « mesures_jardin » (id, heure, capteur, humidité, arrosage) et la règle du seuil de 40 % — sans la raison écrite à côté de chaque arrosage. | SVG original, dessiné par `_outils/document_qcm.py` depuis `documents_qcm_4e_C4.1.json`, lui-même LU par `documents_qcm.py` dans `Images/table_donnees_jardin.svg` et dans la séquence. | CC0, comme les images du dépôt | QCM, q11, q12, q13 |

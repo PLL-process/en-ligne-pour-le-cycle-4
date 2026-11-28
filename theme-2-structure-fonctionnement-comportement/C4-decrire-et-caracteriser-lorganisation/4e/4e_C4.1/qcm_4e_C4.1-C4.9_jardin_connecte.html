@@ -140,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -304,7 +306,7 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (7 EN + 10 ID + 10 RES + 3 PRO), 4 illustrées.
+/* Banque : 30 questions (7 EN + 10 ID + 10 RES + 3 PRO), 7 illustrées.
    Ligne recalculée depuis les questions elles-mêmes le 09/09/2026 — controle_banque_qcm.py la
    vérifie. L'ancienne disait « Banque : 30 questions (7 EN + 10 ID + 10 RES + 3 PRO — codes
    4e_C4.1 a C4.9), 3 illustrees (regle images v2) » : elle venait d'un gabarit, par copie, et
@@ -385,26 +387,29 @@ const QUESTIONS = [
  err:"Voir ces métadonnées comme du superflu.",
  d:["Quelques octets de plus pour un gain immense d'usage.","Aucune loi n'exige d'horodater l'humidité des radis.","","Chaque colonne de la table a un rôle technique précis."],
  ret:"Donnée utile = valeur + horodatage + identification de la source."},
-{c:"ID",n:"Une ligne de la table",q:"Dans la table « mesures_jardin », UNE LIGNE représente…",
+{c:"ID",n:"Une ligne de la table",q:"Dans cet extrait de la table « mesures_jardin », que représente UNE LIGNE ?",
+ img:{src:"Images/doc_table_mesures_jardin.svg",alt:"Un extrait de la table « mesures_jardin » du 12/05/2027. Ligne 341 : 07:00, bac_A, humidité 52 %, arrosage non. Ligne 342 : 07:00, bac_B, humidité 60 %, arrosage non. Ligne 343 : 07:00, bac_C, humidité 71 %, arrosage non. Ligne 356 : 12:00, bac_A, humidité 38 %, arrosage OUI. Ligne 357 : 12:00, bac_B, humidité 47 %, arrosage non. Ligne 371 : 17:00, bac_C, humidité 34 %, arrosage OUI. La règle du jardin : arroser un bac quand son humidité passe sous le seuil de 40 %. Le document ne dit pas pourquoi chaque arrosage s'est déclenché."},
  o:["UNE mesure complète, avec son contexte","toutes les mesures relevées sur un bac","une colonne du tableau, mise en travers","le programme installé sur la carte"],r:0,
  expl:"C'est LA règle des tables structurées : une ligne = un enregistrement (ici, une mesure à un instant donné) ; une colonne = un type d'information. C4.6 tient dans cette règle.",
  ex:"La ligne 356 : bac_A, 12/05 12:00, 38 %, arrosage OUI — une mesure, toute son histoire.",
  err:"Confondre lignes (enregistrements) et colonnes (catégories).",
- d:["","Un bac apparaît sur PLUSIEURS lignes : une par mesure.","Les colonnes sont verticales — et ne penchent pas.","Le programme vit dans la carte, pas dans la table."],
+ d:["","Le bac_A apparaît sur plusieurs lignes, 341 et 356 : une ligne par mesure.","Les colonnes sont verticales : relis l'en-tête du tableau.","Le programme vit dans la carte : la table ne garde que des mesures."],
  ret:"1 ligne = 1 mesure · 1 colonne = 1 information."},
-{c:"ID",n:"La colonne capteur",q:"Sans la colonne « capteur », la table du jardin deviendrait…",
+{c:"ID",n:"La colonne capteur",q:"Dans cet extrait, si la table perdait la colonne « capteur », que deviendrait-elle ?",
+ img:{src:"Images/doc_table_mesures_jardin.svg",alt:"Un extrait de la table « mesures_jardin » du 12/05/2027. Ligne 341 : 07:00, bac_A, humidité 52 %, arrosage non. Ligne 342 : 07:00, bac_B, humidité 60 %, arrosage non. Ligne 343 : 07:00, bac_C, humidité 71 %, arrosage non. Ligne 356 : 12:00, bac_A, humidité 38 %, arrosage OUI. Ligne 357 : 12:00, bac_B, humidité 47 %, arrosage non. Ligne 371 : 17:00, bac_C, humidité 34 %, arrosage OUI. La règle du jardin : arroser un bac quand son humidité passe sous le seuil de 40 %. Le document ne dit pas pourquoi chaque arrosage s'est déclenché."},
  o:["plus rapide à lire d'un seul coup d'œil","inutilisable : on ne sait plus qui a mesuré","plus écologique, car beaucoup plus compacte","plus précise, car allégée de tout le superflu"],r:1,
  expl:"Les mesures des trois bacs se mélangeraient en une seule bouillie de chiffres. La colonne d'identification est ce qui permet le FILTRE (bac_A seulement) et la comparaison.",
  ex:"C'est elle que tu as utilisée avec l'explorateur : « WHERE capteur = bac_A ».",
  err:"Croire qu'une colonne « en moins » simplifie toujours.",
- d:["Plus courte peut-être, mais illisible : à qui est ce 38 % ?","","La taille du fichier n'a rien d'écologique ici.","La précision des valeurs ne changerait pas — leur SENS disparaîtrait."],
+ d:["Plus courte peut-être, mais illisible : relis la ligne 356, à qui serait ce 38 % ?","","La taille du fichier n'a rien d'écologique ici.","La précision des valeurs ne changerait pas : relis les lignes de 12:00, leur sens disparaîtrait."],
  ret:"La colonne d'identification permet filtres et comparaisons."},
-{c:"ID",n:"Lire un arrosage",q:"Ligne 356 : bac_A, 12:00, humidité 38 %, arrosage OUI. Pourquoi l'arrosage s'est-il déclenché ?",
+{c:"ID",n:"Lire un arrosage",q:"Dans cet extrait, la ligne 356 dit « arrosage OUI ». Pourquoi l'arrosage s'est-il déclenché ?",
+ img:{src:"Images/doc_table_mesures_jardin.svg",alt:"Un extrait de la table « mesures_jardin » du 12/05/2027. Ligne 341 : 07:00, bac_A, humidité 52 %, arrosage non. Ligne 342 : 07:00, bac_B, humidité 60 %, arrosage non. Ligne 343 : 07:00, bac_C, humidité 71 %, arrosage non. Ligne 356 : 12:00, bac_A, humidité 38 %, arrosage OUI. Ligne 357 : 12:00, bac_B, humidité 47 %, arrosage non. Ligne 371 : 17:00, bac_C, humidité 34 %, arrosage OUI. La règle du jardin : arroser un bac quand son humidité passe sous le seuil de 40 %. Le document ne dit pas pourquoi chaque arrosage s'est déclenché."},
  o:["parce qu'il était exactement midi pile","parce que le bac B venait d'être arrosé","parce que l'arrosage se fait toutes les heures","parce que 38 % est passé sous le seuil"],r:3,
  expl:"La table garde la TRACE de la décision : la valeur (38), le seuil (40) et l'action (OUI). Analyser une table, c'est retrouver les règles du système dans ses données.",
  ex:"Ligne 371 : bac_C à 34 % → arrosage aussi. La règle se confirme.",
  err:"Chercher la cause ailleurs que dans les données.",
- d:["L'heure n'est pas la cause : à 07:00, personne n'a été arrosé.","Ce qui arrive au bac B ne déclenche pas l'arrosage du bac A : chaque bac a sa mesure.","Le système applique une règle sur l'humidité, pas un rythme fixe.",""],
+ d:["L'heure n'est pas la cause : relis la ligne 357, à 12:00 aussi, sans arrosage.","Chaque bac a sa mesure : relis la ligne 357 du bac_B.","Relis les heures : 07:00, 12:00, 17:00, et des arrosages seulement sur deux lignes.",""],
  ret:"Une table bien structurée raconte les décisions du système."},
 {c:"ID",n:"Trier, filtrer, tracer",q:"La STRUCTURE en colonnes de la table permet trois exploitations. Lesquelles ?",
  o:["TRIER, FILTRER, puis TRACER","imprimer, plastifier, puis afficher","chiffrer, compresser, puis cacher","copier, coller, puis supprimer"],r:0,
