@@ -39107,3 +39107,14 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   pour Tokyo », achevable à la maison, passe de 25 à 20 minutes.
 Bancs : séquence 41 / 41 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.7`).
+
+## 28/11/2026 — 3e_C4.8 : un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- Le QCM avait déjà six questions sur document : pas de D1 sur ce lot.
+- **Billet de sortie** avant le Bonus de la séance 3 : deux salles du collège, deux réseaux (la passerelle du poste ; un
+  tracert lu saut par saut, et la panne située après le dernier saut qui répond). Les explications « comme au brevet »
+  se font à la maison, comme leur pastille le disait : la séance tient en 55 minutes. Le lot n'avait pas de banc de
+  séquence : `tests_3e_C4.8_billet.mjs` vérifie le billet.
+Bancs : billet 5 / 5 (neuf), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de l'aération, du
+squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.8`). La famille C4 du thème 2 est complète.
