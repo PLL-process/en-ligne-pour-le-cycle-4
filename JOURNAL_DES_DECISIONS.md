@@ -38984,6 +38984,17 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
 Bancs : séquence 25 / 25 (cinq tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C4.7`).
 
+## 28/11/2026 — 4e_C4.1 : trois questions sur document de plus (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Un extrait de la table du jardin », LU dans le lot par `documents_qcm.py` (les
+  lignes de la table « mesures_jardin » du schéma de la séquence, et le seuil de 40 %) ; il montre les arrosages sans la
+  raison écrite à côté, que le schéma de la séquence donnait. Les q11, q12 et q13 s'y lisent (q13 citait « la ligne
+  356 » sans la montrer). Le manifeste annonçait 3 questions illustrées : 7.
+- La séquence avait déjà son billet de sortie.
+Bancs : séquence et QCM 75 / 75 (trois tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or,
+de l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C4.1`).
+
 ## 28/11/2026 — Les trois freins de Sainte-Luce en 3D, et un atelier Blender commun (transversal : thème 1, `_ressources-communes`, `.claude/skills`, `SKILLS_AUDIT.md`)
 
 **Demande de Pascal (26/11).** « 1a 2b 3b fusionne et donne moi l'URL », puis « Continue » : 3b, c'était « lancer les trois

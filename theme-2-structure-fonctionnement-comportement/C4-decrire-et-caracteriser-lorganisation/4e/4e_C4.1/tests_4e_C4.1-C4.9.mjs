@@ -526,7 +526,7 @@ await p.waitForTimeout(300);
 
 const Q = await p.evaluate(() => QUESTIONS.map(q => ({
   c: q.c, n: q.n, o: q.o, r: q.r, d: q.d, expl: q.expl, ex: q.ex, err: q.err, ret: q.ret,
-  img: q.img ? q.img.src : null })));
+  img: q.img ? q.img.src : null, alt: q.img ? q.img.alt : null })));
 const familles = await p.evaluate(() => Object.keys(COMP_LABELS));
 const badge = (await p.$eval('.badge.theme', e => e.textContent)).trim();
 
@@ -549,6 +549,15 @@ const illustrees = Q.filter(q => q.img);
 const imgAbsentes = illustrees.filter(q => !fs.existsSync(path.join(ICI, q.img)));
 ok(`27 · ${illustrees.length} questions illustrées, fichiers présents sur le disque`,
    illustrees.length > 0 && imgAbsentes.length === 0, imgAbsentes.map(q => q.img).join(' · '));
+ok('27 bis · au moins six questions sur document (n°345, 28/11/2026)', illustrees.length >= 6, String(illustrees.length));
+{
+  let aJour = true;
+  try { (await import('node:child_process')).execSync('python3 documents_qcm.py --verifier', { cwd: ICI, stdio: 'pipe' }); } catch { aJour = false; }
+  ok('27 ter · documents_qcm_4e_C4.1.json est à jour du lot (table du jardin, seuil)', aJour);
+  const doc = Q.filter(q => /\/doc_/.test(q.img || ''));
+  ok('27 quater · le document « doc_ » porte trois questions, chacune décrite en entier',
+     doc.length === 3 && doc.every(q => (q.alt || '').length > 120), doc.map(q => q.n).join(' · '));
+}
 
 const incomplets = Q.filter(q => !(q.o.length === 4 && q.d.length === 4 && q.expl && q.ex
                                    && q.err && q.ret));
