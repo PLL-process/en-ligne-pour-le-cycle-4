@@ -39225,3 +39225,18 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   et modifier une ligne ; deux scénarios et une validation limitée). Le réinvestissement passe de 15 à 10 minutes.
 Bancs : séquence 32 / 32 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C6.1`).
+
+## 28/11/2026 — 4e_C6.2 : douze questions sur document et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM de l'arrosage** : `doc_programme_arrosage` (le Python complété de l'activité 5) sous q14, q16, q19, q27 ;
+  `doc_banc_tests_arrosage` (le tableau de l'activité 6, sans la colonne « Obtenu ») sous q21, q22.
+- **QCM de l'éclairage** : `doc_programme_eclairage`, le programme Arduino que sa banque cite par morceaux (chaque
+  morceau vérifié), sous q11 à q14, q18, q19. Ses aides étaient « à reposer » sur `main` : les sigles sont passés dans
+  les données, puis reposés.
+- **Billet de sortie** avant le Bonus de la séance 3 : le brumisateur du préau (compléter un programme à trous ; trois
+  tests dont la frontière).
+- `_outils/document_qcm.py` : une espace insécable en tête de ligne n'est plus retirée, pour garder l'indentation d'un
+  programme. Les documents des autres lots, redessinés, sont identiques à l'octet.
+Bancs : séquence 70 / 70 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C6.2`, `_outils/document_qcm.py`).
