@@ -37,9 +37,15 @@ l'eau — sans risquer de casser ce qui fonctionne ?
 ## Évaluation
 
 - **Formative** : vérificateurs intégrés (verrou : 4 scénarios joués) + auto-positionnement par code.
-- **Entraînement** : QCM 30 questions (15 par code, 3 illustrées, corrections exhaustives, réponses réparties 8/7/7/8).
+- **Entraînement** : QCM 30 questions (15 par code, 7 illustrées, dont quatre sur « Le programme corrigé du jardin », n°345, corrections exhaustives, réponses réparties 8/7/7/8).
 - **Sommative** : à construire par l'enseignant (corrigé non publié dans le dépôt public). Items suggérés : relevés inédits à diagnostiquer (réfrigérateur qui bat) ; scénarios de test d'une hystérésis donnée.
 - **LSU** : saisie par code (C6.1 / C6.3) via les critères de réussite affichés.
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 2 : le brasseur d'air de la salle informatique, un système
+neuf. Question 1 (4e_C6.1) : lire les relevés, séparer le normal de l'anomalie (il tourne la nuit, salle vide), nommer
+la ligne fautive et ajouter UNE condition d'heure avec ET. Question 2 (4e_C6.3) : deux scénarios chiffrés avec leur
+verdict (la modification, la non-régression), puis une validation réelle limitée lue dans les relevés. Le
+réinvestissement (activité 4) passe de 15 à 10 minutes : la séance tient en 55.
 
 ## Sécurité (transversale à la séquence)
 
