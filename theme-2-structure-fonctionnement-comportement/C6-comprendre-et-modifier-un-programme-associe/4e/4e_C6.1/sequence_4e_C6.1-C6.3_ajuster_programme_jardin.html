@@ -2567,7 +2567,7 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
   </div>
 
   <div class="activite" id="act4">
-    <header><span class="num">Activité 4</span><h3>Réinvestissement — le lampadaire clignote au crépuscule</h3><span class="duree">⏱ 15 min</span></header>
+    <header><span class="num">Activité 4</span><h3>Réinvestissement — le lampadaire clignote au crépuscule</h3><span class="duree">⏱ 10 min</span></header>
     <details class="fiche-activite"><summary>🗂 La fiche de l'activité : objectif, compétence, production attendue, ressources</summary><div class="meta-grid">
       <div><b>Objectif :</b> transférer l'analyse de données et l'hystérésis sur un autre objet, sans aide.</div>
       <div><b>Compétence :</b> 4e_C6.1 + C6.3 (transfert).</div>
@@ -2630,6 +2630,58 @@ if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); el
     <div class="retenir"><b>🧠 À retenir :</b> le motif « battement autour d'un seuil unique » et son remède (l'hystérésis) valent pour tous les systèmes à mesure et commande. Analyser → déduire → tester → valider : la boucle du programmeur responsable.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
   </div>
+</section>
+
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Un système nouveau&nbsp;: <b>le brasseur d'air de la salle informatique</b>, un grand ventilateur au plafond.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <pre class="code" style="white-space:pre-wrap;overflow-wrap:anywhere">répéter à chaque mesure :
+  SI température &gt; 28 °C
+    ALORS brasseur ON
+  SINON brasseur OFF</pre>
+  <p><b>Les relevés de la semaine</b> (°C&nbsp;: degrés Celsius)&nbsp;:
+  <br>· de 7 h 30 à 17 h, la salle monte à 30 °C&nbsp;; le brasseur tourne, les élèves ont moins chaud&nbsp;;
+  <br>· de 17 h à 7 h, la salle est vide et reste à 29 °C&nbsp;; le brasseur tourne toute la nuit.</p>
+  <p><label for="bs_4e_C6_1_1"><b>1.</b> Analyse ces relevés&nbsp;: quelle anomalie vois-tu, et quelle ligne du programme en est la cause&nbsp;? Écris la ligne modifiée.</label></p>
+  <textarea id="bs_4e_C6_1_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Ce qui est normal&nbsp;: ____ . L'anomalie&nbsp;: ____ .</li>
+      <li>La cause&nbsp;: la ligne «&nbsp;SI ____&nbsp;» ne teste que ____ .</li>
+      <li>Ligne modifiée&nbsp;: SI température &gt; 28 °C ET ____ ALORS brasseur ON.</li>
+    </ul>
+  </details>
+  <p><label for="bs_4e_C6_1_2"><b>2.</b> Avant de charger ta modification dans la vraie salle, écris deux scénarios de test (les valeurs d'entrée, et ce que doit faire le brasseur). Puis dis comment tu valides en réel sans risque.</label></p>
+  <textarea id="bs_4e_C6_1_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Scénario 1&nbsp;: ____ °C à ____ h → le brasseur doit ____ . Règle testée&nbsp;: ____ .</li>
+      <li>Scénario 2&nbsp;: ____ °C à ____ h → le brasseur doit ____ . Règle testée&nbsp;: ____ .</li>
+      <li>En réel&nbsp;: d'abord ____ , puis je regarde ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Le jour, le brasseur tourne quand il fait plus de 28 °C&nbsp;: c'est normal, on ne le corrige pas.
+    <br>L'anomalie&nbsp;: il tourne toute la nuit, salle vide.
+    <br>La cause&nbsp;: la ligne SI ne teste que la température, aucune condition d'heure.
+    <br>Ligne modifiée&nbsp;: SI température &gt; 28 °C ET heure entre 7 h et 17 h ALORS brasseur ON.&nbsp;»
+    <br><b>Critère</b>&nbsp;: l'anomalie est appuyée sur les relevés, la ligne fautive est nommée, et la modification ajoute UNE condition avec ET.</p>
+    <p>✘ «&nbsp;Je monte le seuil à 30 °C&nbsp;»&nbsp;: la nuit, le brasseur s'arrêterait&nbsp;; mais le jour, à 29 °C, la classe aurait chaud sans lui&nbsp;: on casse ce qui marchait.
+    <br>✘ «&nbsp;Je supprime le programme et je l'allume à la main&nbsp;»&nbsp;: on ne corrige pas une anomalie en jetant tout le système.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Scénario 1&nbsp;: 30 °C à 10 h → le brasseur doit tourner. Règle testée&nbsp;: le jour, rien n'a changé.
+    <br>Scénario 2&nbsp;: 29 °C à 22 h → le brasseur doit rester arrêté. Règle testée&nbsp;: la nouvelle condition d'heure.
+    <br>Je les joue d'abord en simulation, après avoir sauvegardé le programme d'origine.
+    <br>En réel, je charge un seul soir, puis je regarde les relevés du lendemain matin.&nbsp;»
+    <br><b>Critère</b>&nbsp;: chaque scénario donne ses valeurs et son verdict attendu, l'un teste la modification, l'autre la non-régression, et la validation réelle est limitée puis lue dans les relevés.</p>
+    <p>✘ «&nbsp;Scénario&nbsp;: il fait chaud&nbsp;»&nbsp;: sans valeur ni heure, on ne peut pas dire si le brasseur a raison.
+    <br>✘ «&nbsp;Je charge dans la salle et je regarde si ça marche&nbsp;»&nbsp;: sans sauvegarde ni simulation, une erreur coûte une nuit, ou une journée de classe sans air.</p>
+    </div>
+  </details>
 </section>
 
 <section class="card">
