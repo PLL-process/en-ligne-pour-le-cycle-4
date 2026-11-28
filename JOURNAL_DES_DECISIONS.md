@@ -39082,3 +39082,16 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
   le matériau et le procédé de son boîtier en 500 exemplaires). La séance 3 passe de 45 à 50 minutes.
 Bancs : séquence 30 / 30 (cinq tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
 l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.1`).
+
+## 28/11/2026 — 3e_C4.3 : six questions sur document, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (aucune question sur document) : « Un extrait des mesures de la station », LU dans le fichier de données
+  simulées du lot (q17, q20, q25), et « Le baromètre et son CAN », LU dans la consigne de l'activité 3, sans le plus
+  grand N ni la valeur d'un palier (q11, q13, q14). Le moteur du QCM n'affichait aucune image : il reçoit la figure du
+  gabarit maison. L'exemple de la q20 citait des valeurs qui n'étaient pas celles du fichier : il cite le fichier. La
+  correction de la q19 débordait de l'écran du téléphone (une ligne de CSV sans espace) : corrigée.
+- **Billet de sortie** avant le Bonus de la séance 5 : le thermomètre connecté de la cantine (chaîne d'information et N
+  d'un CAN 8 bits ; types de données et format du fichier).
+Bancs : séquence 29 / 29 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.3`).
