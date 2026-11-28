@@ -63,6 +63,9 @@
   /* question */
   .q-comp{font-size:.78em;color:var(--head);font-weight:600}
   .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
   .options{display:grid;gap:9px}
   .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
   .option:hover:not(:disabled){border-color:var(--hl)}
@@ -137,6 +140,8 @@
 /* iPhone, iPad : un champ écrit en moins de 16 px fait zoomer la page dès qu'on le touche, et elle ne dézoome pas
    (06/11/2026). Sur un écran tactile, chaque champ passe donc à 16 px ; à la souris, rien ne change. */
 @media (pointer:coarse){input,textarea,select{font-size:16px!important}}
+  /* documents-qcm : un document étroit ne s'étire pas (n°345) */
+  .q-figure img[src*="/doc_"]{max-width:400px}
 </style>
 <style id="sigles-css">/* n°44, décision du 22/11/2026 : un sigle s'explique au survol, à l'appui et sur papier */abbr.sigle{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}abbr.sigle:focus{outline:2px solid currentColor;outline-offset:1px}abbr.sigle:focus::after{content:" (" attr(title) ")"}@media print{abbr.sigle::after{content:" (" attr(title) ")"}}</style>
 </head>
@@ -261,6 +266,7 @@
     <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
   </div>
   <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
   <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
   <div class="q-actions">
     <button class="btn" id="btnValider">✔ Valider ma réponse</button>
@@ -362,12 +368,13 @@ const QUESTIONS = [
  err:"Représenter les objets (marques, écrans) au lieu des FONCTIONS et des FLUX.",
  d:["Les mots de passe relèvent de la sécurité, pas du trajet.","","La marque n'a aucun rôle fonctionnel.","Le coût n'apparaît pas dans un schéma de circulation."],
  ret:"Un schéma de circulation montre les réseaux traversés + les routeurs + des flèches orientées."},
-{c:"C4.7",n:"Découpage en paquets",q:"Avant de partir sur Internet, un message long est…",
+{c:"C4.7",n:"Découpage en paquets",q:"D'après ce document, que devient un message d'alerte avant de partir sur Internet ?",
+ img:{src:"Images/doc_paquets_arrivee.svg",alt:"Trois paquets d'un même message arrivent dans cet ordre : le paquet n°3 sur 3, qui porte « SAINTE-LUCE » ; le paquet n°1 sur 3, qui porte « ALERTE » ; le paquet n°2 sur 3, qui porte « ROUGE ». Chaque en-tête porte aussi l'adresse IP de l'expéditeur et celle du destinataire. Le document ne dit pas le message reconstitué."},
  o:["converti en musique, puis rejoué","envoyé d'un seul bloc, sans découpage","découpé en paquets numérotés","imprimé sur papier, puis scanné"],r:2,
  expl:"Tout message est découpé en paquets de taille limitée, chacun portant un en-tête (adresses IP source/destination + numéro d'ordre). Ils voyagent indépendamment puis sont réassemblés.",
  ex:"« ALERTE ROUGE SAINTE-LUCE » → 3 paquets n°1/3, 2/3, 3/3 dans le simulateur de la séquence.",
  err:"Croire qu'un gros fichier voyage d'un bloc : il serait impossible à faire circuler équitablement.",
- d:["La conversion en son n'existe que pour d'anciens modems, et le principe des paquets reste vrai.","Un bloc unique monopoliserait les liaisons et une seule erreur obligerait à tout renvoyer.","","Aucun papier dans le voyage numérique !"],
+ d:["Relis la colonne contenu : des morceaux de texte, pas de la musique.","Relis la colonne en-tête : n°1, n°2, n°3 sur 3. Le message n'est pas parti d'un bloc.","","Rien n'est imprimé : relis la colonne contenu, ce sont des morceaux du texte."],
  ret:"Sur Internet, tout message est découpé en paquets numérotés qui voyagent indépendamment."},
 {c:"C4.7",n:"Contenu de l'en-tête",q:"Que contient l'en-tête de chaque paquet ?",
  o:["le mot de passe du réseau Wi-Fi","la météo qu'il fait ce jour-là","le nom et le prénom de l'utilisateur","les adresses source et destination"],r:3,
@@ -376,12 +383,13 @@ const QUESTIONS = [
  err:"Penser que les routeurs lisent le CONTENU : ils ne lisent que l'en-tête, comme le facteur lit l'enveloppe, pas la lettre.",
  d:["Le mot de passe Wi-Fi sert à entrer sur le réseau local, il ne voyage pas dans les paquets.","La météo est un contenu possible, pas un champ d'en-tête !","L'identité humaine n'est pas nécessaire à la livraison réseau.",""],
  ret:"En-tête d'un paquet = IP destination + IP source + numéro d'ordre (l'enveloppe du paquet)."},
-{c:"C4.7",n:"Réassemblage",q:"Les paquets arrivent dans le désordre : n°3, n°1, n°2. Comment le destinataire reconstitue-t-il le message ?",
+{c:"C4.7",n:"Réassemblage",q:"Les paquets de ce document arrivent dans le désordre. Comment le téléphone reconstitue-t-il le message ?",
+ img:{src:"Images/doc_paquets_arrivee.svg",alt:"Trois paquets d'un même message arrivent dans cet ordre : le paquet n°3 sur 3, qui porte « SAINTE-LUCE » ; le paquet n°1 sur 3, qui porte « ALERTE » ; le paquet n°2 sur 3, qui porte « ROUGE ». Chaque en-tête porte aussi l'adresse IP de l'expéditeur et celle du destinataire. Le document ne dit pas le message reconstitué."},
  o:["Il les lit dans l'ordre d'arrivée","Il les remet dans l'ordre grâce à leur numéro","Il demande à l'expéditeur de tout renvoyer dans l'ordre","Il jette les paquets en désordre"],r:1,
  expl:"Le numéro d'ordre de chaque paquet permet la remise en ordre à l'arrivée : 1, 2, 3 — quel que soit leur ordre d'arrivée réel.",
  ex:"Dans le simulateur de la séquence, tu as toi-même remis les paquets en ordre : tu as fait le travail du destinataire.",
  err:"Croire que le désordre est une panne : c'est un fonctionnement NORMAL (routes différentes = durées différentes).",
- d:["Lire dans l'ordre d'arrivée donnerait un message mélangé.","","Inutile : tout est arrivé, il suffit de trier.","Aucun paquet valide n'est jeté."],
+ d:["Dans l'ordre d'arrivée, il lirait « SAINTE-LUCE ALERTE ROUGE » : relis l'en-tête.","","Tout renvoyer ne garantit pas l'ordre : relis l'en-tête, le numéro suffit.","Les paquets ne sont pas abîmés, seulement mélangés : relis l'en-tête."],
  ret:"Le numéro d'ordre permet le réassemblage : l'arrivée dans le désordre est normale."},
 {c:"C4.7",n:"Perte d'un paquet",q:"Sur 2 000 paquets d'une photo, seul le n°1207 n'arrive pas. Que se passe-t-il ?",
  o:["seul le paquet manquant est redemandé","la photo s'affiche avec un trou au milieu","l'envoi est purement et simplement annulé","toute la photo est renvoyée depuis le début"],r:0,
@@ -419,21 +427,24 @@ const QUESTIONS = [
  d:["","Une heure correspondrait à un transport physique, pas à la lumière dans une fibre.","Une journée, c'est le courrier postal aérien !","Une semaine, c'est un colis maritime."],
  ret:"Transit d'un paquet transatlantique : quelques dizaines de millisecondes (vitesse de la lumière dans la fibre)."},
 /* ═══ C4.8 — protocole de routage (15 q) ═══ */
-{c:"C4.8",n:"Table de routage",q:"Qu'est-ce que la table de routage d'un routeur ?",
+{c:"C4.8",n:"Table de routage",q:"D'après ce document, qu'est-ce que la table de routage d'un routeur ?",
+ img:{src:"Images/doc_table_routage_r2.svg",alt:"La table de routage du routeur R2, en trois règles : réseau 198.51.100.x : envoyer vers R1 ; réseau 203.0.113.x : envoyer vers R4 ; tout le reste : envoyer vers R3. Le document n'aiguille aucun paquet."},
  o:["la liste des appareils branchés sur le routeur du collège","la liste des mots de passe des utilisateurs","l'historique de tous les sites visités","ses règles : pour chaque destination, une sortie"],r:3,
  expl:"La table de routage associe des réseaux de destination à des sorties (« pour 203.0.113.x → passer par R4 »). Le routeur la consulte pour CHAQUE paquet reçu.",
  ex:"Table de R2 dans la séquence : 198.51.100.x → R1 · 203.0.113.x → R4 · tout le reste → R3.",
  err:"Imaginer que le routeur « connaît » tout le trajet : il ne décide que du PROCHAIN saut, chaque routeur suivant fait de même.",
  d:["La table ne liste pas les appareils branchés : elle dit, pour chaque destination, par quelle sortie envoyer le paquet.","Les mots de passe ne concernent pas l'aiguillage des paquets.","L'historique de navigation est stocké par le navigateur, pas par la table de routage.",""],
  ret:"Table de routage = règles « réseau de destination → prochaine sortie », consultées pour chaque paquet."},
-{c:"C4.8",n:"Appliquer une table",q:"La table de routage du routeur R2 dit : 198.51.100.x → vers R1 · 203.0.113.x → vers R4 · tout le reste → vers R3. Où R2 envoie-t-il un paquet destiné à 203.0.113.77 ?",
+{c:"C4.8",n:"Appliquer une table",q:"D'après cette table, où R2 envoie-t-il un paquet destiné à 203.0.113.77 ?",
+ img:{src:"Images/doc_table_routage_r2.svg",alt:"La table de routage du routeur R2, en trois règles : réseau 198.51.100.x : envoyer vers R1 ; réseau 203.0.113.x : envoyer vers R4 ; tout le reste : envoyer vers R3. Le document n'aiguille aucun paquet."},
  o:["Vers R1","Vers R3","Vers R4","Il est détruit"],r:2,
  expl:"L'adresse 203.0.113.77 appartient au réseau 203.0.113.x : la règle correspondante dit « passer par R4 ». Le routeur compare le début de l'adresse aux réseaux de sa table.",
  ex:"Même logique qu'un tri postal : « 97228 » part vers le centre de tri de Martinique, quel que soit le nom de la rue.",
  err:"Choisir la règle par défaut (R3) alors qu'une règle précise correspond.",
  d:["R1 dessert 198.51.100.x, pas notre destination.","La règle « le reste » ne s'applique que si AUCUNE règle précise ne correspond.","","Un paquet avec une route connue n'est jamais détruit."],
  ret:"Le routeur compare le début de l'adresse de destination aux réseaux de sa table, la règle précise gagne sur la règle par défaut."},
-{c:"C4.8",n:"Règle par défaut",q:"Dans la table de routage d'un routeur, à quoi sert la ligne « tout le reste → vers le routeur R3 » ?",
+{c:"C4.8",n:"Règle par défaut",q:"Dans cette table, à quoi sert la ligne « tout le reste → R3 » ?",
+ img:{src:"Images/doc_table_routage_r2.svg",alt:"La table de routage du routeur R2, en trois règles : réseau 198.51.100.x : envoyer vers R1 ; réseau 203.0.113.x : envoyer vers R4 ; tout le reste : envoyer vers R3. Le document n'aiguille aucun paquet."},
  o:["à bloquer les virus venus de l'extérieur du réseau","à doubler la vitesse de la connexion","à jeter les paquets d'origine inconnue","à donner une sortie aux destinations sans règle"],r:3,
  expl:"La route par défaut évite d'énumérer les millions de réseaux du monde : tout ce qui n'a pas de règle précise part vers un routeur « qui en sait plus » (souvent vers le cœur d'Internet).",
  ex:"Le routeur du collège a une règle simple : tout ce qui n'est pas local → l'opérateur.",
@@ -489,7 +500,8 @@ const QUESTIONS = [
  err:"Raisonner en kilomètres : le réseau raisonne en liaisons, capacités et règles.",
  d:["La « ligne droite » n'existe pas s'il n'y a pas de câble direct.","","Les paquets n'ont pas de GPS : les tables de routage guident chaque saut.","Le choix suit des règles précises, jamais le hasard."],
  ret:"Le routage optimise selon les liaisons réelles (existence, capacité, charge), pas selon la distance géographique."},
-{c:"C4.8",n:"Saut par saut",q:"Comment le chemin complet d'un paquet est-il décidé ?",
+{c:"C4.8",n:"Saut par saut",q:"R2 ne connaît que sa table, comme celle-ci. Comment le chemin complet d'un paquet est-il alors décidé ?",
+ img:{src:"Images/doc_table_routage_r2.svg",alt:"La table de routage du routeur R2, en trois règles : réseau 198.51.100.x : envoyer vers R1 ; réseau 203.0.113.x : envoyer vers R4 ; tout le reste : envoyer vers R3. Le document n'aiguille aucun paquet."},
  o:["chaque routeur décide du prochain saut","l'utilisateur choisit lui-même chaque routeur","le paquet demande son chemin aux autres paquets","le premier routeur calcule tout le trajet"],r:0,
  expl:"Le routage est distribué : chaque routeur consulte SA table et choisit la sortie suivante. Personne ne connaît tout le trajet à l'avance — c'est ce qui permet l'adaptation en temps réel.",
  ex:"Comme demander sa route de carrefour en carrefour : chaque habitant t'indique la prochaine direction.",
@@ -789,6 +801,8 @@ function rendreQuestion(){
   $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
   $("qNum").textContent=i+1; $("qTot").textContent=N;
   $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
   $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
   const zone=$("qOptions"); zone.innerHTML="";
   const lettres=["A","B","C","D"];
