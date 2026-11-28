@@ -25,7 +25,7 @@ et sans rien jeter qui puisse être réparé ?
 |---|---|---|---|
 | 1 — Ouvrir l'œil (C5.1) | Que peut-on découvrir sur une panne SANS rien démonter ? | Act. 1 : inspection visuelle des 6 zones (verrou : 6/6 examinées), classement normal/anomalie, désignation de la pièce, réflexe sécurité | Carnet d'inspection + tableau au cahier |
 | 2 — Réparer au protocole (C5.2) | Pourquoi suivre un protocole À LA LETTRE ? | Act. 2 : protocole à remettre en ordre, puis simulateur de réparation pas à pas (verrou : 6 étapes dans l'ordre + test final), questions sécurité/preuve | Protocole ordonné + réparation simulée 6/6 |
-| 3 — L'atelier de fabrication (C5.3) | Que faire quand la pièce ne se vend plus ? | Act. 3 : les 4 postes de l'atelier (associations procédé/pièce, familles additif/enlèvement, sécurité atelier) · Act. 4 : réinvestissement (feu arrière du vélo) | Associations + 2 familles au cahier + 4/4 transfert |
+| 3 — L'atelier de fabrication (C5.3) | Que faire quand la pièce ne se vend plus ? | Act. 3 : les 4 postes de l'atelier (associations procédé/pièce, familles additif/enlèvement, sécurité atelier) · Act. 4 : réinvestissement (feu arrière du vélo, 10 min) · billet de sortie (5 min, seul et sans aide, n°330) : la lampe torche du kit cyclone | Associations + 2 familles au cahier + 4/4 transfert |
 
 ## Différenciation
 
@@ -39,7 +39,7 @@ et sans rien jeter qui puisse être réparé ?
 - **Formative** : vérificateurs intégrés (verrous expérientiels : inspection 6/6, réparation 6/6) + auto-positionnement par code.
   Depuis la révision du 14/11/2026, une activité n'est validée que si toutes ses réponses sont justes (8/8, 8/8, 7/7, 4/4,
   comme le disent ses critères de réussite ; avant, 7/8 suffisait) ; chaque question fausse est marquée « à revoir ».
-- **Entraînement** : QCM 30 questions (10 par code, 3 illustrées, corrections exhaustives, réponses réparties A/B/C/D).
+- **Entraînement** : QCM 30 questions (10 par code, 7 illustrées, dont quatre sur « Le carnet d'inspection du lampadaire n°3 », n°345, corrections exhaustives, réponses réparties A/B/C/D).
 - **Sommative** : à construire par l'enseignant (corrigé non publié dans le dépôt public). Item rapide suggéré : remettre le protocole en ordre.
 - **LSU** : saisie par code (C5.1 / C5.2 / C5.3) via les critères de réussite affichés.
 
@@ -54,3 +54,8 @@ et sans rien jeter qui puisse être réparé ?
 Maquette lampadaire des LOTs 05/07 (carte, capteur luminosité, LED, batterie TBT), un capot
 imprimé de rechange, protocole imprimé. Mise en panne par l'enseignant : capot retiré,
 connecteur capteur débranché.
+
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3 : la lampe torche rechargeable du kit cyclone, un objet
+neuf. Question 1 (5e_C5.1) : classer cinq observations et désigner la pièce — on regarde que le câble est désigné, et
+que le voyant éteint est relié à la charge. Question 2 (5e_C5.2, 5e_C5.3) : trois étapes sûres, la prise débranchée
+d'abord, et l'imprimante 3D pour le clip. Le réinvestissement passe de 15 à 10 minutes : la séance tient en 55.

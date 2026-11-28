@@ -39119,6 +39119,30 @@ Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
 Bancs : billet 5 / 5 (neuf), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de l'aération, du
 squelette, du mode mission et des liens : verts. Thème 2 seulement (`3e_C4.8`). La famille C4 du thème 2 est complète.
 
+## 28/11/2026 — 5e_C5.1 : quatre questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (3 questions sur document) : « Le carnet d'inspection du lampadaire n°3 », LU dans la séquence (`const ZONES`)
+  par `documents_qcm.py`, sans aucun classement ; les q3, q5, q6 et q10 s'y lisent. La q4 n'y est pas mise : le carnet
+  écrit « le coffret signale un problème », la réponse même.
+- **Billet de sortie** avant le Bonus de la séance 3 : la lampe torche rechargeable du kit cyclone (classer cinq
+  observations et désigner la pièce ; trois étapes sûres et le procédé du clip). Le réinvestissement passe de 15 à 10
+  minutes : la séance tient en 55.
+Bancs : séquence 36 / 36 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`5e_C5.1`).
+
+## 28/11/2026 — 4e_C5.1 : trois questions sur document de plus, et un billet de sortie (thème 2)
+
+Pascal : « 1 oui, 2 oui » — les chantiers D1 et P1 du thème 2, lot par lot.
+- **QCM** (4 questions sur document) : « Le clip-support à refaire », LU par `documents_qcm.py` dans le schéma de
+  l'activité 3, sans les ✔ / ✘ du tableau de choix ; les q22, q25 et q29 s'y lisent.
+- **Billet de sortie** avant le Bonus de la séance 3 : le distributeur automatique de gel de l'entrée (un protocole de
+  quatre tests et la purge qui innocente la pompe ; le procédé pour trente fenêtres plates, piles retirées d'abord). La
+  séance 3 passe de 45 à 50 minutes d'activités.
+- Une ligne d'erreurs fréquentes cousait trois idées par « ; » (audit d'aération) : une par ligne.
+Bancs : séquence 32 / 32 (six tests neufs), n°311 34 / 34 ; contrôles des QCM, des schémas, des règles d'or, de
+l'aération, du squelette, du mode mission et des liens : verts. Thème 2 seulement (`4e_C5.1`).
+
 ## 28/11/2026 — Les trois freins de Sainte-Luce en 3D, et un atelier Blender commun (transversal : thème 1, `_ressources-communes`, `.claude/skills`, `SKILLS_AUDIT.md`)
 
 **Demande de Pascal (26/11).** « 1a 2b 3b fusionne et donne moi l'URL », puis « Continue » : 3b, c'était « lancer les trois
