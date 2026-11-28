@@ -56,6 +56,11 @@ statiques miroir (act. 3). S3 : les preuves — ping (TTL=126), tracert (3 sauts
 mesurées (act. 4) ; le film en mode Simulation (Event List 0.000→0.010 s) + contre-épreuve « route
 effacée » sur le mini-simulateur à verrou (act. 5) ; trois explications écrites sans propositions sur un ping et un tracert imaginés, comme au brevet (n°346, 22/11/2026, ~10 min, faisable à la maison) ; bilan, auto-positionnement par code, QCM 30 q.
 
+**Billet de sortie** (28/11/2026, n°330), en fin de séance 3, environ 5 minutes, seul et sans aide : deux salles du
+collège, deux réseaux, un routeur. Question 1 : pourquoi le commutateur ne suffit pas, et la passerelle du poste. Question
+2 : lire un tracert saut par saut, et situer la panne après le dernier saut qui répond. Les explications « comme au
+brevet » (~10 min) se font à la maison, comme leur pastille le dit déjà : la séance tient en 55 minutes.
+
 ## Outils, versions, sécurité
 
 Packet Tracer 8.2 (compte Cisco de classe à préparer AVANT la séance : la fenêtre de connexion est

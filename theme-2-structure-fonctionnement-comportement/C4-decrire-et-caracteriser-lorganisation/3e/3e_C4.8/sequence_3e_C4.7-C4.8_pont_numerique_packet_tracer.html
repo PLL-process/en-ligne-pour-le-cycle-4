@@ -2901,6 +2901,49 @@ Trace complete.</pre>
   </details>
 </section>
 
+<section class="card" id="billetSortie">
+  <h2>🎟 Billet de sortie — seul, sans aide <span style="font-size:.8em;opacity:.8">(~5 min)</span></h2>
+  <p>Une situation nouvelle&nbsp;: <b>deux salles du collège, deux réseaux</b>. La salle A est dans la rue 192.168.1, la salle B dans la rue 192.168.2&nbsp;; un routeur les relie, avec l'adresse 192.168.1.1 côté A et 192.168.2.1 côté B.
+  <br>Seul, sans aide&nbsp;: ce billet dit ce que tu sais faire.</p>
+  <p><label for="bs_3e_C4_8_1"><b>1.</b> Le poste 192.168.1.15, en salle A, doit imprimer sur l'imprimante 192.168.2.40, en salle B. Pourquoi le commutateur de la salle A ne suffit-il pas&nbsp;? Quelle passerelle faut-il régler sur le poste, et pourquoi celle-là&nbsp;?</label></p>
+  <textarea id="bs_3e_C4_8_1" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Le poste et l'imprimante ne sont pas dans la même ____ : ____ et ____ .</li>
+      <li>Le commutateur ne relie que ____ ; pour changer de réseau, il faut ____ .</li>
+      <li>La passerelle du poste est ____ , parce que ____ .</li>
+    </ul>
+  </details>
+  <p><label for="bs_3e_C4_8_2"><b>2.</b> Depuis le poste, un tracert vers l'imprimante affiche deux lignes&nbsp;: «&nbsp;1 · 192.168.1.1&nbsp;» puis «&nbsp;2 · 192.168.2.40&nbsp;». Que prouve-t-il&nbsp;? Un autre jour, la ligne 2 devient «&nbsp;Request timed out&nbsp;». Où chercher la panne, et pourquoi là&nbsp;?</label></p>
+  <textarea id="bs_3e_C4_8_2" data-save rows="4"></textarea>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>Le tracert prouve que le message passe par ____ , puis arrive à ____ .</li>
+      <li>Quand la ligne 2 ne répond plus, le message atteint encore ____ , mais pas ____ .</li>
+      <li>Je cherche donc la panne ____ , par exemple ____ .</li>
+    </ul>
+  </details>
+  <details class="correction">
+    <summary>📖 Correction complète — ouvre-la après avoir écrit tes deux réponses</summary>
+    <div>
+    <p><b>1. Une réponse possible.</b>
+    <br>«&nbsp;Le poste et l'imprimante ne sont pas dans la même rue&nbsp;: 192.168.1 et 192.168.2.
+    <br>Le commutateur ne relie que les appareils d'une même rue&nbsp;; pour changer de réseau, il faut le routeur.
+    <br>La passerelle du poste est 192.168.1.1, parce que c'est l'adresse du routeur dans la rue du poste&nbsp;: la porte de sortie de la salle A.&nbsp;»
+    <br><b>Critère</b>&nbsp;: les deux rues sont lues dans les adresses, et la passerelle choisie est l'adresse du routeur du côté du poste.</p>
+    <p>✘ «&nbsp;Passerelle 192.168.2.1&nbsp;»&nbsp;: c'est l'adresse du routeur côté B&nbsp;; le poste ne peut pas la joindre sans passer d'abord par la porte de sa propre rue.
+    <br>✘ «&nbsp;Il suffit d'un câble plus long&nbsp;»&nbsp;: la longueur ne change rien, les deux rues restent deux réseaux.</p>
+    <p><b>2. Une réponse possible.</b>
+    <br>«&nbsp;Le tracert prouve que le message passe par le routeur, 192.168.1.1, puis arrive à l'imprimante, en deux sauts.
+    <br>Quand la ligne 2 ne répond plus, le message atteint encore le routeur, mais pas l'imprimante.
+    <br>Je cherche donc la panne du côté de la salle B, entre le routeur et l'imprimante&nbsp;: son câble, son adresse, sa passerelle.&nbsp;»
+    <br><b>Critère</b>&nbsp;: le tracert est lu saut par saut, et la panne est située après le dernier saut qui répond.</p>
+    <p>✘ «&nbsp;Le poste est en panne&nbsp;»&nbsp;: la ligne 1 répond, le poste et sa passerelle marchent.
+    <br>✘ «&nbsp;Internet est coupé&nbsp;»&nbsp;: tout le trajet est dans le collège, il ne passe pas par Internet.</p>
+    </div>
+  </details>
+</section>
+
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <details class="bonus-replie"><summary>🎁 Les 3 défis du Bonus — ouvre-les quand tu as fini</summary>
